@@ -292,6 +292,10 @@ p.n-margin {
     position: relative;
 }
 
+.app-main .column-middle-inner {
+    overflow: visible;
+}
+
 textarea,
 input {
     font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
@@ -714,8 +718,10 @@ td.pointer {
     white-space: nowrap;
     font-weight: 600;
     line-height: 14px;
-    position: relative;
-    z-index: 0;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 50px;
+    z-index: 1;
 }
 
 .message_list .recipient_row {
@@ -1277,6 +1283,7 @@ div.message_table {
 
 .message_row {
     position: relative;
+    z-index: 0;
     border-left: 1px solid hsla(0, 0%, 0%, 0.10);
     border-right: 1px solid hsla(0, 0%, 0%, 0.10);
 }
@@ -1947,6 +1954,7 @@ div.floating_recipient {
 
 #floating_recipient_bar {
     top: 50px;
+    display: none;
 }
 
 .message-header-contents {
