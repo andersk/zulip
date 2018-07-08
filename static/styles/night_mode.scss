@@ -151,7 +151,7 @@ body.night-mode .compose_table .recipient_box:focus {
 body.night-mode .message-header-contents,
 body.night-mode .message_header_private_message .message-header-contents,
 body.night-mode #tab_list li.active {
-    background: hsla(0, 0%, 0%, 0.2);
+    background: #1a242f;
 }
 
 body.night-mode .message-header-contents,
@@ -294,6 +294,10 @@ body.night-mode table,
 body.night-mode table th,
 body.night-mode table td {
     border-color: hsla(0, 0%, 0%, 0.2);
+}
+
+body.night-mode .private-message .messagebox {
+    background-color: #3e4c58;
 }
 
 body.night-mode .draft-row .draft-info-box,
