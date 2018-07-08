@@ -1085,11 +1085,7 @@ td.pointer {
 }
 
 .selected_message .messagebox-content {
-    box-shadow: inset 0px 0px 0px 2px hsl(215, 47%, 50%),
-                     -1px -1px 0px 0px hsl(215, 47%, 50%),
-                      1px 1px 0px 0px hsl(215, 47%, 50%),
-                     -1px 1px 0px 0px hsl(215, 47%, 50%),
-                      1px -1px 0px 0px hsl(215, 47%, 50%);
+    box-shadow: inset 0px 0px 0px 3px hsl(215, 47%, 50%);
 }
 
 .message_sender {
@@ -1285,10 +1281,6 @@ div.message_table {
     border-right: 1px solid hsla(0, 0%, 0%, 0.10);
 }
 
-.message_row.selected_message {
-    z-index: 2;
-}
-
 div.focused_table {
     display: block;
 }
@@ -1450,15 +1442,16 @@ blockquote p {
 }
 
 .messagebox-content {
-    padding: 4px 115px 1px 10px;
+    margin: 0px -1px;
+    padding: 4px 116px 1px 11px;
 }
 
 #message-edit-history .messagebox-content {
-    padding: 0px 10px;
+    padding: 0px 11px;
 }
 
 .last_message .messagebox-content {
-    padding-bottom: 1px;
+    padding-bottom: 2px;
 }
 
 .messagebox p {
