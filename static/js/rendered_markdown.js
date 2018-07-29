@@ -158,7 +158,7 @@ exports.update_elements = (content) => {
         // fallback to the Date() constructor.  This isn't really a
         // problem for us except in local echo, as the backend always
         // uses a format that ensures that is unnecessary.
-        moment.suppressDeprecationWarnings = true;
+        moment.suppressDeprecationWarnings = true; // eslint-disable-line no-import-assign
         const timestamp = moment(time_str);
         if (timestamp.isValid()) {
             const text = $(this).text();

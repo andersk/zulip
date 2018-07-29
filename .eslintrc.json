@@ -22,7 +22,6 @@
         "import/extensions": "error",
         "import/first": "error",
         "import/newline-after-import": "error",
-        "import/no-cycle": "error",
         "import/no-useless-path-segments": "error",
         "import/order": [
             "error",
@@ -32,6 +31,7 @@
             }
         ],
         "import/unambiguous": "error",
+        "lines-around-directive": "error",
         "new-cap": [
             "error",
             {
@@ -77,7 +77,10 @@
                 "varsIgnorePattern": "print_elapsed_time|check_duplicate_ids"
             }
         ],
-        "no-use-before-define": ["error", {"functions": false}],
+        "no-use-before-define": [
+            "error",
+            {"classes": false, "functions": false, "variables": false}
+        ],
         "no-useless-constructor": "error",
         "no-var": "error",
         "object-shorthand": "error",

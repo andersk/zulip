@@ -320,7 +320,7 @@ function handleTimestamp(time) {
         // Moment throws a large deprecation warning when it has to fallback
         // to the Date() constructor. We needn't worry here and can let backend
         // Markdown handle any dates that moment misses.
-        moment.suppressDeprecationWarnings = true;
+        moment.suppressDeprecationWarnings = true; // eslint-disable-line no-import-assign
         timeobject = moment(time); // not a Unix timestamp
     } else {
         // JavaScript dates are in milliseconds, Unix timestamps are in seconds

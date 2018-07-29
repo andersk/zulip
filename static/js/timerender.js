@@ -230,7 +230,7 @@ exports.get_full_time = function (timestamp) {
 
 exports.get_timestamp_for_flatpickr = (timestring) => {
     let timestamp;
-    moment.suppressDeprecationWarnings = true;
+    moment.suppressDeprecationWarnings = true; // eslint-disable-line no-import-assign
     try {
         // If there's already a valid time in the compose box,
         // we use it to initialize the flatpickr instance.
@@ -241,7 +241,7 @@ exports.get_timestamp_for_flatpickr = (timestring) => {
             timestamp = moment();
         }
     }
-    moment.suppressDeprecationWarnings = false;
+    moment.suppressDeprecationWarnings = false; // eslint-disable-line no-import-assign
     return timestamp.toDate();
 };
 
