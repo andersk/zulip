@@ -117,6 +117,7 @@ export default (env?: string): webpack.Configuration[] => {
                 },
             ],
         },
+        node: false,
         output: {
             path: resolve(__dirname, '../static/webpack-bundles'),
             publicPath,
