@@ -35,7 +35,7 @@ Listen 127.0.0.1:8888
 	SSLCertificateFile /etc/ssl/certs/zulip.combined-chain.crt
 	SSLCertificateKeyFile /etc/ssl/private/zulip.key
 
-	WSGIScriptAlias / /home/zulip/deployments/current/zproject/wsgi.py
+	WSGIScriptAlias / /home/zulip/deployments/current/zproject/sso_wsgi.py
 	WSGIDaemonProcess zulip threads=5 user=zulip python-path=/home/zulip/deployments/current/
 	WSGIProcessGroup zulip
 
