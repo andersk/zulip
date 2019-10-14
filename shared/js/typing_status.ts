@@ -31,10 +31,26 @@ var TYPING_STOPPED_WAIT_PERIOD = 5000; // 5s
 */
 
 /** Exported only for tests. */
-export const state = {};
+type RecipientUserIds = number[];
+
+interface Worker {
+    notify_server_start(recipient: RecipientUserIds): void;
+    notify_server_stop(recipient: RecipientUserIds): void;
+    get_recipient(): RecipientUserIds | undefined;
+    get_current_time(): number;
+    is_valid_conversation(recipient: RecipientUserIds | undefined): boolean;
+}
+
+interface State {
+    current_recipient?: RecipientUserIds;
+    next_send_start_time?: number;
+    idle_timer?: ReturnType<typeof setTimeout>;
+}
+
+export const state: State = {};
 
 /** Exported only for tests. */
-export function initialize_state() {
+export function initialize_state(): void {
     state.current_recipient =  undefined;
     state.next_send_start_time =  undefined;
     state.idle_timer = undefined;
@@ -43,7 +59,7 @@ export function initialize_state() {
 initialize_state();
 
 /** Exported only for tests. */
-export function stop_last_notification(worker) {
+export function stop_last_notification(worker: Worker): void {
     if (state.idle_timer) {
         clearTimeout(state.idle_timer);
     }
@@ -52,8 +68,8 @@ export function stop_last_notification(worker) {
 }
 
 /** Exported only for tests. */
-export function start_or_extend_idle_timer(worker) {
-    function on_idle_timeout() {
+export function start_or_extend_idle_timer(worker: Worker): void {
+    function on_idle_timeout(): void {
         // We don't do any real error checking here, because
         // if we've been idle, we need to tell folks, and if
         // our current recipient has changed, previous code will
@@ -70,24 +86,28 @@ export function start_or_extend_idle_timer(worker) {
     );
 }
 
-function set_next_start_time(current_time) {
+function set_next_start_time(current_time: number): void {
     state.next_send_start_time = current_time + TYPING_STARTED_WAIT_PERIOD;
 }
 
-function actually_ping_server(worker, recipient, current_time) {
+function actually_ping_server(
+    worker: Worker,
+    recipient: RecipientUserIds,
+    current_time: number
+): void {
     worker.notify_server_start(recipient);
     set_next_start_time(current_time);
 }
 
 /** Exported only for tests. */
-export function maybe_ping_server(worker, recipient) {
+export function maybe_ping_server(worker: Worker, recipient: RecipientUserIds): void {
     var current_time = worker.get_current_time();
     if (current_time > state.next_send_start_time) {
         actually_ping_server(worker, recipient, current_time);
     }
 }
 
-export function handle_text_input(worker) {
+export function handle_text_input(worker: Worker): void {
     var new_recipient = worker.get_recipient();
     var current_recipient = state.current_recipient;
 
@@ -125,7 +145,7 @@ export function handle_text_input(worker) {
     start_or_extend_idle_timer(worker);
 }
 
-export function stop(worker) {
+export function stop(worker: Worker): void {
     // We get this if somebody closes the compose box, but
     // it doesn't necessarily mean we had typing indicators
     // active before this.

@@ -23,7 +23,7 @@ USAGE = '''
     '''
 
 enforce_fully_covered = {
-    'shared/js/typing_status.js',
+    'shared/js/typing_status.ts',
 
     'static/js/activity.js',
     'static/js/alert_words.js',

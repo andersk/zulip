@@ -15,7 +15,7 @@ var exports = {};
 // and expire its typing status
 var TYPING_STARTED_EXPIRY_PERIOD = 15000; // 15s
 
-// Note!: There are also timing constants in typing_status.js
+// Note!: There are also timing constants in typing_status.ts
 // that make typing indicators work.
 
 function get_users_typing_for_narrow() {
