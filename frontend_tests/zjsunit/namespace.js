@@ -1,16 +1,6 @@
 const _ = require('underscore/underscore.js');
 
-const requires = [];
-const new_globals = new Set();
-let old_globals = {};
-
 exports.set_global = function (name, val) {
-    if (!(name in old_globals)) {
-        if (!(name in global)) {
-            new_globals.add(name);
-        }
-        old_globals[name] = global[name];
-    }
     global[name] = val;
     return val;
 };
@@ -22,21 +12,7 @@ exports.zrequire = function (name, fn) {
         // FIXME: Stealing part of the NPM namespace is confusing.
         fn = '../../static/' + fn;
     }
-    delete require.cache[require.resolve(fn)];
-    requires.push(fn);
     return require(fn);
-};
-
-exports.restore = function () {
-    requires.forEach(function (fn) {
-        delete require.cache[require.resolve(fn)];
-    });
-    _.extend(global, old_globals);
-    old_globals = {};
-    for (const name of new_globals) {
-        delete global[name];
-    }
-    new_globals.clear();
 };
 
 exports.stub_out_jquery = function () {

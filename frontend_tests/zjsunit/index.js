@@ -1,15 +1,5 @@
 const path = require('path');
 const fs = require('fs');
-const escapeRegExp = require("lodash/escapeRegExp");
-
-require("@babel/register")({
-    extensions: [".es6", ".es", ".jsx", ".js", ".mjs", ".ts"],
-    only: [
-        new RegExp("^" + escapeRegExp(path.resolve(__dirname, "../../static/js")) + path.sep),
-        new RegExp("^" + escapeRegExp(path.resolve(__dirname, "../../static/shared/js")) + path.sep),
-    ],
-    plugins: ["rewire-ts"],
-});
 
 global.assert = require('assert').strict;
 global._ = require('underscore/underscore.js');
@@ -22,13 +12,6 @@ function immediate(f) {
     };
 }
 
-// Find the files we need to run.
-const finder = require('./finder.js');
-const files = finder.find_files_to_run(); // may write to console
-if (files.length === 0) {
-    throw "No tests found";
-}
-
 // Set up our namespace helpers.
 const namespace = require('./namespace.js');
 global.set_global = namespace.set_global;
@@ -37,9 +20,7 @@ global.zrequire = namespace.zrequire;
 global.stub_out_jquery = namespace.stub_out_jquery;
 global.with_overrides = namespace.with_overrides;
 
-global.window = new Proxy(global, {
-    set: (obj, prop, value) => namespace.set_global(prop, value),
-});
+global.window = global;
 global.to_$ = () => window;
 
 // Set up stub helpers.
@@ -56,9 +37,10 @@ global.make_zblueslip = require('./zblueslip.js').make_zblueslip;
 global.stub_i18n = require('./i18n.js');
 
 // Set up Handlebars
-const handlebars = require('./handlebars.js');
-global.make_handlebars = handlebars.make_handlebars;
-global.stub_templates = handlebars.stub_templates;
+global.make_handlebars = () => require("handlebars/dist/cjs/handlebars.runtime.js");
+global.stub_templates = stub => {
+    global.template_stub = stub;
+};
 
 const noop = function () {};
 
@@ -69,48 +51,24 @@ global.read_fixture_data = (fn) => {
     return data;
 };
 
-function short_tb(tb) {
-    const lines = tb.split('\n');
-
-    const i = lines.findIndex(line => line.includes('run_test') || line.includes('run_one_module'));
-
-    if (i === -1) {
-        return tb;
-    }
-
-    return lines.splice(0, i + 1).join('\n') + '\n(...)\n';
-}
-
-function run_one_module(file) {
-    console.info('running tests for ' + file.name);
-    require(file.full_name);
-}
-
+// This could just be an alias for test(), except some of our tests were
+// written under the assumption that the test body runs synchronously with the
+// surrounding code.
 global.run_test = (label, f) => {
-    if (files.length === 1) {
-        console.info('        test: ' + label);
+    let dummy = () => {};
+    try {
+        f();
+    } catch (err) {
+        dummy = done => done(err);
+    } finally {
+        test(label, dummy);
     }
-    f();
 };
 
-try {
-    files.forEach(function (file) {
-        set_global('location', {
-            hash: '#',
-        });
-        global.patch_builtin('setTimeout', noop);
-        global.patch_builtin('setInterval', noop);
-        _.throttle = immediate;
-        _.debounce = immediate;
-
-        run_one_module(file);
-        namespace.restore();
-    });
-} catch (e) {
-    if (e.stack) {
-        console.info(short_tb(e.stack));
-    } else {
-        console.info(e);
-    }
-    process.exit(1);
-}
+set_global('location', {
+    hash: '#',
+});
+global.patch_builtin('setTimeout', noop);
+global.patch_builtin('setInterval', noop);
+_.throttle = immediate;
+_.debounce = immediate;

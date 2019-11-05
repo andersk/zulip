@@ -1,5 +1,3 @@
-const rewiremock = require("rewiremock/node");
-
 set_global('$', global.make_zjquery());
 set_global('document', {
     location: { },
@@ -265,14 +263,15 @@ run_test('uppy_config', () => {
         };
     }
     uppy_stub.Plugin = plugin_stub;
-    rewiremock.proxy(() => require("../../static/js/upload"), {'@uppy/core': uppy_stub});
+    jest.resetModules();
+    jest.mock("@uppy/core", () => uppy_stub);
+    const upload = require("../../static/js/upload");
     upload.setup_upload({mode: "compose"});
 
     assert.equal(uppy_stub_called, true);
     assert.equal(uppy_set_meta_called, true);
     assert.equal(uppy_used_xhrupload, true);
     assert.equal(uppy_used_progressbar, true);
-
 });
 
 run_test('file_input', () => {
@@ -405,7 +404,9 @@ run_test('uppy_events', () => {
         };
     }
     uppy_stub.Plugin = plugin_stub;
-    rewiremock.proxy(() => require("../../static/js/upload"), {'@uppy/core': uppy_stub});
+    jest.resetModules();
+    jest.mock("@uppy/core", () => uppy_stub);
+    const upload = require("../../static/js/upload");
     upload.setup_upload({mode: "compose"});
     assert.equal(Object.keys(callbacks).length, 4);
 

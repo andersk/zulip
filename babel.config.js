@@ -1,4 +1,4 @@
-module.exports = {
+module.exports = api => ({
     presets: [
         [
             "@babel/preset-env",
@@ -13,6 +13,7 @@ module.exports = {
     plugins: [
         "@babel/proposal-class-properties",
         ["@babel/plugin-proposal-unicode-property-regex", { useUnicodeFlag: false }],
+        ...api.env("test") ? ["rewire-ts"] : [],
     ],
     sourceType: "unambiguous",
-};
+});

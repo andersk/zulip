@@ -19,7 +19,6 @@ import ujson
 
 from zulint.printer import GREEN, BOLDRED, ENDC
 
-INDEX_JS = 'frontend_tests/zjsunit/index.js'
 NODE_COVERAGE_PATH = 'var/node-coverage/coverage-final.json'
 
 USAGE = '''
@@ -171,7 +170,6 @@ parser.add_argument('--force', dest='force',
                     default=False, help='Run tests despite possible problems.')
 parser.add_argument('args', nargs=argparse.REMAINDER)
 options = parser.parse_args()
-individual_files = options.args
 
 from tools.lib.test_script import assert_provisioning_status_ok
 
@@ -181,38 +179,10 @@ def print_error(msg: str) -> None:
     print(BOLDRED + 'ERROR:' + ENDC + ' ' + msg)
 
 def run_tests_via_node_js() -> int:
-    os.environ['TZ'] = 'UTC'
-
-    # Add ".js" to the end of all the file arguments, so index.js
-    # can actually verify if the file exists or not.
-    for index, arg in enumerate(options.args):
-        if not arg.endswith('.js') and not arg.endswith('.ts'):
-            # If it doesn't end with ".js" or ".ts", assume it is a JS file,
-            # since most files are currently JS files.
-            options.args[index] = arg + '.js'
-
-    # The index.js test runner is the real "driver" here, and we launch
-    # with either nyc or node, depending on whether we want coverage
-    # reports.  Running under nyc is slower and creates funny
-    # tracebacks, so you generally want to get coverage reports only
-    # after making sure tests will pass.
-    node_tests_cmd = ['node', '--stack-trace-limit=100', INDEX_JS]
-    node_tests_cmd += individual_files
+    command = ['node', os.path.join(ROOT_DIR, 'node_modules/.bin/jest')]
     if options.coverage:
-        coverage_dir = os.path.join(ROOT_DIR, 'var/node-coverage')
-        coverage_lcov_file = os.path.join(coverage_dir, 'lcov.info')
-
-        nyc = os.path.join(ROOT_DIR, 'node_modules/.bin/nyc')
-        command = [nyc, '--extension', '.hbs', '--extension', '.ts']
-        command += ['--report-dir', coverage_dir]
-        command += ['--temp-directory', coverage_dir, '-r=text-summary']
-        command += node_tests_cmd
-        command += ['&&', 'nyc', 'report', '-r=lcov', '-r=json']
-        command += ['>', coverage_lcov_file]
-    else:
-        # Normal testing, no coverage analysis.
-        # Run the index.js test runner, which runs all the other tests.
-        command = node_tests_cmd
+        command += ['--coverage']
+    command += options.args
 
     print('Starting node tests...')
 
@@ -302,7 +272,7 @@ def enforce_proper_coverage(coverage_json: Any) -> bool:
 ret = run_tests_via_node_js()
 
 if options.coverage and ret == 0:
-    if not individual_files:
+    if not options.args:
         coverage_json = read_coverage()
         problems_encountered = enforce_proper_coverage(coverage_json)
         if problems_encountered:
