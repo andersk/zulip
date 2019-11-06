@@ -62,13 +62,6 @@ global.stub_templates = handlebars.stub_templates;
 
 const noop = function () {};
 
-// Set up fake module.hot
-// eslint-disable-next-line no-native-reassign
-module = require('module');
-module.prototype.hot = {
-    accept: noop,
-};
-
 // Set up fixtures.
 global.read_fixture_data = (fn) => {
     const full_fn = path.join(__dirname, '../../zerver/tests/fixtures/', fn);

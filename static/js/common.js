@@ -1,8 +1,3 @@
-// This reloads the module in development rather than refreshing the page
-if (module.hot) {
-    module.hot.accept();
-}
-
 exports.status_classes = 'alert-error alert-success alert-info alert-warning';
 
 exports.autofocus = function (selector) {
