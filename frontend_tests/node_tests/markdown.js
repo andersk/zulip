@@ -1,3 +1,5 @@
+const bugdown_assert = require('../zjsunit/bugdown_assert.js');
+
 zrequire('hash_util');
 set_global('katex', zrequire('katex', 'katex/dist/katex.min.js'));
 set_global('marked', zrequire('marked', 'third/marked/lib/marked'));
@@ -262,12 +264,12 @@ run_test('marked_shared', () => {
         const output = message.content;
         const error_message = `Failure in test: ${test.name}`;
         if (test.marked_expected_output) {
-            global.bugdown_assert.notEqual(test.expected_output, output, error_message);
-            global.bugdown_assert.equal(test.marked_expected_output, output, error_message);
+            bugdown_assert.notEqual(test.expected_output, output, error_message);
+            bugdown_assert.equal(test.marked_expected_output, output, error_message);
         } else if (test.backend_only_rendering) {
             assert.equal(markdown.contains_backend_only_syntax(test.input), true);
         } else {
-            global.bugdown_assert.equal(test.expected_output, output, error_message);
+            bugdown_assert.equal(test.expected_output, output, error_message);
         }
     });
 });

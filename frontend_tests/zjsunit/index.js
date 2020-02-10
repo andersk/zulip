@@ -88,9 +88,6 @@ function short_tb(tb) {
     return lines.splice(0, i + 1).join('\n') + '\n(...)\n';
 }
 
-// Set up bugdown comparison helper
-global.bugdown_assert = require('./bugdown_assert.js');
-
 function run_one_module(file) {
     console.info('running tests for ' + file.name);
     require(file.full_name);
