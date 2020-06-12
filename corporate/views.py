@@ -197,7 +197,7 @@ def sponsorship(request: HttpRequest, user: UserProfile,
         UserProfile.ROLE_REALM_OWNER: "Realm owner",
         UserProfile.ROLE_REALM_ADMINISTRATOR: "Realm adminstrator",
         UserProfile.ROLE_MEMBER: "Member",
-        UserProfile.ROLE_GUEST: "Guest"
+        UserProfile.ROLE_GUEST: "Guest",
     }
     user_role = role_id_to_name_map[user.role]
 

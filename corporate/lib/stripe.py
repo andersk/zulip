@@ -276,7 +276,7 @@ def make_end_of_cycle_updates_if_needed(plan: CustomerPlan,
             discount = plan.customer.default_discount or plan.discount
             _, _, _, price_per_license = compute_plan_parameters(
                 automanage_licenses=plan.automanage_licenses, billing_schedule=CustomerPlan.ANNUAL,
-                discount=plan.discount
+                discount=plan.discount,
             )
 
             new_plan = CustomerPlan.objects.create(
@@ -290,7 +290,7 @@ def make_end_of_cycle_updates_if_needed(plan: CustomerPlan,
             new_plan_ledger_entry = LicenseLedger.objects.create(
                 plan=new_plan, is_renewal=True, event_time=next_billing_cycle,
                 licenses=last_ledger_entry.licenses_at_next_renewal,
-                licenses_at_next_renewal=last_ledger_entry.licenses_at_next_renewal
+                licenses_at_next_renewal=last_ledger_entry.licenses_at_next_renewal,
             )
 
             RealmAuditLog.objects.create(
@@ -299,7 +299,7 @@ def make_end_of_cycle_updates_if_needed(plan: CustomerPlan,
                 extra_data=ujson.dumps({
                     "monthly_plan_id": plan.id,
                     "annual_plan_id": new_plan.id,
-                })
+                }),
             )
             return new_plan, new_plan_ledger_entry
 

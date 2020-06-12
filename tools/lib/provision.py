@@ -318,7 +318,7 @@ def install_yum_deps(deps_to_install: List[str]) -> None:
     )
     overwrite_symlink(
         "/usr/share/myspell/en_US.aff",
-        "/usr/pgsql-{}/share/tsearch_data/en_us.affix".format(POSTGRES_VERSION,),
+        "/usr/pgsql-{}/share/tsearch_data/en_us.affix".format(POSTGRES_VERSION),
     )
 
 def main(options: argparse.Namespace) -> "NoReturn":

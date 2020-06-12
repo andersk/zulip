@@ -82,7 +82,7 @@ class EventsEndpointTest(ZulipTestCase):
         test_event = dict(
             id=6,
             type=event_type,
-            realm_emoji=[]
+            realm_emoji=[],
         )
 
         # Test that call is made to deal with a returning soft deactivated user.
@@ -756,7 +756,7 @@ class FetchQueriesTest(ZulipTestCase):
                     event_types=None,
                     queue_id='x',
                     client_gravatar=False,
-                    user_avatar_url_field_optional=False
+                    user_avatar_url_field_optional=False,
                 )
 
         self.assert_length(queries, 30)
@@ -812,7 +812,7 @@ class FetchQueriesTest(ZulipTestCase):
                     event_types=event_types,
                     queue_id='x',
                     client_gravatar=False,
-                    user_avatar_url_field_optional=False
+                    user_avatar_url_field_optional=False,
                 )
             self.assert_length(queries, count)
 

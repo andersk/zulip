@@ -68,7 +68,7 @@ def get_zoom_sid(request: HttpRequest) -> str:
     return mark_sanitized(
         ""
         if getattr(request, "_dont_enforce_csrf_checks", False)
-        else salted_hmac("Zulip Zoom sid", request.META["CSRF_COOKIE"]).hexdigest()
+        else salted_hmac("Zulip Zoom sid", request.META["CSRF_COOKIE"]).hexdigest(),
     )
 
 
@@ -170,7 +170,7 @@ def get_bigbluebutton_url(request: HttpRequest, user_profile: UserProfile) -> Ht
     url = add_query_to_redirect_url("/calls/bigbluebutton/join", urlencode({
         "meeting_id": "\"" + id + "\"",
         "password": "\"" + password + "\"",
-        "checksum": "\"" + checksum + "\""
+        "checksum": "\"" + checksum + "\"",
     }))
     return json_success({"url": url})
 
@@ -194,7 +194,7 @@ def join_bigbluebutton(request: HttpRequest, meeting_id: str = REQ(validator=che
                 "meetingID": meeting_id,
                 "moderatorPW": password,
                 "attendeePW": password + "a",
-                "checksum": checksum
+                "checksum": checksum,
             })))
         try:
             response.raise_for_status()
@@ -211,7 +211,7 @@ def join_bigbluebutton(request: HttpRequest, meeting_id: str = REQ(validator=che
         join_params = urlencode({  # type: ignore[type-var] # https://github.com/python/typeshed/issues/4234
             "meetingID": meeting_id,
             "password": password,
-            "fullName": request.user.full_name
+            "fullName": request.user.full_name,
         }, quote_via=quote)
 
         checksum = hashlib.sha1(("join" + join_params + settings.BIG_BLUE_BUTTON_SECRET).encode()).hexdigest()

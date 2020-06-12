@@ -38,6 +38,6 @@ class Migration(migrations.Migration):
     operations = [
         migrations.RunPython(
             clear_preregistrationuser_invited_as_admin,
-            reverse_code=migrations.RunPython.noop
+            reverse_code=migrations.RunPython.noop,
         ),
     ]

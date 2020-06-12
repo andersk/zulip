@@ -77,7 +77,7 @@ def get_events_backend(request: HttpRequest, user_profile: UserProfile,
                        lifespan_secs: int=REQ(default=0, converter=to_non_negative_int,
                                               intentionally_undocumented=True),
                        bulk_message_deletion: bool=REQ(default=False, validator=check_bool,
-                                                       intentionally_undocumented=True)
+                                                       intentionally_undocumented=True),
                        ) -> HttpResponse:
     # Extract the Tornado handler from the request
     handler: AsyncDjangoHandler = request._tornado_handler

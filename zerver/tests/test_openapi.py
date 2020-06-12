@@ -777,12 +777,12 @@ class TestCurlExampleGeneration(ZulipTestCase):
                             "content": {
                                 "application/json": {
                                     "schema": {
-                                        "type": "object"
+                                        "type": "object",
                                     },
                                     "example": {
                                         "key": "value",
-                                    }
-                                }
+                                    },
+                                },
                             },
                             "required": True,
                         },
@@ -817,12 +817,12 @@ class TestCurlExampleGeneration(ZulipTestCase):
                             "content": {
                                 "application/json": {
                                     "schema": {
-                                        "type": "object"
+                                        "type": "object",
                                     },
                                     "example": {
                                         "key": "value",
-                                    }
-                                }
+                                    },
+                                },
                             },
                         },
                     ],

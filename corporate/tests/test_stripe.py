@@ -1448,7 +1448,7 @@ class StripeTest(StripeTestCase):
             "plan": None, "quantity": 5, "subscription": None, "discountable": False,
             "period": {
                 "start": datetime_to_timestamp(self.next_month),
-                "end": datetime_to_timestamp(add_months(self.next_month, 12))
+                "end": datetime_to_timestamp(add_months(self.next_month, 12)),
             },
         }
         for key, value in annual_plan_invoice_item_params.items():
@@ -1459,7 +1459,7 @@ class StripeTest(StripeTestCase):
             "plan": None, "quantity": 20, "subscription": None, "discountable": False,
             "period": {
                 "start": datetime_to_timestamp(self.next_month),
-                "end": datetime_to_timestamp(add_months(self.next_month, 12))
+                "end": datetime_to_timestamp(add_months(self.next_month, 12)),
             },
         }
         for key, value in annual_plan_invoice_item_params.items():
@@ -1473,7 +1473,7 @@ class StripeTest(StripeTestCase):
             "plan": None, "quantity": 14, "subscription": None, "discountable": False,
             "period": {
                 "start": datetime_to_timestamp(self.now),
-                "end": datetime_to_timestamp(self.next_month)
+                "end": datetime_to_timestamp(self.next_month),
             },
         }
         for key, value in monthly_plan_invoice_item_params.items():
@@ -1494,7 +1494,7 @@ class StripeTest(StripeTestCase):
             "plan": None, "quantity": 5, "subscription": None, "discountable": False,
             "period": {
                 "start": datetime_to_timestamp(add_months(self.next_month, 1)),
-                "end": datetime_to_timestamp(add_months(self.next_month, 12))
+                "end": datetime_to_timestamp(add_months(self.next_month, 12)),
             },
         }
         for key, value in monthly_plan_invoice_item_params.items():
@@ -1512,7 +1512,7 @@ class StripeTest(StripeTestCase):
             "plan": None, "quantity": 30, "subscription": None, "discountable": False,
             "period": {
                 "start": datetime_to_timestamp(add_months(self.next_month, 12)),
-                "end": datetime_to_timestamp(add_months(self.next_month, 24))
+                "end": datetime_to_timestamp(add_months(self.next_month, 24)),
             },
         }
         for key, value in annual_plan_invoice_item_params.items():
@@ -1582,7 +1582,7 @@ class StripeTest(StripeTestCase):
             "plan": None, "quantity": num_licenses, "subscription": None, "discountable": False,
             "period": {
                 "start": datetime_to_timestamp(self.next_month),
-                "end": datetime_to_timestamp(add_months(self.next_month, 12))
+                "end": datetime_to_timestamp(add_months(self.next_month, 12)),
             },
         }
         for key, value in annual_plan_invoice_item_params.items():
@@ -1605,7 +1605,7 @@ class StripeTest(StripeTestCase):
             "plan": None, "quantity": num_licenses, "subscription": None, "discountable": False,
             "period": {
                 "start": datetime_to_timestamp(add_months(self.next_month, 12)),
-                "end": datetime_to_timestamp(add_months(self.next_month, 24))
+                "end": datetime_to_timestamp(add_months(self.next_month, 24)),
             },
         }
         for key, value in annual_plan_invoice_item_params.items():

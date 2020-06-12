@@ -592,7 +592,7 @@ def restore_retention_policy_deletions_for_stream(stream: Stream) -> None:
         .distinct('id')
 
     restore_data_from_archive_by_transactions(
-        list(relevant_transactions)
+        list(relevant_transactions),
     )
 
 def clean_archived_data() -> None:

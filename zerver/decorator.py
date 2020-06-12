@@ -468,7 +468,7 @@ def zulip_login_required(
     )(
         zulip_otp_required(
             redirect_field_name=redirect_field_name, login_url=login_url,
-        )(add_logging_data(function))
+        )(add_logging_data(function)),
     )
 
     if function:
