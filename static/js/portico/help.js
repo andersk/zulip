@@ -1,5 +1,3 @@
-import * as google_analytics from "./google-analytics.js";
-import SimpleBar from "simplebar";
 import {activate_correct_tab} from "./tabbed-instructions.js";
 
 function registerCodeSection($codeSection) {
@@ -53,52 +51,6 @@ function render_code_sections() {
     });
 }
 
-function scrollToHash(simplebar) {
-    const hash = window.location.hash;
-    const scrollbar = simplebar.getScrollElement();
-    if (hash !== "" && $(hash).length > 0) {
-        const position = $(hash).position().top - $(scrollbar.firstChild).position().top;
-        scrollbar.scrollTop = position;
-    } else {
-        scrollbar.scrollTop = 0;
-    }
-}
-
-const html_map = new Map();
-const loading = {
-    name: null,
-};
-
-const markdownSB = new SimpleBar($(".markdown")[0]);
-
-const fetch_page = function (path, callback) {
-    $.get(path, (res) => {
-        const $html = $(res).find(".markdown .content");
-
-        callback($html.html().trim());
-        render_code_sections();
-    });
-};
-
-const update_page = function (html_map, path) {
-    if (html_map.has(path)) {
-        $(".markdown .content").html(html_map.get(path));
-        render_code_sections();
-        scrollToHash(markdownSB);
-    } else {
-        loading.name = path;
-        fetch_page(path, (res) => {
-            html_map.set(path, res);
-            $(".markdown .content").html(res);
-            loading.name = null;
-            scrollToHash(markdownSB);
-        });
-    }
-    google_analytics.config({page_path: path});
-};
-
-new SimpleBar($(".sidebar")[0]);
-
 $(".sidebar.slide h2").on("click", (e) => {
     const $next = $(e.target).next();
 
@@ -108,29 +60,6 @@ $(".sidebar.slide h2").on("click", (e) => {
         // Toggle the heading
         $next.slideToggle("fast", "swing");
     }
-});
-
-$(".sidebar a").on("click", function (e) {
-    const path = $(this).attr("href");
-    const path_dir = path.split("/")[1];
-    const current_dir = window.location.pathname.split("/")[1];
-
-    // Do not block redirecting to external URLs
-    if (path_dir !== current_dir) {
-        return;
-    }
-
-    if (loading.name === path) {
-        return;
-    }
-
-    history.pushState({}, "", path);
-
-    update_page(html_map, path);
-
-    $(".sidebar").removeClass("show");
-
-    e.preventDefault();
 });
 
 if (window.location.pathname === "/help/") {
@@ -146,7 +75,6 @@ $(document).on(
     ".markdown .content h1, .markdown .content h2, .markdown .content h3",
     function () {
         window.location.hash = $(this).attr("id");
-        scrollToHash(markdownSB);
     },
 );
 
@@ -161,14 +89,5 @@ $(".markdown").on("click", () => {
 });
 
 render_code_sections();
-
-// Finally, make sure if we loaded a window with a hash, we scroll
-// to the right place.
-scrollToHash(markdownSB);
-
-window.addEventListener("popstate", () => {
-    const path = window.location.pathname;
-    update_page(html_map, path);
-});
 
 $("body").addClass("noscroll");
