@@ -38,9 +38,7 @@ BITBUCKET_COMMIT_STATUS_CHANGED_BODY = (
 BITBUCKET_REPO_UPDATED_CHANGED = (
     "{actor} changed the {change} of the **{repo_name}**" " repo from **{old}** to **{new}**"
 )
-BITBUCKET_REPO_UPDATED_ADDED = (
-    "{actor} changed the {change} of the **{repo_name}** repo to **{new}**"
-)
+BITBUCKET_REPO_UPDATED_ADDED = "{actor} changed the {change} of the **{repo_name}** repo to **{new}**"
 
 PULL_REQUEST_SUPPORTED_ACTIONS = [
     "approved",
@@ -116,9 +114,7 @@ def get_push_subjects(payload: Dict[str, Any]) -> List[str]:
 
 def get_subject(payload: Dict[str, Any]) -> str:
     assert payload["repository"] is not None
-    return BITBUCKET_TOPIC_TEMPLATE.format(
-        repository_name=get_repository_name(payload["repository"]),
-    )
+    return BITBUCKET_TOPIC_TEMPLATE.format(repository_name=get_repository_name(payload["repository"]))
 
 
 def get_subject_based_on_type(payload: Dict[str, Any], type: str) -> Any:

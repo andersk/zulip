@@ -300,15 +300,11 @@ class DeleteCustomProfileFieldTest(CustomProfileFieldTestCase):
         converter = field.FIELD_CONVERTERS[field.field_type]
         self.assertEqual([self.example_user("aaron").id], converter(iago_value.value))
 
-        result = self.client_delete(
-            "/json/users/me/profile_data", {"data": ujson.dumps([field.id])},
-        )
+        result = self.client_delete("/json/users/me/profile_data", {"data": ujson.dumps([field.id])})
         self.assert_json_success(result)
 
         # Don't throw an exception here
-        result = self.client_delete(
-            "/json/users/me/profile_data", {"data": ujson.dumps([field.id])},
-        )
+        result = self.client_delete("/json/users/me/profile_data", {"data": ujson.dumps([field.id])})
         self.assert_json_success(result)
 
     def test_delete_internals(self) -> None:

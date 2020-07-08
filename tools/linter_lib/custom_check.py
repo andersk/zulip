@@ -152,10 +152,7 @@ js_rules = RuleList(
             },
             "description": "Setting HTML content with jQuery .html() can lead to XSS security bugs.  Consider .text() or using rendered_foo as a variable name if content comes from handlebars and thus is already sanitized.",
         },
-        {
-            "pattern": "[\"']json/",
-            "description": "Relative URL for JSON route not supported by i18n",
-        },
+        {"pattern": "[\"']json/", "description": "Relative URL for JSON route not supported by i18n"},
         # This rule is constructed with + to avoid triggering on itself
         {"pattern": "^[ ]*//[A-Za-z0-9]", "description": "Missing space after // in comment"},
         {
@@ -177,10 +174,7 @@ js_rules = RuleList(
             "description": "Argument to report_success should be a literal string enclosed "
             "by i18n.t()",
         },
-        {
-            "pattern": r"ui.report_error\(",
-            "description": "Deprecated function, use ui_report.error.",
-        },
+        {"pattern": r"ui.report_error\(", "description": "Deprecated function, use ui_report.error."},
         {
             "pattern": r"""report.error\(["'][^'"]""",
             "description": "Argument to ui_report.error should be a literal string enclosed "
@@ -900,11 +894,7 @@ markdown_rules = RuleList(
         },
         {
             "pattern": "https://zulip.readthedocs.io/en/latest/[a-zA-Z0-9]",
-            "exclude": {
-                "docs/overview/contributing.md",
-                "docs/overview/readme.md",
-                "docs/README.md",
-            },
+            "exclude": {"docs/overview/contributing.md", "docs/overview/readme.md", "docs/README.md"},
             "include_only": {"docs/"},
             "description": "Use relative links (../foo/bar.html) to other documents in docs/",
         },

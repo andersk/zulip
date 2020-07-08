@@ -151,8 +151,7 @@ class TestZulipBaseCommand(ZulipTestCase):
 
         # Test the default mode excluding bots and deactivated users
         expected_user_profiles = sorted(
-            UserProfile.objects.filter(realm=self.zulip_realm, is_active=True),
-            key=lambda x: x.email,
+            UserProfile.objects.filter(realm=self.zulip_realm, is_active=True), key=lambda x: x.email,
         )
         user_profiles = self.get_users_sorted(dict(users=None, all_users=True), self.zulip_realm)
         self.assertEqual(user_profiles, expected_user_profiles)
@@ -226,9 +225,7 @@ class TestSendWebhookFixtureMessage(ZulipTestCase):
         print_help_mock.assert_any_call("./manage.py", self.COMMAND_NAME)
 
     @patch("zerver.management.commands.send_webhook_fixture_message.Command.print_help")
-    def test_check_if_command_exits_when_url_param_is_empty(
-        self, print_help_mock: MagicMock,
-    ) -> None:
+    def test_check_if_command_exits_when_url_param_is_empty(self, print_help_mock: MagicMock) -> None:
         with self.assertRaises(CommandError):
             call_command(self.COMMAND_NAME, fixture=self.fixture_path)
 
@@ -463,9 +460,7 @@ class TestExport(ZulipTestCase):
             content="Thumbs up for export",
         )
         message = Message.objects.last()
-        do_add_reaction(
-            self.example_user("iago"), message, "outbox", "1f4e4", Reaction.UNICODE_EMOJI,
-        )
+        do_add_reaction(self.example_user("iago"), message, "outbox", "1f4e4", Reaction.UNICODE_EMOJI)
         do_add_reaction(
             self.example_user("hamlet"), message, "outbox", "1f4e4", Reaction.UNICODE_EMOJI,
         )
@@ -492,9 +487,7 @@ class TestExport(ZulipTestCase):
 
         message.last_edit_time = None
         message.save()
-        do_add_reaction(
-            self.mit_user("sipbtest"), message, "outbox", "1f4e4", Reaction.UNICODE_EMOJI,
-        )
+        do_add_reaction(self.mit_user("sipbtest"), message, "outbox", "1f4e4", Reaction.UNICODE_EMOJI)
         with self.assertRaisesRegex(
             CommandError, "Users from a different realm reacted to message. Aborting...",
         ):

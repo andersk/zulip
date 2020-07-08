@@ -139,9 +139,7 @@ class Command(BaseCommand):
             None: self.generate_fixture_data(stat, 0.8, 0.2, 4, 0.3, 6, partial_sum=True),
         }
         insert_fixture_data(stat, installation_data, InstallationCount)
-        FillState.objects.create(
-            property=stat.property, end_time=last_end_time, state=FillState.DONE,
-        )
+        FillState.objects.create(property=stat.property, end_time=last_end_time, state=FillState.DONE)
 
         stat = COUNT_STATS["realm_active_humans::day"]
         realm_data = {
@@ -152,9 +150,7 @@ class Command(BaseCommand):
             None: self.generate_fixture_data(stat, 1, 0.3, 4, 0.5, 3, partial_sum=True),
         }
         insert_fixture_data(stat, installation_data, InstallationCount)
-        FillState.objects.create(
-            property=stat.property, end_time=last_end_time, state=FillState.DONE,
-        )
+        FillState.objects.create(property=stat.property, end_time=last_end_time, state=FillState.DONE)
 
         stat = COUNT_STATS["active_users_audit:is_bot:day"]
         realm_data = {
@@ -165,9 +161,7 @@ class Command(BaseCommand):
             "false": self.generate_fixture_data(stat, 1, 0.3, 6, 0.8, 2, partial_sum=True),
         }
         insert_fixture_data(stat, installation_data, InstallationCount)
-        FillState.objects.create(
-            property=stat.property, end_time=last_end_time, state=FillState.DONE,
-        )
+        FillState.objects.create(property=stat.property, end_time=last_end_time, state=FillState.DONE)
 
         stat = COUNT_STATS["messages_sent:is_bot:hour"]
         user_data: Mapping[Optional[str], List[int]] = {
@@ -184,9 +178,7 @@ class Command(BaseCommand):
             "true": self.generate_fixture_data(stat, 150, 150, 3, 0.4, 2),
         }
         insert_fixture_data(stat, installation_data, InstallationCount)
-        FillState.objects.create(
-            property=stat.property, end_time=last_end_time, state=FillState.DONE,
-        )
+        FillState.objects.create(property=stat.property, end_time=last_end_time, state=FillState.DONE)
 
         stat = COUNT_STATS["messages_sent:message_type:day"]
         user_data = {
@@ -209,9 +201,7 @@ class Command(BaseCommand):
             "huddle_message": self.generate_fixture_data(stat, 60, 30, 3, 0.6, 4),
         }
         insert_fixture_data(stat, installation_data, InstallationCount)
-        FillState.objects.create(
-            property=stat.property, end_time=last_end_time, state=FillState.DONE,
-        )
+        FillState.objects.create(property=stat.property, end_time=last_end_time, state=FillState.DONE)
 
         website, created = Client.objects.get_or_create(name="website")
         old_desktop, created = Client.objects.get_or_create(name="desktop app Linux 0.3.7")
@@ -253,9 +243,7 @@ class Command(BaseCommand):
             long_webhook.id: self.generate_fixture_data(stat, 50, 50, 2, 0.6, 3),
         }
         insert_fixture_data(stat, installation_data, InstallationCount)
-        FillState.objects.create(
-            property=stat.property, end_time=last_end_time, state=FillState.DONE,
-        )
+        FillState.objects.create(property=stat.property, end_time=last_end_time, state=FillState.DONE)
 
         stat = COUNT_STATS["messages_in_stream:is_bot:day"]
         realm_data = {
@@ -268,9 +256,7 @@ class Command(BaseCommand):
             "true": self.generate_fixture_data(stat, 5, 3, 2, 0.4, 2),
         }
         insert_fixture_data(stat, stream_data, StreamCount)
-        FillState.objects.create(
-            property=stat.property, end_time=last_end_time, state=FillState.DONE,
-        )
+        FillState.objects.create(property=stat.property, end_time=last_end_time, state=FillState.DONE)
 
         stat = COUNT_STATS["messages_read::hour"]
         user_data = {
@@ -281,6 +267,4 @@ class Command(BaseCommand):
             None: self.generate_fixture_data(stat, 50, 35, 6, 0.6, 4),
         }
         insert_fixture_data(stat, realm_data, RealmCount)
-        FillState.objects.create(
-            property=stat.property, end_time=last_end_time, state=FillState.DONE,
-        )
+        FillState.objects.create(property=stat.property, end_time=last_end_time, state=FillState.DONE)

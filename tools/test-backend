@@ -217,9 +217,7 @@ def main() -> None:
     test-backend zerver.tests.test_markdown.MarkdownTest.test_inline_youtube # run a single test
     test-backend MarkdownTest.test_inline_youtube # run a single test"""
 
-    parser = argparse.ArgumentParser(
-        description=usage, formatter_class=argparse.RawTextHelpFormatter,
-    )
+    parser = argparse.ArgumentParser(description=usage, formatter_class=argparse.RawTextHelpFormatter)
 
     parser.add_argument(
         "--nonfatal-errors",
@@ -260,11 +258,7 @@ def main() -> None:
         "tests in. Default is the number of logical CPUs",
     )
     parser.add_argument(
-        "--profile",
-        dest="profile",
-        action="store_true",
-        default=False,
-        help="Profile test runtime.",
+        "--profile", dest="profile", action="store_true", default=False, help="Profile test runtime.",
     )
     parser.add_argument(
         "--force",

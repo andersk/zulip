@@ -587,9 +587,7 @@ class StreamAdminTest(ZulipTestCase):
             f"/json/streams/{stream.id}", {"new_name": ujson.dumps("stream_name1")},
         )
         self.assert_json_error(result, "Stream already has that name!")
-        result = self.client_patch(
-            f"/json/streams/{stream.id}", {"new_name": ujson.dumps("Denmark")},
-        )
+        result = self.client_patch(f"/json/streams/{stream.id}", {"new_name": ujson.dumps("Denmark")})
         self.assert_json_error(result, "Stream name 'Denmark' is already taken.")
         result = self.client_patch(
             f"/json/streams/{stream.id}", {"new_name": ujson.dumps("denmark ")},
@@ -809,8 +807,7 @@ class StreamAdminTest(ZulipTestCase):
         )
 
         result = self.client_patch(
-            f"/json/streams/{stream_id}",
-            {"description": ujson.dumps("a\nmulti\nline\ndescription")},
+            f"/json/streams/{stream_id}", {"description": ujson.dumps("a\nmulti\nline\ndescription")},
         )
         self.assert_json_success(result)
         stream = get_stream("stream_name1", realm)
@@ -1043,9 +1040,7 @@ class StreamAdminTest(ZulipTestCase):
         ]
 
         do_change_plan_type(realm, Realm.LIMITED)
-        with self.assertRaisesRegex(
-            JsonableError, "Available on Zulip Standard. Upgrade to access.",
-        ):
+        with self.assertRaisesRegex(JsonableError, "Available on Zulip Standard. Upgrade to access."):
             list_to_streams(streams_raw, owner, autocreate=True)
 
         do_change_plan_type(realm, Realm.SELF_HOSTED)
@@ -1667,9 +1662,7 @@ class DefaultStreamGroupTest(ZulipTestCase):
         with self.assertRaisesRegex(
             JsonableError, "'stream1' is a default stream and cannot be added to 'new group1'",
         ):
-            do_create_default_stream_group(
-                realm, new_group_name, "This is group1", remaining_streams,
-            )
+            do_create_default_stream_group(realm, new_group_name, "This is group1", remaining_streams)
 
     def test_api_calls(self) -> None:
         self.login("hamlet")
@@ -1884,11 +1877,7 @@ class DefaultStreamGroupTest(ZulipTestCase):
 
         result = self.client_post(
             "/json/default_stream_groups/create",
-            {
-                "group_name": "",
-                "description": description,
-                "stream_names": ujson.dumps(stream_names),
-            },
+            {"group_name": "", "description": description, "stream_names": ujson.dumps(stream_names)},
         )
         self.assert_json_error(result, "Invalid default stream group name ''")
 
@@ -2801,9 +2790,7 @@ class SubscriptionAPITest(ZulipTestCase):
         """
         # character limit is 60 characters
         long_stream_name = "a" * 61
-        result = self.common_subscribe_to_streams(
-            self.test_user, [long_stream_name], allow_fail=True,
-        )
+        result = self.common_subscribe_to_streams(self.test_user, [long_stream_name], allow_fail=True)
         self.assert_json_error(result, "Stream name too long (limit: 60 characters).")
 
     def test_subscriptions_add_stream_with_null(self) -> None:
@@ -3019,9 +3006,7 @@ class SubscriptionAPITest(ZulipTestCase):
         with tornado_redirected_to_list(events):
             with queries_captured() as queries:
                 self.common_subscribe_to_streams(
-                    self.test_user,
-                    streams_to_sub,
-                    dict(principals=ujson.dumps([self.test_user.id])),
+                    self.test_user, streams_to_sub, dict(principals=ujson.dumps([self.test_user.id])),
                 )
         self.assert_length(queries, 14)
 
@@ -3638,9 +3623,7 @@ class SubscriptionAPITest(ZulipTestCase):
     def get_subscription(self, user_profile: UserProfile, stream_name: str) -> Subscription:
         stream = get_stream(stream_name, self.test_realm)
         return Subscription.objects.get(
-            user_profile=user_profile,
-            recipient__type=Recipient.STREAM,
-            recipient__type_id=stream.id,
+            user_profile=user_profile, recipient__type=Recipient.STREAM, recipient__type_id=stream.id,
         )
 
     def test_subscriptions_add_notification_default_none(self) -> None:
@@ -3659,9 +3642,7 @@ class SubscriptionAPITest(ZulipTestCase):
         user_profile.save()
         current_stream = self.get_streams(user_profile)[0]
         invite_streams = self.make_random_stream_names([current_stream])
-        self.assert_adding_subscriptions_for_principal(
-            invitee_user_id, invitee_realm, invite_streams,
-        )
+        self.assert_adding_subscriptions_for_principal(invitee_user_id, invitee_realm, invite_streams)
         subscription = self.get_subscription(user_profile, invite_streams[0])
 
         with mock.patch("zerver.models.Recipient.__str__", return_value="recip"):
@@ -4021,9 +4002,7 @@ class InviteOnlyStreamTest(ZulipTestCase):
         user = self.example_user("hamlet")
         self.login_user(user)
         # Create Saxony as an invite-only stream.
-        self.assert_json_success(
-            self.common_subscribe_to_streams(user, ["Saxony"], invite_only=True),
-        )
+        self.assert_json_success(self.common_subscribe_to_streams(user, ["Saxony"], invite_only=True))
 
         cordelia = self.example_user("cordelia")
         with self.assertRaises(JsonableError):
@@ -4129,8 +4108,7 @@ class GetSubscribersTest(ZulipTestCase):
         self.assertIn("subscribers", result)
         self.assertIsInstance(result["subscribers"], list)
         true_subscribers = [
-            user_profile.email
-            for user_profile in self.users_subscribed_to_stream(stream_name, realm)
+            user_profile.email for user_profile in self.users_subscribed_to_stream(stream_name, realm)
         ]
         self.assertEqual(sorted(result["subscribers"]), sorted(true_subscribers))
 
@@ -4588,8 +4566,7 @@ class StreamTrafficTest(ZulipTestCase):
     def test_average_weekly_stream_traffic_calculation(self) -> None:
         # No traffic data for the stream
         self.assertEqual(
-            get_average_weekly_stream_traffic(42, timezone_now() - timedelta(days=300), {1: 4003}),
-            0,
+            get_average_weekly_stream_traffic(42, timezone_now() - timedelta(days=300), {1: 4003}), 0,
         )
 
         # using high numbers here to make it more likely to catch small errors in the denominators

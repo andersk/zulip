@@ -2123,9 +2123,7 @@ class Markdown(markdown.Markdown):
             # but InlineProcessor copies md as self.md in __init__.
             self.treeprocessors.register(markdown.treeprocessors.InlineProcessor(self), "inline", 25)
             self.preprocessors = get_sub_registry(self.preprocessors, ["custom_text_notifications"])
-            self.parser.blockprocessors = get_sub_registry(
-                self.parser.blockprocessors, ["paragraph"],
-            )
+            self.parser.blockprocessors = get_sub_registry(self.parser.blockprocessors, ["paragraph"])
 
 
 md_engines: Dict[Tuple[int, bool], markdown.Markdown] = {}
@@ -2139,9 +2137,7 @@ def make_md_engine(realm_filters_key: int, email_gateway: bool) -> None:
 
     realm_filters = realm_filter_data[realm_filters_key]
     md_engines[md_engine_key] = build_engine(
-        realm_filters=realm_filters,
-        realm_filters_key=realm_filters_key,
-        email_gateway=email_gateway,
+        realm_filters=realm_filters, realm_filters_key=realm_filters_key, email_gateway=email_gateway,
     )
 
 

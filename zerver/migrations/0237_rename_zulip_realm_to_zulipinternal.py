@@ -4,9 +4,7 @@ from django.db.backends.postgresql.schema import DatabaseSchemaEditor
 from django.db.migrations.state import StateApps
 
 
-def rename_zulip_realm_to_zulipinternal(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def rename_zulip_realm_to_zulipinternal(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     if not settings.PRODUCTION:
         return
 

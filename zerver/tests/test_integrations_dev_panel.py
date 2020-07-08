@@ -64,7 +64,9 @@ class TestIntegrationsDevPanel(ZulipTestCase):
 
     def test_check_send_webhook_fixture_message_for_success_with_headers(self) -> None:
         bot = get_user("webhook-bot@zulip.com", self.zulip_realm)
-        url = f"/api/v1/external/github?api_key={bot.api_key}&stream=Denmark&topic=GitHub Notifications"
+        url = (
+            f"/api/v1/external/github?api_key={bot.api_key}&stream=Denmark&topic=GitHub Notifications"
+        )
         target_url = "/devtools/integrations/check_send_webhook_fixture_message"
         with open("zerver/webhooks/github/fixtures/ping__organization.json") as f:
             body = f.read()

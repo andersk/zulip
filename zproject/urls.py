@@ -568,9 +568,7 @@ v1_api_and_json_patterns = [
         {"PATCH": "zerver.views.muting.update_muted_topic"},
     ),
     # used to register for an event queue in tornado
-    path(
-        "register", rest_dispatch, {"POST": "zerver.views.events_register.events_register_backend"},
-    ),
+    path("register", rest_dispatch, {"POST": "zerver.views.events_register.events_register_backend"}),
     # events -> zerver.tornado.views
     path(
         "events",
@@ -613,9 +611,7 @@ v1_api_and_json_patterns = [
     ),
     # Used to generate a Zoom video call URL
     path(
-        "calls/zoom/create",
-        rest_dispatch,
-        {"POST": "zerver.views.video_calls.make_zoom_video_call"},
+        "calls/zoom/create", rest_dispatch, {"POST": "zerver.views.video_calls.make_zoom_video_call"},
     ),
     # Used to generate a Big Blue Button video call URL
     path(
@@ -859,9 +855,7 @@ i18n_urls = [
     re_path(r"apps/(.*)$", zerver.views.portico.apps_view, name="zerver.views.home.apps_view"),
     path("team/", zerver.views.portico.team_view),
     path("history/", zerver.views.portico.landing_view, {"template_name": "zerver/history.html"}),
-    path(
-        "why-zulip/", zerver.views.portico.landing_view, {"template_name": "zerver/why-zulip.html"},
-    ),
+    path("why-zulip/", zerver.views.portico.landing_view, {"template_name": "zerver/why-zulip.html"}),
     path(
         "for/open-source/",
         zerver.views.portico.landing_view,
@@ -883,9 +877,7 @@ i18n_urls = [
         {"template_name": "zerver/for-working-groups-and-communities.html"},
     ),
     path("security/", zerver.views.portico.landing_view, {"template_name": "zerver/security.html"}),
-    path(
-        "atlassian/", zerver.views.portico.landing_view, {"template_name": "zerver/atlassian.html"},
-    ),
+    path("atlassian/", zerver.views.portico.landing_view, {"template_name": "zerver/atlassian.html"}),
     # Terms of Service and privacy pages.
     path("terms/", zerver.views.portico.terms_view, name="terms"),
     path("privacy/", zerver.views.portico.privacy_view, name="privacy"),

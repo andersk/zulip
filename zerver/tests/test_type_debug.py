@@ -57,15 +57,11 @@ class TypesPrintTest(ZulipTestCase):
     def test_list(self) -> None:
         self.check_signature("add([], [str]) -> [str]", ["two"], add, [], ["two"])
         self.check_signature("add([int], [str]) -> [int, ...]", [2, "two"], add, [2], ["two"])
-        self.check_signature(
-            "add([int, ...], y=[]) -> [int, ...]", [2, "two"], add, [2, "two"], y=[],
-        )
+        self.check_signature("add([int, ...], y=[]) -> [int, ...]", [2, "two"], add, [2, "two"], y=[])
 
     def test_dict(self) -> None:
         self.check_signature("to_dict() -> {}", {}, to_dict)
-        self.check_signature(
-            "to_dict([(int, str)]) -> {int: str}", {2: "two"}, to_dict, [(2, "two")],
-        )
+        self.check_signature("to_dict([(int, str)]) -> {int: str}", {2: "two"}, to_dict, [(2, "two")])
         self.check_signature(
             "to_dict(((int, str),)) -> {int: str}", {2: "two"}, to_dict, ((2, "two"),),
         )

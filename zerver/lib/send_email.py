@@ -41,9 +41,7 @@ class FromAddress:
     @staticmethod
     def tokenized_no_reply_address() -> str:
         if settings.ADD_TOKENS_TO_NOREPLY_ADDRESS:
-            return parseaddr(settings.TOKENIZED_NOREPLY_EMAIL_ADDRESS)[1].format(
-                token=generate_key(),
-            )
+            return parseaddr(settings.TOKENIZED_NOREPLY_EMAIL_ADDRESS)[1].format(token=generate_key())
         return FromAddress.NOREPLY
 
     @staticmethod
@@ -161,9 +159,7 @@ class EmailNotDeliveredException(Exception):
 
 class DoubledEmailArgumentException(CommandError):
     def __init__(self, argument_name: str) -> None:
-        msg = (
-            f"Argument '{argument_name}' is ambiguously present in both options and email template."
-        )
+        msg = f"Argument '{argument_name}' is ambiguously present in both options and email template."
         super().__init__(msg)
 
 

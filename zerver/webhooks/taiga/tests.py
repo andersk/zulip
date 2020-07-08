@@ -113,9 +113,7 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("task_changed_blocked_link", self.TOPIC, message)
 
     def test_taiga_task_changed_unblocked(self) -> None:
-        message = (
-            "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) unblocked task **New Task**."
-        )
+        message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) unblocked task **New Task**."
         self.send_and_test_stream_message("task_changed_unblocked", self.TOPIC, message)
 
     def test_taiga_task_changed_assigned(self) -> None:
@@ -162,9 +160,7 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("sprint_created", self.TOPIC, message)
 
     def test_taiga_sprint_deleted(self) -> None:
-        message = (
-            "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) deleted sprint **New name**."
-        )
+        message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) deleted sprint **New name**."
         self.send_and_test_stream_message("sprint_deleted", self.TOPIC, message)
 
     def test_taiga_sprint_changed_time(self) -> None:
@@ -176,9 +172,7 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("sprint_changed_name", self.TOPIC, message)
 
     def test_taiga_issue_created(self) -> None:
-        message = (
-            "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) created issue **New issue**."
-        )
+        message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) created issue **New issue**."
         self.send_and_test_stream_message("issue_created", self.TOPIC, message)
 
     def test_taiga_issue_created_link(self) -> None:
@@ -186,9 +180,7 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("issue_created_link", self.TOPIC, message)
 
     def test_taiga_issue_deleted(self) -> None:
-        message = (
-            "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) deleted issue **New issue**."
-        )
+        message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) deleted issue **New issue**."
         self.send_and_test_stream_message("issue_deleted", self.TOPIC, message)
 
     def test_taiga_issue_changed_assigned(self) -> None:

@@ -222,9 +222,7 @@ class MarkdownMiscTest(ZulipTestCase):
 
         fred4 = make_user("fred4@example.com", "Fred Flintstone")
 
-        lst = get_possible_mentions_info(
-            realm.id, {"Fred Flintstone", "cordelia LEAR", "Not A User"},
-        )
+        lst = get_possible_mentions_info(realm.id, {"Fred Flintstone", "cordelia LEAR", "Not A User"})
         set_of_names = set(map(lambda x: x["full_name"].lower(), lst))
         self.assertEqual(set_of_names, {"fred flintstone", "cordelia lear"})
 
@@ -498,9 +496,7 @@ class MarkdownTest(ZulipTestCase):
             '<p><a href="https://www.youtube.com/playlist?list=PL8dPuuaLjXtNlUrzyH5r6jN9ulIgZBpdo">https://www.youtube.com/playlist?list=PL8dPuuaLjXtNlUrzyH5r6jN9ulIgZBpdo</a></p>',
         )
 
-        msg = (
-            "https://www.youtube.com/playlist?v=O5nskjZ_GoI&list=PL8dPuuaLjXtNlUrzyH5r6jN9ulIgZBpdo"
-        )
+        msg = "https://www.youtube.com/playlist?v=O5nskjZ_GoI&list=PL8dPuuaLjXtNlUrzyH5r6jN9ulIgZBpdo"
         converted = markdown_convert_wrapper(msg)
 
         self.assertEqual(
@@ -530,8 +526,7 @@ class MarkdownTest(ZulipTestCase):
         converted = markdown_convert_wrapper(msg)
 
         self.assertEqual(
-            converted,
-            '<p><a href="https://vimeo.com/246979354">https://vimeo.com/246979354</a></p>',
+            converted, '<p><a href="https://vimeo.com/246979354">https://vimeo.com/246979354</a></p>',
         )
 
     @override_settings(INLINE_IMAGE_PREVIEW=True)
@@ -884,9 +879,7 @@ class MarkdownTest(ZulipTestCase):
         converted = markdown_convert_wrapper(msg)
         self.assertEqual(
             converted,
-            "<p>{}</p>".format(
-                make_link("http://www.twitter.com/wdaher/status/2879779692873154569"),
-            ),
+            "<p>{}</p>".format(make_link("http://www.twitter.com/wdaher/status/2879779692873154569")),
         )
 
         # id too large (i.e. tweet doesn't exist)
@@ -993,8 +986,7 @@ class MarkdownTest(ZulipTestCase):
             "<p>{}</p>\n{}".format(
                 make_link("http://twitter.com/wdaher/status/287977969287315458"),
                 make_inline_twitter_preview(
-                    "http://twitter.com/wdaher/status/287977969287315458",
-                    mention_in_link_tweet_html,
+                    "http://twitter.com/wdaher/status/287977969287315458", mention_in_link_tweet_html,
                 ),
             ),
         )
@@ -1062,8 +1054,7 @@ class MarkdownTest(ZulipTestCase):
             realm=realm, name="green_tick", deactivated=False,
         ).get()
         self.assertEqual(
-            converted,
-            "<p>{}</p>".format(emoji_img(":green_tick:", realm_emoji.file_name, realm.id)),
+            converted, "<p>{}</p>".format(emoji_img(":green_tick:", realm_emoji.file_name, realm.id)),
         )
 
         # Deactivate realm emoji.
@@ -1267,9 +1258,7 @@ class MarkdownTest(ZulipTestCase):
             flush_realm_filter(sender=None, instance=instance)
 
         def save_new_realm_filter() -> None:
-            realm_filter = RealmFilter(
-                realm=realm, pattern=r"whatever", url_format_string="whatever",
-            )
+            realm_filter = RealmFilter(realm=realm, pattern=r"whatever", url_format_string="whatever")
             realm_filter.save()
 
         # start fresh for our realm

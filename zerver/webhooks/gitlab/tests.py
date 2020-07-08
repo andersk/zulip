@@ -190,7 +190,9 @@ class GitlabHookTests(WebhookTestCase):
 
     def test_update_confidential_issue_event_message(self) -> None:
         expected_subject = "testing / Issue #1 Testing"
-        expected_message = "Joe Bloggs updated [Issue #1](https://gitlab.example.co.uk/joe.bloggs/testing/issues/1)."
+        expected_message = (
+            "Joe Bloggs updated [Issue #1](https://gitlab.example.co.uk/joe.bloggs/testing/issues/1)."
+        )
 
         self.send_and_test_stream_message(
             "issue_hook__confidential_issue_updated", expected_subject, expected_message,
@@ -287,18 +289,14 @@ class GitlabHookTests(WebhookTestCase):
         expected_topic = "my-awesome-project / Snippet #2 test"
         expected_message = "Tomasz Kolek [commented](https://gitlab.com/tomaszkolek0/my-awesome-project/snippets/2#note_14172058) on [Snippet #2](https://gitlab.com/tomaszkolek0/my-awesome-project/snippets/2):\n\n~~~ quote\nNice snippet\n~~~"
 
-        self.send_and_test_stream_message(
-            "note_hook__snippet_note", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("note_hook__snippet_note", expected_topic, expected_message)
 
     def test_note_snippet_with_custom_topic_in_url(self) -> None:
         self.url = self.build_webhook_url(topic="notifications")
         expected_topic = "notifications"
         expected_message = "[[my-awesome-project](https://gitlab.com/tomaszkolek0/my-awesome-project)] Tomasz Kolek [commented](https://gitlab.com/tomaszkolek0/my-awesome-project/snippets/2#note_14172058) on [Snippet #2 test](https://gitlab.com/tomaszkolek0/my-awesome-project/snippets/2):\n\n~~~ quote\nNice snippet\n~~~"
 
-        self.send_and_test_stream_message(
-            "note_hook__snippet_note", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("note_hook__snippet_note", expected_topic, expected_message)
 
     def test_merge_request_created_without_assignee_event_message(self) -> None:
         expected_topic = "my-awesome-project / MR #2 NEW MR"
@@ -516,17 +514,13 @@ class GitlabHookTests(WebhookTestCase):
     def test_job_hook_event(self) -> None:
         expected_topic = "gitlab_test / gitlab-script-trigger"
         expected_message = "Build test from test stage was created."
-        self.send_and_test_stream_message(
-            "job_hook__build_created", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("job_hook__build_created", expected_topic, expected_message)
 
     def test_job_hook_event_topic(self) -> None:
         self.url = self.build_webhook_url(topic="provided topic")
         expected_topic = "provided topic"
         expected_message = "[[gitlab_test](http://192.168.64.1:3005/gitlab-org/gitlab-test)] Build test from test stage was created."
-        self.send_and_test_stream_message(
-            "job_hook__build_created", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("job_hook__build_created", expected_topic, expected_message)
 
     def test_system_push_event_message(self) -> None:
         expected_topic = "gitlab / master"

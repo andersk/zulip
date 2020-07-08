@@ -147,9 +147,7 @@ class MatterMostImporter(ZulipTestCase):
         self.assertEqual(
             user_handler.get_user(user_id_mapper.get("harry"))["full_name"], "Harry Potter",
         )
-        self.assertEqual(
-            user_handler.get_user(user_id_mapper.get("ron"))["full_name"], "Ron Weasley",
-        )
+        self.assertEqual(user_handler.get_user(user_id_mapper.get("ron"))["full_name"], "Ron Weasley")
 
         team_name = "slytherin"
         user_handler = UserHandler()
@@ -241,9 +239,7 @@ class MatterMostImporter(ZulipTestCase):
             {ron_id, harry_id},
         )
         self.assertEqual(
-            subscriber_handler.get_users(
-                stream_id=stream_id_mapper.get("gryffindor-quidditch-team"),
-            ),
+            subscriber_handler.get_users(stream_id=stream_id_mapper.get("gryffindor-quidditch-team")),
             {ron_id, harry_id},
         )
         self.assertEqual(
@@ -269,9 +265,7 @@ class MatterMostImporter(ZulipTestCase):
             {harry_id},
         )
         self.assertEqual(
-            subscriber_handler.get_users(
-                stream_id=stream_id_mapper.get("gryffindor-quidditch-team"),
-            ),
+            subscriber_handler.get_users(stream_id=stream_id_mapper.get("gryffindor-quidditch-team")),
             {harry_id},
         )
         self.assertEqual(
@@ -566,9 +560,7 @@ class MatterMostImporter(ZulipTestCase):
         harry_team_output_dir = self.team_output_dir(output_dir, "gryffindor")
         self.assertEqual(os.path.exists(os.path.join(harry_team_output_dir, "avatars")), True)
         self.assertEqual(os.path.exists(os.path.join(harry_team_output_dir, "emoji")), True)
-        self.assertEqual(
-            os.path.exists(os.path.join(harry_team_output_dir, "attachment.json")), True,
-        )
+        self.assertEqual(os.path.exists(os.path.join(harry_team_output_dir, "attachment.json")), True)
 
         realm = self.read_file(harry_team_output_dir, "realm.json")
 
@@ -605,9 +597,7 @@ class MatterMostImporter(ZulipTestCase):
         exported_recipient_type_ids = self.get_set(realm["zerver_recipient"], "type_id")
         self.assertEqual(len(exported_recipient_type_ids), 3)
 
-        exported_subscription_userprofile = self.get_set(
-            realm["zerver_subscription"], "user_profile",
-        )
+        exported_subscription_userprofile = self.get_set(realm["zerver_subscription"], "user_profile")
         self.assertEqual(len(exported_subscription_userprofile), 3)
         exported_subscription_recipients = self.get_set(realm["zerver_subscription"], "recipient")
         self.assertEqual(len(exported_subscription_recipients), 6)
@@ -650,9 +640,7 @@ class MatterMostImporter(ZulipTestCase):
         harry_team_output_dir = self.team_output_dir(output_dir, "gryffindor")
         self.assertEqual(os.path.exists(os.path.join(harry_team_output_dir, "avatars")), True)
         self.assertEqual(os.path.exists(os.path.join(harry_team_output_dir, "emoji")), True)
-        self.assertEqual(
-            os.path.exists(os.path.join(harry_team_output_dir, "attachment.json")), True,
-        )
+        self.assertEqual(os.path.exists(os.path.join(harry_team_output_dir, "attachment.json")), True)
 
         realm = self.read_file(harry_team_output_dir, "realm.json")
 
@@ -692,9 +680,7 @@ class MatterMostImporter(ZulipTestCase):
         exported_recipient_type_ids = self.get_set(realm["zerver_recipient"], "type_id")
         self.assertEqual(len(exported_recipient_type_ids), 4)
 
-        exported_subscription_userprofile = self.get_set(
-            realm["zerver_subscription"], "user_profile",
-        )
+        exported_subscription_userprofile = self.get_set(realm["zerver_subscription"], "user_profile")
         self.assertEqual(len(exported_subscription_userprofile), 4)
         exported_subscription_recipients = self.get_set(realm["zerver_subscription"], "recipient")
         self.assertEqual(len(exported_subscription_recipients), 8)

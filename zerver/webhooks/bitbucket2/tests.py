@@ -15,9 +15,7 @@ class Bitbucket2HookTests(WebhookTestCase):
     def test_bitbucket2_on_push_event(self) -> None:
         commit_info = "* first commit ([84b96ad](https://bitbucket.org/kolaszek/repository-name/commits/84b96adc644a30fd6465b3d196369d880762afed))"
         expected_message = f"kolaszek [pushed](https://bitbucket.org/kolaszek/repository-name/branch/master) 1 commit to branch master.\n\n{commit_info}"
-        self.send_and_test_stream_message(
-            "push", self.EXPECTED_TOPIC_BRANCH_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("push", self.EXPECTED_TOPIC_BRANCH_EVENTS, expected_message)
 
     def test_bitbucket2_on_push_commits_multiple_committers(self) -> None:
         commit_info = "* first commit ([84b96ad](https://bitbucket.org/kolaszek/repository-name/commits/84b96adc644a30fd6465b3d196369d880762afed))\n"
@@ -59,9 +57,7 @@ class Bitbucket2HookTests(WebhookTestCase):
         self.url = self.build_webhook_url(branches="master,development")
         commit_info = "* first commit ([84b96ad](https://bitbucket.org/kolaszek/repository-name/commits/84b96adc644a30fd6465b3d196369d880762afed))"
         expected_message = f"kolaszek [pushed](https://bitbucket.org/kolaszek/repository-name/branch/master) 1 commit to branch master.\n\n{commit_info}"
-        self.send_and_test_stream_message(
-            "push", self.EXPECTED_TOPIC_BRANCH_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("push", self.EXPECTED_TOPIC_BRANCH_EVENTS, expected_message)
 
     def test_bitbucket2_on_push_commits_above_limit_event(self) -> None:
         commit_info = "* a ([6f161a7](https://bitbucket.org/kolaszek/repository-name/commits/6f161a7bced94430ac8947d87dbf45c6deee3fb0))\n"
@@ -239,7 +235,9 @@ class Bitbucket2HookTests(WebhookTestCase):
         )
 
     def test_bitbucket2_on_pull_request_fulfilled_event(self) -> None:
-        expected_message = "kolaszek merged [PR #1](https://bitbucket.org/kolaszek/repository-name/pull-requests/1)."
+        expected_message = (
+            "kolaszek merged [PR #1](https://bitbucket.org/kolaszek/repository-name/pull-requests/1)."
+        )
         kwargs = {
             "HTTP_X_EVENT_KEY": "pullrequest:fulfilled",
         }

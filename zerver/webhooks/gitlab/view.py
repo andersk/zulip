@@ -102,9 +102,7 @@ def get_issue_event_body(payload: Dict[str, Any], action: str, include_title: bo
     )
 
 
-def get_merge_request_updated_event_body(
-    payload: Dict[str, Any], include_title: bool = False,
-) -> str:
+def get_merge_request_updated_event_body(payload: Dict[str, Any], include_title: bool = False) -> str:
     if payload["object_attributes"].get("oldrev"):
         return get_merge_request_event_body(
             payload, "added commit(s) to", include_title=include_title,
@@ -258,9 +256,7 @@ def get_pipeline_event_body(payload: Dict[str, Any]) -> str:
         action = f"changed status to {pipeline_status}"
 
     project_homepage = get_project_homepage(payload)
-    pipeline_url = "{}/pipelines/{}".format(
-        project_homepage, payload["object_attributes"].get("id"),
-    )
+    pipeline_url = "{}/pipelines/{}".format(project_homepage, payload["object_attributes"].get("id"))
 
     builds_status = ""
     for build in payload["builds"]:

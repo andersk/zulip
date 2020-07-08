@@ -161,10 +161,7 @@ def queries_captured(
     queries: List[Dict[str, Union[str, bytes]]] = []
 
     def wrapper_execute(
-        self: TimeTrackingCursor,
-        action: Callable[[str, ParamsT], None],
-        sql: Query,
-        params: ParamsT,
+        self: TimeTrackingCursor, action: Callable[[str, ParamsT], None], sql: Query, params: ParamsT,
     ) -> None:
         cache = get_cache_backend(None)
         cache.clear()
@@ -179,9 +176,7 @@ def queries_captured(
                     {"sql": self.mogrify(sql, params).decode("utf-8"), "time": f"{duration:.3f}"},
                 )
 
-    def cursor_execute(
-        self: TimeTrackingCursor, sql: Query, params: Optional[Params] = None,
-    ) -> None:
+    def cursor_execute(self: TimeTrackingCursor, sql: Query, params: Optional[Params] = None) -> None:
         return wrapper_execute(self, super(TimeTrackingCursor, self).execute, sql, params)
 
     def cursor_executemany(self: TimeTrackingCursor, sql: Query, params: Iterable[Params]) -> None:
@@ -268,9 +263,7 @@ def most_recent_message(user_profile: UserProfile) -> Message:
 def get_subscription(stream_name: str, user_profile: UserProfile) -> Subscription:
     stream = get_stream(stream_name, user_profile.realm)
     recipient_id = stream.recipient_id
-    return Subscription.objects.get(
-        user_profile=user_profile, recipient_id=recipient_id, active=True,
-    )
+    return Subscription.objects.get(user_profile=user_profile, recipient_id=recipient_id, active=True)
 
 
 def get_user_messages(user_profile: UserProfile) -> List[Message]:
@@ -330,9 +323,7 @@ class HostRequestMock:
 
 
 class MockPythonResponse:
-    def __init__(
-        self, text: str, status_code: int, headers: Optional[Dict[str, str]] = None,
-    ) -> None:
+    def __init__(self, text: str, status_code: int, headers: Optional[Dict[str, str]] = None) -> None:
         self.text = text
         self.status_code = status_code
         if headers is None:

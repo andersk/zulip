@@ -617,8 +617,7 @@ class NormalActionsTest(BaseAction):
             sender, "Verona", "hello 1",
         )
         self.verify_action(
-            lambda: self.send_stream_message(sender, "Verona", "hello 2"),
-            state_change_expected=True,
+            lambda: self.send_stream_message(sender, "Verona", "hello 2"), state_change_expected=True,
         )
 
     def test_add_reaction_legacy(self) -> None:
@@ -2389,9 +2388,7 @@ class NormalActionsTest(BaseAction):
                 ),
             ],
         )
-        events = self.verify_action(
-            lambda: do_mark_hotspot_as_read(self.user_profile, "intro_reply"),
-        )
+        events = self.verify_action(lambda: do_mark_hotspot_as_read(self.user_profile, "intro_reply"))
         schema_checker("events[0]", events[0])
 
     def test_rename_stream(self) -> None:
@@ -2505,8 +2502,7 @@ class NormalActionsTest(BaseAction):
             Message.objects.get(id=msg_id_2),
         ]
         events = self.verify_action(
-            lambda: do_delete_messages(self.user_profile.realm, messages),
-            state_change_expected=True,
+            lambda: do_delete_messages(self.user_profile.realm, messages), state_change_expected=True,
         )
         schema_checker("events[0]", events[0])
 
@@ -2748,8 +2744,7 @@ class NormalActionsTest(BaseAction):
         self.login_user(self.user_profile)
 
         with mock.patch(
-            "zerver.lib.export.do_export_realm",
-            return_value=create_dummy_file("test-export.tar.gz"),
+            "zerver.lib.export.do_export_realm", return_value=create_dummy_file("test-export.tar.gz"),
         ):
             with stdout_suppressed():
                 events = self.verify_action(
@@ -3097,9 +3092,7 @@ class SubscribeActionTest(BaseAction):
                 (
                     "subscriptions",
                     check_list(
-                        check_dict_only(
-                            [("name", equals("test_stream")), ("stream_id", check_int)],
-                        ),
+                        check_dict_only([("name", equals("test_stream")), ("stream_id", check_int)]),
                     ),
                 ),
             ],

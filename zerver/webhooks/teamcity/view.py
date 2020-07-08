@@ -120,9 +120,7 @@ def api_teamcity_webhook(
                 message["teamcityProperties"], "teamcity.build.triggeredBy.username",
             )
             if teamcity_shortname is not None:
-                teamcity_user = guess_zulip_user_from_teamcity(
-                    teamcity_shortname, user_profile.realm,
-                )
+                teamcity_user = guess_zulip_user_from_teamcity(teamcity_shortname, user_profile.realm)
 
         if teamcity_user is None:
             # We can't figure out who started this build - there's nothing we can do here.

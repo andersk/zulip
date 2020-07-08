@@ -173,11 +173,7 @@ class OpenAPIToolsTest(ZulipTestCase):
             with self.assertRaises(SchemaError, msg='Opaque object "obj"'):
                 # Checks for opaque objects
                 validate_schema(
-                    (
-                        test_dict["test3"]["responses"]["200"]["content"]["application/json"][
-                            "schema"
-                        ]
-                    ),
+                    (test_dict["test3"]["responses"]["200"]["content"]["application/json"]["schema"]),
                 )
         finally:
             openapi_spec.spec()["paths"].pop("testing", None)
@@ -952,9 +948,7 @@ class TestCurlExampleGeneration(ZulipTestCase):
         self.assertEqual(generated_curl_example, expected_curl_example)
 
     @patch("zerver.openapi.openapi.OpenAPISpec.spec")
-    def test_generate_and_render_curl_with_object_without_example(
-        self, spec_mock: MagicMock,
-    ) -> None:
+    def test_generate_and_render_curl_with_object_without_example(self, spec_mock: MagicMock) -> None:
         spec_mock.return_value = self.spec_mock_using_object_without_example
         with self.assertRaises(ValueError):
             self.curl_example("/endpoint", "GET")
@@ -1075,8 +1069,7 @@ class OpenAPIRegexTest(ZulipTestCase):
             == "/users/{user_id}/subscriptions/{stream_id}"
         )
         assert (
-            match_against_openapi_regex("/users/iago@zulip.com/presence")
-            == "/users/{email}/presence"
+            match_against_openapi_regex("/users/iago@zulip.com/presence") == "/users/{email}/presence"
         )
         assert match_against_openapi_regex("/messages/23") == "/messages/{message_id}"
         assert (

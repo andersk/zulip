@@ -12,11 +12,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser: ArgumentParser) -> None:
         parser.add_argument(
-            "realms",
-            metavar="<realm>",
-            type=str,
-            nargs="*",
-            help="realm to generate statistics for",
+            "realms", metavar="<realm>", type=str, nargs="*", help="realm to generate statistics for",
         )
 
     def handle(self, *args: Any, **options: str) -> None:

@@ -952,10 +952,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
                 body=self.generate_access_url_payload(account_data_dict),
             )
             requests_mock.add(
-                requests_mock.GET,
-                self.USER_INFO_URL,
-                status=200,
-                body=json.dumps(account_data_dict),
+                requests_mock.GET, self.USER_INFO_URL, status=200, body=json.dumps(account_data_dict),
             )
             self.register_extra_endpoints(requests_mock, account_data_dict, **extra_data)
 
@@ -3553,8 +3550,7 @@ class FetchAPIKeyTest(ZulipTestCase):
 
     def test_success(self) -> None:
         result = self.client_post(
-            "/api/v1/fetch_api_key",
-            dict(username=self.email, password=initial_password(self.email)),
+            "/api/v1/fetch_api_key", dict(username=self.email, password=initial_password(self.email)),
         )
         self.assert_json_success(result)
 
@@ -3591,16 +3587,14 @@ class FetchAPIKeyTest(ZulipTestCase):
     def test_inactive_user(self) -> None:
         do_deactivate_user(self.user_profile)
         result = self.client_post(
-            "/api/v1/fetch_api_key",
-            dict(username=self.email, password=initial_password(self.email)),
+            "/api/v1/fetch_api_key", dict(username=self.email, password=initial_password(self.email)),
         )
         self.assert_json_error_contains(result, "Your account has been disabled", 403)
 
     def test_deactivated_realm(self) -> None:
         do_deactivate_realm(self.user_profile.realm)
         result = self.client_post(
-            "/api/v1/fetch_api_key",
-            dict(username=self.email, password=initial_password(self.email)),
+            "/api/v1/fetch_api_key", dict(username=self.email, password=initial_password(self.email)),
         )
         self.assert_json_error_contains(result, "This organization has been deactivated", 403)
 
@@ -3822,9 +3816,7 @@ class FetchAuthBackends(ZulipTestCase):
         check_result(result)
 
         with self.settings(ROOT_DOMAIN_LANDING_PAGE=False):
-            result = self.client_get(
-                "/api/v1/server_settings", subdomain="zulip", HTTP_USER_AGENT="",
-            )
+            result = self.client_get("/api/v1/server_settings", subdomain="zulip", HTTP_USER_AGENT="")
         check_result(
             result,
             [
@@ -4039,9 +4031,7 @@ class TestDevAuthBackend(ZulipTestCase):
         data = {"direct_email": email}
 
         response = self.client_post("/accounts/login/local/", data)
-        self.assertRedirects(
-            response, reverse("config_error", kwargs={"error_category_name": "dev"}),
-        )
+        self.assertRedirects(response, reverse("config_error", kwargs={"error_category_name": "dev"}))
 
 
 class TestZulipRemoteUserBackend(DesktopFlowTestingLib, ZulipTestCase):
@@ -4135,9 +4125,7 @@ class TestZulipRemoteUserBackend(DesktopFlowTestingLib, ZulipTestCase):
         user_profile = self.example_user("hamlet")
         email = user_profile.delivery_email
         with mock.patch("zerver.views.auth.get_subdomain", return_value="zulip"):
-            with self.settings(
-                AUTHENTICATION_BACKENDS=("zproject.backends.ZulipRemoteUserBackend",),
-            ):
+            with self.settings(AUTHENTICATION_BACKENDS=("zproject.backends.ZulipRemoteUserBackend",)):
                 result = self.client_get("/accounts/login/sso/", REMOTE_USER=email)
                 self.assertEqual(result.status_code, 302)
                 self.assert_logged_in_user_id(user_profile.id)
@@ -4311,9 +4299,7 @@ class TestZulipRemoteUserBackend(DesktopFlowTestingLib, ZulipTestCase):
         def test_with_redirect_to_param_set_as_next(next: str = "") -> HttpResponse:
             user_profile = self.example_user("hamlet")
             email = user_profile.delivery_email
-            with self.settings(
-                AUTHENTICATION_BACKENDS=("zproject.backends.ZulipRemoteUserBackend",),
-            ):
+            with self.settings(AUTHENTICATION_BACKENDS=("zproject.backends.ZulipRemoteUserBackend",)):
                 result = self.client_get("/accounts/login/sso/?next=" + next, REMOTE_USER=email)
             return result
 
@@ -4362,9 +4348,7 @@ class TestJWTLogin(ZulipTestCase):
             web_token = jwt.encode(payload, key, algorithm).decode("utf8")
             data = {"json_web_token": web_token}
             result = self.client_post("/accounts/login/jwt/", data)
-            self.assert_json_error_contains(
-                result, "No user specified in JSON web token claims", 400,
-            )
+            self.assert_json_error_contains(result, "No user specified in JSON web token claims", 400)
 
     def test_login_failure_when_realm_is_missing(self) -> None:
         payload = {"user": "hamlet"}
@@ -4482,9 +4466,7 @@ class DjangoToLDAPUsernameTests(ZulipTestCase):
             self.assertEqual(username, '"hamlet@test"@zulip')
 
     def test_django_to_ldap_username_with_email_search(self) -> None:
-        self.assertEqual(
-            self.backend.django_to_ldap_username("hamlet"), self.ldap_username("hamlet"),
-        )
+        self.assertEqual(self.backend.django_to_ldap_username("hamlet"), self.ldap_username("hamlet"))
         self.assertEqual(
             self.backend.django_to_ldap_username("hamlet@zulip.com"), self.ldap_username("hamlet"),
         )
@@ -5428,9 +5410,7 @@ class TestMaybeSendToRegistration(ZulipTestCase):
 
         with mock.patch("zerver.views.auth.HomepageForm", return_value=Form()):
             self.assertEqual(PreregistrationUser.objects.all().count(), 0)
-            result = maybe_send_to_registration(
-                request, self.example_email("hamlet"), is_signup=True,
-            )
+            result = maybe_send_to_registration(request, self.example_email("hamlet"), is_signup=True)
             self.assertEqual(result.status_code, 302)
             confirmation = Confirmation.objects.all().first()
             confirmation_key = confirmation.confirmation_key

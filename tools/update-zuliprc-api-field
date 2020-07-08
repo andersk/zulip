@@ -54,12 +54,7 @@ for zuliprc_path in zuliprc_paths_list:
         os.chdir(ZULIP_PATH)
 
         if is_vagrant_env_host(ZULIP_PATH):
-            arguments = [
-                "vagrant",
-                "ssh",
-                "--command",
-                "./manage.py print_initial_password " + email,
-            ]
+            arguments = ["vagrant", "ssh", "--command", "./manage.py print_initial_password " + email]
         else:
             # Support users who don't have vagrant based setup
             arguments = ["./manage.py", "print_initial_password", email]

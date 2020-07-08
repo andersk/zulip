@@ -34,9 +34,7 @@ from zerver.lib.validator import (
 from zerver.models import CustomProfileField, UserProfile, custom_profile_fields_for_realm
 
 
-def list_realm_custom_profile_fields(
-    request: HttpRequest, user_profile: UserProfile,
-) -> HttpResponse:
+def list_realm_custom_profile_fields(request: HttpRequest, user_profile: UserProfile) -> HttpResponse:
     fields = custom_profile_fields_for_realm(user_profile.realm_id)
     return json_success({"custom_fields": [f.as_dict() for f in fields]})
 

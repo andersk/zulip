@@ -123,8 +123,7 @@ class EventsEndpointTest(ZulipTestCase):
                 user,
                 "/json/register",
                 dict(
-                    event_types=ujson.dumps([event_type]),
-                    fetch_event_types=ujson.dumps(["message"]),
+                    event_types=ujson.dumps([event_type]), fetch_event_types=ujson.dumps(["message"]),
                 ),
             )
         self.assert_json_success(result)
@@ -143,8 +142,7 @@ class EventsEndpointTest(ZulipTestCase):
                 user,
                 "/json/register",
                 dict(
-                    fetch_event_types=ujson.dumps([event_type]),
-                    event_types=ujson.dumps(["message"]),
+                    fetch_event_types=ujson.dumps([event_type]), event_types=ujson.dumps(["message"]),
                 ),
             )
         self.assert_json_success(result)
@@ -164,9 +162,7 @@ class EventsEndpointTest(ZulipTestCase):
         # the /notify_tornado endpoint, so we can have 100% URL coverage,
         # but it does exercise a little bit of the codepath.
         post_data = dict(
-            data=ujson.dumps(
-                dict(event=dict(type="other"), users=[self.example_user("hamlet").id]),
-            ),
+            data=ujson.dumps(dict(event=dict(type="other"), users=[self.example_user("hamlet").id])),
         )
         req = POSTRequestMock(post_data, user_profile=None)
         req.META["REMOTE_ADDR"] = "127.0.0.1"

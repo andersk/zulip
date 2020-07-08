@@ -62,7 +62,9 @@ class TestCustomEmails(ZulipTestCase):
         hamlet = self.example_user("hamlet")
         from_name = "from_name_test"
         email_subject = "subject_test"
-        markdown_template_path = "zerver/tests/fixtures/email/custom_emails/email_base_headers_no_headers_test.source.html"
+        markdown_template_path = (
+            "zerver/tests/fixtures/email/custom_emails/email_base_headers_no_headers_test.source.html"
+        )
 
         from zerver.lib.send_email import NoEmailArgumentException
 
@@ -173,9 +175,7 @@ class TestFollowupEmails(ZulipTestCase):
             self.assertEqual(len(scheduled_emails), 2)
             email_data = ujson.loads(scheduled_emails[0].data)
             self.assertEqual(email_data["context"]["ldap"], True)
-            self.assertEqual(
-                email_data["context"]["ldap_username"], "newuser_email_as_uid@zulip.com",
-            )
+            self.assertEqual(email_data["context"]["ldap_username"], "newuser_email_as_uid@zulip.com")
 
     @override_settings(
         AUTHENTICATION_BACKENDS=(
@@ -228,9 +228,7 @@ class TestFollowupEmails(ZulipTestCase):
 
         enqueue_welcome_emails(self.example_user("hamlet"))
         # Hamlet has account only in Zulip realm so both day1 and day2 emails should be sent
-        scheduled_emails = ScheduledEmail.objects.filter(users=hamlet).order_by(
-            "scheduled_timestamp",
-        )
+        scheduled_emails = ScheduledEmail.objects.filter(users=hamlet).order_by("scheduled_timestamp")
         self.assertEqual(2, len(scheduled_emails))
         self.assertEqual(
             ujson.loads(scheduled_emails[1].data)["template_prefix"], "zerver/emails/followup_day2",
@@ -282,9 +280,7 @@ class TestMissedMessages(ZulipTestCase):
         else:
             reply_to_emails = ["noreply@testserver"]
         msg = mail.outbox[0]
-        from_email = str(
-            Address(display_name="Zulip missed messages", addr_spec=FromAddress.NOREPLY),
-        )
+        from_email = str(Address(display_name="Zulip missed messages", addr_spec=FromAddress.NOREPLY))
         self.assertEqual(len(mail.outbox), 1)
         if send_as_user:
             from_email = f'"{othello.full_name}" <{othello.email}>'
@@ -320,9 +316,7 @@ class TestMissedMessages(ZulipTestCase):
         for i in range(0, 11):
             self.send_stream_message(self.example_user("othello"), "Denmark", content=str(i))
         self.send_stream_message(self.example_user("othello"), "Denmark", "11", topic_name="test2")
-        msg_id = self.send_stream_message(
-            self.example_user("othello"), "denmark", "@**King Hamlet**",
-        )
+        msg_id = self.send_stream_message(self.example_user("othello"), "denmark", "@**King Hamlet**")
 
         if show_message_content:
             verify_body_include = [
@@ -420,9 +414,7 @@ class TestMissedMessages(ZulipTestCase):
     ) -> None:
         for i in range(0, 3):
             self.send_stream_message(self.example_user("cordelia"), "Denmark", str(i))
-        msg_id = self.send_stream_message(
-            self.example_user("othello"), "Denmark", "@**King Hamlet**",
-        )
+        msg_id = self.send_stream_message(self.example_user("othello"), "Denmark", "@**King Hamlet**")
         verify_body_include = [
             "Cordelia Lear: 0 1 2 Othello, the Moor of Venice: @**King Hamlet** -- ",
             "You are receiving this because you were mentioned in Zulip Dev.",
@@ -545,9 +537,7 @@ class TestMissedMessages(ZulipTestCase):
         email_subject = "Group PMs with Cordelia Lear, Iago, and Othello, the Moor of Venice"
         self._test_cases(msg_id, verify_body_include, email_subject, send_as_user)
 
-    def _extra_context_in_huddle_missed_stream_messages_many_others(
-        self, send_as_user: bool,
-    ) -> None:
+    def _extra_context_in_huddle_missed_stream_messages_many_others(self, send_as_user: bool) -> None:
         msg_id = self.send_huddle_message(
             self.example_user("othello"),
             [
@@ -837,9 +827,7 @@ class TestMissedMessages(ZulipTestCase):
 
         self.assertIn("Iago: @**King Hamlet**\n\n--\nYou are", mail.outbox[0].body)
         # If message content starts with <p> tag the sender name is appended inside the <p> tag.
-        self.assertIn(
-            '<p><b>Iago</b>: <span class="user-mention"', mail.outbox[0].alternatives[0][0],
-        )
+        self.assertIn('<p><b>Iago</b>: <span class="user-mention"', mail.outbox[0].alternatives[0][0])
 
         self.assertIn("Iago: * 1\n *2\n\n--\nYou are receiving", mail.outbox[1].body)
         # If message content does not starts with <p> tag sender name is appended before the <p> tag
@@ -860,9 +848,7 @@ class TestMissedMessages(ZulipTestCase):
         msg_id_1 = self.send_personal_message(
             self.example_user("othello"), hamlet, "Personal Message 1",
         )
-        msg_id_2 = self.send_personal_message(
-            self.example_user("iago"), hamlet, "Personal Message 2",
-        )
+        msg_id_2 = self.send_personal_message(self.example_user("iago"), hamlet, "Personal Message 2")
 
         handle_missedmessage_emails(hamlet.id, [{"message_id": msg_id_1}, {"message_id": msg_id_2}])
         self.assertEqual(len(mail.outbox), 2)

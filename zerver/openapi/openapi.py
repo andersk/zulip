@@ -116,9 +116,9 @@ openapi_spec = OpenAPISpec(OPENAPI_SPEC_PATH)
 def get_schema(endpoint: str, method: str, response: str) -> Dict[str, Any]:
     if len(response) == 3 and (
         "oneOf"
-        in (openapi_spec.spec())["paths"][endpoint][method.lower()]["responses"][response][
-            "content"
-        ]["application/json"]["schema"]
+        in (openapi_spec.spec())["paths"][endpoint][method.lower()]["responses"][response]["content"][
+            "application/json"
+        ]["schema"]
     ):
         # Currently at places where multiple schemas are defined they only
         # differ in example so either can be used.

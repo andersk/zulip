@@ -45,9 +45,7 @@ class SendLoginEmailTest(ZulipTestCase):
             mock_time = datetime.datetime(year=2018, month=1, day=1, tzinfo=utc)
             reference_time = mock_time.astimezone(user_tz).strftime("%A, %B %d, %Y at %I:%M%p %Z")
             with mock.patch("zerver.signals.timezone_now", return_value=mock_time):
-                self.client_post(
-                    "/accounts/login/", info=login_info, HTTP_USER_AGENT=firefox_windows,
-                )
+                self.client_post("/accounts/login/", info=login_info, HTTP_USER_AGENT=firefox_windows)
 
             # email is sent and correct subject
             self.assertEqual(len(mail.outbox), 1)
@@ -61,9 +59,7 @@ class SendLoginEmailTest(ZulipTestCase):
             user.twenty_four_hour_time = True
             user.save()
             with mock.patch("zerver.signals.timezone_now", return_value=mock_time):
-                self.client_post(
-                    "/accounts/login/", info=login_info, HTTP_USER_AGENT=firefox_windows,
-                )
+                self.client_post("/accounts/login/", info=login_info, HTTP_USER_AGENT=firefox_windows)
 
             reference_time = mock_time.astimezone(user_tz).strftime("%A, %B %d, %Y at %H:%M %Z")
             self.assertIn(reference_time, mail.outbox[1].body)
@@ -245,6 +241,4 @@ class TestNotifyNewUser(ZulipTestCase):
         self.assertEqual(message.recipient.type, Recipient.STREAM)
         actual_stream = Stream.objects.get(id=message.recipient.type_id)
         self.assertEqual(actual_stream.name, Realm.INITIAL_PRIVATE_STREAM_NAME)
-        self.assertIn(
-            f"@_**Cordelia Lear|{new_user.id}** just signed up for Zulip.", message.content,
-        )
+        self.assertIn(f"@_**Cordelia Lear|{new_user.id}** just signed up for Zulip.", message.content)

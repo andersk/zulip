@@ -746,9 +746,7 @@ def apply_event(
         if recipient_id not in state["raw_recent_private_conversations"]:  # nocoverage
             return
 
-        old_max_message_id = state["raw_recent_private_conversations"][recipient_id][
-            "max_message_id"
-        ]
+        old_max_message_id = state["raw_recent_private_conversations"][recipient_id]["max_message_id"]
         if old_max_message_id not in message_ids:  # nocoverage
             return
 

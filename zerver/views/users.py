@@ -338,9 +338,7 @@ def add_bot_backend(
     bot_type: int = REQ(validator=check_int, default=UserProfile.DEFAULT_BOT),
     payload_url: str = REQ(validator=check_url, default=""),
     service_name: Optional[str] = REQ(default=None),
-    config_data: Dict[str, str] = REQ(
-        default={}, validator=check_dict(value_validator=check_string),
-    ),
+    config_data: Dict[str, str] = REQ(default={}, validator=check_dict(value_validator=check_string)),
     interface_type: int = REQ(validator=check_int, default=Service.GENERIC),
     default_sending_stream_name: Optional[str] = REQ("default_sending_stream", default=None),
     default_events_register_stream_name: Optional[str] = REQ(

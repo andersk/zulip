@@ -29,12 +29,8 @@ class Uploader:
         self.copy_files(old_file_path, new_file_path)
 
         # Copy resized image file.
-        old_file_path = self.old_path_template.format(
-            realm_id=realm_id, emoji_file_name=old_filename,
-        )
-        new_file_path = self.new_path_template.format(
-            realm_id=realm_id, emoji_file_name=new_filename,
-        )
+        old_file_path = self.old_path_template.format(realm_id=realm_id, emoji_file_name=old_filename)
+        new_file_path = self.new_path_template.format(realm_id=realm_id, emoji_file_name=new_filename)
         self.copy_files(old_file_path, new_file_path)
 
 

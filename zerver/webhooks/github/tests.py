@@ -121,15 +121,11 @@ class GithubWebhookTest(WebhookTestCase):
 
     def test_create_msg(self) -> None:
         expected_message = "baxterthehacker created tag 0.0.1."
-        self.send_and_test_stream_message(
-            "create", self.EXPECTED_TOPIC_REPO_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("create", self.EXPECTED_TOPIC_REPO_EVENTS, expected_message)
 
     def test_delete_msg(self) -> None:
         expected_message = "baxterthehacker deleted tag simple-tag."
-        self.send_and_test_stream_message(
-            "delete", self.EXPECTED_TOPIC_REPO_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("delete", self.EXPECTED_TOPIC_REPO_EVENTS, expected_message)
 
     def test_deployment_msg(self) -> None:
         expected_message = "baxterthehacker created new deployment."
@@ -185,16 +181,16 @@ class GithubWebhookTest(WebhookTestCase):
         )
 
     def test_membership_removal_msg(self) -> None:
-        expected_message = "baxterthehacker removed [kdaigle](https://github.com/kdaigle) from the Contractors team."
+        expected_message = (
+            "baxterthehacker removed [kdaigle](https://github.com/kdaigle) from the Contractors team."
+        )
         self.send_and_test_stream_message(
             "membership__removal", self.EXPECTED_TOPIC_ORGANIZATION_EVENTS, expected_message,
         )
 
     def test_member_msg(self) -> None:
         expected_message = "baxterthehacker added [octocat](https://github.com/octocat) to [public-repo](https://github.com/baxterthehacker/public-repo)."
-        self.send_and_test_stream_message(
-            "member", self.EXPECTED_TOPIC_REPO_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("member", self.EXPECTED_TOPIC_REPO_EVENTS, expected_message)
 
     def test_pull_request_opened_msg(self) -> None:
         expected_message = "baxterthehacker opened [PR #1](https://github.com/baxterthehacker/public-repo/pull/1) from `changes` to `master`:\n\n~~~ quote\nThis is a pretty simple change that we need to pull into master.\n~~~"
@@ -243,9 +239,7 @@ class GithubWebhookTest(WebhookTestCase):
 
     def test_public_msg(self) -> None:
         expected_message = "baxterthehacker made the repository [baxterthehacker/public-repo](https://github.com/baxterthehacker/public-repo) public."
-        self.send_and_test_stream_message(
-            "public", self.EXPECTED_TOPIC_REPO_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("public", self.EXPECTED_TOPIC_REPO_EVENTS, expected_message)
 
     def test_wiki_pages_msg(self) -> None:
         expected_message = "jasonrudolph:\n* created [Home](https://github.com/baxterthehacker/public-repo/wiki/Home)\n* created [Home](https://github.com/baxterthehacker/public-repo/wiki/Home)"
@@ -285,9 +279,7 @@ class GithubWebhookTest(WebhookTestCase):
 
     def test_status_msg(self) -> None:
         expected_message = "[9049f12](https://github.com/baxterthehacker/public-repo/commit/9049f1265b7d61be4a8904a9a27120d2064dab3b) changed its status to success."
-        self.send_and_test_stream_message(
-            "status", self.EXPECTED_TOPIC_REPO_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("status", self.EXPECTED_TOPIC_REPO_EVENTS, expected_message)
 
     def test_status_with_target_url_msg(self) -> None:
         expected_message = "[9049f12](https://github.com/baxterthehacker/public-repo/commit/9049f1265b7d61be4a8904a9a27120d2064dab3b) changed its status to [success](https://example.com/build/status)."

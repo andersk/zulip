@@ -191,9 +191,7 @@ def tokenize(text: str) -> List[Token]:
     return tokens
 
 
-def validate(
-    fn: Optional[str] = None, text: Optional[str] = None, check_indent: bool = True,
-) -> None:
+def validate(fn: Optional[str] = None, text: Optional[str] = None, check_indent: bool = True) -> None:
     assert fn or text
 
     if fn is None:

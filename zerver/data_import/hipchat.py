@@ -392,10 +392,7 @@ def write_emoticon_data(realm_id: int, data_dir: str, output_dir: str) -> List[Z
 
     realmemoji = [
         build_realm_emoji(
-            realm_id=realm_id,
-            name=rec["name"],
-            id=NEXT_ID("realmemoji"),
-            file_name=rec["file_name"],
+            realm_id=realm_id, name=rec["name"], id=NEXT_ID("realmemoji"), file_name=rec["file_name"],
         )
         for rec in emoji_records
     ]
@@ -766,9 +763,7 @@ def do_convert_data(
     )
     realm["zerver_stream"] = zerver_stream
 
-    zerver_recipient = build_recipients(
-        zerver_userprofile=normal_users, zerver_stream=zerver_stream,
-    )
+    zerver_recipient = build_recipients(zerver_userprofile=normal_users, zerver_stream=zerver_stream)
     realm["zerver_recipient"] = zerver_recipient
 
     if api_token is None:

@@ -116,10 +116,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     # zip_it from https://mashable.com/2015/10/23/ios-9-1-emoji-guide/,
     # lips_sealed from https://emojipedia.org/zipper-mouth-face/, rest seemed
     # like reasonable additions
-    "1f910": {
-        "canonical_name": "silence",
-        "aliases": ["quiet", "hush", "zip_it", "lips_are_sealed"],
-    },
+    "1f910": {"canonical_name": "silence", "aliases": ["quiet", "hush", "zip_it", "lips_are_sealed"]},
     # queasy seemed like a natural addition
     "1f922": {"canonical_name": "nauseated", "aliases": ["queasy"]},
     "1f927": {"canonical_name": "sneezing", "aliases": []},
@@ -1096,10 +1093,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     "1f6e2": {"canonical_name": "oil_drum", "aliases": ["commodities"]},
     # losing money from https://emojipedia.org/money-with-wings/,
     # easy_come_easy_go seems like a reasonable addition
-    "1f4b8": {
-        "canonical_name": "losing_money",
-        "aliases": ["easy_come_easy_go", "money_with_wings"],
-    },
+    "1f4b8": {"canonical_name": "losing_money", "aliases": ["easy_come_easy_go", "money_with_wings"]},
     # I think the _bills, _banknotes etc versions of these are arguably more
     # fun to use in chat, and certainly match the glyphs better
     "1f4b5": {"canonical_name": "dollar_bills", "aliases": []},

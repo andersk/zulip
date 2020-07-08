@@ -98,9 +98,7 @@ class TestServiceBotBasics(ZulipTestCase):
             recipient_type=Recipient.STREAM,
         )
 
-        expected = dict(
-            outgoing_webhooks=[dict(trigger="mention", user_profile_id=outgoing_bot.id)],
-        )
+        expected = dict(outgoing_webhooks=[dict(trigger="mention", user_profile_id=outgoing_bot.id)])
 
         self.assertEqual(event_dict, expected)
 

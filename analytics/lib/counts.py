@@ -728,9 +728,7 @@ def get_count_stats(realm: Optional[Realm] = None) -> Dict[str, CountStat]:
         # simplest of the three to inspect by hand.
         CountStat(
             "active_users:is_bot:day",
-            sql_data_collector(
-                RealmCount, count_user_by_realm_query(realm), (UserProfile, "is_bot"),
-            ),
+            sql_data_collector(RealmCount, count_user_by_realm_query(realm), (UserProfile, "is_bot")),
             CountStat.DAY,
             interval=TIMEDELTA_MAX,
         ),

@@ -71,9 +71,7 @@ class Bitbucket3HookTests(WebhookTestCase):
             """[hypro999](http://139.59.64.214:7990/users/hypro999) deleted branch branch2."""
         )
         expected_topic = self.EXPECTED_TOPIC_BRANCH_EVENTS.format(branch="branch2")
-        self.send_and_test_stream_message(
-            "repo_push_delete_branch", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("repo_push_delete_branch", expected_topic, expected_message)
 
     def test_push_delete_tag(self) -> None:
         expected_message = (
@@ -197,24 +195,18 @@ class Bitbucket3HookTests(WebhookTestCase):
     def test_pr_unapproved(self) -> None:
         expected_topic = "sandbox / PR #6 sample_file: Add sample_file.txt."
         expected_message = """[zura](http://139.59.64.214:7990/users/zura) unapproved [PR #6](http://139.59.64.214:7990/projects/SBOX/repos/sandbox/pull-requests/6)."""
-        self.send_and_test_stream_message(
-            "pull_request_unapproved", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request_unapproved", expected_topic, expected_message)
 
     def test_pr_marked_as_needs_review(self) -> None:
         expected_topic = "sandbox / PR #6 sample_file: Add sample_file.txt."
         expected_message = """[zura](http://139.59.64.214:7990/users/zura) marked [PR #6](http://139.59.64.214:7990/projects/SBOX/repos/sandbox/pull-requests/6) as \"needs work\"."""
-        self.send_and_test_stream_message(
-            "pull_request_needs_work", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request_needs_work", expected_topic, expected_message)
 
     def test_pr_marked_as_needs_review_and_include_title(self) -> None:
         expected_topic = "custom_topic"
         expected_message = """[zura](http://139.59.64.214:7990/users/zura) marked [PR #6 sample_file: Add sample_file.txt.](http://139.59.64.214:7990/projects/SBOX/repos/sandbox/pull-requests/6) as \"needs work\"."""
         self.url = self.build_webhook_url(topic="custom_topic")
-        self.send_and_test_stream_message(
-            "pull_request_needs_work", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request_needs_work", expected_topic, expected_message)
 
     def test_pull_request_reviewer_added(self) -> None:
         expected_message = """[hypro999](http://139.59.64.214:7990/users/hypro999) reassigned [PR #1](http://139.59.64.214:7990/projects/SBOX/repos/sandbox/pull-requests/1) to [shimura](http://139.59.64.214:7990/users/shimura)."""

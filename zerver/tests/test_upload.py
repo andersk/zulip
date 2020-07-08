@@ -340,9 +340,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
 
         # Send message referring only dummy_1
         self.subscribe(self.example_user("hamlet"), "Denmark")
-        body = (
-            "Some files here ...[zulip.txt](http://localhost:9991/user_uploads/" + d1_path_id + ")"
-        )
+        body = "Some files here ...[zulip.txt](http://localhost:9991/user_uploads/" + d1_path_id + ")"
         self.send_stream_message(self.example_user("hamlet"), "Denmark", body, "test")
 
         # dummy_2 should not exist in database or the uploads folder
@@ -709,10 +707,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         for i in range(0, 5):
             stream_name = f"test-subscribe {i}"
             self.make_stream(
-                stream_name,
-                realm=hamlet.realm,
-                invite_only=True,
-                history_public_to_subscribers=True,
+                stream_name, realm=hamlet.realm, invite_only=True, history_public_to_subscribers=True,
             )
             self.subscribe(hamlet, stream_name)
 
@@ -808,9 +803,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
                     self.assertIn(content_disposition, response["Content-disposition"])
                 else:
                     self.assertIn("inline;", response["Content-disposition"])
-                self.assertEqual(
-                    set(response["Cache-Control"].split(", ")), {"private", "immutable"},
-                )
+                self.assertEqual(set(response["Cache-Control"].split(", ")), {"private", "immutable"})
 
         check_xsend_links("zulip.txt", "zulip.txt", 'filename="zulip.txt"')
         check_xsend_links(

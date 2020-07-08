@@ -249,8 +249,7 @@ def auth_rate_limiting_already_applied(request: HttpRequest) -> bool:
         return False
 
     return any(
-        isinstance(r.entity, RateLimitedAuthenticationByUsername)
-        for r in request._ratelimits_applied
+        isinstance(r.entity, RateLimitedAuthenticationByUsername) for r in request._ratelimits_applied
     )
 
 
@@ -1189,9 +1188,7 @@ class ZulipRemoteUserBackend(RemoteUserBackend, ExternalAuthMethod):
 def redirect_deactivated_user_to_login() -> HttpResponseRedirect:
     # Specifying the template name makes sure that the user is not redirected to dev_login in case of
     # a deactivated account on a test server.
-    login_url = reverse(
-        "zerver.views.auth.login_page", kwargs={"template_name": "zerver/login.html"},
-    )
+    login_url = reverse("zerver.views.auth.login_page", kwargs={"template_name": "zerver/login.html"})
     redirect_url = login_url + "?is_deactivated=true"
     return HttpResponseRedirect(redirect_url)
 

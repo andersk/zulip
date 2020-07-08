@@ -797,9 +797,7 @@ class AdminCreateUserTest(ZulipTestCase):
                 short_name="Romeo",
             ),
         )
-        self.assert_json_error(
-            result, "Email 'romeo@not-zulip.com' not allowed in this organization",
-        )
+        self.assert_json_error(result, "Email 'romeo@not-zulip.com' not allowed in this organization")
 
         RealmDomain.objects.create(realm=get_realm("zulip"), domain="zulip.net")
         valid_params = dict(

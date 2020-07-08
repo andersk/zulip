@@ -148,10 +148,7 @@ class Migration(migrations.Migration):
             model_name="archivedattachment",
             name="realm",
             field=models.ForeignKey(
-                blank=True,
-                null=True,
-                on_delete=django.db.models.deletion.CASCADE,
-                to="zerver.Realm",
+                blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm",
             ),
         ),
         migrations.AlterUniqueTogether(

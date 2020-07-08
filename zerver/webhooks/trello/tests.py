@@ -96,9 +96,7 @@ class TrelloHookTests(WebhookTestCase):
 
     def test_trello_webhook_when_check_item_is_unchecked(self) -> None:
         expected_message = "Eeshan Garg unchecked **Tomatoes** in **Checklist** ([Something something](https://trello.com/c/R2thJK3P))."
-        self.send_and_test_stream_message(
-            "uncheck_item_on_card_checklist", "Zulip", expected_message,
-        )
+        self.send_and_test_stream_message("uncheck_item_on_card_checklist", "Zulip", expected_message)
 
     def test_trello_webhook_when_member_was_removed_from_board(self) -> None:
         expected_message = (
@@ -112,9 +110,7 @@ class TrelloHookTests(WebhookTestCase):
         expected_message = (
             "TomaszKolek added Trello to [Welcome Board](https://trello.com/b/iqXXzYEj)."
         )
-        self.send_and_test_stream_message(
-            "adding_member_to_board", "Welcome Board", expected_message,
-        )
+        self.send_and_test_stream_message("adding_member_to_board", "Welcome Board", expected_message)
 
     def test_trello_webhook_when_list_was_added_to_board(self) -> None:
         expected_message = (
@@ -126,9 +122,7 @@ class TrelloHookTests(WebhookTestCase):
 
     def test_trello_webhook_when_comment_was_added_to_card(self) -> None:
         expected_message = "TomaszKolek commented on [New card](https://trello.com/c/xPKXoSTQ):\n~~~ quote\nNew comment\n~~~"
-        self.send_and_test_stream_message(
-            "adding_comment_to_card", "Welcome Board", expected_message,
-        )
+        self.send_and_test_stream_message("adding_comment_to_card", "Welcome Board", expected_message)
 
     def test_trello_webhook_when_board_was_renamed(self) -> None:
         expected_message = "TomaszKolek renamed the board from Welcome Board to [New name](https://trello.com/b/iqXXzYEj)."

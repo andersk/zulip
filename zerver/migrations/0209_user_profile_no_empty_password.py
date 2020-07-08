@@ -187,10 +187,7 @@ def ensure_no_empty_passwords(apps: StateApps, schema_editor: DatabaseSchemaEdit
 
                 event_time = timezone_now()
                 write_realm_audit_log_entry(
-                    user_profile,
-                    event_time,
-                    USER_API_KEY_CHANGED,
-                    AFFECTED_USER_TYPE_EMPTY_PASSWORD,
+                    user_profile, event_time, USER_API_KEY_CHANGED, AFFECTED_USER_TYPE_EMPTY_PASSWORD,
                 )
 
             user_profile.save(update_fields=update_fields)

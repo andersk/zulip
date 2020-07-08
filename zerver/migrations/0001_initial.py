@@ -121,10 +121,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ("enable_offline_push_notifications", models.BooleanField(default=True)),
                 ("enable_digest_emails", models.BooleanField(default=True)),
                 ("default_desktop_notifications", models.BooleanField(default=True)),
-                (
-                    "last_reminder",
-                    models.DateTimeField(default=django.utils.timezone.now, null=True),
-                ),
+                ("last_reminder", models.DateTimeField(default=django.utils.timezone.now, null=True)),
                 ("rate_limits", models.CharField(default="", max_length=100)),
                 ("default_all_public_streams", models.BooleanField(default=False)),
                 ("enter_sends", models.NullBooleanField(default=True)),
@@ -313,9 +310,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ("img_url", models.TextField()),
                 (
                     "realm",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm",
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm"),
                 ),
             ],
         ),
@@ -332,9 +327,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ("url_format_string", models.TextField()),
                 (
                     "realm",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm",
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm"),
                 ),
             ],
         ),
@@ -406,9 +399,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ("deactivated", models.BooleanField(default=False)),
                 (
                     "realm",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm",
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm"),
                 ),
             ],
         ),
@@ -840,10 +831,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
             model_name="attachment",
             name="realm",
             field=models.ForeignKey(
-                blank=True,
-                null=True,
-                on_delete=django.db.models.deletion.CASCADE,
-                to="zerver.Realm",
+                blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm",
             ),
         ),
         migrations.RunPython(code=migrate_existing_attachment_data, elidable=True),
@@ -856,9 +844,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
             field=models.CharField(default="en", max_length=50),
         ),
         migrations.AddField(
-            model_name="realm",
-            name="allow_message_editing",
-            field=models.BooleanField(default=True),
+            model_name="realm", name="allow_message_editing", field=models.BooleanField(default=True),
         ),
         migrations.AddField(
             model_name="realm",

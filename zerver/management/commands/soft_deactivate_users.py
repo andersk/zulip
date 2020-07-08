@@ -96,9 +96,7 @@ class Command(ZulipBaseCommand):
                 print("Soft deactivating forcefully...")
                 users_deactivated = do_soft_deactivate_users(users_to_deactivate)
             else:
-                users_deactivated = do_auto_soft_deactivate_users(
-                    int(options["inactive_for"]), realm,
-                )
+                users_deactivated = do_auto_soft_deactivate_users(int(options["inactive_for"]), realm)
             logger.info("Soft Deactivated %d user(s)", len(users_deactivated))
 
         else:

@@ -260,9 +260,7 @@ class TestGetChartData(ZulipTestCase):
 
     def test_include_empty_subgroups(self) -> None:
         FillState.objects.create(
-            property="realm_active_humans::day",
-            end_time=self.end_times_day[0],
-            state=FillState.DONE,
+            property="realm_active_humans::day", end_time=self.end_times_day[0], state=FillState.DONE,
         )
         result = self.client_get("/json/analytics/chart_data", {"chart_name": "number_of_humans"})
         self.assert_json_success(result)
@@ -313,9 +311,7 @@ class TestGetChartData(ZulipTestCase):
         )
 
         FillState.objects.create(
-            property="messages_sent:client:day",
-            end_time=self.end_times_day[0],
-            state=FillState.DONE,
+            property="messages_sent:client:day", end_time=self.end_times_day[0], state=FillState.DONE,
         )
         result = self.client_get(
             "/json/analytics/chart_data", {"chart_name": "messages_sent_by_client"},
@@ -499,8 +495,7 @@ class TestGetChartData(ZulipTestCase):
         self.insert_data(stat, [None], [])
 
         result = self.client_get(
-            "/json/analytics/chart_data/realm/not_existing_realm",
-            {"chart_name": "number_of_humans"},
+            "/json/analytics/chart_data/realm/not_existing_realm", {"chart_name": "number_of_humans"},
         )
         self.assert_json_error(result, "Invalid organization", 400)
 
@@ -591,10 +586,7 @@ class TestSupportEndpoint(ZulipTestCase):
             if invite:
                 self.assert_in_success_response(['<span class="label">invite</span>'], result)
                 self.assert_in_success_response(
-                    [
-                        "<b>Expires in</b>: 1\xa0week, 3",
-                        "<b>Status</b>: Link has never been clicked",
-                    ],
+                    ["<b>Expires in</b>: 1\xa0week, 3", "<b>Status</b>: Link has never been clicked"],
                     result,
                 )
                 self.assert_in_success_response([], result)
@@ -889,8 +881,7 @@ class TestTimeRange(ZulipTestCase):
             [floor_hour, floor_hour + HOUR],
         )
         self.assertEqual(
-            time_range(floor_day, floor_day + DAY, CountStat.DAY, None),
-            [floor_day, floor_day + DAY],
+            time_range(floor_day, floor_day + DAY, CountStat.DAY, None), [floor_day, floor_day + DAY],
         )
         # test min_length
         self.assertEqual(

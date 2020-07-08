@@ -22,9 +22,7 @@ class Migration(migrations.Migration):
                 ("word", models.TextField()),
                 (
                     "realm",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm",
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm"),
                 ),
                 (
                     "user_profile",

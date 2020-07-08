@@ -87,9 +87,7 @@ class TestEncodeDecode(ZulipTestCase):
         self.assertEqual(token, stream.email_token)
 
         # We also handle mixing + and . but it shouldn't be recommended to users.
-        email_address_all_options = (
-            "dev-help.{}+include-footer.show-sender+include-quotes@testserver"
-        )
+        email_address_all_options = "dev-help.{}+include-footer.show-sender+include-quotes@testserver"
         email_address_all_options = email_address_all_options.format(stream.email_token)
         token, options = decode_email_address(email_address_all_options)
         self._assert_options(options, show_sender=True, include_footer=True, include_quotes=True)

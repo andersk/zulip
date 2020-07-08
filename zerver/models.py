@@ -1822,9 +1822,7 @@ def bulk_get_huddle_user_ids(recipients: List[Recipient]) -> Dict[int, List[int]
     if not recipients:
         return {}
 
-    subscriptions = Subscription.objects.filter(recipient__in=recipients).order_by(
-        "user_profile_id",
-    )
+    subscriptions = Subscription.objects.filter(recipient__in=recipients).order_by("user_profile_id")
 
     result_dict: Dict[int, List[int]] = {}
     for recipient in recipients:
@@ -1906,9 +1904,7 @@ class ArchivedMessage(AbstractMessage):
     """
 
     id: int = models.AutoField(auto_created=True, primary_key=True, verbose_name="ID")
-    archive_transaction: ArchiveTransaction = models.ForeignKey(
-        ArchiveTransaction, on_delete=CASCADE,
-    )
+    archive_transaction: ArchiveTransaction = models.ForeignKey(ArchiveTransaction, on_delete=CASCADE)
 
 
 class Message(AbstractMessage):
@@ -2470,9 +2466,7 @@ def get_user_by_delivery_email(email: str, realm: Realm) -> UserProfile:
     EMAIL_ADDRESS_VISIBILITY_ADMINS security model.  Use get_user in
     those code paths.
     """
-    return UserProfile.objects.select_related().get(
-        delivery_email__iexact=email.strip(), realm=realm,
-    )
+    return UserProfile.objects.select_related().get(delivery_email__iexact=email.strip(), realm=realm)
 
 
 def get_users_by_delivery_email(emails: Set[str], realm: Realm) -> QuerySet:
@@ -3010,7 +3004,9 @@ class RealmAuditLog(AbstractRealmAuditLog):
 
     def __str__(self) -> str:
         if self.modified_user is not None:
-            return f"<RealmAuditLog: {self.modified_user} {self.event_type} {self.event_time} {self.id}>"
+            return (
+                f"<RealmAuditLog: {self.modified_user} {self.event_type} {self.event_time} {self.id}>"
+            )
         if self.modified_stream is not None:
             return f"<RealmAuditLog: {self.modified_stream} {self.event_type} {self.event_time} {self.id}>"
         return f"<RealmAuditLog: {self.realm} {self.event_type} {self.event_time} {self.id}>"
@@ -3104,9 +3100,7 @@ class CustomProfileField(models.Model):
     FIELD_VALIDATORS: Dict[int, Validator[Union[int, str, List[int]]]] = {
         item[0]: item[2] for item in FIELD_TYPE_DATA
     }
-    FIELD_CONVERTERS: Dict[int, Callable[[Any], Any]] = {
-        item[0]: item[3] for item in ALL_FIELD_TYPES
-    }
+    FIELD_CONVERTERS: Dict[int, Callable[[Any], Any]] = {item[0]: item[3] for item in ALL_FIELD_TYPES}
     FIELD_TYPE_CHOICES: List[Tuple[int, str]] = [(item[0], item[1]) for item in ALL_FIELD_TYPES]
     FIELD_TYPE_CHOICES_DICT: Dict[str, Dict[str, Union[str, int]]] = {
         item[4]: {"id": item[0], "name": item[1]} for item in ALL_FIELD_TYPES

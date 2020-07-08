@@ -19,8 +19,6 @@ class Migration(migrations.Migration):
             field=models.PositiveSmallIntegerField(default=COMMUNITY),
         ),
         migrations.AlterField(
-            model_name="realm",
-            name="restricted_to_domain",
-            field=models.BooleanField(default=False),
+            model_name="realm", name="restricted_to_domain", field=models.BooleanField(default=False),
         ),
     ]

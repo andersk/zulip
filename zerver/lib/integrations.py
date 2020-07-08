@@ -498,9 +498,7 @@ INTEGRATIONS: Dict[str, Integration] = {
         stream_name="jira",
         legacy=True,
     ),
-    "matrix": Integration(
-        "matrix", "matrix", ["communication"], doc="zerver/integrations/matrix.md",
-    ),
+    "matrix": Integration("matrix", "matrix", ["communication"], doc="zerver/integrations/matrix.md"),
     "mercurial": Integration(
         "mercurial",
         "mercurial",
@@ -655,9 +653,7 @@ DOC_SCREENSHOT_CONFIG: Dict[str, List[ScreenshotConfig]] = {
     "dropbox": [ScreenshotConfig("file_updated.json")],
     "errbit": [ScreenshotConfig("error_message.json")],
     "flock": [ScreenshotConfig("messages.json")],
-    "freshdesk": [
-        ScreenshotConfig("ticket_created.json", image_name="004.png", use_basic_auth=True),
-    ],
+    "freshdesk": [ScreenshotConfig("ticket_created.json", image_name="004.png", use_basic_auth=True)],
     "front": [ScreenshotConfig("inbound_message.json")],
     "gci": [ScreenshotConfig("task_abandoned_by_student.json")],
     "gitea": [ScreenshotConfig("pull_request__merged.json")],
@@ -725,10 +721,7 @@ DOC_SCREENSHOT_CONFIG: Dict[str, List[ScreenshotConfig]] = {
     "wordpress": [ScreenshotConfig("publish_post.txt", "wordpress_post_created.png")],
     "yo": [
         ScreenshotConfig(
-            "",
-            "002.png",
-            "yo-app",
-            extra_params={"email": "iago@zulip.com", "username": "Cordelia"},
+            "", "002.png", "yo-app", extra_params={"email": "iago@zulip.com", "username": "Cordelia"},
         ),
     ],
     "zabbix": [ScreenshotConfig("zabbix_alert.json")],
@@ -737,11 +730,7 @@ DOC_SCREENSHOT_CONFIG: Dict[str, List[ScreenshotConfig]] = {
             "",
             "007.png",
             use_basic_auth=True,
-            extra_params={
-                "ticket_title": "Test ticket",
-                "ticket_id": "4",
-                "message": "Test Message",
-            },
+            extra_params={"ticket_title": "Test ticket", "ticket_id": "4", "message": "Test Message"},
         ),
     ],
 }

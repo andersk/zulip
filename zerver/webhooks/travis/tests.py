@@ -30,9 +30,7 @@ class TravisHookTests(WebhookTestCase):
     def test_ignore_travis_pull_request_by_default(self) -> None:
         self.subscribe(self.test_user, self.STREAM_NAME)
         result = self.client_post(
-            self.url,
-            self.get_body("pull_request"),
-            content_type="application/x-www-form-urlencoded",
+            self.url, self.get_body("pull_request"), content_type="application/x-www-form-urlencoded",
         )
         self.assert_json_success(result)
         msg = self.get_last_message()

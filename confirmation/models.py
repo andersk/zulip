@@ -135,9 +135,7 @@ class Confirmation(models.Model):
 
 class ConfirmationType:
     def __init__(
-        self,
-        url_name: str,
-        validity_in_days: int = settings.CONFIRMATION_LINK_DEFAULT_VALIDITY_DAYS,
+        self, url_name: str, validity_in_days: int = settings.CONFIRMATION_LINK_DEFAULT_VALIDITY_DAYS,
     ) -> None:
         self.url_name = url_name
         self.validity_in_days = validity_in_days

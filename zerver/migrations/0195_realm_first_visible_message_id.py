@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="realm",
-            name="first_visible_message_id",
-            field=models.IntegerField(default=0),
+            model_name="realm", name="first_visible_message_id", field=models.IntegerField(default=0),
         ),
     ]

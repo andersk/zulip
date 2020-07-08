@@ -111,9 +111,7 @@ def complete_zoom_user_in_realm(
     oauth = get_zoom_session(request.user)
     try:
         token = oauth.fetch_token(
-            "https://zoom.us/oauth/token",
-            code=code,
-            client_secret=settings.VIDEO_ZOOM_CLIENT_SECRET,
+            "https://zoom.us/oauth/token", code=code, client_secret=settings.VIDEO_ZOOM_CLIENT_SECRET,
         )
     except OAuth2Error:
         raise JsonableError(_("Invalid Zoom credentials"))

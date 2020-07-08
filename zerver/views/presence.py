@@ -16,9 +16,7 @@ from zerver.lib.validator import check_bool, check_capped_string
 from zerver.models import UserActivity, UserPresence, UserProfile, get_active_user
 
 
-def get_presence_backend(
-    request: HttpRequest, user_profile: UserProfile, email: str,
-) -> HttpResponse:
+def get_presence_backend(request: HttpRequest, user_profile: UserProfile, email: str) -> HttpResponse:
     # This isn't used by the webapp; it's available for API use by
     # bots and other clients.  We may want to add slim_presence
     # support for it (or just migrate its API wholesale) later.
@@ -81,9 +79,7 @@ def update_active_status_backend(
     if status_val is None:
         raise JsonableError(_("Invalid status: {}").format(status))
     elif user_profile.presence_enabled:
-        update_user_presence(
-            user_profile, request.client, timezone_now(), status_val, new_user_input,
-        )
+        update_user_presence(user_profile, request.client, timezone_now(), status_val, new_user_input)
 
     if ping_only:
         ret: Dict[str, Any] = {}

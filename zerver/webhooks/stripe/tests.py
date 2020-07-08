@@ -212,7 +212,9 @@ Amount due: 0.00 INR
 
     def test_invoice_paid(self) -> None:
         expected_topic = "cus_FDmrSwQt9Fck5M"
-        expected_message = "[Invoice](https://dashboard.stripe.com/invoices/in_1EjLINHuGUuNWDDZjDf2WNqd) is now paid"
+        expected_message = (
+            "[Invoice](https://dashboard.stripe.com/invoices/in_1EjLINHuGUuNWDDZjDf2WNqd) is now paid"
+        )
         self.send_and_test_stream_message(
             "invoice_updated__paid",
             expected_topic,

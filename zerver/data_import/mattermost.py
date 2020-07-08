@@ -283,10 +283,7 @@ def build_reactions(
 
         reaction_id = NEXT_ID("reaction")
         reaction = Reaction(
-            id=reaction_id,
-            emoji_code=emoji_code,
-            emoji_name=emoji_name,
-            reaction_type=reaction_type,
+            id=reaction_id, emoji_code=emoji_code, emoji_name=emoji_name, reaction_type=reaction_type,
         )
 
         reaction_dict = model_to_dict(reaction, exclude=["message", "user_profile"])
@@ -650,10 +647,7 @@ def write_emoticon_data(
 
     realmemoji = [
         build_realm_emoji(
-            realm_id=realm_id,
-            name=rec["name"],
-            id=NEXT_ID("realmemoji"),
-            file_name=rec["file_name"],
+            realm_id=realm_id, name=rec["name"], id=NEXT_ID("realmemoji"), file_name=rec["file_name"],
         )
         for rec in emoji_records
     ]

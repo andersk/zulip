@@ -24,9 +24,7 @@ class FillState(models.Model):
 # The earliest/starting end_time in FillState
 # We assume there is at least one realm
 def installation_epoch() -> datetime.datetime:
-    earliest_realm_creation = Realm.objects.aggregate(models.Min("date_created"))[
-        "date_created__min"
-    ]
+    earliest_realm_creation = Realm.objects.aggregate(models.Min("date_created"))["date_created__min"]
     return floor_to_day(earliest_realm_creation)
 
 

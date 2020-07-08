@@ -326,9 +326,7 @@ class ReactionTest(ZulipTestCase):
         add = self.api_post(reaction_sender, f"/api/v1/messages/{pm_id}/reactions", reaction_info)
         self.assert_json_success(add)
 
-        first = self.api_delete(
-            reaction_sender, f"/api/v1/messages/{pm_id}/reactions", reaction_info,
-        )
+        first = self.api_delete(reaction_sender, f"/api/v1/messages/{pm_id}/reactions", reaction_info)
         self.assert_json_success(first)
 
         second = self.api_delete(

@@ -322,9 +322,7 @@ class RealmTest(ZulipTestCase):
         self.assertEqual(realm.signup_notifications_stream.id, new_signup_notifications_stream_id)
 
         invalid_signup_notifications_stream_id = 1234
-        req = dict(
-            signup_notifications_stream_id=ujson.dumps(invalid_signup_notifications_stream_id),
-        )
+        req = dict(signup_notifications_stream_id=ujson.dumps(invalid_signup_notifications_stream_id))
         result = self.client_patch("/json/realm", req)
         self.assert_json_error(result, "Invalid stream id")
         realm = get_realm("zulip")

@@ -22,11 +22,7 @@ def api_zapier_webhook(
         # label for users to be able to distinguish between different Zulip
         # bots and API keys in their UI
         return json_success(
-            {
-                "full_name": user_profile.full_name,
-                "email": user_profile.email,
-                "id": user_profile.id,
-            },
+            {"full_name": user_profile.full_name, "email": user_profile.email, "id": user_profile.id},
         )
 
     topic = payload.get("topic")

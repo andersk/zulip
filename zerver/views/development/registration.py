@@ -48,9 +48,7 @@ def register_development_realm(request: HttpRequest) -> HttpResponse:
     name = f"user-{count}"
     email = f"{name}@zulip.com"
     realm_name = f"realm-{count}"
-    prereg = create_preregistration_user(
-        email, request, realm_creation=True, password_required=False,
-    )
+    prereg = create_preregistration_user(email, request, realm_creation=True, password_required=False)
     activation_url = create_confirmation_link(prereg, Confirmation.REALM_CREATION)
     key = activation_url.split("/")[-1]
     # Need to add test data to POST request as it doesnt originally contain the required parameters

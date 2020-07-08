@@ -61,9 +61,7 @@ def add_request_metadata(report: Dict[str, Any], request: HttpRequest) -> None:
     exception_filter = get_exception_reporter_filter(request)
     try:
         report["data"] = (
-            exception_filter.get_post_parameters(request)
-            if request.method == "POST"
-            else request.GET
+            exception_filter.get_post_parameters(request) if request.method == "POST" else request.GET
         )
     except Exception:
         # exception_filter.get_post_parameters will throw

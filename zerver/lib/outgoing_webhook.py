@@ -56,10 +56,7 @@ class GenericOutgoingWebhookService(OutgoingWebhookServiceInterface):
         it themselves).
         """
         message_dict = MessageDict.finalize_payload(
-            event["message"],
-            apply_markdown=False,
-            client_gravatar=False,
-            keep_rendered_content=True,
+            event["message"], apply_markdown=False, client_gravatar=False, keep_rendered_content=True,
         )
 
         request_data = {
@@ -273,9 +270,7 @@ def request_retry(event: Dict[str, Any], failure_message: Optional[str] = None) 
     retry_event("outgoing_webhooks", event, failure_processor)
 
 
-def process_success_response(
-    event: Dict[str, Any], service_handler: Any, response: Response,
-) -> None:
+def process_success_response(event: Dict[str, Any], service_handler: Any, response: Response) -> None:
     try:
         response_json = json.loads(response.text)
     except ValueError:

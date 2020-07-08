@@ -21,10 +21,7 @@ class Migration(migrations.Migration):
                         auto_created=True, primary_key=True, serialize=False, verbose_name="ID",
                     ),
                 ),
-                (
-                    "timestamp",
-                    models.DateTimeField(db_index=True, default=django.utils.timezone.now),
-                ),
+                ("timestamp", models.DateTimeField(db_index=True, default=django.utils.timezone.now)),
                 ("restored", models.BooleanField(db_index=True, default=False)),
                 ("type", models.PositiveSmallIntegerField(db_index=True)),
                 (

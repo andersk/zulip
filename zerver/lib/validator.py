@@ -142,9 +142,7 @@ def check_color(var_name: str, val: object) -> str:
     valid_color_pattern = re.compile(r"^#([a-fA-F0-9]{3,6})$")
     matched_results = valid_color_pattern.match(s)
     if not matched_results:
-        raise ValidationError(
-            _("{var_name} is not a valid hex color code").format(var_name=var_name),
-        )
+        raise ValidationError(_("{var_name} is not a valid hex color code").format(var_name=var_name))
     return s
 
 

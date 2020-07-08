@@ -585,9 +585,7 @@ class ImportExportTest(ZulipTestCase):
         )
         message = Message.objects.last()
         consented_user_ids = [self.example_user(user).id for user in ["iago", "hamlet"]]
-        do_add_reaction(
-            self.example_user("iago"), message, "outbox", "1f4e4", Reaction.UNICODE_EMOJI,
-        )
+        do_add_reaction(self.example_user("iago"), message, "outbox", "1f4e4", Reaction.UNICODE_EMOJI)
         do_add_reaction(
             self.example_user("hamlet"), message, "outbox", "1f4e4", Reaction.UNICODE_EMOJI,
         )
@@ -664,9 +662,7 @@ class ImportExportTest(ZulipTestCase):
         )
         pm_query = Q(recipient__in=pm_recipients) | Q(sender__in=consented_user_ids)
         exported_pm_ids = (
-            Message.objects.filter(pm_query)
-            .values_list("id", flat=True)
-            .values_list("id", flat=True)
+            Message.objects.filter(pm_query).values_list("id", flat=True).values_list("id", flat=True)
         )
 
         # Third huddle is not exported since none of the members gave consent
@@ -675,9 +671,7 @@ class ImportExportTest(ZulipTestCase):
         )
         pm_query = Q(recipient__in=huddle_recipients) | Q(sender__in=consented_user_ids)
         exported_huddle_ids = (
-            Message.objects.filter(pm_query)
-            .values_list("id", flat=True)
-            .values_list("id", flat=True)
+            Message.objects.filter(pm_query).values_list("id", flat=True).values_list("id", flat=True)
         )
 
         exported_msg_ids = (
@@ -1009,9 +1003,7 @@ class ImportExportTest(ZulipTestCase):
         def get_user_group_mention(r: Realm) -> Set[Any]:
             user_group = UserGroup.objects.get(realm=r, name="hamletcharacters")
             data_usergroup_id = f'data-user-group-id="{user_group.id}"'
-            mention_message = get_stream_messages(r).get(
-                rendered_content__contains=data_usergroup_id,
-            )
+            mention_message = get_stream_messages(r).get(rendered_content__contains=data_usergroup_id)
             return mention_message.content
 
         assert_realm_values(get_user_group_mention)

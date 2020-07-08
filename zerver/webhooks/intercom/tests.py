@@ -209,9 +209,7 @@ New user created:
 
     def test_user_tag_deleted(self) -> None:
         expected_topic = "User: eeshangarg"
-        expected_message = (
-            "The tag `CSV Import - 2019-03-26 22:46:04 UTC` was removed from the user."
-        )
+        expected_message = "The tag `CSV Import - 2019-03-26 22:46:04 UTC` was removed from the user."
 
         self.send_and_test_stream_message(
             "user_tag_deleted", expected_topic, expected_message,

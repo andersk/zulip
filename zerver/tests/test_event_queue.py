@@ -331,18 +331,13 @@ class MissedMessageNotificationsTest(ZulipTestCase):
         # Fetch the Denmark stream for testing
         stream = get_stream("Denmark", user_profile.realm)
         sub = Subscription.objects.get(
-            user_profile=user_profile,
-            recipient__type=Recipient.STREAM,
-            recipient__type_id=stream.id,
+            user_profile=user_profile, recipient__type=Recipient.STREAM, recipient__type_id=stream.id,
         )
 
         self.login_user(user_profile)
 
         def change_subscription_properties(
-            user_profile: UserProfile,
-            stream: Stream,
-            sub: Subscription,
-            properties: Dict[str, bool],
+            user_profile: UserProfile, stream: Stream, sub: Subscription, properties: Dict[str, bool],
         ) -> None:
             for property_name, value in properties.items():
                 do_change_subscription_property(user_profile, sub, stream, property_name, value)
@@ -768,9 +763,7 @@ class FileReloadLogicTest(ZulipTestCase):
         with self.settings(
             JSON_PERSISTENT_QUEUE_FILENAME_PATTERN="/home/zulip/tornado/event_queues%s.json",
         ):
-            self.assertEqual(
-                persistent_queue_filename(9993), "/home/zulip/tornado/event_queues.json",
-            )
+            self.assertEqual(persistent_queue_filename(9993), "/home/zulip/tornado/event_queues.json")
             self.assertEqual(
                 persistent_queue_filename(9993, last=True),
                 "/home/zulip/tornado/event_queues.json.last",

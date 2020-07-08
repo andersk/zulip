@@ -339,9 +339,7 @@ def build_customprofilefields_values(
             continue
         custom_field_value = CustomProfileFieldValue(id=custom_field_id, value=value["value"])
 
-        custom_field_value_dict = model_to_dict(
-            custom_field_value, exclude=["user_profile", "field"],
-        )
+        custom_field_value_dict = model_to_dict(custom_field_value, exclude=["user_profile", "field"])
         custom_field_value_dict["user_profile"] = user_id
         custom_field_value_dict["field"] = slack_custom_field_name_to_zulip_custom_field_id[field]
 

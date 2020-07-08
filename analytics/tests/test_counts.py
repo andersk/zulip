@@ -423,9 +423,7 @@ class TestCountStats(AnalyticsTestCase):
         # more than 1 realm, and the time bounds (time_start and time_end in
         # the queries).
         self.second_realm = Realm.objects.create(
-            string_id="second-realm",
-            name="Second Realm",
-            date_created=self.TIME_ZERO - 2 * self.DAY,
+            string_id="second-realm", name="Second Realm", date_created=self.TIME_ZERO - 2 * self.DAY,
         )
         for minutes_ago in [0, 1, 61, 60 * 24 + 1]:
             creation_time = self.TIME_ZERO - minutes_ago * self.MINUTE
@@ -898,9 +896,7 @@ class TestCountStats(AnalyticsTestCase):
             ["value", "subgroup", "stream"],
             [[1, "false", stream1], [1, "true", stream1]],
         )
-        self.assertTableState(
-            RealmCount, ["value", "subgroup", "realm"], [[1, "false"], [1, "true"]],
-        )
+        self.assertTableState(RealmCount, ["value", "subgroup", "realm"], [[1, "false"], [1, "true"]])
         # No aggregation to InstallationCount with realm constraint
         self.assertTableState(InstallationCount, ["value", "subgroup"], [])
         self.assertTableState(UserCount, [], [])
@@ -1540,11 +1536,7 @@ class TestActiveUsersAudit(AnalyticsTestCase):
         self.assertTableState(
             RealmCount,
             ["value", "subgroup", "realm"],
-            [
-                [2, "false", self.default_realm],
-                [1, "false", second_realm],
-                [1, "true", second_realm],
-            ],
+            [[2, "false", self.default_realm], [1, "false", second_realm], [1, "true", second_realm]],
         )
         self.assertTableState(InstallationCount, ["value", "subgroup"], [[3, "false"], [1, "true"]])
         self.assertTableState(StreamCount, [], [])

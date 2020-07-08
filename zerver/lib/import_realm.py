@@ -676,9 +676,7 @@ def import_uploads(
         records: List[Dict[str, Any]] = ujson.load(records_file)
     timestamp = datetime_to_timestamp(timezone_now())
 
-    re_map_foreign_keys_internal(
-        records, "records", "realm_id", related_table="realm", id_field=True,
-    )
+    re_map_foreign_keys_internal(records, "records", "realm_id", related_table="realm", id_field=True)
     if not processing_emojis and not processing_realm_icons:
         re_map_foreign_keys_internal(
             records, "records", "user_profile_id", related_table="user_profile", id_field=True,
@@ -1007,9 +1005,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
         re_map_foreign_keys(
             data, "zerver_realmauditlog", "modified_user", related_table="user_profile",
         )
-        re_map_foreign_keys(
-            data, "zerver_realmauditlog", "acting_user", related_table="user_profile",
-        )
+        re_map_foreign_keys(data, "zerver_realmauditlog", "acting_user", related_table="user_profile")
         re_map_foreign_keys(data, "zerver_realmauditlog", "modified_stream", related_table="stream")
         update_model_ids(RealmAuditLog, data, related_table="realmauditlog")
         bulk_import_model(data, RealmAuditLog)
@@ -1073,9 +1069,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
         bulk_import_model(data, BotStorageData)
 
     if "zerver_botconfigdata" in data:
-        re_map_foreign_keys(
-            data, "zerver_botconfigdata", "bot_profile", related_table="user_profile",
-        )
+        re_map_foreign_keys(data, "zerver_botconfigdata", "bot_profile", related_table="user_profile")
         update_model_ids(BotConfigData, data, "botconfigdata")
         bulk_import_model(data, BotConfigData)
 

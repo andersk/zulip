@@ -30,9 +30,7 @@ def get_message_body(payload: Dict[str, Dict[str, Any]]) -> str:
         )
 
     if recipients.get("signed"):
-        text = WAS_JUST_SIGNED_BY.format(
-            signed_recipients=get_recipients_text(recipients["signed"]),
-        )
+        text = WAS_JUST_SIGNED_BY.format(signed_recipients=get_recipients_text(recipients["signed"]))
 
         if recipients_text:
             recipients_text = f"{recipients_text}, and {text}"

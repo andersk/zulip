@@ -117,9 +117,7 @@ From image editing program:
 
         message_ids = do_send_messages(messages)
 
-        preview_message = Message.objects.get(
-            id__in=message_ids, content__icontains="image previews",
-        )
+        preview_message = Message.objects.get(id__in=message_ids, content__icontains="image previews")
         (emoji_code, reaction_type) = emoji_name_to_emoji_code(realm, "whale")
         do_add_reaction(starr, preview_message, "whale", emoji_code, reaction_type)
 

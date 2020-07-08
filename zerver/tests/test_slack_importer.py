@@ -78,9 +78,7 @@ class SlackImporter(ZulipTestCase):
     def test_get_slack_api_data(self, mock_get: mock.Mock) -> None:
         token = "xoxp-valid-token"
         slack_user_list_url = "https://slack.com/api/users.list"
-        self.assertEqual(
-            get_slack_api_data(slack_user_list_url, "members", token=token), "user_data",
-        )
+        self.assertEqual(get_slack_api_data(slack_user_list_url, "members", token=token), "user_data")
         token = "xoxp-invalid-token"
         with self.assertRaises(Exception) as invalid:
             get_slack_api_data(slack_user_list_url, "members", token=token)

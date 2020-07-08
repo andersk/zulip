@@ -46,9 +46,7 @@ def set_realm_admins_as_realm_owners(apps: StateApps, schema_editor: DatabaseSch
 
     objects_to_create = []
 
-    for user in UserProfile.objects.filter(
-        is_active=True, role=UserProfile.ROLE_REALM_ADMINISTRATOR,
-    ):
+    for user in UserProfile.objects.filter(is_active=True, role=UserProfile.ROLE_REALM_ADMINISTRATOR):
         user.role = UserProfile.ROLE_REALM_OWNER
         user.save(update_fields=["role"])
         audit_log_entry = RealmAuditLog(

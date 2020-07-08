@@ -56,9 +56,7 @@ class EmoticonTranslation(Preprocessor):
     def handleMatch(self, match: Match[str]) -> List[str]:
         rows = [
             ROW_HTML.format(
-                emoticon=emoticon,
-                name=name.strip(":"),
-                codepoint=name_to_codepoint[name.strip(":")],
+                emoticon=emoticon, name=name.strip(":"), codepoint=name_to_codepoint[name.strip(":")],
             )
             for emoticon, name in EMOTICON_CONVERSIONS.items()
         ]

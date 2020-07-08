@@ -22,10 +22,7 @@ class HelloSignHookTests(WebhookTestCase):
         expected_topic = "NDA with Acme Co."
         expected_message = "The `NDA with Acme Co.` document was just signed by Jill."
         self.send_and_test_stream_message(
-            "signatures_signed_by_one_signatory",
-            expected_topic,
-            expected_message,
-            content_type=None,
+            "signatures_signed_by_one_signatory", expected_topic, expected_message, content_type=None,
         )
 
     def test_signatures_message_with_four_signatories(self) -> None:

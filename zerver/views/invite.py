@@ -22,10 +22,7 @@ from zerver.models import MultiuseInvite, PreregistrationUser, Stream, UserProfi
 
 
 def check_if_owner_required(invited_as: int, user_profile: UserProfile) -> None:
-    if (
-        invited_as == PreregistrationUser.INVITE_AS["REALM_OWNER"]
-        and not user_profile.is_realm_owner
-    ):
+    if invited_as == PreregistrationUser.INVITE_AS["REALM_OWNER"] and not user_profile.is_realm_owner:
         raise OrganizationOwnerRequired()
 
 

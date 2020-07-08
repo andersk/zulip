@@ -59,11 +59,7 @@ link_mapping = {
         "Custom profile fields",
         "/#organization/profile-field-settings",
     ],
-    "invites-list-admin": [
-        "Manage organization",
-        "Invitations",
-        "/#organization/invites-list-admin",
-    ],
+    "invites-list-admin": ["Manage organization", "Invitations", "/#organization/invites-list-admin"],
     "data-exports-admin": [
         "Manage organization",
         "Data exports",

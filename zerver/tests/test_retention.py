@@ -489,9 +489,7 @@ class TestArchivingSubMessages(ArchiveMessagesTestingBase):
 
         self.assertEqual(
             set(
-                ArchivedSubMessage.objects.filter(id__in=submessage_ids).values_list(
-                    "id", flat=True,
-                ),
+                ArchivedSubMessage.objects.filter(id__in=submessage_ids).values_list("id", flat=True),
             ),
             set(submessage_ids),
         )
@@ -695,9 +693,7 @@ class MoveMessageToArchiveGeneral(MoveMessageToArchiveBase):
             self.assertEqual(
                 set(attachment_id_to_message_ids[attachment_id]),
                 set(
-                    Message.objects.filter(attachment__id=attachment_id).values_list(
-                        "id", flat=True,
-                    ),
+                    Message.objects.filter(attachment__id=attachment_id).values_list("id", flat=True),
                 ),
             )
 

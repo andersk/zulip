@@ -380,8 +380,7 @@ class PreviewTestCase(ZulipTestCase):
                     queue_json_publish(*args, **kwargs)
                     msg = Message.objects.select_related("sender").get(id=msg_id)
                     self.assertIn(
-                        f'<a href="{edited_url}" title="The Rock">The Rock</a>',
-                        msg.rendered_content,
+                        f'<a href="{edited_url}" title="The Rock">The Rock</a>', msg.rendered_content,
                     )
 
         with mock.patch(
@@ -523,9 +522,7 @@ class PreviewTestCase(ZulipTestCase):
             event = patched.call_args[0][1]
 
         # HTML without the og:image metadata
-        html = "\n".join(
-            line for line in self.open_graph_html.splitlines() if "og:image" not in line
-        )
+        html = "\n".join(line for line in self.open_graph_html.splitlines() if "og:image" not in line)
         mocked_response = mock.Mock(side_effect=self.create_mock_response(url, html=html))
         with self.settings(TEST_SUITE=False, CACHES=TEST_CACHES):
             with mock.patch("requests.get", mocked_response):

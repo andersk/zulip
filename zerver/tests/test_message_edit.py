@@ -84,9 +84,7 @@ class EditMessageTest(ZulipTestCase):
         message_ids.append(
             self.send_stream_message(self.notification_bot(), stream_name, "Message three"),
         )
-        messages = [
-            Message.objects.select_related().get(id=message_id) for message_id in message_ids
-        ]
+        messages = [Message.objects.select_related().get(id=message_id) for message_id in message_ids]
 
         # Check number of queries performed
         with queries_captured() as queries:
@@ -743,17 +741,13 @@ class EditMessageTest(ZulipTestCase):
 
         users_to_be_notified = list(map(notify, [hamlet.id, cordelia.id]))
         # Edit topic of a message sent before Cordelia subscribed the stream
-        do_update_message_topic_success(
-            cordelia, message, "Othello eats apple", users_to_be_notified,
-        )
+        do_update_message_topic_success(cordelia, message, "Othello eats apple", users_to_be_notified)
 
         # If Cordelia is long-term idle, she doesn't get a notification.
         cordelia.long_term_idle = True
         cordelia.save()
         users_to_be_notified = list(map(notify, [hamlet.id]))
-        do_update_message_topic_success(
-            cordelia, message, "Another topic idle", users_to_be_notified,
-        )
+        do_update_message_topic_success(cordelia, message, "Another topic idle", users_to_be_notified)
         cordelia.long_term_idle = False
         cordelia.save()
 
@@ -1050,8 +1044,7 @@ class EditMessageTest(ZulipTestCase):
         )
 
         self.assertEqual(
-            has_message_access(guest_user, Message.objects.get(id=msg_id_to_test_acesss), None),
-            True,
+            has_message_access(guest_user, Message.objects.get(id=msg_id_to_test_acesss), None), True,
         )
         self.assertEqual(
             has_message_access(non_guest_user, Message.objects.get(id=msg_id_to_test_acesss), None),

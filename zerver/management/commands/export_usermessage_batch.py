@@ -21,9 +21,7 @@ class Command(BaseCommand):
             default=None,
             help="Path to find messages.json archives",
         )
-        parser.add_argument(
-            "--thread", dest="thread", action="store", default=None, help="Thread ID",
-        )
+        parser.add_argument("--thread", dest="thread", action="store", default=None, help="Thread ID")
         parser.add_argument(
             "--consent-message-id",
             dest="consent_message_id",

@@ -10,8 +10,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="realm",
-            name="description",
-            field=models.TextField(max_length=100, null=True),
+            model_name="realm", name="description", field=models.TextField(max_length=100, null=True),
         ),
     ]

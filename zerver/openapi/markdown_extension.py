@@ -104,9 +104,7 @@ def extract_code_example(
     return extract_code_example(source, snippet, example_regex)
 
 
-def render_python_code_example(
-    function: str, admin_config: bool = False, **kwargs: Any
-) -> List[str]:
+def render_python_code_example(function: str, admin_config: bool = False, **kwargs: Any) -> List[str]:
     method = zerver.openapi.python_examples.TEST_FUNCTIONS[function]
     function_source_lines = inspect.getsourcelines(method)[0]
 
@@ -276,16 +274,14 @@ def generate_curl_example(
             authentication_required = True
         else:
             raise AssertionError(
-                "Unhandled global securityScheme."
-                + " Please update the code to handle this scheme.",
+                "Unhandled global securityScheme." + " Please update the code to handle this scheme.",
             )
     elif operation_security == []:
         if operation in insecure_operations:
             authentication_required = False
         else:
             raise AssertionError(
-                "Unknown operation without a securityScheme. "
-                + "Please update insecure_operations.",
+                "Unknown operation without a securityScheme. " + "Please update insecure_operations.",
             )
     else:
         raise AssertionError(

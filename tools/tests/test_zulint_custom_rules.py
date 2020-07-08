@@ -37,8 +37,7 @@ class TestRuleList(TestCase):
             for path in rule.get("include_only", {}):
                 if not os.path.splitext(path)[1]:
                     self.assertTrue(
-                        path.endswith("/"),
-                        f"The path '{path}' should end with '/'. {CHECK_MESSAGE}",
+                        path.endswith("/"), f"The path '{path}' should end with '/'. {CHECK_MESSAGE}",
                     )
 
     def test_rule_patterns(self) -> None:
@@ -49,10 +48,7 @@ class TestRuleList(TestCase):
             for line in rule.get("good_lines", []):
                 # create=True is superfluous when mocking built-ins in Python >= 3.5
                 with patch(
-                    "builtins.open",
-                    return_value=StringIO(line + "\n\n"),
-                    create=True,
-                    autospec=True,
+                    "builtins.open", return_value=StringIO(line + "\n\n"), create=True, autospec=True,
                 ):
                     self.assertFalse(
                         RuleList([], [rule]).custom_check_file("foo.bar", "baz", ""),
@@ -62,10 +58,7 @@ class TestRuleList(TestCase):
             for line in rule.get("bad_lines", []):
                 # create=True is superfluous when mocking built-ins in Python >= 3.5
                 with patch(
-                    "builtins.open",
-                    return_value=StringIO(line + "\n\n"),
-                    create=True,
-                    autospec=True,
+                    "builtins.open", return_value=StringIO(line + "\n\n"), create=True, autospec=True,
                 ), patch("builtins.print"):
                     filename = list(rule.get("include_only", {"foo.bar"}))[0]
                     self.assertTrue(

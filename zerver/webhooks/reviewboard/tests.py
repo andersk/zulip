@@ -17,17 +17,13 @@ class ReviewBoardHookTests(WebhookTestCase):
         expected_topic = "Scheduler"
         expected_message = "**eeshangarg** opened [#2: Initial commit](https://rbcommons.com/s/zulip/r/2/):\n\n``` quote\n**Description**: Initial commit\n**Status**: pending\n**Target people**: **drsbgarg**, **johndoe**, and **janedoe**\n**Branch**: master\n```"
         self.send_and_test_stream_message(
-            "review_request_published__with_multiple_target_people",
-            expected_topic,
-            expected_message,
+            "review_request_published__with_multiple_target_people", expected_topic, expected_message,
         )
 
     def test_review_request_reopened(self) -> None:
         expected_topic = "Scheduler"
         expected_message = "**eeshangarg** reopened [#1: Initial commit (first iteration)](https://rbcommons.com/s/zulip/r/1/):\n\n``` quote\n**Description**: Initial commit (first iteration)\n**Status**: pending\n**Target people**: **drsbgarg**\n**Branch**: master\n```"
-        self.send_and_test_stream_message(
-            "review_request_reopened", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("review_request_reopened", expected_topic, expected_message)
 
     def test_review_request_closed(self) -> None:
         expected_topic = "Scheduler"

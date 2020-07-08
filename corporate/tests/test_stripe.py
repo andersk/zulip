@@ -2384,9 +2384,7 @@ class BillingHelpersTest(ZulipTestCase):
         customer.save()
         # Customer exists, replace payment source
         with patch("corporate.lib.stripe.do_replace_payment_source") as mocked3:
-            returned_customer = update_or_create_stripe_customer(
-                self.example_user("hamlet"), "token",
-            )
+            returned_customer = update_or_create_stripe_customer(self.example_user("hamlet"), "token")
         mocked3.assert_called()
         self.assertEqual(returned_customer, customer)
 

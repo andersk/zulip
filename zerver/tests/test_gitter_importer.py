@@ -59,9 +59,7 @@ class GitterImporter(ZulipTestCase):
         self.assertEqual({1, 2}, exported_recipient_type)
 
         # test subscription
-        exported_subscription_userprofile = self.get_set(
-            realm["zerver_subscription"], "user_profile",
-        )
+        exported_subscription_userprofile = self.get_set(realm["zerver_subscription"], "user_profile")
         self.assertEqual({0, 1}, exported_subscription_userprofile)
         exported_subscription_recipient = self.get_set(realm["zerver_subscription"], "recipient")
         self.assertEqual(len(exported_subscription_recipient), 3)

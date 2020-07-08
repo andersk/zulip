@@ -914,8 +914,7 @@ class HandlePushNotificationTest(PushNotificationTest):
         with self.settings(PUSH_NOTIFICATION_BOUNCER_URL=True), mock.patch(
             "zerver.lib.push_notifications.get_message_payload_apns", return_value={"apns": True},
         ), mock.patch(
-            "zerver.lib.push_notifications.get_message_payload_gcm",
-            return_value=({"gcm": True}, {}),
+            "zerver.lib.push_notifications.get_message_payload_gcm", return_value=({"gcm": True}, {}),
         ), mock.patch(
             "zerver.lib.push_notifications" ".send_notifications_to_bouncer",
         ) as mock_send:
@@ -947,8 +946,7 @@ class HandlePushNotificationTest(PushNotificationTest):
         with mock.patch(
             "zerver.lib.push_notifications.get_message_payload_apns", return_value={"apns": True},
         ), mock.patch(
-            "zerver.lib.push_notifications.get_message_payload_gcm",
-            return_value=({"gcm": True}, {}),
+            "zerver.lib.push_notifications.get_message_payload_gcm", return_value=({"gcm": True}, {}),
         ), mock.patch(
             "zerver.lib.push_notifications" ".send_apple_push_notification",
         ) as mock_send_apple, mock.patch(
@@ -1108,8 +1106,7 @@ class HandlePushNotificationTest(PushNotificationTest):
         with mock.patch(
             "zerver.lib.push_notifications.get_message_payload_apns", return_value={"apns": True},
         ), mock.patch(
-            "zerver.lib.push_notifications.get_message_payload_gcm",
-            return_value=({"gcm": True}, {}),
+            "zerver.lib.push_notifications.get_message_payload_gcm", return_value=({"gcm": True}, {}),
         ), mock.patch(
             "zerver.lib.push_notifications" ".send_apple_push_notification",
         ) as mock_send_apple, mock.patch(
@@ -1128,9 +1125,7 @@ class HandlePushNotificationTest(PushNotificationTest):
 
 class TestAPNs(PushNotificationTest):
     def devices(self) -> List[DeviceToken]:
-        return list(
-            PushDeviceToken.objects.filter(user=self.user_profile, kind=PushDeviceToken.APNS),
-        )
+        return list(PushDeviceToken.objects.filter(user=self.user_profile, kind=PushDeviceToken.APNS))
 
     def send(
         self, devices: Optional[List[PushDeviceToken]] = None, payload_data: Dict[str, Any] = {},
@@ -1288,9 +1283,7 @@ class TestAPNs(PushNotificationTest):
         # Similarly, test APNs badge count for stream mention.
         stream = self.subscribe(user_profile, "Denmark")
         message_ids += [
-            self.send_stream_message(
-                self.sender, stream.name, "Hi, @**Othello, the Moor of Venice**",
-            )
+            self.send_stream_message(self.sender, stream.name, "Hi, @**Othello, the Moor of Venice**")
             for i in range(2)
         ]
         self.assertEqual(get_apns_badge_count(user_profile), 5)

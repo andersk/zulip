@@ -42,9 +42,7 @@ def get_config(section: str, key: str, default_value: str) -> str:
 
 TORNADO_PROCESSES = int(get_config("application_server", "tornado_processes", "1"))
 
-output = subprocess.check_output(
-    ["/usr/sbin/rabbitmqctl", "list_consumers"], universal_newlines=True,
-)
+output = subprocess.check_output(["/usr/sbin/rabbitmqctl", "list_consumers"], universal_newlines=True)
 
 consumers: Dict[str, int] = defaultdict(int)
 

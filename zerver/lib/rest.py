@@ -128,9 +128,7 @@ def rest_dispatch(request: HttpRequest, **kwargs: Any) -> HttpResponse:
             # unfortunately need that in the React Native mobile apps,
             # because there's no way to set HTTP_AUTHORIZATION in
             # React Native.  See last block for rate limiting notes.
-            target_function = authenticated_uploads_api_view(skip_rate_limiting=True)(
-                target_function,
-            )
+            target_function = authenticated_uploads_api_view(skip_rate_limiting=True)(target_function)
         # /json views (web client) validate with a session token (cookie)
         elif not request.path.startswith("/api") and request.user.is_authenticated:
             # Authenticated via sessions framework, only CSRF check needed

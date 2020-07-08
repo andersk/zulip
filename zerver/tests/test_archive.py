@@ -40,9 +40,7 @@ class GlobalPublicStreamTest(ZulipTestCase):
             self.send_stream_message(
                 self.example_user("iago"), "Test Public Archives", msg, "TopicGlobal",
             )
-            return self.client_get(
-                "/archive/streams/" + str(test_stream.id) + "/topics/TopicGlobal",
-            )
+            return self.client_get("/archive/streams/" + str(test_stream.id) + "/topics/TopicGlobal")
 
         result = send_msg_and_get_result("Test Message 1")
         self.assert_in_success_response(["Test Message 1"], result)

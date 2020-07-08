@@ -278,14 +278,10 @@ class UserPresenceTests(ZulipTestCase):
             )
         self.assert_json_success(result)
         self.assertEqual(UserActivityInterval.objects.filter(user_profile=user_profile).count(), 2)
-        interval = UserActivityInterval.objects.filter(user_profile=user_profile).order_by("start")[
-            0
-        ]
+        interval = UserActivityInterval.objects.filter(user_profile=user_profile).order_by("start")[0]
         self.assertEqual(interval.start, time_zero)
         self.assertEqual(interval.end, second_time + UserActivityInterval.MIN_INTERVAL_LENGTH)
-        interval = UserActivityInterval.objects.filter(user_profile=user_profile).order_by("start")[
-            1
-        ]
+        interval = UserActivityInterval.objects.filter(user_profile=user_profile).order_by("start")[1]
         self.assertEqual(interval.start, third_time)
         self.assertEqual(interval.end, third_time + UserActivityInterval.MIN_INTERVAL_LENGTH)
 
@@ -312,9 +308,7 @@ class UserPresenceTests(ZulipTestCase):
         )
         self.assertEqual(
             seconds_usage_between(
-                user_profile,
-                time_zero + timedelta(seconds=100),
-                third_time - timedelta(seconds=100),
+                user_profile, time_zero + timedelta(seconds=100), third_time - timedelta(seconds=100),
             ).total_seconds(),
             1400,
         )
@@ -442,10 +436,7 @@ class SingleUserPresenceTests(ZulipTestCase):
             "/json/users/me/presence", {"status": "active"}, HTTP_USER_AGENT="ZulipDesktop/1.0",
         )
         result = self.api_post(
-            user,
-            "/api/v1/users/me/presence",
-            {"status": "idle"},
-            HTTP_USER_AGENT="ZulipAndroid/1.0",
+            user, "/api/v1/users/me/presence", {"status": "idle"}, HTTP_USER_AGENT="ZulipAndroid/1.0",
         )
         self.assert_json_success(result)
 
@@ -502,10 +493,7 @@ class UserPresenceAggregationTests(ZulipTestCase):
             )
         with mock.patch(timezone_util, return_value=validate_time - datetime.timedelta(seconds=7)):
             latest_result = self.api_post(
-                user,
-                "/api/v1/users/me/presence",
-                {"status": status},
-                HTTP_USER_AGENT="ZulipIOS/1.0",
+                user, "/api/v1/users/me/presence", {"status": status}, HTTP_USER_AGENT="ZulipIOS/1.0",
             )
         latest_result_dict = latest_result.json()
         self.assertDictEqual(

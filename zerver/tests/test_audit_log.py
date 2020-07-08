@@ -48,9 +48,7 @@ class TestRealmAuditLog(ZulipTestCase):
     def test_user_activation(self) -> None:
         realm = get_realm("zulip")
         now = timezone_now()
-        user = do_create_user(
-            "email", "password", realm, "full_name", "short_name", acting_user=None,
-        )
+        user = do_create_user("email", "password", realm, "full_name", "short_name", acting_user=None)
         do_deactivate_user(user, acting_user=user)
         do_activate_user(user, acting_user=user)
         do_deactivate_user(user, acting_user=user)
@@ -285,16 +283,12 @@ class TestRealmAuditLog(ZulipTestCase):
     def test_realm_activation(self) -> None:
         realm = get_realm("zulip")
         do_deactivate_realm(realm)
-        log_entry = RealmAuditLog.objects.get(
-            realm=realm, event_type=RealmAuditLog.REALM_DEACTIVATED,
-        )
+        log_entry = RealmAuditLog.objects.get(realm=realm, event_type=RealmAuditLog.REALM_DEACTIVATED)
         extra_data = ujson.loads(log_entry.extra_data)
         self.check_role_count_schema(extra_data[RealmAuditLog.ROLE_COUNT])
 
         do_reactivate_realm(realm)
-        log_entry = RealmAuditLog.objects.get(
-            realm=realm, event_type=RealmAuditLog.REALM_REACTIVATED,
-        )
+        log_entry = RealmAuditLog.objects.get(realm=realm, event_type=RealmAuditLog.REALM_REACTIVATED)
         extra_data = ujson.loads(log_entry.extra_data)
         self.check_role_count_schema(extra_data[RealmAuditLog.ROLE_COUNT])
 
@@ -303,11 +297,7 @@ class TestRealmAuditLog(ZulipTestCase):
         realm = get_realm("zulip")
         user = self.example_user("hamlet")
         stream = create_stream_if_needed(
-            realm,
-            "test",
-            invite_only=False,
-            stream_description="Test Description",
-            acting_user=user,
+            realm, "test", invite_only=False, stream_description="Test Description", acting_user=user,
         )[0]
         self.assertEqual(
             RealmAuditLog.objects.filter(

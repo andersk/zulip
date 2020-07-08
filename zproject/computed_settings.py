@@ -607,11 +607,7 @@ default_template_engine_settings.update(
 
 non_html_template_engine_settings = deepcopy(base_template_engine_settings)
 non_html_template_engine_settings.update(
-    {
-        "NAME": "Jinja2_plaintext",
-        "DIRS": [os.path.join(DEPLOY_ROOT, "templates")],
-        "APP_DIRS": False,
-    },
+    {"NAME": "Jinja2_plaintext", "DIRS": [os.path.join(DEPLOY_ROOT, "templates")], "APP_DIRS": False},
 )
 non_html_template_engine_settings["OPTIONS"].update(
     {"autoescape": False, "trim_blocks": True, "lstrip_blocks": True},
@@ -1008,9 +1004,7 @@ SOCIAL_AUTH_GOOGLE_SECRET = SOCIAL_AUTH_GOOGLE_SECRET or GOOGLE_OAUTH2_CLIENT_SE
 
 if PRODUCTION:
     SOCIAL_AUTH_SAML_SP_PUBLIC_CERT = get_from_file_if_exists("/etc/zulip/saml/zulip-cert.crt")
-    SOCIAL_AUTH_SAML_SP_PRIVATE_KEY = get_from_file_if_exists(
-        "/etc/zulip/saml/zulip-private-key.key",
-    )
+    SOCIAL_AUTH_SAML_SP_PRIVATE_KEY = get_from_file_if_exists("/etc/zulip/saml/zulip-private-key.key")
 
 if "signatureAlgorithm" not in SOCIAL_AUTH_SAML_SECURITY_CONFIG:
     # If the configuration doesn't explicitly specify the algorithm,

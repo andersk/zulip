@@ -31,9 +31,7 @@ PUSH_COMMITS_MESSAGE_TEMPLATE_WITHOUT_COMMITTERS = (
 {commits_data}
 """
 )
-PUSH_DELETE_BRANCH_MESSAGE_TEMPLATE = (
-    "{user_name} [deleted]({compare_url}) the branch {branch_name}."
-)
+PUSH_DELETE_BRANCH_MESSAGE_TEMPLATE = "{user_name} [deleted]({compare_url}) the branch {branch_name}."
 PUSH_LOCAL_BRANCH_WITHOUT_COMMITS_MESSAGE_TEMPLATE = (
     "{user_name} [pushed]({compare_url}) " "the branch {branch_name}."
 )
@@ -48,9 +46,7 @@ CREATE_BRANCH_WITHOUT_URL_MESSAGE_TEMPLATE = "{user_name} created {branch_name} 
 REMOVE_BRANCH_MESSAGE_TEMPLATE = "{user_name} deleted branch {branch_name}."
 
 PULL_REQUEST_OR_ISSUE_MESSAGE_TEMPLATE = "{user_name} {action} [{type}{id}]({url})"
-PULL_REQUEST_OR_ISSUE_MESSAGE_TEMPLATE_WITH_TITLE = (
-    "{user_name} {action} [{type}{id} {title}]({url})"
-)
+PULL_REQUEST_OR_ISSUE_MESSAGE_TEMPLATE_WITH_TITLE = "{user_name} {action} [{type}{id} {title}]({url})"
 PULL_REQUEST_OR_ISSUE_ASSIGNEE_INFO_TEMPLATE = "(assigned to {assignee})"
 PULL_REQUEST_BRANCH_INFO_TEMPLATE = "from `{target}` to `{base}`"
 
@@ -182,9 +178,7 @@ def get_pull_request_event_message(
 
             assignees_string = ", ".join(usernames[:-1]) + " and " + usernames[-1]
 
-        assignee_info = PULL_REQUEST_OR_ISSUE_ASSIGNEE_INFO_TEMPLATE.format(
-            assignee=assignees_string,
-        )
+        assignee_info = PULL_REQUEST_OR_ISSUE_ASSIGNEE_INFO_TEMPLATE.format(assignee=assignees_string)
         main_message = f"{main_message} {assignee_info}"
 
     elif assignee:

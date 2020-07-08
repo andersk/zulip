@@ -99,12 +99,8 @@ Leo Franchià created [BUG-15: New bug with à hook](http://lfranchi.com:8080/br
 * **Priority**: Major
 * **Assignee**: no one
 """.strip()
-        self.send_and_test_stream_message(
-            "created_with_unicode_v1", expected_topic, expected_message,
-        )
-        self.send_and_test_stream_message(
-            "created_with_unicode_v2", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("created_with_unicode_v1", expected_topic, expected_message)
+        self.send_and_test_stream_message("created_with_unicode_v2", expected_topic, expected_message)
 
     def test_created_assignee(self) -> None:
         expected_topic = "TEST-4: Test Created Assignee"
@@ -167,7 +163,9 @@ Adding a comment. Oh, what a comment it is!
 
     def test_deleted(self) -> None:
         expected_topic = "BUG-15: New bug with hook"
-        expected_message = "Leo Franchi deleted [BUG-15: New bug with hook](http://lfranchi.com:8080/browse/BUG-15)."
+        expected_message = (
+            "Leo Franchi deleted [BUG-15: New bug with hook](http://lfranchi.com:8080/browse/BUG-15)."
+        )
         self.send_and_test_stream_message("deleted_v1", expected_topic, expected_message)
         self.send_and_test_stream_message("deleted_v2", expected_topic, expected_message)
 

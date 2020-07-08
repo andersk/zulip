@@ -885,9 +885,7 @@ def api_dev_list_users(request: HttpRequest) -> HttpResponse:
     return json_success(
         dict(
             direct_admins=[
-                dict(email=u.delivery_email, realm_uri=u.realm.uri)
-                for u in users
-                if u.is_realm_admin
+                dict(email=u.delivery_email, realm_uri=u.realm.uri) for u in users if u.is_realm_admin
             ],
             direct_users=[
                 dict(email=u.delivery_email, realm_uri=u.realm.uri)

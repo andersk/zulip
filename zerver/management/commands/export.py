@@ -143,9 +143,7 @@ class Command(ZulipBaseCommand):
         try:
             os.close(os.open(tarball_path, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o666))
         except FileExistsError:
-            raise CommandError(
-                f"Refusing to overwrite existing tarball: {tarball_path}. Aborting...",
-            )
+            raise CommandError(f"Refusing to overwrite existing tarball: {tarball_path}. Aborting...")
 
         print(f"\033[94mExporting realm\033[0m: {realm.string_id}")
 
@@ -178,9 +176,7 @@ class Command(ZulipBaseCommand):
             )
             for reaction in reactions:
                 if reaction.user_profile.realm != realm:
-                    raise CommandError(
-                        "Users from a different realm reacted to message. Aborting...",
-                    )
+                    raise CommandError("Users from a different realm reacted to message. Aborting...")
 
             print(f"\n\033[94mMessage content:\033[0m\n{message.content}\n")
 

@@ -281,9 +281,7 @@ class EventQueue:
 
         self.queue: Deque[Dict[str, Any]] = deque()
         self.next_event_id: int = 0
-        self.newest_pruned_id: Optional[
-            int
-        ] = -1  # will only be None for migration from old versions
+        self.newest_pruned_id: Optional[int] = -1  # will only be None for migration from old versions
         self.id: str = id
         self.virtual_events: Dict[str, Dict[str, Any]] = {}
 
@@ -750,9 +748,7 @@ def build_offline_notification(user_profile_id: int, message_id: int) -> Dict[st
     }
 
 
-def missedmessage_hook(
-    user_profile_id: int, client: ClientDescriptor, last_for_client: bool,
-) -> None:
+def missedmessage_hook(user_profile_id: int, client: ClientDescriptor, last_for_client: bool) -> None:
     """The receiver_is_off_zulip logic used to determine whether a user
     has no active client suffers from a somewhat fundamental race
     condition.  If the client is no longer on the Internet,

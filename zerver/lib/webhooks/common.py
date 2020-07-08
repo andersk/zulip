@@ -131,9 +131,7 @@ def validate_extract_webhook_http_header(
             integration_name=integration_name,
             support_email=FromAddress.SUPPORT,
         )
-        send_rate_limited_pm_notification_to_bot_owner(
-            request.user, request.user.realm, message_body,
-        )
+        send_rate_limited_pm_notification_to_bot_owner(request.user, request.user.realm, message_body)
 
         raise MissingHTTPEventHeader(header)
 

@@ -863,9 +863,7 @@ def handle_push_notification(user_profile_id: int, missed_message: Dict[str, Any
         PushDeviceToken.objects.filter(user=user_profile, kind=PushDeviceToken.GCM),
     )
 
-    apple_devices = list(
-        PushDeviceToken.objects.filter(user=user_profile, kind=PushDeviceToken.APNS),
-    )
+    apple_devices = list(PushDeviceToken.objects.filter(user=user_profile, kind=PushDeviceToken.APNS))
 
     if apple_devices:
         send_apple_push_notification(user_profile.id, apple_devices, apns_payload)

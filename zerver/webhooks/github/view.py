@@ -155,9 +155,7 @@ def get_issue_comment_body(payload: Dict[str, Any], include_title: bool = False)
 
 def get_fork_body(payload: Dict[str, Any]) -> str:
     forkee = payload["forkee"]
-    return "{} forked [{}]({}).".format(
-        get_sender_name(payload), forkee["name"], forkee["html_url"],
-    )
+    return "{} forked [{}]({}).".format(get_sender_name(payload), forkee["name"], forkee["html_url"])
 
 
 def get_deployment_body(payload: Dict[str, Any]) -> str:
@@ -170,9 +168,7 @@ def get_change_deployment_status_body(payload: Dict[str, Any]) -> str:
 
 def get_create_or_delete_body(payload: Dict[str, Any], action: str) -> str:
     ref_type = payload["ref_type"]
-    return "{} {} {} {}.".format(
-        get_sender_name(payload), action, ref_type, payload["ref"],
-    ).rstrip()
+    return "{} {} {} {}.".format(get_sender_name(payload), action, ref_type, payload["ref"]).rstrip()
 
 
 def get_commit_comment_body(payload: Dict[str, Any]) -> str:
@@ -249,9 +245,7 @@ def get_repository_body(payload: Dict[str, Any]) -> str:
 
 def get_add_team_body(payload: Dict[str, Any]) -> str:
     return "The repository [{}]({}) was added to team {}.".format(
-        get_repository_full_name(payload),
-        payload["repository"]["html_url"],
-        payload["team"]["name"],
+        get_repository_full_name(payload), payload["repository"]["html_url"], payload["team"]["name"],
     )
 
 
@@ -336,9 +330,7 @@ def get_pull_request_review_body(payload: Dict[str, Any], include_title: bool = 
     )
 
 
-def get_pull_request_review_comment_body(
-    payload: Dict[str, Any], include_title: bool = False,
-) -> str:
+def get_pull_request_review_comment_body(payload: Dict[str, Any], include_title: bool = False) -> str:
     action = payload["action"]
     message = None
     if action == "created":

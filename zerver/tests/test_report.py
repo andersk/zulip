@@ -34,11 +34,7 @@ class TestReport(ZulipTestCase):
         self.login("hamlet")
 
         params = dict(
-            time=5,
-            received=6,
-            displayed=7,
-            locally_echoed="true",
-            rendered_content_disparity="true",
+            time=5, received=6, displayed=7, locally_echoed="true", rendered_content_disparity="true",
         )
 
         stats_mock = StatsMock(self.settings)

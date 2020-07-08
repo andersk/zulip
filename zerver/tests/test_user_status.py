@@ -34,10 +34,7 @@ class UserStatusTest(ZulipTestCase):
         client2 = get_client("ZT")
 
         update_user_status(
-            user_profile_id=hamlet.id,
-            status=UserStatus.AWAY,
-            status_text=None,
-            client_id=client1.id,
+            user_profile_id=hamlet.id, status=UserStatus.AWAY, status_text=None, client_id=client1.id,
         )
 
         away_user_ids = get_away_user_ids(realm_id=realm_id)
@@ -93,10 +90,7 @@ class UserStatusTest(ZulipTestCase):
         # Now set away status for three different users across
         # two realms.
         update_user_status(
-            user_profile_id=hamlet.id,
-            status=UserStatus.AWAY,
-            status_text=None,
-            client_id=client1.id,
+            user_profile_id=hamlet.id, status=UserStatus.AWAY, status_text=None, client_id=client1.id,
         )
         update_user_status(
             user_profile_id=cordelia.id,

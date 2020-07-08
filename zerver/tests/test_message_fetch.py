@@ -227,7 +227,9 @@ class NarrowBuilderTest(ZulipTestCase):
         self._do_add_term_test(term, where_clause, params)
 
         term = dict(operator="is", operand="mentioned", negated=True)
-        where_clause = "WHERE NOT ((flags & %(flags_1)s) != %(param_1)s OR (flags & %(flags_2)s) != %(param_2)s)"
+        where_clause = (
+            "WHERE NOT ((flags & %(flags_1)s) != %(param_1)s OR (flags & %(flags_2)s) != %(param_2)s)"
+        )
         params = dict(
             flags_1=UserMessage.flags.mentioned.mask,
             param_1=0,
@@ -408,9 +410,7 @@ class NarrowBuilderTest(ZulipTestCase):
     @override_settings(USING_PGROONGA=True)
     def test_add_term_using_search_operator_and_negated_pgroonga(self) -> None:  # NEGATED
         term = dict(operator="search", operand='"french fries"', negated=True)
-        self._do_add_term_test(
-            term, "WHERE NOT (search_pgroonga &@~ escape_html(%(escape_html_1)s))",
-        )
+        self._do_add_term_test(term, "WHERE NOT (search_pgroonga &@~ escape_html(%(escape_html_1)s))")
 
     def test_add_term_using_has_operator_and_attachment_operand(self) -> None:
         term = dict(operator="has", operand="attachment")
@@ -1934,14 +1934,8 @@ class GetOldMessagesTest(ZulipTestCase):
 
         messages_to_search = [
             ("Gryffindor", "Hogwart's house which values courage, bravery, nerve, and chivalry"),
-            (
-                "Hufflepuff",
-                "Hogwart's house which values hard work, patience, justice, and loyalty.",
-            ),
-            (
-                "Ravenclaw",
-                "Hogwart's house which values intelligence, creativity, learning, and wit",
-            ),
+            ("Hufflepuff", "Hogwart's house which values hard work, patience, justice, and loyalty."),
+            ("Ravenclaw", "Hogwart's house which values intelligence, creativity, learning, and wit"),
             (
                 "Slytherin",
                 "Hogwart's house which  values ambition, cunning, leadership, and resourcefulness",
@@ -2630,9 +2624,7 @@ class GetOldMessagesTest(ZulipTestCase):
         )
         self.assertEqual(final_dict["content"], "<p>test content</p>")
 
-    def common_check_get_messages_query(
-        self, query_params: Dict[str, object], expected: str,
-    ) -> None:
+    def common_check_get_messages_query(self, query_params: Dict[str, object], expected: str) -> None:
         user_profile = self.example_user("hamlet")
         request = POSTRequestMock(query_params, user_profile)
         with queries_captured() as queries:
@@ -3026,8 +3018,7 @@ recipient_id = %(recipient_id_3)s AND upper(subject) = upper(%(param_2)s))\
         sql_template = "SELECT anon_1.message_id \nFROM (SELECT id AS message_id \nFROM zerver_message \nWHERE recipient_id = {scotland_recipient} ORDER BY zerver_message.id ASC \n LIMIT 10) AS anon_1 ORDER BY message_id ASC"
         sql = sql_template.format(**query_ids)
         self.common_check_get_messages_query(
-            {"anchor": 0, "num_before": 0, "num_after": 9, "narrow": '[["stream", "Scotland"]]'},
-            sql,
+            {"anchor": 0, "num_before": 0, "num_after": 9, "narrow": '[["stream", "Scotland"]]'}, sql,
         )
 
         sql_template = "SELECT anon_1.message_id \nFROM (SELECT id AS message_id \nFROM zerver_message \nWHERE recipient_id IN ({public_streams_recipents}) ORDER BY zerver_message.id ASC \n LIMIT 10) AS anon_1 ORDER BY message_id ASC"
@@ -3264,9 +3255,7 @@ class MessageHasKeywordsTest(ZulipTestCase):
         msg_contents = ["foo.org", "[bar](baz.gov)", "http://quux.ca"]
         for msg_content in msg_contents:
             msg_ids.append(
-                self.send_stream_message(
-                    self.example_user("hamlet"), "Denmark", content=msg_content,
-                ),
+                self.send_stream_message(self.example_user("hamlet"), "Denmark", content=msg_content),
             )
         msgs = [Message.objects.get(id=id) for id in msg_ids]
         self.assertTrue(all([msg.has_link for msg in msgs]))
@@ -3276,9 +3265,7 @@ class MessageHasKeywordsTest(ZulipTestCase):
         msg_contents = ["`example.org`", "``example.org```", "$$https://example.org$$", "foo"]
         for msg_content in msg_contents:
             msg_ids.append(
-                self.send_stream_message(
-                    self.example_user("hamlet"), "Denmark", content=msg_content,
-                ),
+                self.send_stream_message(self.example_user("hamlet"), "Denmark", content=msg_content),
             )
         msgs = [Message.objects.get(id=id) for id in msg_ids]
         self.assertFalse(all([msg.has_link for msg in msgs]))
@@ -3329,9 +3316,7 @@ class MessageHasKeywordsTest(ZulipTestCase):
         ]
         for msg_content in msg_contents:
             msg_ids.append(
-                self.send_stream_message(
-                    self.example_user("hamlet"), "Denmark", content=msg_content,
-                ),
+                self.send_stream_message(self.example_user("hamlet"), "Denmark", content=msg_content),
             )
         msgs = [Message.objects.get(id=id) for id in msg_ids]
         self.assertEqual([False, True, False, True], [msg.has_image for msg in msgs])

@@ -278,9 +278,7 @@ class MessageDict:
         del obj["sender_is_mirror_dummy"]
 
     @staticmethod
-    def sew_submessages_and_reactions_to_msgs(
-        messages: List[Dict[str, Any]],
-    ) -> List[Dict[str, Any]]:
+    def sew_submessages_and_reactions_to_msgs(messages: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         msg_ids = [msg["id"] for msg in messages]
         submessages = SubMessage.get_raw_db_rows(msg_ids)
         sew_messages_and_submessages(messages, submessages)
@@ -289,9 +287,7 @@ class MessageDict:
         return sew_messages_and_reactions(messages, reactions)
 
     @staticmethod
-    def to_dict_uncached(
-        messages: List[Message], realm_id: Optional[int] = None,
-    ) -> Dict[int, bytes]:
+    def to_dict_uncached(messages: List[Message], realm_id: Optional[int] = None) -> Dict[int, bytes]:
         messages_dict = MessageDict.to_dict_uncached_helper(messages, realm_id)
         encoded_messages = {msg["id"]: stringify_message_dict(msg) for msg in messages_dict}
         return encoded_messages
@@ -845,9 +841,7 @@ def aggregate_message_dict(
 
 
 def get_inactive_recipient_ids(user_profile: UserProfile) -> List[int]:
-    rows = (
-        get_stream_subscriptions_for_user(user_profile).filter(active=False).values("recipient_id")
-    )
+    rows = get_stream_subscriptions_for_user(user_profile).filter(active=False).values("recipient_id")
     inactive_recipient_ids = [row["recipient_id"] for row in rows]
     return inactive_recipient_ids
 

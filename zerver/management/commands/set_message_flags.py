@@ -38,9 +38,7 @@ class Command(ZulipBaseCommand):
             help="Mark all messages <= specific usermessage id",
         )
 
-        parser.add_argument(
-            "-m", "--email", dest="email", type=str, help="Email to set messages for",
-        )
+        parser.add_argument("-m", "--email", dest="email", type=str, help="Email to set messages for")
         self.add_realm_args(parser)
 
     def handle(self, *args: Any, **options: Any) -> None:

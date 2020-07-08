@@ -131,9 +131,7 @@ def get_presence_for_user(
     return get_status_dicts_for_rows(presence_rows, mobile_user_ids, slim_presence)
 
 
-def get_status_dict_by_realm(
-    realm_id: int, slim_presence: bool = False,
-) -> Dict[str, Dict[str, Any]]:
+def get_status_dict_by_realm(realm_id: int, slim_presence: bool = False) -> Dict[str, Dict[str, Any]]:
     two_weeks_ago = timezone_now() - datetime.timedelta(weeks=2)
     query = UserPresence.objects.filter(
         realm_id=realm_id,

@@ -895,9 +895,7 @@ def do_set_realm_message_deleting(realm: Realm, message_content_delete_limit_sec
     send_event(realm, event, active_user_ids(realm.id))
 
 
-def do_set_realm_notifications_stream(
-    realm: Realm, stream: Optional[Stream], stream_id: int,
-) -> None:
+def do_set_realm_notifications_stream(realm: Realm, stream: Optional[Stream], stream_id: int) -> None:
     realm.notifications_stream = stream
     realm.save(update_fields=["notifications_stream"])
     event = dict(type="realm", op="update", property="notifications_stream_id", value=stream_id)
@@ -1048,9 +1046,7 @@ def do_deactivate_user(
         send_event(user_profile.realm, event, bot_owner_user_ids(user_profile))
 
     if _cascade:
-        bot_profiles = UserProfile.objects.filter(
-            is_bot=True, is_active=True, bot_owner=user_profile,
-        )
+        bot_profiles = UserProfile.objects.filter(is_bot=True, is_active=True, bot_owner=user_profile)
         for profile in bot_profiles:
             do_deactivate_user(profile, acting_user=acting_user, _cascade=False)
 
@@ -1164,10 +1160,7 @@ def do_change_user_delivery_email(user_profile: UserProfile, new_email: str) -> 
 def do_start_email_change_process(user_profile: UserProfile, new_email: str) -> None:
     old_email = user_profile.delivery_email
     obj = EmailChangeStatus.objects.create(
-        new_email=new_email,
-        old_email=old_email,
-        user_profile=user_profile,
-        realm=user_profile.realm,
+        new_email=new_email, old_email=old_email, user_profile=user_profile, realm=user_profile.realm,
     )
 
     activation_url = create_confirmation_link(obj, Confirmation.EMAIL_CHANGE)
@@ -1195,9 +1188,7 @@ def compute_jabber_user_fullname(email: str) -> str:
     return email.split("@")[0] + " (XMPP)"
 
 
-@cache_with_key(
-    lambda realm, email, f: user_profile_by_email_cache_key(email), timeout=3600 * 24 * 7,
-)
+@cache_with_key(lambda realm, email, f: user_profile_by_email_cache_key(email), timeout=3600 * 24 * 7)
 def create_mirror_user_if_needed(
     realm: Realm, email: str, email_to_fullname: Callable[[str], str],
 ) -> UserProfile:
@@ -1300,9 +1291,7 @@ def get_recipient_info(
         subscription_rows = (
             stream_topic.get_active_subscriptions()
             .annotate(
-                user_profile_email_notifications=F(
-                    "user_profile__enable_stream_email_notifications",
-                ),
+                user_profile_email_notifications=F("user_profile__enable_stream_email_notifications"),
                 user_profile_push_notifications=F("user_profile__enable_stream_push_notifications"),
                 user_profile_wildcard_mentions_notify=F("user_profile__wildcard_mentions_notify"),
             )
@@ -1690,9 +1679,7 @@ def do_send_messages(
             if message["stream"] is None:
                 stream_id = message["message"].recipient.type_id
                 message["stream"] = Stream.objects.select_related().get(id=stream_id)
-            assert (
-                message["stream"] is not None
-            )  # assert needed because stubs for django are missing
+            assert message["stream"] is not None  # assert needed because stubs for django are missing
             realm_id = message["stream"].realm_id
 
         # Deliver events to the real-time push system, as well as
@@ -1750,9 +1737,7 @@ def do_send_messages(
             # notify new_message request if it's a public stream,
             # ensuring that in the tornado server, non-public stream
             # messages are only associated to their subscribed users.
-            assert (
-                message["stream"] is not None
-            )  # assert needed because stubs for django are missing
+            assert message["stream"] is not None  # assert needed because stubs for django are missing
             if message["stream"].is_public():
                 event["realm_id"] = message["stream"].realm_id
                 event["stream_name"] = message["stream"].name
@@ -2000,11 +1985,7 @@ def do_remove_reaction_legacy(user_profile: UserProfile, message: Message, emoji
 
 
 def do_add_reaction(
-    user_profile: UserProfile,
-    message: Message,
-    emoji_name: str,
-    emoji_code: str,
-    reaction_type: str,
+    user_profile: UserProfile, message: Message, emoji_name: str, emoji_code: str, reaction_type: str,
 ) -> None:
     reaction = Reaction(
         user_profile=user_profile,
@@ -2871,9 +2852,7 @@ def bulk_get_subscriber_user_ids(
         target_stream_dicts.append(stream_dict)
 
     stream_ids = [stream["id"] for stream in target_stream_dicts]
-    recipient_ids = sorted(
-        [stream_recipient.recipient_id_for(stream_id) for stream_id in stream_ids],
-    )
+    recipient_ids = sorted([stream_recipient.recipient_id_for(stream_id) for stream_id in stream_ids])
 
     result: Dict[int, List[int]] = {stream["id"]: [] for stream in stream_dicts}
     if not recipient_ids:
@@ -2944,9 +2923,7 @@ def get_subscribers_query(stream: Stream, requesting_user: Optional[UserProfile]
     return subscriptions
 
 
-def get_subscriber_emails(
-    stream: Stream, requesting_user: Optional[UserProfile] = None,
-) -> List[str]:
+def get_subscriber_emails(stream: Stream, requesting_user: Optional[UserProfile] = None) -> List[str]:
     subscriptions_query = get_subscribers_query(stream, requesting_user)
     subscriptions = subscriptions_query.values("user_profile__email")
     return [subscription["user_profile__email"] for subscription in subscriptions]
@@ -3159,9 +3136,7 @@ def bulk_add_subscriptions(
     ]
     if new_occupied_streams and not from_stream_creation:
         event: Dict[str, object] = dict(
-            type="stream",
-            op="occupy",
-            streams=[stream.to_dict() for stream in new_occupied_streams],
+            type="stream", op="occupy", streams=[stream.to_dict() for stream in new_occupied_streams],
         )
         send_event(realm, event, active_user_ids(realm.id))
 
@@ -3382,9 +3357,7 @@ def bulk_remove_subscriptions(
         subscribed_user_ids = all_subscribers_by_stream[stream.id]
 
         peer_user_ids = get_peer_user_ids_for_stream_change(
-            stream=stream,
-            altered_user_ids=altered_user_ids,
-            subscribed_user_ids=subscribed_user_ids,
+            stream=stream, altered_user_ids=altered_user_ids, subscribed_user_ids=subscribed_user_ids,
         )
 
         if peer_user_ids:
@@ -3638,9 +3611,7 @@ def do_regenerate_api_key(user_profile: UserProfile, acting_user: UserProfile) -
         send_event(
             user_profile.realm,
             dict(
-                type="realm_bot",
-                op="update",
-                bot=dict(user_id=user_profile.id, api_key=new_api_key),
+                type="realm_bot", op="update", bot=dict(user_id=user_profile.id, api_key=new_api_key),
             ),
             bot_owner_user_ids(user_profile),
         )
@@ -3714,9 +3685,7 @@ def do_change_icon_source(realm: Realm, icon_source: str, log: bool = True) -> N
     realm.save(update_fields=["icon_source", "icon_version"])
 
     if log:
-        log_event(
-            {"type": "realm_change_icon", "realm": realm.string_id, "icon_source": icon_source},
-        )
+        log_event({"type": "realm_change_icon", "realm": realm.string_id, "icon_source": icon_source})
 
     send_event(
         realm,
@@ -4239,9 +4208,7 @@ def notify_default_streams(realm: Realm) -> None:
 def notify_default_stream_groups(realm: Realm) -> None:
     event = dict(
         type="default_stream_groups",
-        default_stream_groups=default_stream_groups_to_dicts_sorted(
-            get_default_stream_groups(realm),
-        ),
+        default_stream_groups=default_stream_groups_to_dicts_sorted(get_default_stream_groups(realm)),
     )
     send_event(realm, event, active_non_guest_user_ids(realm.id))
 
@@ -4356,8 +4323,7 @@ def do_remove_default_stream_group(realm: Realm, group: DefaultStreamGroup) -> N
 
 def get_default_streams_for_realm(realm_id: int) -> List[Stream]:
     return [
-        default.stream
-        for default in DefaultStream.objects.select_related().filter(realm_id=realm_id)
+        default.stream for default in DefaultStream.objects.select_related().filter(realm_id=realm_id)
     ]
 
 
@@ -4666,11 +4632,7 @@ def do_clear_mobile_push_notifications_for_ids(
     for (user_profile_id, event_message_ids) in messages_by_user.items():
         queue_json_publish(
             "missedmessage_mobile_notifications",
-            {
-                "type": "remove",
-                "user_profile_id": user_profile_id,
-                "message_ids": event_message_ids,
-            },
+            {"type": "remove", "user_profile_id": user_profile_id, "message_ids": event_message_ids},
         )
 
 
@@ -5058,9 +5020,7 @@ def do_update_message(
         # though the messages were deleted, and we should send a
         # delete_message event to them instead.
 
-        subscribers = get_active_subscriptions_for_stream_id(stream_id).select_related(
-            "user_profile",
-        )
+        subscribers = get_active_subscriptions_for_stream_id(stream_id).select_related("user_profile")
         subs_to_new_stream = list(
             get_active_subscriptions_for_stream_id(new_stream.id).select_related("user_profile"),
         )
@@ -5653,9 +5613,7 @@ class InvitationError(JsonableError):
     code = ErrorCode.INVITATION_FAILED
     data_fields = ["errors", "sent_invitations"]
 
-    def __init__(
-        self, msg: str, errors: List[Tuple[str, str, bool]], sent_invitations: bool,
-    ) -> None:
+    def __init__(self, msg: str, errors: List[Tuple[str, str, bool]], sent_invitations: bool) -> None:
         self._msg: str = msg
         self.errors: List[Tuple[str, str, bool]] = errors
         self.sent_invitations: bool = sent_invitations
@@ -5770,9 +5728,7 @@ def do_invite_users(
 
     if skipped and len(skipped) == len(invitee_emails):
         # All e-mails were skipped, so we didn't actually invite anyone.
-        raise InvitationError(
-            _("We weren't able to invite anyone."), skipped, sent_invitations=False,
-        )
+        raise InvitationError(_("We weren't able to invite anyone."), skipped, sent_invitations=False)
 
     # We do this here rather than in the invite queue processor since this
     # is used for rate limiting invitations, rather than keeping track of
@@ -5840,9 +5796,7 @@ def do_get_user_invites(user_profile: UserProfile) -> List[Dict[str, Any]]:
         # We do not return multiuse invites to non-admin users.
         return invites
 
-    lowest_datetime = timezone_now() - datetime.timedelta(
-        days=settings.INVITATION_LINK_VALIDITY_DAYS,
-    )
+    lowest_datetime = timezone_now() - datetime.timedelta(days=settings.INVITATION_LINK_VALIDITY_DAYS)
     multiuse_confirmation_objs = Confirmation.objects.filter(
         realm=user_profile.realm, type=Confirmation.MULTIUSE_INVITE, date_sent__gte=lowest_datetime,
     )
@@ -6049,9 +6003,7 @@ def do_add_realm_domain(realm: Realm, domain: str, allow_subdomains: bool) -> (R
     event = dict(
         type="realm_domains",
         op="add",
-        realm_domain=dict(
-            domain=realm_domain.domain, allow_subdomains=realm_domain.allow_subdomains,
-        ),
+        realm_domain=dict(domain=realm_domain.domain, allow_subdomains=realm_domain.allow_subdomains),
     )
     send_event(realm, event, active_user_ids(realm.id))
     return realm_domain
@@ -6063,9 +6015,7 @@ def do_change_realm_domain(realm_domain: RealmDomain, allow_subdomains: bool) ->
     event = dict(
         type="realm_domains",
         op="change",
-        realm_domain=dict(
-            domain=realm_domain.domain, allow_subdomains=realm_domain.allow_subdomains,
-        ),
+        realm_domain=dict(domain=realm_domain.domain, allow_subdomains=realm_domain.allow_subdomains),
     )
     send_event(realm_domain.realm, event, active_user_ids(realm_domain.realm_id))
 
@@ -6461,9 +6411,7 @@ def do_update_outgoing_webhook_service(
             bot=dict(
                 user_id=bot_profile.id,
                 services=[
-                    dict(
-                        base_url=service.base_url, interface=service.interface, token=service.token,
-                    ),
+                    dict(base_url=service.base_url, interface=service.interface, token=service.token),
                 ],
             ),
         ),

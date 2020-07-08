@@ -35,7 +35,9 @@ class StatuspageHookTests(WebhookTestCase):
 
     def test_statuspage_component(self) -> None:
         expected_topic = "Database component: Service Under Maintenance"
-        expected_message = "**Database component** has changed status from **operational** to **under_maintenance**."
+        expected_message = (
+            "**Database component** has changed status from **operational** to **under_maintenance**."
+        )
         self.send_and_test_stream_message(
             "component_status_update",
             expected_topic,

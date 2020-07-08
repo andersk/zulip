@@ -629,14 +629,10 @@ body:
 
         api_auth = "Basic " + base64.b64encode(b"foo").decode("utf-8")
         result = self.client_post("/api/v1/external/zendesk", {}, HTTP_AUTHORIZATION=api_auth)
-        self.assert_json_error(
-            result, "Invalid authorization header for basic auth", status_code=401,
-        )
+        self.assert_json_error(result, "Invalid authorization header for basic auth", status_code=401)
 
         result = self.client_post("/api/v1/external/zendesk", {})
-        self.assert_json_error(
-            result, "Missing authorization header for basic auth", status_code=401,
-        )
+        self.assert_json_error(result, "Missing authorization header for basic auth", status_code=401)
 
 
 class RateLimitTestCase(ZulipTestCase):
@@ -1351,9 +1347,7 @@ class TestIncomingWebhookBot(ZulipTestCase):
     def test_webhook_bot_permissions(self) -> None:
         webhook_bot = self.example_user("webhook_bot")
         othello = self.example_user("othello")
-        payload = dict(
-            type="private", content="Test message", client="test suite", to=othello.email,
-        )
+        payload = dict(type="private", content="Test message", client="test suite", to=othello.email)
 
         result = self.api_post(webhook_bot, "/api/v1/messages", payload)
         self.assert_json_success(result)
@@ -1436,9 +1430,7 @@ class TestValidateApiKey(ZulipTestCase):
                     JsonableError, "Account is not associated with this subdomain",
                 ):
                     validate_api_key(
-                        HostRequestMock(host=settings.EXTERNAL_HOST),
-                        self.default_bot.email,
-                        api_key,
+                        HostRequestMock(host=settings.EXTERNAL_HOST), self.default_bot.email, api_key,
                     )
 
                 mock_warning.assert_called_with(

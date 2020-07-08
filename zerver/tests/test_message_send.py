@@ -1232,9 +1232,7 @@ class ScheduledMessageTest(ZulipTestCase):
         content = "Test message"
 
         result = self.do_schedule_message("stream", "Verona", content + " 1")
-        self.assert_json_error(
-            result, "Missing deliver_at in a request for delayed message delivery",
-        )
+        self.assert_json_error(result, "Missing deliver_at in a request for delayed message delivery")
 
 
 class StreamMessagesTest(ZulipTestCase):

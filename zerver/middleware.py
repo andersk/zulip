@@ -211,9 +211,7 @@ def write_log_line(
             )
 
         if markdown_time_delta > 0.005:
-            markdown_output = (
-                f" (md: {format_timedelta(markdown_time_delta)}/{markdown_count_delta})"
-            )
+            markdown_output = f" (md: {format_timedelta(markdown_time_delta)}/{markdown_count_delta})"
 
             if not suppress_statsd:
                 statsd.timing(f"{statsd_path}.markdown.time", timedelta_ms(markdown_time_delta))
@@ -350,9 +348,7 @@ class LogRequests(MiddlewareMixin):
 
 
 class JsonErrorHandler(MiddlewareMixin):
-    def process_exception(
-        self, request: HttpRequest, exception: Exception,
-    ) -> Optional[HttpResponse]:
+    def process_exception(self, request: HttpRequest, exception: Exception) -> Optional[HttpResponse]:
         if isinstance(exception, JsonableError):
             return json_response_from_error(exception)
         if request.error_format == "JSON":
@@ -419,17 +415,13 @@ class RateLimitMiddleware(MiddlewareMixin):
 
         return response
 
-    def process_exception(
-        self, request: HttpRequest, exception: Exception,
-    ) -> Optional[HttpResponse]:
+    def process_exception(self, request: HttpRequest, exception: Exception) -> Optional[HttpResponse]:
         if isinstance(exception, RateLimited):
             secs_to_freedom = float(
                 str(exception),
             )  # secs_to_freedom is passed to RateLimited when raising
             resp = json_error(
-                _("API usage exceeded rate limit"),
-                data={"retry-after": secs_to_freedom},
-                status=429,
+                _("API usage exceeded rate limit"), data={"retry-after": secs_to_freedom}, status=429,
             )
             resp["Retry-After"] = secs_to_freedom
             return resp

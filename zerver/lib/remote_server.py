@@ -117,8 +117,7 @@ def build_analytics_data(
         model_to_dict(row) for row in realm_count_query.order_by("id")[0:MAX_CLIENT_BATCH_SIZE]
     ]
     data["analytics_installationcount"] = [
-        model_to_dict(row)
-        for row in installation_count_query.order_by("id")[0:MAX_CLIENT_BATCH_SIZE]
+        model_to_dict(row) for row in installation_count_query.order_by("id")[0:MAX_CLIENT_BATCH_SIZE]
     ]
     data["zerver_realmauditlog"] = [
         model_to_dict(row, fields=REALMAUDITLOG_PUSHED_FIELDS)

@@ -55,9 +55,7 @@ class SubscriberHandler:
         else:
             raise AssertionError("stream_id or huddle_id is required")
 
-    def get_users(
-        self, stream_id: Optional[int] = None, huddle_id: Optional[int] = None,
-    ) -> Set[int]:
+    def get_users(self, stream_id: Optional[int] = None, huddle_id: Optional[int] = None) -> Set[int]:
         if stream_id is not None:
             return self.stream_info[stream_id]
         elif huddle_id is not None:

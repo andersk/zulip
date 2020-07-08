@@ -1573,9 +1573,7 @@ so we didn't send them an invitation. We did send invitations to everyone else!"
                 from_address=FromAddress.no_reply_placeholder,
                 context=context,
             )
-        email_jobs_to_deliver = ScheduledEmail.objects.filter(
-            scheduled_timestamp__lte=timezone_now(),
-        )
+        email_jobs_to_deliver = ScheduledEmail.objects.filter(scheduled_timestamp__lte=timezone_now())
         self.assertEqual(len(email_jobs_to_deliver), 1)
         email_count = len(outbox)
         for job in email_jobs_to_deliver:
@@ -1749,9 +1747,7 @@ so we didn't send them an invitation. We did send invitations to everyone else!"
         registration_key = confirmation_link.split("/")[-1]
 
         url = "/accounts/register/"
-        self.client_post(
-            url, {"key": registration_key, "from_confirmation": 1, "full_name": "alice"},
-        )
+        self.client_post(url, {"key": registration_key, "from_confirmation": 1, "full_name": "alice"})
         self.submit_reg_form_for_user(email, password, key=registration_key)
 
         url = "/accounts/register/"
@@ -1907,9 +1903,7 @@ class InvitationsTestCase(InviteUserBase):
 
         invitee = "DeleteMe@zulip.com"
         self.assert_json_success(
-            self.invite(
-                invitee, ["Denmark"], invite_as=PreregistrationUser.INVITE_AS["REALM_OWNER"],
-            ),
+            self.invite(invitee, ["Denmark"], invite_as=PreregistrationUser.INVITE_AS["REALM_OWNER"]),
         )
         prereg_user = PreregistrationUser.objects.get(email=invitee)
         result = self.api_delete(self.example_user("iago"), "/api/v1/invites/" + str(prereg_user.id))
@@ -2076,9 +2070,7 @@ class InvitationsTestCase(InviteUserBase):
 
         invitee = "resend_owner@zulip.com"
         self.assert_json_success(
-            self.invite(
-                invitee, ["Denmark"], invite_as=PreregistrationUser.INVITE_AS["REALM_OWNER"],
-            ),
+            self.invite(invitee, ["Denmark"], invite_as=PreregistrationUser.INVITE_AS["REALM_OWNER"]),
         )
         self.check_sent_emails([invitee], custom_from_name="Zulip")
         scheduledemail_filter = ScheduledEmail.objects.filter(
@@ -2170,9 +2162,7 @@ class InviteeEmailsParserTests(ZulipTestCase):
         self.assertEqual(get_invitee_emails_set(emails_raw), expected_set)
 
     def test_if_emails_from_email_client_separated_by_newlines_are_parsed_correctly(self) -> None:
-        emails_raw = (
-            f"Email One <{self.email1}>\nEmailTwo<{self.email2}>\nEmail Three<{self.email3}>"
-        )
+        emails_raw = f"Email One <{self.email1}>\nEmailTwo<{self.email2}>\nEmail Three<{self.email3}>"
         expected_set = {self.email1, self.email2, self.email3}
         self.assertEqual(get_invitee_emails_set(emails_raw), expected_set)
 
@@ -4031,9 +4021,7 @@ class UserSignUpTest(InviteUserBase):
             # Name comes from the POST request, not LDAP
             self.assertEqual(user_profile.full_name, "Non-LDAP Full Name")
 
-    def ldap_invite_and_signup_as(
-        self, invite_as: int, streams: Sequence[str] = ["Denmark"],
-    ) -> None:
+    def ldap_invite_and_signup_as(self, invite_as: int, streams: Sequence[str] = ["Denmark"]) -> None:
         self.init_default_ldap_database()
         ldap_user_attr_map = {"full_name": "cn"}
 
@@ -4434,13 +4422,9 @@ class TestFindMyTeam(ZulipTestCase):
         self.assertIn("Find your Zulip accounts", result.content.decode("utf8"))
 
     def test_result(self) -> None:
-        result = self.client_post(
-            "/accounts/find/", dict(emails="iago@zulip.com,cordelia@zulip.com"),
-        )
+        result = self.client_post("/accounts/find/", dict(emails="iago@zulip.com,cordelia@zulip.com"))
         self.assertEqual(result.status_code, 302)
-        self.assertEqual(
-            result.url, "/accounts/find/?emails=iago%40zulip.com%2Ccordelia%40zulip.com",
-        )
+        self.assertEqual(result.url, "/accounts/find/?emails=iago%40zulip.com%2Ccordelia%40zulip.com")
         result = self.client_get(result.url)
         content = result.content.decode("utf8")
         self.assertIn("Emails sent! You will only receive emails", content)

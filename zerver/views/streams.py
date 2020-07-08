@@ -377,9 +377,7 @@ def remove_subscriptions_backend(
     request: HttpRequest,
     user_profile: UserProfile,
     streams_raw: Iterable[str] = REQ("subscriptions", validator=remove_subscriptions_schema),
-    principals: Optional[Union[List[str], List[int]]] = REQ(
-        validator=check_principals, default=None,
-    ),
+    principals: Optional[Union[List[str], List[int]]] = REQ(validator=check_principals, default=None),
 ) -> HttpResponse:
 
     removing_someone_else = check_if_removing_someone_else(user_profile, principals)
@@ -515,9 +513,7 @@ def add_subscriptions_backend(
             # user is a guest, which happens in the decorator above.
             assert user_profile.realm.invite_to_stream_policy == Realm.POLICY_FULL_MEMBERS_ONLY
             return json_error(_("Your account is too new to modify other users' subscriptions."))
-        subscribers = {
-            principal_to_user_profile(user_profile, principal) for principal in principals
-        }
+        subscribers = {principal_to_user_profile(user_profile, principal) for principal in principals}
     else:
         subscribers = {user_profile}
 

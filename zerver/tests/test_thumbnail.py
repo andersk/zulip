@@ -95,9 +95,7 @@ class ThumbnailTest(ZulipTestCase):
             encoded_url = base64.urlsafe_b64encode(image_url.encode()).decode("utf-8")
             result = self.client_get(f"/thumbnail?url={quoted_url}&size=full")
             self.assertEqual(result.status_code, 302, result)
-            expected_part_url = (
-                "/smart/filters:no_upscale()/" + encoded_url + "/source_type/external"
-            )
+            expected_part_url = "/smart/filters:no_upscale()/" + encoded_url + "/source_type/external"
             self.assertIn(expected_part_url, result.url)
 
             # Test thumbnail size.
@@ -153,9 +151,7 @@ class ThumbnailTest(ZulipTestCase):
             self.login("iago")
             result = self.client_get(f"/thumbnail?url={quoted_url}&size=full")
             self.assertEqual(result.status_code, 302, result)
-            expected_part_url = (
-                "/smart/filters:no_upscale()/" + encoded_url + "/source_type/external"
-            )
+            expected_part_url = "/smart/filters:no_upscale()/" + encoded_url + "/source_type/external"
             self.assertIn(expected_part_url, result.url)
 
         image_url = "https://images.foobar.com/12345"

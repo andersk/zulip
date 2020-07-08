@@ -759,9 +759,7 @@ class GetUnreadMsgsTest(ZulipTestCase):
         self.assertEqual(unread_stream["unread_message_ids"], [muted_stream_message_id])
         self.assertEqual(unread_stream["sender_ids"], [sender_id])
 
-        huddle_string = ",".join(
-            str(uid) for uid in sorted([sender_id, user_profile.id, othello.id])
-        )
+        huddle_string = ",".join(str(uid) for uid in sorted([sender_id, user_profile.id, othello.id]))
 
         unread_huddle = result["huddles"][0]
         self.assertEqual(unread_huddle["user_ids_string"], huddle_string)
@@ -1141,9 +1139,7 @@ class MessageAccessTests(ZulipTestCase):
         message_two_id = self.send_stream_message(user, stream_name, "Message two")
 
         message_ids = [message_one_id, message_two_id]
-        messages = [
-            Message.objects.select_related().get(id=message_id) for message_id in message_ids
-        ]
+        messages = [Message.objects.select_related().get(id=message_id) for message_id in message_ids]
 
         filtered_messages = bulk_access_messages(later_subscribed_user, messages)
 
@@ -1183,9 +1179,7 @@ class MessageAccessTests(ZulipTestCase):
         message_two_id = self.send_stream_message(user, stream_name, "Message two")
 
         message_ids = [message_one_id, message_two_id]
-        messages = [
-            Message.objects.select_related().get(id=message_id) for message_id in message_ids
-        ]
+        messages = [Message.objects.select_related().get(id=message_id) for message_id in message_ids]
 
         # All public stream messages are always accessible
         filtered_messages = bulk_access_messages(later_subscribed_user, messages)
@@ -1203,9 +1197,7 @@ class PersonalMessagesFlagTest(ZulipTestCase):
         Make sure `is_private` flag is not leaked to the API.
         """
         self.login("hamlet")
-        self.send_personal_message(
-            self.example_user("hamlet"), self.example_user("cordelia"), "test",
-        )
+        self.send_personal_message(self.example_user("hamlet"), self.example_user("cordelia"), "test")
 
         for msg in self.get_messages():
             self.assertNotIn("is_private", msg["flags"])

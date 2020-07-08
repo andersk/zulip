@@ -627,10 +627,7 @@ def get_realm_config() -> Config:
     )
 
     user_groups_config = Config(
-        table="zerver_usergroup",
-        model=UserGroup,
-        normal_parent=realm_config,
-        parent_key="realm__in",
+        table="zerver_usergroup", model=UserGroup, normal_parent=realm_config, parent_key="realm__in",
     )
 
     Config(
@@ -914,9 +911,7 @@ def fetch_huddle_objects(response: TableData, config: Config, context: Context) 
 
     # Mark all Huddles whose recipient ID contains a cross-realm user.
     unsafe_huddle_recipient_ids = set()
-    for sub in Subscription.objects.select_related().filter(
-        recipient__in=realm_huddle_recipient_ids,
-    ):
+    for sub in Subscription.objects.select_related().filter(recipient__in=realm_huddle_recipient_ids):
         if sub.user_profile.realm != realm:
             # In almost every case the other realm will be zulip.com
             unsafe_huddle_recipient_ids.add(sub.recipient_id)
@@ -1759,9 +1754,9 @@ def export_messages_single_user(
     min_id = -1
     dump_file_id = 1
     while True:
-        actual_query = user_message_query.select_related(
-            "message", "message__sending_client",
-        ).filter(id__gt=min_id)[0:chunk_size]
+        actual_query = user_message_query.select_related("message", "message__sending_client").filter(
+            id__gt=min_id,
+        )[0:chunk_size]
         user_message_chunk = [um for um in actual_query]
         user_message_ids = {um.id for um in user_message_chunk}
 
