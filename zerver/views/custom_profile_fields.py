@@ -184,7 +184,7 @@ def update_user_custom_profile_data(
                 ('id', check_int),
                 ('value', check_union([check_int, check_string, check_list(check_int)])),
             ]),
-        )
+        ),
     ),
 ) -> HttpResponse:
 

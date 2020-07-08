@@ -1005,7 +1005,7 @@ class HandlePushNotificationTest(PushNotificationTest):
                          'user_id': self.user_profile.id,
                          'event': 'remove',
                          'zulip_message_ids': str(message.id),
-                     }
+                     },
                  }})
             user_message = UserMessage.objects.get(user_profile=self.user_profile,
                                                    message=message)

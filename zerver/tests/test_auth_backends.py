@@ -1540,7 +1540,7 @@ class SAMLAuthBackendTest(SocialAuthBase):
             values = ''.join(
                 ['<saml2:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema" ' +
                  'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">' +
-                 f'{value}</saml2:AttributeValue>' for value in extra_attr_values]
+                 f'{value}</saml2:AttributeValue>' for value in extra_attr_values],
             )
             extra_attrs += f'<saml2:Attribute Name="{extra_attr_name}" ' + \
                            'NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified">' + \
@@ -3319,7 +3319,7 @@ class FetchAuthBackends(ZulipTestCase):
                         ('name', check_string),
                         ('signup_url', check_string),
                     ]),
-                    length=len(external_auth_methods)
+                    length=len(external_auth_methods),
                 )),
                 ('email_auth_enabled', check_bool),
                 ('is_incompatible', check_bool),

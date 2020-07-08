@@ -2299,7 +2299,7 @@ def do_convert(content: str,
         # something huge.
         if len(rendered_content) > MAX_MESSAGE_LENGTH * 10:
             raise MarkdownRenderingException(
-                f'Rendered content exceeds {MAX_MESSAGE_LENGTH * 10} characters (message {logging_message_id})'
+                f'Rendered content exceeds {MAX_MESSAGE_LENGTH * 10} characters (message {logging_message_id})',
             )
         return rendered_content
     except Exception:

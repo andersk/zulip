@@ -202,7 +202,7 @@ class BaseAction(ZulipTestCase):
                  queue_timeout = 600,
                  last_connection_time = time.time(),
                  narrow = [],
-                 bulk_message_deletion = bulk_message_deletion)
+                 bulk_message_deletion = bulk_message_deletion),
         )
 
         # hybrid_state = initial fetch state + re-applying events triggered by our action
@@ -2201,7 +2201,7 @@ class NormalActionsTest(BaseAction):
         msg_id_2 = self.send_stream_message(hamlet, "Verona")
         messages = [
             Message.objects.get(id=msg_id),
-            Message.objects.get(id=msg_id_2)
+            Message.objects.get(id=msg_id_2),
         ]
         events = self.verify_action(
             lambda: do_delete_messages(self.user_profile.realm, messages),
@@ -2226,12 +2226,12 @@ class NormalActionsTest(BaseAction):
         msg_id_2 = self.send_stream_message(hamlet, "Verona")
         messages = [
             Message.objects.get(id=msg_id),
-            Message.objects.get(id=msg_id_2)
+            Message.objects.get(id=msg_id_2),
         ]
         events = self.verify_action(
             lambda: do_delete_messages(self.user_profile.realm, messages),
             state_change_expected=True, bulk_message_deletion=False,
-            num_events=2
+            num_events=2,
         )
         schema_checker('events[0]', events[0])
 
@@ -2271,7 +2271,7 @@ class NormalActionsTest(BaseAction):
         message = Message.objects.get(id=msg_id)
         events = self.verify_action(
             lambda: do_delete_messages(self.user_profile.realm, [message]),
-            state_change_expected=True, bulk_message_deletion=False
+            state_change_expected=True, bulk_message_deletion=False,
         )
         schema_checker('events[0]', events[0])
 
@@ -2559,7 +2559,7 @@ class RealmPropertyActionTest(BaseAction):
                 event_time__gte=now, acting_user=self.user_profile,
                 extra_data=ujson.dumps({
                     RealmAuditLog.OLD_VALUE: {'property': name, 'value': old_value},
-                    RealmAuditLog.NEW_VALUE: {'property': name, 'value': val}
+                    RealmAuditLog.NEW_VALUE: {'property': name, 'value': val},
                 })).count(), 1)
             schema_checker('events[0]', events[0])
 
@@ -2577,7 +2577,7 @@ class UserDisplayActionTest(BaseAction):
             default_language = ['es', 'de', 'en'],
             timezone = ['US/Mountain', 'US/Samoa', 'Pacific/Galapogos', ''],
             demote_inactive_streams = [2, 3, 1],
-            color_scheme = [2, 3, 1]
+            color_scheme = [2, 3, 1],
         )
 
         property_type = UserProfile.property_types[setting_name]
@@ -2736,7 +2736,7 @@ class SubscribeActionTest(BaseAction):
             ('property', equals('message_retention_days')),
             ('stream_id', check_int),
             ('name', check_string),
-            ('value', check_none_or(check_int))
+            ('value', check_none_or(check_int)),
         ])
 
         # Subscribe to a totally new stream, so it's just Hamlet on it

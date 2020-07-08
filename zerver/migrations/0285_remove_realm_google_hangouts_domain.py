@@ -21,7 +21,7 @@ def remove_google_hangouts_provider(apps: StateApps, schema_editor: DatabaseSche
     # their video chat provided are now setted to the default, jitsi.
     Realm = apps.get_model('zerver', 'Realm')
     Realm.objects.filter(video_chat_provider=VIDEO_CHAT_PROVIDERS['google_hangouts']['id']).update(
-        video_chat_provider=VIDEO_CHAT_PROVIDERS['jitsi_meet']['id']
+        video_chat_provider=VIDEO_CHAT_PROVIDERS['jitsi_meet']['id'],
     )
 
 class Migration(migrations.Migration):
@@ -38,6 +38,6 @@ class Migration(migrations.Migration):
         migrations.RunPython(
             remove_google_hangouts_provider,
             reverse_code=migrations.RunPython.noop,
-            elidable=True
+            elidable=True,
         ),
     ]

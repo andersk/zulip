@@ -376,7 +376,7 @@ class Realm(models.Model):
     if settings.BIG_BLUE_BUTTON_SECRET is not None and settings.BIG_BLUE_BUTTON_URL is not None:
         VIDEO_CHAT_PROVIDERS['big_blue_button'] = {
             'name': "Big Blue Button",
-            'id': 4
+            'id': 4,
         }
 
     video_chat_provider: int = models.PositiveSmallIntegerField(default=VIDEO_CHAT_PROVIDERS['jitsi_meet']['id'])
@@ -1023,7 +1023,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     COLOR_SCHEME_CHOICES = [
         COLOR_SCHEME_AUTOMATIC,
         COLOR_SCHEME_NIGHT,
-        COLOR_SCHEME_LIGHT
+        COLOR_SCHEME_LIGHT,
     ]
     color_scheme: int = models.PositiveSmallIntegerField(default=COLOR_SCHEME_AUTOMATIC)
 
@@ -1557,7 +1557,7 @@ class Stream(models.Model):
         "stream_post_policy",
         "history_public_to_subscribers",
         "first_message_id",
-        "message_retention_days"
+        "message_retention_days",
     ]
 
     @staticmethod

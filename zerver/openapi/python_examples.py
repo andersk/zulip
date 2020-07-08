@@ -591,7 +591,7 @@ def check_messages_match_narrow(client: Client) -> None:
         "type": "stream",
         "to": "Verona",
         "topic": "test_topic",
-        "content": "http://foo.com"
+        "content": "http://foo.com",
     }
     msg_ids = []
     response = client.send_message(message)
@@ -610,7 +610,7 @@ def check_messages_match_narrow(client: Client) -> None:
     result = client.call_endpoint(
         url='messages/matches_narrow',
         method='GET',
-        request=request
+        request=request,
     )
     # {code_example|end}
 

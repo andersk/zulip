@@ -254,7 +254,7 @@ STREAM_ASSIGNMENT_COLORS = [
 def subscriber_info(user_id: int) -> Dict[str, Any]:
     return {
         'id': user_id,
-        'flags': ['read']
+        'flags': ['read'],
     }
 
 # Store an event in the log for re-importing messages
@@ -345,14 +345,14 @@ def notify_new_user(user_profile: UserProfile) -> None:
         with override_language(user_profile.realm.default_language):
             message = _("{user} just signed up for Zulip. (total: {user_count})").format(
                 user=f"@_**{user_profile.full_name}|{user_profile.id}**",
-                user_count=user_count
+                user_count=user_count,
             )
             internal_send_stream_message(
                 user_profile.realm,
                 sender,
                 signup_notifications_stream,
                 _("signups"),
-                message
+                message,
             )
 
     # We also send a notification to the Zulip administrative realm
@@ -364,14 +364,14 @@ def notify_new_user(user_profile: UserProfile) -> None:
             # We intentionally use the same strings as above to avoid translation burden.
             message = _("{user} just signed up for Zulip. (total: {user_count})").format(
                 user=f"{user_profile.full_name} <`{user_profile.email}`>",
-                user_count=user_count
+                user_count=user_count,
             )
             internal_send_stream_message(
                 admin_realm,
                 sender,
                 signups_stream,
                 user_profile.realm.display_subdomain,
-                message
+                message,
             )
 
     except Stream.DoesNotExist:
@@ -467,7 +467,7 @@ def process_new_human_user(user_profile: UserProfile,
                 user_profile.realm,
                 get_system_bot(settings.NOTIFICATION_BOT),
                 prereg_user.referred_by,
-                _("{user} accepted your invitation to join Zulip!").format(user=f"{user_profile.full_name} <`{user_profile.email}`>")
+                _("{user} accepted your invitation to join Zulip!").format(user=f"{user_profile.full_name} <`{user_profile.email}`>"),
             )
     # Mark any other PreregistrationUsers that are STATUS_ACTIVE as
     # inactive so we can keep track of the PreregistrationUser we
@@ -693,7 +693,7 @@ def do_set_realm_property(realm: Realm, name: str, value: Any,
         realm=realm, event_type=RealmAuditLog.REALM_PROPERTY_CHANGED, event_time=event_time,
         acting_user=acting_user, extra_data=ujson.dumps({
             RealmAuditLog.OLD_VALUE: {'property': name, 'value': old_value},
-            RealmAuditLog.NEW_VALUE: {'property': name, 'value': value}
+            RealmAuditLog.NEW_VALUE: {'property': name, 'value': value},
         }))
 
     if name == "email_address_visibility":
@@ -727,7 +727,7 @@ def do_set_realm_authentication_methods(realm: Realm,
         realm=realm, event_type=RealmAuditLog.REALM_PROPERTY_CHANGED, event_time=timezone_now(),
         acting_user=acting_user, extra_data=ujson.dumps({
             RealmAuditLog.OLD_VALUE: {'property': 'authentication_methods', 'value': old_value},
-            RealmAuditLog.NEW_VALUE: {'property': 'authentication_methods', 'value': updated_value}
+            RealmAuditLog.NEW_VALUE: {'property': 'authentication_methods', 'value': updated_value},
         }))
     event = dict(
         type="realm",
@@ -5272,11 +5272,11 @@ def do_invite_users(user_profile: UserProfile,
 def do_get_user_invites(user_profile: UserProfile) -> List[Dict[str, Any]]:
     if user_profile.is_realm_admin:
         prereg_users = filter_to_valid_prereg_users(
-            PreregistrationUser.objects.filter(referred_by__realm=user_profile.realm)
+            PreregistrationUser.objects.filter(referred_by__realm=user_profile.realm),
         )
     else:
         prereg_users = filter_to_valid_prereg_users(
-            PreregistrationUser.objects.filter(referred_by=user_profile)
+            PreregistrationUser.objects.filter(referred_by=user_profile),
         )
 
     invites = []

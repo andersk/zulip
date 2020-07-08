@@ -116,7 +116,7 @@ def create_streams_if_needed(realm: Realm,
             history_public_to_subscribers=stream_dict.get("history_public_to_subscribers"),
             stream_description=stream_dict.get("description", ""),
             message_retention_days=stream_dict.get("message_retention_days", None),
-            acting_user=acting_user
+            acting_user=acting_user,
         )
 
         if created:

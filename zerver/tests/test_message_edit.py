@@ -994,7 +994,7 @@ class EditMessageTest(ZulipTestCase):
             'message_id': msg_id,
             'stream_id': new_stream.id,
             'propagate_mode': 'change_all',
-            'topic': 'new topic'
+            'topic': 'new topic',
         })
         self.assert_json_success(result)
 

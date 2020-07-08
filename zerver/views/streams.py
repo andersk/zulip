@@ -293,7 +293,7 @@ FuncKwargPair = Tuple[Callable[..., HttpResponse], Dict[str, Union[int, Iterable
 add_subscriptions_schema = check_list(
     check_dict_only(
         required_keys=[
-            ('name', check_string)
+            ('name', check_string),
         ],
         optional_keys=[
             ('color', check_color),
@@ -542,7 +542,7 @@ def add_subscriptions_backend(
 
             content = content.format(
                 user_name=f"@_**{user_profile.full_name}|{user_profile.id}**",
-                stream_str=", ".join(f'#**{s.name}**' for s in created_streams)
+                stream_str=", ".join(f'#**{s.name}**' for s in created_streams),
             )
 
             sender = get_system_bot(settings.NOTIFICATION_BOT)

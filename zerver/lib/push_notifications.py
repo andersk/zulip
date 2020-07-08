@@ -621,15 +621,15 @@ def get_apns_alert_subtitle(message: Message) -> str:
 
 def get_apns_badge_count(user_profile: UserProfile, read_messages_ids: Optional[Sequence[int]]=[]) -> int:
     return UserMessage.objects.filter(
-        user_profile=user_profile
+        user_profile=user_profile,
     ).extra(
-        where=[UserMessage.where_active_push_notification()]
+        where=[UserMessage.where_active_push_notification()],
     ).exclude(
         # If we've just marked some messages as read, they're still
         # marked as having active notifications; we'll clear that flag
         # only after we've sent that update to the devices.  So we need
         # to exclude them explicitly from the count.
-        message_id__in=read_messages_ids
+        message_id__in=read_messages_ids,
     ).count()
 
 def get_message_payload_apns(user_profile: UserProfile, message: Message) -> Dict[str, Any]:

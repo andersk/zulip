@@ -39,7 +39,7 @@ def run_sql_query(query: str) -> List[List[str]]:
         output = subprocess.check_output(
             command,
             stderr=subprocess.STDOUT,
-            universal_newlines=True
+            universal_newlines=True,
         ).strip()
         if not output:
             return []
@@ -71,7 +71,7 @@ def loc_to_abs_offset(loc_str: str) -> int:
 
 replication_info = run_sql_query(
     'sender_host, status, pg_last_wal_replay_lsn(), pg_last_wal_receive_lsn()'
-    ' from pg_stat_wal_receiver'
+    ' from pg_stat_wal_receiver',
 )
 
 if replication_info:
@@ -94,7 +94,7 @@ if replication_info:
 else:
     replication_info = run_sql_query(
         'client_addr, state, sent_lsn, write_lsn, flush_lsn, replay_lsn'
-        ' from pg_stat_replication'
+        ' from pg_stat_replication',
     )
     if replication_info == 0:
         report('CRITICAL', 'No replicas!')

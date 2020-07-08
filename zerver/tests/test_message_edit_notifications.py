@@ -508,7 +508,7 @@ class EditMessageSideEffectsTest(ZulipTestCase):
 
         self._get_queued_data_for_message_update(
             message_id=message_id,
-            content="Removed mention"
+            content="Removed mention",
         )
 
         self.assertEqual(get_apns_badge_count(mentioned_user), 0)
@@ -548,7 +548,7 @@ class EditMessageSideEffectsTest(ZulipTestCase):
 
         self._get_queued_data_for_message_update(
             message_id=message_id,
-            content="Removed mention"
+            content="Removed mention",
         )
 
         self.assertEqual(get_apns_badge_count(mentioned_user), 1)
