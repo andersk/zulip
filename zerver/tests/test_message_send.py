@@ -224,9 +224,7 @@ class MessagePOSTTest(ZulipTestCase):
             "Test topic",
             "Test message by notification bot",
         )
-        self.assertEqual(
-            self.get_last_message().content, "Test message by notification bot",
-        )
+        self.assertEqual(self.get_last_message().content, "Test message by notification bot")
 
     def test_sending_message_as_stream_post_policy_restrict_new_members(self) -> None:
         """
@@ -295,9 +293,7 @@ class MessagePOSTTest(ZulipTestCase):
             "Test topic",
             "Test message by notification bot",
         )
-        self.assertEqual(
-            self.get_last_message().content, "Test message by notification bot",
-        )
+        self.assertEqual(self.get_last_message().content, "Test message by notification bot")
 
     def test_api_message_with_default_to(self) -> None:
         """
@@ -557,12 +553,7 @@ class MessagePOSTTest(ZulipTestCase):
         othello = self.example_user("othello")
         result = self.client_post(
             "/json/messages",
-            {
-                "type": "private",
-                "content": " ",
-                "client": "test suite",
-                "to": othello.email,
-            },
+            {"type": "private", "content": " ", "client": "test suite", "to": othello.email},
         )
         self.assert_json_error(result, "Message must not be empty")
 
@@ -623,12 +614,7 @@ class MessagePOSTTest(ZulipTestCase):
         self.login("hamlet")
         result = self.client_post(
             "/json/messages",
-            {
-                "type": "private",
-                "content": "Test content",
-                "client": "test suite",
-                "to": "",
-            },
+            {"type": "private", "content": "Test content", "client": "test suite", "to": ""},
         )
         self.assert_json_error(result, "Message must have recipients")
 
@@ -1233,11 +1219,7 @@ class ScheduledMessageTest(ZulipTestCase):
         # Setting a reminder in PM's to ourself is successful.
         # Required by reminders from message actions popover caret feature.
         result = self.do_schedule_message(
-            "private",
-            hamlet.email,
-            content + " 5",
-            defer_until_str,
-            delivery_type="remind",
+            "private", hamlet.email, content + " 5", defer_until_str, delivery_type="remind",
         )
         message = self.last_scheduled_message()
         self.assert_json_success(result)
@@ -1508,9 +1490,7 @@ class StreamMessagesTest(ZulipTestCase):
             ).flags.is_private.is_set,
         )
 
-        self.send_personal_message(
-            self.example_user("hamlet"), user_profile, content="test",
-        )
+        self.send_personal_message(self.example_user("hamlet"), user_profile, content="test")
         message = most_recent_message(user_profile)
         self.assertTrue(
             UserMessage.objects.get(

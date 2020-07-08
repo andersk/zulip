@@ -57,9 +57,7 @@ class Command(ZulipBaseCommand):
         if options["op"] == "add":
             try:
                 RealmDomain.objects.create(
-                    realm=realm,
-                    domain=domain,
-                    allow_subdomains=options["allow_subdomains"],
+                    realm=realm, domain=domain, allow_subdomains=options["allow_subdomains"],
                 )
                 sys.exit(0)
             except IntegrityError:

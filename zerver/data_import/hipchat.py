@@ -816,9 +816,7 @@ def do_convert_data(
             zerver_stream=zerver_stream,
         )
 
-    personal_subscriptions = build_personal_subscriptions(
-        zerver_recipient=zerver_recipient,
-    )
+    personal_subscriptions = build_personal_subscriptions(zerver_recipient=zerver_recipient)
     zerver_subscription = personal_subscriptions + stream_subscriptions
 
     realm["zerver_subscription"] = zerver_subscription

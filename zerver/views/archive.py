@@ -68,9 +68,7 @@ def archive(request: HttpRequest, stream_id: int, topic_name: str) -> HttpRespon
             "include_sender": include_sender,
             "status_message": status_message,
         }
-        rendered_msg = loader.render_to_string(
-            "zerver/archive/single_message.html", context,
-        )
+        rendered_msg = loader.render_to_string("zerver/archive/single_message.html", context)
         rendered_message_list.append(rendered_msg)
     return get_response(rendered_message_list, True, stream.name)
 

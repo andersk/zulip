@@ -233,8 +233,7 @@ def rewrite_local_links_to_relative(db_data: Optional[DbData], link: str) -> str
         realm_uri_prefix = db_data["realm_uri"] + "/"
         if (
             link.startswith(realm_uri_prefix)
-            and urllib.parse.urljoin(realm_uri_prefix, link[len(realm_uri_prefix) :])
-            == link
+            and urllib.parse.urljoin(realm_uri_prefix, link[len(realm_uri_prefix) :]) == link
         ):
             return link[len(realm_uri_prefix) :]
 
@@ -571,9 +570,7 @@ class InlineHttpsProcessor(markdown.treeprocessors.Treeprocessor):
 class BacktickInlineProcessor(markdown.inlinepatterns.BacktickInlineProcessor):
     """ Return a `<code>` element containing the matching text. """
 
-    def handleMatch(
-        self, m: Match[str], data: str,
-    ) -> Tuple[Union[None, Element], int, int]:
+    def handleMatch(self, m: Match[str], data: str) -> Tuple[Union[None, Element], int, int]:
         # Let upstream's implementation do its job as it is, we'll
         # just replace the text to not strip the group because it
         # makes it impossible to put leading/trailing whitespace in
@@ -637,9 +634,7 @@ class InlineInterestingLinkProcessor(markdown.treeprocessors.Treeprocessor):
             url = url.lstrip("/")
             img.set(
                 "src",
-                "/thumbnail?url={}&size=thumbnail".format(
-                    urllib.parse.quote(url, safe=""),
-                ),
+                "/thumbnail?url={}&size=thumbnail".format(urllib.parse.quote(url, safe="")),
             )
             img.set(
                 "data-src-fullsize",
@@ -1513,9 +1508,7 @@ def sanitize_url(url: str) -> Optional[str]:
     elif scheme == "" and netloc == "" and len(path) > 0 and path[0] == "/":
         # Allow domain-relative links
         return urllib.parse.urlunparse(("", "", path, params, query, fragment))
-    elif (scheme, netloc, path, params, query) == ("", "", "", "", "") and len(
-        fragment,
-    ) > 0:
+    elif (scheme, netloc, path, params, query) == ("", "", "", "", "") and len(fragment) > 0:
         # Allow fragment links
         return urllib.parse.urlunparse(("", "", "", "", "", fragment))
 
@@ -1973,9 +1966,7 @@ class LinkInlineProcessor(markdown.inlinepatterns.LinkInlineProcessor):
 
         return el
 
-    def handleMatch(
-        self, m: Match[str], data: str,
-    ) -> Tuple[Union[None, Element], int, int]:
+    def handleMatch(self, m: Match[str], data: str) -> Tuple[Union[None, Element], int, int]:
         el, match_start, index = super().handleMatch(m, data)
         if el is not None:
             el = self.zulip_specific_link_changes(el)
@@ -2343,9 +2334,7 @@ def privacy_clean_markdown(content: str) -> str:
     return repr(_privacy_re.sub("x", content))
 
 
-def get_possible_mentions_info(
-    realm_id: int, mention_texts: Set[str],
-) -> List[FullNameInfo]:
+def get_possible_mentions_info(realm_id: int, mention_texts: Set[str]) -> List[FullNameInfo]:
     if not mention_texts:
         return list()
 

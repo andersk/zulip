@@ -24,9 +24,7 @@ class GitlabHookTests(WebhookTestCase):
         expected_topic = "my-awesome-project / changes"
         expected_message = "Eeshan Garg [pushed](https://gitlab.com/eeshangarg/my-awesome-project/compare/0000000000000000000000000000000000000000...68d7a5528cf423dfaac37dd62a56ac9cc8a884e3) the branch changes."
         self.send_and_test_stream_message(
-            "push_hook__push_local_branch_without_commits",
-            expected_topic,
-            expected_message,
+            "push_hook__push_local_branch_without_commits", expected_topic, expected_message,
         )
 
     def test_push_event_message_filtered_by_branches(self) -> None:
@@ -639,7 +637,5 @@ class GitlabHookTests(WebhookTestCase):
         expected_message = "Eeshan Garg unapproved [MR #1](https://gitlab.com/eeshangarg/my-awesome-project/merge_requests/1)."
 
         self.send_and_test_stream_message(
-            "merge_request_hook__merge_request_unapproved",
-            expected_topic,
-            expected_message,
+            "merge_request_hook__merge_request_unapproved", expected_topic, expected_message,
         )

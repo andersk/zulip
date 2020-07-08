@@ -165,9 +165,7 @@ class NarrowBuilderTest(ZulipTestCase):
             "WHERE recipient_id IN (%(recipient_id_1)s, %(recipient_id_2)s, %(recipient_id_3)s, %(recipient_id_4)s, %(recipient_id_5)s, %(recipient_id_6)s)",
         )
 
-    def test_add_term_using_streams_operator_and_public_stream_operand_negated(
-        self,
-    ) -> None:
+    def test_add_term_using_streams_operator_and_public_stream_operand_negated(self) -> None:
         term = dict(operator="streams", operand="public", negated=True)
         self._do_add_term_test(
             term,
@@ -200,9 +198,7 @@ class NarrowBuilderTest(ZulipTestCase):
             "WHERE recipient_id NOT IN (%(recipient_id_1)s, %(recipient_id_2)s, %(recipient_id_3)s, %(recipient_id_4)s, %(recipient_id_5)s, %(recipient_id_6)s)",
         )
 
-    def test_add_term_using_is_operator_private_operand_and_negated(
-        self,
-    ) -> None:  # NEGATED
+    def test_add_term_using_is_operator_private_operand_and_negated(self) -> None:  # NEGATED
         term = dict(operator="is", operand="private", negated=True)
         self._do_add_term_test(term, "WHERE (flags & %(flags_1)s) = %(param_1)s")
 
@@ -378,17 +374,14 @@ class NarrowBuilderTest(ZulipTestCase):
         term = dict(operator="id", operand=555, negated=True)
         self._do_add_term_test(term, "WHERE id != %(param_1)s")
 
-    def test_add_term_using_group_pm_operator_and_not_the_same_user_as_operand(
-        self,
-    ) -> None:
+    def test_add_term_using_group_pm_operator_and_not_the_same_user_as_operand(self) -> None:
         # Test wtihout any such group PM threads existing
         term = dict(operator="group-pm-with", operand=self.othello_email)
         self._do_add_term_test(term, "WHERE 1 != 1")
 
         # Test with at least one such group PM thread existing
         self.send_huddle_message(
-            self.user_profile,
-            [self.example_user("othello"), self.example_user("cordelia")],
+            self.user_profile, [self.example_user("othello"), self.example_user("cordelia")],
         )
 
         term = dict(operator="group-pm-with", operand=self.othello_email)
@@ -1583,9 +1576,7 @@ class GetOldMessagesTest(ZulipTestCase):
 
         matching_message_ids = []
 
-        matching_message_ids.append(
-            self.send_huddle_message(me, [iago, cordelia, othello]),
-        )
+        matching_message_ids.append(self.send_huddle_message(me, [iago, cordelia, othello]))
 
         matching_message_ids.append(self.send_huddle_message(me, [cordelia, othello]))
 
@@ -1751,9 +1742,7 @@ class GetOldMessagesTest(ZulipTestCase):
         self.subscribe(mit_user_profile, "Scotland")
         self.send_stream_message(mit_user_profile, "Scotland", topic_name="\u03bb-topic")
         self.send_stream_message(mit_user_profile, "Scotland", topic_name="\u03bb-topic.d")
-        self.send_stream_message(
-            mit_user_profile, "Scotland", topic_name="\u03bb-topic.d.d",
-        )
+        self.send_stream_message(mit_user_profile, "Scotland", topic_name="\u03bb-topic.d.d")
         self.send_stream_message(
             mit_user_profile, "Scotland", topic_name="\u03bb-topic.d.d.d",
         )
@@ -2049,10 +2038,7 @@ class GetOldMessagesTest(ZulipTestCase):
         for topic, content in messages_to_search:
             message_ids.append(
                 self.send_stream_message(
-                    self.example_user("iago"),
-                    "Scotland",
-                    topic_name=topic,
-                    content=content,
+                    self.example_user("iago"), "Scotland", topic_name=topic, content=content,
                 ),
             )
         self._update_tsvector_index()
@@ -2142,9 +2128,7 @@ class GetOldMessagesTest(ZulipTestCase):
         messages = result["messages"]
 
         japanese_message = [m for m in messages if m[TOPIC_NAME] == "日本語"][-1]
-        self.assertEqual(
-            japanese_message[MATCH_TOPIC], '<span class="highlight">日本</span>語',
-        )
+        self.assertEqual(japanese_message[MATCH_TOPIC], '<span class="highlight">日本</span>語')
         self.assertEqual(
             japanese_message["match_content"],
             '<p>昨日、<span class="highlight">日本</span>の' + "お菓子を送りました。</p>",
@@ -2460,9 +2444,7 @@ class GetOldMessagesTest(ZulipTestCase):
         self.assertEqual(data["history_limited"], False)
         messages_matches_ids(messages, message_ids)
 
-        data = self.get_messages_response(
-            anchor=message_ids[5], num_before=10, num_after=10,
-        )
+        data = self.get_messages_response(anchor=message_ids[5], num_before=10, num_after=10)
         messages = data["messages"]
         self.assertEqual(data["found_anchor"], True)
         self.assertEqual(data["found_oldest"], True)
@@ -2900,9 +2882,7 @@ class GetOldMessagesTest(ZulipTestCase):
         )
         self.send_personal_message(self.example_user("othello"), self.example_user("iago"))
 
-        query_params = dict(
-            anchor="first_unread", num_before=10, num_after=10, narrow="[]",
-        )
+        query_params = dict(anchor="first_unread", num_before=10, num_after=10, narrow="[]")
         request = POSTRequestMock(query_params, user_profile)
 
         with queries_captured() as all_queries:
@@ -2945,9 +2925,7 @@ class GetOldMessagesTest(ZulipTestCase):
         )
         self.send_personal_message(self.example_user("othello"), self.example_user("iago"))
 
-        query_params = dict(
-            anchor="first_unread", num_before=10, num_after=10, narrow="[]",
-        )
+        query_params = dict(anchor="first_unread", num_before=10, num_after=10, narrow="[]")
         request = POSTRequestMock(query_params, user_profile)
 
         first_visible_message_id = first_unread_message_id + 2
@@ -2968,9 +2946,7 @@ class GetOldMessagesTest(ZulipTestCase):
     def test_use_first_unread_anchor_with_no_unread_messages(self) -> None:
         user_profile = self.example_user("hamlet")
 
-        query_params = dict(
-            anchor="first_unread", num_before=10, num_after=10, narrow="[]",
-        )
+        query_params = dict(anchor="first_unread", num_before=10, num_after=10, narrow="[]")
         request = POSTRequestMock(query_params, user_profile)
 
         with queries_captured() as all_queries:
@@ -3472,9 +3448,9 @@ class MessageHasKeywordsTest(ZulipTestCase):
 
         # This message should claim attachments 1 only because attachment 2
         # is not being parsed as a link by Markdown.
-        body = (
-            "Some files here ...[zulip.txt]({})" + "{}.... Some more...." + "{}"
-        ).format(dummy_urls[0], dummy_urls[1], dummy_urls[1])
+        body = ("Some files here ...[zulip.txt]({})" + "{}.... Some more...." + "{}").format(
+            dummy_urls[0], dummy_urls[1], dummy_urls[1],
+        )
         self.send_stream_message(user_profile, "Denmark", body, "test")
         assert_attachment_claimed(dummy_path_ids[0], True)
         assert_attachment_claimed(dummy_path_ids[1], False)

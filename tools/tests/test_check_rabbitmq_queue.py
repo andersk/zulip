@@ -117,8 +117,7 @@ class AnalyzeQueueStatsTests(TestCase):
 
         # verify logic around MAX_SECONDS_TO_CLEAR_FOR_BURSTS.
         with mock.patch.dict(
-            "scripts.lib.check_rabbitmq_queue.MAX_SECONDS_TO_CLEAR_FOR_BURSTS",
-            {"name": 10},
+            "scripts.lib.check_rabbitmq_queue.MAX_SECONDS_TO_CLEAR_FOR_BURSTS", {"name": 10},
         ):
             result = analyze_queue_stats(
                 "name",

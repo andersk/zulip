@@ -909,9 +909,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
     # which isn't imported yet.  But we need the Stream model IDs for
     # notifications_stream.
     update_model_ids(Stream, data, "stream")
-    re_map_foreign_keys(
-        data, "zerver_realm", "notifications_stream", related_table="stream",
-    )
+    re_map_foreign_keys(data, "zerver_realm", "notifications_stream", related_table="stream")
     re_map_foreign_keys(
         data, "zerver_realm", "signup_notifications_stream", related_table="stream",
     )
@@ -957,9 +955,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
     # Remap the user IDs for notification_bot and friends to their
     # appropriate IDs on this server
     for item in data["zerver_userprofile_crossrealm"]:
-        logging.info(
-            "Adding to ID map: %s %s", item["id"], get_system_bot(item["email"]).id,
-        )
+        logging.info("Adding to ID map: %s %s", item["id"], get_system_bot(item["email"]).id)
         new_user_id = get_system_bot(item["email"]).id
         update_id_map(table="user_profile", old_id=item["id"], new_id=new_user_id)
         new_recipient_id = Recipient.objects.get(
@@ -989,10 +985,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
         data, "zerver_userprofile", "default_sending_stream", related_table="stream",
     )
     re_map_foreign_keys(
-        data,
-        "zerver_userprofile",
-        "default_events_register_stream",
-        related_table="stream",
+        data, "zerver_userprofile", "default_events_register_stream", related_table="stream",
     )
     re_map_foreign_keys(
         data,
@@ -1097,9 +1090,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
 
     if "zerver_userhotspot" in data:
         fix_datetime_fields(data, "zerver_userhotspot")
-        re_map_foreign_keys(
-            data, "zerver_userhotspot", "user", related_table="user_profile",
-        )
+        re_map_foreign_keys(data, "zerver_userhotspot", "user", related_table="user_profile")
         update_model_ids(UserHotspot, data, "userhotspot")
         bulk_import_model(data, UserHotspot)
 
@@ -1135,10 +1126,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
             data, "zerver_usergroupmembership", "user_group", related_table="usergroup",
         )
         re_map_foreign_keys(
-            data,
-            "zerver_usergroupmembership",
-            "user_profile",
-            related_table="user_profile",
+            data, "zerver_usergroupmembership", "user_profile", related_table="user_profile",
         )
         update_model_ids(UserGroupMembership, data, "usergroupmembership")
         bulk_import_model(data, UserGroupMembership)
@@ -1186,10 +1174,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
     bulk_import_model(data, CustomProfileField)
 
     re_map_foreign_keys(
-        data,
-        "zerver_customprofilefieldvalue",
-        "user_profile",
-        related_table="user_profile",
+        data, "zerver_customprofilefieldvalue", "user_profile", related_table="user_profile",
     )
     re_map_foreign_keys(
         data, "zerver_customprofilefieldvalue", "field", related_table="customprofilefield",
@@ -1296,9 +1281,7 @@ def create_users(
 
 
 def update_message_foreign_keys(import_dir: Path, sort_by_date: bool) -> None:
-    old_id_list = get_incoming_message_ids(
-        import_dir=import_dir, sort_by_date=sort_by_date,
-    )
+    old_id_list = get_incoming_message_ids(import_dir=import_dir, sort_by_date=sort_by_date)
 
     count = len(old_id_list)
 
@@ -1386,9 +1369,7 @@ def import_message_data(
         logging.info("Importing message dump %s", message_filename)
         re_map_foreign_keys(data, "zerver_message", "sender", related_table="user_profile")
         re_map_foreign_keys(data, "zerver_message", "recipient", related_table="recipient")
-        re_map_foreign_keys(
-            data, "zerver_message", "sending_client", related_table="client",
-        )
+        re_map_foreign_keys(data, "zerver_message", "sending_client", related_table="client")
         fix_datetime_fields(data, "zerver_message")
         # Parser to update message content with the updated attachment urls
         fix_upload_links(data, "zerver_message")

@@ -369,9 +369,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         self.login_user(hamlet)
         body = f"Test message ...[zulip.txt](http://localhost:9991/user_uploads/{hamlet.realm_id}/64/fake_path_id.txt)"
         self.send_stream_message(self.example_user("hamlet"), "Denmark", body, "test")
-        self.assertFalse(
-            Attachment.objects.filter(path_id="1/64/fake_path_id.txt").exists(),
-        )
+        self.assertFalse(Attachment.objects.filter(path_id="1/64/fake_path_id.txt").exists())
 
     def test_multiple_claim_attachments(self) -> None:
         """
@@ -386,9 +384,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
 
         self.subscribe(self.example_user("hamlet"), "Denmark")
         host = self.example_user("hamlet").realm.host
-        body = (
-            f"First message ...[zulip.txt](http://{host}/user_uploads/" + d1_path_id + ")"
-        )
+        body = f"First message ...[zulip.txt](http://{host}/user_uploads/" + d1_path_id + ")"
         self.send_stream_message(self.example_user("hamlet"), "Denmark", body, "test")
         body = (
             f"Second message ...[zulip.txt](http://{host}/user_uploads/" + d1_path_id + ")"
@@ -411,12 +407,8 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         self.subscribe(self.example_user("hamlet"), "private_stream")
 
         # First, send the message to the new private stream.
-        body = (
-            f"First message ...[zulip.txt](http://{host}/user_uploads/" + d1_path_id + ")"
-        )
-        self.send_stream_message(
-            self.example_user("hamlet"), "private_stream", body, "test",
-        )
+        body = f"First message ...[zulip.txt](http://{host}/user_uploads/" + d1_path_id + ")"
+        self.send_stream_message(self.example_user("hamlet"), "private_stream", body, "test")
         self.assertFalse(Attachment.objects.get(path_id=d1_path_id).is_realm_public)
         self.assertEqual(Attachment.objects.get(path_id=d1_path_id).messages.count(), 1)
 
@@ -439,9 +431,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         self.assertFalse(Attachment.objects.get(path_id=d1_path_id).is_realm_public)
 
         # Then, have that new recipient user publish it.
-        body = (
-            f"Third message ...[zulip.txt](http://{host}/user_uploads/" + d1_path_id + ")"
-        )
+        body = f"Third message ...[zulip.txt](http://{host}/user_uploads/" + d1_path_id + ")"
         self.send_stream_message(self.example_user("othello"), "Denmark", body, "test")
         self.assertEqual(Attachment.objects.get(path_id=d1_path_id).messages.count(), 3)
         self.assertTrue(Attachment.objects.get(path_id=d1_path_id).is_realm_public)
@@ -587,9 +577,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         result = self.client_post("/json/user_uploads", {"file": fp})
         uri = result.json()["uri"]
         fp_path_id = re.sub("/user_uploads/", "", uri)
-        body = (
-            f"First message ...[zulip.txt](http://{host}/user_uploads/" + fp_path_id + ")"
-        )
+        body = f"First message ...[zulip.txt](http://{host}/user_uploads/" + fp_path_id + ")"
         with self.settings(CROSS_REALM_BOT_EMAILS={user_2.email, user_3.email}):
             internal_send_private_message(
                 realm=r1,
@@ -824,9 +812,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
             + fp_path_id
             + ")"
         )
-        self.send_stream_message(
-            self.example_user("hamlet"), "test-subscribe", body, "test",
-        )
+        self.send_stream_message(self.example_user("hamlet"), "test-subscribe", body, "test")
         self.logout()
 
         # Now all users should be able to access the files
@@ -852,9 +838,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
                 fp_path = os.path.split(fp_path_id)[0]
                 response = self.client_get(uri)
                 _get_sendfile.cache_clear()
-                test_run, worker = os.path.split(
-                    os.path.dirname(settings.LOCAL_UPLOADS_DIR),
-                )
+                test_run, worker = os.path.split(os.path.dirname(settings.LOCAL_UPLOADS_DIR))
                 self.assertEqual(
                     response["X-Accel-Redirect"],
                     "/serve_uploads/" + fp_path + "/" + name_str_for_test,
@@ -933,9 +917,7 @@ class AvatarTest(UploadSerializeMixin, ZulipTestCase):
     def test_avatar_url(self) -> None:
         """Verifies URL schemes for avatars and realm icons."""
         backend: ZulipUploadBackend = LocalUploadBackend()
-        self.assertEqual(
-            backend.get_avatar_url("hash", False), "/user_avatars/hash.png?x=x",
-        )
+        self.assertEqual(backend.get_avatar_url("hash", False), "/user_avatars/hash.png?x=x")
         self.assertEqual(
             backend.get_avatar_url("hash", True), "/user_avatars/hash-medium.png?x=x",
         )
@@ -1068,16 +1050,12 @@ class AvatarTest(UploadSerializeMixin, ZulipTestCase):
         # Test cross_realm_bot avatar access using email.
         response = self.api_get(hamlet, "/avatar/welcome-bot@zulip.com?foo=bar")
         redirect_url = response["Location"]
-        self.assertTrue(
-            redirect_url.endswith(str(avatar_url(cross_realm_bot)) + "&foo=bar"),
-        )
+        self.assertTrue(redirect_url.endswith(str(avatar_url(cross_realm_bot)) + "&foo=bar"))
 
         # Test cross_realm_bot avatar access using id.
         response = self.api_get(hamlet, f"/avatar/{cross_realm_bot.id}?foo=bar")
         redirect_url = response["Location"]
-        self.assertTrue(
-            redirect_url.endswith(str(avatar_url(cross_realm_bot)) + "&foo=bar"),
-        )
+        self.assertTrue(redirect_url.endswith(str(avatar_url(cross_realm_bot)) + "&foo=bar"))
 
         response = self.client_get("/avatar/cordelia@zulip.com?foo=bar")
         self.assert_json_error(
@@ -1474,8 +1452,7 @@ class RealmLogoTest(UploadSerializeMixin, ZulipTestCase):
         self.login("iago")
         with get_test_image_file("img.png") as fp1, get_test_image_file("img.png") as fp2:
             result = self.client_post(
-                "/json/realm/logo",
-                {"f1": fp1, "f2": fp2, "night": ujson.dumps(self.night)},
+                "/json/realm/logo", {"f1": fp1, "f2": fp2, "night": ujson.dumps(self.night)},
             )
         self.assert_json_error(result, "You must upload exactly one logo.")
 
@@ -1786,9 +1763,7 @@ class S3Test(ZulipTestCase):
         bucket = create_s3_buckets(settings.S3_AUTH_UPLOADS_BUCKET)[0]
 
         user_profile = self.example_user("hamlet")
-        uri = upload_message_file(
-            "dummy.txt", len(b"zulip!"), None, b"zulip!", user_profile,
-        )
+        uri = upload_message_file("dummy.txt", len(b"zulip!"), None, b"zulip!", user_profile)
 
         path_id = re.sub("/user_uploads/", "", uri)
         self.assertEqual(b"zulip!", bucket.Object(path_id).get()["Body"].read())
@@ -1970,9 +1945,7 @@ class S3Test(ZulipTestCase):
         image_file = get_test_image_file("img.png")
         zerver.lib.upload.upload_backend.upload_realm_icon_image(image_file, user_profile)
 
-        original_path_id = os.path.join(
-            str(user_profile.realm.id), "realm", "icon.original",
-        )
+        original_path_id = os.path.join(str(user_profile.realm.id), "realm", "icon.original")
         original_key = bucket.Object(original_path_id)
         image_file.seek(0)
         self.assertEqual(image_file.read(), original_key.get()["Body"].read())
@@ -2109,9 +2082,7 @@ class UploadSpaceTests(UploadSerializeMixin, ZulipTestCase):
         self.assertEqual(len(data), self.realm.currently_used_upload_space_bytes())
 
         data2 = b"more-data!"
-        upload_message_file(
-            "dummy2.txt", len(data2), "text/plain", data2, self.user_profile,
-        )
+        upload_message_file("dummy2.txt", len(data2), "text/plain", data2, self.user_profile)
         self.assertEqual(
             len(data) + len(data2),
             cache_get(get_realm_used_upload_space_cache_key(self.realm))[0],

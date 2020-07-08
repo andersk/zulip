@@ -931,9 +931,7 @@ def do_events_register(
     # handling perspective to do it before contacting Tornado
     check_supported_events_narrow_filter(narrow)
 
-    notification_settings_null = client_capabilities.get(
-        "notification_settings_null", False,
-    )
+    notification_settings_null = client_capabilities.get("notification_settings_null", False)
     bulk_message_deletion = client_capabilities.get("bulk_message_deletion", False)
     user_avatar_url_field_optional = client_capabilities.get(
         "user_avatar_url_field_optional", False,

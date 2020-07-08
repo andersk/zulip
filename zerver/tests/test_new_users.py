@@ -105,9 +105,7 @@ class SendLoginEmailTest(ZulipTestCase):
         mock_time = datetime.datetime(year=2018, month=1, day=1, tzinfo=utc)
 
         user.timezone = "US/Pacific"
-        user.date_joined = mock_time - datetime.timedelta(
-            seconds=JUST_CREATED_THRESHOLD + 1,
-        )
+        user.date_joined = mock_time - datetime.timedelta(seconds=JUST_CREATED_THRESHOLD + 1)
         user.save()
 
         do_change_notification_settings(user, "enable_login_emails", False)

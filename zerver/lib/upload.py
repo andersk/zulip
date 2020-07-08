@@ -420,9 +420,7 @@ class S3UploadBackend(ZulipUploadBackend):
             self.uploads_bucket, s3_file_name, content_type, user_profile, file_data,
         )
 
-        create_attachment(
-            uploaded_file_name, s3_file_name, user_profile, uploaded_file_size,
-        )
+        create_attachment(uploaded_file_name, s3_file_name, user_profile, uploaded_file_size)
         return url
 
     def delete_message_image(self, path_id: str) -> bool:
@@ -455,11 +453,7 @@ class S3UploadBackend(ZulipUploadBackend):
 
         resized_data = resize_avatar(image_data)
         upload_image_to_s3(
-            self.avatar_bucket,
-            s3_file_name,
-            "image/png",
-            target_user_profile,
-            resized_data,
+            self.avatar_bucket, s3_file_name, "image/png", target_user_profile, resized_data,
         )
         # See avatar_url in avatar.py for URL.  (That code also handles the case
         # that users use gravatar.)
@@ -476,9 +470,7 @@ class S3UploadBackend(ZulipUploadBackend):
         s3_file_name = user_avatar_path(target_user_profile)
 
         image_data = user_file.read()
-        self.write_avatar_images(
-            s3_file_name, target_user_profile, image_data, content_type,
-        )
+        self.write_avatar_images(s3_file_name, target_user_profile, image_data, content_type)
 
     def delete_avatar_image(self, user: UserProfile) -> None:
         path_id = user_avatar_path(user)
@@ -861,9 +853,7 @@ class LocalUploadBackend(ZulipUploadBackend):
         # TODO: Refactor this to share code with ensure_medium_avatar_image
         file_path = user_avatar_path(user_profile)
 
-        output_path = os.path.join(
-            settings.LOCAL_UPLOADS_DIR, "avatars", file_path + ".png",
-        )
+        output_path = os.path.join(settings.LOCAL_UPLOADS_DIR, "avatars", file_path + ".png")
         if os.path.isfile(output_path):
             return
 
@@ -980,10 +970,7 @@ def upload_message_file(
 
 
 def claim_attachment(
-    user_profile: UserProfile,
-    path_id: str,
-    message: Message,
-    is_message_realm_public: bool,
+    user_profile: UserProfile, path_id: str, message: Message, is_message_realm_public: bool,
 ) -> Attachment:
     attachment = Attachment.objects.get(path_id=path_id)
     attachment.messages.add(message)
@@ -1013,11 +1000,7 @@ def upload_message_image_from_request(
 ) -> str:
     uploaded_file_name, uploaded_file_size, content_type = get_file_info(request, user_file)
     return upload_message_file(
-        uploaded_file_name,
-        uploaded_file_size,
-        content_type,
-        user_file.read(),
-        user_profile,
+        uploaded_file_name, uploaded_file_size, content_type, user_file.read(), user_profile,
     )
 
 

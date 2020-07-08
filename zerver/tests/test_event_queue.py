@@ -1065,9 +1065,7 @@ class EventQueueTest(ZulipTestCase):
         self.verify_to_dict_end_to_end(client)
 
         queue.push({"type": "unknown", "timestamp": "1"})
-        self.assertEqual(
-            list(queue.queue), [{"id": 1, "type": "unknown", "timestamp": "1"}],
-        )
+        self.assertEqual(list(queue.queue), [{"id": 1, "type": "unknown", "timestamp": "1"}])
         self.assertEqual(
             queue.virtual_events,
             {

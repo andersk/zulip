@@ -200,9 +200,7 @@ def send_apple_push_notification(
                 "APNs: Success sending for user %d to device %s", user_id, device.token,
             )
         elif result in ["Unregistered", "BadDeviceToken", "DeviceTokenNotForTopic"]:
-            logger.info(
-                "APNs: Removing invalid/expired token %s (%s)", device.token, result,
-            )
+            logger.info("APNs: Removing invalid/expired token %s (%s)", device.token, result)
             # We remove all entries for this token (There
             # could be multiple for different Zulip servers).
             DeviceTokenClass.objects.filter(
@@ -441,11 +439,7 @@ def add_push_device_token(
     user_profile: UserProfile, token_str: str, kind: int, ios_app_id: Optional[str] = None,
 ) -> None:
     logger.info(
-        "Registering push device: %d %r %d %r",
-        user_profile.id,
-        token_str,
-        kind,
-        ios_app_id,
+        "Registering push device: %d %r %d %r", user_profile.id, token_str, kind, ios_app_id,
     )
 
     # Regardless of whether we're using the push notifications
@@ -573,8 +567,7 @@ def get_gcm_alert(message: Message) -> str:
     if message.recipient.type == Recipient.HUDDLE and message.trigger == "private_message":
         return f"New private group message from {sender_str}"
     elif (
-        message.recipient.type == Recipient.PERSONAL
-        and message.trigger == "private_message"
+        message.recipient.type == Recipient.PERSONAL and message.trigger == "private_message"
     ):
         return f"New private message from {sender_str}"
     elif message.is_stream_message() and (

@@ -107,9 +107,7 @@ class PrincipalError(JsonableError):
         return _("User not authorized to execute queries on behalf of '{principal}'")
 
 
-def principal_to_user_profile(
-    agent: UserProfile, principal: Union[str, int],
-) -> UserProfile:
+def principal_to_user_profile(agent: UserProfile, principal: Union[str, int]) -> UserProfile:
     try:
         if isinstance(principal, str):
             return get_active_user(principal, agent.realm)
@@ -390,9 +388,7 @@ check_principals: Validator[Union[List[str], List[int]]] = check_union(
 def remove_subscriptions_backend(
     request: HttpRequest,
     user_profile: UserProfile,
-    streams_raw: Iterable[str] = REQ(
-        "subscriptions", validator=remove_subscriptions_schema,
-    ),
+    streams_raw: Iterable[str] = REQ("subscriptions", validator=remove_subscriptions_schema),
     principals: Optional[Union[List[str], List[int]]] = REQ(
         validator=check_principals, default=None,
     ),

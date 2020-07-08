@@ -372,9 +372,7 @@ def get_chart_data(
                 for stat in stats
             )
 
-        if start > end and (
-            timezone_now() - start > MAX_TIME_FOR_FULL_ANALYTICS_GENERATION
-        ):
+        if start > end and (timezone_now() - start > MAX_TIME_FOR_FULL_ANALYTICS_GENERATION):
             logging.warning(
                 "User from realm %s attempted to access /stats, but the computed "
                 "start time: %s (creation of realm or installation) is later than the computed "
@@ -527,9 +525,7 @@ def get_time_series_by_subgroup(
     value_arrays = {}
     for subgroup, label in subgroup_to_label.items():
         if (subgroup in value_dicts) or include_empty_subgroups:
-            value_arrays[label] = [
-                value_dicts[subgroup][end_time] for end_time in end_times
-            ]
+            value_arrays[label] = [value_dicts[subgroup][end_time] for end_time in end_times]
 
     if stat == COUNT_STATS["messages_sent:client:day"]:
         # HACK: We rewrite these arrays to collapse the Client objects
@@ -850,10 +846,7 @@ def user_activity_intervals() -> Tuple[mark_safe, Dict[str, float]]:
         UserActivityInterval.objects.filter(end__gte=day_start, start__lte=day_end)
         .select_related("user_profile", "user_profile__realm")
         .only(
-            "start",
-            "end",
-            "user_profile__delivery_email",
-            "user_profile__realm__string_id",
+            "start", "end", "user_profile__delivery_email", "user_profile__realm__string_id",
         )
         .order_by("user_profile__realm__string_id", "user_profile__delivery_email")
     )

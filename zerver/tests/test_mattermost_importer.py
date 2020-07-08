@@ -261,9 +261,7 @@ class MatterMostImporter(ZulipTestCase):
             {ron_id, harry_id},
         )
         self.assertEqual(
-            subscriber_handler.get_users(
-                stream_id=stream_id_mapper.get("dumbledores-army"),
-            ),
+            subscriber_handler.get_users(stream_id=stream_id_mapper.get("dumbledores-army")),
             {ron_id, harry_id},
         )
 
@@ -293,9 +291,7 @@ class MatterMostImporter(ZulipTestCase):
             {harry_id},
         )
         self.assertEqual(
-            subscriber_handler.get_users(
-                stream_id=stream_id_mapper.get("dumbledores-army"),
-            ),
+            subscriber_handler.get_users(stream_id=stream_id_mapper.get("dumbledores-army")),
             {harry_id},
         )
 
@@ -680,9 +676,7 @@ class MatterMostImporter(ZulipTestCase):
             self.assertIsNotNone(message.rendered_content)
 
     def test_do_convert_data_with_direct_messages(self) -> None:
-        mattermost_data_dir = self.fixture_file_name(
-            "direct_channel", "mattermost_fixtures",
-        )
+        mattermost_data_dir = self.fixture_file_name("direct_channel", "mattermost_fixtures")
         output_dir = self.make_import_output_dir("mattermost")
 
         do_convert_data(

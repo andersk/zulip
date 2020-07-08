@@ -158,9 +158,7 @@ def gogs_webhook_main(
     user_specified_topic: Optional[str],
 ) -> HttpResponse:
     repo = payload["repository"]["name"]
-    event = validate_extract_webhook_http_header(
-        request, http_header_name, integration_name,
-    )
+    event = validate_extract_webhook_http_header(request, http_header_name, integration_name)
     if event == "push":
         branch = payload["ref"].replace("refs/heads/", "")
         if branches is not None and branch not in branches.split(","):
@@ -199,9 +197,7 @@ def gogs_webhook_main(
             title=payload["issue"]["title"],
         )
     elif event == "release":
-        body = format_release_event(
-            payload, include_title=user_specified_topic is not None,
-        )
+        body = format_release_event(payload, include_title=user_specified_topic is not None)
         topic = TOPIC_WITH_RELEASE_TEMPLATE.format(
             repo=repo, tag=payload["release"]["tag_name"], title=payload["release"]["name"],
         )

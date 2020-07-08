@@ -278,9 +278,7 @@ def cache_get_many(keys: List[str], cache_name: Optional[str] = None) -> Dict[st
     return {key[len(KEY_PREFIX) :]: value for key, value in ret.items()}
 
 
-def safe_cache_get_many(
-    keys: List[str], cache_name: Optional[str] = None,
-) -> Dict[str, Any]:
+def safe_cache_get_many(keys: List[str], cache_name: Optional[str] = None) -> Dict[str, Any]:
     """Variant of cache_get_many that drops any keys that fail
     validation, rather than throwing an exception visible to the
     caller."""

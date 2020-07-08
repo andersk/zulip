@@ -75,9 +75,7 @@ Usage examples:
                 # Report global activity.
                 self.compute_activity(UserActivity.objects.all())
             elif options["target"] == "realm" and realm is not None:
-                self.compute_activity(
-                    UserActivity.objects.filter(user_profile__realm=realm),
-                )
+                self.compute_activity(UserActivity.objects.filter(user_profile__realm=realm))
             else:
                 self.print_help("./manage.py", "client_activity")
         elif options["target"] == "user":

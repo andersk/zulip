@@ -78,9 +78,7 @@ class AttachmentHandler:
                 message_ids=info["message_ids"],
                 user_id=info["sender_id"],
                 fileinfo=dict(
-                    created=info["mtime"],  # minor lie
-                    size=info["size"],
-                    name=info["name"],
+                    created=info["mtime"], size=info["size"], name=info["name"],  # minor lie
                 ),
                 s3_path=info["target_path"],
                 zerver_attachment=attachments,

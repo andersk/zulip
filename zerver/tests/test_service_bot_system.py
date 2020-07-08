@@ -91,9 +91,7 @@ class TestServiceBotBasics(ZulipTestCase):
 
         cordelia = self.example_user("cordelia")
 
-        red_herring_bot = self.create_test_bot(
-            short_name="whatever", user_profile=cordelia,
-        )
+        red_herring_bot = self.create_test_bot(short_name="whatever", user_profile=cordelia)
 
         event_dict = get_service_bot_events(
             sender=sender,
@@ -372,9 +370,7 @@ class TestServiceBotConfigHandler(ZulipTestCase):
             "Cannot store configuration. Request would require 101 characters. "
             "The current configuration size limit is 100 characters.",
             lambda: set_bot_config(
-                self.bot_profile,
-                "some key",
-                "x" * (settings.BOT_CONFIG_SIZE_LIMIT - 8 + 1),
+                self.bot_profile, "some key", "x" * (settings.BOT_CONFIG_SIZE_LIMIT - 8 + 1),
             ),
         )
         set_bot_config(

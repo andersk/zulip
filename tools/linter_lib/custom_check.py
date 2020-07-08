@@ -732,10 +732,7 @@ html_rules: List["Rule"] = whitespace_rules + prose_style_rules + [
             "templates/zerver/app/keyboard_shortcuts.html",
             "templates/zerver/app/markdown_help.html",
         },
-        "good_lines": [
-            '<img src="{{source_url}}" alt="{{ _(name) }}" />',
-            '<img alg="" />',
-        ],
+        "good_lines": ['<img src="{{source_url}}" alt="{{ _(name) }}" />', '<img alg="" />'],
         "bad_lines": ['<img alt="Foo Image" />'],
     },
     {

@@ -147,9 +147,7 @@ class ChangeSettingsTest(ZulipTestCase):
         realm.emails_restricted_to_domains = False
         realm.save()
 
-        json_result = self.client_patch(
-            "/json/settings", dict(email="hamlet@mailnator.com"),
-        )
+        json_result = self.client_patch("/json/settings", dict(email="hamlet@mailnator.com"))
         self.assert_json_error(json_result, "Please use your real email address.")
 
     # This is basically a don't-explode test.

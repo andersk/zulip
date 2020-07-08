@@ -451,17 +451,13 @@ class RealmTest(ZulipTestCase):
         # Check normal user cannot access email
         result = self.api_get(cordelia, f"/api/v1/users/{hamlet.id}")
         self.assert_json_success(result)
-        self.assertEqual(
-            result.json()["user"]["email"], f"user{hamlet.id}@zulip.testserver",
-        )
+        self.assertEqual(result.json()["user"]["email"], f"user{hamlet.id}@zulip.testserver")
         self.assertEqual(result.json()["user"].get("delivery_email"), None)
 
         # Check administrator gets delivery_email with EMAIL_ADDRESS_VISIBILITY_ADMINS
         result = self.api_get(user_profile, f"/api/v1/users/{hamlet.id}")
         self.assert_json_success(result)
-        self.assertEqual(
-            result.json()["user"]["email"], f"user{hamlet.id}@zulip.testserver",
-        )
+        self.assertEqual(result.json()["user"]["email"], f"user{hamlet.id}@zulip.testserver")
         self.assertEqual(result.json()["user"].get("delivery_email"), hamlet.delivery_email)
 
         req = dict(
@@ -483,9 +479,7 @@ class RealmTest(ZulipTestCase):
         # EMAIL_ADDRESS_VISIBILITY_NOBODY
         result = self.api_get(user_profile, f"/api/v1/users/{hamlet.id}")
         self.assert_json_success(result)
-        self.assertEqual(
-            result.json()["user"]["email"], f"user{hamlet.id}@zulip.testserver",
-        )
+        self.assertEqual(result.json()["user"]["email"], f"user{hamlet.id}@zulip.testserver")
         self.assertEqual(result.json()["user"].get("delivery_email"), None)
 
     def test_change_stream_creation_policy(self) -> None:
@@ -527,9 +521,7 @@ class RealmTest(ZulipTestCase):
     def test_private_message_policy(self) -> None:
         # We need an admin user.
         self.login("iago")
-        req = dict(
-            private_message_policy=ujson.dumps(Realm.PRIVATE_MESSAGE_POLICY_DISABLED),
-        )
+        req = dict(private_message_policy=ujson.dumps(Realm.PRIVATE_MESSAGE_POLICY_DISABLED))
         result = self.client_patch("/json/realm", req)
         self.assert_json_success(result)
         print(result)
@@ -541,9 +533,7 @@ class RealmTest(ZulipTestCase):
 
     def test_invalid_integer_attribute_values(self) -> None:
 
-        integer_values = [
-            key for key, value in Realm.property_types.items() if value is int
-        ]
+        integer_values = [key for key, value in Realm.property_types.items() if value is int]
 
         invalid_values = dict(
             bot_creation_policy=10,
@@ -600,9 +590,7 @@ class RealmTest(ZulipTestCase):
         )
 
         req = {
-            "video_chat_provider": ujson.dumps(
-                Realm.VIDEO_CHAT_PROVIDERS["disabled"]["id"],
-            ),
+            "video_chat_provider": ujson.dumps(Realm.VIDEO_CHAT_PROVIDERS["disabled"]["id"]),
         }
         result = self.client_patch("/json/realm", req)
         self.assert_json_success(result)
@@ -649,17 +637,14 @@ class RealmTest(ZulipTestCase):
                 get_realm("hosted").message_visibility_limit,
                 Realm.MESSAGE_VISIBILITY_LIMITED,
             )
-            self.assertEqual(
-                get_realm("hosted").upload_quota_gb, Realm.UPLOAD_QUOTA_LIMITED,
-            )
+            self.assertEqual(get_realm("hosted").upload_quota_gb, Realm.UPLOAD_QUOTA_LIMITED)
 
         with self.settings(BILLING_ENABLED=False):
             self.assertEqual(
                 do_create_realm("onpremise", "onpremise").plan_type, Realm.SELF_HOSTED,
             )
             self.assertEqual(
-                get_realm("onpremise").max_invites,
-                settings.INVITES_DEFAULT_REALM_DAILY_MAX,
+                get_realm("onpremise").max_invites, settings.INVITES_DEFAULT_REALM_DAILY_MAX,
             )
             self.assertEqual(get_realm("onpremise").message_visibility_limit, None)
             self.assertEqual(get_realm("onpremise").upload_quota_gb, None)
@@ -904,9 +889,7 @@ class ScrubRealmTest(ZulipTestCase):
             self.send_stream_message(king, "Shakespeare")
 
         Attachment.objects.filter(realm=zulip).delete()
-        Attachment.objects.create(
-            realm=zulip, owner=iago, path_id="a/b/temp1.txt", size=512,
-        )
+        Attachment.objects.create(realm=zulip, owner=iago, path_id="a/b/temp1.txt", size=512)
         Attachment.objects.create(
             realm=zulip, owner=othello, path_id="a/b/temp2.txt", size=512,
         )

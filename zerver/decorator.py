@@ -528,9 +528,7 @@ def add_logging_data(view_func: ViewFuncT) -> ViewFuncT:
     def _wrapped_view_func(
         request: HttpRequest, *args: object, **kwargs: object
     ) -> HttpResponse:
-        process_client(
-            request, request.user, is_browser_view=True, query=view_func.__name__,
-        )
+        process_client(request, request.user, is_browser_view=True, query=view_func.__name__)
         return rate_limit()(view_func)(request, *args, **kwargs)
 
     return cast(ViewFuncT, _wrapped_view_func)  # https://github.com/python/mypy/issues/1927
@@ -690,9 +688,7 @@ def authenticated_rest_api_view(
                 auth_type, credentials = request.META["HTTP_AUTHORIZATION"].split()
                 # case insensitive per RFC 1945
                 if auth_type.lower() != "basic":
-                    return json_error(
-                        _("This endpoint requires HTTP basic authentication."),
-                    )
+                    return json_error(_("This endpoint requires HTTP basic authentication."))
                 role, api_key = base64.b64decode(credentials).decode("utf-8").split(":")
             except ValueError:
                 return json_unauthorized(_("Invalid authorization header for basic auth"))

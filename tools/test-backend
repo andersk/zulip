@@ -326,9 +326,7 @@ def main() -> None:
     include_webhooks = options.coverage or options.include_webhooks
 
     if parallel < 1:
-        raise argparse.ArgumentError(
-            "option processes: Only positive integers are allowed.",
-        )
+        raise argparse.ArgumentError("option processes: Only positive integers are allowed.")
 
     zerver_test_dir = "zerver/tests/"
 
@@ -527,9 +525,7 @@ def main() -> None:
             failures = True
     if options.profile:
         prof.disable()
-        with tempfile.NamedTemporaryFile(
-            prefix="profile.data.", delete=False,
-        ) as stats_file:
+        with tempfile.NamedTemporaryFile(prefix="profile.data.", delete=False) as stats_file:
             prof.dump_stats(stats_file.name)
             print(f"Profile data saved to {stats_file.name}")
             print(

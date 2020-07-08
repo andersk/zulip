@@ -24,9 +24,7 @@ class GiteaHookTests(WebhookTestCase):
     def test_new_branch(self) -> None:
         expected_topic = "test / test-branch"
         expected_message = "kostekIV created [test-branch](https://try.gitea.io/kostekIV/test/src/test-branch) branch."
-        self.send_and_test_stream_message(
-            "create__branch", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("create__branch", expected_topic, expected_message)
 
     def test_pull_request_opened(self) -> None:
         expected_topic = "test / PR #1905 New pr"
@@ -73,23 +71,17 @@ class GiteaHookTests(WebhookTestCase):
     def test_issues_opened(self) -> None:
         expected_topic = "test / Issue #3 Test issue"
         expected_message = """kostekIV opened [Issue #3](https://try.gitea.io/kostekIV/test/issues/3):\n\n~~~ quote\nTest body\n~~~"""
-        self.send_and_test_stream_message(
-            "issues__opened", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("issues__opened", expected_topic, expected_message)
 
     def test_issues_edited(self) -> None:
         expected_topic = "test / Issue #3 Test issue 2"
         expected_message = """kostekIV edited [Issue #3](https://try.gitea.io/kostekIV/test/issues/3) (assigned to kostekIV):\n\n~~~ quote\nTest body\n~~~"""
-        self.send_and_test_stream_message(
-            "issues__edited", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("issues__edited", expected_topic, expected_message)
 
     def test_issues_closed(self) -> None:
         expected_topic = "test / Issue #3 Test issue 2"
         expected_message = """kostekIV closed [Issue #3](https://try.gitea.io/kostekIV/test/issues/3) (assigned to kostekIV):\n\n~~~ quote\nTest body\n~~~"""
-        self.send_and_test_stream_message(
-            "issues__closed", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("issues__closed", expected_topic, expected_message)
 
     def test_issues_assigned(self) -> None:
         expected_topic = "test / Issue #3 Test issue"

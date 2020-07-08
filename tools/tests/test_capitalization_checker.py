@@ -108,9 +108,7 @@ class IsCapitalizedTestCase(TestCase):
         capitalized = is_capitalized(string)
         self.assertFalse(capitalized)
 
-        string = (
-            "Please re-enter your password to confirm your identity." " (Forgotten it?)"
-        )
+        string = "Please re-enter your password to confirm your identity." " (Forgotten it?)"
         capitalized = is_capitalized(string)
         self.assertTrue(capitalized)
 

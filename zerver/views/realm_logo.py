@@ -17,9 +17,7 @@ from zerver.models import UserProfile
 @require_realm_admin
 @has_request_variables
 def upload_logo(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    night: bool = REQ(validator=check_bool),
+    request: HttpRequest, user_profile: UserProfile, night: bool = REQ(validator=check_bool),
 ) -> HttpResponse:
     user_profile.realm.ensure_not_on_limited_plan()
 
@@ -45,27 +43,20 @@ def upload_logo(
 @require_realm_admin
 @has_request_variables
 def delete_logo_backend(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    night: bool = REQ(validator=check_bool),
+    request: HttpRequest, user_profile: UserProfile, night: bool = REQ(validator=check_bool),
 ) -> HttpResponse:
     # We don't actually delete the logo because it might still
     # be needed if the URL was cached and it is rewrited
     # in any case after next update.
     do_change_logo_source(
-        user_profile.realm,
-        user_profile.realm.LOGO_DEFAULT,
-        night,
-        acting_user=user_profile,
+        user_profile.realm, user_profile.realm.LOGO_DEFAULT, night, acting_user=user_profile,
     )
     return json_success()
 
 
 @has_request_variables
 def get_logo_backend(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    night: bool = REQ(validator=check_bool),
+    request: HttpRequest, user_profile: UserProfile, night: bool = REQ(validator=check_bool),
 ) -> HttpResponse:
     url = get_realm_logo_url(user_profile.realm, night)
 

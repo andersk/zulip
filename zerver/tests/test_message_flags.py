@@ -222,9 +222,7 @@ class UnreadCountTests(ZulipTestCase):
 
         events: List[Mapping[str, Any]] = []
         with tornado_redirected_to_list(events):
-            result = self.client_post(
-                "/json/mark_stream_as_read", {"stream_id": stream.id},
-            )
+            result = self.client_post("/json/mark_stream_as_read", {"stream_id": stream.id})
 
         self.assert_json_success(result)
         self.assertTrue(len(events) == 1)
@@ -663,9 +661,7 @@ class GetUnreadMsgsTest(ZulipTestCase):
             # Hamlet himself, but that is actually normal
             # behavior for most API clients.
             message_id = self.send_personal_message(
-                from_user=hamlet,
-                to_user=other_user,
-                sending_client_name="some_api_program",
+                from_user=hamlet, to_user=other_user, sending_client_name="some_api_program",
             )
 
             # Check our test setup is correct--the message should
@@ -1206,8 +1202,7 @@ class MessageAccessTests(ZulipTestCase):
 
         message_ids = [message_one_id, message_two_id]
         messages = [
-            Message.objects.select_related().get(id=message_id)
-            for message_id in message_ids
+            Message.objects.select_related().get(id=message_id) for message_id in message_ids
         ]
 
         filtered_messages = bulk_access_messages(later_subscribed_user, messages)
@@ -1249,8 +1244,7 @@ class MessageAccessTests(ZulipTestCase):
 
         message_ids = [message_one_id, message_two_id]
         messages = [
-            Message.objects.select_related().get(id=message_id)
-            for message_id in message_ids
+            Message.objects.select_related().get(id=message_id) for message_id in message_ids
         ]
 
         # All public stream messages are always accessible

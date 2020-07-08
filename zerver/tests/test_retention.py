@@ -708,9 +708,7 @@ class MoveMessageToArchiveGeneral(MoveMessageToArchiveBase):
 
         attachment_id_to_message_ids: Dict[int, List[int]] = {}
         attachment_ids = list(
-            Attachment.objects.filter(messages__id__in=msg_ids).values_list(
-                "id", flat=True,
-            ),
+            Attachment.objects.filter(messages__id__in=msg_ids).values_list("id", flat=True),
         )
         for attachment_id in attachment_ids:
             attachment_id_to_message_ids[attachment_id] = list(
@@ -747,9 +745,7 @@ class MoveMessageToArchiveGeneral(MoveMessageToArchiveBase):
         self._verify_restored_data(msg_ids, usermsg_ids)
 
         restored_attachment_ids = list(
-            Attachment.objects.filter(messages__id__in=msg_ids).values_list(
-                "id", flat=True,
-            ),
+            Attachment.objects.filter(messages__id__in=msg_ids).values_list("id", flat=True),
         )
 
         self.assertEqual(set(attachment_ids), set(restored_attachment_ids))
@@ -820,9 +816,7 @@ class MoveMessageToArchiveGeneral(MoveMessageToArchiveBase):
         # Restore everything:
         restore_all_data_from_archive()
         self.assertEqual(
-            set(
-                Attachment.objects.filter(messages__id=msg_id).values_list("id", flat=True),
-            ),
+            set(Attachment.objects.filter(messages__id=msg_id).values_list("id", flat=True)),
             set(attachment_ids),
         )
 
@@ -935,9 +929,7 @@ class TestCleaningArchive(ArchiveMessagesTestingBase):
             ArchivedMessage.objects.filter(id__in=message_ids_to_clean).exists(),
         )
         self.assertFalse(
-            ArchivedUserMessage.objects.filter(
-                message_id__in=message_ids_to_clean,
-            ).exists(),
+            ArchivedUserMessage.objects.filter(message_id__in=message_ids_to_clean).exists(),
         )
 
         for message in ArchivedMessage.objects.all():

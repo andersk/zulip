@@ -36,8 +36,7 @@ BITBUCKET_COMMIT_STATUS_CHANGED_BODY = (
     "[System {key}]({system_url}) changed status of" " {commit_info} to {status}."
 )
 BITBUCKET_REPO_UPDATED_CHANGED = (
-    "{actor} changed the {change} of the **{repo_name}**"
-    " repo from **{old}** to **{new}**"
+    "{actor} changed the {change} of the **{repo_name}**" " repo from **{old}** to **{new}**"
 )
 BITBUCKET_REPO_UPDATED_ADDED = (
     "{actor} changed the {change} of the **{repo_name}** repo to **{new}**"
@@ -169,9 +168,7 @@ def get_type(request: HttpRequest, payload: Dict[str, Any]) -> str:
         pull_request_template = "pull_request_{}"
         # Note that we only need the HTTP header to determine pullrequest events.
         # We rely on the payload itself to determine the other ones.
-        event_key = validate_extract_webhook_http_header(
-            request, "X_EVENT_KEY", "BitBucket",
-        )
+        event_key = validate_extract_webhook_http_header(request, "X_EVENT_KEY", "BitBucket")
         assert event_key is not None
         action = re.match("pullrequest:(?P<action>.*)$", event_key)
         if action:
@@ -179,9 +176,7 @@ def get_type(request: HttpRequest, payload: Dict[str, Any]) -> str:
             if action_group in PULL_REQUEST_SUPPORTED_ACTIONS:
                 return pull_request_template.format(action_group)
     else:
-        event_key = validate_extract_webhook_http_header(
-            request, "X_EVENT_KEY", "BitBucket",
-        )
+        event_key = validate_extract_webhook_http_header(request, "X_EVENT_KEY", "BitBucket")
         if event_key == "repo:updated":
             return event_key
 
@@ -367,9 +362,7 @@ def get_pull_request_comment_created_action_body(
 def get_pull_request_deleted_or_updated_comment_action_body(
     payload: Dict[str, Any], action: str, include_title: bool = False,
 ) -> str:
-    action = "{} a [comment]({})".format(
-        action, payload["comment"]["links"]["html"]["href"],
-    )
+    action = "{} a [comment]({})".format(action, payload["comment"]["links"]["html"]["href"])
     return get_pull_request_comment_action_body(payload, action, include_title)
 
 

@@ -211,9 +211,7 @@ class TornadoInMemoryRateLimiterBackend(RateLimiterBackend):
     timestamps_blocked_until: Dict[str, float] = {}
 
     @classmethod
-    def _garbage_collect_for_rule(
-        cls, now: float, time_window: int, max_count: int,
-    ) -> None:
+    def _garbage_collect_for_rule(cls, now: float, time_window: int, max_count: int) -> None:
         keys_to_delete = []
         reset_times_for_rule = cls.reset_times.get((time_window, max_count), None)
         if reset_times_for_rule is None:

@@ -169,11 +169,9 @@ def home(request: HttpRequest) -> HttpResponse:
 def home_real(request: HttpRequest) -> HttpResponse:
     # Before we do any real work, check if the app is banned.
     client_user_agent = request.META.get("HTTP_USER_AGENT", "")
-    (
-        insecure_desktop_app,
-        banned_desktop_app,
-        auto_update_broken,
-    ) = is_outdated_desktop_app(client_user_agent)
+    (insecure_desktop_app, banned_desktop_app, auto_update_broken) = is_outdated_desktop_app(
+        client_user_agent,
+    )
     if banned_desktop_app:
         return render(
             request,

@@ -62,9 +62,7 @@ Job: [#2674 System - Deploy - Zabbix Agent](http://awx.example.co.uk/#/jobs/play
 * chat.example.co.uk: Success
 """.strip()
 
-        self.send_and_test_stream_message(
-            "job_successful", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("job_successful", expected_topic, expected_message)
 
     def test_ansibletower_nine_job_successful_message(self) -> None:
         """

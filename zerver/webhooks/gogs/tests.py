@@ -61,9 +61,7 @@ class GogsHookTests(WebhookTestCase):
     def test_new_branch(self) -> None:
         expected_topic = "try-git / my_feature"
         expected_message = "john created [my_feature](http://localhost:3000/john/try-git/src/my_feature) branch."
-        self.send_and_test_stream_message(
-            "create__branch", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("create__branch", expected_topic, expected_message)
 
     def test_pull_request_opened(self) -> None:
         expected_topic = "try-git / PR #1 Title Text for Pull Request"
@@ -125,9 +123,7 @@ class GogsHookTests(WebhookTestCase):
     def test_issues_opened(self) -> None:
         expected_topic = "test / Issue #3 New test issue"
         expected_message = """kostekIV opened [Issue #3](https://try.gogs.io/kostekIV/test/issues/3):\n\n~~~ quote\nTest\n~~~"""
-        self.send_and_test_stream_message(
-            "issues__opened", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("issues__opened", expected_topic, expected_message)
 
     def test_issues_reopened(self) -> None:
         expected_topic = "test / Issue #3 New test issue"
@@ -139,9 +135,7 @@ class GogsHookTests(WebhookTestCase):
     def test_issues_edited(self) -> None:
         expected_topic = "test / Issue #3 New test issue"
         expected_message = """kostekIV edited [Issue #3](https://try.gogs.io/kostekIV/test/issues/3):\n\n~~~ quote\nTest edit\n~~~"""
-        self.send_and_test_stream_message(
-            "issues__edited", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("issues__edited", expected_topic, expected_message)
 
     def test_issues_assignee(self) -> None:
         expected_topic = "test / Issue #3 New test issue"
@@ -153,9 +147,7 @@ class GogsHookTests(WebhookTestCase):
     def test_issues_closed(self) -> None:
         expected_topic = "test / Issue #3 New test issue"
         expected_message = """kostekIV closed [Issue #3](https://try.gogs.io/kostekIV/test/issues/3):\n\n~~~ quote\nClosed #3\n~~~"""
-        self.send_and_test_stream_message(
-            "issues__closed", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("issues__closed", expected_topic, expected_message)
 
     def test_issue_comment_new(self) -> None:
         expected_topic = "test / Issue #3 New test issue"

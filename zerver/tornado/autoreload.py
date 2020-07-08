@@ -181,9 +181,7 @@ def _check_file(modify_times, module, path):
     else:
         return
 
-    if path == __file__ or path == os.path.join(
-        os.path.dirname(__file__), "event_queue.py",
-    ):
+    if path == __file__ or path == os.path.join(os.path.dirname(__file__), "event_queue.py"):
         # Assume that the autoreload library itself imports correctly,
         # because reloading this file will destroy its state,
         # including _reload_hooks

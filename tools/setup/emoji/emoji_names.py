@@ -58,10 +58,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     "1f61f": {"canonical_name": "worried", "aliases": []},
     # these seem to better capture the glyphs. This is also what :/ turns into
     # in google hangouts
-    "1f615": {
-        "canonical_name": "oh_no",
-        "aliases": ["half_frown", "concerned", "confused"],
-    },
+    "1f615": {"canonical_name": "oh_no", "aliases": ["half_frown", "concerned", "confused"]},
     "1f641": {"canonical_name": "frown", "aliases": ["slight_frown"]},
     # sad seemed better than putting another frown as the primary name (see
     # People/37)
@@ -1191,10 +1188,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     "1f489": {"canonical_name": "injection", "aliases": ["syringe"]},
     "1f321": {"canonical_name": "temperature", "aliases": ["thermometer", "warm"]},
     "1f6bd": {"canonical_name": "toilet", "aliases": []},
-    "1f6b0": {
-        "canonical_name": "potable_water",
-        "aliases": ["tap_water", "drinking_water"],
-    },
+    "1f6b0": {"canonical_name": "potable_water", "aliases": ["tap_water", "drinking_water"]},
     "1f6bf": {"canonical_name": "shower", "aliases": []},
     "1f6c1": {"canonical_name": "bathtub", "aliases": []},
     "1f6c0": {"canonical_name": "bath", "aliases": []},
@@ -1295,10 +1289,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     "1f517": {"canonical_name": "link", "aliases": []},
     "1f4ce": {"canonical_name": "paperclip", "aliases": ["attachment"]},
     # office_supplies from https://mashable.com/2015/10/23/ios-9-1-emoji-guide/
-    "1f587": {
-        "canonical_name": "office_supplies",
-        "aliases": ["paperclip_chain", "linked"],
-    },
+    "1f587": {"canonical_name": "office_supplies", "aliases": ["paperclip_chain", "linked"]},
     "1f4d0": {"canonical_name": "carpenter_square", "aliases": ["triangular_ruler"]},
     "1f4cf": {"canonical_name": "ruler", "aliases": ["straightedge"]},
     "1f4cc": {"canonical_name": "push_pin", "aliases": ["thumb_tack"]},

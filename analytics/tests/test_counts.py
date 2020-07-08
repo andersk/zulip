@@ -258,33 +258,25 @@ class TestProcessCountStat(AnalyticsTestCase):
         stat = self.make_dummy_count_stat("test stat")
         process_count_stat(stat, current_time)
         self.assertFillStateEquals(stat, current_time)
-        self.assertEqual(
-            InstallationCount.objects.filter(property=stat.property).count(), 1,
-        )
+        self.assertEqual(InstallationCount.objects.filter(property=stat.property).count(), 1)
 
         # dirty stat
         FillState.objects.filter(property=stat.property).update(state=FillState.STARTED)
         process_count_stat(stat, current_time)
         self.assertFillStateEquals(stat, current_time)
-        self.assertEqual(
-            InstallationCount.objects.filter(property=stat.property).count(), 1,
-        )
+        self.assertEqual(InstallationCount.objects.filter(property=stat.property).count(), 1)
 
         # clean stat, no update
         process_count_stat(stat, current_time)
         self.assertFillStateEquals(stat, current_time)
-        self.assertEqual(
-            InstallationCount.objects.filter(property=stat.property).count(), 1,
-        )
+        self.assertEqual(InstallationCount.objects.filter(property=stat.property).count(), 1)
 
         # clean stat, with update
         current_time = current_time + self.HOUR
         stat = self.make_dummy_count_stat("test stat")
         process_count_stat(stat, current_time)
         self.assertFillStateEquals(stat, current_time)
-        self.assertEqual(
-            InstallationCount.objects.filter(property=stat.property).count(), 2,
-        )
+        self.assertEqual(InstallationCount.objects.filter(property=stat.property).count(), 2)
 
     def test_bad_fill_to_time(self) -> None:
         stat = self.make_dummy_count_stat("test stat")
@@ -369,9 +361,7 @@ class TestProcessCountStat(AnalyticsTestCase):
             INSERT INTO analytics_realmcount (realm_id, value, property, end_time)
             VALUES ({default_realm_id}, 1, {property}, %(time_end)s)
         """,
-        ).format(
-            default_realm_id=Literal(self.default_realm.id), property=Literal("stat3"),
-        )
+        ).format(default_realm_id=Literal(self.default_realm.id), property=Literal("stat3"))
         stat3 = DependentCountStat(
             "stat3",
             sql_data_collector(RealmCount, query, None),
@@ -432,9 +422,7 @@ class TestProcessCountStat(AnalyticsTestCase):
             INSERT INTO analytics_realmcount (realm_id, value, property, end_time)
             VALUES ({default_realm_id}, 1, {property}, %(time_end)s)
         """,
-        ).format(
-            default_realm_id=Literal(self.default_realm.id), property=Literal("stat4"),
-        )
+        ).format(default_realm_id=Literal(self.default_realm.id), property=Literal("stat4"))
         stat4 = DependentCountStat(
             "stat4",
             sql_data_collector(RealmCount, query, None),
@@ -538,9 +526,7 @@ class TestCountStats(AnalyticsTestCase):
         )
 
         do_fill_count_stat_at_hour(stat, self.TIME_ZERO, self.default_realm)
-        self.assertTableState(
-            RealmCount, ["value", "subgroup"], [[1, "true"], [1, "false"]],
-        )
+        self.assertTableState(RealmCount, ["value", "subgroup"], [[1, "true"], [1, "false"]])
         # No aggregation to InstallationCount with realm constraint
         self.assertTableState(InstallationCount, ["value", "subgroup"], [])
         self.assertTableState(UserCount, [], [])
@@ -1186,9 +1172,7 @@ class TestCountStats(AnalyticsTestCase):
 
         do_fill_count_stat_at_hour(stat, self.TIME_ZERO, self.default_realm)
         self.assertTableState(UserCount, ["value", "user"], [[60, user1], [1, user2]])
-        self.assertTableState(
-            RealmCount, ["value", "realm"], [[60 + 1, self.default_realm]],
-        )
+        self.assertTableState(RealmCount, ["value", "realm"], [[60 + 1, self.default_realm]])
         # No aggregation to InstallationCount with realm constraint
         self.assertTableState(InstallationCount, ["value"], [])
         self.assertTableState(StreamCount, [], [])
@@ -1262,9 +1246,7 @@ class TestDoIncrementLoggingStat(AnalyticsTestCase):
         # so this only tests a new subgroup and end_time
         do_increment_logging_stat(self.default_realm, stat, "subgroup1", self.TIME_ZERO)
         do_increment_logging_stat(self.default_realm, stat, "subgroup2", self.TIME_ZERO)
-        do_increment_logging_stat(
-            self.default_realm, stat, "subgroup1", self.TIME_LAST_HOUR,
-        )
+        do_increment_logging_stat(self.default_realm, stat, "subgroup1", self.TIME_LAST_HOUR)
         self.current_property = "test"
         self.assertTableState(
             RealmCount,
@@ -1435,9 +1417,9 @@ class TestLoggingCountStats(AnalyticsTestCase):
         )
         self.assertEqual(
             1,
-            UserCount.objects.filter(property=interactions_property).aggregate(
-                Sum("value"),
-            )["value__sum"],
+            UserCount.objects.filter(property=interactions_property).aggregate(Sum("value"))[
+                "value__sum"
+            ],
         )
 
         self.send_stream_message(user1, stream.name)
@@ -1451,9 +1433,9 @@ class TestLoggingCountStats(AnalyticsTestCase):
         )
         self.assertEqual(
             2,
-            UserCount.objects.filter(property=interactions_property).aggregate(
-                Sum("value"),
-            )["value__sum"],
+            UserCount.objects.filter(property=interactions_property).aggregate(Sum("value"))[
+                "value__sum"
+            ],
         )
 
         message = self.send_stream_message(user2, stream.name)
@@ -1466,9 +1448,9 @@ class TestLoggingCountStats(AnalyticsTestCase):
         )
         self.assertEqual(
             3,
-            UserCount.objects.filter(property=interactions_property).aggregate(
-                Sum("value"),
-            )["value__sum"],
+            UserCount.objects.filter(property=interactions_property).aggregate(Sum("value"))[
+                "value__sum"
+            ],
         )
 
 
@@ -1502,11 +1484,7 @@ class TestDeleteStats(AnalyticsTestCase):
             "end_time": self.TIME_ZERO,
             "value": 10,
         }
-        count_args_to_save = {
-            "property": "to_save",
-            "end_time": self.TIME_ZERO,
-            "value": 10,
-        }
+        count_args_to_save = {"property": "to_save", "end_time": self.TIME_ZERO, "value": 10}
 
         for count_args in [count_args_to_delete, count_args_to_save]:
             UserCount.objects.create(user=user, realm=user.realm, **count_args)

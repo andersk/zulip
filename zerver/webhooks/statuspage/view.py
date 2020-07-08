@@ -45,8 +45,7 @@ def get_incident_topic(payload: Dict[str, Any]) -> str:
 
 def get_component_topic(payload: Dict[str, Any]) -> str:
     return TOPIC_TEMPLATE.format(
-        name=payload["component"]["name"],
-        description=payload["page"]["status_description"],
+        name=payload["component"]["name"], description=payload["page"]["status_description"],
     )
 
 

@@ -11,9 +11,7 @@ class EmailLogTest(ZulipTestCase):
     def test_generate_and_clear_email_log(self) -> None:
         with self.settings(
             EMAIL_BACKEND="zproject.email_backends.EmailLogBackEnd",
-        ), mock.patch(
-            "zproject.email_backends.EmailLogBackEnd.send_email_smtp",
-        ), mock.patch(
+        ), mock.patch("zproject.email_backends.EmailLogBackEnd.send_email_smtp"), mock.patch(
             "logging.info", return_value=None,
         ), self.settings(
             DEVELOPMENT_LOG_EMAILS=True,

@@ -138,9 +138,7 @@ def simulated_empty_cache() -> Iterator[
 ]:
     cache_queries: List[Tuple[str, Union[str, List[str]], Optional[str]]] = []
 
-    def my_cache_get(
-        key: str, cache_name: Optional[str] = None,
-    ) -> Optional[Dict[str, Any]]:
+    def my_cache_get(key: str, cache_name: Optional[str] = None) -> Optional[Dict[str, Any]]:
         cache_queries.append(("get", key, cache_name))
         return None
 
@@ -340,9 +338,7 @@ class HostRequestMock:
     routes that use Zulip's subdomains feature"""
 
     def __init__(
-        self,
-        user_profile: Optional[UserProfile] = None,
-        host: str = settings.EXTERNAL_HOST,
+        self, user_profile: Optional[UserProfile] = None, host: str = settings.EXTERNAL_HOST,
     ) -> None:
         self.host = host
         self.GET: Dict[str, Any] = {}
@@ -476,9 +472,7 @@ def write_instrumentation_reports(full_suite: bool, include_webhooks: bool) -> N
         find_patterns(v1_api_and_json_patterns, ["api/v1/", "json/"])
 
         assert len(pattern_cnt) > 100
-        untested_patterns = {
-            p.replace("\\", "") for p in pattern_cnt if pattern_cnt[p] == 0
-        }
+        untested_patterns = {p.replace("\\", "") for p in pattern_cnt if pattern_cnt[p] == 0}
 
         exempt_patterns = set(
             [

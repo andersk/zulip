@@ -165,9 +165,7 @@ def update_user_backend(
     user_profile: UserProfile,
     user_id: int,
     full_name: Optional[str] = REQ(default=None, validator=check_string),
-    role: Optional[int] = REQ(
-        default=None, validator=check_int_in(UserProfile.ROLE_TYPES),
-    ),
+    role: Optional[int] = REQ(default=None, validator=check_int_in(UserProfile.ROLE_TYPES)),
     profile_data: Optional[List[Dict[str, Optional[Union[int, str, List[int]]]]]] = REQ(
         default=None, validator=check_profile_data,
     ),
@@ -368,9 +366,7 @@ def add_bot_backend(
         default={}, validator=check_dict(value_validator=check_string),
     ),
     interface_type: int = REQ(validator=check_int, default=Service.GENERIC),
-    default_sending_stream_name: Optional[str] = REQ(
-        "default_sending_stream", default=None,
-    ),
+    default_sending_stream_name: Optional[str] = REQ("default_sending_stream", default=None),
     default_events_register_stream_name: Optional[str] = REQ(
         "default_events_register_stream", default=None,
     ),

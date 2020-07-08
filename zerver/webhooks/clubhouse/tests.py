@@ -39,9 +39,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
 
     def test_epic_archive(self) -> None:
         expected_message = "The epic **Zulip is epic!** was archived."
-        self.send_and_test_stream_message(
-            "epic_archive", "Zulip is epic!", expected_message,
-        )
+        self.send_and_test_stream_message("epic_archive", "Zulip is epic!", expected_message)
 
     def test_story_unarchive(self) -> None:
         expected_message = (
@@ -221,9 +219,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
     def test_story_label_added_label_name_in_actions(self) -> None:
         expected_message = "The label **sad** was added to the story [An emotional story!](https://app.clubhouse.io/zulip/story/28)."
         self.send_and_test_stream_message(
-            "story_update_add_label_name_in_action",
-            "An emotional story!",
-            expected_message,
+            "story_update_add_label_name_in_action", "An emotional story!", expected_message,
         )
 
     @patch("zerver.lib.webhooks.common.check_send_webhook_message")

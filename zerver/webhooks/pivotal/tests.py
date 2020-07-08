@@ -87,10 +87,7 @@ class PivotalV3HookTests(WebhookTestCase):
         expected_message = 'Leo Franchi edited "My new Feature story" \
 [(view)](https://www.pivotaltracker.com/s/projects/807213/stories/48276573).'
         self.send_and_test_stream_message(
-            "type_changed",
-            expected_topic,
-            expected_message,
-            content_type="application/xml",
+            "type_changed", expected_topic, expected_message, content_type="application/xml",
         )
 
     def get_body(self, fixture_name: str) -> str:
@@ -190,10 +187,7 @@ Try again next time
 * estimate changed from 3 to **0 points**
 * type changed from **feature** to **bug**"""
         self.send_and_test_stream_message(
-            "type_changed",
-            expected_topic,
-            expected_message,
-            content_type="application/xml",
+            "type_changed", expected_topic, expected_message, content_type="application/xml",
         )
 
     def get_body(self, fixture_name: str) -> str:

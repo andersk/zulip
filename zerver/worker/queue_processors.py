@@ -200,9 +200,7 @@ class QueueProcessingWorker(ABC):
 
     def update_statistics(self, remaining_queue_size: int) -> None:
         total_seconds = sum([seconds for _, seconds in self.recent_consume_times])
-        total_events = sum(
-            [events_number for events_number, _ in self.recent_consume_times],
-        )
+        total_events = sum([events_number for events_number, _ in self.recent_consume_times])
         if total_events == 0:
             recent_average_consume_time = None
         else:
@@ -384,9 +382,7 @@ class ConfirmationEmailWorker(QueueProcessingWorker):
 
         referrer = get_user_profile_by_id(data["referrer_id"])
         logger.info(
-            "Sending invitation for realm %s to %s",
-            referrer.realm.string_id,
-            invitee.email,
+            "Sending invitation for realm %s to %s", referrer.realm.string_id, invitee.email,
         )
         activate_url = do_send_confirmation_email(invitee, referrer)
 

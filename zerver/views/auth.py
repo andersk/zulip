@@ -312,9 +312,7 @@ def login_or_register_remote_user(
 
     redirect_to = result.data_dict.get("redirect_to", "")
     if is_realm_creation is not None and settings.FREE_TRIAL_DAYS not in [None, 0]:
-        redirect_to = "{}?onboarding=true".format(
-            reverse("corporate.views.initial_upgrade"),
-        )
+        redirect_to = "{}?onboarding=true".format(reverse("corporate.views.initial_upgrade"))
 
     redirect_to = get_safe_redirect_to(redirect_to, user_profile.realm.uri)
     return HttpResponseRedirect(redirect_to)
@@ -540,9 +538,7 @@ def oauth_redirect_to_root(
 
     params = {**params, **extra_url_params}
 
-    return redirect(
-        add_query_to_redirect_url(main_site_uri, urllib.parse.urlencode(params)),
-    )
+    return redirect(add_query_to_redirect_url(main_site_uri, urllib.parse.urlencode(params)))
 
 
 def handle_desktop_flow(func: ViewFuncT) -> ViewFuncT:
@@ -835,9 +831,7 @@ def login_page(
 
     try:
         template_response = DjangoLoginView.as_view(
-            authentication_form=OurAuthenticationForm,
-            extra_context=extra_context,
-            **kwargs,
+            authentication_form=OurAuthenticationForm, extra_context=extra_context, **kwargs,
         )(request)
     except ZulipLDAPConfigurationError as e:
         assert len(e.args) > 1

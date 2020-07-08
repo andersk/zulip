@@ -122,9 +122,7 @@ def api_teamcity_webhook(
         # "teamcity.build.triggeredBy.username" property gives us the teamcity username.
         # Let's try finding the user email from both.
         teamcity_fullname = message["triggeredBy"].split(";")[0]
-        teamcity_user = guess_zulip_user_from_teamcity(
-            teamcity_fullname, user_profile.realm,
-        )
+        teamcity_user = guess_zulip_user_from_teamcity(teamcity_fullname, user_profile.realm)
 
         if teamcity_user is None:
             teamcity_shortname = get_teamcity_property_value(

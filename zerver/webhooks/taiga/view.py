@@ -144,8 +144,7 @@ templates = {
         "delete": "[{user}]({user_link}) deleted issue {subject}.",
         "due_date": "[{user}]({user_link}) changed due date of issue {subject}"
         " from {old} to {new}.",
-        "set_due_date": "[{user}]({user_link}) set due date of issue {subject}"
-        " to {new}.",
+        "set_due_date": "[{user}]({user_link}) set due date of issue {subject}" " to {new}.",
         "blocked": "[{user}]({user_link}) blocked issue {subject}.",
         "unblocked": "[{user}]({user_link}) unblocked issue {subject}.",
     },
@@ -326,12 +325,7 @@ def get_subject(message: Mapping[str, Any]) -> str:
     data = message["data"]
     if "permalink" in data:
         return (
-            "["
-            + data.get("subject", data.get("name"))
-            + "]"
-            + "("
-            + data["permalink"]
-            + ")"
+            "[" + data.get("subject", data.get("name")) + "]" + "(" + data["permalink"] + ")"
         )
     return "**" + data.get("subject", data.get("name")) + "**"
 

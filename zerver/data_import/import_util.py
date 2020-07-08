@@ -188,9 +188,7 @@ def build_subscription(
     recipient_id: int, user_id: int, subscription_id: int,
 ) -> ZerverFieldsT:
     subscription = Subscription(color=random.choice(stream_colors), id=subscription_id)
-    subscription_dict = model_to_dict(
-        subscription, exclude=["user_profile", "recipient_id"],
-    )
+    subscription_dict = model_to_dict(subscription, exclude=["user_profile", "recipient_id"])
     subscription_dict["user_profile"] = user_id
     subscription_dict["recipient"] = recipient_id
     return subscription_dict
@@ -694,9 +692,7 @@ def process_uploads(
 
     # Run downloads in parallel
     output = []
-    for (status, job) in run_parallel_wrapper(
-        get_uploads, upload_url_list, threads=threads,
-    ):
+    for (status, job) in run_parallel_wrapper(get_uploads, upload_url_list, threads=threads):
         output.append(job)
 
     logging.info("######### GETTING ATTACHMENTS FINISHED #########\n")

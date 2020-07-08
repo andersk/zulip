@@ -162,9 +162,7 @@ class AdminNotifyHandlerTest(ZulipTestCase):
         self.assertIn("stack_trace", report)
 
         # Test an exception_filter exception
-        with patch(
-            "zerver.logging_handlers.get_exception_reporter_filter", return_value=15,
-        ):
+        with patch("zerver.logging_handlers.get_exception_reporter_filter", return_value=15):
             record.request.method = "POST"
             report = self.run_handler(record)
             record.request.method = "GET"

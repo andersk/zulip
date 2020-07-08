@@ -105,9 +105,7 @@ def check_emoji_admin(user_profile: UserProfile, emoji_name: Optional[str] = Non
         realm=user_profile.realm, name=emoji_name, deactivated=False,
     ).first()
     current_user_is_author = (
-        emoji is not None
-        and emoji.author is not None
-        and emoji.author.id == user_profile.id
+        emoji is not None and emoji.author is not None and emoji.author.id == user_profile.id
     )
     if not user_profile.is_realm_admin and not current_user_is_author:
         raise JsonableError(_("Must be an organization administrator or emoji author"))

@@ -27,9 +27,7 @@ kerberos_alter_egos = {
 @authenticated_json_view
 @has_request_variables
 def webathena_kerberos_login(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    cred: Optional[str] = REQ(default=None),
+    request: HttpRequest, user_profile: UserProfile, cred: Optional[str] = REQ(default=None),
 ) -> HttpResponse:
     global kerberos_alter_egos
     if cred is None:

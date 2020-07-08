@@ -88,9 +88,7 @@ def generate_all_emails(request: HttpRequest) -> HttpResponse:
     user.save(update_fields=["is_active"])
     # account on different realm
     result = client.post(
-        "/accounts/password/reset/",
-        {"email": registered_email},
-        HTTP_HOST=other_realm.host,
+        "/accounts/password/reset/", {"email": registered_email}, HTTP_HOST=other_realm.host,
     )
     assert result.status_code == 302
     # no account anywhere

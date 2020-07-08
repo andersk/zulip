@@ -23,9 +23,7 @@ class ZapierHookTests(WebhookTestCase):
     def test_zapier_weather_update(self) -> None:
         expected_topic = "Here is your weather update for the day:"
         expected_message = "Foggy in the morning.\nMaximum temperature to be 24.\nMinimum temperature to be 12"
-        self.send_and_test_stream_message(
-            "weather_update", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("weather_update", expected_topic, expected_message)
 
 
 class ZapierZulipAppTests(WebhookTestCase):

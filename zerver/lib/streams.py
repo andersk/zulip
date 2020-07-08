@@ -143,9 +143,7 @@ def check_stream_name(stream_name: str) -> None:
         raise JsonableError(_("Invalid stream name '{}'").format(stream_name))
     if len(stream_name) > Stream.MAX_NAME_LENGTH:
         raise JsonableError(
-            _("Stream name too long (limit: {} characters).").format(
-                Stream.MAX_NAME_LENGTH,
-            ),
+            _("Stream name too long (limit: {} characters).").format(Stream.MAX_NAME_LENGTH),
         )
     for i in stream_name:
         if ord(i) == 0:

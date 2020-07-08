@@ -243,9 +243,7 @@ def run(args: Sequence[str], **kwargs: Any) -> None:
             + ENDC,
         )
         print(
-            WHITEONRED
-            + "Actual error output for the subcommand is just above this."
-            + ENDC,
+            WHITEONRED + "Actual error output for the subcommand is just above this." + ENDC,
         )
         print()
         raise
@@ -334,9 +332,7 @@ def purge_unused_caches(
     caches_dir: str, caches_in_use: Set[str], cache_type: str, args: argparse.Namespace,
 ) -> None:
     all_caches = {os.path.join(caches_dir, cache) for cache in os.listdir(caches_dir)}
-    caches_to_purge = get_caches_to_be_purged(
-        caches_dir, caches_in_use, args.threshold_days,
-    )
+    caches_to_purge = get_caches_to_be_purged(caches_dir, caches_in_use, args.threshold_days)
     caches_to_keep = all_caches - caches_to_purge
 
     may_be_perform_purging(

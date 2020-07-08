@@ -373,7 +373,9 @@ so maybe we shouldn't mark it as intentionally undocumented in the urls.
         try:
             self.assertEqual(len(undocumented_paths), 0)
         except AssertionError:  # nocoverage
-            msg = "The following endpoints have been documented but can't be found in urls.py:"
+            msg = (
+                "The following endpoints have been documented but can't be found in urls.py:"
+            )
             for undocumented_path in undocumented_paths:
                 msg += f"\n + {undocumented_path}"
             raise AssertionError(msg)
@@ -1005,9 +1007,7 @@ class TestCurlExampleGeneration(ZulipTestCase):
             self.curl_example("/endpoint", "GET")
 
     @patch("zerver.openapi.openapi.OpenAPISpec.spec")
-    def test_generate_and_render_curl_with_param_in_path(
-        self, spec_mock: MagicMock,
-    ) -> None:
+    def test_generate_and_render_curl_with_param_in_path(self, spec_mock: MagicMock) -> None:
         spec_mock.return_value = self.spec_mock_using_param_in_path
         generated_curl_example = self.curl_example("/endpoint/{param1}", "GET")
         expected_curl_example = [

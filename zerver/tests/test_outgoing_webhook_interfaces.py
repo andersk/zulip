@@ -6,10 +6,7 @@ import requests
 
 from zerver.lib.avatar import get_gravatar_url
 from zerver.lib.message import MessageDict
-from zerver.lib.outgoing_webhook import (
-    get_service_interface_class,
-    process_success_response,
-)
+from zerver.lib.outgoing_webhook import get_service_interface_class, process_success_response
 from zerver.lib.test_classes import ZulipTestCase
 from zerver.lib.timestamp import datetime_to_timestamp
 from zerver.lib.topic import TOPIC_NAME

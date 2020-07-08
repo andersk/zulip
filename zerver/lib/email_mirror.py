@@ -299,9 +299,7 @@ def extract_html_body(message: EmailMessage, include_quotes: bool = False) -> Op
         if include_quotes:
             return convert_html_to_markdown(html_content)
         else:
-            return convert_html_to_markdown(
-                talon.quotations.extract_from_html(html_content),
-            )
+            return convert_html_to_markdown(talon.quotations.extract_from_html(html_content))
     else:
         return None
 
@@ -445,9 +443,7 @@ def process_missed_message(to: str, message: EmailMessage) -> None:
         assert not isinstance(display_recipient, str)
         recipient_str = display_recipient[0]["email"]
         recipient_user = get_user(recipient_str, user_profile.realm)
-        internal_send_private_message(
-            user_profile.realm, user_profile, recipient_user, body,
-        )
+        internal_send_private_message(user_profile.realm, user_profile, recipient_user, body)
     elif recipient.type == Recipient.HUDDLE:
         display_recipient = get_display_recipient(recipient)
         assert not isinstance(display_recipient, str)

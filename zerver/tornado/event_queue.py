@@ -439,9 +439,7 @@ def add_to_client_dicts(client: ClientDescriptor) -> None:
         realm_clients_all_streams.setdefault(client.realm_id, []).append(client)
 
 
-def allocate_client_descriptor(
-    new_queue_data: MutableMapping[str, Any],
-) -> ClientDescriptor:
+def allocate_client_descriptor(new_queue_data: MutableMapping[str, Any]) -> ClientDescriptor:
     global next_queue_id
     queue_id = str(settings.SERVER_GENERATION) + ":" + str(next_queue_id)
     next_queue_id += 1
@@ -523,9 +521,7 @@ def persistent_queue_filename(port: int, last: bool = False) -> str:
             return settings.JSON_PERSISTENT_QUEUE_FILENAME_PATTERN % ("",) + ".last"
         return settings.JSON_PERSISTENT_QUEUE_FILENAME_PATTERN % ("",)
     if last:
-        return settings.JSON_PERSISTENT_QUEUE_FILENAME_PATTERN % (
-            "." + str(port) + ".last",
-        )
+        return settings.JSON_PERSISTENT_QUEUE_FILENAME_PATTERN % ("." + str(port) + ".last",)
     return settings.JSON_PERSISTENT_QUEUE_FILENAME_PATTERN % ("." + str(port),)
 
 

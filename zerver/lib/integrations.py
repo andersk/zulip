@@ -152,9 +152,7 @@ class BotIntegration(Integration):
             self.logo_url = self.get_logo_url()
             if self.logo_url is None:
                 # TODO: Add a test for this by initializing one in a test.
-                logo = staticfiles_storage.url(
-                    self.ZULIP_LOGO_STATIC_PATH_PNG,
-                )  # nocoverage
+                logo = staticfiles_storage.url(self.ZULIP_LOGO_STATIC_PATH_PNG)  # nocoverage
         else:
             self.logo_url = staticfiles_storage.url(logo)
 
@@ -610,9 +608,7 @@ HUBOT_INTEGRATIONS: List[HubotIntegration] = [
     ),
     HubotIntegration("bonusly", ["hr"]),
     HubotIntegration("chartbeat", ["marketing"], display_name="Chartbeat"),
-    HubotIntegration(
-        "darksky", ["misc"], display_name="Dark Sky", logo_alt="Dark Sky logo",
-    ),
+    HubotIntegration("darksky", ["misc"], display_name="Dark Sky", logo_alt="Dark Sky logo"),
     HubotIntegration(
         "instagram",
         ["misc"],

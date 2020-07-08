@@ -72,9 +72,7 @@ class CountStat:
 
 
 class LoggingCountStat(CountStat):
-    def __init__(
-        self, property: str, output_table: Type[BaseCount], frequency: str,
-    ) -> None:
+    def __init__(self, property: str, output_table: Type[BaseCount], frequency: str) -> None:
         CountStat.__init__(self, property, DataCollector(output_table, None), frequency)
 
 
@@ -727,9 +725,7 @@ def get_count_stats(realm: Optional[Realm] = None) -> Dict[str, CountStat]:
         CountStat(
             "active_users_audit:is_bot:day",
             sql_data_collector(
-                UserCount,
-                check_realmauditlog_by_user_query(realm),
-                (UserProfile, "is_bot"),
+                UserCount, check_realmauditlog_by_user_query(realm), (UserProfile, "is_bot"),
             ),
             CountStat.DAY,
         ),

@@ -59,9 +59,7 @@ class SubsNotificationSettingsTestCase(MigrationsTestCase):  # nocoverage
         denmark_sub.audible_notifications = False
         denmark_sub.save(update_fields=["desktop_notifications", "audible_notifications"])
 
-        iago_recipient = Recipient.objects.get(
-            type=self.RECIPIENT_PERSONAL, type_id=iago.id,
-        )
+        iago_recipient = Recipient.objects.get(type=self.RECIPIENT_PERSONAL, type_id=iago.id)
         iago_sub = Subscription.objects.get(user_profile=iago, recipient=iago_recipient)
         iago_sub.desktop_notifications = False
         iago_sub.audible_notifications = False
@@ -95,9 +93,7 @@ class SubsNotificationSettingsTestCase(MigrationsTestCase):  # nocoverage
         self.assertIsNone(denmark_sub.audible_notifications)
 
         # Zulip ignores subscription's notification related settings for PMs so don't migrate them.
-        iago_recipient = Recipient.objects.get(
-            type=self.RECIPIENT_PERSONAL, type_id=iago.id,
-        )
+        iago_recipient = Recipient.objects.get(type=self.RECIPIENT_PERSONAL, type_id=iago.id)
         iago_sub = Subscription.objects.get(user_profile=iago, recipient=iago_recipient)
         self.assertEqual(iago_sub.desktop_notifications, False)
         self.assertEqual(iago_sub.audible_notifications, False)

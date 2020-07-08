@@ -88,6 +88,4 @@ Danny Torrence left the following review for your property:
             file_type = "txt"
         else:
             file_type = "json"
-        return self.webhook_fixture_data(
-            "slack_incoming", fixture_name, file_type=file_type,
-        )
+        return self.webhook_fixture_data("slack_incoming", fixture_name, file_type=file_type)

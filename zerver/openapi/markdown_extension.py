@@ -9,11 +9,7 @@ from markdown.extensions import Extension
 from markdown.preprocessors import Preprocessor
 
 import zerver.openapi.python_examples
-from zerver.openapi.openapi import (
-    get_openapi_description,
-    get_openapi_fixture,
-    openapi_spec,
-)
+from zerver.openapi.openapi import get_openapi_description, get_openapi_fixture, openapi_spec
 
 MACRO_REGEXP = re.compile(
     r"\{generate_code_example(\(\s*(.+?)\s*\))*\|\s*(.+?)\s*\|\s*(.+?)\s*(\(\s*(.+)\s*\))?\}",

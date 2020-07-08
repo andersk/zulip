@@ -89,9 +89,7 @@ def mark_topic_as_read(
         if not topic_exists:
             raise JsonableError(_("No such topic '{}'").format(topic_name))
 
-    count = do_mark_stream_messages_as_read(
-        user_profile, request.client, stream, topic_name,
-    )
+    count = do_mark_stream_messages_as_read(user_profile, request.client, stream, topic_name)
 
     log_data_str = f"[{count} updated]"
     request._log_data["extra"] = log_data_str

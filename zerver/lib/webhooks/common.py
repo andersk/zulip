@@ -144,9 +144,7 @@ def validate_extract_webhook_http_header(
     return extracted_header
 
 
-def get_fixture_http_headers(
-    integration_name: str, fixture_name: str,
-) -> Dict["str", "str"]:
+def get_fixture_http_headers(integration_name: str, fixture_name: str) -> Dict["str", "str"]:
     """For integrations that require custom HTTP headers for some (or all)
     of their test fixtures, this method will call a specially named
     function from the target integration module to determine what set

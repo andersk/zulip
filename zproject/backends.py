@@ -633,9 +633,7 @@ class ZulipLDAPAuthBackendBase(ZulipAuthMixin, LDAPBackend):
             content_type = magic.from_buffer(copy.deepcopy(io).read()[0:1024], mime=True)
             if content_type.startswith("image/"):
                 upload_avatar_image(io, user, user, content_type=content_type)
-                do_change_avatar_fields(
-                    user, UserProfile.AVATAR_FROM_USER, acting_user=None,
-                )
+                do_change_avatar_fields(user, UserProfile.AVATAR_FROM_USER, acting_user=None)
                 # Update avatar hash.
                 user.avatar_hash = user_avatar_content_hash(ldap_avatar)
                 user.save(update_fields=["avatar_hash"])
@@ -836,9 +834,7 @@ class ZulipLDAPAuthBackend(ZulipLDAPAuthBackendBase):
             email_allowed_for_realm(username, self._realm)
             validate_email_not_already_in_realm(self._realm, username)
         except DomainNotAllowedForRealmError:
-            raise ZulipLDAPException(
-                "This email domain isn't allowed in this organization.",
-            )
+            raise ZulipLDAPException("This email domain isn't allowed in this organization.")
         except (DisposableEmailError, EmailContainsPlusError):
             raise ZulipLDAPException("Email validation failed.")
 

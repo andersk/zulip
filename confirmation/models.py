@@ -205,10 +205,7 @@ def validate_key(creation_key: Optional[str]) -> Optional["RealmCreationKey"]:
     except RealmCreationKey.DoesNotExist:
         raise RealmCreationKey.Invalid()
     time_elapsed = timezone_now() - key_record.date_created
-    if (
-        time_elapsed.total_seconds()
-        > settings.REALM_CREATION_LINK_VALIDITY_DAYS * 24 * 3600
-    ):
+    if time_elapsed.total_seconds() > settings.REALM_CREATION_LINK_VALIDITY_DAYS * 24 * 3600:
         raise RealmCreationKey.Invalid()
     return key_record
 

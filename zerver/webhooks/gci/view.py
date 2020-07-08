@@ -148,9 +148,7 @@ def get_event(payload: Dict[str, Any]) -> Optional[str]:
     if event in EVENTS_FUNCTION_MAPPER:
         return event
 
-    raise UnknownEventType(
-        f"Event '{event}' is unknown and cannot be handled",
-    )  # nocoverage
+    raise UnknownEventType(f"Event '{event}' is unknown and cannot be handled")  # nocoverage
 
 
 def get_body_based_on_event(event: str) -> Any:

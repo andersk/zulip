@@ -5,12 +5,7 @@ import ujson
 from django.http import HttpRequest, HttpResponse
 from django.utils.translation import ugettext as _
 
-from zerver.decorator import (
-    REQ,
-    has_request_variables,
-    internal_notify_view,
-    process_client,
-)
+from zerver.decorator import REQ, has_request_variables, internal_notify_view, process_client
 from zerver.lib.response import json_error, json_success
 from zerver.lib.validator import (
     check_bool,

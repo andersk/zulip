@@ -19,9 +19,7 @@ def get_status_dicts_for_rows(
     # more precise for real users.
     # We could technically do this sort with the database, but doing it
     # here prevents us from having to assume the caller is playing nice.
-    all_rows = sorted(
-        all_rows, key=lambda row: (row["user_profile__id"], row["timestamp"]),
-    )
+    all_rows = sorted(all_rows, key=lambda row: (row["user_profile__id"], row["timestamp"]))
 
     if slim_presence:
         # Stringify user_id here, since it's gonna be turned

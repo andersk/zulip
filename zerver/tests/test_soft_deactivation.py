@@ -365,9 +365,7 @@ class SoftDeactivationMessageTest(ZulipTestCase):
         for sent_message in sent_message_list:
             self.assertEqual(idle_user_msg_list.pop(), sent_message)
         long_term_idle_user.refresh_from_db()
-        self.assertEqual(
-            long_term_idle_user.last_active_message_id, sent_message_list[0].id,
-        )
+        self.assertEqual(long_term_idle_user.last_active_message_id, sent_message_list[0].id)
 
         # Test consecutive subscribe/unsubscribe in a public stream
         sent_message_list = []
@@ -399,9 +397,7 @@ class SoftDeactivationMessageTest(ZulipTestCase):
         for sent_message in sent_message_list:
             self.assertEqual(idle_user_msg_list.pop(), sent_message)
         long_term_idle_user.refresh_from_db()
-        self.assertEqual(
-            long_term_idle_user.last_active_message_id, sent_message_list[0].id,
-        )
+        self.assertEqual(long_term_idle_user.last_active_message_id, sent_message_list[0].id)
 
         # Test for when user unsubscribes before soft deactivation
         # (must reactivate them in order to do this).
@@ -455,9 +451,7 @@ class SoftDeactivationMessageTest(ZulipTestCase):
         for sent_message in sent_message_list:
             self.assertEqual(idle_user_msg_list.pop(), sent_message)
         long_term_idle_user.refresh_from_db()
-        self.assertEqual(
-            long_term_idle_user.last_active_message_id, sent_message_list[0].id,
-        )
+        self.assertEqual(long_term_idle_user.last_active_message_id, sent_message_list[0].id)
 
     @mock.patch("zerver.lib.soft_deactivation.BULK_CREATE_BATCH_SIZE", 2)
     def test_add_missing_messages_pagination(self) -> None:

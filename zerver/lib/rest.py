@@ -170,8 +170,7 @@ def rest_dispatch(request: HttpRequest, **kwargs: Any) -> HttpResponse:
                 return json_unauthorized()
             # Logged out user accessing an endpoint with anonymous user access on JSON; proceed.
             elif (
-                request.path.startswith("/json")
-                and "allow_anonymous_user_web" in view_flags
+                request.path.startswith("/json") and "allow_anonymous_user_web" in view_flags
             ):
                 auth_kwargs = dict(allow_unauthenticated=True)
                 target_function = csrf_protect(

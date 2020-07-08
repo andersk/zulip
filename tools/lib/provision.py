@@ -356,10 +356,7 @@ def install_yum_deps(deps_to_install: List[str]) -> None:
         return
 
     run_as_root(
-        [
-            "/usr/{}/bin/postgresql-{}-setup".format(postgres_dir, POSTGRES_VERSION),
-            "initdb",
-        ],
+        ["/usr/{}/bin/postgresql-{}-setup".format(postgres_dir, POSTGRES_VERSION), "initdb"],
         sudo_args=["-H"],
     )
     # Use vendored pg_hba.conf, which enables password authentication.

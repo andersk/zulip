@@ -62,9 +62,7 @@ def get_normal_push_event_body(payload: Dict[str, Any]) -> str:
 
 
 def get_remove_branch_event_body(payload: Dict[str, Any]) -> str:
-    return get_remove_branch_event_message(
-        get_user_name(payload), get_branch_name(payload),
-    )
+    return get_remove_branch_event_message(get_user_name(payload), get_branch_name(payload))
 
 
 def get_tag_push_event_body(payload: Dict[str, Any]) -> str:

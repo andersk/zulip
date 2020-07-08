@@ -85,8 +85,7 @@ class EditMessageTest(ZulipTestCase):
             self.send_stream_message(self.notification_bot(), stream_name, "Message three"),
         )
         messages = [
-            Message.objects.select_related().get(id=message_id)
-            for message_id in message_ids
+            Message.objects.select_related().get(id=message_id) for message_id in message_ids
         ]
 
         # Check number of queries performed
@@ -114,8 +113,7 @@ class EditMessageTest(ZulipTestCase):
             content="before edit",
         )
         result = self.client_patch(
-            "/json/messages/" + str(msg_id),
-            {"message_id": msg_id, "content": "after edit"},
+            "/json/messages/" + str(msg_id), {"message_id": msg_id, "content": "after edit"},
         )
         self.assert_json_success(result)
         self.check_message(msg_id, topic_name="editing", content="after edit")
@@ -473,9 +471,7 @@ class EditMessageTest(ZulipTestCase):
         history = ujson.loads(Message.objects.get(id=msg_id).edit_history)
         self.assertEqual(history[0][LEGACY_PREV_TOPIC], "topic 1")
         self.assertEqual(history[0]["user_id"], hamlet.id)
-        self.assertEqual(
-            set(history[0].keys()), {"timestamp", LEGACY_PREV_TOPIC, "user_id"},
-        )
+        self.assertEqual(set(history[0].keys()), {"timestamp", LEGACY_PREV_TOPIC, "user_id"})
 
         result = self.client_patch(
             "/json/messages/" + str(msg_id),
@@ -749,9 +745,7 @@ class EditMessageTest(ZulipTestCase):
         do_edit_message_assert_success(id_, "D")
 
     @mock.patch("zerver.lib.actions.send_event")
-    def test_edit_topic_public_history_stream(
-        self, mock_send_event: mock.MagicMock,
-    ) -> None:
+    def test_edit_topic_public_history_stream(self, mock_send_event: mock.MagicMock) -> None:
         stream_name = "Macbeth"
         hamlet = self.example_user("hamlet")
         cordelia = self.example_user("cordelia")
@@ -1011,13 +1005,9 @@ class EditMessageTest(ZulipTestCase):
         return (user_profile, stream, new_stream, msg_id, msg_id_lt)
 
     def test_move_message_to_stream(self) -> None:
-        (
-            user_profile,
-            old_stream,
-            new_stream,
-            msg_id,
-            msg_id_lt,
-        ) = self.prepare_move_topics("iago", "test move stream", "new stream", "test")
+        (user_profile, old_stream, new_stream, msg_id, msg_id_lt) = self.prepare_move_topics(
+            "iago", "test move stream", "new stream", "test",
+        )
 
         result = self.client_patch(
             "/json/messages/" + str(msg_id),
@@ -1122,9 +1112,7 @@ class EditMessageTest(ZulipTestCase):
                 "content": "Not allowed",
             },
         )
-        self.assert_json_error(
-            result, "Cannot change message content while changing stream",
-        )
+        self.assert_json_error(result, "Cannot change message content while changing stream")
 
         messages = get_topic_messages(user_profile, old_stream, "test")
         self.assertEqual(len(messages), 3)
@@ -1170,13 +1158,9 @@ class EditMessageTest(ZulipTestCase):
 
     def test_inaccessible_msg_after_stream_change(self) -> None:
         """Simulates the case where message is moved to a stream where user is not a subscribed"""
-        (
-            user_profile,
-            old_stream,
-            new_stream,
-            msg_id,
-            msg_id_lt,
-        ) = self.prepare_move_topics("iago", "test move stream", "new stream", "test")
+        (user_profile, old_stream, new_stream, msg_id, msg_id_lt) = self.prepare_move_topics(
+            "iago", "test move stream", "new stream", "test",
+        )
 
         guest_user = self.example_user("polonius")
         non_guest_user = self.example_user("hamlet")
@@ -1239,13 +1223,9 @@ class EditMessageTest(ZulipTestCase):
         )
 
     def test_no_notify_move_message_to_stream(self) -> None:
-        (
-            user_profile,
-            old_stream,
-            new_stream,
-            msg_id,
-            msg_id_lt,
-        ) = self.prepare_move_topics("iago", "test move stream", "new stream", "test")
+        (user_profile, old_stream, new_stream, msg_id, msg_id_lt) = self.prepare_move_topics(
+            "iago", "test move stream", "new stream", "test",
+        )
 
         result = self.client_patch(
             "/json/messages/" + str(msg_id),
@@ -1267,13 +1247,9 @@ class EditMessageTest(ZulipTestCase):
         self.assertEqual(len(messages), 3)
 
     def test_notify_new_thread_move_message_to_stream(self) -> None:
-        (
-            user_profile,
-            old_stream,
-            new_stream,
-            msg_id,
-            msg_id_lt,
-        ) = self.prepare_move_topics("iago", "test move stream", "new stream", "test")
+        (user_profile, old_stream, new_stream, msg_id, msg_id_lt) = self.prepare_move_topics(
+            "iago", "test move stream", "new stream", "test",
+        )
 
         result = self.client_patch(
             "/json/messages/" + str(msg_id),
@@ -1299,13 +1275,9 @@ class EditMessageTest(ZulipTestCase):
         )
 
     def test_notify_old_thread_move_message_to_stream(self) -> None:
-        (
-            user_profile,
-            old_stream,
-            new_stream,
-            msg_id,
-            msg_id_lt,
-        ) = self.prepare_move_topics("iago", "test move stream", "new stream", "test")
+        (user_profile, old_stream, new_stream, msg_id, msg_id_lt) = self.prepare_move_topics(
+            "iago", "test move stream", "new stream", "test",
+        )
 
         result = self.client_patch(
             "/json/messages/" + str(msg_id),
@@ -1449,9 +1421,7 @@ class DeleteMessageTest(ZulipTestCase):
         result = test_delete_message_by_owner(msg_id=msg_id_1)
         self.assert_json_success(result)
         result = test_delete_message_by_owner(msg_id=msg_id_2)
-        self.assert_json_error(
-            result, "The time limit for deleting this message has passed",
-        )
+        self.assert_json_error(result, "The time limit for deleting this message has passed")
 
         # No limit for admin.
         result = test_delete_message_by_admin(msg_id=msg_id_2)
@@ -1468,9 +1438,7 @@ class DeleteMessageTest(ZulipTestCase):
         # see issue #11219.
         with mock.patch("zerver.views.message_edit.do_delete_messages") as m, mock.patch(
             "zerver.views.message_edit.validate_can_delete_message", return_value=None,
-        ), mock.patch(
-            "zerver.views.message_edit.access_message", return_value=(None, None),
-        ):
+        ), mock.patch("zerver.views.message_edit.access_message", return_value=(None, None)):
             m.side_effect = IntegrityError()
             result = test_delete_message_by_owner(msg_id=msg_id)
             self.assert_json_error(result, "Message already deleted")

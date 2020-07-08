@@ -1652,15 +1652,13 @@ so we didn't send them an invitation. We did send invitations to everyone else!"
             )
 
         email_jobs_to_deliver = ScheduledEmail.objects.filter(
-            scheduled_timestamp__lte=timezone_now(),
-            type=ScheduledEmail.INVITATION_REMINDER,
+            scheduled_timestamp__lte=timezone_now(), type=ScheduledEmail.INVITATION_REMINDER,
         )
         self.assertEqual(len(email_jobs_to_deliver), 1)
 
         self.register(invitee_email, "test")
         email_jobs_to_deliver = ScheduledEmail.objects.filter(
-            scheduled_timestamp__lte=timezone_now(),
-            type=ScheduledEmail.INVITATION_REMINDER,
+            scheduled_timestamp__lte=timezone_now(), type=ScheduledEmail.INVITATION_REMINDER,
         )
         self.assertEqual(len(email_jobs_to_deliver), 0)
 
@@ -1795,9 +1793,7 @@ so we didn't send them an invitation. We did send invitations to everyone else!"
         response = self.client_post(
             url, {"key": registration_key, "from_confirmation": 1, "full_nme": "alice"},
         )
-        self.assert_in_success_response(
-            ["We just need you to do one last thing."], response,
-        )
+        self.assert_in_success_response(["We just need you to do one last thing."], response)
         response = self.submit_reg_form_for_user(email, password, key=registration_key)
         self.assertEqual(response.status_code, 302)
 
@@ -1904,9 +1900,7 @@ class InvitationsTestCase(InviteUserBase):
         multiuse_invite_one = MultiuseInvite.objects.create(referred_by=hamlet, realm=realm)
         create_confirmation_link(multiuse_invite_one, Confirmation.MULTIUSE_INVITE)
 
-        multiuse_invite_two = MultiuseInvite.objects.create(
-            referred_by=othello, realm=realm,
-        )
+        multiuse_invite_two = MultiuseInvite.objects.create(referred_by=othello, realm=realm)
         create_confirmation_link(multiuse_invite_two, Confirmation.MULTIUSE_INVITE)
         confirmation = Confirmation.objects.last()
         confirmation.date_sent = expired_datetime
@@ -2003,9 +1997,7 @@ class InvitationsTestCase(InviteUserBase):
         invitee = "DeleteMe@zulip.com"
         self.assert_json_success(
             self.invite(
-                invitee,
-                ["Denmark"],
-                invite_as=PreregistrationUser.INVITE_AS["REALM_OWNER"],
+                invitee, ["Denmark"], invite_as=PreregistrationUser.INVITE_AS["REALM_OWNER"],
             ),
         )
         prereg_user = PreregistrationUser.objects.get(email=invitee)
@@ -2188,9 +2180,7 @@ class InvitationsTestCase(InviteUserBase):
         invitee = "resend_owner@zulip.com"
         self.assert_json_success(
             self.invite(
-                invitee,
-                ["Denmark"],
-                invite_as=PreregistrationUser.INVITE_AS["REALM_OWNER"],
+                invitee, ["Denmark"], invite_as=PreregistrationUser.INVITE_AS["REALM_OWNER"],
             ),
         )
         self.check_sent_emails([invitee], custom_from_name="Zulip")
@@ -2292,7 +2282,9 @@ class InviteeEmailsParserTests(ZulipTestCase):
     def test_if_emails_from_email_client_separated_by_newlines_are_parsed_correctly(
         self,
     ) -> None:
-        emails_raw = f"Email One <{self.email1}>\nEmailTwo<{self.email2}>\nEmail Three<{self.email3}>"
+        emails_raw = (
+            f"Email One <{self.email1}>\nEmailTwo<{self.email2}>\nEmail Three<{self.email3}>"
+        )
         expected_set = {self.email1, self.email2, self.email3}
         self.assertEqual(get_invitee_emails_set(emails_raw), expected_set)
 
@@ -2851,9 +2843,7 @@ class RealmCreationTest(ZulipTestCase):
             email, password, realm_subdomain="", realm_name=realm_name,
         )
         self.assertEqual(result.status_code, 302)
-        self.assertTrue(
-            result.url.startswith("http://testserver/accounts/login/subdomain/"),
-        )
+        self.assertTrue(result.url.startswith("http://testserver/accounts/login/subdomain/"))
 
     @override_settings(OPEN_REALM_CREATION=True)
     def test_subdomain_restrictions_root_domain_option(self) -> None:
@@ -2886,9 +2876,7 @@ class RealmCreationTest(ZulipTestCase):
             realm_name=realm_name,
         )
         self.assertEqual(result.status_code, 302)
-        self.assertTrue(
-            result.url.startswith("http://testserver/accounts/login/subdomain/"),
-        )
+        self.assertTrue(result.url.startswith("http://testserver/accounts/login/subdomain/"))
 
     def test_is_root_domain_available(self) -> None:
         self.assertTrue(is_root_domain_available())
@@ -3990,9 +3978,7 @@ class UserSignUpTest(InviteUserBase):
                 HTTP_HOST=subdomain + ".testserver",
             )
 
-            with patch(
-                "zerver.views.registration.name_changes_disabled", return_value=True,
-            ):
+            with patch("zerver.views.registration.name_changes_disabled", return_value=True):
                 result = self.submit_reg_form_for_user(
                     email,
                     password,
@@ -4600,9 +4586,7 @@ class TestLoginPage(ZulipTestCase):
     def test_login_page_registration_hint(self) -> None:
         response = self.client_get("/login/")
         self.assert_not_in_success_response(
-            [
-                "Don't have an account yet? You need to be invited to join this organization.",
-            ],
+            ["Don't have an account yet? You need to be invited to join this organization."],
             response,
         )
 
@@ -4611,9 +4595,7 @@ class TestLoginPage(ZulipTestCase):
         realm.save(update_fields=["invite_required"])
         response = self.client_get("/login/")
         self.assert_in_success_response(
-            [
-                "Don't have an account yet? You need to be invited to join this organization.",
-            ],
+            ["Don't have an account yet? You need to be invited to join this organization."],
             response,
         )
 

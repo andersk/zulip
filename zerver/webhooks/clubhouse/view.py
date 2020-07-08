@@ -6,10 +6,7 @@ from django.http import HttpRequest, HttpResponse
 from zerver.decorator import api_key_only_webhook_view
 from zerver.lib.request import REQ, has_request_variables
 from zerver.lib.response import json_success
-from zerver.lib.webhooks.common import (
-    UnexpectedWebhookEventType,
-    check_send_webhook_message,
-)
+from zerver.lib.webhooks.common import UnexpectedWebhookEventType, check_send_webhook_message
 from zerver.models import UserProfile
 
 EPIC_NAME_TEMPLATE = "**{name}**"
@@ -362,10 +359,7 @@ def get_story_create_github_entity_body(payload: Dict[str, Any], entity: str) ->
 
     story: Dict[str, Any] = {}
     for a in payload["actions"]:
-        if (
-            a["entity_type"] == "story"
-            and a["changes"].get("workflow_state_id") is not None
-        ):
+        if a["entity_type"] == "story" and a["changes"].get("workflow_state_id") is not None:
             story = a
 
     new_state_id = story["changes"]["workflow_state_id"]["new"]

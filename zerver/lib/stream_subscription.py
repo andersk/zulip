@@ -74,9 +74,7 @@ def num_subscribers_for_stream_id(stream_id: int) -> int:
 
 
 def handle_stream_notifications_compatibility(
-    user_profile: UserProfile,
-    stream_dict: Dict[str, Any],
-    notification_settings_null: bool,
+    user_profile: UserProfile, stream_dict: Dict[str, Any], notification_settings_null: bool,
 ) -> None:
     # Old versions of the mobile apps don't support `None` as a
     # value for the stream-level notifications properties, so we

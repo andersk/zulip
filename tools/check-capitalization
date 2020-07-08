@@ -25,8 +25,7 @@ if __name__ == "__main__":
         action="store_true",
         dest="show_ignored",
         default=False,
-        help="Show strings that passed the check because they "
-        "contained ignored phrases.",
+        help="Show strings that passed the check because they " "contained ignored phrases.",
     )
     parser.add_argument(
         "--no-generate",

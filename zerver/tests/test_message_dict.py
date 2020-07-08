@@ -171,9 +171,7 @@ class MessageDictTest(ZulipTestCase):
             rows = list(MessageDict.get_raw_db_rows(ids))
 
             objs = [MessageDict.build_dict_from_raw_db_row(row) for row in rows]
-            MessageDict.post_process_dicts(
-                objs, apply_markdown=False, client_gravatar=False,
-            )
+            MessageDict.post_process_dicts(objs, apply_markdown=False, client_gravatar=False)
 
         delay = time.time() - t
         # Make sure we don't take longer than 1.5ms per message to
@@ -518,9 +516,7 @@ class TestMessageForIdsDisplayRecipientFetching(ZulipTestCase):
         )
 
         self._verify_display_recipient(messages[0]["display_recipient"], [hamlet, cordelia])
-        self._verify_display_recipient(
-            messages[1]["display_recipient"], [cordelia, othello],
-        )
+        self._verify_display_recipient(messages[1]["display_recipient"], [cordelia, othello])
 
     def test_display_recipient_stream(self) -> None:
         cordelia = self.example_user("cordelia")
@@ -607,9 +603,7 @@ class TestMessageForIdsDisplayRecipientFetching(ZulipTestCase):
         self._verify_display_recipient(
             messages[4]["display_recipient"], [hamlet, cordelia, othello, iago],
         )
-        self._verify_display_recipient(
-            messages[5]["display_recipient"], [cordelia, othello],
-        )
+        self._verify_display_recipient(messages[5]["display_recipient"], [cordelia, othello])
 
 
 class SewMessageAndReactionTest(ZulipTestCase):

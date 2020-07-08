@@ -83,9 +83,7 @@ def email_is_not_mit_mailing_list(email: str) -> None:
                 raise AssertionError("Unexpected DNS error")
 
 
-def check_subdomain_available(
-    subdomain: str, from_management_command: bool = False,
-) -> None:
+def check_subdomain_available(subdomain: str, from_management_command: bool = False) -> None:
     error_strings = {
         "too short": _("Subdomain needs to have length 3 or greater."),
         "extremal dash": _("Subdomain cannot start or end with a '-'."),
@@ -425,9 +423,7 @@ class OurAuthenticationForm(AuthenticationForm):
                 )
             except RateLimited as e:
                 secs_to_freedom = int(float(str(e)))
-                raise ValidationError(
-                    AUTHENTICATION_RATE_LIMITED_ERROR % (secs_to_freedom,),
-                )
+                raise ValidationError(AUTHENTICATION_RATE_LIMITED_ERROR % (secs_to_freedom,))
 
             if return_data.get("inactive_realm"):
                 raise AssertionError(

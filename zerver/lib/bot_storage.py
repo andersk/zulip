@@ -72,7 +72,5 @@ def is_key_in_bot_storage(bot_profile: UserProfile, key: str) -> bool:
 
 def get_keys_in_bot_storage(bot_profile: UserProfile) -> List[str]:
     return list(
-        BotStorageData.objects.filter(bot_profile=bot_profile).values_list(
-            "key", flat=True,
-        ),
+        BotStorageData.objects.filter(bot_profile=bot_profile).values_list("key", flat=True),
     )

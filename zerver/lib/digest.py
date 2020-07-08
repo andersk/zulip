@@ -195,9 +195,7 @@ def handle_digest_email(
     context = common_context(user_profile)
 
     # Start building email template data.
-    context.update(
-        {"unsubscribe_link": one_click_unsubscribe_link(user_profile, "digest")},
-    )
+    context.update({"unsubscribe_link": one_click_unsubscribe_link(user_profile, "digest")})
 
     home_view_streams = Subscription.objects.filter(
         user_profile=user_profile,

@@ -25,9 +25,7 @@ class TestIntegrationsDevPanel(ZulipTestCase):
 
         response = self.client_post(target_url, data)
 
-        self.assertEqual(
-            response.status_code, 500,
-        )  # Since the response would be forwarded.
+        self.assertEqual(response.status_code, 500)  # Since the response would be forwarded.
         expected_response = {"result": "error", "msg": "Internal server error"}
         self.assertEqual(ujson.loads(response.content), expected_response)
 
@@ -47,9 +45,7 @@ class TestIntegrationsDevPanel(ZulipTestCase):
 
         response = self.client_post(target_url, data)
         expected_response = {
-            "responses": [
-                {"status_code": 200, "message": {"result": "success", "msg": ""}},
-            ],
+            "responses": [{"status_code": 200, "message": {"result": "success", "msg": ""}}],
             "result": "success",
             "msg": "",
         }
@@ -63,9 +59,7 @@ class TestIntegrationsDevPanel(ZulipTestCase):
         latest_msg = Message.objects.latest("id")
         expected_message = '[ZeroDivisionError](https://zulip.airbrake.io/projects/125209/groups/1705190192091077626): "Error message from logger" occurred.'
         self.assertEqual(latest_msg.content, expected_message)
-        self.assertEqual(
-            Stream.objects.get(id=latest_msg.recipient.type_id).name, "Denmark",
-        )
+        self.assertEqual(Stream.objects.get(id=latest_msg.recipient.type_id).name, "Denmark")
         self.assertEqual(latest_msg.topic_name(), "Airbrake Notifications")
 
     def test_check_send_webhook_fixture_message_for_success_with_headers(self) -> None:
@@ -88,9 +82,7 @@ class TestIntegrationsDevPanel(ZulipTestCase):
         latest_msg = Message.objects.latest("id")
         expected_message = "GitHub webhook has been successfully configured by eeshangarg."
         self.assertEqual(latest_msg.content, expected_message)
-        self.assertEqual(
-            Stream.objects.get(id=latest_msg.recipient.type_id).name, "Denmark",
-        )
+        self.assertEqual(Stream.objects.get(id=latest_msg.recipient.type_id).name, "Denmark")
         self.assertEqual(latest_msg.topic_name(), "GitHub Notifications")
 
     def test_check_send_webhook_fixture_message_for_success_with_headers_and_non_json_fixtures(
@@ -119,9 +111,7 @@ class TestIntegrationsDevPanel(ZulipTestCase):
         latest_msg = Message.objects.latest("id")
         expected_message = "New post published:\n* [New WordPress Post](WordPress Post URL)"
         self.assertEqual(latest_msg.content, expected_message)
-        self.assertEqual(
-            Stream.objects.get(id=latest_msg.recipient.type_id).name, "Denmark",
-        )
+        self.assertEqual(Stream.objects.get(id=latest_msg.recipient.type_id).name, "Denmark")
         self.assertEqual(latest_msg.topic_name(), "Wordpress Notifications")
 
     def test_get_fixtures_for_nonexistant_integration(self) -> None:

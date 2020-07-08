@@ -99,9 +99,7 @@ class CacheWithKeyDecoratorTest(ZulipTestCase):
 
     def test_cache_with_key_key_too_long(self) -> None:
         def too_long_cache_key_function(user_id: int) -> str:
-            return "CacheWithKeyDecoratorTest:very_long_key:{}:{}".format(
-                "a" * 250, user_id,
-            )
+            return "CacheWithKeyDecoratorTest:very_long_key:{}:{}".format("a" * 250, user_id)
 
         @cache_with_key(too_long_cache_key_function, timeout=1000)
         def get_user_function_with_bad_cache_keys(user_id: int) -> UserProfile:

@@ -95,10 +95,7 @@ def analyze_queue_stats(
         # while the worker is still processing it and staying below
         # the CRITICAL threshold.
         if expected_time_to_clear_backlog > MAX_SECONDS_TO_CLEAR_NORMAL[queue_name]:
-            if (
-                expected_time_to_clear_backlog
-                > CRITICAL_SECONDS_TO_CLEAR_NORMAL[queue_name]
-            ):
+            if expected_time_to_clear_backlog > CRITICAL_SECONDS_TO_CLEAR_NORMAL[queue_name]:
                 status = CRITICAL
             else:
                 status = WARNING

@@ -223,8 +223,7 @@ def move_expired_personal_and_huddle_messages_to_archive(
 
     # This function will archive appropriate messages and their related objects.
     cross_realm_bot_ids = [
-        get_user_including_cross_realm(email).id
-        for email in settings.CROSS_REALM_BOT_EMAILS
+        get_user_including_cross_realm(email).id for email in settings.CROSS_REALM_BOT_EMAILS
     ]
     recipient_types = (Recipient.PERSONAL, Recipient.HUDDLE)
 
@@ -679,9 +678,7 @@ def restore_retention_policy_deletions_for_stream(stream: Stream) -> None:
 
 def clean_archived_data() -> None:
     logger.info("Cleaning old archive data.")
-    check_date = timezone_now() - timedelta(
-        days=settings.ARCHIVED_DATA_VACUUMING_DELAY_DAYS,
-    )
+    check_date = timezone_now() - timedelta(days=settings.ARCHIVED_DATA_VACUUMING_DELAY_DAYS)
     # Associated archived objects will get deleted through the on_delete=CASCADE property:
     count = 0
     transaction_ids = list(

@@ -207,8 +207,7 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
         migrations.AlterUniqueTogether(
-            name="usercount",
-            unique_together={("user", "property", "end_time", "interval")},
+            name="usercount", unique_together={("user", "property", "end_time", "interval")},
         ),
         migrations.AlterUniqueTogether(
             name="streamcount",
@@ -219,8 +218,7 @@ class Migration(migrations.Migration):
             unique_together={("realm", "property", "end_time", "interval")},
         ),
         migrations.AlterUniqueTogether(
-            name="installationcount",
-            unique_together={("property", "end_time", "interval")},
+            name="installationcount", unique_together={("property", "end_time", "interval")},
         ),
         migrations.AlterUniqueTogether(
             name="huddlecount",

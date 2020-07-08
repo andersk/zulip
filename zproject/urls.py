@@ -172,9 +172,7 @@ v1_api_and_json_patterns = [
         },
     ),
     # realm/deactivate -> zerver.views.deactivate_realm
-    path(
-        "realm/deactivate", rest_dispatch, {"POST": "zerver.views.realm.deactivate_realm"},
-    ),
+    path("realm/deactivate", rest_dispatch, {"POST": "zerver.views.realm.deactivate_realm"}),
     path(
         "realm/presence",
         rest_dispatch,
@@ -364,22 +362,13 @@ v1_api_and_json_patterns = [
     ),
     # typing -> zerver.views.typing
     # POST sends a typing notification event to recipients
-    path(
-        "typing", rest_dispatch, {"POST": "zerver.views.typing.send_notification_backend"},
-    ),
+    path("typing", rest_dispatch, {"POST": "zerver.views.typing.send_notification_backend"}),
     # user_uploads -> zerver.views.upload
-    path(
-        "user_uploads", rest_dispatch, {"POST": "zerver.views.upload.upload_file_backend"},
-    ),
+    path("user_uploads", rest_dispatch, {"POST": "zerver.views.upload.upload_file_backend"}),
     re_path(
         r"^user_uploads/(?P<realm_id_str>(\d*|unk))/(?P<filename>.*)$",
         rest_dispatch,
-        {
-            "GET": (
-                "zerver.views.upload.serve_file_url_backend",
-                {"override_api_url_scheme"},
-            ),
-        },
+        {"GET": ("zerver.views.upload.serve_file_url_backend", {"override_api_url_scheme"})},
     ),
     # bot_storage -> zerver.views.storage
     path(
@@ -543,9 +532,7 @@ v1_api_and_json_patterns = [
     # (this API is only used externally)
     path("streams", rest_dispatch, {"GET": "zerver.views.streams.get_streams_backend"}),
     # GET returns `stream_id`, stream name should be encoded in the url query (in `stream` param)
-    path(
-        "get_stream_id", rest_dispatch, {"GET": "zerver.views.streams.json_get_stream_id"},
-    ),
+    path("get_stream_id", rest_dispatch, {"GET": "zerver.views.streams.json_get_stream_id"}),
     # GET returns "stream info" (undefined currently?), HEAD returns whether stream exists (200 or 404)
     path(
         "streams/<int:stream_id>/members",

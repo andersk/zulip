@@ -303,13 +303,10 @@ class UserPresenceTests(ZulipTestCase):
             "start",
         )[1]
         self.assertEqual(interval.start, third_time)
-        self.assertEqual(
-            interval.end, third_time + UserActivityInterval.MIN_INTERVAL_LENGTH,
-        )
+        self.assertEqual(interval.end, third_time + UserActivityInterval.MIN_INTERVAL_LENGTH)
 
         self.assertEqual(
-            seconds_usage_between(user_profile, time_zero, third_time).total_seconds(),
-            1500,
+            seconds_usage_between(user_profile, time_zero, third_time).total_seconds(), 1500,
         )
         self.assertEqual(
             seconds_usage_between(
@@ -358,13 +355,9 @@ class UserPresenceTests(ZulipTestCase):
 
         self.login("hamlet")
 
-        self.assertEqual(
-            filter_presence_idle_user_ids({user_profile.id}), [user_profile.id],
-        )
+        self.assertEqual(filter_presence_idle_user_ids({user_profile.id}), [user_profile.id])
         self.client_post("/json/users/me/presence", {"status": "idle"})
-        self.assertEqual(
-            filter_presence_idle_user_ids({user_profile.id}), [user_profile.id],
-        )
+        self.assertEqual(filter_presence_idle_user_ids({user_profile.id}), [user_profile.id])
 
         # Active presence from the mobile app doesn't count
         self.client_post(
@@ -372,9 +365,7 @@ class UserPresenceTests(ZulipTestCase):
             {"status": "active"},
             HTTP_USER_AGENT="ZulipMobile/1.0",
         )
-        self.assertEqual(
-            filter_presence_idle_user_ids({user_profile.id}), [user_profile.id],
-        )
+        self.assertEqual(filter_presence_idle_user_ids({user_profile.id}), [user_profile.id])
 
         self.client_post("/json/users/me/presence", {"status": "active"})
         self.assertEqual(filter_presence_idle_user_ids({user_profile.id}), [])
@@ -592,9 +583,7 @@ class UserPresenceAggregationTests(ZulipTestCase):
     def test_aggregated_presense_active(self) -> None:
         user = self.example_user("othello")
         validate_time = timezone_now()
-        result_dict = self._send_presence_for_aggregated_tests(
-            user, "active", validate_time,
-        )
+        result_dict = self._send_presence_for_aggregated_tests(user, "active", validate_time)
         self.assertDictEqual(
             result_dict["presence"]["aggregated"],
             {

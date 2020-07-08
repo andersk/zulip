@@ -320,9 +320,7 @@ def billing_home(request: HttpRequest) -> HttpResponse:
                 CustomerPlan.PLUS: "Zulip Plus",
             }[plan.tier]
             free_trial = plan.status == CustomerPlan.FREE_TRIAL
-            downgrade_at_end_of_cycle = (
-                plan.status == CustomerPlan.DOWNGRADE_AT_END_OF_CYCLE
-            )
+            downgrade_at_end_of_cycle = plan.status == CustomerPlan.DOWNGRADE_AT_END_OF_CYCLE
             switch_to_annual_at_end_of_cycle = (
                 plan.status == CustomerPlan.SWITCH_TO_ANNUAL_AT_END_OF_CYCLE
             )

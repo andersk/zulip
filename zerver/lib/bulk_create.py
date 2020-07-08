@@ -23,9 +23,7 @@ def bulk_create_users(
     existing_users = frozenset(
         UserProfile.objects.filter(realm=realm).values_list("email", flat=True),
     )
-    users = sorted(
-        [user_raw for user_raw in users_raw if user_raw[0] not in existing_users],
-    )
+    users = sorted([user_raw for user_raw in users_raw if user_raw[0] not in existing_users])
 
     # Now create user_profiles
     profiles_to_create: List[UserProfile] = []

@@ -94,10 +94,7 @@ class WebPublicTopicHistoryTest(ZulipTestCase):
         test_stream = self.make_stream("Test Public Archives")
 
         self.send_stream_message(
-            self.example_user("iago"),
-            "Test Public Archives",
-            "Test Message",
-            "TopicGlobal",
+            self.example_user("iago"), "Test Public Archives", "Test Message", "TopicGlobal",
         )
 
         result = self.client_get("/archive/streams/" + str(test_stream.id) + "/topics")

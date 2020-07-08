@@ -38,9 +38,7 @@ def request_exception_error(
     raise requests.exceptions.RequestException("I'm a generic exception :(")
 
 
-def timeout_error(
-    http_method: Any, final_url: Any, data: Any, **request_kwargs: Any
-) -> Any:
+def timeout_error(http_method: Any, final_url: Any, data: Any, **request_kwargs: Any) -> Any:
     raise requests.exceptions.Timeout("Time is up!")
 
 
@@ -103,9 +101,7 @@ class DoRestCallTests(ZulipTestCase):
                 """[A message](http://zulip.testserver/#narrow/stream/999-Verona/topic/Foo/near/) triggered an outgoing webhook.
 The webhook got a response with status code *500*.""",
             )
-            self.assertEqual(
-                bot_owner_notification.recipient_id, self.bot_user.bot_owner.id,
-            )
+            self.assertEqual(bot_owner_notification.recipient_id, self.bot_user.bot_owner.id)
         self.mock_event["failed_tries"] = 0
 
     @mock.patch("zerver.lib.outgoing_webhook.fail_with_message")
@@ -121,9 +117,7 @@ The webhook got a response with status code *500*.""",
 The webhook got a response with status code *400*.""",
             )
             assert self.bot_user.bot_owner is not None
-            self.assertEqual(
-                bot_owner_notification.recipient_id, self.bot_user.bot_owner.id,
-            )
+            self.assertEqual(bot_owner_notification.recipient_id, self.bot_user.bot_owner.id)
 
     def test_headers(self) -> None:
         with mock.patch("requests.request") as mock_request:

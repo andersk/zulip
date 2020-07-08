@@ -52,8 +52,7 @@ class SlowQueryTest(ZulipTestCase):
 
             logged_line = mock_slow_query_logger.info.call_args_list[0][0][0]
             self.assertRegex(
-                logged_line,
-                r"123\.456\.789\.012 GET     200 10\.\ds .* \(unknown via \?\)",
+                logged_line, r"123\.456\.789\.012 GET     200 10\.\ds .* \(unknown via \?\)",
             )
 
 
@@ -163,7 +162,9 @@ class OpenGraphTest(ZulipTestCase):
 
     def test_login_page_simple_description(self) -> None:
         name = "Zulip Dev"
-        description = "The Zulip development environment default organization. It's great for testing!"
+        description = (
+            "The Zulip development environment default organization. It's great for testing!"
+        )
 
         self.check_title_and_description("/login/", name, [description], [])
 
@@ -210,8 +211,7 @@ class OpenGraphTest(ZulipTestCase):
         realm.save(update_fields=["icon_source"])
         icon_url = f"https://foo.s3.amazonaws.com/{realm.id}/realm/icon.png?version={1}"
         with patch(
-            "zerver.lib.realm_icon.upload_backend.get_realm_icon_url",
-            return_value=icon_url,
+            "zerver.lib.realm_icon.upload_backend.get_realm_icon_url", return_value=icon_url,
         ):
             response = self.client_get("/login/")
         self.assertEqual(response.status_code, 200)

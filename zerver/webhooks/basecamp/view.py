@@ -7,10 +7,7 @@ from django.http import HttpRequest, HttpResponse
 from zerver.decorator import api_key_only_webhook_view
 from zerver.lib.request import REQ, has_request_variables
 from zerver.lib.response import json_success
-from zerver.lib.webhooks.common import (
-    UnexpectedWebhookEventType,
-    check_send_webhook_message,
-)
+from zerver.lib.webhooks.common import UnexpectedWebhookEventType, check_send_webhook_message
 from zerver.models import UserProfile
 
 from .support_event import SUPPORT_EVENTS
@@ -150,9 +147,7 @@ def get_todo_body(event: str, payload: Dict[str, Any]) -> str:
     return get_generic_body(event, payload, "todo_", TODO_TEMPLATE)
 
 
-def get_generic_body(
-    event: str, payload: Dict[str, Any], prefix: str, template: str,
-) -> str:
+def get_generic_body(event: str, payload: Dict[str, Any], prefix: str, template: str) -> str:
     verb = get_verb(event, prefix)
     title = get_subject_title(payload)
     template = add_punctuation_if_necessary(template, title)

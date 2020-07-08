@@ -290,9 +290,7 @@ class MarkdownListPreprocessorTest(ZulipTestCase):
 
     def test_list_in_code(self) -> None:
         preprocessor = MarkdownListPreprocessor()
-        original, expected = self.split_message(
-            "```\nList without a gap\n* One\n* Two\n```",
-        )
+        original, expected = self.split_message("```\nList without a gap\n* One\n* Two\n```")
         self.assertEqual(preprocessor.run(original), expected)
 
     def test_complex_nesting_with_different_fences(self) -> None:
@@ -954,8 +952,7 @@ class MarkdownTest(ZulipTestCase):
             "<p>{}</p>\n{}".format(
                 make_link("http://twitter.com/wdaher/status/287977969287315456"),
                 make_inline_twitter_preview(
-                    "http://twitter.com/wdaher/status/287977969287315456",
-                    normal_tweet_html,
+                    "http://twitter.com/wdaher/status/287977969287315456", normal_tweet_html,
                 ),
             ),
         )
@@ -976,12 +973,10 @@ class MarkdownTest(ZulipTestCase):
                 make_link("http://twitter.com/wdaher/status/287977969287315457"),
                 make_link("http://twitter.com/wdaher/status/287977969287315457"),
                 make_inline_twitter_preview(
-                    "http://twitter.com/wdaher/status/287977969287315456",
-                    normal_tweet_html,
+                    "http://twitter.com/wdaher/status/287977969287315456", normal_tweet_html,
                 ),
                 make_inline_twitter_preview(
-                    "http://twitter.com/wdaher/status/287977969287315457",
-                    normal_tweet_html,
+                    "http://twitter.com/wdaher/status/287977969287315457", normal_tweet_html,
                 ),
             ),
         )
@@ -1002,12 +997,10 @@ class MarkdownTest(ZulipTestCase):
                 make_link("https://twitter.com/wdaher/status/287977969287315456"),
                 make_link("http://twitter.com/wdaher/status/287977969287315460"),
                 make_inline_twitter_preview(
-                    "http://twitter.com/wdaher/status/287977969287315456",
-                    normal_tweet_html,
+                    "http://twitter.com/wdaher/status/287977969287315456", normal_tweet_html,
                 ),
                 make_inline_twitter_preview(
-                    "http://twitter.com/wdaher/status/287977969287315457",
-                    normal_tweet_html,
+                    "http://twitter.com/wdaher/status/287977969287315457", normal_tweet_html,
                 ),
                 make_inline_twitter_preview(
                     "https://twitter.com/wdaher/status/287977969287315456",
@@ -1179,9 +1172,7 @@ class MarkdownTest(ZulipTestCase):
         realm = get_realm("zulip")
         url_format_string = r"https://trac.example.com/ticket/%(id)s"
         realm_filter = RealmFilter(
-            realm=realm,
-            pattern=r"#(?P<id>[0-9]{2,8})",
-            url_format_string=url_format_string,
+            realm=realm, pattern=r"#(?P<id>[0-9]{2,8})", url_format_string=url_format_string,
         )
         realm_filter.save()
         self.assertEqual(
@@ -1271,9 +1262,7 @@ class MarkdownTest(ZulipTestCase):
         realm = get_realm("zulip")
         url_format_string = r"https://trac.example.com/ticket/%(id)s"
         realm_filter = RealmFilter(
-            realm=realm,
-            pattern=r"#(?P<id>[0-9]{2,8})",
-            url_format_string=url_format_string,
+            realm=realm, pattern=r"#(?P<id>[0-9]{2,8})", url_format_string=url_format_string,
         )
         realm_filter.save()
 
@@ -1633,9 +1622,7 @@ class MarkdownTest(ZulipTestCase):
 
         self.assertTrue(msg_with_js == msg_without_language_default_js)
         self.assertTrue(
-            msg_with_python
-            == msg_with_python_default_js
-            == msg_without_language_default_py,
+            msg_with_python == msg_with_python_default_js == msg_without_language_default_py,
         )
         self.assertTrue(msg_with_quote == msg_without_language_default_quote)
         self.assertTrue(msg_with_math == msg_without_language_default_math)
@@ -1673,9 +1660,7 @@ class MarkdownTest(ZulipTestCase):
         content = "@**everyone** test"
         self.assertEqual(
             render_markdown(msg, content),
-            '<p><span class="user-mention" data-user-id="*">'
-            "@everyone"
-            "</span> test</p>",
+            '<p><span class="user-mention" data-user-id="*">' "@everyone" "</span> test</p>",
         )
         self.assertTrue(msg.mentions_wildcard)
 
@@ -1883,9 +1868,7 @@ class MarkdownTest(ZulipTestCase):
         # Create a linkifier.
         url_format_string = r"https://trac.example.com/ticket/%(id)s"
         realm_filter = RealmFilter(
-            realm=realm,
-            pattern=r"#(?P<id>[0-9]{2,8})",
-            url_format_string=url_format_string,
+            realm=realm, pattern=r"#(?P<id>[0-9]{2,8})", url_format_string=url_format_string,
         )
         realm_filter.save()
         self.assertEqual(
@@ -1950,9 +1933,7 @@ class MarkdownTest(ZulipTestCase):
         # Create a linkifier.
         url_format_string = r"https://trac.example.com/ticket/%(id)s"
         realm_filter = RealmFilter(
-            realm=realm,
-            pattern=r"#(?P<id>[0-9]{2,8})",
-            url_format_string=url_format_string,
+            realm=realm, pattern=r"#(?P<id>[0-9]{2,8})", url_format_string=url_format_string,
         )
         realm_filter.save()
         self.assertEqual(
@@ -2035,9 +2016,7 @@ class MarkdownTest(ZulipTestCase):
                 "/json/messages/" + str(msg_id), {"message_id": msg_id, "content": content},
             )
             self.assert_json_success(result)
-            um = UserMessage.objects.get(
-                user_profile_id=user_profile.id, message_id=msg_id,
-            )
+            um = UserMessage.objects.get(user_profile_id=user_profile.id, message_id=msg_id)
             if mentioned:
                 self.assertIn("mentioned", um.flags_list())
             else:
@@ -2132,9 +2111,7 @@ class MarkdownTest(ZulipTestCase):
         sender_user_profile = self.example_user("othello")
         url_format_string = r"https://trac.example.com/ticket/%(id)s"
         realm_filter = RealmFilter(
-            realm=realm,
-            pattern=r"#(?P<id>[0-9]{2,8})",
-            url_format_string=url_format_string,
+            realm=realm, pattern=r"#(?P<id>[0-9]{2,8})", url_format_string=url_format_string,
         )
         realm_filter.save()
         self.assertEqual(
@@ -2204,9 +2181,7 @@ class MarkdownTest(ZulipTestCase):
         sender_user_profile = self.example_user("othello")
         url_format_string = r"https://trac.example.com/ticket/%(id)s"
         realm_filter = RealmFilter(
-            realm=realm,
-            pattern=r"#(?P<id>[0-9]{2,8})",
-            url_format_string=url_format_string,
+            realm=realm, pattern=r"#(?P<id>[0-9]{2,8})", url_format_string=url_format_string,
         )
         realm_filter.save()
         self.assertEqual(

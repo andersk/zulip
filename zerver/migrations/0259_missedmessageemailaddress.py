@@ -25,10 +25,7 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                (
-                    "email_token",
-                    models.CharField(db_index=True, max_length=34, unique=True),
-                ),
+                ("email_token", models.CharField(db_index=True, max_length=34, unique=True)),
                 (
                     "timestamp",
                     models.DateTimeField(db_index=True, default=django.utils.timezone.now),

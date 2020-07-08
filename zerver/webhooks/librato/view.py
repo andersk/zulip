@@ -130,9 +130,7 @@ class LibratoWebhookHandler(LibratoWebhookParser):
     def handle_alert_violation_message(self) -> str:
         alert_violation_template = "Alert [alert_name]({alert_url}) has triggered! "
         alert_id, alert_name, alert_url, alert_runbook_url = self.parse_alert()
-        content = alert_violation_template.format(
-            alert_name=alert_name, alert_url=alert_url,
-        )
+        content = alert_violation_template.format(alert_name=alert_name, alert_url=alert_url)
         if alert_runbook_url:
             alert_runbook_template = "[Reaction steps]({alert_runbook_url}):"
             content += alert_runbook_template.format(alert_runbook_url=alert_runbook_url)

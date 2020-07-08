@@ -49,9 +49,7 @@ def test_generated_curl_examples_for_success(client: Client) -> None:
             print("Testing {} ...".format(curl_command_text.split("\n")[0]))
 
             # Turn the text into an arguments list.
-            generated_curl_command = [
-                x for x in shlex.split(curl_command_text) if x != "\n"
-            ]
+            generated_curl_command = [x for x in shlex.split(curl_command_text) if x != "\n"]
 
             response_json = None
             response = None

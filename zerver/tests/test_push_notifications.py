@@ -112,9 +112,7 @@ class BouncerTestCase(ZulipTestCase):
             )
 
         elif args[0] == "GET":
-            result = self.uuid_get(
-                self.server_uuid, local_url, kwargs["data"], subdomain="",
-            )
+            result = self.uuid_get(self.server_uuid, local_url, kwargs["data"], subdomain="")
         else:
             raise AssertionError("Unsupported method for bounce_request")
         return result
@@ -350,8 +348,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
                 )
 
             with mock.patch(
-                "zerver.lib.remote_server.requests.request",
-                return_value=Result(status=500),
+                "zerver.lib.remote_server.requests.request", return_value=Result(status=500),
             ):
                 result = self.client_post(endpoint, {"token": token}, subdomain="zulip")
                 self.assert_json_error(
@@ -786,10 +783,7 @@ class HandlePushNotificationTest(PushNotificationTest):
         local_url = args[1].replace(settings.PUSH_NOTIFICATION_BOUNCER_URL, "")
         if args[0] == "POST":
             result = self.uuid_post(
-                self.server_uuid,
-                local_url,
-                kwargs["data"],
-                content_type="application/json",
+                self.server_uuid, local_url, kwargs["data"], content_type="application/json",
             )
         else:
             raise AssertionError("Unsupported method for bounce_request")
@@ -819,17 +813,13 @@ class HandlePushNotificationTest(PushNotificationTest):
         ):
             apns_devices = [
                 (b64_to_hex(device.token), device.ios_app_id, device.token)
-                for device in RemotePushDeviceToken.objects.filter(
-                    kind=PushDeviceToken.APNS,
-                )
+                for device in RemotePushDeviceToken.objects.filter(kind=PushDeviceToken.APNS)
             ]
             gcm_devices = [
                 (b64_to_hex(device.token), device.ios_app_id, device.token)
                 for device in RemotePushDeviceToken.objects.filter(kind=PushDeviceToken.GCM)
             ]
-            mock_gcm.json_request.return_value = {
-                "success": {gcm_devices[0][2]: message.id},
-            }
+            mock_gcm.json_request.return_value = {"success": {gcm_devices[0][2]: message.id}}
             mock_apns.get_notification_result.return_value = "Success"
             handle_push_notification(self.user_profile.id, missed_message)
             for _, _, token in apns_devices:
@@ -878,9 +868,7 @@ class HandlePushNotificationTest(PushNotificationTest):
                 (b64_to_hex(device.token), device.ios_app_id, device.token)
                 for device in RemotePushDeviceToken.objects.filter(kind=PushDeviceToken.GCM)
             ]
-            mock_gcm.json_request.return_value = {
-                "success": {gcm_devices[0][2]: message.id},
-            }
+            mock_gcm.json_request.return_value = {"success": {gcm_devices[0][2]: message.id}}
             with self.assertRaises(PushNotificationBouncerRetryLaterError):
                 handle_push_notification(self.user_profile.id, missed_message)
 
@@ -1000,9 +988,7 @@ class HandlePushNotificationTest(PushNotificationTest):
         )
 
         android_devices = list(
-            PushDeviceToken.objects.filter(
-                user=self.user_profile, kind=PushDeviceToken.GCM,
-            ),
+            PushDeviceToken.objects.filter(user=self.user_profile, kind=PushDeviceToken.GCM),
         )
 
         apple_devices = list(
@@ -1091,9 +1077,7 @@ class HandlePushNotificationTest(PushNotificationTest):
         )
 
         android_devices = list(
-            PushDeviceToken.objects.filter(
-                user=self.user_profile, kind=PushDeviceToken.GCM,
-            ),
+            PushDeviceToken.objects.filter(user=self.user_profile, kind=PushDeviceToken.GCM),
         )
 
         apple_devices = list(
@@ -1182,9 +1166,7 @@ class HandlePushNotificationTest(PushNotificationTest):
         }
 
         android_devices = list(
-            PushDeviceToken.objects.filter(
-                user=self.user_profile, kind=PushDeviceToken.GCM,
-            ),
+            PushDeviceToken.objects.filter(user=self.user_profile, kind=PushDeviceToken.GCM),
         )
 
         apple_devices = list(
@@ -1851,8 +1833,7 @@ class TestPushApi(BouncerTestCase):
             with self.settings(
                 PUSH_NOTIFICATION_BOUNCER_URL="https://push.zulip.org.example.com",
             ), mock.patch(
-                "zerver.lib.remote_server.requests.request",
-                side_effect=self.bounce_request,
+                "zerver.lib.remote_server.requests.request", side_effect=self.bounce_request,
             ) as remote_server_request:
                 result = self.client_delete(endpoint, {"token": "abcd1234"})
                 self.assert_json_error(result, "Token does not exist")
@@ -1912,8 +1893,7 @@ class TestPushApi(BouncerTestCase):
         # PushDeviceToken will include all the device tokens.
         tokens = list(PushDeviceToken.objects.values_list("token", flat=True))
         self.assertEqual(
-            tokens,
-            ["apple-tokenaa", "android-token-1", "apple-tokenbb", "android-token-2"],
+            tokens, ["apple-tokenaa", "android-token-1", "apple-tokenbb", "android-token-2"],
         )
 
         # RemotePushDeviceToken will only include tokens of
@@ -1984,9 +1964,7 @@ class GCMSendTest(PushNotificationTest):
         return data
 
     @mock.patch("zerver.lib.push_notifications.logger.debug")
-    def test_gcm_is_none(
-        self, mock_debug: mock.MagicMock, mock_gcm: mock.MagicMock,
-    ) -> None:
+    def test_gcm_is_none(self, mock_debug: mock.MagicMock, mock_gcm: mock.MagicMock) -> None:
         mock_gcm.__bool__.return_value = False
         send_android_push_notification_to_user(self.user_profile, {}, {})
         mock_debug.assert_called_with(

@@ -600,9 +600,7 @@ def create_realm(request: HttpRequest, creation_key: Optional[str] = None) -> Ht
                 return HttpResponseRedirect(activation_url)
 
             try:
-                send_confirm_registration_email(
-                    email, activation_url, request.LANGUAGE_CODE,
-                )
+                send_confirm_registration_email(email, activation_url, request.LANGUAGE_CODE)
             except smtplib.SMTPException as e:
                 logging.error("Error in create_realm: %s", str(e))
                 return HttpResponseRedirect("/config-error/smtp")
@@ -688,9 +686,7 @@ def accounts_home_from_multiuse_invite(
 ) -> HttpResponse:
     multiuse_object = None
     try:
-        multiuse_object = get_object_from_key(
-            confirmation_key, Confirmation.MULTIUSE_INVITE,
-        )
+        multiuse_object = get_object_from_key(confirmation_key, Confirmation.MULTIUSE_INVITE)
         # Required for oAuth2
     except ConfirmationKeyException as exception:
         realm = get_realm_from_request(request)

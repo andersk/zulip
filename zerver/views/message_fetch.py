@@ -355,9 +355,7 @@ class NarrowBuilder:
         cond = column("sender_id") == literal(sender.id)
         return query.where(maybe_negate(cond))
 
-    def by_near(
-        self, query: Query, operand: str, maybe_negate: ConditionTransform,
-    ) -> Query:
+    def by_near(self, query: Query, operand: str, maybe_negate: ConditionTransform) -> Query:
         return query
 
     def by_id(self, query: Query, operand: str, maybe_negate: ConditionTransform) -> Query:

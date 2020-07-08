@@ -321,8 +321,7 @@ def do_send_missedmessage_events_reply_in_zulip(
         return
 
     recipients = {
-        (msg["message"].recipient_id, msg["message"].topic_name())
-        for msg in missed_messages
+        (msg["message"].recipient_id, msg["message"].topic_name()) for msg in missed_messages
     }
     if len(recipients) != 1:
         raise ValueError(

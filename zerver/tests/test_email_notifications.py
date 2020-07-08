@@ -330,9 +330,7 @@ class TestMissedMessages(ZulipTestCase):
         self, send_as_user: bool, show_message_content: bool = True,
     ) -> None:
         for i in range(0, 11):
-            self.send_stream_message(
-                self.example_user("othello"), "Denmark", content=str(i),
-            )
+            self.send_stream_message(self.example_user("othello"), "Denmark", content=str(i))
         self.send_stream_message(
             self.example_user("othello"), "Denmark", "11", topic_name="test2",
         )
@@ -379,9 +377,7 @@ class TestMissedMessages(ZulipTestCase):
         self, send_as_user: bool, show_message_content: bool = True,
     ) -> None:
         for i in range(1, 6):
-            self.send_stream_message(
-                self.example_user("othello"), "Denmark", content=str(i),
-            )
+            self.send_stream_message(self.example_user("othello"), "Denmark", content=str(i))
         self.send_stream_message(
             self.example_user("othello"), "Denmark", "11", topic_name="test2",
         )
@@ -427,9 +423,7 @@ class TestMissedMessages(ZulipTestCase):
         self, send_as_user: bool,
     ) -> None:
         for i in range(0, 11):
-            self.send_stream_message(
-                self.example_user("othello"), "Denmark", content=str(i),
-            )
+            self.send_stream_message(self.example_user("othello"), "Denmark", content=str(i))
         self.send_stream_message(
             self.example_user("othello"), "Denmark", "11", topic_name="test2",
         )
@@ -513,9 +507,7 @@ class TestMissedMessages(ZulipTestCase):
             verify_body_does_not_include=verify_body_does_not_include,
         )
 
-    def _reply_to_email_in_personal_missed_stream_messages(
-        self, send_as_user: bool,
-    ) -> None:
+    def _reply_to_email_in_personal_missed_stream_messages(self, send_as_user: bool) -> None:
         msg_id = self.send_personal_message(
             self.example_user("othello"),
             self.example_user("hamlet"),
@@ -590,9 +582,7 @@ class TestMissedMessages(ZulipTestCase):
         verify_body_include = [
             "Othello, the Moor of Venice: Group personal message! -- Reply",
         ]
-        email_subject = (
-            "Group PMs with Cordelia Lear, Iago, and Othello, the Moor of Venice"
-        )
+        email_subject = "Group PMs with Cordelia Lear, Iago, and Othello, the Moor of Venice"
         self._test_cases(msg_id, verify_body_include, email_subject, send_as_user)
 
     def _extra_context_in_huddle_missed_stream_messages_many_others(
@@ -743,9 +733,7 @@ class TestMissedMessages(ZulipTestCase):
         self._extra_context_in_personal_missed_stream_messages(False)
 
     @override_settings(SEND_MISSED_MESSAGE_EMAILS_AS_USER=True)
-    def test_extra_context_in_huddle_missed_stream_messages_two_others_as_user(
-        self,
-    ) -> None:
+    def test_extra_context_in_huddle_missed_stream_messages_two_others_as_user(self) -> None:
         self._extra_context_in_huddle_missed_stream_messages_two_others(True)
 
     def test_extra_context_in_huddle_missed_stream_messages_two_others(self) -> None:
@@ -799,9 +787,7 @@ class TestMissedMessages(ZulipTestCase):
         realm.save(update_fields=["message_content_allowed_in_email_notifications"])
 
         # Emails have missed message content when message content is enabled by the user
-        do_change_notification_settings(
-            user, "message_content_in_email_notifications", True,
-        )
+        do_change_notification_settings(user, "message_content_in_email_notifications", True)
         mail.outbox = []
         self._extra_context_in_personal_missed_stream_messages(
             False, show_message_content=True,
@@ -822,9 +808,7 @@ class TestMissedMessages(ZulipTestCase):
         realm.message_content_allowed_in_email_notifications = False
         realm.save(update_fields=["message_content_allowed_in_email_notifications"])
 
-        do_change_notification_settings(
-            user, "message_content_in_email_notifications", True,
-        )
+        do_change_notification_settings(user, "message_content_in_email_notifications", True)
         mail.outbox = []
         self._extra_context_in_personal_missed_stream_messages(
             False, show_message_content=False, message_content_disabled_by_realm=True,
@@ -964,9 +948,7 @@ class TestMissedMessages(ZulipTestCase):
         msg_id_1 = self.send_stream_message(
             self.example_user("othello"), "Denmark", "Message1",
         )
-        msg_id_2 = self.send_stream_message(
-            self.example_user("iago"), "Denmark", "Message2",
-        )
+        msg_id_2 = self.send_stream_message(self.example_user("iago"), "Denmark", "Message2")
 
         handle_missedmessage_emails(
             hamlet.id,

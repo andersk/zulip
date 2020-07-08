@@ -560,9 +560,7 @@ ALLOW_OLD_URLS = False
 ## Path where the Result storage will store generated images
 ## Defaults to: '/tmp/thumbor/result_storage'
 if IS_LOCAL_STORAGE:
-    RESULT_STORAGE_FILE_STORAGE_ROOT_PATH = os.path.join(
-        FILE_LOADER_ROOT_PATH, "thumbnails",
-    )
+    RESULT_STORAGE_FILE_STORAGE_ROOT_PATH = os.path.join(FILE_LOADER_ROOT_PATH, "thumbnails")
 
 ## Indicates whether unsafe requests should also be stored in the Result Storage
 ## Defaults to: False

@@ -202,10 +202,7 @@ def update_user_custom_profile_data(
             check_dict_only(
                 [
                     ("id", check_int),
-                    (
-                        "value",
-                        check_union([check_int, check_string, check_list(check_int)]),
-                    ),
+                    ("value", check_union([check_int, check_string, check_list(check_int)])),
                 ],
             ),
         ),

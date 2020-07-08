@@ -49,18 +49,7 @@ def run() -> None:
 
     by_lang = linter_config.list_files(
         groups={
-            "backend": [
-                "py",
-                "sh",
-                "pp",
-                "json",
-                "md",
-                "txt",
-                "text",
-                "yaml",
-                "rst",
-                "yml",
-            ],
+            "backend": ["py", "sh", "pp", "json", "md", "txt", "text", "yaml", "rst", "yml"],
             "frontend": ["js", "ts", "css", "scss", "hbs", "html", "lock"],
         },
         exclude=EXCLUDED_FILES,
@@ -78,8 +67,7 @@ def run() -> None:
         ["node", "node_modules/.bin/eslint", "--quiet", "--cache", "--ext", ".js,.ts"],
         ["js", "ts"],
         fix_arg="--fix",
-        description="Standard JavaScript style and formatting linter"
-        "(config: .eslintrc).",
+        description="Standard JavaScript style and formatting linter" "(config: .eslintrc).",
     )
     linter_config.external_linter(
         "puppet",

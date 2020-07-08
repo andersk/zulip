@@ -315,10 +315,7 @@ class PreviewTestCase(ZulipTestCase):
 
     @override_settings(INLINE_URL_EMBED_PREVIEW=True)
     def _send_message_with_test_org_url(
-        self,
-        sender: UserProfile,
-        queue_should_run: bool = True,
-        relative_url: bool = False,
+        self, sender: UserProfile, queue_should_run: bool = True, relative_url: bool = False,
     ) -> Message:
         url = "http://test.org/"
         with mock.patch("zerver.lib.actions.queue_json_publish") as patched:
@@ -404,8 +401,7 @@ class PreviewTestCase(ZulipTestCase):
                     )
 
         with mock.patch(
-            "zerver.views.message_edit.queue_json_publish",
-            wraps=wrapped_queue_json_publish,
+            "zerver.views.message_edit.queue_json_publish", wraps=wrapped_queue_json_publish,
         ) as patched:
             result = self.client_patch(
                 "/json/messages/" + str(msg_id),
@@ -699,8 +695,7 @@ class PreviewTestCase(ZulipTestCase):
         self.assertIsNone(cached_data)
         msg.refresh_from_db()
         self.assertEqual(
-            '<p><a href="http://test.org/x">http://test.org/x</a></p>',
-            msg.rendered_content,
+            '<p><a href="http://test.org/x">http://test.org/x</a></p>', msg.rendered_content,
         )
 
     @override_settings(INLINE_URL_EMBED_PREVIEW=True)

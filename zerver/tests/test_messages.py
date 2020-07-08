@@ -83,9 +83,7 @@ class TestBulkGetHuddleUserIds(ZulipTestCase):
             [first_huddle_recipient, second_huddle_recipient],
         )
         self.assertEqual(huddle_user_ids[first_huddle_recipient.id], first_huddle_user_ids)
-        self.assertEqual(
-            huddle_user_ids[second_huddle_recipient.id], second_huddle_user_ids,
-        )
+        self.assertEqual(huddle_user_ids[second_huddle_recipient.id], second_huddle_user_ids)
 
     def test_bulk_get_huddle_user_ids_empty_list(self) -> None:
         self.assertEqual(bulk_get_huddle_user_ids([]), {})

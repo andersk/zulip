@@ -288,12 +288,8 @@ class ImportExportTest(ZulipTestCase):
                 realm, Realm.LOGO_UPLOADED, False, acting_user=user_profile,
             )
         with get_test_image_file("img.png") as img_file:
-            upload.upload_backend.upload_realm_logo_image(
-                img_file, user_profile, night=True,
-            )
-            do_change_logo_source(
-                realm, Realm.LOGO_UPLOADED, True, acting_user=user_profile,
-            )
+            upload.upload_backend.upload_realm_logo_image(img_file, user_profile, night=True)
+            do_change_logo_source(realm, Realm.LOGO_UPLOADED, True, acting_user=user_profile)
 
         test_image = get_test_image_file("img.png").read()
         message.sender.avatar_source = "U"
@@ -862,9 +858,7 @@ class ImportExportTest(ZulipTestCase):
                 self.assertNotEqual(orig_realm_result, imported_realm_result)
 
         # test users
-        assert_realm_values(
-            lambda r: {user.email for user in r.get_admin_users_and_bots()},
-        )
+        assert_realm_values(lambda r: {user.email for user in r.get_admin_users_and_bots()})
 
         assert_realm_values(lambda r: {user.email for user in r.get_active_users()})
 

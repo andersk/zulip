@@ -328,9 +328,7 @@ def get_stream_id(client: Client) -> int:
 @openapi_test_function("/streams/{stream_id}:delete")
 def delete_stream(client: Client, stream_id: int) -> None:
     result = client.add_subscriptions(
-        streams=[
-            {"name": "stream to be deleted", "description": "New stream for testing"},
-        ],
+        streams=[{"name": "stream to be deleted", "description": "New stream for testing"}],
     )
 
     # {code_example|start}

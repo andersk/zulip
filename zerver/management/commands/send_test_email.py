@@ -56,6 +56,4 @@ class Command(sendtestemail.Command):
             )
 
         if kwargs["admins"]:
-            mail_admins(
-                "Zulip admins email test", "This email was sent to the site admins.",
-            )
+            mail_admins("Zulip admins email test", "This email was sent to the site admins.")

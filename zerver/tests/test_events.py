@@ -418,18 +418,14 @@ class NormalActionsTest(BaseAction):
             return schema_checker
 
         events = self.verify_action(
-            lambda: self.send_stream_message(
-                self.example_user("hamlet"), "Verona", "hello",
-            ),
+            lambda: self.send_stream_message(self.example_user("hamlet"), "Verona", "hello"),
             client_gravatar=False,
         )
         schema_checker = get_checker(check_gravatar=check_string)
         schema_checker("events[0]", events[0])
 
         events = self.verify_action(
-            lambda: self.send_stream_message(
-                self.example_user("hamlet"), "Verona", "hello",
-            ),
+            lambda: self.send_stream_message(self.example_user("hamlet"), "Verona", "hello"),
             client_gravatar=True,
         )
         schema_checker = get_checker(check_gravatar=equals(None))
@@ -656,9 +652,7 @@ class NormalActionsTest(BaseAction):
             ],
         )
 
-        message_id = self.send_stream_message(
-            self.example_user("hamlet"), "Verona", "hello",
-        )
+        message_id = self.send_stream_message(self.example_user("hamlet"), "Verona", "hello")
         message = Message.objects.get(id=message_id)
         events = self.verify_action(
             lambda: do_add_reaction_legacy(self.user_profile, message, "tada"),
@@ -689,9 +683,7 @@ class NormalActionsTest(BaseAction):
             ],
         )
 
-        message_id = self.send_stream_message(
-            self.example_user("hamlet"), "Verona", "hello",
-        )
+        message_id = self.send_stream_message(self.example_user("hamlet"), "Verona", "hello")
         message = Message.objects.get(id=message_id)
         do_add_reaction_legacy(self.user_profile, message, "tada")
         events = self.verify_action(
@@ -723,9 +715,7 @@ class NormalActionsTest(BaseAction):
             ],
         )
 
-        message_id = self.send_stream_message(
-            self.example_user("hamlet"), "Verona", "hello",
-        )
+        message_id = self.send_stream_message(self.example_user("hamlet"), "Verona", "hello")
         message = Message.objects.get(id=message_id)
         events = self.verify_action(
             lambda: do_add_reaction(
@@ -785,15 +775,11 @@ class NormalActionsTest(BaseAction):
             ],
         )
 
-        message_id = self.send_stream_message(
-            self.example_user("hamlet"), "Verona", "hello",
-        )
+        message_id = self.send_stream_message(self.example_user("hamlet"), "Verona", "hello")
         message = Message.objects.get(id=message_id)
         do_add_reaction(self.user_profile, message, "tada", "1f389", "unicode_emoji")
         events = self.verify_action(
-            lambda: do_remove_reaction(
-                self.user_profile, message, "1f389", "unicode_emoji",
-            ),
+            lambda: do_remove_reaction(self.user_profile, message, "1f389", "unicode_emoji"),
             state_change_expected=False,
         )
         schema_checker("events[0]", events[0])
@@ -856,8 +842,7 @@ class NormalActionsTest(BaseAction):
 
         multiuse_object = MultiuseInvite.objects.get()
         events = self.verify_action(
-            lambda: do_revoke_multi_use_invite(multiuse_object),
-            state_change_expected=False,
+            lambda: do_revoke_multi_use_invite(multiuse_object), state_change_expected=False,
         )
         schema_checker("events[0]", events[0])
 
@@ -1470,9 +1455,7 @@ class NormalActionsTest(BaseAction):
         do_change_user_role(self.user_profile, UserProfile.ROLE_GUEST)
         stream = get_stream("Scotland", self.user_profile.realm)
         self.verify_action(
-            lambda: do_add_default_stream(stream),
-            state_change_expected=False,
-            num_events=0,
+            lambda: do_add_default_stream(stream), state_change_expected=False, num_events=0,
         )
         self.verify_action(
             lambda: do_remove_default_stream(stream),
@@ -1853,9 +1836,7 @@ class NormalActionsTest(BaseAction):
 
         do_change_user_role(self.user_profile, UserProfile.ROLE_MEMBER)
         for role in [UserProfile.ROLE_REALM_ADMINISTRATOR, UserProfile.ROLE_MEMBER]:
-            events = self.verify_action(
-                lambda: do_change_user_role(self.user_profile, role),
-            )
+            events = self.verify_action(lambda: do_change_user_role(self.user_profile, role))
             schema_checker("events[0]", events[0])
 
     def test_change_is_owner(self) -> None:
@@ -1884,9 +1865,7 @@ class NormalActionsTest(BaseAction):
 
         do_change_user_role(self.user_profile, UserProfile.ROLE_MEMBER)
         for role in [UserProfile.ROLE_REALM_OWNER, UserProfile.ROLE_MEMBER]:
-            events = self.verify_action(
-                lambda: do_change_user_role(self.user_profile, role),
-            )
+            events = self.verify_action(lambda: do_change_user_role(self.user_profile, role))
             schema_checker("events[0]", events[0])
 
     def test_change_is_guest(self) -> None:
@@ -1915,9 +1894,7 @@ class NormalActionsTest(BaseAction):
 
         do_change_user_role(self.user_profile, UserProfile.ROLE_MEMBER)
         for role in [UserProfile.ROLE_GUEST, UserProfile.ROLE_MEMBER]:
-            events = self.verify_action(
-                lambda: do_change_user_role(self.user_profile, role),
-            )
+            events = self.verify_action(lambda: do_change_user_role(self.user_profile, role))
             schema_checker("events[0]", events[0])
 
     def test_change_notification_settings(self) -> None:
@@ -2337,15 +2314,11 @@ class NormalActionsTest(BaseAction):
 
         action = lambda: do_change_default_sending_stream(bot, stream)
         events = self.verify_action(action)
-        self.realm_bot_schema("default_sending_stream", check_string)(
-            "events[0]", events[0],
-        )
+        self.realm_bot_schema("default_sending_stream", check_string)("events[0]", events[0])
 
         action = lambda: do_change_default_sending_stream(bot, None)
         events = self.verify_action(action)
-        self.realm_bot_schema("default_sending_stream", equals(None))(
-            "events[0]", events[0],
-        )
+        self.realm_bot_schema("default_sending_stream", equals(None))("events[0]", events[0])
 
     def test_change_bot_default_events_register_stream(self) -> None:
         bot = self.create_bot("test")
@@ -2379,10 +2352,7 @@ class NormalActionsTest(BaseAction):
             [
                 ("type", equals("realm_bot")),
                 ("op", equals("update")),
-                (
-                    "bot",
-                    check_dict_only([("user_id", check_int), ("owner_id", check_int)]),
-                ),
+                ("bot", check_dict_only([("user_id", check_int), ("owner_id", check_int)])),
             ],
         )
         self.user_profile = self.example_user("iago")

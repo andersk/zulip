@@ -280,9 +280,7 @@ def setup_emoji_farms(cache_path: str, emoji_data: List[Dict[str, Any]]) -> None
         # We hardcode octopus emoji image to Google emojiset's old
         # "cute octopus" image. Copy it to the emoji farms.
         input_img_file = os.path.join(EMOJI_SCRIPT_DIR_PATH, "1f419.png")
-        output_img_file = os.path.join(
-            cache_path, "images-" + emojiset + "-64", "1f419.png",
-        )
+        output_img_file = os.path.join(cache_path, "images-" + emojiset + "-64", "1f419.png")
         shutil.copyfile(input_img_file, output_img_file)
 
         generate_sprite_css_files(cache_path, emoji_data, emojiset, alt_name)
@@ -327,9 +325,7 @@ def setup_old_emoji_farm(
         try:
             # `emoji_map` contains duplicate entries for the same codepoint with different
             # names. So creation of symlink for <codepoint>.png may throw `FileExistsError`.
-            unicode_symlink_path = os.path.join(
-                unicode_emoji_cache_path, f"{codepoint}.png",
-            )
+            unicode_symlink_path = os.path.join(unicode_emoji_cache_path, f"{codepoint}.png")
             os.symlink(image_file_path, unicode_symlink_path)
         except FileExistsError:
             pass

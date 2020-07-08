@@ -16,9 +16,7 @@ import ujson
 
 from emoji_setup_utils import get_emoji_code
 
-TOOLS_DIR_PATH = os.path.dirname(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-)
+TOOLS_DIR_PATH = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 ZULIP_PATH = os.path.dirname(TOOLS_DIR_PATH)
 # `emoji.json` file is same in all four emoji-datasource packages.
 EMOJI_DATA_PATH = os.path.join(

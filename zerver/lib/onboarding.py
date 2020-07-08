@@ -114,9 +114,7 @@ def send_initial_realm_messages(realm: Realm) -> None:
     # Order corresponds to the ordering of the streams on the left sidebar, to make the initial Home
     # view slightly less overwhelming
     content_of_private_streams_topic = (
-        _(
-            "This is a private stream, as indicated by the lock icon next to the stream name.",
-        )
+        _("This is a private stream, as indicated by the lock icon next to the stream name.")
         + " "
         + _("Private streams are only visible to stream members.")
         + "\n"

@@ -5,18 +5,7 @@ import shutil
 import tempfile
 import urllib
 from contextlib import contextmanager
-from typing import (
-    Any,
-    Dict,
-    Iterable,
-    Iterator,
-    List,
-    Optional,
-    Sequence,
-    Set,
-    Tuple,
-    Union,
-)
+from typing import Any, Dict, Iterable, Iterator, List, Optional, Sequence, Set, Tuple, Union
 from unittest import mock
 
 import ujson
@@ -226,9 +215,7 @@ class ZulipTestCase(TestCase):
         return result
 
     @instrument_url
-    def client_put(
-        self, url: str, info: Dict[str, Any] = {}, **kwargs: Any
-    ) -> HttpResponse:
+    def client_put(self, url: str, info: Dict[str, Any] = {}, **kwargs: Any) -> HttpResponse:
         encoded = urllib.parse.urlencode(info)
         django_client = self.client  # see WRAPPER_COMMENT
         self.set_http_headers(kwargs)
@@ -288,9 +275,7 @@ class ZulipTestCase(TestCase):
         return match.func(req)
 
     @instrument_url
-    def client_get(
-        self, url: str, info: Dict[str, Any] = {}, **kwargs: Any
-    ) -> HttpResponse:
+    def client_get(self, url: str, info: Dict[str, Any] = {}, **kwargs: Any) -> HttpResponse:
         django_client = self.client  # see WRAPPER_COMMENT
         self.set_http_headers(kwargs)
         result = django_client.get(url, info, **kwargs)
@@ -701,9 +686,7 @@ class ZulipTestCase(TestCase):
         self.assertNotEqual(json["msg"], "Error parsing JSON in response!")
         return json
 
-    def get_json_error(
-        self, result: HttpResponse, status_code: int = 400,
-    ) -> Dict[str, Any]:
+    def get_json_error(self, result: HttpResponse, status_code: int = 400) -> Dict[str, Any]:
         try:
             json = ujson.loads(result.content)
         except Exception:  # nocoverage

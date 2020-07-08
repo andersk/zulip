@@ -124,10 +124,7 @@ class GitterImporter(ZulipTestCase):
                 ],
             },
             {"text": "hi @user4", "mentions": [{"screenName": "user4"}]},
-            {
-                "text": "hi @user5",
-                "mentions": [{"screenName": "user", "userId": "5712ds4"}],
-            },
+            {"text": "hi @user5", "mentions": [{"screenName": "user", "userId": "5712ds4"}]},
         ]
 
         self.assertEqual(

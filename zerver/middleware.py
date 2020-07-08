@@ -435,9 +435,7 @@ class RateLimitMiddleware(MiddlewareMixin):
         )
         response["X-RateLimit-Reset"] = str(int(reset_time))
 
-    def process_response(
-        self, request: HttpRequest, response: HttpResponse,
-    ) -> HttpResponse:
+    def process_response(self, request: HttpRequest, response: HttpResponse) -> HttpResponse:
         if not settings.RATE_LIMITING:
             return response
 
@@ -465,9 +463,7 @@ class RateLimitMiddleware(MiddlewareMixin):
 
 
 class FlushDisplayRecipientCache(MiddlewareMixin):
-    def process_response(
-        self, request: HttpRequest, response: HttpResponse,
-    ) -> HttpResponse:
+    def process_response(self, request: HttpRequest, response: HttpResponse) -> HttpResponse:
         # We flush the per-request caches after every request, so they
         # are not shared at all between requests.
         flush_per_request_caches()
@@ -475,9 +471,7 @@ class FlushDisplayRecipientCache(MiddlewareMixin):
 
 
 class HostDomainMiddleware(MiddlewareMixin):
-    def process_response(
-        self, request: HttpRequest, response: HttpResponse,
-    ) -> HttpResponse:
+    def process_response(self, request: HttpRequest, response: HttpResponse) -> HttpResponse:
         if getattr(response, "asynchronous", False):
             # This special Tornado "asynchronous" response is
             # discarded after going through this code path as Tornado

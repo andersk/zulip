@@ -233,9 +233,7 @@ class Database:
         )
 
 
-DEV_DATABASE = Database(
-    platform="dev", database_name="zulip", settings="zproject.settings",
-)
+DEV_DATABASE = Database(platform="dev", database_name="zulip", settings="zproject.settings")
 
 TEST_DATABASE = Database(
     platform="test", database_name="zulip_test_template", settings="zproject.test_settings",
@@ -356,16 +354,7 @@ def destroy_leaked_test_databases(expiry_time: int = 60 * 60) -> int:
 
     commands = "\n".join(f"DROP DATABASE IF EXISTS {db};" for db in databases_to_drop)
     p = subprocess.Popen(
-        [
-            "psql",
-            "-q",
-            "-v",
-            "ON_ERROR_STOP=1",
-            "-h",
-            "localhost",
-            "postgres",
-            "zulip_test",
-        ],
+        ["psql", "-q", "-v", "ON_ERROR_STOP=1", "-h", "localhost", "postgres", "zulip_test"],
         stdin=subprocess.PIPE,
     )
     p.communicate(input=commands.encode())

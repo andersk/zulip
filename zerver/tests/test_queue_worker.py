@@ -82,9 +82,7 @@ class WorkerTest(ZulipTestCase):
         fake_client = self.FakeClient()
 
         user = self.example_user("hamlet")
-        UserActivity.objects.filter(
-            user_profile=user.id, client=get_client("ios"),
-        ).delete()
+        UserActivity.objects.filter(user_profile=user.id, client=get_client("ios")).delete()
 
         data = dict(
             user_profile_id=user.id,
@@ -412,9 +410,7 @@ class WorkerTest(ZulipTestCase):
             with patch(
                 "zerver.lib.send_email.build_email",
                 side_effect=smtplib.SMTPServerDisconnected,
-            ), patch(
-                "zerver.lib.queue.queue_json_publish", side_effect=fake_publish,
-            ), patch(
+            ), patch("zerver.lib.queue.queue_json_publish", side_effect=fake_publish), patch(
                 "logging.exception",
             ):
                 worker.start()
@@ -442,9 +438,7 @@ class WorkerTest(ZulipTestCase):
             worker.setup()
             with patch(
                 "zerver.worker.queue_processors.requests.post", return_value=fake_response,
-            ), patch(
-                "zerver.lib.queue.queue_json_publish", side_effect=fake_publish,
-            ), patch(
+            ), patch("zerver.lib.queue.queue_json_publish", side_effect=fake_publish), patch(
                 "logging.info",
             ), self.settings(
                 MAILCHIMP_API_KEY="one-two", PRODUCTION=True, ZULIP_FRIENDS_LIST_ID="id",

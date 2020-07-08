@@ -319,9 +319,7 @@ def build_customprofile_field(
             customprofilefield_dict = model_to_dict(customprofilefield, exclude=["realm"])
             customprofilefield_dict["realm"] = realm_id
 
-            slack_custom_field_name_to_zulip_custom_field_id[
-                field
-            ] = custom_profile_field_id
+            slack_custom_field_name_to_zulip_custom_field_id[field] = custom_profile_field_id
             custom_profile_field_id += 1
             customprofile_field.append(customprofilefield_dict)
     return slack_custom_field_name_to_zulip_custom_field_id, custom_profile_field_id
@@ -1001,13 +999,7 @@ def channel_message_to_zerver_message(
         total_user_messages,
         total_skipped_user_messages,
     )
-    return (
-        zerver_message,
-        zerver_usermessage,
-        zerver_attachment,
-        uploads_list,
-        reaction_list,
-    )
+    return zerver_message, zerver_usermessage, zerver_attachment, uploads_list, reaction_list
 
 
 def process_message_files(
@@ -1331,12 +1323,7 @@ def do_convert_data(
         avatar_list,
         emoji_url_map,
     ) = slack_workspace_to_realm(
-        domain_name,
-        realm_id,
-        user_list,
-        realm_subdomain,
-        slack_data_dir,
-        custom_emoji_list,
+        domain_name, realm_id, user_list, realm_subdomain, slack_data_dir, custom_emoji_list,
     )
 
     reactions, uploads_list, zerver_attachment = convert_slack_workspace_messages(

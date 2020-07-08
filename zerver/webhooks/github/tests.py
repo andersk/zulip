@@ -71,9 +71,7 @@ class GithubWebhookTest(WebhookTestCase):
         expected_message = f"""baxterthehacker [pushed](https://github.com/baxterthehacker/public-repo/compare/9049f1265b7d...0d1a26e67d8f) 6 commits to branch changes. Commits by Tomasz (3), Ben (2) and baxterthehacker (1).\n\n{commits_info * 5}* Update README.md ([0d1a26e](https://github.com/baxterthehacker/public-repo/commit/0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c))"""
 
         self.send_and_test_stream_message(
-            "push__multiple_committers",
-            self.EXPECTED_TOPIC_BRANCH_EVENTS,
-            expected_message,
+            "push__multiple_committers", self.EXPECTED_TOPIC_BRANCH_EVENTS, expected_message,
         )
 
     def test_push_multiple_comitters_with_others(self) -> None:
@@ -92,9 +90,7 @@ class GithubWebhookTest(WebhookTestCase):
         expected_message = f"""baxterthehacker [pushed](https://github.com/baxterthehacker/public-repo/compare/9049f1265b7d...0d1a26e67d8f) 6 commits to branch changes. Commits by Tomasz (3), Ben (2) and baxterthehacker (1).\n\n{commits_info * 5}* Update README.md ([0d1a26e](https://github.com/baxterthehacker/public-repo/commit/0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c))"""
 
         self.send_and_test_stream_message(
-            "push__multiple_committers",
-            self.EXPECTED_TOPIC_BRANCH_EVENTS,
-            expected_message,
+            "push__multiple_committers", self.EXPECTED_TOPIC_BRANCH_EVENTS, expected_message,
         )
 
     def test_push_multiple_comitters_with_others_filtered_by_branches(self) -> None:
@@ -199,9 +195,7 @@ class GithubWebhookTest(WebhookTestCase):
     def test_membership_removal_msg(self) -> None:
         expected_message = "baxterthehacker removed [kdaigle](https://github.com/kdaigle) from the Contractors team."
         self.send_and_test_stream_message(
-            "membership__removal",
-            self.EXPECTED_TOPIC_ORGANIZATION_EVENTS,
-            expected_message,
+            "membership__removal", self.EXPECTED_TOPIC_ORGANIZATION_EVENTS, expected_message,
         )
 
     def test_member_msg(self) -> None:

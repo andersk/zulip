@@ -27,9 +27,7 @@ def renumber_migration(
             stack.append(conflicts[i - 1][0:4])
         else:
             # Replace dependencies with the last correct migration
-            file = fileinput.FileInput(
-                "zerver/migrations/" + conflicts[i - 1], inplace=True,
-            )
+            file = fileinput.FileInput("zerver/migrations/" + conflicts[i - 1], inplace=True)
             for line in file:
                 print(re.sub(r"[\d]+(_[a-z0-9]+)+", last_correct_migration, line), end="")
 

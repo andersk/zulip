@@ -871,17 +871,13 @@ def fetch_user_profile_cross_realm(
         bot_default_email = bot_name_to_default_email[bot_name]
         bot_user_id = get_system_bot(bot_email).id
 
-        recipient_id = Recipient.objects.get(
-            type_id=bot_user_id, type=Recipient.PERSONAL,
-        ).id
+        recipient_id = Recipient.objects.get(type_id=bot_user_id, type=Recipient.PERSONAL).id
         response["zerver_userprofile_crossrealm"].append(
             dict(email=bot_default_email, id=bot_user_id, recipient_id=recipient_id),
         )
 
 
-def fetch_attachment_data(
-    response: TableData, realm_id: int, message_ids: Set[int],
-) -> None:
+def fetch_attachment_data(response: TableData, realm_id: int, message_ids: Set[int]) -> None:
     filter_args = {"realm_id": realm_id}
     query = Attachment.objects.filter(**filter_args)
     response["zerver_attachment"] = make_raw(list(query))
@@ -1371,9 +1367,7 @@ def export_files_from_s3(
         object_prefix = f"{realm.id}/"
 
     if settings.EMAIL_GATEWAY_BOT is not None:
-        email_gateway_bot: Optional[UserProfile] = get_system_bot(
-            settings.EMAIL_GATEWAY_BOT,
-        )
+        email_gateway_bot: Optional[UserProfile] = get_system_bot(settings.EMAIL_GATEWAY_BOT)
     else:
         email_gateway_bot = None
 
@@ -1500,9 +1494,7 @@ def export_realm_icons(realm: Realm, local_dir: Path, output_dir: Path) -> None:
         output_path = os.path.join(output_dir, icon_relative_path)
         os.makedirs(str(os.path.dirname(output_path)), exist_ok=True)
         shutil.copy2(str(icon_absolute_path), str(output_path))
-        record = dict(
-            realm_id=realm.id, path=icon_relative_path, s3_path=icon_relative_path,
-        )
+        record = dict(realm_id=realm.id, path=icon_relative_path, s3_path=icon_relative_path)
         records.append(record)
 
     with open(os.path.join(output_dir, "records.json"), "w") as records_file:
@@ -1794,9 +1786,7 @@ def get_single_user_config() -> Config:
 def export_messages_single_user(
     user_profile: UserProfile, output_dir: Path, chunk_size: int = MESSAGE_BATCH_CHUNK_SIZE,
 ) -> None:
-    user_message_query = UserMessage.objects.filter(user_profile=user_profile).order_by(
-        "id",
-    )
+    user_message_query = UserMessage.objects.filter(user_profile=user_profile).order_by("id")
     min_id = -1
     dump_file_id = 1
     while True:
@@ -1816,9 +1806,7 @@ def export_messages_single_user(
             item["flags_mask"] = user_message.flags.mask
             # Add a few nice, human-readable details
             item["sending_client_name"] = user_message.message.sending_client.name
-            item["display_recipient"] = get_display_recipient(
-                user_message.message.recipient,
-            )
+            item["display_recipient"] = get_display_recipient(user_message.message.recipient)
             message_chunk.append(item)
 
         message_filename = os.path.join(output_dir, f"messages-{dump_file_id:06}.json")

@@ -20,9 +20,7 @@ class TrelloHookTests(WebhookTestCase):
 
     def test_trello_webhook_when_card_was_renamed(self) -> None:
         expected_message = 'TomaszKolek renamed the card from "Old name" to [New name](https://trello.com/c/r33ylX2Z).'
-        self.send_and_test_stream_message(
-            "renaming_card", "Welcome Board", expected_message,
-        )
+        self.send_and_test_stream_message("renaming_card", "Welcome Board", expected_message)
 
     def test_trello_webhook_when_label_was_added_to_card(self) -> None:
         expected_message = 'TomaszKolek added a green label with "text value" to [Card name](https://trello.com/c/r33ylX2Z).'
@@ -71,26 +69,20 @@ class TrelloHookTests(WebhookTestCase):
         )
 
     def test_trello_webhook_when_card_was_archived(self) -> None:
-        expected_message = (
-            "TomaszKolek archived [Card name](https://trello.com/c/9BduUcVQ)."
-        )
+        expected_message = "TomaszKolek archived [Card name](https://trello.com/c/9BduUcVQ)."
         self.send_and_test_stream_message(
             "archiving_card", "Welcome Board", expected_message,
         )
 
     def test_trello_webhook_when_card_was_reopened(self) -> None:
-        expected_message = (
-            "TomaszKolek reopened [Card name](https://trello.com/c/9BduUcVQ)."
-        )
+        expected_message = "TomaszKolek reopened [Card name](https://trello.com/c/9BduUcVQ)."
         self.send_and_test_stream_message(
             "reopening_card", "Welcome Board", expected_message,
         )
 
     def test_trello_webhook_when_card_was_created(self) -> None:
         expected_message = "TomaszKolek created [New card](https://trello.com/c/5qrgGdD5)."
-        self.send_and_test_stream_message(
-            "creating_card", "Welcome Board", expected_message,
-        )
+        self.send_and_test_stream_message("creating_card", "Welcome Board", expected_message)
 
     def test_trello_webhook_when_attachment_was_added_to_card(self) -> None:
         expected_message = "TomaszKolek added [attachment_name](http://url.com) to [New card](https://trello.com/c/xPKXoSTQ)."
@@ -117,7 +109,9 @@ class TrelloHookTests(WebhookTestCase):
         )
 
     def test_trello_webhook_when_member_was_removed_from_board(self) -> None:
-        expected_message = "TomaszKolek removed Trello from [Welcome Board](https://trello.com/b/iqXXzYEj)."
+        expected_message = (
+            "TomaszKolek removed Trello from [Welcome Board](https://trello.com/b/iqXXzYEj)."
+        )
         self.send_and_test_stream_message(
             "removing_member_from_board", "Welcome Board", expected_message,
         )

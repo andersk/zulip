@@ -21,9 +21,7 @@ class TaigaHookTests(WebhookTestCase):
 
     def test_taiga_userstory_changed_unblocked(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) unblocked user story **UserStory**."
-        self.send_and_test_stream_message(
-            "userstory_changed_unblocked", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("userstory_changed_unblocked", self.TOPIC, message)
 
     def test_taiga_userstory_changed_subject(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) renamed user story from UserStory to **UserStoryNewSubject**."
@@ -227,9 +225,7 @@ class TaigaHookTests(WebhookTestCase):
 
     def test_taiga_issue_changed_comment_added(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) commented on issue **New issue**."
-        self.send_and_test_stream_message(
-            "issue_changed_comment_added", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("issue_changed_comment_added", self.TOPIC, message)
 
     def test_taiga_issue_changed_blocked(self) -> None:
         message = "[Aditya Verma](https://tree.taiga.io/profile/orientor) blocked issue [Issues](https://tree.taiga.io/project/orientor-sd/issue/49)."
@@ -256,9 +252,7 @@ class TaigaHookTests(WebhookTestCase):
 
     def test_taiga_issue_changed_remove_sprint(self) -> None:
         message = "[Aditya Verma](https://tree.taiga.io/profile/orientor) detached issue [Nice Issue](https://tree.taiga.io/project/orientor-sd/issue/53) from sprint eres."
-        self.send_and_test_stream_message(
-            "issue_changed_remove_sprint", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("issue_changed_remove_sprint", self.TOPIC, message)
 
     def test_taiga_epic_created(self) -> None:
         message = "[Eeshan Garg](https://tree.taiga.io/profile/eeshangarg) created epic **Zulip is awesome!**."

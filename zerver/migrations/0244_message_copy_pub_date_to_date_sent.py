@@ -26,17 +26,15 @@ def sql_copy_pub_date_to_date_sent(
         )
 
 
-def copy_pub_date_to_date_sent(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def copy_pub_date_to_date_sent(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     Message = apps.get_model("zerver", "Message")
     if not Message.objects.exists():
         # Nothing to do
         return
 
-    first_uncopied_id = Message.objects.filter(date_sent__isnull=True).aggregate(
-        Min("id"),
-    )["id__min"]
+    first_uncopied_id = Message.objects.filter(date_sent__isnull=True).aggregate(Min("id"))[
+        "id__min"
+    ]
     # Note: the below id can fall in a segment
     # where date_sent = pub_date already, but it's not a big problem
     # this will just do some redundant UPDATEs.

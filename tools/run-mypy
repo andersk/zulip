@@ -18,9 +18,7 @@ stubs/
 """.split()
 
 parser = argparse.ArgumentParser(description="Run mypy on files tracked by git.")
-parser.add_argument(
-    "targets", nargs="*", help="files and directories to check (default: .)",
-)
+parser.add_argument("targets", nargs="*", help="files and directories to check (default: .)")
 parser.add_argument(
     "--version", action="store_true", help="show mypy version information and exit",
 )
@@ -89,8 +87,6 @@ rc = subprocess.call([mypy_command] + mypy_args)
 
 if rc != 0:
     print("")
-    print(
-        "See https://zulip.readthedocs.io/en/latest/testing/mypy.html for debugging tips.",
-    )
+    print("See https://zulip.readthedocs.io/en/latest/testing/mypy.html for debugging tips.")
 
 sys.exit(rc)

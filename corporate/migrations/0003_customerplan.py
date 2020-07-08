@@ -28,10 +28,7 @@ class Migration(migrations.Migration):
                 ("charge_automatically", models.BooleanField(default=False)),
                 ("price_per_license", models.IntegerField(null=True)),
                 ("fixed_price", models.IntegerField(null=True)),
-                (
-                    "discount",
-                    models.DecimalField(decimal_places=4, max_digits=6, null=True),
-                ),
+                ("discount", models.DecimalField(decimal_places=4, max_digits=6, null=True)),
                 ("billing_cycle_anchor", models.DateTimeField()),
                 ("billing_schedule", models.SmallIntegerField()),
                 ("billed_through", models.DateTimeField()),
@@ -41,8 +38,7 @@ class Migration(migrations.Migration):
                 (
                     "customer",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to="corporate.Customer",
+                        on_delete=django.db.models.deletion.CASCADE, to="corporate.Customer",
                     ),
                 ),
             ],

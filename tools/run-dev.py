@@ -42,9 +42,7 @@ parser = argparse.ArgumentParser(
     description=DESCRIPTION, formatter_class=argparse.RawTextHelpFormatter,
 )
 
-parser.add_argument(
-    "--test", action="store_true", help="Use the testing database and ports",
-)
+parser.add_argument("--test", action="store_true", help="Use the testing database and ports")
 parser.add_argument(
     "--minify", action="store_true", help="Minifies assets for testing in dev",
 )

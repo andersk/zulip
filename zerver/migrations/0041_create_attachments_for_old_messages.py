@@ -55,9 +55,7 @@ class Migration(migrations.Migration):
         # but because it fixes a problem that causes the RunPython
         # part of this migration to crash, we've copied it here.
         migrations.AlterField(
-            model_name="attachment",
-            name="file_name",
-            field=models.TextField(db_index=True),
+            model_name="attachment", name="file_name", field=models.TextField(db_index=True),
         ),
         migrations.RunPython(check_and_create_attachments, elidable=True),
     ]

@@ -6,10 +6,7 @@ from django.http import HttpRequest, HttpResponse
 from zerver.decorator import api_key_only_webhook_view
 from zerver.lib.request import REQ, has_request_variables
 from zerver.lib.response import json_success
-from zerver.lib.webhooks.common import (
-    UnexpectedWebhookEventType,
-    check_send_webhook_message,
-)
+from zerver.lib.webhooks.common import UnexpectedWebhookEventType, check_send_webhook_message
 from zerver.models import UserProfile
 
 PAGER_DUTY_EVENT_NAMES = {
@@ -134,8 +131,7 @@ def build_pagerduty_formatdict_v2(message: Dict[str, Any]) -> Dict[str, Any]:
     last_status_change_by = message["incident"].get("last_status_change_by")
     if last_status_change_by is not None:
         format_dict["resolving_agent_info"] = ASSIGNEE_TEMPLATE.format(
-            username=last_status_change_by["summary"],
-            url=last_status_change_by["html_url"],
+            username=last_status_change_by["summary"], url=last_status_change_by["html_url"],
         )
 
     trigger_description = message["incident"].get("description")

@@ -225,9 +225,7 @@ SYSTEM_BOT_REALM = "zulipinternal"
 EXTRA_INSTALLED_APPS = ["analytics"]
 
 # Default GOOGLE_CLIENT_ID to the value needed for Android auth to work
-GOOGLE_CLIENT_ID = (
-    "835904834568-77mtr5mtmpgspj9b051del9i9r5t4g4n.apps.googleusercontent.com"
-)
+GOOGLE_CLIENT_ID = "835904834568-77mtr5mtmpgspj9b051del9i9r5t4g4n.apps.googleusercontent.com"
 
 # Legacy event logs configuration.  Our plans include removing
 # log_event entirely in favor of RealmAuditLog, at which point we

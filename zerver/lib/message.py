@@ -1033,9 +1033,7 @@ def apply_unread_message_event(
         message_type = "stream"
     elif message["type"] == "private":
         others = [
-            recip
-            for recip in message["display_recipient"]
-            if recip["id"] != user_profile.id
+            recip for recip in message["display_recipient"] if recip["id"] != user_profile.id
         ]
         if len(others) <= 1:
             message_type = "private"
@@ -1144,9 +1142,7 @@ def get_recent_conversations_recipient_id(
     return recipient_id
 
 
-def get_recent_private_conversations(
-    user_profile: UserProfile,
-) -> Dict[int, Dict[str, Any]]:
+def get_recent_private_conversations(user_profile: UserProfile) -> Dict[int, Dict[str, Any]]:
     """This function uses some carefully optimized SQL queries, designed
     to use the UserMessage index on private_messages.  It is
     significantly complicated by the fact that for 1:1 private

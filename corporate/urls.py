@@ -11,8 +11,7 @@ i18n_urlpatterns: Any = [
     # Zephyr/MIT
     path("zephyr/", TemplateView.as_view(template_name="corporate/zephyr.html")),
     path(
-        "zephyr-mirror/",
-        TemplateView.as_view(template_name="corporate/zephyr-mirror.html"),
+        "zephyr-mirror/", TemplateView.as_view(template_name="corporate/zephyr-mirror.html"),
     ),
     path("jobs/", TemplateView.as_view(template_name="corporate/jobs.html")),
     # Billing
@@ -26,9 +25,7 @@ v1_api_and_json_patterns = [
     path("billing/upgrade", rest_dispatch, {"POST": "corporate.views.upgrade"}),
     path("billing/sponsorship", rest_dispatch, {"POST": "corporate.views.sponsorship"}),
     path(
-        "billing/plan/change",
-        rest_dispatch,
-        {"POST": "corporate.views.change_plan_status"},
+        "billing/plan/change", rest_dispatch, {"POST": "corporate.views.change_plan_status"},
     ),
     path(
         "billing/sources/change",

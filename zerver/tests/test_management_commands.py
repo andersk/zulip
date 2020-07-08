@@ -125,9 +125,7 @@ class TestZulipBaseCommand(ZulipTestCase):
             self.command.get_users(dict(users=user_emails), self.zulip_realm)
 
         self.assertEqual(
-            self.command.get_users(
-                dict(users=self.example_email("iago")), self.zulip_realm,
-            ),
+            self.command.get_users(dict(users=self.example_email("iago")), self.zulip_realm),
             [self.example_user("iago")],
         )
 
@@ -148,9 +146,7 @@ class TestZulipBaseCommand(ZulipTestCase):
 
         # Test the default mode excluding bots and deactivated users
         expected_user_profiles = sorted(
-            UserProfile.objects.filter(
-                realm=self.zulip_realm, is_active=True, is_bot=False,
-            ),
+            UserProfile.objects.filter(realm=self.zulip_realm, is_active=True, is_bot=False),
             key=lambda x: x.email,
         )
         user_profiles = self.get_users_sorted(
@@ -495,9 +491,7 @@ class TestExport(ZulipTestCase):
         )
 
         with patch("zerver.management.commands.export.export_realm_wrapper") as m:
-            call_command(
-                self.COMMAND_NAME, "-r=zulip", f"--consent-message-id={message.id}",
-            )
+            call_command(self.COMMAND_NAME, "-r=zulip", f"--consent-message-id={message.id}")
             m.assert_called_once_with(
                 realm=realm,
                 public_only=False,
@@ -514,9 +508,7 @@ class TestExport(ZulipTestCase):
         message.last_edit_time = timezone_now()
         message.save()
         with self.assertRaisesRegex(CommandError, "Message was edited. Aborting..."):
-            call_command(
-                self.COMMAND_NAME, "-r=zulip", f"--consent-message-id={message.id}",
-            )
+            call_command(self.COMMAND_NAME, "-r=zulip", f"--consent-message-id={message.id}")
 
         message.last_edit_time = None
         message.save()
@@ -526,6 +518,4 @@ class TestExport(ZulipTestCase):
         with self.assertRaisesRegex(
             CommandError, "Users from a different realm reacted to message. Aborting...",
         ):
-            call_command(
-                self.COMMAND_NAME, "-r=zulip", f"--consent-message-id={message.id}",
-            )
+            call_command(self.COMMAND_NAME, "-r=zulip", f"--consent-message-id={message.id}")

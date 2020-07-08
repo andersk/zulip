@@ -377,9 +377,7 @@ def send_custom_email(users: List[UserProfile], options: Dict[str, Any]) -> None
 
     from zerver.templatetags.app_filters import render_markdown_path
 
-    rendered_input = render_markdown_path(
-        plain_text_template_path.replace("templates/", ""),
-    )
+    rendered_input = render_markdown_path(plain_text_template_path.replace("templates/", ""))
 
     # And then extend it with our standard email headers.
     with open(html_source_template_path, "w") as f:

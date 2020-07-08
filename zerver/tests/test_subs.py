@@ -173,11 +173,7 @@ class TestCreateStreams(ZulipTestCase):
         new_streams, existing_streams = create_streams_if_needed(
             realm,
             [
-                {
-                    "name": stream_name,
-                    "description": stream_description,
-                    "invite_only": True,
-                }
+                {"name": stream_name, "description": stream_description, "invite_only": True}
                 for (stream_name, stream_description) in zip(
                     stream_names, stream_descriptions,
                 )
@@ -681,8 +677,7 @@ class StreamAdminTest(ZulipTestCase):
         with tornado_redirected_to_list(events):
             stream_id = stream_name_new_uni_exists.id
             result = self.client_patch(
-                f"/json/streams/{stream_id}",
-                {"new_name": ujson.dumps("français".encode())},
+                f"/json/streams/{stream_id}", {"new_name": ujson.dumps("français".encode())},
             )
         self.assert_json_success(result)
         stream_name_fr_exists = get_stream("français", realm)
@@ -1008,8 +1003,7 @@ class StreamAdminTest(ZulipTestCase):
         self.assertEqual(stream.message_retention_days, None)
 
         result = self.client_patch(
-            f"/json/streams/{stream.id}",
-            {"message_retention_days": ujson.dumps("invalid")},
+            f"/json/streams/{stream.id}", {"message_retention_days": ujson.dumps("invalid")},
         )
         self.assert_json_error(result, "Bad value for 'message_retention_days': invalid")
 
@@ -1431,9 +1425,7 @@ class StreamAdminTest(ZulipTestCase):
 
         # Cannot create stream because not an admin.
         stream_name = ["admins_only"]
-        result = self.common_subscribe_to_streams(
-            user_profile, stream_name, allow_fail=True,
-        )
+        result = self.common_subscribe_to_streams(user_profile, stream_name, allow_fail=True)
         self.assert_json_error(result, "User cannot create streams.")
 
         # Make current user an admin.
@@ -1458,9 +1450,7 @@ class StreamAdminTest(ZulipTestCase):
         # Cannot create stream because user is not an admin and is not older than the waiting
         # period.
         stream_name = ["waiting_period"]
-        result = self.common_subscribe_to_streams(
-            user_profile, stream_name, allow_fail=True,
-        )
+        result = self.common_subscribe_to_streams(user_profile, stream_name, allow_fail=True)
         self.assert_json_error(result, "User cannot create streams.")
 
         # Make user account 11 days old..
@@ -1917,9 +1907,7 @@ class DefaultStreamGroupTest(ZulipTestCase):
             f"/json/default_stream_groups/{group_id}",
             {"op": "change", "new_group_name": ujson.dumps(group_name)},
         )
-        self.assert_json_error(
-            result, "This default stream group is already named 'group1'",
-        )
+        self.assert_json_error(result, "This default stream group is already named 'group1'")
 
         result = self.client_patch(
             f"/json/default_stream_groups/{group_id}",
@@ -2463,13 +2451,7 @@ class SubscriptionPropertiesTest(ZulipTestCase):
             "/api/v1/users/me/subscriptions/properties",
             {
                 "subscription_data": ujson.dumps(
-                    [
-                        {
-                            "property": "bad",
-                            "value": "bad",
-                            "stream_id": subs[0]["stream_id"],
-                        },
-                    ],
+                    [{"property": "bad", "value": "bad", "stream_id": subs[0]["stream_id"]}],
                 ),
             },
         )
@@ -2512,9 +2494,7 @@ class SubscriptionRestApiTest(ZulipTestCase):
 
         # incorrect color format
         request = {
-            "subscriptions": ujson.dumps(
-                [{"name": "my_test_stream_3", "color": "#0g0g0g"}],
-            ),
+            "subscriptions": ujson.dumps([{"name": "my_test_stream_3", "color": "#0g0g0g"}]),
         }
         result = self.api_post(user, "/api/v1/users/me/subscriptions", request)
         self.assert_json_error(
@@ -3191,9 +3171,7 @@ class SubscriptionAPITest(ZulipTestCase):
         add_event, add_peer_event = events
         self.assertEqual(add_event["event"]["type"], "subscription")
         self.assertEqual(add_event["event"]["op"], "add")
-        self.assertEqual(
-            add_event["users"], [get_user(self.test_email, self.test_realm).id],
-        )
+        self.assertEqual(add_event["users"], [get_user(self.test_email, self.test_realm).id])
         self.assertEqual(
             set(add_event["event"]["subscriptions"][0]["subscribers"]),
             {user1.id, user2.id, self.test_user.id},
@@ -4280,9 +4258,7 @@ class InviteOnlyStreamTest(ZulipTestCase):
         # Inviting another user to an invite-only stream is allowed
         self.login_user(hamlet)
         result = self.common_subscribe_to_streams(
-            hamlet,
-            [stream_name],
-            extra_post_data={"principals": ujson.dumps([othello.id])},
+            hamlet, [stream_name], extra_post_data={"principals": ujson.dumps([othello.id])},
         )
         json = result.json()
         self.assertEqual(json["subscribed"], {othello.email: [stream_name]})

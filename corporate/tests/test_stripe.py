@@ -238,9 +238,7 @@ def normalize_fixture_data(
                     normalized_values[pattern][match] = translation % (
                         len(normalized_values[pattern]) + 1,
                     )
-                file_content = file_content.replace(
-                    match, normalized_values[pattern][match],
-                )
+                file_content = file_content.replace(match, normalized_values[pattern][match])
         file_content = re.sub(r'(?<="risk_score": )(\d+)', "00", file_content)
         file_content = re.sub(r'(?<="times_redeemed": )(\d+)', "00", file_content)
         file_content = re.sub(
@@ -394,9 +392,7 @@ class StripeTestCase(ZulipTestCase):
         return match.group(1) if match else None
 
     def get_salt_from_response(self, response: HttpResponse) -> Optional[str]:
-        match = re.search(
-            r"name=\"salt\" value=\"(\w+)\"", response.content.decode("utf-8"),
-        )
+        match = re.search(r"name=\"salt\" value=\"(\w+)\"", response.content.decode("utf-8"))
         return match.group(1) if match else None
 
     def upgrade(
@@ -1229,15 +1225,11 @@ class StripeTest(StripeTestCase):
         self.upgrade()
         # Check that the non-admin hamlet can still access /billing
         response = self.client_get("/billing/")
-        self.assert_in_success_response(
-            ["for billing history or to make changes"], response,
-        )
+        self.assert_in_success_response(["for billing history or to make changes"], response)
         # Check admins can access billing, even though they are not a billing admin
         self.login_user(iago)
         response = self.client_get("/billing/")
-        self.assert_in_success_response(
-            ["for billing history or to make changes"], response,
-        )
+        self.assert_in_success_response(["for billing history or to make changes"], response)
         # Check that a non-admin, non-billing admin user does not have access
         self.login_user(cordelia)
         response = self.client_get("/billing/")
@@ -1259,9 +1251,7 @@ class StripeTest(StripeTestCase):
         # Check that the Charge used the old quantity, not new_seat_count
         self.assertEqual(
             8000 * self.seat_count,
-            [charge for charge in stripe.Charge.list(customer=stripe_customer_id)][
-                0
-            ].amount,
+            [charge for charge in stripe.Charge.list(customer=stripe_customer_id)][0].amount,
         )
         # Check that the invoice has a credit for the old amount and a charge for the new one
         stripe_invoice = [
@@ -1335,9 +1325,7 @@ class StripeTest(StripeTestCase):
         # Check the Charges and Invoices in Stripe
         self.assertEqual(
             8000 * 23,
-            [charge for charge in stripe.Charge.list(customer=stripe_customer_id)][
-                0
-            ].amount,
+            [charge for charge in stripe.Charge.list(customer=stripe_customer_id)][0].amount,
         )
         stripe_invoice = [
             invoice for invoice in stripe.Invoice.list(customer=stripe_customer_id)
@@ -1400,9 +1388,7 @@ class StripeTest(StripeTestCase):
             response = self.upgrade(
                 talk_to_stripe=False, del_args=del_args, **upgrade_params,
             )
-            self.assert_json_error_contains(
-                response, "Something went wrong. Please contact",
-            )
+            self.assert_json_error_contains(response, "Something went wrong. Please contact")
             self.assertEqual(
                 ujson.loads(response.content)["error_description"], error_description,
             )
@@ -1541,9 +1527,7 @@ class StripeTest(StripeTestCase):
             self.assertEqual(len(message.to), 1)
             self.assertEqual(message.to[0], "desdemona+admin@zulip.com")
             self.assertEqual(message.subject, "Sponsorship request (Open-source) for zulip")
-            self.assertEqual(
-                message.from_email, f"{user.full_name} <{user.delivery_email}>",
-            )
+            self.assertEqual(message.from_email, f"{user.full_name} <{user.delivery_email}>")
             self.assertIn("User role: Member", message.body)
             self.assertIn(
                 "Support URL: http://zulip.testserver/activity/support?q=zulip",
@@ -1699,9 +1683,7 @@ class StripeTest(StripeTestCase):
         ).first()
         self.assertEqual(
             1200 * self.seat_count,
-            [charge for charge in stripe.Charge.list(customer=stripe_customer_id)][
-                0
-            ].amount,
+            [charge for charge in stripe.Charge.list(customer=stripe_customer_id)][0].amount,
         )
         stripe_invoice = [
             invoice for invoice in stripe.Invoice.list(customer=stripe_customer_id)
@@ -1722,9 +1704,7 @@ class StripeTest(StripeTestCase):
         )
         self.assertEqual(
             6000 * self.seat_count,
-            [charge for charge in stripe.Charge.list(customer=stripe_customer_id)][
-                0
-            ].amount,
+            [charge for charge in stripe.Charge.list(customer=stripe_customer_id)][0].amount,
         )
         stripe_invoice = [
             invoice for invoice in stripe.Invoice.list(customer=stripe_customer_id)
@@ -1950,9 +1930,7 @@ class StripeTest(StripeTestCase):
         self.assertEqual(annual_plan.billing_cycle_anchor, self.next_month)
         self.assertEqual(annual_plan.next_invoice_date, self.next_month)
         self.assertEqual(annual_plan.invoiced_through, None)
-        annual_ledger_entries = LicenseLedger.objects.filter(plan=annual_plan).order_by(
-            "id",
-        )
+        annual_ledger_entries = LicenseLedger.objects.filter(plan=annual_plan).order_by("id")
         self.assertEqual(len(annual_ledger_entries), 2)
         self.assertEqual(annual_ledger_entries[0].is_renewal, True)
         self.assertEqual(
@@ -1971,15 +1949,11 @@ class StripeTest(StripeTestCase):
         self.assertEqual(
             ujson.loads(audit_log.extra_data)["monthly_plan_id"], monthly_plan.id,
         )
-        self.assertEqual(
-            ujson.loads(audit_log.extra_data)["annual_plan_id"], annual_plan.id,
-        )
+        self.assertEqual(ujson.loads(audit_log.extra_data)["annual_plan_id"], annual_plan.id)
 
         invoice_plans_as_needed(self.next_month)
 
-        annual_ledger_entries = LicenseLedger.objects.filter(plan=annual_plan).order_by(
-            "id",
-        )
+        annual_ledger_entries = LicenseLedger.objects.filter(plan=annual_plan).order_by("id")
         self.assertEqual(len(annual_ledger_entries), 2)
         annual_plan.refresh_from_db()
         self.assertEqual(annual_plan.invoicing_status, CustomerPlan.DONE)
@@ -2150,9 +2124,7 @@ class StripeTest(StripeTestCase):
         )
         self.assertEqual(annual_plan.billing_cycle_anchor, self.next_month)
         self.assertEqual(annual_plan.next_invoice_date, self.next_month)
-        annual_ledger_entries = LicenseLedger.objects.filter(plan=annual_plan).order_by(
-            "id",
-        )
+        annual_ledger_entries = LicenseLedger.objects.filter(plan=annual_plan).order_by("id")
         self.assertEqual(len(annual_ledger_entries), 1)
         self.assertEqual(annual_ledger_entries[0].is_renewal, True)
         self.assertEqual(

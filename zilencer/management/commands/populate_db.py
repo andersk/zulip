@@ -109,9 +109,7 @@ def clear_database() -> None:
 push_notifications_logger.disabled = True
 
 
-def subscribe_users_to_streams(
-    realm: Realm, stream_dict: Dict[str, Dict[str, Any]],
-) -> None:
+def subscribe_users_to_streams(realm: Realm, stream_dict: Dict[str, Dict[str, Any]]) -> None:
     subscriptions_to_add = []
     event_time = timezone_now()
     all_subscription_logs = []
@@ -411,9 +409,7 @@ class Command(BaseCommand):
             create_users(zulip_realm, names, tos_version=settings.TOS_VERSION)
 
             iago = get_user_by_delivery_email("iago@zulip.com", zulip_realm)
-            do_change_user_role(
-                iago, UserProfile.ROLE_REALM_ADMINISTRATOR, acting_user=None,
-            )
+            do_change_user_role(iago, UserProfile.ROLE_REALM_ADMINISTRATOR, acting_user=None)
             iago.is_staff = True
             iago.save(update_fields=["is_staff"])
 
@@ -993,6 +989,4 @@ def create_user_groups() -> None:
         get_user_by_delivery_email("cordelia@zulip.com", zulip),
         get_user_by_delivery_email("hamlet@zulip.com", zulip),
     ]
-    create_user_group(
-        "hamletcharacters", members, zulip, description="Characters of Hamlet",
-    )
+    create_user_group("hamletcharacters", members, zulip, description="Characters of Hamlet")

@@ -38,11 +38,7 @@ from zerver.lib.cache import (
     ignore_unhashable_lru_cache,
     items_tuple_to_dict,
 )
-from zerver.lib.exceptions import (
-    InvalidAPIKeyError,
-    InvalidAPIKeyFormatError,
-    JsonableError,
-)
+from zerver.lib.exceptions import InvalidAPIKeyError, InvalidAPIKeyFormatError, JsonableError
 from zerver.lib.initial_password import initial_password
 from zerver.lib.request import (
     REQ,
@@ -444,9 +440,7 @@ body:
         webhook_bot.save()
         webhook_bot.realm.deactivated = True
         webhook_bot.realm.save()
-        with self.assertRaisesRegex(
-            JsonableError, "This organization has been deactivated",
-        ):
+        with self.assertRaisesRegex(JsonableError, "This organization has been deactivated"):
             my_webhook(request)
 
 

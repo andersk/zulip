@@ -33,6 +33,4 @@ class CodeshipHookTests(WebhookTestCase):
         Tests if codeship other status is mapped correctly
         """
         expected_message = "[Build](https://www.codeship.com/projects/10213/builds/973711) triggered by beanieboi on master branch has some_other_status status."
-        self.send_and_test_stream_message(
-            "other_status_build", self.TOPIC, expected_message,
-        )
+        self.send_and_test_stream_message("other_status_build", self.TOPIC, expected_message)

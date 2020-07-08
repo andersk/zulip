@@ -20,10 +20,7 @@ test comment
 >in app.py
 >A warning occurred (42 apples)"""
         self.send_and_test_stream_message(
-            "new_comment",
-            expected_topic,
-            expected_message,
-            content_type="application/json",
+            "new_comment", expected_topic, expected_message, content_type="application/json",
         )
 
     def test_new_app(self) -> None:
@@ -66,10 +63,7 @@ foo marked the error group as fixed
 >in app.py
 >A warning occurred (42 apples)"""
         self.send_and_test_stream_message(
-            "error_fixed",
-            expected_topic,
-            expected_message,
-            content_type="application/json",
+            "error_fixed", expected_topic, expected_message, content_type="application/json",
         )
 
     def test_error_reopened(self) -> None:

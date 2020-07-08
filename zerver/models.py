@@ -254,9 +254,7 @@ class Realm(models.Model):
     ]
 
     # Who in the organization is allowed to create streams.
-    create_stream_policy: int = models.PositiveSmallIntegerField(
-        default=POLICY_MEMBERS_ONLY,
-    )
+    create_stream_policy: int = models.PositiveSmallIntegerField(default=POLICY_MEMBERS_ONLY)
 
     # Who in the organization is allowed to invite other users to streams.
     invite_to_stream_policy: int = models.PositiveSmallIntegerField(
@@ -329,9 +327,7 @@ class Realm(models.Model):
 
     # Defaults for new users
     default_twenty_four_hour_time: bool = models.BooleanField(default=False)
-    default_language: str = models.CharField(
-        default="en", max_length=MAX_LANGUAGE_ID_LENGTH,
-    )
+    default_language: str = models.CharField(default="en", max_length=MAX_LANGUAGE_ID_LENGTH)
 
     DEFAULT_NOTIFICATION_STREAM_NAME = "general"
     INITIAL_PRIVATE_STREAM_NAME = "core team"
@@ -835,7 +831,9 @@ class RealmFilter(models.Model):
         unique_together = ("realm", "pattern")
 
     def __str__(self) -> str:
-        return f"<RealmFilter({self.realm.string_id}): {self.pattern} {self.url_format_string}>"
+        return (
+            f"<RealmFilter({self.realm.string_id}): {self.pattern} {self.url_format_string}>"
+        )
 
 
 def get_realm_filters_cache_key(realm_id: int) -> str:
@@ -1117,9 +1115,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     left_side_userlist: bool = models.BooleanField(default=False)
 
     # display settings
-    default_language: str = models.CharField(
-        default="en", max_length=MAX_LANGUAGE_ID_LENGTH,
-    )
+    default_language: str = models.CharField(default="en", max_length=MAX_LANGUAGE_ID_LENGTH)
     dense_mode: bool = models.BooleanField(default=True)
     fluid_layout_width: bool = models.BooleanField(default=False)
     high_contrast_mode: bool = models.BooleanField(default=False)
@@ -1834,7 +1830,9 @@ def bulk_get_streams(realm: Realm, stream_names: STREAM_NAMES) -> Dict[str, Any]
         #
         # But chaining __in and __iexact doesn't work with Django's
         # ORM, so we have the following hack to construct the relevant where clause
-        where_clause = "upper(zerver_stream.name::text) IN (SELECT upper(name) FROM unnest(%s) AS name)"
+        where_clause = (
+            "upper(zerver_stream.name::text) IN (SELECT upper(name) FROM unnest(%s) AS name)"
+        )
         return (
             get_active_streams(realm)
             .select_related()
@@ -2573,9 +2571,7 @@ def get_user(email: str, realm: Realm) -> UserProfile:
     EMAIL_ADDRESS_VISIBILITY_ADMINS.  In those code paths, use
     get_user_by_delivery_email.
     """
-    return UserProfile.objects.select_related().get(
-        email__iexact=email.strip(), realm=realm,
-    )
+    return UserProfile.objects.select_related().get(email__iexact=email.strip(), realm=realm)
 
 
 def get_active_user(email: str, realm: Realm) -> UserProfile:
@@ -2598,9 +2594,7 @@ def get_active_user_profile_by_id_in_realm(uid: int, realm: Realm) -> UserProfil
     return user_profile
 
 
-def get_user_including_cross_realm(
-    email: str, realm: Optional[Realm] = None,
-) -> UserProfile:
+def get_user_including_cross_realm(email: str, realm: Optional[Realm] = None) -> UserProfile:
     if is_cross_realm_bot_email(email):
         return get_system_bot(email)
     assert realm is not None
@@ -3087,9 +3081,7 @@ class RealmAuditLog(AbstractRealmAuditLog):
             return f"<RealmAuditLog: {self.modified_user} {self.event_type} {self.event_time} {self.id}>"
         if self.modified_stream is not None:
             return f"<RealmAuditLog: {self.modified_stream} {self.event_type} {self.event_time} {self.id}>"
-        return (
-            f"<RealmAuditLog: {self.realm} {self.event_type} {self.event_time} {self.id}>"
-        )
+        return f"<RealmAuditLog: {self.realm} {self.event_type} {self.event_time} {self.id}>"
 
 
 class UserHotspot(models.Model):
@@ -3140,9 +3132,7 @@ class CustomProfileField(models.Model):
     id: int = models.AutoField(auto_created=True, primary_key=True, verbose_name="ID")
     realm: Realm = models.ForeignKey(Realm, on_delete=CASCADE)
     name: str = models.CharField(max_length=NAME_MAX_LENGTH)
-    hint: Optional[str] = models.CharField(
-        max_length=HINT_MAX_LENGTH, default="", null=True,
-    )
+    hint: Optional[str] = models.CharField(max_length=HINT_MAX_LENGTH, default="", null=True)
     order: int = models.IntegerField(default=0)
 
     SHORT_TEXT = 1

@@ -198,15 +198,11 @@ class SlackImporter(ZulipTestCase):
             call(
                 "https://slack.com/api/users.info", "user", token="token", user="U061A3E0G",
             ),
-            call(
-                "https://slack.com/api/team.info", "team", token="token", team="T6LARQE2Z",
-            ),
+            call("https://slack.com/api/team.info", "team", token="token", team="T6LARQE2Z"),
             call(
                 "https://slack.com/api/users.info", "user", token="token", user="U061A8H1G",
             ),
-            call(
-                "https://slack.com/api/team.info", "team", token="token", team="T7KJRQE8Y",
-            ),
+            call("https://slack.com/api/team.info", "team", token="token", team="T7KJRQE8Y"),
         ]
         api_mock.assert_has_calls(api_calls, any_order=True)
 
@@ -480,9 +476,7 @@ class SlackImporter(ZulipTestCase):
         self.assertEqual(
             zerver_userprofile[7]["id"], test_slack_user_id_to_zulip_user_id["U1RDFEC80"],
         )
-        self.assertEqual(
-            zerver_userprofile[7]["role"], UserProfile.ROLE_REALM_ADMINISTRATOR,
-        )
+        self.assertEqual(zerver_userprofile[7]["role"], UserProfile.ROLE_REALM_ADMINISTRATOR)
         self.assertEqual(zerver_userprofile[7]["is_staff"], False)
         self.assertEqual(zerver_userprofile[7]["is_active"], True)
         self.assertEqual(zerver_userprofile[7]["is_mirror_dummy"], False)
@@ -601,9 +595,7 @@ class SlackImporter(ZulipTestCase):
         # zerver defaultstream already tested in helper functions.
         # Note that the `random` stream is archived and thus should
         # not be created as a DefaultStream.
-        self.assertEqual(
-            realm["zerver_defaultstream"], [{"id": 0, "realm": 3, "stream": 1}],
-        )
+        self.assertEqual(realm["zerver_defaultstream"], [{"id": 0, "realm": 3, "stream": 1}])
 
         self.assertDictEqual(test_added_mpims, added_mpims)
         self.assertDictEqual(test_dm_members, dm_members)
@@ -614,8 +606,7 @@ class SlackImporter(ZulipTestCase):
             set(slack_recipient_name_to_zulip_recipient_id.keys()), slack_recipient_names,
         )
         self.assertEqual(
-            set(slack_recipient_name_to_zulip_recipient_id.values()),
-            {i for i in range(11)},
+            set(slack_recipient_name_to_zulip_recipient_id.values()), {i for i in range(11)},
         )
 
         # functioning of zerver subscriptions are already tested in the helper functions

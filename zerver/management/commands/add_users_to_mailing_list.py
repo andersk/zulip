@@ -15,9 +15,7 @@ class Command(BaseCommand):
     help = """Add users to a MailChimp mailing list."""
 
     def add_arguments(self, parser: argparse.ArgumentParser) -> None:
-        parser.add_argument(
-            "--api-key", dest="api_key", type=str, help="MailChimp API key.",
-        )
+        parser.add_argument("--api-key", dest="api_key", type=str, help="MailChimp API key.")
         parser.add_argument(
             "--list-id",
             dest="list_id",

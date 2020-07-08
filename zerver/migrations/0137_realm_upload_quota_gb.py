@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="realm",
-            name="upload_quota_gb",
-            field=models.IntegerField(null=True),
+            model_name="realm", name="upload_quota_gb", field=models.IntegerField(null=True),
         ),
     ]

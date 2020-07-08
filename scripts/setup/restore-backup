@@ -32,14 +32,7 @@ def restore_backup(tarball_file: IO[bytes]) -> None:
     # (E.g. because this is a development backup).
     tarball_file.seek(0, 0)
     subprocess.call(
-        [
-            "tar",
-            "-C",
-            "/etc/zulip",
-            "--strip-components=2",
-            "-xz",
-            "zulip-backup/settings",
-        ],
+        ["tar", "-C", "/etc/zulip", "--strip-components=2", "-xz", "zulip-backup/settings"],
         stdin=tarball_file,
     )
 
@@ -155,12 +148,7 @@ def restore_backup(tarball_file: IO[bytes]) -> None:
             # /etc/zulip/zulip.conf to this system, since it was
             # originally installed without the restored copy of that
             # file.
-            run(
-                [
-                    os.path.join(settings.DEPLOY_ROOT, "scripts", "zulip-puppet-apply"),
-                    "-f",
-                ],
-            )
+            run([os.path.join(settings.DEPLOY_ROOT, "scripts", "zulip-puppet-apply"), "-f"])
 
         # Now, restore the the database backup using pg_restore.  This
         # needs to run after zulip-puppet-apply to ensure full-text

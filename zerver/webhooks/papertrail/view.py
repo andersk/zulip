@@ -29,9 +29,7 @@ def api_papertrail_webhook(
                 ("events", check_list(check_dict([]))),
                 (
                     "saved_search",
-                    check_dict(
-                        [("name", check_string), ("html_search_url", check_string)],
-                    ),
+                    check_dict([("name", check_string), ("html_search_url", check_string)]),
                 ),
             ],
         ),

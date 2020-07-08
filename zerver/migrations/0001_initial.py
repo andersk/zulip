@@ -212,10 +212,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                         verbose_name="ID",
                     ),
                 ),
-                (
-                    "huddle_hash",
-                    models.CharField(db_index=True, max_length=40, unique=True),
-                ),
+                ("huddle_hash", models.CharField(db_index=True, max_length=40, unique=True)),
             ],
         ),
         migrations.CreateModel(
@@ -459,9 +456,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ("invite_only", models.NullBooleanField(default=False)),
                 (
                     "email_token",
-                    models.CharField(
-                        default=generate_email_token_for_stream, max_length=32,
-                    ),
+                    models.CharField(default=generate_email_token_for_stream, max_length=32),
                 ),
                 ("description", models.CharField(default="", max_length=1024)),
                 ("date_created", models.DateTimeField(default=django.utils.timezone.now)),

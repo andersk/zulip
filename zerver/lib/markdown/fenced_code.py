@@ -203,13 +203,7 @@ def check_for_new_fence(
         if not lang and default_language:
             lang = default_language
         handler = generic_handler(
-            processor,
-            output,
-            fence,
-            lang,
-            header,
-            run_content_validators,
-            default_language,
+            processor, output, fence, lang, header, run_content_validators, default_language,
         )
         processor.push(handler)
     else:

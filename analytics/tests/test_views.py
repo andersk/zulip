@@ -404,8 +404,7 @@ class TestGetChartData(ZulipTestCase):
         self.assert_json_success(result)
         data = result.json()
         end_times = [
-            ceiling_to_day(self.realm.date_created) + timedelta(days=i)
-            for i in range(-1, 4)
+            ceiling_to_day(self.realm.date_created) + timedelta(days=i) for i in range(-1, 4)
         ]
         self.assertEqual(data["end_times"], [datetime_to_timestamp(dt) for dt in end_times])
         self.assertEqual(
@@ -927,9 +926,7 @@ class TestTimeRange(ZulipTestCase):
         self.assertEqual(time_range(a_time, a_time, CountStat.HOUR, None), [])
         self.assertEqual(time_range(a_time, a_time, CountStat.DAY, None), [])
         # test start == end == boundary, and min_length == 0
-        self.assertEqual(
-            time_range(floor_hour, floor_hour, CountStat.HOUR, 0), [floor_hour],
-        )
+        self.assertEqual(time_range(floor_hour, floor_hour, CountStat.HOUR, 0), [floor_hour])
         self.assertEqual(time_range(floor_day, floor_day, CountStat.DAY, 0), [floor_day])
         # test start and end on different boundaries
         self.assertEqual(

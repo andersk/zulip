@@ -8,10 +8,7 @@ from django.http import HttpRequest, HttpResponse
 from zerver.decorator import api_key_only_webhook_view
 from zerver.lib.request import REQ, has_request_variables
 from zerver.lib.response import json_success
-from zerver.lib.webhooks.common import (
-    UnexpectedWebhookEventType,
-    check_send_webhook_message,
-)
+from zerver.lib.webhooks.common import UnexpectedWebhookEventType, check_send_webhook_message
 from zerver.lib.webhooks.git import (
     CONTENT_MESSAGE_TEMPLATE,
     TOPIC_WITH_BRANCH_TEMPLATE,
@@ -132,9 +129,7 @@ def repo_modified_handler(payload: Dict[str, Any]) -> List[Dict[str, str]]:
     return [{"subject": subject_new, "body": body}]
 
 
-def repo_push_branch_data(
-    payload: Dict[str, Any], change: Dict[str, Any],
-) -> Dict[str, str]:
+def repo_push_branch_data(payload: Dict[str, Any], change: Dict[str, Any]) -> Dict[str, str]:
     event_type = change["type"]
     repo_name = payload["repository"]["name"]
     user_name = get_user_name(payload)

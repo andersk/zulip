@@ -1352,9 +1352,7 @@ class ActivateTest(ZulipTestCase):
                             display_name=hamlet.full_name, addr_spec=hamlet.delivery_email,
                         ),
                     ),
-                    str(
-                        Address(display_name=iago.full_name, addr_spec=iago.delivery_email),
-                    ),
+                    str(Address(display_name=iago.full_name, addr_spec=iago.delivery_email)),
                 },
             )
         self.assertEqual(ScheduledEmail.objects.count(), 0)

@@ -29,11 +29,7 @@ class Command(ZulipBaseCommand):
         )
 
         parser.add_argument(
-            "-o",
-            "--op",
-            dest="op",
-            type=str,
-            help="The operation to do: 'add' or 'remove'",
+            "-o", "--op", dest="op", type=str, help="The operation to do: 'add' or 'remove'",
         )
 
         parser.add_argument(

@@ -10,8 +10,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterUniqueTogether(
-            name="installationcount",
-            unique_together={("property", "subgroup", "end_time")},
+            name="installationcount", unique_together={("property", "subgroup", "end_time")},
         ),
         migrations.RemoveField(model_name="installationcount", name="interval"),
         migrations.AlterUniqueTogether(
@@ -25,8 +24,7 @@ class Migration(migrations.Migration):
         ),
         migrations.RemoveField(model_name="streamcount", name="interval"),
         migrations.AlterUniqueTogether(
-            name="usercount",
-            unique_together={("user", "property", "subgroup", "end_time")},
+            name="usercount", unique_together={("user", "property", "subgroup", "end_time")},
         ),
         migrations.RemoveField(model_name="usercount", name="interval"),
     ]

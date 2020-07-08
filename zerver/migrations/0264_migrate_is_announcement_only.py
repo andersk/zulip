@@ -5,9 +5,7 @@ from django.db.backends.postgresql.schema import DatabaseSchemaEditor
 from django.db.migrations.state import StateApps
 
 
-def upgrade_stream_post_policy(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def upgrade_stream_post_policy(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     Stream = apps.get_model("zerver", "Stream")
     Stream.STREAM_POST_POLICY_EVERYONE = 1
     Stream.STREAM_POST_POLICY_ADMINS = 2

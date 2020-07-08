@@ -13,9 +13,7 @@ COMMIT_ROW_TEMPLATE = "* {commit_msg} ([{commit_short_sha}]({commit_url}))\n"
 COMMITS_MORE_THAN_LIMIT_TEMPLATE = "[and {commits_number} more commit(s)]"
 COMMIT_OR_COMMITS = "commit{}"
 
-PUSH_PUSHED_TEXT_WITH_URL = (
-    "[pushed]({compare_url}) {number_of_commits} {commit_or_commits}"
-)
+PUSH_PUSHED_TEXT_WITH_URL = "[pushed]({compare_url}) {number_of_commits} {commit_or_commits}"
 PUSH_PUSHED_TEXT_WITHOUT_URL = "pushed {number_of_commits} {commit_or_commits}"
 
 PUSH_COMMITS_BASE = "{user_name} {pushed_text} to branch {branch_name}."

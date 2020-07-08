@@ -80,10 +80,7 @@ from zerver.lib.cache import (
 )
 from zerver.lib.context_managers import lockfile
 from zerver.lib.create_user import create_user, get_display_email_address
-from zerver.lib.email_mirror_helpers import (
-    encode_email_address,
-    encode_email_address_helper,
-)
+from zerver.lib.email_mirror_helpers import encode_email_address, encode_email_address_helper
 from zerver.lib.email_notifications import enqueue_welcome_emails
 from zerver.lib.email_validation import (
     email_reserved_for_system_bots_error,
@@ -516,11 +513,7 @@ def process_new_human_user(
     add_new_user_history(user_profile, streams)
 
     # mit_beta_users don't have a referred_by field
-    if (
-        not mit_beta_user
-        and prereg_user is not None
-        and prereg_user.referred_by is not None
-    ):
+    if not mit_beta_user and prereg_user is not None and prereg_user.referred_by is not None:
         # This is a cross-realm private message.
         with override_language(prereg_user.referred_by.default_language):
             internal_send_private_message(
@@ -542,9 +535,9 @@ def process_new_human_user(
         if prereg_user.referred_by is not None:
             notify_invites_changed(user_profile)
     else:
-        PreregistrationUser.objects.filter(
-            email__iexact=user_profile.delivery_email,
-        ).update(status=confirmation_settings.STATUS_REVOKED)
+        PreregistrationUser.objects.filter(email__iexact=user_profile.delivery_email).update(
+            status=confirmation_settings.STATUS_REVOKED,
+        )
 
     notify_new_user(user_profile)
     # Clear any scheduled invitation emails to prevent them
@@ -934,9 +927,7 @@ def do_set_realm_message_deleting(
         type="realm",
         op="update_dict",
         property="default",
-        data=dict(
-            message_content_delete_limit_seconds=message_content_delete_limit_seconds,
-        ),
+        data=dict(message_content_delete_limit_seconds=message_content_delete_limit_seconds),
     )
     send_event(realm, event, active_user_ids(realm.id))
 
@@ -988,9 +979,7 @@ def do_deactivate_realm(realm: Realm, acting_user: Optional[UserProfile] = None)
         event_type=RealmAuditLog.REALM_DEACTIVATED,
         event_time=event_time,
         acting_user=acting_user,
-        extra_data=ujson.dumps(
-            {RealmAuditLog.ROLE_COUNT: realm_user_count_by_role(realm)},
-        ),
+        extra_data=ujson.dumps({RealmAuditLog.ROLE_COUNT: realm_user_count_by_role(realm)}),
     )
 
     ScheduledEmail.objects.filter(realm=realm).delete()
@@ -1013,9 +1002,7 @@ def do_reactivate_realm(realm: Realm) -> None:
         realm=realm,
         event_type=RealmAuditLog.REALM_REACTIVATED,
         event_time=event_time,
-        extra_data=ujson.dumps(
-            {RealmAuditLog.ROLE_COUNT: realm_user_count_by_role(realm)},
-        ),
+        extra_data=ujson.dumps({RealmAuditLog.ROLE_COUNT: realm_user_count_by_role(realm)}),
     )
 
 
@@ -1451,11 +1438,7 @@ def get_recipient_info(
 
     if user_ids:
         query = UserProfile.objects.filter(is_active=True).values(
-            "id",
-            "enable_online_push_notifications",
-            "is_bot",
-            "bot_type",
-            "long_term_idle",
+            "id", "enable_online_push_notifications", "is_bot", "bot_type", "long_term_idle",
         )
 
         # query_for_ids is fast highly optimized for large queries, and we
@@ -2142,9 +2125,7 @@ def do_send_typing_notification(
         {"user_id": profile.id, "email": profile.email}
         for profile in recipient_user_profiles
     ]
-    event = dict(
-        type="typing", op=operator, sender=sender_dict, recipients=recipient_dicts,
-    )
+    event = dict(type="typing", op=operator, sender=sender_dict, recipients=recipient_dicts)
 
     # Only deliver the notification to active user recipients
     user_ids_to_notify = [user.id for user in recipient_user_profiles if user.is_active]
@@ -2194,10 +2175,7 @@ def check_send_typing_notification(
         user_profiles.append(user_profile)
 
     do_send_typing_notification(
-        realm=realm,
-        sender=sender,
-        recipient_user_profiles=user_profiles,
-        operator=operator,
+        realm=realm, sender=sender, recipient_user_profiles=user_profiles, operator=operator,
     )
 
 
@@ -2797,9 +2775,7 @@ def _internal_prep_message(
             ensure_stream(realm, stream_name, acting_user=sender)
 
     try:
-        return check_message(
-            sender, get_client("Internal"), addressee, content, realm=realm,
-        )
+        return check_message(sender, get_client("Internal"), addressee, content, realm=realm)
     except JsonableError as e:
         logging.exception(
             "Error queueing internal message by %s: %s", sender.delivery_email, e.msg,
@@ -3203,9 +3179,7 @@ def bulk_add_subscriptions(
         stream_map[recipients_map[stream.id]] = stream
 
     subs_by_user: Dict[int, List[Subscription]] = defaultdict(list)
-    all_subs_query = get_stream_subscriptions_for_users(users).select_related(
-        "user_profile",
-    )
+    all_subs_query = get_stream_subscriptions_for_users(users).select_related("user_profile")
     for sub in all_subs_query:
         subs_by_user[sub.user_profile_id].append(sub)
 
@@ -3944,9 +3918,7 @@ def do_change_plan_type(realm: Realm, plan_type: int) -> None:
 
     update_first_visible_message_id(realm)
 
-    realm.save(
-        update_fields=["_max_invites", "message_visibility_limit", "upload_quota_gb"],
-    )
+    realm.save(update_fields=["_max_invites", "message_visibility_limit", "upload_quota_gb"])
 
     event = {
         "type": "realm",
@@ -5509,9 +5481,7 @@ def do_delete_messages_by_sender(user: UserProfile) -> None:
         Message.objects.filter(sender=user).values_list("id", flat=True).order_by("id"),
     )
     if message_ids:
-        move_messages_to_archive(
-            message_ids, chunk_size=retention.STREAM_MESSAGE_BATCH_SIZE,
-        )
+        move_messages_to_archive(message_ids, chunk_size=retention.STREAM_MESSAGE_BATCH_SIZE)
 
 
 def get_streams_traffic(stream_ids: Set[int]) -> Dict[int, int]:
@@ -5648,9 +5618,7 @@ def gather_subscriptions_helper(
 
     # Deactivated streams aren't in stream_hash.
     streams = [
-        stream_hash[sub["stream_id"]]
-        for sub in sub_dicts
-        if sub["stream_id"] in stream_hash
+        stream_hash[sub["stream_id"]] for sub in sub_dicts if sub["stream_id"] in stream_hash
     ]
     streams_subscribed_map = {sub["stream_id"]: sub["active"] for sub in sub_dicts}
 
@@ -6139,9 +6107,7 @@ def do_revoke_user_invite(prereg_user: PreregistrationUser) -> None:
     # to a "revoked" status so that we can give the invited user a better
     # error message.
     content_type = ContentType.objects.get_for_model(PreregistrationUser)
-    Confirmation.objects.filter(
-        content_type=content_type, object_id=prereg_user.id,
-    ).delete()
+    Confirmation.objects.filter(content_type=content_type, object_id=prereg_user.id).delete()
     prereg_user.delete()
     clear_scheduled_invitation_emails(email)
     notify_invites_changed(prereg_user)
@@ -6701,9 +6667,7 @@ def check_add_user_group(
     realm: Realm, name: str, initial_members: List[UserProfile], description: str,
 ) -> None:
     try:
-        user_group = create_user_group(
-            name, initial_members, realm, description=description,
-        )
+        user_group = create_user_group(name, initial_members, realm, description=description)
         do_send_create_user_group_event(user_group, initial_members)
     except django.db.utils.IntegrityError:
         raise JsonableError(_("User group '{}' already exists.").format(name))
@@ -6758,9 +6722,7 @@ def do_update_outgoing_webhook_service(
     )
 
 
-def do_update_bot_config_data(
-    bot_profile: UserProfile, config_data: Dict[str, str],
-) -> None:
+def do_update_bot_config_data(bot_profile: UserProfile, config_data: Dict[str, str]) -> None:
     for key, value in config_data.items():
         set_bot_config(bot_profile, key, value)
     updated_config_data = get_bot_config(bot_profile)
@@ -6878,9 +6840,7 @@ def get_owned_bot_dicts(
 def do_send_user_group_members_update_event(
     event_name: str, user_group: UserGroup, user_ids: List[int],
 ) -> None:
-    event = dict(
-        type="user_group", op=event_name, group_id=user_group.id, user_ids=user_ids,
-    )
+    event = dict(type="user_group", op=event_name, group_id=user_group.id, user_ids=user_ids)
     send_event(user_group.realm, event, active_user_ids(user_group.realm_id))
 
 
@@ -6908,9 +6868,7 @@ def remove_members_from_user_group(
     do_send_user_group_members_update_event("remove_members", user_group, user_ids)
 
 
-def do_send_delete_user_group_event(
-    realm: Realm, user_group_id: int, realm_id: int,
-) -> None:
+def do_send_delete_user_group_event(realm: Realm, user_group_id: int, realm_id: int) -> None:
     event = dict(type="user_group", op="remove", group_id=user_group_id)
     send_event(realm, event, active_user_ids(realm_id))
 
@@ -6918,9 +6876,7 @@ def do_send_delete_user_group_event(
 def check_delete_user_group(user_group_id: int, user_profile: UserProfile) -> None:
     user_group = access_user_group_by_id(user_group_id, user_profile)
     user_group.delete()
-    do_send_delete_user_group_event(
-        user_profile.realm, user_group_id, user_profile.realm.id,
-    )
+    do_send_delete_user_group_event(user_profile.realm, user_group_id, user_profile.realm.id)
 
 
 def do_send_realm_reactivation_email(realm: Realm) -> None:

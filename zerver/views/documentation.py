@@ -27,10 +27,7 @@ def add_api_uri_context(context: Dict[str, Any], request: HttpRequest) -> None:
     context.update(zulip_default_context(request))
 
     subdomain = get_subdomain(request)
-    if (
-        subdomain != Realm.SUBDOMAIN_FOR_ROOT_DOMAIN
-        or not settings.ROOT_DOMAIN_LANDING_PAGE
-    ):
+    if subdomain != Realm.SUBDOMAIN_FOR_ROOT_DOMAIN or not settings.ROOT_DOMAIN_LANDING_PAGE:
         display_subdomain = subdomain
         html_settings_links = True
     else:

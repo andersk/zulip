@@ -249,10 +249,7 @@ class CreateCustomProfileFieldTest(CustomProfileFieldTestCase):
         self.assert_json_error(result, 'field_data["url_pattern"] is not a URL')
 
         data["field_data"] = ujson.dumps(
-            {
-                "subtype": "custom",
-                "url_pattern": "https://www.reddit.com/user/%(username)s",
-            },
+            {"subtype": "custom", "url_pattern": "https://www.reddit.com/user/%(username)s"},
         )
         result = self.client_post("/json/realm/profile_fields", info=data)
         self.assert_json_success(result)
