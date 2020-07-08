@@ -540,9 +540,7 @@ class GitlabHookTests(WebhookTestCase):
             "Tomasz Kolek closed [MR #2](https://gitlab.com/tomaszkolek0/my-awesome-project/merge_requests/2)."
         )
 
-        self.send_and_test_stream_message(
-            "system_hook__merge_request_closed", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("system_hook__merge_request_closed", expected_topic, expected_message)
 
     def test_system_merge_request_merged_event_message(self) -> None:
         expected_topic = "my-awesome-project / MR #3 New Merge Request"
@@ -550,22 +548,20 @@ class GitlabHookTests(WebhookTestCase):
             "Tomasz Kolek merged [MR #3](https://gitlab.com/tomaszkolek0/my-awesome-project/merge_requests/3)."
         )
 
-        self.send_and_test_stream_message(
-            "system_hook__merge_request_merged", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("system_hook__merge_request_merged", expected_topic, expected_message)
 
     def test_system_merge_request_closed_with_custom_topic_in_url(self) -> None:
         self.url = self.build_webhook_url(topic="notifications")
         expected_topic = "notifications"
         expected_message = "[[my-awesome-project](https://gitlab.com/tomaszkolek0/my-awesome-project)] Tomasz Kolek closed [MR #2 NEW MR](https://gitlab.com/tomaszkolek0/my-awesome-project/merge_requests/2)."
 
-        self.send_and_test_stream_message(
-            "system_hook__merge_request_closed", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("system_hook__merge_request_closed", expected_topic, expected_message)
 
     def test_merge_request_unapproved_event_message(self) -> None:
         expected_topic = "my-awesome-project / MR #1 Update the README with author ..."
-        expected_message = "Eeshan Garg unapproved [MR #1](https://gitlab.com/eeshangarg/my-awesome-project/merge_requests/1)."
+        expected_message = (
+            "Eeshan Garg unapproved [MR #1](https://gitlab.com/eeshangarg/my-awesome-project/merge_requests/1)."
+        )
 
         self.send_and_test_stream_message(
             "merge_request_hook__merge_request_unapproved", expected_topic, expected_message,

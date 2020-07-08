@@ -112,9 +112,7 @@ class Command(BaseCommand):
                     zulip_autoreload_start()
 
                 # start tornado web server in single-threaded mode
-                http_server = httpserver.HTTPServer(
-                    application, xheaders=xheaders, no_keep_alive=no_keep_alive,
-                )
+                http_server = httpserver.HTTPServer(application, xheaders=xheaders, no_keep_alive=no_keep_alive)
                 http_server.listen(port, address=addr)
 
                 from zerver.tornado.ioloop_logging import logging_data

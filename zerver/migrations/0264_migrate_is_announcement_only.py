@@ -12,9 +12,7 @@ def upgrade_stream_post_policy(apps: StateApps, schema_editor: DatabaseSchemaEdi
     Stream.objects.filter(is_announcement_only=False).update(
         stream_post_policy=Stream.STREAM_POST_POLICY_EVERYONE,
     )
-    Stream.objects.filter(is_announcement_only=True).update(
-        stream_post_policy=Stream.STREAM_POST_POLICY_ADMINS,
-    )
+    Stream.objects.filter(is_announcement_only=True).update(stream_post_policy=Stream.STREAM_POST_POLICY_ADMINS)
 
 
 class Migration(migrations.Migration):
@@ -24,7 +22,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(
-            upgrade_stream_post_policy, reverse_code=migrations.RunPython.noop, elidable=True,
-        ),
+        migrations.RunPython(upgrade_stream_post_policy, reverse_code=migrations.RunPython.noop, elidable=True),
     ]

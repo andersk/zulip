@@ -209,12 +209,7 @@ def get_chart_data_for_remote_installation(
 ) -> HttpResponse:
     server = RemoteZulipServer.objects.get(id=remote_server_id)
     return get_chart_data(
-        request=request,
-        user_profile=user_profile,
-        for_installation=True,
-        remote=True,
-        server=server,
-        **kwargs,
+        request=request, user_profile=user_profile, for_installation=True, remote=True, server=server, **kwargs,
     )
 
 
@@ -284,9 +279,7 @@ def get_chart_data(
         stats = [COUNT_STATS["messages_sent:client:day"]]
         tables = [aggregate_table, UserCount]
         # Note that the labels are further re-written by client_label_map
-        subgroup_to_label = {
-            stats[0]: {str(id): name for id, name in Client.objects.values_list("id", "name")},
-        }
+        subgroup_to_label = {stats[0]: {str(id): name for id, name in Client.objects.values_list("id", "name")}}
         labels_sort_function = sort_client_labels
         include_empty_subgroups = False
     elif chart_name == "messages_read_over_time":

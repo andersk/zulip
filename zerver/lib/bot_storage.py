@@ -50,9 +50,7 @@ def set_bot_storage(bot_profile: UserProfile, entries: List[Tuple[str, str]]) ->
         )
     else:
         for key, value in entries:
-            BotStorageData.objects.update_or_create(
-                bot_profile=bot_profile, key=key, defaults={"value": value},
-            )
+            BotStorageData.objects.update_or_create(bot_profile=bot_profile, key=key, defaults={"value": value})
 
 
 def remove_bot_storage(bot_profile: UserProfile, keys: List[str]) -> None:

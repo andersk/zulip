@@ -10,9 +10,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name="archivedattachment",
-            name="path_id",
-            field=models.TextField(db_index=True, unique=True),
+            model_name="archivedattachment", name="path_id", field=models.TextField(db_index=True, unique=True),
         ),
         migrations.AlterField(
             model_name="attachment", name="path_id", field=models.TextField(db_index=True, unique=True),

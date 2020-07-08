@@ -502,9 +502,7 @@ class EmojiReactionBase(ZulipTestCase):
 
     def get_message_reactions(self, message_id: int, emoji_code: str, reaction_type: str) -> List[Reaction]:
         message = Message.objects.get(id=message_id)
-        reactions = Reaction.objects.filter(
-            message=message, emoji_code=emoji_code, reaction_type=reaction_type,
-        )
+        reactions = Reaction.objects.filter(message=message, emoji_code=emoji_code, reaction_type=reaction_type)
         return list(reactions)
 
 

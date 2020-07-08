@@ -178,10 +178,7 @@ class OpsGenieHookTests(WebhookTestCase):
 """.strip()
 
         self.send_and_test_stream_message(
-            "takeownership",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "takeownership", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_unacknowledge_alert(self) -> None:
@@ -194,10 +191,7 @@ class OpsGenieHookTests(WebhookTestCase):
 """.strip()
 
         self.send_and_test_stream_message(
-            "unacknowledge",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "unacknowledge", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def get_body(self, fixture_name: str) -> str:

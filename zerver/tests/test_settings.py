@@ -62,9 +62,7 @@ class ChangeSettingsTest(ZulipTestCase):
         json_result = self.client_patch(
             "/json/settings",
             dict(
-                full_name="Foo Bar",
-                old_password=initial_password(user.delivery_email),
-                new_password="foobar1",
+                full_name="Foo Bar", old_password=initial_password(user.delivery_email), new_password="foobar1",
             ),
         )
         self.assert_json_success(json_result)
@@ -190,9 +188,7 @@ class ChangeSettingsTest(ZulipTestCase):
 
     def test_wrong_old_password(self) -> None:
         self.login("hamlet")
-        result = self.client_patch(
-            "/json/settings", dict(old_password="bad_password", new_password="ignored"),
-        )
+        result = self.client_patch("/json/settings", dict(old_password="bad_password", new_password="ignored"))
         self.assert_json_error(result, "Wrong password!")
 
     def test_wrong_old_password_rate_limiter(self) -> None:

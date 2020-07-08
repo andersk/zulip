@@ -1105,8 +1105,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
 # bots don't already exist and only then create a user for these bots.
 def do_import_system_bots(realm: Any) -> None:
     internal_bots = [
-        (bot["name"], bot["email_template"] % (settings.INTERNAL_BOT_DOMAIN,))
-        for bot in settings.INTERNAL_BOTS
+        (bot["name"], bot["email_template"] % (settings.INTERNAL_BOT_DOMAIN,)) for bot in settings.INTERNAL_BOTS
     ]
     create_users(realm, internal_bots, bot_type=UserProfile.DEFAULT_BOT)
     print("Finished importing system bots.")

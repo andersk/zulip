@@ -76,8 +76,7 @@ class FirstUnreadAnchorTests(ZulipTestCase):
 
         # Let's set this old message to be unread
         result = self.client_post(
-            "/json/messages/flags",
-            {"messages": ujson.dumps([old_message_id]), "op": "remove", "flag": "read"},
+            "/json/messages/flags", {"messages": ujson.dumps([old_message_id]), "op": "remove", "flag": "read"},
         )
 
         # Verify it's now marked as unread
@@ -105,9 +104,7 @@ class FirstUnreadAnchorTests(ZulipTestCase):
         self.assertEqual(messages_response["messages"][0]["id"], new_message_id)
         self.assertEqual(messages_response["anchor"], new_message_id)
 
-        with mock.patch(
-            "zerver.views.message_fetch.get_first_visible_message_id", return_value=new_message_id,
-        ):
+        with mock.patch("zerver.views.message_fetch.get_first_visible_message_id", return_value=new_message_id):
             messages_response = self.get_messages_response(anchor="first_unread", num_before=0, num_after=1)
         self.assertEqual(messages_response["messages"][0]["id"], new_message_id)
         self.assertEqual(messages_response["anchor"], new_message_id)
@@ -154,8 +151,7 @@ class UnreadCountTests(ZulipTestCase):
         self.login("hamlet")
 
         result = self.client_post(
-            "/json/messages/flags",
-            {"messages": ujson.dumps(self.unread_msg_ids), "op": "add", "flag": "read"},
+            "/json/messages/flags", {"messages": ujson.dumps(self.unread_msg_ids), "op": "add", "flag": "read"},
         )
         self.assert_json_success(result)
 
@@ -236,9 +232,7 @@ class UnreadCountTests(ZulipTestCase):
         user_profile = self.example_user("hamlet")
         self.subscribe(user_profile, "test_stream")
 
-        message_id = self.send_stream_message(
-            self.example_user("hamlet"), "test_stream", "hello", "test_topic",
-        )
+        message_id = self.send_stream_message(self.example_user("hamlet"), "test_stream", "hello", "test_topic")
         unrelated_message_id = self.send_stream_message(
             self.example_user("hamlet"), "Denmark", "hello", "Denmark2",
         )

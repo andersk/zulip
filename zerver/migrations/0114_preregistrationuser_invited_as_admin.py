@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="preregistrationuser",
-            name="invited_as_admin",
-            field=models.BooleanField(default=False),
+            model_name="preregistrationuser", name="invited_as_admin", field=models.BooleanField(default=False),
         ),
     ]

@@ -70,9 +70,7 @@ class SlackMessageConversion(ZulipTestCase):
         ]  # Deleted users don't have 'real_name' key in Slack
         channel_map = {"general": ("C5Z73A7RA", 137)}
         message = "Hi <@U08RGD1RD|john>: How are you? <#C5Z73A7RA|general>"
-        text, mentioned_users, has_link = convert_to_zulip_markdown(
-            message, users, channel_map, slack_user_map,
-        )
+        text, mentioned_users, has_link = convert_to_zulip_markdown(message, users, channel_map, slack_user_map)
         full_name = get_user_full_name(users[1])
         self.assertEqual(full_name, "John Doe")
         self.assertEqual(get_user_full_name(users[2]), "Jane")
@@ -82,17 +80,13 @@ class SlackMessageConversion(ZulipTestCase):
 
         # multiple mentioning
         message = "Hi <@U08RGD1RD|john>: How are you?<@U0CBK5KAT> asked."
-        text, mentioned_users, has_link = convert_to_zulip_markdown(
-            message, users, channel_map, slack_user_map,
-        )
+        text, mentioned_users, has_link = convert_to_zulip_markdown(message, users, channel_map, slack_user_map)
         self.assertEqual(text, "Hi @**John Doe**: How are you?@**aaron.anzalone** asked.")
         self.assertEqual(mentioned_users, [540, 554])
 
         # Check wrong mentioning
         message = "Hi <@U08RGD1RD|jon>: How are you?"
-        text, mentioned_users, has_link = convert_to_zulip_markdown(
-            message, users, channel_map, slack_user_map,
-        )
+        text, mentioned_users, has_link = convert_to_zulip_markdown(message, users, channel_map, slack_user_map)
         self.assertEqual(text, message)
         self.assertEqual(mentioned_users, [])
 

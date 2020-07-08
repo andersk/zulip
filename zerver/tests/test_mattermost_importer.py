@@ -202,9 +202,7 @@ class MatterMostImporter(ZulipTestCase):
 
         self.assertEqual(zerver_stream[1]["name"], "Gryffindor quidditch team")
         self.assertEqual(zerver_stream[1]["invite_only"], False)
-        self.assertEqual(
-            zerver_stream[1]["description"], "A place for talking about Gryffindor quidditch team",
-        )
+        self.assertEqual(zerver_stream[1]["description"], "A place for talking about Gryffindor quidditch team")
         self.assertEqual(zerver_stream[1]["rendered_description"], "")
         self.assertEqual(zerver_stream[1]["realm"], 3)
 

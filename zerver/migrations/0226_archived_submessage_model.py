@@ -25,15 +25,11 @@ class Migration(migrations.Migration):
                 ("archive_timestamp", models.DateTimeField(db_index=True, default=django.utils.timezone.now)),
                 (
                     "message",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="zerver.ArchivedMessage",
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.ArchivedMessage"),
                 ),
                 (
                     "sender",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL,
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
                 ),
             ],
             options={"abstract": False},

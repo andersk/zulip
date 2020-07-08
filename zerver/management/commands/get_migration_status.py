@@ -25,9 +25,7 @@ class Command(BaseCommand):
             help="Nominates a database to synchronize. " 'Defaults to the "default" database.',
         )
 
-        parser.add_argument(
-            "--output", action="store", help="Path to store the status to (default to stdout).",
-        )
+        parser.add_argument("--output", action="store", help="Path to store the status to (default to stdout).")
 
     def handle(self, *args: Any, **options: Any) -> None:
         result = get_migration_status(**options)

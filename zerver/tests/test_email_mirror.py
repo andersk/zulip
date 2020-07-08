@@ -1209,9 +1209,7 @@ class TestEmailMirrorTornadoView(ZulipTestCase):
             self.assertEqual(event, {"rcpt_to": to_address, "msg_base64": msg_base64})
             MirrorWorker().consume(event)
 
-            self.assertEqual(
-                self.get_last_message().content, "This is a plain-text message for testing Zulip.",
-            )
+            self.assertEqual(self.get_last_message().content, "This is a plain-text message for testing Zulip.")
 
         mock_queue_json_publish.side_effect = check_queue_json_publish
         post_data = {

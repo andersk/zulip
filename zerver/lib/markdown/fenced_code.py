@@ -154,9 +154,7 @@ class FencedCodeExtension(markdown.Extension):
     def extendMarkdown(self, md: markdown.Markdown, md_globals: Dict[str, Any]) -> None:
         """ Add FencedBlockPreprocessor to the Markdown instance. """
         md.registerExtension(self)
-        processor = FencedBlockPreprocessor(
-            md, run_content_validators=self.config["run_content_validators"][0],
-        )
+        processor = FencedBlockPreprocessor(md, run_content_validators=self.config["run_content_validators"][0])
         md.preprocessors.register(processor, "fenced_code_block", 25)
 
 

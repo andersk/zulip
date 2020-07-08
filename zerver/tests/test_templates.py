@@ -14,8 +14,7 @@ class TemplateTestCase(ZulipTestCase):
 
         content_sans_whitespace = content.replace(" ", "").replace("\n", "")
         self.assertEqual(
-            content_sans_whitespace,
-            'header<h1id="hello">Hello!</h1><p>Thisissome<em>boldtext</em>.</p>footer',
+            content_sans_whitespace, 'header<h1id="hello">Hello!</h1><p>Thisissome<em>boldtext</em>.</p>footer',
         )
 
     def test_markdown_tabbed_sections_extension(self) -> None:

@@ -41,9 +41,7 @@ DJANGO_HTTP_PREFIX = "HTTP_"
 
 def notify_bot_owner_about_invalid_json(user_profile: UserProfile, webhook_client_name: str) -> None:
     send_rate_limited_pm_notification_to_bot_owner(
-        user_profile,
-        user_profile.realm,
-        INVALID_JSON_MESSAGE.format(webhook_name=webhook_client_name).strip(),
+        user_profile, user_profile.realm, INVALID_JSON_MESSAGE.format(webhook_name=webhook_client_name).strip(),
     )
 
 

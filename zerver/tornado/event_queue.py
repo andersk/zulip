@@ -598,18 +598,14 @@ def fetch_events(query: Mapping[str, Any]) -> Dict[str, Any]:
                 and last_event_id < client.event_queue.newest_pruned_id
             ):
                 raise JsonableError(
-                    _("An event newer than {event_id} has already been pruned!").format(
-                        event_id=last_event_id,
-                    ),
+                    _("An event newer than {event_id} has already been pruned!").format(event_id=last_event_id),
                 )
             client.event_queue.prune(last_event_id)
             if (
                 client.event_queue.newest_pruned_id is not None
                 and last_event_id != client.event_queue.newest_pruned_id
             ):
-                raise JsonableError(
-                    _("Event {event_id} was not in this queue").format(event_id=last_event_id),
-                )
+                raise JsonableError(_("Event {event_id} was not in this queue").format(event_id=last_event_id))
             was_connected = client.finish_current_handler()
 
         if not client.event_queue.empty() or dont_block:
@@ -966,13 +962,7 @@ def process_message_event(event_template: Mapping[str, Any], users: Iterable[Map
 
         # We first check if a message is potentially mentionable,
         # since receiver_is_off_zulip is somewhat expensive.
-        if (
-            private_message
-            or mentioned
-            or wildcard_mention_notify
-            or stream_push_notify
-            or stream_email_notify
-        ):
+        if private_message or mentioned or wildcard_mention_notify or stream_push_notify or stream_email_notify:
             idle = receiver_is_off_zulip(user_profile_id) or (user_profile_id in presence_idle_user_ids)
             always_push_notify = user_data.get("always_push_notify", False)
             stream_name = event_template.get("stream_name")
@@ -1094,9 +1084,7 @@ def process_deletion_event(event: Mapping[str, Any], users: Iterable[int]) -> No
                 client.add_event(compatibility_event)
 
 
-def process_message_update_event(
-    event_template: Mapping[str, Any], users: Iterable[Mapping[str, Any]],
-) -> None:
+def process_message_update_event(event_template: Mapping[str, Any], users: Iterable[Mapping[str, Any]]) -> None:
     prior_mention_user_ids = set(event_template.get("prior_mention_user_ids", []))
     mention_user_ids = set(event_template.get("mention_user_ids", []))
     presence_idle_user_ids = set(event_template.get("presence_idle_user_ids", []))

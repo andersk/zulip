@@ -69,9 +69,7 @@ def bulk_get_user_profile_by_id(uids: List[int]) -> Dict[int, UserDisplayRecipie
     )
 
 
-def bulk_fetch_display_recipients(
-    recipient_tuples: Set[Tuple[int, int, int]],
-) -> Dict[int, DisplayRecipientT]:
+def bulk_fetch_display_recipients(recipient_tuples: Set[Tuple[int, int, int]]) -> Dict[int, DisplayRecipientT]:
     """
     Takes set of tuples of the form (recipient_id, recipient_type, recipient_type_id)
     Returns dict mapping recipient_id to corresponding display_recipient

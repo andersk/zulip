@@ -244,10 +244,7 @@ def exclude_subscription_modified_streams(
 
     # Streams where the user's subscription was changed
     modified_streams = RealmAuditLog.objects.filter(
-        realm=user_profile.realm,
-        modified_user=user_profile,
-        event_time__gt=cutoff_date,
-        event_type__in=events,
+        realm=user_profile.realm, modified_user=user_profile, event_time__gt=cutoff_date, event_type__in=events,
     ).values_list("modified_stream_id", flat=True)
 
     return list(set(stream_ids) - set(modified_streams))

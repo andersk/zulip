@@ -27,9 +27,7 @@ def notify(request: HttpRequest) -> HttpResponse:
 
 
 @has_request_variables
-def cleanup_event_queue(
-    request: HttpRequest, user_profile: UserProfile, queue_id: str = REQ(),
-) -> HttpResponse:
+def cleanup_event_queue(request: HttpRequest, user_profile: UserProfile, queue_id: str = REQ()) -> HttpResponse:
     client = get_client_descriptor(str(queue_id))
     if client is None:
         raise BadEventQueueIdError(queue_id)

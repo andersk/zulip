@@ -190,9 +190,7 @@ class AsyncDjangoHandler(tornado.web.RequestHandler, base.BaseHandler):
         if client_descriptor is not None:
             client_descriptor.disconnect_handler(client_closed=True)
 
-    def zulip_finish(
-        self, result_dict: Dict[str, Any], old_request: HttpRequest, apply_markdown: bool,
-    ) -> None:
+    def zulip_finish(self, result_dict: Dict[str, Any], old_request: HttpRequest, apply_markdown: bool) -> None:
         # Function called when we want to break a long-polled
         # get_events request and return a response to the client.
 

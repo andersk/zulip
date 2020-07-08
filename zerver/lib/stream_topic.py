@@ -19,9 +19,9 @@ class StreamTopicTarget:
         self.topic_name = topic_name
 
     def user_ids_muting_topic(self) -> Set[int]:
-        query = MutedTopic.objects.filter(
-            stream_id=self.stream_id, topic_name__iexact=self.topic_name,
-        ).values("user_profile_id")
+        query = MutedTopic.objects.filter(stream_id=self.stream_id, topic_name__iexact=self.topic_name).values(
+            "user_profile_id",
+        )
         return {row["user_profile_id"] for row in query}
 
     def get_active_subscriptions(self) -> QuerySet:

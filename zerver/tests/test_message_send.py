@@ -247,9 +247,7 @@ class MessagePOSTTest(ZulipTestCase):
 
         # Non admins and their owned bots can send to STREAM_POST_POLICY_RESTRICT_NEW_MEMBERS streams,
         # if the user is not a new member
-        self._send_and_verify_message(
-            non_admin_profile, stream_name, "New members cannot send to this stream.",
-        )
+        self._send_and_verify_message(non_admin_profile, stream_name, "New members cannot send to this stream.")
         non_admin_owned_bot = self.create_test_bot(
             short_name="whatever2", full_name="whatever2", user_profile=non_admin_profile,
         )
@@ -266,9 +264,7 @@ class MessagePOSTTest(ZulipTestCase):
             short_name="freebot",
             bot_type=UserProfile.DEFAULT_BOT,
         )
-        self._send_and_verify_message(
-            bot_without_owner, stream_name, "New members cannot send to this stream.",
-        )
+        self._send_and_verify_message(bot_without_owner, stream_name, "New members cannot send to this stream.")
 
         # Cross realm bots should be allowed
         notification_bot = get_system_bot("notification-bot@zulip.com")
@@ -1549,9 +1545,7 @@ class PersonalMessageSendTest(ZulipTestCase):
         recipient = Recipient.objects.get(type_id=user_profile.id, type=Recipient.PERSONAL)
         self.assertEqual(most_recent_message(user_profile).recipient, recipient)
 
-    def assert_personal(
-        self, sender: UserProfile, receiver: UserProfile, content: str = "testcontent",
-    ) -> None:
+    def assert_personal(self, sender: UserProfile, receiver: UserProfile, content: str = "testcontent") -> None:
         """
         Send a private message from `sender_email` to `receiver_email` and check
         that only those two parties actually received the message.
@@ -1822,11 +1816,7 @@ class TestCrossRealmPMs(ZulipTestCase):
         return get_user(email, get_realm(subdomain))
 
     @override_settings(
-        CROSS_REALM_BOT_EMAILS=[
-            "notification-bot@zulip.com",
-            "welcome-bot@zulip.com",
-            "support@3.example.com",
-        ],
+        CROSS_REALM_BOT_EMAILS=["notification-bot@zulip.com", "welcome-bot@zulip.com", "support@3.example.com"],
     )
     def test_realm_scenarios(self) -> None:
         self.make_realm("1.example.com")

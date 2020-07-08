@@ -75,7 +75,9 @@ class BeanstalkHookTests(WebhookTestCase):
         )
 
     def test_git_more_than_limit(self) -> None:
-        commits_info = "* add some stuff ([e50508d](http://lfranchi-svn.beanstalkapp.com/work-test/changesets/e50508df))\n"
+        commits_info = (
+            "* add some stuff ([e50508d](http://lfranchi-svn.beanstalkapp.com/work-test/changesets/e50508df))\n"
+        )
         expected_topic = "work-test / master"
         expected_message = f"""Leo Franchi [pushed](http://lfranchi-svn.beanstalkapp.com/work-test) 50 commits to branch master.
 
@@ -86,7 +88,9 @@ class BeanstalkHookTests(WebhookTestCase):
 
     def test_git_more_than_limit_filtered_by_branches(self) -> None:
         self.url = self.build_webhook_url(branches="master,development")
-        commits_info = "* add some stuff ([e50508d](http://lfranchi-svn.beanstalkapp.com/work-test/changesets/e50508df))\n"
+        commits_info = (
+            "* add some stuff ([e50508d](http://lfranchi-svn.beanstalkapp.com/work-test/changesets/e50508df))\n"
+        )
         expected_topic = "work-test / master"
         expected_message = f"""Leo Franchi [pushed](http://lfranchi-svn.beanstalkapp.com/work-test) 50 commits to branch master.
 
@@ -114,9 +118,7 @@ class BeanstalkHookTests(WebhookTestCase):
         self.assert_json_success(result)
 
     @patch("zerver.webhooks.beanstalk.view.check_send_webhook_message")
-    def test_git_multiple_filtered_by_branches_ignore(
-        self, check_send_webhook_message_mock: MagicMock,
-    ) -> None:
+    def test_git_multiple_filtered_by_branches_ignore(self, check_send_webhook_message_mock: MagicMock) -> None:
         self.url = self.build_webhook_url(branches="changes,development")
         payload = self.get_body("git_multiple")
         result = self.api_post(self.test_user, self.url, payload)

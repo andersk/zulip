@@ -24,9 +24,7 @@ class Migration(migrations.Migration):
                 ("licenses_at_next_renewal", models.IntegerField(null=True)),
                 (
                     "plan",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="corporate.CustomerPlan",
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="corporate.CustomerPlan"),
                 ),
             ],
         ),

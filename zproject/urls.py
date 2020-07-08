@@ -78,9 +78,7 @@ v1_api_and_json_patterns = [
     # realm-level calls
     path("realm", rest_dispatch, {"PATCH": "zerver.views.realm.update_realm"}),
     # Returns a 204, used by desktop app to verify connectivity status
-    path(
-        "generate_204", zerver.views.registration.generate_204, name="zerver.views.registration.generate_204",
-    ),
+    path("generate_204", zerver.views.registration.generate_204, name="zerver.views.registration.generate_204"),
     re_path(
         r"^realm/subdomain/(?P<subdomain>\S+)$",
         zerver.views.realm.check_subdomain_available,
@@ -177,9 +175,7 @@ v1_api_and_json_patterns = [
         {"GET": "zerver.views.users.get_members_backend", "POST": "zerver.views.users.create_user_backend"},
     ),
     path(
-        "users/<int:user_id>/reactivate",
-        rest_dispatch,
-        {"POST": "zerver.views.users.reactivate_user_backend"},
+        "users/<int:user_id>/reactivate", rest_dispatch, {"POST": "zerver.views.users.reactivate_user_backend"},
     ),
     re_path(
         r"^users/(?!me/)(?P<email>[^/]*)/presence$",
@@ -364,9 +360,7 @@ v1_api_and_json_patterns = [
     ),
     # users/me -> zerver.views.user_settings
     path(
-        "users/me/api_key/regenerate",
-        rest_dispatch,
-        {"POST": "zerver.views.user_settings.regenerate_api_key"},
+        "users/me/api_key/regenerate", rest_dispatch, {"POST": "zerver.views.user_settings.regenerate_api_key"},
     ),
     path(
         "users/me/enter-sends",
@@ -466,9 +460,7 @@ v1_api_and_json_patterns = [
     ),
     # Delete topic in stream
     path(
-        "streams/<int:stream_id>/delete_topic",
-        rest_dispatch,
-        {"POST": "zerver.views.streams.delete_in_topic"},
+        "streams/<int:stream_id>/delete_topic", rest_dispatch, {"POST": "zerver.views.streams.delete_in_topic"},
     ),
     path(
         "default_streams",
@@ -636,9 +628,7 @@ i18n_urls = [
         zerver.views.zephyr.webathena_kerberos_login,
         name="zerver.views.zephyr.webathena_kerberos_login",
     ),
-    path(
-        "accounts/password/reset/", zerver.views.auth.password_reset, name="zerver.views.auth.password_reset",
-    ),
+    path("accounts/password/reset/", zerver.views.auth.password_reset, name="zerver.views.auth.password_reset"),
     path(
         "accounts/password/reset/done/",
         PasswordResetDoneView.as_view(template_name="zerver/reset_emailed.html"),
@@ -707,9 +697,7 @@ i18n_urls = [
     ),
     # Find your account
     path(
-        "accounts/find/",
-        zerver.views.registration.find_account,
-        name="zerver.views.registration.find_account",
+        "accounts/find/", zerver.views.registration.find_account, name="zerver.views.registration.find_account",
     ),
     # Go to organization subdomain
     path(
@@ -777,9 +765,7 @@ i18n_urls = [
     path("history/", zerver.views.portico.landing_view, {"template_name": "zerver/history.html"}),
     path("why-zulip/", zerver.views.portico.landing_view, {"template_name": "zerver/why-zulip.html"}),
     path(
-        "for/open-source/",
-        zerver.views.portico.landing_view,
-        {"template_name": "zerver/for-open-source.html"},
+        "for/open-source/", zerver.views.portico.landing_view, {"template_name": "zerver/for-open-source.html"},
     ),
     path("for/research/", zerver.views.portico.landing_view, {"template_name": "zerver/for-research.html"}),
     path("for/companies/", zerver.views.portico.landing_view, {"template_name": "zerver/for-companies.html"}),
@@ -798,9 +784,7 @@ i18n_urls = [
         zerver.views.auth.config_error_view,
         name="config_error",
     ),
-    re_path(
-        r"^config-error/remoteuser/(?P<error_category_name>[\w,-]+)$", zerver.views.auth.config_error_view,
-    ),
+    re_path(r"^config-error/remoteuser/(?P<error_category_name>[\w,-]+)$", zerver.views.auth.config_error_view),
 ]
 
 # Make a copy of i18n_urls so that they appear without prefix for english

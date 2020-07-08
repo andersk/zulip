@@ -29,9 +29,7 @@ def upload_logo(
             _("Uploaded file is larger than the allowed limit of {} MiB").format(settings.MAX_LOGO_FILE_SIZE),
         )
     upload_logo_image(logo_file, user_profile, night)
-    do_change_logo_source(
-        user_profile.realm, user_profile.realm.LOGO_UPLOADED, night, acting_user=user_profile,
-    )
+    do_change_logo_source(user_profile.realm, user_profile.realm.LOGO_UPLOADED, night, acting_user=user_profile)
     return json_success()
 
 

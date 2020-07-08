@@ -283,9 +283,7 @@ class PreviewTestCase(ZulipTestCase):
         mocked_response = mock.Mock(side_effect=self.create_mock_response(url))
 
         with mock.patch("zerver.views.message_edit.queue_json_publish") as patched:
-            result = self.client_patch(
-                "/json/messages/" + str(msg_id), {"message_id": msg_id, "content": url},
-            )
+            result = self.client_patch("/json/messages/" + str(msg_id), {"message_id": msg_id, "content": url})
             self.assert_json_success(result)
             patched.assert_called_once()
             queue = patched.call_args[0][0]
@@ -367,9 +365,7 @@ class PreviewTestCase(ZulipTestCase):
                     # up-to-date event for edited_url.
                     queue_json_publish(*args, **kwargs)
                     msg = Message.objects.select_related("sender").get(id=msg_id)
-                    self.assertIn(
-                        f'<a href="{edited_url}" title="The Rock">The Rock</a>', msg.rendered_content,
-                    )
+                    self.assertIn(f'<a href="{edited_url}" title="The Rock">The Rock</a>', msg.rendered_content)
 
         with mock.patch(
             "zerver.views.message_edit.queue_json_publish", wraps=wrapped_queue_json_publish,
@@ -408,9 +404,7 @@ class PreviewTestCase(ZulipTestCase):
         setattr(realm, "inline_url_embed_preview", False)
         realm.save()
 
-        msg = self._send_message_with_test_org_url(
-            sender=self.example_user("prospero"), queue_should_run=False,
-        )
+        msg = self._send_message_with_test_org_url(sender=self.example_user("prospero"), queue_should_run=False)
         self.assertEqual(msg.rendered_content, without_preview)
 
     @override_settings(INLINE_URL_EMBED_PREVIEW=True)
@@ -517,8 +511,7 @@ class PreviewTestCase(ZulipTestCase):
         self.assertNotIn("image", cached_data)
         msg = Message.objects.select_related("sender").get(id=msg_id)
         self.assertEqual(
-            ('<p><a href="http://test.org/foo.html">' "http://test.org/foo.html</a></p>"),
-            msg.rendered_content,
+            ('<p><a href="http://test.org/foo.html">' "http://test.org/foo.html</a></p>"), msg.rendered_content,
         )
 
     @override_settings(INLINE_URL_EMBED_PREVIEW=True)
@@ -548,8 +541,7 @@ class PreviewTestCase(ZulipTestCase):
         self.assertNotIn("image", cached_data)
         msg = Message.objects.select_related("sender").get(id=msg_id)
         self.assertEqual(
-            ('<p><a href="http://test.org/foo.html">' "http://test.org/foo.html</a></p>"),
-            msg.rendered_content,
+            ('<p><a href="http://test.org/foo.html">' "http://test.org/foo.html</a></p>"), msg.rendered_content,
         )
 
     @override_settings(INLINE_URL_EMBED_PREVIEW=True)

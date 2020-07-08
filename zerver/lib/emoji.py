@@ -15,9 +15,7 @@ emoji_codes_path = static_path("generated/emoji/emoji_codes.json")
 if not os.path.exists(emoji_codes_path):  # nocoverage
     # During the collectstatic step of build-release-tarball,
     # prod-static/serve/generated/emoji won't exist yet.
-    emoji_codes_path = os.path.join(
-        os.path.dirname(__file__), "../../static/generated/emoji/emoji_codes.json",
-    )
+    emoji_codes_path = os.path.join(os.path.dirname(__file__), "../../static/generated/emoji/emoji_codes.json")
 
 with open(emoji_codes_path) as fp:
     emoji_codes = ujson.load(fp)

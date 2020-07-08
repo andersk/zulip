@@ -211,9 +211,7 @@ parser.add_argument("--fixture", type=str, help="Name of the fixture file to use
 parser.add_argument("--image-name", type=str, help="Name for the screenshot image")
 parser.add_argument("--image-dir", type=str, help="Directory name where to save the screenshot image")
 parser.add_argument("--bot-name", type=str, help="Name to use for the bot")
-parser.add_argument(
-    "-A", "--use-basic-auth", action="store_true", help="Add basic auth headers to the request",
-)
+parser.add_argument("-A", "--use-basic-auth", action="store_true", help="Add basic auth headers to the request")
 parser.add_argument(
     "-Q", "--payload-as-query-param", action="store_true", help="Send payload as query param instead of body",
 )

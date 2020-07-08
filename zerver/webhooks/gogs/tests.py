@@ -20,18 +20,14 @@ class GogsHookTests(WebhookTestCase):
         commit_info = "* Webhook Test ([d8fce16](http://localhost:3000/john/try-git/commit/d8fce16c72a2ff56a5afc8a08645a6ce45491794))\n"
         expected_topic = "try-git / master"
         expected_message = f"""john [pushed](http://localhost:3000/john/try-git/compare/479e6b772b7fba19412457483f50b201286d0103...d8fce16c72a2ff56a5afc8a08645a6ce45491794) 2 commits to branch master. Commits by Benjamin (1) and John (1).\n\n{commit_info}* Webhook Test ([d8fce16](http://localhost:3000/john/try-git/commit/d8fce16c72a2ff56a5afc8a08645a6ce45491794))"""
-        self.send_and_test_stream_message(
-            "push__commits_multiple_committers", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("push__commits_multiple_committers", expected_topic, expected_message)
 
     def test_push_multiple_committers_filtered_by_branches(self) -> None:
         self.url = self.build_webhook_url(branches="master,development")
         commit_info = "* Webhook Test ([d8fce16](http://localhost:3000/john/try-git/commit/d8fce16c72a2ff56a5afc8a08645a6ce45491794))\n"
         expected_topic = "try-git / master"
         expected_message = f"""john [pushed](http://localhost:3000/john/try-git/compare/479e6b772b7fba19412457483f50b201286d0103...d8fce16c72a2ff56a5afc8a08645a6ce45491794) 2 commits to branch master. Commits by Benjamin (1) and John (1).\n\n{commit_info}* Webhook Test ([d8fce16](http://localhost:3000/john/try-git/commit/d8fce16c72a2ff56a5afc8a08645a6ce45491794))"""
-        self.send_and_test_stream_message(
-            "push__commits_multiple_committers", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("push__commits_multiple_committers", expected_topic, expected_message)
 
     def test_push_filtered_by_branches(self) -> None:
         self.url = self.build_webhook_url(branches="master,development")
@@ -111,7 +107,9 @@ class GogsHookTests(WebhookTestCase):
 
     def test_pull_request_synchronized(self) -> None:
         expected_topic = "test / PR #1349 Test"
-        expected_message = """kostekIV synchronized [PR #2](https://try.gogs.io/kostekIV/test/pulls/2) from `c` to `master`."""
+        expected_message = (
+            """kostekIV synchronized [PR #2](https://try.gogs.io/kostekIV/test/pulls/2) from `c` to `master`."""
+        )
         self.send_and_test_stream_message("pull_request__synchronized", expected_topic, expected_message)
 
     def test_issues_opened(self) -> None:

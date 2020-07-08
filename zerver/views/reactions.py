@@ -19,9 +19,7 @@ def create_historical_message(user_profile: UserProfile, message: Message) -> No
     # for the message.  This is the same trick we use for starring
     # messages.
     UserMessage.objects.create(
-        user_profile=user_profile,
-        message=message,
-        flags=UserMessage.flags.historical | UserMessage.flags.read,
+        user_profile=user_profile, message=message, flags=UserMessage.flags.historical | UserMessage.flags.read,
     )
 
 

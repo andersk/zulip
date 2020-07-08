@@ -54,10 +54,7 @@ class Migration(migrations.Migration):
                 ),
                 ("stripe_customer_id", models.CharField(max_length=255, unique=True)),
                 ("has_billing_relationship", models.BooleanField(default=False)),
-                (
-                    "realm",
-                    models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm"),
-                ),
+                ("realm", models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm")),
             ],
         ),
         migrations.CreateModel(

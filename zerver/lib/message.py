@@ -670,9 +670,9 @@ def bulk_access_messages_expect_usermessage(user_profile_id: int, message_ids: S
 
     See also: `access_message`, `bulk_access_messages`.
     """
-    return UserMessage.objects.filter(
-        user_profile_id=user_profile_id, message_id__in=message_ids,
-    ).values_list("message_id", flat=True)
+    return UserMessage.objects.filter(user_profile_id=user_profile_id, message_id__in=message_ids).values_list(
+        "message_id", flat=True,
+    )
 
 
 def render_markdown(
@@ -965,9 +965,7 @@ def aggregate_unread_data(raw_data: RawUnreadMessagesResult) -> UnreadMessagesRe
 
     count = len(pm_dict) + len(unmuted_stream_msgs) + len(huddle_dict)
 
-    pm_objects = aggregate_message_dict(
-        input_dict=pm_dict, lookup_fields=["sender_id"], collect_senders=False,
-    )
+    pm_objects = aggregate_message_dict(input_dict=pm_dict, lookup_fields=["sender_id"], collect_senders=False)
 
     stream_objects = aggregate_message_dict(
         input_dict=stream_dict, lookup_fields=["stream_id", "topic"], collect_senders=True,

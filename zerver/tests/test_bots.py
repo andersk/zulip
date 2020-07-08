@@ -1556,7 +1556,9 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
         }
         response = self.client_post("/json/bots", bot_metadata)
         self.assertEqual(response.status_code, 400)
-        expected_error_message = 'Invalid stripe_api_key value _invalid_key (stripe_api_key starts with a "_" and is hence invalid.)'
+        expected_error_message = (
+            'Invalid stripe_api_key value _invalid_key (stripe_api_key starts with a "_" and is hence invalid.)'
+        )
         self.assertEqual(ujson.loads(response.content.decode("utf-8"))["msg"], expected_error_message)
         with self.assertRaises(UserProfile.DoesNotExist):
             UserProfile.objects.get(full_name="My Stripe Bot")

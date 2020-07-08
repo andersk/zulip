@@ -39,10 +39,7 @@ class MissedMessageTest(ZulipTestCase):
         def set_presence(user: UserProfile, client_name: str, ago: int) -> None:
             when = timezone_now() - datetime.timedelta(seconds=ago)
             UserPresence.objects.create(
-                user_profile_id=user.id,
-                realm_id=user.realm_id,
-                client=get_client(client_name),
-                timestamp=when,
+                user_profile_id=user.id, realm_id=user.realm_id, client=get_client(client_name), timestamp=when,
             )
 
         message_type = "private"

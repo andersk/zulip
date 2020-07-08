@@ -182,9 +182,7 @@ def convert_avatar_data(
 
         user_id = user_id_mapper.get(raw_user_id)
 
-        metadata = write_avatar_png(
-            avatar_folder=avatar_folder, realm_id=realm_id, user_id=user_id, bits=bits,
-        )
+        metadata = write_avatar_png(avatar_folder=avatar_folder, realm_id=realm_id, user_id=user_id, bits=bits)
         avatar_records.append(metadata)
 
     return avatar_records
@@ -235,9 +233,7 @@ def convert_room_data(
         )
 
         if invite_only:
-            users: Set[int] = {
-                user_id_mapper.get(key) for key in in_dict["members"] if user_id_mapper.has(key)
-            }
+            users: Set[int] = {user_id_mapper.get(key) for key in in_dict["members"] if user_id_mapper.has(key)}
 
             if user_id_mapper.has(in_dict["owner"]):
                 owner = user_id_mapper.get(in_dict["owner"])
@@ -756,9 +752,7 @@ def do_convert_data(
             public_stream_subscriptions: List[ZerverFieldsT] = []
         else:
             public_stream_subscriptions = build_public_stream_subscriptions(
-                zerver_userprofile=normal_users,
-                zerver_recipient=zerver_recipient,
-                zerver_stream=zerver_stream,
+                zerver_userprofile=normal_users, zerver_recipient=zerver_recipient, zerver_stream=zerver_stream,
             )
 
         private_stream_subscriptions = build_stream_subscriptions(

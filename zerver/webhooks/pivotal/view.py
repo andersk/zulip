@@ -90,7 +90,9 @@ def api_pivotal_webhook_v5(request: HttpRequest, user_profile: UserProfile) -> T
 
     performed_by = payload.get("performed_by", {}).get("name", "")
 
-    story_info = f"[{project_name}](https://www.pivotaltracker.com/s/projects/{project_id}): [{story_name}]({story_url})"
+    story_info = (
+        f"[{project_name}](https://www.pivotaltracker.com/s/projects/{project_id}): [{story_name}]({story_url})"
+    )
 
     changes = payload.get("changes", [])
 

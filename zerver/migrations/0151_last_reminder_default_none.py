@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name="userprofile",
-            name="last_reminder",
-            field=models.DateTimeField(default=None, null=True),
+            model_name="userprofile", name="last_reminder", field=models.DateTimeField(default=None, null=True),
         ),
     ]

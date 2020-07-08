@@ -189,9 +189,7 @@ def match_against_openapi_regex(endpoint: str) -> Optional[str]:
     return None
 
 
-def validate_against_openapi_schema(
-    content: Dict[str, Any], endpoint: str, method: str, response: str,
-) -> bool:
+def validate_against_openapi_schema(content: Dict[str, Any], endpoint: str, method: str, response: str) -> bool:
     """Compare a "content" dict with the defined schema for a specific method
     in an endpoint. Return true if validated and false if skipped.
     """

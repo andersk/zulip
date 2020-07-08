@@ -71,9 +71,7 @@ class CustomerPlan(models.Model):
 
 
 def get_current_plan_by_customer(customer: Customer) -> Optional[CustomerPlan]:
-    return CustomerPlan.objects.filter(
-        customer=customer, status__lt=CustomerPlan.LIVE_STATUS_THRESHOLD,
-    ).first()
+    return CustomerPlan.objects.filter(customer=customer, status__lt=CustomerPlan.LIVE_STATUS_THRESHOLD).first()
 
 
 def get_current_plan_by_realm(realm: Realm) -> Optional[CustomerPlan]:

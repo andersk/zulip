@@ -1088,9 +1088,7 @@ class AvatarTest(UploadSerializeMixin, ZulipTestCase):
 
         source_original_path_id = avatar_disk_path(source_user_profile, original=True)
         target_original_path_id = avatar_disk_path(target_user_profile, original=True)
-        self.assertEqual(
-            open(source_original_path_id, "rb").read(), open(target_original_path_id, "rb").read(),
-        )
+        self.assertEqual(open(source_original_path_id, "rb").read(), open(target_original_path_id, "rb").read())
 
         source_medium_path_id = avatar_disk_path(source_user_profile, medium=True)
         target_medium_path_id = avatar_disk_path(target_user_profile, medium=True)
@@ -1397,9 +1395,7 @@ class RealmLogoTest(UploadSerializeMixin, ZulipTestCase):
         response = self.client_get("/json/realm/logo", {"night": ujson.dumps(self.night)})
         redirect_url = response["Location"]
         is_night_str = str(self.night).lower()
-        self.assertEqual(
-            redirect_url, f"/static/images/logo/zulip-org-logo.png?version=0&night={is_night_str}",
-        )
+        self.assertEqual(redirect_url, f"/static/images/logo/zulip-org-logo.png?version=0&night={is_night_str}")
 
     def test_get_realm_logo(self) -> None:
         user_profile = self.example_user("hamlet")
@@ -1429,9 +1425,7 @@ class RealmLogoTest(UploadSerializeMixin, ZulipTestCase):
             self.assertEqual(realm.logo_source, Realm.LOGO_UPLOADED)
         response = self.client_get("/json/realm/logo", {"night": ujson.dumps(self.night)})
         redirect_url = response["Location"]
-        self.assertEqual(
-            redirect_url, f"/static/images/logo/zulip-org-logo.png?version=0&night={is_night_str}",
-        )
+        self.assertEqual(redirect_url, f"/static/images/logo/zulip-org-logo.png?version=0&night={is_night_str}")
 
     def test_valid_logos(self) -> None:
         """
@@ -1551,9 +1545,7 @@ class LocalStorageTest(UploadSerializeMixin, ZulipTestCase):
         )
 
         file_path = os.path.join(settings.LOCAL_UPLOADS_DIR, "avatars", emoji_path)
-        with get_test_image_file("img.png") as image_file, open(
-            file_path + ".original", "rb",
-        ) as original_file:
+        with get_test_image_file("img.png") as image_file, open(file_path + ".original", "rb") as original_file:
             self.assertEqual(image_file.read(), original_file.read())
 
         resized_image = Image.open(open(file_path, "rb"))
@@ -1588,7 +1580,9 @@ class LocalStorageTest(UploadSerializeMixin, ZulipTestCase):
         result = re.search(re.compile(r"([A-Za-z0-9\-_]{24})"), uri)
         if result is not None:
             random_name = result.group(1)
-        expected_url = f"http://zulip.testserver/user_avatars/exports/{user_profile.realm_id}/{random_name}/tarball.tar.gz"
+        expected_url = (
+            f"http://zulip.testserver/user_avatars/exports/{user_profile.realm_id}/{random_name}/tarball.tar.gz"
+        )
         self.assertEqual(expected_url, uri)
 
         # Delete the tarball.

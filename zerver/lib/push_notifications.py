@@ -483,9 +483,7 @@ def clear_push_device_tokens(user_profile_id: int) -> None:
 def push_notifications_enabled() -> bool:
     """True just if this server has configured a way to send push notifications."""
     if (
-        uses_notification_bouncer()
-        and settings.ZULIP_ORG_KEY is not None
-        and settings.ZULIP_ORG_ID is not None
+        uses_notification_bouncer() and settings.ZULIP_ORG_KEY is not None and settings.ZULIP_ORG_ID is not None
     ):  # nocoverage
         # We have the needed configuration to send push notifications through
         # the bouncer.  Better yet would be to confirm that this config actually

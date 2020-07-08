@@ -199,12 +199,7 @@ class AnalyticsTestCase(ZulipTestCase):
         row of <table>, and that no additional rows exist. Note that this means
         checking a table with duplicate rows is not supported.
         """
-        defaults = {
-            "property": self.current_property,
-            "subgroup": None,
-            "end_time": self.TIME_ZERO,
-            "value": 1,
-        }
+        defaults = {"property": self.current_property, "subgroup": None, "end_time": self.TIME_ZERO, "value": 1}
         for values in arg_values:
             kwargs: Dict[str, Any] = {}
             for i in range(len(values)):
@@ -915,9 +910,7 @@ class TestCountStats(AnalyticsTestCase):
             ["value", "user"],
             [[1, user2], [1, user3], [1, user4], [1, user5], [1, user6], [1, user7]],
         )
-        self.assertTableState(
-            RealmCount, ["value", "realm"], [[5, self.default_realm], [1, self.second_realm]],
-        )
+        self.assertTableState(RealmCount, ["value", "realm"], [[5, self.default_realm], [1, self.second_realm]])
         self.assertTableState(InstallationCount, ["value"], [[6]])
         self.assertTableState(StreamCount, [], [])
 
@@ -988,9 +981,7 @@ class TestCountStats(AnalyticsTestCase):
             ["value", "user"],
             [[1, user2], [1, user3], [1, user4], [1, user5], [1, user6], [1, user7]],
         )
-        self.assertTableState(
-            RealmCount, ["value", "realm"], [[5, self.default_realm], [1, self.second_realm]],
-        )
+        self.assertTableState(RealmCount, ["value", "realm"], [[5, self.default_realm], [1, self.second_realm]])
         self.assertTableState(InstallationCount, ["value"], [[6]])
         self.assertTableState(StreamCount, [], [])
 
@@ -1213,9 +1204,7 @@ class TestLoggingCountStats(AnalyticsTestCase):
         process_count_stat(stat, self.TIME_ZERO)
 
         self.assertTableState(
-            InstallationCount,
-            ["property", "value"],
-            [["realm test", 1], ["user test", 1], ["stream test", 1]],
+            InstallationCount, ["property", "value"], [["realm test", 1], ["user test", 1], ["stream test", 1]],
         )
         self.assertTableState(
             RealmCount, ["property", "value"], [["realm test", 1], ["user test", 1], ["stream test", 1]],

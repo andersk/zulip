@@ -275,9 +275,7 @@ class Realm(models.Model):
     EMAIL_ADDRESS_VISIBILITY_MEMBERS = 2
     EMAIL_ADDRESS_VISIBILITY_ADMINS = 3
     EMAIL_ADDRESS_VISIBILITY_NOBODY = 4
-    email_address_visibility: int = models.PositiveSmallIntegerField(
-        default=EMAIL_ADDRESS_VISIBILITY_EVERYONE,
-    )
+    email_address_visibility: int = models.PositiveSmallIntegerField(default=EMAIL_ADDRESS_VISIBILITY_EVERYONE)
     EMAIL_ADDRESS_VISIBILITY_TYPES = [
         EMAIL_ADDRESS_VISIBILITY_EVERYONE,
         # The MEMBERS level is not yet implemented on the backend.
@@ -1733,9 +1731,7 @@ def bulk_get_streams(realm: Realm, stream_names: STREAM_NAMES) -> Dict[str, Any]
         # ORM, so we have the following hack to construct the relevant where clause
         where_clause = "upper(zerver_stream.name::text) IN (SELECT upper(name) FROM unnest(%s) AS name)"
         return (
-            get_active_streams(realm)
-            .select_related()
-            .extra(where=[where_clause], params=(list(stream_names),))
+            get_active_streams(realm).select_related().extra(where=[where_clause], params=(list(stream_names),))
         )
 
     def stream_name_to_cache_key(stream_name: str) -> str:
@@ -2760,7 +2756,9 @@ class ScheduledEmail(AbstractScheduledJob):
     type: int = models.PositiveSmallIntegerField()
 
     def __str__(self) -> str:
-        return f"<ScheduledEmail: {self.type} {self.address or list(self.users.all())} {self.scheduled_timestamp}>"
+        return (
+            f"<ScheduledEmail: {self.type} {self.address or list(self.users.all())} {self.scheduled_timestamp}>"
+        )
 
 
 class MissedMessageEmailAddress(models.Model):

@@ -90,8 +90,7 @@ templates = {
         " from {old} to {new}.",
         "estimated_finish": "[{user}]({user_link}) changed estimated finish of sprint {subject}"
         " from {old} to {new}.",
-        "set_estimated_start": "[{user}]({user_link}) changed estimated start of sprint {subject}"
-        " to {new}.",
+        "set_estimated_start": "[{user}]({user_link}) changed estimated start of sprint {subject}" " to {new}.",
         "set_estimated_finish": "[{user}]({user_link}) set estimated finish of sprint {subject}" " to {new}.",
         "delete": "[{user}]({user_link}) deleted sprint {subject}.",
     },
@@ -119,10 +118,8 @@ templates = {
         "changed_assigned_to": "[{user}]({user_link}) reassigned issue {subject}" " from {old} to {new}.",
         "set_milestone": "[{user}]({user_link}) added issue {subject} to sprint {new}.",
         "unset_milestone": "[{user}]({user_link}) detached issue {subject} from sprint {old}.",
-        "changed_priority": "[{user}]({user_link}) changed priority of issue "
-        "{subject} from {old} to {new}.",
-        "changed_severity": "[{user}]({user_link}) changed severity of issue "
-        "{subject} from {old} to {new}.",
+        "changed_priority": "[{user}]({user_link}) changed priority of issue " "{subject} from {old} to {new}.",
+        "changed_severity": "[{user}]({user_link}) changed severity of issue " "{subject} from {old} to {new}.",
         "changed_status": "[{user}]({user_link}) changed status of issue {subject}" " from {old} to {new}.",
         "changed_type": "[{user}]({user_link}) changed type of issue {subject} from {old} to {new}.",
         "renamed": "[{user}]({user_link}) renamed issue {old} to **{new}**.",
@@ -308,9 +305,7 @@ def get_subject(message: Mapping[str, Any]) -> str:
 
 def get_epic_subject(message: Mapping[str, Any]) -> str:
     if "permalink" in message["data"]["epic"]:
-        return (
-            "[" + message["data"]["epic"]["subject"] + "]" + "(" + message["data"]["epic"]["permalink"] + ")"
-        )
+        return "[" + message["data"]["epic"]["subject"] + "]" + "(" + message["data"]["epic"]["permalink"] + ")"
     return "**" + message["data"]["epic"]["subject"] + "**"
 
 

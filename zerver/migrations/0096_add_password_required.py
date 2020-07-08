@@ -10,8 +10,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="preregistrationuser",
-            name="password_required",
-            field=models.BooleanField(default=True),
+            model_name="preregistrationuser", name="password_required", field=models.BooleanField(default=True),
         ),
     ]

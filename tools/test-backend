@@ -428,11 +428,7 @@ def main() -> None:
 
     with block_internet():
         test_runner = TestRunner(
-            failfast=options.fatal_errors,
-            verbosity=2,
-            parallel=parallel,
-            reverse=options.reverse,
-            keepdb=True,
+            failfast=options.fatal_errors, verbosity=2, parallel=parallel, reverse=options.reverse, keepdb=True,
         )
         failures, failed_tests = test_runner.run_tests(
             suites, full_suite=full_suite, include_webhooks=include_webhooks,

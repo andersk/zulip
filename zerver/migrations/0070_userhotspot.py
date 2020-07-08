@@ -23,9 +23,7 @@ class Migration(migrations.Migration):
                 ("timestamp", models.DateTimeField(default=django.utils.timezone.now)),
                 (
                     "user",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL,
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
                 ),
             ],
         ),

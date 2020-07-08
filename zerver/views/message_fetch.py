@@ -573,9 +573,7 @@ def narrow_parameter(json: str) -> OptionalNarrowListT:
                 raise JsonableError(error.message)
 
             # whitelist the fields we care about for now
-            return dict(
-                operator=elem["operator"], operand=elem["operand"], negated=elem.get("negated", False),
-            )
+            return dict(operator=elem["operator"], operand=elem["operand"], negated=elem.get("negated", False))
 
         raise ValueError("element is not a dictionary")
 

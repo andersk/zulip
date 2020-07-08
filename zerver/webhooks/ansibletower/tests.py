@@ -69,9 +69,7 @@ Job: [#1 Demo Job Template](https://towerhost/#/jobs/playbook/1) was successful:
 * localhost: Success
 """.strip()
 
-        self.send_and_test_stream_message(
-            "job_complete_successful_awx_9.1.1", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("job_complete_successful_awx_9.1.1", expected_topic, expected_message)
 
     def test_ansibletower_job_failed_message(self) -> None:
         """

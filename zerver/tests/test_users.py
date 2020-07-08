@@ -257,9 +257,7 @@ class PermissionTest(ZulipTestCase):
 
         # Also verify the /events code path.  This is a bit hacky, but
         # we need to verify client_gravatar is not being overridden.
-        with mock.patch(
-            "zerver.lib.events.request_event_queue", return_value=None,
-        ) as mock_request_event_queue:
+        with mock.patch("zerver.lib.events.request_event_queue", return_value=None) as mock_request_event_queue:
             with self.assertRaises(JsonableError):
                 result = do_events_register(user, get_client("website"), client_gravatar=True)
             self.assertEqual(mock_request_event_queue.call_args_list[0][0][3], True)
@@ -282,9 +280,7 @@ class PermissionTest(ZulipTestCase):
         # Also verify the /events code path.  This is a bit hacky, but
         # basically we want to verify client_gravatar is being
         # overridden.
-        with mock.patch(
-            "zerver.lib.events.request_event_queue", return_value=None,
-        ) as mock_request_event_queue:
+        with mock.patch("zerver.lib.events.request_event_queue", return_value=None) as mock_request_event_queue:
             with self.assertRaises(JsonableError):
                 result = do_events_register(user, get_client("website"), client_gravatar=True)
             self.assertEqual(mock_request_event_queue.call_args_list[0][0][3], False)
@@ -783,9 +779,7 @@ class AdminCreateUserTest(ZulipTestCase):
         do_set_realm_property(realm, "emails_restricted_to_domains", True)
         result = self.client_post(
             "/json/users",
-            dict(
-                email="romeo@not-zulip.com", password="xxxx", full_name="Romeo Montague", short_name="Romeo",
-            ),
+            dict(email="romeo@not-zulip.com", password="xxxx", full_name="Romeo Montague", short_name="Romeo"),
         )
         self.assert_json_error(result, "Email 'romeo@not-zulip.com' not allowed in this organization")
 
@@ -1210,10 +1204,7 @@ class ActivateTest(ZulipTestCase):
     def test_clear_scheduled_jobs(self) -> None:
         user = self.example_user("hamlet")
         send_future_email(
-            "zerver/emails/followup_day1",
-            user.realm,
-            to_user_ids=[user.id],
-            delay=datetime.timedelta(hours=1),
+            "zerver/emails/followup_day1", user.realm, to_user_ids=[user.id], delay=datetime.timedelta(hours=1),
         )
         self.assertEqual(ScheduledEmail.objects.count(), 1)
         do_deactivate_user(user)
@@ -1352,10 +1343,7 @@ class RecipientInfoTest(ZulipTestCase):
         self.assertEqual(info["wildcard_mention_user_ids"], set())
 
         info = get_recipient_info(
-            recipient=recipient,
-            sender_id=hamlet.id,
-            stream_topic=stream_topic,
-            possible_wildcard_mention=True,
+            recipient=recipient, sender_id=hamlet.id, stream_topic=stream_topic, possible_wildcard_mention=True,
         )
         self.assertEqual(info["wildcard_mention_user_ids"], {hamlet.id, othello.id})
 
@@ -1388,10 +1376,7 @@ class RecipientInfoTest(ZulipTestCase):
         self.assertEqual(info["wildcard_mention_user_ids"], set())
 
         info = get_recipient_info(
-            recipient=recipient,
-            sender_id=hamlet.id,
-            stream_topic=stream_topic,
-            possible_wildcard_mention=True,
+            recipient=recipient, sender_id=hamlet.id, stream_topic=stream_topic, possible_wildcard_mention=True,
         )
         self.assertEqual(info["stream_push_user_ids"], set())
         # Since Hamlet has muted the stream and Cordelia has disabled
@@ -1403,10 +1388,7 @@ class RecipientInfoTest(ZulipTestCase):
         sub.save()
 
         info = get_recipient_info(
-            recipient=recipient,
-            sender_id=hamlet.id,
-            stream_topic=stream_topic,
-            possible_wildcard_mention=True,
+            recipient=recipient, sender_id=hamlet.id, stream_topic=stream_topic, possible_wildcard_mention=True,
         )
         self.assertEqual(info["stream_push_user_ids"], set())
         # Verify that stream-level wildcard_mentions_notify=False works correctly.
@@ -1418,10 +1400,7 @@ class RecipientInfoTest(ZulipTestCase):
         sub.save()
 
         info = get_recipient_info(
-            recipient=recipient,
-            sender_id=hamlet.id,
-            stream_topic=stream_topic,
-            possible_wildcard_mention=True,
+            recipient=recipient, sender_id=hamlet.id, stream_topic=stream_topic, possible_wildcard_mention=True,
         )
         self.assertEqual(info["stream_push_user_ids"], set())
         self.assertEqual(info["wildcard_mention_user_ids"], {othello.id})

@@ -153,9 +153,7 @@ def accounts_register(request: HttpRequest) -> HttpResponse:
             email_allowed_for_realm(email, realm)
         except DomainNotAllowedForRealmError:
             return render(
-                request,
-                "zerver/invalid_email.html",
-                context={"realm_name": realm.name, "closed_domain": True},
+                request, "zerver/invalid_email.html", context={"realm_name": realm.name, "closed_domain": True},
             )
         except DisposableEmailError:
             return render(

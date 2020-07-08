@@ -36,10 +36,7 @@ The panel has no data.
 
         # use fixture named helloworld_hello
         self.send_and_test_stream_message(
-            "no_data_alert",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "no_data_alert", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_no_message_alert(self) -> None:

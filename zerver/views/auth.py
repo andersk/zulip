@@ -890,9 +890,7 @@ def api_fetch_api_key(request: HttpRequest, username: str = REQ(), password: str
         )
     if return_data.get("password_auth_disabled"):
         return json_error(
-            _("Password auth is disabled in your team."),
-            data={"reason": "password auth disabled"},
-            status=403,
+            _("Password auth is disabled in your team."), data={"reason": "password auth disabled"}, status=403,
         )
     if user_profile is None:
         return json_error(

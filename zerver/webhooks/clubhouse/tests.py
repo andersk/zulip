@@ -84,9 +84,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
         self.send_and_test_stream_message("story_update_description", "Add cool feature!", expected_message)
 
     def test_epic_update_change_state(self) -> None:
-        expected_message = (
-            "State of the epic **New Cool Epic!** was changed from **to do** to **in progress**."
-        )
+        expected_message = "State of the epic **New Cool Epic!** was changed from **to do** to **in progress**."
         self.send_and_test_stream_message("epic_update_change_state", "New Cool Epic!", expected_message)
 
     def test_story_update_change_state(self) -> None:
@@ -145,9 +143,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
 
     def test_story_estimate_changed(self) -> None:
         expected_message = "The estimate for the story [Add cool feature!](https://app.clubhouse.io/zulip/story/11) was set to 4 points."
-        self.send_and_test_stream_message(
-            "story_update_change_estimate", "Add cool feature!", expected_message,
-        )
+        self.send_and_test_stream_message("story_update_change_estimate", "Add cool feature!", expected_message)
 
     def test_story_estimate_added(self) -> None:
         expected_message = "The estimate for the story [Add cool feature!](https://app.clubhouse.io/zulip/story/11) was set to 4 points."
@@ -155,9 +151,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
 
     def test_story_estimate_removed(self) -> None:
         expected_message = "The estimate for the story [Add cool feature!](https://app.clubhouse.io/zulip/story/11) was set to *Unestimated*."
-        self.send_and_test_stream_message(
-            "story_update_remove_estimate", "Add cool feature!", expected_message,
-        )
+        self.send_and_test_stream_message("story_update_remove_estimate", "Add cool feature!", expected_message)
 
     def test_story_file_attachment_added(self) -> None:
         expected_message = "A file attachment `zuliprc` was added to the story [Add cool feature!](https://app.clubhouse.io/zulip/story/11)."

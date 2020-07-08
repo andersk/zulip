@@ -13,10 +13,7 @@ class GoSquaredHookTests(WebhookTestCase):
         expected_message = "[requestb.in](https://www.gosquared.com/now/GSN-595854-T) has 33 visitors online."
 
         self.send_and_test_stream_message(
-            "traffic_spike",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "traffic_spike", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_chat_message(self) -> None:

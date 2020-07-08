@@ -376,8 +376,7 @@ class UpdateCustomProfileFieldTest(CustomProfileFieldTestCase):
 
         field = CustomProfileField.objects.get(name="Favorite editor", realm=realm)
         result = self.client_patch(
-            f"/json/realm/profile_fields/{field.id}",
-            info={"name": "Favorite editor", "field_data": "invalid"},
+            f"/json/realm/profile_fields/{field.id}", info={"name": "Favorite editor", "field_data": "invalid"},
         )
         self.assert_json_error(result, "Bad value for 'field_data': invalid")
 
@@ -590,9 +589,7 @@ class ListCustomProfileFieldTest(CustomProfileFieldTestCase):
         try_reorder_realm_custom_profile_fields(realm, order)
         result = self.client_get("/json/realm/profile_fields")
         content = result.json()
-        self.assertListEqual(
-            content["custom_fields"], sorted(content["custom_fields"], key=lambda x: -x["id"]),
-        )
+        self.assertListEqual(content["custom_fields"], sorted(content["custom_fields"], key=lambda x: -x["id"]))
 
     def test_get_custom_profile_fields_from_api(self) -> None:
         iago = self.example_user("iago")

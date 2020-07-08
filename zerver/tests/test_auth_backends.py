@@ -607,9 +607,7 @@ class RateLimitAuthenticationTests(ZulipTestCase):
         user_profile.set_password(password)
         user_profile.save()
 
-        def attempt_authentication(
-            request: HttpRequest, username: str, password: str,
-        ) -> Optional[UserProfile]:
+        def attempt_authentication(request: HttpRequest, username: str, password: str) -> Optional[UserProfile]:
             return EmailAuthBackend().authenticate(
                 request=request,
                 username=username,
@@ -630,9 +628,7 @@ class RateLimitAuthenticationTests(ZulipTestCase):
         user_profile = self.example_user("hamlet")
         password = self.ldap_password("hamlet")
 
-        def attempt_authentication(
-            request: HttpRequest, username: str, password: str,
-        ) -> Optional[UserProfile]:
+        def attempt_authentication(request: HttpRequest, username: str, password: str) -> Optional[UserProfile]:
             return ZulipLDAPAuthBackend().authenticate(
                 request=request,
                 username=username,
@@ -661,9 +657,7 @@ class RateLimitAuthenticationTests(ZulipTestCase):
         user_profile.set_password(email_password)
         user_profile.save()
 
-        def attempt_authentication(
-            request: HttpRequest, username: str, password: str,
-        ) -> Optional[UserProfile]:
+        def attempt_authentication(request: HttpRequest, username: str, password: str) -> Optional[UserProfile]:
             return authenticate(
                 request=request,
                 username=username,
@@ -673,11 +667,7 @@ class RateLimitAuthenticationTests(ZulipTestCase):
             )
 
         self.do_test_auth_rate_limiting(
-            attempt_authentication,
-            user_profile.delivery_email,
-            email_password,
-            "wrong_password",
-            user_profile,
+            attempt_authentication, user_profile.delivery_email, email_password, "wrong_password", user_profile,
         )
         self.do_test_auth_rate_limiting(
             attempt_authentication, user_profile.delivery_email, ldap_password, "wrong_password", user_profile,
@@ -1056,9 +1046,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
             # Verify that the right thing happens with an invalid-format OTP
             result = self.social_auth_test(account_data_dict, subdomain="zulip", mobile_flow_otp="1234")
             self.assert_json_error(result, "Invalid OTP")
-            result = self.social_auth_test(
-                account_data_dict, subdomain="zulip", mobile_flow_otp="invalido" * 8,
-            )
+            result = self.social_auth_test(account_data_dict, subdomain="zulip", mobile_flow_otp="invalido" * 8)
             self.assert_json_error(result, "Invalid OTP")
 
             # Now do it correctly
@@ -1633,9 +1621,7 @@ class SAMLAuthBackendTest(SocialAuthBase):
             self.assertEqual(data["is_signup"], "1")
 
         saml_response = self.generate_saml_response(
-            email=account_data_dict["email"],
-            name=account_data_dict["name"],
-            extra_attributes=extra_attributes,
+            email=account_data_dict["email"], name=account_data_dict["name"], extra_attributes=extra_attributes,
         )
         post_params = {"SAMLResponse": saml_response, "RelayState": relay_state}
         # The mock below is necessary, so that python3-saml accepts our SAMLResponse,
@@ -1744,11 +1730,7 @@ class SAMLAuthBackendTest(SocialAuthBase):
                 self.assertIn("login", result.url)
             self.assertEqual(
                 m.output,
-                [
-                    self.logger_output(
-                        "AuthFailed: Authentication failed: SAML login failed: [] (None)", "info",
-                    ),
-                ],
+                [self.logger_output("AuthFailed: Authentication failed: SAML login failed: [] (None)", "info")],
             )
 
     def test_social_auth_complete_when_base_exc_is_raised(self) -> None:
@@ -1775,9 +1757,7 @@ class SAMLAuthBackendTest(SocialAuthBase):
             result = self.client_get("/complete/saml/")
             self.assertEqual(result.status_code, 302)
             self.assertIn("login", result.url)
-        self.assertEqual(
-            m.output, [self.logger_output("/complete/saml/: No SAMLResponse in request.", "info")],
-        )
+        self.assertEqual(m.output, [self.logger_output("/complete/saml/: No SAMLResponse in request.", "info")])
 
         # Check that POSTing the RelayState, but with missing SAMLResponse,
         # doesn't cause errors either:
@@ -1789,9 +1769,7 @@ class SAMLAuthBackendTest(SocialAuthBase):
             result = self.client_post("/complete/saml/", post_params)
             self.assertEqual(result.status_code, 302)
             self.assertIn("login", result.url)
-        self.assertEqual(
-            m.output, [self.logger_output("/complete/saml/: No SAMLResponse in request.", "info")],
-        )
+        self.assertEqual(m.output, [self.logger_output("/complete/saml/: No SAMLResponse in request.", "info")])
 
         # Now test bad SAMLResponses.
         with self.assertLogs(self.logger_string, level="INFO") as m:
@@ -4041,9 +4019,7 @@ class TestZulipRemoteUserBackend(DesktopFlowTestingLib, ZulipTestCase):
         desktop_flow_otp = "1234abcd" * 8
 
         # Verify that the right thing happens with an invalid-format OTP
-        result = self.client_get(
-            "/accounts/login/sso/", dict(desktop_flow_otp="1234"), REMOTE_USER=remote_user,
-        )
+        result = self.client_get("/accounts/login/sso/", dict(desktop_flow_otp="1234"), REMOTE_USER=remote_user)
         self.assert_logged_in_user_id(None)
         self.assert_json_error_contains(result, "Invalid OTP", 400)
 
@@ -4229,9 +4205,7 @@ class DjangoToLDAPUsernameTests(ZulipTestCase):
 
     def test_django_to_ldap_username_with_email_search(self) -> None:
         self.assertEqual(self.backend.django_to_ldap_username("hamlet"), self.ldap_username("hamlet"))
-        self.assertEqual(
-            self.backend.django_to_ldap_username("hamlet@zulip.com"), self.ldap_username("hamlet"),
-        )
+        self.assertEqual(self.backend.django_to_ldap_username("hamlet@zulip.com"), self.ldap_username("hamlet"))
         # If there are no matches through the email search, raise exception:
         with self.assertRaises(ZulipLDAPExceptionNoMatchingLDAPUser):
             self.backend.django_to_ldap_username("no_such_email@example.com")
@@ -4384,9 +4358,7 @@ class TestLDAP(ZulipLDAPTestCase):
         # dev LDAP environment that allowed login via password substrings.
         self.mock_ldap.directory = generate_dev_ldap_dir("B", 8)
         with self.settings(
-            AUTH_LDAP_USER_SEARCH=LDAPSearch(
-                "ou=users,dc=zulip,dc=com", ldap.SCOPE_ONELEVEL, "(uid=%(user)s)",
-            ),
+            AUTH_LDAP_USER_SEARCH=LDAPSearch("ou=users,dc=zulip,dc=com", ldap.SCOPE_ONELEVEL, "(uid=%(user)s)"),
             AUTH_LDAP_REVERSE_EMAIL_SEARCH=LDAPSearch(
                 "ou=users,dc=zulip,dc=com", ldap.SCOPE_ONELEVEL, "(email=%(email)s)",
             ),
@@ -4456,10 +4428,7 @@ class TestLDAP(ZulipLDAPTestCase):
             self.assertEqual(email_belongs_to_ldap(realm, self.example_email("aaron")), True)
             username = self.ldap_username("aaron")
             user_profile = ZulipLDAPAuthBackend().authenticate(
-                request=mock.MagicMock(),
-                username=username,
-                password=self.ldap_password(username),
-                realm=realm,
+                request=mock.MagicMock(), username=username, password=self.ldap_password(username), realm=realm,
             )
             self.assertEqual(user_profile, self.example_user("aaron"))
 
@@ -5074,8 +5043,7 @@ class TestPasswordAuthEnabled(ZulipTestCase):
 class TestRequireEmailFormatUsernames(ZulipTestCase):
     def test_require_email_format_usernames_for_ldap_with_append_domain(self) -> None:
         with self.settings(
-            AUTHENTICATION_BACKENDS=("zproject.backends.ZulipLDAPAuthBackend",),
-            LDAP_APPEND_DOMAIN="zulip.com",
+            AUTHENTICATION_BACKENDS=("zproject.backends.ZulipLDAPAuthBackend",), LDAP_APPEND_DOMAIN="zulip.com",
         ):
             realm = Realm.objects.get(string_id="zulip")
             self.assertFalse(require_email_format_usernames(realm))

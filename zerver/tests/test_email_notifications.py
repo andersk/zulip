@@ -48,9 +48,7 @@ class TestCustomEmails(ZulipTestCase):
 
     def test_send_custom_email_headers(self) -> None:
         hamlet = self.example_user("hamlet")
-        markdown_template_path = (
-            "zerver/tests/fixtures/email/custom_emails/email_base_headers_test.source.html"
-        )
+        markdown_template_path = "zerver/tests/fixtures/email/custom_emails/email_base_headers_test.source.html"
         send_custom_email([hamlet], {"markdown_template_path": markdown_template_path})
         self.assertEqual(len(mail.outbox), 1)
         msg = mail.outbox[0]
@@ -86,9 +84,7 @@ class TestCustomEmails(ZulipTestCase):
         hamlet = self.example_user("hamlet")
         from_name = "from_name_test"
         email_subject = "subject_test"
-        markdown_template_path = (
-            "zerver/tests/fixtures/email/custom_emails/email_base_headers_test.source.html"
-        )
+        markdown_template_path = "zerver/tests/fixtures/email/custom_emails/email_base_headers_test.source.html"
 
         from zerver.lib.send_email import DoubledEmailArgumentException
 
@@ -112,9 +108,7 @@ class TestCustomEmails(ZulipTestCase):
 
         non_admin_user = self.example_user("cordelia")
 
-        markdown_template_path = (
-            "zerver/tests/fixtures/email/custom_emails/email_base_headers_test.source.html"
-        )
+        markdown_template_path = "zerver/tests/fixtures/email/custom_emails/email_base_headers_test.source.html"
         send_custom_email(
             [admin_user, non_admin_user],
             {"markdown_template_path": markdown_template_path, "admins_only": True},

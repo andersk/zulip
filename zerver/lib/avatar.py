@@ -12,9 +12,7 @@ from zerver.lib.upload import MEDIUM_AVATAR_SIZE, upload_backend
 from zerver.models import UserProfile
 
 
-def avatar_url(
-    user_profile: UserProfile, medium: bool = False, client_gravatar: bool = False,
-) -> Optional[str]:
+def avatar_url(user_profile: UserProfile, medium: bool = False, client_gravatar: bool = False) -> Optional[str]:
 
     return get_avatar_field(
         user_id=user_profile.id,
@@ -36,11 +34,7 @@ def avatar_url_from_dict(userdict: Dict[str, Any], medium: bool = False) -> str:
                 on the client side.
     """
     url = _get_unversioned_avatar_url(
-        userdict["id"],
-        userdict["avatar_source"],
-        userdict["realm_id"],
-        email=userdict["email"],
-        medium=medium,
+        userdict["id"], userdict["avatar_source"], userdict["realm_id"], email=userdict["email"], medium=medium,
     )
     url += "&version={:d}".format(userdict["avatar_version"])
     return url

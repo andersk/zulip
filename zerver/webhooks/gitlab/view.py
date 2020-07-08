@@ -167,9 +167,7 @@ def get_commented_commit_event_body(payload: Dict[str, Any]) -> str:
 def get_commented_merge_request_event_body(payload: Dict[str, Any], include_title: bool = False) -> str:
     comment = payload["object_attributes"]
     action = "[commented]({}) on".format(comment["url"])
-    url = "{}/merge_requests/{}".format(
-        payload["project"].get("web_url"), payload["merge_request"].get("iid"),
-    )
+    url = "{}/merge_requests/{}".format(payload["project"].get("web_url"), payload["merge_request"].get("iid"))
 
     return get_pull_request_event_message(
         get_issue_user_name(payload),

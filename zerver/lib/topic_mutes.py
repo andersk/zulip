@@ -59,9 +59,7 @@ def add_topic_mute(
 
 
 def remove_topic_mute(user_profile: UserProfile, stream_id: int, topic_name: str) -> None:
-    row = MutedTopic.objects.get(
-        user_profile=user_profile, stream_id=stream_id, topic_name__iexact=topic_name,
-    )
+    row = MutedTopic.objects.get(user_profile=user_profile, stream_id=stream_id, topic_name__iexact=topic_name)
     row.delete()
 
 

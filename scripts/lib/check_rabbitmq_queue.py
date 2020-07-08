@@ -52,9 +52,7 @@ CRITICAL_SECONDS_TO_CLEAR_NORMAL: DefaultDict[str, int] = defaultdict(
 )
 
 
-def analyze_queue_stats(
-    queue_name: str, stats: Dict[str, Any], queue_count_rabbitmqctl: int,
-) -> Dict[str, Any]:
+def analyze_queue_stats(queue_name: str, stats: Dict[str, Any], queue_count_rabbitmqctl: int) -> Dict[str, Any]:
     now = int(time.time())
     if stats == {}:
         return dict(status=UNKNOWN, name=queue_name, message="invalid or no stats data")

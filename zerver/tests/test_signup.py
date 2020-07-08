@@ -630,8 +630,7 @@ class LoginTest(ZulipTestCase):
             mock_warning.assert_called_once()
         self.assertEqual(result.status_code, 200)
         self.assert_in_response(
-            "Your Zulip account is not a member of the " "organization associated with this subdomain.",
-            result,
+            "Your Zulip account is not a member of the " "organization associated with this subdomain.", result,
         )
         self.assert_logged_in_user_id(None)
 
@@ -1651,16 +1650,12 @@ so we didn't send them an invitation. We did send invitations to everyone else!"
 
         registration_key = "invalid_confirmation_key"
         url = "/accounts/register/"
-        response = self.client_post(
-            url, {"key": registration_key, "from_confirmation": 1, "full_nme": "alice"},
-        )
+        response = self.client_post(url, {"key": registration_key, "from_confirmation": 1, "full_nme": "alice"})
         self.assertEqual(response.status_code, 200)
         self.assert_in_success_response(["The registration link has expired or is not valid."], response)
 
         registration_key = confirmation_link.split("/")[-1]
-        response = self.client_post(
-            url, {"key": registration_key, "from_confirmation": 1, "full_nme": "alice"},
-        )
+        response = self.client_post(url, {"key": registration_key, "from_confirmation": 1, "full_nme": "alice"})
         self.assert_in_success_response(["We just need you to do one last thing."], response)
         response = self.submit_reg_form_for_user(email, password, key=registration_key)
         self.assertEqual(response.status_code, 302)
@@ -2114,10 +2109,7 @@ class MultiuseInviteTest(ZulipTestCase):
             date_sent = timezone_now()
         key = generate_key()
         Confirmation.objects.create(
-            content_object=invite,
-            date_sent=date_sent,
-            confirmation_key=key,
-            type=Confirmation.MULTIUSE_INVITE,
+            content_object=invite, date_sent=date_sent, confirmation_key=key, type=Confirmation.MULTIUSE_INVITE,
         )
 
         return confirmation_url(key, self.realm, Confirmation.MULTIUSE_INVITE)
@@ -2444,9 +2436,7 @@ class RealmCreationTest(ZulipTestCase):
         self.init_default_ldap_database()
 
         with self.settings(LDAP_EMAIL_ATTR="mail"):
-            self.check_able_to_create_realm(
-                "newuser_email@zulip.com", self.ldap_password("newuser_with_email"),
-            )
+            self.check_able_to_create_realm("newuser_email@zulip.com", self.ldap_password("newuser_with_email"))
 
     def test_create_realm_as_system_bot(self) -> None:
         result = self.client_post("/new/", {"email": "notification-bot@zulip.com"})
@@ -4059,9 +4049,7 @@ class UserSignUpTest(InviteUserBase):
                 ["We just need you to do one last thing.", "newuser@zulip.com"], result,
             )
 
-    @patch(
-        "DNS.dnslookup", return_value=[["sipbtest:*:20922:101:Fred Sipb,,,:/mit/sipbtest:/bin/athena/tcsh"]],
-    )
+    @patch("DNS.dnslookup", return_value=[["sipbtest:*:20922:101:Fred Sipb,,,:/mit/sipbtest:/bin/athena/tcsh"]])
     def test_registration_of_mirror_dummy_user(self, ignored: Any) -> None:
         password = "test"
         subdomain = "zephyr"

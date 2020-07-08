@@ -26,9 +26,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="realm",
-            name="subdomain",
-            field=models.CharField(max_length=40, unique=True, null=True),
+            model_name="realm", name="subdomain", field=models.CharField(max_length=40, unique=True, null=True),
         ),
         migrations.RunPython(set_subdomain_of_default_realm, elidable=True),
     ]

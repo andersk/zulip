@@ -34,9 +34,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="stream",
-            name="history_public_to_subscribers",
-            field=models.BooleanField(default=False),
+            model_name="stream", name="history_public_to_subscribers", field=models.BooleanField(default=False),
         ),
         migrations.RunPython(
             set_initial_value_for_history_public_to_subscribers,

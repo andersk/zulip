@@ -74,9 +74,7 @@ class RealmTest(ZulipTestCase):
         with tornado_redirected_to_list(events):
             do_set_realm_property(realm, "description", new_description)
         event = events[0]["event"]
-        self.assertEqual(
-            event, dict(type="realm", op="update", property="description", value=new_description),
-        )
+        self.assertEqual(event, dict(type="realm", op="update", property="description", value=new_description))
 
     def test_update_realm_description(self) -> None:
         self.login("iago")
@@ -90,9 +88,7 @@ class RealmTest(ZulipTestCase):
             self.assertEqual(realm.description, new_description)
 
         event = events[0]["event"]
-        self.assertEqual(
-            event, dict(type="realm", op="update", property="description", value=new_description),
-        )
+        self.assertEqual(event, dict(type="realm", op="update", property="description", value=new_description))
 
     def test_realm_description_length(self) -> None:
         new_description = "A" * 1001
@@ -174,10 +170,7 @@ class RealmTest(ZulipTestCase):
     def test_do_deactivate_realm_clears_scheduled_jobs(self) -> None:
         user = self.example_user("hamlet")
         send_future_email(
-            "zerver/emails/followup_day1",
-            user.realm,
-            to_user_ids=[user.id],
-            delay=datetime.timedelta(hours=1),
+            "zerver/emails/followup_day1", user.realm, to_user_ids=[user.id], delay=datetime.timedelta(hours=1),
         )
         self.assertEqual(ScheduledEmail.objects.count(), 1)
         do_deactivate_realm(user.realm)
@@ -531,9 +524,7 @@ class RealmTest(ZulipTestCase):
         self.assertTrue(msg in possible_messages)
 
     def test_change_video_chat_provider(self) -> None:
-        self.assertEqual(
-            get_realm("zulip").video_chat_provider, Realm.VIDEO_CHAT_PROVIDERS["jitsi_meet"]["id"],
-        )
+        self.assertEqual(get_realm("zulip").video_chat_provider, Realm.VIDEO_CHAT_PROVIDERS["jitsi_meet"]["id"])
         self.login("iago")
 
         invalid_video_chat_provider_value = 10
@@ -551,9 +542,7 @@ class RealmTest(ZulipTestCase):
         req = {"video_chat_provider": ujson.dumps(Realm.VIDEO_CHAT_PROVIDERS["jitsi_meet"]["id"])}
         result = self.client_patch("/json/realm", req)
         self.assert_json_success(result)
-        self.assertEqual(
-            get_realm("zulip").video_chat_provider, Realm.VIDEO_CHAT_PROVIDERS["jitsi_meet"]["id"],
-        )
+        self.assertEqual(get_realm("zulip").video_chat_provider, Realm.VIDEO_CHAT_PROVIDERS["jitsi_meet"]["id"])
 
         req = {"video_chat_provider": ujson.dumps(Realm.VIDEO_CHAT_PROVIDERS["big_blue_button"]["id"])}
         result = self.client_patch("/json/realm", req)

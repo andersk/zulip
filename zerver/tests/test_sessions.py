@@ -42,14 +42,9 @@ class TestSessions(ZulipTestCase):
 
     def test_delete_user_sessions(self) -> None:
         user_profile = self.example_user("hamlet")
+        self.do_test_session(user_profile, lambda: delete_user_sessions(user_profile), get_realm("zulip"), True)
         self.do_test_session(
-            user_profile, lambda: delete_user_sessions(user_profile), get_realm("zulip"), True,
-        )
-        self.do_test_session(
-            self.example_user("othello"),
-            lambda: delete_user_sessions(user_profile),
-            get_realm("zulip"),
-            False,
+            self.example_user("othello"), lambda: delete_user_sessions(user_profile), get_realm("zulip"), False,
         )
 
     def test_delete_realm_user_sessions(self) -> None:
@@ -112,9 +107,7 @@ class TestExpirableSessionVars(ZulipTestCase):
             self.assertEqual(value, None)
 
     def test_set_and_get_with_delete(self) -> None:
-        set_expirable_session_var(
-            self.session, "test_set_and_get_with_delete", "some_value", expiry_seconds=10,
-        )
+        set_expirable_session_var(self.session, "test_set_and_get_with_delete", "some_value", expiry_seconds=10)
         value = get_expirable_session_var(self.session, "test_set_and_get_with_delete", delete=True)
         self.assertEqual(value, "some_value")
         self.assertEqual(get_expirable_session_var(self.session, "test_set_and_get_with_delete"), None)

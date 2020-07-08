@@ -85,10 +85,7 @@ Hello , This is a reply from an agent to a ticket
 """.strip()
 
         self.send_and_test_stream_message(
-            "agent_replied",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "agent_replied", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     # This simulates the condition when a customer replied to a ticket.

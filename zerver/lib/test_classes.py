@@ -861,9 +861,7 @@ class ZulipTestCase(TestCase):
             shutil.rmtree(path)
 
     def make_import_output_dir(self, exported_from: str) -> str:
-        output_dir = tempfile.mkdtemp(
-            dir=settings.TEST_WORKER_DIR, prefix="test-" + exported_from + "-import-",
-        )
+        output_dir = tempfile.mkdtemp(dir=settings.TEST_WORKER_DIR, prefix="test-" + exported_from + "-import-")
         os.makedirs(output_dir, exist_ok=True)
         return output_dir
 

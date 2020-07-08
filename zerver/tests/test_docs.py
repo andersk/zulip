@@ -430,9 +430,7 @@ class PlansPageTest(ZulipTestCase):
 
         realm.plan_type = Realm.LIMITED
         realm.save()
-        Customer.objects.create(
-            realm=get_realm("zulip"), stripe_customer_id="cus_id", sponsorship_pending=True,
-        )
+        Customer.objects.create(realm=get_realm("zulip"), stripe_customer_id="cus_id", sponsorship_pending=True)
         result = self.client_get("/plans/", subdomain="zulip")
         self.assert_in_success_response([current_plan], result)
         self.assert_in_success_response([current_plan, sponsorship_pending], result)

@@ -325,14 +325,7 @@ class ImportExportTest(ZulipTestCase):
             image_files.add(os.path.basename(image_path))
         self.assertEqual(
             set(image_files),
-            {
-                "night_logo.png",
-                "logo.original",
-                "logo.png",
-                "icon.png",
-                "night_logo.original",
-                "icon.original",
-            },
+            {"night_logo.png", "logo.original", "logo.png", "icon.png", "night_logo.original", "icon.original"},
         )
 
         # Test avatars
@@ -398,14 +391,7 @@ class ImportExportTest(ZulipTestCase):
             image_files.add(os.path.basename(image_path))
         self.assertEqual(
             set(image_files),
-            {
-                "night_logo.png",
-                "logo.original",
-                "logo.png",
-                "icon.png",
-                "night_logo.original",
-                "icon.original",
-            },
+            {"night_logo.png", "logo.original", "logo.png", "icon.png", "night_logo.original", "icon.original"},
         )
 
         # Test avatars
@@ -800,9 +786,7 @@ class ImportExportTest(ZulipTestCase):
 
         assert_realm_values(get_custom_profile_field_names)
 
-        def get_custom_profile_with_field_type_user(
-            r: Realm,
-        ) -> Tuple[Set[Any], Set[Any], Set[FrozenSet[str]]]:
+        def get_custom_profile_with_field_type_user(r: Realm) -> Tuple[Set[Any], Set[Any], Set[FrozenSet[str]]]:
             fields = CustomProfileField.objects.filter(field_type=CustomProfileField.USER, realm=r)
 
             def get_email(user_id: int) -> str:

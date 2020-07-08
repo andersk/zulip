@@ -399,9 +399,7 @@ class EditMessageTest(ZulipTestCase):
             {"timestamp", "prev_content", "user_id", "prev_rendered_content", "prev_rendered_content_version"},
         )
 
-        result = self.client_patch(
-            "/json/messages/" + str(msg_id), {"message_id": msg_id, "topic": "topic 2"},
-        )
+        result = self.client_patch("/json/messages/" + str(msg_id), {"message_id": msg_id, "topic": "topic 2"})
         self.assert_json_success(result)
         history = ujson.loads(Message.objects.get(id=msg_id).edit_history)
         self.assertEqual(history[0][LEGACY_PREV_TOPIC], "topic 1")
@@ -409,8 +407,7 @@ class EditMessageTest(ZulipTestCase):
         self.assertEqual(set(history[0].keys()), {"timestamp", LEGACY_PREV_TOPIC, "user_id"})
 
         result = self.client_patch(
-            "/json/messages/" + str(msg_id),
-            {"message_id": msg_id, "content": "content 3", "topic": "topic 3"},
+            "/json/messages/" + str(msg_id), {"message_id": msg_id, "content": "content 3", "topic": "topic 3"},
         )
         self.assert_json_success(result)
         history = ujson.loads(Message.objects.get(id=msg_id).edit_history)
@@ -438,9 +435,7 @@ class EditMessageTest(ZulipTestCase):
         self.assertEqual(history[0]["user_id"], hamlet.id)
 
         self.login("iago")
-        result = self.client_patch(
-            "/json/messages/" + str(msg_id), {"message_id": msg_id, "topic": "topic 4"},
-        )
+        result = self.client_patch("/json/messages/" + str(msg_id), {"message_id": msg_id, "topic": "topic 4"})
         self.assert_json_success(result)
         history = ujson.loads(Message.objects.get(id=msg_id).edit_history)
         self.assertEqual(history[0][LEGACY_PREV_TOPIC], "topic 3")

@@ -250,9 +250,7 @@ class UserPresenceTests(ZulipTestCase):
         self.assertEqual(UserActivityInterval.objects.filter(user_profile=user_profile).count(), 0)
         time_zero = timezone_now().replace(microsecond=0)
         with mock.patch("zerver.views.presence.timezone_now", return_value=time_zero):
-            result = self.client_post(
-                "/json/users/me/presence", {"status": "active", "new_user_input": "true"},
-            )
+            result = self.client_post("/json/users/me/presence", {"status": "active", "new_user_input": "true"})
         self.assert_json_success(result)
         self.assertEqual(UserActivityInterval.objects.filter(user_profile=user_profile).count(), 1)
         interval = UserActivityInterval.objects.get(user_profile=user_profile)
@@ -262,9 +260,7 @@ class UserPresenceTests(ZulipTestCase):
         second_time = time_zero + timedelta(seconds=600)
         # Extent the interval
         with mock.patch("zerver.views.presence.timezone_now", return_value=second_time):
-            result = self.client_post(
-                "/json/users/me/presence", {"status": "active", "new_user_input": "true"},
-            )
+            result = self.client_post("/json/users/me/presence", {"status": "active", "new_user_input": "true"})
         self.assert_json_success(result)
         self.assertEqual(UserActivityInterval.objects.filter(user_profile=user_profile).count(), 1)
         interval = UserActivityInterval.objects.get(user_profile=user_profile)
@@ -273,9 +269,7 @@ class UserPresenceTests(ZulipTestCase):
 
         third_time = time_zero + timedelta(seconds=6000)
         with mock.patch("zerver.views.presence.timezone_now", return_value=third_time):
-            result = self.client_post(
-                "/json/users/me/presence", {"status": "active", "new_user_input": "true"},
-            )
+            result = self.client_post("/json/users/me/presence", {"status": "active", "new_user_input": "true"})
         self.assert_json_success(result)
         self.assertEqual(UserActivityInterval.objects.filter(user_profile=user_profile).count(), 2)
         interval = UserActivityInterval.objects.filter(user_profile=user_profile).order_by("start")[0]
@@ -297,9 +291,7 @@ class UserPresenceTests(ZulipTestCase):
             2400,
         )
         self.assertEqual(
-            seconds_usage_between(
-                user_profile, time_zero, third_time - timedelta(seconds=100),
-            ).total_seconds(),
+            seconds_usage_between(user_profile, time_zero, third_time - timedelta(seconds=100)).total_seconds(),
             1500,
         )
         self.assertEqual(

@@ -66,13 +66,7 @@ class RateLimitTests(ZulipTestCase):
         return self.api_post(
             user,
             "/api/v1/messages",
-            {
-                "type": "stream",
-                "to": "Verona",
-                "client": "test suite",
-                "content": content,
-                "topic": "whatever",
-            },
+            {"type": "stream", "to": "Verona", "client": "test suite", "content": content, "topic": "whatever"},
         )
 
     def test_headers(self) -> None:

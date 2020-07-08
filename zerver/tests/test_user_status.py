@@ -47,10 +47,7 @@ class UserStatusTest(ZulipTestCase):
         # reference and to maybe reconcile timeout
         # situations.
         update_user_status(
-            user_profile_id=hamlet.id,
-            status=UserStatus.AWAY,
-            status_text="out to lunch",
-            client_id=client2.id,
+            user_profile_id=hamlet.id, status=UserStatus.AWAY, status_text="out to lunch", client_id=client2.id,
         )
 
         self.assertEqual(

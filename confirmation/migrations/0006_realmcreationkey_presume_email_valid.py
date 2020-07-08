@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="realmcreationkey",
-            name="presume_email_valid",
-            field=models.BooleanField(default=False),
+            model_name="realmcreationkey", name="presume_email_valid", field=models.BooleanField(default=False),
         ),
     ]

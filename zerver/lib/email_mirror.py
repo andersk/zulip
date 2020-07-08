@@ -54,9 +54,7 @@ def redact_email_address(error_message: str) -> str:
         email_address = address_match.group(0)
         # Annotate basic info about the address before scrubbing:
         if is_missed_message_address(email_address):
-            redacted_message = error_message.replace(
-                email_address, f"{email_address} <Missed message address>",
-            )
+            redacted_message = error_message.replace(email_address, f"{email_address} <Missed message address>")
         else:
             try:
                 target_stream_id = decode_stream_email_address(email_address)[0].id

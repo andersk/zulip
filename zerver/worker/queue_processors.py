@@ -576,8 +576,7 @@ class PushNotificationsWorker(QueueProcessingWorker):  # nocoverage
 
             def failure_processor(event: Dict[str, Any]) -> None:
                 logger.warning(
-                    "Maximum retries exceeded for trigger:%s event:push_notification",
-                    event["user_profile_id"],
+                    "Maximum retries exceeded for trigger:%s event:push_notification", event["user_profile_id"],
                 )
 
             retry_event(self.queue_name, event, failure_processor)
@@ -704,8 +703,7 @@ class EmbeddedBotWorker(QueueProcessingWorker):
                     bot_handler.initialize(self.get_bot_api_client(user_profile))
                 if event["trigger"] == "mention":
                     message["content"] = extract_query_without_mention(
-                        message=message,
-                        client=cast(ExternalBotHandler, self.get_bot_api_client(user_profile)),
+                        message=message, client=cast(ExternalBotHandler, self.get_bot_api_client(user_profile)),
                     )
                     assert message["content"] is not None
                 bot_handler.handle_message(

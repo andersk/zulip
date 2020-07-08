@@ -874,9 +874,7 @@ class StreamAdminTest(ZulipTestCase):
         do_change_plan_type(realm, Realm.SELF_HOSTED)
         events: List[Mapping[str, Any]] = []
         with tornado_redirected_to_list(events):
-            result = self.client_patch(
-                f"/json/streams/{stream.id}", {"message_retention_days": ujson.dumps(2)},
-            )
+            result = self.client_patch(f"/json/streams/{stream.id}", {"message_retention_days": ujson.dumps(2)})
         self.assert_json_success(result)
 
         event = events[0]["event"]
@@ -1080,8 +1078,7 @@ class StreamAdminTest(ZulipTestCase):
 
         # Even if you could guess the new name, you can't subscribe to it.
         result = self.client_post(
-            "/json/users/me/subscriptions",
-            {"subscriptions": ujson.dumps([{"name": deactivated_stream_name}])},
+            "/json/users/me/subscriptions", {"subscriptions": ujson.dumps([{"name": deactivated_stream_name}])},
         )
         self.assert_json_error(result, f"Unable to access stream ({deactivated_stream_name}).")
 
@@ -2052,13 +2049,7 @@ class SubscriptionPropertiesTest(ZulipTestCase):
                 "/api/v1/users/me/subscriptions/properties",
                 {
                     "subscription_data": ujson.dumps(
-                        [
-                            {
-                                "property": legacy_property_name,
-                                "value": False,
-                                "stream_id": subs[0]["stream_id"],
-                            },
-                        ],
+                        [{"property": legacy_property_name, "value": False, "stream_id": subs[0]["stream_id"]}],
                     ),
                 },
             )
@@ -2862,8 +2853,7 @@ class SubscriptionAPITest(ZulipTestCase):
         self.assertEqual(add_event["event"]["op"], "add")
         self.assertEqual(add_event["users"], [get_user(self.test_email, self.test_realm).id])
         self.assertEqual(
-            set(add_event["event"]["subscriptions"][0]["subscribers"]),
-            {user1.id, user2.id, self.test_user.id},
+            set(add_event["event"]["subscriptions"][0]["subscribers"]), {user1.id, user2.id, self.test_user.id},
         )
 
         self.assertNotIn(self.example_user("polonius").id, add_peer_event["users"])

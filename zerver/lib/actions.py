@@ -2216,12 +2216,7 @@ def get_validated_emails(emails: Iterable[str]) -> List[str]:
 
 
 def check_send_stream_message(
-    sender: UserProfile,
-    client: Client,
-    stream_name: str,
-    topic: str,
-    body: str,
-    realm: Optional[Realm] = None,
+    sender: UserProfile, client: Client, stream_name: str, topic: str, body: str, realm: Optional[Realm] = None,
 ) -> int:
     addressee = Addressee.for_stream_name(stream_name, topic)
     message = check_message(sender, client, addressee, body, realm)
@@ -3387,9 +3382,7 @@ def check_change_full_name(user_profile: UserProfile, full_name_raw: str, acting
     return new_full_name
 
 
-def check_change_bot_full_name(
-    user_profile: UserProfile, full_name_raw: str, acting_user: UserProfile,
-) -> None:
+def check_change_bot_full_name(user_profile: UserProfile, full_name_raw: str, acting_user: UserProfile) -> None:
     new_full_name = check_full_name(full_name_raw)
 
     if new_full_name == user_profile.full_name:
@@ -3715,11 +3708,7 @@ def do_change_default_all_public_streams(user_profile: UserProfile, value: bool,
     user_profile.save(update_fields=["default_all_public_streams"])
     if log:
         log_event(
-            {
-                "type": "user_change_default_all_public_streams",
-                "user": user_profile.email,
-                "value": str(value),
-            },
+            {"type": "user_change_default_all_public_streams", "user": user_profile.email, "value": str(value)},
         )
     if user_profile.is_bot:
         send_event(
@@ -3728,8 +3717,7 @@ def do_change_default_all_public_streams(user_profile: UserProfile, value: bool,
                 type="realm_bot",
                 op="update",
                 bot=dict(
-                    user_id=user_profile.id,
-                    default_all_public_streams=user_profile.default_all_public_streams,
+                    user_id=user_profile.id, default_all_public_streams=user_profile.default_all_public_streams,
                 ),
             ),
             bot_owner_user_ids(user_profile),
@@ -4866,9 +4854,7 @@ def do_update_message(
         new_stream_sub_ids = [user.user_profile_id for user in subs_to_new_stream]
 
         # Get users who aren't subscribed to the new_stream.
-        subs_losing_usermessages = [
-            sub for sub in subscribers if sub.user_profile_id not in new_stream_sub_ids
-        ]
+        subs_losing_usermessages = [sub for sub in subscribers if sub.user_profile_id not in new_stream_sub_ids]
         # Users who can longer access the message without some action
         # from administrators.
         #
@@ -5685,9 +5671,7 @@ def do_resend_user_invite_email(prereg_user: PreregistrationUser) -> int:
     prereg_user.invited_at = timezone_now()
     prereg_user.save()
 
-    do_increment_logging_stat(
-        prereg_user.realm, COUNT_STATS["invites_sent::day"], None, prereg_user.invited_at,
-    )
+    do_increment_logging_stat(prereg_user.realm, COUNT_STATS["invites_sent::day"], None, prereg_user.invited_at)
 
     clear_scheduled_invitation_emails(prereg_user.email)
     # We don't store the custom email body, so just set it to None
@@ -6035,10 +6019,7 @@ def try_add_realm_custom_profile_field(
 ) -> CustomProfileField:
     field = CustomProfileField(realm=realm, name=name, field_type=field_type)
     field.hint = hint
-    if (
-        field.field_type == CustomProfileField.CHOICE
-        or field.field_type == CustomProfileField.EXTERNAL_ACCOUNT
-    ):
+    if field.field_type == CustomProfileField.CHOICE or field.field_type == CustomProfileField.EXTERNAL_ACCOUNT:
         field.field_data = ujson.dumps(field_data or {})
 
     field.save()
@@ -6070,10 +6051,7 @@ def try_update_realm_custom_profile_field(
 ) -> None:
     field.name = name
     field.hint = hint
-    if (
-        field.field_type == CustomProfileField.CHOICE
-        or field.field_type == CustomProfileField.EXTERNAL_ACCOUNT
-    ):
+    if field.field_type == CustomProfileField.CHOICE or field.field_type == CustomProfileField.EXTERNAL_ACCOUNT:
         field.field_data = ujson.dumps(field_data or {})
     field.save()
     notify_realm_custom_profile_fields(realm, "update")
@@ -6167,9 +6145,7 @@ def do_send_create_user_group_event(user_group: UserGroup, members: List[UserPro
     send_event(user_group.realm, event, active_user_ids(user_group.realm_id))
 
 
-def check_add_user_group(
-    realm: Realm, name: str, initial_members: List[UserProfile], description: str,
-) -> None:
+def check_add_user_group(realm: Realm, name: str, initial_members: List[UserProfile], description: str) -> None:
     try:
         user_group = create_user_group(name, initial_members, realm, description=description)
         do_send_create_user_group_event(user_group, initial_members)

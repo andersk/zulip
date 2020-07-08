@@ -290,11 +290,7 @@ def has_request_variables(view_func: ViewFuncT) -> ViewFuncT:
 
             # Record arguments that should be documented so that our
             # automated OpenAPI docs tests can compare these against the code.
-            if (
-                not value.intentionally_undocumented
-                and not value.documentation_pending
-                and not value.path_only
-            ):
+            if not value.intentionally_undocumented and not value.documentation_pending and not value.path_only:
                 arguments_map[view_func_full_name].append(value.post_var_name)
 
     @wraps(view_func)

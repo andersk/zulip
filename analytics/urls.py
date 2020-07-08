@@ -19,9 +19,7 @@ i18n_urlpatterns = [
         name="analytics.views.get_user_activity",
     ),
     path(
-        "stats/realm/<str:realm_str>/",
-        analytics.views.stats_for_realm,
-        name="analytics.views.stats_for_realm",
+        "stats/realm/<str:realm_str>/", analytics.views.stats_for_realm, name="analytics.views.stats_for_realm",
     ),
     path(
         "stats/installation",

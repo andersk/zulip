@@ -228,9 +228,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ("ios_app_id", models.TextField(null=True)),
                 (
                     "user",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL,
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
                 ),
             ],
         ),
@@ -316,9 +314,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ("timestamp", models.DateTimeField(auto_now_add=True)),
                 (
                     "user_profile",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL,
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
                 ),
             ],
         ),
@@ -371,9 +367,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ),
                 (
                     "user_profile",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL,
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
                 ),
             ],
         ),
@@ -390,9 +384,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ("client", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Client")),
                 (
                     "user_profile",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL,
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
                 ),
             ],
         ),
@@ -407,9 +399,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ("end", models.DateTimeField(db_index=True, verbose_name="end time")),
                 (
                     "user_profile",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL,
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
                 ),
             ],
         ),
@@ -446,9 +436,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ),
                 (
                     "user_profile",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL,
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
                 ),
             ],
         ),
@@ -464,9 +452,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ("client", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Client")),
                 (
                     "user_profile",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL,
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
                 ),
             ],
         ),
@@ -664,9 +650,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ],
             ),
         ),
-        migrations.AlterField(
-            model_name="realmemoji", name="img_url", field=models.URLField(max_length=1000),
-        ),
+        migrations.AlterField(model_name="realmemoji", name="img_url", field=models.URLField(max_length=1000)),
         migrations.CreateModel(
             name="Attachment",
             fields=[
@@ -680,9 +664,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ("messages", models.ManyToManyField(to="zerver.Message")),
                 (
                     "owner",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL,
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
                 ),
                 ("is_realm_public", models.BooleanField(default=False)),
             ],

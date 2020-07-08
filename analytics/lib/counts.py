@@ -250,10 +250,7 @@ def do_aggregate_to_summary_table(stat: CountStat, end_time: datetime, realm: Op
         cursor.execute(installationcount_query, {"property": stat.property, "end_time": end_time})
         end = time.time()
         logger.info(
-            "%s InstallationCount aggregation (%dms/%sr)",
-            stat.property,
-            (end - start) * 1000,
-            cursor.rowcount,
+            "%s InstallationCount aggregation (%dms/%sr)", stat.property, (end - start) * 1000, cursor.rowcount,
         )
 
     cursor.close()

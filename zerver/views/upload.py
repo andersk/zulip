@@ -115,9 +115,7 @@ def upload_file_backend(request: HttpRequest, user_profile: UserProfile) -> Http
     file_size = user_file.size
     if settings.MAX_FILE_UPLOAD_SIZE * 1024 * 1024 < file_size:
         return json_error(
-            _("Uploaded file is larger than the allowed limit of {} MiB").format(
-                settings.MAX_FILE_UPLOAD_SIZE,
-            ),
+            _("Uploaded file is larger than the allowed limit of {} MiB").format(settings.MAX_FILE_UPLOAD_SIZE),
         )
     check_upload_within_quota(user_profile.realm, file_size)
 

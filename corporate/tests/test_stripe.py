@@ -474,9 +474,7 @@ class StripeTest(StripeTestCase):
         self.assertEqual(len(stripe_charges), 1)
         self.assertEqual(stripe_charges[0].amount, 8000 * self.seat_count)
         # TODO: fix Decimal
-        self.assertEqual(
-            stripe_charges[0].description, f"Upgrade to Zulip Standard, $80.0 x {self.seat_count}",
-        )
+        self.assertEqual(stripe_charges[0].description, f"Upgrade to Zulip Standard, $80.0 x {self.seat_count}")
         self.assertEqual(stripe_charges[0].receipt_email, user.email)
         self.assertEqual(stripe_charges[0].statement_descriptor, "Zulip Standard")
         # Check Invoices in Stripe
@@ -1551,9 +1549,7 @@ class StripeTest(StripeTestCase):
 
         # Replace with a valid card
         stripe_token = stripe_create_token(card_number="5555555555554444").id
-        response = self.client_post(
-            "/json/billing/sources/change", {"stripe_token": ujson.dumps(stripe_token)},
-        )
+        response = self.client_post("/json/billing/sources/change", {"stripe_token": ujson.dumps(stripe_token)})
         self.assert_json_success(response)
         number_of_sources = 0
         for stripe_source in stripe_get_customer(stripe_customer_id).sources:
@@ -1688,13 +1684,9 @@ class StripeTest(StripeTestCase):
         annual_ledger_entries = LicenseLedger.objects.filter(plan=annual_plan).order_by("id")
         self.assertEqual(len(annual_ledger_entries), 2)
         self.assertEqual(annual_ledger_entries[0].is_renewal, True)
-        self.assertEqual(
-            annual_ledger_entries.values_list("licenses", "licenses_at_next_renewal")[0], (20, 20),
-        )
+        self.assertEqual(annual_ledger_entries.values_list("licenses", "licenses_at_next_renewal")[0], (20, 20))
         self.assertEqual(annual_ledger_entries[1].is_renewal, False)
-        self.assertEqual(
-            annual_ledger_entries.values_list("licenses", "licenses_at_next_renewal")[1], (25, 25),
-        )
+        self.assertEqual(annual_ledger_entries.values_list("licenses", "licenses_at_next_renewal")[1], (25, 25))
         audit_log = RealmAuditLog.objects.get(
             event_type=RealmAuditLog.CUSTOMER_SWITCHED_FROM_MONTHLY_TO_ANNUAL_PLAN,
         )

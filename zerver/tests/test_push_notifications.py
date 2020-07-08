@@ -890,9 +890,7 @@ class HandlePushNotificationTest(PushNotificationTest):
             user_profile=self.user_profile, message=message,
         )
 
-        android_devices = list(
-            PushDeviceToken.objects.filter(user=self.user_profile, kind=PushDeviceToken.GCM),
-        )
+        android_devices = list(PushDeviceToken.objects.filter(user=self.user_profile, kind=PushDeviceToken.GCM))
 
         apple_devices = list(PushDeviceToken.objects.filter(user=self.user_profile, kind=PushDeviceToken.APNS))
 
@@ -921,9 +919,7 @@ class HandlePushNotificationTest(PushNotificationTest):
         user_profile = self.example_user("hamlet")
         message = self.get_message(Recipient.PERSONAL, type_id=1)
         UserMessage.objects.create(
-            user_profile=user_profile,
-            message=message,
-            flags=UserMessage.flags.active_mobile_push_notification,
+            user_profile=user_profile, message=message, flags=UserMessage.flags.active_mobile_push_notification,
         )
 
         with self.settings(PUSH_NOTIFICATION_BOUNCER_URL=True), mock.patch(
@@ -969,9 +965,7 @@ class HandlePushNotificationTest(PushNotificationTest):
             flags=UserMessage.flags.active_mobile_push_notification,
         )
 
-        android_devices = list(
-            PushDeviceToken.objects.filter(user=self.user_profile, kind=PushDeviceToken.GCM),
-        )
+        android_devices = list(PushDeviceToken.objects.filter(user=self.user_profile, kind=PushDeviceToken.GCM))
 
         apple_devices = list(PushDeviceToken.objects.filter(user=self.user_profile, kind=PushDeviceToken.APNS))
 
@@ -1050,9 +1044,7 @@ class HandlePushNotificationTest(PushNotificationTest):
             "trigger": "stream_push_notify",
         }
 
-        android_devices = list(
-            PushDeviceToken.objects.filter(user=self.user_profile, kind=PushDeviceToken.GCM),
-        )
+        android_devices = list(PushDeviceToken.objects.filter(user=self.user_profile, kind=PushDeviceToken.GCM))
 
         apple_devices = list(PushDeviceToken.objects.filter(user=self.user_profile, kind=PushDeviceToken.APNS))
 
@@ -1094,9 +1086,7 @@ class TestAPNs(PushNotificationTest):
 
         zerver.lib.push_notifications._apns_client_initialized = False
         try:
-            with self.settings(APNS_CERT_FILE="/foo.pem"), mock.patch(
-                "apns2.client.APNsClient",
-            ) as mock_client:
+            with self.settings(APNS_CERT_FILE="/foo.pem"), mock.patch("apns2.client.APNsClient") as mock_client:
                 client = get_apns_client()
                 self.assertEqual(mock_client.return_value, client)
         finally:
@@ -1277,8 +1267,7 @@ class TestGetAPNsPayload(PushNotificationTest):
                     "message_ids": [message.id],
                     "recipient_type": "private",
                     "pm_users": ",".join(
-                        str(s.user_profile_id)
-                        for s in Subscription.objects.filter(recipient=message.recipient)
+                        str(s.user_profile_id) for s in Subscription.objects.filter(recipient=message.recipient)
                     ),
                     "sender_email": self.sender.email,
                     "sender_id": self.sender.id,
@@ -1405,8 +1394,7 @@ class TestGetAPNsPayload(PushNotificationTest):
                     "message_ids": [message.id],
                     "recipient_type": "private",
                     "pm_users": ",".join(
-                        str(s.user_profile_id)
-                        for s in Subscription.objects.filter(recipient=message.recipient)
+                        str(s.user_profile_id) for s in Subscription.objects.filter(recipient=message.recipient)
                     ),
                     "sender_email": self.sender.email,
                     "sender_id": self.sender.id,

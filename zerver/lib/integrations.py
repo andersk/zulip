@@ -445,9 +445,7 @@ INTEGRATIONS: Dict[str, Integration] = {
         display_name="Capistrano",
         doc="zerver/integrations/capistrano.md",
     ),
-    "codebase": Integration(
-        "codebase", "codebase", ["version-control"], doc="zerver/integrations/codebase.md",
-    ),
+    "codebase": Integration("codebase", "codebase", ["version-control"], doc="zerver/integrations/codebase.md"),
     "discourse": Integration(
         "discourse", "discourse", ["communication"], doc="zerver/integrations/discourse.md",
     ),
@@ -503,9 +501,7 @@ INTEGRATIONS: Dict[str, Integration] = {
         doc="zerver/integrations/openshift.md",
         stream_name="deployments",
     ),
-    "perforce": Integration(
-        "perforce", "perforce", ["version-control"], doc="zerver/integrations/perforce.md",
-    ),
+    "perforce": Integration("perforce", "perforce", ["version-control"], doc="zerver/integrations/perforce.md"),
     "phabricator": Integration(
         "phabricator", "phabricator", ["version-control"], doc="zerver/integrations/phabricator.md",
     ),

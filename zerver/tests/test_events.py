@@ -835,10 +835,7 @@ class NormalActionsTest(BaseAction):
                 ("type", equals("typing")),
                 ("op", equals("start")),
                 ("sender", check_dict_only([("email", check_string), ("user_id", check_int)])),
-                (
-                    "recipients",
-                    check_list(check_dict_only([("email", check_string), ("user_id", check_int)])),
-                ),
+                ("recipients", check_list(check_dict_only([("email", check_string), ("user_id", check_int)]))),
             ],
         )
 
@@ -1763,9 +1760,7 @@ class NormalActionsTest(BaseAction):
         )
 
         events = self.verify_action(
-            lambda: do_change_notification_settings(
-                self.user_profile, notification_setting, "ding", log=False,
-            ),
+            lambda: do_change_notification_settings(self.user_profile, notification_setting, "ding", log=False),
         )
         schema_checker("events[0]", events[0])
 

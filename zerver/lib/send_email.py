@@ -95,9 +95,7 @@ def build_email(
 
     def render_templates() -> Tuple[str, str, str]:
         email_subject = (
-            loader.render_to_string(
-                template_prefix + ".subject.txt", context=context, using="Jinja2_plaintext",
-            )
+            loader.render_to_string(template_prefix + ".subject.txt", context=context, using="Jinja2_plaintext")
             .strip()
             .replace("\n", "")
         )

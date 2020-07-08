@@ -34,16 +34,16 @@ class GithubWebhookTest(WebhookTestCase):
         self.send_and_test_stream_message("push__delete_branch", "public-repo / feature", expected_message)
 
     def test_push_local_branch_without_commits(self) -> None:
-        expected_message = "eeshangarg [pushed](https://github.com/eeshangarg/public-repo/compare/feature) the branch feature."
+        expected_message = (
+            "eeshangarg [pushed](https://github.com/eeshangarg/public-repo/compare/feature) the branch feature."
+        )
         self.send_and_test_stream_message(
             "push__local_branch_without_commits", "public-repo / feature", expected_message,
         )
 
     def test_push_1_commit(self) -> None:
         expected_message = "baxterthehacker [pushed](https://github.com/baxterthehacker/public-repo/compare/9049f1265b7d...0d1a26e67d8f) 1 commit to branch changes.\n\n* Update README.md ([0d1a26e](https://github.com/baxterthehacker/public-repo/commit/0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c))"
-        self.send_and_test_stream_message(
-            "push__1_commit", self.EXPECTED_TOPIC_BRANCH_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("push__1_commit", self.EXPECTED_TOPIC_BRANCH_EVENTS, expected_message)
 
     def test_push_1_commit_without_username(self) -> None:
         expected_message = "eeshangarg [pushed](https://github.com/eeshangarg/public-repo/compare/0383613da871...2e8cf535fb38) 1 commit to branch changes. Commits by John Snow (1).\n\n* Update the README ([2e8cf53](https://github.com/eeshangarg/public-repo/commit/2e8cf535fb38a3dab2476cdf856efda904ad4c94))"
@@ -54,9 +54,7 @@ class GithubWebhookTest(WebhookTestCase):
     def test_push_1_commit_filtered_by_branches(self) -> None:
         self.url = self.build_webhook_url("master,changes")
         expected_message = "baxterthehacker [pushed](https://github.com/baxterthehacker/public-repo/compare/9049f1265b7d...0d1a26e67d8f) 1 commit to branch changes.\n\n* Update README.md ([0d1a26e](https://github.com/baxterthehacker/public-repo/commit/0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c))"
-        self.send_and_test_stream_message(
-            "push__1_commit", self.EXPECTED_TOPIC_BRANCH_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("push__1_commit", self.EXPECTED_TOPIC_BRANCH_EVENTS, expected_message)
 
     def test_push_multiple_comitters(self) -> None:
         commits_info = "* Update README.md ([0d1a26e](https://github.com/baxterthehacker/public-repo/commit/0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c))\n"
@@ -121,9 +119,7 @@ class GithubWebhookTest(WebhookTestCase):
 
     def test_deployment_msg(self) -> None:
         expected_message = "baxterthehacker created new deployment."
-        self.send_and_test_stream_message(
-            "deployment", self.EXPECTED_TOPIC_DEPLOYMENT_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("deployment", self.EXPECTED_TOPIC_DEPLOYMENT_EVENTS, expected_message)
 
     def test_deployment_status_msg(self) -> None:
         expected_message = "Deployment changed status to success."
@@ -316,9 +312,7 @@ class GithubWebhookTest(WebhookTestCase):
         self.send_and_test_stream_message("pull_request__assigned", expected_topic, expected_message)
 
     def test_pull_request_unassigned_msg(self) -> None:
-        expected_message = (
-            "eeshangarg unassigned [PR #1](https://github.com/zulip-test-org/helloworld/pull/1)."
-        )
+        expected_message = "eeshangarg unassigned [PR #1](https://github.com/zulip-test-org/helloworld/pull/1)."
         self.send_and_test_stream_message(
             "pull_request__unassigned", "helloworld / PR #1 Mention that Zulip rocks!", expected_message,
         )

@@ -622,9 +622,7 @@ class MoveMessageToArchiveGeneral(MoveMessageToArchiveBase):
         ]
 
         attachment_id_to_message_ids: Dict[int, List[int]] = {}
-        attachment_ids = list(
-            Attachment.objects.filter(messages__id__in=msg_ids).values_list("id", flat=True),
-        )
+        attachment_ids = list(Attachment.objects.filter(messages__id__in=msg_ids).values_list("id", flat=True))
         for attachment_id in attachment_ids:
             attachment_id_to_message_ids[attachment_id] = list(
                 Message.objects.filter(attachment__id=attachment_id).values_list("id", flat=True),

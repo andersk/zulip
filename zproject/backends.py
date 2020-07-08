@@ -862,16 +862,12 @@ class ZulipLDAPUserPopulator(ZulipLDAPAuthBackendBase):
             user_disabled_in_ldap = self.is_account_control_disabled_user(ldap_user)
             if user_disabled_in_ldap:
                 if user.is_active:
-                    logging.info(
-                        "Deactivating user %s because they are disabled in LDAP.", user.delivery_email,
-                    )
+                    logging.info("Deactivating user %s because they are disabled in LDAP.", user.delivery_email)
                     do_deactivate_user(user)
                 # Do an early return to avoid trying to sync additional data.
                 return (user, built)
             elif not user.is_active:
-                logging.info(
-                    "Reactivating user %s because they are not disabled in LDAP.", user.delivery_email,
-                )
+                logging.info("Reactivating user %s because they are not disabled in LDAP.", user.delivery_email)
                 do_reactivate_user(user)
 
         self.sync_avatar_from_ldap(user, ldap_user)
@@ -1556,9 +1552,7 @@ class GitHubAuthBackend(SocialAuthMixin, GithubOAuth2):
         # verified by GitHub, because the whole point is for the user
         # to demonstrate that they control the target email address.
         verified_emails: List[str] = []
-        for email_obj in [
-            obj for obj in self.get_usable_email_objects(*args, **kwargs) if obj.get("verified")
-        ]:
+        for email_obj in [obj for obj in self.get_usable_email_objects(*args, **kwargs) if obj.get("verified")]:
             # social_associate_user_helper assumes that the first email in
             # verified_emails is primary.
             if email_obj.get("primary"):

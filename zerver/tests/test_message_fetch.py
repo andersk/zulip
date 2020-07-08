@@ -352,9 +352,7 @@ class NarrowBuilderTest(ZulipTestCase):
         term = dict(operator="group-pm-with", operand=self.othello_email)
         self._do_add_term_test(term, "WHERE recipient_id IN (%(recipient_id_1)s)")
 
-    def test_add_term_using_group_pm_operator_not_the_same_user_as_operand_and_negated(
-        self,
-    ) -> None:  # NEGATED
+    def test_add_term_using_group_pm_operator_not_the_same_user_as_operand_and_negated(self) -> None:  # NEGATED
         term = dict(operator="group-pm-with", operand=self.othello_email, negated=True)
         self._do_add_term_test(term, "WHERE 1 = 1")
 
@@ -1235,8 +1233,7 @@ class GetOldMessagesTest(ZulipTestCase):
         payload = self.client_get("/json/messages", dict(post_params), **kwargs)
         self.assert_json_success(payload)
         self.assertEqual(
-            set(payload["Cache-Control"].split(", ")),
-            {"must-revalidate", "no-store", "no-cache", "max-age=0"},
+            set(payload["Cache-Control"].split(", ")), {"must-revalidate", "no-store", "no-cache", "max-age=0"},
         )
 
         result = ujson.loads(payload.content)
@@ -1383,9 +1380,7 @@ class GetOldMessagesTest(ZulipTestCase):
         hamlet = self.example_user("hamlet")
         self.login_user(hamlet)
 
-        do_set_realm_property(
-            hamlet.realm, "email_address_visibility", Realm.EMAIL_ADDRESS_VISIBILITY_EVERYONE,
-        )
+        do_set_realm_property(hamlet.realm, "email_address_visibility", Realm.EMAIL_ADDRESS_VISIBILITY_EVERYONE)
 
         self.send_personal_message(hamlet, self.example_user("iago"))
 
@@ -2023,9 +2018,7 @@ class GetOldMessagesTest(ZulipTestCase):
             dict(operator="search", operand="butter"),
         ]
         special_search_result: Dict[str, Any] = self.get_and_check_messages(
-            dict(
-                narrow=ujson.dumps(special_search_narrow), anchor=next_message_id, num_after=10, num_before=0,
-            ),
+            dict(narrow=ujson.dumps(special_search_narrow), anchor=next_message_id, num_after=10, num_before=0),
         )
         self.assertEqual(len(special_search_result["messages"]), 1)
         self.assertEqual(
@@ -2037,9 +2030,7 @@ class GetOldMessagesTest(ZulipTestCase):
             dict(operator="search", operand="&"),
         ]
         special_search_result = self.get_and_check_messages(
-            dict(
-                narrow=ujson.dumps(special_search_narrow), anchor=next_message_id, num_after=10, num_before=0,
-            ),
+            dict(narrow=ujson.dumps(special_search_narrow), anchor=next_message_id, num_after=10, num_before=0),
         )
         self.assertEqual(len(special_search_result["messages"]), 1)
         self.assertEqual(

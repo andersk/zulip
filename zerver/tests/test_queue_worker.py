@@ -335,8 +335,7 @@ class WorkerTest(ZulipTestCase):
                     worker.start()
                     self.assertEqual(mock_mirror_email.call_count, 4)
                     mock_warn.assert_called_with(
-                        "Deadlock trying to incr_ratelimit for %s",
-                        f"RateLimitedRealmMirror:{realm.string_id}",
+                        "Deadlock trying to incr_ratelimit for %s", f"RateLimitedRealmMirror:{realm.string_id}",
                     )
 
     def test_email_sending_worker_retries(self) -> None:

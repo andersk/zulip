@@ -82,9 +82,7 @@ class TopicHistoryTest(ZulipTestCase):
 
         self.assertEqual([topic["name"] for topic in history], ["topic0", "topic1", "topic2"])
 
-        self.assertEqual(
-            [topic["max_id"] for topic in history], [topic0_msg_id, topic1_msg_id, topic2_msg_id],
-        )
+        self.assertEqual([topic["max_id"] for topic in history], [topic0_msg_id, topic1_msg_id, topic2_msg_id])
 
         # Now try as cordelia, who we imagine as a totally new user in
         # that she doesn't have UserMessage rows.  We should see the
@@ -101,9 +99,7 @@ class TopicHistoryTest(ZulipTestCase):
         self.assertEqual([topic["name"] for topic in history], ["topic0", "topic1", "topic2"])
         self.assertIn("topic0", [topic["name"] for topic in history])
 
-        self.assertEqual(
-            [topic["max_id"] for topic in history], [topic0_msg_id, topic1_msg_id, topic2_msg_id],
-        )
+        self.assertEqual([topic["max_id"] for topic in history], [topic0_msg_id, topic1_msg_id, topic2_msg_id])
 
         # Now make stream private, but subscribe cordelia
         do_change_stream_invite_only(stream, True)

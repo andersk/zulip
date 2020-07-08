@@ -347,10 +347,7 @@ class TestRealmAuditLog(ZulipTestCase):
 
         do_set_realm_authentication_methods(realm, auth_method_dict, acting_user=user)
         realm_audit_logs = RealmAuditLog.objects.filter(
-            realm=realm,
-            event_type=RealmAuditLog.REALM_PROPERTY_CHANGED,
-            event_time__gte=now,
-            acting_user=user,
+            realm=realm, event_type=RealmAuditLog.REALM_PROPERTY_CHANGED, event_time__gte=now, acting_user=user,
         )
         self.assertEqual(realm_audit_logs.count(), 1)
         extra_data = ujson.loads(realm_audit_logs[0].extra_data)

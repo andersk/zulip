@@ -149,6 +149,4 @@ def send_email_mirror(
 
 
 recipient = str(os.environ.get("ORIGINAL_RECIPIENT", options.recipient))
-send_email_mirror(
-    recipient, options.shared_secret, options.host, options.url, options.test, options.verify_ssl,
-)
+send_email_mirror(recipient, options.shared_secret, options.host, options.url, options.test, options.verify_ssl)

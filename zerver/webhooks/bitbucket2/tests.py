@@ -112,9 +112,7 @@ class Bitbucket2HookTests(WebhookTestCase):
 
     def test_bitbucket2_on_issue_commented_event(self) -> None:
         expected_message = "kolaszek [commented](https://bitbucket.org/kolaszek/repository-name/issues/2#comment-28973596) on [Issue #1](https://bitbucket.org/kolaszek/repository-name/issues/2/bug)."
-        self.send_and_test_stream_message(
-            "issue_commented", self.EXPECTED_TOPIC_ISSUE_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("issue_commented", self.EXPECTED_TOPIC_ISSUE_EVENTS, expected_message)
 
     def test_bitbucket2_on_issue_commented_with_custom_topic_in_url(self) -> None:
         self.url = self.build_webhook_url(topic="notifications")

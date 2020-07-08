@@ -85,11 +85,7 @@ class EmbeddedBotHandler:
 
         if message["type"] == "stream":
             internal_send_stream_message_by_name(
-                self.user_profile.realm,
-                self.user_profile,
-                message["to"],
-                message["topic"],
-                message["content"],
+                self.user_profile.realm, self.user_profile, message["to"], message["topic"], message["content"],
             )
             return
 

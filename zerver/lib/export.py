@@ -667,10 +667,7 @@ def get_realm_config() -> Config:
     )
 
     Config(
-        table="zerver_userhotspot",
-        model=UserHotspot,
-        normal_parent=user_profile_config,
-        parent_key="user__in",
+        table="zerver_userhotspot", model=UserHotspot, normal_parent=user_profile_config, parent_key="user__in",
     )
 
     Config(
@@ -681,10 +678,7 @@ def get_realm_config() -> Config:
     )
 
     Config(
-        table="zerver_service",
-        model=Service,
-        normal_parent=user_profile_config,
-        parent_key="user_profile__in",
+        table="zerver_service", model=Service, normal_parent=user_profile_config, parent_key="user_profile__in",
     )
 
     Config(
@@ -1154,9 +1148,7 @@ def export_uploads_and_avatars(realm: Realm, output_dir: Path) -> None:
             realm, local_dir=os.path.join(settings.LOCAL_UPLOADS_DIR, "files"), output_dir=uploads_output_dir,
         )
         export_avatars_from_local(
-            realm,
-            local_dir=os.path.join(settings.LOCAL_UPLOADS_DIR, "avatars"),
-            output_dir=avatars_output_dir,
+            realm, local_dir=os.path.join(settings.LOCAL_UPLOADS_DIR, "avatars"), output_dir=avatars_output_dir,
         )
         export_emoji_from_local(
             realm, local_dir=os.path.join(settings.LOCAL_UPLOADS_DIR, "avatars"), output_dir=emoji_output_dir,
@@ -1776,10 +1768,7 @@ def get_analytics_config() -> Config:
     )
 
     Config(
-        table="analytics_usercount",
-        model=UserCount,
-        normal_parent=analytics_config,
-        parent_key="realm_id__in",
+        table="analytics_usercount", model=UserCount, normal_parent=analytics_config, parent_key="realm_id__in",
     )
 
     Config(

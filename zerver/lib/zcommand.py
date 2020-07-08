@@ -50,10 +50,7 @@ def process_zcommands(content: str, user_profile: UserProfile) -> Dict[str, Any]
             return dict(msg="You are still in fluid width mode.")
         return dict(
             msg=change_mode_setting(
-                command=command,
-                switch_command="fixed-width",
-                setting="fluid_layout_width",
-                setting_value=True,
+                command=command, switch_command="fixed-width", setting="fluid_layout_width", setting_value=True,
             ),
         )
     elif command == "fixed-width":

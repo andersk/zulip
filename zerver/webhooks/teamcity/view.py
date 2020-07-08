@@ -93,11 +93,7 @@ def api_teamcity_webhook(
 """.strip()
 
     body = template.format(
-        build_name=build_name,
-        build_id=build_number,
-        status=status,
-        changes_url=changes_url,
-        log_url=build_url,
+        build_name=build_name, build_id=build_number, status=status, changes_url=changes_url, log_url=build_url,
     )
 
     if "branchDisplayName" in message:

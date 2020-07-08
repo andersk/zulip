@@ -456,11 +456,7 @@ INTERNAL_BOTS = [
     {"var_name": "NOTIFICATION_BOT", "email_template": "notification-bot@%s", "name": "Notification Bot"},
     {"var_name": "EMAIL_GATEWAY_BOT", "email_template": "emailgateway@%s", "name": "Email Gateway"},
     {"var_name": "NAGIOS_SEND_BOT", "email_template": "nagios-send-bot@%s", "name": "Nagios Send Bot"},
-    {
-        "var_name": "NAGIOS_RECEIVE_BOT",
-        "email_template": "nagios-receive-bot@%s",
-        "name": "Nagios Receive Bot",
-    },
+    {"var_name": "NAGIOS_RECEIVE_BOT", "email_template": "nagios-receive-bot@%s", "name": "Nagios Receive Bot"},
     {"var_name": "WELCOME_BOT", "email_template": "welcome-bot@%s", "name": "Welcome Bot"},
 ]
 

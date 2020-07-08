@@ -62,8 +62,7 @@ def add_user_alert_words(user_profile: UserProfile, new_words: Iterable[str]) ->
         word_dict[word.lower()] = word
 
     AlertWord.objects.bulk_create(
-        AlertWord(user_profile=user_profile, word=word, realm=user_profile.realm)
-        for word in word_dict.values()
+        AlertWord(user_profile=user_profile, word=word, realm=user_profile.realm) for word in word_dict.values()
     )
     # Django bulk_create operations don't flush caches, so we need to do this ourselves.
     flush_realm_alert_words(user_profile.realm)

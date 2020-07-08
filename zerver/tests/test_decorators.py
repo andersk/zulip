@@ -1407,9 +1407,7 @@ class TestValidateApiKey(ZulipTestCase):
             with mock.patch("logging.warning") as mock_warning:
                 with self.assertRaisesRegex(JsonableError, "Account is not associated with this subdomain"):
                     validate_api_key(
-                        HostRequestMock(host="acme." + settings.EXTERNAL_HOST),
-                        self.default_bot.email,
-                        api_key,
+                        HostRequestMock(host="acme." + settings.EXTERNAL_HOST), self.default_bot.email, api_key,
                     )
 
                 mock_warning.assert_called_with(

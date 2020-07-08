@@ -30,9 +30,7 @@ def api_opsgenie_webhook(
     if "note" in payload["alert"]:
         info["additional_info"] += bullet_template.format(key="Note", value=payload["alert"]["note"])
     if "recipient" in payload["alert"]:
-        info["additional_info"] += bullet_template.format(
-            key="Recipient", value=payload["alert"]["recipient"],
-        )
+        info["additional_info"] += bullet_template.format(key="Recipient", value=payload["alert"]["recipient"])
     if "addedTags" in payload["alert"]:
         info["additional_info"] += bullet_template.format(
             key="Tags added", value=payload["alert"]["addedTags"],
