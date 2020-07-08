@@ -84,9 +84,7 @@ class Command(ZulipBaseCommand):
                 or tos_prompt.lower() == ""
                 or tos_prompt.lower() == "yes"
             ):
-                raise CommandError(
-                    "Aborting, since Terms of Service have not been accepted.",
-                )
+                raise CommandError("Aborting, since Terms of Service have not been accepted.")
 
         registration_url = (
             settings.PUSH_NOTIFICATION_BOUNCER_URL + "/api/v1/remotes/server/register"

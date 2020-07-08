@@ -271,10 +271,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                         verbose_name="ID",
                     ),
                 ),
-                (
-                    "kind",
-                    models.PositiveSmallIntegerField(choices=[(1, "apns"), (2, "gcm")]),
-                ),
+                ("kind", models.PositiveSmallIntegerField(choices=[(1, "apns"), (2, "gcm")])),
                 ("token", models.CharField(max_length=4096, unique=True)),
                 (
                     "last_updated",

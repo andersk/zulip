@@ -427,9 +427,7 @@ class PushNotificationMarkReadFlowsTest(ZulipTestCase):
             .values_list("message_id", flat=True),
         )
 
-    @mock.patch(
-        "zerver.lib.push_notifications.push_notifications_enabled", return_value=True,
-    )
+    @mock.patch("zerver.lib.push_notifications.push_notifications_enabled", return_value=True)
     def test_track_active_mobile_push_notifications(
         self, mock_push_notifications: mock.MagicMock,
     ) -> None:
@@ -980,9 +978,7 @@ class MessageAccessTests(ZulipTestCase):
         ]
         # Send a second message so we can verify it isn't modified
         other_message_ids = [
-            self.send_stream_message(
-                self.example_user("hamlet"), stream_name, "test_unused",
-            ),
+            self.send_stream_message(self.example_user("hamlet"), stream_name, "test_unused"),
         ]
         received_message_ids = [
             self.send_personal_message(

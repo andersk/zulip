@@ -295,9 +295,7 @@ def build_reactions(
         total_reactions.append(reaction_dict)
 
 
-def get_mentioned_user_ids(
-    raw_message: Dict[str, Any], user_id_mapper: IdMapper,
-) -> Set[int]:
+def get_mentioned_user_ids(raw_message: Dict[str, Any], user_id_mapper: IdMapper) -> Set[int]:
     user_ids = set()
     content = raw_message["content"]
 
@@ -418,9 +416,7 @@ def process_raw_message_batch(
         mention_map=mention_map,
     )
 
-    message_json = dict(
-        zerver_message=zerver_message, zerver_usermessage=zerver_usermessage,
-    )
+    message_json = dict(zerver_message=zerver_message, zerver_usermessage=zerver_usermessage)
 
     dump_file_id = NEXT_ID("dump_file_id" + str(realm_id))
     message_file = f"/messages-{dump_file_id:06}.json"
@@ -746,9 +742,7 @@ def mattermost_data_file_to_dict(mattermost_data_file: str) -> Dict[str, Any]:
     return mattermost_data
 
 
-def do_convert_data(
-    mattermost_data_dir: str, output_dir: str, masking_content: bool,
-) -> None:
+def do_convert_data(mattermost_data_dir: str, output_dir: str, masking_content: bool) -> None:
     username_to_user: Dict[str, Dict[str, Any]] = {}
 
     os.makedirs(output_dir, exist_ok=True)

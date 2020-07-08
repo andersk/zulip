@@ -115,7 +115,9 @@ else:
         lag["replay"] = sent_offset - loc_to_abs_offset(replay_lsn)
         for lag_type in ("write", "flush", "replay"):
             lag_bytes = lag[lag_type]
-            msg = f"replica {client_addr} is {lag_bytes} bytes behind in {lag_type} of WAL logs"
+            msg = (
+                f"replica {client_addr} is {lag_bytes} bytes behind in {lag_type} of WAL logs"
+            )
             if lag_bytes > 5 * 16 * 1024 ** 2:
                 report("CRITICAL", msg)
             elif lag_bytes > 16 * 1024 ** 2:

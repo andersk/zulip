@@ -103,10 +103,7 @@ def check_subdomain_available(subdomain: str, from_management_command: bool = Fa
         return
     if len(subdomain) < 3:
         raise ValidationError(error_strings["too short"])
-    if (
-        is_reserved_subdomain(subdomain)
-        or Realm.objects.filter(string_id=subdomain).exists()
-    ):
+    if is_reserved_subdomain(subdomain) or Realm.objects.filter(string_id=subdomain).exists():
         raise ValidationError(error_strings["unavailable"])
 
 

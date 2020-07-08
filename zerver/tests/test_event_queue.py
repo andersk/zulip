@@ -821,8 +821,7 @@ class FileReloadLogicTest(ZulipTestCase):
             TORNADO_PROCESSES=4,
         ):
             self.assertEqual(
-                persistent_queue_filename(9993),
-                "/home/zulip/tornado/event_queues.9993.json",
+                persistent_queue_filename(9993), "/home/zulip/tornado/event_queues.9993.json",
             )
             self.assertEqual(
                 persistent_queue_filename(9993, last=True),

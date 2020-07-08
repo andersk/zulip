@@ -170,9 +170,7 @@ def access_stream_for_send_message(
     # Organization admins can send to any stream, irrespective of the stream_post_policy value.
     if sender.is_realm_admin or is_cross_realm_bot_email(sender.delivery_email):
         pass
-    elif sender.is_bot and (
-        sender.bot_owner is not None and sender.bot_owner.is_realm_admin
-    ):
+    elif sender.is_bot and (sender.bot_owner is not None and sender.bot_owner.is_realm_admin):
         pass
     elif stream.stream_post_policy == Stream.STREAM_POST_POLICY_ADMINS:
         raise JsonableError(_("Only organization administrators can send to this stream."))
@@ -215,9 +213,7 @@ def access_stream_for_send_message(
     raise JsonableError(_("Not authorized to send to stream '{}'").format(stream.name))
 
 
-def check_for_exactly_one_stream_arg(
-    stream_id: Optional[int], stream: Optional[str],
-) -> None:
+def check_for_exactly_one_stream_arg(stream_id: Optional[int], stream: Optional[str]) -> None:
     if stream_id is None and stream is None:
         raise JsonableError(_("Please supply 'stream'."))
 

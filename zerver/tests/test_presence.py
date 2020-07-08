@@ -9,11 +9,7 @@ from zerver.lib.actions import do_deactivate_user
 from zerver.lib.presence import get_status_dict_by_realm
 from zerver.lib.statistics import seconds_usage_between
 from zerver.lib.test_classes import ZulipTestCase
-from zerver.lib.test_helpers import (
-    make_client,
-    queries_captured,
-    reset_emails_in_zulip_realm,
-)
+from zerver.lib.test_helpers import make_client, queries_captured, reset_emails_in_zulip_realm
 from zerver.lib.timestamp import datetime_to_timestamp
 from zerver.models import (
     Client,
@@ -279,9 +275,7 @@ class UserPresenceTests(ZulipTestCase):
         )
         interval = UserActivityInterval.objects.get(user_profile=user_profile)
         self.assertEqual(interval.start, time_zero)
-        self.assertEqual(
-            interval.end, second_time + UserActivityInterval.MIN_INTERVAL_LENGTH,
-        )
+        self.assertEqual(interval.end, second_time + UserActivityInterval.MIN_INTERVAL_LENGTH)
 
         third_time = time_zero + timedelta(seconds=6000)
         with mock.patch("zerver.views.presence.timezone_now", return_value=third_time):
@@ -296,9 +290,7 @@ class UserPresenceTests(ZulipTestCase):
             "start",
         )[0]
         self.assertEqual(interval.start, time_zero)
-        self.assertEqual(
-            interval.end, second_time + UserActivityInterval.MIN_INTERVAL_LENGTH,
-        )
+        self.assertEqual(interval.end, second_time + UserActivityInterval.MIN_INTERVAL_LENGTH)
         interval = UserActivityInterval.objects.filter(user_profile=user_profile).order_by(
             "start",
         )[1]
@@ -487,9 +479,7 @@ class SingleUserPresenceTests(ZulipTestCase):
 
         sipbtest = self.mit_user("sipbtest")
         self.login_user(sipbtest)
-        result = self.client_get(
-            "/json/users/othello@zulip.com/presence", subdomain="zephyr",
-        )
+        result = self.client_get("/json/users/othello@zulip.com/presence", subdomain="zephyr")
         self.assert_json_error(result, "No such user")
 
         # Then, we check everything works

@@ -33,15 +33,11 @@ class TaigaHookTests(WebhookTestCase):
 
     def test_taiga_userstory_changed_reassigned(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) reassigned user story **UserStory** from TomaszKolek to HanSolo."
-        self.send_and_test_stream_message(
-            "userstory_changed_reassigned", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("userstory_changed_reassigned", self.TOPIC, message)
 
     def test_taiga_userstory_changed_unassigned(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) unassigned user story **UserStory**."
-        self.send_and_test_stream_message(
-            "userstory_changed_unassigned", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("userstory_changed_unassigned", self.TOPIC, message)
 
     def test_taiga_userstory_changed_points(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) changed estimation of user story **UserStory**."
@@ -49,9 +45,7 @@ class TaigaHookTests(WebhookTestCase):
 
     def test_taiga_userstory_changed_new_sprint(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) added user story **UserStory** to sprint Sprint1."
-        self.send_and_test_stream_message(
-            "userstory_changed_new_sprint", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("userstory_changed_new_sprint", self.TOPIC, message)
 
     def test_taiga_userstory_changed_sprint(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) changed sprint of user story **UserStory** from Sprint1 to Sprint2."
@@ -105,7 +99,9 @@ class TaigaHookTests(WebhookTestCase):
         )
 
     def test_taiga_task_created(self) -> None:
-        message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) created task **New Task**."
+        message = (
+            "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) created task **New Task**."
+        )
         self.send_and_test_stream_message("task_created", self.TOPIC, message)
 
     def test_taiga_task_changed_user_stories(self) -> None:
@@ -117,7 +113,9 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("task_changed_status", self.TOPIC, message)
 
     def test_taiga_task_changed_blocked(self) -> None:
-        message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) blocked task **New Task**."
+        message = (
+            "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) blocked task **New Task**."
+        )
         self.send_and_test_stream_message("task_changed_blocked", self.TOPIC, message)
 
     def test_taiga_task_changed_blocked_link(self) -> None:
@@ -145,7 +143,9 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("task_changed_description", self.TOPIC, message)
 
     def test_taiga_task_deleted(self) -> None:
-        message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) deleted task **New Task**."
+        message = (
+            "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) deleted task **New Task**."
+        )
         self.send_and_test_stream_message("task_deleted", self.TOPIC, message)
 
     def test_taiga_task_changed_comment_added(self) -> None:

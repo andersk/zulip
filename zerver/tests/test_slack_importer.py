@@ -84,9 +84,7 @@ class SlackImporter(ZulipTestCase):
         token = "xoxp-invalid-token"
         with self.assertRaises(Exception) as invalid:
             get_slack_api_data(slack_user_list_url, "members", token=token)
-        self.assertEqual(
-            invalid.exception.args, ("Error accessing Slack API: invalid_auth",),
-        )
+        self.assertEqual(invalid.exception.args, ("Error accessing Slack API: invalid_auth",))
 
         with self.assertRaises(Exception) as invalid:
             get_slack_api_data(slack_user_list_url, "members")
@@ -195,13 +193,9 @@ class SlackImporter(ZulipTestCase):
         self.assertEqual(users[4]["is_mirror_dummy"], True)
 
         api_calls = [
-            call(
-                "https://slack.com/api/users.info", "user", token="token", user="U061A3E0G",
-            ),
+            call("https://slack.com/api/users.info", "user", token="token", user="U061A3E0G"),
             call("https://slack.com/api/team.info", "team", token="token", team="T6LARQE2Z"),
-            call(
-                "https://slack.com/api/users.info", "user", token="token", user="U061A8H1G",
-            ),
+            call("https://slack.com/api/users.info", "user", token="token", user="U061A8H1G"),
             call("https://slack.com/api/team.info", "team", token="token", team="T7KJRQE8Y"),
         ]
         api_mock.assert_has_calls(api_calls, any_order=True)
@@ -1005,13 +999,7 @@ class SlackImporter(ZulipTestCase):
 
         mock_get_messages_iterator.side_effect = fake_get_messages_iter
         mock_message.side_effect = [
-            [
-                zerver_message[:1],
-                zerver_usermessage[:2],
-                attachments,
-                uploads,
-                reactions[:1],
-            ],
+            [zerver_message[:1], zerver_usermessage[:2], attachments, uploads, reactions[:1]],
             [
                 zerver_message[1:2],
                 zerver_usermessage[2:5],

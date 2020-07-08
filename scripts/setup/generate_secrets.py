@@ -149,10 +149,7 @@ def generate_secrets(development: bool = False) -> None:
 
                 redis_password = random_token()
 
-                for filename in [
-                    "/etc/redis/zuli-redis.conf",
-                    "/etc/redis/zulip-redis.conf",
-                ]:
+                for filename in ["/etc/redis/zuli-redis.conf", "/etc/redis/zulip-redis.conf"]:
                     if os.path.exists(filename):
                         with open(filename, "a") as f:
                             f.write(

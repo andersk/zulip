@@ -524,9 +524,7 @@ class EditMessageSideEffectsTest(ZulipTestCase):
         self.assertEqual(get_apns_badge_count(group_mentioned_user), 1)
 
         self._get_queued_data_for_message_update(
-            message_id=message_id,
-            content="Removed group mention",
-            expect_short_circuit=True,
+            message_id=message_id, content="Removed group mention", expect_short_circuit=True,
         )
 
         self.assertEqual(get_apns_badge_count(group_mentioned_user), 0)

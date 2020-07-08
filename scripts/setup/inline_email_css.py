@@ -47,9 +47,7 @@ def inline_template(template_source_name: str) -> None:
     template_name = template_source_name.split(".source.html")[0]
     template_path = os.path.join(EMAIL_TEMPLATES_PATH, template_source_name)
     compiled_template_path = os.path.join(
-        os.path.dirname(template_path),
-        "compiled",
-        os.path.basename(template_name) + ".html",
+        os.path.dirname(template_path), "compiled", os.path.basename(template_name) + ".html",
     )
 
     os.makedirs(os.path.dirname(compiled_template_path), exist_ok=True)

@@ -59,9 +59,7 @@ def stream_handle_match(key: str) -> str:
     if relative_help_links:
         return f"1. Go to [{stream_info[key][0]}]({stream_info[key][1]})."
     if key == "all":
-        return (
-            stream_instructions_no_link + "\n\n1. Click **All streams** in the upper left."
-        )
+        return stream_instructions_no_link + "\n\n1. Click **All streams** in the upper left."
     return stream_instructions_no_link
 
 

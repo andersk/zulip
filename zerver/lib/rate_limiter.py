@@ -249,10 +249,7 @@ class TornadoInMemoryRateLimiterBackend(RateLimiterBackend):
         now = time.time()
 
         # Remove all timestamps from `reset_times` that are too old.
-        if (
-            cls.last_gc_time.get((time_window, max_count), 0)
-            <= now - time_window / max_count
-        ):
+        if cls.last_gc_time.get((time_window, max_count), 0) <= now - time_window / max_count:
             cls.last_gc_time[(time_window, max_count)] = now
             cls._garbage_collect_for_rule(now, time_window, max_count)
 
@@ -436,9 +433,7 @@ class RedisRateLimiterBackend(RateLimiterBackend):
         return False, 0.0
 
     @classmethod
-    def incr_ratelimit(
-        cls, entity_key: str, max_api_calls: int, max_api_window: int,
-    ) -> None:
+    def incr_ratelimit(cls, entity_key: str, max_api_calls: int, max_api_window: int) -> None:
         """Increases the rate-limit for the specified entity"""
         list_key, set_key, _ = cls.get_keys(entity_key)
         now = time.time()

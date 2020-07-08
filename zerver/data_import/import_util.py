@@ -215,8 +215,7 @@ def build_public_stream_subscriptions(
     public_stream_recipient_ids = {
         recipient["id"]
         for recipient in zerver_recipient
-        if recipient["type"] == Recipient.STREAM
-        and recipient["type_id"] in public_stream_ids
+        if recipient["type"] == Recipient.STREAM and recipient["type_id"] in public_stream_ids
     }
 
     user_ids = [user["id"] for user in zerver_userprofile]
@@ -298,9 +297,7 @@ def build_personal_subscriptions(
     subscriptions: List[ZerverFieldsT] = []
 
     personal_recipients = [
-        recipient
-        for recipient in zerver_recipient
-        if recipient["type"] == Recipient.PERSONAL
+        recipient for recipient in zerver_recipient if recipient["type"] == Recipient.PERSONAL
     ]
 
     for recipient in personal_recipients:
@@ -752,9 +749,7 @@ def process_emojis(
 
     # Run downloads in parallel
     output = []
-    for (status, job) in run_parallel_wrapper(
-        get_emojis, upload_emoji_list, threads=threads,
-    ):
+    for (status, job) in run_parallel_wrapper(get_emojis, upload_emoji_list, threads=threads):
         output.append(job)
 
     logging.info("######### GETTING EMOJIS FINISHED #########\n")

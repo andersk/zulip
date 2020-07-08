@@ -208,9 +208,7 @@ def create_dns_record(my_token: str, username: str, ip_address: str) -> None:
 
     print(f"Creating new A record for {username}.zulipdev.org that points to {ip_address}.")
     domain.create_new_domain_record(type="A", name=username, data=ip_address)
-    print(
-        f"Creating new A record for *.{username}.zulipdev.org that points to {ip_address}.",
-    )
+    print(f"Creating new A record for *.{username}.zulipdev.org that points to {ip_address}.")
     domain.create_new_domain_record(type="A", name=wildcard_name, data=ip_address)
 
 

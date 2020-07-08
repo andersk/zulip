@@ -420,10 +420,7 @@ class GitlabHookTests(WebhookTestCase):
         expected_message = "Build job_name from test stage was created."
 
         self.send_and_test_stream_message(
-            "build_created",
-            expected_topic,
-            expected_message,
-            HTTP_X_GITLAB_EVENT="Job Hook",
+            "build_created", expected_topic, expected_message, HTTP_X_GITLAB_EVENT="Job Hook",
         )
 
     def test_build_started_event_message(self) -> None:
@@ -431,10 +428,7 @@ class GitlabHookTests(WebhookTestCase):
         expected_message = "Build job_name from test stage started."
 
         self.send_and_test_stream_message(
-            "build_started",
-            expected_topic,
-            expected_message,
-            HTTP_X_GITLAB_EVENT="Job Hook",
+            "build_started", expected_topic, expected_message, HTTP_X_GITLAB_EVENT="Job Hook",
         )
 
     def test_build_succeeded_event_message(self) -> None:

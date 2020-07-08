@@ -15,8 +15,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="realm",
             name="email_address_visibility",
-            field=models.PositiveSmallIntegerField(
-                default=EMAIL_ADDRESS_VISIBILITY_EVERYONE,
-            ),
+            field=models.PositiveSmallIntegerField(default=EMAIL_ADDRESS_VISIBILITY_EVERYONE),
         ),
     ]

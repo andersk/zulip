@@ -26,9 +26,7 @@ class Command(ZulipBaseCommand):
             "--output", default=None, nargs="?", help="Filename of output tarball",
         )
         parser.add_argument("--skip-db", action="store_true", help="Skip database backup")
-        parser.add_argument(
-            "--skip-uploads", action="store_true", help="Skip uploads backup",
-        )
+        parser.add_argument("--skip-uploads", action="store_true", help="Skip uploads backup")
 
     def handle(self, *args: Any, **options: Any) -> None:
         timestamp = timezone_now().strftime(TIMESTAMP_FORMAT)

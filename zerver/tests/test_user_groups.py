@@ -319,9 +319,7 @@ class UserGroupAPITestCase(ZulipTestCase):
 
         # Test adding a member already there.
         result = self.client_post(f"/json/user_groups/{user_group.id}/members", info=params)
-        self.assert_json_error(
-            result, f"User {othello.id} is already a member of this group",
-        )
+        self.assert_json_error(result, f"User {othello.id} is already a member of this group")
         self.assertEqual(UserGroupMembership.objects.count(), 4)
         members = get_memberships_of_users(user_group, [hamlet, othello])
         self.assertEqual(len(members), 2)

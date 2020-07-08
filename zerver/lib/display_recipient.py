@@ -162,10 +162,7 @@ def bulk_fetch_display_recipients(
                 result.append(
                     (
                         recipient.id,
-                        [
-                            user_profiles[user_id]
-                            for user_id in huddle_user_ids[recipient.id]
-                        ],
+                        [user_profiles[user_id] for user_id in huddle_user_ids[recipient.id]],
                     ),
                 )
 

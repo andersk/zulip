@@ -149,9 +149,7 @@ class DecoratorTestCase(ZulipTestCase):
         request.POST = dict(number="6", x="7")
         with self.assertRaises(RequestConfusingParmsError) as cm:
             double(request)
-        self.assertEqual(
-            str(cm.exception), "Can't decide between 'number' and 'x' arguments",
-        )
+        self.assertEqual(str(cm.exception), "Can't decide between 'number' and 'x' arguments")
 
     def test_REQ_converter(self) -> None:
         def my_converter(data: str) -> List[int]:
@@ -639,15 +637,11 @@ body:
         api_key = get_api_key(user_profile)
         credentials = f"{user_profile.email}:{api_key}"
         api_auth = "Digest " + base64.b64encode(credentials.encode("utf-8")).decode("utf-8")
-        result = self.client_post(
-            "/api/v1/external/zendesk", {}, HTTP_AUTHORIZATION=api_auth,
-        )
+        result = self.client_post("/api/v1/external/zendesk", {}, HTTP_AUTHORIZATION=api_auth)
         self.assert_json_error(result, "This endpoint requires HTTP basic authentication.")
 
         api_auth = "Basic " + base64.b64encode(b"foo").decode("utf-8")
-        result = self.client_post(
-            "/api/v1/external/zendesk", {}, HTTP_AUTHORIZATION=api_auth,
-        )
+        result = self.client_post("/api/v1/external/zendesk", {}, HTTP_AUTHORIZATION=api_auth)
         self.assert_json_error(
             result, "Invalid authorization header for basic auth", status_code=401,
         )
@@ -1088,9 +1082,7 @@ class ValidatorTestCase(ZulipTestCase):
         check_string_or_int_list("x", x)
 
         x = None
-        with self.assertRaisesRegex(
-            ValidationError, r"x is not a string or an integer list",
-        ):
+        with self.assertRaisesRegex(ValidationError, r"x is not a string or an integer list"):
             check_string_or_int_list("x", x)
 
         x = [1, 2, "3"]
@@ -1465,9 +1457,7 @@ class TestValidateApiKey(ZulipTestCase):
     def test_validate_api_key_if_email_is_case_insensitive(self) -> None:
         api_key = get_api_key(self.default_bot)
         profile = validate_api_key(
-            HostRequestMock(host="zulip.testserver"),
-            self.default_bot.email.upper(),
-            api_key,
+            HostRequestMock(host="zulip.testserver"), self.default_bot.email.upper(), api_key,
         )
         self.assertEqual(profile.id, self.default_bot.id)
 
@@ -1672,9 +1662,7 @@ class TestAuthenticatedJsonPostViewDecorator(ZulipTestCase):
         # we deactivate user manually because do_deactivate_user removes user session
         user_profile.is_active = False
         user_profile.save()
-        self.assert_json_error_contains(
-            self._do_test(user_profile), "Account is deactivated",
-        )
+        self.assert_json_error_contains(self._do_test(user_profile), "Account is deactivated")
         do_reactivate_user(user_profile)
 
     def test_authenticated_json_post_view_if_user_realm_is_deactivated(self) -> None:

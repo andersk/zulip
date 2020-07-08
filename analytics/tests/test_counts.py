@@ -172,9 +172,7 @@ class AnalyticsTestCase(ZulipTestCase):
     ) -> None:
         if property is None:
             property = self.current_property
-        queryset = table.objects.filter(property=property, end_time=end_time).filter(
-            **kwargs,
-        )
+        queryset = table.objects.filter(property=property, end_time=end_time).filter(**kwargs)
         if table is not InstallationCount:
             if realm is None:
                 realm = self.default_realm
@@ -238,9 +236,7 @@ class TestProcessCountStat(AnalyticsTestCase):
             INSERT INTO analytics_realmcount (realm_id, value, property, end_time)
             VALUES ({default_realm_id}, 1, {property}, %(time_end)s)
         """,
-        ).format(
-            default_realm_id=Literal(self.default_realm.id), property=Literal(property),
-        )
+        ).format(default_realm_id=Literal(self.default_realm.id), property=Literal(property))
         return CountStat(
             property, sql_data_collector(RealmCount, query, None), CountStat.HOUR,
         )
@@ -315,9 +311,7 @@ class TestProcessCountStat(AnalyticsTestCase):
         for stat in [user_stat, stream_stat, realm_stat]:
             process_count_stat(stat, end_time)
         self.assertTableState(UserCount, ["property", "value"], [[user_stat.property, 5]])
-        self.assertTableState(
-            StreamCount, ["property", "value"], [[stream_stat.property, 5]],
-        )
+        self.assertTableState(StreamCount, ["property", "value"], [[stream_stat.property, 5]])
         self.assertTableState(
             RealmCount,
             ["property", "value"],
@@ -339,9 +333,7 @@ class TestProcessCountStat(AnalyticsTestCase):
         for stat in [user_stat, stream_stat, realm_stat]:
             process_count_stat(stat, end_time)
         self.assertTableState(UserCount, ["property", "value"], [[user_stat.property, 6]])
-        self.assertTableState(
-            StreamCount, ["property", "value"], [[stream_stat.property, 6]],
-        )
+        self.assertTableState(StreamCount, ["property", "value"], [[stream_stat.property, 6]])
         self.assertTableState(
             RealmCount,
             ["property", "value"],
@@ -992,9 +984,7 @@ class TestCountStats(AnalyticsTestCase):
             [[1, user2], [1, user3], [1, user4], [1, user5], [1, user6], [1, user7]],
         )
         self.assertTableState(
-            RealmCount,
-            ["value", "realm"],
-            [[5, self.default_realm], [1, self.second_realm]],
+            RealmCount, ["value", "realm"], [[5, self.default_realm], [1, self.second_realm]],
         )
         self.assertTableState(InstallationCount, ["value"], [[6]])
         self.assertTableState(StreamCount, [], [])
@@ -1067,9 +1057,7 @@ class TestCountStats(AnalyticsTestCase):
             [[1, user2], [1, user3], [1, user4], [1, user5], [1, user6], [1, user7]],
         )
         self.assertTableState(
-            RealmCount,
-            ["value", "realm"],
-            [[5, self.default_realm], [1, self.second_realm]],
+            RealmCount, ["value", "realm"], [[5, self.default_realm], [1, self.second_realm]],
         )
         self.assertTableState(InstallationCount, ["value"], [[6]])
         self.assertTableState(StreamCount, [], [])
@@ -1276,9 +1264,7 @@ class TestDoIncrementLoggingStat(AnalyticsTestCase):
             self.default_realm, stat, None, self.TIME_ZERO, increment=-1,
         )
         self.assertTableState(RealmCount, ["value"], [[-1]])
-        do_increment_logging_stat(
-            self.default_realm, stat, None, self.TIME_ZERO, increment=3,
-        )
+        do_increment_logging_stat(self.default_realm, stat, None, self.TIME_ZERO, increment=3)
         self.assertTableState(RealmCount, ["value"], [[2]])
         do_increment_logging_stat(self.default_realm, stat, None, self.TIME_ZERO)
         self.assertTableState(RealmCount, ["value"], [[3]])

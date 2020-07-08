@@ -129,9 +129,7 @@ def topic_and_body(payload: Dict[str, Any]) -> Tuple[str, str]:
             # Running into the 60 character topic limit.
             # topic = '[{}](https://dashboard.stripe.com/customers/{})' % (object_['id'], object_['id'])
             topic = object_["id"]
-            body = default_body(
-                update_blacklist=["delinquent", "currency", "default_source"],
-            )
+            body = default_body(update_blacklist=["delinquent", "currency", "default_source"])
             if event == "created":
                 if object_["email"]:
                     body += "\nEmail: {}".format(object_["email"])

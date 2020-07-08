@@ -17,13 +17,7 @@ from zerver.lib.remote_server import PushNotificationBouncerRetryLaterError
 from zerver.lib.send_email import FromAddress
 from zerver.lib.test_classes import ZulipTestCase
 from zerver.lib.test_helpers import simulated_queue_client
-from zerver.models import (
-    PreregistrationUser,
-    UserActivity,
-    get_client,
-    get_realm,
-    get_stream,
-)
+from zerver.models import PreregistrationUser, UserActivity, get_client, get_realm, get_stream
 from zerver.tornado.event_queue import build_offline_notification
 from zerver.worker import queue_processors
 from zerver.worker.queue_processors import (
@@ -263,9 +257,7 @@ class WorkerTest(ZulipTestCase):
                 event_new = generate_new_message_notification()
                 event_remove = generate_remove_notification()
                 fake_client.queue.append(("missedmessage_mobile_notifications", event_new))
-                fake_client.queue.append(
-                    ("missedmessage_mobile_notifications", event_remove),
-                )
+                fake_client.queue.append(("missedmessage_mobile_notifications", event_remove))
 
                 worker.start()
                 mock_handle_new.assert_called_once_with(
@@ -287,9 +279,7 @@ class WorkerTest(ZulipTestCase):
                 event_new = generate_new_message_notification()
                 event_remove = generate_remove_notification()
                 fake_client.queue.append(("missedmessage_mobile_notifications", event_new))
-                fake_client.queue.append(
-                    ("missedmessage_mobile_notifications", event_remove),
-                )
+                fake_client.queue.append(("missedmessage_mobile_notifications", event_remove))
 
                 with patch("zerver.lib.queue.queue_json_publish", side_effect=fake_publish):
                     worker.start()

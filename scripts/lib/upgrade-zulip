@@ -50,9 +50,7 @@ try:
     # not readable by the Zulip user.
     logging.info("Archiving the tarball under %s", TARBALL_ARCHIVE_PATH)
     os.makedirs(TARBALL_ARCHIVE_PATH, exist_ok=True)
-    archived_tarball_path = os.path.join(
-        TARBALL_ARCHIVE_PATH, os.path.basename(tarball_path),
-    )
+    archived_tarball_path = os.path.join(TARBALL_ARCHIVE_PATH, os.path.basename(tarball_path))
     shutil.copy(tarball_path, archived_tarball_path)
     subprocess.check_output(["chown", "-R", "zulip:zulip", TARBALL_ARCHIVE_PATH])
 

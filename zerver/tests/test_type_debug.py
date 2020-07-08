@@ -56,9 +56,7 @@ class TypesPrintTest(ZulipTestCase):
 
     def test_list(self) -> None:
         self.check_signature("add([], [str]) -> [str]", ["two"], add, [], ["two"])
-        self.check_signature(
-            "add([int], [str]) -> [int, ...]", [2, "two"], add, [2], ["two"],
-        )
+        self.check_signature("add([int], [str]) -> [int, ...]", [2, "two"], add, [2], ["two"])
         self.check_signature(
             "add([int, ...], y=[]) -> [int, ...]", [2, "two"], add, [2, "two"], y=[],
         )
@@ -92,9 +90,7 @@ class TypesPrintTest(ZulipTestCase):
         class B(str):
             pass
 
-        self.check_signature(
-            "<lambda>(A) -> str", "A", (lambda x: x.__class__.__name__), A(),
-        )
+        self.check_signature("<lambda>(A) -> str", "A", (lambda x: x.__class__.__name__), A())
         self.check_signature("<lambda>(B) -> int", 5, (lambda x: len(x)), B("hello"))
 
     def test_sequence(self) -> None:
@@ -104,9 +100,7 @@ class TypesPrintTest(ZulipTestCase):
         class B(List[Any]):
             pass
 
-        self.check_signature(
-            "add(A([]), B([str])) -> [str]", ["two"], add, A([]), B(["two"]),
-        )
+        self.check_signature("add(A([]), B([str])) -> [str]", ["two"], add, A([]), B(["two"]))
         self.check_signature(
             "add(A([int]), B([str])) -> [int, ...]", [2, "two"], add, A([2]), B(["two"]),
         )

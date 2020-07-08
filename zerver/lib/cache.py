@@ -576,7 +576,9 @@ def bot_dicts_in_realm_cache_key(realm: "Realm") -> str:
 
 
 def get_stream_cache_key(stream_name: str, realm_id: int) -> str:
-    return f"stream_by_realm_and_name:{realm_id}:{make_safe_digest(stream_name.strip().lower())}"
+    return (
+        f"stream_by_realm_and_name:{realm_id}:{make_safe_digest(stream_name.strip().lower())}"
+    )
 
 
 def delete_user_profile_caches(user_profiles: Iterable["UserProfile"]) -> None:

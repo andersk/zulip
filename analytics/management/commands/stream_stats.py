@@ -58,9 +58,7 @@ class Command(BaseCommand):
                 else:
                     stream_type = "public"
                 print(f"{stream.name:>25}", end=" ")
-                recipient = Recipient.objects.filter(
-                    type=Recipient.STREAM, type_id=stream.id,
-                )
+                recipient = Recipient.objects.filter(type=Recipient.STREAM, type_id=stream.id)
                 print(
                     "{:10}".format(
                         len(Subscription.objects.filter(recipient=recipient, active=True)),

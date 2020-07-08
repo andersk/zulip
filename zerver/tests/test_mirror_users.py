@@ -189,9 +189,7 @@ class MirroredMessageUsersTest(ZulipTestCase):
             raise IntegrityError()
 
         with mock.patch("zerver.lib.actions.create_user", side_effect=create_user) as m:
-            mirror_fred_user = create_mirror_user_if_needed(
-                realm, email, email_to_full_name,
-            )
+            mirror_fred_user = create_mirror_user_if_needed(realm, email, email_to_full_name)
 
         self.assertEqual(mirror_fred_user.delivery_email, email)
         m.assert_called()

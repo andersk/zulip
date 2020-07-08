@@ -205,9 +205,7 @@ def get_push_bodies(payload: Dict[str, Any]) -> List[str]:
 
 
 def get_remove_branch_push_body(payload: Dict[str, Any], change: Dict[str, Any]) -> str:
-    return get_remove_branch_event_message(
-        get_user_username(payload), change["old"]["name"],
-    )
+    return get_remove_branch_event_message(get_user_username(payload), change["old"]["name"])
 
 
 def get_force_push_body(payload: Dict[str, Any], change: Dict[str, Any]) -> str:

@@ -807,9 +807,7 @@ def import_uploads(
             )
         else:
             if processing_avatars or processing_emojis or processing_realm_icons:
-                file_path = os.path.join(
-                    settings.LOCAL_UPLOADS_DIR, "avatars", relative_path,
-                )
+                file_path = os.path.join(settings.LOCAL_UPLOADS_DIR, "avatars", relative_path)
             else:
                 file_path = os.path.join(settings.LOCAL_UPLOADS_DIR, "files", relative_path)
             orig_file_path = os.path.join(import_dir, record["path"])
@@ -961,9 +959,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
         new_recipient_id = Recipient.objects.get(
             type=Recipient.PERSONAL, type_id=new_user_id,
         ).id
-        update_id_map(
-            table="recipient", old_id=item["recipient_id"], new_id=new_recipient_id,
-        )
+        update_id_map(table="recipient", old_id=item["recipient_id"], new_id=new_recipient_id)
 
     # Merge in zerver_userprofile_mirrordummy
     data["zerver_userprofile"] = (
@@ -978,9 +974,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
     fix_datetime_fields(data, "zerver_userprofile")
     update_model_ids(UserProfile, data, "user_profile")
     re_map_foreign_keys(data, "zerver_userprofile", "realm", related_table="realm")
-    re_map_foreign_keys(
-        data, "zerver_userprofile", "bot_owner", related_table="user_profile",
-    )
+    re_map_foreign_keys(data, "zerver_userprofile", "bot_owner", related_table="user_profile")
     re_map_foreign_keys(
         data, "zerver_userprofile", "default_sending_stream", related_table="stream",
     )
@@ -1100,9 +1094,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
             data, "zerver_mutedtopic", "user_profile", related_table="user_profile",
         )
         re_map_foreign_keys(data, "zerver_mutedtopic", "stream", related_table="stream")
-        re_map_foreign_keys(
-            data, "zerver_mutedtopic", "recipient", related_table="recipient",
-        )
+        re_map_foreign_keys(data, "zerver_mutedtopic", "recipient", related_table="recipient")
         update_model_ids(MutedTopic, data, "mutedtopic")
         bulk_import_model(data, MutedTopic)
 
@@ -1211,9 +1203,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
     import_message_data(realm=realm, sender_map=sender_map, import_dir=import_dir)
 
     re_map_foreign_keys(data, "zerver_reaction", "message", related_table="message")
-    re_map_foreign_keys(
-        data, "zerver_reaction", "user_profile", related_table="user_profile",
-    )
+    re_map_foreign_keys(data, "zerver_reaction", "user_profile", related_table="user_profile")
     re_map_foreign_keys(
         data,
         "zerver_reaction",

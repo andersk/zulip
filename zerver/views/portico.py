@@ -95,7 +95,5 @@ def terms_view(request: HttpRequest) -> HttpResponse:
 @add_google_analytics
 def privacy_view(request: HttpRequest) -> HttpResponse:
     return TemplateResponse(
-        request,
-        "zerver/privacy.html",
-        context={"isolated_page": get_isolated_page(request)},
+        request, "zerver/privacy.html", context={"isolated_page": get_isolated_page(request)},
     )

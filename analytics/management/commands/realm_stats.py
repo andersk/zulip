@@ -146,9 +146,7 @@ class Command(BaseCommand):
                 print("")
 
                 print(f"{self.stream_messages(realm, days_ago)} stream messages")
-                print(
-                    f"{self.private_messages(realm, days_ago)} one-on-one private messages",
-                )
+                print(f"{self.private_messages(realm, days_ago)} one-on-one private messages")
                 print(f"{self.api_messages(realm, days_ago)} messages sent via the API")
                 print(
                     f"{self.group_private_messages(realm, days_ago)} group private messages",

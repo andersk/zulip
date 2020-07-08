@@ -664,9 +664,7 @@ if not IS_LOCAL_STORAGE:
     TC_AWS_LOADER_ROOT_PATH = ""  # S3 path prefix for Loader bucket
 
     TC_AWS_RESULT_STORAGE_BUCKET = S3_AUTH_UPLOADS_BUCKET  # S3 bucket for result Storage
-    TC_AWS_RESULT_STORAGE_ROOT_PATH = (
-        "thumbnails"  # S3 path prefix for Result storage bucket
-    )
+    TC_AWS_RESULT_STORAGE_ROOT_PATH = "thumbnails"  # S3 path prefix for Result storage bucket
 
 TC_AWS_MAX_RETRY = 0  # Max retries for get image from S3 Bucket. Default is 0
 

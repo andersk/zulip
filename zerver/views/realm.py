@@ -177,8 +177,7 @@ def update_realm(
         )
         or (
             message_content_edit_limit_seconds is not None
-            and realm.message_content_edit_limit_seconds
-            != message_content_edit_limit_seconds
+            and realm.message_content_edit_limit_seconds != message_content_edit_limit_seconds
         )
         or (
             allow_community_topic_editing is not None
@@ -203,8 +202,7 @@ def update_realm(
 
     if (
         message_content_delete_limit_seconds is not None
-        and realm.message_content_delete_limit_seconds
-        != message_content_delete_limit_seconds
+        and realm.message_content_delete_limit_seconds != message_content_delete_limit_seconds
     ):
         do_set_realm_message_deleting(realm, message_content_delete_limit_seconds)
         data["message_content_delete_limit_seconds"] = message_content_delete_limit_seconds

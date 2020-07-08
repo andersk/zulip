@@ -57,10 +57,7 @@ class EmailTranslationTestCase(ZulipTestCase):
             "Hallo",
             "post",
             "/json/invites",
-            {
-                "invitee_emails": "new-email@zulip.com",
-                "stream_ids": ujson.dumps([stream.id]),
-            },
+            {"invitee_emails": "new-email@zulip.com", "stream_ids": ujson.dumps([stream.id])},
         )
 
         with self.settings(DEVELOPMENT_LOG_EMAILS=True):

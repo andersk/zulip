@@ -130,7 +130,9 @@ def get_story_create_body(payload: Dict[str, Any]) -> str:
         message = "New story [{name}]({app_url}) of type **{story_type}** was created."
         kwargs = action
     else:
-        message = "New story [{name}]({app_url}) was created and added to the epic **{epic_name}**."
+        message = (
+            "New story [{name}]({app_url}) was created and added to the epic **{epic_name}**."
+        )
         kwargs = {
             "name": action["name"],
             "app_url": action["app_url"],
@@ -376,9 +378,7 @@ def get_story_create_github_entity_body(payload: Dict[str, Any], entity: str) ->
     }
 
     template = (
-        STORY_GITHUB_PR_TEMPLATE
-        if entity == "pull-request"
-        else STORY_GITHUB_BRANCH_TEMPLATE
+        STORY_GITHUB_PR_TEMPLATE if entity == "pull-request" else STORY_GITHUB_BRANCH_TEMPLATE
     )
     return template.format(**kwargs)
 

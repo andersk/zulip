@@ -536,9 +536,7 @@ def handle_missedmessage_emails(
         for m in messages_by_bucket[bucket_tup]:
             unique_messages[m.id] = dict(message=m, trigger=message_ids.get(m.id))
         do_send_missedmessage_events_reply_in_zulip(
-            user_profile,
-            list(unique_messages.values()),
-            message_count_by_bucket[bucket_tup],
+            user_profile, list(unique_messages.values()), message_count_by_bucket[bucket_tup],
         )
 
 

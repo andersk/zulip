@@ -154,9 +154,7 @@ def get_conversation_admin_assigned_message(payload: Dict[str, Any]) -> Tuple[st
 def get_conversation_admin_message(payload: Dict[str, Any], action: str) -> Tuple[str, str]:
     assignee = payload["data"]["item"]["assignee"]
     user = payload["data"]["item"]["user"]
-    body = CONVERSATION_ADMIN_TEMPLATE.format(
-        admin_name=assignee.get("name"), action=action,
-    )
+    body = CONVERSATION_ADMIN_TEMPLATE.format(admin_name=assignee.get("name"), action=action)
     topic = get_topic_for_contacts(user)
     return (topic, body)
 
@@ -175,9 +173,7 @@ def get_conversation_admin_reply_message(
     return (topic, body)
 
 
-def get_conversation_admin_single_created_message(
-    payload: Dict[str, Any],
-) -> Tuple[str, str]:
+def get_conversation_admin_single_created_message(payload: Dict[str, Any]) -> Tuple[str, str]:
     assignee = payload["data"]["item"]["assignee"]
     user = payload["data"]["item"]["user"]
     conversation_body = payload["data"]["item"]["conversation_message"]["body"]

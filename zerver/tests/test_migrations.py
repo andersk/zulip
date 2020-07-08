@@ -52,9 +52,7 @@ class SubsNotificationSettingsTestCase(MigrationsTestCase):  # nocoverage
         denmark_recipient = Recipient.objects.get(
             type=self.RECIPIENT_STREAM, type_id=denmark.id,
         )
-        denmark_sub = Subscription.objects.get(
-            user_profile=iago, recipient=denmark_recipient,
-        )
+        denmark_sub = Subscription.objects.get(user_profile=iago, recipient=denmark_recipient)
         denmark_sub.desktop_notifications = False
         denmark_sub.audible_notifications = False
         denmark_sub.save(update_fields=["desktop_notifications", "audible_notifications"])
@@ -86,9 +84,7 @@ class SubsNotificationSettingsTestCase(MigrationsTestCase):  # nocoverage
         denmark_recipient = Recipient.objects.get(
             type=self.RECIPIENT_STREAM, type_id=denmark.id,
         )
-        denmark_sub = Subscription.objects.get(
-            user_profile=iago, recipient=denmark_recipient,
-        )
+        denmark_sub = Subscription.objects.get(user_profile=iago, recipient=denmark_recipient)
         self.assertEqual(denmark_sub.desktop_notifications, False)
         self.assertIsNone(denmark_sub.audible_notifications)
 

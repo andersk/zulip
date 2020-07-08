@@ -87,11 +87,7 @@ if DEBUG:
     INTERNAL_IPS = ("127.0.0.1",)
 
 # Detect whether we're running as a queue worker; this impacts the logging configuration.
-if (
-    len(sys.argv) > 2
-    and sys.argv[0].endswith("manage.py")
-    and sys.argv[1] == "process_queue"
-):
+if len(sys.argv) > 2 and sys.argv[0].endswith("manage.py") and sys.argv[1] == "process_queue":
     IS_WORKER = True
 else:
     IS_WORKER = False
@@ -301,9 +297,7 @@ if DEVELOPMENT:
     LOCAL_DATABASE_PASSWORD = get_secret("local_database_password")
     DATABASES["default"].update({"PASSWORD": LOCAL_DATABASE_PASSWORD, "HOST": "localhost"})
 elif REMOTE_POSTGRES_HOST != "":
-    DATABASES["default"].update(
-        {"HOST": REMOTE_POSTGRES_HOST, "PORT": REMOTE_POSTGRES_PORT},
-    )
+    DATABASES["default"].update({"HOST": REMOTE_POSTGRES_HOST, "PORT": REMOTE_POSTGRES_PORT})
     if get_secret("postgres_password") is not None:
         DATABASES["default"].update({"PASSWORD": get_secret("postgres_password")})
     if REMOTE_POSTGRES_SSLMODE != "":
@@ -490,11 +484,7 @@ REALM_INTERNAL_BOTS: List[Dict[str, str]] = []
 # These are realm-internal bots that may exist in some organizations,
 # so configure power the setting, but should not be auto-created at this time.
 DISABLED_REALM_INTERNAL_BOTS = [
-    {
-        "var_name": "REMINDER_BOT",
-        "email_template": "reminder-bot@%s",
-        "name": "Reminder Bot",
-    },
+    {"var_name": "REMINDER_BOT", "email_template": "reminder-bot@%s", "name": "Reminder Bot"},
 ]
 
 if PRODUCTION:
@@ -676,9 +666,7 @@ ERROR_FILE_LOG_PATH = zulip_path("/var/log/zulip/errors.log")
 MANAGEMENT_LOG_PATH = zulip_path("/var/log/zulip/manage.log")
 WORKER_LOG_PATH = zulip_path("/var/log/zulip/workers.log")
 SLOW_QUERIES_LOG_PATH = zulip_path("/var/log/zulip/slow_queries.log")
-JSON_PERSISTENT_QUEUE_FILENAME_PATTERN = zulip_path(
-    "/home/zulip/tornado/event_queues%s.json",
-)
+JSON_PERSISTENT_QUEUE_FILENAME_PATTERN = zulip_path("/home/zulip/tornado/event_queues%s.json")
 EMAIL_LOG_PATH = zulip_path("/var/log/zulip/send_email.log")
 EMAIL_MIRROR_LOG_PATH = zulip_path("/var/log/zulip/email_mirror.log")
 EMAIL_DELIVERER_LOG_PATH = zulip_path("/var/log/zulip/email-deliverer.log")
@@ -899,10 +887,7 @@ LOGGING: Dict[str, Any] = {
         "zulip.queue": {"level": "WARNING"},
         "zulip.retention": {"handlers": ["file", "errors_file"], "propagate": False},
         "zulip.slow_queries": {"level": "INFO", "handlers": ["slow_queries_file"]},
-        "zulip.soft_deactivation": {
-            "handlers": ["file", "errors_file"],
-            "propagate": False,
-        },
+        "zulip.soft_deactivation": {"handlers": ["file", "errors_file"], "propagate": False},
         "zulip.zerver.lib.webhooks.common": {
             "level": "DEBUG",
             "handlers": ["file", "errors_file"],

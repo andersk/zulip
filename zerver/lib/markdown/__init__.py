@@ -536,9 +536,7 @@ def fetch_open_graph_image(url: str) -> Optional[Dict[str, Any]]:
 
 def get_tweet_id(url: str) -> Optional[str]:
     parsed_url = urllib.parse.urlparse(url)
-    if not (
-        parsed_url.netloc == "twitter.com" or parsed_url.netloc.endswith(".twitter.com")
-    ):
+    if not (parsed_url.netloc == "twitter.com" or parsed_url.netloc.endswith(".twitter.com")):
         return None
     to_match = parsed_url.path
     # In old-style twitter.com/#!/wdaher/status/1231241234-style URLs,
@@ -1873,20 +1871,7 @@ def possible_linked_stream_names(content: str) -> Set[str]:
 
 class AlertWordNotificationProcessor(markdown.preprocessors.Preprocessor):
 
-    allowed_before_punctuation = {
-        " ",
-        "\n",
-        "(",
-        '"',
-        ".",
-        ",",
-        "'",
-        ";",
-        "[",
-        "*",
-        "`",
-        ">",
-    }
+    allowed_before_punctuation = {" ", "\n", "(", '"', ".", ",", "'", ";", "[", "*", "`", ">"}
     allowed_after_punctuation = {
         " ",
         "\n",
@@ -1928,10 +1913,9 @@ class AlertWordNotificationProcessor(markdown.preprocessors.Preprocessor):
 
             if realm_alert_words_automaton is not None:
                 content = "\n".join(lines).lower()
-                for (
-                    end_index,
-                    (original_value, user_ids),
-                ) in realm_alert_words_automaton.iter(content):
+                for end_index, (original_value, user_ids) in realm_alert_words_automaton.iter(
+                    content,
+                ):
                     if self.check_valid_start_position(
                         content, end_index - len(original_value),
                     ) and self.check_valid_end_position(content, end_index + 1):

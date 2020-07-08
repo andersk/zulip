@@ -144,9 +144,7 @@ class Bitbucket2HookTests(WebhookTestCase):
         self.url = self.build_webhook_url(topic="notifications")
         expected_topic = "notifications"
         expected_message = "kolaszek [commented](https://bitbucket.org/kolaszek/repository-name/issues/2#comment-28973596) on [Issue #1 Bug](https://bitbucket.org/kolaszek/repository-name/issues/2/bug)."
-        self.send_and_test_stream_message(
-            "issue_commented", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("issue_commented", expected_topic, expected_message)
 
     def test_bitbucket2_on_pull_request_created_event(self) -> None:
         expected_message = "kolaszek created [PR #1](https://bitbucket.org/kolaszek/repository-name/pull-requests/1) (assigned to tkolek) from `new-branch` to `master`:\n\n~~~ quote\ndescription\n~~~"
@@ -160,9 +158,7 @@ class Bitbucket2HookTests(WebhookTestCase):
             **kwargs,
         )
 
-    def test_bitbucket2_on_pull_request_created_without_reviewer_username_event(
-        self,
-    ) -> None:
+    def test_bitbucket2_on_pull_request_created_without_reviewer_username_event(self) -> None:
         expected_message = "kolaszek created [PR #1](https://bitbucket.org/kolaszek/repository-name/pull-requests/1) (assigned to Tomasz Kolek) from `new-branch` to `master`:\n\n~~~ quote\ndescription\n~~~"
         kwargs = {
             "HTTP_X_EVENT_KEY": "pullrequest:created",
@@ -217,10 +213,7 @@ class Bitbucket2HookTests(WebhookTestCase):
             "HTTP_X_EVENT_KEY": "pullrequest:approved",
         }
         self.send_and_test_stream_message(
-            "pull_request_approved_or_unapproved",
-            expected_topic,
-            expected_message,
-            **kwargs,
+            "pull_request_approved_or_unapproved", expected_topic, expected_message, **kwargs,
         )
 
     def test_bitbucket2_on_pull_request_unapproved_event(self) -> None:
@@ -397,9 +390,7 @@ class Bitbucket2HookTests(WebhookTestCase):
         )
         self.do_test_topic(msg, self.EXPECTED_TOPIC)
 
-    def test_bitbucket2_on_more_than_one_push_event_filtered_by_branches_ignore(
-        self,
-    ) -> None:
+    def test_bitbucket2_on_more_than_one_push_event_filtered_by_branches_ignore(self) -> None:
         self.url = self.build_webhook_url(branches="changes,development")
         kwargs = {
             "HTTP_X_EVENT_KEY": "pullrequest:push",

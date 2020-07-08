@@ -142,9 +142,7 @@ class MatterMostImporter(ZulipTestCase):
 
         team_name = "gryffindor"
         user_handler = UserHandler()
-        convert_user_data(
-            user_handler, user_id_mapper, username_to_user, realm_id, team_name,
-        )
+        convert_user_data(user_handler, user_id_mapper, username_to_user, realm_id, team_name)
         self.assertEqual(len(user_handler.get_all_users()), 2)
         self.assertTrue(user_id_mapper.has("harry"))
         self.assertTrue(user_id_mapper.has("ron"))
@@ -157,9 +155,7 @@ class MatterMostImporter(ZulipTestCase):
 
         team_name = "slytherin"
         user_handler = UserHandler()
-        convert_user_data(
-            user_handler, user_id_mapper, username_to_user, realm_id, team_name,
-        )
+        convert_user_data(user_handler, user_id_mapper, username_to_user, realm_id, team_name)
         self.assertEqual(len(user_handler.get_all_users()), 3)
         self.assertTrue(user_id_mapper.has("malfoy"))
         self.assertTrue(user_id_mapper.has("pansy"))
@@ -169,17 +165,13 @@ class MatterMostImporter(ZulipTestCase):
         # Snape is a mirror dummy user in Harry's team.
         label_mirror_dummy_users(2, team_name, mattermost_data, username_to_user)
         user_handler = UserHandler()
-        convert_user_data(
-            user_handler, user_id_mapper, username_to_user, realm_id, team_name,
-        )
+        convert_user_data(user_handler, user_id_mapper, username_to_user, realm_id, team_name)
         self.assertEqual(len(user_handler.get_all_users()), 3)
         self.assertTrue(user_id_mapper.has("snape"))
 
         team_name = "slytherin"
         user_handler = UserHandler()
-        convert_user_data(
-            user_handler, user_id_mapper, username_to_user, realm_id, team_name,
-        )
+        convert_user_data(user_handler, user_id_mapper, username_to_user, realm_id, team_name)
         self.assertEqual(len(user_handler.get_all_users()), 3)
 
     def test_convert_channel_data(self) -> None:
@@ -589,9 +581,7 @@ class MatterMostImporter(ZulipTestCase):
         )
 
         harry_team_output_dir = self.team_output_dir(output_dir, "gryffindor")
-        self.assertEqual(
-            os.path.exists(os.path.join(harry_team_output_dir, "avatars")), True,
-        )
+        self.assertEqual(os.path.exists(os.path.join(harry_team_output_dir, "avatars")), True)
         self.assertEqual(os.path.exists(os.path.join(harry_team_output_dir, "emoji")), True)
         self.assertEqual(
             os.path.exists(os.path.join(harry_team_output_dir, "attachment.json")), True,
@@ -600,8 +590,7 @@ class MatterMostImporter(ZulipTestCase):
         realm = self.read_file(harry_team_output_dir, "realm.json")
 
         self.assertEqual(
-            "Organization imported from Mattermost!",
-            realm["zerver_realm"][0]["description"],
+            "Organization imported from Mattermost!", realm["zerver_realm"][0]["description"],
         )
 
         exported_user_ids = self.get_set(realm["zerver_userprofile"], "id")
@@ -686,9 +675,7 @@ class MatterMostImporter(ZulipTestCase):
         )
 
         harry_team_output_dir = self.team_output_dir(output_dir, "gryffindor")
-        self.assertEqual(
-            os.path.exists(os.path.join(harry_team_output_dir, "avatars")), True,
-        )
+        self.assertEqual(os.path.exists(os.path.join(harry_team_output_dir, "avatars")), True)
         self.assertEqual(os.path.exists(os.path.join(harry_team_output_dir, "emoji")), True)
         self.assertEqual(
             os.path.exists(os.path.join(harry_team_output_dir, "attachment.json")), True,
@@ -697,8 +684,7 @@ class MatterMostImporter(ZulipTestCase):
         realm = self.read_file(harry_team_output_dir, "realm.json")
 
         self.assertEqual(
-            "Organization imported from Mattermost!",
-            realm["zerver_realm"][0]["description"],
+            "Organization imported from Mattermost!", realm["zerver_realm"][0]["description"],
         )
 
         exported_user_ids = self.get_set(realm["zerver_userprofile"], "id")
@@ -748,9 +734,7 @@ class MatterMostImporter(ZulipTestCase):
         exported_messages_id = self.get_set(messages["zerver_message"], "id")
         self.assertIn(messages["zerver_message"][0]["sender"], exported_user_ids)
         self.assertIn(messages["zerver_message"][0]["recipient"], exported_recipient_ids)
-        self.assertIn(
-            messages["zerver_message"][0]["content"], "ron joined the channel.\n\n",
-        )
+        self.assertIn(messages["zerver_message"][0]["content"], "ron joined the channel.\n\n")
 
         exported_usermessage_userprofiles = self.get_set(
             messages["zerver_usermessage"], "user_profile",

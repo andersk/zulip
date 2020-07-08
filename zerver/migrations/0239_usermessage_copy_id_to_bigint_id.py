@@ -21,8 +21,7 @@ def sql_copy_id_to_bigint_id(id_range_lower_bound: int, id_range_upper_bound: in
     )
     with connection.cursor() as cursor:
         cursor.execute(
-            query,
-            {"lower_bound": id_range_lower_bound, "upper_bound": id_range_upper_bound},
+            query, {"lower_bound": id_range_lower_bound, "upper_bound": id_range_upper_bound},
         )
 
 

@@ -292,9 +292,7 @@ class NarrowBuilder:
             return query.where(maybe_negate(cond))
         raise BadNarrowOperator("unknown streams operand " + operand)
 
-    def by_topic(
-        self, query: Query, operand: str, maybe_negate: ConditionTransform,
-    ) -> Query:
+    def by_topic(self, query: Query, operand: str, maybe_negate: ConditionTransform) -> Query:
         if self.user_profile.realm.is_zephyr_mirror_realm:
             # MIT users expect narrowing to topic "foo" to also show messages to /^foo(.d)*$/
             # (foo, foo.d, foo.d.d, etc)
@@ -650,9 +648,7 @@ def ok_to_include_history(narrow: OptionalNarrowListT, user_profile: UserProfile
             if term["operator"] == "stream" and not term.get("negated", False):
                 operand: Union[str, int] = term["operand"]
                 if isinstance(operand, str):
-                    include_history = can_access_stream_history_by_name(
-                        user_profile, operand,
-                    )
+                    include_history = can_access_stream_history_by_name(user_profile, operand)
                 else:
                     include_history = can_access_stream_history_by_id(user_profile, operand)
             elif (
@@ -885,10 +881,7 @@ def get_messages_backend(
             _("Too many messages requested (maximum {}).").format(MAX_MESSAGES_PER_FETCH),
         )
 
-    if (
-        user_profile.realm.email_address_visibility
-        != Realm.EMAIL_ADDRESS_VISIBILITY_EVERYONE
-    ):
+    if user_profile.realm.email_address_visibility != Realm.EMAIL_ADDRESS_VISIBILITY_EVERYONE:
         # If email addresses are only available to administrators,
         # clients cannot compute gravatars, so we force-set it to false.
         client_gravatar = False
@@ -1206,9 +1199,7 @@ def messages_in_narrow_backend(
 ) -> HttpResponse:
 
     first_visible_message_id = get_first_visible_message_id(user_profile.realm)
-    msg_ids = [
-        message_id for message_id in msg_ids if message_id >= first_visible_message_id
-    ]
+    msg_ids = [message_id for message_id in msg_ids if message_id >= first_visible_message_id]
     # This query is limited to messages the user has access to because they
     # actually received them, as reflected in `zerver_usermessage`.
     query = select(

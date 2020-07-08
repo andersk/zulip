@@ -1362,9 +1362,7 @@ class TestContentTypeUnspecifiedCharset(ZulipTestCase):
         message_as_string = message_as_string.replace(
             'Content-Type: text/plain; charset="us-ascii"', "Content-Type: text/plain",
         )
-        incoming_message = message_from_string(
-            message_as_string, policy=email.policy.default,
-        )
+        incoming_message = message_from_string(message_as_string, policy=email.policy.default)
         assert isinstance(
             incoming_message, EmailMessage,
         )  # https://github.com/python/typeshed/issues/2417
@@ -1422,9 +1420,7 @@ class TestEmailMirrorLogAndReport(ZulipTestCase):
         self.assertEqual("email mirror error", message.topic_name())
 
         msg_content = message.content.strip("~").strip()
-        expected_content = (
-            "Sender: {}\nTo: {} <Address to stream id: {}>\ntest error message"
-        )
+        expected_content = "Sender: {}\nTo: {} <Address to stream id: {}>\ntest error message"
         expected_content = expected_content.format(
             self.example_email("hamlet"), scrubbed_address, stream.id,
         )

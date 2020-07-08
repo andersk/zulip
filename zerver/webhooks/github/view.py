@@ -79,9 +79,7 @@ def get_assigned_or_unassigned_pull_request_body(
     return base_message
 
 
-def get_closed_pull_request_body(
-    payload: Dict[str, Any], include_title: bool = False,
-) -> str:
+def get_closed_pull_request_body(payload: Dict[str, Any], include_title: bool = False) -> str:
     pull_request = payload["pull_request"]
     action = "merged" if pull_request["merged"] else "closed without merge"
     return get_pull_request_event_message(
@@ -335,9 +333,7 @@ def get_pull_request_ready_for_review_body(
     )
 
 
-def get_pull_request_review_body(
-    payload: Dict[str, Any], include_title: bool = False,
-) -> str:
+def get_pull_request_review_body(payload: Dict[str, Any], include_title: bool = False) -> str:
     title = "for #{} {}".format(
         payload["pull_request"]["number"], payload["pull_request"]["title"],
     )
@@ -378,9 +374,7 @@ def get_pull_request_review_requested_body(
     requested_reviewer = (
         [payload["requested_reviewer"]] if "requested_reviewer" in payload else []
     )
-    requested_reviewers = (
-        payload["pull_request"]["requested_reviewers"] or requested_reviewer
-    )
+    requested_reviewers = payload["pull_request"]["requested_reviewers"] or requested_reviewer
 
     requested_team = [payload["requested_team"]] if "requested_team" in payload else []
     requested_team_reviewers = payload["pull_request"]["requested_teams"] or requested_team

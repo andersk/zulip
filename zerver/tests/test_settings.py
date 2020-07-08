@@ -355,9 +355,7 @@ class ChangeSettingsTest(ZulipTestCase):
     def test_change_user_display_setting(self) -> None:
         """Test updating each non-boolean setting in UserProfile property_types"""
         user_settings = (
-            s
-            for s in UserProfile.property_types
-            if UserProfile.property_types[s] is not bool
+            s for s in UserProfile.property_types if UserProfile.property_types[s] is not bool
         )
         for setting in user_settings:
             self.do_test_change_user_display_setting(setting)

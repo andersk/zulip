@@ -72,6 +72,4 @@ class RedisUtilsTest(ZulipTestCase):
 
     def test_get_data_key_format_validation(self) -> None:
         with self.assertRaises(ZulipRedisKeyOfWrongFormatError):
-            get_dict_from_redis(
-                self.redis_client, self.key_format, "nonmatching_format_1111",
-            )
+            get_dict_from_redis(self.redis_client, self.key_format, "nonmatching_format_1111")

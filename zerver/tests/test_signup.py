@@ -594,9 +594,7 @@ class PasswordResetTest(ZulipTestCase):
             with patch("logging.info") as mock_logging:
                 result = self.client_post("/accounts/password/reset/", {"email": email})
                 self.assertEqual(result.status_code, 302)
-                self.assertTrue(
-                    result["Location"].endswith("/accounts/password/reset/done/"),
-                )
+                self.assertTrue(result["Location"].endswith("/accounts/password/reset/done/"))
                 result = self.client_get(result["Location"])
 
         body = self.get_reset_mail_body()
@@ -1561,8 +1559,7 @@ so we didn't send them an invitation. We did send invitations to everyone else!"
         result = self.submit_reg_form_for_user(external_address, "password")
         self.assertEqual(result.status_code, 200)
         self.assert_in_response(
-            "Zulip Dev, does not allow signups using emails\n        that contains +",
-            result,
+            "Zulip Dev, does not allow signups using emails\n        that contains +", result,
         )
 
     def test_invalid_email_check_after_confirming_email(self) -> None:
@@ -1668,15 +1665,13 @@ so we didn't send them an invitation. We did send invitations to everyone else!"
         with self.settings(INVITATION_LINK_VALIDITY_DAYS=4):
             self.invite("alice@zulip.com", ["Denmark"])
         self.assertEqual(
-            ScheduledEmail.objects.filter(type=ScheduledEmail.INVITATION_REMINDER).count(),
-            1,
+            ScheduledEmail.objects.filter(type=ScheduledEmail.INVITATION_REMINDER).count(), 1,
         )
         # Check invitation reminder email is not scheduled with 3 day link expiry
         with self.settings(INVITATION_LINK_VALIDITY_DAYS=3):
             self.invite("bob@zulip.com", ["Denmark"])
         self.assertEqual(
-            ScheduledEmail.objects.filter(type=ScheduledEmail.INVITATION_REMINDER).count(),
-            1,
+            ScheduledEmail.objects.filter(type=ScheduledEmail.INVITATION_REMINDER).count(), 1,
         )
 
     # make sure users can't take a valid confirmation key from another
@@ -1955,9 +1950,7 @@ class InvitationsTestCase(InviteUserBase):
         self.assert_json_success(self.invite(invitee, ["Denmark"]))
 
         # Verify that the scheduled email exists.
-        prereg_user = PreregistrationUser.objects.get(
-            email=invitee, referred_by=user_profile,
-        )
+        prereg_user = PreregistrationUser.objects.get(email=invitee, referred_by=user_profile)
         ScheduledEmail.objects.get(
             address__iexact=invitee, type=ScheduledEmail.INVITATION_REMINDER,
         )
@@ -1969,9 +1962,7 @@ class InvitationsTestCase(InviteUserBase):
         self.assert_json_error(result, "Must be an organization administrator")
 
         # Verify that the scheduled email still exists.
-        prereg_user = PreregistrationUser.objects.get(
-            email=invitee, referred_by=user_profile,
-        )
+        prereg_user = PreregistrationUser.objects.get(email=invitee, referred_by=user_profile)
         ScheduledEmail.objects.get(
             address__iexact=invitee, type=ScheduledEmail.INVITATION_REMINDER,
         )
@@ -2033,9 +2024,7 @@ class InvitationsTestCase(InviteUserBase):
         self.assertEqual(result.status_code, 200)
         self.assertIsNone(MultiuseInvite.objects.filter(id=multiuse_invite.id).first())
         # Test that trying to double-delete fails
-        error_result = self.client_delete(
-            "/json/invites/multiuse/" + str(multiuse_invite.id),
-        )
+        error_result = self.client_delete("/json/invites/multiuse/" + str(multiuse_invite.id))
         self.assert_json_error(error_result, "No such invitation")
 
         # Test deleting owner mutiuse_invite.
@@ -2045,9 +2034,7 @@ class InvitationsTestCase(InviteUserBase):
             invited_as=PreregistrationUser.INVITE_AS["REALM_OWNER"],
         )
         create_confirmation_link(multiuse_invite, Confirmation.MULTIUSE_INVITE)
-        error_result = self.client_delete(
-            "/json/invites/multiuse/" + str(multiuse_invite.id),
-        )
+        error_result = self.client_delete("/json/invites/multiuse/" + str(multiuse_invite.id))
         self.assert_json_error(error_result, "Must be an organization owner")
 
         self.login("desdemona")
@@ -3269,9 +3256,7 @@ class UserSignUpTest(InviteUserBase):
         result = self.submit_reg_form_for_user(
             email, password, default_stream_groups=["group 1"],
         )
-        self.check_user_subscribed_only_to_streams(
-            "newguy", default_streams + group1_streams,
-        )
+        self.check_user_subscribed_only_to_streams("newguy", default_streams + group1_streams)
 
     def test_signup_two_confirmation_links(self) -> None:
         email = self.nonreg_email("newguy")
@@ -3430,11 +3415,7 @@ class UserSignUpTest(InviteUserBase):
 
         result = self.client_post(
             "/accounts/register/",
-            {
-                "password": password,
-                "key": find_key_by_email(email),
-                "from_confirmation": "1",
-            },
+            {"password": password, "key": find_key_by_email(email), "from_confirmation": "1"},
             subdomain=subdomain,
         )
         self.assert_in_success_response(
@@ -4215,9 +4196,7 @@ class UserSignUpTest(InviteUserBase):
             # Invite user.
             self.login("iago")
             response = self.invite(
-                invitee_emails="newuser@zulip.com",
-                stream_names=streams,
-                invite_as=invite_as,
+                invitee_emails="newuser@zulip.com", stream_names=streams, invite_as=invite_as,
             )
             self.assert_json_success(response)
             self.logout()
@@ -4629,8 +4608,7 @@ class TestFindMyTeam(ZulipTestCase):
         )
         self.assertEqual(result.status_code, 302)
         self.assertEqual(
-            result.url,
-            "/accounts/find/?emails=iago%40zulip.com%2Cinvalid_email%40zulip.com",
+            result.url, "/accounts/find/?emails=iago%40zulip.com%2Cinvalid_email%40zulip.com",
         )
         result = self.client_get(result.url)
         content = result.content.decode("utf8")
@@ -4792,9 +4770,7 @@ class FollowupEmailTest(ZulipTestCase):
 class NoReplyEmailTest(ZulipTestCase):
     def test_noreply_email_address(self) -> None:
         self.assertTrue(
-            re.search(
-                self.TOKENIZED_NOREPLY_REGEX, FromAddress.tokenized_no_reply_address(),
-            ),
+            re.search(self.TOKENIZED_NOREPLY_REGEX, FromAddress.tokenized_no_reply_address()),
         )
 
         with self.settings(ADD_TOKENS_TO_NOREPLY_ADDRESS=False):

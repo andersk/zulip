@@ -692,9 +692,7 @@ def apply_event(
             state["unsubscribed"] += removed_subs
 
             # Now filter out the removed subscriptions from subscriptions.
-            state["subscriptions"] = [
-                s for s in state["subscriptions"] if not was_removed(s)
-            ]
+            state["subscriptions"] = [s for s in state["subscriptions"] if not was_removed(s)]
 
         elif event["op"] == "update":
             for sub in state["subscriptions"]:
@@ -720,9 +718,9 @@ def apply_event(
             user_key = str(event["user_id"])
         else:
             user_key = event["email"]
-        state["presences"][user_key] = get_presence_for_user(
-            event["user_id"], slim_presence,
-        )[user_key]
+        state["presences"][user_key] = get_presence_for_user(event["user_id"], slim_presence)[
+            user_key
+        ]
     elif event["type"] == "update_message":
         # We don't return messages in /register, so we don't need to
         # do anything for content updates, but we may need to update
@@ -937,10 +935,7 @@ def do_events_register(
         "user_avatar_url_field_optional", False,
     )
 
-    if (
-        user_profile.realm.email_address_visibility
-        != Realm.EMAIL_ADDRESS_VISIBILITY_EVERYONE
-    ):
+    if user_profile.realm.email_address_visibility != Realm.EMAIL_ADDRESS_VISIBILITY_EVERYONE:
         # If real email addresses are not available to the user, their
         # clients cannot compute gravatars, so we force-set it to false.
         client_gravatar = False

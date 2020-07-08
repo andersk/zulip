@@ -557,9 +557,7 @@ class UpdateCustomProfileFieldTest(CustomProfileFieldTestCase):
         field = CustomProfileField.objects.get(name="Biography", realm=realm)
         data = [{"id": field.id, "value": "foobar"}]
 
-        result = self.client_patch(
-            "/json/users/me/profile_data", {"data": ujson.dumps(data)},
-        )
+        result = self.client_patch("/json/users/me/profile_data", {"data": ujson.dumps(data)})
         self.assert_json_success(result)
         for field_dict in iago.profile_data:
             if field_dict["id"] == field.id:
@@ -577,9 +575,7 @@ class UpdateCustomProfileFieldTest(CustomProfileFieldTestCase):
         field = CustomProfileField.objects.get(name="Favorite editor", realm=realm)
         data = [{"id": field.id, "value": "emacs"}]
 
-        result = self.client_patch(
-            "/json/users/me/profile_data", {"data": ujson.dumps(data)},
-        )
+        result = self.client_patch("/json/users/me/profile_data", {"data": ujson.dumps(data)})
         self.assert_json_success(result)
 
     def test_null_value_and_rendered_value(self) -> None:

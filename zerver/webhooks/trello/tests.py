@@ -70,15 +70,11 @@ class TrelloHookTests(WebhookTestCase):
 
     def test_trello_webhook_when_card_was_archived(self) -> None:
         expected_message = "TomaszKolek archived [Card name](https://trello.com/c/9BduUcVQ)."
-        self.send_and_test_stream_message(
-            "archiving_card", "Welcome Board", expected_message,
-        )
+        self.send_and_test_stream_message("archiving_card", "Welcome Board", expected_message)
 
     def test_trello_webhook_when_card_was_reopened(self) -> None:
         expected_message = "TomaszKolek reopened [Card name](https://trello.com/c/9BduUcVQ)."
-        self.send_and_test_stream_message(
-            "reopening_card", "Welcome Board", expected_message,
-        )
+        self.send_and_test_stream_message("reopening_card", "Welcome Board", expected_message)
 
     def test_trello_webhook_when_card_was_created(self) -> None:
         expected_message = "TomaszKolek created [New card](https://trello.com/c/5qrgGdD5)."

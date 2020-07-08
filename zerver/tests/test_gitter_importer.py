@@ -84,9 +84,7 @@ class GitterImporter(ZulipTestCase):
             messages["zerver_usermessage"], "user_profile",
         )
         self.assertEqual(exported_user_ids, exported_usermessage_userprofile)
-        exported_usermessage_message = self.get_set(
-            messages["zerver_usermessage"], "message",
-        )
+        exported_usermessage_message = self.get_set(messages["zerver_usermessage"], "message")
         self.assertEqual(exported_usermessage_message, exported_messages_id)
 
     @mock.patch("zerver.data_import.gitter.process_avatars", return_value=[])

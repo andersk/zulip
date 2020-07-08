@@ -83,9 +83,7 @@ GOOGLE_OAUTH2_CLIENT_ID: Optional[str] = None
 SOCIAL_AUTH_APPLE_SERVICES_ID = get_secret(
     "social_auth_apple_services_id", development_only=True,
 )
-SOCIAL_AUTH_APPLE_BUNDLE_ID = get_secret(
-    "social_auth_apple_bundle_id", development_only=True,
-)
+SOCIAL_AUTH_APPLE_BUNDLE_ID = get_secret("social_auth_apple_bundle_id", development_only=True)
 SOCIAL_AUTH_APPLE_KEY = get_secret("social_auth_apple_key", development_only=True)
 SOCIAL_AUTH_APPLE_TEAM = get_secret("social_auth_apple_team", development_only=True)
 SOCIAL_AUTH_APPLE_SCOPE = ["name", "email"]

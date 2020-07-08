@@ -16,6 +16,4 @@ class LegacySubjectTest(ZulipTestCase):
         # You can't use both subject and topic.
         payload["topic"] = "whatever"
         result = self.client_post("/json/messages", payload)
-        self.assert_json_error(
-            result, "Can't decide between 'topic' and 'subject' arguments",
-        )
+        self.assert_json_error(result, "Can't decide between 'topic' and 'subject' arguments")

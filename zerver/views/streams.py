@@ -190,9 +190,7 @@ def update_default_stream_group_info(
     if new_group_name is not None:
         do_change_default_stream_group_name(user_profile.realm, group, new_group_name)
     if new_description is not None:
-        do_change_default_stream_group_description(
-            user_profile.realm, group, new_description,
-        )
+        do_change_default_stream_group_description(user_profile.realm, group, new_description)
     return json_success()
 
 

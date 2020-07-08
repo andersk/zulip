@@ -103,9 +103,7 @@ def move_rows(
         # Use base_model's db_table unless otherwise specified.
         src_db_table = base_model._meta.db_table
 
-    src_fields = [
-        Identifier(src_db_table, field.column) for field in base_model._meta.fields
-    ]
+    src_fields = [Identifier(src_db_table, field.column) for field in base_model._meta.fields]
     dst_fields = [Identifier(field.column) for field in base_model._meta.fields]
     sql_args = {
         "src_fields": SQL(",").join(src_fields),
@@ -640,9 +638,7 @@ def restore_data_from_archive_by_realm(realm: Realm) -> None:
     transactions = ArchiveTransaction.objects.exclude(restored=True).filter(
         realm=realm, type=ArchiveTransaction.RETENTION_POLICY_BASED,
     )
-    logger.info(
-        "Restoring %s transactions from realm %s", len(transactions), realm.string_id,
-    )
+    logger.info("Restoring %s transactions from realm %s", len(transactions), realm.string_id)
     message_count = restore_data_from_archive_by_transactions(transactions)
 
     logger.info(

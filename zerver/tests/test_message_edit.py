@@ -827,9 +827,7 @@ class EditMessageTest(ZulipTestCase):
         self.unsubscribe(cordelia, stream_name)
         self.login_user(hamlet)
         users_to_be_notified = list(map(notify, [hamlet.id]))
-        do_update_message_topic_success(
-            hamlet, message, "Change again", users_to_be_notified,
-        )
+        do_update_message_topic_success(hamlet, message, "Change again", users_to_be_notified)
 
     @mock.patch("zerver.lib.actions.send_event")
     def test_wildcard_mention(self, mock_send_event: mock.MagicMock) -> None:
@@ -881,9 +879,7 @@ class EditMessageTest(ZulipTestCase):
         id2 = self.send_stream_message(
             self.example_user("iago"), "Scotland", topic_name="topic1",
         )
-        id3 = self.send_stream_message(
-            self.example_user("iago"), "Rome", topic_name="topic1",
-        )
+        id3 = self.send_stream_message(self.example_user("iago"), "Rome", topic_name="topic1")
         id4 = self.send_stream_message(
             self.example_user("hamlet"), "Scotland", topic_name="topic2",
         )
@@ -911,9 +907,7 @@ class EditMessageTest(ZulipTestCase):
         id2 = self.send_stream_message(
             self.example_user("hamlet"), "Scotland", topic_name="topic1",
         )
-        id3 = self.send_stream_message(
-            self.example_user("iago"), "Rome", topic_name="topic1",
-        )
+        id3 = self.send_stream_message(self.example_user("iago"), "Rome", topic_name="topic1")
         id4 = self.send_stream_message(
             self.example_user("hamlet"), "Scotland", topic_name="topic2",
         )
@@ -945,9 +939,7 @@ class EditMessageTest(ZulipTestCase):
         id2 = self.send_stream_message(
             self.example_user("hamlet"), "Scotland", topic_name="Topic1",
         )
-        id3 = self.send_stream_message(
-            self.example_user("iago"), "Rome", topic_name="topiC1",
-        )
+        id3 = self.send_stream_message(self.example_user("iago"), "Rome", topic_name="topiC1")
         id4 = self.send_stream_message(
             self.example_user("iago"), "Scotland", topic_name="toPic1",
         )
@@ -998,9 +990,7 @@ class EditMessageTest(ZulipTestCase):
             user_profile, stream.name, topic_name=topic, content="Second",
         )
 
-        self.send_stream_message(
-            user_profile, stream.name, topic_name=topic, content="third",
-        )
+        self.send_stream_message(user_profile, stream.name, topic_name=topic, content="third")
 
         return (user_profile, stream, new_stream, msg_id, msg_id_lt)
 

@@ -770,8 +770,7 @@ class StreamAdminTest(ZulipTestCase):
         self.assert_json_success(result)
 
         result = self.client_patch(
-            f"/json/streams/{stream_id}",
-            {"new_description": ujson.dumps("new description")},
+            f"/json/streams/{stream_id}", {"new_description": ujson.dumps("new description")},
         )
         self.assert_json_success(result)
 
@@ -1742,9 +1741,7 @@ class DefaultStreamGroupTest(ZulipTestCase):
         self.assert_length(default_stream_groups, 1)
         self.assertEqual(default_stream_groups[0].name, group_name)
         self.assertEqual(default_stream_groups[0].description, description)
-        self.assertEqual(
-            list(default_stream_groups[0].streams.all().order_by("id")), streams,
-        )
+        self.assertEqual(list(default_stream_groups[0].streams.all().order_by("id")), streams)
 
         # Try adding the same streams to the group.
         result = self.client_post(
@@ -1784,9 +1781,7 @@ class DefaultStreamGroupTest(ZulipTestCase):
             "/json/default_stream_groups/12345/streams",
             {"op": "add", "stream_names": ujson.dumps(new_stream_names)},
         )
-        self.assert_json_error(
-            result, "Default stream group with id '12345' does not exist.",
-        )
+        self.assert_json_error(result, "Default stream group with id '12345' does not exist.")
 
         result = self.client_patch(
             f"/json/default_stream_groups/{group_id}/streams", {"op": "add"},
@@ -1828,9 +1823,7 @@ class DefaultStreamGroupTest(ZulipTestCase):
             "/json/default_stream_groups/12345/streams",
             {"op": "remove", "stream_names": ujson.dumps(new_stream_names)},
         )
-        self.assert_json_error(
-            result, "Default stream group with id '12345' does not exist.",
-        )
+        self.assert_json_error(result, "Default stream group with id '12345' does not exist.")
 
         result = self.client_patch(
             f"/json/default_stream_groups/{group_id}/streams",
@@ -1866,17 +1859,13 @@ class DefaultStreamGroupTest(ZulipTestCase):
             f"/json/default_stream_groups/{group_id}",
             {"group_name": group_name, "op": "change"},
         )
-        self.assert_json_error(
-            result, 'You must pass "new_description" or "new_group_name".',
-        )
+        self.assert_json_error(result, 'You must pass "new_description" or "new_group_name".')
 
         result = self.client_patch(
             "/json/default_stream_groups/12345",
             {"op": "change", "new_description": ujson.dumps(new_description)},
         )
-        self.assert_json_error(
-            result, "Default stream group with id '12345' does not exist.",
-        )
+        self.assert_json_error(result, "Default stream group with id '12345' does not exist.")
 
         result = self.client_patch(
             f"/json/default_stream_groups/{group_id}",
@@ -3144,8 +3133,7 @@ class SubscriptionAPITest(ZulipTestCase):
         for ev in [x for x in events if x["event"]["type"] not in ("message", "stream")]:
             if ev["event"]["op"] == "add":
                 self.assertEqual(
-                    set(ev["event"]["subscriptions"][0]["subscribers"]),
-                    {user1.id, user2.id},
+                    set(ev["event"]["subscriptions"][0]["subscribers"]), {user1.id, user2.id},
                 )
             else:
                 # Check "peer_add" events for streams users were
@@ -3457,9 +3445,7 @@ class SubscriptionAPITest(ZulipTestCase):
 
         realm = get_realm("zephyr")
         stream_names = [f"stream_{i}" for i in range(40)]
-        streams = [
-            self.make_stream(stream_name, realm=realm) for stream_name in stream_names
-        ]
+        streams = [self.make_stream(stream_name, realm=realm) for stream_name in stream_names]
 
         for stream in streams:
             stream.is_in_zephyr_realm = True
@@ -3689,8 +3675,7 @@ class SubscriptionAPITest(ZulipTestCase):
             :1
         ]  # pick only one fake stream, to make checking the error message easy
         result = self.client_delete(
-            "/json/users/me/subscriptions",
-            {"subscriptions": ujson.dumps(streams_to_remove)},
+            "/json/users/me/subscriptions", {"subscriptions": ujson.dumps(streams_to_remove)},
         )
         self.assert_json_error(result, f"Stream(s) ({random_streams[0]}) do not exist")
 
@@ -3939,9 +3924,7 @@ class SubscriptionAPITest(ZulipTestCase):
 
         # For this test to work, othello can't be in the no_othello_here realm
         self.assertNotEqual(
-            user_profile.realm.id,
-            realm.id,
-            "Expected othello user to not be in this realm.",
+            user_profile.realm.id, realm.id, "Expected othello user to not be in this realm.",
         )
 
         # This should result in missing user

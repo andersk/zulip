@@ -22,10 +22,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 ("user_id", models.BigIntegerField()),
-                (
-                    "kind",
-                    models.PositiveSmallIntegerField(choices=[(1, "apns"), (2, "gcm")]),
-                ),
+                ("kind", models.PositiveSmallIntegerField(choices=[(1, "apns"), (2, "gcm")])),
                 ("token", models.CharField(unique=True, max_length=4096)),
                 ("last_updated", models.DateTimeField(auto_now=True)),
                 ("ios_app_id", models.TextField(null=True)),

@@ -22,12 +22,8 @@ class IntegrationsTestCase(ZulipTestCase):
         integration = INTEGRATIONS["airbrake"]
         assert isinstance(integration, WebhookIntegration)
         screenshot_config = ScreenshotConfig("error_message.json", "002.png", "ci")
-        fixture_path, image_path = get_fixture_and_image_paths(
-            integration, screenshot_config,
-        )
-        self.assertEqual(
-            fixture_path, "zerver/webhooks/airbrake/fixtures/error_message.json",
-        )
+        fixture_path, image_path = get_fixture_and_image_paths(integration, screenshot_config)
+        self.assertEqual(fixture_path, "zerver/webhooks/airbrake/fixtures/error_message.json")
         self.assertEqual(image_path, "static/images/integrations/ci/002.png")
 
     def test_get_bot_avatar_path(self) -> None:

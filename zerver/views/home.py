@@ -91,9 +91,7 @@ def detect_narrowed_window(
             )
             narrow = [["stream", narrow_stream.name]]
         except Exception:
-            logging.warning(
-                "Invalid narrow requested, ignoring", extra=dict(request=request),
-            )
+            logging.warning("Invalid narrow requested, ignoring", extra=dict(request=request))
         if narrow_stream is not None and narrow_topic is not None:
             narrow.append(["topic", narrow_topic])
     return narrow, narrow_stream, narrow_topic

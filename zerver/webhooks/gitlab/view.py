@@ -73,9 +73,7 @@ def get_tag_push_event_body(payload: Dict[str, Any]) -> str:
     )
 
 
-def get_issue_created_event_body(
-    payload: Dict[str, Any], include_title: bool = False,
-) -> str:
+def get_issue_created_event_body(payload: Dict[str, Any], include_title: bool = False) -> str:
     description = payload["object_attributes"].get("description")
     # Filter out multiline hidden comments
     if description is not None:

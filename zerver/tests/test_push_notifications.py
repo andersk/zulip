@@ -107,9 +107,7 @@ class BouncerTestCase(ZulipTestCase):
         # args[0] is method, args[1] is URL.
         local_url = args[1].replace(settings.PUSH_NOTIFICATION_BOUNCER_URL, "")
         if args[0] == "POST":
-            result = self.uuid_post(
-                self.server_uuid, local_url, kwargs["data"], subdomain="",
-            )
+            result = self.uuid_post(self.server_uuid, local_url, kwargs["data"], subdomain="")
 
         elif args[0] == "GET":
             result = self.uuid_get(self.server_uuid, local_url, kwargs["data"], subdomain="")
@@ -233,9 +231,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
             HTTP_AUTHORIZATION=api_auth,
         )
         self.assert_json_error(
-            result,
-            "Zulip server auth failure: 5678-efgh is not registered",
-            status_code=401,
+            result, "Zulip server auth failure: 5678-efgh is not registered", status_code=401,
         )
 
     def test_remote_push_user_endpoints(self) -> None:
@@ -304,16 +300,8 @@ class PushBouncerNotificationTest(BouncerTestCase):
         server = RemoteZulipServer.objects.get(uuid=self.server_uuid)
 
         endpoints = [
-            (
-                "/json/users/me/apns_device_token",
-                "apple-tokenaz",
-                RemotePushDeviceToken.APNS,
-            ),
-            (
-                "/json/users/me/android_gcm_reg_id",
-                "android-token",
-                RemotePushDeviceToken.GCM,
-            ),
+            ("/json/users/me/apns_device_token", "apple-tokenaz", RemotePushDeviceToken.APNS),
+            ("/json/users/me/android_gcm_reg_id", "android-token", RemotePushDeviceToken.GCM),
         ]
 
         # Test error handling
@@ -431,8 +419,7 @@ class AnalyticsBouncerTest(BouncerTestCase):
         end_time = self.TIME_ZERO
 
         with mock.patch(
-            "zerver.lib.remote_server.requests.request",
-            side_effect=requests.ConnectionError,
+            "zerver.lib.remote_server.requests.request", side_effect=requests.ConnectionError,
         ), mock.patch("zerver.lib.remote_server.logging.warning") as mock_warning:
             send_analytics_to_remote_server()
             mock_warning.assert_called_once_with(
@@ -861,8 +848,7 @@ class HandlePushNotificationTest(PushNotificationTest):
         with self.settings(PUSH_NOTIFICATION_BOUNCER_URL=""), mock.patch(
             "zerver.lib.remote_server.requests.request", side_effect=self.bounce_request,
         ), mock.patch("zerver.lib.push_notifications.gcm_client") as mock_gcm, mock.patch(
-            "zerver.lib.remote_server.requests.request",
-            side_effect=requests.ConnectionError,
+            "zerver.lib.remote_server.requests.request", side_effect=requests.ConnectionError,
         ):
             gcm_devices = [
                 (b64_to_hex(device.token), device.ios_app_id, device.token)
@@ -872,9 +858,7 @@ class HandlePushNotificationTest(PushNotificationTest):
             with self.assertRaises(PushNotificationBouncerRetryLaterError):
                 handle_push_notification(self.user_profile.id, missed_message)
 
-    @mock.patch(
-        "zerver.lib.push_notifications.push_notifications_enabled", return_value=True,
-    )
+    @mock.patch("zerver.lib.push_notifications.push_notifications_enabled", return_value=True)
     def test_disabled_notifications(self, mock_push_notifications: mock.MagicMock) -> None:
         user_profile = self.example_user("hamlet")
         user_profile.enable_online_email_notifications = False
@@ -886,9 +870,7 @@ class HandlePushNotificationTest(PushNotificationTest):
         handle_push_notification(user_profile.id, {})
         mock_push_notifications.assert_called()
 
-    @mock.patch(
-        "zerver.lib.push_notifications.push_notifications_enabled", return_value=True,
-    )
+    @mock.patch("zerver.lib.push_notifications.push_notifications_enabled", return_value=True)
     def test_read_message(self, mock_push_notifications: mock.MagicMock) -> None:
         user_profile = self.example_user("hamlet")
         message = self.get_message(Recipient.PERSONAL, type_id=1)
@@ -992,9 +974,7 @@ class HandlePushNotificationTest(PushNotificationTest):
         )
 
         apple_devices = list(
-            PushDeviceToken.objects.filter(
-                user=self.user_profile, kind=PushDeviceToken.APNS,
-            ),
+            PushDeviceToken.objects.filter(user=self.user_profile, kind=PushDeviceToken.APNS),
         )
 
         missed_message = {
@@ -1081,9 +1061,7 @@ class HandlePushNotificationTest(PushNotificationTest):
         )
 
         apple_devices = list(
-            PushDeviceToken.objects.filter(
-                user=self.user_profile, kind=PushDeviceToken.APNS,
-            ),
+            PushDeviceToken.objects.filter(user=self.user_profile, kind=PushDeviceToken.APNS),
         )
 
         with mock.patch(
@@ -1170,9 +1148,7 @@ class HandlePushNotificationTest(PushNotificationTest):
         )
 
         apple_devices = list(
-            PushDeviceToken.objects.filter(
-                user=self.user_profile, kind=PushDeviceToken.APNS,
-            ),
+            PushDeviceToken.objects.filter(user=self.user_profile, kind=PushDeviceToken.APNS),
         )
 
         with mock.patch(
@@ -1202,9 +1178,7 @@ class HandlePushNotificationTest(PushNotificationTest):
 class TestAPNs(PushNotificationTest):
     def devices(self) -> List[DeviceToken]:
         return list(
-            PushDeviceToken.objects.filter(
-                user=self.user_profile, kind=PushDeviceToken.APNS,
-            ),
+            PushDeviceToken.objects.filter(user=self.user_profile, kind=PushDeviceToken.APNS),
         )
 
     def send(
@@ -1355,9 +1329,7 @@ class TestAPNs(PushNotificationTest):
         )
         self.assertEqual(modernize_apns_payload(payload), payload)
 
-    @mock.patch(
-        "zerver.lib.push_notifications.push_notifications_enabled", return_value=True,
-    )
+    @mock.patch("zerver.lib.push_notifications.push_notifications_enabled", return_value=True)
     def test_apns_badge_count(self, mock_push_notifications: mock.MagicMock) -> None:
         user_profile = self.example_user("othello")
         # Test APNs badge count for personal messages.
@@ -1416,9 +1388,7 @@ class TestGetAPNsPayload(PushNotificationTest):
         }
         self.assertDictEqual(payload, expected)
 
-    @mock.patch(
-        "zerver.lib.push_notifications.push_notifications_enabled", return_value=True,
-    )
+    @mock.patch("zerver.lib.push_notifications.push_notifications_enabled", return_value=True)
     def test_get_message_payload_apns_huddle_message(
         self, mock_push_notifications: mock.MagicMock,
     ) -> None:

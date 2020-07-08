@@ -158,9 +158,7 @@ class AlertWordTests(ZulipTestCase):
         self.assertEqual(set(result.json()["alert_words"]), {"one", "two", "three"})
 
         # Alerts in the middle of messages work.
-        self.assertTrue(
-            self.message_does_alert(user_profile_hamlet, "Normal alert one time"),
-        )
+        self.assertTrue(self.message_does_alert(user_profile_hamlet, "Normal alert one time"))
         # Alerts at the end of messages work.
         self.assertTrue(self.message_does_alert(user_profile_hamlet, "Normal alert one"))
         # Alerts at the beginning of messages work.
@@ -173,9 +171,7 @@ class AlertWordTests(ZulipTestCase):
             self.message_does_alert(user_profile_hamlet, "Definitely time for three."),
         )
         # Multiple alerts in a message work.
-        self.assertTrue(
-            self.message_does_alert(user_profile_hamlet, "One two three o'clock"),
-        )
+        self.assertTrue(self.message_does_alert(user_profile_hamlet, "One two three o'clock"))
         # Alerts are case-insensitive.
         self.assertTrue(self.message_does_alert(user_profile_hamlet, "One o'clock"))
         self.assertTrue(

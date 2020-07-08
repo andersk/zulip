@@ -374,10 +374,7 @@ class TestRealmAuditLog(ZulipTestCase):
         )
         self.assertEqual(realm_audit_logs.count(), 1)
         extra_data = ujson.loads(realm_audit_logs[0].extra_data)
-        expected_new_value = {
-            "property": "authentication_methods",
-            "value": auth_method_dict,
-        }
+        expected_new_value = {"property": "authentication_methods", "value": auth_method_dict}
         self.assertEqual(extra_data[RealmAuditLog.OLD_VALUE], expected_old_value)
         self.assertEqual(extra_data[RealmAuditLog.NEW_VALUE], expected_new_value)
 

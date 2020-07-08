@@ -113,9 +113,7 @@ class ThumbnailTest(ZulipTestCase):
             # Test api endpoint with standard API authentication.
             self.logout()
             user_profile = self.example_user("hamlet")
-            result = self.api_get(
-                user_profile, f"/thumbnail?url={quoted_url}&size=thumbnail",
-            )
+            result = self.api_get(user_profile, f"/thumbnail?url={quoted_url}&size=thumbnail")
             self.assertEqual(result.status_code, 302, result)
             expected_part_url = (
                 "/0x300/smart/filters:no_upscale():sharpen(0.5,0.2,true)/"

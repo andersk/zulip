@@ -408,9 +408,7 @@ def api_key_only_webhook_view(
                     # NOTE: importing this at the top of file leads to a
                     # cyclic import; correct fix is probably to move
                     # notify_bot_owner_about_invalid_json to a smaller file.
-                    from zerver.lib.webhooks.common import (
-                        notify_bot_owner_about_invalid_json,
-                    )
+                    from zerver.lib.webhooks.common import notify_bot_owner_about_invalid_json
 
                     notify_bot_owner_about_invalid_json(user_profile, webhook_client_name)
                 else:

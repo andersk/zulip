@@ -236,11 +236,7 @@ def maybe_send_to_registration(
         if is_signup:
             return redirect(confirmation_link)
 
-        context = {
-            "email": email,
-            "continue_link": confirmation_link,
-            "full_name": full_name,
-        }
+        context = {"email": email, "continue_link": confirmation_link, "full_name": full_name}
         return render(request, "zerver/confirm_continue_registration.html", context=context)
 
     # This email address it not allowed to join this organization, so
@@ -676,9 +672,7 @@ def get_dev_users(
             is_bot=False, is_active=True,
         )
 
-    shakespearian_users = users_query.exclude(email__startswith="extrauser").order_by(
-        "email",
-    )
+    shakespearian_users = users_query.exclude(email__startswith="extrauser").order_by("email")
     extra_users = users_query.filter(email__startswith="extrauser").order_by("email")
     # Limit the number of extra users we offer by default
     extra_users = extra_users[0:extra_users_count]
@@ -722,9 +716,7 @@ def add_dev_login_context(realm: Optional[Realm], context: Dict[str, Any]) -> No
         [u for u in users if u.is_realm_admin and not u.is_realm_owner],
     )
     context["guest_users"] = sort([u for u in users if u.is_guest])
-    context["direct_users"] = sort(
-        [u for u in users if not (u.is_realm_admin or u.is_guest)],
-    )
+    context["direct_users"] = sort([u for u in users if not (u.is_realm_admin or u.is_guest)])
 
 
 def update_login_page_context(request: HttpRequest, context: Dict[str, Any]) -> None:
@@ -745,9 +737,7 @@ class TwoFactorLoginView(BaseTwoFactorLoginView):
         ("backup", BackupTokenForm),
     )
 
-    def __init__(
-        self, extra_context: ExtraContext = None, *args: Any, **kwargs: Any
-    ) -> None:
+    def __init__(self, extra_context: ExtraContext = None, *args: Any, **kwargs: Any) -> None:
         self.extra_context = extra_context
         super().__init__(*args, **kwargs)
 
@@ -933,9 +923,7 @@ def api_dev_fetch_api_key(request: HttpRequest, username: str = REQ()) -> HttpRe
         )
     if return_data.get("inactive_user"):
         return json_error(
-            _("Your account has been disabled."),
-            data={"reason": "user disable"},
-            status=403,
+            _("Your account has been disabled."), data={"reason": "user disable"}, status=403,
         )
     if user_profile is None:
         return json_error(
@@ -989,9 +977,7 @@ def api_fetch_api_key(
     )
     if return_data.get("inactive_user"):
         return json_error(
-            _("Your account has been disabled."),
-            data={"reason": "user disable"},
-            status=403,
+            _("Your account has been disabled."), data={"reason": "user disable"}, status=403,
         )
     if return_data.get("inactive_realm"):
         return json_error(
@@ -1175,6 +1161,5 @@ def config_error_view(request: HttpRequest, error_category_name: str) -> HttpRes
     }
 
     return TemplateView.as_view(
-        template_name="zerver/config_error.html",
-        extra_context=contexts[error_category_name],
+        template_name="zerver/config_error.html", extra_context=contexts[error_category_name],
     )(request)

@@ -79,8 +79,7 @@ class ZephyrTest(ZulipTestCase):
 
         def kerberos_alter_egos_mock() -> Any:
             return patch(
-                "zerver.views.zephyr.kerberos_alter_egos",
-                {"kerberos_alter_ego": "starnine"},
+                "zerver.views.zephyr.kerberos_alter_egos", {"kerberos_alter_ego": "starnine"},
             )
 
         cred = dict(cname=dict(nameString=["kerberos_alter_ego"]))

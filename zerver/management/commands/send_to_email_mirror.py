@@ -112,9 +112,7 @@ Example:
                 )  # https://github.com/python/typeshed/issues/2417
                 return message
 
-    def _prepare_message(
-        self, message: EmailMessage, realm: Realm, stream_name: str,
-    ) -> None:
+    def _prepare_message(self, message: EmailMessage, realm: Realm, stream_name: str) -> None:
         stream = get_stream(stream_name, realm)
 
         # The block below ensures that the imported email message doesn't have any recipient-like

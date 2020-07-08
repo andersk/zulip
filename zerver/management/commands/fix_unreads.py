@@ -54,9 +54,7 @@ class Command(ZulipBaseCommand):
 
         if options["all"]:
             if realm is None:
-                raise CommandError(
-                    "You must specify a realm if you choose the --all option.",
-                )
+                raise CommandError("You must specify a realm if you choose the --all option.")
 
             self.fix_all_users(realm)
             return

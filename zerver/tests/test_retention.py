@@ -122,9 +122,7 @@ class ArchiveMessagesTestingBase(RetentionTestingBase):
         # control over what's expired and what isn't.
         Message.objects.all().update(date_sent=timezone_now())
 
-    def _set_realm_message_retention_value(
-        self, realm: Realm, retention_period: int,
-    ) -> None:
+    def _set_realm_message_retention_value(self, realm: Realm, retention_period: int) -> None:
         realm.message_retention_days = retention_period
         realm.save()
 
@@ -535,9 +533,7 @@ class TestArchivingSubMessages(ArchiveMessagesTestingBase):
         restore_all_data_from_archive()
         self.assertEqual(
             set(
-                SubMessage.objects.filter(id__in=submessage_ids).values_list(
-                    "id", flat=True,
-                ),
+                SubMessage.objects.filter(id__in=submessage_ids).values_list("id", flat=True),
             ),
             set(submessage_ids),
         )
@@ -862,9 +858,7 @@ class MoveMessageToArchiveWithSubMessages(MoveMessageToArchiveBase):
         restore_all_data_from_archive()
         self.assertEqual(
             set(
-                SubMessage.objects.filter(id__in=submessage_ids).values_list(
-                    "id", flat=True,
-                ),
+                SubMessage.objects.filter(id__in=submessage_ids).values_list("id", flat=True),
             ),
             set(submessage_ids),
         )
@@ -925,9 +919,7 @@ class TestCleaningArchive(ArchiveMessagesTestingBase):
         # All transactions except the last one were deleted:
         self.assertEqual(remaining_transactions[0].id, transactions[-1].id)
         # And corresponding ArchivedMessages should have been deleted:
-        self.assertFalse(
-            ArchivedMessage.objects.filter(id__in=message_ids_to_clean).exists(),
-        )
+        self.assertFalse(ArchivedMessage.objects.filter(id__in=message_ids_to_clean).exists())
         self.assertFalse(
             ArchivedUserMessage.objects.filter(message_id__in=message_ids_to_clean).exists(),
         )
@@ -949,9 +941,7 @@ class TestGetRealmAndStreamsForArchiving(ZulipTestCase):
         for realm, streams_list in result:
             streams_list.sort(key=lambda stream: stream.id)
 
-    def simple_get_realms_and_streams_for_archiving(
-        self,
-    ) -> List[Tuple[Realm, List[Stream]]]:
+    def simple_get_realms_and_streams_for_archiving(self) -> List[Tuple[Realm, List[Stream]]]:
         """
         This is an implementation of the function we're testing, but using the obvious,
         unoptimized algorithm. We can use this for additional verification of correctness,
@@ -993,9 +983,7 @@ class TestGetRealmAndStreamsForArchiving(ZulipTestCase):
         zephyr_realm.save()
         self.make_stream("normal stream", realm=zephyr_realm)
 
-        archiving_blocked_zephyr_stream = self.make_stream(
-            "no archiving", realm=zephyr_realm,
-        )
+        archiving_blocked_zephyr_stream = self.make_stream("no archiving", realm=zephyr_realm)
         archiving_blocked_zephyr_stream.message_retention_days = -1
         archiving_blocked_zephyr_stream.save()
 

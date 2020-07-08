@@ -241,9 +241,7 @@ def update_user(client: Client) -> None:
     # {code_example|start}
     # Change value of the custom profile field with ID 9.
     user_id = 8
-    result = client.update_user_by_id(
-        user_id, profile_data=[{"id": 9, "value": "some data"}],
-    )
+    result = client.update_user_by_id(user_id, profile_data=[{"id": 9, "value": "some data"}])
     # {code_example|end}
     validate_against_openapi_schema(result, "/users/{user_id}", "patch", "400")
 
@@ -390,9 +388,9 @@ def get_user_groups(client: Client) -> int:
     # {code_example|end}
 
     validate_against_openapi_schema(result, "/user_groups", "get", "200")
-    hamlet_user_group = [
-        u for u in result["user_groups"] if u["name"] == "hamletcharacters"
-    ][0]
+    hamlet_user_group = [u for u in result["user_groups"] if u["name"] == "hamletcharacters"][
+        0
+    ]
     assert hamlet_user_group["description"] == "Characters of Hamlet"
 
     marketing_user_group = [u for u in result["user_groups"] if u["name"] == "marketing"][0]
@@ -700,9 +698,7 @@ def add_reaction(client: Client, message_id: int) -> None:
 
     result = client.add_reaction(request)
     # {code_example|end}
-    validate_against_openapi_schema(
-        result, "/messages/{message_id}/reactions", "post", "200",
-    )
+    validate_against_openapi_schema(result, "/messages/{message_id}/reactions", "post", "200")
 
 
 @openapi_test_function("/messages/{message_id}/reactions:delete")
@@ -1003,9 +999,7 @@ def upload_custom_emoji(client: Client) -> None:
     # Upload a custom emoji; assume `emoji_path` is the path to your image.
     with open(emoji_path, "rb") as fp:
         emoji_name = "my_custom_emoji"
-        result = client.call_endpoint(
-            f"realm/emoji/{emoji_name}", method="POST", files=[fp],
-        )
+        result = client.call_endpoint(f"realm/emoji/{emoji_name}", method="POST", files=[fp])
     # {code_example|end}
 
     validate_against_openapi_schema(result, "/realm/emoji/{emoji_name}", "post", "200")

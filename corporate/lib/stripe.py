@@ -343,9 +343,7 @@ def make_end_of_cycle_updates_if_needed(
 
         if plan.status == CustomerPlan.SWITCH_TO_ANNUAL_AT_END_OF_CYCLE:
             if plan.fixed_price is not None:  # nocoverage
-                raise NotImplementedError(
-                    "Can't switch fixed priced monthly plan to annual.",
-                )
+                raise NotImplementedError("Can't switch fixed priced monthly plan to annual.")
 
             plan.status = CustomerPlan.ENDED
             plan.save(update_fields=["status"])

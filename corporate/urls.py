@@ -16,9 +16,7 @@ i18n_urlpatterns: Any = [
     path("jobs/", TemplateView.as_view(template_name="corporate/jobs.html")),
     # Billing
     path("billing/", corporate.views.billing_home, name="corporate.views.billing_home"),
-    path(
-        "upgrade/", corporate.views.initial_upgrade, name="corporate.views.initial_upgrade",
-    ),
+    path("upgrade/", corporate.views.initial_upgrade, name="corporate.views.initial_upgrade"),
 ]
 
 v1_api_and_json_patterns = [

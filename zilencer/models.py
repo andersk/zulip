@@ -31,9 +31,7 @@ class RemoteZulipServer(models.Model):
 
 # Variant of PushDeviceToken for a remote server.
 class RemotePushDeviceToken(AbstractPushDeviceToken):
-    server: RemoteZulipServer = models.ForeignKey(
-        RemoteZulipServer, on_delete=models.CASCADE,
-    )
+    server: RemoteZulipServer = models.ForeignKey(RemoteZulipServer, on_delete=models.CASCADE)
     # The user id on the remote server for this device device this is
     user_id: int = models.BigIntegerField(db_index=True)
 
@@ -49,9 +47,7 @@ class RemoteRealmAuditLog(AbstractRealmAuditLog):
     billing.  See RealmAuditLog and AbstractRealmAuditLog for details.
     """
 
-    server: RemoteZulipServer = models.ForeignKey(
-        RemoteZulipServer, on_delete=models.CASCADE,
-    )
+    server: RemoteZulipServer = models.ForeignKey(RemoteZulipServer, on_delete=models.CASCADE)
     realm_id: int = models.IntegerField(db_index=True)
     # The remote_id field lets us deduplicate data from the remote server
     remote_id: int = models.IntegerField(db_index=True)
@@ -61,9 +57,7 @@ class RemoteRealmAuditLog(AbstractRealmAuditLog):
 
 
 class RemoteInstallationCount(BaseCount):
-    server: RemoteZulipServer = models.ForeignKey(
-        RemoteZulipServer, on_delete=models.CASCADE,
-    )
+    server: RemoteZulipServer = models.ForeignKey(RemoteZulipServer, on_delete=models.CASCADE)
     # The remote_id field lets us deduplicate data from the remote server
     remote_id: int = models.IntegerField(db_index=True)
 
@@ -79,9 +73,7 @@ class RemoteInstallationCount(BaseCount):
 
 # We can't subclass RealmCount because we only have a realm_id here, not a foreign key.
 class RemoteRealmCount(BaseCount):
-    server: RemoteZulipServer = models.ForeignKey(
-        RemoteZulipServer, on_delete=models.CASCADE,
-    )
+    server: RemoteZulipServer = models.ForeignKey(RemoteZulipServer, on_delete=models.CASCADE)
     realm_id: int = models.IntegerField(db_index=True)
     # The remote_id field lets us deduplicate data from the remote server
     remote_id: int = models.IntegerField(db_index=True)

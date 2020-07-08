@@ -19,8 +19,7 @@ QUESTIONS_ANSWER_TEMPLATE = (
     + "of the question [{question_title}]({question_url})"
 )
 COMMENT_TEMPLATE = (
-    "{user_name} {verb} the [comment]({answer_url}) "
-    "of the task [{task_title}]({task_url})"
+    "{user_name} {verb} the [comment]({answer_url}) " "of the task [{task_title}]({task_url})"
 )
 MESSAGE_TEMPLATE = "{user_name} {verb} the message [{title}]({url})"
 TODO_LIST_TEMPLATE = "{user_name} {verb} the todo list [{title}]({url})"

@@ -143,9 +143,7 @@ def send_apple_push_notification(
     else:
         DeviceTokenClass = PushDeviceToken
 
-    logger.info(
-        "APNs: Sending notification for user %d to %d devices", user_id, len(devices),
-    )
+    logger.info("APNs: Sending notification for user %d to %d devices", user_id, len(devices))
     payload = APNsPayload(**modernize_apns_payload(payload_data))
     expiration = int(time.time() + 24 * 3600)
     retries_left = APNS_MAX_RETRIES
@@ -702,9 +700,7 @@ def get_apns_alert_subtitle(message: Message) -> str:
     if message.trigger == "mentioned":
         return _("{full_name} mentioned you:").format(full_name=message.sender.full_name)
     elif message.trigger == "wildcard_mentioned":
-        return _("{full_name} mentioned everyone:").format(
-            full_name=message.sender.full_name,
-        )
+        return _("{full_name} mentioned everyone:").format(full_name=message.sender.full_name)
     elif message.recipient.type == Recipient.PERSONAL:
         return ""
     # For group PMs, or regular messages to a stream, just use a colon to indicate this is the sender.
@@ -815,9 +811,7 @@ def handle_remove_push_notification(user_profile_id: int, message_ids: List[int]
     apns_payload = get_remove_payload_apns(user_profile, message_ids)
 
     if uses_notification_bouncer():
-        send_notifications_to_bouncer(
-            user_profile_id, apns_payload, gcm_payload, gcm_options,
-        )
+        send_notifications_to_bouncer(user_profile_id, apns_payload, gcm_payload, gcm_options)
     else:
         android_devices = list(
             PushDeviceToken.objects.filter(user=user_profile, kind=PushDeviceToken.GCM),
@@ -897,9 +891,7 @@ def handle_push_notification(user_profile_id: int, missed_message: Dict[str, Any
     logger.info("Sending push notifications to mobile clients for user %s", user_profile_id)
 
     if uses_notification_bouncer():
-        send_notifications_to_bouncer(
-            user_profile_id, apns_payload, gcm_payload, gcm_options,
-        )
+        send_notifications_to_bouncer(user_profile_id, apns_payload, gcm_payload, gcm_options)
         return
 
     android_devices = list(

@@ -72,9 +72,7 @@ if (vendor, os_version) in UNSUPPORTED_DISTROS:
 os.umask(0o22)
 
 parser = argparse.ArgumentParser()
-parser.add_argument(
-    "deploy_path", metavar="deploy_path", help="Path to deployment directory",
-)
+parser.add_argument("deploy_path", metavar="deploy_path", help="Path to deployment directory")
 parser.add_argument(
     "--skip-puppet",
     dest="skip_puppet",
@@ -295,9 +293,7 @@ if not args.skip_migrations:
                 need_create_large_indexes = True
     if need_create_large_indexes:
         logging.info("Creating some expensive indexes before starting downtime.")
-        subprocess.check_call(
-            ["./manage.py", "create_large_indexes"], preexec_fn=su_to_zulip,
-        )
+        subprocess.check_call(["./manage.py", "create_large_indexes"], preexec_fn=su_to_zulip)
 
 # Now we start shutting down services; we start with
 # process-fts-updates, which isn't on the critical serving path.

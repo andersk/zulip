@@ -110,9 +110,7 @@ class EmailChangeTestCase(ZulipTestCase):
         self.assertEqual(len(mail.outbox), 0)
         result = self.client_patch(url, data)
         self.assertEqual(len(mail.outbox), 1)
-        self.assert_in_success_response(
-            ["Check your email for a confirmation link."], result,
-        )
+        self.assert_in_success_response(["Check your email for a confirmation link."], result)
         email_message = mail.outbox[0]
         self.assertEqual(
             email_message.subject, "Verify your new email address",
@@ -135,9 +133,7 @@ class EmailChangeTestCase(ZulipTestCase):
 
         # Now confirm trying to change your email back doesn't throw an immediate error
         result = self.client_patch(url, {"email": "hamlet@zulip.com"})
-        self.assert_in_success_response(
-            ["Check your email for a confirmation link."], result,
-        )
+        self.assert_in_success_response(["Check your email for a confirmation link."], result)
 
     def test_unauthorized_email_change(self) -> None:
         data = {"email": "hamlet-new@zulip.com"}
@@ -156,9 +152,7 @@ class EmailChangeTestCase(ZulipTestCase):
         self.login("iago")
         url = "/json/settings"
         result = self.client_patch(url, data)
-        self.assert_in_success_response(
-            ["Check your email for a confirmation link."], result,
-        )
+        self.assert_in_success_response(["Check your email for a confirmation link."], result)
 
     def test_email_change_already_taken(self) -> None:
         data = {"email": "cordelia@zulip.com"}
@@ -179,9 +173,7 @@ class EmailChangeTestCase(ZulipTestCase):
         self.assertEqual(len(mail.outbox), 0)
         result = self.client_patch(url, data)
         self.assertEqual(len(mail.outbox), 1)
-        self.assert_in_success_response(
-            ["Check your email for a confirmation link."], result,
-        )
+        self.assert_in_success_response(["Check your email for a confirmation link."], result)
         email_message = mail.outbox[0]
         self.assertEqual(
             email_message.subject, "Verify your new email address",

@@ -107,16 +107,7 @@ def install_venv_deps(pip: str, requirements_file: str) -> None:
             pip_requirements,
         ],
     )
-    run(
-        [
-            pip,
-            "install",
-            "--no-deps",
-            "--require-hashes",
-            "--requirement",
-            requirements_file,
-        ],
-    )
+    run([pip, "install", "--no-deps", "--require-hashes", "--requirement", requirements_file])
 
 
 def get_index_filename(venv_path: str) -> str:

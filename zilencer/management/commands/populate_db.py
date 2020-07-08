@@ -591,9 +591,7 @@ class Command(BaseCommand):
             mentor = try_add_realm_custom_profile_field(
                 zulip_realm, "Mentor", CustomProfileField.USER,
             )
-            github_profile = try_add_realm_default_custom_profile_field(
-                zulip_realm, "github",
-            )
+            github_profile = try_add_realm_default_custom_profile_field(zulip_realm, "github")
 
             # Fill in values for Iago and Hamlet
             hamlet = get_user_by_delivery_email("hamlet@zulip.com", zulip_realm)
@@ -691,9 +689,7 @@ class Command(BaseCommand):
                     ("Athena Consulting Exchange User (MIT)", "starnine@mit.edu"),
                     ("Esp Classroom (MIT)", "espuser@mit.edu"),
                 ]
-                create_users(
-                    mit_realm, testsuite_mit_users, tos_version=settings.TOS_VERSION,
-                )
+                create_users(mit_realm, testsuite_mit_users, tos_version=settings.TOS_VERSION)
 
                 testsuite_lear_users = [
                     ("King Lear", "king@lear.org"),

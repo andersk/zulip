@@ -108,9 +108,7 @@ class MutedTopicsTests(ZulipTestCase):
             result = self.api_patch(user, url, data)
 
             self.assert_json_success(result)
-            self.assertNotIn(
-                (stream.name, "Verona3", mock_date_muted), get_topic_mutes(user),
-            )
+            self.assertNotIn((stream.name, "Verona3", mock_date_muted), get_topic_mutes(user))
             self.assertFalse(topic_is_muted(user, stream.id, "verona3"))
 
     def test_muted_topic_add_invalid(self) -> None:

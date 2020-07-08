@@ -158,9 +158,7 @@ class UserStatusTest(ZulipTestCase):
 
         self.assertEqual(
             event_info.payload,
-            dict(
-                type="user_status", user_id=hamlet.id, away=True, status_text="on vacation",
-            ),
+            dict(type="user_status", user_id=hamlet.id, away=True, status_text="on vacation"),
         )
 
         self.assertEqual(

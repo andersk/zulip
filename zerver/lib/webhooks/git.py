@@ -196,9 +196,7 @@ def get_pull_request_event_message(
         main_message = f"{main_message} {assignee_info}"
 
     elif assignee:
-        assignee_info = PULL_REQUEST_OR_ISSUE_ASSIGNEE_INFO_TEMPLATE.format(
-            assignee=assignee,
-        )
+        assignee_info = PULL_REQUEST_OR_ISSUE_ASSIGNEE_INFO_TEMPLATE.format(assignee=assignee)
         main_message = f"{main_message} {assignee_info}"
 
     if target_branch and base_branch:

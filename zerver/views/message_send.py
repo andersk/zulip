@@ -191,9 +191,7 @@ def send_message_backend(
     realm_str: Optional[str] = REQ("realm_str", default=None, documentation_pending=True),
     local_id: Optional[str] = REQ(default=None),
     queue_id: Optional[str] = REQ(default=None),
-    delivery_type: str = REQ(
-        "delivery_type", default="send_now", documentation_pending=True,
-    ),
+    delivery_type: str = REQ("delivery_type", default="send_now", documentation_pending=True),
     defer_until: Optional[str] = REQ("deliver_at", default=None, documentation_pending=True),
     tz_guess: Optional[str] = REQ("tz_guess", default=None, documentation_pending=True),
 ) -> HttpResponse:

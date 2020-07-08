@@ -509,9 +509,7 @@ class PreviewTestCase(ZulipTestCase):
         self.login_user(user)
         url = "http://test.org/audio.mp3"
         with mock.patch("zerver.lib.actions.queue_json_publish") as patched:
-            msg_id = self.send_stream_message(
-                user, "Scotland", topic_name="foo", content=url,
-            )
+            msg_id = self.send_stream_message(user, "Scotland", topic_name="foo", content=url)
             patched.assert_called_once()
             queue = patched.call_args[0][0]
             self.assertEqual(queue, "embed_links")
@@ -541,9 +539,7 @@ class PreviewTestCase(ZulipTestCase):
         self.login_user(user)
         url = "http://test.org/foo.html"
         with mock.patch("zerver.lib.actions.queue_json_publish") as patched:
-            msg_id = self.send_stream_message(
-                user, "Scotland", topic_name="foo", content=url,
-            )
+            msg_id = self.send_stream_message(user, "Scotland", topic_name="foo", content=url)
             patched.assert_called_once()
             queue = patched.call_args[0][0]
             self.assertEqual(queue, "embed_links")
@@ -573,9 +569,7 @@ class PreviewTestCase(ZulipTestCase):
         self.login_user(user)
         url = "http://test.org/foo.html"
         with mock.patch("zerver.lib.actions.queue_json_publish") as patched:
-            msg_id = self.send_stream_message(
-                user, "Scotland", topic_name="foo", content=url,
-            )
+            msg_id = self.send_stream_message(user, "Scotland", topic_name="foo", content=url)
             patched.assert_called_once()
             queue = patched.call_args[0][0]
             self.assertEqual(queue, "embed_links")
@@ -606,9 +600,7 @@ class PreviewTestCase(ZulipTestCase):
         self.login_user(user)
         url = "http://test.org/"
         with mock.patch("zerver.lib.actions.queue_json_publish") as patched:
-            msg_id = self.send_stream_message(
-                user, "Scotland", topic_name="foo", content=url,
-            )
+            msg_id = self.send_stream_message(user, "Scotland", topic_name="foo", content=url)
             patched.assert_called_once()
             queue = patched.call_args[0][0]
             self.assertEqual(queue, "embed_links")
@@ -654,9 +646,7 @@ class PreviewTestCase(ZulipTestCase):
                 side_effect=lambda k: True,
             ):
                 with self.settings(TEST_SUITE=False, CACHES=TEST_CACHES):
-                    with mock.patch(
-                        "requests.get", mock.Mock(side_effect=ConnectionError()),
-                    ):
+                    with mock.patch("requests.get", mock.Mock(side_effect=ConnectionError())):
                         FetchLinksEmbedData().consume(event)
 
                     with self.assertRaises(NotFoundInCache):
@@ -673,9 +663,7 @@ class PreviewTestCase(ZulipTestCase):
         error_url = "http://test.org/x"
         with mock.patch("zerver.lib.actions.queue_json_publish"):
             msg_id = self.send_personal_message(
-                self.example_user("hamlet"),
-                self.example_user("cordelia"),
-                content=error_url,
+                self.example_user("hamlet"), self.example_user("cordelia"), content=error_url,
             )
         msg = Message.objects.select_related("sender").get(id=msg_id)
         event = {

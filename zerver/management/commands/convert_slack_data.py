@@ -14,10 +14,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser: CommandParser) -> None:
         parser.add_argument(
-            "slack_data_zip",
-            nargs="+",
-            metavar="<slack data zip>",
-            help="Zipped slack data",
+            "slack_data_zip", nargs="+", metavar="<slack data zip>", help="Zipped slack data",
         )
 
         parser.add_argument(

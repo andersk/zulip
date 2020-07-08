@@ -56,7 +56,9 @@ class Bitbucket3HookTests(WebhookTestCase):
 
     # Repo Push Events:
     def test_push_add_branch(self) -> None:
-        expected_message = """[hypro999](http://139.59.64.214:7990/users/hypro999) created branch2 branch."""
+        expected_message = (
+            """[hypro999](http://139.59.64.214:7990/users/hypro999) created branch2 branch."""
+        )
         expected_topic = self.EXPECTED_TOPIC_BRANCH_EVENTS.format(branch="branch2")
         self.send_and_test_stream_message(
             "repo_push_add_branch", expected_topic, expected_message,
@@ -71,7 +73,9 @@ class Bitbucket3HookTests(WebhookTestCase):
         )
 
     def test_push_delete_branch(self) -> None:
-        expected_message = """[hypro999](http://139.59.64.214:7990/users/hypro999) deleted branch branch2."""
+        expected_message = (
+            """[hypro999](http://139.59.64.214:7990/users/hypro999) deleted branch branch2."""
+        )
         expected_topic = self.EXPECTED_TOPIC_BRANCH_EVENTS.format(branch="branch2")
         self.send_and_test_stream_message(
             "repo_push_delete_branch", expected_topic, expected_message,

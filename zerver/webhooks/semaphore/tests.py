@@ -79,10 +79,7 @@ class SemaphoreHookTests(WebhookTestCase):
 * **Author**: [radwo](https://github.com/radwo)
 """.strip()
         self.send_and_test_stream_message(
-            "pull_request",
-            expected_topic,
-            expected_message,
-            content_type="application/json",
+            "pull_request", expected_topic, expected_message, content_type="application/json",
         )
 
     def test_semaphore_pull_request_non_gh_repo(self) -> None:

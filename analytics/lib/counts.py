@@ -704,9 +704,7 @@ def get_count_stats(realm: Optional[Realm] = None) -> Dict[str, CountStat]:
         CountStat(
             "messages_sent:client:day",
             sql_data_collector(
-                UserCount,
-                count_message_by_user_query(realm),
-                (Message, "sending_client_id"),
+                UserCount, count_message_by_user_query(realm), (Message, "sending_client_id"),
             ),
             CountStat.DAY,
         ),

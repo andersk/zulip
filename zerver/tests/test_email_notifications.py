@@ -381,9 +381,7 @@ class TestMissedMessages(ZulipTestCase):
         self.send_stream_message(
             self.example_user("othello"), "Denmark", "11", topic_name="test2",
         )
-        msg_id = self.send_stream_message(
-            self.example_user("othello"), "denmark", "@**all**",
-        )
+        msg_id = self.send_stream_message(self.example_user("othello"), "denmark", "@**all**")
 
         if show_message_content:
             verify_body_include = [
@@ -619,9 +617,7 @@ class TestMissedMessages(ZulipTestCase):
         handle_missedmessage_emails(hamlet.id, [{"message_id": msg_id}])
         self.assertEqual(len(mail.outbox), 0)
 
-    def _deleted_message_in_personal_missed_stream_messages(
-        self, send_as_user: bool,
-    ) -> None:
+    def _deleted_message_in_personal_missed_stream_messages(self, send_as_user: bool) -> None:
         msg_id = self.send_personal_message(
             self.example_user("othello"),
             self.example_user("hamlet"),
@@ -749,9 +745,7 @@ class TestMissedMessages(ZulipTestCase):
         self._extra_context_in_huddle_missed_stream_messages_three_others(False)
 
     @override_settings(SEND_MISSED_MESSAGE_EMAILS_AS_USER=True)
-    def test_extra_context_in_huddle_missed_stream_messages_many_others_as_user(
-        self,
-    ) -> None:
+    def test_extra_context_in_huddle_missed_stream_messages_many_others_as_user(self) -> None:
         self._extra_context_in_huddle_missed_stream_messages_many_others(True)
 
     def test_extra_context_in_huddle_missed_stream_messages_many_others(self) -> None:
@@ -794,9 +788,7 @@ class TestMissedMessages(ZulipTestCase):
         )
 
         # Emails don't have missed message content when message content is disabled by the user
-        do_change_notification_settings(
-            user, "message_content_in_email_notifications", False,
-        )
+        do_change_notification_settings(user, "message_content_in_email_notifications", False)
         mail.outbox = []
         self._extra_context_in_personal_missed_stream_messages(
             False, show_message_content=False, message_content_disabled_by_user=True,
@@ -814,9 +806,7 @@ class TestMissedMessages(ZulipTestCase):
             False, show_message_content=False, message_content_disabled_by_realm=True,
         )
 
-        do_change_notification_settings(
-            user, "message_content_in_email_notifications", False,
-        )
+        do_change_notification_settings(user, "message_content_in_email_notifications", False)
         mail.outbox = []
         self._extra_context_in_personal_missed_stream_messages(
             False,
@@ -1000,8 +990,7 @@ class TestMissedMessages(ZulipTestCase):
         mention_msg_id = self.send_stream_message(user, stream_name, "@**King Hamlet**")
 
         handle_missedmessage_emails(
-            late_subscribed_user.id,
-            [{"message_id": mention_msg_id, "trigger": "mentioned"}],
+            late_subscribed_user.id, [{"message_id": mention_msg_id, "trigger": "mentioned"}],
         )
 
         self.assertEqual(len(mail.outbox), 1)

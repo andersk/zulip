@@ -74,9 +74,7 @@ def check_send_webhook_message(
 
     if stream is None:
         assert user_profile.bot_owner is not None
-        check_send_private_message(
-            user_profile, request.client, user_profile.bot_owner, body,
-        )
+        check_send_private_message(user_profile, request.client, user_profile.bot_owner, body)
     else:
         # Some third-party websites (such as Atlassian's JIRA), tend to
         # double escape their URLs in a manner that escaped space characters

@@ -37,9 +37,7 @@ class PingdomHookTests(WebhookTestCase):
         """
         Tests if pingdom imap check from down to up is handled correctly
         """
-        expected_message = (
-            "Service imap.someurl.com changed its IMAP status from DOWN to UP."
-        )
+        expected_message = "Service imap.someurl.com changed its IMAP status from DOWN to UP."
         self.send_and_test_stream_message(
             "imap_down_to_up", "IMAP check status.", expected_message,
         )

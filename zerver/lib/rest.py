@@ -128,8 +128,7 @@ def rest_dispatch(request: HttpRequest, **kwargs: Any) -> HttpResponse:
                 target_function,
             )
         elif (
-            "override_api_url_scheme" in view_flags
-            and request.GET.get("api_key") is not None
+            "override_api_url_scheme" in view_flags and request.GET.get("api_key") is not None
         ):
             # This request uses legacy API authentication.  We
             # unfortunately need that in the React Native mobile apps,

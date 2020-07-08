@@ -10,13 +10,7 @@ import sys
 import time
 
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-from scripts.lib.zulip_tools import (
-    DEPLOYMENTS_DIR,
-    ENDC,
-    OKGREEN,
-    WARNING,
-    overwrite_symlink,
-)
+from scripts.lib.zulip_tools import DEPLOYMENTS_DIR, ENDC, OKGREEN, WARNING, overwrite_symlink
 
 logging.Formatter.converter = time.gmtime
 logging.basicConfig(format="%(asctime)s restart-server: %(message)s", level=logging.INFO)

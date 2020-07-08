@@ -31,9 +31,7 @@ def get_language_list() -> List[Dict[str, Any]]:
         return languages["name_map"]
 
 
-def get_language_list_for_templates(
-    default_language: str,
-) -> List[Dict[str, Dict[str, str]]]:
+def get_language_list_for_templates(default_language: str) -> List[Dict[str, Dict[str, str]]]:
     language_list = [
         lang
         for lang in get_language_list()

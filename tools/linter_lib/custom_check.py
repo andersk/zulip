@@ -157,10 +157,7 @@ js_rules = RuleList(
             "description": "Relative URL for JSON route not supported by i18n",
         },
         # This rule is constructed with + to avoid triggering on itself
-        {
-            "pattern": "^[ ]*//[A-Za-z0-9]",
-            "description": "Missing space after // in comment",
-        },
+        {"pattern": "^[ ]*//[A-Za-z0-9]", "description": "Missing space after // in comment"},
         {
             "pattern": r"""[.]text\(["'][a-zA-Z]""",
             "description": "Strings passed to $().text should be wrapped in i18n.t() for internationalization",
@@ -319,10 +316,7 @@ python_rules = RuleList(
             "exclude": {"scripts/lib/setup_venv.py"},
             "exclude_line": {
                 ("scripts/lib/zulip_tools.py", "sudo_args = kwargs.pop('sudo_args', [])"),
-                (
-                    "scripts/lib/zulip_tools.py",
-                    "args = ['sudo'] + sudo_args + ['--'] + args",
-                ),
+                ("scripts/lib/zulip_tools.py", "args = ['sudo'] + sudo_args + ['--'] + args"),
             },
             "description": "Most scripts are intended to run on systems without sudo.",
             "good_lines": ['subprocess.check_call(["ls"])'],
@@ -426,10 +420,7 @@ python_rules = RuleList(
         {
             "pattern": r"(logging|logger)\.warn\W",
             "description": "Logger.warn is a deprecated alias for Logger.warning; Use 'warning' instead of 'warn'.",
-            "good_lines": [
-                "logging.warning('I am a warning.')",
-                "logger.warning('warning')",
-            ],
+            "good_lines": ["logging.warning('I am a warning.')", "logger.warning('warning')"],
             "bad_lines": ["logging.warn('I am a warning.')", "logger.warn('warning')"],
         },
         {
@@ -620,9 +611,7 @@ prose_style_rules: List["Rule"] = [
     {
         "pattern": "[oO]rganisation",  # exclude usage in hrefs/divs
         "description": "Organization is spelled with a z",
-        "exclude_line": {
-            ("docs/translating/french.md", "* organization - **organisation**"),
-        },
+        "exclude_line": {("docs/translating/french.md", "* organization - **organisation**")},
     },
     {
         "pattern": "!!! warning",

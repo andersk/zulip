@@ -999,9 +999,7 @@ class NormalActionsTest(BaseAction):
             "value": "New value",
         }
         events = self.verify_action(
-            lambda: do_update_user_custom_profile_data_if_changed(
-                self.user_profile, [field],
-            ),
+            lambda: do_update_user_custom_profile_data_if_changed(self.user_profile, [field]),
         )
         schema_checker_with_rendered_value("events[0]", events[0])
 
@@ -1014,9 +1012,7 @@ class NormalActionsTest(BaseAction):
             "value": [self.example_user("ZOE").id],
         }
         events = self.verify_action(
-            lambda: do_update_user_custom_profile_data_if_changed(
-                self.user_profile, [field],
-            ),
+            lambda: do_update_user_custom_profile_data_if_changed(self.user_profile, [field]),
         )
         schema_checker_basic("events[0]", events[0])
 
@@ -1049,10 +1045,7 @@ class NormalActionsTest(BaseAction):
 
         events = self.verify_action(
             lambda: do_update_user_presence(
-                self.user_profile,
-                get_client("website"),
-                timezone_now(),
-                UserPresence.ACTIVE,
+                self.user_profile, get_client("website"), timezone_now(), UserPresence.ACTIVE,
             ),
             slim_presence=False,
         )
@@ -1107,10 +1100,7 @@ class NormalActionsTest(BaseAction):
         )
         self.verify_action(
             lambda: do_update_user_presence(
-                self.user_profile,
-                get_client("website"),
-                timezone_now(),
-                UserPresence.ACTIVE,
+                self.user_profile, get_client("website"), timezone_now(), UserPresence.ACTIVE,
             ),
         )
         events = self.verify_action(
@@ -1287,9 +1277,7 @@ class NormalActionsTest(BaseAction):
             ],
         )
         backend = UserGroup.objects.get(name="backend")
-        events = self.verify_action(
-            lambda: do_update_user_group_name(backend, "backendteam"),
-        )
+        events = self.verify_action(lambda: do_update_user_group_name(backend, "backendteam"))
         user_group_update_checker("events[0]", events[0])
 
         # Test description update
@@ -1317,9 +1305,7 @@ class NormalActionsTest(BaseAction):
             ],
         )
         hamlet = self.example_user("hamlet")
-        events = self.verify_action(
-            lambda: bulk_add_members_to_user_group(backend, [hamlet]),
-        )
+        events = self.verify_action(lambda: bulk_add_members_to_user_group(backend, [hamlet]))
         user_group_add_member_checker("events[0]", events[0])
 
         # Test remove members
@@ -1332,9 +1318,7 @@ class NormalActionsTest(BaseAction):
             ],
         )
         hamlet = self.example_user("hamlet")
-        events = self.verify_action(
-            lambda: remove_members_from_user_group(backend, [hamlet]),
-        )
+        events = self.verify_action(lambda: remove_members_from_user_group(backend, [hamlet]))
         user_group_remove_member_checker("events[0]", events[0])
 
         # Test delete event
@@ -1360,10 +1344,7 @@ class NormalActionsTest(BaseAction):
                                 ("name", check_string),
                                 ("id", check_int),
                                 ("description", check_string),
-                                (
-                                    "streams",
-                                    check_list(check_dict_only(basic_stream_fields)),
-                                ),
+                                ("streams", check_list(check_dict_only(basic_stream_fields))),
                             ],
                         ),
                     ),
@@ -2101,10 +2082,7 @@ class NormalActionsTest(BaseAction):
                 (
                     "realm_domain",
                     check_dict_only(
-                        [
-                            ("domain", equals("zulip.org")),
-                            ("allow_subdomains", equals(True)),
-                        ],
+                        [("domain", equals("zulip.org")), ("allow_subdomains", equals(True))],
                     ),
                 ),
             ],
@@ -2276,10 +2254,7 @@ class NormalActionsTest(BaseAction):
 
     def test_change_realm_night_mode_logo_source(self) -> None:
         action = lambda: do_change_logo_source(
-            self.user_profile.realm,
-            Realm.LOGO_UPLOADED,
-            True,
-            acting_user=self.user_profile,
+            self.user_profile.realm, Realm.LOGO_UPLOADED, True, acting_user=self.user_profile,
         )
         events = self.verify_action(action, state_change_expected=True)
         schema_checker = check_events_dict(

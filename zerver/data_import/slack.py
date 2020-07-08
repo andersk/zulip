@@ -350,9 +350,7 @@ def build_customprofilefields_values(
     for field, value in fields.items():
         if value["value"] == "":
             continue
-        custom_field_value = CustomProfileFieldValue(
-            id=custom_field_id, value=value["value"],
-        )
+        custom_field_value = CustomProfileFieldValue(id=custom_field_id, value=value["value"])
 
         custom_field_value_dict = model_to_dict(
             custom_field_value, exclude=["user_profile", "field"],
@@ -553,9 +551,7 @@ def channels_to_zerver_stream(
 
             added_mpims[mpim["name"]] = (mpim["id"], huddle_id_count)
 
-            recipient = build_recipient(
-                huddle_id_count, recipient_id_count, Recipient.HUDDLE,
-            )
+            recipient = build_recipient(huddle_id_count, recipient_id_count, Recipient.HUDDLE)
             realm["zerver_recipient"].append(recipient)
             slack_recipient_name_to_zulip_recipient_id[mpim["name"]] = recipient_id_count
 
@@ -894,9 +890,7 @@ def channel_message_to_zerver_message(
 
         if "channel_name" in message:
             is_private = False
-            recipient_id = slack_recipient_name_to_zulip_recipient_id[
-                message["channel_name"]
-            ]
+            recipient_id = slack_recipient_name_to_zulip_recipient_id[message["channel_name"]]
         elif "mpim_name" in message:
             is_private = True
             recipient_id = slack_recipient_name_to_zulip_recipient_id[message["mpim_name"]]
@@ -1304,9 +1298,7 @@ def do_convert_data(
 
     # We get the user data from the legacy token method of slack api, which is depreciated
     # but we use it as the user email data is provided only in this method
-    user_list = get_slack_api_data(
-        "https://slack.com/api/users.list", "members", token=token,
-    )
+    user_list = get_slack_api_data("https://slack.com/api/users.list", "members", token=token)
     fetch_shared_channel_users(user_list, slack_data_dir, token)
 
     custom_emoji_list = get_slack_api_data(

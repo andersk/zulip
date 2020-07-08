@@ -156,9 +156,7 @@ class RealmDomainTest(ZulipTestCase):
     def test_realm_realm_domains_uniqueness(self) -> None:
         realm = get_realm("zulip")
         with self.assertRaises(IntegrityError):
-            RealmDomain.objects.create(
-                realm=realm, domain="zulip.com", allow_subdomains=True,
-            )
+            RealmDomain.objects.create(realm=realm, domain="zulip.com", allow_subdomains=True)
 
     def test_validate_domain(self) -> None:
         invalid_domains = [

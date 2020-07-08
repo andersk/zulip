@@ -365,9 +365,7 @@ def billing_home(request: HttpRequest) -> HttpResponse:
 @require_billing_access
 @has_request_variables
 def change_plan_status(
-    request: HttpRequest,
-    user: UserProfile,
-    status: int = REQ("status", validator=check_int),
+    request: HttpRequest, user: UserProfile, status: int = REQ("status", validator=check_int),
 ) -> HttpResponse:
     assert status in [
         CustomerPlan.ACTIVE,

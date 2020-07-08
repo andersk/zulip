@@ -34,9 +34,7 @@ def set_up_django(external_host: str) -> None:
     os.environ["PYTHONUNBUFFERED"] = "y"
 
 
-def assert_server_running(
-    server: "subprocess.Popen[bytes]", log_file: Optional[str],
-) -> None:
+def assert_server_running(server: "subprocess.Popen[bytes]", log_file: Optional[str]) -> None:
     """Get the exit code of the server, or None if it is still running."""
     if server.poll() is not None:
         message = "Server died unexpectedly!"

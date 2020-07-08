@@ -172,9 +172,7 @@ TEMPLATE_DATABASE_DIR = "test-backend/databases"
 
 def get_dev_uuid_var_path(create_if_missing: bool = False) -> str:
     zulip_path = get_deploy_root()
-    uuid_path = os.path.join(
-        os.path.realpath(os.path.dirname(zulip_path)), ".zulip-dev-uuid",
-    )
+    uuid_path = os.path.join(os.path.realpath(os.path.dirname(zulip_path)), ".zulip-dev-uuid")
     if os.path.exists(uuid_path):
         with open(uuid_path) as f:
             zulip_uuid = f.read().strip()

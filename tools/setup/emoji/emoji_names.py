@@ -78,10 +78,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     "1f621": {"canonical_name": "rage", "aliases": ["mad", "grumpy", "very_angry"]},
     # blank from https://beebom.com/emoji-meanings/, speechless and poker_face
     # seemed like good ideas for this
-    "1f636": {
-        "canonical_name": "speechless",
-        "aliases": ["no_mouth", "blank", "poker_face"],
-    },
+    "1f636": {"canonical_name": "speechless", "aliases": ["no_mouth", "blank", "poker_face"]},
     "1f610": {"canonical_name": "neutral", "aliases": []},
     "1f611": {"canonical_name": "expressionless", "aliases": []},
     "1f62f": {"canonical_name": "hushed", "aliases": []},
@@ -282,10 +279,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     # detective from gemoji, sneaky from
     # https://mashable.com/2015/10/23/ios-9-1-emoji-guide/, agent seems a
     # reasonable addition
-    "1f575": {
-        "canonical_name": "detective",
-        "aliases": ["spy", "sleuth", "agent", "sneaky"],
-    },
+    "1f575": {"canonical_name": "detective", "aliases": ["spy", "sleuth", "agent", "sneaky"]},
     # mrs_claus from https://emojipedia.org/mother-christmas/
     "1f936": {"canonical_name": "mother_christmas", "aliases": ["mrs_claus"]},
     "1f385": {"canonical_name": "santa", "aliases": []},
@@ -767,10 +761,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     "1f94a": {"canonical_name": "boxing_glove", "aliases": []},
     # keikogi and dogi are the actual names for this, I believe. black_belt is
     # I think a more useful name here
-    "1f94b": {
-        "canonical_name": "black_belt",
-        "aliases": ["keikogi", "dogi", "martial_arts"],
-    },
+    "1f94b": {"canonical_name": "black_belt", "aliases": ["keikogi", "dogi", "martial_arts"]},
     "26f8": {"canonical_name": "ice_skate", "aliases": []},
     "1f3bf": {"canonical_name": "ski", "aliases": []},
     "26f7": {"canonical_name": "skier", "aliases": []},
@@ -1194,10 +1185,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     "1f6c0": {"canonical_name": "bath", "aliases": []},
     # reception and services from
     # https://www.iemoji.com/view/emoji/1169/objects/bellhop-bell
-    "1f6ce": {
-        "canonical_name": "bellhop_bell",
-        "aliases": ["reception", "services", "ding"],
-    },
+    "1f6ce": {"canonical_name": "bellhop_bell", "aliases": ["reception", "services", "ding"]},
     "1f511": {"canonical_name": "key", "aliases": []},
     # encrypted from https://www.iemoji.com/view/emoji/1081/objects/old-key,
     # secret from https://mashable.com/2015/10/23/ios-9-1-emoji-guide/

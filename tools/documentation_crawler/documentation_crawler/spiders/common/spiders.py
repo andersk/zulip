@@ -164,9 +164,7 @@ class BaseDocumentationSpider(scrapy.Spider):
     def exclude_error(self, url: str) -> bool:
         return url in EXCLUDED_URLS
 
-    def error_callback(
-        self, failure: Failure,
-    ) -> Optional[Union[Failure, Iterator[Request]]]:
+    def error_callback(self, failure: Failure) -> Optional[Union[Failure, Iterator[Request]]]:
         if failure.check(HttpError):
             response = failure.value.response
             if self.exclude_error(response.url):

@@ -222,9 +222,7 @@ def get_changed_desc_body(payload: Mapping[str, Any], action_type: str) -> str:
     return fill_appropriate_message_content(payload, action_type, data)
 
 
-def get_body_by_action_type_without_data(
-    payload: Mapping[str, Any], action_type: str,
-) -> str:
+def get_body_by_action_type_without_data(payload: Mapping[str, Any], action_type: str) -> str:
     return fill_appropriate_message_content(payload, action_type)
 
 
@@ -245,9 +243,7 @@ def get_filled_card_url_template(payload: Mapping[str, Any]) -> str:
 
 
 def get_card_url(payload: Mapping[str, Any]) -> str:
-    return "https://trello.com/c/{}".format(
-        get_action_data(payload)["card"].get("shortLink"),
-    )
+    return "https://trello.com/c/{}".format(get_action_data(payload)["card"].get("shortLink"))
 
 
 def get_message_body(action_type: str) -> str:

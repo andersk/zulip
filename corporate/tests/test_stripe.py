@@ -299,9 +299,7 @@ def mock_stripe(
         if generate_fixture is None:
             generate_fixture = settings.GENERATE_STRIPE_FIXTURES
         for mocked_function_name in MOCKED_STRIPE_FUNCTION_NAMES:
-            mocked_function = operator.attrgetter(mocked_function_name)(
-                sys.modules[__name__],
-            )
+            mocked_function = operator.attrgetter(mocked_function_name)(sys.modules[__name__])
             if generate_fixture:
                 side_effect = generate_and_save_stripe_fixture(
                     decorated_function.__name__, mocked_function_name, mocked_function,
@@ -358,9 +356,9 @@ class StripeTestCase(ZulipTestCase):
         ]
 
         # Deactivate all users in our realm that aren't in our whitelist.
-        UserProfile.objects.filter(realm_id=realm.id).exclude(
-            email__in=active_emails,
-        ).update(is_active=False)
+        UserProfile.objects.filter(realm_id=realm.id).exclude(email__in=active_emails).update(
+            is_active=False,
+        )
 
         # sanity check our 8 expected users are active
         self.assertEqual(
@@ -1243,9 +1241,7 @@ class StripeTest(StripeTestCase):
         self.login_user(hamlet)
         new_seat_count = 23
         # Change the seat count while the user is going through the upgrade flow
-        with patch(
-            "corporate.lib.stripe.get_latest_seat_count", return_value=new_seat_count,
-        ):
+        with patch("corporate.lib.stripe.get_latest_seat_count", return_value=new_seat_count):
             self.upgrade()
         stripe_customer_id = Customer.objects.first().stripe_customer_id
         # Check that the Charge used the old quantity, not new_seat_count
@@ -1277,9 +1273,7 @@ class StripeTest(StripeTestCase):
             self.upgrade(stripe_token=stripe_create_token("4000000000000341").id)
         mock_billing_logger.assert_called()
         # Check that we created a Customer object but no CustomerPlan
-        stripe_customer_id = Customer.objects.get(
-            realm=get_realm("zulip"),
-        ).stripe_customer_id
+        stripe_customer_id = Customer.objects.get(realm=get_realm("zulip")).stripe_customer_id
         self.assertFalse(CustomerPlan.objects.exists())
         # Check that we created a Customer in stripe, a failed Charge, and no Invoices or Invoice Items
         self.assertTrue(stripe_get_customer(stripe_customer_id))
@@ -1385,9 +1379,7 @@ class StripeTest(StripeTestCase):
             upgrade_params: Mapping[str, Any],
             del_args: Sequence[str] = [],
         ) -> None:
-            response = self.upgrade(
-                talk_to_stripe=False, del_args=del_args, **upgrade_params,
-            )
+            response = self.upgrade(talk_to_stripe=False, del_args=del_args, **upgrade_params)
             self.assert_json_error_contains(response, "Something went wrong. Please contact")
             self.assertEqual(
                 ujson.loads(response.content)["error_description"], error_description,
@@ -1530,14 +1522,11 @@ class StripeTest(StripeTestCase):
             self.assertEqual(message.from_email, f"{user.full_name} <{user.delivery_email}>")
             self.assertIn("User role: Member", message.body)
             self.assertIn(
-                "Support URL: http://zulip.testserver/activity/support?q=zulip",
-                message.body,
+                "Support URL: http://zulip.testserver/activity/support?q=zulip", message.body,
             )
             self.assertIn("Website: https://infinispan.org", message.body)
             self.assertIn("Organization type: Open-source", message.body)
-            self.assertIn(
-                "Description:\nInfinispan is a distributed in-memory", message.body,
-            )
+            self.assertIn("Description:\nInfinispan is a distributed in-memory", message.body)
 
         response = self.client_get("/upgrade/")
         self.assertEqual(response.status_code, 302)

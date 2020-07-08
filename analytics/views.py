@@ -111,9 +111,7 @@ def render_stats(
         request,
         "analytics/stats.html",
         context=dict(
-            target_name=target_name,
-            page_params=page_params,
-            analytics_ready=analytics_ready,
+            target_name=target_name, page_params=page_params, analytics_ready=analytics_ready,
         ),
     )
 
@@ -126,10 +124,7 @@ def stats(request: HttpRequest) -> HttpResponse:
         # can use @require_member_or_admin
         raise JsonableError(_("Not allowed for guest users"))
     return render_stats(
-        request,
-        "",
-        realm.name or realm.string_id,
-        analytics_ready=is_analytics_ready(realm),
+        request, "", realm.name or realm.string_id, analytics_ready=is_analytics_ready(realm),
     )
 
 
@@ -614,9 +609,7 @@ def get_realm_day_counts() -> Dict[str, Dict[str, str]]:
 
             return f'<td class="number {good_bad}">{cnt}</td>'
 
-        cnts = format_count(raw_cnts[0], "neutral") + "".join(
-            map(format_count, raw_cnts[1:]),
-        )
+        cnts = format_count(raw_cnts[0], "neutral") + "".join(map(format_count, raw_cnts[1:]))
         result[string_id] = dict(cnts=cnts)
 
     return result
@@ -1279,7 +1272,9 @@ def support(request: HttpRequest) -> HttpResponse:
             new_discount = Decimal(request.POST.get("discount"))
             current_discount = get_discount_for_realm(realm)
             attach_discount_to_realm(realm, new_discount)
-            msg = f"Discount of {realm.name} changed to {new_discount} from {current_discount} "
+            msg = (
+                f"Discount of {realm.name} changed to {new_discount} from {current_discount} "
+            )
             context["message"] = msg
         elif request.POST.get("status", None) is not None:
             status = request.POST.get("status")

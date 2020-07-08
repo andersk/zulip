@@ -56,8 +56,7 @@ class TestZulipBaseCommand(ZulipTestCase):
         self.assertEqual(self.command.get_realm(dict(realm_id="zulip")), self.zulip_realm)
         self.assertEqual(self.command.get_realm(dict(realm_id=None)), None)
         self.assertEqual(
-            self.command.get_realm(dict(realm_id=str(self.zulip_realm.id))),
-            self.zulip_realm,
+            self.command.get_realm(dict(realm_id=str(self.zulip_realm.id))), self.zulip_realm,
         )
         with self.assertRaisesRegex(CommandError, "There is no realm with id"):
             self.command.get_realm(dict(realm_id="17"))
@@ -319,9 +318,7 @@ class TestGenerateRealmCreationLink(ZulipTestCase):
 
         result = self.client_post(generated_link, {"email": email})
         self.assertEqual(result.status_code, 302)
-        self.assertTrue(
-            re.search(f"/accounts/new/send_confirm/{email}$", result["Location"]),
-        )
+        self.assertTrue(re.search(f"/accounts/new/send_confirm/{email}$", result["Location"]))
         result = self.client_get(result["Location"])
         self.assert_in_response("Check your email so we can get started", result)
 
@@ -445,9 +442,7 @@ class TestConvertMattermostData(ZulipTestCase):
     COMMAND_NAME = "convert_mattermost_data"
 
     def test_if_command_calls_do_convert_data(self) -> None:
-        with patch(
-            "zerver.management.commands.convert_mattermost_data.do_convert_data",
-        ) as m:
+        with patch("zerver.management.commands.convert_mattermost_data.do_convert_data") as m:
             mm_fixtures = self.fixture_file_name("", "mattermost_fixtures")
             output_dir = self.make_import_output_dir("mattermost")
             call_command(self.COMMAND_NAME, mm_fixtures, f"--output={output_dir}")
@@ -463,9 +458,7 @@ class TestInvoicePlans(ZulipTestCase):
     COMMAND_NAME = "invoice_plans"
 
     def test_if_command_calls_invoice_plans_as_needed(self) -> None:
-        with patch(
-            "zilencer.management.commands.invoice_plans.invoice_plans_as_needed",
-        ) as m:
+        with patch("zilencer.management.commands.invoice_plans.invoice_plans_as_needed") as m:
             call_command(self.COMMAND_NAME)
 
         m.assert_called_once()

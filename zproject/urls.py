@@ -338,9 +338,7 @@ v1_api_and_json_patterns = [
         rest_dispatch,
         {"PATCH": "zerver.views.streams.update_subscriptions_property"},
     ),
-    path(
-        "submessage", rest_dispatch, {"POST": "zerver.views.submessage.process_submessage"},
-    ),
+    path("submessage", rest_dispatch, {"POST": "zerver.views.submessage.process_submessage"}),
     # New endpoint for handling reactions.
     # reactions -> zerver.view.reactions
     # POST adds a reaction to a message
@@ -635,12 +633,7 @@ v1_api_and_json_patterns = [
     path(
         "report/narrow_times",
         rest_dispatch,
-        {
-            "POST": (
-                "zerver.views.report.report_narrow_times",
-                {"intentionally_undocumented"},
-            ),
-        },
+        {"POST": ("zerver.views.report.report_narrow_times", {"intentionally_undocumented"})},
     ),
     path(
         "report/unnarrow_times",
@@ -1055,9 +1048,7 @@ for incoming_webhook in WEBHOOK_INTEGRATIONS:
 # Desktop-specific authentication URLs
 urls += [
     path(
-        "json/fetch_api_key",
-        rest_dispatch,
-        {"POST": "zerver.views.auth.json_fetch_api_key"},
+        "json/fetch_api_key", rest_dispatch, {"POST": "zerver.views.auth.json_fetch_api_key"},
     ),
 ]
 
@@ -1151,8 +1142,7 @@ urls += [
     re_path(
         r"^api/(?P<article>[-\w]*\/?)$",
         MarkdownDirectoryView.as_view(
-            template_name="zerver/documentation_main.html",
-            path_template="/zerver/api/%s.md",
+            template_name="zerver/documentation_main.html", path_template="/zerver/api/%s.md",
         ),
     ),
 ]

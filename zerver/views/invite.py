@@ -13,10 +13,7 @@ from zerver.lib.actions import (
     do_revoke_multi_use_invite,
     do_revoke_user_invite,
 )
-from zerver.lib.exceptions import (
-    OrganizationAdministratorRequired,
-    OrganizationOwnerRequired,
-)
+from zerver.lib.exceptions import OrganizationAdministratorRequired, OrganizationOwnerRequired
 from zerver.lib.request import REQ, JsonableError, has_request_variables
 from zerver.lib.response import json_error, json_success
 from zerver.lib.streams import access_stream_by_id
@@ -148,10 +145,7 @@ def resend_user_invite_email(
 
     # Structurally, any invitation the user can actually access should
     # have a referred_by set for the user who created it.
-    if (
-        prereg_user.referred_by is None
-        or prereg_user.referred_by.realm != user_profile.realm
-    ):
+    if prereg_user.referred_by is None or prereg_user.referred_by.realm != user_profile.realm:
         raise JsonableError(_("No such invitation"))
 
     if prereg_user.referred_by_id != user_profile.id:

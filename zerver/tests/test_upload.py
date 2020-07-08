@@ -386,9 +386,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         host = self.example_user("hamlet").realm.host
         body = f"First message ...[zulip.txt](http://{host}/user_uploads/" + d1_path_id + ")"
         self.send_stream_message(self.example_user("hamlet"), "Denmark", body, "test")
-        body = (
-            f"Second message ...[zulip.txt](http://{host}/user_uploads/" + d1_path_id + ")"
-        )
+        body = f"Second message ...[zulip.txt](http://{host}/user_uploads/" + d1_path_id + ")"
         self.send_stream_message(self.example_user("hamlet"), "Denmark", body, "test")
 
         self.assertEqual(Attachment.objects.get(path_id=d1_path_id).messages.count(), 2)
@@ -421,9 +419,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         self.assertFalse(Attachment.objects.get(path_id=d1_path_id).is_realm_public)
 
         # Then, have the owner PM it to another user, giving that other user access.
-        body = (
-            f"Second message ...[zulip.txt](http://{host}/user_uploads/" + d1_path_id + ")"
-        )
+        body = f"Second message ...[zulip.txt](http://{host}/user_uploads/" + d1_path_id + ")"
         self.send_personal_message(
             self.example_user("hamlet"), self.example_user("othello"), body,
         )
@@ -1167,9 +1163,7 @@ class AvatarTest(UploadSerializeMixin, ZulipTestCase):
         source_path_id = avatar_disk_path(source_user_profile)
         target_path_id = avatar_disk_path(target_user_profile)
         self.assertNotEqual(source_path_id, target_path_id)
-        self.assertEqual(
-            open(source_path_id, "rb").read(), open(target_path_id, "rb").read(),
-        )
+        self.assertEqual(open(source_path_id, "rb").read(), open(target_path_id, "rb").read())
 
         source_original_path_id = avatar_disk_path(source_user_profile, original=True)
         target_original_path_id = avatar_disk_path(target_user_profile, original=True)
@@ -1496,9 +1490,7 @@ class RealmLogoTest(UploadSerializeMixin, ZulipTestCase):
         user_profile = self.example_user("hamlet")
         self.login_user(user_profile)
         realm = user_profile.realm
-        do_change_logo_source(
-            realm, Realm.LOGO_DEFAULT, self.night, acting_user=user_profile,
-        )
+        do_change_logo_source(realm, Realm.LOGO_DEFAULT, self.night, acting_user=user_profile)
         response = self.client_get("/json/realm/logo", {"night": ujson.dumps(self.night)})
         redirect_url = response["Location"]
         is_night_str = str(self.night).lower()
@@ -1694,9 +1686,7 @@ class LocalStorageTest(UploadSerializeMixin, ZulipTestCase):
         file_name = "emoji.png"
 
         upload_emoji_image(image_file, file_name, user_profile)
-        url = zerver.lib.upload.upload_backend.get_emoji_url(
-            file_name, user_profile.realm_id,
-        )
+        url = zerver.lib.upload.upload_backend.get_emoji_url(file_name, user_profile.realm_id)
 
         emoji_path = RealmEmoji.PATH_ID_TEMPLATE.format(
             realm_id=user_profile.realm_id, emoji_file_name=file_name,
@@ -1714,9 +1704,7 @@ class LocalStorageTest(UploadSerializeMixin, ZulipTestCase):
 
         uri = upload_export_tarball(user_profile.realm, tarball_path)
         self.assertTrue(
-            os.path.isfile(
-                os.path.join(settings.LOCAL_UPLOADS_DIR, "avatars", tarball_path),
-            ),
+            os.path.isfile(os.path.join(settings.LOCAL_UPLOADS_DIR, "avatars", tarball_path)),
         )
 
         result = re.search(re.compile(r"([A-Za-z0-9\-_]{24})"), uri)

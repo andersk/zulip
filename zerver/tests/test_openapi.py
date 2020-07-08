@@ -170,9 +170,9 @@ class OpenAPIToolsTest(ZulipTestCase):
             ):
                 validate_against_openapi_schema(
                     (
-                        test_dict["test2"]["responses"]["200"]["content"][
-                            "application/json"
-                        ]["example"]
+                        test_dict["test2"]["responses"]["200"]["content"]["application/json"][
+                            "example"
+                        ]
                     ),
                     "testing",
                     "test2",
@@ -182,9 +182,9 @@ class OpenAPIToolsTest(ZulipTestCase):
                 # Checks for opaque objects
                 validate_schema(
                     (
-                        test_dict["test3"]["responses"]["200"]["content"][
-                            "application/json"
-                        ]["schema"]
+                        test_dict["test3"]["responses"]["200"]["content"]["application/json"][
+                            "schema"
+                        ]
                     ),
                 )
         finally:
@@ -475,9 +475,7 @@ do not match the types declared in the implementation of {function.__name__}.\n"
         raise AssertionError(msg)
 
     def check_argument_types(
-        self,
-        function: Callable[..., HttpResponse],
-        openapi_parameters: List[Dict[str, Any]],
+        self, function: Callable[..., HttpResponse], openapi_parameters: List[Dict[str, Any]],
     ) -> None:
         """ We construct for both the OpenAPI data and the function's definition a set of
         tuples of the form (var_name, type) and then compare those sets to see if the
@@ -953,9 +951,7 @@ class TestCurlExampleGeneration(ZulipTestCase):
         self.assertEqual(generated_curl_example, expected_curl_example)
 
     @patch("zerver.openapi.openapi.OpenAPISpec.spec")
-    def test_generate_and_render_curl_with_invalid_method(
-        self, spec_mock: MagicMock,
-    ) -> None:
+    def test_generate_and_render_curl_with_invalid_method(self, spec_mock: MagicMock) -> None:
         spec_mock.return_value = self.spec_mock_with_invalid_method
         with self.assertRaises(ValueError):
             self.curl_example("/endpoint", "BREW")  # see: HTCPCP

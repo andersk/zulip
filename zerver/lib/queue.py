@@ -138,9 +138,7 @@ class SimpleQueueClient:
             self.publish(queue_name, data)
             return
         except pika.exceptions.AMQPConnectionError:
-            self.log.warning(
-                "Failed to send to rabbitmq, trying to reconnect and send again",
-            )
+            self.log.warning("Failed to send to rabbitmq, trying to reconnect and send again")
 
         self._reconnect()
         self.publish(queue_name, data)
@@ -387,9 +385,7 @@ queue_lock = threading.RLock()
 
 
 def queue_json_publish(
-    queue_name: str,
-    event: Dict[str, Any],
-    processor: Optional[Callable[[Any], None]] = None,
+    queue_name: str, event: Dict[str, Any], processor: Optional[Callable[[Any], None]] = None,
 ) -> None:
     # most events are dicts, but zerver.middleware.write_log_line uses a str
     with queue_lock:

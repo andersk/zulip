@@ -132,9 +132,7 @@ def _deactivate_user_profile_backend(
 def reactivate_user_backend(
     request: HttpRequest, user_profile: UserProfile, user_id: int,
 ) -> HttpResponse:
-    target = access_user_by_id(
-        user_profile, user_id, allow_deactivated=True, allow_bots=True,
-    )
+    target = access_user_by_id(user_profile, user_id, allow_deactivated=True, allow_bots=True)
     if target.is_bot:
         assert target.bot_type is not None
         check_bot_creation_policy(user_profile, target.bot_type)
@@ -150,9 +148,7 @@ check_profile_data: Validator[
             ("id", check_int),
             (
                 "value",
-                check_none_or(
-                    check_union([check_int, check_string, check_list(check_int)]),
-                ),
+                check_none_or(check_union([check_int, check_string, check_list(check_int)])),
             ),
         ],
     ),
@@ -170,16 +166,12 @@ def update_user_backend(
         default=None, validator=check_profile_data,
     ),
 ) -> HttpResponse:
-    target = access_user_by_id(
-        user_profile, user_id, allow_deactivated=True, allow_bots=True,
-    )
+    target = access_user_by_id(user_profile, user_id, allow_deactivated=True, allow_bots=True)
 
     if role is not None and target.role != role:
         if target.role == UserProfile.ROLE_REALM_OWNER and check_last_owner(user_profile):
             return json_error(
-                _(
-                    "The owner permission cannot be removed from the only organization owner.",
-                ),
+                _("The owner permission cannot be removed from the only organization owner."),
             )
         if (
             UserProfile.ROLE_REALM_OWNER in [role, target.role]
@@ -620,9 +612,9 @@ def get_profile_backend(request: HttpRequest, user_profile: UserProfile) -> Http
 
     result["max_message_id"] = -1
 
-    messages = Message.objects.filter(usermessage__user_profile=user_profile).order_by(
-        "-id",
-    )[:1]
+    messages = Message.objects.filter(usermessage__user_profile=user_profile).order_by("-id")[
+        :1
+    ]
     if messages:
         result["max_message_id"] = messages[0].id
 

@@ -308,9 +308,7 @@ def write_avatar_data(
     create_converted_data_files(avatar_records, output_dir, "/avatars/records.json")
 
 
-def write_emoticon_data(
-    realm_id: int, data_dir: str, output_dir: str,
-) -> List[ZerverFieldsT]:
+def write_emoticon_data(realm_id: int, data_dir: str, output_dir: str) -> List[ZerverFieldsT]:
     """
     This function does most of the work for processing emoticons, the bulk
     of which is copying files.  We also write a json file with metadata.
@@ -734,9 +732,7 @@ def process_raw_message_batch(
         mention_map=mention_map,
     )
 
-    message_json = dict(
-        zerver_message=zerver_message, zerver_usermessage=zerver_usermessage,
-    )
+    message_json = dict(zerver_message=zerver_message, zerver_usermessage=zerver_usermessage)
 
     dump_file_id = NEXT_ID("dump_file_id")
     message_file = f"/messages-{dump_file_id:06}.json"

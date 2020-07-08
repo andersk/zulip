@@ -74,8 +74,6 @@ Usage: ./manage.py deliver_scheduled_messages
                         message.save(update_fields=["delivered"])
 
             cur_time = timezone_now()
-            time_next_min = (cur_time + timedelta(minutes=1)).replace(
-                second=0, microsecond=0,
-            )
+            time_next_min = (cur_time + timedelta(minutes=1)).replace(second=0, microsecond=0)
             sleep_time = (time_next_min - cur_time).total_seconds()
             time.sleep(sleep_time)

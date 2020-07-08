@@ -148,9 +148,7 @@ class DocPageTest(ZulipTestCase):
         self._test("/en/history/", "Cambridge, Massachusetts")
         self._test("/apps/", "Apps for every platform.")
         self._test("/features/", "Beautiful messaging")
-        self._test(
-            "/hello/", "Chat for distributed teams", landing_missing_strings=["Login"],
-        )
+        self._test("/hello/", "Chat for distributed teams", landing_missing_strings=["Login"])
         self._test("/why-zulip/", "Why Zulip?")
         self._test("/for/open-source/", "for open source projects")
         self._test("/for/research/", "for researchers")
@@ -315,9 +313,7 @@ class IntegrationTest(ZulipTestCase):
     def test_api_url_view_subdomains_homepage_base(self) -> None:
         context: Dict[str, Any] = dict()
         add_api_uri_context(context, HostRequestMock())
-        self.assertEqual(
-            context["api_url_scheme_relative"], "yourZulipDomain.testserver/api",
-        )
+        self.assertEqual(context["api_url_scheme_relative"], "yourZulipDomain.testserver/api")
         self.assertEqual(context["api_url"], "http://yourZulipDomain.testserver/api")
         self.assertFalse(context["html_settings_links"])
 
@@ -364,9 +360,7 @@ class AboutPageTest(ZulipTestCase):
             result = self.client_get("/team/")
         self.assert_in_success_response(["Our amazing community"], result)
         self.assert_in_success_response(["2017-11-20"], result)
-        self.assert_in_success_response(
-            ["timabbott", "showell", "gnprice", "rishig"], result,
-        )
+        self.assert_in_success_response(["timabbott", "showell", "gnprice", "rishig"], result)
 
         with mock.patch("zerver.views.portico.open", side_effect=FileNotFoundError) as m:
             result = self.client_get("/team/")

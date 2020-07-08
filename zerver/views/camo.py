@@ -1,12 +1,7 @@
 import binascii
 
 from django.conf import settings
-from django.http import (
-    HttpRequest,
-    HttpResponse,
-    HttpResponseForbidden,
-    HttpResponseNotFound,
-)
+from django.http import HttpRequest, HttpResponse, HttpResponseForbidden, HttpResponseNotFound
 from django.shortcuts import redirect
 from django.utils.translation import ugettext as _
 

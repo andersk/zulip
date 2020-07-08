@@ -215,8 +215,7 @@ class TestServiceBotStateHandler(ZulipTestCase):
 
         with self.assertRaisesMessage(
             StateError,
-            "Request exceeds storage limit by 32 characters. "
-            "The limit is 100 characters.",
+            "Request exceeds storage limit by 32 characters. " "The limit is 100 characters.",
         ):
             storage.put("too much data", "a few bits too long")
 

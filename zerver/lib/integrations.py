@@ -471,10 +471,7 @@ INTEGRATIONS: Dict[str, Integration] = {
         "email", "email", ["communication"], doc="zerver/integrations/email.md",
     ),
     "errbot": Integration(
-        "errbot",
-        "errbot",
-        ["meta-integration", "bots"],
-        doc="zerver/integrations/errbot.md",
+        "errbot", "errbot", ["meta-integration", "bots"], doc="zerver/integrations/errbot.md",
     ),
     "git": Integration(
         "git",
@@ -494,11 +491,7 @@ INTEGRATIONS: Dict[str, Integration] = {
         "hubot", "hubot", ["meta-integration", "bots"], doc="zerver/integrations/hubot.md",
     ),
     "irc": Integration(
-        "irc",
-        "irc",
-        ["communication"],
-        display_name="IRC",
-        doc="zerver/integrations/irc.md",
+        "irc", "irc", ["communication"], display_name="IRC", doc="zerver/integrations/irc.md",
     ),
     "jenkins": Integration(
         "jenkins",
@@ -556,11 +549,7 @@ INTEGRATIONS: Dict[str, Integration] = {
         "redmine", "redmine", ["project-management"], doc="zerver/integrations/redmine.md",
     ),
     "rss": Integration(
-        "rss",
-        "rss",
-        ["communication"],
-        display_name="RSS",
-        doc="zerver/integrations/rss.md",
+        "rss", "rss", ["communication"], display_name="RSS", doc="zerver/integrations/rss.md",
     ),
     "svn": Integration("svn", "svn", ["version-control"], doc="zerver/integrations/svn.md"),
     "trac": Integration(
@@ -653,9 +642,7 @@ NO_SCREENSHOT_WEBHOOKS = {
 DOC_SCREENSHOT_CONFIG: Dict[str, List[ScreenshotConfig]] = {
     "airbrake": [ScreenshotConfig("error_message.json")],
     "alertmanager": [
-        ScreenshotConfig(
-            "alert.json", extra_params={"name": "topic", "desc": "description"},
-        ),
+        ScreenshotConfig("alert.json", extra_params={"name": "topic", "desc": "description"}),
     ],
     "ansibletower": [ScreenshotConfig("job_successful_multiple_hosts.json")],
     "appfollow": [ScreenshotConfig("review.json")],
@@ -736,9 +723,7 @@ DOC_SCREENSHOT_CONFIG: Dict[str, List[ScreenshotConfig]] = {
     "insping": [ScreenshotConfig("website_state_available.json")],
     "intercom": [ScreenshotConfig("conversation_admin_replied.json")],
     "jira": [ScreenshotConfig("created_v1.json")],
-    "librato": [
-        ScreenshotConfig("three_conditions_alert.json", payload_as_query_param=True),
-    ],
+    "librato": [ScreenshotConfig("three_conditions_alert.json", payload_as_query_param=True)],
     "mention": [ScreenshotConfig("webfeeds.json")],
     "netlify": [ScreenshotConfig("deploy_building.json")],
     "newrelic": [ScreenshotConfig("alert.txt", "002.png")],

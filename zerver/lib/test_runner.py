@@ -22,10 +22,7 @@ from scripts.lib.zulip_tools import (
 )
 from zerver.lib import test_helpers
 from zerver.lib.sqlalchemy_utils import get_sqlalchemy_connection
-from zerver.lib.test_helpers import (
-    append_instrumentation_data,
-    write_instrumentation_reports,
-)
+from zerver.lib.test_helpers import append_instrumentation_data, write_instrumentation_reports
 
 # We need to pick an ID for this test-backend invocation, and store it
 # in this global so it can be used in init_worker; this is used to

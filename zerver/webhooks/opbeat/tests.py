@@ -78,10 +78,7 @@ foo reopened the error group
 >in app.py
 >A warning occurred (42 apples)"""
         self.send_and_test_stream_message(
-            "error_reopen",
-            expected_topic,
-            expected_message,
-            content_type="application/json",
+            "error_reopen", expected_topic, expected_message, content_type="application/json",
         )
 
     def test_error_regressed(self) -> None:

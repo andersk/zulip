@@ -54,9 +54,7 @@ AVATAR_CHANGES_DISABLED_ERROR = _("Avatar changes are disabled in this organizat
 
 def confirm_email_change(request: HttpRequest, confirmation_key: str) -> HttpResponse:
     try:
-        email_change_object = get_object_from_key(
-            confirmation_key, Confirmation.EMAIL_CHANGE,
-        )
+        email_change_object = get_object_from_key(confirmation_key, Confirmation.EMAIL_CHANGE)
     except ConfirmationKeyException as exception:
         return render_confirmation_key_error(request, exception)
 

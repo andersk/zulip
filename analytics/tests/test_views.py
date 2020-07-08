@@ -224,9 +224,7 @@ class TestGetChartData(ZulipTestCase):
         client2 = Client.objects.create(name="client 2")
         client3 = Client.objects.create(name="client 3")
         client4 = Client.objects.create(name="client 4")
-        self.insert_data(
-            stat, [client4.id, client3.id, client2.id], [client3.id, client1.id],
-        )
+        self.insert_data(stat, [client4.id, client3.id, client2.id], [client3.id, client1.id])
         result = self.client_get(
             "/json/analytics/chart_data", {"chart_name": "messages_sent_by_client"},
         )
@@ -384,8 +382,7 @@ class TestGetChartData(ZulipTestCase):
         self.insert_data(stat, ["false"], [])
         # test min_length is too short to change anything
         result = self.client_get(
-            "/json/analytics/chart_data",
-            {"chart_name": "number_of_humans", "min_length": 2},
+            "/json/analytics/chart_data", {"chart_name": "number_of_humans", "min_length": 2},
         )
         self.assert_json_success(result)
         data = result.json()
@@ -398,8 +395,7 @@ class TestGetChartData(ZulipTestCase):
         )
         # test min_length larger than filled data
         result = self.client_get(
-            "/json/analytics/chart_data",
-            {"chart_name": "number_of_humans", "min_length": 5},
+            "/json/analytics/chart_data", {"chart_name": "number_of_humans", "min_length": 5},
         )
         self.assert_json_success(result)
         data = result.json()
@@ -612,9 +608,7 @@ class TestSupportEndpoint(ZulipTestCase):
                 result,
             )
             if invite:
-                self.assert_in_success_response(
-                    ['<span class="label">invite</span>'], result,
-                )
+                self.assert_in_success_response(['<span class="label">invite</span>'], result)
                 self.assert_in_success_response(
                     [
                         "<b>Expires in</b>: 1\xa0week, 3",

@@ -534,10 +534,7 @@ def dump_event_queues(port: int) -> None:
         )
 
     logging.info(
-        "Tornado %d dumped %d event queues in %.3fs",
-        port,
-        len(clients),
-        time.time() - start,
+        "Tornado %d dumped %d event queues in %.3fs", port, len(clients), time.time() - start,
     )
 
 
@@ -564,17 +561,12 @@ def load_event_queues(port: int) -> None:
         add_to_client_dicts(client)
 
     logging.info(
-        "Tornado %d loaded %d event queues in %.3fs",
-        port,
-        len(clients),
-        time.time() - start,
+        "Tornado %d loaded %d event queues in %.3fs", port, len(clients), time.time() - start,
     )
 
 
 def send_restart_events(immediate: bool = False) -> None:
-    event: Dict[str, Any] = dict(
-        type="restart", server_generation=settings.SERVER_GENERATION,
-    )
+    event: Dict[str, Any] = dict(type="restart", server_generation=settings.SERVER_GENERATION)
     if immediate:
         event["immediate"] = True
     for client in clients.values():
@@ -591,9 +583,7 @@ def setup_event_queue(port: int) -> None:
         add_reload_hook(lambda: dump_event_queues(port))
 
     try:
-        os.rename(
-            persistent_queue_filename(port), persistent_queue_filename(port, last=True),
-        )
+        os.rename(persistent_queue_filename(port), persistent_queue_filename(port, last=True))
     except OSError:
         pass
 
@@ -632,9 +622,7 @@ def fetch_events(query: Mapping[str, Any]) -> Dict[str, Any]:
                 raise JsonableError(_("Missing 'last_event_id' argument"))
             client = get_client_descriptor(queue_id)
             if user_profile_id != client.user_profile_id:
-                raise JsonableError(
-                    _("You are not authorized to get events from this queue"),
-                )
+                raise JsonableError(_("You are not authorized to get events from this queue"))
             if (
                 client.event_queue.newest_pruned_id is not None
                 and last_event_id < client.event_queue.newest_pruned_id

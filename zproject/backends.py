@@ -16,19 +16,7 @@ import binascii
 import copy
 import logging
 from abc import ABC, abstractmethod
-from typing import (
-    Any,
-    Callable,
-    Dict,
-    List,
-    Optional,
-    Set,
-    Tuple,
-    Type,
-    TypeVar,
-    Union,
-    cast,
-)
+from typing import Any, Callable, Dict, List, Optional, Set, Tuple, Type, TypeVar, Union, cast
 
 import jwt
 import magic
@@ -286,9 +274,7 @@ def auth_rate_limiting_already_applied(request: HttpRequest) -> bool:
 # @decorator does this for us.
 # The usual @wraps from functools breaks signatures, so it can't be used here.
 @decorator
-def rate_limit_auth(
-    auth_func: AuthFuncT, *args: Any, **kwargs: Any
-) -> Optional[UserProfile]:
+def rate_limit_auth(auth_func: AuthFuncT, *args: Any, **kwargs: Any) -> Optional[UserProfile]:
     if not settings.RATE_LIMITING_AUTHENTICATE:
         return auth_func(*args, **kwargs)
 
@@ -520,17 +506,13 @@ class ZulipLDAPAuthBackendBase(ZulipAuthMixin, LDAPBackend):
     def has_perm(self, user: Optional[UserProfile], perm: Any, obj: Any = None) -> bool:
         return False
 
-    def has_module_perms(
-        self, user: Optional[UserProfile], app_label: Optional[str],
-    ) -> bool:
+    def has_module_perms(self, user: Optional[UserProfile], app_label: Optional[str]) -> bool:
         return False
 
     def get_all_permissions(self, user: Optional[UserProfile], obj: Any = None) -> Set[Any]:
         return set()
 
-    def get_group_permissions(
-        self, user: Optional[UserProfile], obj: Any = None,
-    ) -> Set[Any]:
+    def get_group_permissions(self, user: Optional[UserProfile], obj: Any = None) -> Set[Any]:
         return set()
 
     def django_to_ldap_username(self, username: str) -> str:
@@ -566,7 +548,9 @@ class ZulipLDAPAuthBackendBase(ZulipAuthMixin, LDAPBackend):
         if _LDAPUser(self, result).attrs is None:
             # Check that there actually is an ldap entry matching the result username
             # we want to return. Otherwise, raise an exception.
-            error_message = "No ldap user matching django_to_ldap_username result: {}. Input username: {}"
+            error_message = (
+                "No ldap user matching django_to_ldap_username result: {}. Input username: {}"
+            )
             raise ZulipLDAPExceptionNoMatchingLDAPUser(
                 error_message.format(result, username),
             )
@@ -1969,8 +1953,7 @@ class SAMLAuthBackend(SocialAuthMixin, SAMLAuth):
             # we should log that and redirect to the login page.
             self.logger.info("/login/saml/ : Bad idp param: KeyError: %s.", str(e))
             return reverse(
-                "zerver.views.auth.login_page",
-                kwargs={"template_name": "zerver/login.html"},
+                "zerver.views.auth.login_page", kwargs={"template_name": "zerver/login.html"},
             )
 
         # This where we change things.  We need to pass some params
@@ -2261,9 +2244,7 @@ def validate_otp_params(
         )
 
 
-def get_external_method_dicts(
-    realm: Optional[Realm] = None,
-) -> List[ExternalAuthMethodDictT]:
+def get_external_method_dicts(realm: Optional[Realm] = None) -> List[ExternalAuthMethodDictT]:
     """
     Returns a list of dictionaries that represent social backends, sorted
     in the order in which they should be displayed.

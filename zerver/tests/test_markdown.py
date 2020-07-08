@@ -1003,8 +1003,7 @@ class MarkdownTest(ZulipTestCase):
                     "http://twitter.com/wdaher/status/287977969287315457", normal_tweet_html,
                 ),
                 make_inline_twitter_preview(
-                    "https://twitter.com/wdaher/status/287977969287315456",
-                    normal_tweet_html,
+                    "https://twitter.com/wdaher/status/287977969287315456", normal_tweet_html,
                 ),
             ),
         )
@@ -1550,9 +1549,7 @@ class MarkdownTest(ZulipTestCase):
         expected_user_ids: Set[int] = set()
         self.assertEqual(msg.user_ids_with_alert_words, expected_user_ids)
 
-    def test_alert_words_retuns_user_ids_with_alert_words_with_huge_alert_words(
-        self,
-    ) -> None:
+    def test_alert_words_retuns_user_ids_with_alert_words_with_huge_alert_words(self) -> None:
 
         alert_words_for_users: Dict[str, List[str]] = {
             "hamlet": ["issue124"],
@@ -2135,9 +2132,7 @@ class MarkdownTest(ZulipTestCase):
         scotland = get_stream("Scotland", get_realm("zulip"))
         sender_user_profile = self.example_user("othello")
         msg = Message(sender=sender_user_profile, sending_client=get_client("test"))
-        content = (
-            "This has two links: #**Denmark>some topic** and #**Scotland>other topic**."
-        )
+        content = "This has two links: #**Denmark>some topic** and #**Scotland>other topic**."
         self.assertEqual(
             render_markdown(msg, content),
             "<p>This has two links: "
@@ -2207,8 +2202,7 @@ class MarkdownTest(ZulipTestCase):
 
         content = "There #**Nonexistentstream**"
         self.assertEqual(
-            render_markdown(msg, content),
-            "<p>There #<strong>Nonexistentstream</strong></p>",
+            render_markdown(msg, content), "<p>There #<strong>Nonexistentstream</strong></p>",
         )
         self.assertEqual(msg.mentions_user_ids, set())
 

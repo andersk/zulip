@@ -118,9 +118,7 @@ else:
             "Ubuntu Trusty reached end-of-life upstream and is no longer a supported platform for Zulip",
         )
         if os.path.exists("/home/vagrant"):
-            print(
-                "To upgrade, run `vagrant destroy`, and then recreate the Vagrant guest.\n",
-            )
+            print("To upgrade, run `vagrant destroy`, and then recreate the Vagrant guest.\n")
             print(
                 "See: https://zulip.readthedocs.io/en/latest/development/setup-vagrant.html",
             )
@@ -251,9 +249,7 @@ elif "fedora" in os_families():
 if "fedora" in os_families():
     TSEARCH_STOPWORDS_PATH = "/usr/pgsql-{}/share/tsearch_data/".format(POSTGRES_VERSION)
 else:
-    TSEARCH_STOPWORDS_PATH = "/usr/share/postgresql/{}/tsearch_data/".format(
-        POSTGRES_VERSION,
-    )
+    TSEARCH_STOPWORDS_PATH = "/usr/share/postgresql/{}/tsearch_data/".format(POSTGRES_VERSION)
 REPO_STOPWORDS_PATH = os.path.join(
     ZULIP_PATH, "puppet", "zulip", "files", "postgresql", "zulip_english.stop",
 )
@@ -311,9 +307,7 @@ def install_yum_deps(deps_to_install: List[str]) -> None:
     #        Requires: perl(IPC::Run)
     yum_extra_flags = []  # type: List[str]
     if vendor == "rhel":
-        exitcode, subs_status = subprocess.getstatusoutput(
-            "sudo subscription-manager status",
-        )
+        exitcode, subs_status = subprocess.getstatusoutput("sudo subscription-manager status")
         if exitcode == 1:
             # TODO this might overkill since `subscription-manager` is already
             # called in setup-yum-repo
@@ -360,9 +354,7 @@ def install_yum_deps(deps_to_install: List[str]) -> None:
         sudo_args=["-H"],
     )
     # Use vendored pg_hba.conf, which enables password authentication.
-    run_as_root(
-        ["cp", "-a", "puppet/zulip/files/postgresql/centos_pg_hba.conf", pg_hba_conf],
-    )
+    run_as_root(["cp", "-a", "puppet/zulip/files/postgresql/centos_pg_hba.conf", pg_hba_conf])
     # Later steps will ensure postgres is started
 
     # Link in tsearch data files

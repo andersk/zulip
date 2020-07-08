@@ -262,9 +262,7 @@ class PermissionTest(ZulipTestCase):
             "zerver.lib.events.request_event_queue", return_value=None,
         ) as mock_request_event_queue:
             with self.assertRaises(JsonableError):
-                result = do_events_register(
-                    user, get_client("website"), client_gravatar=True,
-                )
+                result = do_events_register(user, get_client("website"), client_gravatar=True)
             self.assertEqual(mock_request_event_queue.call_args_list[0][0][3], True)
 
         #############################################################
@@ -291,9 +289,7 @@ class PermissionTest(ZulipTestCase):
             "zerver.lib.events.request_event_queue", return_value=None,
         ) as mock_request_event_queue:
             with self.assertRaises(JsonableError):
-                result = do_events_register(
-                    user, get_client("website"), client_gravatar=True,
-                )
+                result = do_events_register(user, get_client("website"), client_gravatar=True)
             self.assertEqual(mock_request_event_queue.call_args_list[0][0][3], False)
 
         # client_gravatar is still turned off for admins.  In theory,
@@ -653,24 +649,21 @@ class PermissionTest(ZulipTestCase):
             new_profile_data.append({"id": field.id, "value": field_value})
 
             result = self.client_patch(
-                f"/json/users/{cordelia.id}",
-                {"profile_data": ujson.dumps(new_profile_data)},
+                f"/json/users/{cordelia.id}", {"profile_data": ujson.dumps(new_profile_data)},
             )
             self.assert_json_error(result, error_msg)
 
         # non-existent field and no data
         invalid_profile_data = [{"id": 9001, "value": ""}]
         result = self.client_patch(
-            f"/json/users/{cordelia.id}",
-            {"profile_data": ujson.dumps(invalid_profile_data)},
+            f"/json/users/{cordelia.id}", {"profile_data": ujson.dumps(invalid_profile_data)},
         )
         self.assert_json_error(result, "Field id 9001 not found.")
 
         # non-existent field and data
         invalid_profile_data = [{"id": 9001, "value": "some data"}]
         result = self.client_patch(
-            f"/json/users/{cordelia.id}",
-            {"profile_data": ujson.dumps(invalid_profile_data)},
+            f"/json/users/{cordelia.id}", {"profile_data": ujson.dumps(invalid_profile_data)},
         )
         self.assert_json_error(result, "Field id 9001 not found.")
 

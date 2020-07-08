@@ -281,12 +281,8 @@ class ImportExportTest(ZulipTestCase):
             do_change_icon_source(realm, Realm.ICON_UPLOADED, False)
 
         with get_test_image_file("img.png") as img_file:
-            upload.upload_backend.upload_realm_logo_image(
-                img_file, user_profile, night=False,
-            )
-            do_change_logo_source(
-                realm, Realm.LOGO_UPLOADED, False, acting_user=user_profile,
-            )
+            upload.upload_backend.upload_realm_logo_image(img_file, user_profile, night=False)
+            do_change_logo_source(realm, Realm.LOGO_UPLOADED, False, acting_user=user_profile)
         with get_test_image_file("img.png") as img_file:
             upload.upload_backend.upload_realm_logo_image(img_file, user_profile, night=True)
             do_change_logo_source(realm, Realm.LOGO_UPLOADED, True, acting_user=user_profile)
@@ -1149,9 +1145,7 @@ class ImportExportTest(ZulipTestCase):
         user_email = Message.objects.all()[0].sender.email
         user_profile = UserProfile.objects.get(email=user_email, realm=imported_realm)
         avatar_path_id = user_avatar_path(user_profile) + ".original"
-        avatar_file_path = os.path.join(
-            settings.LOCAL_UPLOADS_DIR, "avatars", avatar_path_id,
-        )
+        avatar_file_path = os.path.join(settings.LOCAL_UPLOADS_DIR, "avatars", avatar_path_id)
         self.assertTrue(os.path.isfile(avatar_file_path))
 
         # Test realm icon and logo
@@ -1200,9 +1194,7 @@ class ImportExportTest(ZulipTestCase):
         uploaded_file = Attachment.objects.get(realm=imported_realm)
         self.assertEqual(len(b"zulip!"), uploaded_file.size)
 
-        attachment_content = (
-            uploads_bucket.Object(uploaded_file.path_id).get()["Body"].read()
-        )
+        attachment_content = uploads_bucket.Object(uploaded_file.path_id).get()["Body"].read()
         self.assertEqual(b"zulip!", attachment_content)
 
         # Test emojis

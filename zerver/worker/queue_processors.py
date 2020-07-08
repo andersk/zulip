@@ -634,9 +634,7 @@ class MirrorWorker(QueueProcessingWorker):
         msg = email.message_from_bytes(
             base64.b64decode(event["msg_base64"]), policy=email.policy.default,
         )
-        assert isinstance(
-            msg, EmailMessage,
-        )  # https://github.com/python/typeshed/issues/2417
+        assert isinstance(msg, EmailMessage)  # https://github.com/python/typeshed/issues/2417
         if not is_missed_message_address(rcpt_to):
             # Missed message addresses are one-time use, so we don't need
             # to worry about emails to them resulting in message spam.
@@ -676,9 +674,7 @@ class FetchLinksEmbedData(QueueProcessingWorker):
             start_time = time.time()
             url_preview.get_link_embed_data(url)
             logging.info(
-                "Time spent on get_link_embed_data for %s: %s",
-                url,
-                time.time() - start_time,
+                "Time spent on get_link_embed_data for %s: %s", url, time.time() - start_time,
             )
 
         message = Message.objects.get(id=event["message_id"])

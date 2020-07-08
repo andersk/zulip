@@ -205,9 +205,7 @@ def add_missing_messages(user_profile: UserProfile) -> None:
     )
 
     # Filter those messages for which UserMessage rows have been already created
-    all_stream_msgs = [
-        msg for msg in all_stream_msgs if msg["id"] not in already_created_ums
-    ]
+    all_stream_msgs = [msg for msg in all_stream_msgs if msg["id"] not in already_created_ums]
 
     stream_messages: DefaultDict[int, List[Message]] = defaultdict(list)
     for msg in all_stream_msgs:

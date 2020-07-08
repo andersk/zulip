@@ -31,8 +31,7 @@ class UnusedImagesLinterSpider(BaseDocumentationSpider):
         unused_images = set(os.listdir(self.images_static_dir)) - self.static_images
         if unused_images:
             exception_message = (
-                "The following images are not used in documentation "
-                "and can be removed: {}"
+                "The following images are not used in documentation " "and can be removed: {}"
             )
             self._set_error_state()
             unused_images_relatedpath = [

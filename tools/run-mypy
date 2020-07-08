@@ -22,9 +22,7 @@ parser.add_argument("targets", nargs="*", help="files and directories to check (
 parser.add_argument(
     "--version", action="store_true", help="show mypy version information and exit",
 )
-parser.add_argument(
-    "-m", "--modified", action="store_true", help="check only modified files",
-)
+parser.add_argument("-m", "--modified", action="store_true", help="check only modified files")
 parser.add_argument(
     "--scripts-only", action="store_true", help="only check extensionless python scripts",
 )

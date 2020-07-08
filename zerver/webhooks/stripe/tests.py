@@ -190,9 +190,7 @@ Billing method: send invoice"""
 Total: 0.00 INR
 Amount due: 0.00 INR
 """.strip()
-        self.send_and_test_stream_message(
-            "invoice_created", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("invoice_created", expected_topic, expected_message)
 
     def test_invoiceitem_created(self) -> None:
         expected_topic = "cus_00000000000000"

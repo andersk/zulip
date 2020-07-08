@@ -34,9 +34,7 @@ def get_alert_word_automaton(realm: Realm) -> ahocorasick.Automaton:
                 (key, user_ids_for_alert_word) = alert_word_automaton.get(alert_word_lower)
                 user_ids_for_alert_word.add(user_id)
             else:
-                alert_word_automaton.add_word(
-                    alert_word_lower, (alert_word_lower, {user_id}),
-                )
+                alert_word_automaton.add_word(alert_word_lower, (alert_word_lower, {user_id}))
     alert_word_automaton.make_automaton()
     # If the kind is not AHOCORASICK after calling make_automaton, it means there is no key present
     # and hence we cannot call items on the automaton yet. To avoid it we return None for such cases
@@ -83,7 +81,5 @@ def remove_user_alert_words(
     # We can clean this up if/when Postgres has more native support for case-insensitive fields.
     # If we turn this into a bulk operation, we will need to call flush_realm_alert_words() here.
     for delete_word in delete_words:
-        AlertWord.objects.filter(
-            user_profile=user_profile, word__iexact=delete_word,
-        ).delete()
+        AlertWord.objects.filter(user_profile=user_profile, word__iexact=delete_word).delete()
     return user_alert_words(user_profile)

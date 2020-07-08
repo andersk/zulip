@@ -803,9 +803,7 @@ class MessagePOSTTest(ZulipTestCase):
         self.assert_json_success(result)
 
         sent_message = self.get_last_message()
-        self.assertEqual(
-            sent_message.topic_name(), "A" * (MAX_TOPIC_NAME_LENGTH - 3) + "...",
-        )
+        self.assertEqual(sent_message.topic_name(), "A" * (MAX_TOPIC_NAME_LENGTH - 3) + "...")
 
     def test_send_forged_message_as_not_superuser(self) -> None:
         self.login("hamlet")
@@ -927,9 +925,7 @@ class MessagePOSTTest(ZulipTestCase):
             },
             subdomain="notzephyr",
         )
-        self.assert_json_error(
-            result, "Zephyr mirroring is not allowed in this organization",
-        )
+        self.assert_json_error(result, "Zephyr mirroring is not allowed in this organization")
 
     @mock.patch("zerver.views.message_send.create_mirrored_message_users")
     def test_send_message_when_client_is_zephyr_mirror_but_recipient_is_user_id(
@@ -1177,9 +1173,7 @@ class ScheduledMessageTest(ZulipTestCase):
         defer_until_str = str(defer_until)
 
         # Scheduling a message to a stream you are subscribed is successful.
-        result = self.do_schedule_message(
-            "stream", "Verona", content + " 1", defer_until_str,
-        )
+        result = self.do_schedule_message("stream", "Verona", content + " 1", defer_until_str)
         message = self.last_scheduled_message()
         self.assert_json_success(result)
         self.assertEqual(message.content, "Test message 1")
@@ -1208,11 +1202,7 @@ class ScheduledMessageTest(ZulipTestCase):
 
         # Setting a reminder in PM's to other users causes a error.
         result = self.do_schedule_message(
-            "private",
-            othello.email,
-            content + " 4",
-            defer_until_str,
-            delivery_type="remind",
+            "private", othello.email, content + " 4", defer_until_str, delivery_type="remind",
         )
         self.assert_json_error(result, "Reminders can only be set for streams.")
 
@@ -1244,9 +1234,7 @@ class ScheduledMessageTest(ZulipTestCase):
         user = self.example_user("hamlet")
         user.timezone = "US/Pacific"
         user.save(update_fields=["timezone"])
-        result = self.do_schedule_message(
-            "stream", "Verona", content + " 7", defer_until_str,
-        )
+        result = self.do_schedule_message("stream", "Verona", content + " 7", defer_until_str)
         message = self.last_scheduled_message()
         self.assert_json_success(result)
         self.assertEqual(message.content, "Test message 7")
@@ -1261,9 +1249,7 @@ class ScheduledMessageTest(ZulipTestCase):
         defer_until = timezone_now()
         defer_until_str = str(defer_until)
 
-        result = self.do_schedule_message(
-            "stream", "Verona", content + " 1", defer_until_str,
-        )
+        result = self.do_schedule_message("stream", "Verona", content + " 1", defer_until_str)
         self.assert_json_error(result, "Time must be in the future.")
 
     def test_invalid_timestamp(self) -> None:
@@ -1286,10 +1272,7 @@ class ScheduledMessageTest(ZulipTestCase):
 
 class StreamMessagesTest(ZulipTestCase):
     def assert_stream_message(
-        self,
-        stream_name: str,
-        topic_name: str = "test topic",
-        content: str = "test content",
+        self, stream_name: str, topic_name: str = "test topic", content: str = "test content",
     ) -> None:
         """
         Check that messages sent to a stream reach all subscribers to that stream.
@@ -1439,10 +1422,7 @@ class StreamMessagesTest(ZulipTestCase):
         user_profile = self.example_user("iago")
         self.subscribe(user_profile, "Denmark")
         self.send_stream_message(
-            self.example_user("hamlet"),
-            "Denmark",
-            content="whatever",
-            topic_name="my topic",
+            self.example_user("hamlet"), "Denmark", content="whatever", topic_name="my topic",
         )
         message = most_recent_message(user_profile)
         row = MessageDict.get_raw_db_rows([message.id])[0]
@@ -1457,9 +1437,7 @@ class StreamMessagesTest(ZulipTestCase):
         receiving_user_profile = self.example_user("iago")
         sender = self.example_user("hamlet")
         self.subscribe(receiving_user_profile, "Denmark")
-        self.send_stream_message(
-            sender, "Denmark", content="whatever", topic_name="my topic",
-        )
+        self.send_stream_message(sender, "Denmark", content="whatever", topic_name="my topic")
         message = most_recent_message(receiving_user_profile)
         self.assertEqual(
             str(message),
@@ -1973,11 +1951,7 @@ class InternalPrepTest(ZulipTestCase):
         content = "hello"
 
         internal_prep_stream_message_by_name(
-            realm=realm,
-            sender=sender,
-            stream_name=stream_name,
-            topic=topic,
-            content=content,
+            realm=realm, sender=sender, stream_name=stream_name, topic=topic, content=content,
         )
 
         # This would throw an error if the stream

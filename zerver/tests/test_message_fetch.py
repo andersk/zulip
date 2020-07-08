@@ -248,9 +248,7 @@ class NarrowBuilderTest(ZulipTestCase):
         term = dict(operator="topic", operand="lunch")
         self._do_add_term_test(term, "WHERE upper(subject) = upper(%(param_1)s)")
 
-    def test_add_term_using_topic_operator_lunch_operand_and_negated(
-        self,
-    ) -> None:  # NEGATED
+    def test_add_term_using_topic_operator_lunch_operand_and_negated(self) -> None:  # NEGATED
         term = dict(operator="topic", operand="lunch", negated=True)
         self._do_add_term_test(term, "WHERE upper(subject) != upper(%(param_1)s)")
 
@@ -393,9 +391,7 @@ class NarrowBuilderTest(ZulipTestCase):
         term = dict(operator="group-pm-with", operand=self.othello_email, negated=True)
         self._do_add_term_test(term, "WHERE 1 = 1")
 
-    def test_add_term_using_group_pm_operator_with_non_existing_user_as_operand(
-        self,
-    ) -> None:
+    def test_add_term_using_group_pm_operator_with_non_existing_user_as_operand(self) -> None:
         term = dict(operator="group-pm-with", operand="non-existing@zulip.com")
         self.assertRaises(BadNarrowOperator, self._build_query, term)
 
@@ -549,9 +545,7 @@ class NarrowLibraryTest(ZulipTestCase):
             ),
         )
         self.assertTrue(
-            is_web_public_compatible(
-                [{"operator": "sender", "operand": "hamlet@zulip.com"}],
-            ),
+            is_web_public_compatible([{"operator": "sender", "operand": "hamlet@zulip.com"}]),
         )
         self.assertFalse(
             is_web_public_compatible(
@@ -574,12 +568,8 @@ class NarrowLibraryTest(ZulipTestCase):
                 ],
             ),
         )
-        self.assertFalse(
-            is_web_public_compatible([{"operator": "is", "operand": "starred"}]),
-        )
-        self.assertFalse(
-            is_web_public_compatible([{"operator": "is", "operand": "private"}]),
-        )
+        self.assertFalse(is_web_public_compatible([{"operator": "is", "operand": "starred"}]))
+        self.assertFalse(is_web_public_compatible([{"operator": "is", "operand": "private"}]))
         self.assertTrue(
             is_web_public_compatible([{"operator": "streams", "operand": "public"}]),
         )
@@ -1387,9 +1377,7 @@ class GetOldMessagesTest(ZulipTestCase):
         recipients = (
             Recipient.objects.filter(
                 type=Recipient.STREAM,
-                type_id__in=Stream.objects.filter(
-                    realm=hamlet_user.realm, invite_only=False,
-                ),
+                type_id__in=Stream.objects.filter(realm=hamlet_user.realm, invite_only=False),
             )
             .values("id")
             .order_by("id")
@@ -1472,9 +1460,7 @@ class GetOldMessagesTest(ZulipTestCase):
         self.login_user(hamlet)
 
         do_set_realm_property(
-            hamlet.realm,
-            "email_address_visibility",
-            Realm.EMAIL_ADDRESS_VISIBILITY_EVERYONE,
+            hamlet.realm, "email_address_visibility", Realm.EMAIL_ADDRESS_VISIBILITY_EVERYONE,
         )
 
         self.send_personal_message(hamlet, self.example_user("iago"))
@@ -1508,9 +1494,7 @@ class GetOldMessagesTest(ZulipTestCase):
 
         def dr_ids(dr: DisplayRecipientT) -> List[int]:
             assert isinstance(dr, list)
-            return list(
-                sorted(set([r["id"] for r in dr] + [self.example_user("hamlet").id])),
-            )
+            return list(sorted(set([r["id"] for r in dr] + [self.example_user("hamlet").id])))
 
         self.send_personal_message(me, self.example_user("iago"))
 
@@ -1785,8 +1769,7 @@ class GetOldMessagesTest(ZulipTestCase):
 
         narrow = [dict(operator="topic", operand="personal.d.d")]
         result = self.get_and_check_messages(
-            dict(num_before=50, num_after=50, narrow=ujson.dumps(narrow)),
-            subdomain="zephyr",
+            dict(num_before=50, num_after=50, narrow=ujson.dumps(narrow)), subdomain="zephyr",
         )
 
         messages = get_user_messages(mit_user_profile)
@@ -2901,9 +2884,7 @@ class GetOldMessagesTest(ZulipTestCase):
         self.assertIn(cond, sql)
         self.assertIn("UNION", sql)
 
-    def test_visible_messages_use_first_unread_anchor_with_some_unread_messages(
-        self,
-    ) -> None:
+    def test_visible_messages_use_first_unread_anchor_with_some_unread_messages(self) -> None:
         user_profile = self.example_user("hamlet")
 
         # Have Othello send messages to Hamlet that he hasn't read.
@@ -3486,12 +3467,7 @@ class MessageHasKeywordsTest(ZulipTestCase):
 
     def test_finds_only_links(self) -> None:
         msg_ids = []
-        msg_contents = [
-            "`example.org`",
-            "``example.org```",
-            "$$https://example.org$$",
-            "foo",
-        ]
+        msg_contents = ["`example.org`", "``example.org```", "$$https://example.org$$", "foo"]
         for msg_content in msg_contents:
             msg_ids.append(
                 self.send_stream_message(
@@ -3702,8 +3678,6 @@ class MessageVisibilityTest(ZulipTestCase):
 class PersonalMessagesNearTest(ZulipTestCase):
     def test_near_pm_message_url(self) -> None:
         realm = get_realm("zulip")
-        message = dict(
-            type="personal", id=555, display_recipient=[dict(id=77), dict(id=80)],
-        )
+        message = dict(type="personal", id=555, display_recipient=[dict(id=77), dict(id=80)])
         url = near_message_url(realm=realm, message=message)
         self.assertEqual(url, "http://zulip.testserver/#narrow/pm-with/77,80-pm/near/555")

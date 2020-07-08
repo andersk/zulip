@@ -180,16 +180,12 @@ def build_recipient_and_subscription(
     # We enumerate all streams, and build a recipient for each
     # Hence 'recipient_id'=n corresponds to 'stream_id'=n
     for stream in zerver_stream:
-        zerver_recipient.append(
-            build_recipient(recipient_id, recipient_id, Recipient.STREAM),
-        )
+        zerver_recipient.append(build_recipient(recipient_id, recipient_id, Recipient.STREAM))
         recipient_id += 1
 
     # For users
     for user in zerver_userprofile:
-        zerver_recipient.append(
-            build_recipient(user["id"], recipient_id, Recipient.PERSONAL),
-        )
+        zerver_recipient.append(build_recipient(user["id"], recipient_id, Recipient.PERSONAL))
         zerver_subscription.append(
             build_subscription(recipient_id, user["id"], subscription_id),
         )

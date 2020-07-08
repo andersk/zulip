@@ -21,8 +21,7 @@ def sql_copy_pub_date_to_date_sent(
     )
     with connection.cursor() as cursor:
         cursor.execute(
-            query,
-            {"lower_bound": id_range_lower_bound, "upper_bound": id_range_upper_bound},
+            query, {"lower_bound": id_range_lower_bound, "upper_bound": id_range_upper_bound},
         )
 
 

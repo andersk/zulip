@@ -362,9 +362,7 @@ def get_file_info(request: HttpRequest, user_file: File) -> Tuple[str, int, Opti
 
 def get_signed_upload_url(path: str) -> str:
     client = boto3.client(
-        "s3",
-        aws_access_key_id=settings.S3_KEY,
-        aws_secret_access_key=settings.S3_SECRET_KEY,
+        "s3", aws_access_key_id=settings.S3_KEY, aws_secret_access_key=settings.S3_SECRET_KEY,
     )
     return client.generate_presigned_url(
         ClientMethod="get_object",

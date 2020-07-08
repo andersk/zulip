@@ -39,10 +39,7 @@ def json_method_not_allowed(methods: List[str]) -> HttpResponseNotAllowed:
 
 
 def json_response(
-    res_type: str = "success",
-    msg: str = "",
-    data: Mapping[str, Any] = {},
-    status: int = 200,
+    res_type: str = "success", msg: str = "", data: Mapping[str, Any] = {}, status: int = 200,
 ) -> HttpResponse:
     content = {"result": res_type, "msg": msg}
     content.update(data)

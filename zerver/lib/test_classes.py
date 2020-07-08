@@ -242,18 +242,14 @@ class ZulipTestCase(TestCase):
         return django_client.options(url, encoded, **kwargs)
 
     @instrument_url
-    def client_head(
-        self, url: str, info: Dict[str, Any] = {}, **kwargs: Any
-    ) -> HttpResponse:
+    def client_head(self, url: str, info: Dict[str, Any] = {}, **kwargs: Any) -> HttpResponse:
         encoded = urllib.parse.urlencode(info)
         django_client = self.client  # see WRAPPER_COMMENT
         self.set_http_headers(kwargs)
         return django_client.head(url, encoded, **kwargs)
 
     @instrument_url
-    def client_post(
-        self, url: str, info: Dict[str, Any] = {}, **kwargs: Any
-    ) -> HttpResponse:
+    def client_post(self, url: str, info: Dict[str, Any] = {}, **kwargs: Any) -> HttpResponse:
         django_client = self.client  # see WRAPPER_COMMENT
         self.set_http_headers(kwargs)
         result = django_client.post(url, info, **kwargs)
@@ -655,9 +651,7 @@ class ZulipTestCase(TestCase):
         )
         return data["messages"]
 
-    def users_subscribed_to_stream(
-        self, stream_name: str, realm: Realm,
-    ) -> List[UserProfile]:
+    def users_subscribed_to_stream(self, stream_name: str, realm: Realm) -> List[UserProfile]:
         stream = Stream.objects.get(name=stream_name, realm=realm)
         recipient = Recipient.objects.get(type_id=stream.id, type=Recipient.STREAM)
         subscriptions = Subscription.objects.filter(recipient=recipient, active=True)
