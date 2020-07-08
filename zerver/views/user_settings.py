@@ -147,10 +147,7 @@ def json_change_settings(
     result: Dict[str, Any] = {}
     new_email = email.strip()
     if user_profile.delivery_email != new_email and new_email != "":
-        if (
-            user_profile.realm.email_changes_disabled
-            and not user_profile.is_realm_admin
-        ):
+        if user_profile.realm.email_changes_disabled and not user_profile.is_realm_admin:
             return json_error(
                 _("Email address changes are disabled in this organization."),
             )
@@ -172,10 +169,7 @@ def json_change_settings(
         result["account_email"] = _("Check your email for a confirmation link. ")
 
     if user_profile.full_name != full_name and full_name.strip() != "":
-        if (
-            name_changes_disabled(user_profile.realm)
-            and not user_profile.is_realm_admin
-        ):
+        if name_changes_disabled(user_profile.realm) and not user_profile.is_realm_admin:
             # Failingly silently is fine -- they can't do it through the UI, so
             # they'd have to be trying to break the rules.
             pass

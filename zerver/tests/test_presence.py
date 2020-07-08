@@ -715,9 +715,7 @@ class GetRealmStatusesTest(ZulipTestCase):
         )
 
         # Check that a bot can fetch the presence data for the realm.
-        result = self.api_get(
-            self.example_user("default_bot"), "/api/v1/realm/presence",
-        )
+        result = self.api_get(self.example_user("default_bot"), "/api/v1/realm/presence")
         self.assert_json_success(result)
         json = result.json()
         self.assertEqual(set(json["presences"].keys()), {hamlet.email, othello.email})

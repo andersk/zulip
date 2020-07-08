@@ -8,9 +8,7 @@ from typing import Iterable, List, Optional, Tuple
 from scripts.lib.zulip_tools import get_dev_uuid_var_path
 from version import PROVISION_VERSION
 
-ZULIP_PATH = os.path.dirname(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-)
+ZULIP_PATH = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 def get_major_version(v: str) -> int:

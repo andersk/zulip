@@ -90,12 +90,7 @@ def build_userprofile(
 
             email = get_user_email(user_data, domain_name)
             build_avatar(
-                user_id,
-                realm_id,
-                email,
-                user_data["avatarUrl"],
-                timestamp,
-                avatar_list,
+                user_id, realm_id, email, user_data["avatarUrl"], timestamp, avatar_list,
             )
 
             # Build userprofile object

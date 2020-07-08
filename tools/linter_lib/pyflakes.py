@@ -10,10 +10,7 @@ def check_pyflakes(files: List[str], options: argparse.Namespace) -> bool:
         # Intentionally imported by zerver/lib/webhooks/common.py
         ("", "'zerver.lib.exceptions.UnexpectedWebhookEventType' imported but unused"),
         # Our ipython startup pythonrc file intentionally imports *
-        (
-            "scripts/lib/pythonrc.py",
-            " import *' used; unable to detect undefined names",
-        ),
+        ("scripts/lib/pythonrc.py", " import *' used; unable to detect undefined names"),
         (
             "zerver/views/realm.py",
             "local variable 'message_retention_days' is assigned to but never used",

@@ -72,8 +72,7 @@ class AnalyzeQueueStatsTests(TestCase):
 
         # Verify logic around whether it'll take MAX_SECONDS_TO_CLEAR_NORMAL to clear queue.
         with mock.patch.dict(
-            "scripts.lib.check_rabbitmq_queue.MAX_SECONDS_TO_CLEAR_NORMAL",
-            {"name": 10},
+            "scripts.lib.check_rabbitmq_queue.MAX_SECONDS_TO_CLEAR_NORMAL", {"name": 10},
         ):
             result = analyze_queue_stats(
                 "name",

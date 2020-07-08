@@ -46,10 +46,10 @@ class ClubhouseWebhookTest(WebhookTestCase):
         )
 
     def test_story_unarchive(self) -> None:
-        expected_message = "The story [Story 2](https://app.clubhouse.io/zulip/story/9) was unarchived."
-        self.send_and_test_stream_message(
-            "story_unarchive", "Story 2", expected_message,
+        expected_message = (
+            "The story [Story 2](https://app.clubhouse.io/zulip/story/9) was unarchived."
         )
+        self.send_and_test_stream_message("story_unarchive", "Story 2", expected_message)
 
     def test_epic_create(self) -> None:
         expected_message = "New epic **New Epic!**(to do) was created."

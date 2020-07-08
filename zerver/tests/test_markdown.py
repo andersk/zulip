@@ -377,9 +377,7 @@ class MarkdownTest(ZulipTestCase):
     def load_markdown_tests(self) -> Tuple[Dict[str, Any], List[List[str]]]:
         test_fixtures = {}
         with open(
-            os.path.join(
-                os.path.dirname(__file__), "fixtures/markdown_test_cases.json",
-            ),
+            os.path.join(os.path.dirname(__file__), "fixtures/markdown_test_cases.json"),
         ) as f:
             data = ujson.load(f)
         for test in data["regular_tests"]:
@@ -422,9 +420,7 @@ class MarkdownTest(ZulipTestCase):
                     do_set_user_display_setting(
                         user_profile, "translate_emoticons", True,
                     )
-                    msg = Message(
-                        sender=user_profile, sending_client=get_client("test"),
-                    )
+                    msg = Message(sender=user_profile, sending_client=get_client("test"))
                     converted = render_markdown(msg, test["input"])
                 else:
                     converted = markdown_convert_wrapper(test["input"])
@@ -549,7 +545,9 @@ class MarkdownTest(ZulipTestCase):
     @override_settings(INLINE_IMAGE_PREVIEW=True)
     def test_inline_image_thumbnail_url(self) -> None:
         realm = get_realm("zephyr")
-        msg = "[foobar](/user_uploads/{realm_id}/50/w2G6ok9kr8AMCQCTNAUOFMln/IMG_0677.JPG)"
+        msg = (
+            "[foobar](/user_uploads/{realm_id}/50/w2G6ok9kr8AMCQCTNAUOFMln/IMG_0677.JPG)"
+        )
         msg = msg.format(realm_id=realm.id)
         thumbnail_img = '<img data-src-fullsize="/thumbnail?url=user_uploads%2F{realm_id}%2F50%2Fw2G6ok9kr8AMCQCTNAUOFMln%2FIMG_0677.JPG&amp;size=full" src="/thumbnail?url=user_uploads%2F{realm_id}%2F50%2Fw2G6ok9kr8AMCQCTNAUOFMln%2FIMG_0677.JPG&amp;size=thumbnail"><'
         thumbnail_img = thumbnail_img.format(realm_id=realm.id)
@@ -780,9 +778,7 @@ class MarkdownTest(ZulipTestCase):
     def test_inline_dropbox_negative(self) -> None:
         # Make sure we're not overzealous in our conversion:
         msg = "Look at the new dropbox logo: https://www.dropbox.com/static/images/home_logo.png"
-        with mock.patch(
-            "zerver.lib.markdown.fetch_open_graph_image", return_value=None,
-        ):
+        with mock.patch("zerver.lib.markdown.fetch_open_graph_image", return_value=None):
             converted = markdown_convert_wrapper(msg)
 
         self.assertEqual(
@@ -793,9 +789,7 @@ class MarkdownTest(ZulipTestCase):
     def test_inline_dropbox_bad(self) -> None:
         # Don't fail on bad dropbox links
         msg = "https://zulip-test.dropbox.com/photos/cl/ROmr9K1XYtmpneM"
-        with mock.patch(
-            "zerver.lib.markdown.fetch_open_graph_image", return_value=None,
-        ):
+        with mock.patch("zerver.lib.markdown.fetch_open_graph_image", return_value=None):
             converted = markdown_convert_wrapper(msg)
         self.assertEqual(
             converted,
@@ -1406,9 +1400,7 @@ class MarkdownTest(ZulipTestCase):
 
         msg = Message(sender=user_profile, sending_client=get_client("test"))
         content = "We have a NOTHINGWORD day today!"
-        self.assertEqual(
-            render(msg, content), "<p>We have a NOTHINGWORD day today!</p>",
-        )
+        self.assertEqual(render(msg, content), "<p>We have a NOTHINGWORD day today!</p>")
         self.assertEqual(msg.user_ids_with_alert_words, set())
 
     def test_alert_words_returns_user_ids_with_alert_words(self) -> None:
@@ -1427,9 +1419,7 @@ class MarkdownTest(ZulipTestCase):
             do_add_alert_words(user_profile, alert_words)
         sender_user_profile = self.example_user("polonius")
         msg = Message(sender=sender_user_profile, sending_client=get_client("test"))
-        realm_alert_words_automaton = get_alert_word_automaton(
-            sender_user_profile.realm,
-        )
+        realm_alert_words_automaton = get_alert_word_automaton(sender_user_profile.realm)
 
         def render(msg: Message, content: str) -> str:
             return render_markdown(
@@ -1463,9 +1453,7 @@ class MarkdownTest(ZulipTestCase):
             do_add_alert_words(user_profile, alert_words)
         sender_user_profile = self.example_user("polonius")
         msg = Message(sender=sender_user_profile, sending_client=get_client("test"))
-        realm_alert_words_automaton = get_alert_word_automaton(
-            sender_user_profile.realm,
-        )
+        realm_alert_words_automaton = get_alert_word_automaton(sender_user_profile.realm)
 
         def render(msg: Message, content: str) -> str:
             return render_markdown(
@@ -1503,9 +1491,7 @@ class MarkdownTest(ZulipTestCase):
             do_add_alert_words(user_profile, alert_words)
         sender_user_profile = self.example_user("polonius")
         msg = Message(sender=sender_user_profile, sending_client=get_client("test"))
-        realm_alert_words_automaton = get_alert_word_automaton(
-            sender_user_profile.realm,
-        )
+        realm_alert_words_automaton = get_alert_word_automaton(sender_user_profile.realm)
 
         def render(msg: Message, content: str) -> str:
             return render_markdown(
@@ -1540,9 +1526,7 @@ class MarkdownTest(ZulipTestCase):
             do_add_alert_words(user_profile, alert_words)
         sender_user_profile = self.example_user("polonius")
         msg = Message(sender=user_profile, sending_client=get_client("test"))
-        realm_alert_words_automaton = get_alert_word_automaton(
-            sender_user_profile.realm,
-        )
+        realm_alert_words_automaton = get_alert_word_automaton(sender_user_profile.realm)
 
         def render(msg: Message, content: str) -> str:
             return render_markdown(
@@ -1576,9 +1560,7 @@ class MarkdownTest(ZulipTestCase):
             do_add_alert_words(user_profile, alert_words)
         sender_user_profile = self.example_user("polonius")
         msg = Message(sender=sender_user_profile, sending_client=get_client("test"))
-        realm_alert_words_automaton = get_alert_word_automaton(
-            sender_user_profile.realm,
-        )
+        realm_alert_words_automaton = get_alert_word_automaton(sender_user_profile.realm)
 
         def render(msg: Message, content: str) -> str:
             return render_markdown(
@@ -1607,9 +1589,7 @@ class MarkdownTest(ZulipTestCase):
             do_add_alert_words(user_profile, alert_words)
         sender_user_profile = self.example_user("polonius")
         msg = Message(sender=sender_user_profile, sending_client=get_client("test"))
-        realm_alert_words_automaton = get_alert_word_automaton(
-            sender_user_profile.realm,
-        )
+        realm_alert_words_automaton = get_alert_word_automaton(sender_user_profile.realm)
 
         def render(msg: Message, content: str) -> str:
             return render_markdown(
@@ -1754,9 +1734,7 @@ class MarkdownTest(ZulipTestCase):
         msg = Message(sender=user_profile, sending_client=get_client("test"))
 
         content = "test @alleycat.com test"
-        self.assertEqual(
-            render_markdown(msg, content), "<p>test @alleycat.com test</p>",
-        )
+        self.assertEqual(render_markdown(msg, content), "<p>test @alleycat.com test</p>")
         self.assertFalse(msg.mentions_wildcard)
         self.assertEqual(msg.mentions_user_ids, set())
 

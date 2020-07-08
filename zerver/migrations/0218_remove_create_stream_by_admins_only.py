@@ -10,7 +10,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name="realm", name="create_stream_by_admins_only",
-        ),
+        migrations.RemoveField(model_name="realm", name="create_stream_by_admins_only"),
     ]

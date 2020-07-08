@@ -158,9 +158,7 @@ class TaigaHookTests(WebhookTestCase):
 
     def test_taiga_task_changed_reassigned(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) reassigned task **New Task** from HanSolo to TomaszKolek."
-        self.send_and_test_stream_message(
-            "task_changed_reassigned", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("task_changed_reassigned", self.TOPIC, message)
 
     def test_taiga_task_changed_subject(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) renamed task New Task to **New Task Subject**."
@@ -271,9 +269,7 @@ class TaigaHookTests(WebhookTestCase):
 
     def test_taiga_issue_changed_unblocked(self) -> None:
         message = "[Aditya Verma](https://tree.taiga.io/profile/orientor) unblocked issue [Issues](https://tree.taiga.io/project/orientor-sd/issue/49)."
-        self.send_and_test_stream_message(
-            "issue_changed_unblocked", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("issue_changed_unblocked", self.TOPIC, message)
 
     def test_taiga_issue_changed_due_date(self) -> None:
         message = (
@@ -310,15 +306,11 @@ class TaigaHookTests(WebhookTestCase):
 
     def test_taiga_epic_changed_unassigned(self) -> None:
         message = "[Eeshan Garg](https://tree.taiga.io/profile/eeshangarg) unassigned epic **Zulip is awesome!**."
-        self.send_and_test_stream_message(
-            "epic_changed_unassigned", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("epic_changed_unassigned", self.TOPIC, message)
 
     def test_taiga_epic_changed_reassigned(self) -> None:
         message = "[Eeshan Garg](https://tree.taiga.io/profile/eeshangarg) reassigned epic **Zulip is awesome!** from Eeshan Garg to Angela Johnson."
-        self.send_and_test_stream_message(
-            "epic_changed_reassigned", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("epic_changed_reassigned", self.TOPIC, message)
 
     def test_taiga_epic_changed_blocked(self) -> None:
         message = "[Eeshan Garg](https://tree.taiga.io/profile/eeshangarg) blocked epic **Zulip is awesome!**."

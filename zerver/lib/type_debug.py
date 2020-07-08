@@ -80,9 +80,7 @@ def print_types_to(file_obj: IO[str]) -> Callable[[FuncT], FuncT]:
             ]
             ret_val = func(*args, **kwargs)
             output = "{}({}) -> {}".format(
-                func.__name__,
-                ", ".join(arg_types + kwarg_types),
-                get_type_str(ret_val),
+                func.__name__, ", ".join(arg_types + kwarg_types), get_type_str(ret_val),
             )
             print(output, file=file_obj)
             return ret_val

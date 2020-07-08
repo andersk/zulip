@@ -1117,11 +1117,7 @@ class InlineInterestingLinkProcessor(markdown.treeprocessors.Treeprocessor):
                     grandparent, parent, parent_index,
                 )
                 self.add_a(
-                    grandparent,
-                    actual_url,
-                    url,
-                    title=title,
-                    insertion_index=ins_index,
+                    grandparent, actual_url, url, title=title, insertion_index=ins_index,
                 )
 
             else:
@@ -2054,9 +2050,7 @@ class Markdown(markdown.Markdown):
         preprocessors = markdown.util.Registry()
         preprocessors.register(MarkdownListPreprocessor(self), "hanging_lists", 35)
         preprocessors.register(
-            markdown.preprocessors.NormalizeWhitespace(self),
-            "normalize_whitespace",
-            30,
+            markdown.preprocessors.NormalizeWhitespace(self), "normalize_whitespace", 30,
         )
         preprocessors.register(
             fenced_code.FencedBlockPreprocessor(self), "fenced_code_block", 25,
@@ -2149,9 +2143,7 @@ class Markdown(markdown.Markdown):
             "topic",
             87,
         )
-        reg.register(
-            StreamPattern(get_compiled_stream_link_regex(), self), "stream", 85,
-        )
+        reg.register(StreamPattern(get_compiled_stream_link_regex(), self), "stream", 85)
         reg.register(Timestamp(r"<time:(?P<time>[^>]*?)>"), "timestamp", 75)
         reg.register(
             UserGroupMentionPattern(mention.user_group_mentions, self),

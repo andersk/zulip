@@ -320,9 +320,7 @@ class EditMessageTest(ZulipTestCase):
             self.example_user("hamlet"),
             "Scotland",
             topic_name="editing",
-            content=(
-                "content before edit, line 1\n" "\n" "content before edit, line 3"
-            ),
+            content=("content before edit, line 1\n" "\n" "content before edit, line 3"),
         )
         new_content_2 = (
             "content before edit, line 1\n"
@@ -643,10 +641,7 @@ class EditMessageTest(ZulipTestCase):
         self.login("iago")
         # send a message in the past
         id_ = self.send_stream_message(
-            self.example_user("iago"),
-            "Scotland",
-            content="content",
-            topic_name="topic",
+            self.example_user("iago"), "Scotland", content="content", topic_name="topic",
         )
         message = Message.objects.get(id=id_)
         message.date_sent = message.date_sent - datetime.timedelta(seconds=180)
@@ -1502,9 +1497,7 @@ class DeleteMessageTest(ZulipTestCase):
 
         # Test handling of 500 error caused by multiple delete requests due to latency.
         # see issue #11219.
-        with mock.patch(
-            "zerver.views.message_edit.do_delete_messages",
-        ) as m, mock.patch(
+        with mock.patch("zerver.views.message_edit.do_delete_messages") as m, mock.patch(
             "zerver.views.message_edit.validate_can_delete_message", return_value=None,
         ), mock.patch(
             "zerver.views.message_edit.access_message", return_value=(None, None),

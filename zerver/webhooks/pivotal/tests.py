@@ -10,10 +10,7 @@ class PivotalV3HookTests(WebhookTestCase):
         expected_message = 'Leo Franchi accepted "My new Feature story" \
 [(view)](https://www.pivotaltracker.com/s/projects/807213/stories/48276573).'
         self.send_and_test_stream_message(
-            "accepted",
-            expected_topic,
-            expected_message,
-            content_type="application/xml",
+            "accepted", expected_topic, expected_message, content_type="application/xml",
         )
 
     def test_commented(self) -> None:
@@ -52,10 +49,7 @@ class PivotalV3HookTests(WebhookTestCase):
         expected_message = 'Leo Franchi finished "Another new story" \
 [(view)](https://www.pivotaltracker.com/s/projects/807213/stories/48278289).'
         self.send_and_test_stream_message(
-            "finished",
-            expected_topic,
-            expected_message,
-            content_type="application/xml",
+            "finished", expected_topic, expected_message, content_type="application/xml",
         )
 
     def test_moved(self) -> None:
@@ -71,10 +65,7 @@ class PivotalV3HookTests(WebhookTestCase):
         expected_message = 'Leo Franchi rejected "Another new story" with comments: \
 "Not good enough, sorry" [(view)](https://www.pivotaltracker.com/s/projects/807213/stories/48278289).'
         self.send_and_test_stream_message(
-            "rejected",
-            expected_topic,
-            expected_message,
-            content_type="application/xml",
+            "rejected", expected_topic, expected_message, content_type="application/xml",
         )
 
     def test_started(self) -> None:
@@ -121,10 +112,7 @@ class PivotalV5HookTests(WebhookTestCase):
         expected_message = """Leo Franchi updated [Hard Code](https://www.pivotaltracker.com/s/projects/807213): [Story of the Year](http://www.pivotaltracker.com/story/show/63486316):
 * state changed from **unstarted** to **accepted**"""
         self.send_and_test_stream_message(
-            "accepted",
-            expected_topic,
-            expected_message,
-            content_type="application/xml",
+            "accepted", expected_topic, expected_message, content_type="application/xml",
         )
 
     def test_commented(self) -> None:
@@ -167,10 +155,7 @@ A comment on the story
         expected_message = """Leo Franchi updated [Hard Code](https://www.pivotaltracker.com/s/projects/807213): [Story of the Year](http://www.pivotaltracker.com/story/show/63486316):
 * state changed from **delivered** to **accepted**"""
         self.send_and_test_stream_message(
-            "finished",
-            expected_topic,
-            expected_message,
-            content_type="application/xml",
+            "finished", expected_topic, expected_message, content_type="application/xml",
         )
 
     def test_moved(self) -> None:
@@ -189,10 +174,7 @@ Try again next time
 ~~~
 * state changed from **delivered** to **rejected**"""
         self.send_and_test_stream_message(
-            "rejected",
-            expected_topic,
-            expected_message,
-            content_type="application/xml",
+            "rejected", expected_topic, expected_message, content_type="application/xml",
         )
 
     def test_started(self) -> None:

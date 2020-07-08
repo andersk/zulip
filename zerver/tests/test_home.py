@@ -493,9 +493,7 @@ class HomeTest(ZulipTestCase):
         )
         return user
 
-    def create_non_active_user(
-        self, realm: Realm, email: str, name: str,
-    ) -> UserProfile:
+    def create_non_active_user(self, realm: Realm, email: str, name: str) -> UserProfile:
         user = do_create_user(
             email=email, password="123", realm=realm, full_name=name, short_name=name,
         )

@@ -98,9 +98,7 @@ class MarkdownDirectoryView(ApiURLView):
         if self.path_template == "/zerver/help/%s.md":
             context["page_is_help_center"] = True
             context["doc_root"] = "/help/"
-            (sidebar_index, http_status_ignored) = self.get_path(
-                "include/sidebar_index",
-            )
+            (sidebar_index, http_status_ignored) = self.get_path("include/sidebar_index")
             # We want the sliding/collapsing behavior for /help pages only
             sidebar_class = "sidebar slide"
             title_base = "Zulip Help Center"
@@ -201,9 +199,7 @@ class IntegrationView(ApiURLView):
 
 
 @has_request_variables
-def integration_doc(
-    request: HttpRequest, integration_name: str = REQ(),
-) -> HttpResponse:
+def integration_doc(request: HttpRequest, integration_name: str = REQ()) -> HttpResponse:
     if not request.is_ajax():
         return HttpResponseNotFound()
     try:

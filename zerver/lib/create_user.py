@@ -18,9 +18,7 @@ from zerver.models import (
 )
 
 
-def copy_user_settings(
-    source_profile: UserProfile, target_profile: UserProfile,
-) -> None:
+def copy_user_settings(source_profile: UserProfile, target_profile: UserProfile) -> None:
     # Important note: Code run from here to configure the user's
     # settings should not call send_event, as that would cause clients
     # to throw an exception (we haven't sent the realm_user/add event

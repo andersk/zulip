@@ -40,9 +40,7 @@ class RedisUtilsTest(ZulipTestCase):
             "b": "some value",
         }
 
-        max_valid_token_length = MAX_KEY_LENGTH - (
-            len(self.key_format) - len("{token}")
-        )
+        max_valid_token_length = MAX_KEY_LENGTH - (len(self.key_format) - len("{token}"))
         key = put_dict_in_redis(
             self.redis_client,
             self.key_format,
@@ -55,9 +53,7 @@ class RedisUtilsTest(ZulipTestCase):
 
         # Trying to put data under an overly long key should get stopped before even
         # generating the random token.
-        with mock.patch(
-            "zerver.lib.redis_utils.generate_random_token",
-        ) as mock_generate:
+        with mock.patch("zerver.lib.redis_utils.generate_random_token") as mock_generate:
             with self.assertRaises(ZulipRedisKeyTooLongError):
                 put_dict_in_redis(
                     self.redis_client,

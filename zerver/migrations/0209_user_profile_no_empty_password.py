@@ -102,9 +102,7 @@ def ensure_no_empty_passwords(
             event_type__in=[USER_PASSWORD_CHANGED, USER_API_KEY_CHANGED],
         ).order_by("event_time")
 
-        earliest_password_change = query.filter(
-            event_type=USER_PASSWORD_CHANGED,
-        ).first()
+        earliest_password_change = query.filter(event_type=USER_PASSWORD_CHANGED).first()
         # Since these users are in password_change_user_ids, this must not be None.
         assert earliest_password_change is not None
 
@@ -154,10 +152,7 @@ def ensure_no_empty_passwords(
             event_type=event_type,
             event_time=event_time,
             extra_data=ujson.dumps(
-                {
-                    "migration_id": MIGRATION_ID,
-                    "affected_user_type": affected_user_type,
-                },
+                {"migration_id": MIGRATION_ID, "affected_user_type": affected_user_type},
             ),
         )
 

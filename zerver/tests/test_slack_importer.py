@@ -79,8 +79,7 @@ class SlackImporter(ZulipTestCase):
         token = "xoxp-valid-token"
         slack_user_list_url = "https://slack.com/api/users.list"
         self.assertEqual(
-            get_slack_api_data(slack_user_list_url, "members", token=token),
-            "user_data",
+            get_slack_api_data(slack_user_list_url, "members", token=token), "user_data",
         )
         token = "xoxp-invalid-token"
         with self.assertRaises(Exception) as invalid:
@@ -653,9 +652,7 @@ class SlackImporter(ZulipTestCase):
         self.assertEqual(
             self.get_set(zerver_subscription, "recipient"), {i for i in range(11)},
         )
-        self.assertEqual(
-            self.get_set(zerver_subscription, "user_profile"), {1, 5, 7, 8},
-        )
+        self.assertEqual(self.get_set(zerver_subscription, "user_profile"), {1, 5, 7, 8})
 
         self.assertEqual(
             self.get_set(zerver_recipient, "id"),
@@ -748,11 +745,7 @@ class SlackImporter(ZulipTestCase):
             "type": "message",
             "file": {"user": "U064KUGRJ"},
         }
-        message_without_file = {
-            "subtype": "file",
-            "type": "messge",
-            "user": "U064KUGRJ",
-        }
+        message_without_file = {"subtype": "file", "type": "messge", "user": "U064KUGRJ"}
 
         user_file = get_message_sending_user(message_with_file)
         self.assertEqual(user_file, "U064KUGRJ")

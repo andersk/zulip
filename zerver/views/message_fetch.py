@@ -458,9 +458,7 @@ class NarrowBuilder:
     ) -> Query:
         try:
             if isinstance(operand, str):
-                narrow_profile = get_user_including_cross_realm(
-                    operand, self.user_realm,
-                )
+                narrow_profile = get_user_including_cross_realm(operand, self.user_realm)
             else:
                 narrow_profile = get_user_by_id_in_realm_including_cross_realm(
                     operand, self.user_realm,
@@ -774,9 +772,7 @@ def get_base_query_for_search(
 
     else:
         assert need_message
-        query = select(
-            [column("id").label("message_id")], None, table("zerver_message"),
-        )
+        query = select([column("id").label("message_id")], None, table("zerver_message"))
         inner_msg_id_col = literal_column("zerver_message.id")
         return (query, inner_msg_id_col)
 

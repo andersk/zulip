@@ -262,8 +262,7 @@ class TornadoInMemoryRateLimiterBackend(RateLimiterBackend):
 
         reset_times_for_rule = cls.reset_times.setdefault((time_window, max_count), {})
         new_reset = (
-            max(reset_times_for_rule.get(entity_key, now), now)
-            + time_window / max_count
+            max(reset_times_for_rule.get(entity_key, now), now) + time_window / max_count
         )
 
         if new_reset > now + time_window:
@@ -287,9 +286,7 @@ class TornadoInMemoryRateLimiterBackend(RateLimiterBackend):
         else:
             return max_calls, 0
 
-        calls_remaining = (
-            (now + range_seconds - reset_time) * max_calls // range_seconds
-        )
+        calls_remaining = (now + range_seconds - reset_time) * max_calls // range_seconds
         return int(calls_remaining), reset_time - now
 
     @classmethod

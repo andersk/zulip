@@ -75,9 +75,7 @@ TAB_DISPLAY_NAMES = {
 class TabbedSectionsGenerator(Extension):
     def extendMarkdown(self, md: markdown.Markdown, md_globals: Dict[str, Any]) -> None:
         md.preprocessors.add(
-            "tabbed_sections",
-            TabbedSectionsPreprocessor(md, self.getConfigs()),
-            "_end",
+            "tabbed_sections", TabbedSectionsPreprocessor(md, self.getConfigs()), "_end",
         )
 
 

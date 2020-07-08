@@ -19,10 +19,7 @@ RANDOM_KEY_PREFIX = generate_random_token(32)
 
 class RateLimitedTestObject(RateLimitedObject):
     def __init__(
-        self,
-        name: str,
-        rules: List[Tuple[int, int]],
-        backend: Type[RateLimiterBackend],
+        self, name: str, rules: List[Tuple[int, int]], backend: Type[RateLimiterBackend],
     ) -> None:
         self.name = name
         self._rules = rules
@@ -140,9 +137,7 @@ class RateLimiterBackendBase(ZulipTestCase):
 
         obj.unblock_access()
         with mock.patch("time.time", return_value=(start_time)):
-            self.make_request(
-                obj, expect_ratelimited=False, verify_api_calls_left=False,
-            )
+            self.make_request(obj, expect_ratelimited=False, verify_api_calls_left=False)
 
     def test_api_calls_left(self) -> None:
         obj = self.create_object("test", [(2, 5), (3, 6)])
@@ -222,9 +217,7 @@ class TornadoInMemoryRateLimiterBackendTest(RateLimiterBackendBase):
             self.make_request(obj, expect_ratelimited=True, verify_api_calls_left=False)
 
         with mock.patch("time.time", return_value=(start_time + 1.01)):
-            self.make_request(
-                obj, expect_ratelimited=False, verify_api_calls_left=False,
-            )
+            self.make_request(obj, expect_ratelimited=False, verify_api_calls_left=False)
 
 
 class RateLimitedObjectsTest(ZulipTestCase):

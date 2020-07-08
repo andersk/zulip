@@ -106,9 +106,7 @@ class TypingHappyPathTest(ZulipTestCase):
 
         events: List[Mapping[str, Any]] = []
 
-        params = dict(
-            to=ujson.dumps([user.id for user in recipient_users]), op="start",
-        )
+        params = dict(to=ujson.dumps([user.id for user in recipient_users]), op="start")
 
         with queries_captured() as queries:
             with tornado_redirected_to_list(events):

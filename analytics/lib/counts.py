@@ -209,9 +209,7 @@ def do_delete_counts_at_hour(stat: CountStat, end_time: datetime) -> None:
             property=stat.property, end_time=end_time,
         ).delete()
         if stat.data_collector.output_table in [UserCount, StreamCount]:
-            RealmCount.objects.filter(
-                property=stat.property, end_time=end_time,
-            ).delete()
+            RealmCount.objects.filter(property=stat.property, end_time=end_time).delete()
     else:
         UserCount.objects.filter(property=stat.property, end_time=end_time).delete()
         StreamCount.objects.filter(property=stat.property, end_time=end_time).delete()
@@ -727,9 +725,7 @@ def get_count_stats(realm: Optional[Realm] = None) -> Dict[str, CountStat]:
         ),
         CountStat(
             "messages_sent:message_type:day",
-            sql_data_collector(
-                UserCount, count_message_type_by_user_query(realm), None,
-            ),
+            sql_data_collector(UserCount, count_message_type_by_user_query(realm), None),
             CountStat.DAY,
         ),
         CountStat(
@@ -826,9 +822,7 @@ def get_count_stats(realm: Optional[Realm] = None) -> Dict[str, CountStat]:
         # Canonical account of the number of active humans in a realm on each day.
         DependentCountStat(
             "realm_active_humans::day",
-            sql_data_collector(
-                RealmCount, count_realm_active_humans_query(realm), None,
-            ),
+            sql_data_collector(RealmCount, count_realm_active_humans_query(realm), None),
             CountStat.DAY,
             dependencies=["active_users_audit:is_bot:day", "15day_actives::day"],
         ),

@@ -662,9 +662,7 @@ def bulk_import_model(
     if dump_file_id is None:
         logging.info("Successfully imported %s from %s.", model, table)
     else:
-        logging.info(
-            "Successfully imported %s from %s[%s].", model, table, dump_file_id,
-        )
+        logging.info("Successfully imported %s from %s[%s].", model, table, dump_file_id)
 
 
 # Client is a table shared by multiple realms, so in order to
@@ -859,9 +857,7 @@ def import_uploads(
                     )
                     # Delete the record of the avatar to avoid 404s.
                     do_change_avatar_fields(
-                        user_profile,
-                        UserProfile.AVATAR_FROM_GRAVATAR,
-                        acting_user=None,
+                        user_profile, UserProfile.AVATAR_FROM_GRAVATAR, acting_user=None,
                     )
             return 0
 
@@ -956,9 +952,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
     for stream in data["zerver_stream"]:
         if "rendered_description" in stream:
             continue
-        stream["rendered_description"] = render_stream_description(
-            stream["description"],
-        )
+        stream["rendered_description"] = render_stream_description(stream["description"])
     bulk_import_model(data, Stream)
 
     realm.notifications_stream_id = notifications_stream_id
@@ -1085,9 +1079,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
 
     if "zerver_realmauditlog" in data:
         fix_datetime_fields(data, "zerver_realmauditlog")
-        re_map_foreign_keys(
-            data, "zerver_realmauditlog", "realm", related_table="realm",
-        )
+        re_map_foreign_keys(data, "zerver_realmauditlog", "realm", related_table="realm")
         re_map_foreign_keys(
             data, "zerver_realmauditlog", "modified_user", related_table="user_profile",
         )
@@ -1465,9 +1457,7 @@ def import_attachments(data: TableData) -> None:
     # Clean up the data in zerver_attachment that is not
     # relevant to our many-to-many import.
     fix_datetime_fields(data, "zerver_attachment")
-    re_map_foreign_keys(
-        data, "zerver_attachment", "owner", related_table="user_profile",
-    )
+    re_map_foreign_keys(data, "zerver_attachment", "owner", related_table="user_profile")
     re_map_foreign_keys(data, "zerver_attachment", "realm", related_table="realm")
 
     # Configure ourselves.  Django models many-to-many (m2m)

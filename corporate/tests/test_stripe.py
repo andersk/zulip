@@ -105,9 +105,7 @@ def stripe_fixture_path(
     return f"{STRIPE_FIXTURES_DIR}/{decorated_function_name}--{mocked_function_name[7:]}.{call_count}.json"
 
 
-def fixture_files_for_function(
-    decorated_function: CallableT,
-) -> List[str]:  # nocoverage
+def fixture_files_for_function(decorated_function: CallableT) -> List[str]:  # nocoverage
     decorated_function_name = decorated_function.__name__
     if decorated_function_name[:5] == "test_":
         decorated_function_name = decorated_function_name[5:]
@@ -1394,9 +1392,7 @@ class StripeTest(StripeTestCase):
         hamlet = self.example_user("hamlet")
         self.login_user(hamlet)
         response = self.upgrade(talk_to_stripe=False, salt="badsalt")
-        self.assert_json_error_contains(
-            response, "Something went wrong. Please contact",
-        )
+        self.assert_json_error_contains(response, "Something went wrong. Please contact")
         self.assertEqual(
             ujson.loads(response.content)["error_description"], "tampered seat count",
         )
@@ -1405,9 +1401,7 @@ class StripeTest(StripeTestCase):
         hamlet = self.example_user("hamlet")
         self.login_user(hamlet)
         self.local_upgrade(self.seat_count, True, CustomerPlan.ANNUAL, "token")
-        with patch(
-            "corporate.lib.stripe.billing_logger.warning",
-        ) as mock_billing_logger:
+        with patch("corporate.lib.stripe.billing_logger.warning") as mock_billing_logger:
             with self.assertRaises(BillingError) as context:
                 self.local_upgrade(self.seat_count, True, CustomerPlan.ANNUAL, "token")
         self.assertEqual(
@@ -1528,9 +1522,7 @@ class StripeTest(StripeTestCase):
         # Autopay
         check_success(False, self.seat_count, {"license_management": "manual"})
         # Autopay has no limit on max licenses
-        check_success(
-            False, MAX_INVOICED_LICENSES + 1, {"license_management": "manual"},
-        )
+        check_success(False, MAX_INVOICED_LICENSES + 1, {"license_management": "manual"})
         # Invoice
         check_success(True, self.seat_count + MIN_INVOICED_LICENSES)
         # Invoice
@@ -2012,16 +2004,12 @@ class StripeTest(StripeTestCase):
         self.assertEqual(len(annual_ledger_entries), 2)
         self.assertEqual(annual_ledger_entries[0].is_renewal, True)
         self.assertEqual(
-            annual_ledger_entries.values_list("licenses", "licenses_at_next_renewal")[
-                0
-            ],
+            annual_ledger_entries.values_list("licenses", "licenses_at_next_renewal")[0],
             (20, 20),
         )
         self.assertEqual(annual_ledger_entries[1].is_renewal, False)
         self.assertEqual(
-            annual_ledger_entries.values_list("licenses", "licenses_at_next_renewal")[
-                1
-            ],
+            annual_ledger_entries.values_list("licenses", "licenses_at_next_renewal")[1],
             (25, 25),
         )
         audit_log = RealmAuditLog.objects.get(
@@ -2221,9 +2209,7 @@ class StripeTest(StripeTestCase):
         self.assertEqual(len(annual_ledger_entries), 1)
         self.assertEqual(annual_ledger_entries[0].is_renewal, True)
         self.assertEqual(
-            annual_ledger_entries.values_list("licenses", "licenses_at_next_renewal")[
-                0
-            ],
+            annual_ledger_entries.values_list("licenses", "licenses_at_next_renewal")[0],
             (num_licenses, num_licenses),
         )
         self.assertEqual(annual_plan.invoiced_through, None)
@@ -2366,9 +2352,7 @@ class StripeTest(StripeTestCase):
             self.assertEqual(last_ledger_entry.licenses_at_next_renewal, 21)
 
             self.login_user(user)
-            self.client_post(
-                "/json/billing/plan/change", {"status": CustomerPlan.ENDED},
-            )
+            self.client_post("/json/billing/plan/change", {"status": CustomerPlan.ENDED})
 
             plan.refresh_from_db()
             self.assertEqual(get_realm("zulip").plan_type, Realm.LIMITED)
@@ -2622,29 +2606,20 @@ class BillingHelpersTest(ZulipTestCase):
         year_later = datetime(2020, 12, 31, 1, 2, 3, tzinfo=timezone.utc)
         test_cases = [
             # test all possibilities, since there aren't that many
-            (
-                (True, CustomerPlan.ANNUAL, None),
-                (anchor, month_later, year_later, 8000),
-            ),
+            ((True, CustomerPlan.ANNUAL, None), (anchor, month_later, year_later, 8000)),
             ((True, CustomerPlan.ANNUAL, 85), (anchor, month_later, year_later, 1200)),
             (
                 (True, CustomerPlan.MONTHLY, None),
                 (anchor, month_later, month_later, 800),
             ),
             ((True, CustomerPlan.MONTHLY, 85), (anchor, month_later, month_later, 120)),
-            (
-                (False, CustomerPlan.ANNUAL, None),
-                (anchor, year_later, year_later, 8000),
-            ),
+            ((False, CustomerPlan.ANNUAL, None), (anchor, year_later, year_later, 8000)),
             ((False, CustomerPlan.ANNUAL, 85), (anchor, year_later, year_later, 1200)),
             (
                 (False, CustomerPlan.MONTHLY, None),
                 (anchor, month_later, month_later, 800),
             ),
-            (
-                (False, CustomerPlan.MONTHLY, 85),
-                (anchor, month_later, month_later, 120),
-            ),
+            ((False, CustomerPlan.MONTHLY, 85), (anchor, month_later, month_later, 120)),
             # test exact math of Decimals; 800 * (1 - 87.25) = 101.9999999..
             (
                 (False, CustomerPlan.MONTHLY, 87.25),
@@ -2927,9 +2902,7 @@ class InvoiceTest(StripeTestCase):
 
         stripe_invoices = [
             invoice
-            for invoice in stripe.Invoice.list(
-                customer=plan.customer.stripe_customer_id,
-            )
+            for invoice in stripe.Invoice.list(customer=plan.customer.stripe_customer_id)
         ]
         self.assertEqual(len(stripe_invoices), 2)
         self.assertIsNotNone(stripe_invoices[0].status_transitions.finalized_at)
@@ -2986,9 +2959,7 @@ class InvoiceTest(StripeTestCase):
         invoice_plan(plan, self.next_year)
         stripe_invoices = [
             invoice
-            for invoice in stripe.Invoice.list(
-                customer=plan.customer.stripe_customer_id,
-            )
+            for invoice in stripe.Invoice.list(customer=plan.customer.stripe_customer_id)
         ]
         self.assertEqual(len(stripe_invoices), 2)
         self.assertEqual(stripe_invoices[0].billing, "send_invoice")

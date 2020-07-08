@@ -94,9 +94,7 @@ from zproject.backends import (
 def check_prereg_key_and_redirect(
     request: HttpRequest, confirmation_key: str,
 ) -> HttpResponse:
-    confirmation = Confirmation.objects.filter(
-        confirmation_key=confirmation_key,
-    ).first()
+    confirmation = Confirmation.objects.filter(confirmation_key=confirmation_key).first()
     if confirmation is None or confirmation.type not in [
         Confirmation.USER_REGISTRATION,
         Confirmation.INVITATION,

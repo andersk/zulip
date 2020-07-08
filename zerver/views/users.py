@@ -109,10 +109,7 @@ def deactivate_user_backend(
 def deactivate_user_own_backend(
     request: HttpRequest, user_profile: UserProfile,
 ) -> HttpResponse:
-    if (
-        UserProfile.objects.filter(realm=user_profile.realm, is_active=True).count()
-        == 1
-    ):
+    if UserProfile.objects.filter(realm=user_profile.realm, is_active=True).count() == 1:
         raise CannotDeactivateLastUserError(is_last_owner=False)
     if user_profile.is_realm_owner and check_last_owner(user_profile):
         raise CannotDeactivateLastUserError(is_last_owner=True)
@@ -281,9 +278,7 @@ def patch_bot_backend(
     service_interface: int = REQ(validator=check_int, default=1),
     default_sending_stream: Optional[str] = REQ(default=None),
     default_events_register_stream: Optional[str] = REQ(default=None),
-    default_all_public_streams: Optional[bool] = REQ(
-        default=None, validator=check_bool,
-    ),
+    default_all_public_streams: Optional[bool] = REQ(default=None, validator=check_bool),
 ) -> HttpResponse:
     bot = access_bot_by_id(user_profile, bot_id)
 
@@ -393,9 +388,7 @@ def add_bot_backend(
     default_events_register_stream_name: Optional[str] = REQ(
         "default_events_register_stream", default=None,
     ),
-    default_all_public_streams: Optional[bool] = REQ(
-        validator=check_bool, default=None,
-    ),
+    default_all_public_streams: Optional[bool] = REQ(validator=check_bool, default=None),
 ) -> HttpResponse:
     short_name = check_short_name(short_name_raw)
     if bot_type != UserProfile.INCOMING_WEBHOOK_BOT:
@@ -641,9 +634,7 @@ def create_user_backend(
     return json_success()
 
 
-def get_profile_backend(
-    request: HttpRequest, user_profile: UserProfile,
-) -> HttpResponse:
+def get_profile_backend(request: HttpRequest, user_profile: UserProfile) -> HttpResponse:
     raw_user_data = get_raw_user_data(
         user_profile.realm,
         user_profile,
@@ -674,8 +665,6 @@ def get_subscription_backend(
     target_user = access_user_by_id(user_profile, user_id, read_only=True)
     (stream, recipient, sub) = access_stream_by_id(user_profile, stream_id)
 
-    subscription_status = {
-        "is_subscribed": subscribed_to_stream(target_user, stream_id),
-    }
+    subscription_status = {"is_subscribed": subscribed_to_stream(target_user, stream_id)}
 
     return json_success(subscription_status)

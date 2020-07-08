@@ -57,10 +57,7 @@ def accounts_accept_terms(request: HttpRequest) -> HttpResponse:
 
     email = request.user.delivery_email
     special_message_template = None
-    if (
-        request.user.tos_version is None
-        and settings.FIRST_TIME_TOS_TEMPLATE is not None
-    ):
+    if request.user.tos_version is None and settings.FIRST_TIME_TOS_TEMPLATE is not None:
         special_message_template = "zerver/" + settings.FIRST_TIME_TOS_TEMPLATE
     return render(
         request,
@@ -341,9 +338,7 @@ def home_real(request: HttpRequest) -> HttpResponse:
 
     page_params["translation_data"] = {}
     if request_language != "en":
-        page_params["translation_data"] = get_language_translation_data(
-            request_language,
-        )
+        page_params["translation_data"] = get_language_translation_data(request_language)
 
     csp_nonce = generate_random_token(48)
     if user_profile is not None:

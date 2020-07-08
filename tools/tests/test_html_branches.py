@@ -10,9 +10,7 @@ from tools.lib.html_branches import (
     split_for_id_and_class,
 )
 
-ZULIP_PATH = os.path.dirname(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-)
+ZULIP_PATH = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 TEST_TEMPLATES_DIR = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "test_template_data",
 )
@@ -156,9 +154,7 @@ class TestHtmlBranches(unittest.TestCase):
         )
         self.assertEqual(
             template_id_dict["below_navbar"],
-            [
-                f"Line 10:{ZULIP_PATH}/tools/tests/test_template_data/test_template2.html",
-            ],
+            [f"Line 10:{ZULIP_PATH}/tools/tests/test_template_data/test_template2.html"],
         )
 
     def test_split_for_id_and_class(self) -> None:

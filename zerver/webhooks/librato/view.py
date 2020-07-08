@@ -139,9 +139,7 @@ class LibratoWebhookHandler(LibratoWebhookParser):
         )
         if alert_runbook_url:
             alert_runbook_template = "[Reaction steps]({alert_runbook_url}):"
-            content += alert_runbook_template.format(
-                alert_runbook_url=alert_runbook_url,
-            )
+            content += alert_runbook_template.format(alert_runbook_url=alert_runbook_url)
         content += self.generate_conditions_and_violations()
         return content
 

@@ -468,8 +468,7 @@ class TestEmailMirrorMessagesWithAttachments(ZulipTestCase):
         incoming_valid_message = EmailMessage()
         incoming_valid_message.set_content("Test body")
         with open(
-            os.path.join(settings.DEPLOY_ROOT, "static/images/default-avatar.png"),
-            "rb",
+            os.path.join(settings.DEPLOY_ROOT, "static/images/default-avatar.png"), "rb",
         ) as f:
             image_bytes = f.read()
 
@@ -509,8 +508,7 @@ class TestEmailMirrorMessagesWithAttachments(ZulipTestCase):
         incoming_valid_message = EmailMessage()
         incoming_valid_message.set_content("Test body")
         with open(
-            os.path.join(settings.DEPLOY_ROOT, "static/images/default-avatar.png"),
-            "rb",
+            os.path.join(settings.DEPLOY_ROOT, "static/images/default-avatar.png"), "rb",
         ) as f:
             image_bytes = f.read()
 
@@ -556,8 +554,7 @@ class TestEmailMirrorMessagesWithAttachments(ZulipTestCase):
         nested_multipart = EmailMessage()
         nested_multipart.set_content("Nested text that should get skipped.")
         with open(
-            os.path.join(settings.DEPLOY_ROOT, "static/images/default-avatar.png"),
-            "rb",
+            os.path.join(settings.DEPLOY_ROOT, "static/images/default-avatar.png"), "rb",
         ) as f:
             image_bytes = f.read()
 
@@ -715,8 +712,7 @@ class TestStreamEmailMessagesEmptyBody(ZulipTestCase):
         # No textual body
         incoming_valid_message = EmailMessage()
         with open(
-            os.path.join(settings.DEPLOY_ROOT, "static/images/default-avatar.png"),
-            "rb",
+            os.path.join(settings.DEPLOY_ROOT, "static/images/default-avatar.png"), "rb",
         ) as f:
             incoming_valid_message.add_attachment(
                 f.read(), maintype="image", subtype="png",
@@ -729,9 +725,7 @@ class TestStreamEmailMessagesEmptyBody(ZulipTestCase):
 
         with mock.patch("zerver.lib.email_mirror.logging.warning") as mock_warn:
             process_message(incoming_valid_message)
-            mock_warn.assert_called_with(
-                "Unable to find plaintext or HTML message body",
-            )
+            mock_warn.assert_called_with("Unable to find plaintext or HTML message body")
 
     def test_receive_stream_email_messages_empty_body_after_stripping(self) -> None:
         user_profile = self.example_user("hamlet")
@@ -1075,9 +1069,7 @@ class TestEmptyGatewaySetting(ZulipTestCase):
         user_profile = self.example_user("cordelia")
         usermessage = most_recent_usermessage(user_profile)
         with self.settings(EMAIL_GATEWAY_PATTERN=""):
-            mm_address = create_missed_message_address(
-                user_profile, usermessage.message,
-            )
+            mm_address = create_missed_message_address(user_profile, usermessage.message)
             self.assertEqual(mm_address, FromAddress.NOREPLY)
 
     def test_encode_email_addr(self) -> None:
@@ -1332,9 +1324,7 @@ class TestEmailMirrorTornadoView(ZulipTestCase):
     def test_using_mm_address_multiple_times(self) -> None:
         mm_address = self.send_private_message()
         for i in range(0, MissedMessageEmailAddress.ALLOWED_USES):
-            result = self.send_offline_message(
-                mm_address, self.example_user("cordelia"),
-            )
+            result = self.send_offline_message(mm_address, self.example_user("cordelia"))
             self.assert_json_success(result)
 
         result = self.send_offline_message(mm_address, self.example_user("cordelia"))
@@ -1423,9 +1413,7 @@ class TestEmailMirrorProcessMessageNoValidRecipient(ZulipTestCase):
         incoming_valid_message["To"] = "address@wrongdomain, address@notzulip"
         incoming_valid_message["Reply-to"] = self.example_email("othello")
 
-        with mock.patch(
-            "zerver.lib.email_mirror.log_and_report",
-        ) as mock_log_and_report:
+        with mock.patch("zerver.lib.email_mirror.log_and_report") as mock_log_and_report:
             process_message(incoming_valid_message)
             mock_log_and_report.assert_called_with(
                 incoming_valid_message, "Missing recipient in mirror email", None,
@@ -1544,9 +1532,7 @@ class TestEmailMirrorLogAndReport(ZulipTestCase):
         # Test if redacting correctly scrubs multiple occurrences of the address:
         error_message = "test message first occurrence: {} second occurrence: {}"
         error_message = error_message.format(stream_to_address, stream_to_address)
-        expected_message = (
-            "test message first occurrence: {} <Address to stream id: {}>"
-        )
+        expected_message = "test message first occurrence: {} <Address to stream id: {}>"
         expected_message += " second occurrence: {} <Address to stream id: {}>"
         expected_message = expected_message.format(
             scrubbed_stream_address, stream.id, scrubbed_stream_address, stream.id,

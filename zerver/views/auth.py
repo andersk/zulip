@@ -369,9 +369,7 @@ def finish_mobile_flow(
     #
     # Arguably, sending a fake 'user_logged_in' signal would be a better approach:
     #   user_logged_in.send(sender=user_profile.__class__, request=request, user=user_profile)
-    email_on_new_login(
-        sender=user_profile.__class__, request=request, user=user_profile,
-    )
+    email_on_new_login(sender=user_profile.__class__, request=request, user=user_profile)
 
     # Mark this request as having a logged-in user for our server logs.
     process_client(request, user_profile)
@@ -471,9 +469,7 @@ def remote_user_jwt(request: HttpRequest) -> HttpResponse:
     try:
         json_web_token = request.POST["json_web_token"]
         options = {"verify_signature": True}
-        payload = jwt.decode(
-            json_web_token, key, algorithms=algorithms, options=options,
-        )
+        payload = jwt.decode(json_web_token, key, algorithms=algorithms, options=options)
     except KeyError:
         raise JsonableError(_("No JSON web token passed in request"))
     except jwt.InvalidTokenError:
@@ -1044,9 +1040,7 @@ def api_fetch_api_key(
     # Not doing this only because over here we don't add the user information
     # in the session. If the signal receiver assumes that we do then that
     # would cause problems.
-    email_on_new_login(
-        sender=user_profile.__class__, request=request, user=user_profile,
-    )
+    email_on_new_login(sender=user_profile.__class__, request=request, user=user_profile)
 
     # Mark this request as having a logged-in user for our server logs.
     process_client(request, user_profile)

@@ -251,9 +251,7 @@ class DecoratorTestCase(ZulipTestCase):
         request.POST["value"] = "long_value"
         with self.assertRaises(JsonableError) as cm:
             get_middle_characters(request)
-        self.assertEqual(
-            str(cm.exception), "value has incorrect length 10; should be 5",
-        )
+        self.assertEqual(str(cm.exception), "value has incorrect length 10; should be 5")
 
         request.POST["value"] = "valid"
         result = get_middle_characters(request)
@@ -453,9 +451,7 @@ body:
 class SkipRateLimitingTest(ZulipTestCase):
     def test_authenticated_rest_api_view(self) -> None:
         @authenticated_rest_api_view(skip_rate_limiting=False)
-        def my_rate_limited_view(
-            request: HttpRequest, user_profile: UserProfile,
-        ) -> str:
+        def my_rate_limited_view(request: HttpRequest, user_profile: UserProfile) -> str:
             return json_success()  # nocoverage # mock prevents this from being called
 
         @authenticated_rest_api_view(skip_rate_limiting=True)
@@ -480,9 +476,7 @@ class SkipRateLimitingTest(ZulipTestCase):
 
     def test_authenticated_uploads_api_view(self) -> None:
         @authenticated_uploads_api_view(skip_rate_limiting=False)
-        def my_rate_limited_view(
-            request: HttpRequest, user_profile: UserProfile,
-        ) -> str:
+        def my_rate_limited_view(request: HttpRequest, user_profile: UserProfile) -> str:
             return json_success()  # nocoverage # mock prevents this from being called
 
         @authenticated_uploads_api_view(skip_rate_limiting=True)
@@ -507,9 +501,7 @@ class SkipRateLimitingTest(ZulipTestCase):
         def my_view(request: HttpRequest, user_profile: UserProfile) -> str:
             return json_success()
 
-        my_rate_limited_view = authenticated_json_view(
-            my_view, skip_rate_limiting=False,
-        )
+        my_rate_limited_view = authenticated_json_view(my_view, skip_rate_limiting=False)
         my_unlimited_view = authenticated_json_view(my_view, skip_rate_limiting=True)
 
         request = HostRequestMock(host="zulip.testserver")
@@ -1277,9 +1269,7 @@ class FetchAPIKeyTest(ZulipTestCase):
 
     def test_fetch_api_key_wrong_password(self) -> None:
         self.login("cordelia")
-        result = self.client_post(
-            "/json/fetch_api_key", dict(password="wrong_password"),
-        )
+        result = self.client_post("/json/fetch_api_key", dict(password="wrong_password"))
         self.assert_json_error_contains(result, "password is incorrect")
 
 
@@ -1602,9 +1592,7 @@ class TestInternalNotifyView(ZulipTestCase):
 
     def test_internal_requests_with_broken_secret(self) -> None:
         secret = "random"
-        req = self.Request(
-            POST=dict(secret=secret), META=dict(REMOTE_ADDR="127.0.0.1"),
-        )
+        req = self.Request(POST=dict(secret=secret), META=dict(REMOTE_ADDR="127.0.0.1"))
 
         with self.settings(SHARED_SECRET="broken"):
             self.assertFalse(authenticate_notify(req))
@@ -1641,9 +1629,7 @@ class TestHumanUsersOnlyDecorator(ZulipTestCase):
         ]
         for endpoint in post_endpoints:
             result = self.api_post(default_bot, endpoint)
-            self.assert_json_error(
-                result, "This endpoint does not accept bot requests.",
-            )
+            self.assert_json_error(result, "This endpoint does not accept bot requests.")
 
         patch_endpoints = [
             "/api/v1/settings",
@@ -1653,9 +1639,7 @@ class TestHumanUsersOnlyDecorator(ZulipTestCase):
         ]
         for endpoint in patch_endpoints:
             result = self.api_patch(default_bot, endpoint)
-            self.assert_json_error(
-                result, "This endpoint does not accept bot requests.",
-            )
+            self.assert_json_error(result, "This endpoint does not accept bot requests.")
 
         delete_endpoints = [
             "/api/v1/users/me/apns_device_token",
@@ -1663,9 +1647,7 @@ class TestHumanUsersOnlyDecorator(ZulipTestCase):
         ]
         for endpoint in delete_endpoints:
             result = self.api_delete(default_bot, endpoint)
-            self.assert_json_error(
-                result, "This endpoint does not accept bot requests.",
-            )
+            self.assert_json_error(result, "This endpoint does not accept bot requests.")
 
 
 class TestAuthenticatedJsonPostViewDecorator(ZulipTestCase):
@@ -1678,9 +1660,7 @@ class TestAuthenticatedJsonPostViewDecorator(ZulipTestCase):
     def test_authenticated_json_post_view_with_get_request(self) -> None:
         self.login("hamlet")
         with mock.patch("logging.warning") as mock_warning:
-            result = self.client_get(
-                r"/json/subscriptions/exists", {"stream": "Verona"},
-            )
+            result = self.client_get(r"/json/subscriptions/exists", {"stream": "Verona"})
             self.assertEqual(result.status_code, 405)
             mock_warning.assert_called_once()  # Check we logged the Mock Not Allowed
             self.assertEqual(
@@ -1766,8 +1746,7 @@ class TestAuthenticatedJsonViewDecorator(ZulipTestCase):
             "zerver.decorator.get_subdomain", return_value="",
         ):
             self.assert_json_error_contains(
-                self._do_test(email),
-                "Account is not associated with this " "subdomain",
+                self._do_test(email), "Account is not associated with this " "subdomain",
             )
             mock_warning.assert_called_with(
                 "User %s (%s) attempted to access API on wrong subdomain (%s)",
@@ -1780,8 +1759,7 @@ class TestAuthenticatedJsonViewDecorator(ZulipTestCase):
             "zerver.decorator.get_subdomain", return_value="acme",
         ):
             self.assert_json_error_contains(
-                self._do_test(email),
-                "Account is not associated with this " "subdomain",
+                self._do_test(email), "Account is not associated with this " "subdomain",
             )
             mock_warning.assert_called_with(
                 "User %s (%s) attempted to access API on wrong subdomain (%s)",

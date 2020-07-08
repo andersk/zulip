@@ -300,10 +300,7 @@ class QuoteHandler(BaseHandler):
             self.done()
         else:
             check_for_new_fence(
-                self.processor,
-                self.lines,
-                line,
-                default_language=self.default_language,
+                self.processor, self.lines, line, default_language=self.default_language,
             )
 
     def done(self) -> None:
@@ -353,9 +350,7 @@ class SpoilerHandler(BaseHandler):
 
 
 class TexHandler(BaseHandler):
-    def __init__(
-        self, processor: Any, output: MutableSequence[str], fence: str,
-    ) -> None:
+    def __init__(self, processor: Any, output: MutableSequence[str], fence: str) -> None:
         self.processor = processor
         self.output = output
         self.fence = fence

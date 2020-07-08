@@ -112,10 +112,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ("is_staff", models.BooleanField(default=False)),
                 ("is_active", models.BooleanField(default=True)),
                 ("is_bot", models.BooleanField(default=False)),
-                (
-                    "date_joined",
-                    models.DateTimeField(default=django.utils.timezone.now),
-                ),
+                ("date_joined", models.DateTimeField(default=django.utils.timezone.now)),
                 ("is_mirror_dummy", models.BooleanField(default=False)),
                 ("full_name", models.CharField(max_length=100)),
                 ("short_name", models.CharField(max_length=100)),
@@ -133,10 +130,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                     "enable_offline_email_notifications",
                     models.BooleanField(default=True),
                 ),
-                (
-                    "enable_offline_push_notifications",
-                    models.BooleanField(default=True),
-                ),
+                ("enable_offline_push_notifications", models.BooleanField(default=True)),
                 ("enable_digest_emails", models.BooleanField(default=True)),
                 ("default_desktop_notifications", models.BooleanField(default=True)),
                 (
@@ -620,8 +614,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "message",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to="zerver.Message",
+                        on_delete=django.db.models.deletion.CASCADE, to="zerver.Message",
                     ),
                 ),
                 (
@@ -731,8 +724,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
             model_name="message",
             name="sender",
             field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE,
-                to=settings.AUTH_USER_MODEL,
+                on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL,
             ),
         ),
         migrations.AddField(
@@ -831,9 +823,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
             field=models.DateTimeField(auto_now=True),
         ),
         migrations.AlterField(
-            model_name="referral",
-            name="email",
-            field=models.EmailField(max_length=254),
+            model_name="referral", name="email", field=models.EmailField(max_length=254),
         ),
         migrations.AlterField(
             model_name="userprofile",
@@ -843,9 +833,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
         migrations.AlterField(
             model_name="userprofile",
             name="last_login",
-            field=models.DateTimeField(
-                blank=True, null=True, verbose_name="last login",
-            ),
+            field=models.DateTimeField(blank=True, null=True, verbose_name="last login"),
         ),
         migrations.RunSQL(
             sql="CREATE INDEX upper_subject_idx ON zerver_message ((upper(subject)));",
@@ -865,10 +853,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
             options={
                 "permissions": (
                     ("administer", "Administer a realm"),
-                    (
-                        "api_super_user",
-                        "Can send messages as other users for mirroring",
-                    ),
+                    ("api_super_user", "Can send messages as other users for mirroring"),
                 ),
             },
         ),

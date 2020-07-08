@@ -10,9 +10,7 @@ from django.db.migrations.state import StateApps
 
 class Uploader:
     def __init__(self) -> None:
-        self.old_orig_image_path_template = (
-            "{realm_id}/emoji/{emoji_file_name}.original"
-        )
+        self.old_orig_image_path_template = "{realm_id}/emoji/{emoji_file_name}.original"
         self.old_path_template = "{realm_id}/emoji/{emoji_file_name}"
         self.new_orig_image_path_template = (
             "{realm_id}/emoji/images/{emoji_file_name}.original"

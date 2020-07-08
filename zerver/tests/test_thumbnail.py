@@ -63,9 +63,7 @@ class ThumbnailTest(ZulipTestCase):
         file_name = "emoji.png"
 
         upload_emoji_image(image_file, file_name, user_profile)
-        custom_emoji_url = upload_backend.get_emoji_url(
-            file_name, user_profile.realm_id,
-        )
+        custom_emoji_url = upload_backend.get_emoji_url(file_name, user_profile.realm_id)
         emoji_url_base = "/user_avatars/"
         self.assertEqual(emoji_url_base, custom_emoji_url[: len(emoji_url_base)])
 
@@ -232,9 +230,7 @@ class ThumbnailTest(ZulipTestCase):
         file_name = "emoji.png"
 
         upload_emoji_image(image_file, file_name, user_profile)
-        custom_emoji_url = upload_backend.get_emoji_url(
-            file_name, user_profile.realm_id,
-        )
+        custom_emoji_url = upload_backend.get_emoji_url(file_name, user_profile.realm_id)
         emoji_url_base = "/user_avatars/"
         self.assertEqual(emoji_url_base, custom_emoji_url[: len(emoji_url_base)])
 

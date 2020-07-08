@@ -247,9 +247,7 @@ def extract_body(
         logging.warning(
             "Content types: %s", [part.get_content_type() for part in message.walk()],
         )
-        raise ZulipEmailForwardUserError(
-            "Unable to find plaintext or HTML message body",
-        )
+        raise ZulipEmailForwardUserError("Unable to find plaintext or HTML message body")
     if not plaintext_content and not html_content:
         raise ZulipEmailForwardUserError(
             "Email has no nonempty body sections; ignoring.",
@@ -441,9 +439,7 @@ def process_missed_message(to: str, message: EmailMessage) -> None:
         recipient = mm_address.message.recipient
 
     if not is_user_active(user_profile):
-        logger.warning(
-            "Sending user is not active. Ignoring this missed message email.",
-        )
+        logger.warning("Sending user is not active. Ignoring this missed message email.")
         return
 
     body = construct_zulip_body(message, user_profile.realm)

@@ -34,9 +34,7 @@ def upload_icon(request: HttpRequest, user_profile: UserProfile) -> HttpResponse
 
 
 @require_realm_admin
-def delete_icon_backend(
-    request: HttpRequest, user_profile: UserProfile,
-) -> HttpResponse:
+def delete_icon_backend(request: HttpRequest, user_profile: UserProfile) -> HttpResponse:
     # We don't actually delete the icon because it might still
     # be needed if the URL was cached and it is rewrited
     # in any case after next update.

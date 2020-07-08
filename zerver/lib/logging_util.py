@@ -228,9 +228,7 @@ class ZulipFormatter(logging.Formatter):
         if not getattr(record, "zulip_decorated", False):
             # The `setattr` calls put this logic explicitly outside the bounds of the
             # type system; otherwise mypy would complain LogRecord lacks these attributes.
-            setattr(
-                record, "zulip_level_abbrev", abbrev_log_levelname(record.levelname),
-            )
+            setattr(record, "zulip_level_abbrev", abbrev_log_levelname(record.levelname))
             setattr(record, "zulip_origin", find_log_origin(record))
             setattr(record, "zulip_decorated", True)
         return super().format(record)

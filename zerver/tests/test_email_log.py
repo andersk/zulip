@@ -23,9 +23,7 @@ class EmailLogTest(ZulipTestCase):
             self.assertIn("emails", result["Location"])
 
             result = self.client_get("/emails/")
-            self.assert_in_success_response(
-                ["All the emails sent in the Zulip"], result,
-            )
+            self.assert_in_success_response(["All the emails sent in the Zulip"], result)
 
             result = self.client_get("/emails/clear/")
             self.assertEqual(result.status_code, 302)

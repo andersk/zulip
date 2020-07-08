@@ -118,9 +118,7 @@ def repo_forked_handler(payload: Dict[str, Any]) -> List[Dict[str, str]]:
 
 
 def repo_modified_handler(payload: Dict[str, Any]) -> List[Dict[str, str]]:
-    subject_new = BITBUCKET_TOPIC_TEMPLATE.format(
-        repository_name=payload["new"]["name"],
-    )
+    subject_new = BITBUCKET_TOPIC_TEMPLATE.format(repository_name=payload["new"]["name"])
     new_name = payload["new"]["name"]
     body = BITBUCKET_REPO_UPDATED_CHANGED.format(
         actor=get_user_name(payload),
@@ -391,9 +389,7 @@ EVENT_HANDLER_MAP = {
     "repo:refs_changed": repo_push_handler,
     "pr:comment:added": partial(pr_comment_handler, action="commented on"),
     "pr:comment:edited": partial(pr_comment_handler, action="edited their comment on"),
-    "pr:comment:deleted": partial(
-        pr_comment_handler, action="deleted their comment on",
-    ),
+    "pr:comment:deleted": partial(pr_comment_handler, action="deleted their comment on"),
     "pr:declined": partial(pr_handler, action="declined"),
     "pr:deleted": partial(pr_handler, action="deleted"),
     "pr:merged": partial(pr_handler, action="merged"),

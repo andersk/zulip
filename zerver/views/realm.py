@@ -204,9 +204,7 @@ def update_realm(
         if allow_message_editing is None:
             allow_message_editing = realm.allow_message_editing
         if message_content_edit_limit_seconds is None:
-            message_content_edit_limit_seconds = (
-                realm.message_content_edit_limit_seconds
-            )
+            message_content_edit_limit_seconds = realm.message_content_edit_limit_seconds
         if allow_community_topic_editing is None:
             allow_community_topic_editing = realm.allow_community_topic_editing
         do_set_realm_message_editing(

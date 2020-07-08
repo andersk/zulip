@@ -443,9 +443,7 @@ class TestSendToEmailMirror(ZulipTestCase):
         self.login_user(user_profile)
         self.subscribe(user_profile, "Denmark2")
 
-        call_command(
-            self.COMMAND_NAME, f"--fixture={fixture_path}", "--stream=Denmark2",
-        )
+        call_command(self.COMMAND_NAME, f"--fixture={fixture_path}", "--stream=Denmark2")
         message = most_recent_message(user_profile)
 
         # last message should be equal to the body of the email in 1.txt
@@ -547,8 +545,7 @@ class TestExport(ZulipTestCase):
             Reaction.UNICODE_EMOJI,
         )
         with self.assertRaisesRegex(
-            CommandError,
-            "Users from a different realm reacted to message. Aborting...",
+            CommandError, "Users from a different realm reacted to message. Aborting...",
         ):
             call_command(
                 self.COMMAND_NAME, "-r=zulip", f"--consent-message-id={message.id}",

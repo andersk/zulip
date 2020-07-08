@@ -31,9 +31,7 @@ class Command(ZulipBaseCommand):
         cutoff = datetime.datetime.fromtimestamp(
             options["since"], tz=datetime.timezone.utc,
         )
-        messages = Message.objects.filter(
-            date_sent__gt=cutoff, recipient__in=recipients,
-        )
+        messages = Message.objects.filter(date_sent__gt=cutoff, recipient__in=recipients)
 
         for message in messages:
             print(message.to_dict(False))

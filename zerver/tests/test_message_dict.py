@@ -311,9 +311,7 @@ class MessageDictTest(ZulipTestCase):
         self.assertEqual(msg_dict["reactions"][0]["user_id"], sender.id)
         self.assertEqual(msg_dict["reactions"][0]["user"]["id"], sender.id)
         self.assertEqual(msg_dict["reactions"][0]["user"]["email"], sender.email)
-        self.assertEqual(
-            msg_dict["reactions"][0]["user"]["full_name"], sender.full_name,
-        )
+        self.assertEqual(msg_dict["reactions"][0]["user"]["full_name"], sender.full_name)
 
     def test_missing_anchor(self) -> None:
         self.login("hamlet")
@@ -411,9 +409,7 @@ class MessageHydrationTest(ZulipTestCase):
         self.subscribe(hamlet, stream_name)
 
         content = "hello @**King Hamlet**"
-        new_message_id = self.send_stream_message(
-            cordelia, stream_name, content=content,
-        )
+        new_message_id = self.send_stream_message(cordelia, stream_name, content=content)
 
         user_message_flags = {
             old_message_id: ["read", "historical"],

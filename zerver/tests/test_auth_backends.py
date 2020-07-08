@@ -924,9 +924,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
     ) -> HttpResponse:
         parsed_url = urllib.parse.urlparse(result.url)
         csrf_state = urllib.parse.parse_qs(parsed_url.query)["state"]
-        result = self.client_get(
-            self.AUTH_FINISH_URL, dict(state=csrf_state), **headers,
-        )
+        result = self.client_get(self.AUTH_FINISH_URL, dict(state=csrf_state), **headers)
         return result
 
     def generate_access_url_payload(self, account_data_dict: Dict[str, str]) -> str:
@@ -1022,9 +1020,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
                 status=200,
                 body=json.dumps(account_data_dict),
             )
-            self.register_extra_endpoints(
-                requests_mock, account_data_dict, **extra_data,
-            )
+            self.register_extra_endpoints(requests_mock, account_data_dict, **extra_data)
 
             result = self.social_auth_test_finish(
                 result, account_data_dict, expect_choose_email_screen, **headers,
@@ -1057,9 +1053,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
                 )
                 self.assert_in_success_response(["zproject/dev-secrets.conf"], result)
                 self.assert_not_in_success_response([self.CLIENT_KEY_SETTING], result)
-                self.assert_not_in_success_response(
-                    ["zproject/dev_settings.py"], result,
-                )
+                self.assert_not_in_success_response(["zproject/dev_settings.py"], result)
                 self.assert_not_in_success_response(["/etc/zulip/settings.py"], result)
                 self.assert_not_in_success_response(
                     ["/etc/zulip/zulip-secrets.conf"], result,
@@ -1086,9 +1080,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
                 self.assert_not_in_success_response(
                     [self.CLIENT_KEY_SETTING.lower()], result,
                 )
-                self.assert_not_in_success_response(
-                    ["zproject/dev_settings.py"], result,
-                )
+                self.assert_not_in_success_response(["zproject/dev_settings.py"], result)
                 self.assert_not_in_success_response(
                     ["zproject/dev-secrets.conf"], result,
                 )
@@ -1659,9 +1651,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
         )
 
     @override_settings(TERMS_OF_SERVICE=None)
-    def test_social_auth_with_ldap_populate_registration_from_confirmation(
-        self,
-    ) -> None:
+    def test_social_auth_with_ldap_populate_registration_from_confirmation(self) -> None:
         self.init_default_ldap_database()
         email = "newuser@zulip.com"
         name = "Full Name"
@@ -2071,11 +2061,7 @@ class SAMLAuthBackendTest(SocialAuthBase):
             self.assertIn("login", result.url)
         self.assertEqual(
             m.output,
-            [
-                self.logger_output(
-                    "/complete/saml/: No SAMLResponse in request.", "info",
-                ),
-            ],
+            [self.logger_output("/complete/saml/: No SAMLResponse in request.", "info")],
         )
 
         # Check that POSTing the RelayState, but with missing SAMLResponse,
@@ -2094,11 +2080,7 @@ class SAMLAuthBackendTest(SocialAuthBase):
             self.assertIn("login", result.url)
         self.assertEqual(
             m.output,
-            [
-                self.logger_output(
-                    "/complete/saml/: No SAMLResponse in request.", "info",
-                ),
-            ],
+            [self.logger_output("/complete/saml/: No SAMLResponse in request.", "info")],
         )
 
         # Now test bad SAMLResponses.
@@ -2756,8 +2738,7 @@ class AppleIdAuthBackendTest(AppleAuthMixin, SocialAuthBase):
             m.output,
             [
                 self.logger_output(
-                    "AuthFailed: Authentication failed: Token validation failed",
-                    "info",
+                    "AuthFailed: Authentication failed: Token validation failed", "info",
                 ),
             ],
         )
@@ -2947,8 +2928,7 @@ class AppleAuthBackendNativeFlowTest(AppleAuthMixin, SocialAuthBase):
         with self.apple_jwk_url_mock(), mock.patch("logging.info") as mock_info:
             result = self.client_get(url, **headers)
             mock_info.assert_called_once_with(
-                "/complete/apple/: %s",
-                "Authentication failed: Token validation failed",
+                "/complete/apple/: %s", "Authentication failed: Token validation failed",
             )
         return result
 
@@ -2991,9 +2971,7 @@ class GitHubAuthBackendTest(SocialAuthBase):
     ) -> HttpResponse:
         parsed_url = urllib.parse.urlparse(result.url)
         csrf_state = urllib.parse.parse_qs(parsed_url.query)["state"]
-        result = self.client_get(
-            self.AUTH_FINISH_URL, dict(state=csrf_state), **headers,
-        )
+        result = self.client_get(self.AUTH_FINISH_URL, dict(state=csrf_state), **headers)
 
         if expect_choose_email_screen:
             # As GitHub authenticates multiple email addresses,
@@ -3651,9 +3629,7 @@ class GoogleAuthBackendTest(SocialAuthBase):
                 "redirect_to": next,
             }
             user_profile = self.example_user("hamlet")
-            with mock.patch(
-                "zerver.views.auth.authenticate", return_value=user_profile,
-            ):
+            with mock.patch("zerver.views.auth.authenticate", return_value=user_profile):
                 with mock.patch("zerver.views.auth.do_login"):
                     result = self.get_log_into_subdomain(data)
             return result
@@ -3977,9 +3953,7 @@ class DevFetchAPIKeyTest(ZulipTestCase):
         self.email = self.user_profile.delivery_email
 
     def test_success(self) -> None:
-        result = self.client_post(
-            "/api/v1/dev_fetch_api_key", dict(username=self.email),
-        )
+        result = self.client_post("/api/v1/dev_fetch_api_key", dict(username=self.email))
         self.assert_json_success(result)
         data = result.json()
         self.assertEqual(data["email"], self.email)
@@ -3998,16 +3972,12 @@ class DevFetchAPIKeyTest(ZulipTestCase):
 
     def test_inactive_user(self) -> None:
         do_deactivate_user(self.user_profile)
-        result = self.client_post(
-            "/api/v1/dev_fetch_api_key", dict(username=self.email),
-        )
+        result = self.client_post("/api/v1/dev_fetch_api_key", dict(username=self.email))
         self.assert_json_error_contains(result, "Your account has been disabled", 403)
 
     def test_deactivated_realm(self) -> None:
         do_deactivate_realm(self.user_profile.realm)
-        result = self.client_post(
-            "/api/v1/dev_fetch_api_key", dict(username=self.email),
-        )
+        result = self.client_post("/api/v1/dev_fetch_api_key", dict(username=self.email))
         self.assert_json_error_contains(
             result, "This organization has been deactivated", 403,
         )
@@ -4052,10 +4022,7 @@ class ExternalMethodDictsTests(ZulipTestCase):
             # First backends in the list should be SAML:
             self.assertIn("saml:", external_auth_methods[0]["name"])
             self.assertEqual(
-                [
-                    social_backend["name"]
-                    for social_backend in external_auth_methods[1:]
-                ],
+                [social_backend["name"] for social_backend in external_auth_methods[1:]],
                 [
                     social_backend.name
                     for social_backend in sorted(
@@ -4443,8 +4410,7 @@ class TestDevAuthBackend(ZulipTestCase):
         ):
             response = self.client_post("/accounts/login/local/", data)
             self.assertRedirects(
-                response,
-                reverse("config_error", kwargs={"error_category_name": "dev"}),
+                response, reverse("config_error", kwargs={"error_category_name": "dev"}),
             )
 
     def test_dev_direct_production_config_error(self) -> None:
@@ -4967,8 +4933,7 @@ class DjangoToLDAPUsernameTests(ZulipTestCase):
 
     def test_django_to_ldap_username_with_email_search(self) -> None:
         self.assertEqual(
-            self.backend.django_to_ldap_username("hamlet"),
-            self.ldap_username("hamlet"),
+            self.backend.django_to_ldap_username("hamlet"), self.ldap_username("hamlet"),
         )
         self.assertEqual(
             self.backend.django_to_ldap_username("hamlet@zulip.com"),
@@ -5233,9 +5198,7 @@ class TestLDAP(ZulipLDAPTestCase):
             othello.set_password(password)
             othello.save()
 
-            self.assertEqual(
-                email_belongs_to_ldap(realm, othello.delivery_email), False,
-            )
+            self.assertEqual(email_belongs_to_ldap(realm, othello.delivery_email), False)
             user_profile = EmailAuthBackend().authenticate(
                 request=mock.MagicMock(),
                 username=othello.delivery_email,
@@ -5680,9 +5643,7 @@ class TestZulipLDAPUserPopulator(ZulipLDAPTestCase):
         with self.settings(
             LDAP_DEACTIVATE_NON_MATCHING_USERS=False, LDAP_APPEND_DOMAIN="zulip.com",
         ):
-            othello = self.example_user(
-                "othello",
-            )  # othello isn't in our test directory
+            othello = self.example_user("othello")  # othello isn't in our test directory
             mock_logger = mock.MagicMock()
             result = sync_user_from_ldap(othello, mock_logger)
             mock_logger.warning.assert_called_once_with(
@@ -5883,9 +5844,7 @@ class TestZulipLDAPUserPopulator(ZulipLDAPTestCase):
 
     def test_update_custom_profile_field_not_present_in_ldap(self) -> None:
         hamlet = self.example_user("hamlet")
-        no_op_field = CustomProfileField.objects.get(
-            realm=hamlet.realm, name="Birthday",
-        )
+        no_op_field = CustomProfileField.objects.get(realm=hamlet.realm, name="Birthday")
         expected_value = CustomProfileFieldValue.objects.get(
             user_profile=hamlet, field=no_op_field,
         ).value
@@ -6185,8 +6144,7 @@ class LDAPBackendTest(ZulipTestCase):
         user = self.example_user("hamlet")
 
         data = dict(
-            username=user.delivery_email,
-            password=initial_password(user.delivery_email),
+            username=user.delivery_email, password=initial_password(user.delivery_email),
         )
         error_type = ZulipLDAPAuthBackend.REALM_IS_NONE_ERROR
         error = ZulipLDAPConfigurationError("Realm is None", error_type)

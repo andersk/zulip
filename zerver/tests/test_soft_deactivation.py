@@ -409,9 +409,7 @@ class SoftDeactivationMessageTest(ZulipTestCase):
         do_soft_activate_users([long_term_idle_user])
         self.subscribe(long_term_idle_user, stream_name)
         # Send a real message to update last_active_message_id
-        sent_message_id = self.send_stream_message(
-            sender, stream_name, "Test Message 9",
-        )
+        sent_message_id = self.send_stream_message(sender, stream_name, "Test Message 9")
         self.unsubscribe(long_term_idle_user, stream_name)
         # Soft deactivate and send another message to the unsubscribed stream.
         do_soft_deactivate_users([long_term_idle_user])
@@ -485,9 +483,7 @@ class SoftDeactivationMessageTest(ZulipTestCase):
             add_missing_messages(long_term_idle_user)
         self.assert_length(queries, 10)
         idle_user_msg_list = get_user_messages(long_term_idle_user)
-        self.assertEqual(
-            len(idle_user_msg_list), idle_user_msg_count + num_new_messages,
-        )
+        self.assertEqual(len(idle_user_msg_list), idle_user_msg_count + num_new_messages)
         long_term_idle_user.refresh_from_db()
         self.assertEqual(long_term_idle_user.last_active_message_id, message_ids[-1])
 

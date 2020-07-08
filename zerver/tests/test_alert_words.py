@@ -164,9 +164,7 @@ class AlertWordTests(ZulipTestCase):
             self.message_does_alert(user_profile_hamlet, "Normal alert one time"),
         )
         # Alerts at the end of messages work.
-        self.assertTrue(
-            self.message_does_alert(user_profile_hamlet, "Normal alert one"),
-        )
+        self.assertTrue(self.message_does_alert(user_profile_hamlet, "Normal alert one"))
         # Alerts at the beginning of messages work.
         self.assertTrue(
             self.message_does_alert(user_profile_hamlet, "two normal alerts"),

@@ -32,8 +32,7 @@ class Migration(migrations.Migration):
                 (
                     "message",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to="zerver.Message",
+                        on_delete=django.db.models.deletion.CASCADE, to="zerver.Message",
                     ),
                 ),
                 ("emoji_name", models.TextField()),
@@ -41,7 +40,6 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
         migrations.AlterUniqueTogether(
-            name="reaction",
-            unique_together={("user_profile", "message", "emoji_name")},
+            name="reaction", unique_together={("user_profile", "message", "emoji_name")},
         ),
     ]

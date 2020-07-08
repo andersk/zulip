@@ -106,9 +106,7 @@ def check_html_templates(templates: Iterable[str], all_dups: bool, fix: bool) ->
 
         for ids, fns in bad_ids_dict.items():
             logging.error(
-                "Duplicate ID(s) detected :Id '"
-                + ids
-                + "' present at following files:",
+                "Duplicate ID(s) detected :Id '" + ids + "' present at following files:",
             )
             for fn in fns:
                 print(fn)

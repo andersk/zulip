@@ -46,9 +46,7 @@ class MatterMostImporter(ZulipTestCase):
         self.assertEqual(mattermost_data["team"][0]["name"], "gryffindor")
 
         self.assertEqual(len(mattermost_data["channel"]), 5)
-        self.assertEqual(
-            mattermost_data["channel"][0]["name"], "gryffindor-common-room",
-        )
+        self.assertEqual(mattermost_data["channel"][0]["name"], "gryffindor-common-room")
         self.assertEqual(mattermost_data["channel"][0]["team"], "gryffindor")
 
         self.assertEqual(len(mattermost_data["user"]), 5)
@@ -163,8 +161,7 @@ class MatterMostImporter(ZulipTestCase):
             "Harry Potter",
         )
         self.assertEqual(
-            user_handler.get_user(user_id_mapper.get("ron"))["full_name"],
-            "Ron Weasley",
+            user_handler.get_user(user_id_mapper.get("ron"))["full_name"], "Ron Weasley",
         )
 
         team_name = "slytherin"
@@ -615,8 +612,7 @@ class MatterMostImporter(ZulipTestCase):
             os.path.exists(os.path.join(harry_team_output_dir, "emoji")), True,
         )
         self.assertEqual(
-            os.path.exists(os.path.join(harry_team_output_dir, "attachment.json")),
-            True,
+            os.path.exists(os.path.join(harry_team_output_dir, "attachment.json")), True,
         )
 
         realm = self.read_file(harry_team_output_dir, "realm.json")
@@ -627,9 +623,7 @@ class MatterMostImporter(ZulipTestCase):
         )
 
         exported_user_ids = self.get_set(realm["zerver_userprofile"], "id")
-        exported_user_full_names = self.get_set(
-            realm["zerver_userprofile"], "full_name",
-        )
+        exported_user_full_names = self.get_set(realm["zerver_userprofile"], "full_name")
         self.assertEqual(
             {"Harry Potter", "Ron Weasley", "Severus Snape"}, exported_user_full_names,
         )
@@ -674,9 +668,7 @@ class MatterMostImporter(ZulipTestCase):
 
         exported_messages_id = self.get_set(messages["zerver_message"], "id")
         self.assertIn(messages["zerver_message"][0]["sender"], exported_user_ids)
-        self.assertIn(
-            messages["zerver_message"][0]["recipient"], exported_recipient_ids,
-        )
+        self.assertIn(messages["zerver_message"][0]["recipient"], exported_recipient_ids)
         self.assertIn(
             messages["zerver_message"][0]["content"], "harry joined the channel.\n\n",
         )
@@ -723,8 +715,7 @@ class MatterMostImporter(ZulipTestCase):
             os.path.exists(os.path.join(harry_team_output_dir, "emoji")), True,
         )
         self.assertEqual(
-            os.path.exists(os.path.join(harry_team_output_dir, "attachment.json")),
-            True,
+            os.path.exists(os.path.join(harry_team_output_dir, "attachment.json")), True,
         )
 
         realm = self.read_file(harry_team_output_dir, "realm.json")
@@ -735,9 +726,7 @@ class MatterMostImporter(ZulipTestCase):
         )
 
         exported_user_ids = self.get_set(realm["zerver_userprofile"], "id")
-        exported_user_full_names = self.get_set(
-            realm["zerver_userprofile"], "full_name",
-        )
+        exported_user_full_names = self.get_set(realm["zerver_userprofile"], "full_name")
         self.assertEqual(
             {"Harry Potter", "Ron Weasley", "Ginny Weasley", "Tom Riddle"},
             exported_user_full_names,
@@ -788,9 +777,7 @@ class MatterMostImporter(ZulipTestCase):
 
         exported_messages_id = self.get_set(messages["zerver_message"], "id")
         self.assertIn(messages["zerver_message"][0]["sender"], exported_user_ids)
-        self.assertIn(
-            messages["zerver_message"][0]["recipient"], exported_recipient_ids,
-        )
+        self.assertIn(messages["zerver_message"][0]["recipient"], exported_recipient_ids)
         self.assertIn(
             messages["zerver_message"][0]["content"], "ron joined the channel.\n\n",
         )
@@ -834,9 +821,9 @@ class MatterMostImporter(ZulipTestCase):
             huddle_messages[0].content, "Who is going to Hogesmead this weekend?\n\n",
         )
 
-        personal_messages = messages.filter(
-            recipient__type=Recipient.PERSONAL,
-        ).order_by("date_sent")
+        personal_messages = messages.filter(recipient__type=Recipient.PERSONAL).order_by(
+            "date_sent",
+        )
         personal_recipients = personal_messages.values_list("recipient", flat=True)
         self.assertEqual(len(personal_messages), 4)
         self.assertEqual(len(set(personal_recipients)), 3)

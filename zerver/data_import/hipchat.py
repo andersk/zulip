@@ -364,9 +364,7 @@ def write_emoticon_data(
 
     if isinstance(data, dict) and "Emoticons" in data:
         # Handle the hc-migrate export format for emoticons.json.
-        flat_data = [
-            dict(path=d["path"], name=d["shortcut"]) for d in data["Emoticons"]
-        ]
+        flat_data = [dict(path=d["path"], name=d["shortcut"]) for d in data["Emoticons"]]
     else:
         flat_data = [
             dict(path=d["Emoticon"]["path"], name=d["Emoticon"]["shortcut"])
@@ -817,9 +815,7 @@ def do_convert_data(
                 if stream_dict["invite_only"]
             ],
         )
-        stream_subscriptions = (
-            public_stream_subscriptions + private_stream_subscriptions
-        )
+        stream_subscriptions = public_stream_subscriptions + private_stream_subscriptions
     else:
         stream_subscriptions = build_stream_subscriptions(
             get_users=subscriber_handler.get_users,

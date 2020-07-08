@@ -91,10 +91,7 @@ class RealmTest(ZulipTestCase):
         self.assertEqual(
             event,
             dict(
-                type="realm",
-                op="update",
-                property="description",
-                value=new_description,
+                type="realm", op="update", property="description", value=new_description,
             ),
         )
 
@@ -113,10 +110,7 @@ class RealmTest(ZulipTestCase):
         self.assertEqual(
             event,
             dict(
-                type="realm",
-                op="update",
-                property="description",
-                value=new_description,
+                type="realm", op="update", property="description", value=new_description,
             ),
         )
 
@@ -370,8 +364,7 @@ class RealmTest(ZulipTestCase):
         realm = get_realm("zulip")
         assert realm.signup_notifications_stream is not None
         self.assertNotEqual(
-            realm.signup_notifications_stream.id,
-            invalid_signup_notifications_stream_id,
+            realm.signup_notifications_stream.id, invalid_signup_notifications_stream_id,
         )
 
     def test_get_default_signup_notifications_stream(self) -> None:
@@ -625,9 +618,7 @@ class RealmTest(ZulipTestCase):
         result = self.client_patch("/json/realm", req)
         self.assert_json_error(
             result,
-            ("Invalid video_chat_provider {}").format(
-                invalid_video_chat_provider_value,
-            ),
+            ("Invalid video_chat_provider {}").format(invalid_video_chat_provider_value),
         )
 
         req = {
@@ -667,9 +658,7 @@ class RealmTest(ZulipTestCase):
         )
 
         req = {
-            "video_chat_provider": ujson.dumps(
-                Realm.VIDEO_CHAT_PROVIDERS["zoom"]["id"],
-            ),
+            "video_chat_provider": ujson.dumps(Realm.VIDEO_CHAT_PROVIDERS["zoom"]["id"]),
         }
         result = self.client_patch("/json/realm", req)
         self.assert_json_success(result)
@@ -761,9 +750,7 @@ class RealmTest(ZulipTestCase):
 
         req = dict(message_retention_days=ujson.dumps("invalid"))
         result = self.client_patch("/json/realm", req)
-        self.assert_json_error(
-            result, "Bad value for 'message_retention_days': invalid",
-        )
+        self.assert_json_error(result, "Bad value for 'message_retention_days': invalid")
 
         req = dict(message_retention_days=ujson.dumps(-1))
         result = self.client_patch("/json/realm", req)
@@ -780,9 +767,7 @@ class RealmTest(ZulipTestCase):
         do_change_plan_type(realm, Realm.LIMITED)
         req = dict(message_retention_days=ujson.dumps(10))
         result = self.client_patch("/json/realm", req)
-        self.assert_json_error(
-            result, "Available on Zulip Standard. Upgrade to access.",
-        )
+        self.assert_json_error(result, "Available on Zulip Standard. Upgrade to access.")
 
         do_change_plan_type(realm, Realm.STANDARD)
         req = dict(message_retention_days=ujson.dumps(10))
@@ -966,9 +951,7 @@ class ScrubRealmTest(ZulipTestCase):
         CustomProfileField.objects.create(realm=lear)
 
         self.assertEqual(Message.objects.filter(sender__in=[iago, othello]).count(), 10)
-        self.assertEqual(
-            Message.objects.filter(sender__in=[cordelia, king]).count(), 10,
-        )
+        self.assertEqual(Message.objects.filter(sender__in=[cordelia, king]).count(), 10)
         self.assertEqual(
             UserMessage.objects.filter(user_profile__in=[iago, othello]).count(), 20,
         )
@@ -982,9 +965,7 @@ class ScrubRealmTest(ZulipTestCase):
             do_scrub_realm(zulip)
 
         self.assertEqual(Message.objects.filter(sender__in=[iago, othello]).count(), 0)
-        self.assertEqual(
-            Message.objects.filter(sender__in=[cordelia, king]).count(), 10,
-        )
+        self.assertEqual(Message.objects.filter(sender__in=[cordelia, king]).count(), 10)
         self.assertEqual(
             UserMessage.objects.filter(user_profile__in=[iago, othello]).count(), 0,
         )
@@ -1001,9 +982,7 @@ class ScrubRealmTest(ZulipTestCase):
         zulip_users = UserProfile.objects.filter(realm=zulip)
         for user in zulip_users:
             self.assertTrue(re.search("Scrubbed [a-z0-9]{15}", user.full_name))
-            self.assertTrue(
-                re.search("scrubbed-[a-z0-9]{15}@" + zulip.host, user.email),
-            )
+            self.assertTrue(re.search("scrubbed-[a-z0-9]{15}@" + zulip.host, user.email))
             self.assertTrue(
                 re.search("scrubbed-[a-z0-9]{15}@" + zulip.host, user.delivery_email),
             )

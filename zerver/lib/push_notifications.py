@@ -377,9 +377,7 @@ def send_android_push_notification(
                 ).update(token=new_reg_id)
             else:
                 # Since we know the new ID is registered in our system we can just drop the old one.
-                logger.info(
-                    "GCM: Got canonical ref %s, dropping %s", new_reg_id, reg_id,
-                )
+                logger.info("GCM: Got canonical ref %s, dropping %s", new_reg_id, reg_id)
 
                 DeviceTokenClass.objects.filter(
                     token=reg_id, kind=DeviceTokenClass.GCM,
@@ -724,9 +722,7 @@ def get_apns_alert_subtitle(message: Message) -> str:
     On an iOS notification, this is the second bolded line.
     """
     if message.trigger == "mentioned":
-        return _("{full_name} mentioned you:").format(
-            full_name=message.sender.full_name,
-        )
+        return _("{full_name} mentioned you:").format(full_name=message.sender.full_name)
     elif message.trigger == "wildcard_mentioned":
         return _("{full_name} mentioned everyone:").format(
             full_name=message.sender.full_name,
@@ -858,9 +854,7 @@ def handle_remove_push_notification(
             PushDeviceToken.objects.filter(user=user_profile, kind=PushDeviceToken.GCM),
         )
         apple_devices = list(
-            PushDeviceToken.objects.filter(
-                user=user_profile, kind=PushDeviceToken.APNS,
-            ),
+            PushDeviceToken.objects.filter(user=user_profile, kind=PushDeviceToken.APNS),
         )
         if android_devices:
             send_android_push_notification(android_devices, gcm_payload, gcm_options)
@@ -869,9 +863,7 @@ def handle_remove_push_notification(
 
     UserMessage.objects.filter(
         user_profile_id=user_profile_id, message_id__in=message_ids,
-    ).update(
-        flags=F("flags").bitand(~UserMessage.flags.active_mobile_push_notification),
-    )
+    ).update(flags=F("flags").bitand(~UserMessage.flags.active_mobile_push_notification))
 
 
 @statsd_increment("push_notifications")

@@ -384,9 +384,7 @@ def get_story_create_github_entity_body(payload: Dict[str, Any], entity: str) ->
 
     kwargs = {
         "name_template": STORY_NAME_TEMPLATE.format(**story),
-        "name": action.get("number")
-        if entity == "pull-request"
-        else action.get("name"),
+        "name": action.get("number") if entity == "pull-request" else action.get("name"),
         "url": action["url"],
         "new": new_state,
         "old": old_state,

@@ -6,9 +6,7 @@ from django.db.backends.postgresql.schema import DatabaseSchemaEditor
 from django.db.migrations.state import StateApps
 
 
-def realm_emoji_name_to_id(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def realm_emoji_name_to_id(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     Reaction = apps.get_model("zerver", "Reaction")
     RealmEmoji = apps.get_model("zerver", "RealmEmoji")
     realm_emoji_by_realm_id: Dict[int, Dict[str, Any]] = defaultdict(dict)

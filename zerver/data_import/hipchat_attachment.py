@@ -122,9 +122,7 @@ class AttachmentHandler:
 
         attachment = dict(zerver_attachment=attachments)
 
-        create_converted_data_files(
-            uploads_records, output_dir, "/uploads/records.json",
-        )
+        create_converted_data_files(uploads_records, output_dir, "/uploads/records.json")
         create_converted_data_files(attachment, output_dir, "/attachment.json")
 
         logging.info("Done processing attachment files")

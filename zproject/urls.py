@@ -364,9 +364,7 @@ v1_api_and_json_patterns = [
         },
     ),
     # attachments -> zerver.views.attachments
-    path(
-        "attachments", rest_dispatch, {"GET": "zerver.views.attachments.list_by_user"},
-    ),
+    path("attachments", rest_dispatch, {"GET": "zerver.views.attachments.list_by_user"}),
     path(
         "attachments/<int:attachment_id>",
         rest_dispatch,
@@ -444,9 +442,7 @@ v1_api_and_json_patterns = [
     ),
     # user_groups -> zerver.views.user_groups
     path(
-        "user_groups",
-        rest_dispatch,
-        {"GET": "zerver.views.user_groups.get_user_group"},
+        "user_groups", rest_dispatch, {"GET": "zerver.views.user_groups.get_user_group"},
     ),
     path(
         "user_groups/create",
@@ -892,9 +888,7 @@ i18n_urls = [
     ),
     # Realm Creation
     path(
-        "new/",
-        zerver.views.registration.create_realm,
-        name="zerver.views.create_realm",
+        "new/", zerver.views.registration.create_realm, name="zerver.views.create_realm",
     ),
     re_path(
         r"^new/(?P<creation_key>[\w]+)$",
@@ -1039,12 +1033,7 @@ urls += [
     re_path(
         r"^user_uploads/(?P<realm_id_str>(\d*|unk))/(?P<filename>.*)$",
         rest_dispatch,
-        {
-            "GET": (
-                "zerver.views.upload.serve_file_backend",
-                {"override_api_url_scheme"},
-            ),
-        },
+        {"GET": ("zerver.views.upload.serve_file_backend", {"override_api_url_scheme"})},
     ),
     # This endpoint serves thumbnailed versions of images using thumbor;
     # it requires an exception for the same reason.

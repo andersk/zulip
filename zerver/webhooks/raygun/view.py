@@ -60,7 +60,9 @@ def make_user_stats_chunk(error_dict: Dict[str, Any]) -> str:
     total_occurrences = error_dict["totalOccurrences"]
 
     # One line is subjectively better than two lines for this.
-    return f"* {users_affected} users affected with {total_occurrences} total occurrences\n"
+    return (
+        f"* {users_affected} users affected with {total_occurrences} total occurrences\n"
+    )
 
 
 def make_time_chunk(error_dict: Dict[str, Any]) -> str:
@@ -246,9 +248,7 @@ def activity_message(payload: Dict[str, Any]) -> str:
         message += f"{error_link_md} status changed to **{error_status}** by {user}:\n"
     elif event_type == "CommentAdded":
         comment = payload["error"]["comment"]
-        message += (
-            f"{user} commented on {error_link_md}:\n\n``` quote\n{comment}\n```\n"
-        )
+        message += f"{user} commented on {error_link_md}:\n\n``` quote\n{comment}\n```\n"
     elif event_type == "AssignedToUser":
         assigned_to = payload["error"]["assignedTo"]
         message += f"{user} assigned {error_link_md} to {assigned_to}:\n"

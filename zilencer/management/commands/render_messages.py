@@ -60,10 +60,7 @@ class Command(BaseCommand):
                             break
                 result.write(
                     ujson.dumps(
-                        {
-                            "id": message.id,
-                            "content": render_markdown(message, content),
-                        },
+                        {"id": message.id, "content": render_markdown(message, content)},
                     ),
                 )
                 if message.id != latest:

@@ -675,9 +675,7 @@ def zulip_path(path: str) -> str:
         if path.startswith("/var/log"):
             path = os.path.join(DEVELOPMENT_LOG_DIRECTORY, os.path.basename(path))
         else:
-            path = os.path.join(
-                os.path.join(DEPLOY_ROOT, "var"), os.path.basename(path),
-            )
+            path = os.path.join(os.path.join(DEPLOY_ROOT, "var"), os.path.basename(path))
     return path
 
 

@@ -45,9 +45,7 @@ class BasecampHookTests(WebhookTestCase):
 
     def test_basecamp_makes_questions_answer_content_changed(self) -> None:
         expected_message = "Tomasz changed content of the [answer](https://3.basecamp.com/3688623/buckets/2957043/questions/432527747/answers/2017-03-16#__recording_432529636) of the question [Question](https://3.basecamp.com/3688623/buckets/2957043/questions/432527747)."
-        self._send_and_test_message(
-            "questions_answer_content_changed", expected_message,
-        )
+        self._send_and_test_message("questions_answer_content_changed", expected_message)
 
     def test_basecamp_makes_questions_answer_created(self) -> None:
         expected_message = "Tomasz created the [answer](https://3.basecamp.com/3688623/buckets/2957043/questions/432527747/answers/2017-03-16#__recording_432529636) of the question [Question](https://3.basecamp.com/3688623/buckets/2957043/questions/432527747)."

@@ -350,9 +350,7 @@ def get_users_for_soft_deactivation(
     for user_activity in users_activity:
         if (today - user_activity["last_visit"]).days > inactive_for_days:
             user_ids_to_deactivate.append(user_activity["user_profile_id"])
-    users_to_deactivate = list(
-        UserProfile.objects.filter(id__in=user_ids_to_deactivate),
-    )
+    users_to_deactivate = list(UserProfile.objects.filter(id__in=user_ids_to_deactivate))
     return users_to_deactivate
 
 

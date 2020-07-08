@@ -6,9 +6,7 @@ import shutil
 import sys
 from typing import List
 
-ZULIP_PATH = os.path.dirname(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-)
+ZULIP_PATH = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 sys.path.append(ZULIP_PATH)
 from pygments import __version__ as pygments_version
@@ -21,9 +19,7 @@ from scripts.lib.zulip_tools import (
     run,
     write_new_digest,
 )
-from tools.setup.generate_zulip_bots_static_files import (
-    generate_zulip_bots_static_files,
-)
+from tools.setup.generate_zulip_bots_static_files import generate_zulip_bots_static_files
 from version import PROVISION_VERSION
 
 VENV_PATH = "/srv/zulip-py3-venv"
@@ -101,8 +97,7 @@ def setup_bash_profile() -> None:
     """Select a bash profile file to add setup code to."""
 
     BASH_PROFILES = [
-        os.path.expanduser(p)
-        for p in ("~/.bash_profile", "~/.bash_login", "~/.profile")
+        os.path.expanduser(p) for p in ("~/.bash_profile", "~/.bash_login", "~/.profile")
     ]
 
     def clear_old_profile() -> None:

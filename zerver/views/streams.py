@@ -218,9 +218,7 @@ def update_default_stream_group_streams(
     elif op == "remove":
         do_remove_streams_from_default_stream_group(user_profile.realm, group, streams)
     else:
-        return json_error(
-            _('Invalid value for "op". Specify one of "add" or "remove".'),
-        )
+        return json_error(_('Invalid value for "op". Specify one of "add" or "remove".'))
     return json_success()
 
 
@@ -353,9 +351,7 @@ def update_subscriptions_backend(
     ),
 ) -> HttpResponse:
     if not add and not delete:
-        return json_error(
-            _('Nothing to do. Specify at least one of "add" or "delete".'),
-        )
+        return json_error(_('Nothing to do. Specify at least one of "add" or "delete".'))
 
     method_kwarg_pairs: List[FuncKwargPair] = [
         (add_subscriptions_backend, dict(streams_raw=add)),
@@ -510,9 +506,7 @@ def add_subscriptions_backend(
         stream_dict_copy["name"] = stream_dict_copy["name"].strip()
         stream_dict_copy["invite_only"] = invite_only
         stream_dict_copy["stream_post_policy"] = stream_post_policy
-        stream_dict_copy[
-            "history_public_to_subscribers"
-        ] = history_public_to_subscribers
+        stream_dict_copy["history_public_to_subscribers"] = history_public_to_subscribers
         stream_dict_copy["message_retention_days"] = parse_message_retention_days(
             message_retention_days, Stream.MESSAGE_RETENTION_SPECIAL_VALUES_MAP,
         )

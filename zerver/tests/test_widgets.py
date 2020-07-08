@@ -20,13 +20,9 @@ class WidgetContentTestCase(ZulipTestCase):
 
         assert_error({}, "widget_type is not in widget_content")
 
-        assert_error(
-            dict(widget_type="whatever"), "extra_data is not in widget_content",
-        )
+        assert_error(dict(widget_type="whatever"), "extra_data is not in widget_content")
 
-        assert_error(
-            dict(widget_type="zform", extra_data=4), "extra_data is not a dict",
-        )
+        assert_error(dict(widget_type="zform", extra_data=4), "extra_data is not a dict")
 
         assert_error(
             dict(widget_type="bogus", extra_data={}), "unknown widget type: bogus",

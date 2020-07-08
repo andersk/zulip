@@ -23,9 +23,7 @@ def get_user_profiles(emails: Iterable[str], realm: Realm) -> List[UserProfile]:
     return user_profiles
 
 
-def get_user_profiles_by_ids(
-    user_ids: Iterable[int], realm: Realm,
-) -> List[UserProfile]:
+def get_user_profiles_by_ids(user_ids: Iterable[int], realm: Realm) -> List[UserProfile]:
     user_profiles: List[UserProfile] = []
     for user_id in user_ids:
         try:

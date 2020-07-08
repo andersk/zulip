@@ -225,9 +225,7 @@ def reactivate_user(client: Client) -> None:
     user_id = 8
     result = client.reactivate_user_by_id(user_id)
     # {code_example|end}
-    validate_against_openapi_schema(
-        result, "/users/{user_id}/reactivate", "post", "200",
-    )
+    validate_against_openapi_schema(result, "/users/{user_id}/reactivate", "post", "200")
 
 
 @openapi_test_function("/users/{user_id}:patch")
@@ -973,9 +971,7 @@ def get_stream_topics(client: Client, stream_id: int) -> None:
     result = client.get_stream_topics(stream_id)
     # {code_example|end}
 
-    validate_against_openapi_schema(
-        result, "/users/me/{stream_id}/topics", "get", "200",
-    )
+    validate_against_openapi_schema(result, "/users/me/{stream_id}/topics", "get", "200")
 
 
 @openapi_test_function("/typing:post")
@@ -1174,9 +1170,7 @@ def assertLength(result: Dict[str, Any], fixture: Dict[str, Any]) -> None:
 
 def assertIn(key: str, result: Dict[str, Any]) -> None:
     if key not in result.keys():
-        raise AssertionError(
-            f"The actual output does not contain the the key `{key}`.",
-        )
+        raise AssertionError(f"The actual output does not contain the the key `{key}`.")
     else:
         assert key in result
 

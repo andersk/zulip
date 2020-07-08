@@ -34,10 +34,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     "1f60b": {"canonical_name": "yum", "aliases": []},
     # crazy from https://beebom.com/emoji-meanings/, seems like best emoji for
     # joking
-    "1f61c": {
-        "canonical_name": "stuck_out_tongue_wink",
-        "aliases": ["joking", "crazy"],
-    },
+    "1f61c": {"canonical_name": "stuck_out_tongue_wink", "aliases": ["joking", "crazy"]},
     "1f61d": {"canonical_name": "stuck_out_tongue", "aliases": []},
     # don't really need two stuck_out_tongues (see People/23), so chose
     # something else that could fit
@@ -355,10 +352,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     "1f462": {"canonical_name": "boot", "aliases": []},
     "1f45e": {"canonical_name": "shoe", "aliases": []},
     # running_shoe is from gemoji, sneaker seems like a reasonable addition
-    "1f45f": {
-        "canonical_name": "athletic_shoe",
-        "aliases": ["sneaker", "running_shoe"],
-    },
+    "1f45f": {"canonical_name": "athletic_shoe", "aliases": ["sneaker", "running_shoe"]},
     "1f452": {"canonical_name": "hat", "aliases": []},
     "1f3a9": {"canonical_name": "top_hat", "aliases": []},
     # graduate seems like a better word for this

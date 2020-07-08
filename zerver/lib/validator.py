@@ -147,9 +147,7 @@ def check_float(var_name: str, val: object) -> float:
 
 def check_bool(var_name: str, val: object) -> bool:
     if not isinstance(val, bool):
-        raise ValidationError(
-            _("{var_name} is not a boolean").format(var_name=var_name),
-        )
+        raise ValidationError(_("{var_name} is not a boolean").format(var_name=var_name))
     return val
 
 
@@ -485,9 +483,7 @@ def check_string_or_int_list(var_name: str, val: object) -> Union[str, List[int]
 
     if not isinstance(val, list):
         raise ValidationError(
-            _("{var_name} is not a string or an integer list").format(
-                var_name=var_name,
-            ),
+            _("{var_name} is not a string or an integer list").format(var_name=var_name),
         )
 
     return check_list(check_int)(var_name, val)

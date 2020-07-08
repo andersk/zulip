@@ -42,9 +42,9 @@ def user_groups_in_realm_serialized(realm: Realm) -> List[Dict[str, Any]]:
             members=[],
         )
 
-    membership = UserGroupMembership.objects.filter(
-        user_group__realm=realm,
-    ).values_list("user_group_id", "user_profile_id")
+    membership = UserGroupMembership.objects.filter(user_group__realm=realm).values_list(
+        "user_group_id", "user_profile_id",
+    )
     for (user_group_id, user_profile_id) in membership:
         group_dicts[user_group_id]["members"].append(user_profile_id)
     for group_dict in group_dicts.values():
@@ -66,9 +66,7 @@ def check_add_user_to_user_group(
     return created
 
 
-def remove_user_from_user_group(
-    user_profile: UserProfile, user_group: UserGroup,
-) -> int:
+def remove_user_from_user_group(user_profile: UserProfile, user_group: UserGroup) -> int:
     num_deleted, _ = UserGroupMembership.objects.filter(
         user_profile=user_profile, user_group=user_group,
     ).delete()

@@ -7,9 +7,7 @@ from typing import List, Optional, Set, Tuple
 from scripts.lib.hash_reqs import expand_reqs
 from scripts.lib.zulip_tools import ENDC, WARNING, os_families, run, run_as_root
 
-ZULIP_PATH = os.path.dirname(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-)
+ZULIP_PATH = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 VENV_CACHE_PATH = "/srv/zulip-venv-cache"
 
 VENV_DEPENDENCIES = [
@@ -239,9 +237,7 @@ def try_to_copy_venv(venv_path: str, new_packages: Set[str]) -> bool:
         success_stamp_path = os.path.join(venv_path, "success-stamp")
         run_as_root(["rm", "-f", success_stamp_path])
 
-        run_as_root(
-            ["chown", "-R", "{}:{}".format(os.getuid(), os.getgid()), venv_path],
-        )
+        run_as_root(["chown", "-R", "{}:{}".format(os.getuid(), os.getgid()), venv_path])
         source_log = get_logfile_name(source_venv_path)
         copy_parent_log(source_log, target_log)
         create_log_entry(
@@ -355,9 +351,7 @@ def do_setup_virtualenv(venv_path: str, requirements_file: str) -> None:
         # Create new virtualenv.
         run_as_root(["mkdir", "-p", venv_path])
         run_as_root(["virtualenv", "-p", "python3", venv_path])
-        run_as_root(
-            ["chown", "-R", "{}:{}".format(os.getuid(), os.getgid()), venv_path],
-        )
+        run_as_root(["chown", "-R", "{}:{}".format(os.getuid(), os.getgid()), venv_path])
         create_log_entry(get_logfile_name(venv_path), "", set(), new_packages)
 
     create_requirements_index_file(venv_path, requirements_file)

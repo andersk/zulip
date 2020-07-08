@@ -63,11 +63,7 @@ def serve_local(request: HttpRequest, path_id: str, url_only: bool) -> HttpRespo
     attachment = mimetype not in INLINE_MIME_TYPES
 
     response = sendfile(
-        request,
-        local_path,
-        attachment=attachment,
-        mimetype=mimetype,
-        encoding=encoding,
+        request, local_path, attachment=attachment, mimetype=mimetype, encoding=encoding,
     )
     patch_cache_control(response, private=True, immutable=True)
     return response
@@ -124,9 +120,7 @@ def serve_local_file_unauthed(
     return serve_local(request, path_id, url_only=False)
 
 
-def upload_file_backend(
-    request: HttpRequest, user_profile: UserProfile,
-) -> HttpResponse:
+def upload_file_backend(request: HttpRequest, user_profile: UserProfile) -> HttpResponse:
     if len(request.FILES) == 0:
         return json_error(_("You must specify a file to upload"))
     if len(request.FILES) != 1:

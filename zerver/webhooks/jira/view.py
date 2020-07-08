@@ -206,9 +206,7 @@ def handle_updated_issue_event(
     issue_id = get_in(payload, ["issue", "key"])
     issue = get_issue_string(payload, issue_id, True)
 
-    assignee_email = get_in(
-        payload, ["issue", "fields", "assignee", "emailAddress"], "",
-    )
+    assignee_email = get_in(payload, ["issue", "fields", "assignee", "emailAddress"], "")
     assignee_mention = get_assignee_mention(assignee_email, user_profile.realm)
 
     if assignee_mention != "":

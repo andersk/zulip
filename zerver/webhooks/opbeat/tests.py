@@ -36,10 +36,7 @@ App foo created
 >language: nodejs
 >framework: custom"""
         self.send_and_test_stream_message(
-            "new_app",
-            expected_topic,
-            expected_message,
-            content_type="application/json",
+            "new_app", expected_topic, expected_message, content_type="application/json",
         )
 
     def test_get_empty_value(self) -> None:

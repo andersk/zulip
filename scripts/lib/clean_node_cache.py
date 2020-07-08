@@ -4,9 +4,7 @@ import os
 import sys
 from typing import Set
 
-ZULIP_PATH = os.path.dirname(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-)
+ZULIP_PATH = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.append(ZULIP_PATH)
 from scripts.lib.zulip_tools import (
     get_environment,

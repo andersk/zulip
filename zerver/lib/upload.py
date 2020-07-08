@@ -597,9 +597,7 @@ class S3UploadBackend(ZulipUploadBackend):
             file_name = "logo.png"
         else:
             file_name = "night_logo.png"
-        return (
-            f"{self.avatar_bucket_url}/{realm_id}/realm/{file_name}?version={version}"
-        )
+        return f"{self.avatar_bucket_url}/{realm_id}/realm/{file_name}?version={version}"
 
     def ensure_medium_avatar_image(self, user_profile: UserProfile) -> None:
         file_path = user_avatar_path(user_profile)
@@ -617,9 +615,7 @@ class S3UploadBackend(ZulipUploadBackend):
             resized_medium,
         )
 
-    def ensure_basic_avatar_image(
-        self, user_profile: UserProfile,
-    ) -> None:  # nocoverage
+    def ensure_basic_avatar_image(self, user_profile: UserProfile) -> None:  # nocoverage
         # TODO: Refactor this to share code with ensure_medium_avatar_image
         file_path = user_avatar_path(user_profile)
         # Also TODO: Migrate to user_avatar_path(user_profile) + ".png".
@@ -883,9 +879,7 @@ class LocalUploadBackend(ZulipUploadBackend):
         resized_medium = resize_avatar(image_data, MEDIUM_AVATAR_SIZE)
         write_local_file("avatars", file_path + "-medium.png", resized_medium)
 
-    def ensure_basic_avatar_image(
-        self, user_profile: UserProfile,
-    ) -> None:  # nocoverage
+    def ensure_basic_avatar_image(self, user_profile: UserProfile) -> None:  # nocoverage
         # TODO: Refactor this to share code with ensure_medium_avatar_image
         file_path = user_avatar_path(user_profile)
 

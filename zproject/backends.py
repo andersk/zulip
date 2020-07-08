@@ -644,9 +644,7 @@ class ZulipLDAPAuthBackendBase(ZulipAuthMixin, LDAPBackend):
             # Structurally, to make the S3 backend happy, we need to
             # provide a Content-Type; since that isn't specified in
             # any metadata, we auto-detect it.
-            content_type = magic.from_buffer(
-                copy.deepcopy(io).read()[0:1024], mime=True,
-            )
+            content_type = magic.from_buffer(copy.deepcopy(io).read()[0:1024], mime=True)
             if content_type.startswith("image/"):
                 upload_avatar_image(io, user, user, content_type=content_type)
                 do_change_avatar_fields(
@@ -881,13 +879,7 @@ class ZulipLDAPAuthBackend(ZulipLDAPAuthBackendBase):
             opts["default_stream_groups"] = []
 
         user_profile = do_create_user(
-            username,
-            None,
-            self._realm,
-            full_name,
-            short_name,
-            acting_user=None,
-            **opts,
+            username, None, self._realm, full_name, short_name, acting_user=None, **opts,
         )
         self.sync_avatar_from_ldap(user_profile, ldap_user)
         self.sync_custom_profile_fields_from_ldap(user_profile, ldap_user)
@@ -1000,9 +992,7 @@ def sync_user_from_ldap(user_profile: UserProfile, logger: logging.Logger) -> bo
             else settings.LDAP_DEACTIVATE_NON_MATCHING_USERS
         ):
             do_deactivate_user(user_profile)
-            logger.info(
-                "Deactivated non-matching user: %s", user_profile.delivery_email,
-            )
+            logger.info("Deactivated non-matching user: %s", user_profile.delivery_email)
             return True
         elif user_profile.is_active:
             logger.warning("Did not find %s in LDAP.", user_profile.delivery_email)
@@ -2045,9 +2035,7 @@ class SAMLAuthBackend(SocialAuthMixin, SAMLAuth):
         data_to_relay = {
             key: request_data[key] for key in params_to_relay if key in request_data
         }
-        relay_state = ujson.dumps(
-            {"state_token": self.put_data_in_redis(data_to_relay)},
-        )
+        relay_state = ujson.dumps({"state_token": self.put_data_in_redis(data_to_relay)})
 
         return auth.login(return_to=relay_state)
 

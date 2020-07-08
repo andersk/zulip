@@ -97,9 +97,7 @@ def get_push_commits_event_message(
     pushed_text_message = pushed_message_template.format(
         compare_url=compare_url,
         number_of_commits=len(commits_data),
-        commit_or_commits=COMMIT_OR_COMMITS.format(
-            "s" if len(commits_data) > 1 else "",
-        ),
+        commit_or_commits=COMMIT_OR_COMMITS.format("s" if len(commits_data) > 1 else ""),
     )
 
     committers_items: List[Tuple[str, int]] = get_all_committers(commits_data)
@@ -125,9 +123,7 @@ def get_push_commits_event_message(
             user_name=user_name,
             pushed_text=pushed_text_message,
             branch_name=branch_name,
-            committers_details=PUSH_COMMITS_MESSAGE_EXTENSION.format(
-                committers_details,
-            ),
+            committers_details=PUSH_COMMITS_MESSAGE_EXTENSION.format(committers_details),
             commits_data=get_commits_content(commits_data, is_truncated),
         ).rstrip()
 
@@ -181,9 +177,7 @@ def get_pull_request_event_message(
     }
 
     if title is not None:
-        main_message = PULL_REQUEST_OR_ISSUE_MESSAGE_TEMPLATE_WITH_TITLE.format(
-            **kwargs,
-        )
+        main_message = PULL_REQUEST_OR_ISSUE_MESSAGE_TEMPLATE_WITH_TITLE.format(**kwargs)
     else:
         main_message = PULL_REQUEST_OR_ISSUE_MESSAGE_TEMPLATE.format(**kwargs)
 
@@ -261,10 +255,7 @@ def get_issue_event_message(
 
 
 def get_push_tag_event_message(
-    user_name: str,
-    tag_name: str,
-    tag_url: Optional[str] = None,
-    action: str = "pushed",
+    user_name: str, tag_name: str, tag_url: Optional[str] = None, action: str = "pushed",
 ) -> str:
     if tag_url:
         tag_part = TAG_WITH_URL_TEMPLATE.format(tag_name=tag_name, tag_url=tag_url)

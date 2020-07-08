@@ -458,13 +458,7 @@ class PushNotificationMarkReadFlowsTest(ZulipTestCase):
             "/api/v1/users/me/subscriptions/properties",
             {
                 "subscription_data": ujson.dumps(
-                    [
-                        {
-                            "property": property_name,
-                            "value": True,
-                            "stream_id": stream.id,
-                        },
-                    ],
+                    [{"property": property_name, "value": True, "stream_id": stream.id}],
                 ),
             },
         )
@@ -635,8 +629,7 @@ class GetUnreadMsgsTest(ZulipTestCase):
         huddle_dict = raw_unread_data["huddle_dict"]
 
         self.assertEqual(
-            set(huddle_dict.keys()),
-            set(huddle1_message_ids) | set(huddle2_message_ids),
+            set(huddle_dict.keys()), set(huddle1_message_ids) | set(huddle2_message_ids),
         )
 
         huddle_string = ",".join(
@@ -946,9 +939,7 @@ class MessageAccessTests(ZulipTestCase):
                 "flag": "active_mobile_push_notification",
             },
         )
-        self.assert_json_error(
-            result, "Invalid flag: 'active_mobile_push_notification'",
-        )
+        self.assert_json_error(result, "Invalid flag: 'active_mobile_push_notification'")
 
         result = self.client_post(
             "/json/messages/flags",

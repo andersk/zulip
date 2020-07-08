@@ -35,12 +35,8 @@ Leo Franchi created [BUG-15: New bug with hook](http://lfranchi.com:8080/browse/
 * **Priority**: Major
 * **Assignee**: no one
 """.strip()
-        self.send_and_test_stream_message(
-            "created_v1", expected_topic, expected_message,
-        )
-        self.send_and_test_stream_message(
-            "created_v2", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("created_v1", expected_topic, expected_message)
+        self.send_and_test_stream_message("created_v2", expected_topic, expected_message)
 
     def test_created_with_stream_with_spaces_escaped(self) -> None:
         self.STREAM_NAME = quote("jira alerts")
@@ -93,9 +89,7 @@ Leo Franchi created [BUG-15: New bug with hook](http://lfranchi.com:8080/browse/
 * **Priority**: Major
 * **Assignee**: no one
 """.strip()
-        self.send_and_test_stream_message(
-            "created_v1", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("created_v1", expected_topic, expected_message)
 
     def test_created_with_unicode(self) -> None:
         expected_topic = "BUG-15: New bug with à hook"
@@ -190,12 +184,8 @@ Adding a comment. Oh, what a comment it is!
     def test_deleted(self) -> None:
         expected_topic = "BUG-15: New bug with hook"
         expected_message = "Leo Franchi deleted [BUG-15: New bug with hook](http://lfranchi.com:8080/browse/BUG-15)."
-        self.send_and_test_stream_message(
-            "deleted_v1", expected_topic, expected_message,
-        )
-        self.send_and_test_stream_message(
-            "deleted_v2", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("deleted_v1", expected_topic, expected_message)
+        self.send_and_test_stream_message("deleted_v2", expected_topic, expected_message)
 
     def test_reassigned(self) -> None:
         expected_topic = "BUG-15: New bug with hook"

@@ -291,9 +291,7 @@ def read_coverage() -> Any:
         with open(NODE_COVERAGE_PATH) as f:
             coverage_json = ujson.load(f)
     except OSError:
-        print(
-            NODE_COVERAGE_PATH + " doesn't exist. Cannot enforce fully covered files.",
-        )
+        print(NODE_COVERAGE_PATH + " doesn't exist. Cannot enforce fully covered files.")
         raise
     return coverage_json
 
@@ -321,9 +319,7 @@ def enforce_proper_coverage(coverage_json: Any) -> bool:
             coverage_lost = True
     if coverage_lost:
         print()
-        print(
-            "It looks like your changes lost 100% test coverage in one or more files.",
-        )
+        print("It looks like your changes lost 100% test coverage in one or more files.")
         print("Ideally, you should add some tests to restore coverage.")
         print("A worse option is to update EXEMPT_FILES in `tools/test-js-with-node`.")
         print("To run this check locally, use `test-js-with-node --coverage`.")

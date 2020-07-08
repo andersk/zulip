@@ -39,11 +39,7 @@ from zerver.lib.test_helpers import (
 )
 from zerver.lib.topic_mutes import add_topic_mute
 from zerver.lib.upload import upload_avatar_image
-from zerver.lib.users import (
-    access_user_by_id,
-    get_accounts_for_email,
-    user_ids_to_users,
-)
+from zerver.lib.users import access_user_by_id, get_accounts_for_email, user_ids_to_users
 from zerver.models import (
     CustomProfileField,
     InvalidFakeEmailDomain,
@@ -431,9 +427,7 @@ class PermissionTest(ZulipTestCase):
             )
         # But does have read-only access to it.
         access_user_by_id(
-            self.example_user("cordelia"),
-            self.example_user("aaron").id,
-            read_only=True,
+            self.example_user("cordelia"), self.example_user("aaron").id, read_only=True,
         )
 
     def test_change_regular_member_to_guest(self) -> None:
@@ -823,9 +817,7 @@ class AdminCreateUserTest(ZulipTestCase):
         result = self.client_post(
             "/json/users",
             dict(
-                email="romeo@not-zulip.com",
-                password="xxxx",
-                full_name="Romeo Montague",
+                email="romeo@not-zulip.com", password="xxxx", full_name="Romeo Montague",
             ),
         )
         self.assert_json_error(result, "Missing 'short_name' argument")
@@ -933,21 +925,15 @@ class UserProfileTest(ZulipTestCase):
         invalid_uid: object = 1000
         with self.assertRaisesRegex(ValidationError, r"User IDs is not a list"):
             check_valid_user_ids(realm.id, invalid_uid)
-        with self.assertRaisesRegex(
-            ValidationError, rf"Invalid user ID: {invalid_uid}",
-        ):
+        with self.assertRaisesRegex(ValidationError, rf"Invalid user ID: {invalid_uid}"):
             check_valid_user_ids(realm.id, [invalid_uid])
 
         invalid_uid = "abc"
-        with self.assertRaisesRegex(
-            ValidationError, r"User IDs\[0\] is not an integer",
-        ):
+        with self.assertRaisesRegex(ValidationError, r"User IDs\[0\] is not an integer"):
             check_valid_user_ids(realm.id, [invalid_uid])
 
         invalid_uid = str(othello.id)
-        with self.assertRaisesRegex(
-            ValidationError, r"User IDs\[0\] is not an integer",
-        ):
+        with self.assertRaisesRegex(ValidationError, r"User IDs\[0\] is not an integer"):
             check_valid_user_ids(realm.id, [invalid_uid])
 
         # User is in different realm
@@ -964,9 +950,7 @@ class UserProfileTest(ZulipTestCase):
         check_valid_user_ids(realm.id, [hamlet.id], allow_deactivated=True)
 
         # User is a bot
-        with self.assertRaisesRegex(
-            ValidationError, rf"User with ID {bot.id} is a bot",
-        ):
+        with self.assertRaisesRegex(ValidationError, rf"User with ID {bot.id} is a bot"):
             check_valid_user_ids(realm.id, [bot.id])
 
         # Successfully get non-bot, active user belong to your realm

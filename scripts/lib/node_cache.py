@@ -6,9 +6,7 @@ from typing import List, Optional
 
 from scripts.lib.zulip_tools import run, subprocess_text_output
 
-ZULIP_PATH = os.path.dirname(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-)
+ZULIP_PATH = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 ZULIP_SRV_PATH = "/srv"
 
 NODE_MODULES_CACHE_PATH = os.path.join(ZULIP_SRV_PATH, "zulip-npm-cache")
@@ -73,9 +71,7 @@ def setup_node_modules(
     os.symlink(cached_node_modules, "node_modules")
 
 
-def do_yarn_install(
-    target_path: str, yarn_args: List[str], success_stamp: str,
-) -> None:
+def do_yarn_install(target_path: str, yarn_args: List[str], success_stamp: str) -> None:
     os.makedirs(target_path, exist_ok=True)
     shutil.copy("package.json", target_path)
     shutil.copy("yarn.lock", target_path)

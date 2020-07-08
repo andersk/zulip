@@ -335,9 +335,7 @@ class NarrowBuilderTest(ZulipTestCase):
             "WHERE sender_id = %(sender_id_1)s AND recipient_id = %(recipient_id_1)s OR sender_id = %(sender_id_2)s AND recipient_id = %(recipient_id_2)s",
         )
 
-    def test_add_term_using_pm_with_operator_more_than_one_user_as_operand(
-        self,
-    ) -> None:
+    def test_add_term_using_pm_with_operator_more_than_one_user_as_operand(self) -> None:
         two_others = ",".join(
             [self.example_user("cordelia").email, self.example_user("othello").email],
         )
@@ -1496,9 +1494,7 @@ class GetOldMessagesTest(ZulipTestCase):
         )
 
         self.get_and_check_messages(
-            dict(
-                narrow=ujson.dumps([dict(operator="pm-with", operand=othello_email)]),
-            ),
+            dict(narrow=ujson.dumps([dict(operator="pm-with", operand=othello_email)])),
         )
 
     def test_client_avatar(self) -> None:
@@ -1597,9 +1593,7 @@ class GetOldMessagesTest(ZulipTestCase):
 
         message_ids = []
         for i in range(5):
-            message_ids.append(
-                self.send_personal_message(me, self.example_user("iago")),
-            )
+            message_ids.append(self.send_personal_message(me, self.example_user("iago")))
 
         narrow = [dict(operator="pm-with", operand=self.example_user("iago").email)]
         self.message_visibility_test(narrow, message_ids, 2)
@@ -1670,9 +1664,7 @@ class GetOldMessagesTest(ZulipTestCase):
         self.subscribe(hamlet, stream_name)
 
         content = "hello @**King Hamlet**"
-        new_message_id = self.send_stream_message(
-            cordelia, stream_name, content=content,
-        )
+        new_message_id = self.send_stream_message(cordelia, stream_name, content=content)
 
         self.login_user(hamlet)
         narrow = [
@@ -1785,9 +1777,7 @@ class GetOldMessagesTest(ZulipTestCase):
         # it to ensure that we actually have a stream message in this
         # narrow view.
         self.subscribe(mit_user_profile, "Scotland")
-        self.send_stream_message(
-            mit_user_profile, "Scotland", topic_name="\u03bb-topic",
-        )
+        self.send_stream_message(mit_user_profile, "Scotland", topic_name="\u03bb-topic")
         self.send_stream_message(
             mit_user_profile, "Scotland", topic_name="\u03bb-topic.d",
         )
@@ -1949,10 +1939,7 @@ class GetOldMessagesTest(ZulipTestCase):
 
         for topic, content in messages_to_search:
             self.send_stream_message(
-                sender=cordelia,
-                stream_name="Verona",
-                content=content,
-                topic_name=topic,
+                sender=cordelia, stream_name="Verona", content=content, topic_name=topic,
             )
 
         self._update_tsvector_index()
@@ -2498,9 +2485,7 @@ class GetOldMessagesTest(ZulipTestCase):
 
         # And anchor='first' does the same thing.
         with first_visible_id_as(0):
-            data = self.get_messages_response(
-                anchor="oldest", num_before=0, num_after=5,
-            )
+            data = self.get_messages_response(anchor="oldest", num_before=0, num_after=5)
 
         messages = data["messages"]
         messages_matches_ids(messages, message_ids[0:5])
@@ -2616,9 +2601,7 @@ class GetOldMessagesTest(ZulipTestCase):
 
         # The anchor value of 'last' behaves just like LARGER_THAN_MAX_MESSAGE_ID.
         with first_visible_id_as(0):
-            data = self.get_messages_response(
-                anchor="newest", num_before=5, num_after=0,
-            )
+            data = self.get_messages_response(anchor="newest", num_before=5, num_after=0)
 
         messages = data["messages"]
         self.assert_length(messages, 5)
@@ -2844,9 +2827,7 @@ class GetOldMessagesTest(ZulipTestCase):
     def test_bad_narrow_nonexistent_stream(self) -> None:
         self.login("hamlet")
         self.exercise_bad_narrow_operand(
-            "stream",
-            ["non-existent stream"],
-            "Invalid narrow operator: unknown stream",
+            "stream", ["non-existent stream"], "Invalid narrow operator: unknown stream",
         )
 
         non_existing_stream_id = 1232891381239
@@ -3118,7 +3099,9 @@ class GetOldMessagesTest(ZulipTestCase):
 
         stream = get_stream("Scotland", realm)
         recipient_id = stream.recipient.id
-        cond = f"AND NOT (recipient_id = {recipient_id} AND upper(subject) = upper('golf'))"
+        cond = (
+            f"AND NOT (recipient_id = {recipient_id} AND upper(subject) = upper('golf'))"
+        )
         self.assertIn(cond, queries[0]["sql"])
 
         # Next, verify the use_first_unread_anchor setting invokes
@@ -3170,9 +3153,7 @@ class GetOldMessagesTest(ZulipTestCase):
         ]
 
         muting_conditions = exclude_muting_conditions(user_profile, narrow)
-        query = select(
-            [column("id").label("message_id")], None, table("zerver_message"),
-        )
+        query = select([column("id").label("message_id")], None, table("zerver_message"))
         query = query.where(*muting_conditions)
         expected_query = """\
 SELECT id AS message_id \n\
@@ -3499,10 +3480,7 @@ WHERE user_profile_id = {hamlet_id} AND (content ILIKE '%jumping%' OR subject IL
 
         for topic, content in messages_to_search:
             self.send_stream_message(
-                sender=cordelia,
-                stream_name="Verona",
-                content=content,
-                topic_name=topic,
+                sender=cordelia, stream_name="Verona", content=content, topic_name=topic,
             )
 
         self._update_tsvector_index()

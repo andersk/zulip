@@ -143,9 +143,7 @@ def bulk_create_streams(
     existing_streams = frozenset(
         [
             name.lower()
-            for name in Stream.objects.filter(realm=realm).values_list(
-                "name", flat=True,
-            )
+            for name in Stream.objects.filter(realm=realm).values_list("name", flat=True)
         ],
     )
     streams_to_create: List[Stream] = []

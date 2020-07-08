@@ -59,9 +59,5 @@ def create_users(
         short_name = email_to_username(email)
         user_set.add((email, full_name, short_name, True))
     bulk_create_users(
-        realm,
-        user_set,
-        bot_type=bot_type,
-        bot_owner=bot_owner,
-        tos_version=tos_version,
+        realm, user_set, bot_type=bot_type, bot_owner=bot_owner, tos_version=tos_version,
     )

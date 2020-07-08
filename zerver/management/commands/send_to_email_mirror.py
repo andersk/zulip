@@ -106,9 +106,7 @@ Example:
             return self._parse_email_json_fixture(fixture_path)
         else:
             with open(fixture_path, "rb") as fp:
-                message = email.message_from_binary_file(
-                    fp, policy=email.policy.default,
-                )
+                message = email.message_from_binary_file(fp, policy=email.policy.default)
                 assert isinstance(
                     message, EmailMessage,
                 )  # https://github.com/python/typeshed/issues/2417

@@ -25,9 +25,7 @@ class DocPageTest(ZulipTestCase):
             )
         return self.client_get(url, subdomain=subdomain)
 
-    def print_msg_if_error(
-        self, url: str, response: HttpResponse,
-    ) -> None:  # nocoverage
+    def print_msg_if_error(self, url: str, response: HttpResponse) -> None:  # nocoverage
         if response.status_code == 200:
             return
         print("Error processing URL:", url)
@@ -119,9 +117,7 @@ class DocPageTest(ZulipTestCase):
         def _filter_func(fp: str) -> bool:
             ignored_files = ["sidebar_index.md", "index.md", "missing.md"]
             return (
-                fp.endswith(".md")
-                and not fp.startswith(".")
-                and fp not in ignored_files
+                fp.endswith(".md") and not fp.startswith(".") and fp not in ignored_files
             )
 
         files = list(filter(_filter_func, files))
@@ -229,9 +225,7 @@ class DocPageTest(ZulipTestCase):
 
         # Test integrations page
         url = "/integrations/"
-        title = (
-            '<meta property="og:title" content="Connect the tools you use to Zulip">'
-        )
+        title = '<meta property="og:title" content="Connect the tools you use to Zulip">'
         description = '<meta property="og:description" content="Zulip comes with over'
         self._test(url, title, doc_html_str=True)
         self._test(url, description, doc_html_str=True)
@@ -388,9 +382,7 @@ class AboutPageTest(ZulipTestCase):
             ["timabbott", "showell", "gnprice", "rishig"], result,
         )
 
-        with mock.patch(
-            "zerver.views.portico.open", side_effect=FileNotFoundError,
-        ) as m:
+        with mock.patch("zerver.views.portico.open", side_effect=FileNotFoundError) as m:
             result = self.client_get("/team/")
             self.assertEqual(result.status_code, 200)
             self.assert_in_success_response(["Never ran"], result)

@@ -19,9 +19,7 @@ from scripts.lib.zulip_tools import (
 )
 
 logging.Formatter.converter = time.gmtime
-logging.basicConfig(
-    format="%(asctime)s restart-server: %(message)s", level=logging.INFO,
-)
+logging.basicConfig(format="%(asctime)s restart-server: %(message)s", level=logging.INFO)
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -104,9 +102,7 @@ subprocess.check_call(["supervisorctl", "start"] + core_server_services)
 logging.info("Starting workers")
 subprocess.check_call(["supervisorctl", "start", "zulip-workers:*"])
 
-using_sso = subprocess.check_output(
-    ["./scripts/get-django-setting", "USING_APACHE_SSO"],
-)
+using_sso = subprocess.check_output(["./scripts/get-django-setting", "USING_APACHE_SSO"])
 if using_sso.strip() == b"True":
     logging.info("Restarting Apache WSGI process...")
     subprocess.check_call(["pkill", "-f", "apache2", "-u", "zulip"])

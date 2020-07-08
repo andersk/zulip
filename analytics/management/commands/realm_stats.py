@@ -54,9 +54,7 @@ class Command(BaseCommand):
 
     def messages_sent_by(self, user: UserProfile, days_ago: int) -> int:
         sent_time_cutoff = timezone_now() - datetime.timedelta(days=days_ago)
-        return human_messages.filter(
-            sender=user, date_sent__gt=sent_time_cutoff,
-        ).count()
+        return human_messages.filter(sender=user, date_sent__gt=sent_time_cutoff).count()
 
     def total_messages(self, realm: Realm, days_ago: int) -> int:
         sent_time_cutoff = timezone_now() - datetime.timedelta(days=days_ago)
@@ -101,9 +99,7 @@ class Command(BaseCommand):
             .count()
         )
 
-    def report_percentage(
-        self, numerator: float, denominator: float, text: str,
-    ) -> None:
+    def report_percentage(self, numerator: float, denominator: float, text: str) -> None:
         if not denominator:
             fraction = 0.0
         else:
@@ -222,8 +218,7 @@ class Command(BaseCommand):
             )
             print(
                 "{} users have used code block markup on {} messages".format(
-                    len(markup_messages),
-                    sum([elt["count"] for elt in markup_messages]),
+                    len(markup_messages), sum([elt["count"] for elt in markup_messages]),
                 ),
             )
 

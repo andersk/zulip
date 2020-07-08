@@ -89,9 +89,7 @@ def create_integration_bot(
     return bot
 
 
-def create_integration_stream(
-    integration: WebhookIntegration, bot: UserProfile,
-) -> None:
+def create_integration_stream(integration: WebhookIntegration, bot: UserProfile) -> None:
     assert isinstance(bot.bot_owner, UserProfile)
     stream, created = create_stream_if_needed(
         bot.bot_owner.realm, integration.stream_name,

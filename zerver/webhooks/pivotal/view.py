@@ -127,9 +127,7 @@ def api_pivotal_webhook_v5(
                 else:
                     estimate = f"changed from {old_estimate} to"
                 new_estimate = (
-                    new_values["estimate"]
-                    if new_values["estimate"] is not None
-                    else "0"
+                    new_values["estimate"] if new_values["estimate"] is not None else "0"
                 )
                 content += f"* estimate {estimate} **{new_estimate} points**\n"
             if "story_type" in old_values and "story_type" in new_values:
@@ -174,9 +172,7 @@ def api_pivotal_webhook_v5(
 
 @api_key_only_webhook_view("Pivotal")
 @has_request_variables
-def api_pivotal_webhook(
-    request: HttpRequest, user_profile: UserProfile,
-) -> HttpResponse:
+def api_pivotal_webhook(request: HttpRequest, user_profile: UserProfile) -> HttpResponse:
     subject = content = None
     try:
         subject, content = api_pivotal_webhook_v3(request, user_profile)

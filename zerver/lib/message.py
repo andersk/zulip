@@ -1018,9 +1018,7 @@ def aggregate_unread_data(raw_data: RawUnreadMessagesResult) -> UnreadMessagesRe
     )
 
     huddle_objects = aggregate_message_dict(
-        input_dict=huddle_dict,
-        lookup_fields=["user_ids_string"],
-        collect_senders=False,
+        input_dict=huddle_dict, lookup_fields=["user_ids_string"], collect_senders=False,
     )
 
     result: UnreadMessagesResult = dict(

@@ -57,8 +57,7 @@ approach shown above.
         )
 
         self.add_realm_args(
-            parser,
-            help="Specify which realm/subdomain to connect to; default is zulip",
+            parser, help="Specify which realm/subdomain to connect to; default is zulip",
         )
 
     def parse_headers(

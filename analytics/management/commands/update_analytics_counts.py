@@ -31,10 +31,7 @@ class Command(BaseCommand):
             default=timezone_now().isoformat(),
         )
         parser.add_argument(
-            "--utc",
-            action="store_true",
-            help="Interpret --time in UTC.",
-            default=False,
+            "--utc", action="store_true", help="Interpret --time in UTC.", default=False,
         )
         parser.add_argument(
             "--stat",

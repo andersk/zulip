@@ -4,9 +4,7 @@ from django.db.migrations.state import StateApps
 from django.db.models import Count, Sum
 
 
-def clear_duplicate_counts(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def clear_duplicate_counts(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     """This is a preparatory migration for our Analytics tables.
 
     The backstory is that Django's unique_together indexes do not properly

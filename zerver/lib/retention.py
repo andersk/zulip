@@ -133,10 +133,7 @@ def run_archiving_in_chunks(
     #
     # We implement this design by executing queries that archive messages and their related objects
     # (such as UserMessage, Reaction, and Attachment) inside the same transaction.atomic() block.
-    assert type in (
-        ArchiveTransaction.MANUAL,
-        ArchiveTransaction.RETENTION_POLICY_BASED,
-    )
+    assert type in (ArchiveTransaction.MANUAL, ArchiveTransaction.RETENTION_POLICY_BASED)
 
     message_count = 0
     while True:

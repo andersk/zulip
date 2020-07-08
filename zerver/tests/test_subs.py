@@ -349,9 +349,7 @@ class TestCreateStreams(ZulipTestCase):
 
         # According to the code in zerver/views/streams/add_subscriptions_backend
         # the notification stream message is sent first, then the new stream's message.
-        self.assertEqual(
-            hamlet_unread_messages[0]["sender_ids"][0], notification_bot.id,
-        )
+        self.assertEqual(hamlet_unread_messages[0]["sender_ids"][0], notification_bot.id)
         self.assertEqual(hamlet_unread_messages[1]["stream_id"], stream_id)
 
         # But it should be marked as read for Iago, the stream creator.
@@ -952,16 +950,13 @@ class StreamAdminTest(ZulipTestCase):
         result = self.client_patch(
             f"/json/streams/{stream.id}", {"message_retention_days": ujson.dumps(2)},
         )
-        self.assert_json_error(
-            result, "Available on Zulip Standard. Upgrade to access.",
-        )
+        self.assert_json_error(result, "Available on Zulip Standard. Upgrade to access.")
 
         do_change_plan_type(realm, Realm.SELF_HOSTED)
         events: List[Mapping[str, Any]] = []
         with tornado_redirected_to_list(events):
             result = self.client_patch(
-                f"/json/streams/{stream.id}",
-                {"message_retention_days": ujson.dumps(2)},
+                f"/json/streams/{stream.id}", {"message_retention_days": ujson.dumps(2)},
             )
         self.assert_json_success(result)
 
@@ -1035,9 +1030,7 @@ class StreamAdminTest(ZulipTestCase):
             f"/json/streams/{stream.id}",
             {"message_retention_days": ujson.dumps("invalid")},
         )
-        self.assert_json_error(
-            result, "Bad value for 'message_retention_days': invalid",
-        )
+        self.assert_json_error(result, "Bad value for 'message_retention_days': invalid")
 
         result = self.client_patch(
             f"/json/streams/{stream.id}", {"message_retention_days": ujson.dumps(-1)},
@@ -1513,9 +1506,7 @@ class StreamAdminTest(ZulipTestCase):
         cordelia_user.save()
 
         do_set_realm_property(
-            hamlet_user.realm,
-            "invite_to_stream_policy",
-            Realm.POLICY_FULL_MEMBERS_ONLY,
+            hamlet_user.realm, "invite_to_stream_policy", Realm.POLICY_FULL_MEMBERS_ONLY,
         )
         cordelia_user_id = cordelia_user.id
 
@@ -1638,9 +1629,7 @@ class DefaultStreamTest(ZulipTestCase):
         stream = ensure_stream(user_profile.realm, stream_name)
         result = self.client_post("/json/default_streams", dict(stream_id=stream.id))
         self.assert_json_success(result)
-        self.assertTrue(
-            stream_name in self.get_default_stream_names(user_profile.realm),
-        )
+        self.assertTrue(stream_name in self.get_default_stream_names(user_profile.realm))
 
         # look for it
         self.subscribe(user_profile, stream_name)
@@ -1673,9 +1662,7 @@ class DefaultStreamTest(ZulipTestCase):
         self.subscribe(user_profile, stream_name)
         result = self.client_post("/json/default_streams", dict(stream_id=stream.id))
         self.assert_json_success(result)
-        self.assertTrue(
-            stream_name in self.get_default_stream_names(user_profile.realm),
-        )
+        self.assertTrue(stream_name in self.get_default_stream_names(user_profile.realm))
 
         # Test admin can remove unsubscribed private stream
         self.unsubscribe(user_profile, stream_name)
@@ -3086,9 +3073,7 @@ class SubscriptionAPITest(ZulipTestCase):
         realm = user_profile.realm
 
         do_set_realm_property(realm, "create_stream_policy", Realm.POLICY_MEMBERS_ONLY)
-        do_set_realm_property(
-            realm, "invite_to_stream_policy", Realm.POLICY_ADMINS_ONLY,
-        )
+        do_set_realm_property(realm, "invite_to_stream_policy", Realm.POLICY_ADMINS_ONLY)
         result = self.common_subscribe_to_streams(
             self.test_user,
             ["stream1"],
@@ -3190,9 +3175,7 @@ class SubscriptionAPITest(ZulipTestCase):
         self.assertIsInstance(other_profile, UserProfile)
         self.assertNotEqual(len(current_streams), 0)  # necessary for full test coverage
         self.assertNotEqual(len(streams), 0)  # necessary for full test coverage
-        streams_to_sub = streams[
-            :1
-        ]  # just add one, to make the message easier to check
+        streams_to_sub = streams[:1]  # just add one, to make the message easier to check
         streams_to_sub.extend(current_streams)
         self.helper_check_subs_before_and_after_add(
             streams_to_sub,
@@ -3232,9 +3215,7 @@ class SubscriptionAPITest(ZulipTestCase):
         self.assert_length(queries, 40)
 
         self.assert_length(events, 7)
-        for ev in [
-            x for x in events if x["event"]["type"] not in ("message", "stream")
-        ]:
+        for ev in [x for x in events if x["event"]["type"] not in ("message", "stream")]:
             if ev["event"]["op"] == "add":
                 self.assertEqual(
                     set(ev["event"]["subscriptions"][0]["subscribers"]),
@@ -4281,9 +4262,7 @@ class GetStreamsTest(ZulipTestCase):
 
         json = result.json()
         all_streams = [stream.name for stream in Stream.objects.filter(realm=realm)]
-        self.assertEqual(
-            sorted(s["name"] for s in json["streams"]), sorted(all_streams),
-        )
+        self.assertEqual(sorted(s["name"] for s in json["streams"]), sorted(all_streams))
 
 
 class StreamIdTest(ZulipTestCase):
@@ -4473,9 +4452,7 @@ class GetSubscribersTest(ZulipTestCase):
             self.example_user("cordelia").id,
         ]
         self.common_subscribe_to_streams(
-            self.user_profile,
-            streams,
-            dict(principals=ujson.dumps(users_to_subscribe)),
+            self.user_profile, streams, dict(principals=ujson.dumps(users_to_subscribe)),
         )
 
         msg = """
@@ -4842,9 +4819,7 @@ class AccessStreamTest(ZulipTestCase):
         # Both Othello and Hamlet can access a public stream that only
         # Hamlet is subscribed to in this realm
         public_stream_name = "public_stream"
-        self.common_subscribe_to_streams(
-            hamlet, [public_stream_name], invite_only=False,
-        )
+        self.common_subscribe_to_streams(hamlet, [public_stream_name], invite_only=False)
         public_stream = get_stream(public_stream_name, hamlet.realm)
         access_stream_by_id(othello, public_stream.id)
         access_stream_by_name(othello, public_stream.name)
@@ -4873,9 +4848,7 @@ class AccessStreamTest(ZulipTestCase):
             access_stream_by_name(sipbtest, mit_stream.name)
 
         # But they can access streams they are subscribed to
-        self.common_subscribe_to_streams(
-            sipbtest, [mit_stream.name], subdomain="zephyr",
-        )
+        self.common_subscribe_to_streams(sipbtest, [mit_stream.name], subdomain="zephyr")
         access_stream_by_id(sipbtest, mit_stream.id)
         access_stream_by_name(sipbtest, mit_stream.name)
 

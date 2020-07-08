@@ -187,9 +187,7 @@ def build_message_list(
         if message.recipient.type == Recipient.PERSONAL:
             narrow_link = get_narrow_url(user_profile, message)
             header = f"You and {message.sender.full_name}"
-            header_html = (
-                f"<a style='color: #ffffff;' href='{narrow_link}'>{header}</a>"
-            )
+            header_html = f"<a style='color: #ffffff;' href='{narrow_link}'>{header}</a>"
         elif message.recipient.type == Recipient.HUDDLE:
             display_recipient = get_display_recipient(message.recipient)
             assert not isinstance(display_recipient, str)
@@ -200,9 +198,7 @@ def build_message_list(
                 r["full_name"] for r in display_recipient if r["id"] != user_profile.id
             ]
             header = "You and {}".format(", ".join(other_recipients))
-            header_html = (
-                f"<a style='color: #ffffff;' href='{narrow_link}'>{header}</a>"
-            )
+            header_html = f"<a style='color: #ffffff;' href='{narrow_link}'>{header}</a>"
         else:
             stream = Stream.objects.only("id", "name").get(id=message.recipient.type_id)
             narrow_link = get_narrow_url(user_profile, message, stream=stream)
@@ -311,9 +307,7 @@ def message_content_allowed_in_missedmessage_emails(user_profile: UserProfile) -
 
 @statsd_increment("missed_message_reminders")
 def do_send_missedmessage_events_reply_in_zulip(
-    user_profile: UserProfile,
-    missed_messages: List[Dict[str, Any]],
-    message_count: int,
+    user_profile: UserProfile, missed_messages: List[Dict[str, Any]], message_count: int,
 ) -> None:
     """
     Send a reminder email to a user if she's missed some PMs by being offline.

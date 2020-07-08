@@ -128,10 +128,7 @@ def fix_unsubscribed(cursor: CursorObj, user_profile: UserProfile) -> None:
 
         cursor.execute(
             query,
-            {
-                "user_profile_id": user_profile.id,
-                "recipient_ids": tuple(recipient_ids),
-            },
+            {"user_profile_id": user_profile.id, "recipient_ids": tuple(recipient_ids)},
         )
         rows = cursor.fetchall()
         for row in rows:

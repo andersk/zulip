@@ -6,18 +6,7 @@ import urllib
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
 from decimal import Decimal
-from typing import (
-    Any,
-    Callable,
-    Dict,
-    List,
-    Optional,
-    Sequence,
-    Set,
-    Tuple,
-    Type,
-    Union,
-)
+from typing import Any, Callable, Dict, List, Optional, Sequence, Set, Tuple, Type, Union
 
 import pytz
 from django.conf import settings
@@ -105,9 +94,7 @@ MAX_TIME_FOR_FULL_ANALYTICS_GENERATION = timedelta(days=1, minutes=30)
 
 
 def is_analytics_ready(realm: Realm) -> bool:
-    return (
-        timezone_now() - realm.date_created
-    ) > MAX_TIME_FOR_FULL_ANALYTICS_GENERATION
+    return (timezone_now() - realm.date_created) > MAX_TIME_FOR_FULL_ANALYTICS_GENERATION
 
 
 def render_stats(

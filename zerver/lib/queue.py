@@ -218,9 +218,7 @@ class SimpleQueueClient:
 # Patch pika.adapters.tornado_connection.TornadoConnection so that a socket error doesn't
 # throw an exception and disconnect the tornado process from the rabbitmq
 # queue. Instead, just re-connect as usual
-class ExceptionFreeTornadoConnection(
-    pika.adapters.tornado_connection.TornadoConnection,
-):
+class ExceptionFreeTornadoConnection(pika.adapters.tornado_connection.TornadoConnection):
     def _adapter_disconnect(self) -> None:
         try:
             super()._adapter_disconnect()

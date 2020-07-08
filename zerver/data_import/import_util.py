@@ -138,9 +138,7 @@ def build_avatar(
     avatar_list.append(avatar)
 
 
-def make_subscriber_map(
-    zerver_subscription: List[ZerverFieldsT],
-) -> Dict[int, Set[int]]:
+def make_subscriber_map(zerver_subscription: List[ZerverFieldsT]) -> Dict[int, Set[int]]:
     """
     This can be convenient for building up UserMessage
     rows.
@@ -660,9 +658,7 @@ def run_parallel_wrapper(
                 logging.info("A download thread finished %s items", count)
         return 0
 
-    job_lists: List[List[ListJobData]] = [
-        full_items[i::threads] for i in range(threads)
-    ]
+    job_lists: List[List[ListJobData]] = [full_items[i::threads] for i in range(threads)]
     return run_parallel(wrapping_function, job_lists, threads=threads)
 
 

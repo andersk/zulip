@@ -172,9 +172,7 @@ def get_openapi_parameters(
     parameters = openapi_endpoint.get("parameters", [])
     # Also, we skip parameters defined in the URL.
     if not include_url_parameters:
-        parameters = [
-            parameter for parameter in parameters if parameter["in"] != "path"
-        ]
+        parameters = [parameter for parameter in parameters if parameter["in"] != "path"]
     return parameters
 
 

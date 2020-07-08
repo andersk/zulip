@@ -6,9 +6,7 @@ import time
 from collections import defaultdict
 from typing import Any, DefaultDict, Dict, List
 
-ZULIP_PATH = os.path.dirname(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-)
+ZULIP_PATH = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 normal_queues = [
     "deferred_work",
@@ -208,9 +206,7 @@ def check_rabbitmq_queues() -> None:
     results = []
     for queue_name, stats in queue_stats.items():
         results.append(
-            analyze_queue_stats(
-                queue_name, stats, queue_counts_rabbitmqctl[queue_name],
-            ),
+            analyze_queue_stats(queue_name, stats, queue_counts_rabbitmqctl[queue_name]),
         )
 
     results.extend(check_other_queues(queue_counts_rabbitmqctl))

@@ -15,9 +15,7 @@ from zerver.models import UserProfile, get_user_profile_by_api_key
 
 
 class ChangeSettingsTest(ZulipTestCase):
-    def check_well_formed_change_settings_response(
-        self, result: Dict[str, Any],
-    ) -> None:
+    def check_well_formed_change_settings_response(self, result: Dict[str, Any]) -> None:
         self.assertIn("full_name", result)
 
     # DEPRECATED, to be deleted after all uses of check_for_toggle_param
@@ -288,8 +286,7 @@ class ChangeSettingsTest(ZulipTestCase):
             self.assert_json_error(result, "Your Zulip password is managed in LDAP")
 
         with self.settings(
-            LDAP_APPEND_DOMAIN="example.com",
-            AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map,
+            LDAP_APPEND_DOMAIN="example.com", AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map,
         ):
             result = self.client_patch(
                 "/json/settings",

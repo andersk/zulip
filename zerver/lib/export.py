@@ -1063,9 +1063,7 @@ def export_partial_message_files(
         recipient_ids = Recipient.objects.filter(
             type=Recipient.STREAM, type_id__in=recipient_streams,
         ).values_list("id", flat=True)
-        recipient_ids_for_us = get_ids(response["zerver_recipient"]) & set(
-            recipient_ids,
-        )
+        recipient_ids_for_us = get_ids(response["zerver_recipient"]) & set(recipient_ids)
     elif consent_message_id is not None:
         public_streams = Stream.objects.filter(realm=realm, invite_only=False)
         public_stream_recipient_ids = Recipient.objects.filter(
@@ -1112,8 +1110,7 @@ def export_partial_message_files(
         )
 
         recipients_for_them = Recipient.objects.filter(
-            type=Recipient.PERSONAL,
-            type_id__in=ids_of_non_exported_possible_recipients,
+            type=Recipient.PERSONAL, type_id__in=ids_of_non_exported_possible_recipients,
         ).values("id")
         recipient_ids_for_them = get_ids(recipients_for_them)
 

@@ -71,8 +71,7 @@ def run() -> None:
         ["node", "node_modules/.bin/stylelint"],
         ["css", "scss"],
         fix_arg="--fix",
-        description="Standard CSS style and formatting linter "
-        "(config: .stylelintrc)",
+        description="Standard CSS style and formatting linter " "(config: .stylelintrc)",
     )
     linter_config.external_linter(
         "eslint",

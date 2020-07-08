@@ -10,9 +10,7 @@ class HarborHookTests(WebhookTestCase):
     def test_push_image(self) -> None:
         expected_topic = "example/test"
         expected_message = """**admin** pushed image `example/test:latest`"""
-        self.send_and_test_stream_message(
-            "push_image", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("push_image", expected_topic, expected_message)
 
     @patch("zerver.lib.webhooks.common.check_send_webhook_message")
     def test_delete_image_ignored(

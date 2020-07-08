@@ -82,8 +82,6 @@ Usage examples:
                 self.print_help("./manage.py", "client_activity")
         elif options["target"] == "user":
             user_profile = self.get_user(options["user"], realm)
-            self.compute_activity(
-                UserActivity.objects.filter(user_profile=user_profile),
-            )
+            self.compute_activity(UserActivity.objects.filter(user_profile=user_profile))
         else:
             self.print_help("./manage.py", "client_activity")

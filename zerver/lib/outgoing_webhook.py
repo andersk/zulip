@@ -26,9 +26,7 @@ from zerver.models import (
 
 
 class OutgoingWebhookServiceInterface(metaclass=abc.ABCMeta):
-    def __init__(
-        self, token: str, user_profile: UserProfile, service_name: str,
-    ) -> None:
+    def __init__(self, token: str, user_profile: UserProfile, service_name: str) -> None:
         self.token: str = token
         self.user_profile: UserProfile = user_profile
         self.service_name: str = service_name
@@ -42,9 +40,7 @@ class OutgoingWebhookServiceInterface(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def process_success(
-        self, response_json: Dict[str, Any],
-    ) -> Optional[Dict[str, Any]]:
+    def process_success(self, response_json: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         raise NotImplementedError
 
 
@@ -81,14 +77,10 @@ class GenericOutgoingWebhookService(OutgoingWebhookServiceInterface):
             "content-type": "application/json",
             "User-Agent": user_agent,
         }
-        response = requests.request(
-            "POST", base_url, data=request_data, headers=headers,
-        )
+        response = requests.request("POST", base_url, data=request_data, headers=headers)
         return response
 
-    def process_success(
-        self, response_json: Dict[str, Any],
-    ) -> Optional[Dict[str, Any]]:
+    def process_success(self, response_json: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         if (
             "response_not_required" in response_json
             and response_json["response_not_required"]
@@ -138,9 +130,7 @@ class SlackOutgoingWebhookService(OutgoingWebhookServiceInterface):
         response = requests.request("POST", base_url, data=request_data)
         return response
 
-    def process_success(
-        self, response_json: Dict[str, Any],
-    ) -> Optional[Dict[str, Any]]:
+    def process_success(self, response_json: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         if "text" in response_json:
             content = response_json["text"]
             success_data = dict(content=content)
@@ -271,9 +261,7 @@ def notify_bot_owner(
             f"of type {type(exception).__name__} occurred:\n```\n{exception}\n```"
         )
 
-    message_info = dict(
-        type="private", display_recipient=[dict(email=bot_owner.email)],
-    )
+    message_info = dict(type="private", display_recipient=[dict(email=bot_owner.email)])
     response_data = dict(content=notification_message)
     send_response_message(
         bot_id=bot_id, message_info=message_info, response_data=response_data,

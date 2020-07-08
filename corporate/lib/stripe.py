@@ -32,9 +32,7 @@ STRIPE_PUBLISHABLE_KEY = get_secret("stripe_publishable_key")
 stripe.api_key = get_secret("stripe_secret_key")
 
 BILLING_LOG_PATH = os.path.join(
-    "/var/log/zulip"
-    if not settings.DEVELOPMENT
-    else settings.DEVELOPMENT_LOG_DIRECTORY,
+    "/var/log/zulip" if not settings.DEVELOPMENT else settings.DEVELOPMENT_LOG_DIRECTORY,
     "billing.log",
 )
 billing_logger = logging.getLogger("corporate.stripe")
@@ -771,8 +769,6 @@ def downgrade_now(realm: Realm) -> None:
         return
 
     process_downgrade(plan)
-    plan.invoiced_through = (
-        LicenseLedger.objects.filter(plan=plan).order_by("id").last()
-    )
+    plan.invoiced_through = LicenseLedger.objects.filter(plan=plan).order_by("id").last()
     plan.next_invoice_date = next_invoice_date(plan)
     plan.save(update_fields=["invoiced_through", "next_invoice_date"])

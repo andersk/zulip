@@ -347,9 +347,7 @@ class LogRequests(MiddlewareMixin):
             ):
                 requestor_for_logs = request.user.format_requestor_for_logs()
             else:
-                requestor_for_logs = "unauth@{}".format(
-                    get_subdomain(request) or "root",
-                )
+                requestor_for_logs = "unauth@{}".format(get_subdomain(request) or "root")
         try:
             client = request.client.name
         except Exception:

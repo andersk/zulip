@@ -18,9 +18,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterUniqueTogether(
             name="streamcount",
-            unique_together={
-                ("stream", "property", "subgroup", "end_time", "interval"),
-            },
+            unique_together={("stream", "property", "subgroup", "end_time", "interval")},
         ),
         migrations.AlterUniqueTogether(
             name="usercount",

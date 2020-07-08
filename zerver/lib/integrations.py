@@ -430,9 +430,7 @@ WEBHOOK_INTEGRATIONS: List[WebhookIntegration] = [
         logo="images/integrations/logos/slack.svg",
     ),
     WebhookIntegration("slack", ["communication"]),
-    WebhookIntegration(
-        "solano", ["continuous-integration"], display_name="Solano Labs",
-    ),
+    WebhookIntegration("solano", ["continuous-integration"], display_name="Solano Labs"),
     WebhookIntegration("splunk", ["monitoring"], display_name="Splunk"),
     WebhookIntegration("statuspage", ["customer-support"], display_name="Statuspage"),
     WebhookIntegration("stripe", ["financial"], display_name="Stripe"),

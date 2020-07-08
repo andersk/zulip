@@ -115,11 +115,7 @@ class TypesPrintTest(ZulipTestCase):
             "add(A([]), B([str])) -> [str]", ["two"], add, A([]), B(["two"]),
         )
         self.check_signature(
-            "add(A([int]), B([str])) -> [int, ...]",
-            [2, "two"],
-            add,
-            A([2]),
-            B(["two"]),
+            "add(A([int]), B([str])) -> [int, ...]", [2, "two"], add, A([2]), B(["two"]),
         )
         self.check_signature(
             "add(A([int, ...]), y=B([])) -> [int, ...]",

@@ -556,9 +556,7 @@ def list_to_streams(
     return existing_streams, created_streams
 
 
-def access_default_stream_group_by_id(
-    realm: Realm, group_id: int,
-) -> DefaultStreamGroup:
+def access_default_stream_group_by_id(realm: Realm, group_id: int) -> DefaultStreamGroup:
     try:
         return DefaultStreamGroup.objects.get(realm=realm, id=group_id)
     except DefaultStreamGroup.DoesNotExist:

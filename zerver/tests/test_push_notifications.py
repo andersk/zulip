@@ -329,16 +329,12 @@ class PushBouncerNotificationTest(BouncerTestCase):
             # Try adding/removing tokens that are too big...
             broken_token = "a" * 5000  # too big
             result = self.client_post(
-                endpoint,
-                {"token": broken_token, "token_kind": kind},
-                subdomain="zulip",
+                endpoint, {"token": broken_token, "token_kind": kind}, subdomain="zulip",
             )
             self.assert_json_error(result, "Empty or invalid length token")
 
             result = self.client_delete(
-                endpoint,
-                {"token": broken_token, "token_kind": kind},
-                subdomain="zulip",
+                endpoint, {"token": broken_token, "token_kind": kind}, subdomain="zulip",
             )
             self.assert_json_error(result, "Empty or invalid length token")
 
@@ -839,8 +835,7 @@ class HandlePushNotificationTest(PushNotificationTest):
             "trigger": "private_message",
         }
         with self.settings(PUSH_NOTIFICATION_BOUNCER_URL=""), mock.patch(
-            "zerver.lib.remote_server.requests.request",
-            side_effect=self.bounce_request,
+            "zerver.lib.remote_server.requests.request", side_effect=self.bounce_request,
         ), mock.patch(
             "zerver.lib.push_notifications.gcm_client",
         ) as mock_gcm, self.mock_apns() as mock_apns, mock.patch(
@@ -905,8 +900,7 @@ class HandlePushNotificationTest(PushNotificationTest):
             "trigger": "private_message",
         }
         with self.settings(PUSH_NOTIFICATION_BOUNCER_URL=""), mock.patch(
-            "zerver.lib.remote_server.requests.request",
-            side_effect=self.bounce_request,
+            "zerver.lib.remote_server.requests.request", side_effect=self.bounce_request,
         ), mock.patch(
             "zerver.lib.push_notifications.gcm_client",
         ) as mock_gcm, mock.patch(
@@ -1512,9 +1506,7 @@ class TestGetAPNsPayload(PushNotificationTest):
                     "recipient_type": "private",
                     "pm_users": ",".join(
                         str(s.user_profile_id)
-                        for s in Subscription.objects.filter(
-                            recipient=message.recipient,
-                        )
+                        for s in Subscription.objects.filter(recipient=message.recipient)
                     ),
                     "sender_email": self.sender.email,
                     "sender_id": self.sender.id,
@@ -1646,9 +1638,7 @@ class TestGetAPNsPayload(PushNotificationTest):
                     "recipient_type": "private",
                     "pm_users": ",".join(
                         str(s.user_profile_id)
-                        for s in Subscription.objects.filter(
-                            recipient=message.recipient,
-                        )
+                        for s in Subscription.objects.filter(recipient=message.recipient)
                     ),
                     "sender_email": self.sender.email,
                     "sender_id": self.sender.id,
@@ -1947,8 +1937,7 @@ class TestPushApi(BouncerTestCase):
         with self.settings(
             PUSH_NOTIFICATION_BOUNCER_URL="https://push.zulip.org.example.com",
         ), mock.patch(
-            "zerver.lib.remote_server.requests.request",
-            side_effect=self.bounce_request,
+            "zerver.lib.remote_server.requests.request", side_effect=self.bounce_request,
         ):
             # Enable push notification bouncer and add tokens.
             for endpoint, token in bouncer_requests:
@@ -1995,8 +1984,7 @@ class TestPushApi(BouncerTestCase):
         with self.settings(
             PUSH_NOTIFICATION_BOUNCER_URL="https://push.zulip.org.example.com",
         ), mock.patch(
-            "zerver.lib.remote_server.requests.request",
-            side_effect=self.bounce_request,
+            "zerver.lib.remote_server.requests.request", side_effect=self.bounce_request,
         ):
             for endpoint, token in bouncer_requests:
                 result = self.client_delete(endpoint, {"token": token})
@@ -2439,6 +2427,5 @@ class PushBouncerSignupTest(ZulipTestCase):
         )
         result = self.client_post("/api/v1/remotes/server/register", request)
         self.assert_json_error(
-            result,
-            f"Zulip server auth failure: key does not match role {zulip_org_id}",
+            result, f"Zulip server auth failure: key does not match role {zulip_org_id}",
         )

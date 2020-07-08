@@ -286,9 +286,7 @@ if __name__ == "__main__":
 
     api_token = config["digitalocean"]["api_token"]
     # does the droplet already exist?
-    exit_if_droplet_exists(
-        my_token=api_token, username=username, recreate=args.recreate,
-    )
+    exit_if_droplet_exists(my_token=api_token, username=username, recreate=args.recreate)
 
     # set user_data
     user_data = set_user_data(username=username, userkey_dicts=public_keys)

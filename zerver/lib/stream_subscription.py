@@ -15,9 +15,7 @@ def get_active_subscriptions_for_stream_id(stream_id: int) -> QuerySet:
 def get_active_subscriptions_for_stream_ids(stream_ids: List[int]) -> QuerySet:
     # TODO: Change return type to QuerySet[Subscription]
     return Subscription.objects.filter(
-        recipient__type=Recipient.STREAM,
-        recipient__type_id__in=stream_ids,
-        active=True,
+        recipient__type=Recipient.STREAM, recipient__type_id__in=stream_ids, active=True,
     )
 
 

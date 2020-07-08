@@ -15,9 +15,7 @@ def analyze_activity(options: Dict[str, Any]) -> None:
 
     user_profile_query = UserProfile.objects.all()
     if options["realm"]:
-        user_profile_query = user_profile_query.filter(
-            realm__string_id=options["realm"],
-        )
+        user_profile_query = user_profile_query.filter(realm__string_id=options["realm"])
 
     print("Per-user online duration:\n")
     total_duration = datetime.timedelta(0)

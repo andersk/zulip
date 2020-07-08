@@ -226,9 +226,7 @@ class CreateCustomProfileFieldTest(CustomProfileFieldTestCase):
         data["name"] = "Reddit"
         data["field_data"] = ujson.dumps({"subtype": "custom"})
         result = self.client_post("/json/realm/profile_fields", info=data)
-        self.assert_json_error(
-            result, "Custom external account must define url pattern",
-        )
+        self.assert_json_error(result, "Custom external account must define url pattern")
 
         data["field_data"] = ujson.dumps({"subtype": "custom", "url_pattern": 123})
         result = self.client_post("/json/realm/profile_fields", info=data)

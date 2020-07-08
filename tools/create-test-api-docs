@@ -60,9 +60,7 @@ def fix_test_name(s: str) -> str:
     return s.replace("zerver.tests.", "")
 
 
-def create_single_page(
-    pattern: str, out_dir: str, href: str, calls: List[Call],
-) -> None:
+def create_single_page(pattern: str, out_dir: str, href: str, calls: List[Call]) -> None:
     fn = out_dir + "/" + href
     with open(fn, "w") as f:
         f.write(

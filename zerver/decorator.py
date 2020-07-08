@@ -759,9 +759,7 @@ def authenticated_rest_api_view(
                             request_body=request_body,
                             request=request,
                             user_profile=profile,
-                            unexpected_event=isinstance(
-                                err, UnexpectedWebhookEventType,
-                            ),
+                            unexpected_event=isinstance(err, UnexpectedWebhookEventType),
                         )
 
                 raise err
@@ -838,9 +836,7 @@ def authenticate_log_and_execute_json(
     if user_profile.is_incoming_webhook:
         raise JsonableError(_("Webhook bots can only access webhooks"))
 
-    process_client(
-        request, user_profile, is_browser_view=True, query=view_func.__name__,
-    )
+    process_client(request, user_profile, is_browser_view=True, query=view_func.__name__)
     return limited_view_func(request, user_profile, *args, **kwargs)
 
 

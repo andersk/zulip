@@ -392,9 +392,7 @@ so maybe we shouldn't mark it as intentionally undocumented in the urls.
                 val = v
         return tyiroirp.get(val, types[0])
 
-    def get_standardized_argument_type(
-        self, t: Any,
-    ) -> Union[type, Tuple[type, object]]:
+    def get_standardized_argument_type(self, t: Any) -> Union[type, Tuple[type, object]]:
         """ Given a type from the typing module such as List[str] or Union[str, int],
         convert it into a corresponding Python type. Unions are mapped to a canonical
         choice among the options.
@@ -699,9 +697,7 @@ so maybe we shouldn't include it in pending_endpoints.
                     print(" +", openapi_parameter_names)
                     print(" -", accepted_arguments)
                     assert url_pattern in self.buggy_documentation_endpoints
-                elif (
-                    len(openapi_parameter_names - accepted_arguments) > 0
-                ):  # nocoverage
+                elif len(openapi_parameter_names - accepted_arguments) > 0:  # nocoverage
                     print(
                         "Documented invalid parameters for",
                         url_pattern,

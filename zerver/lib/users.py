@@ -457,9 +457,7 @@ def user_profile_to_user_row(user_profile: UserProfile) -> Dict[str, Any]:
     # This could be potentially simplified in the future by
     # changing realm_user_dict_fields to name the bot owner with
     # the less readable `bot_owner` (instead of `bot_owner_id`).
-    user_row = model_to_dict(
-        user_profile, fields=realm_user_dict_fields + ["bot_owner"],
-    )
+    user_row = model_to_dict(user_profile, fields=realm_user_dict_fields + ["bot_owner"])
     user_row["bot_owner_id"] = user_row["bot_owner"]
     del user_row["bot_owner"]
     return user_row

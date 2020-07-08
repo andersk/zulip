@@ -70,8 +70,7 @@ class Migration(migrations.Migration):
             ),
         ),
         migrations.AlterUniqueTogether(
-            name="usergroupmembership",
-            unique_together={("user_group", "user_profile")},
+            name="usergroupmembership", unique_together={("user_group", "user_profile")},
         ),
         migrations.AlterUniqueTogether(
             name="usergroup", unique_together={("realm", "name")},

@@ -19,10 +19,7 @@ settings.RUNNING_INSIDE_TORNADO = True
 instrument_tornado_ioloop()
 
 from zerver.lib.debug import interactive_debug_listen
-from zerver.tornado.application import (
-    create_tornado_application,
-    setup_tornado_rabbitmq,
-)
+from zerver.tornado.application import create_tornado_application, setup_tornado_rabbitmq
 from zerver.tornado.autoreload import start as zulip_autoreload_start
 from zerver.tornado.event_queue import (
     add_client_gc_hook,

@@ -178,9 +178,7 @@ I'm a generic exception :(
 ```""",
         )
         assert self.bot_user.bot_owner is not None
-        self.assertEqual(
-            bot_owner_notification.recipient_id, self.bot_user.bot_owner.id,
-        )
+        self.assertEqual(bot_owner_notification.recipient_id, self.bot_user.bot_owner.id)
 
 
 class TestOutgoingWebhookMessaging(ZulipTestCase):

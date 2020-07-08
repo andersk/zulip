@@ -63,9 +63,7 @@ ONLY perform this on customer request from an authorized person.
                         do_change_is_api_super_user(user, True)
                     elif options["permission"] == "administer":
                         do_change_user_role(
-                            user,
-                            UserProfile.ROLE_REALM_ADMINISTRATOR,
-                            acting_user=None,
+                            user, UserProfile.ROLE_REALM_ADMINISTRATOR, acting_user=None,
                         )
                     print("Done!")
                 else:

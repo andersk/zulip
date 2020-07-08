@@ -92,9 +92,7 @@ class RealmCount(BaseCount):
         index_together = ["property", "end_time"]
 
     def __str__(self) -> str:
-        return (
-            f"<RealmCount: {self.realm} {self.property} {self.subgroup} {self.value}>"
-        )
+        return f"<RealmCount: {self.realm} {self.property} {self.subgroup} {self.value}>"
 
 
 class UserCount(BaseCount):

@@ -10,9 +10,7 @@ class Command(ZulipBaseCommand):
     help = """Manually block or unblock a user from accessing the API"""
 
     def add_arguments(self, parser: ArgumentParser) -> None:
-        parser.add_argument(
-            "-e", "--email", dest="email", help="Email account of user.",
-        )
+        parser.add_argument("-e", "--email", dest="email", help="Email account of user.")
         parser.add_argument("-a", "--api-key", dest="api_key", help="API key of user.")
         parser.add_argument(
             "-s",

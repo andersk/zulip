@@ -49,9 +49,7 @@ def unmute_topic(
     error = _("Topic is not muted")
 
     if stream_name is not None:
-        stream = access_stream_for_unmute_topic_by_name(
-            user_profile, stream_name, error,
-        )
+        stream = access_stream_for_unmute_topic_by_name(user_profile, stream_name, error)
     else:
         assert stream_id is not None
         stream = access_stream_for_unmute_topic_by_id(user_profile, stream_id, error)

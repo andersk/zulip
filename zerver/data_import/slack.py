@@ -402,9 +402,7 @@ def get_user_email(user: ZerverFieldsT, domain_name: str) -> str:
             slack_bot_name = user["profile"]["first_name"]
         else:
             raise AssertionError("Could not identify bot type")
-        return (
-            slack_bot_name.replace("Bot", "").replace(" ", "") + f"-bot@{domain_name}"
-        )
+        return slack_bot_name.replace("Bot", "").replace(" ", "") + f"-bot@{domain_name}"
     if get_user_full_name(user).lower() == "slackbot":
         return f"imported-slackbot-bot@{domain_name}"
     raise AssertionError(f"Could not find email address for Slack user {user}")
@@ -576,9 +574,7 @@ def channels_to_zerver_stream(
                 huddle_id_count, recipient_id_count, Recipient.HUDDLE,
             )
             realm["zerver_recipient"].append(recipient)
-            slack_recipient_name_to_zulip_recipient_id[
-                mpim["name"]
-            ] = recipient_id_count
+            slack_recipient_name_to_zulip_recipient_id[mpim["name"]] = recipient_id_count
 
             subscription_id_count = get_subscription(
                 mpim["members"],
@@ -642,9 +638,7 @@ def get_subscription(
 ) -> int:
     for slack_user_id in channel_members:
         sub = build_subscription(
-            recipient_id,
-            slack_user_id_to_zulip_user_id[slack_user_id],
-            subscription_id,
+            recipient_id, slack_user_id_to_zulip_user_id[slack_user_id], subscription_id,
         )
         zerver_subscription.append(sub)
         subscription_id += 1
@@ -1190,9 +1184,7 @@ def build_reactions(
 
             reaction_dict = model_to_dict(reaction, exclude=["message", "user_profile"])
             reaction_dict["message"] = message_id
-            reaction_dict["user_profile"] = slack_user_id_to_zulip_user_id[
-                slack_user_id
-            ]
+            reaction_dict["user_profile"] = slack_user_id_to_zulip_user_id[slack_user_id]
 
             reaction_list.append(reaction_dict)
 

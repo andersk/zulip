@@ -5,10 +5,7 @@ import markdown
 from markdown.extensions import Extension
 from markdown.preprocessors import Preprocessor
 
-from zerver.openapi.openapi import (
-    get_openapi_return_values,
-    likely_deprecated_parameter,
-)
+from zerver.openapi.openapi import get_openapi_return_values, likely_deprecated_parameter
 
 REGEXP = re.compile(r"\{generate_return_values_table\|\s*(.+?)\s*\|\s*(.+)\s*\}")
 

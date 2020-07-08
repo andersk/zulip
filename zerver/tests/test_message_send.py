@@ -1479,9 +1479,7 @@ class StreamMessagesTest(ZulipTestCase):
         message = most_recent_message(user_profile)
         row = MessageDict.get_raw_db_rows([message.id])[0]
         dct = MessageDict.build_dict_from_raw_db_row(row)
-        MessageDict.post_process_dicts(
-            [dct], apply_markdown=True, client_gravatar=False,
-        )
+        MessageDict.post_process_dicts([dct], apply_markdown=True, client_gravatar=False)
         self.assertEqual(dct["display_recipient"], "Denmark")
 
         stream = get_stream("Denmark", user_profile.realm)
@@ -1849,9 +1847,7 @@ class ExtractTest(ZulipTestCase):
     def test_extract_private_recipients_emails(self) -> None:
 
         # JSON list w/dups, empties, and trailing whitespace
-        s = ujson.dumps(
-            [" alice@zulip.com ", " bob@zulip.com ", "   ", "bob@zulip.com"],
-        )
+        s = ujson.dumps([" alice@zulip.com ", " bob@zulip.com ", "   ", "bob@zulip.com"])
         # sorted() gets confused by extract_private_recipients' return type
         # For testing, ignorance here is better than manual casting
         result = sorted(extract_private_recipients(s))
@@ -1931,10 +1927,7 @@ class InternalPrepTest(ZulipTestCase):
 
         with mock.patch("logging.exception") as m:
             internal_send_private_message(
-                realm=realm,
-                sender=cordelia,
-                recipient_user=hamlet,
-                content=bad_content,
+                realm=realm, sender=cordelia, recipient_user=hamlet, content=bad_content,
             )
 
         m.assert_called_once_with(
@@ -2165,11 +2158,7 @@ class TestAddressee(ZulipTestCase):
 
         result = Addressee.for_user_ids(user_ids=user_ids, realm=realm)
         user_profiles = result.user_profiles()
-        result_user_ids = [
-            user_profiles[0].id,
-            user_profiles[1].id,
-            user_profiles[2].id,
-        ]
+        result_user_ids = [user_profiles[0].id, user_profiles[1].id, user_profiles[2].id]
 
         self.assertEqual(set(result_user_ids), set(user_ids))
 
@@ -2258,9 +2247,7 @@ class CheckMessageTest(ZulipTestCase):
 
         new_count = message_stream_count(parent)
         self.assertEqual(new_count, old_count + 1)
-        self.assertIn(
-            "that stream does not exist.", most_recent_message(parent).content,
-        )
+        self.assertIn("that stream does not exist.", most_recent_message(parent).content)
 
         # Try sending to stream that exists with no subscribers soon
         # after; due to rate-limiting, this should send nothing.
@@ -2296,9 +2283,7 @@ class CheckMessageTest(ZulipTestCase):
         send_rate_limited_pm_notification_to_bot_owner(test_bot, wrong_realm, content)
         self.assertEqual(test_bot.last_reminder, None)
 
-        send_rate_limited_pm_notification_to_bot_owner(
-            wrong_sender, good_realm, content,
-        )
+        send_rate_limited_pm_notification_to_bot_owner(wrong_sender, good_realm, content)
         self.assertEqual(test_bot.last_reminder, None)
 
         test_bot.realm.deactivated = True

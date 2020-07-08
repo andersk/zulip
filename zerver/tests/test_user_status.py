@@ -80,10 +80,7 @@ class UserStatusTest(ZulipTestCase):
 
         # Clear the status_text now.
         update_user_status(
-            user_profile_id=hamlet.id,
-            status=None,
-            status_text="",
-            client_id=client2.id,
+            user_profile_id=hamlet.id, status=None, status_text="", client_id=client2.id,
         )
 
         self.assertEqual(

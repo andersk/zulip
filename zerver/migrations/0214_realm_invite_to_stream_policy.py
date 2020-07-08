@@ -29,8 +29,6 @@ class Migration(migrations.Migration):
             ),
         ),
         migrations.RunPython(
-            handle_waiting_period,
-            reverse_code=migrations.RunPython.noop,
-            elidable=True,
+            handle_waiting_period, reverse_code=migrations.RunPython.noop, elidable=True,
         ),
     ]

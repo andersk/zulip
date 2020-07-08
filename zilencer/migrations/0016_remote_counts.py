@@ -66,9 +66,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterUniqueTogether(
             name="remoterealmcount",
-            unique_together={
-                ("server", "realm_id", "property", "subgroup", "end_time"),
-            },
+            unique_together={("server", "realm_id", "property", "subgroup", "end_time")},
         ),
         migrations.AlterIndexTogether(
             name="remoterealmcount", index_together={("property", "end_time")},

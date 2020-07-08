@@ -23,9 +23,7 @@ def api_opsgenie_webhook(
         "alert_type": payload["action"],
         "alert_id": payload["alert"]["alertId"],
         "integration_name": payload["integrationName"],
-        "tags": ", ".join(
-            ["`" + tag + "`" for tag in payload["alert"].get("tags", [])],
-        ),
+        "tags": ", ".join(["`" + tag + "`" for tag in payload["alert"].get("tags", [])]),
     }
 
     topic = info["integration_name"]

@@ -241,9 +241,7 @@ class ImportExportTest(ZulipTestCase):
         result["message"] = read_file("messages-000001.json")
         try:
             message = read_file("messages-000002.json")
-            result["message"]["zerver_usermessage"].extend(
-                message["zerver_usermessage"],
-            )
+            result["message"]["zerver_usermessage"].extend(message["zerver_usermessage"])
             result["message"]["zerver_message"].extend(message["zerver_message"])
         except FileNotFoundError:
             pass
@@ -254,9 +252,7 @@ class ImportExportTest(ZulipTestCase):
         result["emoji_dir"] = os.path.join(output_dir, "emoji")
         result["emoji_dir_records"] = read_file(os.path.join("emoji", "records.json"))
         result["avatar_dir"] = os.path.join(output_dir, "avatars")
-        result["avatar_dir_records"] = read_file(
-            os.path.join("avatars", "records.json"),
-        )
+        result["avatar_dir_records"] = read_file(os.path.join("avatars", "records.json"))
         result["realm_icons_dir"] = os.path.join(output_dir, "realm_icons")
         result["realm_icons_dir_records"] = read_file(
             os.path.join("realm_icons", "records.json"),
@@ -475,9 +471,7 @@ class ImportExportTest(ZulipTestCase):
         realm = Realm.objects.get(string_id="zulip")
 
         default_bot = self.example_user("default_bot")
-        pm_a_msg_id = self.send_personal_message(
-            self.example_user("AARON"), default_bot,
-        )
+        pm_a_msg_id = self.send_personal_message(self.example_user("AARON"), default_bot)
         pm_b_msg_id = self.send_personal_message(default_bot, self.example_user("iago"))
         pm_c_msg_id = self.send_personal_message(
             self.example_user("othello"), self.example_user("hamlet"),
@@ -492,9 +486,7 @@ class ImportExportTest(ZulipTestCase):
         self.assertEqual(len(data["zerver_userprofile_crossrealm"]), 3)
         self.assertEqual(len(data["zerver_userprofile_mirrordummy"]), 0)
 
-        exported_user_emails = self.get_set(
-            data["zerver_userprofile"], "delivery_email",
-        )
+        exported_user_emails = self.get_set(data["zerver_userprofile"], "delivery_email")
         self.assertIn(self.example_email("cordelia"), exported_user_emails)
         self.assertIn("default-bot@zulip.com", exported_user_emails)
 
@@ -544,9 +536,7 @@ class ImportExportTest(ZulipTestCase):
 
         data = full_data["realm"]
 
-        exported_user_emails = self.get_set(
-            data["zerver_userprofile"], "delivery_email",
-        )
+        exported_user_emails = self.get_set(data["zerver_userprofile"], "delivery_email")
         self.assertIn(self.example_email("iago"), exported_user_emails)
         self.assertIn(self.example_email("hamlet"), exported_user_emails)
         self.assertNotIn("default-bot@zulip.com", exported_user_emails)
@@ -667,9 +657,7 @@ class ImportExportTest(ZulipTestCase):
         self.assertEqual(len(data["zerver_userprofile_crossrealm"]), 3)
         self.assertEqual(len(data["zerver_userprofile_mirrordummy"]), 0)
 
-        exported_user_emails = self.get_set(
-            data["zerver_userprofile"], "delivery_email",
-        )
+        exported_user_emails = self.get_set(data["zerver_userprofile"], "delivery_email")
         self.assertIn(self.example_email("cordelia"), exported_user_emails)
         self.assertIn(self.example_email("hamlet"), exported_user_emails)
         self.assertIn(self.example_email("iago"), exported_user_emails)
@@ -910,9 +898,7 @@ class ImportExportTest(ZulipTestCase):
         assert_realm_values(lambda r: {user.email for user in r.get_active_users()})
 
         # test stream
-        assert_realm_values(
-            lambda r: {stream.name for stream in get_active_streams(r)},
-        )
+        assert_realm_values(lambda r: {stream.name for stream in get_active_streams(r)})
 
         # test recipients
         def get_recipient_stream(r: Realm) -> Recipient:
@@ -1118,9 +1104,7 @@ class ImportExportTest(ZulipTestCase):
             # It should be sufficient to compare UserPresence timestamps to verify
             # they got exported/imported correctly.
             return set(
-                UserPresence.objects.filter(realm=r).values_list(
-                    "timestamp", flat=True,
-                ),
+                UserPresence.objects.filter(realm=r).values_list("timestamp", flat=True),
             )
 
         assert_realm_values(get_userpresence_timestamp)
@@ -1202,9 +1186,7 @@ class ImportExportTest(ZulipTestCase):
         emoji_path = RealmEmoji.PATH_ID_TEMPLATE.format(
             realm_id=imported_realm.id, emoji_file_name=realm_emoji.file_name,
         )
-        emoji_file_path = os.path.join(
-            settings.LOCAL_UPLOADS_DIR, "avatars", emoji_path,
-        )
+        emoji_file_path = os.path.join(settings.LOCAL_UPLOADS_DIR, "avatars", emoji_path)
         self.assertTrue(os.path.isfile(emoji_file_path))
 
         # Test avatars
@@ -1236,9 +1218,7 @@ class ImportExportTest(ZulipTestCase):
 
         with open(os.path.join(full_upload_path, "night_logo.original"), "rb") as f:
             self.assertEqual(f.read(), test_image_data)
-        self.assertTrue(
-            os.path.isfile(os.path.join(full_upload_path, "night_logo.png")),
-        )
+        self.assertTrue(os.path.isfile(os.path.join(full_upload_path, "night_logo.png")))
         self.assertEqual(imported_realm.night_logo_source, Realm.LOGO_UPLOADED)
 
     @use_s3_backend
@@ -1318,9 +1298,7 @@ class ImportExportTest(ZulipTestCase):
         import_dir = os.path.join(
             settings.DEPLOY_ROOT, "zerver", "tests", "fixtures", "import_fixtures",
         )
-        message_ids = get_incoming_message_ids(
-            import_dir=import_dir, sort_by_date=True,
-        )
+        message_ids = get_incoming_message_ids(import_dir=import_dir, sort_by_date=True)
 
         self.assertEqual(message_ids, [888, 999, 555])
 

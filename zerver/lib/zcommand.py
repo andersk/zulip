@@ -18,9 +18,7 @@ def process_zcommands(content: str, user_profile: UserProfile) -> Dict[str, Any]
             )
         )
         do_set_user_display_setting(
-            user_profile=user_profile,
-            setting_name=setting,
-            setting_value=setting_value,
+            user_profile=user_profile, setting_name=setting, setting_value=setting_value,
         )
         return msg
 

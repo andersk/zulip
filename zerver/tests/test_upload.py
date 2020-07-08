@@ -490,8 +490,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
             "[f2.txt](http://{}/user_uploads/".format(host) + f2_path_id + ")"
         )
         result = self.client_patch(
-            "/json/messages/" + str(msg_id),
-            {"message_id": msg_id, "content": new_body},
+            "/json/messages/" + str(msg_id), {"message_id": msg_id, "content": new_body},
         )
         self.assert_json_success(result)
 
@@ -507,8 +506,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         # Delete all the attachments from the message
         new_body = "(deleted)"
         result = self.client_patch(
-            "/json/messages/" + str(msg_id),
-            {"message_id": msg_id, "content": new_body},
+            "/json/messages/" + str(msg_id), {"message_id": msg_id, "content": new_body},
         )
         self.assert_json_success(result)
 
@@ -899,8 +897,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
                 else:
                     self.assertIn("inline;", response["Content-disposition"])
                 self.assertEqual(
-                    set(response["Cache-Control"].split(", ")),
-                    {"private", "immutable"},
+                    set(response["Cache-Control"].split(", ")), {"private", "immutable"},
                 )
 
         check_xsend_links("zulip.txt", "zulip.txt", 'filename="zulip.txt"')
@@ -1214,9 +1211,7 @@ class AvatarTest(UploadSerializeMixin, ZulipTestCase):
             with mock.patch(
                 "zerver.lib.upload.write_local_file",
             ) as mock_write_local_file:
-                zerver.lib.upload.upload_backend.ensure_medium_avatar_image(
-                    user_profile,
-                )
+                zerver.lib.upload.upload_backend.ensure_medium_avatar_image(user_profile)
                 self.assertFalse(mock_write_local_file.called)
 
             # Confirm that ensure_medium_avatar_url works to recreate
@@ -1551,9 +1546,7 @@ class RealmLogoTest(UploadSerializeMixin, ZulipTestCase):
         """
         self.login("iago")
 
-        result = self.client_post(
-            "/json/realm/logo", {"night": ujson.dumps(self.night)},
-        )
+        result = self.client_post("/json/realm/logo", {"night": ujson.dumps(self.night)})
         self.assert_json_error(result, "You must upload exactly one logo.")
 
     correct_files = [
@@ -1581,9 +1574,7 @@ class RealmLogoTest(UploadSerializeMixin, ZulipTestCase):
             result = self.client_post(
                 "/json/realm/logo", {"file": fp, "night": ujson.dumps(self.night)},
             )
-        self.assert_json_error(
-            result, "Available on Zulip Standard. Upgrade to access.",
-        )
+        self.assert_json_error(result, "Available on Zulip Standard. Upgrade to access.")
 
     def test_get_default_logo(self) -> None:
         user_profile = self.example_user("hamlet")

@@ -25,10 +25,7 @@ class Migration(migrations.Migration):
                 ),
                 ("scheduled_timestamp", models.DateTimeField(db_index=True)),
                 ("data", models.TextField()),
-                (
-                    "address",
-                    models.EmailField(db_index=True, max_length=254, null=True),
-                ),
+                ("address", models.EmailField(db_index=True, max_length=254, null=True)),
                 ("type", models.PositiveSmallIntegerField()),
                 (
                     "user",

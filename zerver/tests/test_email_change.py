@@ -24,8 +24,7 @@ class EmailChangeTestCase(ZulipTestCase):
         url = confirmation_url(key, None, Confirmation.EMAIL_CHANGE)
         response = self.client_get(url)
         self.assert_in_success_response(
-            ["Whoops. We couldn't find your confirmation link in the system."],
-            response,
+            ["Whoops. We couldn't find your confirmation link in the system."], response,
         )
 
     def test_confirm_email_change_with_invalid_key(self) -> None:

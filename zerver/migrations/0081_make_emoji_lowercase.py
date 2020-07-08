@@ -11,9 +11,7 @@ class Migration(migrations.Migration):
         ("zerver", "0080_realm_description_length"),
     ]
 
-    def emoji_to_lowercase(
-        apps: StateApps, schema_editor: DatabaseSchemaEditor,
-    ) -> None:
+    def emoji_to_lowercase(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
         RealmEmoji = apps.get_model("zerver", "RealmEmoji")
         emoji = RealmEmoji.objects.all()
         for e in emoji:

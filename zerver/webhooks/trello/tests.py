@@ -43,7 +43,9 @@ class TrelloHookTests(WebhookTestCase):
         )
 
     def test_trello_webhook_when_member_was_removed_from_card(self) -> None:
-        expected_message = "TomaszKolek removed Trello from [Card name](https://trello.com/c/9BduUcVQ)."
+        expected_message = (
+            "TomaszKolek removed Trello from [Card name](https://trello.com/c/9BduUcVQ)."
+        )
         self.send_and_test_stream_message(
             "removing_member_from_card", "Welcome Board", expected_message,
         )
@@ -121,7 +123,9 @@ class TrelloHookTests(WebhookTestCase):
         )
 
     def test_trello_webhook_when_member_was_added_to_board(self) -> None:
-        expected_message = "TomaszKolek added Trello to [Welcome Board](https://trello.com/b/iqXXzYEj)."
+        expected_message = (
+            "TomaszKolek added Trello to [Welcome Board](https://trello.com/b/iqXXzYEj)."
+        )
         self.send_and_test_stream_message(
             "adding_member_to_board", "Welcome Board", expected_message,
         )
@@ -140,9 +144,7 @@ class TrelloHookTests(WebhookTestCase):
 
     def test_trello_webhook_when_board_was_renamed(self) -> None:
         expected_message = "TomaszKolek renamed the board from Welcome Board to [New name](https://trello.com/b/iqXXzYEj)."
-        self.send_and_test_stream_message(
-            "renaming_board", "New name", expected_message,
-        )
+        self.send_and_test_stream_message("renaming_board", "New name", expected_message)
 
     @patch("zerver.webhooks.trello.view.check_send_webhook_message")
     def test_trello_webhook_when_card_is_moved_within_single_list_ignore(

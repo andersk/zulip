@@ -48,9 +48,7 @@ class SendLoginEmailTest(ZulipTestCase):
             )
             with mock.patch("zerver.signals.timezone_now", return_value=mock_time):
                 self.client_post(
-                    "/accounts/login/",
-                    info=login_info,
-                    HTTP_USER_AGENT=firefox_windows,
+                    "/accounts/login/", info=login_info, HTTP_USER_AGENT=firefox_windows,
                 )
 
             # email is sent and correct subject
@@ -66,9 +64,7 @@ class SendLoginEmailTest(ZulipTestCase):
             user.save()
             with mock.patch("zerver.signals.timezone_now", return_value=mock_time):
                 self.client_post(
-                    "/accounts/login/",
-                    info=login_info,
-                    HTTP_USER_AGENT=firefox_windows,
+                    "/accounts/login/", info=login_info, HTTP_USER_AGENT=firefox_windows,
                 )
 
             reference_time = mock_time.astimezone(user_tz).strftime(

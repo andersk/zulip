@@ -193,9 +193,7 @@ class TestDigestEmailMessages(ZulipTestCase):
             mock_queue_digest_recipient.call_count, all_user_profiles.count(),
         )
         mock_queue_digest_recipient.reset_mock()
-        for realm in Realm.objects.filter(
-            deactivated=False, digest_emails_enabled=True,
-        ):
+        for realm in Realm.objects.filter(deactivated=False, digest_emails_enabled=True):
             user_profiles = all_user_profiles.filter(realm=realm)
             for user_profile in user_profiles:
                 UserActivity.objects.create(
@@ -316,9 +314,7 @@ class TestDigestEmailMessages(ZulipTestCase):
         expected_html = f"<a href='http://zulip.testserver/#narrow/stream/{stream_id}-New-stream'>New stream</a>"
         self.assertIn(expected_html, new_stream["html"])
 
-    def simulate_stream_conversation(
-        self, stream: str, senders: List[str],
-    ) -> List[int]:
+    def simulate_stream_conversation(self, stream: str, senders: List[str]) -> List[int]:
         client = "website"  # this makes `sent_by_human` return True
         sending_client = get_client(client)
         message_ids = []  # List[int]

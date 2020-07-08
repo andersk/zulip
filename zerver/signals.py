@@ -86,9 +86,7 @@ def email_on_new_login(
 
     if request:
         # If the user's account was just created, avoid sending an email.
-        if (
-            timezone_now() - user.date_joined
-        ).total_seconds() <= JUST_CREATED_THRESHOLD:
+        if (timezone_now() - user.date_joined).total_seconds() <= JUST_CREATED_THRESHOLD:
             return
 
         user_agent = request.META.get("HTTP_USER_AGENT", "").lower()
@@ -103,12 +101,8 @@ def email_on_new_login(
             hhmm_string = local_time.strftime("%H:%M")
         else:
             hhmm_string = local_time.strftime("%I:%M%p")
-        context["login_time"] = local_time.strftime(
-            f"%A, %B %d, %Y at {hhmm_string} %Z",
-        )
-        context["device_ip"] = request.META.get("REMOTE_ADDR") or _(
-            "Unknown IP address",
-        )
+        context["login_time"] = local_time.strftime(f"%A, %B %d, %Y at {hhmm_string} %Z")
+        context["device_ip"] = request.META.get("REMOTE_ADDR") or _("Unknown IP address")
         context["device_os"] = get_device_os(user_agent) or _(
             "an unknown operating system",
         )

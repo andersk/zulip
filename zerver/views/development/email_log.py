@@ -117,10 +117,7 @@ def generate_all_emails(request: HttpRequest) -> HttpResponse:
     stream = get_realm_stream("Denmark", user.realm.id)
     result = client.post(
         "/json/invites",
-        {
-            "invitee_emails": unregistered_email_2,
-            "stream_ids": ujson.dumps([stream.id]),
-        },
+        {"invitee_emails": unregistered_email_2, "stream_ids": ujson.dumps([stream.id])},
         **host_kwargs,
     )
     assert result.status_code == 200

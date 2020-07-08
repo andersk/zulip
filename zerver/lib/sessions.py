@@ -70,18 +70,14 @@ def delete_all_deactivated_user_sessions() -> None:
             continue
         user_profile = get_user_profile_by_id(user_profile_id)
         if not user_profile.is_active or user_profile.realm.deactivated:
-            logging.info(
-                "Deactivating session for deactivated user %s", user_profile.id,
-            )
+            logging.info("Deactivating session for deactivated user %s", user_profile.id)
             delete_session(session)
 
 
 def set_expirable_session_var(
     session: Session, var_name: str, var_value: Any, expiry_seconds: int,
 ) -> None:
-    expire_at = datetime_to_timestamp(
-        timezone_now() + timedelta(seconds=expiry_seconds),
-    )
+    expire_at = datetime_to_timestamp(timezone_now() + timedelta(seconds=expiry_seconds))
     session[var_name] = {"value": var_value, "expire_at": expire_at}
 
 

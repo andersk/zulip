@@ -150,10 +150,7 @@ def update_message_backend(
     # from (min_seconds_to_edit + seconds_left_buffer) in message_edit.js; if
     # you change this value also change those two parameters in message_edit.js.
     edit_limit_buffer = 20
-    if (
-        content is not None
-        and user_profile.realm.message_content_edit_limit_seconds > 0
-    ):
+    if content is not None and user_profile.realm.message_content_edit_limit_seconds > 0:
         deadline_seconds = (
             user_profile.realm.message_content_edit_limit_seconds + edit_limit_buffer
         )
@@ -224,9 +221,7 @@ def update_message_backend(
         if not user_profile.is_realm_admin:
             raise JsonableError(_("You don't have permission to move this message"))
         if content is not None:
-            raise JsonableError(
-                _("Cannot change message content while changing stream"),
-            )
+            raise JsonableError(_("Cannot change message content while changing stream"))
 
         old_stream = get_stream_by_id(message.recipient.type_id)
         new_stream = get_stream_by_id(stream_id)

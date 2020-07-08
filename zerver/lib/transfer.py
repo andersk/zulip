@@ -50,9 +50,7 @@ def transfer_avatars_to_s3(processes: int) -> None:
 
 def transfer_message_files_to_s3(processes: int) -> None:
     def _transfer_message_files_to_s3(attachment: Attachment) -> int:
-        file_path = os.path.join(
-            settings.LOCAL_UPLOADS_DIR, "files", attachment.path_id,
-        )
+        file_path = os.path.join(settings.LOCAL_UPLOADS_DIR, "files", attachment.path_id)
         try:
             with open(file_path, "rb") as f:
                 guessed_type = guess_type(attachment.file_name)[0]
@@ -89,8 +87,7 @@ def transfer_emoji_to_s3(processes: int) -> None:
             realm_id=realm_emoji.realm.id, emoji_file_name=realm_emoji.file_name,
         )
         emoji_path = (
-            os.path.join(settings.LOCAL_UPLOADS_DIR, "avatars", emoji_path)
-            + ".original"
+            os.path.join(settings.LOCAL_UPLOADS_DIR, "avatars", emoji_path) + ".original"
         )
         try:
             with open(emoji_path, "rb") as f:

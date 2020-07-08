@@ -9,9 +9,7 @@ import sys
 
 os.environ["PYTHONUNBUFFERED"] = "y"
 
-ZULIP_PATH = os.path.dirname(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-)
+ZULIP_PATH = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 sys.path.append(ZULIP_PATH)
 from typing import TYPE_CHECKING, List
@@ -252,9 +250,7 @@ elif "fedora" in os_families():
     BUILD_PGROONGA_FROM_SOURCE = True
 
 if "fedora" in os_families():
-    TSEARCH_STOPWORDS_PATH = "/usr/pgsql-{}/share/tsearch_data/".format(
-        POSTGRES_VERSION,
-    )
+    TSEARCH_STOPWORDS_PATH = "/usr/pgsql-{}/share/tsearch_data/".format(POSTGRES_VERSION)
 else:
     TSEARCH_STOPWORDS_PATH = "/usr/share/postgresql/{}/tsearch_data/".format(
         POSTGRES_VERSION,
@@ -438,11 +434,7 @@ def main(options: argparse.Namespace) -> "NoReturn":
     if not os.access(NODE_MODULES_CACHE_PATH, os.W_OK):
         run_as_root(["mkdir", "-p", NODE_MODULES_CACHE_PATH])
         run_as_root(
-            [
-                "chown",
-                "{}:{}".format(os.getuid(), os.getgid()),
-                NODE_MODULES_CACHE_PATH,
-            ],
+            ["chown", "{}:{}".format(os.getuid(), os.getgid()), NODE_MODULES_CACHE_PATH],
         )
 
     # This is a wrapper around `yarn`, which we run last since

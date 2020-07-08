@@ -28,9 +28,7 @@ class RealmDomainTest(ZulipTestCase):
     def test_list_realm_domains(self) -> None:
         self.login("iago")
         realm = get_realm("zulip")
-        RealmDomain.objects.create(
-            realm=realm, domain="acme.com", allow_subdomains=True,
-        )
+        RealmDomain.objects.create(realm=realm, domain="acme.com", allow_subdomains=True)
         result = self.client_get("/json/realm/domains")
         self.assert_json_success(result)
         received = ujson.dumps(result.json()["domains"], sort_keys=True)

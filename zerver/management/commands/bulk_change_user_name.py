@@ -32,6 +32,4 @@ class Command(ZulipBaseCommand):
                     print(f"{email}: {old_name} -> {new_name}")
                     do_change_full_name(user_profile, new_name, None)
                 except CommandError:
-                    print(
-                        f"e-mail {email} doesn't exist in the realm {realm}, skipping",
-                    )
+                    print(f"e-mail {email} doesn't exist in the realm {realm}, skipping")

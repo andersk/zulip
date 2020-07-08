@@ -84,8 +84,7 @@ class TestGetChartData(ZulipTestCase):
             for i in range(4)
         ]
         self.end_times_day = [
-            ceiling_to_day(self.realm.date_created) + timedelta(days=i)
-            for i in range(4)
+            ceiling_to_day(self.realm.date_created) + timedelta(days=i) for i in range(4)
         ]
 
     def data(self, i: int) -> List[int]:
@@ -526,8 +525,7 @@ class TestGetChartData(ZulipTestCase):
         self.login_user(user)
 
         result = self.client_get(
-            "/json/analytics/chart_data/realm/zulip",
-            {"chart_name": "number_of_humans"},
+            "/json/analytics/chart_data/realm/zulip", {"chart_name": "number_of_humans"},
         )
         self.assert_json_error(result, "Must be an server administrator", 400)
 
@@ -544,8 +542,7 @@ class TestGetChartData(ZulipTestCase):
         self.assert_json_error(result, "Invalid organization", 400)
 
         result = self.client_get(
-            "/json/analytics/chart_data/realm/zulip",
-            {"chart_name": "number_of_humans"},
+            "/json/analytics/chart_data/realm/zulip", {"chart_name": "number_of_humans"},
         )
         self.assert_json_success(result)
 
@@ -962,9 +959,7 @@ class TestTimeRange(ZulipTestCase):
         self.assertEqual(
             time_range(floor_hour, floor_hour, CountStat.HOUR, 0), [floor_hour],
         )
-        self.assertEqual(
-            time_range(floor_day, floor_day, CountStat.DAY, 0), [floor_day],
-        )
+        self.assertEqual(time_range(floor_day, floor_day, CountStat.DAY, 0), [floor_day])
         # test start and end on different boundaries
         self.assertEqual(
             time_range(floor_hour, floor_hour + HOUR, CountStat.HOUR, None),

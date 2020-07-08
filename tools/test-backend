@@ -316,9 +316,7 @@ def main() -> None:
         dest="generate_stripe_fixtures",
         action="store_true",
         default=False,
-        help=(
-            "Generate Stripe test fixtures by making requests to Stripe test network"
-        ),
+        help=("Generate Stripe test fixtures by making requests to Stripe test network"),
     )
     parser.add_argument("args", nargs="*")
 

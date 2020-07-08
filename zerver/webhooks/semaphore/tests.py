@@ -124,10 +124,7 @@ class SemaphoreHookTests(WebhookTestCase):
 """.strip()
         with patch("zerver.webhooks.semaphore.view.is_github_repo", return_value=False):
             self.send_and_test_stream_message(
-                "tag",
-                expected_topic,
-                expected_message,
-                content_type="application/json",
+                "tag", expected_topic, expected_message, content_type="application/json",
             )
 
     def test_semaphore_unknown_event(self) -> None:
@@ -140,10 +137,7 @@ class SemaphoreHookTests(WebhookTestCase):
             self.get_unknown_event,
         ):
             self.send_and_test_stream_message(
-                "tag",
-                expected_topic,
-                expected_message,
-                content_type="application/json",
+                "tag", expected_topic, expected_message, content_type="application/json",
             )
 
     def get_body(self, fixture_name: str) -> str:

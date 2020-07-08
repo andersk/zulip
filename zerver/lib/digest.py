@@ -59,9 +59,7 @@ def should_process_digest(realm_str: str) -> bool:
 
 # Changes to this should also be reflected in
 # zerver/worker/queue_processors.py:DigestWorker.consume()
-def queue_digest_recipient(
-    user_profile: UserProfile, cutoff: datetime.datetime,
-) -> None:
+def queue_digest_recipient(user_profile: UserProfile, cutoff: datetime.datetime) -> None:
     # Convert cutoff to epoch seconds for transit.
     event = {"user_profile_id": user_profile.id, "cutoff": cutoff.strftime("%s")}
     queue_json_publish("digest_emails", event)
@@ -86,8 +84,7 @@ def enqueue_emails(cutoff: datetime.datetime) -> None:
             if inactive_since(user_profile, cutoff):
                 queue_digest_recipient(user_profile, cutoff)
                 logger.info(
-                    "User %s is inactive, queuing for potential digest",
-                    user_profile.id,
+                    "User %s is inactive, queuing for potential digest", user_profile.id,
                 )
 
 

@@ -24,9 +24,7 @@ def api_slack_webhook(
 ) -> HttpRequest:
 
     if channels_map_to_topics not in list(VALID_OPTIONS.values()):
-        return json_error(
-            _("Error: channels_map_to_topics parameter other than 0 or 1"),
-        )
+        return json_error(_("Error: channels_map_to_topics parameter other than 0 or 1"))
 
     if channels_map_to_topics == VALID_OPTIONS["SHOULD_BE_MAPPED"]:
         subject = f"channel: {channel_name}"

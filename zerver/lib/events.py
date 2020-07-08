@@ -332,9 +332,9 @@ def fetch_initial_state_data(
         if user_profile.is_guest:
             state["realm_default_stream_groups"] = []
         else:
-            state[
-                "realm_default_stream_groups"
-            ] = default_stream_groups_to_dicts_sorted(get_default_stream_groups(realm))
+            state["realm_default_stream_groups"] = default_stream_groups_to_dicts_sorted(
+                get_default_stream_groups(realm),
+            )
 
     if want("stop_words"):
         state["stop_words"] = read_stop_words()
@@ -400,10 +400,7 @@ def apply_event(
         state["max_message_id"] = max(state["max_message_id"], event["message"]["id"])
         if "raw_unread_msgs" in state:
             apply_unread_message_event(
-                user_profile,
-                state["raw_unread_msgs"],
-                event["message"],
-                event["flags"],
+                user_profile, state["raw_unread_msgs"], event["message"], event["flags"],
             )
 
         if event["message"]["type"] != "stream":

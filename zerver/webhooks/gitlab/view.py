@@ -32,9 +32,7 @@ def fixture_to_headers(fixture_name: str) -> Dict[str, Any]:
 
     # Map "push_hook__push_commits_more_than_limit.json" into GitLab's
     # HTTP event title "Push Hook".
-    return {
-        "HTTP_X_GITLAB_EVENT": fixture_name.split("__")[0].replace("_", " ").title(),
-    }
+    return {"HTTP_X_GITLAB_EVENT": fixture_name.split("__")[0].replace("_", " ").title()}
 
 
 def get_push_event_body(payload: Dict[str, Any]) -> str:
@@ -294,10 +292,7 @@ def get_pipeline_event_body(payload: Dict[str, Any]) -> str:
             build.get("name"), build_url, build.get("status"), artifact_string,
         )
     return "[Pipeline ({})]({}) {} with build(s):\n{}.".format(
-        payload["object_attributes"].get("id"),
-        pipeline_url,
-        action,
-        builds_status[:-1],
+        payload["object_attributes"].get("id"), pipeline_url, action, builds_status[:-1],
     )
 
 

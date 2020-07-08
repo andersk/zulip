@@ -91,9 +91,7 @@ Job: [#2722 System - Updates - Ubuntu](http://awx.example.co.uk/#/jobs/playbook/
 * chat.example.co.uk: Failed
 """.strip()
 
-        self.send_and_test_stream_message(
-            "job_failed", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("job_failed", expected_topic, expected_message)
 
     def test_ansibletower_job_failed_multiple_hosts_message(self) -> None:
         """

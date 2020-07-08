@@ -10,9 +10,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AlterUniqueTogether(
-            name="installationcount", unique_together=set(),
-        ),
+        migrations.AlterUniqueTogether(name="installationcount", unique_together=set()),
         migrations.AlterUniqueTogether(name="realmcount", unique_together=set()),
         migrations.AlterUniqueTogether(name="streamcount", unique_together=set()),
         migrations.AlterUniqueTogether(name="usercount", unique_together=set()),

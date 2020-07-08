@@ -20,9 +20,7 @@ class RemoteZulipServer(models.Model):
 
     hostname: str = models.CharField(max_length=HOSTNAME_MAX_LENGTH)
     contact_email: str = models.EmailField(blank=True, null=False)
-    last_updated: datetime.datetime = models.DateTimeField(
-        "last updated", auto_now=True,
-    )
+    last_updated: datetime.datetime = models.DateTimeField("last updated", auto_now=True)
 
     def __str__(self) -> str:
         return f"<RemoteZulipServer {self.hostname} {self.uuid[0:12]}>"
@@ -96,4 +94,6 @@ class RemoteRealmCount(BaseCount):
         ]
 
     def __str__(self) -> str:
-        return f"{self.server} {self.realm_id} {self.property} {self.subgroup} {self.value}"
+        return (
+            f"{self.server} {self.realm_id} {self.property} {self.subgroup} {self.value}"
+        )

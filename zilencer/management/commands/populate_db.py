@@ -435,9 +435,7 @@ class Command(BaseCommand):
             for i in range(options["extra_bots"]):
                 zulip_realm_bots.append((f"Extra Bot {i}", f"extrabot{i}@zulip.com"))
 
-            create_users(
-                zulip_realm, zulip_realm_bots, bot_type=UserProfile.DEFAULT_BOT,
-            )
+            create_users(zulip_realm, zulip_realm_bots, bot_type=UserProfile.DEFAULT_BOT)
 
             zoe = get_user_by_delivery_email("zoe@zulip.com", zulip_realm)
             zulip_webhook_bots = [
@@ -516,13 +514,7 @@ class Command(BaseCommand):
                     "iago@zulip.com": ["Verona", "Denmark", "Scotland"],
                     "othello@zulip.com": ["Verona", "Denmark", "Scotland"],
                     "prospero@zulip.com": ["Verona", "Denmark", "Scotland", "Venice"],
-                    "ZOE@zulip.com": [
-                        "Verona",
-                        "Denmark",
-                        "Scotland",
-                        "Venice",
-                        "Rome",
-                    ],
+                    "ZOE@zulip.com": ["Verona", "Denmark", "Scotland", "Venice", "Rome"],
                     "polonius@zulip.com": ["Verona"],
                     "desdemona@zulip.com": ["Verona", "Denmark", "Venice"],
                 }
@@ -547,9 +539,7 @@ class Command(BaseCommand):
                     num_recips = int(num_streams * fraction) + 1
 
                     for type_id in recipient_streams[:num_recips]:
-                        r = Recipient.objects.get(
-                            type=Recipient.STREAM, type_id=type_id,
-                        )
+                        r = Recipient.objects.get(type=Recipient.STREAM, type_id=type_id)
                         subscriptions_list.append((profile, r))
 
             subscriptions_to_add: List[Subscription] = []
@@ -661,9 +651,7 @@ class Command(BaseCommand):
             ]
 
         # Extract a list of all users
-        user_profiles: List[UserProfile] = list(
-            UserProfile.objects.filter(is_bot=False),
-        )
+        user_profiles: List[UserProfile] = list(UserProfile.objects.filter(is_bot=False))
 
         # Create a test realm emoji.
         IMAGE_FILE_PATH = static_path("images/test-images/checkbox.png")

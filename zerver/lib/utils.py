@@ -7,17 +7,7 @@ import re
 import string
 from itertools import zip_longest
 from time import sleep
-from typing import (
-    Any,
-    Callable,
-    Iterator,
-    List,
-    Optional,
-    Sequence,
-    Set,
-    Tuple,
-    TypeVar,
-)
+from typing import Any, Callable, Iterator, List, Optional, Sequence, Set, Tuple, TypeVar
 
 from django.conf import settings
 

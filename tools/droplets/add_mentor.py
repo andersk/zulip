@@ -57,8 +57,7 @@ if __name__ == "__main__":
 
     if args.remove:
         remove_re = re.compile(
-            "#<{0}>{{{{.+}}}}<{0}>(\n)?".format(args.username),
-            re.DOTALL | re.MULTILINE,
+            "#<{0}>{{{{.+}}}}<{0}>(\n)?".format(args.username), re.DOTALL | re.MULTILINE,
         )
 
         with open(authorized_keys, "r+") as f:

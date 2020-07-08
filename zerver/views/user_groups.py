@@ -93,9 +93,7 @@ def update_user_group_backend(
     add: Sequence[int] = REQ(validator=check_list(check_int), default=[]),
 ) -> HttpResponse:
     if not add and not delete:
-        return json_error(
-            _('Nothing to do. Specify at least one of "add" or "delete".'),
-        )
+        return json_error(_('Nothing to do. Specify at least one of "add" or "delete".'))
 
     method_kwarg_pairs: List[FuncKwargPair] = [
         (add_members_to_group_backend, dict(user_group_id=user_group_id, members=add)),

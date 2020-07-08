@@ -760,9 +760,7 @@ class LoginTest(ZulipTestCase):
         page.
         """
         email = self.nonreg_email("test")
-        result = self.client_post(
-            "/accounts/home/", {"email": email}, subdomain="zulip",
-        )
+        result = self.client_post("/accounts/home/", {"email": email}, subdomain="zulip")
         self.assertEqual(result.status_code, 302)
         self.assertNotIn("deactivated", result.url)
 
@@ -1086,9 +1084,7 @@ class InviteUserTest(InviteUserBase):
         self.login("desdemona")
         invitee = self.nonreg_email("alice")
         result = self.invite(
-            invitee,
-            ["Denmark"],
-            invite_as=PreregistrationUser.INVITE_AS["REALM_OWNER"],
+            invitee, ["Denmark"], invite_as=PreregistrationUser.INVITE_AS["REALM_OWNER"],
         )
         self.assert_json_success(result)
         self.assertTrue(find_key_by_email(invitee))
@@ -1102,9 +1098,7 @@ class InviteUserTest(InviteUserBase):
         self.login("iago")
         invitee = self.nonreg_email("alice")
         response = self.invite(
-            invitee,
-            ["Denmark"],
-            invite_as=PreregistrationUser.INVITE_AS["REALM_OWNER"],
+            invitee, ["Denmark"], invite_as=PreregistrationUser.INVITE_AS["REALM_OWNER"],
         )
         self.assert_json_error(response, "Must be an organization owner")
 
@@ -1112,9 +1106,7 @@ class InviteUserTest(InviteUserBase):
         self.login("iago")
         invitee = self.nonreg_email("alice")
         result = self.invite(
-            invitee,
-            ["Denmark"],
-            invite_as=PreregistrationUser.INVITE_AS["REALM_ADMIN"],
+            invitee, ["Denmark"], invite_as=PreregistrationUser.INVITE_AS["REALM_ADMIN"],
         )
         self.assert_json_success(result)
         self.assertTrue(find_key_by_email(invitee))
@@ -1129,9 +1121,7 @@ class InviteUserTest(InviteUserBase):
         self.login("hamlet")
         invitee = self.nonreg_email("alice")
         response = self.invite(
-            invitee,
-            ["Denmark"],
-            invite_as=PreregistrationUser.INVITE_AS["REALM_ADMIN"],
+            invitee, ["Denmark"], invite_as=PreregistrationUser.INVITE_AS["REALM_ADMIN"],
         )
         self.assert_json_error(response, "Must be an organization administrator")
 
@@ -1358,8 +1348,7 @@ earl-test@zulip.com""",
         self.check_sent_emails([])
 
         self.assert_json_error(
-            self.invite("", ["Denmark"]),
-            "You must specify at least one email address.",
+            self.invite("", ["Denmark"]), "You must specify at least one email address.",
         )
         self.check_sent_emails([])
 
@@ -1858,15 +1847,13 @@ so we didn't send them an invitation. We did send invitations to everyone else!"
 
         url = "/accounts/register/"
         self.client_post(
-            url,
-            {"key": registration_key, "from_confirmation": 1, "full_name": "alice"},
+            url, {"key": registration_key, "from_confirmation": 1, "full_name": "alice"},
         )
         self.submit_reg_form_for_user(email, password, key=registration_key)
 
         url = "/accounts/register/"
         response = self.client_post(
-            url,
-            {"key": registration_key, "from_confirmation": 1, "full_name": "alice"},
+            url, {"key": registration_key, "from_confirmation": 1, "full_name": "alice"},
         )
         self.assertEqual(response.status_code, 302)
         self.assertEqual(
@@ -4426,9 +4413,7 @@ class UserSignUpTest(InviteUserBase):
         result = self.client_get(result["Location"])
         self.assert_in_response("Check your email so we can get started.", result)
 
-        with patch(
-            "zerver.views.registration.name_changes_disabled", return_value=True,
-        ):
+        with patch("zerver.views.registration.name_changes_disabled", return_value=True):
             result = self.submit_reg_form_for_user(
                 email,
                 password,
@@ -4663,9 +4648,7 @@ class DeactivateUserTest(ZulipTestCase):
 
 class TestLoginPage(ZulipTestCase):
     @patch("django.http.HttpRequest.get_host")
-    def test_login_page_redirects_for_root_alias(
-        self, mock_get_host: MagicMock,
-    ) -> None:
+    def test_login_page_redirects_for_root_alias(self, mock_get_host: MagicMock) -> None:
         mock_get_host.return_value = "www.testserver"
         with self.settings(ROOT_DOMAIN_LANDING_PAGE=True):
             result = self.client_get("/en/login/")
@@ -4705,9 +4688,7 @@ class TestLoginPage(ZulipTestCase):
             self.assertEqual(result.url, "/accounts/go/?next=%2Fupgrade%2F")
 
     @patch("django.http.HttpRequest.get_host")
-    def test_login_page_works_without_subdomains(
-        self, mock_get_host: MagicMock,
-    ) -> None:
+    def test_login_page_works_without_subdomains(self, mock_get_host: MagicMock) -> None:
         mock_get_host.return_value = "www.testserver"
         with self.settings(ROOT_SUBDOMAIN_ALIASES=["www"]):
             result = self.client_get("/en/login/")
@@ -4750,8 +4731,7 @@ class TestFindMyTeam(ZulipTestCase):
         )
         self.assertEqual(result.status_code, 302)
         self.assertEqual(
-            result.url,
-            "/accounts/find/?emails=iago%40zulip.com%2Ccordelia%40zulip.com",
+            result.url, "/accounts/find/?emails=iago%40zulip.com%2Ccordelia%40zulip.com",
         )
         result = self.client_get(result.url)
         content = result.content.decode("utf8")

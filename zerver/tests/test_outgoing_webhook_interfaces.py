@@ -58,9 +58,7 @@ class TestGenericOutgoingWebhookService(ZulipTestCase):
     def test_build_bot_request(self) -> None:
         othello = self.example_user("othello")
         stream = get_stream("Denmark", othello.realm)
-        message_id = self.send_stream_message(
-            othello, stream.name, content="@**test**",
-        )
+        message_id = self.send_stream_message(othello, stream.name, content="@**test**")
 
         message = Message.objects.get(id=message_id)
 

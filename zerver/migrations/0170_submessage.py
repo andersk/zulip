@@ -29,8 +29,7 @@ class Migration(migrations.Migration):
                 (
                     "message",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to="zerver.Message",
+                        on_delete=django.db.models.deletion.CASCADE, to="zerver.Message",
                     ),
                 ),
                 (

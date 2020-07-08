@@ -253,9 +253,7 @@ class BaseAction(ZulipTestCase):
             try:
                 self.match_states(initial_state, copy.deepcopy(hybrid_state), events)
             except AssertionError:  # nocoverage
-                raise AssertionError(
-                    "Test is invalid--state actually does change here.",
-                )
+                raise AssertionError("Test is invalid--state actually does change here.")
 
         normal_state = fetch_initial_state_data(
             self.user_profile,
@@ -343,10 +341,7 @@ class NormalActionsTest(BaseAction):
             [
                 ("type", equals("realm_bot")),
                 ("op", equals("update")),
-                (
-                    "bot",
-                    check_dict_only([("user_id", check_int), (field_name, check)]),
-                ),
+                ("bot", check_dict_only([("user_id", check_int), (field_name, check)])),
             ],
         )
 
@@ -483,9 +478,7 @@ class NormalActionsTest(BaseAction):
         rendered_content = render_markdown(message, content)
         prior_mention_user_ids: Set[int] = set()
         mentioned_user_ids: Set[int] = set()
-        mention_data = MentionData(
-            realm_id=self.user_profile.realm_id, content=content,
-        )
+        mention_data = MentionData(realm_id=self.user_profile.realm_id, content=content)
 
         events = self.verify_action(
             lambda: do_update_message(
@@ -1236,10 +1229,7 @@ class NormalActionsTest(BaseAction):
 
     def test_alert_words_events(self) -> None:
         alert_words_checker = check_events_dict(
-            [
-                ("type", equals("alert_words")),
-                ("alert_words", check_list(check_string)),
-            ],
+            [("type", equals("alert_words")), ("alert_words", check_list(check_string))],
         )
 
         events = self.verify_action(
@@ -1379,9 +1369,7 @@ class NormalActionsTest(BaseAction):
                 ("group_id", check_int),
             ],
         )
-        events = self.verify_action(
-            lambda: check_delete_user_group(backend.id, othello),
-        )
+        events = self.verify_action(lambda: check_delete_user_group(backend.id, othello))
         user_group_remove_checker("events[0]", events[0])
 
     def test_default_stream_groups_events(self) -> None:
@@ -1693,13 +1681,7 @@ class NormalActionsTest(BaseAction):
 
         # Test transitions; any new backends should be tested with T/T/T/F/T
         for auth_method_dict in (
-            {
-                "Google": True,
-                "Email": True,
-                "GitHub": True,
-                "LDAP": False,
-                "Dev": False,
-            },
+            {"Google": True, "Email": True, "GitHub": True, "LDAP": False, "Dev": False},
             {
                 "Google": True,
                 "Email": True,
@@ -1735,13 +1717,7 @@ class NormalActionsTest(BaseAction):
                 "LDAP": False,
                 "Dev": True,
             },
-            {
-                "Google": False,
-                "Email": True,
-                "GitHub": True,
-                "LDAP": True,
-                "Dev": False,
-            },
+            {"Google": False, "Email": True, "GitHub": True, "LDAP": True, "Dev": False},
         ):
             with fake_backends():
                 events = self.verify_action(

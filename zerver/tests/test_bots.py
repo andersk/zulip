@@ -364,9 +364,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
         }
         events_bot: List[Mapping[str, Any]] = []
         with tornado_redirected_to_list(events_bot):
-            result = self.common_subscribe_to_streams(
-                hamlet, ["Rome"], bot_request_data,
-            )
+            result = self.common_subscribe_to_streams(hamlet, ["Rome"], bot_request_data)
             self.assert_json_success(result)
 
         # No notification message event or invitation email is sent because of bot.
@@ -643,9 +641,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
         bot_info = {
             "full_name": "Fred",
         }
-        result = self.client_patch(
-            f"/json/bots/{self.get_bot_user(email).id}", bot_info,
-        )
+        result = self.client_patch(f"/json/bots/{self.get_bot_user(email).id}", bot_info)
         self.assert_json_error(result, "Insufficient permission")
 
     def get_bot(self) -> Dict[str, Any]:
@@ -819,9 +815,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
             "full_name": "Fred",
         }
         email = "hambot-bot@zulip.testserver"
-        result = self.client_patch(
-            f"/json/bots/{self.get_bot_user(email).id}", bot_info,
-        )
+        result = self.client_patch(f"/json/bots/{self.get_bot_user(email).id}", bot_info)
         self.assert_json_success(result)
 
         self.assertEqual("Fred", result.json()["full_name"])
@@ -903,9 +897,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
             "bot_owner_id": othello.id,
         }
         email = "hambot-bot@zulip.testserver"
-        result = self.client_patch(
-            f"/json/bots/{self.get_bot_user(email).id}", bot_info,
-        )
+        result = self.client_patch(f"/json/bots/{self.get_bot_user(email).id}", bot_info)
         self.assert_json_success(result)
 
         # Test bot's owner has been changed successfully.
@@ -927,9 +919,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
         bot_info = {
             "bot_owner_id": bad_bot_owner_id,
         }
-        result = self.client_patch(
-            f"/json/bots/{self.get_bot_user(email).id}", bot_info,
-        )
+        result = self.client_patch(f"/json/bots/{self.get_bot_user(email).id}", bot_info)
         self.assert_json_error(result, "Failed to change owner, no such user")
         profile = get_user("hambot-bot@zulip.testserver", get_realm("zulip"))
         self.assertEqual(profile.bot_owner, self.example_user("hamlet"))
@@ -948,9 +938,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
         }
 
         email = "hambot-bot@zulip.testserver"
-        result = self.client_patch(
-            f"/json/bots/{self.get_bot_user(email).id}", bot_info,
-        )
+        result = self.client_patch(f"/json/bots/{self.get_bot_user(email).id}", bot_info)
         self.assert_json_error(result, "Failed to change owner, user is deactivated")
         profile = self.get_bot_user(email)
         self.assertEqual(profile.bot_owner, self.example_user("hamlet"))
@@ -965,9 +953,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
         }
 
         email = "hambot-bot@zulip.testserver"
-        result = self.client_patch(
-            f"/json/bots/{self.get_bot_user(email).id}", bot_info,
-        )
+        result = self.client_patch(f"/json/bots/{self.get_bot_user(email).id}", bot_info)
         self.assert_json_error(result, "Failed to change owner, no such user")
         profile = self.get_bot_user(email)
         self.assertEqual(profile.bot_owner, self.example_user("hamlet"))
@@ -982,9 +968,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
         }
 
         email = "hambot-bot@zulip.testserver"
-        result = self.client_patch(
-            f"/json/bots/{self.get_bot_user(email).id}", bot_info,
-        )
+        result = self.client_patch(f"/json/bots/{self.get_bot_user(email).id}", bot_info)
 
         # Check that we're still the owner
         self.assert_json_success(result)
@@ -1007,9 +991,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
             "bot_owner_id": self.get_bot_user("hamelbot-bot@zulip.testserver").id,
         }
         email = "hambot-bot@zulip.testserver"
-        result = self.client_patch(
-            f"/json/bots/{self.get_bot_user(email).id}", bot_info,
-        )
+        result = self.client_patch(f"/json/bots/{self.get_bot_user(email).id}", bot_info)
         self.assert_json_error(
             result, "Failed to change owner, bots can't own other bots",
         )
@@ -1074,9 +1056,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
             "default_sending_stream": "Denmark",
         }
         email = "hambot-bot@zulip.testserver"
-        result = self.client_patch(
-            f"/json/bots/{self.get_bot_user(email).id}", bot_info,
-        )
+        result = self.client_patch(f"/json/bots/{self.get_bot_user(email).id}", bot_info)
         self.assert_json_success(result)
 
         self.assertEqual("Denmark", result.json()["default_sending_stream"])
@@ -1096,9 +1076,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
             "default_sending_stream": "Rome",
         }
         email = "hambot-bot@zulip.testserver"
-        result = self.client_patch(
-            f"/json/bots/{self.get_bot_user(email).id}", bot_info,
-        )
+        result = self.client_patch(f"/json/bots/{self.get_bot_user(email).id}", bot_info)
         self.assert_json_success(result)
 
         self.assertEqual("Rome", result.json()["default_sending_stream"])
@@ -1118,9 +1096,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
             "default_sending_stream": "",
         }
         email = "hambot-bot@zulip.testserver"
-        result = self.client_patch(
-            f"/json/bots/{self.get_bot_user(email).id}", bot_info,
-        )
+        result = self.client_patch(f"/json/bots/{self.get_bot_user(email).id}", bot_info)
         self.assert_json_success(result)
 
         bot_email = "hambot-bot@zulip.testserver"
@@ -1148,9 +1124,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
             "default_sending_stream": "Denmark",
         }
         email = "hambot-bot@zulip.testserver"
-        result = self.client_patch(
-            f"/json/bots/{self.get_bot_user(email).id}", bot_info,
-        )
+        result = self.client_patch(f"/json/bots/{self.get_bot_user(email).id}", bot_info)
         self.assert_json_success(result)
 
         self.assertEqual("Denmark", result.json()["default_sending_stream"])
@@ -1176,9 +1150,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
             "default_sending_stream": "Denmark",
         }
         email = "hambot-bot@zulip.testserver"
-        result = self.client_patch(
-            f"/json/bots/{self.get_bot_user(email).id}", bot_info,
-        )
+        result = self.client_patch(f"/json/bots/{self.get_bot_user(email).id}", bot_info)
         self.assert_json_error(result, "Invalid stream name 'Denmark'")
 
     def test_patch_bot_to_stream_not_found(self) -> None:
@@ -1193,9 +1165,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
             "default_sending_stream": "missing",
         }
         email = "hambot-bot@zulip.testserver"
-        result = self.client_patch(
-            f"/json/bots/{self.get_bot_user(email).id}", bot_info,
-        )
+        result = self.client_patch(f"/json/bots/{self.get_bot_user(email).id}", bot_info)
         self.assert_json_error(result, "Invalid stream name 'missing'")
 
     def test_patch_bot_events_register_stream(self) -> None:
@@ -1260,9 +1230,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
             "default_events_register_stream": "Denmark",
         }
         email = "hambot-bot@zulip.testserver"
-        result = self.client_patch(
-            f"/json/bots/{self.get_bot_user(email).id}", bot_info,
-        )
+        result = self.client_patch(f"/json/bots/{self.get_bot_user(email).id}", bot_info)
         self.assert_json_success(result)
 
         self.assertEqual("Denmark", result.json()["default_events_register_stream"])
@@ -1287,9 +1255,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
             "default_events_register_stream": "Denmark",
         }
         email = "hambot-bot@zulip.testserver"
-        result = self.client_patch(
-            f"/json/bots/{self.get_bot_user(email).id}", bot_info,
-        )
+        result = self.client_patch(f"/json/bots/{self.get_bot_user(email).id}", bot_info)
         self.assert_json_error(result, "Invalid stream name 'Denmark'")
 
     def test_patch_bot_events_register_stream_none(self) -> None:
@@ -1304,9 +1270,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
             "default_events_register_stream": "",
         }
         email = "hambot-bot@zulip.testserver"
-        result = self.client_patch(
-            f"/json/bots/{self.get_bot_user(email).id}", bot_info,
-        )
+        result = self.client_patch(f"/json/bots/{self.get_bot_user(email).id}", bot_info)
         self.assert_json_success(result)
 
         bot_email = "hambot-bot@zulip.testserver"
@@ -1331,9 +1295,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
             "default_events_register_stream": "missing",
         }
         email = "hambot-bot@zulip.testserver"
-        result = self.client_patch(
-            f"/json/bots/{self.get_bot_user(email).id}", bot_info,
-        )
+        result = self.client_patch(f"/json/bots/{self.get_bot_user(email).id}", bot_info)
         self.assert_json_error(result, "Invalid stream name 'missing'")
 
     def test_patch_bot_default_all_public_streams_true(self) -> None:
@@ -1348,9 +1310,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
             "default_all_public_streams": ujson.dumps(True),
         }
         email = "hambot-bot@zulip.testserver"
-        result = self.client_patch(
-            f"/json/bots/{self.get_bot_user(email).id}", bot_info,
-        )
+        result = self.client_patch(f"/json/bots/{self.get_bot_user(email).id}", bot_info)
         self.assert_json_success(result)
 
         self.assertEqual(result.json()["default_all_public_streams"], True)
@@ -1370,9 +1330,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
             "default_all_public_streams": ujson.dumps(False),
         }
         email = "hambot-bot@zulip.testserver"
-        result = self.client_patch(
-            f"/json/bots/{self.get_bot_user(email).id}", bot_info,
-        )
+        result = self.client_patch(f"/json/bots/{self.get_bot_user(email).id}", bot_info)
         self.assert_json_success(result)
 
         self.assertEqual(result.json()["default_all_public_streams"], False)
@@ -1430,9 +1388,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
             "service_interface": Service.SLACK,
         }
         email = "hambot-bot@zulip.testserver"
-        result = self.client_patch(
-            f"/json/bots/{self.get_bot_user(email).id}", bot_info,
-        )
+        result = self.client_patch(f"/json/bots/{self.get_bot_user(email).id}", bot_info)
         self.assert_json_success(result)
 
         service_interface = ujson.loads(result.content)["service_interface"]
@@ -1453,9 +1409,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
         )
         bot_info = {"config_data": ujson.dumps({"key": "87654321"})}
         email = "test-bot@zulip.testserver"
-        result = self.client_patch(
-            f"/json/bots/{self.get_bot_user(email).id}", bot_info,
-        )
+        result = self.client_patch(f"/json/bots/{self.get_bot_user(email).id}", bot_info)
         self.assert_json_success(result)
         config_data = ujson.loads(result.content)["config_data"]
         self.assertEqual(config_data, ujson.loads(bot_info["config_data"]))
@@ -1653,8 +1607,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
         self.assertEqual(response.status_code, 400)
         expected_error_message = 'Invalid stripe_api_key value _invalid_key (stripe_api_key starts with a "_" and is hence invalid.)'
         self.assertEqual(
-            ujson.loads(response.content.decode("utf-8"))["msg"],
-            expected_error_message,
+            ujson.loads(response.content.decode("utf-8"))["msg"], expected_error_message,
         )
         with self.assertRaises(UserProfile.DoesNotExist):
             UserProfile.objects.get(full_name="My Stripe Bot")
@@ -1672,8 +1625,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
         self.assertEqual(response.status_code, 400)
         expected_error_message = "Missing configuration parameters: {'stripe_api_key'}"
         self.assertEqual(
-            ujson.loads(response.content.decode("utf-8"))["msg"],
-            expected_error_message,
+            ujson.loads(response.content.decode("utf-8"))["msg"], expected_error_message,
         )
         with self.assertRaises(UserProfile.DoesNotExist):
             UserProfile.objects.get(full_name="My Stripe Bot")
@@ -1704,8 +1656,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
         self.assertEqual(response.status_code, 400)
         expected_error_message = "Invalid integration 'stripes'."
         self.assertEqual(
-            ujson.loads(response.content.decode("utf-8"))["msg"],
-            expected_error_message,
+            ujson.loads(response.content.decode("utf-8"))["msg"], expected_error_message,
         )
         with self.assertRaises(UserProfile.DoesNotExist):
             UserProfile.objects.get(full_name="My Stripe Bot")

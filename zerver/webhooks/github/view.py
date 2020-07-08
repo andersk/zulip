@@ -390,7 +390,9 @@ def get_pull_request_review_requested_body(
     sender = get_sender_name(payload)
     pr_number = payload["pull_request"]["number"]
     pr_url = payload["pull_request"]["html_url"]
-    message = "**{sender}** requested {reviewers} for a review on [PR #{pr_number}]({pr_url})."
+    message = (
+        "**{sender}** requested {reviewers} for a review on [PR #{pr_number}]({pr_url})."
+    )
     message_with_title = (
         "**{sender}** requested {reviewers} for a review on "
         "[PR #{pr_number} {title}]({pr_url})."

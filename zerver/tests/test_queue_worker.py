@@ -306,9 +306,7 @@ class WorkerTest(ZulipTestCase):
                     "zerver.lib.queue.queue_json_publish", side_effect=fake_publish,
                 ):
                     worker.start()
-                    self.assertEqual(
-                        mock_handle_new.call_count, 1 + MAX_REQUEST_RETRIES,
-                    )
+                    self.assertEqual(mock_handle_new.call_count, 1 + MAX_REQUEST_RETRIES)
                     self.assertEqual(
                         mock_handle_remove.call_count, 1 + MAX_REQUEST_RETRIES,
                     )
@@ -463,9 +461,7 @@ class WorkerTest(ZulipTestCase):
             ), patch(
                 "logging.info",
             ), self.settings(
-                MAILCHIMP_API_KEY="one-two",
-                PRODUCTION=True,
-                ZULIP_FRIENDS_LIST_ID="id",
+                MAILCHIMP_API_KEY="one-two", PRODUCTION=True, ZULIP_FRIENDS_LIST_ID="id",
             ):
                 worker.start()
 
@@ -488,9 +484,7 @@ class WorkerTest(ZulipTestCase):
                 "zerver.worker.queue_processors.requests.post",
                 return_value=fake_response,
             ), self.settings(
-                MAILCHIMP_API_KEY="one-two",
-                PRODUCTION=True,
-                ZULIP_FRIENDS_LIST_ID="id",
+                MAILCHIMP_API_KEY="one-two", PRODUCTION=True, ZULIP_FRIENDS_LIST_ID="id",
             ):
                 with patch("logging.warning") as logging_warning_mock:
                     worker.start()
@@ -516,9 +510,7 @@ class WorkerTest(ZulipTestCase):
                 "zerver.worker.queue_processors.requests.post",
                 return_value=fake_response,
             ), self.settings(
-                MAILCHIMP_API_KEY="one-two",
-                PRODUCTION=True,
-                ZULIP_FRIENDS_LIST_ID="id",
+                MAILCHIMP_API_KEY="one-two", PRODUCTION=True, ZULIP_FRIENDS_LIST_ID="id",
             ):
                 worker.start()
                 fake_response.raise_for_status.assert_called_once()

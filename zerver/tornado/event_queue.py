@@ -565,9 +565,7 @@ def load_event_queues(port: int) -> None:
         logging.exception("Tornado %d could not deserialize event queues", port)
     else:
         try:
-            clients = {
-                qid: ClientDescriptor.from_dict(client) for (qid, client) in data
-            }
+            clients = {qid: ClientDescriptor.from_dict(client) for (qid, client) in data}
         except Exception:
             logging.exception("Tornado %d could not deserialize event queues", port)
 
@@ -968,9 +966,7 @@ def get_client_info_for_message_event(
     sender_queue_id: Optional[str] = event_template.get("sender_queue_id", None)
 
     def is_sender_client(client: ClientDescriptor) -> bool:
-        return (
-            sender_queue_id is not None
-        ) and client.event_queue.id == sender_queue_id
+        return (sender_queue_id is not None) and client.event_queue.id == sender_queue_id
 
     # If we're on a public stream, look for clients (typically belonging to
     # bots) that are registered to get events for ALL streams.

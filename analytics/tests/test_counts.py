@@ -757,9 +757,7 @@ class TestCountStats(AnalyticsTestCase):
 
         user = self.create_user()
         user_recipient = Recipient.objects.get(type_id=user.id, type=Recipient.PERSONAL)
-        private_stream_recipient = self.create_stream_with_recipient(invite_only=True)[
-            1
-        ]
+        private_stream_recipient = self.create_stream_with_recipient(invite_only=True)[1]
         stream_recipient = self.create_stream_with_recipient()[1]
         huddle_recipient = self.create_huddle_with_recipient()[1]
 
@@ -915,9 +913,7 @@ class TestCountStats(AnalyticsTestCase):
             ],
         )
         self.assertTableState(
-            RealmCount,
-            ["value", "subgroup"],
-            [[1, website_client_id], [2, client2_id]],
+            RealmCount, ["value", "subgroup"], [[1, website_client_id], [2, client2_id]],
         )
         # No aggregation to InstallationCount with realm constraint
         self.assertTableState(InstallationCount, ["value", "subgroup"], [])

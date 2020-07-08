@@ -397,9 +397,7 @@ def send_custom_email(users: List[UserProfile], options: Dict[str, Any]) -> None
             # Note that we're doing a hacky non-Jinja2 substitution here;
             # we do this because the normal render_markdown_path ordering
             # doesn't commute properly with inline_email_css.
-            f.write(
-                base_template.read().replace("{{ rendered_input }}", rendered_input),
-            )
+            f.write(base_template.read().replace("{{ rendered_input }}", rendered_input))
 
     with open(subject_path, "w") as f:
         f.write(
@@ -424,9 +422,7 @@ def send_custom_email(users: List[UserProfile], options: Dict[str, Any]) -> None
             from_address=FromAddress.SUPPORT,
             reply_to_email=options.get("reply_to"),
             from_name=get_header(
-                options.get("from_name"),
-                parsed_email_template.get("from"),
-                "from_name",
+                options.get("from_name"), parsed_email_template.get("from"), "from_name",
             ),
             context=context,
         )

@@ -160,9 +160,7 @@ class GithubWebhookTest(WebhookTestCase):
     def test_deployment_status_msg(self) -> None:
         expected_message = "Deployment changed status to success."
         self.send_and_test_stream_message(
-            "deployment_status",
-            self.EXPECTED_TOPIC_DEPLOYMENT_EVENTS,
-            expected_message,
+            "deployment_status", self.EXPECTED_TOPIC_DEPLOYMENT_EVENTS, expected_message,
         )
 
     def test_fork_msg(self) -> None:
@@ -328,9 +326,7 @@ class GithubWebhookTest(WebhookTestCase):
     def test_status_with_target_url_msg(self) -> None:
         expected_message = "[9049f12](https://github.com/baxterthehacker/public-repo/commit/9049f1265b7d61be4a8904a9a27120d2064dab3b) changed its status to [success](https://example.com/build/status)."
         self.send_and_test_stream_message(
-            "status__with_target_url",
-            self.EXPECTED_TOPIC_REPO_EVENTS,
-            expected_message,
+            "status__with_target_url", self.EXPECTED_TOPIC_REPO_EVENTS, expected_message,
         )
 
     def test_pull_request_review_msg(self) -> None:

@@ -6,9 +6,7 @@ from django.db.backends.postgresql.schema import DatabaseSchemaEditor
 from django.db.migrations.state import StateApps
 
 
-def move_to_seperate_table(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def move_to_seperate_table(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     UserProfile = apps.get_model("zerver", "UserProfile")
     AlertWord = apps.get_model("zerver", "AlertWord")
 

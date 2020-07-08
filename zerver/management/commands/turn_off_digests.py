@@ -12,8 +12,7 @@ class Command(ZulipBaseCommand):
 
         self.add_user_list_args(
             parser,
-            help="Turn off digests for this comma-separated "
-            "list of email addresses.",
+            help="Turn off digests for this comma-separated " "list of email addresses.",
             all_users_help="Turn off digests for everyone in realm.",
         )
 

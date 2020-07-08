@@ -36,10 +36,7 @@ def api_gosquared_webhook(
     # Unfortunately, there is no other way to infer the event type
     # than just inferring it from the payload's attributes
     # Traffic spike/dip event
-    if (
-        payload.get("concurrents") is not None
-        and payload.get("siteDetails") is not None
-    ):
+    if payload.get("concurrents") is not None and payload.get("siteDetails") is not None:
         domain_name = payload["siteDetails"]["domain"]
         user_num = payload["concurrents"]
         user_acc = payload["siteDetails"]["acct"]

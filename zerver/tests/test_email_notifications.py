@@ -29,9 +29,7 @@ class TestCustomEmails(ZulipTestCase):
         email_subject = "subject_test"
         reply_to = "reply_to_test"
         from_name = "from_name_test"
-        markdown_template_path = (
-            "templates/zerver/emails/email_base_default.source.html"
-        )
+        markdown_template_path = "templates/zerver/emails/email_base_default.source.html"
         send_custom_email(
             [hamlet],
             {
@@ -180,8 +178,7 @@ class TestFollowupEmails(ZulipTestCase):
             email_data = ujson.loads(scheduled_emails[0].data)
             self.assertEqual(email_data["context"]["ldap"], True)
             self.assertEqual(
-                email_data["context"]["ldap_username"],
-                "newuser_email_as_uid@zulip.com",
+                email_data["context"]["ldap_username"], "newuser_email_as_uid@zulip.com",
             )
 
     @override_settings(
@@ -300,9 +297,7 @@ class TestMissedMessages(ZulipTestCase):
             reply_to_emails = ["noreply@testserver"]
         msg = mail.outbox[0]
         from_email = str(
-            Address(
-                display_name="Zulip missed messages", addr_spec=FromAddress.NOREPLY,
-            ),
+            Address(display_name="Zulip missed messages", addr_spec=FromAddress.NOREPLY),
         )
         self.assertEqual(len(mail.outbox), 1)
         if send_as_user:
@@ -701,9 +696,7 @@ class TestMissedMessages(ZulipTestCase):
     def test_message_content_disabled_in_missed_message_notifications(self) -> None:
         # Test when user disabled message content in email notifications.
         do_change_notification_settings(
-            self.example_user("hamlet"),
-            "message_content_in_email_notifications",
-            False,
+            self.example_user("hamlet"), "message_content_in_email_notifications", False,
         )
         self._extra_context_in_missed_stream_messages_mention(
             False, show_message_content=False,
@@ -933,9 +926,7 @@ class TestMissedMessages(ZulipTestCase):
         msg_id_2 = self.send_stream_message(
             self.example_user("iago"), "Verona", "* 1\n *2",
         )
-        msg_id_3 = self.send_personal_message(
-            self.example_user("iago"), hamlet, "Hello",
-        )
+        msg_id_3 = self.send_personal_message(self.example_user("iago"), hamlet, "Hello")
 
         handle_missedmessage_emails(
             hamlet.id,

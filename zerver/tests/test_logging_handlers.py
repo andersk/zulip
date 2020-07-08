@@ -2,17 +2,7 @@ import logging
 import sys
 from functools import wraps
 from types import TracebackType
-from typing import (
-    Callable,
-    Dict,
-    Iterator,
-    NoReturn,
-    Optional,
-    Tuple,
-    Type,
-    Union,
-    cast,
-)
+from typing import Callable, Dict, Iterator, NoReturn, Optional, Tuple, Type, Union, cast
 from unittest.mock import MagicMock, patch
 
 from django.conf import settings

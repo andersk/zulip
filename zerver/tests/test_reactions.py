@@ -141,9 +141,7 @@ class ReactionEmojiTest(ZulipTestCase):
         """
         stream_name = "Saxony"
         self.subscribe(self.example_user("cordelia"), stream_name)
-        message_id = self.send_stream_message(
-            self.example_user("cordelia"), stream_name,
-        )
+        message_id = self.send_stream_message(self.example_user("cordelia"), stream_name)
 
         user_profile = self.example_user("hamlet")
         sender = user_profile
@@ -510,10 +508,7 @@ class EmojiReactionBase(ZulipTestCase):
         super().__init__(*args, **kwargs)
 
     def post_reaction(
-        self,
-        reaction_info: Dict[str, str],
-        message_id: int = 1,
-        sender: str = "hamlet",
+        self, reaction_info: Dict[str, str], message_id: int = 1, sender: str = "hamlet",
     ) -> HttpResponse:
         if "reaction_type" not in reaction_info:
             reaction_info["reaction_type"] = self.reaction_type
@@ -536,10 +531,7 @@ class EmojiReactionBase(ZulipTestCase):
         return result
 
     def delete_reaction(
-        self,
-        reaction_info: Dict[str, str],
-        message_id: int = 1,
-        sender: str = "hamlet",
+        self, reaction_info: Dict[str, str], message_id: int = 1, sender: str = "hamlet",
     ) -> HttpResponse:
         if "reaction_type" not in reaction_info:
             reaction_info["reaction_type"] = self.reaction_type
@@ -755,9 +747,7 @@ class DefaultEmojiReactionTests(EmojiReactionBase):
         """
         stream_name = "Saxony"
         self.subscribe(self.example_user("cordelia"), stream_name)
-        message_id = self.send_stream_message(
-            self.example_user("cordelia"), stream_name,
-        )
+        message_id = self.send_stream_message(self.example_user("cordelia"), stream_name)
 
         user_profile = self.example_user("hamlet")
 

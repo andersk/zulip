@@ -209,9 +209,7 @@ class Realm(models.Model):
     # A short, identifier-like name for the organization.  Used in subdomains;
     # e.g. on a server at example.com, an org with string_id `foo` is reached
     # at `foo.example.com`.
-    string_id: str = models.CharField(
-        max_length=MAX_REALM_SUBDOMAIN_LENGTH, unique=True,
-    )
+    string_id: str = models.CharField(max_length=MAX_REALM_SUBDOMAIN_LENGTH, unique=True)
 
     date_created: datetime.datetime = models.DateTimeField(default=timezone_now)
     deactivated: bool = models.BooleanField(default=False)
@@ -221,9 +219,7 @@ class Realm(models.Model):
 
     invite_required: bool = models.BooleanField(default=True)
     invite_by_admins_only: bool = models.BooleanField(default=False)
-    _max_invites: Optional[int] = models.IntegerField(
-        null=True, db_column="max_invites",
-    )
+    _max_invites: Optional[int] = models.IntegerField(null=True, db_column="max_invites")
     disallow_disposable_email_addresses: bool = models.BooleanField(default=True)
     authentication_methods: BitHandler = BitField(
         flags=AUTHENTICATION_FLAGS, default=2 ** 31 - 1,
@@ -505,9 +501,7 @@ class Realm(models.Model):
         from zproject.backends import AUTH_BACKEND_NAME_MAP
 
         ret: Dict[str, bool] = {}
-        supported_backends = [
-            backend.__class__ for backend in supported_auth_backends()
-        ]
+        supported_backends = [backend.__class__ for backend in supported_auth_backends()]
         # `authentication_methods` is a bitfield.types.BitHandler, not
         # a true dict; since it is still python2- and python3-compat,
         # `iteritems` is its method to iterate over its contents.
@@ -868,9 +862,9 @@ def realm_in_local_realm_filters_cache(realm_id: int) -> bool:
 
 def realm_filters_for_realm(realm_id: int) -> List[Tuple[str, str, int]]:
     if not realm_in_local_realm_filters_cache(realm_id):
-        per_request_realm_filters_cache[
-            realm_id
-        ] = realm_filters_for_realm_remote_cache(realm_id)
+        per_request_realm_filters_cache[realm_id] = realm_filters_for_realm_remote_cache(
+            realm_id,
+        )
     return per_request_realm_filters_cache[realm_id]
 
 
@@ -1463,9 +1457,7 @@ class PasswordTooWeakError(Exception):
 class UserGroup(models.Model):
     id: int = models.AutoField(auto_created=True, primary_key=True, verbose_name="ID")
     name: str = models.CharField(max_length=100)
-    members: Manager = models.ManyToManyField(
-        UserProfile, through="UserGroupMembership",
-    )
+    members: Manager = models.ManyToManyField(UserProfile, through="UserGroupMembership")
     realm: Realm = models.ForeignKey(Realm, on_delete=CASCADE)
     description: str = models.TextField(default="")
 
@@ -2541,9 +2533,7 @@ def get_user_profile_by_email(email: str) -> UserProfile:
     multiple users with a given (delivery) email address existing on a
     single server (in different realms).
     """
-    return UserProfile.objects.select_related().get(
-        delivery_email__iexact=email.strip(),
-    )
+    return UserProfile.objects.select_related().get(delivery_email__iexact=email.strip())
 
 
 @cache_with_key(user_profile_by_api_key_cache_key, timeout=3600 * 24 * 7)
@@ -2666,9 +2656,7 @@ def get_user_by_id_in_realm_including_cross_realm(
 
 @cache_with_key(realm_user_dicts_cache_key, timeout=3600 * 24 * 7)
 def get_realm_user_dicts(realm_id: int) -> List[Dict[str, Any]]:
-    return UserProfile.objects.filter(realm_id=realm_id).values(
-        *realm_user_dict_fields,
-    )
+    return UserProfile.objects.filter(realm_id=realm_id).values(*realm_user_dict_fields)
 
 
 @cache_with_key(active_user_ids_cache_key, timeout=3600 * 24 * 7)
