@@ -468,9 +468,7 @@ INTEGRATIONS: Dict[str, Integration] = {
         display_name="Google Calendar",
         doc="zerver/integrations/google-calendar.md",
     ),
-    "hubot": Integration(
-        "hubot", "hubot", ["meta-integration", "bots"], doc="zerver/integrations/hubot.md",
-    ),
+    "hubot": Integration("hubot", "hubot", ["meta-integration", "bots"], doc="zerver/integrations/hubot.md"),
     "irc": Integration(
         "irc", "irc", ["communication"], display_name="IRC", doc="zerver/integrations/irc.md",
     ),
@@ -548,9 +546,7 @@ INTEGRATIONS: Dict[str, Integration] = {
 
 BOT_INTEGRATIONS: List[BotIntegration] = [
     BotIntegration("github_detail", ["version-control", "bots"], display_name="GitHub Detail"),
-    BotIntegration(
-        "xkcd", ["bots", "misc"], display_name="xkcd", logo="images/integrations/logos/xkcd.png",
-    ),
+    BotIntegration("xkcd", ["bots", "misc"], display_name="xkcd", logo="images/integrations/logos/xkcd.png"),
 ]
 
 HUBOT_INTEGRATIONS: List[HubotIntegration] = [
@@ -610,9 +606,7 @@ DOC_SCREENSHOT_CONFIG: Dict[str, List[ScreenshotConfig]] = {
     "bitbucket": [
         ScreenshotConfig("push.json", "002.png", use_basic_auth=True, payload_as_query_param=True),
     ],
-    "bitbucket2": [
-        ScreenshotConfig("issue_created.json", "003.png", "bitbucket", bot_name="Bitbucket Bot"),
-    ],
+    "bitbucket2": [ScreenshotConfig("issue_created.json", "003.png", "bitbucket", bot_name="Bitbucket Bot")],
     "bitbucket3": [
         ScreenshotConfig(
             "repo_push_update_single_branch.json", "004.png", "bitbucket", bot_name="Bitbucket Server Bot",

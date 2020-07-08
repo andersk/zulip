@@ -20,8 +20,6 @@ class Migration(migrations.Migration):
             ),
         ),
         migrations.AddField(
-            model_name="realm",
-            name="night_logo_version",
-            field=models.PositiveSmallIntegerField(default=1),
+            model_name="realm", name="night_logo_version", field=models.PositiveSmallIntegerField(default=1),
         ),
     ]

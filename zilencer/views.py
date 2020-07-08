@@ -175,9 +175,7 @@ def remote_server_notify_push(
     gcm_options = payload.get("gcm_options", {})
 
     android_devices = list(
-        RemotePushDeviceToken.objects.filter(
-            user_id=user_id, kind=RemotePushDeviceToken.GCM, server=server,
-        ),
+        RemotePushDeviceToken.objects.filter(user_id=user_id, kind=RemotePushDeviceToken.GCM, server=server),
     )
 
     apple_devices = list(

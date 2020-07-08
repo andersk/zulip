@@ -291,9 +291,7 @@ class Realm(models.Model):
     waiting_period_threshold: int = models.PositiveIntegerField(default=0)
 
     allow_message_deleting: bool = models.BooleanField(default=False)
-    DEFAULT_MESSAGE_CONTENT_DELETE_LIMIT_SECONDS = (
-        600  # if changed, also change in admin.js, setting_org.js
-    )
+    DEFAULT_MESSAGE_CONTENT_DELETE_LIMIT_SECONDS = 600  # if changed, also change in admin.js, setting_org.js
     message_content_delete_limit_seconds: int = models.IntegerField(
         default=DEFAULT_MESSAGE_CONTENT_DELETE_LIMIT_SECONDS,
     )
@@ -534,10 +532,7 @@ class Realm(models.Model):
         return None
 
     def get_signup_notifications_stream(self) -> Optional["Stream"]:
-        if (
-            self.signup_notifications_stream is not None
-            and not self.signup_notifications_stream.deactivated
-        ):
+        if self.signup_notifications_stream is not None and not self.signup_notifications_stream.deactivated:
             return self.signup_notifications_stream
         return None
 
@@ -1124,9 +1119,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
         (AVATAR_FROM_GRAVATAR, "Hosted by Gravatar"),
         (AVATAR_FROM_USER, "Uploaded by user"),
     )
-    avatar_source: str = models.CharField(
-        default=AVATAR_FROM_GRAVATAR, choices=AVATAR_SOURCES, max_length=1,
-    )
+    avatar_source: str = models.CharField(default=AVATAR_FROM_GRAVATAR, choices=AVATAR_SOURCES, max_length=1)
     avatar_version: int = models.PositiveSmallIntegerField(default=1)
     avatar_hash: Optional[str] = models.CharField(null=True, max_length=64)
 
@@ -1243,9 +1236,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
 
     @property
     def is_realm_admin(self) -> bool:
-        return (
-            self.role == UserProfile.ROLE_REALM_ADMINISTRATOR or self.role == UserProfile.ROLE_REALM_OWNER
-        )
+        return self.role == UserProfile.ROLE_REALM_ADMINISTRATOR or self.role == UserProfile.ROLE_REALM_OWNER
 
     @is_realm_admin.setter
     def is_realm_admin(self, value: bool) -> None:
@@ -2689,9 +2680,7 @@ class UserPresence(models.Model):
     @staticmethod
     def status_from_string(status: str) -> Optional[int]:
         if status == "active":
-            status_val: Optional[
-                int
-            ] = UserPresence.ACTIVE  # See https://github.com/python/mypy/issues/2611
+            status_val: Optional[int] = UserPresence.ACTIVE  # See https://github.com/python/mypy/issues/2611
         elif status == "idle":
             status_val = UserPresence.IDLE
         else:

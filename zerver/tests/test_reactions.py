@@ -904,9 +904,7 @@ class ReactionAPIEventTest(EmojiReactionBase):
 
         events: List[Mapping[str, Any]] = []
         with tornado_redirected_to_list(events):
-            result = self.delete_reaction(
-                reaction_info, message_id=pm_id, sender=reaction_sender.short_name,
-            )
+            result = self.delete_reaction(reaction_info, message_id=pm_id, sender=reaction_sender.short_name)
         self.assert_json_success(result)
         self.assertEqual(len(events), 1)
 

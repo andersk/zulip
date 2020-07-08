@@ -362,12 +362,7 @@ class MessagePOSTTest(ZulipTestCase):
         # Now send a message to yourself and see how that interacts with the data structure
         result = self.client_post(
             "/json/messages",
-            {
-                "type": "private",
-                "content": "Test message",
-                "client": "test suite",
-                "to": user_profile.email,
-            },
+            {"type": "private", "content": "Test message", "client": "test suite", "to": user_profile.email},
         )
         self.assert_json_success(result)
         self_message_id = ujson.loads(result.content.decode())["id"]
@@ -506,12 +501,7 @@ class MessagePOSTTest(ZulipTestCase):
         othello = self.example_user("othello")
         result = self.client_post(
             "/json/messages",
-            {
-                "type": "invalid type",
-                "content": "Test message",
-                "client": "test suite",
-                "to": othello.email,
-            },
+            {"type": "invalid type", "content": "Test message", "client": "test suite", "to": othello.email},
         )
         self.assert_json_error(result, "Invalid message type")
 
@@ -1796,11 +1786,7 @@ class InternalPrepTest(ZulipTestCase):
 
         with mock.patch("logging.exception") as m:
             internal_send_stream_message_by_name(
-                realm=realm,
-                sender=cordelia,
-                stream_name=stream.name,
-                topic="whatever",
-                content=bad_content,
+                realm=realm, sender=cordelia, stream_name=stream.name, topic="whatever", content=bad_content,
             )
 
         m.assert_called_once_with(

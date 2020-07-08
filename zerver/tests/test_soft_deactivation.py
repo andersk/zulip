@@ -253,8 +253,7 @@ class SoftDeactivationMessageTest(ZulipTestCase):
         self.assert_length(queries, 8)
         self.assertFalse(long_term_idle_user.long_term_idle)
         self.assertEqual(
-            last_realm_audit_log_entry(RealmAuditLog.USER_SOFT_ACTIVATED).modified_user,
-            long_term_idle_user,
+            last_realm_audit_log_entry(RealmAuditLog.USER_SOFT_ACTIVATED).modified_user, long_term_idle_user,
         )
         idle_user_msg_list = get_user_messages(long_term_idle_user)
         self.assertEqual(len(idle_user_msg_list), idle_user_msg_count + 1)

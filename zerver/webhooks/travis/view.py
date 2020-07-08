@@ -26,11 +26,7 @@ def api_travis_webhook(
     message: Dict[str, object] = REQ(
         "payload",
         validator=check_dict(
-            [
-                ("author_name", check_string),
-                ("status_message", check_string),
-                ("compare_url", check_string),
-            ],
+            [("author_name", check_string), ("status_message", check_string), ("compare_url", check_string)],
         ),
     ),
 ) -> HttpResponse:

@@ -40,10 +40,7 @@ class TestEmbeddedBotMessaging(ZulipTestCase):
     def test_stream_message_to_embedded_bot(self) -> None:
         assert self.bot_profile is not None
         self.send_stream_message(
-            self.user_profile,
-            "Denmark",
-            content=f"@**{self.bot_profile.full_name}** foo",
-            topic_name="bar",
+            self.user_profile, "Denmark", content=f"@**{self.bot_profile.full_name}** foo", topic_name="bar",
         )
         last_message = self.get_last_message()
         self.assertEqual(last_message.content, "beep boop")

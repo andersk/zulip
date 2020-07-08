@@ -42,9 +42,7 @@ class Bitbucket3HookTests(WebhookTestCase):
 
     # Repo Push Events:
     def test_push_add_branch(self) -> None:
-        expected_message = (
-            """[hypro999](http://139.59.64.214:7990/users/hypro999) created branch2 branch."""
-        )
+        expected_message = """[hypro999](http://139.59.64.214:7990/users/hypro999) created branch2 branch."""
         expected_topic = self.EXPECTED_TOPIC_BRANCH_EVENTS.format(branch="branch2")
         self.send_and_test_stream_message("repo_push_add_branch", expected_topic, expected_message)
 
@@ -53,9 +51,7 @@ class Bitbucket3HookTests(WebhookTestCase):
         self.send_and_test_stream_message("repo_push_add_tag", self.EXPECTED_TOPIC, expected_message)
 
     def test_push_delete_branch(self) -> None:
-        expected_message = (
-            """[hypro999](http://139.59.64.214:7990/users/hypro999) deleted branch branch2."""
-        )
+        expected_message = """[hypro999](http://139.59.64.214:7990/users/hypro999) deleted branch branch2."""
         expected_topic = self.EXPECTED_TOPIC_BRANCH_EVENTS.format(branch="branch2")
         self.send_and_test_stream_message("repo_push_delete_branch", expected_topic, expected_message)
 
@@ -66,9 +62,7 @@ class Bitbucket3HookTests(WebhookTestCase):
     def test_push_update_single_branch(self) -> None:
         expected_message = """[hypro999](http://139.59.64.214:7990/users/hypro999) pushed to branch master. Head is now e68c981ef53dbab0a5ca320a2d8d80e216c70528."""
         expected_topic = self.EXPECTED_TOPIC_BRANCH_EVENTS.format(branch="master")
-        self.send_and_test_stream_message(
-            "repo_push_update_single_branch", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("repo_push_update_single_branch", expected_topic, expected_message)
 
     def test_push_update_multiple_branches(self) -> None:
         expected_message_first = """[hypro999](http://139.59.64.214:7990/users/hypro999) pushed to branch branch1. Head is now 3980c2be32a7e23c795741d5dc1a2eecb9b85d6d."""
@@ -204,9 +198,7 @@ class Bitbucket3HookTests(WebhookTestCase):
     def test_pull_request_reviewers_added(self) -> None:
         expected_message = """[hypro999](http://139.59.64.214:7990/users/hypro999) reassigned [PR #1](http://139.59.64.214:7990/projects/SBOX/repos/sandbox/pull-requests/1) to [shimura](http://139.59.64.214:7990/users/shimura) and [sougo](http://139.59.64.214:7990/users/sougo)."""
         expected_topic = "sandbox / PR #1 Branch1"
-        self.send_and_test_stream_message(
-            "pull_request_add_two_reviewers", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request_add_two_reviewers", expected_topic, expected_message)
 
     def test_pull_request_remove_all_reviewers(self) -> None:
         expected_message = """[hypro999](http://139.59.64.214:7990/users/hypro999) removed all reviewers from [PR #1](http://139.59.64.214:7990/projects/SBOX/repos/sandbox/pull-requests/1)."""

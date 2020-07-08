@@ -358,9 +358,7 @@ class PreviewTestCase(ZulipTestCase):
             msg = Message.objects.select_related("sender").get(id=msg_id)
             # The content of the message has changed since the event for original_url has been created,
             # it should not be rendered. Another, up-to-date event will have been sent (edited_url).
-            self.assertNotIn(
-                f'<a href="{original_url}" title="The Rock">The Rock</a>', msg.rendered_content,
-            )
+            self.assertNotIn(f'<a href="{original_url}" title="The Rock">The Rock</a>', msg.rendered_content)
             mocked_response_edited.assert_not_called()
 
             with self.settings(TEST_SUITE=False, CACHES=TEST_CACHES):
@@ -598,9 +596,7 @@ class PreviewTestCase(ZulipTestCase):
         with mock.patch(
             "zerver.lib.url_preview.preview.get_oembed_data", side_effect=lambda *args, **kwargs: None,
         ):
-            with mock.patch(
-                "zerver.lib.url_preview.preview.valid_content_type", side_effect=lambda k: True,
-            ):
+            with mock.patch("zerver.lib.url_preview.preview.valid_content_type", side_effect=lambda k: True):
                 with self.settings(TEST_SUITE=False, CACHES=TEST_CACHES):
                     with mock.patch("requests.get", mock.Mock(side_effect=ConnectionError())):
                         FetchLinksEmbedData().consume(event)

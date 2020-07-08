@@ -88,9 +88,7 @@ class TestVideoCall(ZulipTestCase):
     @responses.activate
     def test_create_video_refresh_error(self) -> None:
         responses.add(
-            responses.POST,
-            "https://zoom.us/oauth/token",
-            json={"access_token": "token", "expires_in": -60},
+            responses.POST, "https://zoom.us/oauth/token", json={"access_token": "token", "expires_in": -60},
         )
 
         response = self.client_get(

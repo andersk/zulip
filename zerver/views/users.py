@@ -327,9 +327,7 @@ def add_bot_backend(
     config_data: Dict[str, str] = REQ(default={}, validator=check_dict(value_validator=check_string)),
     interface_type: int = REQ(validator=check_int, default=Service.GENERIC),
     default_sending_stream_name: Optional[str] = REQ("default_sending_stream", default=None),
-    default_events_register_stream_name: Optional[str] = REQ(
-        "default_events_register_stream", default=None,
-    ),
+    default_events_register_stream_name: Optional[str] = REQ("default_events_register_stream", default=None),
     default_all_public_streams: Optional[bool] = REQ(validator=check_bool, default=None),
 ) -> HttpResponse:
     short_name = check_short_name(short_name_raw)

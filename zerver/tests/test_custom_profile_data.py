@@ -358,11 +358,7 @@ class UpdateCustomProfileFieldTest(CustomProfileFieldTestCase):
 
         result = self.client_patch(
             f"/json/realm/profile_fields/{field.id}",
-            info={
-                "name": "New phone number",
-                "hint": "*" * 81,
-                "field_type": CustomProfileField.SHORT_TEXT,
-            },
+            info={"name": "New phone number", "hint": "*" * 81, "field_type": CustomProfileField.SHORT_TEXT},
         )
         msg = "hint is too long (limit: 80 characters)"
         self.assert_json_error(result, msg)
@@ -594,9 +590,7 @@ class ListCustomProfileFieldTest(CustomProfileFieldTestCase):
         self.login("iago")
         realm = get_realm("zulip")
         order = (
-            CustomProfileField.objects.filter(realm=realm)
-            .order_by("-order")
-            .values_list("order", flat=True)
+            CustomProfileField.objects.filter(realm=realm).order_by("-order").values_list("order", flat=True)
         )
         try_reorder_realm_custom_profile_fields(realm, order)
         result = self.client_get("/json/realm/profile_fields")
@@ -716,9 +710,7 @@ class ReorderCustomProfileFieldTest(CustomProfileFieldTestCase):
         self.login("iago")
         realm = get_realm("zulip")
         order = (
-            CustomProfileField.objects.filter(realm=realm)
-            .order_by("-order")
-            .values_list("order", flat=True)
+            CustomProfileField.objects.filter(realm=realm).order_by("-order").values_list("order", flat=True)
         )
         result = self.client_patch("/json/realm/profile_fields", info={"order": ujson.dumps(order)})
         self.assert_json_success(result)
@@ -730,9 +722,7 @@ class ReorderCustomProfileFieldTest(CustomProfileFieldTestCase):
         self.login("iago")
         realm = get_realm("zulip")
         order = (
-            CustomProfileField.objects.filter(realm=realm)
-            .order_by("-order")
-            .values_list("order", flat=True)
+            CustomProfileField.objects.filter(realm=realm).order_by("-order").values_list("order", flat=True)
         )
         order = list(order)
         order.append(4)
@@ -746,9 +736,7 @@ class ReorderCustomProfileFieldTest(CustomProfileFieldTestCase):
         self.login("hamlet")
         realm = get_realm("zulip")
         order = (
-            CustomProfileField.objects.filter(realm=realm)
-            .order_by("-order")
-            .values_list("order", flat=True)
+            CustomProfileField.objects.filter(realm=realm).order_by("-order").values_list("order", flat=True)
         )
         result = self.client_patch("/json/realm/profile_fields", info={"order": ujson.dumps(order)})
         self.assert_json_error(result, "Must be an organization administrator")

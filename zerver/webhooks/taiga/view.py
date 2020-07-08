@@ -81,8 +81,7 @@ templates = {
         "description_diff": "[{user}]({user_link}) updated description of user story {subject}.",
         "commented": "[{user}]({user_link}) commented on user story {subject}.",
         "delete": "[{user}]({user_link}) deleted user story {subject}.",
-        "due_date": "[{user}]({user_link}) changed due date of user story {subject}"
-        " from {old} to {new}.",
+        "due_date": "[{user}]({user_link}) changed due date of user story {subject}" " from {old} to {new}.",
         "set_due_date": "[{user}]({user_link}) set due date of user story {subject}" " to {new}.",
     },
     "milestone": {
@@ -316,12 +315,7 @@ def get_subject(message: Mapping[str, Any]) -> str:
 def get_epic_subject(message: Mapping[str, Any]) -> str:
     if "permalink" in message["data"]["epic"]:
         return (
-            "["
-            + message["data"]["epic"]["subject"]
-            + "]"
-            + "("
-            + message["data"]["epic"]["permalink"]
-            + ")"
+            "[" + message["data"]["epic"]["subject"] + "]" + "(" + message["data"]["epic"]["permalink"] + ")"
         )
     return "**" + message["data"]["epic"]["subject"] + "**"
 

@@ -147,12 +147,7 @@ def convert_markdown_syntax(text: str, regex: str, zulip_keyword: str) -> str:
     """
     for match in re.finditer(regex, text, re.VERBOSE):
         converted_token = (
-            match.group(1)
-            + zulip_keyword
-            + match.group(3)
-            + match.group(4)
-            + zulip_keyword
-            + match.group(6)
+            match.group(1) + zulip_keyword + match.group(3) + match.group(4) + zulip_keyword + match.group(6)
         )
         text = text.replace(match.group(0), converted_token)
     return text

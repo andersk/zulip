@@ -465,9 +465,7 @@ def accounts_register(request: HttpRequest) -> HttpResponse:
 
 
 def login_and_go_to_home(request: HttpRequest, user_profile: UserProfile) -> HttpResponse:
-    mobile_flow_otp = get_expirable_session_var(
-        request.session, "registration_mobile_flow_otp", delete=True,
-    )
+    mobile_flow_otp = get_expirable_session_var(request.session, "registration_mobile_flow_otp", delete=True)
     desktop_flow_otp = get_expirable_session_var(
         request.session, "registration_desktop_flow_otp", delete=True,
     )

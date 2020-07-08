@@ -81,9 +81,7 @@ class DocPageTest(ZulipTestCase):
             for s in landing_missing_strings:
                 self.assertNotIn(s, str(result.content))
             if not doc_html_str:
-                self.assert_in_success_response(
-                    ['<meta name="description" content="Zulip combines'], result,
-                )
+                self.assert_in_success_response(['<meta name="description" content="Zulip combines'], result)
             self.assert_not_in_success_response(['<meta name="robots" content="noindex,nofollow">'], result)
 
             # Test the URL on the "zephyr" subdomain with the landing page setting

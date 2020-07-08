@@ -18,7 +18,5 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="remotepushdevicetoken", name="user_id", field=models.BigIntegerField(db_index=True),
         ),
-        migrations.AlterUniqueTogether(
-            name="remotepushdevicetoken", unique_together={("server", "token")},
-        ),
+        migrations.AlterUniqueTogether(name="remotepushdevicetoken", unique_together={("server", "token")}),
     ]

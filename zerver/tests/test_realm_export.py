@@ -75,9 +75,7 @@ class RealmExportTest(ZulipTestCase):
         self.assertEqual(export_dict[0]["acting_user_id"], admin.id)
         self.assert_length(
             export_dict,
-            RealmAuditLog.objects.filter(
-                realm=admin.realm, event_type=RealmAuditLog.REALM_EXPORTED,
-            ).count(),
+            RealmAuditLog.objects.filter(realm=admin.realm, event_type=RealmAuditLog.REALM_EXPORTED).count(),
         )
 
         # Finally, delete the file.
@@ -134,9 +132,7 @@ class RealmExportTest(ZulipTestCase):
         self.assertEqual(export_dict[0]["acting_user_id"], admin.id)
         self.assert_length(
             export_dict,
-            RealmAuditLog.objects.filter(
-                realm=admin.realm, event_type=RealmAuditLog.REALM_EXPORTED,
-            ).count(),
+            RealmAuditLog.objects.filter(realm=admin.realm, event_type=RealmAuditLog.REALM_EXPORTED).count(),
         )
 
         # Finally, delete the file.

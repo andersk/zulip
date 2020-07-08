@@ -261,9 +261,7 @@ def access_user_by_id(
 def get_accounts_for_email(email: str) -> List[Dict[str, Optional[str]]]:
     profiles = (
         UserProfile.objects.select_related("realm")
-        .filter(
-            delivery_email__iexact=email.strip(), is_active=True, realm__deactivated=False, is_bot=False,
-        )
+        .filter(delivery_email__iexact=email.strip(), is_active=True, realm__deactivated=False, is_bot=False)
         .order_by("date_joined")
     )
     return [

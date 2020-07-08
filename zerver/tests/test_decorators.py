@@ -1358,9 +1358,7 @@ class TestValidateApiKey(ZulipTestCase):
 
     def test_validate_api_key_if_profile_does_not_exist(self) -> None:
         with self.assertRaises(JsonableError):
-            validate_api_key(
-                HostRequestMock(), "email@doesnotexist.com", "VIzRVw2CspUOnEm9Yu5vQiQtJNkvETkp",
-            )
+            validate_api_key(HostRequestMock(), "email@doesnotexist.com", "VIzRVw2CspUOnEm9Yu5vQiQtJNkvETkp")
 
     def test_validate_api_key_if_api_key_does_not_match_profile_api_key(self) -> None:
         with self.assertRaises(InvalidAPIKeyFormatError):

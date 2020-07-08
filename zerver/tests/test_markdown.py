@@ -787,8 +787,7 @@ class MarkdownTest(ZulipTestCase):
 
     def test_twitter_id_extraction(self) -> None:
         self.assertEqual(
-            get_tweet_id("http://twitter.com/#!/VizzQuotes/status/409030735191097344"),
-            "409030735191097344",
+            get_tweet_id("http://twitter.com/#!/VizzQuotes/status/409030735191097344"), "409030735191097344",
         )
         self.assertEqual(
             get_tweet_id("http://twitter.com/VizzQuotes/status/409030735191097344"), "409030735191097344",

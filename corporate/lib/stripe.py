@@ -631,9 +631,7 @@ def invoice_plan(plan: CustomerPlan, event_time: datetime) -> None:
                 discountable=False,
                 period={
                     "start": datetime_to_timestamp(ledger_entry.event_time),
-                    "end": datetime_to_timestamp(
-                        start_of_next_billing_cycle(plan, ledger_entry.event_time),
-                    ),
+                    "end": datetime_to_timestamp(start_of_next_billing_cycle(plan, ledger_entry.event_time)),
                 },
                 idempotency_key=get_idempotency_key(ledger_entry),
                 **price_args,

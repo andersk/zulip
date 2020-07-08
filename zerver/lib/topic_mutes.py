@@ -19,9 +19,7 @@ def get_topic_mutes(user_profile: UserProfile) -> List[Tuple[str, str, float]]:
 
 
 def set_topic_mutes(
-    user_profile: UserProfile,
-    muted_topics: List[List[str]],
-    date_muted: Optional[datetime.datetime] = None,
+    user_profile: UserProfile, muted_topics: List[List[str]], date_muted: Optional[datetime.datetime] = None,
 ) -> None:
     """
     This is only used in tests.

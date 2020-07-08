@@ -26,7 +26,5 @@ class Migration(migrations.Migration):
             name="creation_key",
             field=models.CharField(db_index=True, max_length=40, verbose_name="activation key"),
         ),
-        migrations.AlterUniqueTogether(
-            name="confirmation", unique_together={("type", "confirmation_key")},
-        ),
+        migrations.AlterUniqueTogether(name="confirmation", unique_together={("type", "confirmation_key")}),
     ]

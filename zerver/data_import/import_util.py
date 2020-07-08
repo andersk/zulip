@@ -390,9 +390,7 @@ def build_usermessages(
     return (user_messages_created, user_messages_skipped)
 
 
-def build_user_message(
-    user_id: int, message_id: int, is_private: bool, is_mentioned: bool,
-) -> ZerverFieldsT:
+def build_user_message(user_id: int, message_id: int, is_private: bool, is_mentioned: bool) -> ZerverFieldsT:
     flags_mask = 1  # For read
     if is_mentioned:
         flags_mask += 8  # For mentioned

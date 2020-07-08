@@ -13,8 +13,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="customprofilefield",
             name="field_type",
-            field=models.PositiveSmallIntegerField(
-                choices=[(1, "Short text"), (2, "Long text")], default=1,
-            ),
+            field=models.PositiveSmallIntegerField(choices=[(1, "Short text"), (2, "Long text")], default=1),
         ),
     ]

@@ -84,9 +84,7 @@ class SimpleQueueClient:
         self.log.info(f"Queue reconnecting saved consumer {consumer} to queue {queue}")
         self.ensure_queue(
             queue,
-            lambda channel: channel.basic_consume(
-                queue, consumer, consumer_tag=self._generate_ctag(queue),
-            ),
+            lambda channel: channel.basic_consume(queue, consumer, consumer_tag=self._generate_ctag(queue)),
         )
 
     def _reconnect_consumer_callbacks(self) -> None:

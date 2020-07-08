@@ -625,9 +625,7 @@ class SlackImporter(ZulipTestCase):
         passed_realm = mock_channels_to_zerver_stream.call_args_list[0][0][2]
         zerver_realmdomain = passed_realm["zerver_realmdomain"]
         self.assertListEqual(zerver_realmdomain, test_zerver_realmdomain)
-        self.assertEqual(
-            passed_realm["zerver_realm"][0]["description"], "Organization imported from Slack!",
-        )
+        self.assertEqual(passed_realm["zerver_realm"][0]["description"], "Organization imported from Slack!")
         self.assertEqual(passed_realm["zerver_userpresence"], [])
         self.assertEqual(len(passed_realm.keys()), 14)
 

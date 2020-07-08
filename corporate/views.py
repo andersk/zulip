@@ -293,9 +293,7 @@ def billing_home(request: HttpRequest) -> HttpResponse:
             if new_plan is not None:  # nocoverage
                 plan = new_plan
             assert plan is not None  # for mypy
-            plan_name = {CustomerPlan.STANDARD: "Zulip Standard", CustomerPlan.PLUS: "Zulip Plus"}[
-                plan.tier
-            ]
+            plan_name = {CustomerPlan.STANDARD: "Zulip Standard", CustomerPlan.PLUS: "Zulip Plus"}[plan.tier]
             free_trial = plan.status == CustomerPlan.FREE_TRIAL
             downgrade_at_end_of_cycle = plan.status == CustomerPlan.DOWNGRADE_AT_END_OF_CYCLE
             switch_to_annual_at_end_of_cycle = plan.status == CustomerPlan.SWITCH_TO_ANNUAL_AT_END_OF_CYCLE
@@ -370,9 +368,7 @@ def change_plan_status(
 @require_billing_access
 @has_request_variables
 def replace_payment_source(
-    request: HttpRequest,
-    user: UserProfile,
-    stripe_token: str = REQ("stripe_token", validator=check_string),
+    request: HttpRequest, user: UserProfile, stripe_token: str = REQ("stripe_token", validator=check_string),
 ) -> HttpResponse:
     try:
         do_replace_payment_source(user, stripe_token, pay_invoices=True)

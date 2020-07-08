@@ -351,9 +351,7 @@ class ImportExportTest(ZulipTestCase):
         create_s3_buckets(settings.S3_AUTH_UPLOADS_BUCKET, settings.S3_AVATAR_BUCKET)
 
         realm = Realm.objects.get(string_id="zulip")
-        attachment_path_id, emoji_path, original_avatar_path_id, test_image = self._setup_export_files(
-            realm,
-        )
+        attachment_path_id, emoji_path, original_avatar_path_id, test_image = self._setup_export_files(realm)
         full_data = self._export_realm(realm)
 
         data = full_data["attachment"]

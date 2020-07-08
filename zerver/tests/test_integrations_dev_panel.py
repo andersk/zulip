@@ -85,9 +85,7 @@ class TestIntegrationsDevPanel(ZulipTestCase):
         self.assertEqual(Stream.objects.get(id=latest_msg.recipient.type_id).name, "Denmark")
         self.assertEqual(latest_msg.topic_name(), "GitHub Notifications")
 
-    def test_check_send_webhook_fixture_message_for_success_with_headers_and_non_json_fixtures(
-        self,
-    ) -> None:
+    def test_check_send_webhook_fixture_message_for_success_with_headers_and_non_json_fixtures(self) -> None:
         bot = get_user("webhook-bot@zulip.com", self.zulip_realm)
         url = (
             f"/api/v1/external/wordpress?api_key={bot.api_key}&stream=Denmark&topic=Wordpress Notifications"
@@ -271,9 +269,6 @@ class TestIntegrationsDevPanel(ZulipTestCase):
             "integration_name": "appfollow",
         }
         response = self.client_post("/devtools/integrations/send_all_webhook_fixture_messages", data)
-        expected_response = {
-            "msg": 'The integration "appfollow" does not have fixtures.',
-            "result": "error",
-        }
+        expected_response = {"msg": 'The integration "appfollow" does not have fixtures.', "result": "error"}
         self.assertEqual(response.status_code, 404)
         self.assertEqual(ujson.loads(response.content), expected_response)

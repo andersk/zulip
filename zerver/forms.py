@@ -51,8 +51,7 @@ WRONG_SUBDOMAIN_ERROR = (
     + "Please contact your organization administrator with any questions."
 )
 DEACTIVATED_ACCOUNT_ERROR = (
-    "Your account is no longer active. "
-    + "Please contact your organization administrator to reactivate it."
+    "Your account is no longer active. " + "Please contact your organization administrator to reactivate it."
 )
 PASSWORD_TOO_WEAK_ERROR = "The password is too weak."
 AUTHENTICATION_RATE_LIMITED_ERROR = (

@@ -30,9 +30,7 @@ class ConfirmationKeyException(Exception):
         self.error_type = error_type
 
 
-def render_confirmation_key_error(
-    request: HttpRequest, exception: ConfirmationKeyException,
-) -> HttpResponse:
+def render_confirmation_key_error(request: HttpRequest, exception: ConfirmationKeyException) -> HttpResponse:
     if exception.error_type == ConfirmationKeyException.WRONG_LENGTH:
         return render(request, "confirmation/link_malformed.html")
     if exception.error_type == ConfirmationKeyException.EXPIRED:

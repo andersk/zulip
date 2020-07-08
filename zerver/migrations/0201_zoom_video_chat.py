@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(model_name="realm", name="zoom_api_key", field=models.TextField(default="")),
-        migrations.AddField(
-            model_name="realm", name="zoom_api_secret", field=models.TextField(default=""),
-        ),
+        migrations.AddField(model_name="realm", name="zoom_api_secret", field=models.TextField(default="")),
         migrations.AddField(model_name="realm", name="zoom_user_id", field=models.TextField(default="")),
     ]

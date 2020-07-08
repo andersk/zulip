@@ -46,8 +46,7 @@ class Command(BaseCommand):
             "addrport",
             nargs="?",
             type=str,
-            help="[optional port number or ipaddr:port]\n "
-            "(use multiple ports to start multiple servers)",
+            help="[optional port number or ipaddr:port]\n " "(use multiple ports to start multiple servers)",
         )
 
         parser.add_argument(
@@ -104,9 +103,7 @@ class Command(BaseCommand):
                 queue_client = get_queue_client()
                 # Process notifications received via RabbitMQ
                 queue_name = notify_tornado_queue_name(port)
-                queue_client.register_json_consumer(
-                    queue_name, get_wrapped_process_notification(queue_name),
-                )
+                queue_client.register_json_consumer(queue_name, get_wrapped_process_notification(queue_name))
 
             try:
                 # Application is an instance of Django's standard wsgi handler.

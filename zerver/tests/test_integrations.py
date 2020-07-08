@@ -28,9 +28,7 @@ class IntegrationsTestCase(ZulipTestCase):
 
     def test_get_bot_avatar_path(self) -> None:
         integration = INTEGRATIONS["alertmanager"]
-        self.assertEqual(
-            integration.get_bot_avatar_path(), "images/integrations/bot_avatars/prometheus.png",
-        )
+        self.assertEqual(integration.get_bot_avatar_path(), "images/integrations/bot_avatars/prometheus.png")
 
         # New instance with logo parameter not set
         integration = WebhookIntegration("alertmanager", ["misc"])

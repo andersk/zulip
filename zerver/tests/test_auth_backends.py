@@ -1112,9 +1112,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
         # Verify that the right thing happens with an invalid-format OTP
         result = self.social_auth_test(account_data_dict, subdomain="zulip", desktop_flow_otp="1234")
         self.assert_json_error(result, "Invalid OTP")
-        result = self.social_auth_test(
-            account_data_dict, subdomain="zulip", desktop_flow_otp="invalido" * 8,
-        )
+        result = self.social_auth_test(account_data_dict, subdomain="zulip", desktop_flow_otp="invalido" * 8)
         self.assert_json_error(result, "Invalid OTP")
 
         # Now do it correctly
@@ -1413,9 +1411,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
         email = "newuser@zulip.com"
         name = "Full Name"
         account_data_dict = self.get_account_data_dict(email=email, name=name)
-        result = self.social_auth_test(
-            account_data_dict, expect_choose_email_screen=True, subdomain="zulip",
-        )
+        result = self.social_auth_test(account_data_dict, expect_choose_email_screen=True, subdomain="zulip")
         self.assertEqual(result.status_code, 302)
         data = load_subdomain_token(result)
         self.assertEqual(data["email"], email)
@@ -1437,9 +1433,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
         email = "nonexisting@phantom.com"
         name = "Full Name"
         account_data_dict = self.get_account_data_dict(email=email, name=name)
-        result = self.social_auth_test(
-            account_data_dict, expect_choose_email_screen=True, subdomain="zulip",
-        )
+        result = self.social_auth_test(account_data_dict, expect_choose_email_screen=True, subdomain="zulip")
         self.assertEqual(result.status_code, 302)
         data = load_subdomain_token(result)
         self.assertEqual(data["email"], email)
@@ -1558,8 +1552,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
             self.assertIn("login", result.url)
 
         with mock.patch(
-            "social_core.backends.oauth.BaseOAuth2.auth_complete",
-            side_effect=requests.exceptions.HTTPError,
+            "social_core.backends.oauth.BaseOAuth2.auth_complete", side_effect=requests.exceptions.HTTPError,
         ):
             result = self.client_get(reverse("social:complete", args=[self.backend.name]))
             self.assertEqual(result.status_code, 302)
@@ -1897,11 +1890,7 @@ class SAMLAuthBackendTest(SocialAuthBase):
                 self.assertEqual("/login/", result.url)
             self.assertEqual(
                 m.output,
-                [
-                    self.logger_output(
-                        "/complete/saml/: No valid IdP as issuer of the SAMLResponse.", "info",
-                    ),
-                ],
+                [self.logger_output("/complete/saml/: No valid IdP as issuer of the SAMLResponse.", "info")],
             )
 
     def test_social_auth_complete_valid_get_idp_bad_samlresponse(self) -> None:
@@ -2651,10 +2640,7 @@ class GitHubAuthBackendTest(SocialAuthBase):
         email_data = extra_data.get("email_data", email_data)
 
         requests_mock.add(
-            requests_mock.GET,
-            "https://api.github.com/user/emails",
-            status=200,
-            body=json.dumps(email_data),
+            requests_mock.GET, "https://api.github.com/user/emails", status=200, body=json.dumps(email_data),
         )
 
         requests_mock.add(
@@ -2734,8 +2720,7 @@ class GitHubAuthBackendTest(SocialAuthBase):
     def test_social_auth_github_organization_member_success(self) -> None:
         account_data_dict = self.get_account_data_dict(email=self.email, name=self.name)
         with mock.patch(
-            "social_core.backends.github.GithubOrganizationOAuth2.user_data",
-            return_value=account_data_dict,
+            "social_core.backends.github.GithubOrganizationOAuth2.user_data", return_value=account_data_dict,
         ):
             result = self.social_auth_test(
                 account_data_dict, expect_choose_email_screen=False, subdomain="zulip",
@@ -2955,10 +2940,7 @@ class GitHubAuthBackendTest(SocialAuthBase):
         ]
         with self.assertLogs(self.logger_string, level="WARNING") as m:
             result = self.social_auth_test(
-                account_data_dict,
-                subdomain="zulip",
-                expect_choose_email_screen=True,
-                email_data=email_data,
+                account_data_dict, subdomain="zulip", expect_choose_email_screen=True, email_data=email_data,
             )
             self.assertEqual(result.status_code, 302)
             self.assertEqual(result.url, "/login/")
@@ -2982,10 +2964,7 @@ class GitHubAuthBackendTest(SocialAuthBase):
         ]
         with self.assertLogs(self.logger_string, level="WARNING") as m:
             result = self.social_auth_test(
-                account_data_dict,
-                subdomain="zulip",
-                expect_choose_email_screen=True,
-                email_data=email_data,
+                account_data_dict, subdomain="zulip", expect_choose_email_screen=True, email_data=email_data,
             )
             self.assertEqual(result.status_code, 302)
             self.assertEqual(result.url, "/login/")
@@ -3012,10 +2991,7 @@ class GitHubAuthBackendTest(SocialAuthBase):
         ]
         with self.assertLogs(self.logger_string, level="WARNING") as m:
             result = self.social_auth_test(
-                account_data_dict,
-                subdomain="zulip",
-                expect_choose_email_screen=True,
-                email_data=email_data,
+                account_data_dict, subdomain="zulip", expect_choose_email_screen=True, email_data=email_data,
             )
             self.assertEqual(result.status_code, 302)
             self.assertEqual(result.url, "/login/")
@@ -3750,10 +3726,7 @@ class TestTwoFactor(ZulipTestCase):
             result = self.client_post("/accounts/login/", first_step_data)
             self.assertEqual(result.status_code, 200)
 
-            second_step_data = {
-                "token-otp_token": str(token),
-                "two_factor_login_view-current_step": "token",
-            }
+            second_step_data = {"token-otp_token": str(token), "two_factor_login_view-current_step": "token"}
             result = self.client_post("/accounts/login/", second_step_data)
             self.assertEqual(result.status_code, 302)
             self.assertEqual(result["Location"], "http://zulip.testserver")
@@ -5086,10 +5059,7 @@ class TestZulipLDAPUserPopulator(ZulipLDAPTestCase):
         expected_value = CustomProfileFieldValue.objects.get(user_profile=hamlet, field=no_op_field).value
 
         with self.settings(
-            AUTH_LDAP_USER_ATTR_MAP={
-                "full_name": "cn",
-                "custom_profile_field__birthday": "nonExistantAttr",
-            },
+            AUTH_LDAP_USER_ATTR_MAP={"full_name": "cn", "custom_profile_field__birthday": "nonExistantAttr"},
         ):
             self.perform_ldap_sync(self.example_user("hamlet"))
 

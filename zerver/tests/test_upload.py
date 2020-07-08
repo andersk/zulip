@@ -629,9 +629,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         subscribed_users = [user, polonius]
         unsubscribed_users = [self.example_user("othello"), self.example_user("prospero")]
         stream_name = "test-subscribe"
-        self.make_stream(
-            stream_name, realm=user.realm, invite_only=True, history_public_to_subscribers=True,
-        )
+        self.make_stream(stream_name, realm=user.realm, invite_only=True, history_public_to_subscribers=True)
 
         for subscribed_user in subscribed_users:
             self.subscribe(subscribed_user, stream_name)
@@ -1451,9 +1449,7 @@ class RealmLogoTest(UploadSerializeMixin, ZulipTestCase):
             # with self.subTest(fname=fname):
             self.login("iago")
             with get_test_image_file(fname) as fp:
-                result = self.client_post(
-                    "/json/realm/logo", {"file": fp, "night": ujson.dumps(self.night)},
-                )
+                result = self.client_post("/json/realm/logo", {"file": fp, "night": ujson.dumps(self.night)})
             realm = get_realm("zulip")
             self.assert_json_success(result)
             logo_url = get_realm_logo_url(realm, self.night)
@@ -1473,9 +1469,7 @@ class RealmLogoTest(UploadSerializeMixin, ZulipTestCase):
             # with self.subTest(fname=fname):
             self.login("iago")
             with get_test_image_file(fname) as fp:
-                result = self.client_post(
-                    "/json/realm/logo", {"file": fp, "night": ujson.dumps(self.night)},
-                )
+                result = self.client_post("/json/realm/logo", {"file": fp, "night": ujson.dumps(self.night)})
 
             self.assert_json_error(result, "Could not decode image; did you upload an image file?")
 
@@ -1515,9 +1509,7 @@ class RealmLogoTest(UploadSerializeMixin, ZulipTestCase):
         self.login("iago")
         with get_test_image_file(self.correct_files[0][0]) as fp:
             with self.settings(MAX_LOGO_FILE_SIZE=0):
-                result = self.client_post(
-                    "/json/realm/logo", {"file": fp, "night": ujson.dumps(self.night)},
-                )
+                result = self.client_post("/json/realm/logo", {"file": fp, "night": ujson.dumps(self.night)})
         self.assert_json_error(result, "Uploaded file is larger than the allowed limit of 0 MiB")
 
     def tearDown(self) -> None:

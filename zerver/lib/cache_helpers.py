@@ -129,9 +129,7 @@ def get_users() -> List[UserProfile]:
 # doing any setup for things we're unlikely to use (without the lambda
 # wrapper the below adds an extra 3ms or so to startup time for
 # anything importing this file).
-cache_fillers: Dict[
-    str, Tuple[Callable[[], List[Any]], Callable[[Dict[str, Any], Any], None], int, int],
-] = {
+cache_fillers: Dict[str, Tuple[Callable[[], List[Any]], Callable[[Dict[str, Any], Any], None], int, int]] = {
     "user": (get_users, user_cache_items, 3600 * 24 * 7, 10000),
     "client": (lambda: Client.objects.select_related().all(), client_cache_items, 3600 * 24 * 7, 10000),
     "stream": (get_streams, stream_cache_items, 3600 * 24 * 7, 10000),

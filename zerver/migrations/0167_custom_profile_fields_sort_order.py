@@ -21,7 +21,5 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="customprofilefield", name="order", field=models.IntegerField(default=0),
         ),
-        migrations.RunPython(
-            migrate_set_order_value, reverse_code=migrations.RunPython.noop, elidable=True,
-        ),
+        migrations.RunPython(migrate_set_order_value, reverse_code=migrations.RunPython.noop, elidable=True),
     ]

@@ -246,9 +246,7 @@ class TestOutgoingWebhookMessaging(ZulipTestCase):
         bot_owner = self.example_user("othello")
         bot = self.create_outgoing_bot(bot_owner)
 
-        self.send_stream_message(
-            bot_owner, "Denmark", content=f"@**{bot.full_name}** foo", topic_name="bar",
-        )
+        self.send_stream_message(bot_owner, "Denmark", content=f"@**{bot.full_name}** foo", topic_name="bar")
         last_message = self.get_last_message()
         self.assertEqual(last_message.content, "Hidley ho, I'm a webhook responding!")
         self.assertEqual(last_message.sender_id, bot.id)

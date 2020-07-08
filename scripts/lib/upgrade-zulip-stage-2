@@ -109,10 +109,7 @@ IS_SERVER_UP = True
 def shutdown_server() -> None:
     global IS_SERVER_UP
 
-    core_server_services = [
-        "zulip-django",
-        "zulip-tornado" if tornado_processes == 1 else "zulip-tornado:*",
-    ]
+    core_server_services = ["zulip-django", "zulip-tornado" if tornado_processes == 1 else "zulip-tornado:*"]
     worker_services = ["zulip-workers:*"]
     # Stop and start thumbor service only if thumbor is installed.
     if os.path.exists("/etc/supervisor/conf.d/thumbor.conf"):
@@ -178,9 +175,7 @@ subprocess.check_call([os.path.join(deploy_path, "scripts", "lib", "install-node
 
 # Generate any new secrets that were added in the new version required.
 # TODO: Do caching to only run this when it has changed.
-subprocess.check_call(
-    [os.path.join(deploy_path, "scripts", "setup", "generate_secrets.py"), "--production"],
-)
+subprocess.check_call([os.path.join(deploy_path, "scripts", "setup", "generate_secrets.py"), "--production"])
 
 # Unpleasant migration: Remove any legacy deployed copies of
 # images-google-64 from before we renamed that emojiset to

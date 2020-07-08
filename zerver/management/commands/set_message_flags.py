@@ -26,16 +26,10 @@ class Command(ZulipBaseCommand):
 
         parser.add_argument("-f", "--flag", dest="flag", type=str, help="The flag to add of remove")
 
-        parser.add_argument(
-            "-o", "--op", dest="op", type=str, help="The operation to do: 'add' or 'remove'",
-        )
+        parser.add_argument("-o", "--op", dest="op", type=str, help="The operation to do: 'add' or 'remove'")
 
         parser.add_argument(
-            "-u",
-            "--until",
-            dest="all_until",
-            type=str,
-            help="Mark all messages <= specific usermessage id",
+            "-u", "--until", dest="all_until", type=str, help="Mark all messages <= specific usermessage id",
         )
 
         parser.add_argument("-m", "--email", dest="email", type=str, help="Email to set messages for")

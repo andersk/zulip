@@ -354,9 +354,7 @@ class TestArchiveMessagesGeneral(ArchiveMessagesTestingBase):
         archive_messages()
         self.assertEqual(ArchivedAttachment.objects.count(), 3)
         self.assertEqual(
-            list(
-                ArchivedAttachment.objects.distinct("messages__id").values_list("messages__id", flat=True),
-            ),
+            list(ArchivedAttachment.objects.distinct("messages__id").values_list("messages__id", flat=True)),
             [msgs_ids["expired_message_id"]],
         )
         self.assertEqual(Attachment.objects.count(), 3)
@@ -941,9 +939,7 @@ class TestRestoreStreamMessages(ArchiveMessagesTestingBase):
         )
 
         self._set_stream_message_retention_value(stream, 5)
-        self._change_messages_date_sent(
-            message_ids_to_archive_by_policy, timezone_now() - timedelta(days=6),
-        )
+        self._change_messages_date_sent(message_ids_to_archive_by_policy, timezone_now() - timedelta(days=6))
 
         move_messages_to_archive(message_ids_to_archive_manually)
         archive_messages()

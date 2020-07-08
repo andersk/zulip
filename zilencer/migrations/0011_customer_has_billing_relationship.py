@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="customer",
-            name="has_billing_relationship",
-            field=models.BooleanField(default=False),
+            model_name="customer", name="has_billing_relationship", field=models.BooleanField(default=False),
         ),
     ]

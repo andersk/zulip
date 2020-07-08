@@ -369,9 +369,7 @@ class GithubWebhookTest(WebhookTestCase):
         self.url = self.build_webhook_url(topic="notifications")
         expected_topic = "notifications"
         expected_message = "**eeshangarg** requested [showell](https://github.com/showell) for a review on [PR #1 This is just a test commit](https://github.com/eeshangarg/Scheduler/pull/1)."
-        self.send_and_test_stream_message(
-            "pull_request__review_requested", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request__review_requested", expected_topic, expected_message)
 
     def test_check_run(self) -> None:
         expected_topic = "hello-world / checks"
@@ -486,9 +484,7 @@ A temporary team so that I can get some webhook fixtures!
         self.assert_json_success(result)
 
     @patch("zerver.webhooks.github.view.check_send_webhook_message")
-    def test_repository_vulnerability_alert_ignore(
-        self, check_send_webhook_message_mock: MagicMock,
-    ) -> None:
+    def test_repository_vulnerability_alert_ignore(self, check_send_webhook_message_mock: MagicMock) -> None:
         self.url = self.build_webhook_url()
         payload = self.get_body("repository_vulnerability_alert")
         result = self.client_post(

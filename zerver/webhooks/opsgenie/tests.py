@@ -174,10 +174,7 @@ class OpsGenieHookTests(WebhookTestCase):
 """.strip()
 
         self.send_and_test_stream_message(
-            "removetags",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "removetags", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_takeownership_alert(self) -> None:

@@ -21,10 +21,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 ("name", models.CharField(db_index=True, max_length=60)),
-                (
-                    "realm",
-                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm"),
-                ),
+                ("realm", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm")),
                 ("streams", models.ManyToManyField(to="zerver.Stream")),
             ],
         ),

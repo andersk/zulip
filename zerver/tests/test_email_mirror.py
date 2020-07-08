@@ -1375,9 +1375,7 @@ class TestEmailMirrorLogAndReport(ZulipTestCase):
 
         msg_content = message.content.strip("~").strip()
         expected_content = "Sender: {}\nTo: {} <Address to stream id: {}>\ntest error message"
-        expected_content = expected_content.format(
-            self.example_email("hamlet"), scrubbed_address, stream.id,
-        )
+        expected_content = expected_content.format(self.example_email("hamlet"), scrubbed_address, stream.id)
         self.assertEqual(msg_content, expected_content)
 
         log_and_report(incoming_valid_message, "test error message", None)

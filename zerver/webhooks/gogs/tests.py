@@ -45,18 +45,14 @@ class GogsHookTests(WebhookTestCase):
         expected_topic = "try-git / master"
         commits_info = "* Webhook Test ([d8fce16](http://localhost:3000/john/try-git/commit/d8fce16c72a2ff56a5afc8a08645a6ce45491794))\n"
         expected_message = f"john [pushed](http://localhost:3000/john/try-git/compare/479e6b772b7fba19412457483f50b201286d0103...d8fce16c72a2ff56a5afc8a08645a6ce45491794) 30 commits to branch master. Commits by John (30).\n\n{commits_info * COMMITS_LIMIT}[and {30 - COMMITS_LIMIT} more commit(s)]"
-        self.send_and_test_stream_message(
-            "push__commits_more_than_limits", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("push__commits_more_than_limits", expected_topic, expected_message)
 
     def test_push_commits_more_than_limits_filtered_by_branches(self) -> None:
         self.url = self.build_webhook_url(branches="master,development")
         expected_topic = "try-git / master"
         commits_info = "* Webhook Test ([d8fce16](http://localhost:3000/john/try-git/commit/d8fce16c72a2ff56a5afc8a08645a6ce45491794))\n"
         expected_message = f"john [pushed](http://localhost:3000/john/try-git/compare/479e6b772b7fba19412457483f50b201286d0103...d8fce16c72a2ff56a5afc8a08645a6ce45491794) 30 commits to branch master. Commits by John (30).\n\n{commits_info * COMMITS_LIMIT}[and {30 - COMMITS_LIMIT} more commit(s)]"
-        self.send_and_test_stream_message(
-            "push__commits_more_than_limits", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("push__commits_more_than_limits", expected_topic, expected_message)
 
     def test_new_branch(self) -> None:
         expected_topic = "try-git / my_feature"
@@ -67,7 +63,9 @@ class GogsHookTests(WebhookTestCase):
 
     def test_pull_request_opened(self) -> None:
         expected_topic = "try-git / PR #1 Title Text for Pull Request"
-        expected_message = """john opened [PR #1](http://localhost:3000/john/try-git/pulls/1) from `feature` to `master`."""
+        expected_message = (
+            """john opened [PR #1](http://localhost:3000/john/try-git/pulls/1) from `feature` to `master`."""
+        )
         self.send_and_test_stream_message("pull_request__opened", expected_topic, expected_message)
 
     def test_pull_request_opened_with_custom_topic_in_url(self) -> None:
@@ -78,12 +76,16 @@ class GogsHookTests(WebhookTestCase):
 
     def test_pull_request_closed(self) -> None:
         expected_topic = "try-git / PR #1 Title Text for Pull Request"
-        expected_message = """john closed [PR #1](http://localhost:3000/john/try-git/pulls/1) from `feature` to `master`."""
+        expected_message = (
+            """john closed [PR #1](http://localhost:3000/john/try-git/pulls/1) from `feature` to `master`."""
+        )
         self.send_and_test_stream_message("pull_request__closed", expected_topic, expected_message)
 
     def test_pull_request_merged(self) -> None:
         expected_topic = "try-git / PR #2 Title Text for Pull Request"
-        expected_message = """john merged [PR #2](http://localhost:3000/john/try-git/pulls/2) from `feature` to `master`."""
+        expected_message = (
+            """john merged [PR #2](http://localhost:3000/john/try-git/pulls/2) from `feature` to `master`."""
+        )
         self.send_and_test_stream_message("pull_request__merged", expected_topic, expected_message)
 
     def test_pull_request_reopened(self) -> None:

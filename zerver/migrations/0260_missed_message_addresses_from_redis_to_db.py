@@ -99,8 +99,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RunPython(
-            move_missed_message_addresses_to_database,
-            reverse_code=migrations.RunPython.noop,
-            elidable=True,
+            move_missed_message_addresses_to_database, reverse_code=migrations.RunPython.noop, elidable=True,
         ),
     ]

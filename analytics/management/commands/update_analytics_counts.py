@@ -81,9 +81,7 @@ class Command(BaseCommand):
                 last = time.time()
 
         if options["verbose"]:
-            print(
-                f"Finished updating analytics counts through {fill_to_time} in {time.time() - start:.3f}s",
-            )
+            print(f"Finished updating analytics counts through {fill_to_time} in {time.time() - start:.3f}s")
         logger.info("Finished updating analytics counts through %s", fill_to_time)
 
         if settings.PUSH_NOTIFICATION_BOUNCER_URL and settings.SUBMIT_USAGE_STATISTICS:

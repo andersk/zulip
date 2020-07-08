@@ -30,10 +30,7 @@ Changelog string
 """.strip()
 
         self.send_and_test_stream_message(
-            "deployment",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "deployment", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def get_body(self, fixture_name: str) -> str:

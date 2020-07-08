@@ -1125,8 +1125,7 @@ class StripeTest(StripeTestCase):
         # Check that the invoice has a credit for the old amount and a charge for the new one
         stripe_invoice = [invoice for invoice in stripe.Invoice.list(customer=stripe_customer_id)][0]
         self.assertEqual(
-            [8000 * new_seat_count, -8000 * self.seat_count],
-            [item.amount for item in stripe_invoice.lines],
+            [8000 * new_seat_count, -8000 * self.seat_count], [item.amount for item in stripe_invoice.lines],
         )
         # Check LicenseLedger has the new amount
         self.assertEqual(LicenseLedger.objects.first().licenses, new_seat_count)
@@ -1557,9 +1556,7 @@ class StripeTest(StripeTestCase):
         for stripe_source in stripe_get_customer(stripe_customer_id).sources:
             assert isinstance(stripe_source, stripe.Card)
             self.assertEqual(stripe_source.last4, "4242")
-        self.assertFalse(
-            RealmAuditLog.objects.filter(event_type=RealmAuditLog.STRIPE_CARD_CHANGED).exists(),
-        )
+        self.assertFalse(RealmAuditLog.objects.filter(event_type=RealmAuditLog.STRIPE_CARD_CHANGED).exists())
 
         # Replace with a card that's valid, but charging the card fails
         stripe_token = stripe_create_token(card_number="4000000000000341").id
@@ -2449,9 +2446,9 @@ class LicenseLedgerTest(StripeTestCase):
         # Not a proper use of do_activate_user, but fine for this test
         do_activate_user(user)
         ledger_entries = list(
-            LicenseLedger.objects.values_list(
-                "is_renewal", "licenses", "licenses_at_next_renewal",
-            ).order_by("id"),
+            LicenseLedger.objects.values_list("is_renewal", "licenses", "licenses_at_next_renewal").order_by(
+                "id",
+            ),
         )
         self.assertEqual(
             ledger_entries,

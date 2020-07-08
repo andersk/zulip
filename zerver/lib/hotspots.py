@@ -34,8 +34,7 @@ ALL_HOTSPOTS: Dict[str, Dict[str, str]] = {
     "intro_compose": {
         "title": _("Compose"),
         "description": _(
-            "Click here to start a new conversation. Pick a topic "
-            "(2-3 words is best), and give it a go!",
+            "Click here to start a new conversation. Pick a topic " "(2-3 words is best), and give it a go!",
         ),
     },
 }

@@ -652,9 +652,7 @@ def flush_realm(sender: Any, **kwargs: Any) -> None:
     users = realm.get_active_users()
     delete_user_profile_caches(users)
 
-    if realm.deactivated or (
-        kwargs["update_fields"] is not None and "string_id" in kwargs["update_fields"]
-    ):
+    if realm.deactivated or (kwargs["update_fields"] is not None and "string_id" in kwargs["update_fields"]):
         cache_delete(realm_user_dicts_cache_key(realm.id))
         cache_delete(active_user_ids_cache_key(realm.id))
         cache_delete(bot_dicts_in_realm_cache_key(realm))

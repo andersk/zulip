@@ -20,9 +20,7 @@ class HttpResponseUnauthorized(HttpResponse):
             raise AssertionError("Invalid www_authenticate value!")
 
 
-def json_unauthorized(
-    message: Optional[str] = None, www_authenticate: Optional[str] = None,
-) -> HttpResponse:
+def json_unauthorized(message: Optional[str] = None, www_authenticate: Optional[str] = None) -> HttpResponse:
     if message is None:
         message = _("Not logged in: API authentication or user session required")
     resp = HttpResponseUnauthorized("zulip", www_authenticate=www_authenticate)

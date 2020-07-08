@@ -786,10 +786,7 @@ class AdminCreateUserTest(ZulipTestCase):
         result = self.client_post(
             "/json/users",
             dict(
-                email="romeo@not-zulip.com",
-                password="xxxx",
-                full_name="Romeo Montague",
-                short_name="Romeo",
+                email="romeo@not-zulip.com", password="xxxx", full_name="Romeo Montague", short_name="Romeo",
             ),
         )
         self.assert_json_error(result, "Email 'romeo@not-zulip.com' not allowed in this organization")
@@ -1125,9 +1122,7 @@ class UserProfileTest(ZulipTestCase):
         # Subscribe to the stream.
         self.subscribe(iago, stream.name)
         with queries_captured() as queries:
-            result = ujson.loads(
-                self.client_get(f"/json/users/{iago.id}/subscriptions/{stream.id}").content,
-            )
+            result = ujson.loads(self.client_get(f"/json/users/{iago.id}/subscriptions/{stream.id}").content)
 
         self.assert_length(queries, 7)
         self.assertTrue(result["is_subscribed"])

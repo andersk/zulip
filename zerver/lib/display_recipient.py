@@ -145,9 +145,7 @@ def bulk_fetch_display_recipients(
                 user_ids_to_fetch = user_ids_to_fetch.union(huddle_user_ids[recipient.id])
 
         # Fetch the needed UserProfiles:
-        user_profiles: Dict[int, UserDisplayRecipient] = bulk_get_user_profile_by_id(
-            list(user_ids_to_fetch),
-        )
+        user_profiles: Dict[int, UserDisplayRecipient] = bulk_get_user_profile_by_id(list(user_ids_to_fetch))
 
         # Build the return value:
         result: List[Tuple[int, List[UserDisplayRecipient]]] = []

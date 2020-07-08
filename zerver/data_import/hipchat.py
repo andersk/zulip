@@ -378,11 +378,7 @@ def write_emoticon_data(realm_id: int, data_dir: str, output_dir: str) -> List[Z
         shutil.copyfile(source_path, target_path)
 
         return dict(
-            path=target_path,
-            s3_path=target_path,
-            file_name=target_fn,
-            realm_id=realm_id,
-            name=data["name"],
+            path=target_path, s3_path=target_path, file_name=target_fn, realm_id=realm_id, name=data["name"],
         )
 
     emoji_records = list(map(process, flat_data))
@@ -820,10 +816,7 @@ def do_convert_data(
 
     logging.info("Start importing avatar data")
     write_avatar_data(
-        raw_user_data=raw_user_data,
-        output_dir=output_dir,
-        user_id_mapper=user_id_mapper,
-        realm_id=realm_id,
+        raw_user_data=raw_user_data, output_dir=output_dir, user_id_mapper=user_id_mapper, realm_id=realm_id,
     )
 
     attachment_handler.write_info(

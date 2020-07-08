@@ -335,9 +335,7 @@ class SignupWorker(QueueProcessingWorker):
             del params["user_id"]
             params["list_id"] = settings.ZULIP_FRIENDS_LIST_ID
             params["status"] = "subscribed"
-            r = requests.post(
-                endpoint, auth=("apikey", settings.MAILCHIMP_API_KEY), json=params, timeout=10,
-            )
+            r = requests.post(endpoint, auth=("apikey", settings.MAILCHIMP_API_KEY), json=params, timeout=10)
             if r.status_code == 400 and ujson.loads(r.text)["title"] == "Member Exists":
                 logging.warning(
                     "Attempted to sign up already existing email to list: %s", data["email_address"],
@@ -512,9 +510,7 @@ class MissedMessageWorker(QueueProcessingWorker):
     def ensure_timer(self) -> None:
         if self.timer_event is not None:
             return
-        self.timer_event = Timer(
-            self.TIMER_FREQUENCY, MissedMessageWorker.maybe_send_batched_emails, [self],
-        )
+        self.timer_event = Timer(self.TIMER_FREQUENCY, MissedMessageWorker.maybe_send_batched_emails, [self])
         self.timer_event.start()
 
     def stop_timer(self) -> None:
@@ -730,9 +726,7 @@ class DeferredWorker(QueueProcessingWorker):
                 # Since the user just unsubscribed, we don't require
                 # an active Subscription object (otherwise, private
                 # streams would never be accessible)
-                (stream, recipient, sub) = access_stream_by_id(
-                    user_profile, stream_id, require_active=False,
-                )
+                (stream, recipient, sub) = access_stream_by_id(user_profile, stream_id, require_active=False)
                 do_mark_stream_messages_as_read(user_profile, client, stream)
         elif event["type"] == "clear_push_device_tokens":
             try:

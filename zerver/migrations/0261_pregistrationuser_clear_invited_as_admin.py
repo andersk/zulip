@@ -7,9 +7,7 @@ from django.db.backends.postgresql_psycopg2.schema import DatabaseSchemaEditor
 from django.db.migrations.state import StateApps
 
 
-def clear_preregistrationuser_invited_as_admin(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def clear_preregistrationuser_invited_as_admin(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     """This migration fixes any PreregistrationUser objects that might
     have been already corrupted to have the administrator role by the
     buggy original version of migration

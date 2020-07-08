@@ -666,9 +666,7 @@ class StreamAdminTest(ZulipTestCase):
         self.assertTrue(stream_name_mixed_exists)
 
         # Test case for notified users in private streams.
-        stream_private = self.make_stream(
-            "stream_private_name1", realm=user_profile.realm, invite_only=True,
-        )
+        stream_private = self.make_stream("stream_private_name1", realm=user_profile.realm, invite_only=True)
         self.subscribe(self.example_user("cordelia"), "stream_private_name1")
         del events[:]
         with tornado_redirected_to_list(events):
@@ -828,9 +826,7 @@ class StreamAdminTest(ZulipTestCase):
         do_change_user_role(user_profile, UserProfile.ROLE_REALM_ADMINISTRATOR)
 
         stream_id = get_stream("stream_name1", user_profile.realm).id
-        result = self.client_patch(
-            f"/json/streams/{stream_id}", {"is_announcement_only": ujson.dumps(True)},
-        )
+        result = self.client_patch(f"/json/streams/{stream_id}", {"is_announcement_only": ujson.dumps(True)})
         self.assert_json_success(result)
         stream = get_stream("stream_name1", user_profile.realm)
         self.assertTrue(stream.stream_post_policy == Stream.STREAM_POST_POLICY_ADMINS)
@@ -958,9 +954,7 @@ class StreamAdminTest(ZulipTestCase):
         )
         self.assert_json_error(result, "Bad value for 'message_retention_days': invalid")
 
-        result = self.client_patch(
-            f"/json/streams/{stream.id}", {"message_retention_days": ujson.dumps(-1)},
-        )
+        result = self.client_patch(f"/json/streams/{stream.id}", {"message_retention_days": ujson.dumps(-1)})
         self.assert_json_error(result, "Bad value for 'message_retention_days': -1")
 
         result = self.client_patch(f"/json/streams/{stream.id}", {"message_retention_days": ujson.dumps(0)})
@@ -1836,11 +1830,7 @@ class DefaultStreamGroupTest(ZulipTestCase):
 
         result = self.client_post(
             "/json/default_stream_groups/create",
-            {
-                "group_name": "x" * 100,
-                "description": description,
-                "stream_names": ujson.dumps(stream_names),
-            },
+            {"group_name": "x" * 100, "description": description, "stream_names": ujson.dumps(stream_names)},
         )
         self.assert_json_error(
             result,
@@ -1851,11 +1841,7 @@ class DefaultStreamGroupTest(ZulipTestCase):
 
         result = self.client_post(
             "/json/default_stream_groups/create",
-            {
-                "group_name": "abc\000",
-                "description": description,
-                "stream_names": ujson.dumps(stream_names),
-            },
+            {"group_name": "abc\000", "description": description, "stream_names": ujson.dumps(stream_names)},
         )
         self.assert_json_error(
             result, "Default stream group name 'abc\000' contains NULL (0x00) characters.",
@@ -1986,13 +1972,7 @@ class SubscriptionPropertiesTest(ZulipTestCase):
             "/api/v1/users/me/subscriptions/properties",
             {
                 "subscription_data": ujson.dumps(
-                    [
-                        {
-                            "property": "wildcard_mentions_notify",
-                            "stream_id": sub["stream_id"],
-                            "value": True,
-                        },
-                    ],
+                    [{"property": "wildcard_mentions_notify", "stream_id": sub["stream_id"], "value": True}],
                 ),
             },
         )
@@ -2873,9 +2853,7 @@ class SubscriptionAPITest(ZulipTestCase):
         self.assertEqual(msg.recipient.type, msg.recipient.STREAM)
         self.assertEqual(msg.topic_name(), "stream events")
         self.assertEqual(msg.sender.email, settings.NOTIFICATION_BOT)
-        self.assertIn(
-            f"Stream created by @_**{self.test_user.full_name}|{self.test_user.id}**", msg.content,
-        )
+        self.assertIn(f"Stream created by @_**{self.test_user.full_name}|{self.test_user.id}**", msg.content)
 
     def test_multi_user_subscription(self) -> None:
         user1 = self.example_user("cordelia")

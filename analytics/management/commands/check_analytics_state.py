@@ -61,10 +61,7 @@ class Command(BaseCommand):
                 critical_threshold = timedelta(minutes=150)
 
             if floor_function(last_fill) != last_fill:
-                return {
-                    "status": 2,
-                    "message": f"FillState not on {stat.frequency} boundary for {property}",
-                }
+                return {"status": 2, "message": f"FillState not on {stat.frequency} boundary for {property}"}
 
             time_to_last_fill = timezone_now() - last_fill
             if time_to_last_fill > critical_threshold:

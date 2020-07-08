@@ -24,10 +24,7 @@ class Migration(migrations.Migration):
                 ("old_email", models.EmailField(max_length=254)),
                 ("updated_at", models.DateTimeField(auto_now=True)),
                 ("status", models.IntegerField(default=0)),
-                (
-                    "realm",
-                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm"),
-                ),
+                ("realm", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm")),
                 (
                     "user_profile",
                     models.ForeignKey(

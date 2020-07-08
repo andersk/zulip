@@ -153,9 +153,7 @@ def need_to_run_inline_email_css() -> bool:
 
 
 def need_to_run_configure_rabbitmq(settings_list: List[str]) -> bool:
-    obsolete = is_digest_obsolete(
-        "last_configure_rabbitmq_hash", configure_rabbitmq_paths(), settings_list,
-    )
+    obsolete = is_digest_obsolete("last_configure_rabbitmq_hash", configure_rabbitmq_paths(), settings_list)
 
     if obsolete:
         return True

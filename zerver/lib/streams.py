@@ -138,9 +138,7 @@ def check_stream_name(stream_name: str) -> None:
     if stream_name.strip() == "":
         raise JsonableError(_("Invalid stream name '{}'").format(stream_name))
     if len(stream_name) > Stream.MAX_NAME_LENGTH:
-        raise JsonableError(
-            _("Stream name too long (limit: {} characters).").format(Stream.MAX_NAME_LENGTH),
-        )
+        raise JsonableError(_("Stream name too long (limit: {} characters).").format(Stream.MAX_NAME_LENGTH))
     for i in stream_name:
         if ord(i) == 0:
             raise JsonableError(_("Stream name '{}' contains NULL (0x00) characters.").format(stream_name))
@@ -254,9 +252,7 @@ def access_stream_common(
     recipient = stream.recipient
 
     try:
-        sub = Subscription.objects.get(
-            user_profile=user_profile, recipient=recipient, active=require_active,
-        )
+        sub = Subscription.objects.get(user_profile=user_profile, recipient=recipient, active=require_active)
     except Subscription.DoesNotExist:
         sub = None
 
@@ -323,9 +319,7 @@ def access_stream_by_name(
     except Stream.DoesNotExist:
         raise JsonableError(error)
 
-    (recipient, sub) = access_stream_common(
-        user_profile, stream, error, allow_realm_admin=allow_realm_admin,
-    )
+    (recipient, sub) = access_stream_common(user_profile, stream, error, allow_realm_admin=allow_realm_admin)
     return (stream, recipient, sub)
 
 

@@ -43,11 +43,7 @@ parser.add_argument(
     "--loop", dest="loop", nargs=1, action="store", type=int, default=None, help="Run tests in a loop.",
 )
 parser.add_argument(
-    "--force",
-    dest="force",
-    action="store_true",
-    default=False,
-    help="Run tests despite possible problems.",
+    "--force", dest="force", action="store_true", default=False, help="Run tests despite possible problems.",
 )
 parser.add_argument(
     "--verbose", help="Whether or not to enable verbose mode", action="store_true", default=False,

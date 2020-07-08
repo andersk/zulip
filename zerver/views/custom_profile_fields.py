@@ -113,11 +113,7 @@ def create_realm_custom_profile_field(
             return json_success({"id": field.id})
         else:
             field = try_add_realm_custom_profile_field(
-                realm=user_profile.realm,
-                name=name,
-                field_data=field_data,
-                field_type=field_type,
-                hint=hint,
+                realm=user_profile.realm, name=name, field_data=field_data, field_type=field_type, hint=hint,
             )
             return json_success({"id": field.id})
     except IntegrityError:
@@ -168,9 +164,7 @@ def update_realm_custom_profile_field(
 @require_realm_admin
 @has_request_variables
 def reorder_realm_custom_profile_fields(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    order: List[int] = REQ(validator=check_list(check_int)),
+    request: HttpRequest, user_profile: UserProfile, order: List[int] = REQ(validator=check_list(check_int)),
 ) -> HttpResponse:
     try_reorder_realm_custom_profile_fields(user_profile.realm, order)
     return json_success()

@@ -20,10 +20,7 @@ class Migration(migrations.Migration):
                         auto_created=True, primary_key=True, serialize=False, verbose_name="ID",
                     ),
                 ),
-                (
-                    "realm",
-                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm"),
-                ),
+                ("realm", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm")),
                 (
                     "referred_by",
                     models.ForeignKey(

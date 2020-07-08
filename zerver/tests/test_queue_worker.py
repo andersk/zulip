@@ -127,9 +127,7 @@ class WorkerTest(ZulipTestCase):
         hamlet = self.example_user("hamlet")
         othello = self.example_user("othello")
 
-        hamlet1_msg_id = self.send_personal_message(
-            from_user=cordelia, to_user=hamlet, content="hi hamlet",
-        )
+        hamlet1_msg_id = self.send_personal_message(from_user=cordelia, to_user=hamlet, content="hi hamlet")
 
         hamlet2_msg_id = self.send_personal_message(
             from_user=cordelia, to_user=hamlet, content="goodbye hamlet",
@@ -328,9 +326,7 @@ class WorkerTest(ZulipTestCase):
                 with self.settings(EMAIL_GATEWAY_PATTERN="%s@example.com"):
                     address = "mm" + ("x" * 32) + "@example.com"
                     event = dict(
-                        msg_base64=base64.b64encode(b"\xf3test").decode(),
-                        time=time.time(),
-                        rcpt_to=address,
+                        msg_base64=base64.b64encode(b"\xf3test").decode(), time=time.time(), rcpt_to=address,
                     )
                     fake_client.queue.append(("email_mirror", event))
                     worker.start()

@@ -63,9 +63,7 @@ def redact_email_address(error_message: str) -> str:
                 annotated_address = f"{email_address} <Address to stream id: {target_stream_id}>"
                 redacted_message = error_message.replace(email_address, annotated_address)
             except ZulipEmailForwardError:
-                redacted_message = error_message.replace(
-                    email_address, f"{email_address} <Invalid address>",
-                )
+                redacted_message = error_message.replace(email_address, f"{email_address} <Invalid address>")
 
         # Scrub the address from the message, to the form XXXXX@example.com:
         string_to_scrub = address_match.groups()[0]

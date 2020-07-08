@@ -687,9 +687,7 @@ def get_count_stats(realm: Optional[Realm] = None) -> Dict[str, CountStat]:
         # Important that this stay a daily stat, so that 'realm_active_humans::day' works as expected.
         CountStat(
             "active_users_audit:is_bot:day",
-            sql_data_collector(
-                UserCount, check_realmauditlog_by_user_query(realm), (UserProfile, "is_bot"),
-            ),
+            sql_data_collector(UserCount, check_realmauditlog_by_user_query(realm), (UserProfile, "is_bot")),
             CountStat.DAY,
         ),
         # Important note: LoggingCountStat objects aren't passed the

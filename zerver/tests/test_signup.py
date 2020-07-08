@@ -220,17 +220,13 @@ class AddNewUserHistoryTest(ZulipTestCase):
             UserMessage.objects.filter(user_profile=user_profile, message_id=race_message_id).exists(),
         )
         self.assertFalse(
-            UserMessage.objects.get(
-                user_profile=user_profile, message_id=race_message_id,
-            ).flags.read.is_set,
+            UserMessage.objects.get(user_profile=user_profile, message_id=race_message_id).flags.read.is_set,
         )
 
         # Verify that the ONBOARDING_UNREAD_MESSAGES latest messages
         # that weren't the race message are marked as unread.
         latest_messages = (
-            UserMessage.objects.filter(
-                user_profile=user_profile, message__recipient__type=Recipient.STREAM,
-            )
+            UserMessage.objects.filter(user_profile=user_profile, message__recipient__type=Recipient.STREAM)
             .exclude(message_id=race_message_id)
             .order_by("-message_id")[0:ONBOARDING_UNREAD_MESSAGES]
         )
@@ -240,9 +236,7 @@ class AddNewUserHistoryTest(ZulipTestCase):
 
         # Verify that older messages are correctly marked as read.
         older_messages = (
-            UserMessage.objects.filter(
-                user_profile=user_profile, message__recipient__type=Recipient.STREAM,
-            )
+            UserMessage.objects.filter(user_profile=user_profile, message__recipient__type=Recipient.STREAM)
             .exclude(message_id=race_message_id)
             .order_by("-message_id")[ONBOARDING_UNREAD_MESSAGES : ONBOARDING_UNREAD_MESSAGES + 1]
         )
@@ -680,9 +674,7 @@ class LoginTest(ZulipTestCase):
         realm.deactivated = True
         realm.save(update_fields=["deactivated"])
 
-        result = self.client_post(
-            "/accounts/home/", {"email": self.nonreg_email("test")}, subdomain="zulip",
-        )
+        result = self.client_post("/accounts/home/", {"email": self.nonreg_email("test")}, subdomain="zulip")
         self.assertEqual(result.status_code, 302)
         self.assertEqual("/accounts/deactivated/", result.url)
 
@@ -2067,8 +2059,7 @@ class InvitationsTestCase(InviteUserBase):
         registration_key = confirmation_link.split("/")[-1]
 
         result = self.client_post(
-            "/accounts/register/",
-            {"key": registration_key, "from_confirmation": "1", "full_name": "alice"},
+            "/accounts/register/", {"key": registration_key, "from_confirmation": "1", "full_name": "alice"},
         )
         self.assertEqual(result.status_code, 200)
         confirmation = Confirmation.objects.get(confirmation_key=registration_key)
@@ -2609,9 +2600,7 @@ class RealmCreationTest(ZulipTestCase):
             self.assert_in_response(error_msg, result)
 
         # test valid subdomain
-        result = self.submit_reg_form_for_user(
-            email, password, realm_subdomain="a-0", realm_name=realm_name,
-        )
+        result = self.submit_reg_form_for_user(email, password, realm_subdomain="a-0", realm_name=realm_name)
         self.assertEqual(result.status_code, 302)
         self.assertTrue(result.url.startswith("http://a-0.testserver/accounts/login/subdomain/"))
 
@@ -2927,12 +2916,7 @@ class UserSignUpTest(InviteUserBase):
 
         result = self.client_post(
             "/accounts/register/",
-            {
-                "password": password,
-                "key": find_key_by_email(email),
-                "terms": True,
-                "from_confirmation": "1",
-            },
+            {"password": password, "key": find_key_by_email(email), "terms": True, "from_confirmation": "1"},
         )
         self.assert_in_success_response(["We just need you to do one last thing."], result)
 
@@ -3070,9 +3054,7 @@ class UserSignUpTest(InviteUserBase):
 
         # Register the account (this will use the second confirmation url):
         result = self.submit_reg_form_for_user(email, password, full_name="New Guy", from_confirmation="1")
-        self.assert_in_success_response(
-            ["We just need you to do one last thing.", "New Guy", email], result,
-        )
+        self.assert_in_success_response(["We just need you to do one last thing.", "New Guy", email], result)
         result = self.submit_reg_form_for_user(email, password, full_name="New Guy")
         user_profile = UserProfile.objects.get(delivery_email=email)
         self.assertEqual(user_profile.delivery_email, email)
@@ -3127,9 +3109,7 @@ class UserSignUpTest(InviteUserBase):
             group2_streams.append(stream)
         do_create_default_stream_group(realm, "group 2", "group 2 description", group2_streams)
 
-        result = self.submit_reg_form_for_user(
-            email, password, default_stream_groups=["group 1", "group 2"],
-        )
+        result = self.submit_reg_form_for_user(email, password, default_stream_groups=["group 1", "group 2"])
         self.check_user_subscribed_only_to_streams(
             "newguy", list(set(default_streams + group1_streams + group2_streams)),
         )
@@ -3390,8 +3370,7 @@ class UserSignUpTest(InviteUserBase):
             )
 
             self.assert_in_success_response(
-                ["We just need you to do one last thing.", "New LDAP fullname", "newuser@zulip.com"],
-                result,
+                ["We just need you to do one last thing.", "New LDAP fullname", "newuser@zulip.com"], result,
             )
 
             # Verify that the user is asked for name
@@ -3469,8 +3448,7 @@ class UserSignUpTest(InviteUserBase):
             )
 
             self.assert_in_success_response(
-                ["We just need you to do one last thing.", "New LDAP fullname", "newuser@zulip.com"],
-                result,
+                ["We just need you to do one last thing.", "New LDAP fullname", "newuser@zulip.com"], result,
             )
 
             # Verify that the user is asked for name
@@ -4107,8 +4085,7 @@ class UserSignUpTest(InviteUserBase):
             )
 
     @patch(
-        "DNS.dnslookup",
-        return_value=[["sipbtest:*:20922:101:Fred Sipb,,,:/mit/sipbtest:/bin/athena/tcsh"]],
+        "DNS.dnslookup", return_value=[["sipbtest:*:20922:101:Fred Sipb,,,:/mit/sipbtest:/bin/athena/tcsh"]],
     )
     def test_registration_of_mirror_dummy_user(self, ignored: Any) -> None:
         password = "test"
@@ -4528,10 +4505,7 @@ class TwoFactorAuthTest(ZulipTestCase):
             result = self.client_post("/accounts/login/", first_step_data)
             self.assertEqual(result.status_code, 200)
 
-            second_step_data = {
-                "token-otp_token": str(token),
-                "two_factor_login_view-current_step": "token",
-            }
+            second_step_data = {"token-otp_token": str(token), "two_factor_login_view-current_step": "token"}
             result = self.client_post("/accounts/login/", second_step_data)
             self.assertEqual(result.status_code, 302)
             self.assertEqual(result["Location"], "http://zulip.testserver")

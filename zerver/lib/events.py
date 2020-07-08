@@ -298,9 +298,7 @@ def fetch_initial_state_data(
         if user_profile.is_guest:
             state["realm_default_streams"] = []
         else:
-            state["realm_default_streams"] = streams_to_dicts_sorted(
-                get_default_streams_for_realm(realm.id),
-            )
+            state["realm_default_streams"] = streams_to_dicts_sorted(get_default_streams_for_realm(realm.id))
     if want("default_stream_groups"):
         if user_profile.is_guest:
             state["realm_default_stream_groups"] = []

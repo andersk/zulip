@@ -280,9 +280,7 @@ class ZulipTestCase(TestCase):
         default_bot="default-bot@zulip.com",
     )
 
-    mit_user_map = dict(
-        sipbtest="sipbtest@mit.edu", starnine="starnine@mit.edu", espuser="espuser@mit.edu",
-    )
+    mit_user_map = dict(sipbtest="sipbtest@mit.edu", starnine="starnine@mit.edu", espuser="espuser@mit.edu")
 
     lear_user_map = dict(cordelia="cordelia@zulip.com", king="king@lear.org")
 

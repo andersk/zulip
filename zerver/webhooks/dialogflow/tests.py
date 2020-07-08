@@ -24,9 +24,7 @@ class DialogflowHookTests(WebhookTestCase):
     def test_dialogflow_error_status(self) -> None:
         self.url = self.build_webhook_url(email="AARON@zulip.com", username="aaron", user_ip="127.0.0.1")
         expected_message = "403 - Access Denied"
-        self.send_and_test_private_message(
-            "error_status", expected_message, content_type="application/json",
-        )
+        self.send_and_test_private_message("error_status", expected_message, content_type="application/json")
 
     def test_dialogflow_exception(self) -> None:
         self.url = self.build_webhook_url(email="AARON@zulip.com", username="aaron", user_ip="127.0.0.1")

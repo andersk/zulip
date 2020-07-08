@@ -93,9 +93,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
 
     def test_story_update_change_state(self) -> None:
         expected_message = "State of the story [Add cool feature!](https://app.clubhouse.io/zulip/story/11) was changed from **Unscheduled** to **Ready for Review**."
-        self.send_and_test_stream_message(
-            "story_update_change_state", "Add cool feature!", expected_message,
-        )
+        self.send_and_test_stream_message("story_update_change_state", "Add cool feature!", expected_message)
 
     def test_epic_update_change_name(self) -> None:
         expected_message = "The name of the epic **New Cool Epic!** was changed from:\n``` quote\nNew Epic!\n```\nto\n``` quote\nNew Cool Epic!\n```"
@@ -155,9 +153,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
 
     def test_story_estimate_added(self) -> None:
         expected_message = "The estimate for the story [Add cool feature!](https://app.clubhouse.io/zulip/story/11) was set to 4 points."
-        self.send_and_test_stream_message(
-            "story_update_add_estimate", "Add cool feature!", expected_message,
-        )
+        self.send_and_test_stream_message("story_update_add_estimate", "Add cool feature!", expected_message)
 
     def test_story_estimate_removed(self) -> None:
         expected_message = "The estimate for the story [Add cool feature!](https://app.clubhouse.io/zulip/story/11) was set to *Unestimated*."

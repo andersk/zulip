@@ -367,10 +367,7 @@ def get_push_tag_body(payload: Dict[str, Any], change: Dict[str, Any]) -> str:
         action = "removed"
 
     return get_push_tag_event_message(
-        get_user_username(payload),
-        tag.get("name"),
-        tag_url=tag["links"]["html"].get("href"),
-        action=action,
+        get_user_username(payload), tag.get("name"), tag_url=tag["links"]["html"].get("href"), action=action,
     )
 
 

@@ -442,9 +442,7 @@ def do_send_missedmessage_events_reply_in_zulip(
     user_profile.save(update_fields=["last_reminder"])
 
 
-def handle_missedmessage_emails(
-    user_profile_id: int, missed_email_events: Iterable[Dict[str, Any]],
-) -> None:
+def handle_missedmessage_emails(user_profile_id: int, missed_email_events: Iterable[Dict[str, Any]]) -> None:
     message_ids = {event.get("message_id"): event.get("trigger") for event in missed_email_events}
 
     user_profile = get_user_profile_by_id(user_profile_id)

@@ -438,10 +438,7 @@ class Command(BaseCommand):
                 ("Outgoing Webhook", "outgoing-webhook@zulip.com"),
             ]
             create_users(
-                zulip_realm,
-                zulip_outgoing_bots,
-                bot_type=UserProfile.OUTGOING_WEBHOOK_BOT,
-                bot_owner=aaron,
+                zulip_realm, zulip_outgoing_bots, bot_type=UserProfile.OUTGOING_WEBHOOK_BOT, bot_owner=aaron,
             )
             outgoing_webhook = get_user("outgoing-webhook@zulip.com", zulip_realm)
             add_service(
@@ -779,9 +776,7 @@ def generate_and_send_messages(
     (tot_messages, personals_pairs, options, output, random_seed) = data
     random.seed(random_seed)
 
-    with open(
-        os.path.join(get_or_create_dev_uuid_var_path("test-backend"), "test_messages.json"),
-    ) as infile:
+    with open(os.path.join(get_or_create_dev_uuid_var_path("test-backend"), "test_messages.json")) as infile:
         dialog = ujson.load(infile)
     random.shuffle(dialog)
     texts = itertools.cycle(dialog)

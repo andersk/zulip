@@ -73,9 +73,7 @@ class Command(BaseCommand):
 
         installation_time = timezone_now() - timedelta(days=self.DAYS_OF_DATA)
         last_end_time = floor_to_day(timezone_now())
-        realm = Realm.objects.create(
-            string_id="analytics", name="Analytics", date_created=installation_time,
-        )
+        realm = Realm.objects.create(string_id="analytics", name="Analytics", date_created=installation_time)
         with mock.patch("zerver.lib.create_user.timezone_now", return_value=installation_time):
             shylock = create_user(
                 "shylock@analytics.ds",

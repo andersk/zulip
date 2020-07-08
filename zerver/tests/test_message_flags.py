@@ -134,9 +134,7 @@ class UnreadCountTests(ZulipTestCase):
         ) as mock_push_notifications_enabled:
             self.unread_msg_ids = [
                 self.send_personal_message(self.example_user("iago"), self.example_user("hamlet"), "hello"),
-                self.send_personal_message(
-                    self.example_user("iago"), self.example_user("hamlet"), "hello2",
-                ),
+                self.send_personal_message(self.example_user("iago"), self.example_user("hamlet"), "hello2"),
             ]
             mock_push_notifications_enabled.assert_called()
 
@@ -248,10 +246,7 @@ class UnreadCountTests(ZulipTestCase):
         with tornado_redirected_to_list(events):
             result = self.client_post(
                 "/json/mark_topic_as_read",
-                {
-                    "stream_id": get_stream("test_stream", user_profile.realm).id,
-                    "topic_name": "test_topic",
-                },
+                {"stream_id": get_stream("test_stream", user_profile.realm).id, "topic_name": "test_topic"},
             )
 
         self.assert_json_success(result)
@@ -465,10 +460,7 @@ class GetUnreadMsgsTest(ZulipTestCase):
         recipient = stream.recipient
 
         add_topic_mute(
-            user_profile=user_profile,
-            stream_id=stream.id,
-            recipient_id=recipient.id,
-            topic_name=topic_name,
+            user_profile=user_profile, stream_id=stream.id, recipient_id=recipient.id, topic_name=topic_name,
         )
 
     def test_raw_unread_stream(self) -> None:
@@ -880,8 +872,7 @@ class MessageAccessTests(ZulipTestCase):
             ),
         ]
         result = self.client_post(
-            "/json/messages/flags",
-            {"messages": ujson.dumps(sent_message_ids), "op": "add", "flag": "read"},
+            "/json/messages/flags", {"messages": ujson.dumps(sent_message_ids), "op": "add", "flag": "read"},
         )
 
         # We can't change flags other than "starred" on historical messages:

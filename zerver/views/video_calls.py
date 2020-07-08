@@ -101,9 +101,7 @@ def complete_zoom_user(
 def complete_zoom_user_in_realm(
     request: HttpRequest,
     code: str = REQ(),
-    state: Dict[str, str] = REQ(
-        validator=check_dict([("sid", check_string)], value_validator=check_string),
-    ),
+    state: Dict[str, str] = REQ(validator=check_dict([("sid", check_string)], value_validator=check_string)),
 ) -> HttpResponse:
     if not constant_time_compare(state["sid"], get_zoom_sid(request)):
         raise JsonableError(_("Invalid Zoom session identifier"))
@@ -248,7 +246,5 @@ def join_bigbluebutton(
         checksum = hashlib.sha1(
             ("join" + join_params + settings.BIG_BLUE_BUTTON_SECRET).encode(),
         ).hexdigest()
-        redirect_url_base = add_query_to_redirect_url(
-            settings.BIG_BLUE_BUTTON_URL + "api/join", join_params,
-        )
+        redirect_url_base = add_query_to_redirect_url(settings.BIG_BLUE_BUTTON_URL + "api/join", join_params)
         return redirect(add_query_arg_to_redirect_url(redirect_url_base, "checksum=" + checksum))

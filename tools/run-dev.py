@@ -271,11 +271,7 @@ class BaseHandler(web.RequestHandler):
         if "X-FORWARDED_PORT" not in self.request.headers:
             self.request.headers["X-FORWARDED-PORT"] = str(proxy_port)
         url = transform_url(
-            self.request.protocol,
-            self.request.path,
-            self.request.query,
-            self.target_port,
-            self.target_host,
+            self.request.protocol, self.request.path, self.request.query, self.target_port, self.target_host,
         )
         try:
             fetch_request(

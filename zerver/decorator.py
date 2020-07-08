@@ -640,10 +640,7 @@ def authenticated_uploads_api_view(
 # If webhook_client_name is specific, the request is a webhook view
 # with that string as the basis for the client string.
 def authenticated_rest_api_view(
-    *,
-    webhook_client_name: Optional[str] = None,
-    is_webhook: bool = False,
-    skip_rate_limiting: bool = False,
+    *, webhook_client_name: Optional[str] = None, is_webhook: bool = False, skip_rate_limiting: bool = False,
 ) -> Callable[[Callable[..., HttpResponse]], Callable[..., HttpResponse]]:
     def _wrapped_view_func(view_func: Callable[..., HttpResponse]) -> Callable[..., HttpResponse]:
         @csrf_exempt

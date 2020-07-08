@@ -250,8 +250,7 @@ def main() -> None:
         type=int,
         action="store",
         default=default_parallel,
-        help="Specify the number of processes to run the "
-        "tests in. Default is the number of logical CPUs",
+        help="Specify the number of processes to run the " "tests in. Default is the number of logical CPUs",
     )
     parser.add_argument(
         "--profile", dest="profile", action="store_true", default=False, help="Profile test runtime.",

@@ -1575,18 +1575,14 @@ class NormalActionsTest(BaseAction):
         # First test with notification_settings_null enabled
         for value in (True, False):
             events = self.verify_action(
-                lambda: do_change_subscription_property(
-                    self.user_profile, sub, stream, setting_name, value,
-                ),
+                lambda: do_change_subscription_property(self.user_profile, sub, stream, setting_name, value),
                 notification_settings_null=True,
             )
             schema_checker("events[0]", events[0])
 
         for value in (True, False):
             events = self.verify_action(
-                lambda: do_change_subscription_property(
-                    self.user_profile, sub, stream, setting_name, value,
-                ),
+                lambda: do_change_subscription_property(self.user_profile, sub, stream, setting_name, value),
             )
             schema_checker("events[0]", events[0])
 
@@ -1659,10 +1655,7 @@ class NormalActionsTest(BaseAction):
 
         stream = get_stream("Rome", self.user_profile.realm)
 
-        for signup_notifications_stream, signup_notifications_stream_id in (
-            (stream, stream.id),
-            (None, -1),
-        ):
+        for signup_notifications_stream, signup_notifications_stream_id in ((stream, stream.id), (None, -1)):
             events = self.verify_action(
                 lambda: do_set_realm_signup_notifications_stream(
                     self.user_profile.realm, signup_notifications_stream, signup_notifications_stream_id,
@@ -1925,9 +1918,7 @@ class NormalActionsTest(BaseAction):
                 ),
             ],
         )
-        events = self.verify_action(
-            lambda: do_add_realm_domain(self.user_profile.realm, "zulip.org", False),
-        )
+        events = self.verify_action(lambda: do_add_realm_domain(self.user_profile.realm, "zulip.org", False))
         schema_checker("events[0]", events[0])
 
         schema_checker = check_events_dict(
@@ -2658,9 +2649,7 @@ class NormalActionsTest(BaseAction):
         ):
             with stdout_suppressed():
                 events = self.verify_action(
-                    lambda: self.client_post("/json/export/realm"),
-                    state_change_expected=True,
-                    num_events=3,
+                    lambda: self.client_post("/json/export/realm"), state_change_expected=True, num_events=3,
                 )
 
         # We first notify when an export is initiated,
@@ -2762,9 +2751,7 @@ class NormalActionsTest(BaseAction):
 
     def test_has_zoom_token(self) -> None:
         schema_checker = check_events_dict([("type", equals("has_zoom_token")), ("value", equals(True))])
-        events = self.verify_action(
-            lambda: do_set_zoom_token(self.user_profile, {"access_token": "token"}),
-        )
+        events = self.verify_action(lambda: do_set_zoom_token(self.user_profile, {"access_token": "token"}))
         schema_checker("events[0]", events[0])
 
         schema_checker = check_events_dict([("type", equals("has_zoom_token")), ("value", equals(False))])

@@ -39,11 +39,7 @@ class TestBasics(ZulipTestCase):
                 content="stuff1",
             ),
             dict(
-                id=sm2.id,
-                message_id=message_id,
-                sender_id=hamlet.id,
-                msg_type="whatever",
-                content="stuff2",
+                id=sm2.id, message_id=message_id, sender_id=hamlet.id, msg_type="whatever", content="stuff2",
             ),
         ]
 

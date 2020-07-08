@@ -177,10 +177,7 @@ class Bitbucket2HookTests(WebhookTestCase):
             "HTTP_X_EVENT_KEY": "pullrequest:approved",
         }
         self.send_and_test_stream_message(
-            "pull_request_approved_or_unapproved",
-            self.EXPECTED_TOPIC_PR_EVENTS,
-            expected_message,
-            **kwargs,
+            "pull_request_approved_or_unapproved", self.EXPECTED_TOPIC_PR_EVENTS, expected_message, **kwargs,
         )
 
     def test_bitbucket2_on_pull_request_approved_with_custom_topic_in_url(self) -> None:
@@ -202,10 +199,7 @@ class Bitbucket2HookTests(WebhookTestCase):
             "HTTP_X_EVENT_KEY": "pullrequest:unapproved",
         }
         self.send_and_test_stream_message(
-            "pull_request_approved_or_unapproved",
-            self.EXPECTED_TOPIC_PR_EVENTS,
-            expected_message,
-            **kwargs,
+            "pull_request_approved_or_unapproved", self.EXPECTED_TOPIC_PR_EVENTS, expected_message, **kwargs,
         )
 
     def test_bitbucket2_on_pull_request_declined_event(self) -> None:
@@ -301,9 +295,7 @@ class Bitbucket2HookTests(WebhookTestCase):
         kwargs = {
             "HTTP_X_EVENT_KEY": "pullrequest:push",
         }
-        self.send_and_test_stream_message(
-            "push_remove_tag", self.EXPECTED_TOPIC, expected_message, **kwargs,
-        )
+        self.send_and_test_stream_message("push_remove_tag", self.EXPECTED_TOPIC, expected_message, **kwargs)
 
     def test_bitbucket2_on_push_more_than_one_tag_event(self) -> None:
         expected_message = "kolaszek pushed tag [{name}](https://bitbucket.org/kolaszek/repository-name/commits/tag/{name})."

@@ -789,9 +789,7 @@ def import_uploads(
                         "Could not thumbnail avatar image for user %s; ignoring", user_profile.id,
                     )
                     # Delete the record of the avatar to avoid 404s.
-                    do_change_avatar_fields(
-                        user_profile, UserProfile.AVATAR_FROM_GRAVATAR, acting_user=None,
-                    )
+                    do_change_avatar_fields(user_profile, UserProfile.AVATAR_FROM_GRAVATAR, acting_user=None)
             return 0
 
         if processes == 1:
@@ -908,9 +906,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
     re_map_foreign_keys(data, "zerver_userprofile", "realm", related_table="realm")
     re_map_foreign_keys(data, "zerver_userprofile", "bot_owner", related_table="user_profile")
     re_map_foreign_keys(data, "zerver_userprofile", "default_sending_stream", related_table="stream")
-    re_map_foreign_keys(
-        data, "zerver_userprofile", "default_events_register_stream", related_table="stream",
-    )
+    re_map_foreign_keys(data, "zerver_userprofile", "default_events_register_stream", related_table="stream")
     re_map_foreign_keys(
         data, "zerver_userprofile", "last_active_message_id", related_table="message", id_field=True,
     )
@@ -1015,9 +1011,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
         bulk_import_model(data, UserGroup)
 
         re_map_foreign_keys(data, "zerver_usergroupmembership", "user_group", related_table="usergroup")
-        re_map_foreign_keys(
-            data, "zerver_usergroupmembership", "user_profile", related_table="user_profile",
-        )
+        re_map_foreign_keys(data, "zerver_usergroupmembership", "user_profile", related_table="user_profile")
         update_model_ids(UserGroupMembership, data, "usergroupmembership")
         bulk_import_model(data, UserGroupMembership)
 
@@ -1053,9 +1047,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
     update_model_ids(CustomProfileField, data, related_table="customprofilefield")
     bulk_import_model(data, CustomProfileField)
 
-    re_map_foreign_keys(
-        data, "zerver_customprofilefieldvalue", "user_profile", related_table="user_profile",
-    )
+    re_map_foreign_keys(data, "zerver_customprofilefieldvalue", "user_profile", related_table="user_profile")
     re_map_foreign_keys(data, "zerver_customprofilefieldvalue", "field", related_table="customprofilefield")
     fix_customprofilefield(data)
     update_model_ids(CustomProfileFieldValue, data, related_table="customprofilefieldvalue")
@@ -1138,9 +1130,7 @@ def do_import_system_bots(realm: Any) -> None:
     print("Finished importing system bots.")
 
 
-def create_users(
-    realm: Realm, name_list: Iterable[Tuple[str, str]], bot_type: Optional[int] = None,
-) -> None:
+def create_users(realm: Realm, name_list: Iterable[Tuple[str, str]], bot_type: Optional[int] = None) -> None:
     user_set = set()
     for full_name, email in name_list:
         short_name = email_to_username(email)

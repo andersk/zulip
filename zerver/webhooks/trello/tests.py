@@ -13,7 +13,9 @@ class TrelloHookTests(WebhookTestCase):
         self.assertEqual(response.status_code, 200, response)
 
     def test_trello_webhook_when_card_was_moved_to_another_list(self) -> None:
-        expected_message = "TomaszKolek moved [This is a card.](https://trello.com/c/r33ylX2Z) from Basics to Intermediate."
+        expected_message = (
+            "TomaszKolek moved [This is a card.](https://trello.com/c/r33ylX2Z) from Basics to Intermediate."
+        )
         self.send_and_test_stream_message("changing_cards_list", "Welcome Board", expected_message)
 
     def test_trello_webhook_when_card_was_renamed(self) -> None:

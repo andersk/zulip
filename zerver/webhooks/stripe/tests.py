@@ -11,7 +11,9 @@ class StripeHookTests(WebhookTestCase):
 
     def test_charge_dispute_closed(self) -> None:
         expected_topic = "disputes"
-        expected_message = "[Dispute](https://dashboard.stripe.com/disputes/dp_00000000000000) closed. Current status: won."
+        expected_message = (
+            "[Dispute](https://dashboard.stripe.com/disputes/dp_00000000000000) closed. Current status: won."
+        )
         self.send_and_test_stream_message(
             "charge_dispute_closed",
             expected_topic,

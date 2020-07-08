@@ -124,9 +124,7 @@ class NarrowBuilderTest(ZulipTestCase):
         term = dict(operator="is", operand="private")
         self._do_add_term_test(term, "WHERE (flags & %(flags_1)s) != %(param_1)s")
 
-    def test_add_term_using_streams_operator_and_invalid_operand_should_raise_error(
-        self,
-    ) -> None:  # NEGATED
+    def test_add_term_using_streams_operator_and_invalid_operand_should_raise_error(self) -> None:  # NEGATED
         term = dict(operator="streams", operand="invalid_operands")
         self.assertRaises(BadNarrowOperator, self._build_query, term)
 
@@ -297,9 +295,7 @@ class NarrowBuilderTest(ZulipTestCase):
         )
 
     def test_add_term_using_pm_with_operator_and_self_and_user_as_operand(self) -> None:
-        myself_and_other = ",".join(
-            [self.example_user("hamlet").email, self.example_user("othello").email],
-        )
+        myself_and_other = ",".join([self.example_user("hamlet").email, self.example_user("othello").email])
         term = dict(operator="pm-with", operand=myself_and_other)
         self._do_add_term_test(
             term,
@@ -312,9 +308,7 @@ class NarrowBuilderTest(ZulipTestCase):
         self._do_add_term_test(term, "WHERE recipient_id = %(recipient_id_1)s")
 
     def test_add_term_using_pm_with_operator_self_and_user_as_operand_and_negated(self) -> None:  # NEGATED
-        myself_and_other = ",".join(
-            [self.example_user("hamlet").email, self.example_user("othello").email],
-        )
+        myself_and_other = ",".join([self.example_user("hamlet").email, self.example_user("othello").email])
         term = dict(operator="pm-with", operand=myself_and_other, negated=True)
         self._do_add_term_test(
             term,
@@ -1994,8 +1988,7 @@ class GetOldMessagesTest(ZulipTestCase):
         japanese_message = [m for m in messages if m[TOPIC_NAME] == "日本語"][-1]
         self.assertEqual(japanese_message[MATCH_TOPIC], '<span class="highlight">日本</span>語')
         self.assertEqual(
-            japanese_message["match_content"],
-            '<p>昨日、<span class="highlight">日本</span>の' + "お菓子を送りました。</p>",
+            japanese_message["match_content"], '<p>昨日、<span class="highlight">日本</span>の' + "お菓子を送りました。</p>",
         )
 
         english_message = [m for m in messages if m[TOPIC_NAME] == "english"][0]
@@ -3312,9 +3305,7 @@ class MessageHasKeywordsTest(ZulipTestCase):
 class MessageVisibilityTest(ZulipTestCase):
     def test_update_first_visible_message_id(self) -> None:
         Message.objects.all().delete()
-        message_ids = [
-            self.send_stream_message(self.example_user("othello"), "Scotland") for i in range(15)
-        ]
+        message_ids = [self.send_stream_message(self.example_user("othello"), "Scotland") for i in range(15)]
 
         # If message_visibility_limit is None update_first_visible_message_id
         # should set first_visible_message_id to 0

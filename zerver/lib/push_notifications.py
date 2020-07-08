@@ -75,9 +75,7 @@ def get_apns_client() -> "Optional[APNsClient]":
         # That's a little sloppy, but harmless unless a server gets
         # hammered with a ton of these all at once after startup.
         if settings.APNS_CERT_FILE is not None:
-            _apns_client = APNsClient(
-                credentials=settings.APNS_CERT_FILE, use_sandbox=settings.APNS_SANDBOX,
-            )
+            _apns_client = APNsClient(credentials=settings.APNS_CERT_FILE, use_sandbox=settings.APNS_SANDBOX)
         _apns_client_initialized = True
     return _apns_client
 

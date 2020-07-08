@@ -1269,8 +1269,7 @@ def social_associate_user_helper(
             # end up with a wrong email associated with the account. The below code
             # takes care of that.
             backend.logger.warning(
-                "Social auth (%s) failed because user has no verified"
-                " emails associated with the account",
+                "Social auth (%s) failed because user has no verified" " emails associated with the account",
                 backend.auth_backend_name,
             )
             return_data["email_not_associated"] = True
@@ -1700,9 +1699,7 @@ class AppleAuthBackend(SocialAuthMixin, AppleIdAuth):
         state sent in the POST redirect.
         """
         request_data = self.strategy.request_data().dict()
-        data_to_store = {
-            key: request_data[key] for key in self.standard_relay_params if key in request_data
-        }
+        data_to_store = {key: request_data[key] for key in self.standard_relay_params if key in request_data}
 
         # Generate a random string of 32 alphanumeric characters.
         state = self.state_token()

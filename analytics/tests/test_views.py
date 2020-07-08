@@ -380,17 +380,13 @@ class TestGetChartData(ZulipTestCase):
         realm.date_created = timezone_now() - timedelta(days=3)
         realm.save(update_fields=["date_created"])
         with mock.patch("logging.warning"):
-            result = self.client_get(
-                "/json/analytics/chart_data", {"chart_name": "messages_sent_over_time"},
-            )
+            result = self.client_get("/json/analytics/chart_data", {"chart_name": "messages_sent_over_time"})
         self.assert_json_error_contains(result, "No analytics data available")
 
         realm.date_created = timezone_now() - timedelta(days=1, hours=2)
         realm.save(update_fields=["date_created"])
         with mock.patch("logging.warning"):
-            result = self.client_get(
-                "/json/analytics/chart_data", {"chart_name": "messages_sent_over_time"},
-            )
+            result = self.client_get("/json/analytics/chart_data", {"chart_name": "messages_sent_over_time"})
         self.assert_json_error_contains(result, "No analytics data available")
 
         realm.date_created = timezone_now() - timedelta(days=1, minutes=10)
@@ -411,9 +407,7 @@ class TestGetChartData(ZulipTestCase):
         realm.date_created = timezone_now() - timedelta(days=3)
         realm.save(update_fields=["date_created"])
         with mock.patch("logging.warning"):
-            result = self.client_get(
-                "/json/analytics/chart_data", {"chart_name": "messages_sent_over_time"},
-            )
+            result = self.client_get("/json/analytics/chart_data", {"chart_name": "messages_sent_over_time"})
         self.assert_json_error_contains(result, "No analytics data available")
 
         realm.date_created = timezone_now() - timedelta(days=1, minutes=10)
@@ -433,9 +427,7 @@ class TestGetChartData(ZulipTestCase):
         realm.date_created = timezone_now() - timedelta(days=1, hours=2)
         realm.save(update_fields=["date_created"])
         with mock.patch("logging.warning"):
-            result = self.client_get(
-                "/json/analytics/chart_data", {"chart_name": "messages_sent_over_time"},
-            )
+            result = self.client_get("/json/analytics/chart_data", {"chart_name": "messages_sent_over_time"})
         self.assert_json_error_contains(result, "No analytics data available")
 
         realm.date_created = timezone_now() - timedelta(days=1, minutes=10)
@@ -829,8 +821,7 @@ class TestTimeRange(ZulipTestCase):
         self.assertEqual(time_range(floor_day, floor_day, CountStat.DAY, 0), [floor_day])
         # test start and end on different boundaries
         self.assertEqual(
-            time_range(floor_hour, floor_hour + HOUR, CountStat.HOUR, None),
-            [floor_hour, floor_hour + HOUR],
+            time_range(floor_hour, floor_hour + HOUR, CountStat.HOUR, None), [floor_hour, floor_hour + HOUR],
         )
         self.assertEqual(
             time_range(floor_day, floor_day + DAY, CountStat.DAY, None), [floor_day, floor_day + DAY],

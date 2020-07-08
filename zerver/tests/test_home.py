@@ -775,9 +775,7 @@ class HomeTest(ZulipTestCase):
             compute_navbar_logo_url(page_params), "/static/images/logo/zulip-org-logo.png?version=0",
         )
 
-        do_change_logo_source(
-            user_profile.realm, Realm.LOGO_UPLOADED, night=False, acting_user=user_profile,
-        )
+        do_change_logo_source(user_profile.realm, Realm.LOGO_UPLOADED, night=False, acting_user=user_profile)
         page_params = {"color_scheme": user_profile.COLOR_SCHEME_NIGHT}
         add_realm_logo_fields(page_params, user_profile.realm)
         self.assertEqual(
@@ -883,11 +881,7 @@ class HomeTest(ZulipTestCase):
             self._sanity_check(result)
 
     def send_test_message(
-        self,
-        content: str,
-        sender_name: str = "iago",
-        stream_name: str = "Denmark",
-        topic_name: str = "foo",
+        self, content: str, sender_name: str = "iago", stream_name: str = "Denmark", topic_name: str = "foo",
     ) -> int:
         sender = self.example_user(sender_name)
         return self.send_stream_message(sender, stream_name, content=content, topic_name=topic_name)

@@ -87,10 +87,7 @@ class Migration(migrations.Migration):
                         verbose_name="ID", serialize=False, auto_created=True, primary_key=True,
                     ),
                 ),
-                (
-                    "realm",
-                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm"),
-                ),
+                ("realm", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm")),
                 ("property", models.CharField(max_length=40)),
                 ("end_time", models.DateTimeField()),
                 ("interval", models.CharField(max_length=20)),
@@ -113,10 +110,7 @@ class Migration(migrations.Migration):
                         verbose_name="ID", serialize=False, auto_created=True, primary_key=True,
                     ),
                 ),
-                (
-                    "realm",
-                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm"),
-                ),
+                ("realm", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm")),
                 (
                     "stream",
                     models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Stream"),
@@ -143,10 +137,7 @@ class Migration(migrations.Migration):
                         verbose_name="ID", serialize=False, auto_created=True, primary_key=True,
                     ),
                 ),
-                (
-                    "realm",
-                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm"),
-                ),
+                ("realm", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm")),
                 (
                     "user",
                     models.ForeignKey(

@@ -61,9 +61,7 @@ def get_events_backend(
     user_profile: UserProfile,
     # user_client is intended only for internal Django=>Tornado requests
     # and thus shouldn't be documented for external use.
-    user_client: Optional[Client] = REQ(
-        converter=get_client, default=None, intentionally_undocumented=True,
-    ),
+    user_client: Optional[Client] = REQ(converter=get_client, default=None, intentionally_undocumented=True),
     last_event_id: Optional[int] = REQ(converter=int, default=None),
     queue_id: Optional[str] = REQ(default=None),
     # apply_markdown, client_gravatar, all_public_streams, and various

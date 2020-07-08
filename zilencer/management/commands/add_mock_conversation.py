@@ -47,9 +47,7 @@ From image editing program:
         UserProfile.objects.filter(email__contains="stage").delete()
         starr = do_create_user("1@stage.example.com", "password", realm, "Ada Starr", "", acting_user=None)
         self.set_avatar(starr, "static/images/characters/starr.png")
-        fisher = do_create_user(
-            "2@stage.example.com", "password", realm, "Bel Fisher", "", acting_user=None,
-        )
+        fisher = do_create_user("2@stage.example.com", "password", realm, "Bel Fisher", "", acting_user=None)
         self.set_avatar(fisher, "static/images/characters/fisher.png")
         twitter_bot = do_create_user(
             "3@stage.example.com",

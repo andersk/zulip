@@ -171,9 +171,7 @@ def ccache_principal(name: Dict[str, str], realm: str) -> bytes:
 
 
 def ccache_key(key: Dict[str, str]) -> bytes:
-    return struct.pack("!H", key["keytype"]) + ccache_counted_octet_string(
-        base64.b64decode(key["keyvalue"]),
-    )
+    return struct.pack("!H", key["keytype"]) + ccache_counted_octet_string(base64.b64decode(key["keyvalue"]))
 
 
 def flags_to_uint32(flags: List[str]) -> int:

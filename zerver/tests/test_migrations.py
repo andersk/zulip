@@ -60,9 +60,7 @@ class SubsNotificationSettingsTestCase(MigrationsTestCase):  # nocoverage
         iago_sub.desktop_notifications = False
         iago_sub.audible_notifications = False
         iago_sub.push_notifications = True
-        iago_sub.save(
-            update_fields=["desktop_notifications", "audible_notifications", "push_notifications"],
-        )
+        iago_sub.save(update_fields=["desktop_notifications", "audible_notifications", "push_notifications"])
 
     def test_subs_migrated(self) -> None:
         UserProfile = self.apps.get_model("zerver", "UserProfile")

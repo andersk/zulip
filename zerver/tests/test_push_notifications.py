@@ -405,9 +405,7 @@ class AnalyticsBouncerTest(BouncerTestCase):
 
         # Create some rows we'll send to remote server
         realm_stat = LoggingCountStat("invites_sent::day", RealmCount, CountStat.DAY)
-        RealmCount.objects.create(
-            realm=user.realm, property=realm_stat.property, end_time=end_time, value=5,
-        )
+        RealmCount.objects.create(realm=user.realm, property=realm_stat.property, end_time=end_time, value=5)
         InstallationCount.objects.create(
             property=realm_stat.property,
             end_time=end_time,
@@ -531,9 +529,7 @@ class AnalyticsBouncerTest(BouncerTestCase):
         end_time = self.TIME_ZERO
 
         realm_stat = LoggingCountStat("invalid count stat", RealmCount, CountStat.DAY)
-        RealmCount.objects.create(
-            realm=user.realm, property=realm_stat.property, end_time=end_time, value=5,
-        )
+        RealmCount.objects.create(realm=user.realm, property=realm_stat.property, end_time=end_time, value=5)
 
         self.assertEqual(RealmCount.objects.count(), 1)
 
@@ -834,9 +830,9 @@ class HandlePushNotificationTest(PushNotificationTest):
         # Now, delete the message the normal way
         do_delete_messages(user_profile.realm, [message])
 
-        with mock.patch(
-            "zerver.lib.push_notifications.uses_notification_bouncer",
-        ) as mock_check, mock.patch("logging.error") as mock_logging_error, mock.patch(
+        with mock.patch("zerver.lib.push_notifications.uses_notification_bouncer") as mock_check, mock.patch(
+            "logging.error",
+        ) as mock_logging_error, mock.patch(
             "zerver.lib.push_notifications.push_notifications_enabled", return_value=True,
         ) as mock_push_notifications:
             handle_push_notification(user_profile.id, missed_message)
@@ -860,9 +856,9 @@ class HandlePushNotificationTest(PushNotificationTest):
         message.delete()
 
         # This should log an error
-        with mock.patch(
-            "zerver.lib.push_notifications.uses_notification_bouncer",
-        ) as mock_check, mock.patch("logging.error") as mock_logging_error, mock.patch(
+        with mock.patch("zerver.lib.push_notifications.uses_notification_bouncer") as mock_check, mock.patch(
+            "logging.error",
+        ) as mock_logging_error, mock.patch(
             "zerver.lib.push_notifications.push_notifications_enabled", return_value=True,
         ) as mock_push_notifications:
             handle_push_notification(user_profile.id, missed_message)
@@ -1328,11 +1324,7 @@ class TestGetAPNsPayload(PushNotificationTest):
         message.stream_name = "Verona"
         payload = get_message_payload_apns(self.sender, message)
         expected = {
-            "alert": {
-                "title": "#Verona > Test Topic",
-                "subtitle": "King Hamlet:",
-                "body": message.content,
-            },
+            "alert": {"title": "#Verona > Test Topic", "subtitle": "King Hamlet:", "body": message.content},
             "sound": "default",
             "badge": 0,
             "custom": {
@@ -1640,9 +1632,7 @@ class TestSendToPushBouncer(ZulipTestCase):
     def test_300_error(self, mock_request: mock.MagicMock) -> None:
         with self.assertRaises(PushNotificationBouncerException) as exc:
             send_to_push_bouncer("register", "register", {"msg": "true"})
-        self.assertEqual(
-            str(exc.exception), "Push notification bouncer returned unexpected status code 300",
-        )
+        self.assertEqual(str(exc.exception), "Push notification bouncer returned unexpected status code 300")
 
 
 class TestNumPushDevicesForUser(PushNotificationTest):

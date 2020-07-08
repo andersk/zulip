@@ -32,9 +32,7 @@ class TestCheckConfig(ZulipTestCase):
     def test_check_config(self) -> None:
         check_config()
         with self.settings(REQUIRED_SETTINGS=[("asdf", "not asdf")]):
-            with self.assertRaisesRegex(
-                CommandError, "Error: You must set asdf in /etc/zulip/settings.py.",
-            ):
+            with self.assertRaisesRegex(CommandError, "Error: You must set asdf in /etc/zulip/settings.py."):
                 check_config()
 
     @override_settings(WARN_NO_EMAIL=True)
@@ -97,9 +95,7 @@ class TestZulipBaseCommand(ZulipTestCase):
         return sorted(users, key=lambda x: x.email)
 
     def test_get_users(self) -> None:
-        expected_user_profiles = self.sorted_users(
-            [self.example_user("hamlet"), self.example_user("iago")],
-        )
+        expected_user_profiles = self.sorted_users([self.example_user("hamlet"), self.example_user("iago")])
 
         user_emails = ",".join(u.delivery_email for u in expected_user_profiles)
         user_profiles = self.get_users_sorted(dict(users=user_emails), self.zulip_realm)
@@ -123,9 +119,7 @@ class TestZulipBaseCommand(ZulipTestCase):
         self.assertEqual(self.command.get_users(dict(users=None), None), [])
 
     def test_get_users_with_all_users_argument_enabled(self) -> None:
-        expected_user_profiles = self.sorted_users(
-            [self.example_user("hamlet"), self.example_user("iago")],
-        )
+        expected_user_profiles = self.sorted_users([self.example_user("hamlet"), self.example_user("iago")])
         user_emails = ",".join(u.delivery_email for u in expected_user_profiles)
         user_profiles = self.get_users_sorted(dict(users=user_emails, all_users=False), self.zulip_realm)
         self.assertEqual(user_profiles, expected_user_profiles)

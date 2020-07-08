@@ -523,9 +523,7 @@ def start_remote_user_sso(request: HttpRequest) -> HttpResponse:
 
 
 @handle_desktop_flow
-def start_social_login(
-    request: HttpRequest, backend: str, extra_arg: Optional[str] = None,
-) -> HttpResponse:
+def start_social_login(request: HttpRequest, backend: str, extra_arg: Optional[str] = None) -> HttpResponse:
     backend_url = reverse("social:begin", args=[backend])
     extra_url_params: Dict[str, str] = {}
     if backend == "saml":

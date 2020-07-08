@@ -726,9 +726,7 @@ def update_subscriptions_property(
     value: str = REQ(),
 ) -> HttpResponse:
     subscription_data = [{"property": property, "stream_id": stream_id, "value": value}]
-    return update_subscription_properties_backend(
-        request, user_profile, subscription_data=subscription_data,
-    )
+    return update_subscription_properties_backend(request, user_profile, subscription_data=subscription_data)
 
 
 @has_request_variables

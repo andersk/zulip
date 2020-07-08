@@ -598,17 +598,11 @@ def get_realm_config() -> Config:
     )
 
     Config(
-        table="zerver_realmdomain",
-        model=RealmDomain,
-        normal_parent=realm_config,
-        parent_key="realm_id__in",
+        table="zerver_realmdomain", model=RealmDomain, normal_parent=realm_config, parent_key="realm_id__in",
     )
 
     Config(
-        table="zerver_realmfilter",
-        model=RealmFilter,
-        normal_parent=realm_config,
-        parent_key="realm_id__in",
+        table="zerver_realmfilter", model=RealmFilter, normal_parent=realm_config, parent_key="realm_id__in",
     )
 
     Config(
@@ -1878,9 +1872,7 @@ def get_realm_exports_serialized(user: UserProfile) -> List[Dict[str, Any]]:
             export_path = export_data.get("export_path")
 
             if export_path and not deleted_timestamp:
-                export_url = zerver.lib.upload.upload_backend.get_export_tarball_url(
-                    user.realm, export_path,
-                )
+                export_url = zerver.lib.upload.upload_backend.get_export_tarball_url(user.realm, export_path)
 
         exports_dict[export.id] = dict(
             id=export.id,

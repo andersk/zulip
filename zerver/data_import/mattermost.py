@@ -356,9 +356,7 @@ def process_raw_message_batch(
         date_sent = raw_message["date_sent"]
         sender_user_id = raw_message["sender_id"]
         if "channel_name" in raw_message:
-            recipient_id = get_recipient_id_from_receiver_name(
-                raw_message["channel_name"], Recipient.STREAM,
-            )
+            recipient_id = get_recipient_id_from_receiver_name(raw_message["channel_name"], Recipient.STREAM)
         elif "huddle_name" in raw_message:
             recipient_id = get_recipient_id_from_receiver_name(raw_message["huddle_name"], Recipient.HUDDLE)
         elif "pm_members" in raw_message:
@@ -629,11 +627,7 @@ def write_emoticon_data(
         shutil.copyfile(source_path, target_path)
 
         return dict(
-            path=target_path,
-            s3_path=target_path,
-            file_name=target_fn,
-            realm_id=realm_id,
-            name=data["name"],
+            path=target_path, s3_path=target_path, file_name=target_fn, realm_id=realm_id, name=data["name"],
         )
 
     emoji_records = list(map(process, flat_data))

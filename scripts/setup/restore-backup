@@ -89,10 +89,7 @@ def restore_backup(tarball_file: IO[bytes]) -> None:
                 postgres_env["PGPASSWORD"] = db["PASSWORD"]
 
         run(
-            [
-                os.path.join(settings.DEPLOY_ROOT, "scripts", "setup", "terminate-psql-sessions"),
-                db["NAME"],
-            ],
+            [os.path.join(settings.DEPLOY_ROOT, "scripts", "setup", "terminate-psql-sessions"), db["NAME"]],
             env=postgres_env,
         )
         run(["dropdb", "--if-exists", "--", db["NAME"]], cwd="/", env=postgres_env)

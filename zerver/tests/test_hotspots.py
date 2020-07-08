@@ -42,8 +42,7 @@ class TestHotspots(ZulipTestCase):
         user = self.example_user("hamlet")
         do_mark_hotspot_as_read(user, "intro_compose")
         self.assertEqual(
-            list(UserHotspot.objects.filter(user=user).values_list("hotspot", flat=True)),
-            ["intro_compose"],
+            list(UserHotspot.objects.filter(user=user).values_list("hotspot", flat=True)), ["intro_compose"],
         )
 
     def test_hotspots_url_endpoint(self) -> None:

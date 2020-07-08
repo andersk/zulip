@@ -28,10 +28,7 @@ class Migration(migrations.Migration):
                         default=3,
                     ),
                 ),
-                (
-                    "realm",
-                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm"),
-                ),
+                ("realm", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm")),
             ],
         ),
         migrations.CreateModel(

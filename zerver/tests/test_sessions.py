@@ -55,16 +55,10 @@ class TestSessions(ZulipTestCase):
     def test_delete_realm_user_sessions(self) -> None:
         realm = get_realm("zulip")
         self.do_test_session(
-            self.example_user("hamlet"),
-            lambda: delete_realm_user_sessions(realm),
-            get_realm("zulip"),
-            True,
+            self.example_user("hamlet"), lambda: delete_realm_user_sessions(realm), get_realm("zulip"), True,
         )
         self.do_test_session(
-            self.mit_user("sipbtest"),
-            lambda: delete_realm_user_sessions(realm),
-            get_realm("zephyr"),
-            False,
+            self.mit_user("sipbtest"), lambda: delete_realm_user_sessions(realm), get_realm("zephyr"), False,
         )
 
     def test_delete_all_user_sessions(self) -> None:
@@ -115,9 +109,7 @@ class TestExpirableSessionVars(ZulipTestCase):
             )
             value = get_expirable_session_var(self.session, "test_set_and_get_basic")
             self.assertEqual(value, "some_value")
-        with mock.patch(
-            "zerver.lib.sessions.timezone_now", return_value=start_time + timedelta(seconds=11),
-        ):
+        with mock.patch("zerver.lib.sessions.timezone_now", return_value=start_time + timedelta(seconds=11)):
             value = get_expirable_session_var(self.session, "test_set_and_get_basic")
             self.assertEqual(value, None)
 

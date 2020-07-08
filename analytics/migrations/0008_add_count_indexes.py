@@ -14,7 +14,5 @@ class Migration(migrations.Migration):
         migrations.AlterIndexTogether(
             name="streamcount", index_together={("property", "realm", "end_time")},
         ),
-        migrations.AlterIndexTogether(
-            name="usercount", index_together={("property", "realm", "end_time")},
-        ),
+        migrations.AlterIndexTogether(name="usercount", index_together={("property", "realm", "end_time")}),
     ]

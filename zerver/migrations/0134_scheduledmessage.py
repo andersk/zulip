@@ -25,10 +25,7 @@ class Migration(migrations.Migration):
                 ("content", models.TextField()),
                 ("scheduled_timestamp", models.DateTimeField(db_index=True)),
                 ("delivered", models.BooleanField(default=False)),
-                (
-                    "realm",
-                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm"),
-                ),
+                ("realm", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm")),
                 (
                     "recipient",
                     models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Recipient"),

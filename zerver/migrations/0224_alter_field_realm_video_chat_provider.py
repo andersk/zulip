@@ -26,9 +26,7 @@ def get_video_chat_provider_detail(
     return dict()
 
 
-def update_existing_video_chat_provider_values(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def update_existing_video_chat_provider_values(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     Realm = apps.get_model("zerver", "Realm")
 
     for realm in Realm.objects.all():

@@ -1287,9 +1287,7 @@ def support(request: HttpRequest) -> HttpResponse:
         multiuse_invites = MultiuseInvite.objects.filter(realm__in=realms)
         confirmations += get_confirmations([Confirmation.MULTIUSE_INVITE], multiuse_invites)
 
-        confirmations += get_confirmations(
-            [Confirmation.REALM_REACTIVATION], [realm.id for realm in realms],
-        )
+        confirmations += get_confirmations([Confirmation.REALM_REACTIVATION], [realm.id for realm in realms])
 
         context["confirmations"] = confirmations
 
@@ -1613,9 +1611,7 @@ def get_realm_activity(request: HttpRequest, realm_str: str) -> HttpResponse:
     data += [(page_title, content)]
 
     title = realm_str
-    return render(
-        request, "analytics/activity.html", context=dict(data=data, realm_link=None, title=title),
-    )
+    return render(request, "analytics/activity.html", context=dict(data=data, realm_link=None, title=title))
 
 
 @require_server_admin

@@ -15,7 +15,5 @@ class Migration(migrations.Migration):
             name="token",
             field=models.CharField(db_index=True, max_length=4096),
         ),
-        migrations.AlterUniqueTogether(
-            name="pushdevicetoken", unique_together={("user", "kind", "token")},
-        ),
+        migrations.AlterUniqueTogether(name="pushdevicetoken", unique_together={("user", "kind", "token")}),
     ]

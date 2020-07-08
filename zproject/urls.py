@@ -335,9 +335,7 @@ v1_api_and_json_patterns = [
             "DELETE": "zerver.views.users.deactivate_user_own_backend",
         },
     ),
-    path(
-        "users/me/presence", rest_dispatch, {"POST": "zerver.views.presence.update_active_status_backend"},
-    ),
+    path("users/me/presence", rest_dispatch, {"POST": "zerver.views.presence.update_active_status_backend"}),
     path("users/me/status", rest_dispatch, {"POST": "zerver.views.presence.update_user_status_backend"}),
     # Endpoint used by mobile devices to register their push
     # notification credentials
@@ -456,9 +454,7 @@ v1_api_and_json_patterns = [
         },
     ),
     path(
-        "users/me/<int:stream_id>/topics",
-        rest_dispatch,
-        {"GET": "zerver.views.streams.get_topics_backend"},
+        "users/me/<int:stream_id>/topics", rest_dispatch, {"GET": "zerver.views.streams.get_topics_backend"},
     ),
     # streams -> zerver.views.streams
     # (this API is only used externally)
@@ -610,18 +606,14 @@ i18n_urls = [
     path("accounts/login/start/sso/", zerver.views.auth.start_remote_user_sso, name="start-login-sso"),
     path("accounts/login/sso/", zerver.views.auth.remote_user_sso, name="login-sso"),
     path("accounts/login/jwt/", zerver.views.auth.remote_user_jwt, name="login-jwt"),
-    re_path(
-        r"^accounts/login/social/([\w,-]+)$", zerver.views.auth.start_social_login, name="login-social",
-    ),
+    re_path(r"^accounts/login/social/([\w,-]+)$", zerver.views.auth.start_social_login, name="login-social"),
     re_path(
         r"^accounts/login/social/([\w,-]+)/([\w,-]+)$",
         zerver.views.auth.start_social_login,
         name="login-social-extra-arg",
     ),
     re_path(
-        r"^accounts/register/social/([\w,-]+)$",
-        zerver.views.auth.start_social_signup,
-        name="signup-social",
+        r"^accounts/register/social/([\w,-]+)$", zerver.views.auth.start_social_signup, name="signup-social",
     ),
     re_path(
         r"^accounts/register/social/([\w,-]+)/([\w,-]+)$",
@@ -680,8 +672,7 @@ i18n_urls = [
         name="django.contrib.auth.views.password_reset_confirm",
     ),
     path(
-        "accounts/password/done/",
-        PasswordResetCompleteView.as_view(template_name="zerver/reset_done.html"),
+        "accounts/password/done/", PasswordResetCompleteView.as_view(template_name="zerver/reset_done.html"),
     ),
     path(
         "accounts/deactivated/",

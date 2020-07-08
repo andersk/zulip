@@ -434,9 +434,9 @@ def add_new_user_history(user_profile: UserProfile, streams: Iterable[Stream]) -
     # Handle the race condition where a message arrives between
     # bulk_add_subscriptions above and the Message query just above
     already_ids = set(
-        UserMessage.objects.filter(
-            message_id__in=message_ids_to_use, user_profile=user_profile,
-        ).values_list("message_id", flat=True),
+        UserMessage.objects.filter(message_id__in=message_ids_to_use, user_profile=user_profile).values_list(
+            "message_id", flat=True,
+        ),
     )
 
     # Mark the newest ONBOARDING_UNREAD_MESSAGES as unread.
@@ -612,9 +612,7 @@ def notify_created_bot(user_profile: UserProfile) -> None:
     send_event(user_profile.realm, event, bot_owner_user_ids(user_profile))
 
 
-def create_users(
-    realm: Realm, name_list: Iterable[Tuple[str, str]], bot_type: Optional[int] = None,
-) -> None:
+def create_users(realm: Realm, name_list: Iterable[Tuple[str, str]], bot_type: Optional[int] = None) -> None:
     user_set = set()
     for full_name, email in name_list:
         short_name = email_to_username(email)
@@ -879,9 +877,7 @@ def do_set_realm_notifications_stream(realm: Realm, stream: Optional[Stream], st
     send_event(realm, event, active_user_ids(realm.id))
 
 
-def do_set_realm_signup_notifications_stream(
-    realm: Realm, stream: Optional[Stream], stream_id: int,
-) -> None:
+def do_set_realm_signup_notifications_stream(realm: Realm, stream: Optional[Stream], stream_id: int) -> None:
     realm.signup_notifications_stream = stream
     realm.save(update_fields=["signup_notifications_stream"])
     event = dict(type="realm", op="update", property="signup_notifications_stream_id", value=stream_id)
@@ -1880,9 +1876,7 @@ def do_add_submessage(realm: Realm, sender_id: int, message_id: int, msg_type: s
     send_event(realm, event, target_user_ids)
 
 
-def notify_reaction_update(
-    user_profile: UserProfile, message: Message, reaction: Reaction, op: str,
-) -> None:
+def notify_reaction_update(user_profile: UserProfile, message: Message, reaction: Reaction, op: str) -> None:
     user_dict = {
         "user_id": user_profile.id,
         "email": user_profile.email,
@@ -2325,9 +2319,7 @@ def check_schedule_message(
     message["delivery_type"] = delivery_type
 
     recipient = message["message"].recipient
-    if delivery_type == "remind" and (
-        recipient.type != Recipient.STREAM and recipient.type_id != sender.id
-    ):
+    if delivery_type == "remind" and (recipient.type != Recipient.STREAM and recipient.type_id != sender.id):
         raise JsonableError(_("Reminders can only be set for streams."))
 
     return do_schedule_messages([message])[0]
@@ -2429,9 +2421,7 @@ def send_pm_if_empty_stream(
         send_rate_limited_pm_notification_to_bot_owner(sender, realm, content)
 
 
-def validate_stream_name_with_pm_notification(
-    stream_name: str, realm: Realm, sender: UserProfile,
-) -> Stream:
+def validate_stream_name_with_pm_notification(stream_name: str, realm: Realm, sender: UserProfile) -> Stream:
     stream_name = stream_name.strip()
     check_stream_name(stream_name)
 
@@ -2669,12 +2659,7 @@ def internal_send_private_message(
 
 
 def internal_send_stream_message(
-    realm: Realm,
-    sender: UserProfile,
-    stream: Stream,
-    topic: str,
-    content: str,
-    email_gateway: bool = False,
+    realm: Realm, sender: UserProfile, stream: Stream, topic: str, content: str, email_gateway: bool = False,
 ) -> Optional[int]:
 
     message = internal_prep_stream_message(realm, sender, stream, topic, content)
@@ -2792,9 +2777,7 @@ def bulk_get_subscriber_user_ids(
     """sub_dict maps stream_id => whether the user is subscribed to that stream."""
     target_stream_dicts = []
     for stream_dict in stream_dicts:
-        stream_recipient.populate_with(
-            stream_id=stream_dict["id"], recipient_id=stream_dict["recipient_id"],
-        )
+        stream_recipient.populate_with(stream_id=stream_dict["id"], recipient_id=stream_dict["recipient_id"])
         try:
             validate_user_access_to_subscribers_helper(
                 user_profile, stream_dict, lambda user_profile: sub_dict[stream_dict["id"]],
@@ -3136,9 +3119,7 @@ def bulk_add_subscriptions(
         if len(sub_tuples_by_user[user_profile.id]) == 0:
             continue
         sub_pairs = sub_tuples_by_user[user_profile.id]
-        notify_subscriptions_added(
-            user_profile, sub_pairs, fetch_stream_subscriber_user_ids, recent_traffic,
-        )
+        notify_subscriptions_added(user_profile, sub_pairs, fetch_stream_subscriber_user_ids, recent_traffic)
 
     # The second batch is events for other users who are tracking the
     # subscribers lists of streams in their browser; everyone for
@@ -3368,9 +3349,7 @@ def do_change_subscription_property(
 
     setattr(sub, database_property_name, database_value)
     sub.save(update_fields=[database_property_name])
-    log_subscription_property_change(
-        user_profile.email, stream.name, database_property_name, database_value,
-    )
+    log_subscription_property_change(user_profile.email, stream.name, database_property_name, database_value)
     event = dict(
         type="subscription",
         op="update",
@@ -3453,9 +3432,7 @@ def check_change_bot_full_name(
     do_change_full_name(user_profile, new_full_name, acting_user)
 
 
-def do_change_bot_owner(
-    user_profile: UserProfile, bot_owner: UserProfile, acting_user: UserProfile,
-) -> None:
+def do_change_bot_owner(user_profile: UserProfile, bot_owner: UserProfile, acting_user: UserProfile) -> None:
     previous_owner = user_profile.bot_owner
     user_profile.bot_owner = bot_owner
     user_profile.save()  # Can't use update_fields because of how the foreign key works.
@@ -3973,9 +3950,7 @@ def do_change_stream_message_retention_days(
     send_event(stream.realm, event, can_access_stream_user_ids(stream))
 
 
-def do_create_realm(
-    string_id: str, name: str, emails_restricted_to_domains: Optional[bool] = None,
-) -> Realm:
+def do_create_realm(string_id: str, name: str, emails_restricted_to_domains: Optional[bool] = None) -> Realm:
     if Realm.objects.filter(string_id=string_id).exists():
         raise AssertionError(f"Realm {string_id} already exists!")
     if not server_initialized():
@@ -4488,9 +4463,7 @@ def do_mark_stream_messages_as_read(
 
     count = msgs.update(flags=F("flags").bitor(UserMessage.flags.read))
 
-    event = dict(
-        type="update_message_flags", operation="add", flag="read", messages=message_ids, all=False,
-    )
+    event = dict(type="update_message_flags", operation="add", flag="read", messages=message_ids, all=False)
     event_time = timezone_now()
 
     send_event(user_profile.realm, event, [user_profile.id])
@@ -6288,9 +6261,7 @@ def do_update_outgoing_webhook_service(
             op="update",
             bot=dict(
                 user_id=bot_profile.id,
-                services=[
-                    dict(base_url=service.base_url, interface=service.interface, token=service.token),
-                ],
+                services=[dict(base_url=service.base_url, interface=service.interface, token=service.token)],
             ),
         ),
         bot_owner_user_ids(bot_profile),

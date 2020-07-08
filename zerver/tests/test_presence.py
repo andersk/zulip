@@ -496,8 +496,7 @@ class UserPresenceAggregationTests(ZulipTestCase):
         validate_time = timezone_now()
         self._send_presence_for_aggregated_tests(user, "active", validate_time)
         with mock.patch(
-            "zerver.views.presence.timezone_now",
-            return_value=validate_time - datetime.timedelta(seconds=1),
+            "zerver.views.presence.timezone_now", return_value=validate_time - datetime.timedelta(seconds=1),
         ):
             result = self.api_post(
                 user, "/api/v1/users/me/presence", {"status": "active"}, HTTP_USER_AGENT="ZulipTestDev/1.0",
@@ -541,8 +540,7 @@ class UserPresenceAggregationTests(ZulipTestCase):
         self.login_user(user)
         validate_time = timezone_now()
         with mock.patch(
-            "zerver.views.presence.timezone_now",
-            return_value=validate_time - datetime.timedelta(seconds=3),
+            "zerver.views.presence.timezone_now", return_value=validate_time - datetime.timedelta(seconds=3),
         ):
             self.api_post(
                 user, "/api/v1/users/me/presence", {"status": "active"}, HTTP_USER_AGENT="ZulipTestDev/1.0",

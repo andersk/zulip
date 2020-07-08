@@ -287,9 +287,7 @@ def list_of_tlds() -> List[str]:
     # tlds-alpha-by-domain.txt comes from https://data.iana.org/TLD/tlds-alpha-by-domain.txt
     tlds_file = os.path.join(os.path.dirname(__file__), "tlds-alpha-by-domain.txt")
     tlds = [
-        tld.lower().strip()
-        for tld in open(tlds_file)
-        if tld not in blacklist and not tld[0].startswith("#")
+        tld.lower().strip() for tld in open(tlds_file) if tld not in blacklist and not tld[0].startswith("#")
     ]
     tlds.sort(key=len, reverse=True)
     return tlds
@@ -1659,10 +1657,7 @@ class RealmFilterPattern(markdown.inlinepatterns.Pattern):
     """ Applied a given realm filter to the input """
 
     def __init__(
-        self,
-        source_pattern: str,
-        format_string: str,
-        markdown_instance: Optional[markdown.Markdown] = None,
+        self, source_pattern: str, format_string: str, markdown_instance: Optional[markdown.Markdown] = None,
     ) -> None:
         self.pattern = prepare_realm_pattern(source_pattern)
         self.format_string = format_string
@@ -1964,9 +1959,7 @@ class Markdown(markdown.Markdown):
         parser.blockprocessors.register(OListProcessor(parser), "olist", 65)
         parser.blockprocessors.register(UListProcessor(parser), "ulist", 60)
         parser.blockprocessors.register(BlockQuoteProcessor(parser), "quote", 55)
-        parser.blockprocessors.register(
-            markdown.blockprocessors.ParagraphProcessor(parser), "paragraph", 50,
-        )
+        parser.blockprocessors.register(markdown.blockprocessors.ParagraphProcessor(parser), "paragraph", 50)
         return parser
 
     def build_inlinepatterns(self) -> markdown.util.Registry:

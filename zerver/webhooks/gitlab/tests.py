@@ -147,9 +147,7 @@ class GitlabHookTests(WebhookTestCase):
         expected_message = "Eeshan Garg created [Issue #3](https://gitlab.com/eeshangarg/public-repo/issues/3):\n\n~~~ quote\nThis description actually has a hidden comment in it!\n~~~"
 
         self.send_and_test_stream_message(
-            "issue_hook__issue_created_with_hidden_comment_in_description",
-            expected_topic,
-            expected_message,
+            "issue_hook__issue_created_with_hidden_comment_in_description", expected_topic, expected_message,
         )
 
     def test_create_confidential_issue_with_hidden_comment_in_description(self) -> None:

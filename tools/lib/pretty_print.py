@@ -19,13 +19,7 @@ def pretty_print_html(html: str, num_spaces: int = 4) -> str:
     # Seed our stack with a pseudo entry to make depth calculations
     # easier.
     info: Dict[str, Any] = dict(
-        block=False,
-        depth=-1,
-        line=-1,
-        token_kind="html_start",
-        tag="html",
-        extra_indent=0,
-        ignore_lines=[],
+        block=False, depth=-1, line=-1, token_kind="html_start", tag="html", extra_indent=0, ignore_lines=[],
     )
     stack.append(info)
 

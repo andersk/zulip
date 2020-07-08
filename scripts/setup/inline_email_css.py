@@ -22,9 +22,7 @@ def configure_cssutils() -> None:
     properties[Profiles.CSS_LEVEL_2]["-webkit-text-size-adjust"] = r"none|auto|{percentage}"
     properties[Profiles.CSS_LEVEL_2]["mso-hide"] = "all"
     properties[Profiles.CSS_LEVEL_2]["pointer-events"] = (
-        r"auto|none|visiblePainted|"
-        r"visibleFill|visibleStroke|"
-        r"visible|painted|fill|stroke|all|inherit"
+        r"auto|none|visiblePainted|" r"visibleFill|visibleStroke|" r"visible|painted|fill|stroke|all|inherit"
     )
 
     profile.addProfiles(

@@ -257,9 +257,7 @@ def do_soft_deactivate_users(users: List[UserProfile]) -> List[UserProfile]:
                 users_soft_deactivated.append(user)
             RealmAuditLog.objects.bulk_create(realm_logs)
 
-        logging.info(
-            "Soft-deactivated batch of %s users; %s remain to process", len(user_batch), len(users),
-        )
+        logging.info("Soft-deactivated batch of %s users; %s remain to process", len(user_batch), len(users))
 
     return users_soft_deactivated
 

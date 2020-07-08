@@ -82,11 +82,7 @@ markdown_whitespace_rules = list([rule for rule in whitespace_rules if rule["pat
     # Two spaces trailing a line with other content is okay--it's a markdown line break.
     # This rule finds one space trailing a non-space, three or more trailing spaces, and
     # spaces on an empty line.
-    {
-        "pattern": r"((?<!\s)\s$)|(\s\s\s+$)|(^\s+$)",
-        "strip": "\n",
-        "description": "Fix trailing whitespace",
-    },
+    {"pattern": r"((?<!\s)\s$)|(\s\s\s+$)|(^\s+$)", "strip": "\n", "description": "Fix trailing whitespace"},
     {
         "pattern": "^#+[A-Za-z0-9]",
         "strip": "\n",
