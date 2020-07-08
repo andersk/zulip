@@ -35,9 +35,7 @@ def body_template(score: int) -> str:
 @api_key_only_webhook_view("Delighted")
 @has_request_variables
 def api_delighted_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    payload: Dict[str, Dict[str, Any]] = REQ(argument_type="body"),
+    request: HttpRequest, user_profile: UserProfile, payload: Dict[str, Dict[str, Any]] = REQ(argument_type="body"),
 ) -> HttpResponse:
     person = payload["event_data"]["person"]
     selected_payload = {"email": person["email"]}

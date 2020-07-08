@@ -46,9 +46,7 @@ class Command(ZulipBaseCommand):
             raise CommandError(e.messages[0])
         if options["op"] == "add":
             try:
-                RealmDomain.objects.create(
-                    realm=realm, domain=domain, allow_subdomains=options["allow_subdomains"],
-                )
+                RealmDomain.objects.create(realm=realm, domain=domain, allow_subdomains=options["allow_subdomains"])
                 sys.exit(0)
             except IntegrityError:
                 raise CommandError(f"The domain {domain} is already a part " "of your organization.")

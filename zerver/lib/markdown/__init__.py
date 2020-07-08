@@ -870,13 +870,7 @@ class InlineInterestingLinkProcessor(markdown.treeprocessors.Treeprocessor):
             full_url = url_data["expanded_url"]
             for match in re.finditer(re.escape(short_url), text, re.IGNORECASE):
                 to_process.append(
-                    {
-                        "type": "url",
-                        "start": match.start(),
-                        "end": match.end(),
-                        "url": short_url,
-                        "text": full_url,
-                    },
+                    {"type": "url", "start": match.start(), "end": match.end(), "url": short_url, "text": full_url},
                 )
         # Build dicts for mentions
         for user_mention in user_mentions:
@@ -1028,9 +1022,7 @@ class InlineInterestingLinkProcessor(markdown.treeprocessors.Treeprocessor):
             return (url, e.text)
         return None
 
-    def handle_image_inlining(
-        self, root: Element, found_url: ResultWithFamily[Tuple[str, Optional[str]]],
-    ) -> None:
+    def handle_image_inlining(self, root: Element, found_url: ResultWithFamily[Tuple[str, Optional[str]]]) -> None:
         grandparent = found_url.family.grandparent
         parent = found_url.family.parent
         ahref_element = found_url.family.child
@@ -2258,9 +2250,7 @@ def get_stream_name_info(realm: Realm, stream_names: Set[str]) -> Dict[str, Full
 
     q_list = {Q(name=name) for name in stream_names}
 
-    rows = (
-        get_active_streams(realm=realm).filter(functools.reduce(lambda a, b: a | b, q_list)).values("id", "name")
-    )
+    rows = get_active_streams(realm=realm).filter(functools.reduce(lambda a, b: a | b, q_list)).values("id", "name")
 
     dct = {row["name"]: row for row in rows}
     return dct

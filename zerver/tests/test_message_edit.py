@@ -118,9 +118,7 @@ class EditMessageTest(ZulipTestCase):
     def test_fetch_raw_message(self) -> None:
         self.login("hamlet")
         msg_id = self.send_personal_message(
-            from_user=self.example_user("hamlet"),
-            to_user=self.example_user("cordelia"),
-            content="**before** edit",
+            from_user=self.example_user("hamlet"), to_user=self.example_user("cordelia"), content="**before** edit",
         )
         result = self.client_get("/json/messages/" + str(msg_id))
         self.assert_json_success(result)
@@ -266,9 +264,7 @@ class EditMessageTest(ZulipTestCase):
             topic_name="editing",
             content=("content before edit, line 1\n" "\n" "content before edit, line 3"),
         )
-        new_content_2 = (
-            "content before edit, line 1\n" "content after edit, line 2\n" "content before edit, line 3"
-        )
+        new_content_2 = "content before edit, line 1\n" "content after edit, line 2\n" "content before edit, line 3"
         result_2 = self.client_patch(
             "/json/messages/" + str(msg_id_2), {"message_id": msg_id_2, "content": new_content_2},
         )
@@ -385,9 +381,7 @@ class EditMessageTest(ZulipTestCase):
         msg_id = self.send_stream_message(
             self.example_user("hamlet"), "Scotland", topic_name="topic 1", content="content 1",
         )
-        result = self.client_patch(
-            "/json/messages/" + str(msg_id), {"message_id": msg_id, "content": "content 2"},
-        )
+        result = self.client_patch("/json/messages/" + str(msg_id), {"message_id": msg_id, "content": "content 2"})
         self.assert_json_success(result)
         history = ujson.loads(Message.objects.get(id=msg_id).edit_history)
         self.assertEqual(history[0]["prev_content"], "content 1")
@@ -424,9 +418,7 @@ class EditMessageTest(ZulipTestCase):
             },
         )
 
-        result = self.client_patch(
-            "/json/messages/" + str(msg_id), {"message_id": msg_id, "content": "content 4"},
-        )
+        result = self.client_patch("/json/messages/" + str(msg_id), {"message_id": msg_id, "content": "content 4"})
         self.assert_json_success(result)
         history = ujson.loads(Message.objects.get(id=msg_id).edit_history)
         self.assertEqual(history[0]["prev_content"], "content 3")
@@ -536,9 +528,7 @@ class EditMessageTest(ZulipTestCase):
 
         self.login("iago")
         # send a message in the past
-        id_ = self.send_stream_message(
-            self.example_user("iago"), "Scotland", content="content", topic_name="topic",
-        )
+        id_ = self.send_stream_message(self.example_user("iago"), "Scotland", content="content", topic_name="topic")
         message = Message.objects.get(id=id_)
         message.date_sent = message.date_sent - datetime.timedelta(seconds=180)
         message.save()
@@ -998,9 +988,7 @@ class EditMessageTest(ZulipTestCase):
         )
         self.assert_json_success(result)
 
-        self.assertEqual(
-            has_message_access(guest_user, Message.objects.get(id=msg_id_to_test_acesss), None), False,
-        )
+        self.assertEqual(has_message_access(guest_user, Message.objects.get(id=msg_id_to_test_acesss), None), False)
         self.assertEqual(
             has_message_access(non_guest_user, Message.objects.get(id=msg_id_to_test_acesss), None), True,
         )

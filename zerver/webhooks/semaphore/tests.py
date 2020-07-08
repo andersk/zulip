@@ -47,9 +47,7 @@ class SemaphoreHookTests(WebhookTestCase):
 * **Branch**: rw/webhook_impl
 * **Author**: [radwo](https://github.com/radwo)
 """.strip()
-        self.send_and_test_stream_message(
-            "push", expected_topic, expected_message, content_type="application/json",
-        )
+        self.send_and_test_stream_message("push", expected_topic, expected_message, content_type="application/json")
 
     def test_semaphore2_push_non_gh_repo(self) -> None:
         expected_topic = "notifications/rw/webhook_impl"  # repo/branch

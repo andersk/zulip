@@ -12,9 +12,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name="realmfilter",
-            name="pattern",
-            field=models.TextField(validators=[filter_pattern_validator]),
+            model_name="realmfilter", name="pattern", field=models.TextField(validators=[filter_pattern_validator]),
         ),
         migrations.AlterField(
             model_name="realmfilter",

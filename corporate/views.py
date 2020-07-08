@@ -80,9 +80,7 @@ def check_upgrade_parameters(
         max_licenses = MAX_INVOICED_LICENSES
 
     if licenses is None or licenses < min_licenses:
-        raise BillingError(
-            "not enough licenses", _("You must invoice for at least {} users.").format(min_licenses),
-        )
+        raise BillingError("not enough licenses", _("You must invoice for at least {} users.").format(min_licenses))
 
     if max_licenses is not None and licenses > max_licenses:
         message = _(

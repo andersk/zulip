@@ -175,9 +175,7 @@ class AnalyticsTestCase(ZulipTestCase):
             queryset = queryset.filter(subgroup=subgroup)
         self.assertEqual(queryset.values_list("value", flat=True)[0], value)
 
-    def assertTableState(
-        self, table: Type[BaseCount], arg_keys: List[str], arg_values: List[List[object]],
-    ) -> None:
+    def assertTableState(self, table: Type[BaseCount], arg_keys: List[str], arg_values: List[List[object]]) -> None:
         """Assert that the state of a *Count table is what it should be.
 
         Example usage:
@@ -339,9 +337,7 @@ class TestProcessCountStat(AnalyticsTestCase):
         # test when one dependency has been run, and the other hasn't
         process_count_stat(stat1, hour[2])
         process_count_stat(stat3, hour[1])
-        self.assertTableState(
-            InstallationCount, ["property", "end_time"], [["stat1", hour[1]], ["stat1", hour[2]]],
-        )
+        self.assertTableState(InstallationCount, ["property", "end_time"], [["stat1", hour[1]], ["stat1", hour[2]]])
         self.assertFillStateEquals(stat3, hour[0])
 
         # test that we don't fill past the fill_to_time argument, even if

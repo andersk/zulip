@@ -82,9 +82,7 @@ class TestGetChartData(ZulipTestCase):
     def data(self, i: int) -> List[int]:
         return [0, 0, i, 0]
 
-    def insert_data(
-        self, stat: CountStat, realm_subgroups: List[Optional[str]], user_subgroups: List[str],
-    ) -> None:
+    def insert_data(self, stat: CountStat, realm_subgroups: List[Optional[str]], user_subgroups: List[str]) -> None:
         if stat.frequency == CountStat.HOUR:
             insert_time = self.end_times_hour[2]
             fill_time = self.end_times_hour[-1]
@@ -263,21 +261,11 @@ class TestGetChartData(ZulipTestCase):
         data = result.json()
         self.assertEqual(
             data["everyone"],
-            {
-                "Public streams": [0],
-                "Private streams": [0],
-                "Private messages": [0],
-                "Group private messages": [0],
-            },
+            {"Public streams": [0], "Private streams": [0], "Private messages": [0], "Group private messages": [0]},
         )
         self.assertEqual(
             data["user"],
-            {
-                "Public streams": [0],
-                "Private streams": [0],
-                "Private messages": [0],
-                "Group private messages": [0],
-            },
+            {"Public streams": [0], "Private streams": [0], "Private messages": [0], "Group private messages": [0]},
         )
 
         FillState.objects.create(
@@ -497,9 +485,7 @@ class TestSupportEndpoint(ZulipTestCase):
                 result,
             )
 
-        def check_preregistration_user_query_result(
-            result: HttpResponse, email: str, invite: bool = False,
-        ) -> None:
+        def check_preregistration_user_query_result(result: HttpResponse, email: str, invite: bool = False) -> None:
             self.assert_in_success_response(
                 ['<span class="label">preregistration user</span>\n', f"<b>Email</b>: {email}"], result,
             )

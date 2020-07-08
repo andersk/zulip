@@ -351,9 +351,7 @@ class MarkdownTest(ZulipTestCase):
         if isinstance(first, str) and isinstance(second, str):
             if first != second:
                 raise AssertionError(
-                    "Actual and expected outputs do not match; showing diff.\n"
-                    + diff_strings(first, second)
-                    + msg,
+                    "Actual and expected outputs do not match; showing diff.\n" + diff_strings(first, second) + msg,
                 )
         else:
             super().assertEqual(first, second)
@@ -1100,9 +1098,7 @@ class MarkdownTest(ZulipTestCase):
     def test_realm_patterns(self) -> None:
         realm = get_realm("zulip")
         url_format_string = r"https://trac.example.com/ticket/%(id)s"
-        realm_filter = RealmFilter(
-            realm=realm, pattern=r"#(?P<id>[0-9]{2,8})", url_format_string=url_format_string,
-        )
+        realm_filter = RealmFilter(realm=realm, pattern=r"#(?P<id>[0-9]{2,8})", url_format_string=url_format_string)
         realm_filter.save()
         self.assertEqual(
             realm_filter.__str__(),
@@ -1186,9 +1182,7 @@ class MarkdownTest(ZulipTestCase):
     def test_maybe_update_markdown_engines(self) -> None:
         realm = get_realm("zulip")
         url_format_string = r"https://trac.example.com/ticket/%(id)s"
-        realm_filter = RealmFilter(
-            realm=realm, pattern=r"#(?P<id>[0-9]{2,8})", url_format_string=url_format_string,
-        )
+        realm_filter = RealmFilter(realm=realm, pattern=r"#(?P<id>[0-9]{2,8})", url_format_string=url_format_string)
         realm_filter.save()
 
         import zerver.lib.markdown
@@ -1749,9 +1743,7 @@ class MarkdownTest(ZulipTestCase):
         msg = Message(sender=sender_user_profile, sending_client=get_client("test"))
         # Create a linkifier.
         url_format_string = r"https://trac.example.com/ticket/%(id)s"
-        realm_filter = RealmFilter(
-            realm=realm, pattern=r"#(?P<id>[0-9]{2,8})", url_format_string=url_format_string,
-        )
+        realm_filter = RealmFilter(realm=realm, pattern=r"#(?P<id>[0-9]{2,8})", url_format_string=url_format_string)
         realm_filter.save()
         self.assertEqual(
             realm_filter.__str__(),
@@ -1809,9 +1801,7 @@ class MarkdownTest(ZulipTestCase):
         user_profile = self.example_user("hamlet")
         # Create a linkifier.
         url_format_string = r"https://trac.example.com/ticket/%(id)s"
-        realm_filter = RealmFilter(
-            realm=realm, pattern=r"#(?P<id>[0-9]{2,8})", url_format_string=url_format_string,
-        )
+        realm_filter = RealmFilter(realm=realm, pattern=r"#(?P<id>[0-9]{2,8})", url_format_string=url_format_string)
         realm_filter.save()
         self.assertEqual(
             realm_filter.__str__(),
@@ -1884,9 +1874,7 @@ class MarkdownTest(ZulipTestCase):
         msg_id = self.send_stream_message(sender_user_profile, "Denmark", topic_name="editing", content="test")
 
         def update_message_and_check_flag(content: str, mentioned: bool) -> None:
-            result = self.client_patch(
-                "/json/messages/" + str(msg_id), {"message_id": msg_id, "content": content},
-            )
+            result = self.client_patch("/json/messages/" + str(msg_id), {"message_id": msg_id, "content": content})
             self.assert_json_success(result)
             um = UserMessage.objects.get(user_profile_id=user_profile.id, message_id=msg_id)
             if mentioned:
@@ -1980,9 +1968,7 @@ class MarkdownTest(ZulipTestCase):
         # Create a linkifier.
         sender_user_profile = self.example_user("othello")
         url_format_string = r"https://trac.example.com/ticket/%(id)s"
-        realm_filter = RealmFilter(
-            realm=realm, pattern=r"#(?P<id>[0-9]{2,8})", url_format_string=url_format_string,
-        )
+        realm_filter = RealmFilter(realm=realm, pattern=r"#(?P<id>[0-9]{2,8})", url_format_string=url_format_string)
         realm_filter.save()
         self.assertEqual(
             realm_filter.__str__(),
@@ -2047,9 +2033,7 @@ class MarkdownTest(ZulipTestCase):
         # Create a linkifier.
         sender_user_profile = self.example_user("othello")
         url_format_string = r"https://trac.example.com/ticket/%(id)s"
-        realm_filter = RealmFilter(
-            realm=realm, pattern=r"#(?P<id>[0-9]{2,8})", url_format_string=url_format_string,
-        )
+        realm_filter = RealmFilter(realm=realm, pattern=r"#(?P<id>[0-9]{2,8})", url_format_string=url_format_string)
         realm_filter.save()
         self.assertEqual(
             realm_filter.__str__(),

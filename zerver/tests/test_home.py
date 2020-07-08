@@ -769,15 +769,13 @@ class HomeTest(ZulipTestCase):
         page_params = {"color_scheme": user_profile.COLOR_SCHEME_NIGHT}
         add_realm_logo_fields(page_params, user_profile.realm)
         self.assertEqual(
-            compute_navbar_logo_url(page_params),
-            f"/user_avatars/{user_profile.realm_id}/realm/logo.png?version=2",
+            compute_navbar_logo_url(page_params), f"/user_avatars/{user_profile.realm_id}/realm/logo.png?version=2",
         )
 
         page_params = {"color_scheme": user_profile.COLOR_SCHEME_LIGHT}
         add_realm_logo_fields(page_params, user_profile.realm)
         self.assertEqual(
-            compute_navbar_logo_url(page_params),
-            f"/user_avatars/{user_profile.realm_id}/realm/logo.png?version=2",
+            compute_navbar_logo_url(page_params), f"/user_avatars/{user_profile.realm_id}/realm/logo.png?version=2",
         )
 
         do_change_logo_source(user_profile.realm, Realm.LOGO_UPLOADED, night=True, acting_user=user_profile)
@@ -791,8 +789,7 @@ class HomeTest(ZulipTestCase):
         page_params = {"color_scheme": user_profile.COLOR_SCHEME_LIGHT}
         add_realm_logo_fields(page_params, user_profile.realm)
         self.assertEqual(
-            compute_navbar_logo_url(page_params),
-            f"/user_avatars/{user_profile.realm_id}/realm/logo.png?version=2",
+            compute_navbar_logo_url(page_params), f"/user_avatars/{user_profile.realm_id}/realm/logo.png?version=2",
         )
 
         # This configuration isn't super supported in the UI and is a

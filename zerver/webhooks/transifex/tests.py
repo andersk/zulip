@@ -20,10 +20,7 @@ class TransifexHookTests(WebhookTestCase):
         expected_topic = f"{self.PROJECT} in {self.LANGUAGE}"
         expected_message = f"Resource {self.RESOURCE} fully reviewed."
         self.url = self.build_webhook_url(
-            self.URL_REVIEWED_METHOD_TEMPLATE,
-            project=self.PROJECT,
-            language=self.LANGUAGE,
-            resource=self.RESOURCE,
+            self.URL_REVIEWED_METHOD_TEMPLATE, project=self.PROJECT, language=self.LANGUAGE, resource=self.RESOURCE,
         )
         self.send_and_test_stream_message("", expected_topic, expected_message)
 

@@ -32,9 +32,7 @@ def export_realm(request: HttpRequest, user: UserProfile) -> HttpResponse:
     # Filter based upon the number of events that have occurred in the delta
     # If we are at the limit, the incoming request is rejected
     event_time_delta = event_time - timedelta(days=7)
-    limit_check = RealmAuditLog.objects.filter(
-        realm=realm, event_type=event_type, event_time__gte=event_time_delta,
-    )
+    limit_check = RealmAuditLog.objects.filter(realm=realm, event_type=event_type, event_time__gte=event_time_delta)
     if len(limit_check) >= EXPORT_LIMIT:
         return json_error(_("Exceeded rate limit."))
 

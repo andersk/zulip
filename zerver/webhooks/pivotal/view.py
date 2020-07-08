@@ -58,7 +58,9 @@ def api_pivotal_webhook_v3(request: HttpRequest, user_profile: UserProfile) -> T
         if estimate != "":
             estimate = f" worth {estimate} story points"
         subject = name
-        content = f"{description} ({issue_status} {issue_type}{estimate}):\n\n~~~ quote\n{issue_desc}\n~~~\n\n{more_info}"
+        content = (
+            f"{description} ({issue_status} {issue_type}{estimate}):\n\n~~~ quote\n{issue_desc}\n~~~\n\n{more_info}"
+        )
     return subject, content
 
 

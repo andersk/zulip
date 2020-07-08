@@ -2163,9 +2163,7 @@ class AbstractUserMessage(models.Model):
 
     def __str__(self) -> str:
         display_recipient = get_display_recipient(self.message.recipient)
-        return (
-            f"<{self.__class__.__name__}: {display_recipient} / {self.user_profile.email} ({self.flags_list()})>"
-        )
+        return f"<{self.__class__.__name__}: {display_recipient} / {self.user_profile.email} ({self.flags_list()})>"
 
 
 class UserMessage(AbstractUserMessage):

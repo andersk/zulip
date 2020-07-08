@@ -94,8 +94,7 @@ def next_month(billing_cycle_anchor: datetime, dt: datetime) -> datetime:
         if 20 < (proposed_next_month - dt).days < 40:
             return proposed_next_month
     raise AssertionError(
-        "Something wrong in next_month calculation with "
-        f"billing_cycle_anchor: {billing_cycle_anchor}, dt: {dt}",
+        "Something wrong in next_month calculation with " f"billing_cycle_anchor: {billing_cycle_anchor}, dt: {dt}",
     )
 
 
@@ -150,9 +149,7 @@ def get_idempotency_key(ledger_entry: LicenseLedger) -> Optional[str]:
 
 class BillingError(Exception):
     # error messages
-    CONTACT_SUPPORT = _("Something went wrong. Please contact {email}.").format(
-        email=settings.ZULIP_ADMINISTRATOR,
-    )
+    CONTACT_SUPPORT = _("Something went wrong. Please contact {email}.").format(email=settings.ZULIP_ADMINISTRATOR)
     TRY_RELOADING = _("Something went wrong. Please reload the page.")
 
     # description is used only for tests
@@ -176,8 +173,7 @@ def catch_stripe_errors(func: CallableT) -> CallableT:
             if STRIPE_PUBLISHABLE_KEY is None:
                 raise BillingError(
                     "missing stripe config",
-                    "Missing Stripe config. "
-                    "See https://zulip.readthedocs.io/en/latest/subsystems/billing.html.",
+                    "Missing Stripe config. " "See https://zulip.readthedocs.io/en/latest/subsystems/billing.html.",
                 )
         try:
             return func(*args, **kwargs)
@@ -252,10 +248,7 @@ def do_replace_payment_source(user: UserProfile, stripe_token: str, pay_invoices
     # Deletes existing card: https://stripe.com/docs/api#update_customer-source
     updated_stripe_customer = stripe.Customer.save(stripe_customer)
     RealmAuditLog.objects.create(
-        realm=user.realm,
-        acting_user=user,
-        event_type=RealmAuditLog.STRIPE_CARD_CHANGED,
-        event_time=timezone_now(),
+        realm=user.realm, acting_user=user, event_type=RealmAuditLog.STRIPE_CARD_CHANGED, event_time=timezone_now(),
     )
     if pay_invoices:
         for stripe_invoice in stripe.Invoice.list(
@@ -401,11 +394,7 @@ def compute_plan_parameters(
 # Only used for cloud signups
 @catch_stripe_errors
 def process_initial_upgrade(
-    user: UserProfile,
-    licenses: int,
-    automanage_licenses: bool,
-    billing_schedule: int,
-    stripe_token: Optional[str],
+    user: UserProfile, licenses: int, automanage_licenses: bool, billing_schedule: int, stripe_token: Optional[str],
 ) -> None:
     realm = user.realm
     customer = update_or_create_stripe_customer(user, stripe_token=stripe_token)
@@ -492,10 +481,7 @@ def process_initial_upgrade(
             customer=customer.stripe_customer_id,
             description="Zulip Standard",
             discountable=False,
-            period={
-                "start": datetime_to_timestamp(billing_cycle_anchor),
-                "end": datetime_to_timestamp(period_end),
-            },
+            period={"start": datetime_to_timestamp(billing_cycle_anchor), "end": datetime_to_timestamp(period_end)},
             quantity=billed_licenses,
             unit_amount=price_per_license,
         )

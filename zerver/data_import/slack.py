@@ -159,9 +159,7 @@ def build_realmemoji(custom_emoji_list: ZerverFieldsT, realm_id: int) -> Tuple[L
 
 def users_to_zerver_userprofile(
     slack_data_dir: str, users: List[ZerverFieldsT], realm_id: int, timestamp: Any, domain_name: str,
-) -> Tuple[
-    List[ZerverFieldsT], List[ZerverFieldsT], SlackToZulipUserIDT, List[ZerverFieldsT], List[ZerverFieldsT],
-]:
+) -> Tuple[List[ZerverFieldsT], List[ZerverFieldsT], SlackToZulipUserIDT, List[ZerverFieldsT], List[ZerverFieldsT]]:
     """
     Returns:
     1. zerver_userprofile, which is a list of user profile
@@ -306,9 +304,7 @@ def build_customprofile_field(
     return slack_custom_field_name_to_zulip_custom_field_id, custom_profile_field_id
 
 
-def process_slack_custom_fields(
-    user: ZerverFieldsT, slack_user_id_to_custom_profile_fields: ZerverFieldsT,
-) -> None:
+def process_slack_custom_fields(user: ZerverFieldsT, slack_user_id_to_custom_profile_fields: ZerverFieldsT) -> None:
     slack_user_id_to_custom_profile_fields[user["id"]] = {}
     if user["profile"].get("fields"):
         slack_user_id_to_custom_profile_fields[user["id"]] = user["profile"]["fields"]
@@ -780,9 +776,7 @@ def channel_message_to_zerver_message(
     dm_members: DMMembersT,
     domain_name: str,
     long_term_idle: Set[int],
-) -> Tuple[
-    List[ZerverFieldsT], List[ZerverFieldsT], List[ZerverFieldsT], List[ZerverFieldsT], List[ZerverFieldsT],
-]:
+) -> Tuple[List[ZerverFieldsT], List[ZerverFieldsT], List[ZerverFieldsT], List[ZerverFieldsT], List[ZerverFieldsT]]:
     """
     Returns:
     1. zerver_message, which is a list of the messages

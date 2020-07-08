@@ -102,9 +102,7 @@ def topic_and_body(payload: Dict[str, Any]) -> Tuple[str, str]:
                 body += ". Failure code: {}".format(object_["failure_code"])
         if resource == "dispute":
             topic = "disputes"
-            body = default_body() + ". Current status: {status}.".format(
-                status=object_["status"].replace("_", " "),
-            )
+            body = default_body() + ". Current status: {status}.".format(status=object_["status"].replace("_", " "))
         if resource == "refund":
             topic = "refunds"
             body = "A {resource} for a {charge} of {amount} {currency} was updated.".format(

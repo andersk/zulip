@@ -664,9 +664,7 @@ DOC_SCREENSHOT_CONFIG: Dict[str, List[ScreenshotConfig]] = {
     "updown": [ScreenshotConfig("check_multiple_events.json")],
     "wordpress": [ScreenshotConfig("publish_post.txt", "wordpress_post_created.png")],
     "yo": [
-        ScreenshotConfig(
-            "", "002.png", "yo-app", extra_params={"email": "iago@zulip.com", "username": "Cordelia"},
-        ),
+        ScreenshotConfig("", "002.png", "yo-app", extra_params={"email": "iago@zulip.com", "username": "Cordelia"}),
     ],
     "zabbix": [ScreenshotConfig("zabbix_alert.json")],
     "zendesk": [

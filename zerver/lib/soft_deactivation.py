@@ -71,10 +71,7 @@ def filter_by_subscription_history(
                         store_user_message_to_insert(stream_message)
                     else:
                         break
-            elif log_entry.event_type in (
-                RealmAuditLog.SUBSCRIPTION_ACTIVATED,
-                RealmAuditLog.SUBSCRIPTION_CREATED,
-            ):
+            elif log_entry.event_type in (RealmAuditLog.SUBSCRIPTION_ACTIVATED, RealmAuditLog.SUBSCRIPTION_CREATED):
                 initial_msg_count = len(stream_messages)
                 for i, stream_message in enumerate(stream_messages):
                     if stream_message["id"] > log_entry.event_last_message_id:

@@ -22,9 +22,7 @@ class Migration(migrations.Migration):
                 ("remote_id", models.IntegerField(db_index=True)),
                 (
                     "server",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="zilencer.RemoteZulipServer",
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zilencer.RemoteZulipServer"),
                 ),
             ],
         ),
@@ -40,9 +38,7 @@ class Migration(migrations.Migration):
                 ("remote_id", models.IntegerField(db_index=True)),
                 (
                     "server",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="zilencer.RemoteZulipServer",
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zilencer.RemoteZulipServer"),
                 ),
             ],
         ),

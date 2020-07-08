@@ -104,9 +104,7 @@ def process_response_error(e: HTTPError) -> None:
         exit(1)
 
 
-def send_email_mirror(
-    rcpt_to: str, shared_secret: str, host: str, url: str, test: bool, verify_ssl: bool,
-) -> None:
+def send_email_mirror(rcpt_to: str, shared_secret: str, host: str, url: str, test: bool, verify_ssl: bool) -> None:
     if not rcpt_to:
         print("5.1.1 Bad destination mailbox address: No missed message email address.")
         exit(posix.EX_NOUSER)

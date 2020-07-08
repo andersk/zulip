@@ -1313,9 +1313,7 @@ def social_associate_user_helper(
 
 
 @partial
-def social_auth_associate_user(
-    backend: BaseAuth, *args: Any, **kwargs: Any
-) -> Union[HttpResponse, Dict[str, Any]]:
+def social_auth_associate_user(backend: BaseAuth, *args: Any, **kwargs: Any) -> Union[HttpResponse, Dict[str, Any]]:
     """A simple wrapper function to reformat the return data from
     social_associate_user_helper as a dictionary.  The
     python-social-auth infrastructure will then pass those values into

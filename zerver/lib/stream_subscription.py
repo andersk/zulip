@@ -7,9 +7,7 @@ from zerver.models import Recipient, Stream, Subscription, UserProfile
 
 def get_active_subscriptions_for_stream_id(stream_id: int) -> QuerySet:
     # TODO: Change return type to QuerySet[Subscription]
-    return Subscription.objects.filter(
-        recipient__type=Recipient.STREAM, recipient__type_id=stream_id, active=True,
-    )
+    return Subscription.objects.filter(recipient__type=Recipient.STREAM, recipient__type_id=stream_id, active=True)
 
 
 def get_active_subscriptions_for_stream_ids(stream_ids: List[int]) -> QuerySet:

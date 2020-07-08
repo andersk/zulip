@@ -14,8 +14,6 @@ class Migration(migrations.Migration):
             model_name="userprofile", name="wildcard_mentions_notify", field=models.BooleanField(default=True),
         ),
         migrations.AddField(
-            model_name="subscription",
-            name="wildcard_mentions_notify",
-            field=models.NullBooleanField(default=None),
+            model_name="subscription", name="wildcard_mentions_notify", field=models.NullBooleanField(default=None),
         ),
     ]

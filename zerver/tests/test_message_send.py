@@ -408,11 +408,7 @@ class MessagePOSTTest(ZulipTestCase):
         self.assertEqual(
             msg.recipient_id,
             get_huddle_recipient(
-                {
-                    self.example_user("hamlet").id,
-                    self.example_user("othello").id,
-                    self.example_user("cordelia").id,
-                },
+                {self.example_user("hamlet").id, self.example_user("othello").id, self.example_user("cordelia").id},
             ).id,
         )
 
@@ -460,12 +456,7 @@ class MessagePOSTTest(ZulipTestCase):
 
         result = self.client_post(
             "/json/messages",
-            {
-                "type": "private",
-                "content": "Test message",
-                "client": "test suite",
-                "to": ujson.dumps([othello.id]),
-            },
+            {"type": "private", "content": "Test message", "client": "test suite", "to": ujson.dumps([othello.id])},
         )
         self.assert_json_error(result, f"'{othello.email}' is no longer using Zulip.")
 
@@ -520,8 +511,7 @@ class MessagePOSTTest(ZulipTestCase):
         """
         self.login("hamlet")
         result = self.client_post(
-            "/json/messages",
-            {"type": "stream", "to": "Verona", "client": "test suite", "content": "Test message"},
+            "/json/messages", {"type": "stream", "to": "Verona", "client": "test suite", "content": "Test message"},
         )
         self.assert_json_error(result, "Missing topic")
 
@@ -1346,9 +1336,7 @@ class StreamMessagesTest(ZulipTestCase):
 
         self.send_personal_message(self.example_user("hamlet"), user_profile, content="test")
         message = most_recent_message(user_profile)
-        self.assertTrue(
-            UserMessage.objects.get(user_profile=user_profile, message=message).flags.is_private.is_set,
-        )
+        self.assertTrue(UserMessage.objects.get(user_profile=user_profile, message=message).flags.is_private.is_set)
 
     def _send_stream_message(self, user: UserProfile, stream_name: str, content: str) -> Set[int]:
         with mock.patch("zerver.lib.actions.send_event") as m:
@@ -1675,9 +1663,7 @@ class ExtractTest(ZulipTestCase):
 
         # Heterogeneous lists are not supported
         mixed = ujson.dumps(["eeshan@example.com", 3, 4])
-        with self.assertRaisesRegex(
-            JsonableError, "Recipient lists may contain emails or user IDs, but not both.",
-        ):
+        with self.assertRaisesRegex(JsonableError, "Recipient lists may contain emails or user IDs, but not both."):
             extract_private_recipients(mixed)
 
     def test_extract_recipient_ids(self) -> None:
@@ -1693,9 +1679,7 @@ class ExtractTest(ZulipTestCase):
 
         # Heterogeneous lists are not supported
         mixed = ujson.dumps([3, 4, "eeshan@example.com"])
-        with self.assertRaisesRegex(
-            JsonableError, "Recipient lists may contain emails or user IDs, but not both.",
-        ):
+        with self.assertRaisesRegex(JsonableError, "Recipient lists may contain emails or user IDs, but not both."):
             extract_private_recipients(mixed)
 
 

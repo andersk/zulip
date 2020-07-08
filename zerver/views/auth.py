@@ -559,9 +559,7 @@ def start_social_signup(request: HttpRequest, backend: str, extra_arg: Optional[
             logging.info("Attempted to initiate SAML authentication with wrong idp argument: %s", extra_arg)
             return redirect_to_config_error("saml")
         extra_url_params = {"idp": extra_arg}
-    return oauth_redirect_to_root(
-        request, backend_url, "social", is_signup=True, extra_url_params=extra_url_params,
-    )
+    return oauth_redirect_to_root(request, backend_url, "social", is_signup=True, extra_url_params=extra_url_params)
 
 
 _subdomain_token_salt = "zerver.views.auth.log_into_subdomain"

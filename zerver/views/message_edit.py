@@ -106,9 +106,7 @@ def update_message_backend(
     message_id: int = REQ(converter=to_non_negative_int, path_only=True),
     stream_id: Optional[int] = REQ(converter=to_non_negative_int, default=None),
     topic_name: Optional[str] = REQ_topic(),
-    propagate_mode: Optional[str] = REQ(
-        default="change_one", str_validator=check_string_in(PROPAGATE_MODE_VALUES),
-    ),
+    propagate_mode: Optional[str] = REQ(default="change_one", str_validator=check_string_in(PROPAGATE_MODE_VALUES)),
     send_notification_to_old_thread: bool = REQ(default=True, validator=check_bool),
     send_notification_to_new_thread: bool = REQ(default=True, validator=check_bool),
     content: Optional[str] = REQ(default=None),

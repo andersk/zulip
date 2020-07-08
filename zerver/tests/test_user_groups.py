@@ -114,9 +114,7 @@ class UserGroupAPITestCase(ZulipTestCase):
         self.login_user(user_profile)
         result = self.client_get("/json/user_groups")
         self.assert_json_success(result)
-        self.assert_length(
-            result.json()["user_groups"], UserGroup.objects.filter(realm=user_profile.realm).count(),
-        )
+        self.assert_length(result.json()["user_groups"], UserGroup.objects.filter(realm=user_profile.realm).count())
 
     def test_user_group_create_by_guest_user(self) -> None:
         guest_user = self.example_user("polonius")

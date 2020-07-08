@@ -29,10 +29,7 @@ def api_netlify_webhook(
     message_template = get_template(request, payload)
 
     body = message_template.format(
-        build_name=payload["name"],
-        build_url=payload["url"],
-        branch_name=payload["branch"],
-        state=payload["state"],
+        build_name=payload["name"], build_url=payload["url"], branch_name=payload["branch"], state=payload["state"],
     )
 
     topic = "{topic}".format(topic=payload["branch"])

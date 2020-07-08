@@ -225,9 +225,7 @@ def write_log_line(
         extra_request_data = ""
     logger_client = f"({requestor_for_logs} via {client_name})"
     logger_timing = f"{format_timedelta(time_delta):>5}{optional_orig_delta}{remote_cache_output}{markdown_output}{db_time_output}{startup_output} {path}"
-    logger_line = (
-        f"{remote_ip:<15} {method:<7} {status_code:3} {logger_timing}{extra_request_data} {logger_client}"
-    )
+    logger_line = f"{remote_ip:<15} {method:<7} {status_code:3} {logger_timing}{extra_request_data} {logger_client}"
     if status_code in [200, 304] and method == "GET" and path.startswith("/static"):
         logger.debug(logger_line)
     else:

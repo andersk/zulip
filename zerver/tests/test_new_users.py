@@ -125,11 +125,7 @@ class TestBrowserAndOsUserAgentStrings(ZulipTestCase):
                 "Chrome",
                 "Windows",
             ),
-            (
-                "mozilla/5.0 (windows nt 6.1; wow64; rv:51.0) " + "gecko/20100101 firefox/51.0",
-                "Firefox",
-                "Windows",
-            ),
+            ("mozilla/5.0 (windows nt 6.1; wow64; rv:51.0) " + "gecko/20100101 firefox/51.0", "Firefox", "Windows"),
             (
                 "mozilla/5.0 (windows nt 6.1; wow64; trident/7.0; rv:11.0) " + "like gecko",
                 "Internet Explorer",

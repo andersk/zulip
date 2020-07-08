@@ -448,10 +448,7 @@ class MatterMostImporter(ZulipTestCase):
         reset_mirror_dummy_users(username_to_user)
 
         label_mirror_dummy_users(
-            num_teams=2,
-            team_name="gryffindor",
-            mattermost_data=mattermost_data,
-            username_to_user=username_to_user,
+            num_teams=2, team_name="gryffindor", mattermost_data=mattermost_data, username_to_user=username_to_user,
         )
         self.assertFalse(username_to_user["harry"]["is_mirror_dummy"])
         self.assertFalse(username_to_user["ron"]["is_mirror_dummy"])

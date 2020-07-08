@@ -58,9 +58,7 @@ class BeanstalkHookTests(WebhookTestCase):
 * Added new file ([edf529c](http://lfranchi-svn.beanstalkapp.com/work-test/changesets/edf529c7))
 * Filled in new file with some stuff ([c2a191b](http://lfranchi-svn.beanstalkapp.com/work-test/changesets/c2a191b9))
 * More work to fix some bugs ([2009815](http://lfranchi-svn.beanstalkapp.com/work-test/changesets/20098158))"""
-        self.api_stream_message(
-            self.test_user, "git_multiple", expected_topic, expected_message, content_type=None,
-        )
+        self.api_stream_message(self.test_user, "git_multiple", expected_topic, expected_message, content_type=None)
 
     def test_git_multiple_filtered_by_branches(self) -> None:
         self.url = self.build_webhook_url(branches="master,development")
@@ -70,9 +68,7 @@ class BeanstalkHookTests(WebhookTestCase):
 * Added new file ([edf529c](http://lfranchi-svn.beanstalkapp.com/work-test/changesets/edf529c7))
 * Filled in new file with some stuff ([c2a191b](http://lfranchi-svn.beanstalkapp.com/work-test/changesets/c2a191b9))
 * More work to fix some bugs ([2009815](http://lfranchi-svn.beanstalkapp.com/work-test/changesets/20098158))"""
-        self.api_stream_message(
-            self.test_user, "git_multiple", expected_topic, expected_message, content_type=None,
-        )
+        self.api_stream_message(self.test_user, "git_multiple", expected_topic, expected_message, content_type=None)
 
     def test_git_more_than_limit(self) -> None:
         commits_info = (

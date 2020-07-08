@@ -16,8 +16,6 @@ class Migration(migrations.Migration):
             field=models.DateTimeField(null=True, verbose_name="date sent"),
         ),
         migrations.AddField(
-            model_name="message",
-            name="date_sent",
-            field=models.DateTimeField(null=True, verbose_name="date sent"),
+            model_name="message", name="date_sent", field=models.DateTimeField(null=True, verbose_name="date sent"),
         ),
     ]

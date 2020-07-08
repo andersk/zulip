@@ -21,7 +21,9 @@ class GithubWebhookTest(WebhookTestCase):
         self.send_and_test_stream_message("ping", self.EXPECTED_TOPIC_REPO_EVENTS, expected_message)
 
     def test_star_event(self) -> None:
-        expected_message = "Codertocat starred the repository [Codertocat/Hello-World](https://github.com/Codertocat/Hello-World)."
+        expected_message = (
+            "Codertocat starred the repository [Codertocat/Hello-World](https://github.com/Codertocat/Hello-World)."
+        )
         expected_topic = "Hello-World"
         self.send_and_test_stream_message("star", expected_topic, expected_message)
 
@@ -279,9 +281,7 @@ class GithubWebhookTest(WebhookTestCase):
 
     def test_pull_request_assigned_msg(self) -> None:
         expected_message = "baxterthehacker assigned [PR #1](https://github.com/baxterthehacker/public-repo/pull/1) to baxterthehacker."
-        self.send_and_test_stream_message(
-            "pull_request__assigned", self.EXPECTED_TOPIC_PR_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request__assigned", self.EXPECTED_TOPIC_PR_EVENTS, expected_message)
 
     def test_pull_request_assigned_msg_with_custom_topic_in_url(self) -> None:
         self.url = self.build_webhook_url(topic="notifications")

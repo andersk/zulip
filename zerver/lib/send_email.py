@@ -45,9 +45,7 @@ class FromAddress:
         return FromAddress.NOREPLY
 
     @staticmethod
-    def security_email_from_name(
-        language: Optional[str] = None, user_profile: Optional[UserProfile] = None,
-    ) -> str:
+    def security_email_from_name(language: Optional[str] = None, user_profile: Optional[UserProfile] = None) -> str:
         if language is None:
             assert user_profile is not None
             language = user_profile.default_language

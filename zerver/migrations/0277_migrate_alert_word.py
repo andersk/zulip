@@ -19,8 +19,7 @@ def move_to_seperate_table(apps: StateApps, schema_editor: DatabaseSchemaEditor)
             word_dict[word.lower()] = word
 
         AlertWord.objects.bulk_create(
-            AlertWord(user_profile=user_profile, word=word, realm=user_profile.realm)
-            for word in word_dict.values()
+            AlertWord(user_profile=user_profile, word=word, realm=user_profile.realm) for word in word_dict.values()
         )
 
 

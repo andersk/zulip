@@ -155,9 +155,7 @@ class TestDigestEmailMessages(ZulipTestCase):
 
         one_sec_ago = timezone_now() - datetime.timedelta(seconds=1)
 
-        filtered_stream_ids = exclude_subscription_modified_streams(
-            othello, list(stream_ids.values()), one_sec_ago,
-        )
+        filtered_stream_ids = exclude_subscription_modified_streams(othello, list(stream_ids.values()), one_sec_ago)
         self.assertNotIn(stream_ids["Verona"], filtered_stream_ids)
         self.assertIn(stream_ids["Scotland"], filtered_stream_ids)
         self.assertIn(stream_ids["Denmark"], filtered_stream_ids)

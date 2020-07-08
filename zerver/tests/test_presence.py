@@ -455,9 +455,7 @@ class UserPresenceAggregationTests(ZulipTestCase):
         with mock.patch(timezone_util, return_value=validate_time - datetime.timedelta(seconds=5)):
             self.client_post("/json/users/me/presence", {"status": status})
         with mock.patch(timezone_util, return_value=validate_time - datetime.timedelta(seconds=2)):
-            self.api_post(
-                user, "/api/v1/users/me/presence", {"status": status}, HTTP_USER_AGENT="ZulipAndroid/1.0",
-            )
+            self.api_post(user, "/api/v1/users/me/presence", {"status": status}, HTTP_USER_AGENT="ZulipAndroid/1.0")
         with mock.patch(timezone_util, return_value=validate_time - datetime.timedelta(seconds=7)):
             latest_result = self.api_post(
                 user, "/api/v1/users/me/presence", {"status": status}, HTTP_USER_AGENT="ZulipIOS/1.0",

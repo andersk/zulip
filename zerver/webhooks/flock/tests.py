@@ -22,9 +22,7 @@ class FlockHookTests(WebhookTestCase):
     def test_flock_note(self) -> None:
         expected_topic = "Flock notifications"
         expected_message = "Shared a note"
-        self.send_and_test_stream_message(
-            "note", expected_topic, expected_message, content_type="application/json",
-        )
+        self.send_and_test_stream_message("note", expected_topic, expected_message, content_type="application/json")
 
     def test_flock_reply_note(self) -> None:
         expected_topic = "Flock notifications"
@@ -71,9 +69,7 @@ class FlockHookTests(WebhookTestCase):
     def test_flock_todo(self) -> None:
         expected_topic = "Flock notifications"
         expected_message = "Rishabh rawat added a to-do in New List 1 list"
-        self.send_and_test_stream_message(
-            "todo", expected_topic, expected_message, content_type="application/json",
-        )
+        self.send_and_test_stream_message("todo", expected_topic, expected_message, content_type="application/json")
 
     def get_body(self, fixture_name: str) -> str:
         return self.webhook_fixture_data("flock", fixture_name, file_type="json")

@@ -607,11 +607,7 @@ class RateLimitAuthenticationTests(ZulipTestCase):
 
         def attempt_authentication(request: HttpRequest, username: str, password: str) -> Optional[UserProfile]:
             return EmailAuthBackend().authenticate(
-                request=request,
-                username=username,
-                realm=get_realm("zulip"),
-                password=password,
-                return_data=dict(),
+                request=request, username=username, realm=get_realm("zulip"), password=password, return_data=dict(),
             )
 
         self.do_test_auth_rate_limiting(
@@ -626,11 +622,7 @@ class RateLimitAuthenticationTests(ZulipTestCase):
 
         def attempt_authentication(request: HttpRequest, username: str, password: str) -> Optional[UserProfile]:
             return ZulipLDAPAuthBackend().authenticate(
-                request=request,
-                username=username,
-                realm=get_realm("zulip"),
-                password=password,
-                return_data=dict(),
+                request=request, username=username, realm=get_realm("zulip"), password=password, return_data=dict(),
             )
 
         self.do_test_auth_rate_limiting(
@@ -652,11 +644,7 @@ class RateLimitAuthenticationTests(ZulipTestCase):
 
         def attempt_authentication(request: HttpRequest, username: str, password: str) -> Optional[UserProfile]:
             return authenticate(
-                request=request,
-                username=username,
-                realm=get_realm("zulip"),
-                password=password,
-                return_data=dict(),
+                request=request, username=username, realm=get_realm("zulip"), password=password, return_data=dict(),
             )
 
         self.do_test_auth_rate_limiting(
@@ -1490,9 +1478,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
             )
 
     def test_social_auth_complete(self) -> None:
-        with mock.patch(
-            "social_core.backends.oauth.BaseOAuth2.process_error", side_effect=AuthFailed("Not found"),
-        ):
+        with mock.patch("social_core.backends.oauth.BaseOAuth2.process_error", side_effect=AuthFailed("Not found")):
             result = self.client_get(reverse("social:complete", args=[self.backend.name]))
             self.assertEqual(result.status_code, 302)
             self.assertIn("login", result.url)
@@ -1778,9 +1764,7 @@ class SAMLAuthBackendTest(SocialAuthBase):
         with self.assertLogs(self.logger_string, level="INFO") as m:
             post_params = {
                 "RelayState": "",
-                "SAMLResponse": self.generate_saml_response(
-                    email=self.example_email("hamlet"), name="King Hamlet",
-                ),
+                "SAMLResponse": self.generate_saml_response(email=self.example_email("hamlet"), name="King Hamlet"),
             }
             with mock.patch.object(SAMLAuthBackend, "choose_subdomain", return_value=None):
                 result = self.client_post("/complete/saml/", post_params)
@@ -3840,10 +3824,7 @@ class TestZulipRemoteUserBackend(DesktopFlowTestingLib, ZulipTestCase):
 
         # Verify that the right thing happens with an invalid-format OTP
         result = self.client_get(
-            "/accounts/login/sso/",
-            dict(mobile_flow_otp="1234"),
-            REMOTE_USER=email,
-            HTTP_USER_AGENT="ZulipAndroid",
+            "/accounts/login/sso/", dict(mobile_flow_otp="1234"), REMOTE_USER=email, HTTP_USER_AGENT="ZulipAndroid",
         )
         self.assert_logged_in_user_id(None)
         self.assert_json_error_contains(result, "Invalid OTP", 400)
@@ -3927,10 +3908,7 @@ class TestZulipRemoteUserBackend(DesktopFlowTestingLib, ZulipTestCase):
 
     @override_settings(SEND_LOGIN_EMAILS=True)
     @override_settings(
-        AUTHENTICATION_BACKENDS=(
-            "zproject.backends.ZulipRemoteUserBackend",
-            "zproject.backends.ZulipDummyBackend",
-        ),
+        AUTHENTICATION_BACKENDS=("zproject.backends.ZulipRemoteUserBackend", "zproject.backends.ZulipDummyBackend"),
     )
     def test_login_desktop_flow_otp_success_email(self) -> None:
         user_profile = self.example_user("hamlet")
@@ -3948,18 +3926,13 @@ class TestZulipRemoteUserBackend(DesktopFlowTestingLib, ZulipTestCase):
         self.assert_logged_in_user_id(None)
         self.assert_json_error_contains(result, "Invalid OTP", 400)
 
-        result = self.client_get(
-            "/accounts/login/sso/", dict(desktop_flow_otp=desktop_flow_otp), REMOTE_USER=email,
-        )
+        result = self.client_get("/accounts/login/sso/", dict(desktop_flow_otp=desktop_flow_otp), REMOTE_USER=email)
         self.verify_desktop_flow_end_page(result, email, desktop_flow_otp)
 
     @override_settings(SEND_LOGIN_EMAILS=True)
     @override_settings(SSO_APPEND_DOMAIN="zulip.com")
     @override_settings(
-        AUTHENTICATION_BACKENDS=(
-            "zproject.backends.ZulipRemoteUserBackend",
-            "zproject.backends.ZulipDummyBackend",
-        ),
+        AUTHENTICATION_BACKENDS=("zproject.backends.ZulipRemoteUserBackend", "zproject.backends.ZulipDummyBackend"),
     )
     def test_login_desktop_flow_otp_success_username(self) -> None:
         user_profile = self.example_user("hamlet")
@@ -4698,9 +4671,7 @@ class TestZulipLDAPUserPopulator(ZulipLDAPTestCase):
     def test_deactivate_user(self) -> None:
         self.change_ldap_user_attr("hamlet", "userAccountControl", "2")
 
-        with self.settings(
-            AUTH_LDAP_USER_ATTR_MAP={"full_name": "cn", "userAccountControl": "userAccountControl"},
-        ):
+        with self.settings(AUTH_LDAP_USER_ATTR_MAP={"full_name": "cn", "userAccountControl": "userAccountControl"}):
             self.perform_ldap_sync(self.example_user("hamlet"))
         hamlet = self.example_user("hamlet")
         self.assertFalse(hamlet.is_active)
@@ -4709,18 +4680,14 @@ class TestZulipLDAPUserPopulator(ZulipLDAPTestCase):
     def test_dont_sync_disabled_ldap_user(self, fake_sync: mock.MagicMock) -> None:
         self.change_ldap_user_attr("hamlet", "userAccountControl", "2")
 
-        with self.settings(
-            AUTH_LDAP_USER_ATTR_MAP={"full_name": "cn", "userAccountControl": "userAccountControl"},
-        ):
+        with self.settings(AUTH_LDAP_USER_ATTR_MAP={"full_name": "cn", "userAccountControl": "userAccountControl"}):
             self.perform_ldap_sync(self.example_user("hamlet"))
             fake_sync.assert_not_called()
 
     def test_reactivate_user(self) -> None:
         do_deactivate_user(self.example_user("hamlet"))
 
-        with self.settings(
-            AUTH_LDAP_USER_ATTR_MAP={"full_name": "cn", "userAccountControl": "userAccountControl"},
-        ):
+        with self.settings(AUTH_LDAP_USER_ATTR_MAP={"full_name": "cn", "userAccountControl": "userAccountControl"}):
             self.perform_ldap_sync(self.example_user("hamlet"))
         hamlet = self.example_user("hamlet")
         self.assertTrue(hamlet.is_active)
@@ -4950,9 +4917,7 @@ class TestQueryLDAP(ZulipLDAPTestCase):
 
     @override_settings(AUTHENTICATION_BACKENDS=("zproject.backends.ZulipLDAPAuthBackend",))
     def test_query_email_attr(self) -> None:
-        with self.settings(
-            AUTH_LDAP_USER_ATTR_MAP={"full_name": "cn", "short_name": "sn"}, LDAP_EMAIL_ATTR="mail",
-        ):
+        with self.settings(AUTH_LDAP_USER_ATTR_MAP={"full_name": "cn", "short_name": "sn"}, LDAP_EMAIL_ATTR="mail"):
             # This will look up the user by email in our test dictionary,
             # should successfully find hamlet's ldap entry.
             values = query_ldap(self.example_email("hamlet"))

@@ -338,9 +338,7 @@ def get_pull_request_deleted_or_updated_comment_action_body(
     return get_pull_request_comment_action_body(payload, action, include_title)
 
 
-def get_pull_request_comment_action_body(
-    payload: Dict[str, Any], action: str, include_title: bool = False,
-) -> str:
+def get_pull_request_comment_action_body(payload: Dict[str, Any], action: str, include_title: bool = False) -> str:
     action += " on"
     return get_pull_request_event_message(
         get_user_username(payload),
@@ -390,9 +388,7 @@ def get_repo_updated_body(payload: Dict[str, Any]) -> str:
             message = append_punctuation(new, message) + "\n"
             body += message
         elif new and not old:
-            message = BITBUCKET_REPO_UPDATED_ADDED.format(
-                actor=actor, change=change, repo_name=repo_name, new=new,
-            )
+            message = BITBUCKET_REPO_UPDATED_ADDED.format(actor=actor, change=change, repo_name=repo_name, new=new)
             message = append_punctuation(new, message) + "\n"
             body += message
 

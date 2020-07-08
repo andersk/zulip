@@ -150,9 +150,7 @@ def simulated_empty_cache() -> Iterator[List[Tuple[str, Union[str, List[str]], O
 
 
 @contextmanager
-def queries_captured(
-    include_savepoints: bool = False,
-) -> Generator[List[Dict[str, Union[str, bytes]]], None, None]:
+def queries_captured(include_savepoints: bool = False) -> Generator[List[Dict[str, Union[str, bytes]]], None, None]:
     """
     Allow a user to capture just the queries executed during
     the with statement.

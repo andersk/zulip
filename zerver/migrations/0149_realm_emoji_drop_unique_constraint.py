@@ -101,9 +101,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterUniqueTogether(name="realmemoji", unique_together=set()),
         migrations.AlterField(
-            model_name="realmemoji",
-            name="file_name",
-            field=models.TextField(db_index=True, null=True, blank=True),
+            model_name="realmemoji", name="file_name", field=models.TextField(db_index=True, null=True, blank=True),
         ),
         migrations.RunPython(migrate_realm_emoji_image_files, reverse_code=reversal, elidable=True),
     ]

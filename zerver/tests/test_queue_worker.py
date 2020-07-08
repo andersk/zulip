@@ -432,9 +432,7 @@ class WorkerTest(ZulipTestCase):
         prereg_alice = PreregistrationUser.objects.create(
             email=self.nonreg_email("alice"), referred_by=inviter, realm=inviter.realm,
         )
-        PreregistrationUser.objects.create(
-            email=self.nonreg_email("bob"), referred_by=inviter, realm=inviter.realm,
-        )
+        PreregistrationUser.objects.create(email=self.nonreg_email("bob"), referred_by=inviter, realm=inviter.realm)
         data = [
             dict(prereg_id=prereg_alice.id, referrer_id=inviter.id, email_body=None),
             # Nonexistent prereg_id, as if the invitation was deleted

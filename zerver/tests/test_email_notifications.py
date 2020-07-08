@@ -524,9 +524,7 @@ class TestMissedMessages(ZulipTestCase):
         self._test_cases(msg_id, verify_body_include, email_subject, send_as_user)
 
     def _deleted_message_in_missed_stream_messages(self, send_as_user: bool) -> None:
-        msg_id = self.send_stream_message(
-            self.example_user("othello"), "denmark", "@**King Hamlet** to be deleted",
-        )
+        msg_id = self.send_stream_message(self.example_user("othello"), "denmark", "@**King Hamlet** to be deleted")
 
         hamlet = self.example_user("hamlet")
         self.login("othello")
@@ -537,9 +535,7 @@ class TestMissedMessages(ZulipTestCase):
 
     def _deleted_message_in_personal_missed_stream_messages(self, send_as_user: bool) -> None:
         msg_id = self.send_personal_message(
-            self.example_user("othello"),
-            self.example_user("hamlet"),
-            "Extremely personal message! to be deleted!",
+            self.example_user("othello"), self.example_user("hamlet"), "Extremely personal message! to be deleted!",
         )
 
         hamlet = self.example_user("hamlet")

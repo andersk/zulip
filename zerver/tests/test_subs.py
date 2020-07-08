@@ -640,9 +640,7 @@ class StreamAdminTest(ZulipTestCase):
         # Test case to change name from one language to other.
         with tornado_redirected_to_list(events):
             stream_id = stream_name_new_uni_exists.id
-            result = self.client_patch(
-                f"/json/streams/{stream_id}", {"new_name": ujson.dumps("français".encode())},
-            )
+            result = self.client_patch(f"/json/streams/{stream_id}", {"new_name": ujson.dumps("français".encode())})
         self.assert_json_success(result)
         stream_name_fr_exists = get_stream("français", realm)
         self.assertTrue(stream_name_fr_exists)
@@ -930,9 +928,7 @@ class StreamAdminTest(ZulipTestCase):
         stream = get_stream("stream_name1", realm)
         self.assertEqual(stream.message_retention_days, None)
 
-        result = self.client_patch(
-            f"/json/streams/{stream.id}", {"message_retention_days": ujson.dumps("invalid")},
-        )
+        result = self.client_patch(f"/json/streams/{stream.id}", {"message_retention_days": ujson.dumps("invalid")})
         self.assert_json_error(result, "Bad value for 'message_retention_days': invalid")
 
         result = self.client_patch(f"/json/streams/{stream.id}", {"message_retention_days": ujson.dumps(-1)})
@@ -1828,11 +1824,7 @@ class SubscriptionPropertiesTest(ZulipTestCase):
         result = self.api_post(
             test_user,
             "/api/v1/users/me/subscriptions/properties",
-            {
-                "subscription_data": ujson.dumps(
-                    [{"property": "color", "stream_id": stream_id, "value": "#ffffff"}],
-                ),
-            },
+            {"subscription_data": ujson.dumps([{"property": "color", "stream_id": stream_id, "value": "#ffffff"}])},
         )
         self.assert_json_success(result)
 
@@ -2893,8 +2885,7 @@ class SubscriptionAPITest(ZulipTestCase):
         self.assertEqual(add_event["event"]["op"], "add")
         self.assertEqual(add_event["users"], [user_profile.id])
         self.assertEqual(
-            set(add_event["event"]["subscriptions"][0]["subscribers"]),
-            {user_profile.id, existing_user_profile.id},
+            set(add_event["event"]["subscriptions"][0]["subscribers"]), {user_profile.id, existing_user_profile.id},
         )
 
         # We don't send a peer_add event to othello, but we do send peer_add event to
@@ -3288,9 +3279,7 @@ class SubscriptionAPITest(ZulipTestCase):
         """
         random_streams = self.make_random_stream_names(self.streams)
         self.assertNotEqual(len(random_streams), 0)  # necessary for full test coverage
-        streams_to_remove = random_streams[
-            :1
-        ]  # pick only one fake stream, to make checking the error message easy
+        streams_to_remove = random_streams[:1]  # pick only one fake stream, to make checking the error message easy
         result = self.client_delete(
             "/json/users/me/subscriptions", {"subscriptions": ujson.dumps(streams_to_remove)},
         )
@@ -3584,8 +3573,7 @@ class GetStreamsTest(ZulipTestCase):
         # Check it correctly lists the bot owner's subs with
         # include_owner_subscribed=true
         result = self.api_get(
-            test_bot,
-            "/api/v1/streams?include_owner_subscribed=true&include_public=false&include_subscribed=false",
+            test_bot, "/api/v1/streams?include_owner_subscribed=true&include_public=false&include_subscribed=false",
         )
         owner_subs = self.api_get(hamlet, "/api/v1/users/me/subscriptions")
 
@@ -4332,9 +4320,7 @@ class StreamTrafficTest(ZulipTestCase):
             98,
         )
         # stream less than 7 days old
-        self.assertEqual(
-            get_average_weekly_stream_traffic(42, timezone_now() - timedelta(days=5), {42: 100}), None,
-        )
+        self.assertEqual(get_average_weekly_stream_traffic(42, timezone_now() - timedelta(days=5), {42: 100}), None)
 
         # average traffic between 0 and 1
         self.assertEqual(get_average_weekly_stream_traffic(42, timezone_now() - timedelta(days=300), {42: 1}), 1)

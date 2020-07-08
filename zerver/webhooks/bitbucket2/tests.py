@@ -234,9 +234,7 @@ class Bitbucket2HookTests(WebhookTestCase):
         kwargs = {
             "HTTP_X_EVENT_KEY": "pullrequest:comment_created",
         }
-        self.send_and_test_stream_message(
-            "pull_request_comment_action", expected_topic, expected_message, **kwargs,
-        )
+        self.send_and_test_stream_message("pull_request_comment_action", expected_topic, expected_message, **kwargs)
 
     def test_bitbucket2_on_pull_request_comment_updated_event(self) -> None:
         expected_message = "kolaszek updated a [comment](https://bitbucket.org/kolaszek/repository-name/pull-requests/3/_/diff#comment-20576503) on [PR #1](https://bitbucket.org/kolaszek/repository-name/pull-requests/3):\n\n~~~ quote\nComment1\n~~~"
@@ -254,9 +252,7 @@ class Bitbucket2HookTests(WebhookTestCase):
         kwargs = {
             "HTTP_X_EVENT_KEY": "pullrequest:comment_updated",
         }
-        self.send_and_test_stream_message(
-            "pull_request_comment_action", expected_topic, expected_message, **kwargs,
-        )
+        self.send_and_test_stream_message("pull_request_comment_action", expected_topic, expected_message, **kwargs)
 
     def test_bitbucket2_on_pull_request_comment_deleted_event(self) -> None:
         expected_message = "kolaszek deleted a [comment](https://bitbucket.org/kolaszek/repository-name/pull-requests/3/_/diff#comment-20576503) on [PR #1](https://bitbucket.org/kolaszek/repository-name/pull-requests/3):\n\n~~~ quote\nComment1\n~~~"
@@ -281,9 +277,7 @@ class Bitbucket2HookTests(WebhookTestCase):
         self.send_and_test_stream_message("push_one_tag", self.EXPECTED_TOPIC, expected_message, **kwargs)
 
     def test_bitbucket2_on_push_remove_tag_event(self) -> None:
-        expected_message = (
-            "kolaszek removed tag [a](https://bitbucket.org/kolaszek/repository-name/commits/tag/a)."
-        )
+        expected_message = "kolaszek removed tag [a](https://bitbucket.org/kolaszek/repository-name/commits/tag/a)."
         kwargs = {
             "HTTP_X_EVENT_KEY": "pullrequest:push",
         }

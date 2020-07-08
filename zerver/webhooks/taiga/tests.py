@@ -58,7 +58,9 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("userstory_changed_remove_sprint", self.TOPIC, message)
 
     def test_taiga_userstory_changed_description(self) -> None:
-        message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) updated description of user story **UserStory**."
+        message = (
+            "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) updated description of user story **UserStory**."
+        )
         self.send_and_test_stream_message("userstory_changed_description", self.TOPIC, message)
 
     def test_taiga_userstory_changed_closed(self) -> None:
@@ -117,9 +119,7 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("task_changed_unblocked", self.TOPIC, message)
 
     def test_taiga_task_changed_assigned(self) -> None:
-        message = (
-            "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) assigned task **New Task** to TomaszKolek."
-        )
+        message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) assigned task **New Task** to TomaszKolek."
         self.send_and_test_stream_message("task_changed_assigned", self.TOPIC, message)
 
     def test_taiga_task_changed_reassigned(self) -> None:

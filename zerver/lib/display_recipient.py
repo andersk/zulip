@@ -145,9 +145,7 @@ def bulk_fetch_display_recipients(recipient_tuples: Set[Tuple[int, int, int]]) -
             if recipient.type == Recipient.PERSONAL:
                 result.append((recipient.id, [user_profiles[recipient.type_id]]))
             else:
-                result.append(
-                    (recipient.id, [user_profiles[user_id] for user_id in huddle_user_ids[recipient.id]]),
-                )
+                result.append((recipient.id, [user_profiles[user_id] for user_id in huddle_user_ids[recipient.id]]))
 
         return result
 

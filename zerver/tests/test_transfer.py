@@ -88,9 +88,7 @@ class TransferUploadsToS3Test(ZulipTestCase):
         if not emoji:
             raise AssertionError("Unable to add emoji.")
 
-        emoji_path = RealmEmoji.PATH_ID_TEMPLATE.format(
-            realm_id=othello.realm_id, emoji_file_name=emoji.file_name,
-        )
+        emoji_path = RealmEmoji.PATH_ID_TEMPLATE.format(realm_id=othello.realm_id, emoji_file_name=emoji.file_name)
 
         transfer_emoji_to_s3(1)
 

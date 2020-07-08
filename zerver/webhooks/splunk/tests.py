@@ -22,10 +22,7 @@ Splunk alert from saved search:
 
         # using fixture named splunk_search_one_result, execute this test
         self.send_and_test_stream_message(
-            "search_one_result",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "search_one_result", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_splunk_short_search_name(self) -> None:
@@ -41,10 +38,7 @@ Splunk alert from saved search:
 """.strip()
 
         self.send_and_test_stream_message(
-            "short_search_name",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "short_search_name", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_splunk_long_search_name(self) -> None:

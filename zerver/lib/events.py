@@ -768,9 +768,7 @@ def apply_event(
                     realm_domain["allow_subdomains"] = event["realm_domain"]["allow_subdomains"]
         elif event["op"] == "remove":
             state["realm_domains"] = [
-                realm_domain
-                for realm_domain in state["realm_domains"]
-                if realm_domain["domain"] != event["domain"]
+                realm_domain for realm_domain in state["realm_domains"] if realm_domain["domain"] != event["domain"]
             ]
     elif event["type"] == "realm_emoji":
         state["realm_emoji"] = event["realm_emoji"]

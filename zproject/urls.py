@@ -214,16 +214,12 @@ v1_api_and_json_patterns = [
         {"GET": "zerver.views.invite.get_user_invites", "POST": "zerver.views.invite.invite_users_backend"},
     ),
     path("invites/<int:prereg_id>", rest_dispatch, {"DELETE": "zerver.views.invite.revoke_user_invite"}),
-    path(
-        "invites/<int:prereg_id>/resend", rest_dispatch, {"POST": "zerver.views.invite.resend_user_invite_email"},
-    ),
+    path("invites/<int:prereg_id>/resend", rest_dispatch, {"POST": "zerver.views.invite.resend_user_invite_email"}),
     # invites/multiuse -> zerver.views.invite
     path("invites/multiuse", rest_dispatch, {"POST": "zerver.views.invite.generate_multiuse_invite_backend"}),
     # invites/multiuse -> zerver.views.invite
     path(
-        "invites/multiuse/<int:invite_id>",
-        rest_dispatch,
-        {"DELETE": "zerver.views.invite.revoke_multiuse_invite"},
+        "invites/multiuse/<int:invite_id>", rest_dispatch, {"DELETE": "zerver.views.invite.revoke_multiuse_invite"},
     ),
     # mark messages as read (in bulk)
     path("mark_all_as_read", rest_dispatch, {"POST": "zerver.views.message_flags.mark_all_as_read"}),
@@ -430,9 +426,7 @@ v1_api_and_json_patterns = [
     # GET returns `stream_id`, stream name should be encoded in the url query (in `stream` param)
     path("get_stream_id", rest_dispatch, {"GET": "zerver.views.streams.json_get_stream_id"}),
     # GET returns "stream info" (undefined currently?), HEAD returns whether stream exists (200 or 404)
-    path(
-        "streams/<int:stream_id>/members", rest_dispatch, {"GET": "zerver.views.streams.get_subscribers_backend"},
-    ),
+    path("streams/<int:stream_id>/members", rest_dispatch, {"GET": "zerver.views.streams.get_subscribers_backend"}),
     path(
         "streams/<int:stream_id>",
         rest_dispatch,
@@ -446,15 +440,10 @@ v1_api_and_json_patterns = [
     path(
         "default_streams",
         rest_dispatch,
-        {
-            "POST": "zerver.views.streams.add_default_stream",
-            "DELETE": "zerver.views.streams.remove_default_stream",
-        },
+        {"POST": "zerver.views.streams.add_default_stream", "DELETE": "zerver.views.streams.remove_default_stream"},
     ),
     path(
-        "default_stream_groups/create",
-        rest_dispatch,
-        {"POST": "zerver.views.streams.create_default_stream_group"},
+        "default_stream_groups/create", rest_dispatch, {"POST": "zerver.views.streams.create_default_stream_group"},
     ),
     path(
         "default_stream_groups/<int:group_id>",
@@ -481,9 +470,7 @@ v1_api_and_json_patterns = [
         },
     ),
     # muting -> zerver.views.muting
-    path(
-        "users/me/subscriptions/muted_topics", rest_dispatch, {"PATCH": "zerver.views.muting.update_muted_topic"},
-    ),
+    path("users/me/subscriptions/muted_topics", rest_dispatch, {"PATCH": "zerver.views.muting.update_muted_topic"}),
     # used to register for an event queue in tornado
     path("register", rest_dispatch, {"POST": "zerver.views.events_register.events_register_backend"}),
     # events -> zerver.tornado.views
@@ -594,9 +581,7 @@ i18n_urls = [
         name="zerver.views.zephyr.webathena_kerberos_login",
     ),
     path("accounts/password/reset/", zerver.views.auth.password_reset, name="zerver.views.auth.password_reset"),
-    path(
-        "accounts/password/reset/done/", PasswordResetDoneView.as_view(template_name="zerver/reset_emailed.html"),
-    ),
+    path("accounts/password/reset/done/", PasswordResetDoneView.as_view(template_name="zerver/reset_emailed.html")),
     re_path(
         r"^accounts/password/reset/(?P<uidb64>[0-9A-Za-z]+)/(?P<token>.+)/$",
         PasswordResetConfirmView.as_view(
@@ -615,9 +600,7 @@ i18n_urls = [
     # Displays digest email content in browser.
     path("digest/", zerver.views.digest.digest_page),
     # Registration views, require a confirmation ID.
-    path(
-        "accounts/home/", zerver.views.registration.accounts_home, name="zerver.views.registration.accounts_home",
-    ),
+    path("accounts/home/", zerver.views.registration.accounts_home, name="zerver.views.registration.accounts_home"),
     re_path(
         r"^accounts/send_confirm/(?P<email>[\S]+)?$",
         TemplateView.as_view(template_name="zerver/accounts_send_confirm.html"),
@@ -660,9 +643,7 @@ i18n_urls = [
     # Find your account
     path("accounts/find/", zerver.views.registration.find_account, name="zerver.views.registration.find_account"),
     # Go to organization subdomain
-    path(
-        "accounts/go/", zerver.views.registration.realm_redirect, name="zerver.views.registration.realm_redirect",
-    ),
+    path("accounts/go/", zerver.views.registration.realm_redirect, name="zerver.views.registration.realm_redirect"),
     # Realm Creation
     path("new/", zerver.views.registration.create_realm, name="zerver.views.create_realm"),
     re_path(

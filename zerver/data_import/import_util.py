@@ -62,9 +62,7 @@ class SubscriberHandler:
             raise AssertionError("stream_id or huddle_id is required")
 
 
-def build_zerver_realm(
-    realm_id: int, realm_subdomain: str, time: float, other_product: str,
-) -> List[ZerverFieldsT]:
+def build_zerver_realm(realm_id: int, realm_subdomain: str, time: float, other_product: str) -> List[ZerverFieldsT]:
     realm = Realm(
         id=realm_id,
         date_created=time,

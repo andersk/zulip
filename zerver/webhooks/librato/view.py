@@ -95,9 +95,7 @@ class LibratoWebhookHandler(LibratoWebhookParser):
             "%Y-%m-%d %H:%M:%S",
         )
         alert_id, alert_name, alert_url, alert_runbook_url = self.parse_alert()
-        content = alert_clear_template.format(
-            alert_name=alert_name, alert_url=alert_url, trigger_time=trigger_time,
-        )
+        content = alert_clear_template.format(alert_name=alert_name, alert_url=alert_url, trigger_time=trigger_time)
         return content
 
     def handle_snapshots(self) -> str:

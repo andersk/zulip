@@ -467,9 +467,7 @@ class RedisRateLimiterBackend(RateLimiterBackend):
 
 
 class RateLimitResult:
-    def __init__(
-        self, entity: RateLimitedObject, secs_to_freedom: float, over_limit: bool, remaining: int,
-    ) -> None:
+    def __init__(self, entity: RateLimitedObject, secs_to_freedom: float, over_limit: bool, remaining: int) -> None:
         if over_limit:
             assert not remaining
 

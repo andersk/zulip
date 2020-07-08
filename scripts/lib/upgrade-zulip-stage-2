@@ -74,9 +74,7 @@ parser.add_argument("deploy_path", metavar="deploy_path", help="Path to deployme
 parser.add_argument(
     "--skip-puppet", dest="skip_puppet", action="store_true", help="Skip doing puppet/apt upgrades.",
 )
-parser.add_argument(
-    "--skip-migrations", dest="skip_migrations", action="store_true", help="Skip doing migrations.",
-)
+parser.add_argument("--skip-migrations", dest="skip_migrations", action="store_true", help="Skip doing migrations.")
 parser.add_argument(
     "--from-git", dest="from_git", action="store_true", help="Upgrading from git, so run update-prod-static.",
 )

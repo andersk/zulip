@@ -59,11 +59,7 @@ if __name__ == "__main__":
     print("\nStarting Development Server")
     args = [f"{TOOLS_DIR}/run-dev.py"]
     run_dev = subprocess.Popen(
-        args,
-        bufsize=1,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        universal_newlines=True,  # line buffered
+        args, bufsize=1, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True,  # line buffered
     )
     failed = check_worker_launch(run_dev)
 

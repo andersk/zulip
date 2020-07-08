@@ -212,12 +212,7 @@ class GetEventsTest(ZulipTestCase):
         result = self.tornado_call(
             get_events,
             user_profile,
-            {
-                "queue_id": queue_id,
-                "user_client": "website",
-                "last_event_id": -1,
-                "dont_block": ujson.dumps(True),
-            },
+            {"queue_id": queue_id, "user_client": "website", "last_event_id": -1, "dont_block": ujson.dumps(True)},
         )
         events = ujson.loads(result.content)["events"]
         self.assert_json_success(result)
@@ -238,12 +233,7 @@ class GetEventsTest(ZulipTestCase):
         result = self.tornado_call(
             get_events,
             user_profile,
-            {
-                "queue_id": queue_id,
-                "user_client": "website",
-                "last_event_id": -1,
-                "dont_block": ujson.dumps(True),
-            },
+            {"queue_id": queue_id, "user_client": "website", "last_event_id": -1, "dont_block": ujson.dumps(True)},
         )
         events = ujson.loads(result.content)["events"]
         self.assert_json_success(result)
@@ -428,9 +418,7 @@ class FetchInitialStateDataTest(ZulipTestCase):
         for key, value in result["raw_users"].items():
             self.assertNotIn("delivery_email", value)
 
-        do_set_realm_property(
-            user_profile.realm, "email_address_visibility", Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS,
-        )
+        do_set_realm_property(user_profile.realm, "email_address_visibility", Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS)
         result = fetch_initial_state_data(
             user_profile, None, "", client_gravatar=False, user_avatar_url_field_optional=False,
         )
@@ -450,9 +438,7 @@ class FetchInitialStateDataTest(ZulipTestCase):
         for key, value in result["raw_users"].items():
             self.assertNotIn("delivery_email", value)
 
-        do_set_realm_property(
-            user_profile.realm, "email_address_visibility", Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS,
-        )
+        do_set_realm_property(user_profile.realm, "email_address_visibility", Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS)
         result = fetch_initial_state_data(
             user_profile, None, "", client_gravatar=False, user_avatar_url_field_optional=False,
         )

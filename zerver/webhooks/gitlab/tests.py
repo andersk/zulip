@@ -202,9 +202,7 @@ class GitlabHookTests(WebhookTestCase):
 
     def test_close_confidential_issue_event_message(self) -> None:
         expected_subject = "testing / Issue #1 Testing Test"
-        expected_message = (
-            "Joe Bloggs closed [Issue #1](https://gitlab.example.co.uk/joe.bloggs/testing/issues/1)."
-        )
+        expected_message = "Joe Bloggs closed [Issue #1](https://gitlab.example.co.uk/joe.bloggs/testing/issues/1)."
 
         self.send_and_test_stream_message(
             "issue_hook__confidential_issue_closed", expected_subject, expected_message,

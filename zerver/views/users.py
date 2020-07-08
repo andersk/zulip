@@ -178,9 +178,7 @@ def update_user_backend(
     return json_success()
 
 
-def avatar(
-    request: HttpRequest, user_profile: UserProfile, email_or_id: str, medium: bool = False,
-) -> HttpResponse:
+def avatar(request: HttpRequest, user_profile: UserProfile, email_or_id: str, medium: bool = False) -> HttpResponse:
     """Accepts an email address or user ID and returns the avatar"""
     is_email = False
     try:

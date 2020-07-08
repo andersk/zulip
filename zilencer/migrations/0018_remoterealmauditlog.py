@@ -23,9 +23,7 @@ class Migration(migrations.Migration):
                 ("event_type", models.PositiveSmallIntegerField()),
                 (
                     "server",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="zilencer.RemoteZulipServer",
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zilencer.RemoteZulipServer"),
                 ),
             ],
         ),

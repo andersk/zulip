@@ -35,9 +35,7 @@ def api_gocd_webhook(
         contents = json.load(f)
         build_link = contents["build_details"]["_links"]["pipeline"]["href"]
 
-    body = MESSAGE_TEMPLATE.format(
-        modifications["user_name"], result, emoji, build_link, modifications["comment"],
-    )
+    body = MESSAGE_TEMPLATE.format(modifications["user_name"], result, emoji, build_link, modifications["comment"])
     branch = material["description"].split(",")
     topic = branch[0].split(" ")[1]
 

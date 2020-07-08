@@ -1889,17 +1889,13 @@ class InvitationsTestCase(InviteUserBase):
         # Resend invite
         result = self.client_post("/json/invites/" + str(prereg_user.id) + "/resend")
         self.assertEqual(
-            ScheduledEmail.objects.filter(
-                address__iexact=invitee, type=ScheduledEmail.INVITATION_REMINDER,
-            ).count(),
+            ScheduledEmail.objects.filter(address__iexact=invitee, type=ScheduledEmail.INVITATION_REMINDER).count(),
             1,
         )
 
         # Check that we have exactly one scheduled email, and that it is different
         self.assertEqual(scheduledemail_filter.count(), 1)
-        self.assertNotEqual(
-            original_timestamp, scheduledemail_filter.values_list("scheduled_timestamp", flat=True),
-        )
+        self.assertNotEqual(original_timestamp, scheduledemail_filter.values_list("scheduled_timestamp", flat=True))
 
         self.assertEqual(result.status_code, 200)
         error_result = self.client_post("/json/invites/" + str(9999) + "/resend")
@@ -1937,17 +1933,13 @@ class InvitationsTestCase(InviteUserBase):
         # Resend invite
         result = self.client_post("/json/invites/" + str(prereg_user.id) + "/resend")
         self.assertEqual(
-            ScheduledEmail.objects.filter(
-                address__iexact=invitee, type=ScheduledEmail.INVITATION_REMINDER,
-            ).count(),
+            ScheduledEmail.objects.filter(address__iexact=invitee, type=ScheduledEmail.INVITATION_REMINDER).count(),
             1,
         )
 
         # Check that we have exactly one scheduled email, and that it is different
         self.assertEqual(scheduledemail_filter.count(), 1)
-        self.assertNotEqual(
-            original_timestamp, scheduledemail_filter.values_list("scheduled_timestamp", flat=True),
-        )
+        self.assertNotEqual(original_timestamp, scheduledemail_filter.values_list("scheduled_timestamp", flat=True))
 
         self.assertEqual(result.status_code, 200)
         error_result = self.client_post("/json/invites/" + str(9999) + "/resend")
@@ -1989,17 +1981,13 @@ class InvitationsTestCase(InviteUserBase):
         self.assert_json_success(result)
 
         self.assertEqual(
-            ScheduledEmail.objects.filter(
-                address__iexact=invitee, type=ScheduledEmail.INVITATION_REMINDER,
-            ).count(),
+            ScheduledEmail.objects.filter(address__iexact=invitee, type=ScheduledEmail.INVITATION_REMINDER).count(),
             1,
         )
 
         # Check that we have exactly one scheduled email, and that it is different
         self.assertEqual(scheduledemail_filter.count(), 1)
-        self.assertNotEqual(
-            original_timestamp, scheduledemail_filter.values_list("scheduled_timestamp", flat=True),
-        )
+        self.assertNotEqual(original_timestamp, scheduledemail_filter.values_list("scheduled_timestamp", flat=True))
 
     def test_accessing_invites_in_another_realm(self) -> None:
         inviter = UserProfile.objects.exclude(realm=get_realm("zulip")).first()
@@ -2642,8 +2630,7 @@ class UserSignUpTest(InviteUserBase):
         email = self.nonreg_email("newguy")
 
         smtp_mock = patch(
-            "zerver.views.registration.send_confirm_registration_email",
-            side_effect=smtplib.SMTPException("uh oh"),
+            "zerver.views.registration.send_confirm_registration_email", side_effect=smtplib.SMTPException("uh oh"),
         )
 
         error_mock = patch("logging.error")
@@ -2664,8 +2651,7 @@ class UserSignUpTest(InviteUserBase):
         email = self.nonreg_email("newguy")
 
         smtp_mock = patch(
-            "zerver.views.registration.send_confirm_registration_email",
-            side_effect=smtplib.SMTPException("uh oh"),
+            "zerver.views.registration.send_confirm_registration_email", side_effect=smtplib.SMTPException("uh oh"),
         )
 
         error_mock = patch("logging.error")
@@ -3180,12 +3166,7 @@ class UserSignUpTest(InviteUserBase):
             with patch("logging.error") as mock_error:
                 result = self.client_post(
                     "/accounts/register/",
-                    {
-                        "password": password,
-                        "full_name": "New User",
-                        "key": find_key_by_email(email),
-                        "terms": True,
-                    },
+                    {"password": password, "full_name": "New User", "key": find_key_by_email(email), "terms": True},
                 )
         mock_error.assert_called_once()
         self.assertEqual(result.status_code, 302)
@@ -3236,9 +3217,7 @@ class UserSignUpTest(InviteUserBase):
 
         email = "iago+label@zulip.com"
         form = HomepageForm({"email": email}, realm=realm)
-        self.assertIn(
-            "Email addresses containing + are not allowed in this organization.", form.errors["email"][0],
-        )
+        self.assertIn("Email addresses containing + are not allowed in this organization.", form.errors["email"][0])
 
     def test_failed_signup_due_to_invite_required(self) -> None:
         realm = get_realm("zulip")
@@ -3252,8 +3231,7 @@ class UserSignUpTest(InviteUserBase):
         email = "user@acme.com"
         form = HomepageForm({"email": email}, realm=None)
         self.assertIn(
-            "organization you are trying to join using {} does " "not exist".format(email),
-            form.errors["email"][0],
+            "organization you are trying to join using {} does " "not exist".format(email), form.errors["email"][0],
         )
 
     def test_access_signup_page_in_root_domain_without_realm(self) -> None:
@@ -3314,9 +3292,7 @@ class UserSignUpTest(InviteUserBase):
             # Verify that the user is asked for name
             self.assert_in_success_response(["id_full_name"], result)
             # Verify that user is asked for its LDAP/Active Directory password.
-            self.assert_in_success_response(
-                ["Enter your LDAP/Active Directory password.", "ldap-password"], result,
-            )
+            self.assert_in_success_response(["Enter your LDAP/Active Directory password.", "ldap-password"], result)
             self.assert_not_in_success_response(["id_password"], result)
 
             # Test the TypeError exception handler
@@ -3328,9 +3304,7 @@ class UserSignUpTest(InviteUserBase):
                     # Pass HTTP_HOST for the target subdomain
                     HTTP_HOST=subdomain + ".testserver",
                 )
-            self.assert_in_success_response(
-                ["We just need you to do one last thing.", "newuser@zulip.com"], result,
-            )
+            self.assert_in_success_response(["We just need you to do one last thing.", "newuser@zulip.com"], result)
 
     @override_settings(
         AUTHENTICATION_BACKENDS=(
@@ -3989,9 +3963,7 @@ class UserSignUpTest(InviteUserBase):
                 # Pass HTTP_HOST for the target subdomain
                 HTTP_HOST=subdomain + ".testserver",
             )
-            self.assert_in_success_response(
-                ["We just need you to do one last thing.", "newuser@zulip.com"], result,
-            )
+            self.assert_in_success_response(["We just need you to do one last thing.", "newuser@zulip.com"], result)
 
     @patch("DNS.dnslookup", return_value=[["sipbtest:*:20922:101:Fred Sipb,,,:/mit/sipbtest:/bin/athena/tcsh"]])
     def test_registration_of_mirror_dummy_user(self, ignored: Any) -> None:

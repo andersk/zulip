@@ -491,12 +491,8 @@ class SlackImporter(ZulipTestCase):
         self.assertEqual(final_subscription_id, 4)
         self.assertEqual(zerver_subscription[0]["recipient"], 12)
         self.assertEqual(zerver_subscription[0]["id"], 0)
-        self.assertEqual(
-            zerver_subscription[0]["user_profile"], slack_user_id_to_zulip_user_id[channel_members[0]],
-        )
-        self.assertEqual(
-            zerver_subscription[2]["user_profile"], slack_user_id_to_zulip_user_id[channel_members[2]],
-        )
+        self.assertEqual(zerver_subscription[0]["user_profile"], slack_user_id_to_zulip_user_id[channel_members[0]])
+        self.assertEqual(zerver_subscription[2]["user_profile"], slack_user_id_to_zulip_user_id[channel_members[2]])
         self.assertEqual(zerver_subscription[3]["id"], 3)
         self.assertEqual(zerver_subscription[1]["recipient"], zerver_subscription[3]["recipient"])
         self.assertEqual(zerver_subscription[1]["pin_to_top"], False)

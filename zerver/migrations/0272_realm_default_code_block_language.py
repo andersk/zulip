@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="realm",
-            name="default_code_block_language",
-            field=models.TextField(default=None, null=True),
+            model_name="realm", name="default_code_block_language", field=models.TextField(default=None, null=True),
         ),
     ]

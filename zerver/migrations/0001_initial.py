@@ -118,11 +118,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "avatar_source",
                     models.CharField(
-                        choices=[
-                            ("G", "Hosted by Gravatar"),
-                            ("U", "Uploaded by user"),
-                            ("S", "System generated"),
-                        ],
+                        choices=[("G", "Hosted by Gravatar"), ("U", "Uploaded by user"), ("S", "System generated")],
                         default="G",
                         max_length=1,
                     ),
@@ -388,9 +384,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
         ),
         migrations.AlterUniqueTogether(name="userpresence", unique_together={("user_profile", "client")}),
         migrations.AlterUniqueTogether(name="usermessage", unique_together={("user_profile", "message")}),
-        migrations.AlterUniqueTogether(
-            name="useractivity", unique_together={("user_profile", "client", "query")},
-        ),
+        migrations.AlterUniqueTogether(name="useractivity", unique_together={("user_profile", "client", "query")}),
         migrations.AlterUniqueTogether(name="subscription", unique_together={("user_profile", "recipient")}),
         migrations.AlterUniqueTogether(name="stream", unique_together={("name", "realm")}),
         migrations.AlterUniqueTogether(name="recipient", unique_together={("type", "type_id")}),

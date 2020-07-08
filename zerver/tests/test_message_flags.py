@@ -105,16 +105,12 @@ class FirstUnreadAnchorTests(ZulipTestCase):
         self.assertEqual(messages_response["messages"][0]["id"], new_message_id)
         self.assertEqual(messages_response["anchor"], new_message_id)
 
-        with mock.patch(
-            "zerver.views.message_fetch.get_first_visible_message_id", return_value=new_message_id + 1,
-        ):
+        with mock.patch("zerver.views.message_fetch.get_first_visible_message_id", return_value=new_message_id + 1):
             messages_reponse = self.get_messages_response(anchor="first_unread", num_before=0, num_after=1)
         self.assert_length(messages_reponse["messages"], 0)
         self.assertIn("anchor", messages_reponse)
 
-        with mock.patch(
-            "zerver.views.message_fetch.get_first_visible_message_id", return_value=new_message_id - 1,
-        ):
+        with mock.patch("zerver.views.message_fetch.get_first_visible_message_id", return_value=new_message_id - 1):
             messages = self.get_messages(anchor="first_unread", num_before=0, num_after=1)
         self.assert_length(messages, 1)
 
@@ -189,9 +185,7 @@ class UnreadCountTests(ZulipTestCase):
         self.assertTrue(len(events) == 1)
 
         event = events[0]["event"]
-        expected = dict(
-            operation="add", messages=[message_id], flag="read", type="update_message_flags", all=False,
-        )
+        expected = dict(operation="add", messages=[message_id], flag="read", type="update_message_flags", all=False)
 
         differences = [key for key in expected if expected[key] != event[key]]
         self.assertTrue(len(differences) == 0)
@@ -229,9 +223,7 @@ class UnreadCountTests(ZulipTestCase):
         self.subscribe(user_profile, "test_stream")
 
         message_id = self.send_stream_message(self.example_user("hamlet"), "test_stream", "hello", "test_topic")
-        unrelated_message_id = self.send_stream_message(
-            self.example_user("hamlet"), "Denmark", "hello", "Denmark2",
-        )
+        unrelated_message_id = self.send_stream_message(self.example_user("hamlet"), "Denmark", "hello", "Denmark2")
         events: List[Mapping[str, Any]] = []
         with tornado_redirected_to_list(events):
             result = self.client_post(
@@ -243,9 +235,7 @@ class UnreadCountTests(ZulipTestCase):
         self.assertTrue(len(events) == 1)
 
         event = events[0]["event"]
-        expected = dict(
-            operation="add", messages=[message_id], flag="read", type="update_message_flags", all=False,
-        )
+        expected = dict(operation="add", messages=[message_id], flag="read", type="update_message_flags", all=False)
 
         differences = [key for key in expected if expected[key] != event[key]]
         self.assertTrue(len(differences) == 0)
@@ -411,9 +401,7 @@ class PushNotificationMarkReadFlowsTest(ZulipTestCase):
         )
 
         self.assert_json_success(result)
-        self.assertEqual(
-            self.get_mobile_push_notification_ids(user_profile), [second_message_id, third_message_id],
-        )
+        self.assertEqual(self.get_mobile_push_notification_ids(user_profile), [second_message_id, third_message_id])
 
         result = self.client_post(
             "/json/mark_stream_as_read", {"stream_id": str(stream.id), "topic_name": "test_topic"},
@@ -423,9 +411,7 @@ class PushNotificationMarkReadFlowsTest(ZulipTestCase):
         fourth_message_id = self.send_stream_message(
             self.example_user("cordelia"), "test_stream", "hello", "test_topic",
         )
-        self.assertEqual(
-            self.get_mobile_push_notification_ids(user_profile), [third_message_id, fourth_message_id],
-        )
+        self.assertEqual(self.get_mobile_push_notification_ids(user_profile), [third_message_id, fourth_message_id])
 
         result = self.client_post("/json/mark_all_as_read", {})
         self.assertEqual(self.get_mobile_push_notification_ids(user_profile), [])
@@ -800,9 +786,7 @@ class MessageAccessTests(ZulipTestCase):
         POST /json/messages/flags.
         """
         self.login("hamlet")
-        message_ids = [
-            self.send_personal_message(self.example_user("hamlet"), self.example_user("hamlet"), "test"),
-        ]
+        message_ids = [self.send_personal_message(self.example_user("hamlet"), self.example_user("hamlet"), "test")]
 
         # Star a message.
         result = self.change_star(message_ids)

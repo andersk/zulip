@@ -72,9 +72,7 @@ def update_realm(
     send_welcome_emails: Optional[bool] = REQ(validator=check_bool, default=None),
     digest_emails_enabled: Optional[bool] = REQ(validator=check_bool, default=None),
     message_content_allowed_in_email_notifications: Optional[bool] = REQ(validator=check_bool, default=None),
-    bot_creation_policy: Optional[int] = REQ(
-        validator=check_int_in(Realm.BOT_CREATION_POLICY_TYPES), default=None,
-    ),
+    bot_creation_policy: Optional[int] = REQ(validator=check_int_in(Realm.BOT_CREATION_POLICY_TYPES), default=None),
     create_stream_policy: Optional[int] = REQ(validator=check_int_in(Realm.COMMON_POLICY_TYPES), default=None),
     invite_to_stream_policy: Optional[int] = REQ(validator=check_int_in(Realm.COMMON_POLICY_TYPES), default=None),
     user_group_edit_policy: Optional[int] = REQ(

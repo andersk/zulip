@@ -86,9 +86,7 @@ class CacheWithKeyDecoratorTest(ZulipTestCase):
             return UserProfile.objects.get(id=user_id)
 
         hamlet = self.example_user("hamlet")
-        with patch("zerver.lib.cache.cache_set") as mock_set, patch(
-            "zerver.lib.cache.logger.warning",
-        ) as mock_warn:
+        with patch("zerver.lib.cache.cache_set") as mock_set, patch("zerver.lib.cache.logger.warning") as mock_warn:
             with queries_captured() as queries:
                 result = get_user_function_with_bad_cache_keys(hamlet.id)
 
@@ -107,9 +105,7 @@ class CacheWithKeyDecoratorTest(ZulipTestCase):
 
         hamlet = self.example_user("hamlet")
 
-        with patch("zerver.lib.cache.cache_set") as mock_set, patch(
-            "zerver.lib.cache.logger.warning",
-        ) as mock_warn:
+        with patch("zerver.lib.cache.cache_set") as mock_set, patch("zerver.lib.cache.logger.warning") as mock_warn:
             with queries_captured() as queries:
                 result = get_user_function_with_bad_cache_keys(hamlet.id)
 

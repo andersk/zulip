@@ -77,9 +77,7 @@ class TrelloHookTests(WebhookTestCase):
         self.send_and_test_stream_message("adding_attachment_to_card", "Welcome Board", expected_message)
 
     def test_trello_webhook_when_checklist_was_added_to_card(self) -> None:
-        expected_message = (
-            "TomaszKolek added the Checklist checklist to [New card](https://trello.com/c/xPKXoSTQ)."
-        )
+        expected_message = "TomaszKolek added the Checklist checklist to [New card](https://trello.com/c/xPKXoSTQ)."
         self.send_and_test_stream_message("adding_checklist_to_card", "Welcome Board", expected_message)
 
     def test_trello_webhook_when_check_item_is_checked(self) -> None:

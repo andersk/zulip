@@ -134,7 +134,9 @@ Billing method: send invoice"""
 
     def test_customer_subscription_trial_will_end(self) -> None:
         expected_topic = "cus_00000000000000"
-        expected_message = "[Subscription](https://dashboard.stripe.com/subscriptions/sub_00000000000000) trial will end in 3 days"
+        expected_message = (
+            "[Subscription](https://dashboard.stripe.com/subscriptions/sub_00000000000000) trial will end in 3 days"
+        )
         # 3 days before the end of the trial, plus a little bit to make sure the rounding is working
         with mock.patch("time.time", return_value=1480892861 - 3 * 3600 * 24 + 100):
             # use fixture named stripe_customer_subscription_trial_will_end
@@ -160,9 +162,7 @@ Billing method: send invoice"""
 
     def test_customer_discount_created(self) -> None:
         expected_topic = "cus_00000000000000"
-        expected_message = (
-            "Discount created ([25.5% off](https://dashboard.stripe.com/coupons/25_00000000000000))."
-        )
+        expected_message = "Discount created ([25.5% off](https://dashboard.stripe.com/coupons/25_00000000000000))."
         self.send_and_test_stream_message(
             "customer_discount_created",
             expected_topic,

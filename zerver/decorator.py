@@ -589,10 +589,7 @@ def require_user_group_edit_permission(view_func: ViewFuncT) -> ViewFuncT:
         request: HttpRequest, user_profile: UserProfile, *args: object, **kwargs: object
     ) -> HttpResponse:
         realm = user_profile.realm
-        if (
-            realm.user_group_edit_policy != Realm.USER_GROUP_EDIT_POLICY_MEMBERS
-            and not user_profile.is_realm_admin
-        ):
+        if realm.user_group_edit_policy != Realm.USER_GROUP_EDIT_POLICY_MEMBERS and not user_profile.is_realm_admin:
             raise OrganizationAdministratorRequired()
         return view_func(request, user_profile, *args, **kwargs)
 

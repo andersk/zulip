@@ -50,9 +50,7 @@ class PivotalV3HookTests(WebhookTestCase):
         expected_topic = "My new Feature story"
         expected_message = 'Leo Franchi edited "My new Feature story" \
 [(view)](https://www.pivotaltracker.com/s/projects/807213/stories/48276573).'
-        self.send_and_test_stream_message(
-            "moved", expected_topic, expected_message, content_type="application/xml",
-        )
+        self.send_and_test_stream_message("moved", expected_topic, expected_message, content_type="application/xml")
 
     def test_rejected(self) -> None:
         expected_topic = "Another new story"
@@ -143,9 +141,7 @@ A comment on the story
     def test_moved(self) -> None:
         expected_topic = "#63496066: Pivotal Test"
         expected_message = """Leo Franchi moved [Hard Code](https://www.pivotaltracker.com/s/projects/807213): [Pivotal Test](http://www.pivotaltracker.com/story/show/63496066) from **unstarted** to **unscheduled**."""
-        self.send_and_test_stream_message(
-            "moved", expected_topic, expected_message, content_type="application/xml",
-        )
+        self.send_and_test_stream_message("moved", expected_topic, expected_message, content_type="application/xml")
 
     def test_rejected(self) -> None:
         expected_topic = "#63486316: Story of the Year"

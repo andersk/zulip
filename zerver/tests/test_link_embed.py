@@ -582,9 +582,7 @@ class PreviewTestCase(ZulipTestCase):
             "message_content": url,
         }
 
-        with mock.patch(
-            "zerver.lib.url_preview.preview.get_oembed_data", side_effect=lambda *args, **kwargs: None,
-        ):
+        with mock.patch("zerver.lib.url_preview.preview.get_oembed_data", side_effect=lambda *args, **kwargs: None):
             with mock.patch("zerver.lib.url_preview.preview.valid_content_type", side_effect=lambda k: True):
                 with self.settings(TEST_SUITE=False, CACHES=TEST_CACHES):
                     with mock.patch("requests.get", mock.Mock(side_effect=ConnectionError())):

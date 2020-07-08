@@ -2004,11 +2004,7 @@ def ensure_stream(
     acting_user: Optional[UserProfile] = None,
 ) -> Stream:
     return create_stream_if_needed(
-        realm,
-        stream_name,
-        invite_only=invite_only,
-        stream_description=stream_description,
-        acting_user=acting_user,
+        realm, stream_name, invite_only=invite_only, stream_description=stream_description, acting_user=acting_user,
     )[0]
 
 
@@ -3236,9 +3232,7 @@ def bulk_remove_subscriptions(
     new_vacant_private_streams = [stream for stream in new_vacant_streams if stream.invite_only]
     new_vacant_public_streams = [stream for stream in new_vacant_streams if not stream.invite_only]
     if new_vacant_public_streams:
-        event = dict(
-            type="stream", op="vacate", streams=[stream.to_dict() for stream in new_vacant_public_streams],
-        )
+        event = dict(type="stream", op="vacate", streams=[stream.to_dict() for stream in new_vacant_public_streams])
         send_event(our_realm, event, active_user_ids(our_realm.id))
     if new_vacant_private_streams:
         # Deactivate any newly-vacant private streams
@@ -3397,9 +3391,7 @@ def do_change_bot_owner(user_profile: UserProfile, bot_owner: UserProfile, actin
 
     send_event(
         user_profile.realm,
-        dict(
-            type="realm_bot", op="update", bot=dict(user_id=user_profile.id, owner_id=user_profile.bot_owner.id),
-        ),
+        dict(type="realm_bot", op="update", bot=dict(user_id=user_profile.id, owner_id=user_profile.bot_owner.id)),
         update_users,
     )
 
@@ -3609,15 +3601,11 @@ def do_change_plan_type(realm: Realm, plan_type: int) -> None:
     send_event(realm, event, active_user_ids(realm.id))
 
 
-def do_change_default_sending_stream(
-    user_profile: UserProfile, stream: Optional[Stream], log: bool = True,
-) -> None:
+def do_change_default_sending_stream(user_profile: UserProfile, stream: Optional[Stream], log: bool = True) -> None:
     user_profile.default_sending_stream = stream
     user_profile.save(update_fields=["default_sending_stream"])
     if log:
-        log_event(
-            {"type": "user_change_default_sending_stream", "user": user_profile.email, "stream": str(stream)},
-        )
+        log_event({"type": "user_change_default_sending_stream", "user": user_profile.email, "stream": str(stream)})
     if user_profile.is_bot:
         if stream:
             stream_name: Optional[str] = stream.name
@@ -4438,9 +4426,7 @@ def do_update_message_flags(
         # didn't actually receive it.  So we create a historical,
         # read UserMessage message row for you to star.
         UserMessage.objects.create(
-            user_profile=user_profile,
-            message=message,
-            flags=UserMessage.flags.historical | UserMessage.flags.read,
+            user_profile=user_profile, message=message, flags=UserMessage.flags.historical | UserMessage.flags.read,
         )
 
     if operation == "add":
@@ -5229,9 +5215,7 @@ def gather_subscriptions_helper(user_profile: UserProfile, include_subscribers: 
 def gather_subscriptions(
     user_profile: UserProfile, include_subscribers: bool = False,
 ) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
-    subscribed, unsubscribed, _ = gather_subscriptions_helper(
-        user_profile, include_subscribers=include_subscribers,
-    )
+    subscribed, unsubscribed, _ = gather_subscriptions_helper(user_profile, include_subscribers=include_subscribers)
 
     if include_subscribers:
         user_ids = set()
@@ -5471,11 +5455,7 @@ def do_invite_users(
     # is used for rate limiting invitations, rather than keeping track of
     # when exactly invitations were sent
     do_increment_logging_stat(
-        user_profile.realm,
-        COUNT_STATS["invites_sent::day"],
-        None,
-        timezone_now(),
-        increment=len(validated_emails),
+        user_profile.realm, COUNT_STATS["invites_sent::day"], None, timezone_now(), increment=len(validated_emails),
     )
 
     # Now that we are past all the possible errors, we actually create

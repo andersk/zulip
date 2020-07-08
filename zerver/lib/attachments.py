@@ -12,9 +12,7 @@ def user_attachments(user_profile: UserProfile) -> List[Dict[str, Any]]:
     return [a.to_dict() for a in attachments]
 
 
-def access_attachment_by_id(
-    user_profile: UserProfile, attachment_id: int, needs_owner: bool = False,
-) -> Attachment:
+def access_attachment_by_id(user_profile: UserProfile, attachment_id: int, needs_owner: bool = False) -> Attachment:
     query = Attachment.objects.filter(id=attachment_id)
     if needs_owner:
         query = query.filter(owner=user_profile)

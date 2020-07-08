@@ -142,9 +142,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         """
         fp = StringIO("zulip!")
         fp.name = "pasted_file"
-        result = self.api_post(
-            self.example_user("hamlet"), "/api/v1/user_uploads?mimetype=image/png", {"file": fp},
-        )
+        result = self.api_post(self.example_user("hamlet"), "/api/v1/user_uploads?mimetype=image/png", {"file": fp})
         self.assertEqual(result.status_code, 200)
         uri = result.json()["uri"]
         self.assertTrue(uri.endswith("pasted_file.png"))
@@ -349,7 +347,9 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
     def test_attachment_url_without_upload(self) -> None:
         hamlet = self.example_user("hamlet")
         self.login_user(hamlet)
-        body = f"Test message ...[zulip.txt](http://localhost:9991/user_uploads/{hamlet.realm_id}/64/fake_path_id.txt)"
+        body = (
+            f"Test message ...[zulip.txt](http://localhost:9991/user_uploads/{hamlet.realm_id}/64/fake_path_id.txt)"
+        )
         self.send_stream_message(self.example_user("hamlet"), "Denmark", body, "test")
         self.assertFalse(Attachment.objects.filter(path_id="1/64/fake_path_id.txt").exists())
 
@@ -847,9 +847,7 @@ class AvatarTest(UploadSerializeMixin, ZulipTestCase):
         self.assertEqual(backend.get_avatar_url("hash", True), "/user_avatars/hash-medium.png?x=x")
         self.assertEqual(backend.get_realm_icon_url(15, 1), "/user_avatars/15/realm/icon.png?version=1")
         self.assertEqual(backend.get_realm_logo_url(15, 1, False), "/user_avatars/15/realm/logo.png?version=1")
-        self.assertEqual(
-            backend.get_realm_logo_url(15, 1, True), "/user_avatars/15/realm/night_logo.png?version=1",
-        )
+        self.assertEqual(backend.get_realm_logo_url(15, 1, True), "/user_avatars/15/realm/night_logo.png?version=1")
 
         with self.settings(S3_AVATAR_BUCKET="bucket"):
             backend = S3UploadBackend()
@@ -1404,9 +1402,7 @@ class RealmLogoTest(UploadSerializeMixin, ZulipTestCase):
             file_name = "night_logo.png"
         else:
             file_name = "logo.png"
-        self.assertEqual(
-            redirect_url, f"/user_avatars/{realm.id}/realm/{file_name}?version=2&night={is_night_str}",
-        )
+        self.assertEqual(redirect_url, f"/user_avatars/{realm.id}/realm/{file_name}?version=2&night={is_night_str}")
 
         do_change_plan_type(realm, Realm.LIMITED)
         if self.night:
@@ -1823,9 +1819,7 @@ class S3Test(ZulipTestCase):
         emoji_name = "emoji.png"
         zerver.lib.upload.upload_backend.upload_emoji_image(image_file, emoji_name, user_profile)
 
-        emoji_path = RealmEmoji.PATH_ID_TEMPLATE.format(
-            realm_id=user_profile.realm_id, emoji_file_name=emoji_name,
-        )
+        emoji_path = RealmEmoji.PATH_ID_TEMPLATE.format(realm_id=user_profile.realm_id, emoji_file_name=emoji_name)
         original_key = bucket.Object(emoji_path + ".original")
         image_file.seek(0)
         self.assertEqual(image_file.read(), original_key.get()["Body"].read())

@@ -702,12 +702,7 @@ class ModifyExampleGenerationTestCase(ZulipTestCase):
             res,
             (
                 "curl",
-                {
-                    "exclude": ["asdf", "sdfg"],
-                    "other_key": "asdf",
-                    "more_things": "asdf",
-                    "another_list": [1, "2"],
-                },
+                {"exclude": ["asdf", "sdfg"], "other_key": "asdf", "more_things": "asdf", "another_list": [1, "2"]},
             ),
         )
 

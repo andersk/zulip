@@ -172,9 +172,7 @@ if __name__ == "__main__":
         default=False,
         help="Run lint tool to detect duplicate ids on ignored files as well",
     )
-    parser.add_argument(
-        "--fix", action="store_true", default=False, help="Automatically fix indentation problems.",
-    )
+    parser.add_argument("--fix", action="store_true", default=False, help="Automatically fix indentation problems.")
     parser.add_argument("targets", nargs=argparse.REMAINDER)
     args = parser.parse_args()
     check_our_files(args.modified, args.all_dups, args.fix, args.targets)

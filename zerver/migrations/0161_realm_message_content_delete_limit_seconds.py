@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="realm",
-            name="message_content_delete_limit_seconds",
-            field=models.IntegerField(default=600),
+            model_name="realm", name="message_content_delete_limit_seconds", field=models.IntegerField(default=600),
         ),
     ]

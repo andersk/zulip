@@ -19,9 +19,7 @@ State changed to **{state}**:
 @api_key_only_webhook_view("Insping")
 @has_request_variables
 def api_insping_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    payload: Dict[str, Dict[str, Any]] = REQ(argument_type="body"),
+    request: HttpRequest, user_profile: UserProfile, payload: Dict[str, Dict[str, Any]] = REQ(argument_type="body"),
 ) -> HttpResponse:
 
     data = payload["webhook_event_data"]

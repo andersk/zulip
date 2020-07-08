@@ -396,8 +396,7 @@ class NormalActionsTest(BaseAction):
             return schema_checker
 
         events = self.verify_action(
-            lambda: self.send_stream_message(self.example_user("hamlet"), "Verona", "hello"),
-            client_gravatar=False,
+            lambda: self.send_stream_message(self.example_user("hamlet"), "Verona", "hello"), client_gravatar=False,
         )
         schema_checker = get_checker(check_gravatar=check_string)
         schema_checker("events[0]", events[0])
@@ -852,8 +851,7 @@ class NormalActionsTest(BaseAction):
         )
 
         events = self.verify_action(
-            lambda: notify_realm_custom_profile_fields(self.user_profile.realm, "add"),
-            state_change_expected=False,
+            lambda: notify_realm_custom_profile_fields(self.user_profile.realm, "add"), state_change_expected=False,
         )
         schema_checker("events[0]", events[0])
 
@@ -864,8 +862,7 @@ class NormalActionsTest(BaseAction):
         try_update_realm_custom_profile_field(realm, field, name, hint=hint)
 
         events = self.verify_action(
-            lambda: notify_realm_custom_profile_fields(self.user_profile.realm, "add"),
-            state_change_expected=False,
+            lambda: notify_realm_custom_profile_fields(self.user_profile.realm, "add"), state_change_expected=False,
         )
         schema_checker("events[0]", events[0])
 
@@ -1391,9 +1388,7 @@ class NormalActionsTest(BaseAction):
                 ("person", check_dict_only([("full_name", check_string), ("user_id", check_int)])),
             ],
         )
-        events = self.verify_action(
-            lambda: do_change_full_name(self.user_profile, "Sir Hamlet", self.user_profile),
-        )
+        events = self.verify_action(lambda: do_change_full_name(self.user_profile, "Sir Hamlet", self.user_profile))
         schema_checker("events[0]", events[0])
 
     def test_change_user_delivery_email_email_address_visibilty_admins(self) -> None:
@@ -2005,10 +2000,7 @@ class NormalActionsTest(BaseAction):
                 ("type", equals("realm")),
                 ("op", equals("update_dict")),
                 ("property", equals("night_logo")),
-                (
-                    "data",
-                    check_dict_only([("night_logo_url", check_string), ("night_logo_source", check_string)]),
-                ),
+                ("data", check_dict_only([("night_logo_url", check_string), ("night_logo_source", check_string)])),
             ],
         )
         schema_checker("events[0]", events[0])
@@ -2714,12 +2706,7 @@ class RealmPropertyActionTest(BaseAction):
         else:
             raise AssertionError(f"Unexpected property type {property_type}")
         schema_checker = check_events_dict(
-            [
-                ("type", equals("realm")),
-                ("op", equals("update")),
-                ("property", equals(name)),
-                ("value", validator),
-            ],
+            [("type", equals("realm")), ("op", equals("update")), ("property", equals(name)), ("value", validator)],
         )
 
         if vals is None:

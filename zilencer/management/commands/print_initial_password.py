@@ -13,11 +13,7 @@ class Command(ZulipBaseCommand):
 
     def add_arguments(self, parser: ArgumentParser) -> None:
         parser.add_argument(
-            "emails",
-            metavar="<email>",
-            type=str,
-            nargs="*",
-            help="email of user to show password and API key for",
+            "emails", metavar="<email>", type=str, nargs="*", help="email of user to show password and API key for",
         )
         self.add_realm_args(parser)
 

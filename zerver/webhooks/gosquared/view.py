@@ -21,9 +21,7 @@ The {status} **{name}** messaged:
 @api_key_only_webhook_view("GoSquared")
 @has_request_variables
 def api_gosquared_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    payload: Dict[str, Dict[str, Any]] = REQ(argument_type="body"),
+    request: HttpRequest, user_profile: UserProfile, payload: Dict[str, Dict[str, Any]] = REQ(argument_type="body"),
 ) -> HttpResponse:
     body = ""
     topic = ""

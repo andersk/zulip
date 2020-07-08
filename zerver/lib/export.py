@@ -1760,10 +1760,7 @@ def get_analytics_config() -> Config:
     )
 
     Config(
-        table="analytics_streamcount",
-        model=StreamCount,
-        normal_parent=analytics_config,
-        parent_key="realm_id__in",
+        table="analytics_streamcount", model=StreamCount, normal_parent=analytics_config, parent_key="realm_id__in",
     )
 
     return analytics_config

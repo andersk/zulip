@@ -245,8 +245,7 @@ def accounts_register(request: HttpRequest) -> HttpResponse:
             # zephyr mirroring realm.
             hesiod_name = compute_mit_user_fullname(email)
             form = RegistrationForm(
-                initial={"full_name": hesiod_name if "@" not in hesiod_name else ""},
-                realm_creation=realm_creation,
+                initial={"full_name": hesiod_name if "@" not in hesiod_name else ""}, realm_creation=realm_creation,
             )
             name_validated = True
         elif prereg_user.full_name:
@@ -255,9 +254,7 @@ def accounts_register(request: HttpRequest) -> HttpResponse:
                 name_validated = True
                 form = RegistrationForm({"full_name": prereg_user.full_name}, realm_creation=realm_creation)
             else:
-                form = RegistrationForm(
-                    initial={"full_name": prereg_user.full_name}, realm_creation=realm_creation,
-                )
+                form = RegistrationForm(initial={"full_name": prereg_user.full_name}, realm_creation=realm_creation)
         elif "full_name" in request.POST:
             form = RegistrationForm(
                 initial={"full_name": request.POST.get("full_name")}, realm_creation=realm_creation,

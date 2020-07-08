@@ -154,9 +154,7 @@ def get_openapi_paths() -> Set[str]:
     return set(openapi_spec.spec()["paths"].keys())
 
 
-def get_openapi_parameters(
-    endpoint: str, method: str, include_url_parameters: bool = True,
-) -> List[Dict[str, Any]]:
+def get_openapi_parameters(endpoint: str, method: str, include_url_parameters: bool = True) -> List[Dict[str, Any]]:
     openapi_endpoint = openapi_spec.spec()["paths"][endpoint][method.lower()]
     # We do a `.get()` for this last bit to distinguish documented
     # endpoints with no parameters (empty list) from undocumented

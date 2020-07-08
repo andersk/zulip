@@ -460,8 +460,7 @@ class TestArchivingSubMessages(ArchiveMessagesTestingBase):
 
         restore_all_data_from_archive()
         self.assertEqual(
-            set(SubMessage.objects.filter(id__in=submessage_ids).values_list("id", flat=True)),
-            set(submessage_ids),
+            set(SubMessage.objects.filter(id__in=submessage_ids).values_list("id", flat=True)), set(submessage_ids),
         )
 
 
@@ -741,8 +740,7 @@ class MoveMessageToArchiveWithSubMessages(MoveMessageToArchiveBase):
 
         restore_all_data_from_archive()
         self.assertEqual(
-            set(SubMessage.objects.filter(id__in=submessage_ids).values_list("id", flat=True)),
-            set(submessage_ids),
+            set(SubMessage.objects.filter(id__in=submessage_ids).values_list("id", flat=True)), set(submessage_ids),
         )
 
 
@@ -759,8 +757,7 @@ class MoveMessageToArchiveWithReactions(MoveMessageToArchiveBase, EmojiReactionB
         move_messages_to_archive(message_ids=[msg_id])
 
         self.assertEqual(
-            set(ArchivedReaction.objects.filter(message_id=msg_id).values_list("id", flat=True)),
-            set(reaction_ids),
+            set(ArchivedReaction.objects.filter(message_id=msg_id).values_list("id", flat=True)), set(reaction_ids),
         )
         self.assertEqual(Reaction.objects.filter(id__in=reaction_ids).count(), 0)
 
@@ -777,15 +774,11 @@ class TestCleaningArchive(ArchiveMessagesTestingBase):
 
         transactions = list(ArchiveTransaction.objects.all())
         for transaction in transactions[0:-1]:
-            transaction.timestamp = timezone_now() - timedelta(
-                days=settings.ARCHIVED_DATA_VACUUMING_DELAY_DAYS + 1,
-            )
+            transaction.timestamp = timezone_now() - timedelta(days=settings.ARCHIVED_DATA_VACUUMING_DELAY_DAYS + 1)
             transaction.save()
 
         message_ids_to_clean = list(
-            ArchivedMessage.objects.filter(archive_transaction__in=transactions[0:-1]).values_list(
-                "id", flat=True,
-            ),
+            ArchivedMessage.objects.filter(archive_transaction__in=transactions[0:-1]).values_list("id", flat=True),
         )
 
         clean_archived_data()

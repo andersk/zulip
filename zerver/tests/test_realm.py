@@ -530,9 +530,7 @@ class RealmTest(ZulipTestCase):
         invalid_video_chat_provider_value = 10
         req = {"video_chat_provider": ujson.dumps(invalid_video_chat_provider_value)}
         result = self.client_patch("/json/realm", req)
-        self.assert_json_error(
-            result, ("Invalid video_chat_provider {}").format(invalid_video_chat_provider_value),
-        )
+        self.assert_json_error(result, ("Invalid video_chat_provider {}").format(invalid_video_chat_provider_value))
 
         req = {"video_chat_provider": ujson.dumps(Realm.VIDEO_CHAT_PROVIDERS["disabled"]["id"])}
         result = self.client_patch("/json/realm", req)

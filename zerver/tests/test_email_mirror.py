@@ -354,9 +354,7 @@ class TestStreamEmailMessagesSuccess(ZulipTestCase):
         incoming_valid_message = EmailMessage()
         incoming_valid_message.set_content("TestStreamEmailMessages Body")
         incoming_valid_message["Subject"] = "TestStreamEmailMessages Subject"
-        incoming_valid_message[
-            "From"
-        ] = "Test =?utf-8?b?VXNlcsOzxIXEmQ==?= <=?utf-8?q?hamlet=5F=C4=99?=@zulip.com>"
+        incoming_valid_message["From"] = "Test =?utf-8?b?VXNlcsOzxIXEmQ==?= <=?utf-8?q?hamlet=5F=C4=99?=@zulip.com>"
         incoming_valid_message["To"] = stream_to_address
         incoming_valid_message["Reply-to"] = self.example_email("othello")
 
@@ -1257,9 +1255,7 @@ class TestEmailMirrorTornadoView(ZulipTestCase):
             self.assert_json_success(result)
 
         result = self.send_offline_message(mm_address, self.example_user("cordelia"))
-        self.assert_json_error(
-            result, "5.1.1 Bad destination mailbox address: Missed message address out of uses.",
-        )
+        self.assert_json_error(result, "5.1.1 Bad destination mailbox address: Missed message address out of uses.")
 
     def test_wrong_missed_email_private_message(self) -> None:
         self.send_private_message()

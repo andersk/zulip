@@ -148,9 +148,7 @@ def gather_hot_conversations(user_profile: UserProfile, messages: List[Message])
     return hot_conversation_render_payloads
 
 
-def gather_new_streams(
-    user_profile: UserProfile, threshold: datetime.datetime,
-) -> Tuple[int, Dict[str, List[str]]]:
+def gather_new_streams(user_profile: UserProfile, threshold: datetime.datetime) -> Tuple[int, Dict[str, List[str]]]:
     if user_profile.can_access_public_streams():
         new_streams = list(
             get_active_streams(user_profile.realm).filter(invite_only=False, date_created__gt=threshold),

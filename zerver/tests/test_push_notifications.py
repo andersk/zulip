@@ -424,16 +424,10 @@ class AnalyticsBouncerTest(BouncerTestCase):
 
         # Test only having new RealmCount rows
         RealmCount.objects.create(
-            realm=user.realm,
-            property=realm_stat.property,
-            end_time=end_time + datetime.timedelta(days=1),
-            value=6,
+            realm=user.realm, property=realm_stat.property, end_time=end_time + datetime.timedelta(days=1), value=6,
         )
         RealmCount.objects.create(
-            realm=user.realm,
-            property=realm_stat.property,
-            end_time=end_time + datetime.timedelta(days=2),
-            value=9,
+            realm=user.realm, property=realm_stat.property, end_time=end_time + datetime.timedelta(days=2), value=9,
         )
         send_analytics_to_remote_server()
         check_counts(7, 3, 1, 1)
@@ -1784,9 +1778,7 @@ class GCMSendTest(PushNotificationTest):
         )
 
     @mock.patch("zerver.lib.push_notifications.logger.warning")
-    def test_canonical_pushdevice_not_present(
-        self, mock_warning: mock.MagicMock, mock_gcm: mock.MagicMock,
-    ) -> None:
+    def test_canonical_pushdevice_not_present(self, mock_warning: mock.MagicMock, mock_gcm: mock.MagicMock) -> None:
         res = {}
         t1 = hex_to_b64("1111")
         t2 = hex_to_b64("3333")

@@ -1826,9 +1826,7 @@ class GetOldMessagesTest(ZulipTestCase):
 
         (english_message,) = [m for m in messages if m[TOPIC_NAME] == "english"]
         self.assertEqual(english_message[MATCH_TOPIC], "english")
-        self.assertIn(
-            english_message["match_content"], '<p>I want to go to <span class="highlight">日本</span>!</p>',
-        )
+        self.assertIn(english_message["match_content"], '<p>I want to go to <span class="highlight">日本</span>!</p>')
 
         # Multiple search operands with unicode
         multi_search_narrow = [
@@ -2372,11 +2370,7 @@ class GetOldMessagesTest(ZulipTestCase):
         """
         self.login("hamlet")
 
-        other_params: List[Tuple[str, Union[int, str, bool]]] = [
-            ("anchor", 0),
-            ("num_before", 0),
-            ("num_after", 0),
-        ]
+        other_params: List[Tuple[str, Union[int, str, bool]]] = [("anchor", 0), ("num_before", 0), ("num_after", 0)]
 
         bad_types: Tuple[Union[int, str, bool], ...] = (
             False,
@@ -2884,12 +2878,7 @@ recipient_id = %(recipient_id_3)s AND upper(subject) = upper(%(param_2)s))\
         sql_template = "SELECT anon_1.message_id \nFROM (SELECT id AS message_id \nFROM zerver_message \nWHERE recipient_id = {scotland_recipient} AND upper(subject) = upper('blah') ORDER BY zerver_message.id ASC \n LIMIT 10) AS anon_1 ORDER BY message_id ASC"
         sql = sql_template.format(**query_ids)
         self.common_check_get_messages_query(
-            {
-                "anchor": 0,
-                "num_before": 0,
-                "num_after": 9,
-                "narrow": '[["stream", "Scotland"], ["topic", "blah"]]',
-            },
+            {"anchor": 0, "num_before": 0, "num_after": 9, "narrow": '[["stream", "Scotland"], ["topic", "blah"]]'},
             sql,
         )
 
@@ -2903,12 +2892,7 @@ recipient_id = %(recipient_id_3)s AND upper(subject) = upper(%(param_2)s))\
         sql_template = "SELECT anon_1.message_id, anon_1.flags \nFROM (SELECT message_id, flags \nFROM zerver_usermessage JOIN zerver_message ON zerver_usermessage.message_id = zerver_message.id \nWHERE user_profile_id = {hamlet_id} AND recipient_id = {scotland_recipient} AND (flags & 2) != 0 ORDER BY message_id ASC \n LIMIT 10) AS anon_1 ORDER BY message_id ASC"
         sql = sql_template.format(**query_ids)
         self.common_check_get_messages_query(
-            {
-                "anchor": 0,
-                "num_before": 0,
-                "num_after": 9,
-                "narrow": '[["stream", "Scotland"], ["is", "starred"]]',
-            },
+            {"anchor": 0, "num_before": 0, "num_after": 9, "narrow": '[["stream", "Scotland"], ["is", "starred"]]'},
             sql,
         )
 

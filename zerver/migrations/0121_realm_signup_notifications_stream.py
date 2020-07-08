@@ -6,9 +6,7 @@ from django.db.backends.postgresql.schema import DatabaseSchemaEditor
 from django.db.migrations.state import StateApps
 
 
-def set_initial_value_for_signup_notifications_stream(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def set_initial_value_for_signup_notifications_stream(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     realm_model = apps.get_model("zerver", "Realm")
     realms = realm_model.objects.exclude(notifications_stream__isnull=True)
     for realm in realms:

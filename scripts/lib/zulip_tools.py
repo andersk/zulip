@@ -363,12 +363,7 @@ def generate_sha1sum_emoji(zulip_path: str) -> str:
 
 
 def may_be_perform_purging(
-    dirs_to_purge: Set[str],
-    dirs_to_keep: Set[str],
-    dir_type: str,
-    dry_run: bool,
-    verbose: bool,
-    no_headings: bool,
+    dirs_to_purge: Set[str], dirs_to_keep: Set[str], dir_type: str, dry_run: bool, verbose: bool, no_headings: bool,
 ) -> None:
     if dry_run:
         print("Performing a dry run...")

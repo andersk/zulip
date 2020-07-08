@@ -69,8 +69,7 @@ templates = {
         "unblocked": "[{user}]({user_link}) unblocked user story {subject}.",
         "set_milestone": "[{user}]({user_link}) added user story {subject} to sprint {new}.",
         "unset_milestone": "[{user}]({user_link}) removed user story {subject} from sprint {old}.",
-        "changed_milestone": "[{user}]({user_link}) changed sprint of user story {subject} from {old}"
-        " to {new}.",
+        "changed_milestone": "[{user}]({user_link}) changed sprint of user story {subject} from {old}" " to {new}.",
         "changed_status": "[{user}]({user_link}) changed status of user story {subject}" " from {old} to {new}.",
         "closed": "[{user}]({user_link}) closed user story {subject}.",
         "reopened": "[{user}]({user_link}) reopened user story {subject}.",

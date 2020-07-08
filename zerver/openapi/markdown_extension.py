@@ -11,9 +11,7 @@ from markdown.preprocessors import Preprocessor
 import zerver.openapi.python_examples
 from zerver.openapi.openapi import get_openapi_description, get_openapi_fixture, openapi_spec
 
-MACRO_REGEXP = re.compile(
-    r"\{generate_code_example(\(\s*(.+?)\s*\))*\|\s*(.+?)\s*\|\s*(.+?)\s*(\(\s*(.+)\s*\))?\}",
-)
+MACRO_REGEXP = re.compile(r"\{generate_code_example(\(\s*(.+?)\s*\))*\|\s*(.+?)\s*\|\s*(.+?)\s*(\(\s*(.+)\s*\))?\}")
 PYTHON_EXAMPLE_REGEX = re.compile(r"\# \{code_example\|\s*(.+?)\s*\}")
 JS_EXAMPLE_REGEX = re.compile(r"\/\/ \{code_example\|\s*(.+?)\s*\}")
 MACRO_REGEXP_DESC = re.compile(r"\{generate_api_description(\(\s*(.+?)\s*\))}")

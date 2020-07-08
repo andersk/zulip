@@ -25,9 +25,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "realm",
-                    models.OneToOneField(
-                        null=True, on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm",
-                    ),
+                    models.OneToOneField(null=True, on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm"),
                 ),
             ],
         ),

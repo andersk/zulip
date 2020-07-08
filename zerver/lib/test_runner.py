@@ -259,9 +259,7 @@ def initialize_worker_path(worker_id: int) -> None:
     # Every process should upload to a separate directory so that
     # race conditions can be avoided.
     settings.LOCAL_UPLOADS_DIR = get_or_create_dev_uuid_var_path(
-        os.path.join(
-            "test-backend", os.path.basename(TEST_RUN_DIR), os.path.basename(worker_path), "test_uploads",
-        ),
+        os.path.join("test-backend", os.path.basename(TEST_RUN_DIR), os.path.basename(worker_path), "test_uploads"),
     )
     settings.SENDFILE_ROOT = os.path.join(settings.LOCAL_UPLOADS_DIR, "files")
 

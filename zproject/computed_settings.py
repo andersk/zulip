@@ -870,9 +870,7 @@ ONLY_LDAP = False
 if len(AUTHENTICATION_BACKENDS) == 1 and (AUTHENTICATION_BACKENDS[0] == "zproject.backends.ZulipLDAPAuthBackend"):
     ONLY_LDAP = True
 
-if len(AUTHENTICATION_BACKENDS) == 1 and (
-    AUTHENTICATION_BACKENDS[0] == "zproject.backends.ZulipRemoteUserBackend"
-):
+if len(AUTHENTICATION_BACKENDS) == 1 and (AUTHENTICATION_BACKENDS[0] == "zproject.backends.ZulipRemoteUserBackend"):
     HOME_NOT_LOGGED_IN = "/accounts/login/sso/"
     ONLY_SSO = True
 else:

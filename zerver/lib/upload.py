@@ -794,8 +794,7 @@ class LocalUploadBackend(ZulipUploadBackend):
 
     def get_emoji_url(self, emoji_file_name: str, realm_id: int) -> str:
         return os.path.join(
-            "/user_avatars",
-            RealmEmoji.PATH_ID_TEMPLATE.format(realm_id=realm_id, emoji_file_name=emoji_file_name),
+            "/user_avatars", RealmEmoji.PATH_ID_TEMPLATE.format(realm_id=realm_id, emoji_file_name=emoji_file_name),
         )
 
     def upload_export_tarball(self, realm: Realm, tarball_path: str) -> str:
@@ -895,9 +894,7 @@ def create_attachment(file_name: str, path_id: str, user_profile: UserProfile, f
 
 def upload_message_image_from_request(request: HttpRequest, user_file: File, user_profile: UserProfile) -> str:
     uploaded_file_name, uploaded_file_size, content_type = get_file_info(request, user_file)
-    return upload_message_file(
-        uploaded_file_name, uploaded_file_size, content_type, user_file.read(), user_profile,
-    )
+    return upload_message_file(uploaded_file_name, uploaded_file_size, content_type, user_file.read(), user_profile)
 
 
 def upload_export_tarball(realm: Realm, tarball_path: str) -> str:

@@ -76,7 +76,5 @@ class Migration(migrations.Migration):
                 ("realm", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm")),
             ],
         ),
-        migrations.RunPython(
-            backfill_user_activations_and_deactivations, reverse_code=reverse_code, elidable=True,
-        ),
+        migrations.RunPython(backfill_user_activations_and_deactivations, reverse_code=reverse_code, elidable=True),
     ]

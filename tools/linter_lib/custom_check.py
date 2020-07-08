@@ -754,10 +754,7 @@ handlebars_rules = RuleList(
             "pattern": "[<]script",
             "description": "Do not use inline <script> tags here; put JavaScript in static/js instead.",
         },
-        {
-            "pattern": "{{ t (\"|')",
-            "description": 'There should be no spaces before the "t" in a translation tag.',
-        },
+        {"pattern": "{{ t (\"|')", "description": 'There should be no spaces before the "t" in a translation tag.'},
         {"pattern": r"{{t '.*' }}[\.\?!]", "description": "Period should be part of the translatable string."},
         {"pattern": r'{{t ".*" }}[\.\?!]', "description": "Period should be part of the translatable string."},
         {"pattern": r"{{/tr}}[\.\?!]", "description": "Period should be part of the translatable string."},

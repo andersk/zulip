@@ -29,9 +29,7 @@ class TestVideoCall(ZulipTestCase):
             responses.POST, "https://zoom.us/oauth/token", json={"access_token": "oldtoken", "expires_in": -60},
         )
 
-        response = self.client_get(
-            "/calls/zoom/complete", {"code": "code", "state": '{"realm":"zulip","sid":""}'},
-        )
+        response = self.client_get("/calls/zoom/complete", {"code": "code", "state": '{"realm":"zulip","sid":""}'})
         self.assertEqual(response.status_code, 200)
 
         responses.replace(
@@ -76,9 +74,7 @@ class TestVideoCall(ZulipTestCase):
     def test_create_video_credential_error(self) -> None:
         responses.add(responses.POST, "https://zoom.us/oauth/token", status=400)
 
-        response = self.client_get(
-            "/calls/zoom/complete", {"code": "code", "state": '{"realm":"zulip","sid":""}'},
-        )
+        response = self.client_get("/calls/zoom/complete", {"code": "code", "state": '{"realm":"zulip","sid":""}'})
         self.assert_json_error(response, "Invalid Zoom credentials")
 
     @responses.activate
@@ -87,9 +83,7 @@ class TestVideoCall(ZulipTestCase):
             responses.POST, "https://zoom.us/oauth/token", json={"access_token": "token", "expires_in": -60},
         )
 
-        response = self.client_get(
-            "/calls/zoom/complete", {"code": "code", "state": '{"realm":"zulip","sid":""}'},
-        )
+        response = self.client_get("/calls/zoom/complete", {"code": "code", "state": '{"realm":"zulip","sid":""}'})
         self.assertEqual(response.status_code, 200)
 
         responses.replace(responses.POST, "https://zoom.us/oauth/token", status=400)
@@ -107,9 +101,7 @@ class TestVideoCall(ZulipTestCase):
             responses.POST, "https://api.zoom.us/v2/users/me/meetings", status=400,
         )
 
-        response = self.client_get(
-            "/calls/zoom/complete", {"code": "code", "state": '{"realm":"zulip","sid":""}'},
-        )
+        response = self.client_get("/calls/zoom/complete", {"code": "code", "state": '{"realm":"zulip","sid":""}'})
         self.assertEqual(response.status_code, 200)
 
         response = self.client_post("/json/calls/zoom/create")

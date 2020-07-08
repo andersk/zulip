@@ -281,11 +281,7 @@ def validate(fn: Optional[str] = None, text: Optional[str] = None, check_indent:
         elif kind == "handlebars_end":
             state.matcher(token)
 
-        elif kind in {
-            "django_start",
-            "jinja2_whitespace_stripped_start",
-            "jinja2_whitespace_stripped_type2_start",
-        }:
+        elif kind in {"django_start", "jinja2_whitespace_stripped_start", "jinja2_whitespace_stripped_type2_start"}:
             if is_django_block_tag(tag):
                 start_tag_matcher(token)
         elif kind in {"django_end", "jinja2_whitespace_stripped_end"}:

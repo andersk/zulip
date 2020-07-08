@@ -25,9 +25,7 @@ class TypesPrintTest(ZulipTestCase):
     def _post_teardown(self) -> None:
         pass
 
-    def check_signature(
-        self, signature: str, retval: T, func: Callable[..., T], *args: Any, **kwargs: Any
-    ) -> None:
+    def check_signature(self, signature: str, retval: T, func: Callable[..., T], *args: Any, **kwargs: Any) -> None:
         """
         Checks if print_types outputs `signature` when func is called with *args and **kwargs.
         Do not decorate func with print_types before passing into this function.
@@ -106,10 +104,7 @@ class TypesPrintTest(ZulipTestCase):
         self.check_signature("to_A() -> A([])", A(()), to_A)
         self.check_signature("to_A([(int, str)]) -> A([(int, str)])", {2: "two"}, to_A, [(2, "two")])
         self.check_signature(
-            "to_A([(int, str), ...]) -> A([(int, str), ...])",
-            {1: "one", 2: "two"},
-            to_A,
-            [(1, "one"), (2, "two")],
+            "to_A([(int, str), ...]) -> A([(int, str), ...])", {1: "one", 2: "two"}, to_A, [(1, "one"), (2, "two")],
         )
         self.check_signature(
             "to_A(((int, str), (int, str))) -> A([(int, str), ...])",

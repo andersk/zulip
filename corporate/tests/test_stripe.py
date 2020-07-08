@@ -179,8 +179,7 @@ def normalize_fixture_data(
     ]
     # We'll replace cus_D7OT2jf5YAtZQ2 with something like cus_NORMALIZED0001
     pattern_translations = {
-        f"{prefix}_[A-Za-z0-9]{{{length}}}": f"{prefix}_NORMALIZED%0{length - 10}d"
-        for prefix, length in id_lengths
+        f"{prefix}_[A-Za-z0-9]{{{length}}}": f"{prefix}_NORMALIZED%0{length - 10}d" for prefix, length in id_lengths
     }
     # We'll replace "invoice_prefix": "A35BC4Q" with something like "invoice_prefix": "NORMA01"
     pattern_translations.update(
@@ -1286,9 +1285,7 @@ class StripeTest(StripeTestCase):
         self.login_user(hamlet)
         with patch("corporate.views.process_initial_upgrade", side_effect=Exception):
             response = self.upgrade(talk_to_stripe=False)
-        self.assert_json_error_contains(
-            response, "Something went wrong. Please contact desdemona+admin@zulip.com.",
-        )
+        self.assert_json_error_contains(response, "Something went wrong. Please contact desdemona+admin@zulip.com.")
         self.assertEqual(ujson.loads(response.content)["error_description"], "uncaught exception during upgrade")
 
     def test_request_sponsorship(self) -> None:
@@ -1520,9 +1517,7 @@ class StripeTest(StripeTestCase):
         # Replace with a card that's valid, but charging the card fails
         stripe_token = stripe_create_token(card_number="4000000000000341").id
         with patch("corporate.lib.stripe.billing_logger.error") as mock_billing_logger:
-            response = self.client_post(
-                "/json/billing/sources/change", {"stripe_token": ujson.dumps(stripe_token)},
-            )
+            response = self.client_post("/json/billing/sources/change", {"stripe_token": ujson.dumps(stripe_token)})
         mock_billing_logger.assert_called()
         self.assertEqual(ujson.loads(response.content)["error_description"], "card error")
         self.assert_json_error_contains(response, "Your card was declined")
@@ -1554,9 +1549,7 @@ class StripeTest(StripeTestCase):
         self.login_user(user)
         with patch("corporate.lib.stripe.timezone_now", return_value=self.now):
             self.local_upgrade(self.seat_count, True, CustomerPlan.ANNUAL, "token")
-        response = self.client_post(
-            "/json/billing/plan/change", {"status": CustomerPlan.DOWNGRADE_AT_END_OF_CYCLE},
-        )
+        response = self.client_post("/json/billing/plan/change", {"status": CustomerPlan.DOWNGRADE_AT_END_OF_CYCLE})
         self.assert_json_success(response)
 
         # Verify that we still write LicenseLedger rows during the remaining
@@ -1895,9 +1888,7 @@ class StripeTest(StripeTestCase):
         self.login_user(user)
         with patch("corporate.lib.stripe.timezone_now", return_value=self.now):
             self.local_upgrade(self.seat_count, True, CustomerPlan.ANNUAL, "token")
-        response = self.client_post(
-            "/json/billing/plan/change", {"status": CustomerPlan.DOWNGRADE_AT_END_OF_CYCLE},
-        )
+        response = self.client_post("/json/billing/plan/change", {"status": CustomerPlan.DOWNGRADE_AT_END_OF_CYCLE})
         self.assert_json_success(response)
         self.assertEqual(CustomerPlan.objects.first().status, CustomerPlan.DOWNGRADE_AT_END_OF_CYCLE)
 

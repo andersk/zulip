@@ -26,9 +26,7 @@ NAME_CHANGED_TEMPLATE = (
 ARCHIVED_TEMPLATE = "The {entity} {name_template} was {action}."
 STORY_TASK_TEMPLATE = "Task **{task_description}** was {action} the story {name_template}."
 STORY_TASK_COMPLETED_TEMPLATE = "Task **{task_description}** ({name_template}) was completed. :tada:"
-STORY_ADDED_REMOVED_EPIC_TEMPLATE = (
-    "The story {story_name_template} was {action} the" " epic {epic_name_template}."
-)
+STORY_ADDED_REMOVED_EPIC_TEMPLATE = "The story {story_name_template} was {action} the" " epic {epic_name_template}."
 STORY_EPIC_CHANGED_TEMPLATE = (
     "The story {story_name_template} was moved from {old_epic_name_template}" " to {new_epic_name_template}."
 )
