@@ -56,9 +56,6 @@ class LibratoHookTests(WebhookTestCase):
         expected_topic = "Snapshots"
         expected_message = "**Hamlet** sent a [snapshot](http://snapshots.librato.com/chart/nr5l3n0c-82162.png) of [metric](https://metrics.librato.com/s/spaces/167315/explore/1731491?duration=72039&end_time=1460569409)."
         self.send_and_test_stream_message(
-            "snapshot",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "snapshot", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
         self.IS_ATTACHMENT = False

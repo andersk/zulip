@@ -286,8 +286,7 @@ def main() -> None:
         action="store_true",
         default=False,
         help=(
-            "Run the tests which failed the last time "
-            "test-backend was run.  Implies --nonfatal-errors."
+            "Run the tests which failed the last time " "test-backend was run.  Implies --nonfatal-errors."
         ),
     )
     parser.add_argument(

@@ -60,9 +60,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="realmauditlog",
-            name="event_last_message_id",
-            field=models.IntegerField(null=True),
+            model_name="realmauditlog", name="event_last_message_id", field=models.IntegerField(null=True),
         ),
         migrations.RunPython(backfill_subscription_log_events, reverse_code=reverse_code, elidable=True),
     ]

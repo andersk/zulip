@@ -268,9 +268,7 @@ def get_story_task_completed_body(payload: Dict[str, Any]) -> Optional[str]:
     story_id = action["story_id"]
     for ref in payload["references"]:
         if ref["id"] == story_id:
-            kwargs["name_template"] = STORY_NAME_TEMPLATE.format(
-                name=ref["name"], app_url=ref["app_url"],
-            )
+            kwargs["name_template"] = STORY_NAME_TEMPLATE.format(name=ref["name"], app_url=ref["app_url"])
 
     if action["changes"]["complete"]["new"]:
         return STORY_TASK_COMPLETED_TEMPLATE.format(**kwargs)
@@ -282,9 +280,7 @@ def get_story_update_epic_body(payload: Dict[str, Any]) -> str:
     action = get_action_with_primary_id(payload)
 
     kwargs = {
-        "story_name_template": STORY_NAME_TEMPLATE.format(
-            name=action["name"], app_url=action["app_url"],
-        ),
+        "story_name_template": STORY_NAME_TEMPLATE.format(name=action["name"], app_url=action["app_url"]),
     }
 
     new_id = action["changes"]["epic_id"].get("new")
@@ -313,9 +309,7 @@ def get_story_update_estimate_body(payload: Dict[str, Any]) -> str:
     action = get_action_with_primary_id(payload)
 
     kwargs = {
-        "story_name_template": STORY_NAME_TEMPLATE.format(
-            name=action["name"], app_url=action["app_url"],
-        ),
+        "story_name_template": STORY_NAME_TEMPLATE.format(name=action["name"], app_url=action["app_url"]),
     }
 
     new = action["changes"]["estimate"].get("new")

@@ -552,9 +552,7 @@ class TestMissedMessages(ZulipTestCase):
 
         hamlet = self.example_user("hamlet")
         self.login("othello")
-        result = self.client_patch(
-            "/json/messages/" + str(msg_id), {"message_id": msg_id, "content": " "},
-        )
+        result = self.client_patch("/json/messages/" + str(msg_id), {"message_id": msg_id, "content": " "})
         self.assert_json_success(result)
         handle_missedmessage_emails(hamlet.id, [{"message_id": msg_id}])
         self.assertEqual(len(mail.outbox), 0)
@@ -568,9 +566,7 @@ class TestMissedMessages(ZulipTestCase):
 
         hamlet = self.example_user("hamlet")
         self.login("othello")
-        result = self.client_patch(
-            "/json/messages/" + str(msg_id), {"message_id": msg_id, "content": " "},
-        )
+        result = self.client_patch("/json/messages/" + str(msg_id), {"message_id": msg_id, "content": " "})
         self.assert_json_success(result)
         handle_missedmessage_emails(hamlet.id, [{"message_id": msg_id}])
         self.assertEqual(len(mail.outbox), 0)
@@ -585,9 +581,7 @@ class TestMissedMessages(ZulipTestCase):
         hamlet = self.example_user("hamlet")
         iago = self.example_user("iago")
         self.login("othello")
-        result = self.client_patch(
-            "/json/messages/" + str(msg_id), {"message_id": msg_id, "content": " "},
-        )
+        result = self.client_patch("/json/messages/" + str(msg_id), {"message_id": msg_id, "content": " "})
         self.assert_json_success(result)
         handle_missedmessage_emails(hamlet.id, [{"message_id": msg_id}])
         self.assertEqual(len(mail.outbox), 0)

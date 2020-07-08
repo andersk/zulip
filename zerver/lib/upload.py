@@ -321,10 +321,7 @@ def upload_image_to_s3(
         content_disposition = "attachment"
 
     key.put(
-        Body=contents,
-        Metadata=metadata,
-        ContentType=content_type,
-        ContentDisposition=content_disposition,
+        Body=contents, Metadata=metadata, ContentType=content_type, ContentDisposition=content_disposition,
     )
 
 
@@ -578,20 +575,14 @@ class S3UploadBackend(ZulipUploadBackend):
         image_data = emoji_file.read()
         resized_image_data = resize_emoji(image_data)
         upload_image_to_s3(
-            self.avatar_bucket,
-            ".".join((emoji_path, "original")),
-            content_type,
-            user_profile,
-            image_data,
+            self.avatar_bucket, ".".join((emoji_path, "original")), content_type, user_profile, image_data,
         )
         upload_image_to_s3(
             self.avatar_bucket, emoji_path, content_type, user_profile, resized_image_data,
         )
 
     def get_emoji_url(self, emoji_file_name: str, realm_id: int) -> str:
-        emoji_path = RealmEmoji.PATH_ID_TEMPLATE.format(
-            realm_id=realm_id, emoji_file_name=emoji_file_name,
-        )
+        emoji_path = RealmEmoji.PATH_ID_TEMPLATE.format(realm_id=realm_id, emoji_file_name=emoji_file_name)
         return f"{self.avatar_bucket_url}/{emoji_path}"
 
     def upload_export_tarball(self, realm: Optional[Realm], tarball_path: str) -> str:
@@ -919,11 +910,7 @@ def claim_attachment(
 
 def create_attachment(file_name: str, path_id: str, user_profile: UserProfile, file_size: int) -> bool:
     attachment = Attachment.objects.create(
-        file_name=file_name,
-        path_id=path_id,
-        owner=user_profile,
-        realm=user_profile.realm,
-        size=file_size,
+        file_name=file_name, path_id=path_id, owner=user_profile, realm=user_profile.realm, size=file_size,
     )
     from zerver.lib.actions import notify_attachment_update
 

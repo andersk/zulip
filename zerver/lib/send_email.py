@@ -388,8 +388,6 @@ def send_custom_email(users: List[UserProfile], options: Dict[str, Any]) -> None
             to_user_ids=[user_profile.id],
             from_address=FromAddress.SUPPORT,
             reply_to_email=options.get("reply_to"),
-            from_name=get_header(
-                options.get("from_name"), parsed_email_template.get("from"), "from_name",
-            ),
+            from_name=get_header(options.get("from_name"), parsed_email_template.get("from"), "from_name"),
             context=context,
         )

@@ -175,9 +175,7 @@ class TestServiceBotStateHandler(ZulipTestCase):
         self.assertEqual(storage.get("some other key"), "some other value")
         self.assertTrue(storage.contains("some key"))
         self.assertFalse(storage.contains("nonexistent key"))
-        self.assertRaisesMessage(
-            StateError, "Key does not exist.", lambda: storage.get("nonexistent key"),
-        )
+        self.assertRaisesMessage(StateError, "Key does not exist.", lambda: storage.get("nonexistent key"))
         storage.put("some key", "a new value")
         self.assertEqual(storage.get("some key"), "a new value")
         second_storage = StateHandler(self.second_bot_profile)

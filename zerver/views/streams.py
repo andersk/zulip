@@ -483,17 +483,13 @@ def add_subscriptions_backend(
     authorized_streams, unauthorized_streams = filter_stream_authorization(user_profile, existing_streams)
     if len(unauthorized_streams) > 0 and authorization_errors_fatal:
         return json_error(
-            _("Unable to access stream ({stream_name}).").format(
-                stream_name=unauthorized_streams[0].name,
-            ),
+            _("Unable to access stream ({stream_name}).").format(stream_name=unauthorized_streams[0].name),
         )
     # Newly created streams are also authorized for the creator
     streams = authorized_streams + created_streams
 
     if len(principals) > 0:
-        if user_profile.realm.is_zephyr_mirror_realm and not all(
-            stream.invite_only for stream in streams
-        ):
+        if user_profile.realm.is_zephyr_mirror_realm and not all(stream.invite_only for stream in streams):
             return json_error(_("You can only invite other Zephyr mirroring users to private streams."))
         if not user_profile.can_subscribe_other_users():
             if user_profile.realm.invite_to_stream_policy == Realm.POLICY_ADMINS_ONLY:

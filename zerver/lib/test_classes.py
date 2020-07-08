@@ -366,9 +366,7 @@ class ZulipTestCase(TestCase):
         result = self.client_post("/json/bots", bot_info)
         self.assert_json_error(result, assert_json_error_msg)
 
-    def login_with_return(
-        self, email: str, password: Optional[str] = None, **kwargs: Any
-    ) -> HttpResponse:
+    def login_with_return(self, email: str, password: Optional[str] = None, **kwargs: Any) -> HttpResponse:
         if password is None:
             password = initial_password(email)
         result = self.client_post("/accounts/login/", {"username": email, "password": password}, **kwargs)

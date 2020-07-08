@@ -155,9 +155,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
 
         endpoint = "/api/v1/remotes/push/register"
 
-        result = self.uuid_post(
-            self.server_uuid, endpoint, {"user_id": user_id, "token_kind": token_kind},
-        )
+        result = self.uuid_post(self.server_uuid, endpoint, {"user_id": user_id, "token_kind": token_kind})
         self.assert_json_error(result, "Missing 'token' argument")
         result = self.uuid_post(self.server_uuid, endpoint, {"user_id": user_id, "token": token})
         self.assert_json_error(result, "Missing 'token_kind' argument")
@@ -170,9 +168,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
 
         hamlet = self.example_user("hamlet")
 
-        result = self.api_post(
-            hamlet, endpoint, dict(user_id=user_id, token_kin=token_kind, token=token),
-        )
+        result = self.api_post(hamlet, endpoint, dict(user_id=user_id, token_kin=token_kind, token=token))
         self.assert_json_error(result, "Account is not associated with this subdomain", status_code=401)
 
         # We need the root ('') subdomain to be in use for this next
@@ -192,9 +188,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
             dict(user_id=user_id, token_kind=token_kind, token=token),
             subdomain="zulip",
         )
-        self.assert_json_error(
-            result, "Invalid subdomain for push notifications bouncer", status_code=401,
-        )
+        self.assert_json_error(result, "Invalid subdomain for push notifications bouncer", status_code=401)
 
         # We do a bit of hackery here to the API_KEYS cache just to
         # make the code simple for sending an incorrect API key.
@@ -697,10 +691,7 @@ class PushNotificationTest(BouncerTestCase):
         self.gcm_tokens = ["1111", "2222"]
         for token in self.gcm_tokens:
             PushDeviceToken.objects.create(
-                kind=PushDeviceToken.GCM,
-                token=hex_to_b64(token),
-                user=self.user_profile,
-                ios_app_id=None,
+                kind=PushDeviceToken.GCM, token=hex_to_b64(token), user=self.user_profile, ios_app_id=None,
             )
 
         self.remote_gcm_tokens = ["dddd"]
@@ -1738,9 +1729,9 @@ class TestPushApi(BouncerTestCase):
             self.assertEqual(len(tokens), 1)
             self.assertEqual(tokens[0].token, token)
 
-        with self.settings(
-            PUSH_NOTIFICATION_BOUNCER_URL="https://push.zulip.org.example.com",
-        ), mock.patch("zerver.lib.remote_server.requests.request", side_effect=self.bounce_request):
+        with self.settings(PUSH_NOTIFICATION_BOUNCER_URL="https://push.zulip.org.example.com"), mock.patch(
+            "zerver.lib.remote_server.requests.request", side_effect=self.bounce_request,
+        ):
             # Enable push notification bouncer and add tokens.
             for endpoint, token in bouncer_requests:
                 # Test that we can push twice.
@@ -1776,9 +1767,9 @@ class TestPushApi(BouncerTestCase):
 
         # Use push notification bouncer and test removing device tokens.
         # Tokens will be removed both locally and remotely.
-        with self.settings(
-            PUSH_NOTIFICATION_BOUNCER_URL="https://push.zulip.org.example.com",
-        ), mock.patch("zerver.lib.remote_server.requests.request", side_effect=self.bounce_request):
+        with self.settings(PUSH_NOTIFICATION_BOUNCER_URL="https://push.zulip.org.example.com"), mock.patch(
+            "zerver.lib.remote_server.requests.request", side_effect=self.bounce_request,
+        ):
             for endpoint, token in bouncer_requests:
                 result = self.client_delete(endpoint, {"token": token})
                 self.assert_json_success(result)

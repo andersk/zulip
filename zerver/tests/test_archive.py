@@ -112,10 +112,7 @@ class WebPublicTopicHistoryTest(ZulipTestCase):
             self.example_user("iago"), "Test Public Archives", "Test Message 2", topic_name="topicglobal",
         )
         self.send_stream_message(
-            self.example_user("iago"),
-            "Test Public Archives",
-            "Test Message 3",
-            topic_name="second_topic",
+            self.example_user("iago"), "Test Public Archives", "Test Message 3", topic_name="second_topic",
         )
         self.send_stream_message(
             self.example_user("iago"), "Test Public Archives", "Test Message 4", topic_name="TopicGlobal",

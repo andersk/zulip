@@ -444,9 +444,7 @@ class ReactionEventTest(ZulipTestCase):
 
         events: List[Mapping[str, Any]] = []
         with tornado_redirected_to_list(events):
-            result = self.api_delete(
-                reaction_sender, f"/api/v1/messages/{pm_id}/reactions", reaction_info,
-            )
+            result = self.api_delete(reaction_sender, f"/api/v1/messages/{pm_id}/reactions", reaction_info)
         self.assert_json_success(result)
         self.assertEqual(len(events), 1)
 
@@ -873,9 +871,7 @@ class ReactionAPIEventTest(EmojiReactionBase):
         }
         events: List[Mapping[str, Any]] = []
         with tornado_redirected_to_list(events):
-            result = self.post_reaction(
-                reaction_info, message_id=pm_id, sender=reaction_sender.short_name,
-            )
+            result = self.post_reaction(reaction_info, message_id=pm_id, sender=reaction_sender.short_name)
         self.assert_json_success(result)
         self.assertEqual(len(events), 1)
 

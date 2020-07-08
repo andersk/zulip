@@ -183,9 +183,7 @@ def add_missing_messages(user_profile: UserProfile) -> None:
         recipient_ids.append(sub["recipient_id"])
 
     all_stream_msgs = list(
-        Message.objects.filter(
-            recipient__id__in=recipient_ids, id__gt=user_profile.last_active_message_id,
-        )
+        Message.objects.filter(recipient__id__in=recipient_ids, id__gt=user_profile.last_active_message_id)
         .order_by("id")
         .values("id", "recipient__type_id"),
     )

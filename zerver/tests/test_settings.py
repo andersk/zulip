@@ -183,9 +183,7 @@ class ChangeSettingsTest(ZulipTestCase):
 
     def test_toggling_boolean_user_display_settings(self) -> None:
         """Test updating each boolean setting in UserProfile property_types"""
-        boolean_settings = (
-            s for s in UserProfile.property_types if UserProfile.property_types[s] is bool
-        )
+        boolean_settings = (s for s in UserProfile.property_types if UserProfile.property_types[s] is bool)
         for display_setting in boolean_settings:
             self.check_for_toggle_param_patch("/json/settings/display", display_setting)
 
@@ -222,9 +220,7 @@ class ChangeSettingsTest(ZulipTestCase):
                         new_password="ignored",
                     ),
                 )
-                self.assert_json_error(
-                    result, "You're making too many attempts! Try again in 10 seconds.",
-                )
+                self.assert_json_error(result, "You're making too many attempts! Try again in 10 seconds.")
 
             # After time passes, we should be able to succeed if we give the correct password.
             with mock.patch("time.time", return_value=start_time + 11):
@@ -255,9 +251,7 @@ class ChangeSettingsTest(ZulipTestCase):
         with self.settings(LDAP_APPEND_DOMAIN="zulip.com", AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map):
             result = self.client_patch(
                 "/json/settings",
-                dict(
-                    old_password=initial_password(self.example_email("hamlet")), new_password="ignored",
-                ),
+                dict(old_password=initial_password(self.example_email("hamlet")), new_password="ignored"),
             )
             self.assert_json_error(result, "Your Zulip password is managed in LDAP")
 
@@ -273,18 +267,14 @@ class ChangeSettingsTest(ZulipTestCase):
         with self.settings(LDAP_APPEND_DOMAIN="example.com", AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map):
             result = self.client_patch(
                 "/json/settings",
-                dict(
-                    old_password=initial_password(self.example_email("hamlet")), new_password="ignored",
-                ),
+                dict(old_password=initial_password(self.example_email("hamlet")), new_password="ignored"),
             )
             self.assert_json_success(result)
 
         with self.settings(LDAP_APPEND_DOMAIN=None, AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map):
             result = self.client_patch(
                 "/json/settings",
-                dict(
-                    old_password=initial_password(self.example_email("hamlet")), new_password="ignored",
-                ),
+                dict(old_password=initial_password(self.example_email("hamlet")), new_password="ignored"),
             )
             self.assert_json_error(result, "Your Zulip password is managed in LDAP")
 

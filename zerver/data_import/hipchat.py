@@ -367,9 +367,7 @@ def write_emoticon_data(realm_id: int, data_dir: str, output_dir: str) -> List[Z
         # Use our template from RealmEmoji
         # PATH_ID_TEMPLATE = "{realm_id}/emoji/images/{emoji_file_name}"
         target_fn = source_fn
-        target_sub_path = RealmEmoji.PATH_ID_TEMPLATE.format(
-            realm_id=realm_id, emoji_file_name=target_fn,
-        )
+        target_sub_path = RealmEmoji.PATH_ID_TEMPLATE.format(realm_id=realm_id, emoji_file_name=target_fn)
         target_path = os.path.join(emoji_folder, target_sub_path)
 
         os.makedirs(os.path.dirname(target_path), exist_ok=True)
@@ -503,9 +501,7 @@ def get_hipchat_sender_id(
     if raw_sender_id == 0:
         if slim_mode:
             return None
-        mirror_user = user_handler.get_mirror_user(
-            realm_id=realm_id, name=message_dict["sender"]["name"],
-        )
+        mirror_user = user_handler.get_mirror_user(realm_id=realm_id, name=message_dict["sender"]["name"])
         sender_id = mirror_user["id"]
         return sender_id
 
@@ -648,9 +644,7 @@ def process_raw_message_batch(
 
         message_id = NEXT_ID("message")
         mention_user_ids = {
-            user_id_mapper.get(id)
-            for id in set(raw_message["mention_user_ids"])
-            if user_id_mapper.has(id)
+            user_id_mapper.get(id) for id in set(raw_message["mention_user_ids"]) if user_id_mapper.has(id)
         }
         mention_map[message_id] = mention_user_ids
 

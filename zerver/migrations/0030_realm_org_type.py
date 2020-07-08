@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="realm",
-            name="org_type",
-            field=models.PositiveSmallIntegerField(default=CORPORATE),
+            model_name="realm", name="org_type", field=models.PositiveSmallIntegerField(default=CORPORATE),
         ),
     ]

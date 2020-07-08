@@ -74,9 +74,7 @@ class TornadoWebTestCase(AsyncHTTPTestCase, ZulipTestCase):
         kwargs["headers"] = headers
 
     def create_queue(self, **kwargs: Any) -> str:
-        response = self.client_get(
-            "/json/events?dont_block=true", subdomain="zulip", skip_user_agent=True,
-        )
+        response = self.client_get("/json/events?dont_block=true", subdomain="zulip", skip_user_agent=True)
         self.assertEqual(response.code, 200)
         body = ujson.loads(response.body)
         self.assertEqual(body["events"], [])

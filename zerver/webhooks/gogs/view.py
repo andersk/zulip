@@ -171,10 +171,7 @@ def gogs_webhook_main(
     elif event == "pull_request":
         body = format_pull_request_event(payload, include_title=user_specified_topic is not None)
         topic = TOPIC_WITH_PR_OR_ISSUE_INFO_TEMPLATE.format(
-            repo=repo,
-            type="PR",
-            id=payload["pull_request"]["id"],
-            title=payload["pull_request"]["title"],
+            repo=repo, type="PR", id=payload["pull_request"]["id"], title=payload["pull_request"]["title"],
         )
     elif event == "issues":
         body = format_issues_event(payload, include_title=user_specified_topic is not None)

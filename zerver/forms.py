@@ -384,9 +384,7 @@ class OurAuthenticationForm(AuthenticationForm):
                 realm = get_realm(subdomain)
             except Realm.DoesNotExist:
                 logging.warning(
-                    "User %s attempted to password login to nonexistent subdomain %s",
-                    username,
-                    subdomain,
+                    "User %s attempted to password login to nonexistent subdomain %s", username, subdomain,
                 )
                 raise ValidationError("Realm does not exist")
 

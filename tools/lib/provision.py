@@ -109,9 +109,7 @@ else:
     logging.critical("Unsupported platform: %s %s", vendor, os_version)
     if vendor == "ubuntu" and os_version == "14.04":
         print()
-        print(
-            "Ubuntu Trusty reached end-of-life upstream and is no longer a supported platform for Zulip",
-        )
+        print("Ubuntu Trusty reached end-of-life upstream and is no longer a supported platform for Zulip")
         if os.path.exists("/home/vagrant"):
             print("To upgrade, run `vagrant destroy`, and then recreate the Vagrant guest.\n")
             print("See: https://zulip.readthedocs.io/en/latest/development/setup-vagrant.html")
@@ -431,12 +429,7 @@ def main(options: argparse.Namespace) -> "NoReturn":
     elif "fedora" in os_families():
         # These platforms don't enable and start services on
         # installing their package, so we do that here.
-        for service in [
-            "postgresql-{}".format(POSTGRES_VERSION),
-            "rabbitmq-server",
-            "memcached",
-            "redis",
-        ]:
+        for service in ["postgresql-{}".format(POSTGRES_VERSION), "rabbitmq-server", "memcached", "redis"]:
             run_as_root(["systemctl", "enable", service], sudo_args=["-H"])
             run_as_root(["systemctl", "start", service], sudo_args=["-H"])
 

@@ -295,9 +295,7 @@ def get_issue_action_body(payload: Dict[str, Any], action: str, include_title: b
     )
 
 
-def get_pull_request_action_body(
-    payload: Dict[str, Any], action: str, include_title: bool = False,
-) -> str:
+def get_pull_request_action_body(payload: Dict[str, Any], action: str, include_title: bool = False) -> str:
     pull_request = payload["pullrequest"]
     return get_pull_request_event_message(
         get_user_username(payload),

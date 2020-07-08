@@ -286,9 +286,7 @@ def validate_account_and_subdomain(request: HttpRequest, user_profile: UserProfi
         raise JsonableError(_("Account is not associated with this subdomain"))
 
 
-def access_user_by_api_key(
-    request: HttpRequest, api_key: str, email: Optional[str] = None,
-) -> UserProfile:
+def access_user_by_api_key(request: HttpRequest, api_key: str, email: Optional[str] = None) -> UserProfile:
     if not has_api_key_format(api_key):
         raise InvalidAPIKeyFormatError()
 
@@ -650,9 +648,7 @@ def authenticated_rest_api_view(
     def _wrapped_view_func(view_func: Callable[..., HttpResponse]) -> Callable[..., HttpResponse]:
         @csrf_exempt
         @wraps(view_func)
-        def _wrapped_func_arguments(
-            request: HttpRequest, *args: object, **kwargs: object
-        ) -> HttpResponse:
+        def _wrapped_func_arguments(request: HttpRequest, *args: object, **kwargs: object) -> HttpResponse:
             # First try block attempts to get the credentials we need to do authentication
             try:
                 # Grab the base64-encoded authentication string, decode it, and split it into
@@ -799,8 +795,7 @@ def is_local_addr(addr: str) -> bool:
 # secret, and also the originating IP (for now).
 def authenticate_notify(request: HttpRequest) -> bool:
     return (
-        is_local_addr(request.META["REMOTE_ADDR"])
-        and request.POST.get("secret") == settings.SHARED_SECRET
+        is_local_addr(request.META["REMOTE_ADDR"]) and request.POST.get("secret") == settings.SHARED_SECRET
     )
 
 
@@ -824,9 +819,7 @@ def internal_notify_view(is_tornado_view: bool) -> Callable[[ViewFuncT], ViewFun
         @csrf_exempt
         @require_post
         @wraps(view_func)
-        def _wrapped_func_arguments(
-            request: HttpRequest, *args: object, **kwargs: object
-        ) -> HttpResponse:
+        def _wrapped_func_arguments(request: HttpRequest, *args: object, **kwargs: object) -> HttpResponse:
             if not authenticate_notify(request):
                 return json_error(_("Access denied"), status=403)
             is_tornado_request = hasattr(request, "_tornado_handler")
@@ -959,9 +952,7 @@ def zulip_otp_required(
 
         return user.is_verified() or (user.is_authenticated and not user_has_device(user))
 
-    decorator = django_user_passes_test(
-        test, login_url=login_url, redirect_field_name=redirect_field_name,
-    )
+    decorator = django_user_passes_test(test, login_url=login_url, redirect_field_name=redirect_field_name)
 
     return decorator
 

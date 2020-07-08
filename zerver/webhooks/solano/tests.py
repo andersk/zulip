@@ -57,10 +57,7 @@ Build update (see [build log](https://ci.solanolabs.com:443/reports/3317799)):
 """.strip()
 
         self.send_and_test_stream_message(
-            "received",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "received", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_solano_test_message(self) -> None:

@@ -801,9 +801,7 @@ class NormalActionsTest(BaseAction):
         streams = []
         for stream_name in ["Denmark", "Verona"]:
             streams.append(get_stream(stream_name, self.user_profile.realm))
-        do_create_multiuse_invite_link(
-            self.user_profile, PreregistrationUser.INVITE_AS["MEMBER"], streams,
-        )
+        do_create_multiuse_invite_link(self.user_profile, PreregistrationUser.INVITE_AS["MEMBER"], streams)
 
         multiuse_object = MultiuseInvite.objects.get()
         events = self.verify_action(
@@ -1160,10 +1158,7 @@ class NormalActionsTest(BaseAction):
         client = get_client("website")
         events = self.verify_action(
             lambda: do_update_user_status(
-                user_profile=self.user_profile,
-                away=True,
-                status_text="out to lunch",
-                client_id=client.id,
+                user_profile=self.user_profile, away=True, status_text="out to lunch", client_id=client.id,
             ),
         )
 
@@ -1319,9 +1314,7 @@ class NormalActionsTest(BaseAction):
         )
         default_stream_groups_checker("events[0]", events[0])
 
-        events = self.verify_action(
-            lambda: do_remove_default_stream_group(self.user_profile.realm, group),
-        )
+        events = self.verify_action(lambda: do_remove_default_stream_group(self.user_profile.realm, group))
         default_stream_groups_checker("events[0]", events[0])
 
     def test_default_stream_group_events_guest(self) -> None:
@@ -1544,9 +1537,7 @@ class NormalActionsTest(BaseAction):
         ):
             with fake_backends():
                 events = self.verify_action(
-                    lambda: do_set_realm_authentication_methods(
-                        self.user_profile.realm, auth_method_dict,
-                    ),
+                    lambda: do_set_realm_authentication_methods(self.user_profile.realm, auth_method_dict),
                 )
 
             schema_checker("events[0]", events[0])
@@ -1830,9 +1821,7 @@ class NormalActionsTest(BaseAction):
         )
 
         events = self.verify_action(
-            lambda: do_change_notification_settings(
-                self.user_profile, notification_setting, 2, log=False,
-            ),
+            lambda: do_change_notification_settings(self.user_profile, notification_setting, 2, log=False),
         )
         schema_checker("events[0]", events[0])
 
@@ -1846,9 +1835,7 @@ class NormalActionsTest(BaseAction):
         )
 
         events = self.verify_action(
-            lambda: do_change_notification_settings(
-                self.user_profile, notification_setting, 1, log=False,
-            ),
+            lambda: do_change_notification_settings(self.user_profile, notification_setting, 1, log=False),
         )
         schema_checker("events[0]", events[0])
 
@@ -1969,11 +1956,7 @@ class NormalActionsTest(BaseAction):
         schema_checker("events[0]", events[0])
 
         schema_checker = check_events_dict(
-            [
-                ("type", equals("realm_domains")),
-                ("op", equals("remove")),
-                ("domain", equals("zulip.org")),
-            ],
+            [("type", equals("realm_domains")), ("op", equals("remove")), ("domain", equals("zulip.org"))],
         )
         events = self.verify_action(lambda: do_remove_realm_domain(test_domain))
         schema_checker("events[0]", events[0])
@@ -2799,9 +2782,7 @@ class NormalActionsTest(BaseAction):
         )
         schema_checker("events[0]", events[0])
 
-        schema_checker = check_events_dict(
-            [("type", equals("has_zoom_token")), ("value", equals(False))],
-        )
+        schema_checker = check_events_dict([("type", equals("has_zoom_token")), ("value", equals(False))])
         events = self.verify_action(lambda: do_set_zoom_token(self.user_profile, None))
         schema_checker("events[0]", events[0])
 

@@ -768,9 +768,7 @@ def handle_remove_push_notification(user_profile_id: int, message_ids: List[int]
     if uses_notification_bouncer():
         send_notifications_to_bouncer(user_profile_id, apns_payload, gcm_payload, gcm_options)
     else:
-        android_devices = list(
-            PushDeviceToken.objects.filter(user=user_profile, kind=PushDeviceToken.GCM),
-        )
+        android_devices = list(PushDeviceToken.objects.filter(user=user_profile, kind=PushDeviceToken.GCM))
         apple_devices = list(PushDeviceToken.objects.filter(user=user_profile, kind=PushDeviceToken.APNS))
         if android_devices:
             send_android_push_notification(android_devices, gcm_payload, gcm_options)

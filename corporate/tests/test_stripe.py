@@ -89,9 +89,7 @@ def stripe_fixture_path(decorated_function_name: str, mocked_function_name: str,
     # use test_* for the python test files
     if decorated_function_name[:5] == "test_":
         decorated_function_name = decorated_function_name[5:]
-    return (
-        f"{STRIPE_FIXTURES_DIR}/{decorated_function_name}--{mocked_function_name[7:]}.{call_count}.json"
-    )
+    return f"{STRIPE_FIXTURES_DIR}/{decorated_function_name}--{mocked_function_name[7:]}.{call_count}.json"
 
 
 def fixture_files_for_function(decorated_function: CallableT) -> List[str]:  # nocoverage
@@ -206,9 +204,7 @@ def normalize_fixture_data(
             f'"{timestamp_field}": 1[5-9][0-9]{{8}}(?![0-9-])'
         ] = f'"{timestamp_field}": 1{i+1:02}%07d'
 
-    normalized_values: Dict[str, Dict[str, str]] = {
-        pattern: {} for pattern in pattern_translations.keys()
-    }
+    normalized_values: Dict[str, Dict[str, str]] = {pattern: {} for pattern in pattern_translations.keys()}
     for fixture_file in fixture_files_for_function(decorated_function):
         with open(fixture_file) as f:
             file_content = f.read()
@@ -1532,9 +1528,7 @@ class StripeTest(StripeTestCase):
         plan.status = CustomerPlan.ENDED
         plan.save(update_fields=["status"])
         attach_discount_to_realm(user.realm, Decimal(25))
-        process_initial_upgrade(
-            user, self.seat_count, True, CustomerPlan.ANNUAL, stripe_create_token().id,
-        )
+        process_initial_upgrade(user, self.seat_count, True, CustomerPlan.ANNUAL, stripe_create_token().id)
         self.assertEqual(
             6000 * self.seat_count,
             [charge for charge in stripe.Charge.list(customer=stripe_customer_id)][0].amount,
@@ -2185,9 +2179,7 @@ class RequiresBillingAccessTest(ZulipTestCase):
         hamlet.is_billing_admin = True
         hamlet.save(update_fields=["is_billing_admin"])
 
-    def verify_non_admins_blocked_from_endpoint(
-        self, url: str, request_data: Dict[str, Any] = {},
-    ) -> None:
+    def verify_non_admins_blocked_from_endpoint(self, url: str, request_data: Dict[str, Any] = {}) -> None:
         cordelia = self.example_user("cordelia")
         self.login_user(cordelia)
         response = self.client_post(url, request_data)

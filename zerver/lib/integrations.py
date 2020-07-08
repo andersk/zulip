@@ -80,11 +80,7 @@ class Integration:
         for category in categories:
             if category not in CATEGORIES:
                 raise KeyError(  # nocoverage
-                    "INTEGRATIONS: "
-                    + name
-                    + " - category '"
-                    + category
-                    + "' is not a key in CATEGORIES.",
+                    "INTEGRATIONS: " + name + " - category '" + category + "' is not a key in CATEGORIES.",
                 )
         self.categories = list(map((lambda c: CATEGORIES[c]), categories))
 
@@ -614,9 +610,7 @@ DOC_SCREENSHOT_CONFIG: Dict[str, List[ScreenshotConfig]] = {
     "appfollow": [ScreenshotConfig("review.json")],
     "appveyor": [ScreenshotConfig("appveyor_build_success.json")],
     "basecamp": [ScreenshotConfig("doc_active.json")],
-    "beanstalk": [
-        ScreenshotConfig("git_multiple.json", use_basic_auth=True, payload_as_query_param=True),
-    ],
+    "beanstalk": [ScreenshotConfig("git_multiple.json", use_basic_auth=True, payload_as_query_param=True)],
     # 'beeminder': [ScreenshotConfig('derail_worried.json')],
     "bitbucket": [
         ScreenshotConfig("push.json", "002.png", use_basic_auth=True, payload_as_query_param=True),
@@ -626,10 +620,7 @@ DOC_SCREENSHOT_CONFIG: Dict[str, List[ScreenshotConfig]] = {
     ],
     "bitbucket3": [
         ScreenshotConfig(
-            "repo_push_update_single_branch.json",
-            "004.png",
-            "bitbucket",
-            bot_name="Bitbucket Server Bot",
+            "repo_push_update_single_branch.json", "004.png", "bitbucket", bot_name="Bitbucket Server Bot",
         ),
     ],
     "buildbot": [ScreenshotConfig("started.json")],

@@ -146,9 +146,7 @@ def send_analytics_to_remote_server() -> None:
 
     (realm_count_data, installation_count_data, realmauditlog_data) = build_analytics_data(
         realm_count_query=RealmCount.objects.filter(id__gt=last_acked_realm_count_id),
-        installation_count_query=InstallationCount.objects.filter(
-            id__gt=last_acked_installation_count_id,
-        ),
+        installation_count_query=InstallationCount.objects.filter(id__gt=last_acked_installation_count_id),
         realmauditlog_query=RealmAuditLog.objects.filter(
             event_type__in=RealmAuditLog.SYNCED_BILLING_EVENTS, id__gt=last_acked_realmauditlog_id,
         ),

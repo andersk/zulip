@@ -852,9 +852,7 @@ def api_dev_fetch_api_key(request: HttpRequest, username: str = REQ()) -> HttpRe
     user_profile = authenticate(dev_auth_username=username, realm=realm, return_data=return_data)
     if return_data.get("inactive_realm"):
         return json_error(
-            _("This organization has been deactivated."),
-            data={"reason": "realm deactivated"},
-            status=403,
+            _("This organization has been deactivated."), data={"reason": "realm deactivated"}, status=403,
         )
     if return_data.get("inactive_user"):
         return json_error(
@@ -904,9 +902,7 @@ def api_fetch_api_key(request: HttpRequest, username: str = REQ(), password: str
         )
     if return_data.get("inactive_realm"):
         return json_error(
-            _("This organization has been deactivated."),
-            data={"reason": "realm deactivated"},
-            status=403,
+            _("This organization has been deactivated."), data={"reason": "realm deactivated"}, status=403,
         )
     if return_data.get("password_auth_disabled"):
         return json_error(

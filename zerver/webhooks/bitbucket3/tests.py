@@ -60,9 +60,7 @@ class Bitbucket3HookTests(WebhookTestCase):
         self.send_and_test_stream_message("repo_push_delete_branch", expected_topic, expected_message)
 
     def test_push_delete_tag(self) -> None:
-        expected_message = (
-            """[hypro999](http://139.59.64.214:7990/users/hypro999) removed tag test-tag."""
-        )
+        expected_message = """[hypro999](http://139.59.64.214:7990/users/hypro999) removed tag test-tag."""
         self.send_and_test_stream_message("repo_push_delete_tag", self.EXPECTED_TOPIC, expected_message)
 
     def test_push_update_single_branch(self) -> None:
@@ -213,18 +211,14 @@ class Bitbucket3HookTests(WebhookTestCase):
     def test_pull_request_remove_all_reviewers(self) -> None:
         expected_message = """[hypro999](http://139.59.64.214:7990/users/hypro999) removed all reviewers from [PR #1](http://139.59.64.214:7990/projects/SBOX/repos/sandbox/pull-requests/1)."""
         expected_topic = "sandbox / PR #1 Branch1"
-        self.send_and_test_stream_message(
-            "pull_request_remove_reviewer", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request_remove_reviewer", expected_topic, expected_message)
 
     def test_pull_request_remove_all_reviewers_with_title(self) -> None:
         expected_message = """[hypro999](http://139.59.64.214:7990/users/hypro999) removed all reviewers from [PR #1 Branch1](http://139.59.64.214:7990/projects/SBOX/repos/sandbox/pull-requests/1)."""
         expected_topic = "sandbox / PR #1 Branch1"
         expected_topic = "custom_topic"
         self.url = self.build_webhook_url(topic="custom_topic")
-        self.send_and_test_stream_message(
-            "pull_request_remove_reviewer", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request_remove_reviewer", expected_topic, expected_message)
 
     # PR Comment Events:
     def test_pull_request_comment_added(self) -> None:
@@ -240,6 +234,4 @@ class Bitbucket3HookTests(WebhookTestCase):
     def test_pull_request_comment_deleted(self) -> None:
         expected_message = """[zura](http://139.59.64.214:7990/users/zura) deleted their comment on [PR #6](http://139.59.64.214:7990/projects/SBOX/repos/sandbox/pull-requests/6):\n\n~~~ quote\n~~This seems like a pretty good idea. @shimura what do you think?~~\n~~~"""
         expected_topic = "sandbox / PR #6 sample_file: Add sample_file.txt."
-        self.send_and_test_stream_message(
-            "pull_request_comment_deleted", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request_comment_deleted", expected_topic, expected_message)

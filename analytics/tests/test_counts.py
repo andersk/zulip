@@ -525,12 +525,7 @@ class TestCountStats(AnalyticsTestCase):
         self.assertTableState(
             UserCount,
             ["value", "subgroup", "user"],
-            [
-                [1, "false", human1],
-                [1, "false", human2],
-                [3, "true", bot],
-                [1, "false", self.hourly_user],
-            ],
+            [[1, "false", human1], [1, "false", human2], [3, "true", bot], [1, "false", self.hourly_user]],
         )
         self.assertTableState(
             RealmCount,
@@ -801,9 +796,7 @@ class TestCountStats(AnalyticsTestCase):
             ["value", "subgroup", "user"],
             [[1, client2_id, user1], [1, client2_id, user2], [1, website_client_id, user2]],
         )
-        self.assertTableState(
-            RealmCount, ["value", "subgroup"], [[1, website_client_id], [2, client2_id]],
-        )
+        self.assertTableState(RealmCount, ["value", "subgroup"], [[1, website_client_id], [2, client2_id]])
         # No aggregation to InstallationCount with realm constraint
         self.assertTableState(InstallationCount, ["value", "subgroup"], [])
         self.assertTableState(StreamCount, [], [])
@@ -1343,9 +1336,7 @@ class TestLoggingCountStats(AnalyticsTestCase):
         )
         self.assertEqual(
             1,
-            UserCount.objects.filter(property=interactions_property).aggregate(Sum("value"))[
-                "value__sum"
-            ],
+            UserCount.objects.filter(property=interactions_property).aggregate(Sum("value"))["value__sum"],
         )
 
         self.send_stream_message(user1, stream.name)
@@ -1357,9 +1348,7 @@ class TestLoggingCountStats(AnalyticsTestCase):
         )
         self.assertEqual(
             2,
-            UserCount.objects.filter(property=interactions_property).aggregate(Sum("value"))[
-                "value__sum"
-            ],
+            UserCount.objects.filter(property=interactions_property).aggregate(Sum("value"))["value__sum"],
         )
 
         message = self.send_stream_message(user2, stream.name)
@@ -1370,9 +1359,7 @@ class TestLoggingCountStats(AnalyticsTestCase):
         )
         self.assertEqual(
             3,
-            UserCount.objects.filter(property=interactions_property).aggregate(Sum("value"))[
-                "value__sum"
-            ],
+            UserCount.objects.filter(property=interactions_property).aggregate(Sum("value"))["value__sum"],
         )
 
 

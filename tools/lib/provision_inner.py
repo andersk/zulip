@@ -133,9 +133,7 @@ def need_to_run_build_pygments_data() -> bool:
     if not os.path.exists("static/generated/pygments_data.json"):
         return True
 
-    return is_digest_obsolete(
-        "build_pygments_data_hash", build_pygments_data_paths(), [pygments_version],
-    )
+    return is_digest_obsolete("build_pygments_data_hash", build_pygments_data_paths(), [pygments_version])
 
 
 def need_to_run_compilemessages() -> bool:

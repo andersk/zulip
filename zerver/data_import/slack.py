@@ -1154,9 +1154,7 @@ def fetch_shared_channel_users(user_list: List[ZerverFieldsT], slack_data_dir: s
         user = get_slack_api_data("https://slack.com/api/users.info", "user", token=token, user=user_id)
         team_id = user["team_id"]
         if team_id not in team_id_to_domain:
-            team = get_slack_api_data(
-                "https://slack.com/api/team.info", "team", token=token, team=team_id,
-            )
+            team = get_slack_api_data("https://slack.com/api/team.info", "team", token=token, team=team_id)
             team_id_to_domain[team_id] = team["domain"]
         user["team_domain"] = team_id_to_domain[team_id]
         user["is_mirror_dummy"] = True
@@ -1280,9 +1278,7 @@ def do_convert_data(slack_zip_file: str, output_dir: str, token: str, threads: i
     avatar_folder = os.path.join(output_dir, "avatars")
     avatar_realm_folder = os.path.join(avatar_folder, str(realm_id))
     os.makedirs(avatar_realm_folder, exist_ok=True)
-    avatar_records = process_avatars(
-        avatar_list, avatar_folder, realm_id, threads, size_url_suffix="-512",
-    )
+    avatar_records = process_avatars(avatar_list, avatar_folder, realm_id, threads, size_url_suffix="-512")
 
     uploads_folder = os.path.join(output_dir, "uploads")
     os.makedirs(os.path.join(uploads_folder, str(realm_id)), exist_ok=True)

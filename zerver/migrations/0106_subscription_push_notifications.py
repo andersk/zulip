@@ -10,8 +10,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="subscription",
-            name="push_notifications",
-            field=models.BooleanField(default=False),
+            model_name="subscription", name="push_notifications", field=models.BooleanField(default=False),
         ),
     ]

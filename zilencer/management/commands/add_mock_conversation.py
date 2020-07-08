@@ -45,9 +45,7 @@ From image editing program:
         stream = ensure_stream(realm, "zulip features", acting_user=None)
 
         UserProfile.objects.filter(email__contains="stage").delete()
-        starr = do_create_user(
-            "1@stage.example.com", "password", realm, "Ada Starr", "", acting_user=None,
-        )
+        starr = do_create_user("1@stage.example.com", "password", realm, "Ada Starr", "", acting_user=None)
         self.set_avatar(starr, "static/images/characters/starr.png")
         fisher = do_create_user(
             "2@stage.example.com", "password", realm, "Bel Fisher", "", acting_user=None,
@@ -98,10 +96,7 @@ From image editing program:
                 "so `#1234` becomes [#1234](github.com/zulip/zulip/1234), "
                 "a link to the corresponding GitHub issue.",
             },
-            {
-                "sender": twitter_bot,
-                "content": "https://twitter.com/gvanrossum/status/786661035637772288",
-            },
+            {"sender": twitter_bot, "content": "https://twitter.com/gvanrossum/status/786661035637772288"},
             {
                 "sender": fisher,
                 "content": "Oops, the Twitter bot I set up shouldn't be posting here. Let me go fix that.",

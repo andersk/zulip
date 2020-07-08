@@ -20,11 +20,7 @@ class Command(compilemessages.Command):
         super().add_arguments(parser)
 
         parser.add_argument(
-            "--strict",
-            "-s",
-            action="store_true",
-            default=False,
-            help="Stop execution in case of errors.",
+            "--strict", "-s", action="store_true", default=False, help="Stop execution in case of errors.",
         )
 
     def handle(self, *args: Any, **options: Any) -> None:

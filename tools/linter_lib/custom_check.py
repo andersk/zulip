@@ -162,8 +162,7 @@ js_rules = RuleList(
         {"pattern": r"ui.report_success\(", "description": "Deprecated function, use ui_report.success."},
         {
             "pattern": r"""report.success\(["']""",
-            "description": "Argument to report_success should be a literal string enclosed "
-            "by i18n.t()",
+            "description": "Argument to report_success should be a literal string enclosed " "by i18n.t()",
         },
         {"pattern": r"ui.report_error\(", "description": "Deprecated function, use ui_report.error."},
         {
@@ -473,18 +472,12 @@ python_rules = RuleList(
         {
             "pattern": ".is_realm_admin =",
             "description": "Use do_change_user_role function rather than setting UserProfile's is_realm_admin attribute directly.",
-            "exclude": {
-                "zerver/migrations/0248_userprofile_role_start.py",
-                "zerver/tests/test_users.py",
-            },
+            "exclude": {"zerver/migrations/0248_userprofile_role_start.py", "zerver/tests/test_users.py"},
         },
         {
             "pattern": ".is_guest =",
             "description": "Use do_change_user_role function rather than setting UserProfile's is_guest attribute directly.",
-            "exclude": {
-                "zerver/migrations/0248_userprofile_role_start.py",
-                "zerver/tests/test_users.py",
-            },
+            "exclude": {"zerver/migrations/0248_userprofile_role_start.py", "zerver/tests/test_users.py"},
         },
         *whitespace_rules,
         *comma_whitespace_rule,
@@ -793,10 +786,7 @@ handlebars_rules = RuleList(
             "pattern": r'{{t ".*" }}[\.\?!]',
             "description": "Period should be part of the translatable string.",
         },
-        {
-            "pattern": r"{{/tr}}[\.\?!]",
-            "description": "Period should be part of the translatable string.",
-        },
+        {"pattern": r"{{/tr}}[\.\?!]", "description": "Period should be part of the translatable string."},
         {"pattern": "{{t (\"|') ", "description": "Translatable strings should not have leading spaces."},
         {
             "pattern": "{{t '[^']+ ' }}",

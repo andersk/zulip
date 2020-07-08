@@ -1319,9 +1319,7 @@ class TestContentTypeUnspecifiedCharset(ZulipTestCase):
             'Content-Type: text/plain; charset="us-ascii"', "Content-Type: text/plain",
         )
         incoming_message = message_from_string(message_as_string, policy=email.policy.default)
-        assert isinstance(
-            incoming_message, EmailMessage,
-        )  # https://github.com/python/typeshed/issues/2417
+        assert isinstance(incoming_message, EmailMessage)  # https://github.com/python/typeshed/issues/2417
 
         user_profile = self.example_user("hamlet")
         self.login_user(user_profile)

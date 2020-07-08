@@ -81,9 +81,7 @@ class EditMessageTest(ZulipTestCase):
         self.subscribe(user_2, stream_name)
         message_ids.append(self.send_stream_message(user_2, stream_name, "Message two"))
         self.subscribe(self.notification_bot(), stream_name)
-        message_ids.append(
-            self.send_stream_message(self.notification_bot(), stream_name, "Message three"),
-        )
+        message_ids.append(self.send_stream_message(self.notification_bot(), stream_name, "Message three"))
         messages = [Message.objects.select_related().get(id=message_id) for message_id in message_ids]
 
         # Check number of queries performed
@@ -866,9 +864,7 @@ class EditMessageTest(ZulipTestCase):
         self.subscribe(user_profile, stream.name)
         self.subscribe(user_profile, new_stream.name)
         msg_id = self.send_stream_message(user_profile, stream.name, topic_name=topic, content="First")
-        msg_id_lt = self.send_stream_message(
-            user_profile, stream.name, topic_name=topic, content="Second",
-        )
+        msg_id_lt = self.send_stream_message(user_profile, stream.name, topic_name=topic, content="Second")
 
         self.send_stream_message(user_profile, stream.name, topic_name=topic, content="third")
 

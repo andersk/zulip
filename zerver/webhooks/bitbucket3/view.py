@@ -223,9 +223,7 @@ def get_pr_opened_or_modified_body(
             "title": pr["title"] if include_title else None,
         }
         if include_title:
-            body = PULL_REQUEST_OPENED_OR_MODIFIED_TEMPLATE_WITH_REVIEWERS_WITH_TITLE.format(
-                **parameters,
-            )
+            body = PULL_REQUEST_OPENED_OR_MODIFIED_TEMPLATE_WITH_REVIEWERS_WITH_TITLE.format(**parameters)
         else:
             body = PULL_REQUEST_OPENED_OR_MODIFIED_TEMPLATE_WITH_REVIEWERS.format(**parameters)
         punctuation = ":" if description else "."

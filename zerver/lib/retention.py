@@ -471,8 +471,7 @@ def get_realms_and_streams_for_archiving() -> List[Tuple[Realm, List[Stream]]]:
         realm_id_to_streams_list[realm.id].append(stream)
 
     return [
-        (realm_id_to_realm[realm_id], realm_id_to_streams_list[realm_id])
-        for realm_id in realm_id_to_realm
+        (realm_id_to_realm[realm_id], realm_id_to_streams_list[realm_id]) for realm_id in realm_id_to_realm
     ]
 
 

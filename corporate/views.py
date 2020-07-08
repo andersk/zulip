@@ -100,9 +100,7 @@ def payment_method_string(stripe_customer: stripe.Customer) -> str:
         return _("No payment method on file")
     if stripe_source.object == "card":
         assert isinstance(stripe_source, stripe.Card)
-        return _("{brand} ending in {last4}").format(
-            brand=stripe_source.brand, last4=stripe_source.last4,
-        )
+        return _("{brand} ending in {last4}").format(brand=stripe_source.brand, last4=stripe_source.last4)
     # There might be one-off stuff we do for a particular customer that
     # would land them here. E.g. by default we don't support ACH for
     # automatic payments, but in theory we could add it for a customer via
@@ -132,12 +130,7 @@ def upgrade(
             schedule = "annual"
             license_management = "manual"
         check_upgrade_parameters(
-            billing_modality,
-            schedule,
-            license_management,
-            licenses,
-            stripe_token is not None,
-            seat_count,
+            billing_modality, schedule, license_management, licenses, stripe_token is not None, seat_count,
         )
         assert licenses is not None
         automanage_licenses = license_management == "automatic"
@@ -305,9 +298,7 @@ def billing_home(request: HttpRequest) -> HttpResponse:
             ]
             free_trial = plan.status == CustomerPlan.FREE_TRIAL
             downgrade_at_end_of_cycle = plan.status == CustomerPlan.DOWNGRADE_AT_END_OF_CYCLE
-            switch_to_annual_at_end_of_cycle = (
-                plan.status == CustomerPlan.SWITCH_TO_ANNUAL_AT_END_OF_CYCLE
-            )
+            switch_to_annual_at_end_of_cycle = plan.status == CustomerPlan.SWITCH_TO_ANNUAL_AT_END_OF_CYCLE
             licenses = last_ledger_entry.licenses
             licenses_used = get_latest_seat_count(user.realm)
             # Should do this in javascript, using the user's timezone

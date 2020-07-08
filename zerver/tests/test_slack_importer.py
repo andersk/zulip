@@ -989,11 +989,7 @@ class SlackImporter(ZulipTestCase):
 
         user_data_fixture = ujson.loads(self.fixture_data("user_data.json", type="slack_fixtures"))
         team_info_fixture = ujson.loads(self.fixture_data("team_info.json", type="slack_fixtures"))
-        mock_get_slack_api_data.side_effect = [
-            user_data_fixture["members"],
-            {},
-            team_info_fixture["team"],
-        ]
+        mock_get_slack_api_data.side_effect = [user_data_fixture["members"], {}, team_info_fixture["team"]]
         mock_requests_get.return_value.raw = get_test_image_file("img.png")
 
         do_convert_data(test_slack_zip_file, output_dir, token)

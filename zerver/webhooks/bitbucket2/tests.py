@@ -39,9 +39,7 @@ class Bitbucket2HookTests(WebhookTestCase):
             "push_multiple_committers", self.EXPECTED_TOPIC_BRANCH_EVENTS, expected_message,
         )
 
-    def test_bitbucket2_on_push_commits_multiple_committers_with_others_filtered_by_branches(
-        self,
-    ) -> None:
+    def test_bitbucket2_on_push_commits_multiple_committers_with_others_filtered_by_branches(self) -> None:
         self.url = self.build_webhook_url(branches="master,development")
         commit_info = "* first commit ([84b96ad](https://bitbucket.org/kolaszek/repository-name/commits/84b96adc644a30fd6465b3d196369d880762afed))\n"
         expected_message = f"""kolaszek [pushed](https://bitbucket.org/kolaszek/repository-name/branch/master) 10 commits to branch master. Commits by james (3), Brendon (2), Tomasz (2) and others (3).\n\n{commit_info*9}* first commit ([84b96ad](https://bitbucket.org/kolaszek/repository-name/commits/84b96adc644a30fd6465b3d196369d880762afed))"""

@@ -18,9 +18,7 @@ RANDOM_KEY_PREFIX = generate_random_token(32)
 
 
 class RateLimitedTestObject(RateLimitedObject):
-    def __init__(
-        self, name: str, rules: List[Tuple[int, int]], backend: Type[RateLimiterBackend],
-    ) -> None:
+    def __init__(self, name: str, rules: List[Tuple[int, int]], backend: Type[RateLimiterBackend]) -> None:
         self.name = name
         self._rules = rules
         self._rules.sort(key=lambda x: x[0])

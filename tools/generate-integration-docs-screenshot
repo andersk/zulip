@@ -53,9 +53,7 @@ from zerver.lib.webhooks.common import get_fixture_http_headers
 from zerver.models import Message, UserProfile, get_realm, get_user_by_delivery_email
 
 
-def create_integration_bot(
-    integration: WebhookIntegration, bot_name: Optional[str] = None,
-) -> UserProfile:
+def create_integration_bot(integration: WebhookIntegration, bot_name: Optional[str] = None) -> UserProfile:
     realm = get_realm("zulip")
     owner = get_user_by_delivery_email("iago@zulip.com", realm)
     bot_email = f"{integration.name}-bot@example.com"

@@ -516,8 +516,7 @@ class MatterMostImporter(ZulipTestCase):
 
         self.assertEqual(len(total_reactions), 4)
         self.assertEqual(
-            self.get_set(total_reactions, "reaction_type"),
-            {Reaction.REALM_EMOJI, Reaction.UNICODE_EMOJI},
+            self.get_set(total_reactions, "reaction_type"), {Reaction.REALM_EMOJI, Reaction.UNICODE_EMOJI},
         )
         self.assertEqual(self.get_set(total_reactions, "emoji_name"), {"tick", "smile", "world_map"})
         self.assertEqual(
@@ -551,9 +550,7 @@ class MatterMostImporter(ZulipTestCase):
 
         realm = self.read_file(harry_team_output_dir, "realm.json")
 
-        self.assertEqual(
-            "Organization imported from Mattermost!", realm["zerver_realm"][0]["description"],
-        )
+        self.assertEqual("Organization imported from Mattermost!", realm["zerver_realm"][0]["description"])
 
         exported_user_ids = self.get_set(realm["zerver_userprofile"], "id")
         exported_user_full_names = self.get_set(realm["zerver_userprofile"], "full_name")
@@ -625,9 +622,7 @@ class MatterMostImporter(ZulipTestCase):
 
         realm = self.read_file(harry_team_output_dir, "realm.json")
 
-        self.assertEqual(
-            "Organization imported from Mattermost!", realm["zerver_realm"][0]["description"],
-        )
+        self.assertEqual("Organization imported from Mattermost!", realm["zerver_realm"][0]["description"])
 
         exported_user_ids = self.get_set(realm["zerver_userprofile"], "id")
         exported_user_full_names = self.get_set(realm["zerver_userprofile"], "full_name")

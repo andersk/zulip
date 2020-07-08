@@ -55,9 +55,7 @@ class GoogleCodeInTests(WebhookTestCase):
     def test_unassign_event_message(self) -> None:
         expected_topic = "student-yqqtag"
         expected_message = "**eeshangarg** unassigned **student-yqqtag** from the task [Sails unspread it stopped at kearney](https://codein.withgoogle.com/dashboard/task-instances/6296903092273152/)."
-        self.send_and_test_stream_message(
-            "student_unassigned_by_mentor", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("student_unassigned_by_mentor", expected_topic, expected_message)
 
     def test_outoftime_event_message(self) -> None:
         expected_topic = "student-yqqtag"

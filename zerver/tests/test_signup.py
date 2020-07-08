@@ -1576,15 +1576,11 @@ so we didn't send them an invitation. We did send invitations to everyone else!"
         # Check invitation reminder email is scheduled with 4 day link expiry
         with self.settings(INVITATION_LINK_VALIDITY_DAYS=4):
             self.invite("alice@zulip.com", ["Denmark"])
-        self.assertEqual(
-            ScheduledEmail.objects.filter(type=ScheduledEmail.INVITATION_REMINDER).count(), 1,
-        )
+        self.assertEqual(ScheduledEmail.objects.filter(type=ScheduledEmail.INVITATION_REMINDER).count(), 1)
         # Check invitation reminder email is not scheduled with 3 day link expiry
         with self.settings(INVITATION_LINK_VALIDITY_DAYS=3):
             self.invite("bob@zulip.com", ["Denmark"])
-        self.assertEqual(
-            ScheduledEmail.objects.filter(type=ScheduledEmail.INVITATION_REMINDER).count(), 1,
-        )
+        self.assertEqual(ScheduledEmail.objects.filter(type=ScheduledEmail.INVITATION_REMINDER).count(), 1)
 
     # make sure users can't take a valid confirmation key from another
     # pathway and use it with the invitation url route
@@ -1737,9 +1733,7 @@ class InvitationsTestCase(InviteUserBase):
             email="TestOne@zulip.com", referred_by=self.mit_user("sipbtest"),
         )
         prereg_user_other_realm.save()
-        multiuse_invite = MultiuseInvite.objects.create(
-            referred_by=user_profile, realm=user_profile.realm,
-        )
+        multiuse_invite = MultiuseInvite.objects.create(referred_by=user_profile, realm=user_profile.realm)
         create_confirmation_link(multiuse_invite, Confirmation.MULTIUSE_INVITE)
         self.assertEqual(len(do_get_user_invites(user_profile)), 5)
         self.assertEqual(len(do_get_user_invites(hamlet)), 1)
@@ -3083,9 +3077,7 @@ class UserSignUpTest(InviteUserBase):
         self.assertNotEqual(first_confirmation_url, second_confirmation_url)
 
         # Register the account (this will use the second confirmation url):
-        result = self.submit_reg_form_for_user(
-            email, password, full_name="New Guy", from_confirmation="1",
-        )
+        result = self.submit_reg_form_for_user(email, password, full_name="New Guy", from_confirmation="1")
         self.assert_in_success_response(
             ["We just need you to do one last thing.", "New Guy", email], result,
         )
@@ -4034,9 +4026,7 @@ class UserSignUpTest(InviteUserBase):
         self.assertNotIn(stream_name, default_streams_name)
 
         # Invite user.
-        self.ldap_invite_and_signup_as(
-            PreregistrationUser.INVITE_AS["REALM_ADMIN"], streams=[stream_name],
-        )
+        self.ldap_invite_and_signup_as(PreregistrationUser.INVITE_AS["REALM_ADMIN"], streams=[stream_name])
 
         user_profile = UserProfile.objects.get(delivery_email=self.nonreg_email("newuser"))
         self.assertTrue(user_profile.is_realm_admin)
@@ -4370,13 +4360,9 @@ class TestFindMyTeam(ZulipTestCase):
         self.assertEqual(len(outbox), 3)
 
     def test_find_team_ignore_invalid_email(self) -> None:
-        result = self.client_post(
-            "/accounts/find/", dict(emails="iago@zulip.com,invalid_email@zulip.com"),
-        )
+        result = self.client_post("/accounts/find/", dict(emails="iago@zulip.com,invalid_email@zulip.com"))
         self.assertEqual(result.status_code, 302)
-        self.assertEqual(
-            result.url, "/accounts/find/?emails=iago%40zulip.com%2Cinvalid_email%40zulip.com",
-        )
+        self.assertEqual(result.url, "/accounts/find/?emails=iago%40zulip.com%2Cinvalid_email%40zulip.com")
         result = self.client_get(result.url)
         content = result.content.decode("utf8")
         self.assertIn("Emails sent! You will only receive emails", content)

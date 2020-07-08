@@ -2011,9 +2011,7 @@ class Markdown(markdown.Markdown):
         # space for us to add our own.
         reg = markdown.util.Registry()
         reg.register(BacktickInlineProcessor(markdown.inlinepatterns.BACKTICK_RE), "backtick", 105)
-        reg.register(
-            markdown.inlinepatterns.DoubleTagPattern(STRONG_EM_RE, "strong,em"), "strong_em", 100,
-        )
+        reg.register(markdown.inlinepatterns.DoubleTagPattern(STRONG_EM_RE, "strong,em"), "strong_em", 100)
         reg.register(UserMentionPattern(mention.find_mentions, self), "usermention", 95)
         reg.register(Tex(r"\B(?<!\$)\$\$(?P<body>[^\n_$](\\\$|[^$\n])*)\$\$(?!\$)\B"), "tex", 90)
         reg.register(StreamTopicPattern(get_compiled_stream_topic_link_regex(), self), "topic", 87)
@@ -2059,9 +2057,7 @@ class Markdown(markdown.Markdown):
         # These are the default python-markdown processors, unmodified.
         postprocessors = markdown.util.Registry()
         postprocessors.register(markdown.postprocessors.RawHtmlPostprocessor(self), "raw_html", 20)
-        postprocessors.register(
-            markdown.postprocessors.AndSubstitutePostprocessor(), "amp_substitute", 15,
-        )
+        postprocessors.register(markdown.postprocessors.AndSubstitutePostprocessor(), "amp_substitute", 15)
         postprocessors.register(markdown.postprocessors.UnescapePostprocessor(), "unescape", 10)
         return postprocessors
 

@@ -134,9 +134,7 @@ class Command(makemessages.Command):
         old_templatize = template.templatize
         # Extend the regular expressions that are used to detect
         # translation blocks with an "OR jinja-syntax" clause.
-        template.endblock_re = re.compile(
-            template.endblock_re.pattern + "|" + r"""^-?\s*endtrans\s*-?$""",
-        )
+        template.endblock_re = re.compile(template.endblock_re.pattern + "|" + r"""^-?\s*endtrans\s*-?$""")
         template.block_re = re.compile(
             template.block_re.pattern + "|" + r"""^-?\s*trans(?:\s+(?!'|")(?=.*?=.*?)|\s*-?$)""",
         )

@@ -118,9 +118,7 @@ Traceback:
     def test_issue_assigned_to_individual(self) -> None:
         expected_topic = "A test message event from golang."
         expected_message = """\nIssue **A test message event from golang.** has now been assigned to **Hemanth V. Alluri** by **Hemanth V. Alluri**."""
-        self.send_and_test_stream_message(
-            "issue_assigned_to_individual", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("issue_assigned_to_individual", expected_topic, expected_message)
 
     def test_issue_assigned_to_team(self) -> None:
         expected_topic = "Exception: program has entered an invalid state."
@@ -167,6 +165,4 @@ New [issue](https://sentry.io/zulip/zulip/issues/156699934/) (level: ERROR):
 ``` quote
 This is an example python exception
 ```"""
-        self.send_and_test_stream_message(
-            "deprecated_exception_message", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("deprecated_exception_message", expected_topic, expected_message)

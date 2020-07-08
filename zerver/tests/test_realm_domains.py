@@ -120,9 +120,7 @@ class RealmDomainTest(ZulipTestCase):
         realm1 = do_create_realm("testrealm1", "Test Realm 1", emails_restricted_to_domains=True)
         realm2 = do_create_realm("testrealm2", "Test Realm 2", emails_restricted_to_domains=True)
 
-        realm_domain = RealmDomain.objects.create(
-            realm=realm1, domain="test1.com", allow_subdomains=False,
-        )
+        realm_domain = RealmDomain.objects.create(realm=realm1, domain="test1.com", allow_subdomains=False)
         RealmDomain.objects.create(realm=realm2, domain="test2.test1.com", allow_subdomains=True)
 
         email_allowed_for_realm("user@test1.com", realm1)

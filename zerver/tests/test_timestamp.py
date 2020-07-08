@@ -24,10 +24,7 @@ class TestTimestamp(ZulipTestCase):
             self.assertEqual(timestamp_to_datetime(timestamp), dt - timedelta(microseconds=123000))
             self.assertEqual(datetime_to_timestamp(dt), timestamp)
 
-        for dt in [
-            parser.parse("2017-01-01 00:00:00.123+01:00"),
-            parser.parse("2017-01-01 00:00:00.123"),
-        ]:
+        for dt in [parser.parse("2017-01-01 00:00:00.123+01:00"), parser.parse("2017-01-01 00:00:00.123")]:
             with self.assertRaises(TimezoneNotUTCException):
                 datetime_to_timestamp(dt)
 

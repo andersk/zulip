@@ -713,9 +713,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         fp_path_id = re.sub("/user_uploads/", "", uri)
         for i in range(20):
             body = (
-                f"First message ...[zulip.txt](http://{hamlet.realm.host}/user_uploads/"
-                + fp_path_id
-                + ")"
+                f"First message ...[zulip.txt](http://{hamlet.realm.host}/user_uploads/" + fp_path_id + ")"
             )
             self.send_stream_message(self.example_user("hamlet"), f"test-subscribe {i % 5}", body, "test")
         self.logout()

@@ -322,9 +322,7 @@ def public_stream_user_ids(stream: Stream) -> Set[int]:
     guest_subscriptions = get_active_subscriptions_for_stream_id(stream.id).filter(
         user_profile__role=UserProfile.ROLE_GUEST,
     )
-    guest_subscriptions = {
-        sub["user_profile_id"] for sub in guest_subscriptions.values("user_profile_id")
-    }
+    guest_subscriptions = {sub["user_profile_id"] for sub in guest_subscriptions.values("user_profile_id")}
     return set(active_non_guest_user_ids(stream.realm_id)) | guest_subscriptions
 
 
@@ -1867,9 +1865,7 @@ def bulk_insert_ums(ums: List[UserMessageLite]) -> None:
         execute_values(cursor.cursor, query, vals)
 
 
-def do_add_submessage(
-    realm: Realm, sender_id: int, message_id: int, msg_type: str, content: str,
-) -> None:
+def do_add_submessage(realm: Realm, sender_id: int, message_id: int, msg_type: str, content: str) -> None:
     submessage = SubMessage(
         sender_id=sender_id, message_id=message_id, msg_type=msg_type, content=content,
     )
@@ -2882,9 +2878,7 @@ def get_subscribers_query(stream: Stream, requesting_user: Optional[UserProfile]
     # Note that non-active users may still have "active" subscriptions, because we
     # want to be able to easily reactivate them with their old subscriptions.  This
     # is why the query here has to look at the UserProfile.is_active flag.
-    subscriptions = get_active_subscriptions_for_stream_id(stream.id).filter(
-        user_profile__is_active=True,
-    )
+    subscriptions = get_active_subscriptions_for_stream_id(stream.id).filter(user_profile__is_active=True)
     return subscriptions
 
 
@@ -3338,9 +3332,7 @@ def bulk_remove_subscriptions(
     new_vacant_public_streams = [stream for stream in new_vacant_streams if not stream.invite_only]
     if new_vacant_public_streams:
         event = dict(
-            type="stream",
-            op="vacate",
-            streams=[stream.to_dict() for stream in new_vacant_public_streams],
+            type="stream", op="vacate", streams=[stream.to_dict() for stream in new_vacant_public_streams],
         )
         send_event(our_realm, event, active_user_ids(our_realm.id))
     if new_vacant_private_streams:
@@ -3354,9 +3346,7 @@ def bulk_remove_subscriptions(
     )
 
 
-def log_subscription_property_change(
-    user_email: str, stream_name: str, property: str, value: Any,
-) -> None:
+def log_subscription_property_change(user_email: str, stream_name: str, property: str, value: Any) -> None:
     event = {
         "type": "subscription_property",
         "property": property,
@@ -3445,9 +3435,7 @@ def do_change_full_name(
         )
 
 
-def check_change_full_name(
-    user_profile: UserProfile, full_name_raw: str, acting_user: UserProfile,
-) -> str:
+def check_change_full_name(user_profile: UserProfile, full_name_raw: str, acting_user: UserProfile) -> str:
     """Verifies that the user's proposed full name is valid.  The caller
     is responsible for checking check permissions.  Returns the new
     full name, which may differ from what was passed in (because this
@@ -3786,9 +3774,7 @@ def do_change_default_events_register_stream(
         )
 
 
-def do_change_default_all_public_streams(
-    user_profile: UserProfile, value: bool, log: bool = True,
-) -> None:
+def do_change_default_all_public_streams(user_profile: UserProfile, value: bool, log: bool = True) -> None:
     user_profile.default_all_public_streams = value
     user_profile.save(update_fields=["default_all_public_streams"])
     if log:
@@ -3941,12 +3927,7 @@ def do_rename_stream(
     ]
     for property, value in data_updates:
         event = dict(
-            op="update",
-            type="stream",
-            property=property,
-            value=value,
-            stream_id=stream.id,
-            name=old_name,
+            op="update", type="stream", property=property, value=value, stream_id=stream.id, name=old_name,
         )
         send_event(stream.realm, event, can_access_stream_user_ids(stream))
     sender = get_system_bot(settings.NOTIFICATION_BOT)
@@ -4272,9 +4253,7 @@ def do_remove_default_stream_group(realm: Realm, group: DefaultStreamGroup) -> N
 
 
 def get_default_streams_for_realm(realm_id: int) -> List[Stream]:
-    return [
-        default.stream for default in DefaultStream.objects.select_related().filter(realm_id=realm_id)
-    ]
+    return [default.stream for default in DefaultStream.objects.select_related().filter(realm_id=realm_id)]
 
 
 def get_default_subs(user_profile: UserProfile) -> List[Stream]:
@@ -4470,9 +4449,7 @@ def do_mark_all_as_read(user_profile: UserProfile, client: Client) -> int:
     )
     do_clear_mobile_push_notifications_for_ids([user_profile.id], all_push_message_ids)
 
-    msgs = UserMessage.objects.filter(user_profile=user_profile).extra(
-        where=[UserMessage.where_unread()],
-    )
+    msgs = UserMessage.objects.filter(user_profile=user_profile).extra(where=[UserMessage.where_unread()])
 
     count = msgs.update(flags=F("flags").bitor(UserMessage.flags.read))
 
@@ -5256,9 +5233,7 @@ def get_web_public_subs(realm: Realm) -> SubHelperT:
 # the code pretty ugly, but in this case, it has significant
 # performance impact for loading / for users with large numbers of
 # subscriptions, so it's worth optimizing.
-def gather_subscriptions_helper(
-    user_profile: UserProfile, include_subscribers: bool = True,
-) -> SubHelperT:
+def gather_subscriptions_helper(user_profile: UserProfile, include_subscribers: bool = True) -> SubHelperT:
     sub_dicts = (
         get_stream_subscriptions_for_user(user_profile)
         .values(*Subscription.API_FIELDS, "recipient_id")
@@ -5309,9 +5284,7 @@ def gather_subscriptions_helper(
     streams_subscribed_map = {sub["stream_id"]: sub["active"] for sub in sub_dicts}
 
     # Add never subscribed streams to streams_subscribed_map
-    streams_subscribed_map.update(
-        {stream["id"]: False for stream in all_streams if stream not in streams},
-    )
+    streams_subscribed_map.update({stream["id"]: False for stream in all_streams if stream not in streams})
 
     if include_subscribers:
         subscriber_map: Mapping[int, Optional[List[int]]] = bulk_get_subscriber_user_ids(

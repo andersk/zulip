@@ -143,9 +143,7 @@ su -c 'git config --global pull.rebase true' zulipdev
     return cloudconf
 
 
-def create_droplet(
-    my_token: str, template_id: str, username: str, tags: List[str], user_data: str,
-) -> str:
+def create_droplet(my_token: str, template_id: str, username: str, tags: List[str], user_data: str) -> str:
     droplet = digitalocean.Droplet(
         token=my_token,
         name=f"{username}.zulipdev.org",

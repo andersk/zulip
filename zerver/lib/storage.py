@@ -21,9 +21,7 @@ else:
 
 
 class IgnoreBundlesManifestStaticFilesStorage(ManifestStaticFilesStorage):
-    def hashed_name(
-        self, name: str, content: Optional[str] = None, filename: Optional[str] = None,
-    ) -> str:
+    def hashed_name(self, name: str, content: Optional[str] = None, filename: Optional[str] = None) -> str:
         ext = os.path.splitext(name)[1]
         if name.startswith("webpack-bundles"):
             # Hack to avoid renaming already-hashnamed webpack bundles

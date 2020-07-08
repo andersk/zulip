@@ -143,9 +143,7 @@ def check_stream_name(stream_name: str) -> None:
         )
     for i in stream_name:
         if ord(i) == 0:
-            raise JsonableError(
-                _("Stream name '{}' contains NULL (0x00) characters.").format(stream_name),
-            )
+            raise JsonableError(_("Stream name '{}' contains NULL (0x00) characters.").format(stream_name))
 
 
 def subscribed_to_stream(user_profile: UserProfile, stream_id: int) -> bool:

@@ -46,10 +46,7 @@ class TravisHookTests(WebhookTestCase):
         )
 
         self.send_and_test_stream_message(
-            "pull_request",
-            self.TOPIC,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "pull_request", self.TOPIC, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def get_body(self, fixture_name: str) -> str:

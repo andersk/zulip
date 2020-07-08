@@ -75,10 +75,7 @@ class WordPressHookTests(WebhookTestCase):
         expected_message = "User testuser logged in."
 
         self.send_and_test_stream_message(
-            "wp_login",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "wp_login", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_unknown_action_no_data(self) -> None:

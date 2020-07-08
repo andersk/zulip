@@ -257,9 +257,7 @@ v1_api_and_json_patterns = [
     ),
     # mark messages as read (in bulk)
     path("mark_all_as_read", rest_dispatch, {"POST": "zerver.views.message_flags.mark_all_as_read"}),
-    path(
-        "mark_stream_as_read", rest_dispatch, {"POST": "zerver.views.message_flags.mark_stream_as_read"},
-    ),
+    path("mark_stream_as_read", rest_dispatch, {"POST": "zerver.views.message_flags.mark_stream_as_read"}),
     path("mark_topic_as_read", rest_dispatch, {"POST": "zerver.views.message_flags.mark_topic_as_read"}),
     path("zcommand", rest_dispatch, {"POST": "zerver.views.message_send.zcommand_backend"}),
     # messages -> zerver.views.message*
@@ -349,9 +347,7 @@ v1_api_and_json_patterns = [
         },
     ),
     path(
-        "users/me/presence",
-        rest_dispatch,
-        {"POST": "zerver.views.presence.update_active_status_backend"},
+        "users/me/presence", rest_dispatch, {"POST": "zerver.views.presence.update_active_status_backend"},
     ),
     path("users/me/status", rest_dispatch, {"POST": "zerver.views.presence.update_user_status_backend"}),
     # Endpoint used by mobile devices to register their push
@@ -852,8 +848,7 @@ i18n_urls = [
         name="config_error",
     ),
     re_path(
-        r"^config-error/remoteuser/(?P<error_category_name>[\w,-]+)$",
-        zerver.views.auth.config_error_view,
+        r"^config-error/remoteuser/(?P<error_category_name>[\w,-]+)$", zerver.views.auth.config_error_view,
     ),
 ]
 
@@ -956,9 +951,7 @@ v1_api_mobile_patterns = [
     path("server_settings", zerver.views.auth.api_get_server_settings),
     # This json format view used by the mobile apps accepts a username
     # password/pair and returns an API key.
-    path(
-        "fetch_api_key", zerver.views.auth.api_fetch_api_key, name="zerver.views.auth.api_fetch_api_key",
-    ),
+    path("fetch_api_key", zerver.views.auth.api_fetch_api_key, name="zerver.views.auth.api_fetch_api_key"),
     # This is for the signing in through the devAuthBackEnd on mobile apps.
     path(
         "dev_fetch_api_key",

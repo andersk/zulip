@@ -222,9 +222,7 @@ class WorkerTest(ZulipTestCase):
         """
         fake_client = self.FakeClient()
 
-        def fake_publish(
-            queue_name: str, event: Dict[str, Any], processor: Callable[[Any], None],
-        ) -> None:
+        def fake_publish(queue_name: str, event: Dict[str, Any], processor: Callable[[Any], None]) -> None:
             fake_client.queue.append((queue_name, event))
 
         def generate_new_message_notification() -> Dict[str, Any]:
@@ -302,9 +300,7 @@ class WorkerTest(ZulipTestCase):
     @patch("zerver.lib.rate_limiter.logger.warning")
     @patch("zerver.worker.queue_processors.mirror_email")
     @override_settings(RATE_LIMITING_MIRROR_REALM_RULES=[(10, 2)])
-    def test_mirror_worker_rate_limiting(
-        self, mock_mirror_email: MagicMock, mock_warn: MagicMock,
-    ) -> None:
+    def test_mirror_worker_rate_limiting(self, mock_mirror_email: MagicMock, mock_warn: MagicMock) -> None:
         fake_client = self.FakeClient()
         realm = get_realm("zulip")
         RateLimitedRealmMirror(realm).clear_history()
@@ -380,9 +376,7 @@ class WorkerTest(ZulipTestCase):
         }
         fake_client.queue.append(("email_senders", data))
 
-        def fake_publish(
-            queue_name: str, event: Dict[str, Any], processor: Callable[[Any], None],
-        ) -> None:
+        def fake_publish(queue_name: str, event: Dict[str, Any], processor: Callable[[Any], None]) -> None:
             fake_client.queue.append((queue_name, event))
 
         with simulated_queue_client(lambda: fake_client):
@@ -405,9 +399,7 @@ class WorkerTest(ZulipTestCase):
         data = {"user_id": user_id, "id": "test_missed"}
         fake_client.queue.append(("signups", data))
 
-        def fake_publish(
-            queue_name: str, event: Dict[str, Any], processor: Callable[[Any], None],
-        ) -> None:
+        def fake_publish(queue_name: str, event: Dict[str, Any], processor: Callable[[Any], None]) -> None:
             fake_client.queue.append((queue_name, event))
 
         fake_response = MagicMock()

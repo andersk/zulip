@@ -14,9 +14,7 @@ class Migration(migrations.Migration):
             model_name="realm", name="invite_required", field=models.BooleanField(default=True),
         ),
         migrations.AlterField(
-            model_name="realm",
-            name="org_type",
-            field=models.PositiveSmallIntegerField(default=COMMUNITY),
+            model_name="realm", name="org_type", field=models.PositiveSmallIntegerField(default=COMMUNITY),
         ),
         migrations.AlterField(
             model_name="realm", name="restricted_to_domain", field=models.BooleanField(default=False),

@@ -84,9 +84,7 @@ class EventsEndpointTest(ZulipTestCase):
         # Test that call is made to deal with a returning soft deactivated user.
         with mock.patch("zerver.lib.events.reactivate_user_if_soft_deactivated") as fa:
             with stub_event_queue_user_events(return_event_queue, return_user_events):
-                result = self.api_post(
-                    user, "/json/register", dict(event_types=ujson.dumps([event_type])),
-                )
+                result = self.api_post(user, "/json/register", dict(event_types=ujson.dumps([event_type])))
                 self.assertEqual(fa.call_count, 1)
 
         with stub_event_queue_user_events(return_event_queue, return_user_events):

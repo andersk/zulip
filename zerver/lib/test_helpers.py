@@ -266,9 +266,7 @@ def get_subscription(stream_name: str, user_profile: UserProfile) -> Subscriptio
 
 def get_user_messages(user_profile: UserProfile) -> List[Message]:
     query = (
-        UserMessage.objects.select_related("message")
-        .filter(user_profile=user_profile)
-        .order_by("message")
+        UserMessage.objects.select_related("message").filter(user_profile=user_profile).order_by("message")
     )
     return [um.message for um in query]
 

@@ -620,9 +620,7 @@ def write_emoticon_data(
         source_path = os.path.join(data_dir, source_sub_path)
 
         target_fn = data["name"]
-        target_sub_path = RealmEmoji.PATH_ID_TEMPLATE.format(
-            realm_id=realm_id, emoji_file_name=target_fn,
-        )
+        target_sub_path = RealmEmoji.PATH_ID_TEMPLATE.format(realm_id=realm_id, emoji_file_name=target_fn)
         target_path = os.path.join(emoji_folder, target_sub_path)
 
         os.makedirs(os.path.dirname(target_path), exist_ok=True)

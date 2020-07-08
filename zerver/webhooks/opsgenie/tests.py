@@ -160,10 +160,7 @@ class OpsGenieHookTests(WebhookTestCase):
 """.strip()
 
         self.send_and_test_stream_message(
-            "escalate",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "escalate", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_removetags_alert(self) -> None:

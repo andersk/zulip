@@ -217,9 +217,7 @@ def convert_gitter_workspace_messages(
             message_time = dateutil.parser.parse(message["sent"]).timestamp()
             mentioned_user_ids = get_usermentions(message, user_map, user_short_name_to_full_name)
             rendered_content = None
-            topic_name = "imported from gitter" + (
-                f' room {message["room"]}' if "room" in message else ""
-            )
+            topic_name = "imported from gitter" + (f' room {message["room"]}' if "room" in message else "")
             user_id = user_map[message["fromUser"]["id"]]
             recipient_id = stream_map[message["room"]] if "room" in message else 0
             zulip_message = build_message(

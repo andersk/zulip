@@ -156,9 +156,7 @@ class Command(BaseCommand):
 
             # Starred messages
             starrers = (
-                UserMessage.objects.filter(
-                    user_profile__in=user_profiles, flags=UserMessage.flags.starred,
-                )
+                UserMessage.objects.filter(user_profile__in=user_profiles, flags=UserMessage.flags.starred)
                 .values("user_profile")
                 .annotate(count=Count("user_profile"))
             )

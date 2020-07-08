@@ -11,10 +11,7 @@ def check_pyflakes(files: List[str], options: argparse.Namespace) -> bool:
         ("", "'zerver.lib.exceptions.UnexpectedWebhookEventType' imported but unused"),
         # Our ipython startup pythonrc file intentionally imports *
         ("scripts/lib/pythonrc.py", " import *' used; unable to detect undefined names"),
-        (
-            "zerver/views/realm.py",
-            "local variable 'message_retention_days' is assigned to but never used",
-        ),
+        ("zerver/views/realm.py", "local variable 'message_retention_days' is assigned to but never used"),
         ("settings.py", "settings import *' used; unable to detect undefined names"),
         ("settings.py", "'from .prod_settings_template import *' used; unable to detect undefined names"),
         ("settings.py", "settings.*' imported but unused"),

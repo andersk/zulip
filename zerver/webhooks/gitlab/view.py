@@ -109,9 +109,7 @@ def get_merge_request_updated_event_body(payload: Dict[str, Any], include_title:
     return get_merge_request_open_or_updated_body(payload, "updated", include_title=include_title)
 
 
-def get_merge_request_event_body(
-    payload: Dict[str, Any], action: str, include_title: bool = False,
-) -> str:
+def get_merge_request_event_body(payload: Dict[str, Any], action: str, include_title: bool = False) -> str:
     pull_request = payload["object_attributes"]
     return get_pull_request_event_message(
         get_issue_user_name(payload),

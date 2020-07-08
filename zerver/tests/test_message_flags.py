@@ -117,9 +117,7 @@ class FirstUnreadAnchorTests(ZulipTestCase):
         with mock.patch(
             "zerver.views.message_fetch.get_first_visible_message_id", return_value=new_message_id + 1,
         ):
-            messages_reponse = self.get_messages_response(
-                anchor="first_unread", num_before=0, num_after=1,
-            )
+            messages_reponse = self.get_messages_response(anchor="first_unread", num_before=0, num_after=1)
         self.assert_length(messages_reponse["messages"], 0)
         self.assertIn("anchor", messages_reponse)
 
@@ -286,10 +284,7 @@ class UnreadCountTests(ZulipTestCase):
         invalid_topic_name = "abc"
         result = self.client_post(
             "/json/mark_topic_as_read",
-            {
-                "stream_id": get_stream("Denmark", get_realm("zulip")).id,
-                "topic_name": invalid_topic_name,
-            },
+            {"stream_id": get_stream("Denmark", get_realm("zulip")).id, "topic_name": invalid_topic_name},
         )
         self.assert_json_error(result, "No such topic 'abc'")
 
@@ -391,9 +386,7 @@ class PushNotificationMarkReadFlowsTest(ZulipTestCase):
         )
 
     @mock.patch("zerver.lib.push_notifications.push_notifications_enabled", return_value=True)
-    def test_track_active_mobile_push_notifications(
-        self, mock_push_notifications: mock.MagicMock,
-    ) -> None:
+    def test_track_active_mobile_push_notifications(self, mock_push_notifications: mock.MagicMock) -> None:
         mock_push_notifications.return_value = True
         self.login("hamlet")
         user_profile = self.example_user("hamlet")
@@ -527,8 +520,7 @@ class GetUnreadMsgsTest(ZulipTestCase):
         )
 
         self.assertEqual(
-            raw_unread_data["unmuted_stream_msgs"],
-            set(message_ids["python"]) | set(message_ids["lunch"]),
+            raw_unread_data["unmuted_stream_msgs"], set(message_ids["python"]) | set(message_ids["lunch"]),
         )
 
         self.assertEqual(
@@ -827,8 +819,7 @@ class MessageAccessTests(ZulipTestCase):
         self.assert_json_error(result, "Invalid flag: 'active_mobile_push_notification'")
 
         result = self.client_post(
-            "/json/messages/flags",
-            {"messages": ujson.dumps([message]), "op": "add", "flag": "mentioned"},
+            "/json/messages/flags", {"messages": ujson.dumps([message]), "op": "add", "flag": "mentioned"},
         )
         self.assert_json_error(result, "Flag not editable: 'mentioned'")
 

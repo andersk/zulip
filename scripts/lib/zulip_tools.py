@@ -230,9 +230,7 @@ def run(args: Sequence[str], **kwargs: Any) -> None:
         print()
         print(
             WHITEONRED
-            + "Error running a subcommand of {}: {}".format(
-                sys.argv[0], " ".join(map(shlex.quote, args)),
-            )
+            + "Error running a subcommand of {}: {}".format(sys.argv[0], " ".join(map(shlex.quote, args)))
             + ENDC,
         )
         print(WHITEONRED + "Actual error output for the subcommand is just above this." + ENDC)

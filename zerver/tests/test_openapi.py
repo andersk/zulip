@@ -107,26 +107,20 @@ class OpenAPIToolsTest(ZulipTestCase):
                 "result": "success",
                 "foo": "bar",
             }
-            validate_against_openapi_schema(
-                bad_content, TEST_ENDPOINT, TEST_METHOD, TEST_RESPONSE_SUCCESS,
-            )
+            validate_against_openapi_schema(bad_content, TEST_ENDPOINT, TEST_METHOD, TEST_RESPONSE_SUCCESS)
 
         with self.assertRaises(ValidationError, msg=("42 is not of type string")):
             bad_content = {
                 "msg": 42,
                 "result": "success",
             }
-            validate_against_openapi_schema(
-                bad_content, TEST_ENDPOINT, TEST_METHOD, TEST_RESPONSE_SUCCESS,
-            )
+            validate_against_openapi_schema(bad_content, TEST_ENDPOINT, TEST_METHOD, TEST_RESPONSE_SUCCESS)
 
         with self.assertRaises(ValidationError, msg='Expected to find the "msg" required key'):
             bad_content = {
                 "result": "success",
             }
-            validate_against_openapi_schema(
-                bad_content, TEST_ENDPOINT, TEST_METHOD, TEST_RESPONSE_SUCCESS,
-            )
+            validate_against_openapi_schema(bad_content, TEST_ENDPOINT, TEST_METHOD, TEST_RESPONSE_SUCCESS)
 
         # No exceptions should be raised here.
         good_content = {

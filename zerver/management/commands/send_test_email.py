@@ -17,8 +17,7 @@ class Command(sendtestemail.Command):
             )
         if len(kwargs["email"]) == 0:
             raise CommandError(
-                "Usage: /home/zulip/deployments/current/manage.py "
-                "send_test_email username@example.com",
+                "Usage: /home/zulip/deployments/current/manage.py " "send_test_email username@example.com",
             )
 
         print("If you run into any trouble, read:")

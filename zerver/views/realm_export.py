@@ -40,9 +40,7 @@ def export_realm(request: HttpRequest, user: UserProfile) -> HttpResponse:
 
     total_messages = sum(
         realm_count.value
-        for realm_count in RealmCount.objects.filter(
-            realm=user.realm, property="messages_sent:client:day",
-        )
+        for realm_count in RealmCount.objects.filter(realm=user.realm, property="messages_sent:client:day")
     )
     if (
         total_messages > MAX_MESSAGE_HISTORY

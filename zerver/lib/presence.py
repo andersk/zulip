@@ -39,9 +39,7 @@ def get_status_dicts_for_rows(
     return user_statuses
 
 
-def get_modern_user_info(
-    presence_rows: List[Dict[str, Any]], mobile_user_ids: Set[int],
-) -> Dict[str, Any]:
+def get_modern_user_info(presence_rows: List[Dict[str, Any]], mobile_user_ids: Set[int]) -> Dict[str, Any]:
 
     active_timestamp = None
     for row in reversed(presence_rows):
@@ -69,9 +67,7 @@ def get_modern_user_info(
     return result
 
 
-def get_legacy_user_info(
-    presence_rows: List[Dict[str, Any]], mobile_user_ids: Set[int],
-) -> Dict[str, Any]:
+def get_legacy_user_info(presence_rows: List[Dict[str, Any]], mobile_user_ids: Set[int]) -> Dict[str, Any]:
 
     # The format of data here is for legacy users of our API,
     # including old versions of the mobile app.

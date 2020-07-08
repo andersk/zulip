@@ -31,7 +31,5 @@ class Migration(migrations.Migration):
                 ),
             ],
         ),
-        migrations.AlterUniqueTogether(
-            name="botuserstatedata", unique_together={("bot_profile", "key")},
-        ),
+        migrations.AlterUniqueTogether(name="botuserstatedata", unique_together={("bot_profile", "key")}),
     ]

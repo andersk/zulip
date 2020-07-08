@@ -226,9 +226,7 @@ class NarrowBuilder:
                     s[i] = "\\" + c
         return "".join(s)
 
-    def by_stream(
-        self, query: Query, operand: Union[str, int], maybe_negate: ConditionTransform,
-    ) -> Query:
+    def by_stream(self, query: Query, operand: Union[str, int], maybe_negate: ConditionTransform) -> Query:
         try:
             # Because you can see your own message history for
             # private streams you are no longer subscribed to, we
@@ -324,9 +322,7 @@ class NarrowBuilder:
         cond = topic_match_sa(operand)
         return query.where(maybe_negate(cond))
 
-    def by_sender(
-        self, query: Query, operand: Union[str, int], maybe_negate: ConditionTransform,
-    ) -> Query:
+    def by_sender(self, query: Query, operand: Union[str, int], maybe_negate: ConditionTransform) -> Query:
         try:
             if isinstance(operand, str):
                 sender = get_user_including_cross_realm(operand, self.user_realm)
@@ -628,9 +624,7 @@ def ok_to_include_history(narrow: OptionalNarrowListT, user_profile: UserProfile
     return include_history
 
 
-def get_stream_from_narrow_access_unchecked(
-    narrow: OptionalNarrowListT, realm: Realm,
-) -> Optional[Stream]:
+def get_stream_from_narrow_access_unchecked(narrow: OptionalNarrowListT, realm: Realm) -> Optional[Stream]:
     if narrow is not None:
         for term in narrow:
             if term["operator"] == "stream":

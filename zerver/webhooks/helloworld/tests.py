@@ -36,9 +36,7 @@ class HelloWorldHookTests(WebhookTestCase):
         expected_message = "Hello! I am happy to be here! :smile:\nThe Wikipedia featured article for today is **[Goodbye](https://en.wikipedia.org/wiki/Goodbye)**"
 
         self.send_and_test_private_message(
-            "goodbye",
-            expected_message=expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "goodbye", expected_message=expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_stream_error_pm_to_bot_owner(self) -> None:

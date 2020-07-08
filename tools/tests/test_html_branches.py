@@ -70,9 +70,7 @@ class TestHtmlBranches(unittest.TestCase):
         self.assertEqual(tree.children[0].children[1].children[0].token.tag, "p")
 
         assert tree.children[0].children[1].children[0].children[0].token is not None
-        self.assertEqual(
-            tree.children[0].children[1].children[0].children[0].token.kind, "html_singleton",
-        )
+        self.assertEqual(tree.children[0].children[1].children[0].children[0].token.kind, "html_singleton")
         self.assertEqual(tree.children[0].children[1].children[0].children[0].token.tag, "br")
 
         assert tree.children[0].children[1].children[1].token is not None

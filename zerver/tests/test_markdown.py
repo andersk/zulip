@@ -804,8 +804,7 @@ class MarkdownTest(ZulipTestCase):
             "410766290349879296",
         )
         self.assertEqual(
-            get_tweet_id("https://twitter.com/windyoona/status/410766290349879296/"),
-            "410766290349879296",
+            get_tweet_id("https://twitter.com/windyoona/status/410766290349879296/"), "410766290349879296",
         )
 
     def test_inline_interesting_links(self) -> None:
@@ -1157,7 +1156,9 @@ class MarkdownTest(ZulipTestCase):
         ).save()
         msg = Message(sender=self.example_user("hamlet"))
 
-        content = "#ZUL-123 was fixed and code was deployed to production, also #zul-321 was deployed to staging"
+        content = (
+            "#ZUL-123 was fixed and code was deployed to production, also #zul-321 was deployed to staging"
+        )
         converted = markdown_convert(content, message_realm=realm, message=msg)
 
         self.assertEqual(
@@ -1202,8 +1203,7 @@ class MarkdownTest(ZulipTestCase):
         ).save()
         converted_topic = topic_links(realm.id, "hello#123 #234")
         self.assertEqual(
-            converted_topic,
-            ["https://trac.example.com/ticket/234", "https://trac.example.com/hello/123"],
+            converted_topic, ["https://trac.example.com/ticket/234", "https://trac.example.com/hello/123"],
         )
 
     def test_maybe_update_markdown_engines(self) -> None:
@@ -2099,9 +2099,7 @@ class MarkdownTest(ZulipTestCase):
         msg = Message(sender=sender_user_profile, sending_client=get_client("test"))
 
         content = "There #**Nonexistentstream**"
-        self.assertEqual(
-            render_markdown(msg, content), "<p>There #<strong>Nonexistentstream</strong></p>",
-        )
+        self.assertEqual(render_markdown(msg, content), "<p>There #<strong>Nonexistentstream</strong></p>")
         self.assertEqual(msg.mentions_user_ids, set())
 
     def test_image_preview_title(self) -> None:

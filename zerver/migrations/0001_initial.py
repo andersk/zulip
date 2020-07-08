@@ -527,12 +527,8 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ),
             ],
         ),
-        migrations.AlterUniqueTogether(
-            name="userpresence", unique_together={("user_profile", "client")},
-        ),
-        migrations.AlterUniqueTogether(
-            name="usermessage", unique_together={("user_profile", "message")},
-        ),
+        migrations.AlterUniqueTogether(name="userpresence", unique_together={("user_profile", "client")}),
+        migrations.AlterUniqueTogether(name="usermessage", unique_together={("user_profile", "message")}),
         migrations.AlterUniqueTogether(
             name="useractivity", unique_together={("user_profile", "client", "query")},
         ),
@@ -830,8 +826,6 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
             field=models.CharField(default="en", max_length=50),
         ),
         migrations.AddField(
-            model_name="userprofile",
-            name="tos_version",
-            field=models.CharField(max_length=10, null=True),
+            model_name="userprofile", name="tos_version", field=models.CharField(max_length=10, null=True),
         ),
     ]

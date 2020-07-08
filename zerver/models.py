@@ -301,9 +301,7 @@ class Realm(models.Model):
     )
 
     allow_message_editing: bool = models.BooleanField(default=True)
-    DEFAULT_MESSAGE_CONTENT_EDIT_LIMIT_SECONDS = (
-        600  # if changed, also change in admin.js, setting_org.js
-    )
+    DEFAULT_MESSAGE_CONTENT_EDIT_LIMIT_SECONDS = 600  # if changed, also change in admin.js, setting_org.js
     message_content_edit_limit_seconds: int = models.IntegerField(
         default=DEFAULT_MESSAGE_CONTENT_EDIT_LIMIT_SECONDS,
     )
@@ -1120,9 +1118,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
         (TWITTER_EMOJISET, "Twitter"),
         (TEXT_EMOJISET, "Plain text"),
     )
-    emojiset: str = models.CharField(
-        default=GOOGLE_BLOB_EMOJISET, choices=EMOJISET_CHOICES, max_length=20,
-    )
+    emojiset: str = models.CharField(default=GOOGLE_BLOB_EMOJISET, choices=EMOJISET_CHOICES, max_length=20)
 
     AVATAR_FROM_GRAVATAR = "G"
     AVATAR_FROM_USER = "U"
@@ -2973,9 +2969,7 @@ class RealmAuditLog(AbstractRealmAuditLog):
         if self.modified_user is not None:
             return f"<RealmAuditLog: {self.modified_user} {self.event_type} {self.event_time} {self.id}>"
         if self.modified_stream is not None:
-            return (
-                f"<RealmAuditLog: {self.modified_stream} {self.event_type} {self.event_time} {self.id}>"
-            )
+            return f"<RealmAuditLog: {self.modified_stream} {self.event_type} {self.event_time} {self.id}>"
         return f"<RealmAuditLog: {self.realm} {self.event_type} {self.event_time} {self.id}>"
 
 

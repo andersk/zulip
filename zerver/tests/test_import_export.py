@@ -428,9 +428,7 @@ class ImportExportTest(ZulipTestCase):
         default_bot = self.example_user("default_bot")
         pm_a_msg_id = self.send_personal_message(self.example_user("AARON"), default_bot)
         pm_b_msg_id = self.send_personal_message(default_bot, self.example_user("iago"))
-        pm_c_msg_id = self.send_personal_message(
-            self.example_user("othello"), self.example_user("hamlet"),
-        )
+        pm_c_msg_id = self.send_personal_message(self.example_user("othello"), self.example_user("hamlet"))
 
         realm_emoji = RealmEmoji.objects.get(realm=realm)
         realm_emoji.delete()
@@ -473,9 +471,7 @@ class ImportExportTest(ZulipTestCase):
 
         pm_a_msg_id = self.send_personal_message(self.example_user("AARON"), self.example_user("othello"))
         pm_b_msg_id = self.send_personal_message(self.example_user("cordelia"), self.example_user("iago"))
-        pm_c_msg_id = self.send_personal_message(
-            self.example_user("hamlet"), self.example_user("othello"),
-        )
+        pm_c_msg_id = self.send_personal_message(self.example_user("hamlet"), self.example_user("othello"))
         pm_d_msg_id = self.send_personal_message(self.example_user("iago"), self.example_user("hamlet"))
 
         realm_emoji = RealmEmoji.objects.get(realm=realm)
@@ -548,9 +544,7 @@ class ImportExportTest(ZulipTestCase):
         # Create PMs
         pm_a_msg_id = self.send_personal_message(self.example_user("AARON"), self.example_user("othello"))
         pm_b_msg_id = self.send_personal_message(self.example_user("cordelia"), self.example_user("iago"))
-        pm_c_msg_id = self.send_personal_message(
-            self.example_user("hamlet"), self.example_user("othello"),
-        )
+        pm_c_msg_id = self.send_personal_message(self.example_user("hamlet"), self.example_user("othello"))
         pm_d_msg_id = self.send_personal_message(self.example_user("iago"), self.example_user("hamlet"))
 
         # Send message advertising export and make users react

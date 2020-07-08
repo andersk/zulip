@@ -197,9 +197,7 @@ class EditMessageSideEffectsTest(ZulipTestCase):
         cordelia = self.example_user("cordelia")
         stream = self.subscribe(cordelia, "Scotland")
         recipient = stream.recipient
-        cordelia_subscription = Subscription.objects.get(
-            user_profile_id=cordelia.id, recipient=recipient,
-        )
+        cordelia_subscription = Subscription.objects.get(user_profile_id=cordelia.id, recipient=recipient)
         cordelia_subscription.push_notifications = True
         cordelia_subscription.save()
 
@@ -487,9 +485,7 @@ class EditMessageSideEffectsTest(ZulipTestCase):
         self.assertEqual(get_apns_badge_count(group_mentioned_user), 0)
 
         with mock.patch("zerver.lib.push_notifications.push_notifications_enabled", return_value=True):
-            message_id = self._login_and_send_original_stream_message(
-                content="Hello @*hamletcharacters*",
-            )
+            message_id = self._login_and_send_original_stream_message(content="Hello @*hamletcharacters*")
 
         self.assertEqual(get_apns_badge_count(group_mentioned_user), 1)
 

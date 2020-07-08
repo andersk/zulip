@@ -290,9 +290,7 @@ class NarrowBuilderTest(ZulipTestCase):
             term, "WHERE sender_id = %(sender_id_1)s AND recipient_id = %(recipient_id_1)s",
         )
 
-    def test_add_term_using_pm_with_operator_the_same_user_as_operand_and_negated(
-        self,
-    ) -> None:  # NEGATED
+    def test_add_term_using_pm_with_operator_the_same_user_as_operand_and_negated(self) -> None:  # NEGATED
         term = dict(operator="pm-with", operand=self.hamlet_email, negated=True)
         self._do_add_term_test(
             term, "WHERE NOT (sender_id = %(sender_id_1)s AND recipient_id = %(recipient_id_1)s)",
@@ -313,9 +311,7 @@ class NarrowBuilderTest(ZulipTestCase):
         term = dict(operator="pm-with", operand=two_others)
         self._do_add_term_test(term, "WHERE recipient_id = %(recipient_id_1)s")
 
-    def test_add_term_using_pm_with_operator_self_and_user_as_operand_and_negated(
-        self,
-    ) -> None:  # NEGATED
+    def test_add_term_using_pm_with_operator_self_and_user_as_operand_and_negated(self) -> None:  # NEGATED
         myself_and_other = ",".join(
             [self.example_user("hamlet").email, self.example_user("othello").email],
         )
@@ -1783,8 +1779,7 @@ class GetOldMessagesTest(ZulipTestCase):
         self.assertEqual(len(list(messages.keys())), 1)
         message = messages[str(good_id)]
         self.assertEqual(
-            message["match_content"],
-            '<p><span class="highlight">KEYWORDMATCH</span> and should work</p>',
+            message["match_content"], '<p><span class="highlight">KEYWORDMATCH</span> and should work</p>',
         )
 
     @override_settings(USING_PGROONGA=False)
@@ -2371,9 +2366,7 @@ class GetOldMessagesTest(ZulipTestCase):
 
         # Verify some additional behavior of found_newest.
         with first_visible_id_as(0):
-            data = self.get_messages_response(
-                anchor=LARGER_THAN_MAX_MESSAGE_ID, num_before=5, num_after=0,
-            )
+            data = self.get_messages_response(anchor=LARGER_THAN_MAX_MESSAGE_ID, num_before=5, num_after=0)
 
         messages = data["messages"]
         self.assert_length(messages, 5)
@@ -2697,9 +2690,7 @@ class GetOldMessagesTest(ZulipTestCase):
 
         cond = f"WHERE user_profile_id = {user_profile.id} AND message_id >= {first_unread_message_id}"
         self.assertIn(cond, sql)
-        cond = (
-            f"WHERE user_profile_id = {user_profile.id} AND message_id <= {first_unread_message_id - 1}"
-        )
+        cond = f"WHERE user_profile_id = {user_profile.id} AND message_id <= {first_unread_message_id - 1}"
         self.assertIn(cond, sql)
         self.assertIn("UNION", sql)
 
@@ -2734,9 +2725,7 @@ class GetOldMessagesTest(ZulipTestCase):
         sql = queries[0]["sql"]
         self.assertNotIn(f"AND message_id = {LARGER_THAN_MAX_MESSAGE_ID}", sql)
         self.assertIn("ORDER BY message_id ASC", sql)
-        cond = (
-            f"WHERE user_profile_id = {user_profile.id} AND message_id <= {first_unread_message_id - 1}"
-        )
+        cond = f"WHERE user_profile_id = {user_profile.id} AND message_id <= {first_unread_message_id - 1}"
         self.assertIn(cond, sql)
         cond = f"WHERE user_profile_id = {user_profile.id} AND message_id >= {first_visible_message_id}"
         self.assertIn(cond, sql)

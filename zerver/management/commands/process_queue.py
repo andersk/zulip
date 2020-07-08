@@ -17,16 +17,9 @@ class Command(BaseCommand):
     def add_arguments(self, parser: ArgumentParser) -> None:
         parser.add_argument("--queue_name", metavar="<queue name>", type=str, help="queue to process")
         parser.add_argument(
-            "--worker_num",
-            metavar="<worker number>",
-            type=int,
-            nargs="?",
-            default=0,
-            help="worker label",
+            "--worker_num", metavar="<worker number>", type=int, nargs="?", default=0, help="worker label",
         )
-        parser.add_argument(
-            "--all", dest="all", action="store_true", default=False, help="run all queues",
-        )
+        parser.add_argument("--all", dest="all", action="store_true", default=False, help="run all queues")
         parser.add_argument(
             "--multi_threaded",
             nargs="+",

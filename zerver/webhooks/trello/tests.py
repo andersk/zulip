@@ -50,9 +50,7 @@ class TrelloHookTests(WebhookTestCase):
         expected_message = (
             "TomaszKolek removed the due date from [Card name](https://trello.com/c/9BduUcVQ)."
         )
-        self.send_and_test_stream_message(
-            "removing_due_date_from_card", "Welcome Board", expected_message,
-        )
+        self.send_and_test_stream_message("removing_due_date_from_card", "Welcome Board", expected_message)
 
     def test_trello_webhook_when_card_was_archived(self) -> None:
         expected_message = "TomaszKolek archived [Card name](https://trello.com/c/9BduUcVQ)."

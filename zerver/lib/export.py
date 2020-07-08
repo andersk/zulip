@@ -594,10 +594,7 @@ def get_realm_config() -> Config:
     )
 
     Config(
-        table="zerver_realmemoji",
-        model=RealmEmoji,
-        normal_parent=realm_config,
-        parent_key="realm_id__in",
+        table="zerver_realmemoji", model=RealmEmoji, normal_parent=realm_config, parent_key="realm_id__in",
     )
 
     Config(
@@ -922,9 +919,7 @@ def fetch_huddle_objects(response: TableData, config: Config, context: Context) 
     # to import it on the other end exist (since we're only
     # exporting the users from this realm), at the cost of losing
     # some of these cross-realm messages.
-    huddle_subs = [
-        sub for sub in realm_huddle_subs if sub.recipient_id not in unsafe_huddle_recipient_ids
-    ]
+    huddle_subs = [sub for sub in realm_huddle_subs if sub.recipient_id not in unsafe_huddle_recipient_ids]
     huddle_recipient_ids = {sub.recipient_id for sub in huddle_subs}
     huddle_ids = {sub.recipient.type_id for sub in huddle_subs}
 

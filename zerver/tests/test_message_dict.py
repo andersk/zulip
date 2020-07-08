@@ -285,9 +285,7 @@ class MessageDictTest(ZulipTestCase):
         message.set_topic_name("whatever")
         message.save()
 
-        reaction = Reaction.objects.create(
-            message=message, user_profile=sender, emoji_name="simple_smile",
-        )
+        reaction = Reaction.objects.create(message=message, user_profile=sender, emoji_name="simple_smile")
         row = MessageDict.get_raw_db_rows([message.id])[0]
         msg_dict = MessageDict.build_dict_from_raw_db_row(row)
         self.assertEqual(msg_dict["reactions"][0]["emoji_name"], reaction.emoji_name)
@@ -550,9 +548,7 @@ class TestMessageForIdsDisplayRecipientFetching(ZulipTestCase):
         )
 
         self._verify_display_recipient(messages[0]["display_recipient"], [hamlet, cordelia, othello])
-        self._verify_display_recipient(
-            messages[1]["display_recipient"], [hamlet, cordelia, othello, iago],
-        )
+        self._verify_display_recipient(messages[1]["display_recipient"], [hamlet, cordelia, othello, iago])
 
     def test_display_recipient_various_types(self) -> None:
         hamlet = self.example_user("hamlet")
@@ -585,9 +581,7 @@ class TestMessageForIdsDisplayRecipientFetching(ZulipTestCase):
         self._verify_display_recipient(
             messages[3]["display_recipient"], get_stream("Denmark", hamlet.realm),
         )
-        self._verify_display_recipient(
-            messages[4]["display_recipient"], [hamlet, cordelia, othello, iago],
-        )
+        self._verify_display_recipient(messages[4]["display_recipient"], [hamlet, cordelia, othello, iago])
         self._verify_display_recipient(messages[5]["display_recipient"], [cordelia, othello])
 
 

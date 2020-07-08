@@ -674,9 +674,7 @@ class MessagePOSTTest(ZulipTestCase):
                 ["starnine:*:84233:101:Athena Consulting Exchange User,,,:/mit/starnine:/bin/bash"],
             ],
         ):
-            result1 = self.api_post(
-                self.mit_user("starnine"), "/api/v1/messages", msg, subdomain="zephyr",
-            )
+            result1 = self.api_post(self.mit_user("starnine"), "/api/v1/messages", msg, subdomain="zephyr")
             self.assert_json_success(result1)
 
         with mock.patch(
@@ -1775,9 +1773,7 @@ class InternalPrepTest(ZulipTestCase):
             )
 
         m.assert_called_once_with(
-            "Error queueing internal message by %s: %s",
-            "cordelia@zulip.com",
-            "Message must not be empty",
+            "Error queueing internal message by %s: %s", "cordelia@zulip.com", "Message must not be empty",
         )
 
         with mock.patch("logging.exception") as m:
@@ -1786,9 +1782,7 @@ class InternalPrepTest(ZulipTestCase):
             )
 
         m.assert_called_once_with(
-            "Error queueing internal message by %s: %s",
-            "cordelia@zulip.com",
-            "Message must not be empty",
+            "Error queueing internal message by %s: %s", "cordelia@zulip.com", "Message must not be empty",
         )
 
         with mock.patch("logging.exception") as m:
@@ -1797,9 +1791,7 @@ class InternalPrepTest(ZulipTestCase):
             )
 
         m.assert_called_once_with(
-            "Error queueing internal message by %s: %s",
-            "cordelia@zulip.com",
-            "Message must not be empty",
+            "Error queueing internal message by %s: %s", "cordelia@zulip.com", "Message must not be empty",
         )
 
         with mock.patch("logging.exception") as m:
@@ -1812,9 +1804,7 @@ class InternalPrepTest(ZulipTestCase):
             )
 
         m.assert_called_once_with(
-            "Error queueing internal message by %s: %s",
-            "cordelia@zulip.com",
-            "Message must not be empty",
+            "Error queueing internal message by %s: %s", "cordelia@zulip.com", "Message must not be empty",
         )
 
     def test_error_handling(self) -> None:
@@ -1901,9 +1891,7 @@ class TestCrossRealmPMs(ZulipTestCase):
         user2 = self.create_user(user2_email)
         user3 = self.create_user(user3_email)
         notification_bot = get_system_bot(notification_bot_email)
-        with self.settings(
-            CROSS_REALM_BOT_EMAILS=["notification-bot@zulip.com", "welcome-bot@zulip.com"],
-        ):
+        with self.settings(CROSS_REALM_BOT_EMAILS=["notification-bot@zulip.com", "welcome-bot@zulip.com"]):
             # HACK: We should probably be creating this "bot" user another
             # way, but since you can't register a user with a
             # cross-realm email, we need to hide this for now.

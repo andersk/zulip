@@ -687,11 +687,7 @@ else:
 # This is disabled in a few tests.
 LOGGING_ENABLED = True
 
-DEFAULT_ZULIP_HANDLERS = (["zulip_admins"] if ERROR_REPORTING else []) + [
-    "console",
-    "file",
-    "errors_file",
-]
+DEFAULT_ZULIP_HANDLERS = (["zulip_admins"] if ERROR_REPORTING else []) + ["console", "file", "errors_file"]
 
 LOGGING: Dict[str, Any] = {
     "version": 1,
@@ -781,11 +777,7 @@ LOGGING: Dict[str, Any] = {
         #  * Setting `handlers` equal to the parent is redundant; don't.
         #  * Always write in order: level, filters, handlers, propagate.
         # root logger
-        "": {
-            "level": "INFO",
-            "filters": ["require_logging_enabled"],
-            "handlers": DEFAULT_ZULIP_HANDLERS,
-        },
+        "": {"level": "INFO", "filters": ["require_logging_enabled"], "handlers": DEFAULT_ZULIP_HANDLERS},
         # Django, alphabetized
         "django": {
             # Django's default logging config has already set some

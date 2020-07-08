@@ -88,9 +88,7 @@ def check_last_owner(user_profile: UserProfile) -> bool:
     return user_profile.is_realm_owner and not user_profile.is_bot and len(owners) == 1
 
 
-def deactivate_user_backend(
-    request: HttpRequest, user_profile: UserProfile, user_id: int,
-) -> HttpResponse:
+def deactivate_user_backend(request: HttpRequest, user_profile: UserProfile, user_id: int) -> HttpResponse:
     target = access_user_by_id(user_profile, user_id)
     if target.is_realm_owner and not user_profile.is_realm_owner:
         raise OrganizationOwnerRequired()
@@ -121,9 +119,7 @@ def _deactivate_user_profile_backend(
     return json_success()
 
 
-def reactivate_user_backend(
-    request: HttpRequest, user_profile: UserProfile, user_id: int,
-) -> HttpResponse:
+def reactivate_user_backend(request: HttpRequest, user_profile: UserProfile, user_id: int) -> HttpResponse:
     target = access_user_by_id(user_profile, user_id, allow_deactivated=True, allow_bots=True)
     if target.is_bot:
         assert target.bot_type is not None

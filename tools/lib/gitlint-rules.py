@@ -307,9 +307,7 @@ class ImperativeMood(LineRule):
             imperative = head_binary_search(first_word, imperative_forms)
             violation = RuleViolation(
                 self.id,
-                self.error_msg.format(
-                    word=first_word, imperative=imperative, title=commit.message.title,
-                ),
+                self.error_msg.format(word=first_word, imperative=imperative, title=commit.message.title),
             )
 
             violations.append(violation)

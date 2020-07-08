@@ -176,7 +176,9 @@ class GitlabHookTests(WebhookTestCase):
 
     def test_update_issue_event_message(self) -> None:
         expected_topic = "my-awesome-project / Issue #1 Issue title_new"
-        expected_message = "Tomasz Kolek updated [Issue #1](https://gitlab.com/tomaszkolek0/my-awesome-project/issues/1)."
+        expected_message = (
+            "Tomasz Kolek updated [Issue #1](https://gitlab.com/tomaszkolek0/my-awesome-project/issues/1)."
+        )
 
         self.send_and_test_stream_message("issue_hook__issue_updated", expected_topic, expected_message)
 
@@ -293,9 +295,7 @@ class GitlabHookTests(WebhookTestCase):
         expected_message = "Tomasz Kolek created [MR #2](https://gitlab.com/tomaszkolek0/my-awesome-project/merge_requests/2) from `tomek` to `master`:\n\n~~~ quote\ndescription of merge request\n~~~"
 
         self.send_and_test_stream_message(
-            "merge_request_hook__merge_request_created_without_assignee",
-            expected_topic,
-            expected_message,
+            "merge_request_hook__merge_request_created_without_assignee", expected_topic, expected_message,
         )
 
     def test_merge_request_created_with_custom_topic_in_url(self) -> None:
@@ -304,9 +304,7 @@ class GitlabHookTests(WebhookTestCase):
         expected_message = "[[my-awesome-project](https://gitlab.com/tomaszkolek0/my-awesome-project)] Tomasz Kolek created [MR #2 NEW MR](https://gitlab.com/tomaszkolek0/my-awesome-project/merge_requests/2) from `tomek` to `master`:\n\n~~~ quote\ndescription of merge request\n~~~"
 
         self.send_and_test_stream_message(
-            "merge_request_hook__merge_request_created_without_assignee",
-            expected_topic,
-            expected_message,
+            "merge_request_hook__merge_request_created_without_assignee", expected_topic, expected_message,
         )
 
     def test_merge_request_created_with_assignee_event_message(self) -> None:

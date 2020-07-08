@@ -245,9 +245,7 @@ def validate_cache_key(key: str) -> None:
         raise InvalidCacheKeyException(f"Cache key too long: {key} Length: {len(key)}")
 
 
-def cache_set(
-    key: str, val: Any, cache_name: Optional[str] = None, timeout: Optional[int] = None,
-) -> None:
+def cache_set(key: str, val: Any, cache_name: Optional[str] = None, timeout: Optional[int] = None) -> None:
     final_key = KEY_PREFIX + key
     validate_cache_key(final_key)
 

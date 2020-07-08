@@ -171,9 +171,7 @@ def do_update_fill_state(fill_state: FillState, end_time: datetime, state: int) 
 
 # We assume end_time is valid (e.g. is on a day or hour boundary as appropriate)
 # and is timezone aware. It is the caller's responsibility to enforce this!
-def do_fill_count_stat_at_hour(
-    stat: CountStat, end_time: datetime, realm: Optional[Realm] = None,
-) -> None:
+def do_fill_count_stat_at_hour(stat: CountStat, end_time: datetime, realm: Optional[Realm] = None) -> None:
     start_time = end_time - stat.interval
     if not isinstance(stat, LoggingCountStat):
         timer = time.time()
@@ -685,9 +683,7 @@ def get_count_stats(realm: Optional[Realm] = None) -> Dict[str, CountStat]:
         ),
         CountStat(
             "messages_in_stream:is_bot:day",
-            sql_data_collector(
-                StreamCount, count_message_by_stream_query(realm), (UserProfile, "is_bot"),
-            ),
+            sql_data_collector(StreamCount, count_message_by_stream_query(realm), (UserProfile, "is_bot")),
             CountStat.DAY,
         ),
         # Number of Users stats

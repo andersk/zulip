@@ -561,9 +561,7 @@ class Command(BaseCommand):
             favorite_editor = try_add_realm_custom_profile_field(
                 zulip_realm, "Favorite editor", CustomProfileField.CHOICE, field_data=field_data,
             )
-            birthday = try_add_realm_custom_profile_field(
-                zulip_realm, "Birthday", CustomProfileField.DATE,
-            )
+            birthday = try_add_realm_custom_profile_field(zulip_realm, "Birthday", CustomProfileField.DATE)
             favorite_website = try_add_realm_custom_profile_field(
                 zulip_realm,
                 "Favorite website",
@@ -822,10 +820,7 @@ def generate_and_send_messages(
         message.content = next(texts)
 
         randkey = random.randint(1, random_max)
-        if (
-            num_messages > 0
-            and random.randint(1, random_max) * 100.0 / random_max < options["stickyness"]
-        ):
+        if num_messages > 0 and random.randint(1, random_max) * 100.0 / random_max < options["stickyness"]:
             # Use an old recipient
             message_type, recipient_id, saved_data = recipients[num_messages - 1]
             if message_type == Recipient.PERSONAL:

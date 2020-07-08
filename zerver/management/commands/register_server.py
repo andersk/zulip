@@ -42,9 +42,7 @@ class Command(ZulipBaseCommand):
         if not settings.ZULIP_ORG_ID:
             raise CommandError("Missing zulip_org_id; run scripts/setup/generate_secrets.py to generate.")
         if not settings.ZULIP_ORG_KEY:
-            raise CommandError(
-                "Missing zulip_org_key; run scripts/setup/generate_secrets.py to generate.",
-            )
+            raise CommandError("Missing zulip_org_key; run scripts/setup/generate_secrets.py to generate.")
         if settings.PUSH_NOTIFICATION_BOUNCER_URL is None:
             if settings.DEVELOPMENT:
                 settings.PUSH_NOTIFICATION_BOUNCER_URL = (

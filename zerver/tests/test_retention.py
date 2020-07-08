@@ -104,9 +104,7 @@ class ArchiveMessagesTestingBase(RetentionTestingBase):
         realm.message_retention_days = retention_period
         realm.save()
 
-    def _set_stream_message_retention_value(
-        self, stream: Stream, retention_period: Optional[int],
-    ) -> None:
+    def _set_stream_message_retention_value(self, stream: Stream, retention_period: Optional[int]) -> None:
         stream.message_retention_days = retention_period
         stream.save()
 
@@ -357,9 +355,7 @@ class TestArchiveMessagesGeneral(ArchiveMessagesTestingBase):
         self.assertEqual(ArchivedAttachment.objects.count(), 3)
         self.assertEqual(
             list(
-                ArchivedAttachment.objects.distinct("messages__id").values_list(
-                    "messages__id", flat=True,
-                ),
+                ArchivedAttachment.objects.distinct("messages__id").values_list("messages__id", flat=True),
             ),
             [msgs_ids["expired_message_id"]],
         )
@@ -701,9 +697,7 @@ class MoveMessageToArchiveGeneral(MoveMessageToArchiveBase):
         )
 
         usermsg_ids = self._get_usermessage_ids([msg_id])
-        attachment_ids = list(
-            Attachment.objects.filter(messages__id=msg_id).values_list("id", flat=True),
-        )
+        attachment_ids = list(Attachment.objects.filter(messages__id=msg_id).values_list("id", flat=True))
 
         self._assert_archive_empty()
         # Archive one of the messages:

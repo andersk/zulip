@@ -257,9 +257,7 @@ class TornadoQueueClient(SimpleQueueClient):
     # potentially causing 4 failures.  We add some headroom above that.
     CONNECTION_FAILURES_BEFORE_NOTIFY = 10
 
-    def _on_connection_open_error(
-        self, connection: pika.connection.Connection, reason: Exception,
-    ) -> None:
+    def _on_connection_open_error(self, connection: pika.connection.Connection, reason: Exception) -> None:
         self._connection_failure_count += 1
         retry_secs = self.CONNECTION_RETRY_SECS
         self.log.log(

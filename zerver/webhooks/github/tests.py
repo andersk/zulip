@@ -31,9 +31,7 @@ class GithubWebhookTest(WebhookTestCase):
 
     def test_push_delete_branch(self) -> None:
         expected_message = "eeshangarg [deleted](https://github.com/eeshangarg/public-repo/compare/2e8cf535fb38...000000000000) the branch feature."
-        self.send_and_test_stream_message(
-            "push__delete_branch", "public-repo / feature", expected_message,
-        )
+        self.send_and_test_stream_message("push__delete_branch", "public-repo / feature", expected_message)
 
     def test_push_local_branch_without_commits(self) -> None:
         expected_message = "eeshangarg [pushed](https://github.com/eeshangarg/public-repo/compare/feature) the branch feature."
@@ -136,7 +134,9 @@ class GithubWebhookTest(WebhookTestCase):
         )
 
     def test_fork_msg(self) -> None:
-        expected_message = "baxterandthehackers forked [public-repo](https://github.com/baxterandthehackers/public-repo)."
+        expected_message = (
+            "baxterandthehackers forked [public-repo](https://github.com/baxterandthehackers/public-repo)."
+        )
         self.send_and_test_stream_message("fork", self.EXPECTED_TOPIC_REPO_EVENTS, expected_message)
 
     def test_issue_comment_msg(self) -> None:

@@ -113,9 +113,7 @@ footer
             "markdown_test_file": "zerver/tests/markdown/test_custom_include_extension.md",
         }
 
-        with self.assertRaisesRegex(
-            InvalidMarkdownIncludeStatement, "Invalid markdown include statement",
-        ):
+        with self.assertRaisesRegex(InvalidMarkdownIncludeStatement, "Invalid markdown include statement"):
             template.render(context)
 
     def test_custom_markdown_include_extension_empty_macro(self) -> None:

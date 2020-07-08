@@ -99,9 +99,7 @@ def check_emoji_admin(user_profile: UserProfile, emoji_name: Optional[str] = Non
         return
 
     # Additionally, normal users can remove emoji they themselves added
-    emoji = RealmEmoji.objects.filter(
-        realm=user_profile.realm, name=emoji_name, deactivated=False,
-    ).first()
+    emoji = RealmEmoji.objects.filter(realm=user_profile.realm, name=emoji_name, deactivated=False).first()
     current_user_is_author = (
         emoji is not None and emoji.author is not None and emoji.author.id == user_profile.id
     )

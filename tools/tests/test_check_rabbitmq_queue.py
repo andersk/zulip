@@ -27,11 +27,7 @@ class AnalyzeQueueStatsTests(TestCase):
         """
         result = analyze_queue_stats(
             "name",
-            {
-                "update_time": time.time(),
-                "current_queue_size": 10000,
-                "recent_average_consume_time": None,
-            },
+            {"update_time": time.time(), "current_queue_size": 10000, "recent_average_consume_time": None},
             10000,
         )
         self.assertEqual(result["status"], OK)
@@ -65,9 +61,7 @@ class AnalyzeQueueStatsTests(TestCase):
         self.assertEqual(result["status"], OK)
 
         # Verify logic around whether it'll take MAX_SECONDS_TO_CLEAR_NORMAL to clear queue.
-        with mock.patch.dict(
-            "scripts.lib.check_rabbitmq_queue.MAX_SECONDS_TO_CLEAR_NORMAL", {"name": 10},
-        ):
+        with mock.patch.dict("scripts.lib.check_rabbitmq_queue.MAX_SECONDS_TO_CLEAR_NORMAL", {"name": 10}):
             result = analyze_queue_stats(
                 "name",
                 {

@@ -88,11 +88,7 @@ def parse_freshdesk_event(event_string: str) -> List[str]:
         # This is a property change event, like {status:{from:4,to:6}}. Pull out
         # the property, from, and to states.
         property, _, from_state, _, to_state = data
-        return [
-            property,
-            property_name(property, int(from_state)),
-            property_name(property, int(to_state)),
-        ]
+        return [property, property_name(property, int(from_state)), property_name(property, int(to_state))]
 
 
 def format_freshdesk_note_message(ticket: TicketDict, event_info: List[str]) -> str:

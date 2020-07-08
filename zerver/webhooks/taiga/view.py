@@ -44,8 +44,7 @@ templates = {
         "changed_assigned_to": "[{user}]({user_link}) reassigned epic {subject}" " from {old} to {new}.",
         "blocked": "[{user}]({user_link}) blocked epic {subject}.",
         "unblocked": "[{user}]({user_link}) unblocked epic {subject}.",
-        "changed_status": "[{user}]({user_link}) changed status of epic {subject}"
-        " from {old} to {new}.",
+        "changed_status": "[{user}]({user_link}) changed status of epic {subject}" " from {old} to {new}.",
         "renamed": "[{user}]({user_link}) renamed epic from **{old}** to **{new}**.",
         "description_diff": "[{user}]({user_link}) updated description of epic {subject}.",
         "commented": "[{user}]({user_link}) commented on epic {subject}.",
@@ -106,8 +105,7 @@ templates = {
         "changed_assigned_to": "[{user}]({user_link}) reassigned task {subject}" " from {old} to {new}.",
         "blocked": "[{user}]({user_link}) blocked task {subject}.",
         "unblocked": "[{user}]({user_link}) unblocked task {subject}.",
-        "changed_status": "[{user}]({user_link}) changed status of task {subject}"
-        " from {old} to {new}.",
+        "changed_status": "[{user}]({user_link}) changed status of task {subject}" " from {old} to {new}.",
         "renamed": "[{user}]({user_link}) renamed task {old} to **{new}**.",
         "description_diff": "[{user}]({user_link}) updated description of task {subject}.",
         "set_milestone": "[{user}]({user_link}) added task {subject} to sprint {new}.",

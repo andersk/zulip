@@ -188,11 +188,7 @@ def update_message_backend(
         # always correct.
         # Note: If rendering fails, the called code will raise a JsonableError.
         rendered_content = render_incoming_message(
-            message,
-            content,
-            user_info["message_user_ids"],
-            user_profile.realm,
-            mention_data=mention_data,
+            message, content, user_info["message_user_ids"], user_profile.realm, mention_data=mention_data,
         )
         links_for_embed |= message.links_for_preview
 

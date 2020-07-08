@@ -1583,9 +1583,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
         name = "Alice Jones"
 
         do_invite_users(iago, [email], [], invite_as=PreregistrationUser.INVITE_AS["REALM_ADMIN"])
-        expired_date = timezone_now() - datetime.timedelta(
-            days=settings.INVITATION_LINK_VALIDITY_DAYS + 1,
-        )
+        expired_date = timezone_now() - datetime.timedelta(days=settings.INVITATION_LINK_VALIDITY_DAYS + 1)
         PreregistrationUser.objects.filter(email=email).update(invited_at=expired_date)
 
         subdomain = "zulip"
@@ -1889,9 +1887,7 @@ class SAMLAuthBackendTest(SocialAuthBase):
         relay_state = ujson.dumps(
             dict(state_token=SAMLAuthBackend.put_data_in_redis({"subdomain": "zulip"})),
         )
-        saml_response = self.generate_saml_response(
-            email=self.example_email("hamlet"), name="King Hamlet",
-        )
+        saml_response = self.generate_saml_response(email=self.example_email("hamlet"), name="King Hamlet")
 
         # We change the entity_id of the configured test IdP, which means it won't match
         # the Entity ID in the SAMLResponse generated above.
@@ -2064,9 +2060,7 @@ class SAMLAuthBackendTest(SocialAuthBase):
         idps_dict["test_idp2"]["display_name"] = "Second Test IdP"
         idps_dict["test_idp2"]["limit_to_subdomains"] = ["zulip"]
 
-        with self.settings(
-            SOCIAL_AUTH_SAML_ENABLED_IDPS=idps_dict, SAML_REQUIRE_LIMIT_TO_SUBDOMAINS=True,
-        ):
+        with self.settings(SOCIAL_AUTH_SAML_ENABLED_IDPS=idps_dict, SAML_REQUIRE_LIMIT_TO_SUBDOMAINS=True):
             with self.assertLogs(self.logger_string, level="ERROR") as m:
                 # Initialization of the backend should validate the configured IdPs
                 # with respect to the SAML_REQUIRE_LIMIT_TO_SUBDOMAINS setting and remove
@@ -2338,10 +2332,7 @@ class AppleIdAuthBackendTest(AppleAuthMixin, SocialAuthBase):
         # the public keys to be used for verifying the signature
         # on the JWT id_token.
         requests_mock.add(
-            requests_mock.GET,
-            self.BACKEND_CLASS.JWK_URL,
-            status=200,
-            json=json.loads(settings.APPLE_JWK),
+            requests_mock.GET, self.BACKEND_CLASS.JWK_URL, status=200, json=json.loads(settings.APPLE_JWK),
         )
 
     def generate_access_url_payload(self, account_data_dict: Dict[str, str]) -> str:
@@ -3410,16 +3401,14 @@ class JSONFetchAPIKeyTest(ZulipTestCase):
         user = self.example_user("hamlet")
         self.login_user(user)
         result = self.client_post(
-            "/json/fetch_api_key",
-            dict(user_profile=user, password=initial_password(user.delivery_email)),
+            "/json/fetch_api_key", dict(user_profile=user, password=initial_password(user.delivery_email)),
         )
         self.assert_json_success(result)
 
     def test_not_loggedin(self) -> None:
         user = self.example_user("hamlet")
         result = self.client_post(
-            "/json/fetch_api_key",
-            dict(user_profile=user, password=initial_password(user.delivery_email)),
+            "/json/fetch_api_key", dict(user_profile=user, password=initial_password(user.delivery_email)),
         )
         self.assert_json_error(result, "Not logged in: API authentication or user session required", 401)
 
@@ -3560,12 +3549,7 @@ class ExternalMethodDictsTests(ZulipTestCase):
                 [
                     social_backend.name
                     for social_backend in sorted(
-                        [
-                            ZulipRemoteUserBackend,
-                            GitHubAuthBackend,
-                            AzureADAuthBackend,
-                            GoogleAuthBackend,
-                        ],
+                        [ZulipRemoteUserBackend, GitHubAuthBackend, AzureADAuthBackend, GoogleAuthBackend],
                         key=lambda x: x.sort_order,
                         reverse=True,
                     )
@@ -4953,9 +4937,7 @@ class TestZulipLDAPUserPopulator(ZulipLDAPTestCase):
             othello = self.example_user("othello")  # othello isn't in our test directory
             mock_logger = mock.MagicMock()
             result = sync_user_from_ldap(othello, mock_logger)
-            mock_logger.warning.assert_called_once_with(
-                "Did not find %s in LDAP.", othello.delivery_email,
-            )
+            mock_logger.warning.assert_called_once_with("Did not find %s in LDAP.", othello.delivery_email)
             self.assertFalse(result)
 
             do_deactivate_user(othello)
@@ -5057,10 +5039,7 @@ class TestZulipLDAPUserPopulator(ZulipLDAPTestCase):
 
     def test_update_non_existent_profile_field(self) -> None:
         with self.settings(
-            AUTH_LDAP_USER_ATTR_MAP={
-                "full_name": "cn",
-                "custom_profile_field__non_existent": "homePhone",
-            },
+            AUTH_LDAP_USER_ATTR_MAP={"full_name": "cn", "custom_profile_field__non_existent": "homePhone"},
         ):
             with self.assertRaisesRegex(
                 ZulipLDAPException, "Custom profile field with name non_existent not found",
@@ -5382,8 +5361,6 @@ class LDAPBackendTest(ZulipTestCase):
         ), mock.patch("django_auth_ldap.backend._LDAPUser._authenticate_user_dn"):
             response = self.client_post("/login/", data)
             self.assertEqual(response.status_code, 302)
-            self.assertEqual(
-                response.url, reverse("config_error", kwargs={"error_category_name": "ldap"}),
-            )
+            self.assertEqual(response.url, reverse("config_error", kwargs={"error_category_name": "ldap"}))
             response = self.client_get(response.url)
             self.assert_in_response("You are trying to login using LDAP " "without creating an", response)

@@ -55,9 +55,7 @@ class TestZulipBaseCommand(ZulipTestCase):
     def test_get_realm(self) -> None:
         self.assertEqual(self.command.get_realm(dict(realm_id="zulip")), self.zulip_realm)
         self.assertEqual(self.command.get_realm(dict(realm_id=None)), None)
-        self.assertEqual(
-            self.command.get_realm(dict(realm_id=str(self.zulip_realm.id))), self.zulip_realm,
-        )
+        self.assertEqual(self.command.get_realm(dict(realm_id=str(self.zulip_realm.id))), self.zulip_realm)
         with self.assertRaisesRegex(CommandError, "There is no realm with id"):
             self.command.get_realm(dict(realm_id="17"))
         with self.assertRaisesRegex(CommandError, "There is no realm with id"):
@@ -109,9 +107,7 @@ class TestZulipBaseCommand(ZulipTestCase):
         user_profiles = self.get_users_sorted(dict(users=user_emails), None)
         self.assertEqual(user_profiles, expected_user_profiles)
 
-        expected_user_profiles = self.sorted_users(
-            [self.mit_user("sipbtest"), self.example_user("iago")],
-        )
+        expected_user_profiles = self.sorted_users([self.mit_user("sipbtest"), self.example_user("iago")])
         user_emails = ",".join(u.delivery_email for u in expected_user_profiles)
         user_profiles = self.get_users_sorted(dict(users=user_emails), None)
         self.assertEqual(user_profiles, expected_user_profiles)

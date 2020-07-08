@@ -19,10 +19,7 @@ Children up and down the country are \u2026
 
         # use fixture named mention_webfeeds
         self.send_and_test_stream_message(
-            "webfeeds",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "webfeeds", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def get_body(self, fixture_name: str) -> str:

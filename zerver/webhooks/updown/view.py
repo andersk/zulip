@@ -13,9 +13,7 @@ from zerver.models import UserProfile
 TOPIC_TEMPLATE = "{service_url}"
 
 
-def send_message_for_event(
-    request: HttpRequest, user_profile: UserProfile, event: Dict[str, Any],
-) -> None:
+def send_message_for_event(request: HttpRequest, user_profile: UserProfile, event: Dict[str, Any]) -> None:
     event_type = get_event_type(event)
     subject = TOPIC_TEMPLATE.format(service_url=event["check"]["url"])
     body = EVENT_TYPE_BODY_MAPPER[event_type](event)
@@ -56,8 +54,7 @@ def add_time_part_to_string_date_if_needed(value: int, text_name: str) -> str:
 
 def get_body_for_down_event(event: Dict[str, Any]) -> str:
     return "Service is `down`. It returned a {} error at {}.".format(
-        event["downtime"]["error"],
-        event["downtime"]["started_at"].replace("T", " ").replace("Z", " UTC"),
+        event["downtime"]["error"], event["downtime"]["started_at"].replace("T", " ").replace("Z", " UTC"),
     )
 
 

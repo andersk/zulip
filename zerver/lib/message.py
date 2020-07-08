@@ -666,9 +666,7 @@ def bulk_access_messages(user_profile: UserProfile, messages: Sequence[Message])
     return filtered_messages
 
 
-def bulk_access_messages_expect_usermessage(
-    user_profile_id: int, message_ids: Sequence[int],
-) -> List[int]:
+def bulk_access_messages_expect_usermessage(user_profile_id: int, message_ids: Sequence[int]) -> List[int]:
     """
     Like bulk_access_messages, but faster and potentially stricter.
 

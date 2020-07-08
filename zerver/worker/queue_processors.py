@@ -610,9 +610,7 @@ class DigestWorker(QueueProcessingWorker):  # nocoverage
 class MirrorWorker(QueueProcessingWorker):
     def consume(self, event: Mapping[str, Any]) -> None:
         rcpt_to = event["rcpt_to"]
-        msg = email.message_from_bytes(
-            base64.b64decode(event["msg_base64"]), policy=email.policy.default,
-        )
+        msg = email.message_from_bytes(base64.b64decode(event["msg_base64"]), policy=email.policy.default)
         assert isinstance(msg, EmailMessage)  # https://github.com/python/typeshed/issues/2417
         if not is_missed_message_address(rcpt_to):
             # Missed message addresses are one-time use, so we don't need

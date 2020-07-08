@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="userprofile",
-            name="avatar_hash",
-            field=models.CharField(max_length=64, null=True),
+            model_name="userprofile", name="avatar_hash", field=models.CharField(max_length=64, null=True),
         ),
     ]

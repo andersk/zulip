@@ -61,9 +61,7 @@ class Command(ZulipBaseCommand):
                 users = self.get_users(options, realm, is_bot=False)
             except CommandError as error:
                 if str(error) == "You have to pass either -u/--users or -a/--all-users.":
-                    raise CommandError(
-                        "You have to pass -u/--users or -a/--all-users or --entire-server.",
-                    )
+                    raise CommandError("You have to pass -u/--users or -a/--all-users or --entire-server.")
                 raise error
 
         send_custom_email(users, options)

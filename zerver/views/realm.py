@@ -55,9 +55,7 @@ def update_realm(
     inline_url_embed_preview: Optional[bool] = REQ(validator=check_bool, default=None),
     add_emoji_by_admins_only: Optional[bool] = REQ(validator=check_bool, default=None),
     allow_message_deleting: Optional[bool] = REQ(validator=check_bool, default=None),
-    message_content_delete_limit_seconds: Optional[int] = REQ(
-        converter=to_non_negative_int, default=None,
-    ),
+    message_content_delete_limit_seconds: Optional[int] = REQ(converter=to_non_negative_int, default=None),
     allow_message_editing: Optional[bool] = REQ(validator=check_bool, default=None),
     allow_community_topic_editing: Optional[bool] = REQ(validator=check_bool, default=None),
     mandatory_topics: Optional[bool] = REQ(validator=check_bool, default=None),
@@ -97,9 +95,7 @@ def update_realm(
     default_twenty_four_hour_time: Optional[bool] = REQ(validator=check_bool, default=None),
     video_chat_provider: Optional[int] = REQ(validator=check_int, default=None),
     default_code_block_language: Optional[str] = REQ(validator=check_string, default=None),
-    digest_weekday: Optional[int] = REQ(
-        validator=check_int_in(Realm.DIGEST_WEEKDAY_VALUES), default=None,
-    ),
+    digest_weekday: Optional[int] = REQ(validator=check_int_in(Realm.DIGEST_WEEKDAY_VALUES), default=None),
 ) -> HttpResponse:
     realm = user_profile.realm
 
