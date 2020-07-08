@@ -141,9 +141,9 @@ def add_missing_messages(user_profile: UserProfile) -> None:
     """
     assert user_profile.last_active_message_id is not None
     all_stream_subs = list(
-        Subscription.objects.filter(
-            user_profile=user_profile, recipient__type=Recipient.STREAM,
-        ).values("recipient_id", "recipient__type_id"),
+        Subscription.objects.filter(user_profile=user_profile, recipient__type=Recipient.STREAM).values(
+            "recipient_id", "recipient__type_id",
+        ),
     )
 
     # For Stream messages we need to check messages against data from
@@ -229,9 +229,7 @@ def add_missing_messages(user_profile: UserProfile) -> None:
 def do_soft_deactivate_user(user_profile: UserProfile) -> None:
     try:
         user_profile.last_active_message_id = (
-            UserMessage.objects.filter(user_profile=user_profile)
-            .order_by("-message__id")[0]
-            .message_id
+            UserMessage.objects.filter(user_profile=user_profile).order_by("-message__id")[0].message_id
         )
     except IndexError:  # nocoverage
         # In the unlikely event that a user somehow has never received

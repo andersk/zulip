@@ -235,10 +235,7 @@ def validate_indent_html(fn: str, fix: bool) -> int:
             flush=True,
         )
         with subprocess.Popen(
-            ["diff", fn, "-"],
-            stdin=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            universal_newlines=True,
+            ["diff", fn, "-"], stdin=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True,
         ) as p:
             p.communicate(phtml)
         print()

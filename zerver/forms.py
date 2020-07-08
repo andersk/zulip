@@ -172,9 +172,9 @@ class HomepageForm(forms.Form):
 
         if realm is None:
             raise ValidationError(
-                _(
-                    "The organization you are trying to " "join using {email} does not " "exist.",
-                ).format(email=email),
+                _("The organization you are trying to " "join using {email} does not " "exist.").format(
+                    email=email,
+                ),
             )
 
         if not from_multiuse_invite and realm.invite_required:

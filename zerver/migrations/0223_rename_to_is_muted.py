@@ -35,8 +35,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="subscription", name="is_muted", field=models.NullBooleanField(default=False),
         ),
-        migrations.RunPython(
-            set_initial_value_for_is_muted, reverse_code=reverse_code, elidable=True,
-        ),
+        migrations.RunPython(set_initial_value_for_is_muted, reverse_code=reverse_code, elidable=True),
         migrations.RemoveField(model_name="subscription", name="in_home_view"),
     ]

@@ -168,9 +168,7 @@ class AdminNotifyHandlerTest(ZulipTestCase):
         self.assertIn("stack_trace", report)
 
         # Test the catch-all exception handler doesn't throw
-        with patch(
-            "zerver.lib.error_notify.notify_server_error", side_effect=Exception("queue error"),
-        ):
+        with patch("zerver.lib.error_notify.notify_server_error", side_effect=Exception("queue error")):
             self.handler.emit(record)
         with self.settings(STAGING_ERROR_NOTIFICATIONS=False):
             with patch(

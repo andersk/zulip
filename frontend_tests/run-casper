@@ -44,13 +44,7 @@ parser.add_argument(
     help="Skip flaky tests",
 )
 parser.add_argument(
-    "--loop",
-    dest="loop",
-    nargs=1,
-    action="store",
-    type=int,
-    default=None,
-    help="Run tests in a loop.",
+    "--loop", dest="loop", nargs=1, action="store", type=int, default=None, help="Run tests in a loop.",
 )
 parser.add_argument(
     "--force",

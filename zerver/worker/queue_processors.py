@@ -592,9 +592,7 @@ class PushNotificationsWorker(QueueProcessingWorker):  # nocoverage
 @assign_queue("error_reports")
 class ErrorReporter(QueueProcessingWorker):
     def consume(self, event: Mapping[str, Any]) -> None:
-        logging.info(
-            "Processing traceback with type %s for %s", event["type"], event.get("user_email"),
-        )
+        logging.info("Processing traceback with type %s for %s", event["type"], event.get("user_email"))
         if settings.ERROR_REPORTING:
             do_report_error(event["report"]["host"], event["type"], event["report"])
 
@@ -808,7 +806,5 @@ class DeferredWorker(QueueProcessingWorker):
             # clients that the export happened.
             notify_realm_export(user_profile)
             logging.info(
-                "Completed data export for %s in %s",
-                user_profile.realm.string_id,
-                time.time() - start,
+                "Completed data export for %s in %s", user_profile.realm.string_id, time.time() - start,
             )

@@ -38,7 +38,9 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("userstory_changed_reassigned", self.TOPIC, message)
 
     def test_taiga_userstory_changed_unassigned(self) -> None:
-        message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) unassigned user story **UserStory**."
+        message = (
+            "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) unassigned user story **UserStory**."
+        )
         self.send_and_test_stream_message("userstory_changed_unassigned", self.TOPIC, message)
 
     def test_taiga_userstory_changed_points(self) -> None:
@@ -156,9 +158,7 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("task_changed_new_due_date", self.TOPIC, message)
 
     def test_taiga_sprint_created(self) -> None:
-        message = (
-            "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) created sprint **New sprint**."
-        )
+        message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) created sprint **New sprint**."
         self.send_and_test_stream_message("sprint_created", self.TOPIC, message)
 
     def test_taiga_sprint_deleted(self) -> None:

@@ -156,9 +156,7 @@ class MessageDictTest(ZulipTestCase):
                 message.save()
                 ids.append(message.id)
 
-                Reaction.objects.create(
-                    user_profile=sender, message=message, emoji_name="simple_smile",
-                )
+                Reaction.objects.create(user_profile=sender, message=message, emoji_name="simple_smile")
 
         num_ids = len(ids)
         self.assertTrue(num_ids >= 600)
@@ -256,9 +254,7 @@ class MessageDictTest(ZulipTestCase):
         )
 
         def get_message(sender: UserProfile) -> Message:
-            msg_id = self.send_stream_message(
-                sender, "Denmark", "hello world", topic_name, zulip_realm,
-            )
+            msg_id = self.send_stream_message(sender, "Denmark", "hello world", topic_name, zulip_realm)
             return Message.objects.get(id=msg_id)
 
         def assert_topic_links(links: List[str], msg: Message) -> None:

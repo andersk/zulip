@@ -39,9 +39,7 @@ def get_database_id(worker_id: Optional[int] = None) -> str:
 
 
 # The root directory for this run of the test suite.
-TEST_RUN_DIR = get_or_create_dev_uuid_var_path(
-    os.path.join("test-backend", f"run_{get_database_id()}"),
-)
+TEST_RUN_DIR = get_or_create_dev_uuid_var_path(os.path.join("test-backend", f"run_{get_database_id()}"))
 
 _worker_id = 0  # Used to identify the worker process.
 

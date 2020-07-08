@@ -93,9 +93,7 @@ class TestRealmAuditLog(ZulipTestCase):
         now = timezone_now()
         user_profile = self.example_user("hamlet")
         acting_user = self.example_user("iago")
-        do_change_user_role(
-            user_profile, UserProfile.ROLE_REALM_ADMINISTRATOR, acting_user=acting_user,
-        )
+        do_change_user_role(user_profile, UserProfile.ROLE_REALM_ADMINISTRATOR, acting_user=acting_user)
         do_change_user_role(user_profile, UserProfile.ROLE_MEMBER, acting_user=acting_user)
         do_change_user_role(user_profile, UserProfile.ROLE_GUEST, acting_user=acting_user)
         do_change_user_role(user_profile, UserProfile.ROLE_MEMBER, acting_user=acting_user)

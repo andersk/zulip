@@ -203,8 +203,7 @@ def create_test_data() -> None:
     paragraphs = parse_file(config, gens, config["corpus"]["filename"])
 
     write_file(
-        paragraphs,
-        os.path.join(get_or_create_dev_uuid_var_path("test-backend"), "test_messages.json"),
+        paragraphs, os.path.join(get_or_create_dev_uuid_var_path("test-backend"), "test_messages.json"),
     )
 
 

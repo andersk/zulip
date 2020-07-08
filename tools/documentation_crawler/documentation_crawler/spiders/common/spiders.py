@@ -120,11 +120,7 @@ class BaseDocumentationSpider(scrapy.Spider):
         if getattr(self, "skip_external", False) and self._is_external_link(url):
             return
         yield Request(
-            url,
-            method=method,
-            callback=callback,
-            dont_filter=dont_filter,
-            errback=self.error_callback,
+            url, method=method, callback=callback, dont_filter=dont_filter, errback=self.error_callback,
         )
 
     def start_requests(self) -> Iterator[Request]:

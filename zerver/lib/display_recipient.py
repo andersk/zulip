@@ -92,9 +92,7 @@ def bulk_fetch_display_recipients(
     personal_and_huddle_recipients = recipient_tuples - stream_recipients
 
     def stream_query_function(recipient_ids: List[int]) -> List[TinyStreamResult]:
-        stream_ids = [
-            recipient_id_to_type_pair_dict[recipient_id][1] for recipient_id in recipient_ids
-        ]
+        stream_ids = [recipient_id_to_type_pair_dict[recipient_id][1] for recipient_id in recipient_ids]
         return Stream.objects.filter(id__in=stream_ids).values("name", "id")
 
     def stream_id_fetcher(stream: TinyStreamResult) -> int:

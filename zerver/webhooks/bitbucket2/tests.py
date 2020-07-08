@@ -28,9 +28,7 @@ class Bitbucket2HookTests(WebhookTestCase):
         commit_info = "* first commit ([84b96ad](https://bitbucket.org/kolaszek/repository-name/commits/84b96adc644a30fd6465b3d196369d880762afed))\n"
         expected_message = f"""kolaszek [pushed](https://bitbucket.org/kolaszek/repository-name/branch/master) 10 commits to branch master. Commits by james (3), Brendon (2), Tomasz (2) and others (3).\n\n{commit_info*9}* first commit ([84b96ad](https://bitbucket.org/kolaszek/repository-name/commits/84b96adc644a30fd6465b3d196369d880762afed))"""
         self.send_and_test_stream_message(
-            "push_multiple_committers_with_others",
-            self.EXPECTED_TOPIC_BRANCH_EVENTS,
-            expected_message,
+            "push_multiple_committers_with_others", self.EXPECTED_TOPIC_BRANCH_EVENTS, expected_message,
         )
 
     def test_bitbucket2_on_push_commits_multiple_committers_filtered_by_branches(self) -> None:
@@ -48,9 +46,7 @@ class Bitbucket2HookTests(WebhookTestCase):
         commit_info = "* first commit ([84b96ad](https://bitbucket.org/kolaszek/repository-name/commits/84b96adc644a30fd6465b3d196369d880762afed))\n"
         expected_message = f"""kolaszek [pushed](https://bitbucket.org/kolaszek/repository-name/branch/master) 10 commits to branch master. Commits by james (3), Brendon (2), Tomasz (2) and others (3).\n\n{commit_info*9}* first commit ([84b96ad](https://bitbucket.org/kolaszek/repository-name/commits/84b96adc644a30fd6465b3d196369d880762afed))"""
         self.send_and_test_stream_message(
-            "push_multiple_committers_with_others",
-            self.EXPECTED_TOPIC_BRANCH_EVENTS,
-            expected_message,
+            "push_multiple_committers_with_others", self.EXPECTED_TOPIC_BRANCH_EVENTS, expected_message,
         )
 
     def test_bitbucket2_on_push_event_filtered_by_branches(self) -> None:
@@ -190,7 +186,9 @@ class Bitbucket2HookTests(WebhookTestCase):
         )
 
     def test_bitbucket2_on_pull_request_approved_event(self) -> None:
-        expected_message = "kolaszek approved [PR #1](https://bitbucket.org/kolaszek/repository-name/pull-requests/1)."
+        expected_message = (
+            "kolaszek approved [PR #1](https://bitbucket.org/kolaszek/repository-name/pull-requests/1)."
+        )
         kwargs = {
             "HTTP_X_EVENT_KEY": "pullrequest:approved",
         }
@@ -225,7 +223,9 @@ class Bitbucket2HookTests(WebhookTestCase):
         )
 
     def test_bitbucket2_on_pull_request_declined_event(self) -> None:
-        expected_message = "kolaszek rejected [PR #1](https://bitbucket.org/kolaszek/repository-name/pull-requests/1)."
+        expected_message = (
+            "kolaszek rejected [PR #1](https://bitbucket.org/kolaszek/repository-name/pull-requests/1)."
+        )
         kwargs = {
             "HTTP_X_EVENT_KEY": "pullrequest:rejected",
         }

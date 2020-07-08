@@ -255,9 +255,7 @@ EVENT_TO_FUNCTION_MAPPER = {
     "conversation.admin.snoozed": partial(get_conversation_admin_message, action="snoozed"),
     "conversation.admin.unsnoozed": partial(get_conversation_admin_message, action="unsnoozed"),
     "conversation.admin.replied": partial(get_conversation_admin_reply_message, action="replied to"),
-    "conversation.admin.noted": partial(
-        get_conversation_admin_reply_message, action="added a note to",
-    ),
+    "conversation.admin.noted": partial(get_conversation_admin_reply_message, action="added a note to"),
     "conversation.admin.single.created": get_conversation_admin_single_created_message,
     "conversation.user.created": get_conversation_user_created_message,
     "conversation.user.replied": get_conversation_user_replied_message,

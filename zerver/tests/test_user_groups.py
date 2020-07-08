@@ -439,9 +439,7 @@ class UserGroupAPITestCase(ZulipTestCase):
         hamlet = self.example_user("hamlet")
         cordelia = self.example_user("cordelia")
         self.login_user(iago)
-        do_set_realm_property(
-            iago.realm, "user_group_edit_policy", Realm.USER_GROUP_EDIT_POLICY_ADMINS,
-        )
+        do_set_realm_property(iago.realm, "user_group_edit_policy", Realm.USER_GROUP_EDIT_POLICY_ADMINS)
 
         params = {
             "name": "support",

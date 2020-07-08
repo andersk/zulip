@@ -87,9 +87,7 @@ def report_to_zulip(error_message: str) -> None:
 
 def log_and_report(email_message: EmailMessage, error_message: str, to: Optional[str]) -> None:
     recipient = to or "No recipient found"
-    error_message = "Sender: {}\nTo: {}\n{}".format(
-        email_message.get("From"), recipient, error_message,
-    )
+    error_message = "Sender: {}\nTo: {}\n{}".format(email_message.get("From"), recipient, error_message)
 
     error_message = redact_email_address(error_message)
     logger.error(error_message)
@@ -198,12 +196,7 @@ class ZulipEmailForwardUserError(ZulipEmailForwardError):
 
 def send_zulip(sender: UserProfile, stream: Stream, topic: str, content: str) -> None:
     internal_send_stream_message(
-        stream.realm,
-        sender,
-        stream,
-        truncate_topic(topic),
-        truncate_body(content),
-        email_gateway=True,
+        stream.realm, sender, stream, truncate_topic(topic), truncate_body(content), email_gateway=True,
     )
 
 

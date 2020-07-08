@@ -235,15 +235,10 @@ def json_change_notify_settings(
 
     # Stream notification settings.
 
-    if (
-        notification_sound is not None
-        and notification_sound not in get_available_notification_sounds()
-    ):
+    if notification_sound is not None and notification_sound not in get_available_notification_sounds():
         raise JsonableError(_("Invalid notification sound '{}'").format(notification_sound))
 
-    req_vars = {
-        k: v for k, v in list(locals().items()) if k in user_profile.notification_setting_types
-    }
+    req_vars = {k: v for k, v in list(locals().items()) if k in user_profile.notification_setting_types}
 
     for k, v in list(req_vars.items()):
         if v is not None and getattr(user_profile, k) != v:

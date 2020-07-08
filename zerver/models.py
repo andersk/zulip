@@ -973,9 +973,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
 
     is_bot: bool = models.BooleanField(default=False, db_index=True)
     bot_type: Optional[int] = models.PositiveSmallIntegerField(null=True, db_index=True)
-    bot_owner: Optional["UserProfile"] = models.ForeignKey(
-        "self", null=True, on_delete=models.SET_NULL,
-    )
+    bot_owner: Optional["UserProfile"] = models.ForeignKey("self", null=True, on_delete=models.SET_NULL)
 
     # Each role has a superset of the permissions of the next higher
     # numbered role.  When adding new roles, leave enough space for
@@ -1205,9 +1203,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     @property
     def profile_data(self) -> ProfileData:
         values = CustomProfileFieldValue.objects.filter(user_profile=self)
-        user_data = {
-            v.field_id: {"value": v.value, "rendered_value": v.rendered_value} for v in values
-        }
+        user_data = {v.field_id: {"value": v.value, "rendered_value": v.rendered_value} for v in values}
         data: ProfileData = []
         for field in custom_profile_fields_for_realm(self.realm_id):
             field_values = user_data.get(field.id, None)
@@ -1764,9 +1760,7 @@ def bulk_get_streams(realm: Realm, stream_names: STREAM_NAMES) -> Dict[str, Any]
         #
         # But chaining __in and __iexact doesn't work with Django's
         # ORM, so we have the following hack to construct the relevant where clause
-        where_clause = (
-            "upper(zerver_stream.name::text) IN (SELECT upper(name) FROM unnest(%s) AS name)"
-        )
+        where_clause = "upper(zerver_stream.name::text) IN (SELECT upper(name) FROM unnest(%s) AS name)"
         return (
             get_active_streams(realm)
             .select_related()
@@ -1932,9 +1926,7 @@ class Message(AbstractMessage):
 
     @staticmethod
     def need_to_render_content(
-        rendered_content: Optional[str],
-        rendered_content_version: Optional[int],
-        markdown_version: int,
+        rendered_content: Optional[str], rendered_content_version: Optional[int], markdown_version: int,
     ) -> bool:
         return (
             rendered_content is None
@@ -2994,7 +2986,9 @@ class RealmAuditLog(AbstractRealmAuditLog):
                 f"<RealmAuditLog: {self.modified_user} {self.event_type} {self.event_time} {self.id}>"
             )
         if self.modified_stream is not None:
-            return f"<RealmAuditLog: {self.modified_stream} {self.event_type} {self.event_time} {self.id}>"
+            return (
+                f"<RealmAuditLog: {self.modified_stream} {self.event_type} {self.event_time} {self.id}>"
+            )
         return f"<RealmAuditLog: {self.realm} {self.event_type} {self.event_time} {self.id}>"
 
 

@@ -173,9 +173,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
         result = self.api_post(
             hamlet, endpoint, dict(user_id=user_id, token_kin=token_kind, token=token),
         )
-        self.assert_json_error(
-            result, "Account is not associated with this subdomain", status_code=401,
-        )
+        self.assert_json_error(result, "Account is not associated with this subdomain", status_code=401)
 
         # We need the root ('') subdomain to be in use for this next
         # test, since the push bouncer API is only available there:
@@ -316,9 +314,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
             ):
                 result = self.client_post(endpoint, {"token": token}, subdomain="zulip")
                 self.assert_json_error(
-                    result,
-                    "ConnectionError while trying to connect to push notification bouncer",
-                    502,
+                    result, "ConnectionError while trying to connect to push notification bouncer", 502,
                 )
 
             with mock.patch(
@@ -789,9 +785,7 @@ class HandlePushNotificationTest(PushNotificationTest):
                 mock_info.assert_any_call(
                     "APNs: Removing invalid/expired token %s (%s)", token, "Unregistered",
                 )
-            self.assertEqual(
-                RemotePushDeviceToken.objects.filter(kind=PushDeviceToken.APNS).count(), 0,
-            )
+            self.assertEqual(RemotePushDeviceToken.objects.filter(kind=PushDeviceToken.APNS).count(), 0)
 
     def test_connection_error(self) -> None:
         self.setup_apns_tokens()
@@ -1812,9 +1806,7 @@ class TestPushApi(BouncerTestCase):
                 result = self.client_delete(endpoint, {"token": token})
                 self.assert_json_success(result)
                 tokens = list(PushDeviceToken.objects.filter(user=user, token=token))
-                remote_tokens = list(
-                    RemotePushDeviceToken.objects.filter(user_id=user.id, token=token),
-                )
+                remote_tokens = list(RemotePushDeviceToken.objects.filter(user_id=user.id, token=token))
                 self.assertEqual(len(tokens), 0)
                 self.assertEqual(len(remote_tokens), 0)
 

@@ -116,10 +116,7 @@ class OpsGenieHookTests(WebhookTestCase):
 """.strip()
 
         self.send_and_test_stream_message(
-            "close",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "close", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_create_alert(self) -> None:

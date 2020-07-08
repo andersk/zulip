@@ -294,11 +294,7 @@ def access_stream_by_id(
 
     error = _("Invalid stream id")
     (recipient, sub) = access_stream_common(
-        user_profile,
-        stream,
-        error,
-        require_active=require_active,
-        allow_realm_admin=allow_realm_admin,
+        user_profile, stream, error, require_active=require_active, allow_realm_admin=allow_realm_admin,
     )
     return (stream, recipient, sub)
 

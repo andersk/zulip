@@ -118,9 +118,7 @@ class EventsEndpointTest(ZulipTestCase):
             result = self.api_post(
                 user,
                 "/json/register",
-                dict(
-                    event_types=ujson.dumps([event_type]), fetch_event_types=ujson.dumps(["message"]),
-                ),
+                dict(event_types=ujson.dumps([event_type]), fetch_event_types=ujson.dumps(["message"])),
             )
         self.assert_json_success(result)
         result_dict = result.json()
@@ -137,9 +135,7 @@ class EventsEndpointTest(ZulipTestCase):
             result = self.api_post(
                 user,
                 "/json/register",
-                dict(
-                    fetch_event_types=ujson.dumps([event_type]), event_types=ujson.dumps(["message"]),
-                ),
+                dict(fetch_event_types=ujson.dumps([event_type]), event_types=ujson.dumps(["message"])),
             )
         self.assert_json_success(result)
         result_dict = result.json()

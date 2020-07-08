@@ -556,11 +556,7 @@ class S3UploadBackend(ZulipUploadBackend):
 
         resized_medium = resize_avatar(image_data, MEDIUM_AVATAR_SIZE)
         upload_image_to_s3(
-            self.avatar_bucket,
-            s3_file_name + "-medium.png",
-            "image/png",
-            user_profile,
-            resized_medium,
+            self.avatar_bucket, s3_file_name + "-medium.png", "image/png", user_profile, resized_medium,
         )
 
     def ensure_basic_avatar_image(self, user_profile: UserProfile) -> None:  # nocoverage

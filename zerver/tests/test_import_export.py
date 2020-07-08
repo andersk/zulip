@@ -480,9 +480,7 @@ class ImportExportTest(ZulipTestCase):
         pm_c_msg_id = self.send_personal_message(
             self.example_user("hamlet"), self.example_user("othello"),
         )
-        pm_d_msg_id = self.send_personal_message(
-            self.example_user("iago"), self.example_user("hamlet"),
-        )
+        pm_d_msg_id = self.send_personal_message(self.example_user("iago"), self.example_user("hamlet"))
 
         realm_emoji = RealmEmoji.objects.get(realm=realm)
         realm_emoji.delete()
@@ -561,23 +559,16 @@ class ImportExportTest(ZulipTestCase):
         pm_c_msg_id = self.send_personal_message(
             self.example_user("hamlet"), self.example_user("othello"),
         )
-        pm_d_msg_id = self.send_personal_message(
-            self.example_user("iago"), self.example_user("hamlet"),
-        )
+        pm_d_msg_id = self.send_personal_message(self.example_user("iago"), self.example_user("hamlet"))
 
         # Send message advertising export and make users react
         self.send_stream_message(
-            self.example_user("othello"),
-            "Verona",
-            topic_name="Export",
-            content="Thumbs up for export",
+            self.example_user("othello"), "Verona", topic_name="Export", content="Thumbs up for export",
         )
         message = Message.objects.last()
         consented_user_ids = [self.example_user(user).id for user in ["iago", "hamlet"]]
         do_add_reaction(self.example_user("iago"), message, "outbox", "1f4e4", Reaction.UNICODE_EMOJI)
-        do_add_reaction(
-            self.example_user("hamlet"), message, "outbox", "1f4e4", Reaction.UNICODE_EMOJI,
-        )
+        do_add_reaction(self.example_user("hamlet"), message, "outbox", "1f4e4", Reaction.UNICODE_EMOJI)
 
         realm_emoji = RealmEmoji.objects.get(realm=realm)
         realm_emoji.delete()
@@ -752,9 +743,7 @@ class ImportExportTest(ZulipTestCase):
             topic_name="Verona2",
         )
 
-        do_update_user_presence(
-            sample_user, get_client("website"), timezone_now(), UserPresence.ACTIVE,
-        )
+        do_update_user_presence(sample_user, get_client("website"), timezone_now(), UserPresence.ACTIVE)
 
         # data to test import of botstoragedata and botconfigdata
         bot_profile = do_create_user(
@@ -1030,8 +1019,7 @@ class ImportExportTest(ZulipTestCase):
             )
         for stream in Stream.objects.filter(realm=imported_realm):
             self.assertEqual(
-                stream.recipient_id,
-                Recipient.objects.get(type=Recipient.STREAM, type_id=stream.id).id,
+                stream.recipient_id, Recipient.objects.get(type=Recipient.STREAM, type_id=stream.id).id,
             )
 
         for huddle_object in Huddle.objects.all():

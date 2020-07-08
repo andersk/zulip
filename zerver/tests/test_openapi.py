@@ -133,9 +133,7 @@ class OpenAPIToolsTest(ZulipTestCase):
             "msg": "",
             "result": "success",
         }
-        validate_against_openapi_schema(
-            good_content, TEST_ENDPOINT, TEST_METHOD, TEST_RESPONSE_SUCCESS,
-        )
+        validate_against_openapi_schema(good_content, TEST_ENDPOINT, TEST_METHOD, TEST_RESPONSE_SUCCESS)
 
         # Overwrite the exception list with a mocked one
         test_dict: Dict[str, Any] = {}
@@ -156,9 +154,7 @@ class OpenAPIToolsTest(ZulipTestCase):
                 "test1",
                 "200",
             )
-            with self.assertRaises(
-                ValidationError, msg='Extraneous key "str4" in response\'s content',
-            ):
+            with self.assertRaises(ValidationError, msg='Extraneous key "str4" in response\'s content'):
                 validate_against_openapi_schema(
                     (test_dict["test2"]["responses"]["200"]["content"]["application/json"]["example"]),
                     "testing",
@@ -623,9 +619,7 @@ do not match the types declared in the implementation of {function.__name__}.\n"
 We found some OpenAPI documentation for {method} {url_pattern},
 so maybe we shouldn't include it in pending_endpoints.
 """
-                    self.ensure_no_documentation_if_intentionally_undocumented(
-                        url_pattern, method, msg,
-                    )
+                    self.ensure_no_documentation_if_intentionally_undocumented(url_pattern, method, msg)
                     continue
 
                 try:

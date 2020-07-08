@@ -17,10 +17,7 @@ class HelloWorldHookTests(WebhookTestCase):
 
         # use fixture named helloworld_hello
         self.send_and_test_stream_message(
-            "hello",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "hello", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_goodbye_message(self) -> None:

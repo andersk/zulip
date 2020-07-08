@@ -648,9 +648,7 @@ class Command(BaseCommand):
             get_huddle(random.sample(user_profiles_ids, random.randint(3, 4)))
 
         # Create several initial pairs for personals
-        personals_pairs = [
-            random.sample(user_profiles_ids, 2) for i in range(options["num_personals"])
-        ]
+        personals_pairs = [random.sample(user_profiles_ids, 2) for i in range(options["num_personals"])]
 
         # Generate a new set of test data.
         create_test_data()
@@ -774,9 +772,7 @@ class Command(BaseCommand):
                     ("Zulip Trac Bot", "trac-bot@zulip.com"),
                     ("Zulip Nagios Bot", "nagios-bot@zulip.com"),
                 ]
-                create_users(
-                    zulip_realm, internal_zulip_users_nosubs, bot_type=UserProfile.DEFAULT_BOT,
-                )
+                create_users(zulip_realm, internal_zulip_users_nosubs, bot_type=UserProfile.DEFAULT_BOT)
 
             # Mark all messages as read
             UserMessage.objects.all().update(flags=UserMessage.flags.read)

@@ -96,11 +96,7 @@ def restore_backup(tarball_file: IO[bytes]) -> None:
             env=postgres_env,
         )
         run(["dropdb", "--if-exists", "--", db["NAME"]], cwd="/", env=postgres_env)
-        run(
-            ["createdb", "-O", "zulip", "-T", "template0", "--", db["NAME"]],
-            cwd="/",
-            env=postgres_env,
-        )
+        run(["createdb", "-O", "zulip", "-T", "template0", "--", db["NAME"]], cwd="/", env=postgres_env)
         os.setresuid(0, 0, 0)
 
         if settings.PRODUCTION:

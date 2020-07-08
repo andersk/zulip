@@ -576,10 +576,7 @@ HUBOT_INTEGRATIONS: List[HubotIntegration] = [
     ),
     HubotIntegration("mailchimp", ["communication", "marketing"], display_name="MailChimp"),
     HubotIntegration(
-        "google-translate",
-        ["misc"],
-        display_name="Google Translate",
-        logo_alt="Google Translate logo",
+        "google-translate", ["misc"], display_name="Google Translate", logo_alt="Google Translate logo",
     ),
     HubotIntegration(
         "youtube",

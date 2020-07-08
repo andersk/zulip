@@ -472,10 +472,7 @@ def oauth_redirect_to_root(
     main_site_uri = settings.ROOT_DOMAIN_URI + url
     if settings.SOCIAL_AUTH_SUBDOMAIN is not None and sso_type == "social":
         main_site_uri = (
-            settings.EXTERNAL_URI_SCHEME
-            + settings.SOCIAL_AUTH_SUBDOMAIN
-            + "."
-            + settings.EXTERNAL_HOST
+            settings.EXTERNAL_URI_SCHEME + settings.SOCIAL_AUTH_SUBDOMAIN + "." + settings.EXTERNAL_HOST
         ) + url
 
     params = {

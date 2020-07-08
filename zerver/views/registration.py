@@ -659,9 +659,7 @@ def accounts_home_from_multiuse_invite(request: HttpRequest, confirmation_key: s
         realm = get_realm_from_request(request)
         if realm is None or realm.invite_required:
             return render_confirmation_key_error(request, exception)
-    return accounts_home(
-        request, multiuse_object_key=confirmation_key, multiuse_object=multiuse_object,
-    )
+    return accounts_home(request, multiuse_object_key=confirmation_key, multiuse_object=multiuse_object)
 
 
 def generate_204(request: HttpRequest) -> HttpResponse:

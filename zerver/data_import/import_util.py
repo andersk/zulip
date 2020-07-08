@@ -467,9 +467,7 @@ def build_message(
         has_link=has_link,
     )
     zulip_message.set_topic_name(topic_name)
-    zulip_message_dict = model_to_dict(
-        zulip_message, exclude=["recipient", "sender", "sending_client"],
-    )
+    zulip_message_dict = model_to_dict(zulip_message, exclude=["recipient", "sender", "sending_client"])
     zulip_message_dict["sender"] = user_id
     zulip_message_dict["sending_client"] = 1
     zulip_message_dict["recipient"] = recipient_id

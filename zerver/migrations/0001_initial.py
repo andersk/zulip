@@ -25,9 +25,7 @@ def migrate_existing_attachment_data(apps: StateApps, schema_editor: DatabaseSch
             if owner == message.sender:
                 if message.recipient.type == Recipient.STREAM:
                     stream = Stream.objects.get(id=message.recipient.type_id)
-                    is_realm_public = (
-                        not stream.realm.is_zephyr_mirror_realm and not stream.invite_only
-                    )
+                    is_realm_public = not stream.realm.is_zephyr_mirror_realm and not stream.invite_only
                     entry.is_realm_public = entry.is_realm_public or is_realm_public
 
         entry.save()
@@ -504,9 +502,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ),
                 (
                     "message",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="zerver.Message",
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Message"),
                 ),
                 (
                     "user_profile",
@@ -588,9 +584,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
         migrations.AddField(
             model_name="message",
             name="recipient",
-            field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE, to="zerver.Recipient",
-            ),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Recipient"),
         ),
         migrations.AddField(
             model_name="message",
@@ -779,10 +773,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ),
                 ("file_name", models.CharField(db_index=True, max_length=100)),
                 ("path_id", models.TextField(db_index=True)),
-                (
-                    "create_time",
-                    models.DateTimeField(db_index=True, default=django.utils.timezone.now),
-                ),
+                ("create_time", models.DateTimeField(db_index=True, default=django.utils.timezone.now)),
                 ("messages", models.ManyToManyField(to="zerver.Message")),
                 (
                     "owner",

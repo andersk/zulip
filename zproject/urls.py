@@ -327,9 +327,7 @@ v1_api_and_json_patterns = [
     # attachments -> zerver.views.attachments
     path("attachments", rest_dispatch, {"GET": "zerver.views.attachments.list_by_user"}),
     path(
-        "attachments/<int:attachment_id>",
-        rest_dispatch,
-        {"DELETE": "zerver.views.attachments.remove"},
+        "attachments/<int:attachment_id>", rest_dispatch, {"DELETE": "zerver.views.attachments.remove"},
     ),
     # typing -> zerver.views.typing
     # POST sends a typing notification event to recipients
@@ -600,9 +598,7 @@ v1_api_and_json_patterns = [
         {"POST": ("zerver.views.report.report_unnarrow_times", {"intentionally_undocumented"})},
     ),
     # Used to generate a Zoom video call URL
-    path(
-        "calls/zoom/create", rest_dispatch, {"POST": "zerver.views.video_calls.make_zoom_video_call"},
-    ),
+    path("calls/zoom/create", rest_dispatch, {"POST": "zerver.views.video_calls.make_zoom_video_call"}),
     # Used to generate a Big Blue Button video call URL
     path(
         "calls/bigbluebutton/create",
@@ -645,9 +641,7 @@ i18n_urls = [
     path("accounts/login/sso/", zerver.views.auth.remote_user_sso, name="login-sso"),
     path("accounts/login/jwt/", zerver.views.auth.remote_user_jwt, name="login-jwt"),
     re_path(
-        r"^accounts/login/social/([\w,-]+)$",
-        zerver.views.auth.start_social_login,
-        name="login-social",
+        r"^accounts/login/social/([\w,-]+)$", zerver.views.auth.start_social_login, name="login-social",
     ),
     re_path(
         r"^accounts/login/social/([\w,-]+)/([\w,-]+)$",

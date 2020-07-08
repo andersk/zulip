@@ -77,9 +77,7 @@ class MatterMostImporter(ZulipTestCase):
         self.assertEqual(mattermost_data["post"]["direct_post"][0]["user"], "ron")
         self.assertEqual(mattermost_data["post"]["direct_post"][0]["replies"], None)
         self.assertEqual(mattermost_data["post"]["direct_post"][0]["message"], "hey harry")
-        self.assertEqual(
-            mattermost_data["post"]["direct_post"][0]["channel_members"], ["ron", "harry"],
-        )
+        self.assertEqual(mattermost_data["post"]["direct_post"][0]["channel_members"], ["ron", "harry"])
 
     def test_process_user(self) -> None:
         user_id_mapper = IdMapper()
@@ -601,9 +599,7 @@ class MatterMostImporter(ZulipTestCase):
         self.assertIn(messages["zerver_message"][0]["recipient"], exported_recipient_ids)
         self.assertIn(messages["zerver_message"][0]["content"], "harry joined the channel.\n\n")
 
-        exported_usermessage_userprofiles = self.get_set(
-            messages["zerver_usermessage"], "user_profile",
-        )
+        exported_usermessage_userprofiles = self.get_set(messages["zerver_usermessage"], "user_profile")
         self.assertEqual(len(exported_usermessage_userprofiles), 3)
         exported_usermessage_messages = self.get_set(messages["zerver_usermessage"], "message")
         self.assertEqual(exported_usermessage_messages, exported_messages_id)
@@ -684,9 +680,7 @@ class MatterMostImporter(ZulipTestCase):
         self.assertIn(messages["zerver_message"][0]["recipient"], exported_recipient_ids)
         self.assertIn(messages["zerver_message"][0]["content"], "ron joined the channel.\n\n")
 
-        exported_usermessage_userprofiles = self.get_set(
-            messages["zerver_usermessage"], "user_profile",
-        )
+        exported_usermessage_userprofiles = self.get_set(messages["zerver_usermessage"], "user_profile")
         self.assertEqual(len(exported_usermessage_userprofiles), 3)
         exported_usermessage_messages = self.get_set(messages["zerver_usermessage"], "message")
         self.assertEqual(exported_usermessage_messages, exported_messages_id)

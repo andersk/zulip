@@ -11,9 +11,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="archivedusermessage",
-            name="bigint_id",
-            field=models.BigIntegerField(null=True),
+            model_name="archivedusermessage", name="bigint_id", field=models.BigIntegerField(null=True),
         ),
         migrations.AddField(
             model_name="usermessage", name="bigint_id", field=models.BigIntegerField(null=True),

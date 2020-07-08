@@ -869,9 +869,7 @@ class TestMissedMessages(ZulipTestCase):
         """Subject should be stream name and topic as usual."""
         hamlet = self.example_user("hamlet")
         msg_id_1 = self.send_stream_message(self.example_user("iago"), "Denmark", "Regular message")
-        msg_id_2 = self.send_stream_message(
-            self.example_user("othello"), "Denmark", "@**King Hamlet**",
-        )
+        msg_id_2 = self.send_stream_message(self.example_user("othello"), "Denmark", "@**King Hamlet**")
 
         handle_missedmessage_emails(
             hamlet.id,
@@ -916,12 +914,8 @@ class TestMissedMessages(ZulipTestCase):
         """Subject should be stream name and topic as usual."""
         hamlet = self.example_user("hamlet")
         msg_id_1 = self.send_stream_message(self.example_user("iago"), "Denmark", "@**King Hamlet**")
-        msg_id_2 = self.send_stream_message(
-            self.example_user("othello"), "Denmark", "@**King Hamlet**",
-        )
-        msg_id_3 = self.send_stream_message(
-            self.example_user("cordelia"), "Denmark", "Regular message",
-        )
+        msg_id_2 = self.send_stream_message(self.example_user("othello"), "Denmark", "@**King Hamlet**")
+        msg_id_3 = self.send_stream_message(self.example_user("cordelia"), "Denmark", "Regular message")
 
         handle_missedmessage_emails(
             hamlet.id,

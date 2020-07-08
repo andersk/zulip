@@ -610,9 +610,9 @@ class ZulipLDAPAuthBackendBase(ZulipAuthMixin, LDAPBackend):
         """Implements the userAccountControl check for whether a user has been
         disabled in an Active Directory server being integrated with
         Zulip via LDAP."""
-        account_control_value = ldap_user.attrs[
-            settings.AUTH_LDAP_USER_ATTR_MAP["userAccountControl"]
-        ][0]
+        account_control_value = ldap_user.attrs[settings.AUTH_LDAP_USER_ATTR_MAP["userAccountControl"]][
+            0
+        ]
         ldap_disabled = bool(int(account_control_value) & LDAP_USER_ACCOUNT_CONTROL_DISABLED_MASK)
         return ldap_disabled
 
@@ -1083,9 +1083,7 @@ class ExternalAuthResult:
 
         if self.user_profile is not None:
             # Ensure data inconsistent with the user_profile wasn't passed in inside the data_dict argument.
-            assert (
-                "full_name" not in data_dict or data_dict["full_name"] == self.user_profile.full_name
-            )
+            assert "full_name" not in data_dict or data_dict["full_name"] == self.user_profile.full_name
             assert "email" not in data_dict or data_dict["email"] == self.user_profile.delivery_email
             # Update these data_dict fields to ensure consistency with self.user_profile. This is mostly
             # defensive code, but is useful in these scenarios:

@@ -19,9 +19,7 @@ class TestGenericOutgoingWebhookService(ZulipTestCase):
 
         bot_user = get_user("outgoing-webhook@zulip.com", get_realm("zulip"))
         service_class = get_service_interface_class("whatever")  # GenericOutgoingWebhookService
-        self.handler = service_class(
-            service_name="test-service", token="abcdef", user_profile=bot_user,
-        )
+        self.handler = service_class(service_name="test-service", token="abcdef", user_profile=bot_user)
 
     def test_process_success_response(self) -> None:
         class Stub:

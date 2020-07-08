@@ -204,9 +204,7 @@ def topic_and_body(payload: Dict[str, Any]) -> Tuple[str, str]:
     if category == "invoiceitem":
         body = default_body(update_blacklist=["description", "invoice"])
         if event == "created":
-            body += " for {amount}".format(
-                amount=amount_string(object_["amount"], object_["currency"]),
-            )
+            body += " for {amount}".format(amount=amount_string(object_["amount"], object_["currency"]))
     if category.startswith("issuing"):  # nocoverage
         # Not implemented
         raise NotImplementedEventType()

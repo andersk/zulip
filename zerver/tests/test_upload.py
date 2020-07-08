@@ -310,9 +310,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         """
         hamlet = self.example_user("hamlet")
         self.login_user(hamlet)
-        response = self.client_get(
-            f"http://localhost:9991/user_uploads/{hamlet.realm_id}/ff/gg/abc.py",
-        )
+        response = self.client_get(f"http://localhost:9991/user_uploads/{hamlet.realm_id}/ff/gg/abc.py")
         self.assertEqual(response.status_code, 404)
         self.assert_in_response("File not found.", response)
 
@@ -646,9 +644,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         result = self.client_post("/json/user_uploads", {"file": fp})
         uri = result.json()["uri"]
         fp_path_id = re.sub("/user_uploads/", "", uri)
-        body = (
-            f"First message ...[zulip.txt](http://{user.realm.host}/user_uploads/" + fp_path_id + ")"
-        )
+        body = f"First message ...[zulip.txt](http://{user.realm.host}/user_uploads/" + fp_path_id + ")"
         self.send_stream_message(user, stream_name, body, "test")
         self.logout()
 
@@ -779,9 +775,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
             self.logout()
 
     def test_serve_local(self) -> None:
-        def check_xsend_links(
-            name: str, name_str_for_test: str, content_disposition: str = "",
-        ) -> None:
+        def check_xsend_links(name: str, name_str_for_test: str, content_disposition: str = "") -> None:
             with self.settings(SENDFILE_BACKEND="django_sendfile.backends.nginx"):
                 _get_sendfile.cache_clear()  # To clearout cached version of backend from djangosendfile
                 self.login("hamlet")
@@ -795,8 +789,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
                 _get_sendfile.cache_clear()
                 test_run, worker = os.path.split(os.path.dirname(settings.LOCAL_UPLOADS_DIR))
                 self.assertEqual(
-                    response["X-Accel-Redirect"],
-                    "/serve_uploads/" + fp_path + "/" + name_str_for_test,
+                    response["X-Accel-Redirect"], "/serve_uploads/" + fp_path + "/" + name_str_for_test,
                 )
                 if content_disposition != "":
                     self.assertIn("attachment;", response["Content-disposition"])
@@ -807,9 +800,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
 
         check_xsend_links("zulip.txt", "zulip.txt", 'filename="zulip.txt"')
         check_xsend_links(
-            "áéБД.txt",
-            "%C3%A1%C3%A9%D0%91%D0%94.txt",
-            "filename*=UTF-8''%C3%A1%C3%A9%D0%91%D0%94.txt",
+            "áéБД.txt", "%C3%A1%C3%A9%D0%91%D0%94.txt", "filename*=UTF-8''%C3%A1%C3%A9%D0%91%D0%94.txt",
         )
         check_xsend_links("zulip.html", "zulip.html", 'filename="zulip.html"')
         check_xsend_links("zulip.sh", "zulip.sh", 'filename="zulip.sh"')
@@ -871,9 +862,7 @@ class AvatarTest(UploadSerializeMixin, ZulipTestCase):
         backend: ZulipUploadBackend = LocalUploadBackend()
         self.assertEqual(backend.get_avatar_url("hash", False), "/user_avatars/hash.png?x=x")
         self.assertEqual(backend.get_avatar_url("hash", True), "/user_avatars/hash-medium.png?x=x")
-        self.assertEqual(
-            backend.get_realm_icon_url(15, 1), "/user_avatars/15/realm/icon.png?version=1",
-        )
+        self.assertEqual(backend.get_realm_icon_url(15, 1), "/user_avatars/15/realm/icon.png?version=1")
         self.assertEqual(
             backend.get_realm_logo_url(15, 1, False), "/user_avatars/15/realm/logo.png?version=1",
         )
@@ -1738,9 +1727,7 @@ class S3Test(ZulipTestCase):
         medium_path_id = path_id + "-medium.png"
 
         with get_test_image_file("img.png") as image_file:
-            zerver.lib.upload.upload_backend.upload_avatar_image(
-                image_file, user_profile, user_profile,
-            )
+            zerver.lib.upload.upload_backend.upload_avatar_image(image_file, user_profile, user_profile)
         with open(get_test_image_file("img.png").name, "rb") as f:
             test_image_data = f.read()
         test_medium_image_data = resize_avatar(test_image_data, MEDIUM_AVATAR_SIZE)
@@ -1789,9 +1776,7 @@ class S3Test(ZulipTestCase):
         target_original_image_key = bucket.Object(target_original_image_path_id)
         self.assertEqual(target_original_image_key.key, target_original_image_path_id)
         source_original_image_key = bucket.Object(source_original_image_path_id)
-        self.assertEqual(
-            source_original_image_key.content_type, target_original_image_key.content_type,
-        )
+        self.assertEqual(source_original_image_key.content_type, target_original_image_key.content_type)
         source_image_data = source_original_image_key.get()["Body"].read()
         target_image_data = target_original_image_key.get()["Body"].read()
         self.assertEqual(source_image_data, target_image_data)
@@ -1946,9 +1931,7 @@ class SanitizeNameTests(ZulipTestCase):
         self.assertEqual(sanitize_name("*testingfile?*.txt"), "testingfile.txt")
         self.assertEqual(sanitize_name("snowman☃.txt"), "snowman.txt")
         self.assertEqual(sanitize_name("테스트.txt"), "테스트.txt")
-        self.assertEqual(
-            sanitize_name('~/."\\`\\?*"u0`000ssh/test.t**{}ar.gz'), ".u0000sshtest.tar.gz",
-        )
+        self.assertEqual(sanitize_name('~/."\\`\\?*"u0`000ssh/test.t**{}ar.gz'), ".u0000sshtest.tar.gz")
 
 
 class UploadSpaceTests(UploadSerializeMixin, ZulipTestCase):

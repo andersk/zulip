@@ -528,9 +528,7 @@ def get_tweet_id(url: str) -> Optional[str]:
     if parsed_url.path == "/" and len(parsed_url.fragment) > 5:
         to_match = parsed_url.fragment
 
-    tweet_id_match = re.match(
-        r"^!?/.*?/status(es)?/(?P<tweetid>\d{10,30})(/photo/[0-9])?/?$", to_match,
-    )
+    tweet_id_match = re.match(r"^!?/.*?/status(es)?/(?P<tweetid>\d{10,30})(/photo/[0-9])?/?$", to_match)
     if not tweet_id_match:
         return None
     return tweet_id_match.group("tweetid")
@@ -610,9 +608,7 @@ class InlineInterestingLinkProcessor(markdown.treeprocessors.Treeprocessor):
             # We strip leading '/' from relative URLs here to ensure
             # consistency in what gets passed to /thumbnail
             url = url.lstrip("/")
-            img.set(
-                "src", "/thumbnail?url={}&size=thumbnail".format(urllib.parse.quote(url, safe="")),
-            )
+            img.set("src", "/thumbnail?url={}&size=thumbnail".format(urllib.parse.quote(url, safe="")))
             img.set(
                 "data-src-fullsize",
                 "/thumbnail?url={}&size=full".format(urllib.parse.quote(url, safe="")),
@@ -1279,9 +1275,7 @@ class Timestamp(markdown.inlinepatterns.Pattern):
         if not timestamp:
             error_element = Element("span")
             error_element.set("class", "timestamp-error")
-            error_element.text = markdown.util.AtomicString(
-                f"Invalid time format: {time_input_string}",
-            )
+            error_element.text = markdown.util.AtomicString(f"Invalid time format: {time_input_string}")
             return error_element
 
         # Use HTML5 <time> element for valid timestamps.
@@ -1830,22 +1824,7 @@ def possible_linked_stream_names(content: str) -> Set[str]:
 class AlertWordNotificationProcessor(markdown.preprocessors.Preprocessor):
 
     allowed_before_punctuation = {" ", "\n", "(", '"', ".", ",", "'", ";", "[", "*", "`", ">"}
-    allowed_after_punctuation = {
-        " ",
-        "\n",
-        ")",
-        '",',
-        "?",
-        ":",
-        ".",
-        ",",
-        "'",
-        ";",
-        "]",
-        "!",
-        "*",
-        "`",
-    }
+    allowed_after_punctuation = {" ", "\n", ")", '",', "?", ":", ".", ",", "'", ";", "]", "!", "*", "`"}
 
     def check_valid_start_position(self, content: str, index: int) -> bool:
         if index <= 0 or content[index] in self.allowed_before_punctuation:
@@ -2048,9 +2027,7 @@ class Markdown(markdown.Markdown):
         reg.register(StreamTopicPattern(get_compiled_stream_topic_link_regex(), self), "topic", 87)
         reg.register(StreamPattern(get_compiled_stream_link_regex(), self), "stream", 85)
         reg.register(Timestamp(r"<time:(?P<time>[^>]*?)>"), "timestamp", 75)
-        reg.register(
-            UserGroupMentionPattern(mention.user_group_mentions, self), "usergroupmention", 65,
-        )
+        reg.register(UserGroupMentionPattern(mention.user_group_mentions, self), "usergroupmention", 65)
         reg.register(LinkInlineProcessor(markdown.inlinepatterns.LINK_RE, self), "link", 60)
         reg.register(AutoLink(get_web_link_regex(), self), "autolink", 55)
         # Reserve priority 45-54 for Realm Filters
@@ -2061,9 +2038,7 @@ class Markdown(markdown.Markdown):
         )
         reg.register(markdown.inlinepatterns.SimpleTagPattern(EMPHASIS_RE, "em"), "emphasis", 30)
         reg.register(markdown.inlinepatterns.SimpleTagPattern(DEL_RE, "del"), "del", 25)
-        reg.register(
-            markdown.inlinepatterns.SimpleTextInlineProcessor(NOT_STRONG_RE), "not_strong", 20,
-        )
+        reg.register(markdown.inlinepatterns.SimpleTextInlineProcessor(NOT_STRONG_RE), "not_strong", 20)
         reg.register(Emoji(EMOJI_REGEX, self), "emoji", 15)
         reg.register(EmoticonTranslation(emoticon_regex, self), "translate_emoticons", 10)
         # We get priority 5 from 'nl2br' extension

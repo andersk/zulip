@@ -20,10 +20,7 @@ class LibratoHookTests(WebhookTestCase):
         expected_topic = "Alert alert.name"
         expected_message = "Alert [alert_name](https://metrics.librato.com/alerts#/6294535) has triggered! [Reaction steps](http://www.google.pl):\n * Metric `librato.cpu.percent.idle`, sum was below 44 by 300s, recorded at 2016-03-31 09:11:42 UTC.\n * Metric `librato.swap.swap.cached`, average was absent  by 300s, recorded at 2016-03-31 09:11:42 UTC.\n * Metric `librato.swap.swap.cached`, derivative was above 9 by 300s, recorded at 2016-03-31 09:11:42 UTC."
         self.send_and_test_stream_message(
-            "alert",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "alert", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_alert_message_with_custom_topic(self) -> None:

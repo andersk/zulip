@@ -204,9 +204,7 @@ def handle_digest_email(
     if not user_profile.long_term_idle:
         stream_ids = home_view_streams
     else:
-        stream_ids = exclude_subscription_modified_streams(
-            user_profile, home_view_streams, cutoff_date,
-        )
+        stream_ids = exclude_subscription_modified_streams(user_profile, home_view_streams, cutoff_date)
 
     # Fetch list of all messages sent after cutoff_date where the user is subscribed
     messages = Message.objects.filter(

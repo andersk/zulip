@@ -291,9 +291,7 @@ class DecoratorTestCase(ZulipTestCase):
         request.POST["api_key"] = webhook_bot_api_key
 
         with mock.patch("logging.warning") as mock_warning:
-            with self.assertRaisesRegex(
-                JsonableError, "Account is not associated with this subdomain",
-            ):
+            with self.assertRaisesRegex(JsonableError, "Account is not associated with this subdomain"):
                 api_result = my_webhook(request)
 
             mock_warning.assert_called_with(
@@ -304,9 +302,7 @@ class DecoratorTestCase(ZulipTestCase):
             )
 
         with mock.patch("logging.warning") as mock_warning:
-            with self.assertRaisesRegex(
-                JsonableError, "Account is not associated with this subdomain",
-            ):
+            with self.assertRaisesRegex(JsonableError, "Account is not associated with this subdomain"):
                 request.host = "acme." + settings.EXTERNAL_HOST
                 api_result = my_webhook(request)
 
@@ -373,9 +369,7 @@ body:
         with mock.patch(
             "zerver.decorator.webhook_unexpected_events_logger.exception",
         ) as mock_exception:
-            exception_msg = (
-                "The 'test_event' event isn't currently supported by the helloworld webhook"
-            )
+            exception_msg = "The 'test_event' event isn't currently supported by the helloworld webhook"
             with self.assertRaisesRegex(UnexpectedWebhookEventType, exception_msg):
                 request.body = "invalidjson"
                 request.content_type = "application/json"
@@ -568,9 +562,7 @@ body:
         with mock.patch(
             "zerver.decorator.webhook_unexpected_events_logger.exception",
         ) as mock_exception:
-            exception_msg = (
-                "The 'test_event' event isn't currently supported by the helloworld webhook"
-            )
+            exception_msg = "The 'test_event' event isn't currently supported by the helloworld webhook"
             with self.assertRaisesRegex(UnexpectedWebhookEventType, exception_msg):
                 my_webhook_raises_exception(request)
 

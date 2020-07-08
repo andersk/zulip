@@ -269,9 +269,7 @@ class TestGetChartData(ZulipTestCase):
         self.assertFalse("user" in data)
 
         FillState.objects.create(
-            property="messages_sent:is_bot:hour",
-            end_time=self.end_times_hour[0],
-            state=FillState.DONE,
+            property="messages_sent:is_bot:hour", end_time=self.end_times_hour[0], state=FillState.DONE,
         )
         result = self.client_get(
             "/json/analytics/chart_data", {"chart_name": "messages_sent_over_time"},
@@ -578,8 +576,7 @@ class TestSupportEndpoint(ZulipTestCase):
             result: HttpResponse, email: str, invite: bool = False,
         ) -> None:
             self.assert_in_success_response(
-                ['<span class="label">preregistration user</span>\n', f"<b>Email</b>: {email}"],
-                result,
+                ['<span class="label">preregistration user</span>\n', f"<b>Email</b>: {email}"], result,
             )
             if invite:
                 self.assert_in_success_response(['<span class="label">invite</span>'], result)
@@ -800,9 +797,7 @@ class TestSupportEndpoint(ZulipTestCase):
                 "/activity/support", {"realm_id": f"{lear_realm.id}", "status": "active"},
             )
             m.assert_called_once_with(lear_realm)
-            self.assert_in_success_response(
-                ["Realm reactivation email sent to admins of Lear"], result,
-            )
+            self.assert_in_success_response(["Realm reactivation email sent to admins of Lear"], result)
 
     def test_scrub_realm(self) -> None:
         cordelia = self.example_user("cordelia")
@@ -837,9 +832,7 @@ class TestGetChartDataHelpers(ZulipTestCase):
         self.assertIsNone(last_successful_fill("non-existant"))
         a_time = datetime(2016, 3, 14, 19, tzinfo=timezone.utc)
         one_hour_before = datetime(2016, 3, 14, 18, tzinfo=timezone.utc)
-        fillstate = FillState.objects.create(
-            property="property", end_time=a_time, state=FillState.DONE,
-        )
+        fillstate = FillState.objects.create(property="property", end_time=a_time, state=FillState.DONE)
         self.assertEqual(last_successful_fill("property"), a_time)
         fillstate.state = FillState.STARTED
         fillstate.save()

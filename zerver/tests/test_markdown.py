@@ -427,9 +427,7 @@ class MarkdownTest(ZulipTestCase):
             return payload % (f'<a href="{href}">{url}</a>',)
 
         print("Running Markdown Linkify tests")
-        with mock.patch(
-            "zerver.lib.url_preview.preview.link_embed_data_from_cache", return_value=None,
-        ):
+        with mock.patch("zerver.lib.url_preview.preview.link_embed_data_from_cache", return_value=None):
             for inline_url, reference, url in linkify_tests:
                 try:
                     match = replaced(reference, url, phrase=inline_url)
@@ -775,7 +773,9 @@ class MarkdownTest(ZulipTestCase):
 
     def test_inline_github_preview(self) -> None:
         # Test photo album previews
-        msg = "Test: https://github.com/zulip/zulip/blob/master/static/images/logo/zulip-icon-128x128.png"
+        msg = (
+            "Test: https://github.com/zulip/zulip/blob/master/static/images/logo/zulip-icon-128x128.png"
+        )
         converted = markdown_convert_wrapper(msg)
 
         self.assertEqual(
@@ -1048,9 +1048,7 @@ class MarkdownTest(ZulipTestCase):
         # Needs to mock an actual message because that's how markdown obtains the realm
         msg = Message(sender=self.example_user("hamlet"))
         converted = markdown_convert(":green_tick:", message_realm=realm, message=msg)
-        realm_emoji = RealmEmoji.objects.filter(
-            realm=realm, name="green_tick", deactivated=False,
-        ).get()
+        realm_emoji = RealmEmoji.objects.filter(realm=realm, name="green_tick", deactivated=False).get()
         self.assertEqual(
             converted, "<p>{}</p>".format(emoji_img(":green_tick:", realm_emoji.file_name, realm.id)),
         )
@@ -1122,9 +1120,7 @@ class MarkdownTest(ZulipTestCase):
         converted_topic = topic_links(realm.id, msg.topic_name())
         self.assertEqual(converted_topic, [])
 
-        msg.set_topic_name(
-            "Try out http://ftp.debian.org, https://google.com/ and https://google.in/.",
-        )
+        msg.set_topic_name("Try out http://ftp.debian.org, https://google.com/ and https://google.in/.")
         converted_topic = topic_links(realm.id, msg.topic_name())
         self.assertEqual(
             converted_topic, ["http://ftp.debian.org", "https://google.com/", "https://google.in/"],
@@ -1159,9 +1155,7 @@ class MarkdownTest(ZulipTestCase):
 
         msg.set_topic_name("#444 https://google.com")
         converted_topic = topic_links(realm.id, msg.topic_name())
-        self.assertEqual(
-            converted_topic, ["https://trac.example.com/ticket/444", "https://google.com"],
-        )
+        self.assertEqual(converted_topic, ["https://trac.example.com/ticket/444", "https://google.com"])
 
         RealmFilter(
             realm=realm,
@@ -1797,9 +1791,7 @@ class MarkdownTest(ZulipTestCase):
         msg = Message(sender=sender_user_profile, sending_client=get_client("test"))
 
         content = "Hey @**Nonexistent User**"
-        self.assertEqual(
-            render_markdown(msg, content), "<p>Hey @<strong>Nonexistent User</strong></p>",
-        )
+        self.assertEqual(render_markdown(msg, content), "<p>Hey @<strong>Nonexistent User</strong></p>")
         self.assertEqual(msg.mentions_user_ids, set())
 
     def test_user_mention_atomic_string(self) -> None:
@@ -1907,8 +1899,7 @@ class MarkdownTest(ZulipTestCase):
         assert_mentions("smush@*steve*smush", set())
 
         assert_mentions(
-            "@*support* Hello @**King Hamlet** and @**Cordelia Lear**\n"
-            "@**Foo van Barson** @**all**",
+            "@*support* Hello @**King Hamlet** and @**Cordelia Lear**\n" "@**Foo van Barson** @**all**",
             {"support"},
         )
 

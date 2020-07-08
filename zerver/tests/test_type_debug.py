@@ -62,9 +62,7 @@ class TypesPrintTest(ZulipTestCase):
     def test_dict(self) -> None:
         self.check_signature("to_dict() -> {}", {}, to_dict)
         self.check_signature("to_dict([(int, str)]) -> {int: str}", {2: "two"}, to_dict, [(2, "two")])
-        self.check_signature(
-            "to_dict(((int, str),)) -> {int: str}", {2: "two"}, to_dict, ((2, "two"),),
-        )
+        self.check_signature("to_dict(((int, str),)) -> {int: str}", {2: "two"}, to_dict, ((2, "two"),))
         self.check_signature(
             "to_dict([(int, str), ...]) -> {int: str, ...}",
             {1: "one", 2: "two"},

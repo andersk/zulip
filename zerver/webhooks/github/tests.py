@@ -259,9 +259,7 @@ class GithubWebhookTest(WebhookTestCase):
 
     def test_team_add_msg(self) -> None:
         expected_message = "The repository [baxterandthehackers/public-repo](https://github.com/baxterandthehackers/public-repo) was added to team github."
-        self.send_and_test_stream_message(
-            "team_add", self.EXPECTED_TOPIC_REPO_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("team_add", self.EXPECTED_TOPIC_REPO_EVENTS, expected_message)
 
     def test_release_msg(self) -> None:
         expected_message = "baxterthehacker published release [0.0.1](https://github.com/baxterthehacker/public-repo/releases/tag/0.0.1) for tag 0.0.1."
@@ -346,9 +344,7 @@ class GithubWebhookTest(WebhookTestCase):
     def test_pull_request_ready_for_review_msg(self) -> None:
         expected_message = "**Hypro999** has marked [PR #2](https://github.com/Hypro999/temp-test-github-webhook/pull/2) as ready for review."
         self.send_and_test_stream_message(
-            "pull_request__ready_for_review",
-            "temp-test-github-webhook / PR #2 Test",
-            expected_message,
+            "pull_request__ready_for_review", "temp-test-github-webhook / PR #2 Test", expected_message,
         )
 
     def test_pull_request_review_requested_msg(self) -> None:

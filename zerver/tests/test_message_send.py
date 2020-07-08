@@ -183,9 +183,7 @@ class MessagePOSTTest(ZulipTestCase):
 
         # Non admins and their owned bots cannot send to STREAM_POST_POLICY_ADMINS streams
         self._send_and_verify_message(
-            non_admin_profile,
-            stream_name,
-            "Only organization administrators can send to this stream.",
+            non_admin_profile, stream_name, "Only organization administrators can send to this stream.",
         )
         non_admin_owned_bot = self.create_test_bot(
             short_name="whatever2", full_name="whatever2", user_profile=non_admin_profile,
@@ -206,9 +204,7 @@ class MessagePOSTTest(ZulipTestCase):
             bot_type=UserProfile.DEFAULT_BOT,
         )
         self._send_and_verify_message(
-            bot_without_owner,
-            stream_name,
-            "Only organization administrators can send to this stream.",
+            bot_without_owner, stream_name, "Only organization administrators can send to this stream.",
         )
 
         # Cross realm bots should be allowed
@@ -353,12 +349,7 @@ class MessagePOSTTest(ZulipTestCase):
         othello = self.example_user("othello")
         result = self.client_post(
             "/json/messages",
-            {
-                "type": "private",
-                "content": "Test message",
-                "client": "test suite",
-                "to": othello.email,
-            },
+            {"type": "private", "content": "Test message", "client": "test suite", "to": othello.email},
         )
         self.assert_json_success(result)
         message_id = ujson.loads(result.content.decode())["id"]
@@ -474,12 +465,7 @@ class MessagePOSTTest(ZulipTestCase):
         self.login("hamlet")
         result = self.client_post(
             "/json/messages",
-            {
-                "type": "private",
-                "content": "Test message",
-                "client": "test suite",
-                "to": "nonexistent",
-            },
+            {"type": "private", "content": "Test message", "client": "test suite", "to": "nonexistent"},
         )
         self.assert_json_error(result, "Invalid email 'nonexistent'")
 
@@ -1403,9 +1389,7 @@ class StreamMessagesTest(ZulipTestCase):
     def test_message_mentions(self) -> None:
         user_profile = self.example_user("iago")
         self.subscribe(user_profile, "Denmark")
-        self.send_stream_message(
-            self.example_user("hamlet"), "Denmark", content="test @**Iago** rules",
-        )
+        self.send_stream_message(self.example_user("hamlet"), "Denmark", content="test @**Iago** rules")
         message = most_recent_message(user_profile)
         assert UserMessage.objects.get(
             user_profile=user_profile, message=message,
@@ -1418,17 +1402,13 @@ class StreamMessagesTest(ZulipTestCase):
         self.send_stream_message(self.example_user("hamlet"), "Denmark", content="test")
         message = most_recent_message(user_profile)
         self.assertFalse(
-            UserMessage.objects.get(
-                user_profile=user_profile, message=message,
-            ).flags.is_private.is_set,
+            UserMessage.objects.get(user_profile=user_profile, message=message).flags.is_private.is_set,
         )
 
         self.send_personal_message(self.example_user("hamlet"), user_profile, content="test")
         message = most_recent_message(user_profile)
         self.assertTrue(
-            UserMessage.objects.get(
-                user_profile=user_profile, message=message,
-            ).flags.is_private.is_set,
+            UserMessage.objects.get(user_profile=user_profile, message=message).flags.is_private.is_set,
         )
 
     def _send_stream_message(self, user: UserProfile, stream_name: str, content: str) -> Set[int]:
@@ -1454,9 +1434,7 @@ class StreamMessagesTest(ZulipTestCase):
         def mention_cordelia() -> Set[int]:
             content = "test @**Cordelia Lear** rules"
 
-            user_ids = self._send_stream_message(
-                user=hamlet, stream_name=stream_name, content=content,
-            )
+            user_ids = self._send_stream_message(user=hamlet, stream_name=stream_name, content=content)
             return user_ids
 
         def num_cordelia_messages() -> int:
@@ -1683,9 +1661,7 @@ class PersonalMessageSendTest(ZulipTestCase):
         """
         self.login("hamlet")
         self.assert_personal(
-            sender=self.example_user("hamlet"),
-            receiver=self.example_user("othello"),
-            content="hümbüǵ",
+            sender=self.example_user("hamlet"), receiver=self.example_user("othello"), content="hümbüǵ",
         )
 
 
@@ -1817,10 +1793,7 @@ class InternalPrepTest(ZulipTestCase):
 
         with mock.patch("logging.exception") as m:
             internal_send_huddle_message(
-                realm=realm,
-                sender=cordelia,
-                emails=[hamlet.email, othello.email],
-                content=bad_content,
+                realm=realm, sender=cordelia, emails=[hamlet.email, othello.email], content=bad_content,
             )
 
         m.assert_called_once_with(

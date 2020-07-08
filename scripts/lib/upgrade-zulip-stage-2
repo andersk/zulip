@@ -173,9 +173,7 @@ subprocess.check_call(
 )
 
 # Setup the thumbor venv
-subprocess.check_call(
-    [os.path.join(deploy_path, "scripts", "lib", "create-thumbor-venv"), deploy_path],
-)
+subprocess.check_call([os.path.join(deploy_path, "scripts", "lib", "create-thumbor-venv"), deploy_path])
 
 # Make sure the right version of node is installed
 subprocess.check_call([os.path.join(deploy_path, "scripts", "lib", "install-node"), deploy_path])

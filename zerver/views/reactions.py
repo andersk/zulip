@@ -51,9 +51,7 @@ def add_reaction(
     ).exists():
         raise JsonableError(_("Reaction already exists."))
 
-    query = Reaction.objects.filter(
-        message=message, emoji_code=emoji_code, reaction_type=reaction_type,
-    )
+    query = Reaction.objects.filter(message=message, emoji_code=emoji_code, reaction_type=reaction_type)
     if query.exists():
         # If another user has already reacted to this message with
         # same emoji code, we treat the new reaction as a vote for the
@@ -101,10 +99,7 @@ def remove_reaction(
     if emoji_code is None:
         if emoji_name is None:
             raise JsonableError(
-                _(
-                    "At least one of the following arguments "
-                    "must be present: emoji_name, emoji_code",
-                ),
+                _("At least one of the following arguments " "must be present: emoji_name, emoji_code"),
             )
         # A correct full Zulip client implementation should always
         # pass an emoji_code, because of the corner cases discussed in

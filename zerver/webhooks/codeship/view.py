@@ -10,9 +10,7 @@ from zerver.lib.webhooks.common import check_send_webhook_message
 from zerver.models import UserProfile
 
 CODESHIP_TOPIC_TEMPLATE = "{project_name}"
-CODESHIP_MESSAGE_TEMPLATE = (
-    "[Build]({build_url}) triggered by {committer} on {branch} branch {status}."
-)
+CODESHIP_MESSAGE_TEMPLATE = "[Build]({build_url}) triggered by {committer} on {branch} branch {status}."
 
 CODESHIP_DEFAULT_STATUS = "has {status} status"
 CODESHIP_STATUS_MAPPER = {
@@ -52,6 +50,4 @@ def get_body_for_http_request(payload: Dict[str, Any]) -> str:
 
 def get_status_message(payload: Dict[str, Any]) -> str:
     build_status = payload["status"]
-    return CODESHIP_STATUS_MAPPER.get(
-        build_status, CODESHIP_DEFAULT_STATUS.format(status=build_status),
-    )
+    return CODESHIP_STATUS_MAPPER.get(build_status, CODESHIP_DEFAULT_STATUS.format(status=build_status))

@@ -16,9 +16,7 @@ VIDEO_CHAT_PROVIDERS = {
 
 
 def get_video_chat_provider_detail(
-    providers_dict: Dict[str, Dict[str, Any]],
-    p_name: Optional[str] = None,
-    p_id: Optional[int] = None,
+    providers_dict: Dict[str, Dict[str, Any]], p_name: Optional[str] = None, p_id: Optional[int] = None,
 ) -> Dict[str, Any]:
     for provider in providers_dict.values():
         if p_name and provider["name"] == p_name:

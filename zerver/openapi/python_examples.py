@@ -67,8 +67,7 @@ def add_subscriptions(client: Client) -> None:
     # the `principals` argument, like so:
     user_id = 25
     result = client.add_subscriptions(
-        streams=[{"name": "new stream", "description": "New stream for testing"}],
-        principals=[user_id],
+        streams=[{"name": "new stream", "description": "New stream for testing"}], principals=[user_id],
     )
     # {code_example|end}
     assert result["result"] == "success"

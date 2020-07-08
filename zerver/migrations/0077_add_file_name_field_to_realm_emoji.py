@@ -9,9 +9,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="realmemoji",
-            name="file_name",
-            field=models.TextField(db_index=True, null=True),
+            model_name="realmemoji", name="file_name", field=models.TextField(db_index=True, null=True),
         ),
         migrations.RemoveField(model_name="realmemoji", name="img_url"),
     ]

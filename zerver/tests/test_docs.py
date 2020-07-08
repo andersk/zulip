@@ -53,9 +53,7 @@ class DocPageTest(ZulipTestCase):
         for s in extra_strings:
             self.assertIn(s, str(result.content))
         if not doc_html_str:
-            self.assert_in_success_response(
-                ['<meta name="robots" content="noindex,nofollow">'], result,
-            )
+            self.assert_in_success_response(['<meta name="robots" content="noindex,nofollow">'], result)
 
         # Test the URL on the root subdomain
         result = self.get_doc(url, subdomain="")
@@ -64,9 +62,7 @@ class DocPageTest(ZulipTestCase):
         self.assertEqual(result.status_code, 200)
         self.assertIn(expected_content, str(result.content))
         if not doc_html_str:
-            self.assert_in_success_response(
-                ['<meta name="robots" content="noindex,nofollow">'], result,
-            )
+            self.assert_in_success_response(['<meta name="robots" content="noindex,nofollow">'], result)
 
         for s in extra_strings:
             self.assertIn(s, str(result.content))

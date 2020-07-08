@@ -21,7 +21,9 @@ class GiteaHookTests(WebhookTestCase):
 
     def test_new_branch(self) -> None:
         expected_topic = "test / test-branch"
-        expected_message = "kostekIV created [test-branch](https://try.gitea.io/kostekIV/test/src/test-branch) branch."
+        expected_message = (
+            "kostekIV created [test-branch](https://try.gitea.io/kostekIV/test/src/test-branch) branch."
+        )
         self.send_and_test_stream_message("create__branch", expected_topic, expected_message)
 
     def test_pull_request_opened(self) -> None:
@@ -96,9 +98,7 @@ class GiteaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("issue_comment__edited", expected_topic, expected_message)
 
     @patch("zerver.webhooks.gogs.view.check_send_webhook_message")
-    def test_push_filtered_by_branches_ignore(
-        self, check_send_webhook_message_mock: MagicMock,
-    ) -> None:
+    def test_push_filtered_by_branches_ignore(self, check_send_webhook_message_mock: MagicMock) -> None:
         self.url = self.build_webhook_url(branches="changes,development")
         payload = self.get_body("push__5_commits")
         result = self.client_post(

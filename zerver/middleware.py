@@ -149,9 +149,7 @@ def write_log_line(
             # statsd sad when it sends the key name over the socket
             statsd_path = statsd_path.encode("ascii", errors="ignore").decode("ascii")
         # TODO: This could probably be optimized to use a regular expression rather than a loop.
-        suppress_statsd = any(
-            blacklisted in statsd_path for blacklisted in statsd_blacklisted_requests
-        )
+        suppress_statsd = any(blacklisted in statsd_path for blacklisted in statsd_blacklisted_requests)
     else:
         suppress_statsd = True
         statsd_path = ""
@@ -171,9 +169,7 @@ def write_log_line(
     remote_cache_output = ""
     if "remote_cache_time_start" in log_data:
         remote_cache_time_delta = get_remote_cache_time() - log_data["remote_cache_time_start"]
-        remote_cache_count_delta = (
-            get_remote_cache_requests() - log_data["remote_cache_requests_start"]
-        )
+        remote_cache_count_delta = get_remote_cache_requests() - log_data["remote_cache_requests_start"]
         if "remote_cache_requests_stopped" in log_data:
             # (now - restarted) + (stopped - start) = (now - start) + (stopped - restarted)
             remote_cache_time_delta += (

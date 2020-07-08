@@ -35,9 +35,7 @@ class UnknownEventType(Exception):
     pass
 
 
-def get_opened_or_update_pull_request_body(
-    payload: Dict[str, Any], include_title: bool = False,
-) -> str:
+def get_opened_or_update_pull_request_body(payload: Dict[str, Any], include_title: bool = False) -> str:
     pull_request = payload["pull_request"]
     action = payload["action"]
     if action == "synchronize":
@@ -303,9 +301,7 @@ def get_status_body(payload: Dict[str, Any]) -> str:
     )
 
 
-def get_pull_request_ready_for_review_body(
-    payload: Dict[str, Any], include_title: bool = False,
-) -> str:
+def get_pull_request_ready_for_review_body(payload: Dict[str, Any], include_title: bool = False) -> str:
 
     message = "**{sender}** has marked [PR #{pr_number}]({pr_url}) as ready for review."
     return message.format(
@@ -344,9 +340,7 @@ def get_pull_request_review_comment_body(payload: Dict[str, Any], include_title:
     )
 
 
-def get_pull_request_review_requested_body(
-    payload: Dict[str, Any], include_title: bool = False,
-) -> str:
+def get_pull_request_review_requested_body(payload: Dict[str, Any], include_title: bool = False) -> str:
     requested_reviewer = [payload["requested_reviewer"]] if "requested_reviewer" in payload else []
     requested_reviewers = payload["pull_request"]["requested_reviewers"] or requested_reviewer
 

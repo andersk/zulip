@@ -108,8 +108,7 @@ class RedirectAndLogIntoSubdomainTestCase(ZulipTestCase):
         response = redirect_and_log_into_subdomain(ExternalAuthResult(user_profile=user_profile))
         data = load_subdomain_token(response)
         self.assertDictEqual(
-            data,
-            {"full_name": name, "email": email, "subdomain": realm.subdomain, "is_signup": False},
+            data, {"full_name": name, "email": email, "subdomain": realm.subdomain, "is_signup": False},
         )
 
         data_dict = ExternalAuthDataDict(is_signup=True, multiuse_object_key="key")
@@ -205,9 +204,7 @@ class AddNewUserHistoryTest(ZulipTestCase):
 
         # Sent a message afterwards to trigger a race between message
         # sending and `add_new_user_history`.
-        race_message_id = self.send_stream_message(
-            self.example_user("hamlet"), streams[0].name, "test",
-        )
+        race_message_id = self.send_stream_message(self.example_user("hamlet"), streams[0].name, "test")
 
         # Overwrite ONBOARDING_UNREAD_MESSAGES to 2
         ONBOARDING_UNREAD_MESSAGES = 2
@@ -648,8 +645,7 @@ class LoginTest(ZulipTestCase):
             mock_warning.assert_called_once()
         self.assertEqual(result.status_code, 200)
         self.assert_in_response(
-            "Your Zulip account is not a member of the "
-            "organization associated with this subdomain.",
+            "Your Zulip account is not a member of the " "organization associated with this subdomain.",
             result,
         )
         self.assert_logged_in_user_id(None)
@@ -1164,10 +1160,7 @@ class InviteUserTest(InviteUserBase):
         self.make_stream(private_stream_name, invite_only=True)
         self.subscribe(user_profile, private_stream_name)
         public_msg_id = self.send_stream_message(
-            self.example_user("hamlet"),
-            "Denmark",
-            topic_name="Public topic",
-            content="Public message",
+            self.example_user("hamlet"), "Denmark", topic_name="Public topic", content="Public message",
         )
         secret_msg_id = self.send_stream_message(
             self.example_user("hamlet"),
@@ -1196,9 +1189,7 @@ class InviteUserTest(InviteUserBase):
         second_msg = last_3_messages[1]
         self.assertEqual(second_msg.sender.email, "notification-bot@zulip.com")
         self.assertTrue(
-            second_msg.content.startswith(
-                f"alice_zulip.com <`{invitee_profile.email}`> accepted your",
-            ),
+            second_msg.content.startswith(f"alice_zulip.com <`{invitee_profile.email}`> accepted your"),
         )
 
         # The second, from welcome-bot to the user who was invited.
@@ -1518,9 +1509,7 @@ so we didn't send them an invitation. We did send invitations to everyone else!"
 
         result = self.submit_reg_form_for_user(email, "password")
         self.assertEqual(result.status_code, 200)
-        self.assert_in_response(
-            "The email address you are trying to sign up with is not valid", result,
-        )
+        self.assert_in_response("The email address you are trying to sign up with is not valid", result)
 
     def test_invite_with_non_ascii_streams(self) -> None:
         """
@@ -1863,9 +1852,7 @@ class InvitationsTestCase(InviteUserBase):
         ScheduledEmail.objects.get(address__iexact=invitee, type=ScheduledEmail.INVITATION_REMINDER)
 
         # Verify another non-admin can't delete
-        result = self.api_delete(
-            self.example_user("othello"), "/api/v1/invites/" + str(prereg_user.id),
-        )
+        result = self.api_delete(self.example_user("othello"), "/api/v1/invites/" + str(prereg_user.id))
         self.assert_json_error(result, "Must be an organization administrator")
 
         # Verify that the scheduled email still exists.
@@ -2212,9 +2199,7 @@ class MultiuseInviteTest(ZulipTestCase):
         email2 = self.nonreg_email("test1")
         email3 = self.nonreg_email("alice")
 
-        date_sent = timezone_now() - datetime.timedelta(
-            days=settings.INVITATION_LINK_VALIDITY_DAYS - 1,
-        )
+        date_sent = timezone_now() - datetime.timedelta(days=settings.INVITATION_LINK_VALIDITY_DAYS - 1)
         invite_link = self.generate_multiuse_invite_link(date_sent=date_sent)
 
         self.check_user_able_to_register(email1, invite_link)

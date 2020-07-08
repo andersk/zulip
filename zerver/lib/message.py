@@ -427,9 +427,7 @@ class MessageDict:
             assert edit_history is not None
             obj["edit_history"] = ujson.loads(edit_history)
 
-        if Message.need_to_render_content(
-            rendered_content, rendered_content_version, markdown_version,
-        ):
+        if Message.need_to_render_content(rendered_content, rendered_content_version, markdown_version):
             # We really shouldn't be rendering objects in this method, but there is
             # a scenario where we upgrade the version of markdown and fail to run
             # management commands to re-render historical messages, and then we
@@ -460,9 +458,7 @@ class MessageDict:
         else:
             obj["is_me_message"] = False
 
-        obj["reactions"] = [
-            ReactionDict.build_dict_from_raw_db_row(reaction) for reaction in reactions
-        ]
+        obj["reactions"] = [ReactionDict.build_dict_from_raw_db_row(reaction) for reaction in reactions]
         obj["submessages"] = submessages
         return obj
 
@@ -598,9 +594,7 @@ class ReactionDict:
         }
 
 
-def access_message(
-    user_profile: UserProfile, message_id: int,
-) -> Tuple[Message, Optional[UserMessage]]:
+def access_message(user_profile: UserProfile, message_id: int) -> Tuple[Message, Optional[UserMessage]]:
     """You can access a message by ID in our APIs that either:
     (1) You received or have previously accessed via starring
         (aka have a UserMessage row for).

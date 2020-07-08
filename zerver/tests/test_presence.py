@@ -358,9 +358,7 @@ class UserPresenceTests(ZulipTestCase):
         self.login_user(user_profile)
 
         def post_presence() -> Dict[str, Any]:
-            result = self.client_post(
-                "/json/users/me/presence", {"status": "idle"}, subdomain="zephyr",
-            )
+            result = self.client_post("/json/users/me/presence", {"status": "idle"}, subdomain="zephyr")
             self.assert_json_success(result)
             json = result.json()
             return json
@@ -461,9 +459,7 @@ class SingleUserPresenceTests(ZulipTestCase):
         self.login("hamlet")
         result = self.client_get("/json/users/othello@zulip.com/presence")
         result_dict = result.json()
-        self.assertEqual(
-            set(result_dict["presence"].keys()), {"ZulipAndroid", "website", "aggregated"},
-        )
+        self.assertEqual(set(result_dict["presence"].keys()), {"ZulipAndroid", "website", "aggregated"})
         self.assertEqual(set(result_dict["presence"]["website"].keys()), {"status", "timestamp"})
 
     def test_ping_only(self) -> None:

@@ -27,9 +27,7 @@ class Migration(migrations.Migration):
                 ("times_used", models.PositiveIntegerField(db_index=True, default=0)),
                 (
                     "message",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="zerver.Message",
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Message"),
                 ),
                 (
                     "user_profile",

@@ -83,9 +83,7 @@ def get_user_invites(request: HttpRequest, user_profile: UserProfile) -> HttpRes
 
 @require_member_or_admin
 @has_request_variables
-def revoke_user_invite(
-    request: HttpRequest, user_profile: UserProfile, prereg_id: int,
-) -> HttpResponse:
+def revoke_user_invite(request: HttpRequest, user_profile: UserProfile, prereg_id: int) -> HttpResponse:
     try:
         prereg_user = PreregistrationUser.objects.get(id=prereg_id)
     except PreregistrationUser.DoesNotExist:

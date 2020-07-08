@@ -149,9 +149,7 @@ def fetch_initial_state_data(
         state["realm_allow_community_topic_editing"] = realm.allow_community_topic_editing
         state["realm_allow_message_deleting"] = realm.allow_message_deleting
         state["realm_message_content_edit_limit_seconds"] = realm.message_content_edit_limit_seconds
-        state[
-            "realm_message_content_delete_limit_seconds"
-        ] = realm.message_content_delete_limit_seconds
+        state["realm_message_content_delete_limit_seconds"] = realm.message_content_delete_limit_seconds
         state[
             "realm_community_topic_editing_limit_seconds"
         ] = Realm.DEFAULT_COMMUNITY_TOPIC_EDITING_LIMIT_SECONDS
@@ -248,9 +246,7 @@ def fetch_initial_state_data(
     if want("realm_embedded_bots"):
         realm_embedded_bots = []
         for bot in EMBEDDED_BOTS:
-            realm_embedded_bots.append(
-                {"name": bot.name, "config": load_bot_config_template(bot.name)},
-            )
+            realm_embedded_bots.append({"name": bot.name, "config": load_bot_config_template(bot.name)})
         state["realm_embedded_bots"] = realm_embedded_bots
 
     # This does not have an apply_events counterpart either since
@@ -549,9 +545,7 @@ def apply_event(
 
         if event["op"] == "delete":
             deleted_stream_ids = {stream["stream_id"] for stream in event["streams"]}
-            state["streams"] = [
-                s for s in state["streams"] if s["stream_id"] not in deleted_stream_ids
-            ]
+            state["streams"] = [s for s in state["streams"] if s["stream_id"] not in deleted_stream_ids]
             state["never_subscribed"] = [
                 stream
                 for stream in state["never_subscribed"]

@@ -25,9 +25,7 @@ def upload_emoji(
     emoji_name = emoji_name.strip().replace(" ", "_")
     check_valid_emoji_name(emoji_name)
     check_emoji_admin(user_profile)
-    if RealmEmoji.objects.filter(
-        realm=user_profile.realm, name=emoji_name, deactivated=False,
-    ).exists():
+    if RealmEmoji.objects.filter(realm=user_profile.realm, name=emoji_name, deactivated=False).exists():
         return json_error(_("A custom emoji with this name already exists."))
     if len(request.FILES) != 1:
         return json_error(_("You must upload exactly one file."))

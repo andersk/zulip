@@ -22,9 +22,7 @@ class Migration(migrations.Migration):
             model_name="userprofile",
             name="emojiset",
             field=models.CharField(
-                choices=[("google", "Google"), ("text", "Plain text")],
-                default="google",
-                max_length=20,
+                choices=[("google", "Google"), ("text", "Plain text")], default="google", max_length=20,
             ),
         ),
     ]

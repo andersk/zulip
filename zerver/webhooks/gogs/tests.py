@@ -149,9 +149,7 @@ class GogsHookTests(WebhookTestCase):
         self.send_and_test_stream_message("release__published", expected_topic, expected_message)
 
     @patch("zerver.webhooks.gogs.view.check_send_webhook_message")
-    def test_push_filtered_by_branches_ignore(
-        self, check_send_webhook_message_mock: MagicMock,
-    ) -> None:
+    def test_push_filtered_by_branches_ignore(self, check_send_webhook_message_mock: MagicMock) -> None:
         self.url = self.build_webhook_url(branches="changes,development")
         payload = self.get_body("push")
         result = self.client_post(

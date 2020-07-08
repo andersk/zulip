@@ -132,9 +132,7 @@ class AlertWordTests(ZulipTestCase):
         self.assert_json_success(result)
         self.assertEqual(set(result.json()["alert_words"]), {"one", "two", "three"})
 
-        result = self.client_delete(
-            "/json/users/me/alert_words", {"alert_words": ujson.dumps(["one"])},
-        )
+        result = self.client_delete("/json/users/me/alert_words", {"alert_words": ujson.dumps(["one"])})
         self.assert_json_success(result)
         self.assertEqual(set(result.json()["alert_words"]), {"two", "three"})
 
@@ -181,9 +179,7 @@ class AlertWordTests(ZulipTestCase):
         user_profile = self.example_user("hamlet")
 
         self.login_user(user_profile)
-        result = self.client_post(
-            "/json/users/me/alert_words", {"alert_words": ujson.dumps(["ALERT"])},
-        )
+        result = self.client_post("/json/users/me/alert_words", {"alert_words": ujson.dumps(["ALERT"])})
 
         content = "this is an ALERT for you"
         self.send_stream_message(user_profile, "Denmark", content)

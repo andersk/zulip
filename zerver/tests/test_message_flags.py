@@ -51,9 +51,7 @@ class FirstUnreadAnchorTests(ZulipTestCase):
 
         # If we call get_messages with use_first_unread_anchor=True, we
         # should get the message we just sent
-        messages_response = self.get_messages_response(
-            anchor="first_unread", num_before=0, num_after=1,
-        )
+        messages_response = self.get_messages_response(anchor="first_unread", num_before=0, num_after=1)
         self.assertEqual(messages_response["messages"][0]["id"], new_message_id)
         self.assertEqual(messages_response["anchor"], new_message_id)
 
@@ -67,9 +65,7 @@ class FirstUnreadAnchorTests(ZulipTestCase):
         # We want to get the message_id of an arbitrary old message. We can
         # call get_messages with use_first_unread_anchor=False and simply
         # save the first message we're returned.
-        messages = self.get_messages(
-            anchor=0, num_before=0, num_after=2, use_first_unread_anchor=False,
-        )
+        messages = self.get_messages(anchor=0, num_before=0, num_after=2, use_first_unread_anchor=False)
         old_message_id = messages[0]["id"]
 
         # Verify the message is marked as read
@@ -93,9 +89,7 @@ class FirstUnreadAnchorTests(ZulipTestCase):
 
         # Now if we call get_messages with use_first_unread_anchor=True,
         # we should get the old message we just set to unread
-        messages_response = self.get_messages_response(
-            anchor="first_unread", num_before=0, num_after=1,
-        )
+        messages_response = self.get_messages_response(anchor="first_unread", num_before=0, num_after=1)
         self.assertEqual(messages_response["messages"][0]["id"], old_message_id)
         self.assertEqual(messages_response["anchor"], old_message_id)
 
@@ -107,9 +101,7 @@ class FirstUnreadAnchorTests(ZulipTestCase):
 
         new_message_id = self.send_stream_message(self.example_user("othello"), "Verona", "test")
 
-        messages_response = self.get_messages_response(
-            anchor="first_unread", num_before=0, num_after=1,
-        )
+        messages_response = self.get_messages_response(anchor="first_unread", num_before=0, num_after=1)
         self.assertEqual(messages_response["messages"][0]["id"], new_message_id)
         self.assertEqual(messages_response["anchor"], new_message_id)
 
@@ -203,9 +195,7 @@ class UnreadCountTests(ZulipTestCase):
         self.subscribe(self.example_user("cordelia"), "test_stream")
 
         message_id = self.send_stream_message(self.example_user("hamlet"), "test_stream", "hello")
-        unrelated_message_id = self.send_stream_message(
-            self.example_user("hamlet"), "Denmark", "hello",
-        )
+        unrelated_message_id = self.send_stream_message(self.example_user("hamlet"), "Denmark", "hello")
 
         events: List[Mapping[str, Any]] = []
         with tornado_redirected_to_list(events):
@@ -216,11 +206,7 @@ class UnreadCountTests(ZulipTestCase):
 
         event = events[0]["event"]
         expected = dict(
-            operation="add",
-            messages=[message_id],
-            flag="read",
-            type="update_message_flags",
-            all=False,
+            operation="add", messages=[message_id], flag="read", type="update_message_flags", all=False,
         )
 
         differences = [key for key in expected if expected[key] != event[key]]
@@ -279,11 +265,7 @@ class UnreadCountTests(ZulipTestCase):
 
         event = events[0]["event"]
         expected = dict(
-            operation="add",
-            messages=[message_id],
-            flag="read",
-            type="update_message_flags",
-            all=False,
+            operation="add", messages=[message_id], flag="read", type="update_message_flags", all=False,
         )
 
         differences = [key for key in expected if expected[key] != event[key]]
@@ -567,9 +549,7 @@ class GetUnreadMsgsTest(ZulipTestCase):
 
         huddle1_message_ids = [self.send_huddle_message(cordelia, [hamlet, othello]) for i in range(3)]
 
-        huddle2_message_ids = [
-            self.send_huddle_message(cordelia, [hamlet, prospero]) for i in range(3)
-        ]
+        huddle2_message_ids = [self.send_huddle_message(cordelia, [hamlet, prospero]) for i in range(3)]
 
         raw_unread_data = get_raw_unread_data(user_profile=hamlet)
 
@@ -939,8 +919,7 @@ class MessageAccessTests(ZulipTestCase):
 
         # We can't change flags other than "starred" on historical messages:
         result = self.client_post(
-            "/json/messages/flags",
-            {"messages": ujson.dumps(message_ids), "op": "add", "flag": "read"},
+            "/json/messages/flags", {"messages": ujson.dumps(message_ids), "op": "add", "flag": "read"},
         )
         self.assert_json_error(result, "Invalid message(s)")
 

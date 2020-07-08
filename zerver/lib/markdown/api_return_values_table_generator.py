@@ -16,9 +16,7 @@ class MarkdownReturnValuesTableGenerator(Extension):
 
     def extendMarkdown(self, md: markdown.Markdown, md_globals: Dict[str, Any]) -> None:
         md.preprocessors.add(
-            "generate_return_values",
-            APIReturnValuesTablePreprocessor(md, self.getConfigs()),
-            "_begin",
+            "generate_return_values", APIReturnValuesTablePreprocessor(md, self.getConfigs()), "_begin",
         )
 
 
@@ -73,8 +71,7 @@ class APIReturnValuesTablePreprocessor(Preprocessor):
             if return_values[return_value].get("additionalProperties", False):
                 ans.append(
                     self.render_desc(
-                        return_values[return_value]["additionalProperties"]["description"],
-                        spacing + 4,
+                        return_values[return_value]["additionalProperties"]["description"], spacing + 4,
                     ),
                 )
                 if "properties" in return_values[return_value]["additionalProperties"]:

@@ -140,9 +140,7 @@ def build_message_list(user_profile: UserProfile, messages: List[Message]) -> Li
         # with a simple hyperlink.
         return re.sub(r"\[(\S*)\]\((\S*)\)", r"\2", content)
 
-    def append_sender_to_message(
-        message_plain: str, message_html: str, sender: str,
-    ) -> Tuple[str, str]:
+    def append_sender_to_message(message_plain: str, message_html: str, sender: str) -> Tuple[str, str]:
         message_plain = f"{sender}: {message_plain}"
         message_soup = BeautifulSoup(message_html, "html.parser")
         sender_name_soup = BeautifulSoup(f"<b>{sender}</b>: ", "html.parser")
@@ -184,9 +182,7 @@ def build_message_list(user_profile: UserProfile, messages: List[Message]) -> Li
             display_recipient = get_display_recipient(message.recipient)
             assert not isinstance(display_recipient, str)
             narrow_link = get_narrow_url(user_profile, message, display_recipient=display_recipient)
-            other_recipients = [
-                r["full_name"] for r in display_recipient if r["id"] != user_profile.id
-            ]
+            other_recipients = [r["full_name"] for r in display_recipient if r["id"] != user_profile.id]
             header = "You and {}".format(", ".join(other_recipients))
             header_html = f"<a style='color: #ffffff;' href='{narrow_link}'>{header}</a>"
         else:
@@ -310,9 +306,7 @@ def do_send_missedmessage_events_reply_in_zulip(
     if not user_profile.enable_offline_email_notifications:
         return
 
-    recipients = {
-        (msg["message"].recipient_id, msg["message"].topic_name()) for msg in missed_messages
-    }
+    recipients = {(msg["message"].recipient_id, msg["message"].topic_name()) for msg in missed_messages}
     if len(recipients) != 1:
         raise ValueError(f"All missed_messages must have the same recipient and topic {recipients!r}")
 
@@ -489,9 +483,7 @@ def handle_missedmessage_emails(
         else:
             messages_by_bucket[(msg.recipient_id, msg.topic_name())].append(msg)
 
-    message_count_by_bucket = {
-        bucket_tup: len(msgs) for bucket_tup, msgs in messages_by_bucket.items()
-    }
+    message_count_by_bucket = {bucket_tup: len(msgs) for bucket_tup, msgs in messages_by_bucket.items()}
 
     for msg_list in messages_by_bucket.values():
         msg = min(msg_list, key=lambda msg: msg.date_sent)

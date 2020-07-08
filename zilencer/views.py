@@ -64,9 +64,7 @@ def validate_bouncer_token_request(
 def register_remote_server(
     request: HttpRequest,
     zulip_org_id: str = REQ(str_validator=check_string_fixed_length(RemoteZulipServer.UUID_LENGTH)),
-    zulip_org_key: str = REQ(
-        str_validator=check_string_fixed_length(RemoteZulipServer.API_KEY_LENGTH),
-    ),
+    zulip_org_key: str = REQ(str_validator=check_string_fixed_length(RemoteZulipServer.API_KEY_LENGTH)),
     hostname: str = REQ(str_validator=check_capped_string(RemoteZulipServer.HOSTNAME_MAX_LENGTH)),
     contact_email: str = REQ(str_validator=check_string),
     new_org_key: Optional[str] = REQ(
@@ -316,9 +314,7 @@ def remote_server_post_analytics(
                 realm_id=row["realm"],
                 remote_id=row["id"],
                 server=server,
-                event_time=datetime.datetime.fromtimestamp(
-                    row["event_time"], tz=datetime.timezone.utc,
-                ),
+                event_time=datetime.datetime.fromtimestamp(row["event_time"], tz=datetime.timezone.utc),
                 backfilled=row["backfilled"],
                 extra_data=row["extra_data"],
                 event_type=row["event_type"],

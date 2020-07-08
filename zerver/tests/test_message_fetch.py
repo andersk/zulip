@@ -2720,7 +2720,9 @@ class GetOldMessagesTest(ZulipTestCase):
 
         cond = f"WHERE user_profile_id = {user_profile.id} AND message_id >= {first_unread_message_id}"
         self.assertIn(cond, sql)
-        cond = f"WHERE user_profile_id = {user_profile.id} AND message_id <= {first_unread_message_id - 1}"
+        cond = (
+            f"WHERE user_profile_id = {user_profile.id} AND message_id <= {first_unread_message_id - 1}"
+        )
         self.assertIn(cond, sql)
         self.assertIn("UNION", sql)
 
@@ -2755,11 +2757,11 @@ class GetOldMessagesTest(ZulipTestCase):
         sql = queries[0]["sql"]
         self.assertNotIn(f"AND message_id = {LARGER_THAN_MAX_MESSAGE_ID}", sql)
         self.assertIn("ORDER BY message_id ASC", sql)
-        cond = f"WHERE user_profile_id = {user_profile.id} AND message_id <= {first_unread_message_id - 1}"
-        self.assertIn(cond, sql)
         cond = (
-            f"WHERE user_profile_id = {user_profile.id} AND message_id >= {first_visible_message_id}"
+            f"WHERE user_profile_id = {user_profile.id} AND message_id <= {first_unread_message_id - 1}"
         )
+        self.assertIn(cond, sql)
+        cond = f"WHERE user_profile_id = {user_profile.id} AND message_id >= {first_visible_message_id}"
         self.assertIn(cond, sql)
 
     def test_use_first_unread_anchor_with_no_unread_messages(self) -> None:
@@ -2916,9 +2918,7 @@ recipient_id = %(recipient_id_3)s AND upper(subject) = upper(%(param_2)s))\
         self.assertEqual(params["recipient_id_1"], get_recipient_id_for_stream_name(realm, "Verona"))
         self.assertEqual(params["recipient_id_2"], get_recipient_id_for_stream_name(realm, "Scotland"))
         self.assertEqual(params["param_1"], "golf")
-        self.assertEqual(
-            params["recipient_id_3"], get_recipient_id_for_stream_name(realm, "web stuff"),
-        )
+        self.assertEqual(params["recipient_id_3"], get_recipient_id_for_stream_name(realm, "web stuff"))
         self.assertEqual(params["param_2"], "css")
 
     def test_get_messages_queries(self) -> None:

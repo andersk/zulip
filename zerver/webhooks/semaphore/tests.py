@@ -22,10 +22,7 @@ class SemaphoreHookTests(WebhookTestCase):
 * **Author**: don@lamancha.com
 """.strip()
         self.send_and_test_stream_message(
-            "build",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "build", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_semaphore_deploy(self) -> None:

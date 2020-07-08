@@ -215,10 +215,7 @@ class EditMessageTest(ZulipTestCase):
 
         # Single-line edit
         msg_id_1 = self.send_stream_message(
-            self.example_user("hamlet"),
-            "Denmark",
-            topic_name="editing",
-            content="content before edit",
+            self.example_user("hamlet"), "Denmark", topic_name="editing", content="content before edit",
         )
 
         new_content_1 = "content after edit"
@@ -283,9 +280,7 @@ class EditMessageTest(ZulipTestCase):
             content=("content before edit, line 1\n" "\n" "content before edit, line 3"),
         )
         new_content_2 = (
-            "content before edit, line 1\n"
-            "content after edit, line 2\n"
-            "content before edit, line 3"
+            "content before edit, line 1\n" "content after edit, line 2\n" "content before edit, line 3"
         )
         result_2 = self.client_patch(
             "/json/messages/" + str(msg_id_2), {"message_id": msg_id_2, "content": new_content_2},
@@ -533,9 +528,7 @@ class EditMessageTest(ZulipTestCase):
             )
             self.assert_json_success(result)
 
-        def do_edit_message_assert_success(
-            id_: int, unique_str: str, topic_only: bool = False,
-        ) -> None:
+        def do_edit_message_assert_success(id_: int, unique_str: str, topic_only: bool = False) -> None:
             new_topic = "topic" + unique_str
             new_content = "content" + unique_str
             params_dict = {"message_id": id_, "topic": new_topic}
@@ -592,17 +585,11 @@ class EditMessageTest(ZulipTestCase):
 
         # without allow_message_editing, nothing is allowed
         set_message_editing_params(False, 240, False)
-        do_edit_message_assert_error(
-            id_, "E", "Your organization has turned off message editing", True,
-        )
+        do_edit_message_assert_error(id_, "E", "Your organization has turned off message editing", True)
         set_message_editing_params(False, 120, False)
-        do_edit_message_assert_error(
-            id_, "F", "Your organization has turned off message editing", True,
-        )
+        do_edit_message_assert_error(id_, "F", "Your organization has turned off message editing", True)
         set_message_editing_params(False, 0, False)
-        do_edit_message_assert_error(
-            id_, "G", "Your organization has turned off message editing", True,
-        )
+        do_edit_message_assert_error(id_, "G", "Your organization has turned off message editing", True)
 
     def test_allow_community_topic_editing(self) -> None:
         def set_message_editing_params(
@@ -794,9 +781,7 @@ class EditMessageTest(ZulipTestCase):
             if arg_event["type"] == "update_message":
                 self.assertEqual(arg_event["type"], "update_message")
                 self.assertEqual(arg_event["wildcard_mention_user_ids"], [cordelia.id, hamlet.id])
-                self.assertEqual(
-                    sorted(arg_notified_users, key=itemgetter("id")), users_to_be_notified,
-                )
+                self.assertEqual(sorted(arg_notified_users, key=itemgetter("id")), users_to_be_notified)
                 called = True
         self.assertTrue(called)
 
@@ -927,11 +912,7 @@ class EditMessageTest(ZulipTestCase):
 
         result = self.client_patch(
             "/json/messages/" + str(msg_id_later),
-            {
-                "message_id": msg_id_later,
-                "stream_id": new_stream.id,
-                "propagate_mode": "change_later",
-            },
+            {"message_id": msg_id_later, "stream_id": new_stream.id, "propagate_mode": "change_later"},
         )
         self.assert_json_success(result)
 
@@ -1163,9 +1144,7 @@ class EditMessageTest(ZulipTestCase):
         new_stream = self.make_stream("new stream", None, True)
         self.subscribe(user_profile, stream.name)
         self.subscribe(user_profile, new_stream.name)
-        msg_id = self.send_stream_message(
-            user_profile, stream.name, topic_name="test", content="First",
-        )
+        msg_id = self.send_stream_message(user_profile, stream.name, topic_name="test", content="First")
         self.send_stream_message(user_profile, stream.name, topic_name="test", content="Second")
 
         result = self.client_patch(

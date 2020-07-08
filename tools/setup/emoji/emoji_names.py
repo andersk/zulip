@@ -132,10 +132,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     "1f915": {"canonical_name": "hurt", "aliases": ["head_bandage", "injured"]},
     # devil from https://emojipedia.org/smiling-face-with-horns/,
     # smiling_face_with_horns from gemoji/unicode
-    "1f608": {
-        "canonical_name": "smiling_devil",
-        "aliases": ["smiling_imp", "smiling_face_with_horns"],
-    },
+    "1f608": {"canonical_name": "smiling_devil", "aliases": ["smiling_imp", "smiling_face_with_horns"]},
     # angry_devil from https://beebom.com/emoji-meanings/
     "1f47f": {"canonical_name": "devil", "aliases": ["imp", "angry_devil"]},
     "1f479": {"canonical_name": "ogre", "aliases": []},
@@ -896,10 +893,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     "1f687": {"canonical_name": "subway", "aliases": []},
     # all the glyphs of oncoming vehicles have names like oncoming_*. The
     # alternate names are to parallel the alternates to Places/27.
-    "1f68a": {
-        "canonical_name": "oncoming_tram",
-        "aliases": ["oncoming_streetcar", "oncoming_trolley"],
-    },
+    "1f68a": {"canonical_name": "oncoming_tram", "aliases": ["oncoming_streetcar", "oncoming_trolley"]},
     "1f689": {"canonical_name": "station", "aliases": []},
     "1f681": {"canonical_name": "helicopter", "aliases": []},
     "1f6e9": {"canonical_name": "small_airplane", "aliases": []},
@@ -1258,10 +1252,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     "1f50d": {"canonical_name": "search", "aliases": ["find", "magnifying_glass"]},
     # '1f50e': {'canonical_name': 'X', 'aliases': ['mag_right']},
     # https://emojipedia.org/lock-with-ink-pen/
-    "1f50f": {
-        "canonical_name": "privacy",
-        "aliases": ["key_signing", "digital_security", "protected"],
-    },
+    "1f50f": {"canonical_name": "privacy", "aliases": ["key_signing", "digital_security", "protected"]},
     "1f510": {
         "canonical_name": "secure",
         "aliases": ["lock_with_key", "safe", "commitment", "loyalty"],
@@ -1367,10 +1358,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     "1f506": {"canonical_name": "brightness", "aliases": ["high_brightness"]},
     "303d": {"canonical_name": "part_alternation", "aliases": []},
     "26a0": {"canonical_name": "warning", "aliases": ["caution", "danger"]},
-    "1f6b8": {
-        "canonical_name": "children_crossing",
-        "aliases": ["school_crossing", "drive_with_care"],
-    },
+    "1f6b8": {"canonical_name": "children_crossing", "aliases": ["school_crossing", "drive_with_care"]},
     "1f531": {"canonical_name": "trident", "aliases": []},
     "269c": {"canonical_name": "fleur_de_lis", "aliases": []},
     "1f530": {"canonical_name": "beginner", "aliases": []},

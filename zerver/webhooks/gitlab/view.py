@@ -104,9 +104,7 @@ def get_issue_event_body(payload: Dict[str, Any], action: str, include_title: bo
 
 def get_merge_request_updated_event_body(payload: Dict[str, Any], include_title: bool = False) -> str:
     if payload["object_attributes"].get("oldrev"):
-        return get_merge_request_event_body(
-            payload, "added commit(s) to", include_title=include_title,
-        )
+        return get_merge_request_event_body(payload, "added commit(s) to", include_title=include_title)
 
     return get_merge_request_open_or_updated_body(payload, "updated", include_title=include_title)
 
@@ -168,9 +166,7 @@ def get_commented_commit_event_body(payload: Dict[str, Any]) -> str:
     )
 
 
-def get_commented_merge_request_event_body(
-    payload: Dict[str, Any], include_title: bool = False,
-) -> str:
+def get_commented_merge_request_event_body(payload: Dict[str, Any], include_title: bool = False) -> str:
     comment = payload["object_attributes"]
     action = "[commented]({}) on".format(comment["url"])
     url = "{}/merge_requests/{}".format(

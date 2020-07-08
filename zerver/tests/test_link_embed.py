@@ -458,9 +458,7 @@ class PreviewTestCase(ZulipTestCase):
             with mock.patch("requests.get", mock.Mock(side_effect=ConnectionError())):
                 FetchLinksEmbedData().consume(event)
         msg = Message.objects.get(id=msg_id)
-        self.assertEqual(
-            '<p><a href="http://test.org/">http://test.org/</a></p>', msg.rendered_content,
-        )
+        self.assertEqual('<p><a href="http://test.org/">http://test.org/</a></p>', msg.rendered_content)
 
     def test_invalid_link(self) -> None:
         with self.settings(INLINE_URL_EMBED_PREVIEW=True, TEST_SUITE=False, CACHES=TEST_CACHES):
@@ -621,9 +619,7 @@ class PreviewTestCase(ZulipTestCase):
                         link_embed_data_from_cache(url)
 
         msg.refresh_from_db()
-        self.assertEqual(
-            '<p><a href="http://test.org/">http://test.org/</a></p>', msg.rendered_content,
-        )
+        self.assertEqual('<p><a href="http://test.org/">http://test.org/</a></p>', msg.rendered_content)
 
     @override_settings(INLINE_URL_EMBED_PREVIEW=True)
     def test_invalid_url(self) -> None:

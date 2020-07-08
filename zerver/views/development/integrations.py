@@ -73,9 +73,7 @@ def get_fixtures(request: HttpResponse, integration_name: str = REQ()) -> HttpRe
         except ValueError:
             pass  # The file extension will be used to determine the type.
 
-        headers_raw = get_fixture_http_headers(
-            valid_integration_name, "".join(fixture.split(".")[:-1]),
-        )
+        headers_raw = get_fixture_http_headers(valid_integration_name, "".join(fixture.split(".")[:-1]))
 
         def fix_name(header: str) -> str:
             if header.startswith("HTTP_"):  # HTTP_ is a prefix intended for Django.
@@ -138,10 +136,6 @@ def send_all_webhook_fixture_messages(
             is_json = False
         response = send_webhook_fixture_message(url, content, is_json, headers)
         responses.append(
-            {
-                "status_code": response.status_code,
-                "fixture_name": fixture,
-                "message": response.content,
-            },
+            {"status_code": response.status_code, "fixture_name": fixture, "message": response.content},
         )
     return json_success({"responses": responses})

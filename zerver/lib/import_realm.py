@@ -478,9 +478,7 @@ def re_map_foreign_keys_internal(
         if old_id in lookup_table:
             new_id = lookup_table[old_id]
             if verbose:
-                logging.info(
-                    "Remapping %s %s from %s to %s", table, field_name + "_id", old_id, new_id,
-                )
+                logging.info("Remapping %s %s from %s to %s", table, field_name + "_id", old_id, new_id)
         else:
             new_id = old_id
         if not id_field:
@@ -535,9 +533,7 @@ def re_map_foreign_keys_many_to_many_internal(
         if old_id in lookup_table:
             new_id = lookup_table[old_id]
             if verbose:
-                logging.info(
-                    "Remapping %s %s from %s to %s", table, field_name + "_id", old_id, new_id,
-                )
+                logging.info("Remapping %s %s from %s to %s", table, field_name + "_id", old_id, new_id)
         else:
             new_id = old_id
         new_id_list.append(new_id)
@@ -793,8 +789,7 @@ def import_uploads(
                 if settings.LOCAL_UPLOADS_DIR is not None:
                     avatar_path = user_avatar_path_from_ids(user_profile.id, record["realm_id"])
                     medium_file_path = (
-                        os.path.join(settings.LOCAL_UPLOADS_DIR, "avatars", avatar_path)
-                        + "-medium.png"
+                        os.path.join(settings.LOCAL_UPLOADS_DIR, "avatars", avatar_path) + "-medium.png"
                     )
                     if os.path.exists(medium_file_path):
                         # We remove the image here primarily to deal with
@@ -1000,9 +995,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
     if "zerver_realmauditlog" in data:
         fix_datetime_fields(data, "zerver_realmauditlog")
         re_map_foreign_keys(data, "zerver_realmauditlog", "realm", related_table="realm")
-        re_map_foreign_keys(
-            data, "zerver_realmauditlog", "modified_user", related_table="user_profile",
-        )
+        re_map_foreign_keys(data, "zerver_realmauditlog", "modified_user", related_table="user_profile")
         re_map_foreign_keys(data, "zerver_realmauditlog", "acting_user", related_table="user_profile")
         re_map_foreign_keys(data, "zerver_realmauditlog", "modified_stream", related_table="stream")
         update_model_ids(RealmAuditLog, data, related_table="realmauditlog")
@@ -1050,9 +1043,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
         update_model_ids(UserGroup, data, "usergroup")
         bulk_import_model(data, UserGroup)
 
-        re_map_foreign_keys(
-            data, "zerver_usergroupmembership", "user_group", related_table="usergroup",
-        )
+        re_map_foreign_keys(data, "zerver_usergroupmembership", "user_group", related_table="usergroup")
         re_map_foreign_keys(
             data, "zerver_usergroupmembership", "user_profile", related_table="user_profile",
         )

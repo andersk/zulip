@@ -95,9 +95,7 @@ TS_START = "<ts-match>"
 TS_STOP = "</ts-match>"
 
 
-def ts_locs_array(
-    config: ColumnElement, text: ColumnElement, tsquery: ColumnElement,
-) -> ColumnElement:
+def ts_locs_array(config: ColumnElement, text: ColumnElement, tsquery: ColumnElement) -> ColumnElement:
     options = f"HighlightAll = TRUE, StartSel = {TS_START}, StopSel = {TS_STOP}"
     delimited = func.ts_headline(config, text, tsquery, options)
     parts = func.unnest(func.string_to_array(delimited, TS_START)).alias()
@@ -402,16 +400,13 @@ class NarrowBuilder:
                     column("recipient_id") == self_recipient_id,
                 ),
                 and_(
-                    column("sender_id") == self.user_profile.id,
-                    column("recipient_id") == recipient.id,
+                    column("sender_id") == self.user_profile.id, column("recipient_id") == recipient.id,
                 ),
             )
             return query.where(maybe_negate(cond))
 
         # PM with self
-        cond = and_(
-            column("sender_id") == self.user_profile.id, column("recipient_id") == recipient.id,
-        )
+        cond = and_(column("sender_id") == self.user_profile.id, column("recipient_id") == recipient.id)
         return query.where(maybe_negate(cond))
 
     def by_group_pm_with(
@@ -421,9 +416,7 @@ class NarrowBuilder:
             if isinstance(operand, str):
                 narrow_profile = get_user_including_cross_realm(operand, self.user_realm)
             else:
-                narrow_profile = get_user_by_id_in_realm_including_cross_realm(
-                    operand, self.user_realm,
-                )
+                narrow_profile = get_user_by_id_in_realm_including_cross_realm(operand, self.user_realm)
         except UserProfile.DoesNotExist:
             raise BadNarrowOperator("unknown user " + str(operand))
 
@@ -468,9 +461,7 @@ class NarrowBuilder:
         condition = column("search_pgroonga").op("&@~")(operand_escaped)
         return query.where(maybe_negate(condition))
 
-    def _by_search_tsearch(
-        self, query: Query, operand: str, maybe_negate: ConditionTransform,
-    ) -> Query:
+    def _by_search_tsearch(self, query: Query, operand: str, maybe_negate: ConditionTransform) -> Query:
         tsquery = func.plainto_tsquery(literal("zulip.english_us_search"), literal(operand))
         query = query.column(
             ts_locs_array(

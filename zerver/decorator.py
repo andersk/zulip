@@ -85,9 +85,7 @@ def cachify(method: FuncT) -> FuncT:
     return cast(FuncT, cache_wrapper)  # https://github.com/python/mypy/issues/1927
 
 
-def update_user_activity(
-    request: HttpRequest, user_profile: UserProfile, query: Optional[str],
-) -> None:
+def update_user_activity(request: HttpRequest, user_profile: UserProfile, query: Optional[str]) -> None:
     # update_active_status also pushes to rabbitmq, and it seems
     # redundant to log that here as well.
     if request.META["PATH_INFO"] == "/json/users/me/presence":

@@ -1040,9 +1040,7 @@ def process_message_files(
 
     content = "\n".join(markdown_links)
 
-    return dict(
-        content=content, has_attachment=has_attachment, has_image=has_image, has_link=has_link,
-    )
+    return dict(content=content, has_attachment=has_attachment, has_image=has_image, has_link=has_link)
 
 
 def get_attachment_path_and_content(fileinfo: ZerverFieldsT, realm_id: int) -> Tuple[str, str]:
@@ -1133,9 +1131,7 @@ def get_message_sending_user(message: ZerverFieldsT) -> Optional[str]:
     return None
 
 
-def fetch_shared_channel_users(
-    user_list: List[ZerverFieldsT], slack_data_dir: str, token: str,
-) -> None:
+def fetch_shared_channel_users(user_list: List[ZerverFieldsT], slack_data_dir: str, token: str) -> None:
     normal_user_ids = set()
     mirror_dummy_user_ids = set()
     added_channels = {}
@@ -1165,9 +1161,7 @@ def fetch_shared_channel_users(
     # Fetch data on the mirror_dummy_user_ids from the Slack API (it's
     # not included in the data export file).
     for user_id in mirror_dummy_user_ids:
-        user = get_slack_api_data(
-            "https://slack.com/api/users.info", "user", token=token, user=user_id,
-        )
+        user = get_slack_api_data("https://slack.com/api/users.info", "user", token=token, user=user_id)
         team_id = user["team_id"]
         if team_id not in team_id_to_domain:
             team = get_slack_api_data(

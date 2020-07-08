@@ -291,9 +291,7 @@ class TestProcessCountStat(AnalyticsTestCase):
         StreamCount.objects.create(
             stream=stream, realm=realm, property=stream_stat.property, end_time=end_time, value=5,
         )
-        RealmCount.objects.create(
-            realm=realm, property=realm_stat.property, end_time=end_time, value=5,
-        )
+        RealmCount.objects.create(realm=realm, property=realm_stat.property, end_time=end_time, value=5)
 
         # Normal run of process_count_stat
         for stat in [user_stat, stream_stat, realm_stat]:
@@ -892,9 +890,7 @@ class TestCountStats(AnalyticsTestCase):
         do_fill_count_stat_at_hour(stat, self.TIME_ZERO, self.default_realm)
 
         self.assertTableState(
-            StreamCount,
-            ["value", "subgroup", "stream"],
-            [[1, "false", stream1], [1, "true", stream1]],
+            StreamCount, ["value", "subgroup", "stream"], [[1, "false", stream1], [1, "true", stream1]],
         )
         self.assertTableState(RealmCount, ["value", "subgroup", "realm"], [[1, "false"], [1, "true"]])
         # No aggregation to InstallationCount with realm constraint

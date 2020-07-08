@@ -173,9 +173,7 @@ class WorkerTest(ZulipTestCase):
         timer = MockTimer()
         loopworker_sleep_mock = patch("zerver.worker.queue_processors.Timer", return_value=timer)
 
-        send_mock = patch(
-            "zerver.lib.email_notifications.do_send_missedmessage_events_reply_in_zulip",
-        )
+        send_mock = patch("zerver.lib.email_notifications.do_send_missedmessage_events_reply_in_zulip")
         mmw.BATCH_DURATION = 0
 
         bonus_event = dict(user_profile_id=hamlet.id, message_id=hamlet3_msg_id)

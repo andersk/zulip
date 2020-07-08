@@ -458,9 +458,7 @@ class StreamAdminTest(ZulipTestCase):
         result = self.client_delete(f"/json/streams/{stream.id}")
         self.assert_json_success(result)
         subscription_exists = (
-            get_active_subscriptions_for_stream_id(stream.id)
-            .filter(user_profile=user_profile)
-            .exists()
+            get_active_subscriptions_for_stream_id(stream.id).filter(user_profile=user_profile).exists()
         )
         self.assertFalse(subscription_exists)
 
@@ -1804,11 +1802,7 @@ class DefaultStreamGroupTest(ZulipTestCase):
 
         result = self.client_patch(
             f"/json/default_stream_groups/{group_id}",
-            {
-                "group_name": group_name,
-                "op": "change",
-                "new_description": ujson.dumps(new_description),
-            },
+            {"group_name": group_name, "op": "change", "new_description": ujson.dumps(new_description)},
         )
         self.assert_json_success(result)
         default_stream_groups = get_default_stream_groups(realm)
@@ -2100,13 +2094,7 @@ class SubscriptionPropertiesTest(ZulipTestCase):
                 "/api/v1/users/me/subscriptions/properties",
                 {
                     "subscription_data": ujson.dumps(
-                        [
-                            {
-                                "property": property_name,
-                                "value": True,
-                                "stream_id": subs[0]["stream_id"],
-                            },
-                        ],
+                        [{"property": property_name, "value": True, "stream_id": subs[0]["stream_id"]}],
                     ),
                 },
             )
@@ -3179,9 +3167,7 @@ class SubscriptionAPITest(ZulipTestCase):
         events: List[Mapping[str, Any]] = []
         with tornado_redirected_to_list(events):
             self.common_subscribe_to_streams(
-                self.test_user,
-                streams_to_sub,
-                dict(principals=ujson.dumps(new_user_ids_to_subscribe)),
+                self.test_user, streams_to_sub, dict(principals=ujson.dumps(new_user_ids_to_subscribe)),
             )
 
         add_peer_events = [events[2], events[3]]
@@ -3341,9 +3327,7 @@ class SubscriptionAPITest(ZulipTestCase):
         self.common_subscribe_to_streams(self.test_user, "Verona", post_data)
 
         do_deactivate_user(target_profile)
-        result = self.common_subscribe_to_streams(
-            self.test_user, "Denmark", post_data, allow_fail=True,
-        )
+        result = self.common_subscribe_to_streams(self.test_user, "Denmark", post_data, allow_fail=True)
         self.assert_json_error(
             result,
             f"User not authorized to execute queries on behalf of '{target_profile.id}'",
@@ -3624,8 +3608,7 @@ class SubscriptionAPITest(ZulipTestCase):
         with mock.patch("zerver.models.Recipient.__str__", return_value="recip"):
             self.assertEqual(
                 str(subscription),
-                "<Subscription: "
-                f"<UserProfile: {user_profile.email} {user_profile.realm}> -> recip>",
+                "<Subscription: " f"<UserProfile: {user_profile.email} {user_profile.realm}> -> recip>",
             )
 
         self.assertIsNone(subscription.desktop_notifications)

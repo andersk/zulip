@@ -25,10 +25,7 @@ class Migration(migrations.Migration):
                 ("file_name", models.TextField(db_index=True)),
                 ("path_id", models.TextField(db_index=True)),
                 ("is_realm_public", models.BooleanField(default=False)),
-                (
-                    "create_time",
-                    models.DateTimeField(db_index=True, default=django.utils.timezone.now),
-                ),
+                ("create_time", models.DateTimeField(db_index=True, default=django.utils.timezone.now)),
                 ("size", models.IntegerField(null=True)),
                 (
                     "archive_timestamp",

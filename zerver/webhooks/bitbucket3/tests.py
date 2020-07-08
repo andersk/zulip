@@ -11,9 +11,7 @@ class Bitbucket3HookTests(WebhookTestCase):
     # Diagnostics Events:
     def test_ping(self) -> None:
         expected_message = "Congratulations! The Bitbucket Server webhook was configured successfully!"
-        self.send_and_test_stream_message(
-            "diagnostics_ping", "Bitbucket Server Ping", expected_message,
-        )
+        self.send_and_test_stream_message("diagnostics_ping", "Bitbucket Server Ping", expected_message)
 
     def test_ping_with_user_defined_topic(self) -> None:
         self.url = self.build_webhook_url(topic="my topic")
@@ -23,9 +21,7 @@ class Bitbucket3HookTests(WebhookTestCase):
     # Core Repo Events:
     def test_commit_comment_added(self) -> None:
         expected_message = """[hypro999](http://139.59.64.214:7990/users/hypro999) commented on [508d1b6](http://139.59.64.214:7990/projects/SBOX/repos/sandbox/commits/508d1b67f1f8f3a25f543a030a7a178894aa9907):\n~~~ quote\nJust an arbitrary comment on a commit.\n~~~"""
-        self.send_and_test_stream_message(
-            "commit_comment_added", self.EXPECTED_TOPIC, expected_message,
-        )
+        self.send_and_test_stream_message("commit_comment_added", self.EXPECTED_TOPIC, expected_message)
 
     def test_commit_comment_edited(self) -> None:
         expected_message = """[hypro999](http://139.59.64.214:7990/users/hypro999) edited their comment on [508d1b6](http://139.59.64.214:7990/projects/SBOX/repos/sandbox/commits/508d1b67f1f8f3a25f543a030a7a178894aa9907):\n~~~ quote\nJust an arbitrary comment on a commit. Nothing to see here...\n~~~"""
@@ -57,9 +53,7 @@ class Bitbucket3HookTests(WebhookTestCase):
         self.send_and_test_stream_message("repo_push_add_branch", expected_topic, expected_message)
 
     def test_push_add_tag(self) -> None:
-        expected_message = (
-            """[hypro999](http://139.59.64.214:7990/users/hypro999) pushed tag newtag."""
-        )
+        expected_message = """[hypro999](http://139.59.64.214:7990/users/hypro999) pushed tag newtag."""
         self.send_and_test_stream_message("repo_push_add_tag", self.EXPECTED_TOPIC, expected_message)
 
     def test_push_delete_branch(self) -> None:
@@ -73,9 +67,7 @@ class Bitbucket3HookTests(WebhookTestCase):
         expected_message = (
             """[hypro999](http://139.59.64.214:7990/users/hypro999) removed tag test-tag."""
         )
-        self.send_and_test_stream_message(
-            "repo_push_delete_tag", self.EXPECTED_TOPIC, expected_message,
-        )
+        self.send_and_test_stream_message("repo_push_delete_tag", self.EXPECTED_TOPIC, expected_message)
 
     def test_push_update_single_branch(self) -> None:
         expected_message = """[hypro999](http://139.59.64.214:7990/users/hypro999) pushed to branch master. Head is now e68c981ef53dbab0a5ca320a2d8d80e216c70528."""
@@ -207,17 +199,13 @@ class Bitbucket3HookTests(WebhookTestCase):
     def test_pull_request_reviewer_added(self) -> None:
         expected_message = """[hypro999](http://139.59.64.214:7990/users/hypro999) reassigned [PR #1](http://139.59.64.214:7990/projects/SBOX/repos/sandbox/pull-requests/1) to [shimura](http://139.59.64.214:7990/users/shimura)."""
         expected_topic = "sandbox / PR #1 Branch1"
-        self.send_and_test_stream_message(
-            "pull_request_add_reviewer", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request_add_reviewer", expected_topic, expected_message)
 
     def test_pull_request_reviewer_added_and_include_title(self) -> None:
         expected_message = """[hypro999](http://139.59.64.214:7990/users/hypro999) reassigned [PR #1 Branch1](http://139.59.64.214:7990/projects/SBOX/repos/sandbox/pull-requests/1) to [shimura](http://139.59.64.214:7990/users/shimura)."""
         expected_topic = "custom_topic"
         self.url = self.build_webhook_url(topic="custom_topic")
-        self.send_and_test_stream_message(
-            "pull_request_add_reviewer", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request_add_reviewer", expected_topic, expected_message)
 
     def test_pull_request_reviewers_added(self) -> None:
         expected_message = """[hypro999](http://139.59.64.214:7990/users/hypro999) reassigned [PR #1](http://139.59.64.214:7990/projects/SBOX/repos/sandbox/pull-requests/1) to [shimura](http://139.59.64.214:7990/users/shimura) and [sougo](http://139.59.64.214:7990/users/sougo)."""

@@ -61,7 +61,5 @@ class Migration(migrations.Migration):
         migrations.AlterUniqueTogether(
             name="customprofilefieldvalue", unique_together={("user_profile", "field")},
         ),
-        migrations.AlterUniqueTogether(
-            name="customprofilefield", unique_together={("realm", "name")},
-        ),
+        migrations.AlterUniqueTogether(name="customprofilefield", unique_together={("realm", "name")}),
     ]

@@ -28,7 +28,5 @@ class Migration(migrations.Migration):
                 ("streams", models.ManyToManyField(to="zerver.Stream")),
             ],
         ),
-        migrations.AlterUniqueTogether(
-            name="defaultstreamgroup", unique_together={("realm", "name")},
-        ),
+        migrations.AlterUniqueTogether(name="defaultstreamgroup", unique_together={("realm", "name")}),
     ]

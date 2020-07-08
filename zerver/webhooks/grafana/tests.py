@@ -22,10 +22,7 @@ Someone is testing the alert notification within grafana.
 
         # use fixture named helloworld_hello
         self.send_and_test_stream_message(
-            "alert",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "alert", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_no_data_alert(self) -> None:

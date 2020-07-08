@@ -38,9 +38,7 @@ behavior, the reverse proxy itself does *not* automatically restart on changes
 to this file.
 """
 
-parser = argparse.ArgumentParser(
-    description=DESCRIPTION, formatter_class=argparse.RawTextHelpFormatter,
-)
+parser = argparse.ArgumentParser(description=DESCRIPTION, formatter_class=argparse.RawTextHelpFormatter)
 
 parser.add_argument("--test", action="store_true", help="Use the testing database and ports")
 parser.add_argument("--minify", action="store_true", help="Minifies assets for testing in dev")
@@ -209,9 +207,7 @@ def transform_url(protocol: str, path: str, query: str, target_port: int, target
 
 
 @gen.engine
-def fetch_request(
-    url: str, callback: Any, **kwargs: Any
-) -> "Generator[Callable[..., Any], Any, None]":
+def fetch_request(url: str, callback: Any, **kwargs: Any) -> "Generator[Callable[..., Any], Any, None]":
     # use large timeouts to handle polling requests
     req = httpclient.HTTPRequest(
         url, connect_timeout=240.0, request_timeout=240.0, decompress_response=False, **kwargs,

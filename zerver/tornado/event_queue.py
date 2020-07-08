@@ -216,9 +216,7 @@ class ClientDescriptor:
         return self.event_types is None or "message" in self.event_types
 
     def expired(self, now: float) -> bool:
-        return (
-            self.current_handler_id is None and now - self.last_connection_time >= self.queue_timeout
-        )
+        return self.current_handler_id is None and now - self.last_connection_time >= self.queue_timeout
 
     def connect_handler(self, handler_id: int, client_name: str) -> None:
         self.current_handler_id = handler_id
@@ -989,9 +987,7 @@ def process_message_event(
             or stream_push_notify
             or stream_email_notify
         ):
-            idle = receiver_is_off_zulip(user_profile_id) or (
-                user_profile_id in presence_idle_user_ids
-            )
+            idle = receiver_is_off_zulip(user_profile_id) or (user_profile_id in presence_idle_user_ids)
             always_push_notify = user_data.get("always_push_notify", False)
             stream_name = event_template.get("stream_name")
             result = maybe_enqueue_notifications(

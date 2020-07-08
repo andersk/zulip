@@ -928,8 +928,7 @@ if (
     AUTHENTICATION_BACKENDS += ("zproject.backends.ZulipLDAPUserPopulator",)
 else:
     POPULATE_PROFILE_VIA_LDAP = (
-        "zproject.backends.ZulipLDAPAuthBackend" in AUTHENTICATION_BACKENDS
-        or POPULATE_PROFILE_VIA_LDAP
+        "zproject.backends.ZulipLDAPAuthBackend" in AUTHENTICATION_BACKENDS or POPULATE_PROFILE_VIA_LDAP
     )
 
 if POPULATE_PROFILE_VIA_LDAP:

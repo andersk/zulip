@@ -218,9 +218,7 @@ def update_default_stream_group_streams(
 
 @require_realm_admin
 @has_request_variables
-def remove_default_stream_group(
-    request: HttpRequest, user_profile: UserProfile, group_id: int,
-) -> None:
+def remove_default_stream_group(request: HttpRequest, user_profile: UserProfile, group_id: int) -> None:
     group = access_default_stream_group_by_id(user_profile.realm, group_id)
     do_remove_default_stream_group(user_profile.realm, group)
     return json_success()
@@ -502,9 +500,7 @@ def add_subscriptions_backend(
         if user_profile.realm.is_zephyr_mirror_realm and not all(
             stream.invite_only for stream in streams
         ):
-            return json_error(
-                _("You can only invite other Zephyr mirroring users to private streams."),
-            )
+            return json_error(_("You can only invite other Zephyr mirroring users to private streams."))
         if not user_profile.can_subscribe_other_users():
             if user_profile.realm.invite_to_stream_policy == Realm.POLICY_ADMINS_ONLY:
                 return json_error(_("Only administrators can modify other users' subscriptions."))
@@ -565,10 +561,7 @@ def add_subscriptions_backend(
 
             notifications.append(
                 internal_prep_private_message(
-                    realm=user_profile.realm,
-                    sender=sender,
-                    recipient_user=recipient_user,
-                    content=msg,
+                    realm=user_profile.realm, sender=sender, recipient_user=recipient_user, content=msg,
                 ),
             )
 

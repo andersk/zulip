@@ -110,9 +110,7 @@ def render_stats(
     return render(
         request,
         "analytics/stats.html",
-        context=dict(
-            target_name=target_name, page_params=page_params, analytics_ready=analytics_ready,
-        ),
+        context=dict(target_name=target_name, page_params=page_params, analytics_ready=analytics_ready),
     )
 
 
@@ -1337,9 +1335,7 @@ def get_user_activity_records_for_realm(realm: str, is_bot: bool) -> QuerySet:
     ]
 
     records = UserActivity.objects.filter(
-        user_profile__realm__string_id=realm,
-        user_profile__is_active=True,
-        user_profile__is_bot=is_bot,
+        user_profile__realm__string_id=realm, user_profile__is_active=True, user_profile__is_bot=is_bot,
     )
     records = records.order_by("user_profile__delivery_email", "-last_visit")
     records = records.select_related("user_profile", "client").only(*fields)

@@ -679,10 +679,7 @@ def do_create_user(
         ),
     )
     do_increment_logging_stat(
-        user_profile.realm,
-        COUNT_STATS["active_users_log:is_bot:day"],
-        user_profile.is_bot,
-        event_time,
+        user_profile.realm, COUNT_STATS["active_users_log:is_bot:day"], user_profile.is_bot, event_time,
     )
     if settings.BILLING_ENABLED:
         update_license_ledger_if_needed(user_profile.realm, event_time)
@@ -723,10 +720,7 @@ def do_activate_user(user_profile: UserProfile, acting_user: Optional[UserProfil
         ),
     )
     do_increment_logging_stat(
-        user_profile.realm,
-        COUNT_STATS["active_users_log:is_bot:day"],
-        user_profile.is_bot,
-        event_time,
+        user_profile.realm, COUNT_STATS["active_users_log:is_bot:day"], user_profile.is_bot, event_time,
     )
     if settings.BILLING_ENABLED:
         update_license_ledger_if_needed(user_profile.realm, event_time)
@@ -752,10 +746,7 @@ def do_reactivate_user(user_profile: UserProfile, acting_user: Optional[UserProf
         ),
     )
     do_increment_logging_stat(
-        user_profile.realm,
-        COUNT_STATS["active_users_log:is_bot:day"],
-        user_profile.is_bot,
-        event_time,
+        user_profile.realm, COUNT_STATS["active_users_log:is_bot:day"], user_profile.is_bot, event_time,
     )
     if settings.BILLING_ENABLED:
         update_license_ledger_if_needed(user_profile.realm, event_time)
@@ -838,10 +829,7 @@ def do_set_realm_authentication_methods(
         extra_data=ujson.dumps(
             {
                 RealmAuditLog.OLD_VALUE: {"property": "authentication_methods", "value": old_value},
-                RealmAuditLog.NEW_VALUE: {
-                    "property": "authentication_methods",
-                    "value": updated_value,
-                },
+                RealmAuditLog.NEW_VALUE: {"property": "authentication_methods", "value": updated_value},
             },
         ),
     )
@@ -907,9 +895,7 @@ def do_set_realm_signup_notifications_stream(
 ) -> None:
     realm.signup_notifications_stream = stream
     realm.save(update_fields=["signup_notifications_stream"])
-    event = dict(
-        type="realm", op="update", property="signup_notifications_stream_id", value=stream_id,
-    )
+    event = dict(type="realm", op="update", property="signup_notifications_stream_id", value=stream_id)
     send_event(realm, event, active_user_ids(realm.id))
 
 
@@ -1224,9 +1210,7 @@ def send_welcome_bot_response(message: MutableMapping[str, Any]) -> None:
                 "skills. Or, try clicking on some of the stream names to your left!",
             )
         )
-        internal_send_private_message(
-            message["realm"], welcome_bot, message["message"].sender, content,
-        )
+        internal_send_private_message(message["realm"], welcome_bot, message["message"].sender, content)
 
 
 def render_incoming_message(
@@ -2382,9 +2366,7 @@ def check_default_stream_group_name(group_name: str) -> None:
     for i in group_name:
         if ord(i) == 0:
             raise JsonableError(
-                _("Default stream group name '{}' contains NULL (0x00) characters.").format(
-                    group_name,
-                ),
+                _("Default stream group name '{}' contains NULL (0x00) characters.").format(group_name),
             )
 
 
@@ -3358,10 +3340,7 @@ def bulk_remove_subscriptions(
         if peer_user_ids:
             for removed_user in altered_users:
                 event = dict(
-                    type="subscription",
-                    op="peer_remove",
-                    stream_id=stream.id,
-                    user_id=removed_user.id,
+                    type="subscription", op="peer_remove", stream_id=stream.id, user_id=removed_user.id,
                 )
                 send_event(our_realm, event, peer_user_ids)
 
@@ -3946,9 +3925,7 @@ def do_rename_stream(
     stream.save(update_fields=["name"])
 
     if log:
-        log_event(
-            {"type": "stream_name_change", "realm": stream.realm.string_id, "new_name": new_name},
-        )
+        log_event({"type": "stream_name_change", "realm": stream.realm.string_id, "new_name": new_name})
 
     recipient_id = stream.recipient_id
     messages = Message.objects.filter(recipient_id=recipient_id).only("id")
@@ -4291,9 +4268,7 @@ def do_change_default_stream_group_name(
     realm: Realm, group: DefaultStreamGroup, new_group_name: str,
 ) -> None:
     if group.name == new_group_name:
-        raise JsonableError(
-            _("This default stream group is already named '{}'").format(new_group_name),
-        )
+        raise JsonableError(_("This default stream group is already named '{}'").format(new_group_name))
 
     if DefaultStreamGroup.objects.filter(name=new_group_name, realm=realm).exists():
         raise JsonableError(_("Default stream group '{}' already exists").format(new_group_name))
@@ -4759,9 +4734,9 @@ def get_user_info_for_message_updates(message_id: int) -> MessageUpdateUserInfoR
     # probably are not relevant for reprocessed alert_words,
     # mentions and similar rendering features.  This may be a
     # decision we change in the future.
-    query = UserMessage.objects.filter(
-        message=message_id, flags=~UserMessage.flags.historical,
-    ).values("user_profile_id", "flags")
+    query = UserMessage.objects.filter(message=message_id, flags=~UserMessage.flags.historical).values(
+        "user_profile_id", "flags",
+    )
     rows = list(query)
 
     message_user_ids = {row["user_profile_id"] for row in rows}
@@ -5031,9 +5006,7 @@ def do_update_message(
         # due to the messages moving to a private stream they are not
         # subscribed to.
         subs_losing_access = [sub for sub in subs_losing_usermessages if sub.user_profile.is_guest]
-        ums = ums.exclude(
-            user_profile_id__in=[sub.user_profile_id for sub in subs_losing_usermessages],
-        )
+        ums = ums.exclude(user_profile_id__in=[sub.user_profile_id for sub in subs_losing_usermessages])
 
     if topic_name is not None:
         topic_name = truncate_topic(topic_name)
@@ -5493,9 +5466,7 @@ def gather_subscriptions(
         for subs in [subscribed, unsubscribed]:
             for sub in subs:
                 if "subscribers" in sub:
-                    sub["subscribers"] = sorted(
-                        [email_dict[user_id] for user_id in sub["subscribers"]],
-                    )
+                    sub["subscribers"] = sorted([email_dict[user_id] for user_id in sub["subscribers"]])
 
     return (subscribed, unsubscribed)
 
@@ -5799,9 +5770,7 @@ def do_get_user_invites(user_profile: UserProfile) -> List[Dict[str, Any]]:
                 invited=datetime_to_timestamp(confirmation_obj.date_sent),
                 id=invite.id,
                 link_url=confirmation_url(
-                    confirmation_obj.confirmation_key,
-                    user_profile.realm,
-                    Confirmation.MULTIUSE_INVITE,
+                    confirmation_obj.confirmation_key, user_profile.realm, Confirmation.MULTIUSE_INVITE,
                 ),
                 invited_as=invite.invited_as,
                 is_multiuse=True,
@@ -5860,11 +5829,7 @@ def do_resend_user_invite_email(prereg_user: PreregistrationUser) -> int:
 
     clear_scheduled_invitation_emails(prereg_user.email)
     # We don't store the custom email body, so just set it to None
-    event = {
-        "prereg_id": prereg_user.id,
-        "referrer_id": prereg_user.referred_by.id,
-        "email_body": None,
-    }
+    event = {"prereg_id": prereg_user.id, "referrer_id": prereg_user.referred_by.id, "email_body": None}
     queue_json_publish("invites", event)
 
     return datetime_to_timestamp(prereg_user.invited_at)

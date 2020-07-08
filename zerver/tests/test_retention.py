@@ -47,9 +47,7 @@ MIT_REALM_DAYS = 100
 
 class RetentionTestingBase(ZulipTestCase):
     def _get_usermessage_ids(self, message_ids: List[int]) -> List[int]:
-        return list(
-            UserMessage.objects.filter(message_id__in=message_ids).values_list("id", flat=True),
-        )
+        return list(UserMessage.objects.filter(message_id__in=message_ids).values_list("id", flat=True))
 
     def _verify_archive_data(
         self, expected_message_ids: List[int], expected_usermessage_ids: List[int],
@@ -320,9 +318,7 @@ class TestArchiveMessagesGeneral(ArchiveMessagesTestingBase):
             )
             self.assertEqual(
                 set(
-                    UserMessage.objects.filter(id__in=expired_usermsg_ids).values_list(
-                        "id", flat=True,
-                    ),
+                    UserMessage.objects.filter(id__in=expired_usermsg_ids).values_list("id", flat=True),
                 ),
                 set(expired_usermsg_ids),
             )
@@ -911,9 +907,7 @@ class TestGetRealmAndStreamsForArchiving(ZulipTestCase):
         archiving_enabled_zephyr_stream.message_retention_days = 1
         archiving_enabled_zephyr_stream.save()
 
-        Realm.objects.create(
-            string_id="no_archiving", invite_required=False, message_retention_days=-1,
-        )
+        Realm.objects.create(string_id="no_archiving", invite_required=False, message_retention_days=-1)
         empty_realm_with_archiving = Realm.objects.create(
             string_id="with_archiving", invite_required=False, message_retention_days=1,
         )
@@ -955,9 +949,7 @@ class TestRestoreStreamMessages(ArchiveMessagesTestingBase):
         message_ids_to_archive_manually = [
             self.send_stream_message(cordelia, stream_name, str(i)) for i in range(0, 2)
         ]
-        usermessage_ids_to_archive_manually = self._get_usermessage_ids(
-            message_ids_to_archive_manually,
-        )
+        usermessage_ids_to_archive_manually = self._get_usermessage_ids(message_ids_to_archive_manually)
         message_ids_to_archive_by_policy = [
             self.send_stream_message(hamlet, stream_name, str(i)) for i in range(0, 2)
         ]

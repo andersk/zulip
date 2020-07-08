@@ -92,7 +92,7 @@ def get_user_group_members(user_group: UserGroup) -> List[UserProfile]:
 
 def get_memberships_of_users(user_group: UserGroup, members: List[UserProfile]) -> List[int]:
     return list(
-        UserGroupMembership.objects.filter(
-            user_group=user_group, user_profile__in=members,
-        ).values_list("user_profile_id", flat=True),
+        UserGroupMembership.objects.filter(user_group=user_group, user_profile__in=members).values_list(
+            "user_profile_id", flat=True,
+        ),
     )

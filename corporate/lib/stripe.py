@@ -32,8 +32,7 @@ STRIPE_PUBLISHABLE_KEY = get_secret("stripe_publishable_key")
 stripe.api_key = get_secret("stripe_secret_key")
 
 BILLING_LOG_PATH = os.path.join(
-    "/var/log/zulip" if not settings.DEVELOPMENT else settings.DEVELOPMENT_LOG_DIRECTORY,
-    "billing.log",
+    "/var/log/zulip" if not settings.DEVELOPMENT else settings.DEVELOPMENT_LOG_DIRECTORY, "billing.log",
 )
 billing_logger = logging.getLogger("corporate.stripe")
 log_to_file(billing_logger, BILLING_LOG_PATH)
@@ -385,9 +384,7 @@ def make_end_of_cycle_updates_if_needed(
 
 # Returns Customer instead of stripe_customer so that we don't make a Stripe
 # API call if there's nothing to update
-def update_or_create_stripe_customer(
-    user: UserProfile, stripe_token: Optional[str] = None,
-) -> Customer:
+def update_or_create_stripe_customer(user: UserProfile, stripe_token: Optional[str] = None) -> Customer:
     realm = user.realm
     customer = get_customer_by_realm(realm)
     if customer is None or customer.stripe_customer_id is None:

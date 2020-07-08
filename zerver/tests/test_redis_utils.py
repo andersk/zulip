@@ -63,9 +63,7 @@ class RedisUtilsTest(ZulipTestCase):
 
     def test_get_data_key_length_check(self) -> None:
         with self.assertRaises(ZulipRedisKeyTooLongError):
-            get_dict_from_redis(
-                self.redis_client, key_format="{token}", key="A" * (MAX_KEY_LENGTH + 1),
-            )
+            get_dict_from_redis(self.redis_client, key_format="{token}", key="A" * (MAX_KEY_LENGTH + 1))
 
     def test_get_data_key_format_validation(self) -> None:
         with self.assertRaises(ZulipRedisKeyOfWrongFormatError):

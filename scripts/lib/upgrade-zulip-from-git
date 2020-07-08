@@ -25,9 +25,7 @@ from scripts.lib.zulip_tools import (
 
 config_file = get_config_file()
 deploy_options = get_deploy_options(config_file)
-remote_url = get_config(
-    config_file, "deployment", "git_repo_url", "https://github.com/zulip/zulip.git",
-)
+remote_url = get_config(config_file, "deployment", "git_repo_url", "https://github.com/zulip/zulip.git")
 
 assert_running_as_root(strip_lib_from_paths=True)
 

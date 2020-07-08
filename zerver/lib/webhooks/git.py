@@ -82,9 +82,7 @@ def get_push_commits_event_message(
             user_name=user_name, compare_url=compare_url, branch_name=branch_name,
         )
 
-    pushed_message_template = (
-        PUSH_PUSHED_TEXT_WITH_URL if compare_url else PUSH_PUSHED_TEXT_WITHOUT_URL
-    )
+    pushed_message_template = PUSH_PUSHED_TEXT_WITH_URL if compare_url else PUSH_PUSHED_TEXT_WITHOUT_URL
 
     pushed_text_message = pushed_message_template.format(
         compare_url=compare_url,
@@ -129,9 +127,7 @@ def get_create_branch_event_message(user_name: str, url: Optional[str], branch_n
         return CREATE_BRANCH_WITHOUT_URL_MESSAGE_TEMPLATE.format(
             user_name=user_name, branch_name=branch_name,
         )
-    return CREATE_BRANCH_MESSAGE_TEMPLATE.format(
-        user_name=user_name, url=url, branch_name=branch_name,
-    )
+    return CREATE_BRANCH_MESSAGE_TEMPLATE.format(user_name=user_name, url=url, branch_name=branch_name)
 
 
 def get_remove_branch_event_message(user_name: str, branch_name: str) -> str:

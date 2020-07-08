@@ -86,9 +86,7 @@ class GitlabHookTests(WebhookTestCase):
         expected_topic = "my-awesome-project"
         expected_message = "Tomasz Kolek removed tag xyz."
 
-        self.send_and_test_stream_message(
-            "tag_push_hook__remove_tag", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("tag_push_hook__remove_tag", expected_topic, expected_message)
 
     def test_create_issue_without_assignee_event_message(self) -> None:
         expected_topic = "my-awesome-project / Issue #1 Issue title"
@@ -171,7 +169,9 @@ class GitlabHookTests(WebhookTestCase):
 
     def test_create_issue_with_null_description(self) -> None:
         expected_topic = "my-awesome-project / Issue #7 Issue without description"
-        expected_message = "Eeshan Garg created [Issue #7](https://gitlab.com/eeshangarg/my-awesome-project/issues/7)."
+        expected_message = (
+            "Eeshan Garg created [Issue #7](https://gitlab.com/eeshangarg/my-awesome-project/issues/7)."
+        )
         self.send_and_test_stream_message(
             "issue_hook__issue_opened_with_null_description", expected_topic, expected_message,
         )
@@ -180,9 +180,7 @@ class GitlabHookTests(WebhookTestCase):
         expected_topic = "my-awesome-project / Issue #1 Issue title_new"
         expected_message = "Tomasz Kolek updated [Issue #1](https://gitlab.com/tomaszkolek0/my-awesome-project/issues/1)."
 
-        self.send_and_test_stream_message(
-            "issue_hook__issue_updated", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("issue_hook__issue_updated", expected_topic, expected_message)
 
     def test_update_confidential_issue_event_message(self) -> None:
         expected_subject = "testing / Issue #1 Testing"
@@ -199,9 +197,7 @@ class GitlabHookTests(WebhookTestCase):
         expected_topic = "notifications"
         expected_message = "[[my-awesome-project](https://gitlab.com/tomaszkolek0/my-awesome-project)] Tomasz Kolek updated [Issue #1 Issue title_new](https://gitlab.com/tomaszkolek0/my-awesome-project/issues/1)."
 
-        self.send_and_test_stream_message(
-            "issue_hook__issue_updated", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("issue_hook__issue_updated", expected_topic, expected_message)
 
     def test_close_issue_event_message(self) -> None:
         expected_topic = "my-awesome-project / Issue #1 Issue title_new"
@@ -319,9 +315,7 @@ class GitlabHookTests(WebhookTestCase):
         expected_topic = "my-awesome-project / MR #3 New Merge Request"
         expected_message = "Tomasz Kolek created [MR #3](https://gitlab.com/tomaszkolek0/my-awesome-project/merge_requests/3) (assigned to Tomasz Kolek) from `tomek` to `master`:\n\n~~~ quote\ndescription of merge request\n~~~"
         self.send_and_test_stream_message(
-            "merge_request_hook__merge_request_created_with_assignee",
-            expected_topic,
-            expected_message,
+            "merge_request_hook__merge_request_created_with_assignee", expected_topic, expected_message,
         )
 
     def test_merge_request_closed_event_message(self) -> None:

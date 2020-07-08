@@ -561,9 +561,7 @@ class AuthBackendTest(ZulipTestCase):
                     subdomain="zulip",
                 )
                 bad_kwargs = dict(subdomain="acme")
-                with mock.patch(
-                    "zerver.views.auth.redirect_and_log_into_subdomain", return_value=user,
-                ):
+                with mock.patch("zerver.views.auth.redirect_and_log_into_subdomain", return_value=user):
                     self.verify_backend(backend, good_kwargs=good_kwargs, bad_kwargs=bad_kwargs)
                     bad_kwargs["subdomain"] = "zephyr"
                     self.verify_backend(backend, good_kwargs=good_kwargs, bad_kwargs=bad_kwargs)
@@ -1091,9 +1089,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
             account_data_dict, expect_choose_email_screen=True, subdomain="zephyr",
         )
         self.assertTrue(result.url.startswith("http://zephyr.testserver/accounts/login/subdomain/"))
-        result = self.client_get(
-            result.url.replace("http://zephyr.testserver", ""), subdomain="zephyr",
-        )
+        result = self.client_get(result.url.replace("http://zephyr.testserver", ""), subdomain="zephyr")
         self.assert_in_success_response(
             [
                 "Your email address, hamlet@zulip.com, is not in one of the domains ",
@@ -1113,9 +1109,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
 
         with self.settings(SEND_LOGIN_EMAILS=True):
             # Verify that the right thing happens with an invalid-format OTP
-            result = self.social_auth_test(
-                account_data_dict, subdomain="zulip", mobile_flow_otp="1234",
-            )
+            result = self.social_auth_test(account_data_dict, subdomain="zulip", mobile_flow_otp="1234")
             self.assert_json_error(result, "Invalid OTP")
             result = self.social_auth_test(
                 account_data_dict, subdomain="zulip", mobile_flow_otp="invalido" * 8,
@@ -1519,20 +1513,11 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
             ),
         ):
             result = self.social_auth_test(
-                account_data_dict,
-                expect_choose_email_screen=True,
-                subdomain=subdomain,
-                is_signup=True,
+                account_data_dict, expect_choose_email_screen=True, subdomain=subdomain, is_signup=True,
             )
             # Full name should get populated from ldap:
             self.stage_two_of_registration(
-                result,
-                realm,
-                subdomain,
-                email,
-                name,
-                "New LDAP fullname",
-                skip_registration_form=True,
+                result, realm, subdomain, email, name, "New LDAP fullname", skip_registration_form=True,
             )
 
             # Now try a user that doesn't exist in ldap:
@@ -1540,10 +1525,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
             name = "Alice Social"
             account_data_dict = self.get_account_data_dict(email=email, name=name)
             result = self.social_auth_test(
-                account_data_dict,
-                expect_choose_email_screen=True,
-                subdomain=subdomain,
-                is_signup=True,
+                account_data_dict, expect_choose_email_screen=True, subdomain=subdomain, is_signup=True,
             )
             # Full name should get populated as provided by the social backend, because
             # this user isn't in the ldap dictionary:
@@ -1584,10 +1566,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
         ):
             account_data_dict = self.get_account_data_dict(email=email, name=name)
             result = self.social_auth_test(
-                account_data_dict,
-                expect_choose_email_screen=True,
-                subdomain=subdomain,
-                is_signup=True,
+                account_data_dict, expect_choose_email_screen=True, subdomain=subdomain, is_signup=True,
             )
             # Full name should get populated as provided by the social backend, because
             # this user isn't in the ldap dictionary:
@@ -1992,11 +1971,7 @@ class SAMLAuthBackendTest(SocialAuthBase):
             self.assertEqual("/login/", result.url)
         self.assertEqual(
             m.output,
-            [
-                self.logger_output(
-                    "/login/saml/ : Bad idp param: KeyError: {}.".format("'idp'"), "info",
-                ),
-            ],
+            [self.logger_output("/login/saml/ : Bad idp param: KeyError: {}.".format("'idp'"), "info")],
         )
 
         with self.assertLogs(self.logger_string, level="INFO") as m:
@@ -2460,11 +2435,7 @@ class AppleIdAuthBackendTest(AppleAuthMixin, SocialAuthBase):
         self.assertEqual(result.url, "/login/")
         self.assertEqual(
             m.output,
-            [
-                self.logger_output(
-                    "AuthFailed: Authentication failed: Token validation failed", "info",
-                ),
-            ],
+            [self.logger_output("AuthFailed: Authentication failed: Token validation failed", "info")],
         )
 
     def test_validate_state(self) -> None:
@@ -2759,9 +2730,7 @@ class GitHubAuthBackendTest(SocialAuthBase):
 
         self.email_data = email_data
 
-    def get_account_data_dict(
-        self, email: str, name: str, user_avatar_url: str = "",
-    ) -> Dict[str, Any]:
+    def get_account_data_dict(self, email: str, name: str, user_avatar_url: str = "") -> Dict[str, Any]:
         return dict(email=email, name=name, user_avatar_url=user_avatar_url)
 
     def test_social_auth_email_not_verified(self) -> None:
@@ -2847,9 +2816,7 @@ class GitHubAuthBackendTest(SocialAuthBase):
             self.assertTrue(github_auth_enabled())
 
     def test_github_oauth2_success_non_primary(self) -> None:
-        account_data_dict = self.get_account_data_dict(
-            email="nonprimary@zulip.com", name="Non Primary",
-        )
+        account_data_dict = self.get_account_data_dict(email="nonprimary@zulip.com", name="Non Primary")
         email_data = [
             dict(email=account_data_dict["email"], verified=True),
             dict(email="hamlet@zulip.com", verified=True, primary=True),
@@ -3076,9 +3043,7 @@ class GitHubAuthBackendTest(SocialAuthBase):
         )
 
     def test_github_oauth2_email_not_associated(self) -> None:
-        account_data_dict = self.get_account_data_dict(
-            email="not-associated@zulip.com", name=self.name,
-        )
+        account_data_dict = self.get_account_data_dict(email="not-associated@zulip.com", name=self.name)
         email_data = [
             dict(email="nonprimary@zulip.com", verified=True),
             dict(email="hamlet@zulip.com", verified=True, primary=True),
@@ -3269,11 +3234,7 @@ class GoogleAuthBackendTest(SocialAuthBase):
             self.assertTrue(google_auth_enabled())
 
     def get_log_into_subdomain(
-        self,
-        data: ExternalAuthDataDict,
-        *,
-        subdomain: str = "zulip",
-        force_token: Optional[str] = None,
+        self, data: ExternalAuthDataDict, *, subdomain: str = "zulip", force_token: Optional[str] = None
     ) -> HttpResponse:
         if force_token is None:
             token = ExternalAuthResult(data_dict=data).store_data()
@@ -4800,9 +4761,7 @@ class TestLDAP(ZulipLDAPTestCase):
         with self.settings(LDAP_EMAIL_ATTR=nonexisting_attr):
             backend = self.backend
             email = "nonexisting@zulip.com"
-            with self.assertRaisesRegex(
-                Exception, "LDAP user doesn't have the needed email attribute",
-            ):
+            with self.assertRaisesRegex(Exception, "LDAP user doesn't have the needed email attribute"):
                 backend.get_or_build_user(email, _LDAPUser())
 
     @override_settings(AUTHENTICATION_BACKENDS=("zproject.backends.ZulipLDAPAuthBackend",))
@@ -5081,9 +5040,7 @@ class TestZulipLDAPUserPopulator(ZulipLDAPTestCase):
             do_deactivate_user(othello)
             mock_logger = mock.MagicMock()
             result = sync_user_from_ldap(othello, mock_logger)
-            self.assertEqual(
-                mock_logger.method_calls, [],
-            )  # In this case the logger shouldn't be used.
+            self.assertEqual(mock_logger.method_calls, [])  # In this case the logger shouldn't be used.
             self.assertFalse(result)
 
     def test_update_user_avatar(self) -> None:
@@ -5210,9 +5167,7 @@ class TestZulipLDAPUserPopulator(ZulipLDAPTestCase):
         ):
             self.perform_ldap_sync(self.example_user("hamlet"))
 
-        actual_value = CustomProfileFieldValue.objects.get(
-            user_profile=hamlet, field=no_op_field,
-        ).value
+        actual_value = CustomProfileFieldValue.objects.get(user_profile=hamlet, field=no_op_field).value
         self.assertEqual(actual_value, expected_value)
 
     def test_update_custom_profile_field_no_update(self) -> None:
@@ -5251,9 +5206,7 @@ class TestZulipLDAPUserPopulator(ZulipLDAPTestCase):
         ):
             self.perform_ldap_sync(self.example_user("hamlet"))
 
-        actual_value = CustomProfileFieldValue.objects.get(
-            user_profile=hamlet, field=no_op_field,
-        ).value
+        actual_value = CustomProfileFieldValue.objects.get(user_profile=hamlet, field=no_op_field).value
         self.assertEqual(actual_value, expected_value)
 
 

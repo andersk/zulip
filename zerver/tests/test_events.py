@@ -1206,9 +1206,7 @@ class NormalActionsTest(BaseAction):
         )
         othello = self.example_user("othello")
         events = self.verify_action(
-            lambda: check_add_user_group(
-                self.user_profile.realm, "backend", [othello], "Backend team",
-            ),
+            lambda: check_add_user_group(self.user_profile.realm, "backend", [othello], "Backend team"),
         )
         user_group_add_checker("events[0]", events[0])
 
@@ -2104,10 +2102,7 @@ class NormalActionsTest(BaseAction):
                 ("type", equals("realm")),
                 ("op", equals("update_dict")),
                 ("property", equals("icon")),
-                (
-                    "data",
-                    check_dict_only([("icon_url", check_string), ("icon_source", check_string)]),
-                ),
+                ("data", check_dict_only([("icon_url", check_string), ("icon_source", check_string)])),
             ],
         )
         schema_checker("events[0]", events[0])
@@ -2122,10 +2117,7 @@ class NormalActionsTest(BaseAction):
                 ("type", equals("realm")),
                 ("op", equals("update_dict")),
                 ("property", equals("logo")),
-                (
-                    "data",
-                    check_dict_only([("logo_url", check_string), ("logo_source", check_string)]),
-                ),
+                ("data", check_dict_only([("logo_url", check_string), ("logo_source", check_string)])),
             ],
         )
         schema_checker("events[0]", events[0])
@@ -3131,9 +3123,7 @@ class SubscribeActionTest(BaseAction):
             self.example_user("hamlet"), "test_stream",
         )
         events = self.verify_action(
-            action,
-            event_types=["subscription", "realm_user"],
-            include_subscribers=include_subscribers,
+            action, event_types=["subscription", "realm_user"], include_subscribers=include_subscribers,
         )
         add_schema_checker("events[0]", events[0])
 

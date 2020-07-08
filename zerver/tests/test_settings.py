@@ -256,8 +256,7 @@ class ChangeSettingsTest(ZulipTestCase):
             result = self.client_patch(
                 "/json/settings",
                 dict(
-                    old_password=initial_password(self.example_email("hamlet")),
-                    new_password="ignored",
+                    old_password=initial_password(self.example_email("hamlet")), new_password="ignored",
                 ),
             )
             self.assert_json_error(result, "Your Zulip password is managed in LDAP")
@@ -277,8 +276,7 @@ class ChangeSettingsTest(ZulipTestCase):
             result = self.client_patch(
                 "/json/settings",
                 dict(
-                    old_password=initial_password(self.example_email("hamlet")),
-                    new_password="ignored",
+                    old_password=initial_password(self.example_email("hamlet")), new_password="ignored",
                 ),
             )
             self.assert_json_success(result)
@@ -287,8 +285,7 @@ class ChangeSettingsTest(ZulipTestCase):
             result = self.client_patch(
                 "/json/settings",
                 dict(
-                    old_password=initial_password(self.example_email("hamlet")),
-                    new_password="ignored",
+                    old_password=initial_password(self.example_email("hamlet")), new_password="ignored",
                 ),
             )
             self.assert_json_error(result, "Your Zulip password is managed in LDAP")

@@ -13,9 +13,7 @@ class Customer(models.Model):
     stripe_customer_id: str = models.CharField(max_length=255, null=True, unique=True)
     sponsorship_pending: bool = models.BooleanField(default=False)
     # A percentage, like 85.
-    default_discount: Optional[Decimal] = models.DecimalField(
-        decimal_places=4, max_digits=7, null=True,
-    )
+    default_discount: Optional[Decimal] = models.DecimalField(decimal_places=4, max_digits=7, null=True)
 
     def __str__(self) -> str:
         return f"<Customer {self.realm} {self.stripe_customer_id}>"

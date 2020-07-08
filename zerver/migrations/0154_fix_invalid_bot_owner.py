@@ -19,8 +19,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RunPython(
-            migrate_fix_invalid_bot_owner_values,
-            reverse_code=migrations.RunPython.noop,
-            elidable=True,
+            migrate_fix_invalid_bot_owner_values, reverse_code=migrations.RunPython.noop, elidable=True,
         ),
     ]

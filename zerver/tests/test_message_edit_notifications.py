@@ -124,8 +124,7 @@ class EditMessageSideEffectsTest(ZulipTestCase):
         present_on_web: bool = False,
     ) -> Dict[str, Any]:
         message_id = self._login_and_send_original_stream_message(
-            content=original_content,
-            enable_online_push_notifications=enable_online_push_notifications,
+            content=original_content, enable_online_push_notifications=enable_online_push_notifications,
         )
 
         if present_on_web:

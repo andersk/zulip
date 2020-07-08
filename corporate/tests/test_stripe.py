@@ -91,7 +91,9 @@ def stripe_fixture_path(
     # use test_* for the python test files
     if decorated_function_name[:5] == "test_":
         decorated_function_name = decorated_function_name[5:]
-    return f"{STRIPE_FIXTURES_DIR}/{decorated_function_name}--{mocked_function_name[7:]}.{call_count}.json"
+    return (
+        f"{STRIPE_FIXTURES_DIR}/{decorated_function_name}--{mocked_function_name[7:]}.{call_count}.json"
+    )
 
 
 def fixture_files_for_function(decorated_function: CallableT) -> List[str]:  # nocoverage
@@ -126,9 +128,7 @@ def generate_and_save_stripe_fixture(
             with open(fixture_path, "w") as f:
                 error_dict = e.__dict__
                 error_dict["headers"] = dict(error_dict["headers"])
-                f.write(
-                    json.dumps(error_dict, indent=2, separators=(",", ": "), sort_keys=True) + "\n",
-                )
+                f.write(json.dumps(error_dict, indent=2, separators=(",", ": "), sort_keys=True) + "\n")
             raise e
         with open(fixture_path, "w") as f:
             if stripe_object is not None:
@@ -450,9 +450,7 @@ class StripeTest(StripeTestCase):
         def raise_card_error() -> None:
             error_message = "The card number is not a valid credit card number."
             json_body = {"error": {"message": error_message}}
-            raise stripe.error.CardError(
-                error_message, "number", "invalid_number", json_body=json_body,
-            )
+            raise stripe.error.CardError(error_message, "number", "invalid_number", json_body=json_body)
 
         with self.assertRaises(StripeCardError) as context:
             raise_card_error()
@@ -481,9 +479,7 @@ class StripeTest(StripeTestCase):
             self.upgrade()
 
         # Check that we correctly created a Customer object in Stripe
-        stripe_customer = stripe_get_customer(
-            Customer.objects.get(realm=user.realm).stripe_customer_id,
-        )
+        stripe_customer = stripe_get_customer(Customer.objects.get(realm=user.realm).stripe_customer_id)
         self.assertEqual(stripe_customer.default_source.id[:5], "card_")
         self.assertEqual(stripe_customer.description, "zulip (Zulip Dev)")
         self.assertEqual(stripe_customer.discount, None)
@@ -583,10 +579,7 @@ class StripeTest(StripeTestCase):
         self.assertEqual(
             audit_log_entries,
             [
-                (
-                    RealmAuditLog.STRIPE_CUSTOMER_CREATED,
-                    timestamp_to_datetime(stripe_customer.created),
-                ),
+                (RealmAuditLog.STRIPE_CUSTOMER_CREATED, timestamp_to_datetime(stripe_customer.created)),
                 (RealmAuditLog.STRIPE_CARD_CHANGED, timestamp_to_datetime(stripe_customer.created)),
                 (RealmAuditLog.CUSTOMER_PLAN_CREATED, self.now),
                 # TODO: Check for REALM_PLAN_TYPE_CHANGED
@@ -636,9 +629,7 @@ class StripeTest(StripeTestCase):
         with patch("corporate.lib.stripe.timezone_now", return_value=self.now):
             self.upgrade(invoice=True)
         # Check that we correctly created a Customer in Stripe
-        stripe_customer = stripe_get_customer(
-            Customer.objects.get(realm=user.realm).stripe_customer_id,
-        )
+        stripe_customer = stripe_get_customer(Customer.objects.get(realm=user.realm).stripe_customer_id)
         # It can take a second for Stripe to attach the source to the customer, and in
         # particular it may not be attached at the time stripe_get_customer is called above,
         # causing test flakes.
@@ -700,11 +691,7 @@ class StripeTest(StripeTestCase):
             status=CustomerPlan.ACTIVE,
         )
         LicenseLedger.objects.get(
-            plan=plan,
-            is_renewal=True,
-            event_time=self.now,
-            licenses=123,
-            licenses_at_next_renewal=123,
+            plan=plan, is_renewal=True, event_time=self.now, licenses=123, licenses_at_next_renewal=123,
         )
         # Check RealmAuditLog
         audit_log_entries = list(
@@ -715,10 +702,7 @@ class StripeTest(StripeTestCase):
         self.assertEqual(
             audit_log_entries,
             [
-                (
-                    RealmAuditLog.STRIPE_CUSTOMER_CREATED,
-                    timestamp_to_datetime(stripe_customer.created),
-                ),
+                (RealmAuditLog.STRIPE_CUSTOMER_CREATED, timestamp_to_datetime(stripe_customer.created)),
                 (RealmAuditLog.CUSTOMER_PLAN_CREATED, self.now),
                 # TODO: Check for REALM_PLAN_TYPE_CHANGED
                 # (RealmAuditLog.REALM_PLAN_TYPE_CHANGED, Kandra()),
@@ -827,10 +811,7 @@ class StripeTest(StripeTestCase):
                         RealmAuditLog.STRIPE_CUSTOMER_CREATED,
                         timestamp_to_datetime(stripe_customer.created),
                     ),
-                    (
-                        RealmAuditLog.STRIPE_CARD_CHANGED,
-                        timestamp_to_datetime(stripe_customer.created),
-                    ),
+                    (RealmAuditLog.STRIPE_CARD_CHANGED, timestamp_to_datetime(stripe_customer.created)),
                     (RealmAuditLog.CUSTOMER_PLAN_CREATED, self.now),
                     # TODO: Check for REALM_PLAN_TYPE_CHANGED
                     # (RealmAuditLog.REALM_PLAN_TYPE_CHANGED, Kandra()),
@@ -1236,8 +1217,7 @@ class StripeTest(StripeTestCase):
         self.assertEqual(ledger_entry.licenses_at_next_renewal, 23)
         # Check the Charges and Invoices in Stripe
         self.assertEqual(
-            8000 * 23,
-            [charge for charge in stripe.Charge.list(customer=stripe_customer_id)][0].amount,
+            8000 * 23, [charge for charge in stripe.Charge.list(customer=stripe_customer_id)][0].amount,
         )
         stripe_invoice = [invoice for invoice in stripe.Invoice.list(customer=stripe_customer_id)][0]
         self.assertEqual([8000 * 23, -8000 * 23], [item.amount for item in stripe_invoice.lines])
@@ -1414,9 +1394,7 @@ class StripeTest(StripeTestCase):
             self.assertEqual(message.subject, "Sponsorship request (Open-source) for zulip")
             self.assertEqual(message.from_email, f"{user.full_name} <{user.delivery_email}>")
             self.assertIn("User role: Member", message.body)
-            self.assertIn(
-                "Support URL: http://zulip.testserver/activity/support?q=zulip", message.body,
-            )
+            self.assertIn("Support URL: http://zulip.testserver/activity/support?q=zulip", message.body)
             self.assertIn("Website: https://infinispan.org", message.body)
             self.assertIn("Organization type: Open-source", message.body)
             self.assertIn("Description:\nInfinispan is a distributed in-memory", message.body)
@@ -1433,9 +1411,7 @@ class StripeTest(StripeTestCase):
         self.login_user(self.example_user("othello"))
         response = self.client_get("/billing/")
         self.assert_in_success_response(
-            [
-                "You must be an organization administrator or a billing administrator to view this page.",
-            ],
+            ["You must be an organization administrator or a billing administrator to view this page."],
             response,
         )
 
@@ -2098,9 +2074,7 @@ class StripeTest(StripeTestCase):
 
             self.login_user(user)
             response = self.client_get("/billing/")
-            self.assert_in_success_response(
-                ["Your organization is on the <b>Zulip Free</b>"], response,
-            )
+            self.assert_in_success_response(["Your organization is on the <b>Zulip Free</b>"], response)
 
             # The extra users added in the final month are not charged
             with patch("corporate.lib.stripe.invoice_plan") as mocked:

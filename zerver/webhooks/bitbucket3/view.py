@@ -27,9 +27,7 @@ from zerver.webhooks.bitbucket2.view import (
 )
 
 BRANCH_UPDATED_MESSAGE_TEMPLATE = "{user_name} pushed to branch {branch_name}. Head is now {head}."
-PULL_REQUEST_MARKED_AS_NEEDS_WORK_TEMPLATE = (
-    '{user_name} marked [PR #{number}]({url}) as "needs work".'
-)
+PULL_REQUEST_MARKED_AS_NEEDS_WORK_TEMPLATE = '{user_name} marked [PR #{number}]({url}) as "needs work".'
 PULL_REQUEST_MARKED_AS_NEEDS_WORK_TEMPLATE_WITH_TITLE = """
 {user_name} marked [PR #{number} {title}]({url}) as \"needs work\".
 """.strip()
@@ -66,9 +64,7 @@ def get_user_name(payload: Dict[str, Any]) -> str:
     return user_name
 
 
-def ping_handler(
-    payload: Dict[str, Any], include_title: Optional[str] = None,
-) -> List[Dict[str, str]]:
+def ping_handler(payload: Dict[str, Any], include_title: Optional[str] = None) -> List[Dict[str, str]]:
     if include_title:
         subject = include_title
     else:
@@ -166,9 +162,7 @@ def repo_push_tag_data(payload: Dict[str, Any], change: Dict[str, Any]) -> Dict[
     return {"subject": subject, "body": body}
 
 
-def repo_push_handler(
-    payload: Dict[str, Any], branches: Optional[str] = None,
-) -> List[Dict[str, str]]:
+def repo_push_handler(payload: Dict[str, Any], branches: Optional[str] = None) -> List[Dict[str, str]]:
     data = []
     for change in payload["changes"]:
         event_target_type = change["ref"]["type"]

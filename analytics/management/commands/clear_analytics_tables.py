@@ -16,6 +16,4 @@ class Command(BaseCommand):
         if options["force"]:
             do_drop_all_analytics_tables()
         else:
-            raise CommandError(
-                "Would delete all data from analytics tables (!); use --force to do so.",
-            )
+            raise CommandError("Would delete all data from analytics tables (!); use --force to do so.")

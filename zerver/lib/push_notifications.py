@@ -395,9 +395,7 @@ def send_notifications_to_bouncer(
 #
 
 
-def num_push_devices_for_user(
-    user_profile: UserProfile, kind: Optional[int] = None,
-) -> PushDeviceToken:
+def num_push_devices_for_user(user_profile: UserProfile, kind: Optional[int] = None) -> PushDeviceToken:
     if kind is None:
         return PushDeviceToken.objects.filter(user=user_profile).count()
     else:
@@ -802,8 +800,7 @@ def handle_push_notification(user_profile_id: int, missed_message: Dict[str, Any
         return
     user_profile = get_user_profile_by_id(user_profile_id)
     if not (
-        receives_offline_push_notifications(user_profile)
-        or receives_online_notifications(user_profile)
+        receives_offline_push_notifications(user_profile) or receives_online_notifications(user_profile)
     ):
         return
 

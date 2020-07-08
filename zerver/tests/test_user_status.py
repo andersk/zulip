@@ -65,10 +65,7 @@ class UserStatusTest(ZulipTestCase):
 
         # Setting status_text to None causes it be ignored.
         update_user_status(
-            user_profile_id=hamlet.id,
-            status=UserStatus.NORMAL,
-            status_text=None,
-            client_id=client2.id,
+            user_profile_id=hamlet.id, status=UserStatus.NORMAL, status_text=None, client_id=client2.id,
         )
 
         self.assertEqual(
@@ -93,10 +90,7 @@ class UserStatusTest(ZulipTestCase):
             user_profile_id=hamlet.id, status=UserStatus.AWAY, status_text=None, client_id=client1.id,
         )
         update_user_status(
-            user_profile_id=cordelia.id,
-            status=UserStatus.AWAY,
-            status_text=None,
-            client_id=client2.id,
+            user_profile_id=cordelia.id, status=UserStatus.AWAY, status_text=None, client_id=client2.id,
         )
         update_user_status(
             user_profile_id=king_lear.id,

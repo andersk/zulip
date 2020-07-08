@@ -41,9 +41,7 @@ Build [#1431](https://circleci.com/gh/Hypro999/zulip/1431) of `bionic-production
 - **Committers:** Hemanth V. Alluri (Hypro999), Sadaharu
 """.strip()
         self.send_and_test_stream_message(
-            "github_bionic_production_build_success_multiple_parties",
-            expected_topic,
-            expected_message,
+            "github_bionic_production_build_success_multiple_parties", expected_topic, expected_message,
         )
 
     def test_for_cancelled_build_off_github(self) -> None:

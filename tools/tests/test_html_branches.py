@@ -117,9 +117,7 @@ class TestHtmlBranches(unittest.TestCase):
 
         template_id_dict = build_id_dict(templates)
 
-        self.assertEqual(
-            set(template_id_dict.keys()), {"below_navbar", "hello_{{ message }}", "intro"},
-        )
+        self.assertEqual(set(template_id_dict.keys()), {"below_navbar", "hello_{{ message }}", "intro"})
         self.assertEqual(
             template_id_dict["hello_{{ message }}"],
             [

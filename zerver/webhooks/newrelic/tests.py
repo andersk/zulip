@@ -10,10 +10,7 @@ class NewRelicHookTests(WebhookTestCase):
         expected_message = "Alert opened on [application name]: Apdex score fell below critical level of 0.90 ([view alert](https://rpm.newrelc.com/accounts/[account_id]/applications/[application_id]/incidents/[incident_id]))."
 
         self.send_and_test_stream_message(
-            "alert",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "alert", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_deployment(self) -> None:
