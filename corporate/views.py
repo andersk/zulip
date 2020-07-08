@@ -81,8 +81,7 @@ def check_upgrade_parameters(
 
     if licenses is None or licenses < min_licenses:
         raise BillingError(
-            "not enough licenses",
-            _("You must invoice for at least {} users.").format(min_licenses),
+            "not enough licenses", _("You must invoice for at least {} users.").format(min_licenses),
         )
 
     if max_licenses is not None and licenses > max_licenses:
@@ -143,9 +142,7 @@ def upgrade(
         assert licenses is not None
         automanage_licenses = license_management == "automatic"
 
-        billing_schedule = {"annual": CustomerPlan.ANNUAL, "monthly": CustomerPlan.MONTHLY}[
-            schedule
-        ]
+        billing_schedule = {"annual": CustomerPlan.ANNUAL, "monthly": CustomerPlan.MONTHLY}[schedule]
         process_initial_upgrade(user, licenses, automanage_licenses, billing_schedule, stripe_token)
     except BillingError as e:
         if not settings.TEST_SUITE:  # nocoverage

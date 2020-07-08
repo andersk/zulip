@@ -88,8 +88,7 @@ def run() -> None:
         "openapi",
         ["node", "tools/check-openapi"],
         ["yaml"],
-        description="Validates our OpenAPI/Swagger API documentation"
-        "(zerver/openapi/zulip.yaml) ",
+        description="Validates our OpenAPI/Swagger API documentation" "(zerver/openapi/zulip.yaml) ",
     )
     linter_config.external_linter(
         "shellcheck",

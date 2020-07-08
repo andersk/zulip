@@ -960,9 +960,7 @@ class TestCurlExampleGeneration(ZulipTestCase):
             self.curl_example("/endpoint", "GET")
 
     @patch("zerver.openapi.openapi.OpenAPISpec.spec")
-    def test_generate_and_render_curl_with_array_without_example(
-        self, spec_mock: MagicMock,
-    ) -> None:
+    def test_generate_and_render_curl_with_array_without_example(self, spec_mock: MagicMock) -> None:
         spec_mock.return_value = self.spec_mock_using_array_without_example
         with self.assertRaises(ValueError):
             self.curl_example("/endpoint", "GET")

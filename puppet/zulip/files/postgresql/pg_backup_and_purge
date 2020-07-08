@@ -21,9 +21,7 @@ def run(args: List[str], dry_run: bool = False) -> str:
         print("Would have run: " + " ".join(map(shlex.quote, args)))
         return ""
 
-    p = subprocess.Popen(
-        args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-    )
+    p = subprocess.Popen(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = p.communicate()
     if p.returncode:
         logger.error("Could not invoke %s\nstdout: %r\nstderror: %r", args[0], stdout, stderr)

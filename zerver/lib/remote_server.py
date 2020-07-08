@@ -45,9 +45,7 @@ def send_to_push_bouncer(
       vs. client-side errors like and invalid token.
 
     """
-    url = urllib.parse.urljoin(
-        settings.PUSH_NOTIFICATION_BOUNCER_URL, "/api/v1/remotes/" + endpoint,
-    )
+    url = urllib.parse.urljoin(settings.PUSH_NOTIFICATION_BOUNCER_URL, "/api/v1/remotes/" + endpoint)
     api_auth = requests.auth.HTTPBasicAuth(settings.ZULIP_ORG_ID, settings.ZULIP_ORG_KEY)
 
     headers = {"User-agent": f"ZulipServer/{ZULIP_VERSION}"}
@@ -102,21 +100,11 @@ def send_to_push_bouncer(
 
 def send_json_to_push_bouncer(method: str, endpoint: str, post_data: Mapping[str, object]) -> None:
     send_to_push_bouncer(
-        method,
-        endpoint,
-        ujson.dumps(post_data),
-        extra_headers={"Content-type": "application/json"},
+        method, endpoint, ujson.dumps(post_data), extra_headers={"Content-type": "application/json"},
     )
 
 
-REALMAUDITLOG_PUSHED_FIELDS = [
-    "id",
-    "realm",
-    "event_time",
-    "backfilled",
-    "extra_data",
-    "event_type",
-]
+REALMAUDITLOG_PUSHED_FIELDS = ["id", "realm", "event_time", "backfilled", "extra_data", "event_type"]
 
 
 def build_analytics_data(

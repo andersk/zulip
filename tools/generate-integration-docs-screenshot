@@ -226,9 +226,7 @@ parser.add_argument(
     action="store_true",
     help="Send payload as query param instead of body",
 )
-parser.add_argument(
-    "-P", "--payload-param-name", type=str, help="Param name to use for the payload",
-)
+parser.add_argument("-P", "--payload-param-name", type=str, help="Param name to use for the payload")
 parser.add_argument(
     "-H",
     "--custom-headers",

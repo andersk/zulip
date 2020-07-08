@@ -19,9 +19,7 @@ class Command(ZulipBaseCommand):
             default=False,
             help="Actually deactivate the user. Default is a dry run.",
         )
-        parser.add_argument(
-            "email", metavar="<email>", type=str, help="email of user to deactivate",
-        )
+        parser.add_argument("email", metavar="<email>", type=str, help="email of user to deactivate")
         self.add_realm_args(parser)
 
     def handle(self, *args: Any, **options: Any) -> None:

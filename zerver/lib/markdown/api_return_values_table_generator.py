@@ -51,9 +51,7 @@ class APIReturnValuesTablePreprocessor(Preprocessor):
                 done = True
         return lines
 
-    def render_desc(
-        self, description: str, spacing: int, return_value: Optional[str] = None,
-    ) -> str:
+    def render_desc(self, description: str, spacing: int, return_value: Optional[str] = None) -> str:
         description = description.replace("\n", "\n" + ((spacing + 4) * " "))
         if return_value is None:
             return (spacing * " ") + "* " + description

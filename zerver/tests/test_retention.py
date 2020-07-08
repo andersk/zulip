@@ -389,8 +389,7 @@ class TestArchiveMessagesGeneral(ArchiveMessagesTestingBase):
         # expired.  We should now delete the Attachment objects and
         # each ArchivedAttachment object should list all 3 messages.
         self._change_messages_date_sent(
-            [msgs_ids["other_user_message_id"]],
-            timezone_now() - timedelta(days=MIT_REALM_DAYS + 1),
+            [msgs_ids["other_user_message_id"]], timezone_now() - timedelta(days=MIT_REALM_DAYS + 1),
         )
 
         archive_messages()
@@ -670,9 +669,7 @@ class MoveMessageToArchiveGeneral(MoveMessageToArchiveBase):
 
         self.assertFalse(Attachment.objects.exists())
         archived_attachment_ids = list(
-            ArchivedAttachment.objects.filter(messages__id__in=msg_ids).values_list(
-                "id", flat=True,
-            ),
+            ArchivedAttachment.objects.filter(messages__id__in=msg_ids).values_list("id", flat=True),
         )
 
         self.assertEqual(set(attachment_ids), set(archived_attachment_ids))
@@ -680,9 +677,9 @@ class MoveMessageToArchiveGeneral(MoveMessageToArchiveBase):
             self.assertEqual(
                 set(attachment_id_to_message_ids[attachment_id]),
                 set(
-                    ArchivedMessage.objects.filter(
-                        archivedattachment__id=attachment_id,
-                    ).values_list("id", flat=True),
+                    ArchivedMessage.objects.filter(archivedattachment__id=attachment_id).values_list(
+                        "id", flat=True,
+                    ),
                 ),
             )
 
@@ -738,9 +735,7 @@ class MoveMessageToArchiveGeneral(MoveMessageToArchiveBase):
         self.assertEqual(Attachment.objects.count(), 5)
 
         self.assertEqual(
-            set(
-                ArchivedAttachment.objects.filter(messages__id=msg_id).values_list("id", flat=True),
-            ),
+            set(ArchivedAttachment.objects.filter(messages__id=msg_id).values_list("id", flat=True)),
             set(attachment_ids),
         )
 
@@ -812,9 +807,7 @@ class MoveMessageToArchiveWithReactions(MoveMessageToArchiveBase, EmojiReactionB
         self.post_zulip_reaction(msg_id, "hamlet")
         self.post_zulip_reaction(msg_id, "cordelia")
 
-        reaction_ids = list(
-            Reaction.objects.filter(message_id=msg_id).values_list("id", flat=True),
-        )
+        reaction_ids = list(Reaction.objects.filter(message_id=msg_id).values_list("id", flat=True))
 
         self.assertEqual(Reaction.objects.filter(id__in=reaction_ids).count(), 2)
         move_messages_to_archive(message_ids=[msg_id])

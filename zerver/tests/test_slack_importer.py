@@ -632,9 +632,7 @@ class SlackImporter(ZulipTestCase):
         return_value=[{"zerver_stream": []}, {}, {}, {}, {}],
     )
     def test_slack_workspace_to_realm(
-        self,
-        mock_channels_to_zerver_stream: mock.Mock,
-        mock_users_to_zerver_userprofile: mock.Mock,
+        self, mock_channels_to_zerver_stream: mock.Mock, mock_users_to_zerver_userprofile: mock.Mock,
     ) -> None:
 
         realm_id = 1

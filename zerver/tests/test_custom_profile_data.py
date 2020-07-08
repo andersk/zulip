@@ -424,9 +424,7 @@ class UpdateCustomProfileFieldTest(CustomProfileFieldTestCase):
         realm = get_realm("zulip")
         field_1 = try_add_realm_custom_profile_field(realm, "Phone", CustomProfileField.SHORT_TEXT)
 
-        field_2 = try_add_realm_custom_profile_field(
-            realm, "Phone 1", CustomProfileField.SHORT_TEXT,
-        )
+        field_2 = try_add_realm_custom_profile_field(realm, "Phone 1", CustomProfileField.SHORT_TEXT)
 
         self.assertTrue(self.custom_field_exists_in_realm(field_1.id))
         self.assertTrue(self.custom_field_exists_in_realm(field_2.id))
@@ -516,9 +514,7 @@ class UpdateCustomProfileFieldTest(CustomProfileFieldTestCase):
 
         for field_dict in iago.profile_data:
             self.assertEqual(field_dict["value"], expected_value[field_dict["id"]])
-            self.assertEqual(
-                field_dict["rendered_value"], expected_rendered_value[field_dict["id"]],
-            )
+            self.assertEqual(field_dict["rendered_value"], expected_rendered_value[field_dict["id"]])
             for k in ["id", "type", "name", "field_data"]:
                 self.assertIn(k, field_dict)
 

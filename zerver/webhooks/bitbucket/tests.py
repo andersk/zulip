@@ -65,17 +65,13 @@ class BitbucketHookTests(WebhookTestCase):
     def test_bitbucket_on_force_push_event(self) -> None:
         fixture_name = "force_push"
         self.url = self.build_webhook_url(payload=self.get_body(fixture_name))
-        expected_message = (
-            "kolaszek [force pushed](https://bitbucket.org/kolaszek/repository-name)."
-        )
+        expected_message = "kolaszek [force pushed](https://bitbucket.org/kolaszek/repository-name)."
         self.api_stream_message(self.test_user, fixture_name, self.EXPECTED_TOPIC, expected_message)
 
     def test_bitbucket_on_force_push_event_without_user_info(self) -> None:
         fixture_name = "force_push_without_user_info"
         self.url = self.build_webhook_url(payload=self.get_body(fixture_name))
-        expected_message = (
-            "Someone [force pushed](https://bitbucket.org/kolaszek/repository-name/)."
-        )
+        expected_message = "Someone [force pushed](https://bitbucket.org/kolaszek/repository-name/)."
         self.api_stream_message(self.test_user, fixture_name, self.EXPECTED_TOPIC, expected_message)
 
     @patch("zerver.webhooks.bitbucket.view.check_send_webhook_message")

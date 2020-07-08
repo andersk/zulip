@@ -132,9 +132,7 @@ class Command(BaseCommand):
 
             for days_ago in (1, 7, 30):
                 print(f"In last {days_ago} days, users sent:")
-                sender_quantities = [
-                    self.messages_sent_by(user, days_ago) for user in user_profiles
-                ]
+                sender_quantities = [self.messages_sent_by(user, days_ago) for user in user_profiles]
                 for quantity in sorted(sender_quantities, reverse=True):
                     print(quantity, end=" ")
                 print("")
@@ -161,9 +159,7 @@ class Command(BaseCommand):
                 sender__realm=realm, content__contains="\n\n",
             ).count()
             self.report_percentage(
-                multi_paragraph_message_count,
-                all_message_count,
-                "all messages are multi-paragraph",
+                multi_paragraph_message_count, all_message_count, "all messages are multi-paragraph",
             )
 
             # Starred messages

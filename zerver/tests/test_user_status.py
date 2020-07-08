@@ -190,8 +190,7 @@ class UserStatusTest(ZulipTestCase):
         self.assert_json_success(result)
 
         self.assertEqual(
-            event_info.payload,
-            dict(type="user_status", user_id=hamlet.id, status_text="in office"),
+            event_info.payload, dict(type="user_status", user_id=hamlet.id, status_text="in office"),
         )
 
         self.assertEqual(

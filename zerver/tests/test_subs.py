@@ -876,10 +876,7 @@ class StreamAdminTest(ZulipTestCase):
             )
             self.assert_json_error(result, "Must be an organization administrator")
 
-        policies = [
-            Stream.STREAM_POST_POLICY_ADMINS,
-            Stream.STREAM_POST_POLICY_RESTRICT_NEW_MEMBERS,
-        ]
+        policies = [Stream.STREAM_POST_POLICY_ADMINS, Stream.STREAM_POST_POLICY_RESTRICT_NEW_MEMBERS]
 
         for policy in policies:
             test_non_admin(how_old=15, is_new=False, policy=policy)
@@ -1224,10 +1221,7 @@ class StreamAdminTest(ZulipTestCase):
         with queries_captured() as queries:
             result = self.client_delete(
                 "/json/users/me/subscriptions",
-                {
-                    "subscriptions": ujson.dumps([stream_name]),
-                    "principals": ujson.dumps(principals),
-                },
+                {"subscriptions": ujson.dumps([stream_name]), "principals": ujson.dumps(principals)},
             )
         self.assert_length(queries, query_count)
 
@@ -2221,13 +2215,7 @@ class SubscriptionPropertiesTest(ZulipTestCase):
             "/api/v1/users/me/subscriptions/properties",
             {
                 "subscription_data": ujson.dumps(
-                    [
-                        {
-                            "property": property_name,
-                            "value": "bad",
-                            "stream_id": subs[0]["stream_id"],
-                        },
-                    ],
+                    [{"property": property_name, "value": "bad", "stream_id": subs[0]["stream_id"]}],
                 ),
             },
         )
@@ -2239,13 +2227,7 @@ class SubscriptionPropertiesTest(ZulipTestCase):
             "/api/v1/users/me/subscriptions/properties",
             {
                 "subscription_data": ujson.dumps(
-                    [
-                        {
-                            "property": property_name,
-                            "value": "bad",
-                            "stream_id": subs[0]["stream_id"],
-                        },
-                    ],
+                    [{"property": property_name, "value": "bad", "stream_id": subs[0]["stream_id"]}],
                 ),
             },
         )
@@ -2257,13 +2239,7 @@ class SubscriptionPropertiesTest(ZulipTestCase):
             "/api/v1/users/me/subscriptions/properties",
             {
                 "subscription_data": ujson.dumps(
-                    [
-                        {
-                            "property": property_name,
-                            "value": "bad",
-                            "stream_id": subs[0]["stream_id"],
-                        },
-                    ],
+                    [{"property": property_name, "value": "bad", "stream_id": subs[0]["stream_id"]}],
                 ),
             },
         )
@@ -2275,13 +2251,7 @@ class SubscriptionPropertiesTest(ZulipTestCase):
             "/api/v1/users/me/subscriptions/properties",
             {
                 "subscription_data": ujson.dumps(
-                    [
-                        {
-                            "property": property_name,
-                            "value": "bad",
-                            "stream_id": subs[0]["stream_id"],
-                        },
-                    ],
+                    [{"property": property_name, "value": "bad", "stream_id": subs[0]["stream_id"]}],
                 ),
             },
         )
@@ -2293,13 +2263,7 @@ class SubscriptionPropertiesTest(ZulipTestCase):
             "/api/v1/users/me/subscriptions/properties",
             {
                 "subscription_data": ujson.dumps(
-                    [
-                        {
-                            "property": property_name,
-                            "value": "bad",
-                            "stream_id": subs[0]["stream_id"],
-                        },
-                    ],
+                    [{"property": property_name, "value": "bad", "stream_id": subs[0]["stream_id"]}],
                 ),
             },
         )
@@ -2311,13 +2275,7 @@ class SubscriptionPropertiesTest(ZulipTestCase):
             "/api/v1/users/me/subscriptions/properties",
             {
                 "subscription_data": ujson.dumps(
-                    [
-                        {
-                            "property": property_name,
-                            "value": "bad",
-                            "stream_id": subs[0]["stream_id"],
-                        },
-                    ],
+                    [{"property": property_name, "value": "bad", "stream_id": subs[0]["stream_id"]}],
                 ),
             },
         )
@@ -2329,13 +2287,7 @@ class SubscriptionPropertiesTest(ZulipTestCase):
             "/api/v1/users/me/subscriptions/properties",
             {
                 "subscription_data": ujson.dumps(
-                    [
-                        {
-                            "property": property_name,
-                            "value": "bad",
-                            "stream_id": subs[0]["stream_id"],
-                        },
-                    ],
+                    [{"property": property_name, "value": "bad", "stream_id": subs[0]["stream_id"]}],
                 ),
             },
         )
@@ -2348,13 +2300,7 @@ class SubscriptionPropertiesTest(ZulipTestCase):
             "/api/v1/users/me/subscriptions/properties",
             {
                 "subscription_data": ujson.dumps(
-                    [
-                        {
-                            "property": property_name,
-                            "value": False,
-                            "stream_id": subs[0]["stream_id"],
-                        },
-                    ],
+                    [{"property": property_name, "value": False, "stream_id": subs[0]["stream_id"]}],
                 ),
             },
         )
@@ -2741,10 +2687,7 @@ class SubscriptionAPITest(ZulipTestCase):
         self.common_subscribe_to_streams(
             invitee,
             invite_streams,
-            extra_post_data={
-                "announce": "true",
-                "principals": ujson.dumps([self.user_profile.id]),
-            },
+            extra_post_data={"announce": "true", "principals": ujson.dumps([self.user_profile.id])},
         )
 
     def test_successful_subscriptions_notifies_stream(self) -> None:
@@ -2827,10 +2770,7 @@ class SubscriptionAPITest(ZulipTestCase):
         self.common_subscribe_to_streams(
             invitee,
             invite_streams,
-            extra_post_data={
-                "announce": "true",
-                "principals": ujson.dumps([self.user_profile.id]),
-            },
+            extra_post_data={"announce": "true", "principals": ujson.dumps([self.user_profile.id])},
         )
 
         msg = self.get_second_to_last_message()
@@ -3269,9 +3209,7 @@ class SubscriptionAPITest(ZulipTestCase):
         iago = self.example_user("iago")
         orig_user_ids_to_subscribe = [self.test_user.id, othello.id]
         self.common_subscribe_to_streams(
-            self.test_user,
-            streams_to_sub,
-            dict(principals=ujson.dumps(orig_user_ids_to_subscribe)),
+            self.test_user, streams_to_sub, dict(principals=ujson.dumps(orig_user_ids_to_subscribe)),
         )
 
         new_user_ids_to_subscribe = [iago.id, cordelia.id]
@@ -3865,9 +3803,7 @@ class SubscriptionAPITest(ZulipTestCase):
         # Test creating a public stream when realm does not have a notification stream.
         with queries_captured() as queries:
             self.common_subscribe_to_streams(
-                self.test_user,
-                [new_streams[0]],
-                dict(principals=ujson.dumps([user1.id, user2.id])),
+                self.test_user, [new_streams[0]], dict(principals=ujson.dumps([user1.id, user2.id])),
             )
         self.assert_length(queries, 40)
 
@@ -4109,9 +4045,7 @@ class InviteOnlyStreamTest(ZulipTestCase):
         self.assertIn("subscriptions", result.json())
         for sub in result.json()["subscriptions"]:
             if sub["name"] == "Normandy":
-                self.assertEqual(
-                    sub["invite_only"], False, "Normandy was mistakenly marked private",
-                )
+                self.assertEqual(sub["invite_only"], False, "Normandy was mistakenly marked private")
             if sub["name"] == "Saxony":
                 self.assertEqual(sub["invite_only"], True, "Saxony was not properly marked private")
 
@@ -4280,9 +4214,7 @@ class GetSubscribersTest(ZulipTestCase):
         self.assert_user_got_subscription_notification(msg)
 
         with queries_captured() as queries:
-            subscribed_streams, _ = gather_subscriptions(
-                self.user_profile, include_subscribers=True,
-            )
+            subscribed_streams, _ = gather_subscriptions(self.user_profile, include_subscribers=True)
         self.assertTrue(len(subscribed_streams) >= 11)
         for sub in subscribed_streams:
             if not sub["name"].startswith("stream_"):

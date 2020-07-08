@@ -10,9 +10,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AlterIndexTogether(
-            name="realmcount", index_together={("property", "end_time")},
-        ),
+        migrations.AlterIndexTogether(name="realmcount", index_together={("property", "end_time")}),
         migrations.AlterIndexTogether(
             name="streamcount", index_together={("property", "realm", "end_time")},
         ),

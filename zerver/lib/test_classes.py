@@ -867,9 +867,7 @@ class ZulipTestCase(TestCase):
         ), mock.patch("zerver.lib.markdown.markdown_logger"):
             yield
 
-    def create_default_device(
-        self, user_profile: UserProfile, number: str = "+12125550100",
-    ) -> None:
+    def create_default_device(self, user_profile: UserProfile, number: str = "+12125550100") -> None:
         phone_device = PhoneDevice(
             user=user_profile,
             name="default",

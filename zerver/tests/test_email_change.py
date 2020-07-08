@@ -114,8 +114,7 @@ class EmailChangeTestCase(ZulipTestCase):
         body = email_message.body
         self.assertIn("We received a request to change the email", body)
         self.assertRegex(
-            email_message.from_email,
-            fr"^Zulip Account Security <{self.TOKENIZED_NOREPLY_REGEX}>\Z",
+            email_message.from_email, fr"^Zulip Account Security <{self.TOKENIZED_NOREPLY_REGEX}>\Z",
         )
 
         self.assertEqual(email_message.extra_headers["List-Id"], "Zulip Dev <zulip.testserver>")
@@ -179,9 +178,7 @@ class EmailChangeTestCase(ZulipTestCase):
         response = self.client_get(activation_url)
 
         self.assertEqual(response.status_code, 400)
-        self.assert_in_response(
-            "Email address changes are disabled in this organization.", response,
-        )
+        self.assert_in_response("Email address changes are disabled in this organization.", response)
 
     def test_post_invalid_email(self) -> None:
         data = {"email": "hamlet-new"}

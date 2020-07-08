@@ -1435,9 +1435,7 @@ class TestDeleteStats(AnalyticsTestCase):
             StreamCount.objects.create(stream=stream, realm=stream.realm, **count_args)
             RealmCount.objects.create(realm=user.realm, **count_args)
             InstallationCount.objects.create(**count_args)
-        FillState.objects.create(
-            property="to_delete", end_time=self.TIME_ZERO, state=FillState.DONE,
-        )
+        FillState.objects.create(property="to_delete", end_time=self.TIME_ZERO, state=FillState.DONE)
         FillState.objects.create(property="to_save", end_time=self.TIME_ZERO, state=FillState.DONE)
 
         analytics = apps.get_app_config("analytics")

@@ -57,12 +57,9 @@ def compute_stats(log_level: int) -> None:
     top_percents: Dict[int, float] = {}
     for size in [10, 25, 50, 100, 200, len(total_user_counts.keys())]:
         top_percents[size] = 0.0
-    for i, email in enumerate(
-        sorted(total_user_counts.keys(), key=lambda x: -total_user_counts[x]),
-    ):
+    for i, email in enumerate(sorted(total_user_counts.keys(), key=lambda x: -total_user_counts[x])):
         percent_zulip = round(
-            100 - (user_counts[email].get("zephyr_mirror", 0)) * 100.0 / total_user_counts[email],
-            1,
+            100 - (user_counts[email].get("zephyr_mirror", 0)) * 100.0 / total_user_counts[email], 1,
         )
         for size in top_percents.keys():
             top_percents.setdefault(size, 0)

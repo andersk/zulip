@@ -772,9 +772,7 @@ class AdminCreateUserTest(ZulipTestCase):
         result = self.client_post("/json/users", dict(email="romeo@not-zulip.com"))
         self.assert_json_error(result, "Missing 'password' argument")
 
-        result = self.client_post(
-            "/json/users", dict(email="romeo@not-zulip.com", password="xxxx"),
-        )
+        result = self.client_post("/json/users", dict(email="romeo@not-zulip.com", password="xxxx"))
         self.assert_json_error(result, "Missing 'full_name' argument")
 
         result = self.client_post(
@@ -805,10 +803,7 @@ class AdminCreateUserTest(ZulipTestCase):
 
         RealmDomain.objects.create(realm=get_realm("zulip"), domain="zulip.net")
         valid_params = dict(
-            email="romeo@zulip.net",
-            password="xxxx",
-            full_name="Romeo Montague",
-            short_name="Romeo",
+            email="romeo@zulip.net", password="xxxx", full_name="Romeo Montague", short_name="Romeo",
         )
         # Check can't use a bad password with zxcvbn enabled
         with self.settings(PASSWORD_MIN_LENGTH=6, PASSWORD_MIN_GUESSES=1000):
@@ -1232,9 +1227,7 @@ class ActivateTest(ZulipTestCase):
         self.assert_json_error(result, "Insufficient permission")
 
         # Cannot reactivate a user
-        result = self.client_post(
-            "/json/users/{}/reactivate".format(self.example_user("hamlet").id),
-        )
+        result = self.client_post("/json/users/{}/reactivate".format(self.example_user("hamlet").id))
         self.assert_json_error(result, "Insufficient permission")
 
     def test_clear_scheduled_jobs(self) -> None:

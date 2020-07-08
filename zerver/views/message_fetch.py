@@ -458,9 +458,7 @@ class NarrowBuilder:
         operand_escaped = func.escape_html(operand)
         keywords = query_extract_keywords(operand_escaped)
         query = query.column(
-            match_positions_character(column("rendered_content"), keywords).label(
-                "content_matches",
-            ),
+            match_positions_character(column("rendered_content"), keywords).label("content_matches"),
         )
         query = query.column(
             match_positions_character(func.escape_html(topic_column_sa()), keywords).label(
@@ -1165,8 +1163,7 @@ def messages_in_narrow_backend(
     query = select(
         [column("message_id"), topic_column_sa(), column("rendered_content")],
         and_(
-            column("user_profile_id") == literal(user_profile.id),
-            column("message_id").in_(msg_ids),
+            column("user_profile_id") == literal(user_profile.id), column("message_id").in_(msg_ids),
         ),
         join(
             table("zerver_usermessage"),

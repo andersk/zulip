@@ -64,9 +64,7 @@ class Bitbucket3HookTests(WebhookTestCase):
         expected_message = (
             """[hypro999](http://139.59.64.214:7990/users/hypro999) pushed tag newtag."""
         )
-        self.send_and_test_stream_message(
-            "repo_push_add_tag", self.EXPECTED_TOPIC, expected_message,
-        )
+        self.send_and_test_stream_message("repo_push_add_tag", self.EXPECTED_TOPIC, expected_message)
 
     def test_push_delete_branch(self) -> None:
         expected_message = (

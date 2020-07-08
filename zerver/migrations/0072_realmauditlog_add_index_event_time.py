@@ -10,8 +10,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name="realmauditlog",
-            name="event_time",
-            field=models.DateTimeField(db_index=True),
+            model_name="realmauditlog", name="event_time", field=models.DateTimeField(db_index=True),
         ),
     ]

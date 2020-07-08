@@ -13,8 +13,7 @@ class TestChoosePubDate(ZulipTestCase):
         """
         tot_messages = 1000000
         datetimes_list = [
-            choose_date_sent(i, tot_messages, 1)
-            for i in range(1, tot_messages, tot_messages // 100)
+            choose_date_sent(i, tot_messages, 1) for i in range(1, tot_messages, tot_messages // 100)
         ]
 
         # Verify there is a meaningful difference between elements.

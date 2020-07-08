@@ -185,9 +185,7 @@ def build_recipient_and_subscription(
     # based either on Gitter API data or who sent messages where.
     for user in zerver_userprofile:
         for stream in zerver_stream:
-            zerver_subscription.append(
-                build_subscription(stream["id"], user["id"], subscription_id),
-            )
+            zerver_subscription.append(build_subscription(stream["id"], user["id"], subscription_id))
             subscription_id += 1
 
     return zerver_recipient, zerver_subscription

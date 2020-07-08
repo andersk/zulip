@@ -75,9 +75,7 @@ except OSError:
         "Make sure you have permission to create symbolic links." + ENDC,
     )
     print("See this page for more information:")
-    print(
-        "  https://zulip.readthedocs.io/en/latest/development/setup-vagrant.html#os-symlink-error",
-    )
+    print("  https://zulip.readthedocs.io/en/latest/development/setup-vagrant.html#os-symlink-error")
     sys.exit(1)
 
 if platform.architecture()[0] == "64bit":

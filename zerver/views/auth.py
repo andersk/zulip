@@ -358,9 +358,7 @@ def create_response_for_otp_flow(
     }
     # We can't use HttpResponseRedirect, since it only allows HTTP(S) URLs
     response = HttpResponse(status=302)
-    response["Location"] = add_query_to_redirect_url(
-        "zulip://login", urllib.parse.urlencode(params),
-    )
+    response["Location"] = add_query_to_redirect_url("zulip://login", urllib.parse.urlencode(params))
 
     return response
 
@@ -592,9 +590,7 @@ def log_into_subdomain(request: HttpRequest, token: str) -> HttpResponse:
     call login_or_register_remote_user, passing all the authentication
     result data that has been stored in redis, associated with this token.
     """
-    if not has_api_key_format(
-        token,
-    ):  # The tokens are intended to have the same format as API keys.
+    if not has_api_key_format(token):  # The tokens are intended to have the same format as API keys.
         logging.warning("log_into_subdomain: Malformed token given: %s", token)
         return HttpResponse(status=400)
 

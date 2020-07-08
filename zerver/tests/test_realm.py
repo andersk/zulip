@@ -422,9 +422,7 @@ class RealmTest(ZulipTestCase):
         self.assertEqual(realm.email_address_visibility, Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS)
 
         edited_user_profile = get_user_profile_by_id(user_profile.id)
-        self.assertEqual(
-            edited_user_profile.email, f"user{edited_user_profile.id}@zulip.testserver",
-        )
+        self.assertEqual(edited_user_profile.email, f"user{edited_user_profile.id}@zulip.testserver")
 
         # Check normal user cannot access email
         result = self.api_get(cordelia, f"/api/v1/users/{hamlet.id}")
@@ -445,9 +443,7 @@ class RealmTest(ZulipTestCase):
         realm = get_realm("zulip")
         self.assertEqual(realm.email_address_visibility, Realm.EMAIL_ADDRESS_VISIBILITY_NOBODY)
         edited_user_profile = get_user_profile_by_id(user_profile.id)
-        self.assertEqual(
-            edited_user_profile.email, f"user{edited_user_profile.id}@zulip.testserver",
-        )
+        self.assertEqual(edited_user_profile.email, f"user{edited_user_profile.id}@zulip.testserver")
 
         # Check even administrator doesn't get delivery_email with
         # EMAIL_ADDRESS_VISIBILITY_NOBODY

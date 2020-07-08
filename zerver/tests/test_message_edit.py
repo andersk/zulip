@@ -180,8 +180,7 @@ class EditMessageTest(ZulipTestCase):
             self.example_user("iago"), "Scotland", topic_name="editing", content="before edit",
         )
         result = self.client_patch(
-            "/json/messages/" + str(msg_id),
-            {"message_id": msg_id, "content": "content after edit"},
+            "/json/messages/" + str(msg_id), {"message_id": msg_id, "content": "content after edit"},
         )
         self.assert_json_error(result, "You don't have permission to edit this message")
 
@@ -280,9 +279,7 @@ class EditMessageTest(ZulipTestCase):
             ),
         )
         # Check content of message before edit.
-        self.assertEqual(
-            message_history_1[1]["prev_rendered_content"], "<p>content before edit</p>",
-        )
+        self.assertEqual(message_history_1[1]["prev_rendered_content"], "<p>content before edit</p>")
 
         # Edits on new lines
         msg_id_2 = self.send_stream_message(

@@ -34,9 +34,7 @@ class TrelloHookTests(WebhookTestCase):
         expected_message = (
             "TomaszKolek added TomaszKolek to [Card name](https://trello.com/c/9BduUcVQ)."
         )
-        self.send_and_test_stream_message(
-            "adding_member_to_card", "Welcome Board", expected_message,
-        )
+        self.send_and_test_stream_message("adding_member_to_card", "Welcome Board", expected_message)
 
     def test_trello_webhook_when_member_was_removed_from_card(self) -> None:
         expected_message = (
@@ -85,7 +83,9 @@ class TrelloHookTests(WebhookTestCase):
         )
 
     def test_trello_webhook_when_checklist_was_added_to_card(self) -> None:
-        expected_message = "TomaszKolek added the Checklist checklist to [New card](https://trello.com/c/xPKXoSTQ)."
+        expected_message = (
+            "TomaszKolek added the Checklist checklist to [New card](https://trello.com/c/xPKXoSTQ)."
+        )
         self.send_and_test_stream_message(
             "adding_checklist_to_card", "Welcome Board", expected_message,
         )
@@ -153,9 +153,7 @@ class TrelloHookTests(WebhookTestCase):
         self.assert_json_success(result)
 
     @patch("zerver.webhooks.trello.view.check_send_webhook_message")
-    def test_create_card_check_item_ignore(
-        self, check_send_webhook_message_mock: MagicMock,
-    ) -> None:
+    def test_create_card_check_item_ignore(self, check_send_webhook_message_mock: MagicMock) -> None:
         payload = self.get_body("create_check_item")
         result = self.client_post(self.url, payload, content_type="application/json")
         self.assertFalse(check_send_webhook_message_mock.called)

@@ -1178,9 +1178,7 @@ class StripeTest(StripeTestCase):
             [charge for charge in stripe.Charge.list(customer=stripe_customer_id)][0].amount,
         )
         # Check that the invoice has a credit for the old amount and a charge for the new one
-        stripe_invoice = [invoice for invoice in stripe.Invoice.list(customer=stripe_customer_id)][
-            0
-        ]
+        stripe_invoice = [invoice for invoice in stripe.Invoice.list(customer=stripe_customer_id)][0]
         self.assertEqual(
             [8000 * new_seat_count, -8000 * self.seat_count],
             [item.amount for item in stripe_invoice.lines],
@@ -1245,9 +1243,7 @@ class StripeTest(StripeTestCase):
             8000 * 23,
             [charge for charge in stripe.Charge.list(customer=stripe_customer_id)][0].amount,
         )
-        stripe_invoice = [invoice for invoice in stripe.Invoice.list(customer=stripe_customer_id)][
-            0
-        ]
+        stripe_invoice = [invoice for invoice in stripe.Invoice.list(customer=stripe_customer_id)][0]
         self.assertEqual([8000 * 23, -8000 * 23], [item.amount for item in stripe_invoice.lines])
         # Check that we correctly populated RealmAuditLog
         audit_log_entries = list(
@@ -1331,9 +1327,7 @@ class StripeTest(StripeTestCase):
             self.assert_json_error_contains(
                 response, f"with more than {MAX_INVOICED_LICENSES} licenses",
             )
-            self.assertEqual(
-                ujson.loads(response.content)["error_description"], "too many licenses",
-            )
+            self.assertEqual(ujson.loads(response.content)["error_description"], "too many licenses")
 
         def check_success(
             invoice: bool, licenses: Optional[int], upgrade_params: Dict[str, Any] = {},
@@ -1514,9 +1508,7 @@ class StripeTest(StripeTestCase):
 
         # Test guests
         # Adding a guest to a realm with a lot of members shouldn't change anything
-        UserProfile.objects.create(
-            realm=realm, email="user3@zulip.com", role=UserProfile.ROLE_GUEST,
-        )
+        UserProfile.objects.create(realm=realm, email="user3@zulip.com", role=UserProfile.ROLE_GUEST)
         self.assertEqual(get_latest_seat_count(realm), initial_count)
         # Test 1 member and 5 guests
         realm = Realm.objects.create(string_id="second", name="second")
@@ -1577,9 +1569,7 @@ class StripeTest(StripeTestCase):
             1200 * self.seat_count,
             [charge for charge in stripe.Charge.list(customer=stripe_customer_id)][0].amount,
         )
-        stripe_invoice = [invoice for invoice in stripe.Invoice.list(customer=stripe_customer_id)][
-            0
-        ]
+        stripe_invoice = [invoice for invoice in stripe.Invoice.list(customer=stripe_customer_id)][0]
         self.assertEqual(
             [1200 * self.seat_count, -1200 * self.seat_count],
             [item.amount for item in stripe_invoice.lines],
@@ -1598,9 +1588,7 @@ class StripeTest(StripeTestCase):
             6000 * self.seat_count,
             [charge for charge in stripe.Charge.list(customer=stripe_customer_id)][0].amount,
         )
-        stripe_invoice = [invoice for invoice in stripe.Invoice.list(customer=stripe_customer_id)][
-            0
-        ]
+        stripe_invoice = [invoice for invoice in stripe.Invoice.list(customer=stripe_customer_id)][0]
         self.assertEqual(
             [6000 * self.seat_count, -6000 * self.seat_count],
             [item.amount for item in stripe_invoice.lines],
@@ -1838,9 +1826,7 @@ class StripeTest(StripeTestCase):
         monthly_plan.refresh_from_db()
         self.assertEqual(monthly_plan.next_invoice_date, None)
 
-        invoices = [
-            invoice for invoice in stripe.Invoice.list(customer=customer.stripe_customer_id)
-        ]
+        invoices = [invoice for invoice in stripe.Invoice.list(customer=customer.stripe_customer_id)]
         self.assertEqual(len(invoices), 3)
 
         annual_plan_invoice_items = [invoice_item for invoice_item in invoices[0].get("lines")]
@@ -1896,9 +1882,7 @@ class StripeTest(StripeTestCase):
             update_license_ledger_if_needed(user.realm, add_months(self.next_month, 1))
         invoice_plans_as_needed(add_months(self.next_month, 1))
 
-        invoices = [
-            invoice for invoice in stripe.Invoice.list(customer=customer.stripe_customer_id)
-        ]
+        invoices = [invoice for invoice in stripe.Invoice.list(customer=customer.stripe_customer_id)]
         self.assertEqual(len(invoices), 4)
 
         monthly_plan_invoice_items = [invoice_item for invoice_item in invoices[0].get("lines")]
@@ -1919,9 +1903,7 @@ class StripeTest(StripeTestCase):
             self.assertEqual(monthly_plan_invoice_items[0][key], value)
         invoice_plans_as_needed(add_months(self.now, 13))
 
-        invoices = [
-            invoice for invoice in stripe.Invoice.list(customer=customer.stripe_customer_id)
-        ]
+        invoices = [invoice for invoice in stripe.Invoice.list(customer=customer.stripe_customer_id)]
         self.assertEqual(len(invoices), 5)
 
         annual_plan_invoice_items = [invoice_item for invoice_item in invoices[0].get("lines")]
@@ -2003,9 +1985,7 @@ class StripeTest(StripeTestCase):
         self.assertEqual(annual_plan.next_invoice_date, add_months(self.next_month, 12))
         self.assertEqual(annual_plan.invoicing_status, CustomerPlan.DONE)
 
-        invoices = [
-            invoice for invoice in stripe.Invoice.list(customer=customer.stripe_customer_id)
-        ]
+        invoices = [invoice for invoice in stripe.Invoice.list(customer=customer.stripe_customer_id)]
         self.assertEqual(len(invoices), 2)
 
         annual_plan_invoice_items = [invoice_item for invoice_item in invoices[0].get("lines")]
@@ -2031,9 +2011,7 @@ class StripeTest(StripeTestCase):
 
         invoice_plans_as_needed(add_months(self.now, 13))
 
-        invoices = [
-            invoice for invoice in stripe.Invoice.list(customer=customer.stripe_customer_id)
-        ]
+        invoices = [invoice for invoice in stripe.Invoice.list(customer=customer.stripe_customer_id)]
         self.assertEqual(len(invoices), 3)
 
         annual_plan_invoice_items = [invoice_item for invoice_item in invoices[0].get("lines")]
@@ -2065,9 +2043,7 @@ class StripeTest(StripeTestCase):
             "/json/billing/plan/change", {"status": CustomerPlan.DOWNGRADE_AT_END_OF_CYCLE},
         )
         self.assert_json_success(response)
-        self.assertEqual(
-            CustomerPlan.objects.first().status, CustomerPlan.DOWNGRADE_AT_END_OF_CYCLE,
-        )
+        self.assertEqual(CustomerPlan.objects.first().status, CustomerPlan.DOWNGRADE_AT_END_OF_CYCLE)
 
         response = self.client_post("/json/billing/plan/change", {"status": CustomerPlan.ACTIVE})
         self.assert_json_success(response)

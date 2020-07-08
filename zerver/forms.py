@@ -420,9 +420,7 @@ class OurAuthenticationForm(AuthenticationForm):
 
             if return_data.get("invalid_subdomain"):
                 logging.warning(
-                    "User %s attempted to password login to wrong subdomain %s",
-                    username,
-                    subdomain,
+                    "User %s attempted to password login to wrong subdomain %s", username, subdomain,
                 )
                 raise ValidationError(mark_safe(WRONG_SUBDOMAIN_ERROR))
 

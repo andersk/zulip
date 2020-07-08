@@ -279,8 +279,7 @@ class TornadoQueueClient(SimpleQueueClient):
         self._connection_failure_count = 1
         retry_secs = self.CONNECTION_RETRY_SECS
         self.log.warning(
-            "TornadoQueueClient lost connection to RabbitMQ, reconnecting in %d secs...",
-            retry_secs,
+            "TornadoQueueClient lost connection to RabbitMQ, reconnecting in %d secs...", retry_secs,
         )
         ioloop.IOLoop.instance().call_later(retry_secs, self._reconnect)
 

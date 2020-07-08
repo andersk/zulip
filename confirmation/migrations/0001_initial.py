@@ -20,10 +20,7 @@ class Migration(migrations.Migration):
                 ),
                 ("object_id", models.PositiveIntegerField()),
                 ("date_sent", models.DateTimeField(verbose_name="sent")),
-                (
-                    "confirmation_key",
-                    models.CharField(max_length=40, verbose_name="activation key"),
-                ),
+                ("confirmation_key", models.CharField(max_length=40, verbose_name="activation key")),
                 (
                     "content_type",
                     models.ForeignKey(

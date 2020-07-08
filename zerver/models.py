@@ -1105,9 +1105,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
         DEMOTE_STREAMS_ALWAYS,
         DEMOTE_STREAMS_NEVER,
     ]
-    demote_inactive_streams: int = models.PositiveSmallIntegerField(
-        default=DEMOTE_STREAMS_AUTOMATIC,
-    )
+    demote_inactive_streams: int = models.PositiveSmallIntegerField(default=DEMOTE_STREAMS_AUTOMATIC)
 
     # A timezone name from the `tzdata` database, as found in pytz.all_timezones.
     #
@@ -1218,10 +1216,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
         for field in custom_profile_fields_for_realm(self.realm_id):
             field_values = user_data.get(field.id, None)
             if field_values:
-                value, rendered_value = (
-                    field_values.get("value"),
-                    field_values.get("rendered_value"),
-                )
+                value, rendered_value = field_values.get("value"), field_values.get("rendered_value")
             else:
                 value, rendered_value = None, None
             field_type = field.field_type
@@ -1323,9 +1318,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
 
     @staticmethod
     def emojiset_choices() -> List[Dict[str, str]]:
-        return [
-            dict(key=emojiset[0], text=emojiset[1]) for emojiset in UserProfile.EMOJISET_CHOICES
-        ]
+        return [dict(key=emojiset[0], text=emojiset[1]) for emojiset in UserProfile.EMOJISET_CHOICES]
 
     @staticmethod
     def emails_from_ids(user_ids: Sequence[int]) -> Dict[int, str]:
@@ -1460,9 +1453,7 @@ class PreregistrationUser(models.Model):
     # store it here to use it to prepopulate the Full Name field in the registration form:
     full_name: Optional[str] = models.CharField(max_length=UserProfile.MAX_NAME_LENGTH, null=True)
     full_name_validated: bool = models.BooleanField(default=False)
-    referred_by: Optional[UserProfile] = models.ForeignKey(
-        UserProfile, null=True, on_delete=CASCADE,
-    )
+    referred_by: Optional[UserProfile] = models.ForeignKey(UserProfile, null=True, on_delete=CASCADE)
     streams: Manager = models.ManyToManyField("Stream")
     invited_at: datetime.datetime = models.DateTimeField(auto_now=True)
     realm_creation: bool = models.BooleanField(default=False)

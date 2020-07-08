@@ -200,8 +200,7 @@ def generate_realm_creation_url(by_admin: bool = False) -> str:
         creation_key=key, date_created=timezone_now(), presume_email_valid=by_admin,
     )
     return urljoin(
-        settings.ROOT_DOMAIN_URI,
-        reverse("zerver.views.create_realm", kwargs={"creation_key": key}),
+        settings.ROOT_DOMAIN_URI, reverse("zerver.views.create_realm", kwargs={"creation_key": key}),
     )
 
 

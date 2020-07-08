@@ -89,9 +89,7 @@ class GogsHookTests(WebhookTestCase):
     def test_pull_request_reopened(self) -> None:
         expected_topic = "test / PR #1349 reopened"
         expected_message = """kostekIV reopened [PR #2](https://try.gogs.io/kostekIV/test/pulls/2) from `c` to `master`."""
-        self.send_and_test_stream_message(
-            "pull_request__reopened", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request__reopened", expected_topic, expected_message)
 
     def test_pull_request_edited(self) -> None:
         expected_topic = "test / PR #1349 Test"
@@ -101,9 +99,7 @@ class GogsHookTests(WebhookTestCase):
     def test_pull_request_assigned(self) -> None:
         expected_topic = "test / PR #1349 Test"
         expected_message = """kostekIV assigned [PR #2](https://try.gogs.io/kostekIV/test/pulls/2) from `c` to `master`."""
-        self.send_and_test_stream_message(
-            "pull_request__assigned", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request__assigned", expected_topic, expected_message)
 
     def test_pull_request_synchronized(self) -> None:
         expected_topic = "test / PR #1349 Test"

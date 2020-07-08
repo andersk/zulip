@@ -138,10 +138,7 @@ check_profile_data: Validator[List[Dict[str, Optional[Union[int, str, List[int]]
     check_dict_only(
         [
             ("id", check_int),
-            (
-                "value",
-                check_none_or(check_union([check_int, check_string, check_list(check_int)])),
-            ),
+            ("value", check_none_or(check_union([check_int, check_string, check_list(check_int)]))),
         ],
     ),
 )
@@ -555,9 +552,7 @@ def create_user_backend(
     try:
         email_allowed_for_realm(email, user_profile.realm)
     except DomainNotAllowedForRealmError:
-        return json_error(
-            _("Email '{email}' not allowed in this organization").format(email=email),
-        )
+        return json_error(_("Email '{email}' not allowed in this organization").format(email=email))
     except DisposableEmailError:
         return json_error(_("Disposable email addresses are not allowed in this organization"))
     except EmailContainsPlusError:

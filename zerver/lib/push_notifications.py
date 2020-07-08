@@ -356,9 +356,7 @@ def send_android_push_notification(
                     logger.info("GCM: Removing %s", reg_id)
                     # We remove all entries for this token (There
                     # could be multiple for different Zulip servers).
-                    DeviceTokenClass.objects.filter(
-                        token=reg_id, kind=DeviceTokenClass.GCM,
-                    ).delete()
+                    DeviceTokenClass.objects.filter(token=reg_id, kind=DeviceTokenClass.GCM).delete()
             else:
                 for reg_id in reg_ids:
                     logger.warning("GCM: Delivery to %s failed: %s", reg_id, error)
@@ -409,9 +407,7 @@ def num_push_devices_for_user(
 def add_push_device_token(
     user_profile: UserProfile, token_str: str, kind: int, ios_app_id: Optional[str] = None,
 ) -> None:
-    logger.info(
-        "Registering push device: %d %r %d %r", user_profile.id, token_str, kind, ios_app_id,
-    )
+    logger.info("Registering push device: %d %r %d %r", user_profile.id, token_str, kind, ios_app_id)
 
     # Regardless of whether we're using the push notifications
     # bouncer, we want to store a PushDeviceToken record locally.

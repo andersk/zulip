@@ -374,9 +374,7 @@ class TestGetChartData(ZulipTestCase):
         )
         self.assert_json_success(result)
         data = result.json()
-        self.assertEqual(
-            data["end_times"], [datetime_to_timestamp(dt) for dt in self.end_times_day],
-        )
+        self.assertEqual(data["end_times"], [datetime_to_timestamp(dt) for dt in self.end_times_day])
         self.assertEqual(
             data["everyone"],
             {"_1day": self.data(100), "_15day": self.data(100), "all_time": self.data(100)},
@@ -782,9 +780,7 @@ class TestSupportEndpoint(ZulipTestCase):
         result = self.client_post(
             "/activity/support", {"realm_id": f"{lear_realm.id}", "sponsorship_pending": "false"},
         )
-        self.assert_in_success_response(
-            ["Lear &amp; Co. is no longer pending sponsorship."], result,
-        )
+        self.assert_in_success_response(["Lear &amp; Co. is no longer pending sponsorship."], result)
         customer = get_customer_by_realm(lear_realm)
         assert customer is not None
         self.assertFalse(customer.sponsorship_pending)

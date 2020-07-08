@@ -281,11 +281,7 @@ def main() -> None:
         help="Don't allow shallow testing of templates (deprecated)",
     )
     parser.add_argument(
-        "--verbose",
-        dest="verbose",
-        action="store_true",
-        default=False,
-        help="Show detailed output",
+        "--verbose", dest="verbose", action="store_true", default=False, help="Show detailed output",
     )
     parser.add_argument(
         "--reverse",
@@ -446,9 +442,7 @@ def main() -> None:
     TestRunner = get_runner(settings)
 
     if parallel > 1:
-        print(
-            "-- Running tests in parallel mode with {} " "processes.".format(parallel), flush=True,
-        )
+        print("-- Running tests in parallel mode with {} " "processes.".format(parallel), flush=True)
     else:
         print("-- Running tests in serial mode.", flush=True)
 

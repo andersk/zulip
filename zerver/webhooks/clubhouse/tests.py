@@ -131,15 +131,11 @@ class ClubhouseWebhookTest(WebhookTestCase):
 
     def test_story_task_created(self) -> None:
         expected_message = "Task **Added a new task** was added to the story [Add cool feature!](https://app.clubhouse.io/zulip/story/11)."
-        self.send_and_test_stream_message(
-            "story_task_create", "Add cool feature!", expected_message,
-        )
+        self.send_and_test_stream_message("story_task_create", "Add cool feature!", expected_message)
 
     def test_story_task_deleted(self) -> None:
         expected_message = "Task **Added a new task** was removed from the story [Add cool feature!](https://app.clubhouse.io/zulip/story/11)."
-        self.send_and_test_stream_message(
-            "story_task_delete", "Add cool feature!", expected_message,
-        )
+        self.send_and_test_stream_message("story_task_delete", "Add cool feature!", expected_message)
 
     def test_story_task_completed(self) -> None:
         expected_message = "Task **A new task for this story** ([Add cool feature!](https://app.clubhouse.io/zulip/story/11)) was completed. :tada:"

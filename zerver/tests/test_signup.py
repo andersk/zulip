@@ -492,9 +492,7 @@ class PasswordResetTest(ZulipTestCase):
         email = self.example_email("hamlet")
 
         # start the password reset process by supplying an email address
-        result = self.client_post(
-            "/accounts/password/reset/", {"email": email}, subdomain="invalid",
-        )
+        result = self.client_post("/accounts/password/reset/", {"email": email}, subdomain="invalid")
 
         # check the redirect link telling you to check mail for password reset link
         self.assertEqual(result.status_code, 404)
@@ -1086,9 +1084,7 @@ class InviteUserTest(InviteUserBase):
         self.login("hamlet")
         invitee = self.nonreg_email("alice")
         self.assert_json_success(
-            self.invite(
-                invitee, ["Denmark"], invite_as=PreregistrationUser.INVITE_AS["GUEST_USER"],
-            ),
+            self.invite(invitee, ["Denmark"], invite_as=PreregistrationUser.INVITE_AS["GUEST_USER"]),
         )
         self.assertTrue(find_key_by_email(invitee))
 
@@ -1101,9 +1097,7 @@ class InviteUserTest(InviteUserBase):
         self.login("iago")
         invitee = self.nonreg_email("alice")
         self.assert_json_success(
-            self.invite(
-                invitee, ["Denmark"], invite_as=PreregistrationUser.INVITE_AS["GUEST_USER"],
-            ),
+            self.invite(invitee, ["Denmark"], invite_as=PreregistrationUser.INVITE_AS["GUEST_USER"]),
         )
         self.assertTrue(find_key_by_email(invitee))
 
@@ -1815,9 +1809,7 @@ class InvitationsTestCase(InviteUserBase):
         expired_datetime = timezone_now() - datetime.timedelta(days=(days_to_activate + 1))
         prereg_user_two = PreregistrationUser(email="TestTwo@zulip.com", referred_by=user_profile)
         prereg_user_two.save()
-        PreregistrationUser.objects.filter(id=prereg_user_two.id).update(
-            invited_at=expired_datetime,
-        )
+        PreregistrationUser.objects.filter(id=prereg_user_two.id).update(invited_at=expired_datetime)
         prereg_user_three = PreregistrationUser(
             email="TestThree@zulip.com", referred_by=user_profile, status=active_value,
         )
@@ -1920,9 +1912,7 @@ class InvitationsTestCase(InviteUserBase):
             ),
         )
         prereg_user = PreregistrationUser.objects.get(email=invitee)
-        result = self.api_delete(
-            self.example_user("iago"), "/api/v1/invites/" + str(prereg_user.id),
-        )
+        result = self.api_delete(self.example_user("iago"), "/api/v1/invites/" + str(prereg_user.id))
         self.assert_json_error(result, "Must be an organization owner")
 
         result = self.api_delete(owner, "/api/v1/invites/" + str(prereg_user.id))
@@ -1976,9 +1966,7 @@ class InvitationsTestCase(InviteUserBase):
             referred_by=self.mit_user("sipbtest"), realm=mit_realm,
         )
         create_confirmation_link(multiuse_invite_in_mit, Confirmation.MULTIUSE_INVITE)
-        error_result = self.client_delete(
-            "/json/invites/multiuse/" + str(multiuse_invite_in_mit.id),
-        )
+        error_result = self.client_delete("/json/invites/multiuse/" + str(multiuse_invite_in_mit.id))
         self.assert_json_error(error_result, "No such invitation")
 
     def test_successful_resend_invitation(self) -> None:
@@ -3492,11 +3480,7 @@ class UserSignUpTest(InviteUserBase):
             )
 
             self.assert_in_success_response(
-                [
-                    "We just need you to do one last thing.",
-                    "New LDAP fullname",
-                    "newuser@zulip.com",
-                ],
+                ["We just need you to do one last thing.", "New LDAP fullname", "newuser@zulip.com"],
                 result,
             )
 
@@ -3577,11 +3561,7 @@ class UserSignUpTest(InviteUserBase):
             )
 
             self.assert_in_success_response(
-                [
-                    "We just need you to do one last thing.",
-                    "New LDAP fullname",
-                    "newuser@zulip.com",
-                ],
+                ["We just need you to do one last thing.", "New LDAP fullname", "newuser@zulip.com"],
                 result,
             )
 
@@ -3964,7 +3944,9 @@ class UserSignUpTest(InviteUserBase):
         # If the user's email is inside the LDAP directory and we just
         # have a wrong password, then we refuse to create an account
         password = "nonldappassword"
-        email = "newuser_email@zulip.com"  # belongs to user uid=newuser_with_email in the test directory
+        email = (
+            "newuser_email@zulip.com"  # belongs to user uid=newuser_with_email in the test directory
+        )
         subdomain = "zulip"
 
         self.init_default_ldap_database()
@@ -4327,9 +4309,7 @@ class UserSignUpTest(InviteUserBase):
         result = self.client_post("/devtools/register_realm/")
         self.assertEqual(result.status_code, 302)
         self.assertTrue(
-            result["Location"].startswith(
-                f"http://{string_id}.testserver/accounts/login/subdomain",
-            ),
+            result["Location"].startswith(f"http://{string_id}.testserver/accounts/login/subdomain"),
         )
         result = self.client_get(result["Location"], subdomain=string_id)
         self.assertEqual(result.status_code, 302)

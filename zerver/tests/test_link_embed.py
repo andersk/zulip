@@ -283,9 +283,7 @@ class PreviewTestCase(ZulipTestCase):
     def test_edit_message_history(self) -> None:
         user = self.example_user("hamlet")
         self.login_user(user)
-        msg_id = self.send_stream_message(
-            user, "Scotland", topic_name="editing", content="original",
-        )
+        msg_id = self.send_stream_message(user, "Scotland", topic_name="editing", content="original")
 
         url = "http://test.org/"
         mocked_response = mock.Mock(side_effect=self.create_mock_response(url))
@@ -359,9 +357,7 @@ class PreviewTestCase(ZulipTestCase):
 
         def wrapped_queue_json_publish(*args: Any, **kwargs: Any) -> None:
             # Mock the network request result so the test can be fast without Internet
-            mocked_response_original = mock.Mock(
-                side_effect=self.create_mock_response(original_url),
-            )
+            mocked_response_original = mock.Mock(side_effect=self.create_mock_response(original_url))
             mocked_response_edited = mock.Mock(side_effect=self.create_mock_response(edited_url))
 
             with self.settings(TEST_SUITE=False, CACHES=TEST_CACHES):

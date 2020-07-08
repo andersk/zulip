@@ -116,11 +116,7 @@ class MirroredMessageUsersTest(ZulipTestCase):
 
         sender = self.example_user("hamlet")
 
-        recipients = [
-            self.nonreg_email("alice"),
-            "bob@irc.zulip.com",
-            self.nonreg_email("cordelia"),
-        ]
+        recipients = [self.nonreg_email("alice"), "bob@irc.zulip.com", self.nonreg_email("cordelia")]
 
         # Now make the request.
         Request = namedtuple("Request", ["POST", "client"])

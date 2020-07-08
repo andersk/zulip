@@ -342,8 +342,7 @@ class SignupWorker(QueueProcessingWorker):
             )
             if r.status_code == 400 and ujson.loads(r.text)["title"] == "Member Exists":
                 logging.warning(
-                    "Attempted to sign up already existing email to list: %s",
-                    data["email_address"],
+                    "Attempted to sign up already existing email to list: %s", data["email_address"],
                 )
             elif r.status_code == 400:
                 retry_event(self.queue_name, data, lambda e: r.raise_for_status())
@@ -369,9 +368,7 @@ class ConfirmationEmailWorker(QueueProcessingWorker):
                 return
 
         referrer = get_user_profile_by_id(data["referrer_id"])
-        logger.info(
-            "Sending invitation for realm %s to %s", referrer.realm.string_id, invitee.email,
-        )
+        logger.info("Sending invitation for realm %s to %s", referrer.realm.string_id, invitee.email)
         activate_url = do_send_confirmation_email(invitee, referrer)
 
         # queue invitation reminder

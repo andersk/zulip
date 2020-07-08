@@ -77,9 +77,7 @@ class Command(BaseCommand):
         if len(critical_unfilled_properties) == 0:
             return {
                 "status": 1,
-                "message": "Missed filling {} once.".format(
-                    ", ".join(warning_unfilled_properties),
-                ),
+                "message": "Missed filling {} once.".format(", ".join(warning_unfilled_properties)),
             }
         return {
             "status": 2,

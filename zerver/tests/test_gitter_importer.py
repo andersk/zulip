@@ -51,9 +51,7 @@ class GitterImporter(ZulipTestCase):
         self.assertEqual(realm["zerver_stream"][0]["deactivated"], False)
         self.assertEqual(realm["zerver_stream"][0]["realm"], realm["zerver_realm"][0]["id"])
 
-        self.assertEqual(
-            realm["zerver_defaultstream"][0]["stream"], realm["zerver_stream"][0]["id"],
-        )
+        self.assertEqual(realm["zerver_defaultstream"][0]["stream"], realm["zerver_stream"][0]["id"])
 
         # test recipient
         exported_recipient_id = self.get_set(realm["zerver_recipient"], "id")

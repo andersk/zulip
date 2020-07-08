@@ -160,11 +160,7 @@ def build_realmemoji(
 
 
 def users_to_zerver_userprofile(
-    slack_data_dir: str,
-    users: List[ZerverFieldsT],
-    realm_id: int,
-    timestamp: Any,
-    domain_name: str,
+    slack_data_dir: str, users: List[ZerverFieldsT], realm_id: int, timestamp: Any, domain_name: str,
 ) -> Tuple[
     List[ZerverFieldsT],
     List[ZerverFieldsT],
@@ -215,9 +211,7 @@ def users_to_zerver_userprofile(
 
         email = get_user_email(user, domain_name)
         # ref: https://chat.zulip.org/help/change-your-profile-picture
-        avatar_url = build_avatar_url(
-            slack_user_id, user["team_id"], user["profile"]["avatar_hash"],
-        )
+        avatar_url = build_avatar_url(slack_user_id, user["team_id"], user["profile"]["avatar_hash"])
         build_avatar(user_id, realm_id, email, avatar_url, timestamp, avatar_list)
         role = UserProfile.ROLE_MEMBER
         if get_owner(user):
@@ -582,13 +576,7 @@ def channels_to_zerver_stream(
     process_dms(dms)
 
     logging.info("######### IMPORTING STREAMS FINISHED #########\n")
-    return (
-        realm,
-        added_channels,
-        added_mpims,
-        dm_members,
-        slack_recipient_name_to_zulip_recipient_id,
-    )
+    return realm, added_channels, added_mpims, dm_members, slack_recipient_name_to_zulip_recipient_id
 
 
 def get_subscription(

@@ -215,7 +215,9 @@ class GitlabHookTests(WebhookTestCase):
 
     def test_close_confidential_issue_event_message(self) -> None:
         expected_subject = "testing / Issue #1 Testing Test"
-        expected_message = "Joe Bloggs closed [Issue #1](https://gitlab.example.co.uk/joe.bloggs/testing/issues/1)."
+        expected_message = (
+            "Joe Bloggs closed [Issue #1](https://gitlab.example.co.uk/joe.bloggs/testing/issues/1)."
+        )
 
         self.send_and_test_stream_message(
             "issue_hook__confidential_issue_closed", expected_subject, expected_message,
@@ -241,9 +243,7 @@ class GitlabHookTests(WebhookTestCase):
         expected_topic = "my-awesome-project"
         expected_message = "Tomasz Kolek [commented](https://gitlab.com/tomaszkolek0/my-awesome-project/commit/66abd2da28809ffa128ed0447965cf11d7f863a7#note_14169211) on [66abd2d](https://gitlab.com/tomaszkolek0/my-awesome-project/commit/66abd2da28809ffa128ed0447965cf11d7f863a7):\n~~~ quote\nnice commit\n~~~"
 
-        self.send_and_test_stream_message(
-            "note_hook__commit_note", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("note_hook__commit_note", expected_topic, expected_message)
 
     def test_note_merge_request_event_message(self) -> None:
         expected_topic = "my-awesome-project / MR #1 Tomek"
@@ -531,9 +531,7 @@ class GitlabHookTests(WebhookTestCase):
     def test_system_push_event_message(self) -> None:
         expected_topic = "gitlab / master"
         expected_message = "John Smith [pushed](http://test.example.com/gitlab/gitlab/compare/95790bf891e76fee5e1747ab589903a6a1f80f22...da1560886d4f094c3e6c9ef40349f7d38b5d27d7) 1 commit to branch master. Commits by Test User (1).\n\n* Add simple search to projects in public area ([c5feabd](https://test.example.com/gitlab/gitlab/-/commit/c5feabde2d8cd023215af4d2ceeb7a64839fc428))"
-        self.send_and_test_stream_message(
-            "system_hook__push_hook", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("system_hook__push_hook", expected_topic, expected_message)
 
     def test_system_merge_request_created_without_assignee_event_message(self) -> None:
         expected_topic = "my-awesome-project / MR #2 NEW MR"

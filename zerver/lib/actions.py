@@ -548,9 +548,7 @@ def process_new_human_user(
                     "NAME": user_profile.full_name,
                     "REALM_ID": user_profile.realm_id,
                     "OPTIN_IP": newsletter_data["IP"],
-                    "OPTIN_TIME": datetime.datetime.isoformat(
-                        timezone_now().replace(microsecond=0),
-                    ),
+                    "OPTIN_TIME": datetime.datetime.isoformat(timezone_now().replace(microsecond=0)),
                 },
             },
             lambda event: None,
@@ -736,9 +734,7 @@ def do_activate_user(user_profile: UserProfile, acting_user: Optional[UserProfil
     notify_created_user(user_profile)
 
 
-def do_reactivate_user(
-    user_profile: UserProfile, acting_user: Optional[UserProfile] = None,
-) -> None:
+def do_reactivate_user(user_profile: UserProfile, acting_user: Optional[UserProfile] = None) -> None:
     # Unlike do_activate_user, this is meant for re-activating existing users,
     # so it doesn't reset their password, etc.
     user_profile.is_active = True
@@ -826,9 +822,7 @@ def do_set_realm_property(
 
 
 def do_set_realm_authentication_methods(
-    realm: Realm,
-    authentication_methods: Dict[str, bool],
-    acting_user: Optional[UserProfile] = None,
+    realm: Realm, authentication_methods: Dict[str, bool], acting_user: Optional[UserProfile] = None,
 ) -> None:
     old_value = realm.authentication_methods_dict()
     for key, value in list(authentication_methods.items()):
@@ -1180,9 +1174,7 @@ def do_start_email_change_process(user_profile: UserProfile, new_email: str) -> 
     from zerver.context_processors import common_context
 
     context = common_context(user_profile)
-    context.update(
-        {"old_email": old_email, "new_email": new_email, "activate_url": activation_url},
-    )
+    context.update({"old_email": old_email, "new_email": new_email, "activate_url": activation_url})
     language = user_profile.default_language
     send_email(
         "zerver/emails/confirm_new_email",
@@ -1578,9 +1570,7 @@ def do_send_messages(
         message["sender_queue_id"] = message.get("sender_queue_id", None)
         message["realm"] = message.get("realm", message["message"].sender.realm)
 
-        mention_data = MentionData(
-            realm_id=message["realm"].id, content=message["message"].content,
-        )
+        mention_data = MentionData(realm_id=message["realm"].id, content=message["message"].content)
         message["mention_data"] = mention_data
 
         if message["message"].is_stream_message():
@@ -2178,9 +2168,7 @@ def validate_recipient_user_profiles(
 
     for user_profile in user_profiles:
         if (
-            not user_profile.is_active
-            and not user_profile.is_mirror_dummy
-            and not allow_deactivated
+            not user_profile.is_active and not user_profile.is_mirror_dummy and not allow_deactivated
         ) or user_profile.realm.deactivated:
             raise ValidationError(
                 _("'{email}' is no longer using Zulip.").format(email=user_profile.email),
@@ -2797,9 +2785,7 @@ def pick_color(user_profile: UserProfile, subs: Iterable[Subscription]) -> str:
         return STREAM_ASSIGNMENT_COLORS[len(used_colors) % len(STREAM_ASSIGNMENT_COLORS)]
 
 
-def validate_user_access_to_subscribers(
-    user_profile: Optional[UserProfile], stream: Stream,
-) -> None:
+def validate_user_access_to_subscribers(user_profile: Optional[UserProfile], stream: Stream) -> None:
     """ Validates whether the user can view the subscribers of a stream.  Raises a JsonableError if:
         * The user and the stream are in different realms
         * The realm is MIT and the stream is not invite only.
@@ -3924,9 +3910,7 @@ def do_change_user_role(
         ),
     )
     event = dict(
-        type="realm_user",
-        op="update",
-        person=dict(user_id=user_profile.id, role=user_profile.role),
+        type="realm_user", op="update", person=dict(user_id=user_profile.id, role=user_profile.role),
     )
     send_event(user_profile.realm, event, active_user_ids(user_profile.realm_id))
 
@@ -4392,9 +4376,7 @@ def default_stream_groups_to_dicts_sorted(groups: List[DefaultStreamGroup]) -> L
     return sorted([group.to_dict() for group in groups], key=lambda elt: elt["name"])
 
 
-def do_update_user_activity_interval(
-    user_profile: UserProfile, log_time: datetime.datetime,
-) -> None:
+def do_update_user_activity_interval(user_profile: UserProfile, log_time: datetime.datetime) -> None:
     effective_end = log_time + UserActivityInterval.MIN_INTERVAL_LENGTH
     # This code isn't perfect, because with various races we might end
     # up creating two overlapping intervals, but that shouldn't happen
@@ -4416,9 +4398,7 @@ def do_update_user_activity_interval(
         pass
 
     # Otherwise, the intervals don't overlap, so we should make a new one
-    UserActivityInterval.objects.create(
-        user_profile=user_profile, start=log_time, end=effective_end,
-    )
+    UserActivityInterval.objects.create(user_profile=user_profile, start=log_time, end=effective_end)
 
 
 @statsd_increment("user_activity")
@@ -4548,10 +4528,7 @@ def do_update_user_status(
     realm = user_profile.realm
 
     update_user_status(
-        user_profile_id=user_profile.id,
-        status=status,
-        status_text=status_text,
-        client_id=client_id,
+        user_profile_id=user_profile.id, status=status, status_text=status_text, client_id=client_id,
     )
 
     event = dict(type="user_status", user_id=user_profile.id)
@@ -4678,9 +4655,7 @@ def do_clear_mobile_push_notifications_for_ids(
 
     messages_by_user = defaultdict(list)
     notifications_to_update = list(
-        UserMessage.objects.filter(
-            message_id__in=message_ids, user_profile_id__in=user_profile_ids,
-        )
+        UserMessage.objects.filter(message_id__in=message_ids, user_profile_id__in=user_profile_ids)
         .extra(where=[UserMessage.where_active_push_notification()])
         .values_list("user_profile_id", "message_id"),
     )
@@ -5197,9 +5172,7 @@ def do_update_message(
             # in users_to_be_notified list.  This is the case where a
             # user both has a UserMessage row and is a current
             # Subscriber
-            subscribers = subscribers.exclude(
-                user_profile_id__in=[um.user_profile_id for um in ums],
-            )
+            subscribers = subscribers.exclude(user_profile_id__in=[um.user_profile_id for um in ums])
 
             if new_stream is not None:
                 assert delete_event_notify_user_ids is not None
@@ -5372,9 +5345,7 @@ def get_web_public_subs(realm: Realm) -> SubHelperT:
         stream_dict["push_notifications"] = True
         stream_dict["email_notifications"] = True
         stream_dict["pin_to_top"] = False
-        stream_weekly_traffic = get_average_weekly_stream_traffic(
-            stream.id, stream.date_created, {},
-        )
+        stream_weekly_traffic = get_average_weekly_stream_traffic(stream.id, stream.date_created, {})
         stream_dict["stream_weekly_traffic"] = stream_weekly_traffic
         stream_dict["email_address"] = ""
         subscribed.append(stream_dict)
@@ -5435,9 +5406,7 @@ def gather_subscriptions_helper(
     never_subscribed = []
 
     # Deactivated streams aren't in stream_hash.
-    streams = [
-        stream_hash[sub["stream_id"]] for sub in sub_dicts if sub["stream_id"] in stream_hash
-    ]
+    streams = [stream_hash[sub["stream_id"]] for sub in sub_dicts if sub["stream_id"] in stream_hash]
     streams_subscribed_map = {sub["stream_id"]: sub["active"] for sub in sub_dicts}
 
     # Add never subscribed streams to streams_subscribed_map

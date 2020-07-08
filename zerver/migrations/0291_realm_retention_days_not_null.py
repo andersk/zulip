@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name="realm",
-            name="message_retention_days",
-            field=models.IntegerField(default=-1),
+            model_name="realm", name="message_retention_days", field=models.IntegerField(default=-1),
         ),
     ]

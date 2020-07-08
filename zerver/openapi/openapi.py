@@ -6,9 +6,7 @@ from typing import Any, Dict, List, Optional, Set
 
 from openapi_schema_validator import OAS30Validator
 
-OPENAPI_SPEC_PATH = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "../openapi/zulip.yaml"),
-)
+OPENAPI_SPEC_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "../openapi/zulip.yaml"))
 
 # A list of endpoint-methods such that the endpoint
 # has documentation but not with this particular method.

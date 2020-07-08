@@ -156,9 +156,7 @@ class GithubWebhookTest(WebhookTestCase):
     def test_issue_comment_deleted_msg(self) -> None:
         expected_topic = "Scheduler / Issue #5 This is a new issue"
         expected_message = "eeshangarg deleted a [comment](https://github.com/eeshangarg/Scheduler/issues/5#issuecomment-425164194) on [Issue #5](https://github.com/eeshangarg/Scheduler/issues/5):\n\n~~~ quote\nThis is a comment on this new issue.\n~~~"
-        self.send_and_test_stream_message(
-            "issue_comment__deleted", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("issue_comment__deleted", expected_topic, expected_message)
 
     def test_issue_comment_msg_with_custom_topic_in_url(self) -> None:
         self.url = self.build_webhook_url(topic="notifications")
@@ -280,9 +278,7 @@ class GithubWebhookTest(WebhookTestCase):
         )
 
     def test_page_build_msg(self) -> None:
-        expected_message = (
-            "Github Pages build, triggered by baxterthehacker, has finished building."
-        )
+        expected_message = "Github Pages build, triggered by baxterthehacker, has finished building."
         self.send_and_test_stream_message(
             "page_build", self.EXPECTED_TOPIC_REPO_EVENTS, expected_message,
         )
@@ -347,9 +343,7 @@ class GithubWebhookTest(WebhookTestCase):
         self.url = self.build_webhook_url(topic="notifications")
         expected_topic = "notifications"
         expected_message = "baxterthehacker assigned [PR #1 Update the README with new information](https://github.com/baxterthehacker/public-repo/pull/1) to baxterthehacker."
-        self.send_and_test_stream_message(
-            "pull_request__assigned", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request__assigned", expected_topic, expected_message)
 
     def test_pull_request_unassigned_msg(self) -> None:
         expected_message = (
@@ -458,9 +452,7 @@ A temporary team so that I can get some webhook fixtures!
         self.assert_json_success(result)
 
     @patch("zerver.webhooks.github.view.check_send_webhook_message")
-    def test_pull_request_unlabeled_ignore(
-        self, check_send_webhook_message_mock: MagicMock,
-    ) -> None:
+    def test_pull_request_unlabeled_ignore(self, check_send_webhook_message_mock: MagicMock) -> None:
         payload = self.get_body("pull_request__unlabeled")
         result = self.client_post(
             self.url, payload, HTTP_X_GITHUB_EVENT="pull_request", content_type="application/json",

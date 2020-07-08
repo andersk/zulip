@@ -227,9 +227,7 @@ def json_change_notify_settings(
     enable_online_push_notifications: Optional[bool] = REQ(validator=check_bool, default=None),
     enable_digest_emails: Optional[bool] = REQ(validator=check_bool, default=None),
     enable_login_emails: Optional[bool] = REQ(validator=check_bool, default=None),
-    message_content_in_email_notifications: Optional[bool] = REQ(
-        validator=check_bool, default=None,
-    ),
+    message_content_in_email_notifications: Optional[bool] = REQ(validator=check_bool, default=None),
     pm_content_in_desktop_notifications: Optional[bool] = REQ(validator=check_bool, default=None),
     desktop_icon_count_display: Optional[int] = REQ(validator=check_int, default=None),
     realm_name_in_notifications: Optional[bool] = REQ(validator=check_bool, default=None),
@@ -283,9 +281,7 @@ def delete_avatar_backend(request: HttpRequest, user_profile: UserProfile) -> Ht
     if avatar_changes_disabled(user_profile.realm) and not user_profile.is_realm_admin:
         return json_error(AVATAR_CHANGES_DISABLED_ERROR)
 
-    do_change_avatar_fields(
-        user_profile, UserProfile.AVATAR_FROM_GRAVATAR, acting_user=user_profile,
-    )
+    do_change_avatar_fields(user_profile, UserProfile.AVATAR_FROM_GRAVATAR, acting_user=user_profile)
     gravatar_url = avatar_url(user_profile)
 
     json_result = dict(avatar_url=gravatar_url)

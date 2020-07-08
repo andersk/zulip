@@ -246,9 +246,7 @@ def handle_updated_issue_event(payload: Dict[str, Any], user_profile: UserProfil
 
                 from_field_string = item.get("fromString")
                 if target_field_string or from_field_string:
-                    content = add_change_info(
-                        content, field, from_field_string, target_field_string,
-                    )
+                    content = add_change_info(content, field, from_field_string, target_field_string)
 
         elif sub_event == "issue_transited":
             from_field_string = get_in(payload, ["transition", "from_status"])

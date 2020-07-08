@@ -27,9 +27,7 @@ class Command(ZulipBaseCommand):
     def add_arguments(self, parser: ArgumentParser) -> None:
         parser.add_argument("stream_to_keep", type=str, help="name of stream to keep")
         parser.add_argument(
-            "stream_to_destroy",
-            type=str,
-            help="name of stream to merge into the stream being kept",
+            "stream_to_destroy", type=str, help="name of stream to merge into the stream being kept",
         )
         self.add_realm_args(parser, True)
 
@@ -64,9 +62,7 @@ class Command(ZulipBaseCommand):
         existing_subs = Subscription.objects.filter(recipient=recipient_to_keep)
         users_already_subscribed = {sub.user_profile_id: sub.active for sub in existing_subs}
 
-        subs_to_deactivate = Subscription.objects.filter(
-            recipient=recipient_to_destroy, active=True,
-        )
+        subs_to_deactivate = Subscription.objects.filter(recipient=recipient_to_destroy, active=True)
         users_to_activate = [
             sub.user_profile
             for sub in subs_to_deactivate

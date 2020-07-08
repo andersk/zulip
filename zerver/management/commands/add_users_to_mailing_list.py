@@ -32,9 +32,7 @@ class Command(BaseCommand):
         if api_key is None:
             try:
                 if settings.MAILCHIMP_API_KEY is None:
-                    raise CommandError(
-                        "MAILCHIMP_API_KEY is None. Check your server settings file.",
-                    )
+                    raise CommandError("MAILCHIMP_API_KEY is None. Check your server settings file.")
                 api_key = settings.MAILCHIMP_API_KEY
             except AttributeError:
                 raise CommandError(

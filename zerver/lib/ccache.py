@@ -135,8 +135,7 @@ def der_encode_ticket(tkt: Dict[str, Any]) -> bytes:
                     [
                         der_encode_int32(tkt["sname"]["nameType"]),
                         der_encode_sequence(
-                            [der_encode_string(c) for c in tkt["sname"]["nameString"]],
-                            tagged=False,
+                            [der_encode_string(c) for c in tkt["sname"]["nameString"]], tagged=False,
                         ),
                     ],
                 ),

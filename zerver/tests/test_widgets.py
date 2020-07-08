@@ -62,11 +62,7 @@ class WidgetContentTestCase(ZulipTestCase):
         stream_name = "Verona"
 
         payload = dict(
-            type="stream",
-            to=stream_name,
-            client="test suite",
-            topic="whatever",
-            content="whatever",
+            type="stream", to=stream_name, client="test suite", topic="whatever", content="whatever",
         )
 
         payload["widget_content"] = "{{{{{{"  # unparsable

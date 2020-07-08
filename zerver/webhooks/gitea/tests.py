@@ -42,9 +42,7 @@ class GiteaHookTests(WebhookTestCase):
     def test_pull_request_reopened(self) -> None:
         expected_topic = "test / PR #1906 test 2"
         expected_message = """kostekIV reopened [PR #5](https://try.gitea.io/kostekIV/test/pulls/5) from `d` to `master`."""
-        self.send_and_test_stream_message(
-            "pull_request__reopened", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request__reopened", expected_topic, expected_message)
 
     def test_pull_request_closed(self) -> None:
         expected_topic = "test / PR #1906 test 2"
@@ -54,9 +52,7 @@ class GiteaHookTests(WebhookTestCase):
     def test_pull_request_assigned(self) -> None:
         expected_topic = "test / PR #1906 test 2"
         expected_message = """kostekIV assigned [PR #5](https://try.gitea.io/kostekIV/test/pulls/5) (assigned to kostekIV) from `d` to `master`."""
-        self.send_and_test_stream_message(
-            "pull_request__assigned", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request__assigned", expected_topic, expected_message)
 
     def test_issues_opened(self) -> None:
         expected_topic = "test / Issue #3 Test issue"

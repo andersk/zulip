@@ -70,9 +70,7 @@ def get_events_backend(
     # other parameters are only used when registering a new queue via this
     # endpoint.  This is a feature used primarily by get_events_internal
     # and not expected to be used by third-party clients.
-    apply_markdown: bool = REQ(
-        default=False, validator=check_bool, intentionally_undocumented=True,
-    ),
+    apply_markdown: bool = REQ(default=False, validator=check_bool, intentionally_undocumented=True),
     client_gravatar: bool = REQ(
         default=False, validator=check_bool, intentionally_undocumented=True,
     ),

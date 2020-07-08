@@ -217,8 +217,7 @@ class ClientDescriptor:
 
     def expired(self, now: float) -> bool:
         return (
-            self.current_handler_id is None
-            and now - self.last_connection_time >= self.queue_timeout
+            self.current_handler_id is None and now - self.last_connection_time >= self.queue_timeout
         )
 
     def connect_handler(self, handler_id: int, client_name: str) -> None:
@@ -442,9 +441,7 @@ def allocate_client_descriptor(new_queue_data: MutableMapping[str, Any]) -> Clie
 
 
 def do_gc_event_queues(
-    to_remove: AbstractSet[str],
-    affected_users: AbstractSet[int],
-    affected_realms: AbstractSet[int],
+    to_remove: AbstractSet[str], affected_users: AbstractSet[int], affected_realms: AbstractSet[int],
 ) -> None:
     def filter_client_dict(
         client_dict: MutableMapping[int, List[ClientDescriptor]], key: int,
@@ -833,9 +830,7 @@ def receiver_is_off_zulip(user_profile_id: int) -> bool:
     # If a user has no message-receiving event queues, they've got no open zulip
     # session so we notify them
     all_client_descriptors = get_client_descriptors_for_user(user_profile_id)
-    message_event_queues = [
-        client for client in all_client_descriptors if client.accepts_messages()
-    ]
+    message_event_queues = [client for client in all_client_descriptors if client.accepts_messages()]
     off_zulip = len(message_event_queues) == 0
     return off_zulip
 
@@ -1309,9 +1304,7 @@ def send_notification_http(realm: Realm, data: Mapping[str, Any]) -> None:
 
 
 def send_event(
-    realm: Realm,
-    event: Mapping[str, Any],
-    users: Union[Iterable[int], Iterable[Mapping[str, Any]]],
+    realm: Realm, event: Mapping[str, Any], users: Union[Iterable[int], Iterable[Mapping[str, Any]]],
 ) -> None:
     """`users` is a list of user IDs, or in the case of `message` type
     events, a list of dicts describing the users and metadata about

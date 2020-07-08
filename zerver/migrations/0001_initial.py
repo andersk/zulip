@@ -617,9 +617,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
         migrations.AddField(
             model_name="message",
             name="sending_client",
-            field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE, to="zerver.Client",
-            ),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Client"),
         ),
         migrations.AddField(
             model_name="defaultstream",
@@ -629,13 +627,9 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
         migrations.AddField(
             model_name="defaultstream",
             name="stream",
-            field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE, to="zerver.Stream",
-            ),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Stream"),
         ),
-        migrations.AlterUniqueTogether(
-            name="defaultstream", unique_together={("realm", "stream")},
-        ),
+        migrations.AlterUniqueTogether(name="defaultstream", unique_together={("realm", "stream")}),
         migrations.AddField(
             model_name="userprofile",
             name="default_events_register_stream",

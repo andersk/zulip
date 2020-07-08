@@ -891,9 +891,7 @@ def fetch_attachment_data(response: TableData, realm_id: int, message_ids: Set[i
     for a particular attachment, then we won't export the
     attachment row.
     """
-    response["zerver_attachment"] = [
-        row for row in response["zerver_attachment"] if row["messages"]
-    ]
+    response["zerver_attachment"] = [row for row in response["zerver_attachment"] if row["messages"]]
 
 
 def fetch_reaction_data(response: TableData, message_ids: Set[int]) -> None:
@@ -1203,10 +1201,7 @@ def export_uploads_and_avatars(realm: Realm, output_dir: Path) -> None:
     else:
         # Some bigger installations will have their data stored on S3.
         export_files_from_s3(
-            realm,
-            settings.S3_AVATAR_BUCKET,
-            output_dir=avatars_output_dir,
-            processing_avatars=True,
+            realm, settings.S3_AVATAR_BUCKET, output_dir=avatars_output_dir, processing_avatars=True,
         )
         export_files_from_s3(realm, settings.S3_AUTH_UPLOADS_BUCKET, output_dir=uploads_output_dir)
         export_files_from_s3(
@@ -1229,9 +1224,7 @@ def _check_key_metadata(
 ) -> None:
     # Helper function for export_files_from_s3
     if "realm_id" in key.metadata and key.metadata["realm_id"] != str(realm.id):
-        if email_gateway_bot is None or key.metadata["user_profile_id"] != str(
-            email_gateway_bot.id,
-        ):
+        if email_gateway_bot is None or key.metadata["user_profile_id"] != str(email_gateway_bot.id):
             raise AssertionError(f"Key metadata problem: {key.name} {key.metadata} / {realm.id}")
         # Email gateway bot sends messages, potentially including attachments, cross-realm.
         print(f"File uploaded by email gateway bot: {key.key} / {key.metadata}")

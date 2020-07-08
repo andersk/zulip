@@ -604,11 +604,7 @@ class InlineInterestingLinkProcessor(markdown.treeprocessors.Treeprocessor):
         if data_id is not None:
             a.set("data-id", data_id)
         img = SubElement(a, "img")
-        if (
-            settings.THUMBNAIL_IMAGES
-            and (not already_thumbnailed)
-            and user_uploads_or_external(url)
-        ):
+        if settings.THUMBNAIL_IMAGES and (not already_thumbnailed) and user_uploads_or_external(url):
             # See docs/thumbnailing.md for some high-level documentation.
             #
             # We strip leading '/' from relative URLs here to ensure
@@ -1508,9 +1504,7 @@ def sanitize_url(url: str) -> Optional[str]:
     return urllib.parse.urlunparse((scheme, netloc, path, params, query, fragment))
 
 
-def url_to_a(
-    db_data: Optional[DbData], url: str, text: Optional[str] = None,
-) -> Union[Element, str]:
+def url_to_a(db_data: Optional[DbData], url: str, text: Optional[str] = None) -> Union[Element, str]:
     a = Element("a")
 
     href = sanitize_url(url)
@@ -1982,9 +1976,7 @@ class Markdown(markdown.Markdown):
             markdown.preprocessors.NormalizeWhitespace(self), "normalize_whitespace", 30,
         )
         preprocessors.register(fenced_code.FencedBlockPreprocessor(self), "fenced_code_block", 25)
-        preprocessors.register(
-            AlertWordNotificationProcessor(self), "custom_text_notifications", 20,
-        )
+        preprocessors.register(AlertWordNotificationProcessor(self), "custom_text_notifications", 20)
         return preprocessors
 
     def build_block_parser(self) -> markdown.util.Registry:
@@ -2095,9 +2087,7 @@ class Markdown(markdown.Markdown):
         # We get priority 30 from 'hilite' extension
         treeprocessors.register(markdown.treeprocessors.InlineProcessor(self), "inline", 25)
         treeprocessors.register(markdown.treeprocessors.PrettifyTreeprocessor(self), "prettify", 20)
-        treeprocessors.register(
-            InlineInterestingLinkProcessor(self), "inline_interesting_links", 15,
-        )
+        treeprocessors.register(InlineInterestingLinkProcessor(self), "inline_interesting_links", 15)
         if settings.CAMO_URI:
             treeprocessors.register(InlineHttpsProcessor(self), "rewrite_to_https", 10)
         return treeprocessors
@@ -2131,9 +2121,7 @@ class Markdown(markdown.Markdown):
             )
             # insert new 'inline' processor because we have changed self.inlinePatterns
             # but InlineProcessor copies md as self.md in __init__.
-            self.treeprocessors.register(
-                markdown.treeprocessors.InlineProcessor(self), "inline", 25,
-            )
+            self.treeprocessors.register(markdown.treeprocessors.InlineProcessor(self), "inline", 25)
             self.preprocessors = get_sub_registry(self.preprocessors, ["custom_text_notifications"])
             self.parser.blockprocessors = get_sub_registry(
                 self.parser.blockprocessors, ["paragraph"],

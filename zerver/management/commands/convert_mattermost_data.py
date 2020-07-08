@@ -23,9 +23,7 @@ class Command(BaseCommand):
     help = """Convert the mattermost data into Zulip data format."""
 
     def add_arguments(self, parser: CommandParser) -> None:
-        dir_help = (
-            "Directory containing exported JSON file and exported_emoji (optional) directory."
-        )
+        dir_help = "Directory containing exported JSON file and exported_emoji (optional) directory."
         parser.add_argument(
             "mattermost_data_dir", metavar="<mattermost data directory>", help=dir_help,
         )

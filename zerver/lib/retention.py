@@ -388,9 +388,7 @@ def archive_messages_by_recipient(
     )
 
 
-def archive_personal_and_huddle_messages(
-    realm: Realm, chunk_size: int = MESSAGE_BATCH_SIZE,
-) -> None:
+def archive_personal_and_huddle_messages(realm: Realm, chunk_size: int = MESSAGE_BATCH_SIZE) -> None:
     logger.info("Archiving personal and huddle messages for realm %s", realm.string_id)
     message_count = move_expired_personal_and_huddle_messages_to_archive(realm, chunk_size)
     logger.info("Done. Archived %s messages", message_count)
@@ -509,9 +507,7 @@ def move_messages_to_archive(
     if count == 0:
         raise Message.DoesNotExist
     # Clean up attachments:
-    archived_attachments = ArchivedAttachment.objects.filter(
-        messages__id__in=message_ids,
-    ).distinct()
+    archived_attachments = ArchivedAttachment.objects.filter(messages__id__in=message_ids).distinct()
     Attachment.objects.filter(messages__isnull=True, id__in=archived_attachments).delete()
 
 
@@ -618,9 +614,7 @@ def restore_data_from_archive(archive_transaction: ArchiveTransaction) -> int:
     return len(msg_ids)
 
 
-def restore_data_from_archive_by_transactions(
-    archive_transactions: List[ArchiveTransaction],
-) -> int:
+def restore_data_from_archive_by_transactions(archive_transactions: List[ArchiveTransaction]) -> int:
     # Looping over the list of ids means we're batching the restoration process by the size of the
     # transactions:
     message_count = 0
@@ -646,9 +640,7 @@ def restore_all_data_from_archive(restore_manual_transactions: bool = True) -> N
 
     if restore_manual_transactions:
         restore_data_from_archive_by_transactions(
-            ArchiveTransaction.objects.exclude(restored=True).filter(
-                type=ArchiveTransaction.MANUAL,
-            ),
+            ArchiveTransaction.objects.exclude(restored=True).filter(type=ArchiveTransaction.MANUAL),
         )
 
 

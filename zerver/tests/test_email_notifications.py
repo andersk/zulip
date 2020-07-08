@@ -303,13 +303,9 @@ class TestMissedMessages(ZulipTestCase):
 
         self.assertEqual(msg.extra_headers["List-Id"], "Zulip Dev <zulip.testserver>")
 
-    def _realm_name_in_missed_message_email_subject(
-        self, realm_name_in_notifications: bool,
-    ) -> None:
+    def _realm_name_in_missed_message_email_subject(self, realm_name_in_notifications: bool) -> None:
         msg_id = self.send_personal_message(
-            self.example_user("othello"),
-            self.example_user("hamlet"),
-            "Extremely personal message!",
+            self.example_user("othello"), self.example_user("hamlet"), "Extremely personal message!",
         )
         verify_body_include = ["Extremely personal message!"]
         email_subject = "PMs with Othello, the Moor of Venice"
@@ -444,9 +440,7 @@ class TestMissedMessages(ZulipTestCase):
         message_content_disabled_by_realm: bool = False,
     ) -> None:
         msg_id = self.send_personal_message(
-            self.example_user("othello"),
-            self.example_user("hamlet"),
-            "Extremely personal message!",
+            self.example_user("othello"), self.example_user("hamlet"), "Extremely personal message!",
         )
 
         if show_message_content:
@@ -487,9 +481,7 @@ class TestMissedMessages(ZulipTestCase):
 
     def _reply_to_email_in_personal_missed_stream_messages(self, send_as_user: bool) -> None:
         msg_id = self.send_personal_message(
-            self.example_user("othello"),
-            self.example_user("hamlet"),
-            "Extremely personal message!",
+            self.example_user("othello"), self.example_user("hamlet"), "Extremely personal message!",
         )
         verify_body_include = ["Reply to this email directly, or view it in Zulip"]
         email_subject = "PMs with Othello, the Moor of Venice"
@@ -497,9 +489,7 @@ class TestMissedMessages(ZulipTestCase):
 
     def _reply_warning_in_personal_missed_stream_messages(self, send_as_user: bool) -> None:
         msg_id = self.send_personal_message(
-            self.example_user("othello"),
-            self.example_user("hamlet"),
-            "Extremely personal message!",
+            self.example_user("othello"), self.example_user("hamlet"), "Extremely personal message!",
         )
         verify_body_include = ["Do not reply to this email."]
         email_subject = "PMs with Othello, the Moor of Venice"
@@ -547,11 +537,7 @@ class TestMissedMessages(ZulipTestCase):
     ) -> None:
         msg_id = self.send_huddle_message(
             self.example_user("othello"),
-            [
-                self.example_user("hamlet"),
-                self.example_user("iago"),
-                self.example_user("cordelia"),
-            ],
+            [self.example_user("hamlet"), self.example_user("iago"), self.example_user("cordelia")],
             "Group personal message!",
         )
 
@@ -836,9 +822,7 @@ class TestMissedMessages(ZulipTestCase):
 
     def test_sender_name_in_missed_message(self) -> None:
         hamlet = self.example_user("hamlet")
-        msg_id_1 = self.send_stream_message(
-            self.example_user("iago"), "Denmark", "@**King Hamlet**",
-        )
+        msg_id_1 = self.send_stream_message(self.example_user("iago"), "Denmark", "@**King Hamlet**")
         msg_id_2 = self.send_stream_message(self.example_user("iago"), "Verona", "* 1\n *2")
         msg_id_3 = self.send_personal_message(self.example_user("iago"), hamlet, "Hello")
 
@@ -880,9 +864,7 @@ class TestMissedMessages(ZulipTestCase):
             self.example_user("iago"), hamlet, "Personal Message 2",
         )
 
-        handle_missedmessage_emails(
-            hamlet.id, [{"message_id": msg_id_1}, {"message_id": msg_id_2}],
-        )
+        handle_missedmessage_emails(hamlet.id, [{"message_id": msg_id_1}, {"message_id": msg_id_2}])
         self.assertEqual(len(mail.outbox), 2)
         email_subject = "PMs with Othello, the Moor of Venice"
         self.assertEqual(mail.outbox[0].subject, email_subject)
@@ -955,9 +937,7 @@ class TestMissedMessages(ZulipTestCase):
     def test_stream_mentions_multiple_people(self) -> None:
         """Subject should be stream name and topic as usual."""
         hamlet = self.example_user("hamlet")
-        msg_id_1 = self.send_stream_message(
-            self.example_user("iago"), "Denmark", "@**King Hamlet**",
-        )
+        msg_id_1 = self.send_stream_message(self.example_user("iago"), "Denmark", "@**King Hamlet**")
         msg_id_2 = self.send_stream_message(
             self.example_user("othello"), "Denmark", "@**King Hamlet**",
         )

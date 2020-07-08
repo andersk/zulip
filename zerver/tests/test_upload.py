@@ -649,9 +649,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         uri = result.json()["uri"]
         fp_path_id = re.sub("/user_uploads/", "", uri)
         body = (
-            f"First message ...[zulip.txt](http://{user.realm.host}/user_uploads/"
-            + fp_path_id
-            + ")"
+            f"First message ...[zulip.txt](http://{user.realm.host}/user_uploads/" + fp_path_id + ")"
         )
         self.send_stream_message(user, stream_name, body, "test")
         self.logout()
@@ -845,8 +843,7 @@ class AvatarTest(UploadSerializeMixin, ZulipTestCase):
             )
 
         self.assertEqual(
-            url,
-            "/user_avatars/5/fc2b9f1a81f4508a4df2d95451a2a77e0524ca0e-medium.png?x=x&version=2",
+            url, "/user_avatars/5/fc2b9f1a81f4508a4df2d95451a2a77e0524ca0e-medium.png?x=x&version=2",
         )
 
         url = get_avatar_field(
@@ -1569,9 +1566,7 @@ class RealmNightLogoTest(RealmLogoTest):
 class LocalStorageTest(UploadSerializeMixin, ZulipTestCase):
     def test_file_upload_local(self) -> None:
         user_profile = self.example_user("hamlet")
-        uri = upload_message_file(
-            "dummy.txt", len(b"zulip!"), "text/plain", b"zulip!", user_profile,
-        )
+        uri = upload_message_file("dummy.txt", len(b"zulip!"), "text/plain", b"zulip!", user_profile)
 
         base = "/user_uploads/"
         self.assertEqual(base, uri[: len(base)])
@@ -1661,9 +1656,7 @@ class S3Test(ZulipTestCase):
         bucket = create_s3_buckets(settings.S3_AUTH_UPLOADS_BUCKET)[0]
 
         user_profile = self.example_user("hamlet")
-        uri = upload_message_file(
-            "dummy.txt", len(b"zulip!"), "text/plain", b"zulip!", user_profile,
-        )
+        uri = upload_message_file("dummy.txt", len(b"zulip!"), "text/plain", b"zulip!", user_profile)
 
         base = "/user_uploads/"
         self.assertEqual(base, uri[: len(base)])
@@ -1695,9 +1688,7 @@ class S3Test(ZulipTestCase):
         create_s3_buckets(settings.S3_AUTH_UPLOADS_BUCKET)
 
         user_profile = self.example_user("hamlet")
-        uri = upload_message_file(
-            "dummy.txt", len(b"zulip!"), "text/plain", b"zulip!", user_profile,
-        )
+        uri = upload_message_file("dummy.txt", len(b"zulip!"), "text/plain", b"zulip!", user_profile)
 
         path_id = re.sub("/user_uploads/", "", uri)
         self.assertTrue(delete_message_image(path_id))
@@ -1882,9 +1873,7 @@ class S3Test(ZulipTestCase):
         image_file = get_test_image_file("img.png")
         zerver.lib.upload.upload_backend.upload_realm_logo_image(image_file, user_profile, night)
 
-        original_path_id = os.path.join(
-            str(user_profile.realm.id), "realm", f"{file_name}.original",
-        )
+        original_path_id = os.path.join(str(user_profile.realm.id), "realm", f"{file_name}.original")
         original_key = bucket.Object(original_path_id)
         image_file.seek(0)
         self.assertEqual(image_file.read(), original_key.get()["Body"].read())

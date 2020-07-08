@@ -87,9 +87,7 @@ class BaseDocumentationSpider(scrapy.Spider):
         fragment = m.group("fragment")
         # Check fragment existing on response page.
         if not response.selector.xpath(xpath_template.format(fragment=fragment)):
-            self.logger.error(
-                "Fragment #%s is not found on page %s", fragment, response.request.url,
-            )
+            self.logger.error("Fragment #%s is not found on page %s", fragment, response.request.url)
 
     def _vnu_callback(self, url: str) -> Callable[[Response], None]:
         def callback(response: Response) -> None:

@@ -33,9 +33,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="subscription",
-            name="is_muted",
-            field=models.NullBooleanField(default=False),
+            model_name="subscription", name="is_muted", field=models.NullBooleanField(default=False),
         ),
         migrations.RunPython(
             set_initial_value_for_is_muted, reverse_code=reverse_code, elidable=True,

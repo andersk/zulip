@@ -326,9 +326,7 @@ def get_pull_request_ready_for_review_body(
 
 
 def get_pull_request_review_body(payload: Dict[str, Any], include_title: bool = False) -> str:
-    title = "for #{} {}".format(
-        payload["pull_request"]["number"], payload["pull_request"]["title"],
-    )
+    title = "for #{} {}".format(payload["pull_request"]["number"], payload["pull_request"]["title"])
     return get_pull_request_event_message(
         get_sender_name(payload),
         "submitted",

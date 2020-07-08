@@ -249,9 +249,7 @@ class ImportExportTest(ZulipTestCase):
     def _setup_export_files(self, realm: Realm) -> Tuple[str, str, str, bytes]:
         message = Message.objects.all()[0]
         user_profile = message.sender
-        url = upload_message_file(
-            "dummy.txt", len(b"zulip!"), "text/plain", b"zulip!", user_profile,
-        )
+        url = upload_message_file("dummy.txt", len(b"zulip!"), "text/plain", b"zulip!", user_profile)
         attachment_path_id = url.replace("/user_uploads/", "")
         claim_attachment(
             user_profile=user_profile,

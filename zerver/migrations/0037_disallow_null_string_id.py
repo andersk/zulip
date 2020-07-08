@@ -34,8 +34,6 @@ class Migration(migrations.Migration):
     operations = [
         migrations.RunPython(set_string_id_using_domain, elidable=True),
         migrations.AlterField(
-            model_name="realm",
-            name="string_id",
-            field=models.CharField(unique=True, max_length=40),
+            model_name="realm", name="string_id", field=models.CharField(unique=True, max_length=40),
         ),
     ]

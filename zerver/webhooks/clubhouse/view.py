@@ -11,9 +11,7 @@ from zerver.models import UserProfile
 
 EPIC_NAME_TEMPLATE = "**{name}**"
 STORY_NAME_TEMPLATE = "[{name}]({app_url})"
-COMMENT_ADDED_TEMPLATE = (
-    "New comment added to the {entity} {name_template}:\n``` quote\n{text}\n```"
-)
+COMMENT_ADDED_TEMPLATE = "New comment added to the {entity} {name_template}:\n``` quote\n{text}\n```"
 NEW_DESC_ADDED_TEMPLATE = (
     "New description added to the {entity} {name_template}:\n``` quote\n{new}\n```"
 )
@@ -31,9 +29,7 @@ NAME_CHANGED_TEMPLATE = (
 )
 ARCHIVED_TEMPLATE = "The {entity} {name_template} was {action}."
 STORY_TASK_TEMPLATE = "Task **{task_description}** was {action} the story {name_template}."
-STORY_TASK_COMPLETED_TEMPLATE = (
-    "Task **{task_description}** ({name_template}) was completed. :tada:"
-)
+STORY_TASK_COMPLETED_TEMPLATE = "Task **{task_description}** ({name_template}) was completed. :tada:"
 STORY_ADDED_REMOVED_EPIC_TEMPLATE = (
     "The story {story_name_template} was {action} the" " epic {epic_name_template}."
 )
@@ -371,9 +367,7 @@ def get_story_create_github_entity_body(payload: Dict[str, Any], entity: str) ->
         "old": old_state,
     }
 
-    template = (
-        STORY_GITHUB_PR_TEMPLATE if entity == "pull-request" else STORY_GITHUB_BRANCH_TEMPLATE
-    )
+    template = STORY_GITHUB_PR_TEMPLATE if entity == "pull-request" else STORY_GITHUB_BRANCH_TEMPLATE
     return template.format(**kwargs)
 
 
@@ -381,9 +375,7 @@ def get_story_update_attachment_body(payload: Dict[str, Any]) -> Optional[str]:
     action = get_action_with_primary_id(payload)
 
     kwargs = {
-        "name_template": STORY_NAME_TEMPLATE.format(
-            name=action["name"], app_url=action["app_url"],
-        ),
+        "name_template": STORY_NAME_TEMPLATE.format(name=action["name"], app_url=action["app_url"]),
     }
     file_ids_added = action["changes"]["file_ids"].get("adds")
 
@@ -403,9 +395,7 @@ def get_story_label_body(payload: Dict[str, Any]) -> Optional[str]:
     action = get_action_with_primary_id(payload)
 
     kwargs = {
-        "name_template": STORY_NAME_TEMPLATE.format(
-            name=action["name"], app_url=action["app_url"],
-        ),
+        "name_template": STORY_NAME_TEMPLATE.format(name=action["name"], app_url=action["app_url"]),
     }
     label_ids_added = action["changes"]["label_ids"].get("adds")
 
@@ -433,9 +423,7 @@ def get_story_label_body(payload: Dict[str, Any]) -> Optional[str]:
 def get_story_update_project_body(payload: Dict[str, Any]) -> str:
     action = get_action_with_primary_id(payload)
     kwargs = {
-        "name_template": STORY_NAME_TEMPLATE.format(
-            name=action["name"], app_url=action["app_url"],
-        ),
+        "name_template": STORY_NAME_TEMPLATE.format(name=action["name"], app_url=action["app_url"]),
     }
 
     new_project_id = action["changes"]["project_id"]["new"]
@@ -452,9 +440,7 @@ def get_story_update_project_body(payload: Dict[str, Any]) -> str:
 def get_story_update_type_body(payload: Dict[str, Any]) -> str:
     action = get_action_with_primary_id(payload)
     kwargs = {
-        "name_template": STORY_NAME_TEMPLATE.format(
-            name=action["name"], app_url=action["app_url"],
-        ),
+        "name_template": STORY_NAME_TEMPLATE.format(name=action["name"], app_url=action["app_url"]),
         "new_type": action["changes"]["story_type"]["new"],
         "old_type": action["changes"]["story_type"]["old"],
     }
@@ -465,9 +451,7 @@ def get_story_update_type_body(payload: Dict[str, Any]) -> str:
 def get_story_update_owner_body(payload: Dict[str, Any]) -> str:
     action = get_action_with_primary_id(payload)
     kwargs = {
-        "name_template": STORY_NAME_TEMPLATE.format(
-            name=action["name"], app_url=action["app_url"],
-        ),
+        "name_template": STORY_NAME_TEMPLATE.format(name=action["name"], app_url=action["app_url"]),
     }
 
     return STORY_UPDATE_OWNER_TEMPLATE.format(**kwargs)

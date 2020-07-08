@@ -138,9 +138,7 @@ def generate_emoji_code_to_emoji_names_maps() -> None:
             reverse_unified_reactions_map[emoji_code] = [name]
 
     for emoji_code in reverse_unified_reactions_map:
-        emoji_code_to_gemoji_names[emoji_code] = ", ".join(
-            reverse_unified_reactions_map[emoji_code],
-        )
+        emoji_code_to_gemoji_names[emoji_code] = ", ".join(reverse_unified_reactions_map[emoji_code])
 
     # Prepare iamcal names map.
     for emoji_dict in EMOJI_DATA:

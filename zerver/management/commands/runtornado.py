@@ -87,9 +87,7 @@ class Command(BaseCommand):
         no_keep_alive = options.get("no_keep_alive", False)
 
         if settings.DEBUG:
-            logging.basicConfig(
-                level=logging.INFO, format="%(asctime)s %(levelname)-8s %(message)s",
-            )
+            logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)-8s %(message)s")
 
         def inner_run() -> None:
             from django.conf import settings

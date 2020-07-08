@@ -111,9 +111,7 @@ Traceback:
 **level:** info
 **timestamp:** 2020-04-30 06:09:56
 ```"""
-        self.send_and_test_stream_message(
-            "event_for_message_node", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("event_for_message_node", expected_topic, expected_message)
 
     def test_event_for_message_python(self) -> None:
         expected_topic = "A simple message-based issue."
@@ -137,9 +135,7 @@ Traceback:
     def test_issue_assigned_to_team(self) -> None:
         expected_topic = "Exception: program has entered an invalid state."
         expected_message = """\nIssue **Exception: program has entered an invalid state.** has now been assigned to **team lone-wolf** by **Hemanth V. Alluri**."""
-        self.send_and_test_stream_message(
-            "issue_assigned_to_team", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("issue_assigned_to_team", expected_topic, expected_message)
 
     def test_issue_created_for_exception(self) -> None:
         expected_topic = "Exception: Custom exception!"

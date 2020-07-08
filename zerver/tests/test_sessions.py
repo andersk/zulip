@@ -75,10 +75,7 @@ class TestSessions(ZulipTestCase):
             True,
         )
         self.do_test_session(
-            self.mit_user("sipbtest"),
-            lambda: delete_all_user_sessions(),
-            get_realm("zephyr"),
-            True,
+            self.mit_user("sipbtest"), lambda: delete_all_user_sessions(), get_realm("zephyr"), True,
         )
 
     def test_delete_all_deactivated_user_sessions(self) -> None:

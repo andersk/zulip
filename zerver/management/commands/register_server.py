@@ -84,9 +84,7 @@ class Command(ZulipBaseCommand):
             ):
                 raise CommandError("Aborting, since Terms of Service have not been accepted.")
 
-        registration_url = (
-            settings.PUSH_NOTIFICATION_BOUNCER_URL + "/api/v1/remotes/server/register"
-        )
+        registration_url = settings.PUSH_NOTIFICATION_BOUNCER_URL + "/api/v1/remotes/server/register"
         try:
             response = requests.post(registration_url, params=request)
         except Exception:

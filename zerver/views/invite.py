@@ -44,10 +44,7 @@ def invite_users_backend(
     if invite_as not in PreregistrationUser.INVITE_AS.values():
         return json_error(_("Must be invited as an valid type of user"))
     check_if_owner_required(invite_as, user_profile)
-    if (
-        invite_as == PreregistrationUser.INVITE_AS["REALM_ADMIN"]
-        and not user_profile.is_realm_admin
-    ):
+    if invite_as == PreregistrationUser.INVITE_AS["REALM_ADMIN"] and not user_profile.is_realm_admin:
         return json_error(_("Must be an organization administrator"))
     if not invitee_emails_raw:
         return json_error(_("You must specify at least one email address."))

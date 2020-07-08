@@ -179,9 +179,7 @@ def semaphore_2(payload: Dict[str, Any]) -> Tuple[str, str, Optional[str]]:
             commit_id=commit_id,
             commit_hash=commit_id[:7],
             commit_message=summary_line(payload["revision"]["commit_message"]),
-            commit_url=GITHUB_URL_TEMPLATES["commit"].format(
-                repo_url=repo_url, commit_id=commit_id,
-            ),
+            commit_url=GITHUB_URL_TEMPLATES["commit"].format(repo_url=repo_url, commit_id=commit_id),
         )
         template = GH_PUSH_TEMPLATE if is_github_repo(repo_url) else PUSH_TEMPLATE
         content = template.format(**context)

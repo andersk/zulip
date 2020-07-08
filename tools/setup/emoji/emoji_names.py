@@ -128,10 +128,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     # flu from https://mashable.com/2015/10/23/ios-9-1-emoji-guide/, sick from
     # https://emojipedia.org/face-with-thermometer/, face_with_thermometer so
     # it shows up in typeahead (thermometer taken by Objects/82)
-    "1f912": {
-        "canonical_name": "sick",
-        "aliases": ["flu", "face_with_thermometer", "ill", "fever"],
-    },
+    "1f912": {"canonical_name": "sick", "aliases": ["flu", "face_with_thermometer", "ill", "fever"]},
     # hurt and injured from https://beebom.com/emoji-meanings/. Chose hurt as
     # primary since I think it can cover a wider set of things (e.g. emotional
     # hurt)
@@ -549,10 +546,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     "26c5": {"canonical_name": "partly_sunny", "aliases": ["partly_cloudy"]},
     "1f325": {"canonical_name": "cloudy", "aliases": []},
     # sunshowers seems like a more fun term
-    "1f326": {
-        "canonical_name": "sunshowers",
-        "aliases": ["sun_and_rain", "partly_sunny_with_rain"],
-    },
+    "1f326": {"canonical_name": "sunshowers", "aliases": ["sun_and_rain", "partly_sunny_with_rain"]},
     # pride and lgbtq seem like reasonable additions
     "1f308": {"canonical_name": "rainbow", "aliases": ["pride", "lgbtq"]},
     # overcast seems like a good addition

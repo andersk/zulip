@@ -425,9 +425,7 @@ def accounts_register(request: HttpRequest) -> HttpResponse:
             # root domain, we need to log them into the subdomain for
             # their new realm.
             return redirect_and_log_into_subdomain(
-                ExternalAuthResult(
-                    user_profile=user_profile, data_dict={"is_realm_creation": True},
-                ),
+                ExternalAuthResult(user_profile=user_profile, data_dict={"is_realm_creation": True}),
             )
 
         # This dummy_backend check below confirms the user is
@@ -553,9 +551,7 @@ def create_realm(request: HttpRequest, creation_key: Optional[str] = None) -> Ht
         return render(
             request,
             "zerver/realm_creation_failed.html",
-            context={
-                "message": _("The organization creation link has expired" " or is not valid."),
-            },
+            context={"message": _("The organization creation link has expired" " or is not valid.")},
         )
     if not settings.OPEN_REALM_CREATION:
         if key_record is None:

@@ -424,8 +424,7 @@ class AnalyticsBouncerTest(BouncerTestCase):
             self.assertEqual(RemoteRealmCount.objects.count(), remote_realm_count)
             self.assertEqual(RemoteInstallationCount.objects.count(), remote_installation_count)
             self.assertEqual(
-                RemoteRealmAuditLog.objects.count(),
-                remote_audit_log_count + remote_realm_audit_log,
+                RemoteRealmAuditLog.objects.count(), remote_audit_log_count + remote_realm_audit_log,
             )
 
         # Create some rows we'll send to remote server
@@ -1272,9 +1271,7 @@ class TestAPNs(PushNotificationTest):
             "custom": {"zulip": {"message_ids": [3]}},
         }
         self.assertEqual(
-            modernize_apns_payload(
-                {"alert": "Message from Hamlet", "message_ids": [3], "badge": 0},
-            ),
+            modernize_apns_payload({"alert": "Message from Hamlet", "message_ids": [3], "badge": 0}),
             payload,
         )
         self.assertEqual(modernize_apns_payload(payload), payload)
@@ -1302,9 +1299,7 @@ class TestAPNs(PushNotificationTest):
         # Mark the messages as read and test whether
         # the count decreases correctly.
         for i, message_id in enumerate(message_ids):
-            do_update_message_flags(
-                user_profile, get_client("website"), "add", "read", [message_id],
-            )
+            do_update_message_flags(user_profile, get_client("website"), "add", "read", [message_id])
             self.assertEqual(get_apns_badge_count(user_profile), num_messages - i - 1)
 
         mock_push_notifications.assert_called()

@@ -51,9 +51,7 @@ class ZulipBaseCommand(BaseCommand):
             help = """The numeric or string ID (subdomain) of the Zulip organization to modify.
 You can use the command list_realms to find ID of the realms in this server."""
 
-        parser.add_argument(
-            "-r", "--realm", dest="realm_id", required=required, type=str, help=help,
-        )
+        parser.add_argument("-r", "--realm", dest="realm_id", required=required, type=str, help=help)
 
     def add_user_list_args(
         self,

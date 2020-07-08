@@ -811,9 +811,7 @@ class NormalActionsTest(BaseAction):
         for stream_name in ["Denmark", "Verona"]:
             streams.append(get_stream(stream_name, self.user_profile.realm))
         do_invite_users(self.user_profile, ["foo@zulip.com"], streams, False)
-        prereg_users = PreregistrationUser.objects.filter(
-            referred_by__realm=self.user_profile.realm,
-        )
+        prereg_users = PreregistrationUser.objects.filter(referred_by__realm=self.user_profile.realm)
         events = self.verify_action(
             lambda: do_revoke_user_invite(prereg_users[0]), state_change_expected=False,
         )
@@ -1087,10 +1085,7 @@ class NormalActionsTest(BaseAction):
         )
         events = self.verify_action(
             lambda: do_update_user_presence(
-                self.user_profile,
-                get_client("ZulipAndroid/1.0"),
-                timezone_now(),
-                UserPresence.IDLE,
+                self.user_profile, get_client("ZulipAndroid/1.0"), timezone_now(), UserPresence.IDLE,
             ),
         )
         schema_checker_android("events[0]", events[0])
@@ -1177,9 +1172,7 @@ class NormalActionsTest(BaseAction):
         events = self.verify_action(lambda: do_add_alert_words(self.user_profile, ["alert_word"]))
         alert_words_checker("events[0]", events[0])
 
-        events = self.verify_action(
-            lambda: do_remove_alert_words(self.user_profile, ["alert_word"]),
-        )
+        events = self.verify_action(lambda: do_remove_alert_words(self.user_profile, ["alert_word"]))
         alert_words_checker("events[0]", events[0])
 
     def test_away_events(self) -> None:
@@ -1958,9 +1951,7 @@ class NormalActionsTest(BaseAction):
         author = self.example_user("iago")
         with get_test_image_file("img.png") as img_file:
             events = self.verify_action(
-                lambda: check_add_realm_emoji(
-                    self.user_profile.realm, "my_emoji", author, img_file,
-                ),
+                lambda: check_add_realm_emoji(self.user_profile.realm, "my_emoji", author, img_file),
             )
 
         schema_checker("events[0]", events[0])
@@ -1977,15 +1968,10 @@ class NormalActionsTest(BaseAction):
         schema_checker = check_events_dict(
             [
                 ("type", equals("realm_filters")),
-                (
-                    "realm_filters",
-                    check_list(check_tuple([check_string, check_string, check_int])),
-                ),
+                ("realm_filters", check_list(check_tuple([check_string, check_string, check_int]))),
             ],
         )
-        events = self.verify_action(
-            lambda: do_add_realm_filter(self.user_profile.realm, regex, url),
-        )
+        events = self.verify_action(lambda: do_add_realm_filter(self.user_profile.realm, regex, url))
         schema_checker("events[0]", events[0])
 
         events = self.verify_action(
@@ -2049,21 +2035,14 @@ class NormalActionsTest(BaseAction):
             elif bot_type == "OUTGOING_WEBHOOK_BOT":
                 check_services = check_list(
                     check_dict_only(
-                        [
-                            ("base_url", check_url),
-                            ("interface", check_int),
-                            ("token", check_string),
-                        ],
+                        [("base_url", check_url), ("interface", check_int), ("token", check_string)],
                     ),
                     length=1,
                 )
             elif bot_type == "EMBEDDED_BOT":
                 check_services = check_list(
                     check_dict_only(
-                        [
-                            ("service_name", check_string),
-                            ("config_data", ad_hoc_config_data_schema),
-                        ],
+                        [("service_name", check_string), ("config_data", ad_hoc_config_data_schema)],
                     ),
                     length=1,
                 )
@@ -2218,15 +2197,11 @@ class NormalActionsTest(BaseAction):
 
         action = lambda: do_change_default_events_register_stream(bot, stream)
         events = self.verify_action(action)
-        self.realm_bot_schema("default_events_register_stream", check_string)(
-            "events[0]", events[0],
-        )
+        self.realm_bot_schema("default_events_register_stream", check_string)("events[0]", events[0])
 
         action = lambda: do_change_default_events_register_stream(bot, None)
         events = self.verify_action(action)
-        self.realm_bot_schema("default_events_register_stream", equals(None))(
-            "events[0]", events[0],
-        )
+        self.realm_bot_schema("default_events_register_stream", equals(None))("events[0]", events[0])
 
     def test_change_bot_owner(self) -> None:
         change_bot_owner_checker_user = check_events_dict(

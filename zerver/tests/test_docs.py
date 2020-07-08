@@ -436,17 +436,13 @@ class PlansPageTest(ZulipTestCase):
         realm.save(update_fields=["plan_type"])
         result = self.client_get("/plans/", subdomain="zulip")
         self.assert_in_success_response([current_plan], result)
-        self.assert_not_in_success_response(
-            [sign_up_now, buy_standard, sponsorship_pending], result,
-        )
+        self.assert_not_in_success_response([sign_up_now, buy_standard, sponsorship_pending], result)
 
         realm.plan_type = Realm.STANDARD
         realm.save(update_fields=["plan_type"])
         result = self.client_get("/plans/", subdomain="zulip")
         self.assert_in_success_response([current_plan], result)
-        self.assert_not_in_success_response(
-            [sign_up_now, buy_standard, sponsorship_pending], result,
-        )
+        self.assert_not_in_success_response([sign_up_now, buy_standard, sponsorship_pending], result)
 
         realm.plan_type = Realm.LIMITED
         realm.save()

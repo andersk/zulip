@@ -338,9 +338,7 @@ def build_recipients(
     return recipients
 
 
-def build_realm(
-    zerver_realm: List[ZerverFieldsT], realm_id: int, domain_name: str,
-) -> ZerverFieldsT:
+def build_realm(zerver_realm: List[ZerverFieldsT], realm_id: int, domain_name: str) -> ZerverFieldsT:
     realm = dict(
         zerver_client=[
             {"name": "populate_db", "id": 1},

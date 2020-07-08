@@ -77,9 +77,7 @@ class MockLDAP(fakeldap.MockLDAP):
 
 
 @contextmanager
-def stub_event_queue_user_events(
-    event_queue_return: Any, user_events_return: Any,
-) -> Iterator[None]:
+def stub_event_queue_user_events(event_queue_return: Any, user_events_return: Any) -> Iterator[None]:
     with mock.patch("zerver.lib.events.request_event_queue", return_value=event_queue_return):
         with mock.patch("zerver.lib.events.get_user_events", return_value=user_events_return):
             yield
@@ -209,9 +207,7 @@ def stdout_suppressed() -> Iterator[IO[str]]:
 
 def reset_emails_in_zulip_realm() -> None:
     realm = get_realm("zulip")
-    do_set_realm_property(
-        realm, "email_address_visibility", Realm.EMAIL_ADDRESS_VISIBILITY_EVERYONE,
-    )
+    do_set_realm_property(realm, "email_address_visibility", Realm.EMAIL_ADDRESS_VISIBILITY_EVERYONE)
 
 
 def get_test_image_file(filename: str) -> IO[Any]:
@@ -219,9 +215,7 @@ def get_test_image_file(filename: str) -> IO[Any]:
     return open(os.path.join(test_avatar_dir, filename), "rb")
 
 
-def avatar_disk_path(
-    user_profile: UserProfile, medium: bool = False, original: bool = False,
-) -> str:
+def avatar_disk_path(user_profile: UserProfile, medium: bool = False, original: bool = False) -> str:
     avatar_url_path = avatar_url(user_profile, medium)
     assert avatar_url_path is not None
     avatar_disk_path = os.path.join(

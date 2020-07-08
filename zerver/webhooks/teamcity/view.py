@@ -108,10 +108,7 @@ def api_teamcity_webhook(
         topic = build_name
 
     # Check if this is a personal build, and if so try to private message the user who triggered it.
-    if (
-        get_teamcity_property_value(message["teamcityProperties"], "env.BUILD_IS_PERSONAL")
-        == "true"
-    ):
+    if get_teamcity_property_value(message["teamcityProperties"], "env.BUILD_IS_PERSONAL") == "true":
         # The triggeredBy field gives us the teamcity user full name, and the
         # "teamcity.build.triggeredBy.username" property gives us the teamcity username.
         # Let's try finding the user email from both.

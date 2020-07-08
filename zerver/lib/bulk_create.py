@@ -78,9 +78,7 @@ def bulk_create_users(
 
     Recipient.objects.bulk_create(recipients_to_create)
 
-    bulk_set_users_or_streams_recipient_fields(
-        UserProfile, profiles_to_create, recipients_to_create,
-    )
+    bulk_set_users_or_streams_recipient_fields(UserProfile, profiles_to_create, recipients_to_create)
 
     recipients_by_user_id: Dict[int, Recipient] = {}
     for recipient in recipients_to_create:
@@ -128,10 +126,7 @@ def bulk_set_users_or_streams_recipient_fields(
 # This is only sed in populate_db, so doesn't really need tests
 def bulk_create_streams(realm: Realm, stream_dict: Dict[str, Dict[str, Any]]) -> None:  # nocoverage
     existing_streams = frozenset(
-        [
-            name.lower()
-            for name in Stream.objects.filter(realm=realm).values_list("name", flat=True)
-        ],
+        [name.lower() for name in Stream.objects.filter(realm=realm).values_list("name", flat=True)],
     )
     streams_to_create: List[Stream] = []
     for name, options in stream_dict.items():

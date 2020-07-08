@@ -10,9 +10,7 @@ def hash_util_encode(string: str) -> str:
     # Do the same encoding operation as hash_util.encodeHashComponent on the
     # frontend.
     # `safe` has a default value of "/", but we want those encoded, too.
-    return (
-        urllib.parse.quote(string.encode("utf-8"), safe=b"").replace(".", "%2E").replace("%", ".")
-    )
+    return urllib.parse.quote(string.encode("utf-8"), safe=b"").replace(".", "%2E").replace("%", ".")
 
 
 def encode_stream(stream_id: int, stream_name: str) -> str:

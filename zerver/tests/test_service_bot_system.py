@@ -384,9 +384,7 @@ class TestServiceBotConfigHandler(ZulipTestCase):
         self.assertEqual(len(bot_config), 0)
 
     def test_bot_send_pm_with_empty_recipients_list(self) -> None:
-        with self.assertRaisesRegex(
-            EmbeddedBotEmptyRecipientsList, "Message must have recipients!",
-        ):
+        with self.assertRaisesRegex(EmbeddedBotEmptyRecipientsList, "Message must have recipients!"):
             self.bot_handler.send_message(message={"type": "private", "to": []})
 
 
@@ -449,9 +447,7 @@ class TestServiceBotEventTriggers(ZulipTestCase):
         self.assertFalse(mock_queue_json_publish.called)
 
     @mock.patch("zerver.lib.actions.queue_json_publish")
-    def test_no_trigger_on_stream_mention_from_bot(
-        self, mock_queue_json_publish: mock.Mock,
-    ) -> None:
+    def test_no_trigger_on_stream_mention_from_bot(self, mock_queue_json_publish: mock.Mock) -> None:
         for bot_type in BOT_TYPE_TO_QUEUE_NAME:
             self.bot_profile.bot_type = bot_type
             self.bot_profile.save()
@@ -460,9 +456,7 @@ class TestServiceBotEventTriggers(ZulipTestCase):
             self.assertFalse(mock_queue_json_publish.called)
 
     @mock.patch("zerver.lib.actions.queue_json_publish")
-    def test_trigger_on_personal_message_from_user(
-        self, mock_queue_json_publish: mock.Mock,
-    ) -> None:
+    def test_trigger_on_personal_message_from_user(self, mock_queue_json_publish: mock.Mock) -> None:
         for bot_type, expected_queue_name in BOT_TYPE_TO_QUEUE_NAME.items():
             self.bot_profile.bot_type = bot_type
             self.bot_profile.save()
@@ -532,9 +526,7 @@ class TestServiceBotEventTriggers(ZulipTestCase):
             mock_queue_json_publish.reset_mock()
 
     @mock.patch("zerver.lib.actions.queue_json_publish")
-    def test_no_trigger_on_huddle_message_from_bot(
-        self, mock_queue_json_publish: mock.Mock,
-    ) -> None:
+    def test_no_trigger_on_huddle_message_from_bot(self, mock_queue_json_publish: mock.Mock) -> None:
         for bot_type in BOT_TYPE_TO_QUEUE_NAME:
             self.bot_profile.bot_type = bot_type
             self.bot_profile.save()

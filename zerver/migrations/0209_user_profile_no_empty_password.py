@@ -196,9 +196,7 @@ def ensure_no_empty_passwords(apps: StateApps, schema_editor: DatabaseSchemaEdit
             user_profile.save(update_fields=update_fields)
             continue
 
-        elif (
-            email_auth_enabled and user_profile.id in password_change_user_ids_api_key_reset_needed
-        ):
+        elif email_auth_enabled and user_profile.id in password_change_user_ids_api_key_reset_needed:
             # For these users, we just need to reset the API key.
             reset_user_api_key(user_profile)
             user_profile.save(update_fields=["api_key"])

@@ -49,9 +49,7 @@ class TestHotspots(ZulipTestCase):
     def test_hotspots_url_endpoint(self) -> None:
         user = self.example_user("hamlet")
         self.login_user(user)
-        result = self.client_post(
-            "/json/users/me/hotspots", {"hotspot": ujson.dumps("intro_reply")},
-        )
+        result = self.client_post("/json/users/me/hotspots", {"hotspot": ujson.dumps("intro_reply")})
         self.assert_json_success(result)
         self.assertEqual(
             list(UserHotspot.objects.filter(user=user).values_list("hotspot", flat=True)),

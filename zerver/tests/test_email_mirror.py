@@ -56,12 +56,8 @@ class TestEncodeDecode(ZulipTestCase):
         prefer_text: bool = True,
     ) -> None:
         self.assertEqual(show_sender, ("show_sender" in options) and options["show_sender"])
-        self.assertEqual(
-            include_footer, ("include_footer" in options) and options["include_footer"],
-        )
-        self.assertEqual(
-            include_quotes, ("include_quotes" in options) and options["include_quotes"],
-        )
+        self.assertEqual(include_footer, ("include_footer" in options) and options["include_footer"])
+        self.assertEqual(include_quotes, ("include_quotes" in options) and options["include_quotes"])
         self.assertEqual(prefer_text, options.get("prefer_text", True))
 
     def test_encode_decode(self) -> None:
@@ -113,9 +109,7 @@ class TestEncodeDecode(ZulipTestCase):
             self.assertEqual(token, stream.email_token)
 
             token, options = decode_email_address(email_address_all_options)
-            self._assert_options(
-                options, show_sender=True, include_footer=True, include_quotes=True,
-            )
+            self._assert_options(options, show_sender=True, include_footer=True, include_quotes=True)
             self.assertEqual(token, stream.email_token)
 
         with self.assertRaises(ZulipEmailForwardError):
@@ -459,9 +453,7 @@ class TestEmailMirrorMessagesWithAttachments(ZulipTestCase):
 
         incoming_valid_message = EmailMessage()
         incoming_valid_message.set_content("Test body")
-        with open(
-            os.path.join(settings.DEPLOY_ROOT, "static/images/default-avatar.png"), "rb",
-        ) as f:
+        with open(os.path.join(settings.DEPLOY_ROOT, "static/images/default-avatar.png"), "rb") as f:
             image_bytes = f.read()
 
         incoming_valid_message.add_attachment(
@@ -498,9 +490,7 @@ class TestEmailMirrorMessagesWithAttachments(ZulipTestCase):
 
         incoming_valid_message = EmailMessage()
         incoming_valid_message.set_content("Test body")
-        with open(
-            os.path.join(settings.DEPLOY_ROOT, "static/images/default-avatar.png"), "rb",
-        ) as f:
+        with open(os.path.join(settings.DEPLOY_ROOT, "static/images/default-avatar.png"), "rb") as f:
             image_bytes = f.read()
 
         utf8_filename = "image_ąęó.png"
@@ -541,9 +531,7 @@ class TestEmailMirrorMessagesWithAttachments(ZulipTestCase):
 
         nested_multipart = EmailMessage()
         nested_multipart.set_content("Nested text that should get skipped.")
-        with open(
-            os.path.join(settings.DEPLOY_ROOT, "static/images/default-avatar.png"), "rb",
-        ) as f:
+        with open(os.path.join(settings.DEPLOY_ROOT, "static/images/default-avatar.png"), "rb") as f:
             image_bytes = f.read()
 
         nested_multipart.add_attachment(
@@ -690,9 +678,7 @@ class TestStreamEmailMessagesEmptyBody(ZulipTestCase):
         stream_to_address = encode_email_address(stream)
         # No textual body
         incoming_valid_message = EmailMessage()
-        with open(
-            os.path.join(settings.DEPLOY_ROOT, "static/images/default-avatar.png"), "rb",
-        ) as f:
+        with open(os.path.join(settings.DEPLOY_ROOT, "static/images/default-avatar.png"), "rb") as f:
             incoming_valid_message.add_attachment(
                 f.read(), maintype="image", subtype="png",
             )

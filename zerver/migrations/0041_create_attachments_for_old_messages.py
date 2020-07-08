@@ -27,9 +27,7 @@ def check_and_create_attachments(apps: StateApps, schema_editor: DatabaseSchemaE
             is_message_realm_public = False
             if message.recipient.type == STREAM:
                 stream = Stream.objects.get(id=message.recipient.type_id)
-                is_message_realm_public = (
-                    not stream.invite_only and stream.realm.domain != "mit.edu"
-                )
+                is_message_realm_public = not stream.invite_only and stream.realm.domain != "mit.edu"
 
             if path_id is not None:
                 attachment = Attachment.objects.create(

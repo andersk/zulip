@@ -45,9 +45,7 @@ def generate_sha1sum_node_modules(
     return sha1sum.hexdigest()
 
 
-def setup_node_modules(
-    production: bool = DEFAULT_PRODUCTION, prefer_offline: bool = False,
-) -> None:
+def setup_node_modules(production: bool = DEFAULT_PRODUCTION, prefer_offline: bool = False) -> None:
     yarn_args = get_yarn_args(production=production)
     if prefer_offline:
         yarn_args.append("--prefer-offline")
@@ -80,9 +78,6 @@ def do_yarn_install(target_path: str, yarn_args: List[str], success_stamp: str) 
         shutil.copytree("node_modules/", cached_node_modules, symlinks=True)
     if os.environ.get("CUSTOM_CA_CERTIFICATES"):
         run([YARN_BIN, "config", "set", "cafile", os.environ["CUSTOM_CA_CERTIFICATES"]])
-    run(
-        [YARN_BIN, "install", "--non-interactive", "--frozen-lockfile"] + yarn_args,
-        cwd=target_path,
-    )
+    run([YARN_BIN, "install", "--non-interactive", "--frozen-lockfile"] + yarn_args, cwd=target_path)
     with open(success_stamp, "w"):
         pass

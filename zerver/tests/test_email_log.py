@@ -11,9 +11,7 @@ class EmailLogTest(ZulipTestCase):
     def test_generate_and_clear_email_log(self) -> None:
         with self.settings(EMAIL_BACKEND="zproject.email_backends.EmailLogBackEnd"), mock.patch(
             "zproject.email_backends.EmailLogBackEnd.send_email_smtp",
-        ), mock.patch("logging.info", return_value=None), self.settings(
-            DEVELOPMENT_LOG_EMAILS=True,
-        ):
+        ), mock.patch("logging.info", return_value=None), self.settings(DEVELOPMENT_LOG_EMAILS=True):
             result = self.client_get("/emails/generate/")
             self.assertEqual(result.status_code, 302)
             self.assertIn("emails", result["Location"])

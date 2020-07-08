@@ -63,9 +63,7 @@ Omit both <email> and <full name> for interactive user creation.
             default=argparse.SUPPRESS,
             help="full name of new user",
         )
-        self.add_realm_args(
-            parser, True, "The name of the existing realm to which to add the user.",
-        )
+        self.add_realm_args(parser, True, "The name of the existing realm to which to add the user.")
 
     def handle(self, *args: Any, **options: Any) -> None:
         if not options["tos"]:

@@ -71,9 +71,7 @@ try:
 
     logging.info("Fetching the latest commits")
     os.chdir(LOCAL_GIT_CACHE_DIR)
-    subprocess.check_call(
-        ["git", "remote", "set-url", "origin", remote_url], preexec_fn=su_to_zulip,
-    )
+    subprocess.check_call(["git", "remote", "set-url", "origin", remote_url], preexec_fn=su_to_zulip)
     subprocess.check_call(["git", "fetch", "-q", "--tags"], preexec_fn=su_to_zulip)
 
     subprocess.check_call(

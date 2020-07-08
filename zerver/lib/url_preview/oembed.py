@@ -4,9 +4,7 @@ from typing import Any, Dict, Optional
 from pyoembed import PyOembedException, oEmbed
 
 
-def get_oembed_data(
-    url: str, maxwidth: int = 640, maxheight: int = 480,
-) -> Optional[Dict[str, Any]]:
+def get_oembed_data(url: str, maxwidth: int = 640, maxheight: int = 480) -> Optional[Dict[str, Any]]:
     try:
         data = oEmbed(url, maxwidth=maxwidth, maxheight=maxheight)
     except (PyOembedException, json.decoder.JSONDecodeError):

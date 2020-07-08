@@ -63,9 +63,7 @@ class ReactionEmojiTest(ZulipTestCase):
             "emoji_name": "smile",
         }
 
-        base_query = Reaction.objects.filter(
-            user_profile=sender, message=Message.objects.get(id=1),
-        )
+        base_query = Reaction.objects.filter(user_profile=sender, message=Message.objects.get(id=1))
         result = self.api_post(sender, "/api/v1/messages/1/reactions", reaction_info)
         self.assert_json_success(result)
         self.assertEqual(200, result.status_code)
@@ -271,9 +269,7 @@ class ReactionMessageIDTest(ZulipTestCase):
             "emoji_name": "smile",
         }
 
-        result = self.api_post(
-            reaction_sender, f"/api/v1/messages/{pm_id}/reactions", reaction_info,
-        )
+        result = self.api_post(reaction_sender, f"/api/v1/messages/{pm_id}/reactions", reaction_info)
         self.assert_json_error(result, "Invalid message(s)")
 
 
@@ -303,9 +299,7 @@ class ReactionTest(ZulipTestCase):
         first = self.api_post(reaction_sender, f"/api/v1/messages/{pm_id}/reactions", reaction_info)
         self.assert_json_success(first)
 
-        second = self.api_post(
-            reaction_sender, f"/api/v1/messages/{pm_id}/reactions", reaction_info,
-        )
+        second = self.api_post(reaction_sender, f"/api/v1/messages/{pm_id}/reactions", reaction_info)
         self.assert_json_error(second, "Reaction already exists.")
 
     def test_remove_nonexisting_reaction(self) -> None:

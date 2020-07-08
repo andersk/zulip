@@ -297,9 +297,7 @@ class TestIntegrationsDevPanel(ZulipTestCase):
             "custom_headers": "{}",
             "integration_name": "appfollow",
         }
-        response = self.client_post(
-            "/devtools/integrations/send_all_webhook_fixture_messages", data,
-        )
+        response = self.client_post("/devtools/integrations/send_all_webhook_fixture_messages", data)
         expected_response = {
             "msg": 'The integration "appfollow" does not have fixtures.',
             "result": "error",

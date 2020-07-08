@@ -105,9 +105,7 @@ def exclude_topic_mutes(
 
 
 def build_topic_mute_checker(user_profile: UserProfile) -> Callable[[int, str], bool]:
-    rows = MutedTopic.objects.filter(user_profile=user_profile).values(
-        "recipient_id", "topic_name",
-    )
+    rows = MutedTopic.objects.filter(user_profile=user_profile).values("recipient_id", "topic_name")
     rows = list(rows)
 
     tups = set()

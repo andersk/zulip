@@ -445,9 +445,7 @@ EMPTY_PRINCIPALS: Union[Sequence[str], Sequence[int]] = []
 def add_subscriptions_backend(
     request: HttpRequest,
     user_profile: UserProfile,
-    streams_raw: Iterable[Dict[str, str]] = REQ(
-        "subscriptions", validator=add_subscriptions_schema,
-    ),
+    streams_raw: Iterable[Dict[str, str]] = REQ("subscriptions", validator=add_subscriptions_schema),
     invite_only: bool = REQ(validator=check_bool, default=False),
     stream_post_policy: int = REQ(
         validator=check_int_in(Stream.STREAM_POST_POLICY_TYPES),
@@ -531,9 +529,7 @@ def add_subscriptions_backend(
     # convert this function to be more id-centric.
     email_to_user_profile: Dict[str, UserProfile] = dict()
 
-    result: Dict[str, Any] = dict(
-        subscribed=defaultdict(list), already_subscribed=defaultdict(list),
-    )
+    result: Dict[str, Any] = dict(subscribed=defaultdict(list), already_subscribed=defaultdict(list))
     for (subscriber, stream) in subscribed:
         result["subscribed"][subscriber.email].append(stream.name)
         email_to_user_profile[subscriber.email] = subscriber

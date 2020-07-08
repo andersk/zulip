@@ -879,11 +879,7 @@ class MessageAccessTests(ZulipTestCase):
     def change_star(self, messages: List[int], add: bool = True, **kwargs: Any) -> HttpResponse:
         return self.client_post(
             "/json/messages/flags",
-            {
-                "messages": ujson.dumps(messages),
-                "op": "add" if add else "remove",
-                "flag": "starred",
-            },
+            {"messages": ujson.dumps(messages), "op": "add" if add else "remove", "flag": "starred"},
             **kwargs,
         )
 
@@ -1131,9 +1127,7 @@ class MessageAccessTests(ZulipTestCase):
         self.login_user(user)
 
         stream_name = "private_stream"
-        stream = self.make_stream(
-            stream_name, invite_only=True, history_public_to_subscribers=False,
-        )
+        stream = self.make_stream(stream_name, invite_only=True, history_public_to_subscribers=False)
 
         self.subscribe(user, stream_name)
         # Send a message before subscribing a new user to stream

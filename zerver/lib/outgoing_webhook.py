@@ -303,9 +303,7 @@ def do_rest_call(
     base_url: str, request_data: Any, event: Dict[str, Any], service_handler: Any,
 ) -> None:
     try:
-        response = service_handler.send_data_to_server(
-            base_url=base_url, request_data=request_data,
-        )
+        response = service_handler.send_data_to_server(base_url=base_url, request_data=request_data)
         if str(response.status_code).startswith("2"):
             process_success_response(event, service_handler, response)
         else:

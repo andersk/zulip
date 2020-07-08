@@ -854,9 +854,7 @@ class ZulipLDAPUserPopulator(ZulipLDAPAuthBackendBase):
     ) -> Optional[UserProfile]:
         return None
 
-    def get_or_build_user(
-        self, username: str, ldap_user: ZulipLDAPUser,
-    ) -> Tuple[UserProfile, bool]:
+    def get_or_build_user(self, username: str, ldap_user: ZulipLDAPUser) -> Tuple[UserProfile, bool]:
         """This is used only in non-authentication contexts such as:
              ./manage.py sync_ldap_user_data
         """
@@ -956,9 +954,7 @@ def sync_user_from_ldap(user_profile: UserProfile, logger: logging.Logger) -> bo
 # Quick tool to test whether you're correctly authenticating to LDAP
 def query_ldap(email: str) -> List[str]:
     values = []
-    backend = next(
-        (backend for backend in get_backends() if isinstance(backend, LDAPBackend)), None,
-    )
+    backend = next((backend for backend in get_backends() if isinstance(backend, LDAPBackend)), None)
     if backend is not None:
         try:
             ldap_username = backend.django_to_ldap_username(email)
@@ -1091,12 +1087,9 @@ class ExternalAuthResult:
         if self.user_profile is not None:
             # Ensure data inconsistent with the user_profile wasn't passed in inside the data_dict argument.
             assert (
-                "full_name" not in data_dict
-                or data_dict["full_name"] == self.user_profile.full_name
+                "full_name" not in data_dict or data_dict["full_name"] == self.user_profile.full_name
             )
-            assert (
-                "email" not in data_dict or data_dict["email"] == self.user_profile.delivery_email
-            )
+            assert "email" not in data_dict or data_dict["email"] == self.user_profile.delivery_email
             # Update these data_dict fields to ensure consistency with self.user_profile. This is mostly
             # defensive code, but is useful in these scenarios:
             # 1. user_profile argument was passed in, and no full_name or email_data in the data_dict arg.
@@ -1141,9 +1134,7 @@ class ExternalAuthResult:
         # more customized error messages for those unlikely races, but
         # it's likely not worth implementing.
         realm = get_realm(data["subdomain"])
-        self.user_profile = authenticate(
-            username=data["email"], realm=realm, use_dummy_backend=True,
-        )
+        self.user_profile = authenticate(username=data["email"], realm=realm, use_dummy_backend=True)
 
     class InvalidTokenError(Exception):
         pass
@@ -1163,9 +1154,7 @@ class ZulipRemoteUserBackend(RemoteUserBackend, ExternalAuthMethod):
     auth_backend_name = "RemoteUser"
     name = "remoteuser"
     display_icon = None
-    sort_order = (
-        9000  # If configured, this backend should have its button near the top of the list.
-    )
+    sort_order = 9000  # If configured, this backend should have its button near the top of the list.
 
     create_unknown_user = False
 
@@ -1265,10 +1254,7 @@ def social_associate_user_helper(
                     existing_account_emails.append(email)
                     avatars[email] = avatar_url(existing_account)
 
-            if (
-                len(existing_account_emails) != 1
-                or backend.strategy.session_get("is_signup") == "1"
-            ):
+            if len(existing_account_emails) != 1 or backend.strategy.session_get("is_signup") == "1":
                 unverified_emails = []
                 if hasattr(backend, "get_unverified_emails"):
                     unverified_emails = backend.get_unverified_emails(*args, **kwargs)
@@ -1608,9 +1594,7 @@ class GitHubAuthBackend(SocialAuthMixin, GithubOAuth2):
         # addresses that can receive emails, and those cannot.
         email_objs = self.get_all_associated_email_objects(*args, **kwargs)
         return [
-            email
-            for email in email_objs
-            if not email["email"].endswith("@users.noreply.github.com")
+            email for email in email_objs if not email["email"].endswith("@users.noreply.github.com")
         ]
 
     def user_data(self, access_token: str, *args: Any, **kwargs: Any) -> Dict[str, str]:
@@ -1762,9 +1746,7 @@ class AppleAuthBackend(SocialAuthMixin, AppleIdAuth):
             raise AuthMissingParameter(self, "state")
 
         formatted_request_state = "apple_auth_" + request_state
-        redis_data = get_dict_from_redis(
-            redis_client, "apple_auth_{token}", formatted_request_state,
-        )
+        redis_data = get_dict_from_redis(redis_client, "apple_auth_{token}", formatted_request_state)
         if redis_data is None:
             self.logger.info("Sign in with Apple failed: bad state token.")
             raise AuthStateForbidden(self)

@@ -113,7 +113,9 @@ def super_minimal_body(payload: Dict[str, Any]) -> str:
     formatted_status = outcome_to_formatted_status_map.get(status, status)
     build_url = payload["build_url"]
     username = payload["username"]
-    return f"[Build]({build_url}) triggered by {username} on branch `{branch_name}` {formatted_status}."
+    return (
+        f"[Build]({build_url}) triggered by {username} on branch `{branch_name}` {formatted_status}."
+    )
 
 
 def get_body(payload: Dict[str, Any]) -> str:

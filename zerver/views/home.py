@@ -62,11 +62,7 @@ def accounts_accept_terms(request: HttpRequest) -> HttpResponse:
     return render(
         request,
         "zerver/accounts_accept_terms.html",
-        context={
-            "form": form,
-            "email": email,
-            "special_message_template": special_message_template,
-        },
+        context={"form": form, "email": email, "special_message_template": special_message_template},
     )
 
 
@@ -129,11 +125,7 @@ def get_bot_types(user_profile: Optional[UserProfile]) -> List[Dict[str, object]
 
     for type_id, name in UserProfile.BOT_TYPES.items():
         bot_types.append(
-            {
-                "type_id": type_id,
-                "name": name,
-                "allowed": type_id in user_profile.allowed_bot_types,
-            },
+            {"type_id": type_id, "name": name, "allowed": type_id in user_profile.allowed_bot_types},
         )
     return bot_types
 

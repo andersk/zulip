@@ -41,10 +41,7 @@ def mute_topic(
 
 
 def unmute_topic(
-    user_profile: UserProfile,
-    stream_id: Optional[int],
-    stream_name: Optional[str],
-    topic_name: str,
+    user_profile: UserProfile, stream_id: Optional[int], stream_name: Optional[str], topic_name: str,
 ) -> HttpResponse:
     error = _("Topic is not muted")
 

@@ -329,9 +329,7 @@ class NarrowBuilderTest(ZulipTestCase):
             "WHERE NOT (sender_id = %(sender_id_1)s AND recipient_id = %(recipient_id_1)s OR sender_id = %(sender_id_2)s AND recipient_id = %(recipient_id_2)s)",
         )
 
-    def test_add_term_using_pm_with_operator_more_than_one_user_as_operand_and_negated(
-        self,
-    ) -> None:
+    def test_add_term_using_pm_with_operator_more_than_one_user_as_operand_and_negated(self) -> None:
         two_others = ",".join(
             [self.example_user("cordelia").email, self.example_user("othello").email],
         )
@@ -526,9 +524,7 @@ class NarrowLibraryTest(ZulipTestCase):
             is_web_public_compatible([{"operator": "pm-with", "operand": "hamlet@zulip.com"}]),
         )
         self.assertFalse(
-            is_web_public_compatible(
-                [{"operator": "group-pm-with", "operand": "hamlet@zulip.com"}],
-            ),
+            is_web_public_compatible([{"operator": "group-pm-with", "operand": "hamlet@zulip.com"}]),
         )
         self.assertTrue(is_web_public_compatible([{"operator": "stream", "operand": "Denmark"}]))
         self.assertTrue(
@@ -2491,9 +2487,7 @@ class GetOldMessagesTest(ZulipTestCase):
                 post_params = dict(
                     other_params
                     + [(param, type)]
-                    + [
-                        (other_param, 0) for other_param in int_params[:idx] + int_params[idx + 1 :]
-                    ],
+                    + [(other_param, 0) for other_param in int_params[:idx] + int_params[idx + 1 :]],
                 )
                 result = self.client_get("/json/messages", post_params)
                 self.assert_json_error(result, f"Bad value for '{param}': {type}")
@@ -2775,7 +2769,9 @@ class GetOldMessagesTest(ZulipTestCase):
         self.assertIn("ORDER BY message_id ASC", sql)
         cond = f"WHERE user_profile_id = {user_profile.id} AND message_id <= {first_unread_message_id - 1}"
         self.assertIn(cond, sql)
-        cond = f"WHERE user_profile_id = {user_profile.id} AND message_id >= {first_visible_message_id}"
+        cond = (
+            f"WHERE user_profile_id = {user_profile.id} AND message_id >= {first_visible_message_id}"
+        )
         self.assertIn(cond, sql)
 
     def test_use_first_unread_anchor_with_no_unread_messages(self) -> None:
@@ -2931,9 +2927,7 @@ recipient_id = %(recipient_id_3)s AND upper(subject) = upper(%(param_2)s))\
 """
         self.assertEqual(get_sqlalchemy_sql(query), expected_query)
         params = get_sqlalchemy_query_params(query)
-        self.assertEqual(
-            params["recipient_id_1"], get_recipient_id_for_stream_name(realm, "Verona"),
-        )
+        self.assertEqual(params["recipient_id_1"], get_recipient_id_for_stream_name(realm, "Verona"))
         self.assertEqual(
             params["recipient_id_2"], get_recipient_id_for_stream_name(realm, "Scotland"),
         )
@@ -2968,9 +2962,7 @@ recipient_id = %(recipient_id_3)s AND upper(subject) = upper(%(param_2)s))\
 
         sql_template = "SELECT anon_1.message_id, anon_1.flags \nFROM ((SELECT message_id, flags \nFROM zerver_usermessage \nWHERE user_profile_id = {hamlet_id} AND message_id <= 99 ORDER BY message_id DESC \n LIMIT 10) UNION ALL (SELECT message_id, flags \nFROM zerver_usermessage \nWHERE user_profile_id = {hamlet_id} AND message_id >= 100 ORDER BY message_id ASC \n LIMIT 11)) AS anon_1 ORDER BY message_id ASC"
         sql = sql_template.format(**query_ids)
-        self.common_check_get_messages_query(
-            {"anchor": 100, "num_before": 10, "num_after": 10}, sql,
-        )
+        self.common_check_get_messages_query({"anchor": 100, "num_before": 10, "num_after": 10}, sql)
 
     def test_get_messages_with_narrow_queries(self) -> None:
         query_ids = self.get_query_ids()
@@ -3041,8 +3033,7 @@ recipient_id = %(recipient_id_3)s AND upper(subject) = upper(%(param_2)s))\
         sql_template = "SELECT anon_1.message_id \nFROM (SELECT id AS message_id \nFROM zerver_message \nWHERE recipient_id IN ({public_streams_recipents}) ORDER BY zerver_message.id ASC \n LIMIT 10) AS anon_1 ORDER BY message_id ASC"
         sql = sql_template.format(**query_ids)
         self.common_check_get_messages_query(
-            {"anchor": 0, "num_before": 0, "num_after": 9, "narrow": '[["streams", "public"]]'},
-            sql,
+            {"anchor": 0, "num_before": 0, "num_after": 9, "narrow": '[["streams", "public"]]'}, sql,
         )
 
         sql_template = "SELECT anon_1.message_id, anon_1.flags \nFROM (SELECT message_id, flags \nFROM zerver_usermessage JOIN zerver_message ON zerver_usermessage.message_id = zerver_message.id \nWHERE user_profile_id = {hamlet_id} AND recipient_id NOT IN ({public_streams_recipents}) ORDER BY message_id ASC \n LIMIT 10) AS anon_1 ORDER BY message_id ASC"
@@ -3117,8 +3108,7 @@ WHERE user_profile_id = {hamlet_id} AND (search_tsvector @@ plainto_tsquery('zul
 """
         sql = sql_template.format(**query_ids)
         self.common_check_get_messages_query(
-            {"anchor": 0, "num_before": 0, "num_after": 9, "narrow": '[["search", "jumping"]]'},
-            sql,
+            {"anchor": 0, "num_before": 0, "num_after": 9, "narrow": '[["search", "jumping"]]'}, sql,
         )
 
         sql_template = """\
@@ -3357,9 +3347,7 @@ class MessageHasKeywordsTest(ZulipTestCase):
         dummy_urls = [f"http://zulip.testserver/user_uploads/{x}" for x in dummy_path_ids]
         self.subscribe(hamlet, "Denmark")
 
-        body = ("Files ...[zulip.txt]({}) {} {}").format(
-            dummy_urls[0], dummy_urls[1], dummy_urls[2],
-        )
+        body = ("Files ...[zulip.txt]({}) {} {}").format(dummy_urls[0], dummy_urls[1], dummy_urls[2])
 
         msg_id = self.send_stream_message(hamlet, "Denmark", body, "test")
         msg = Message.objects.get(id=msg_id)

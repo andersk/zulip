@@ -114,9 +114,7 @@ class TypesPrintTest(ZulipTestCase):
             return A(v)
 
         self.check_signature("to_A() -> A([])", A(()), to_A)
-        self.check_signature(
-            "to_A([(int, str)]) -> A([(int, str)])", {2: "two"}, to_A, [(2, "two")],
-        )
+        self.check_signature("to_A([(int, str)]) -> A([(int, str)])", {2: "two"}, to_A, [(2, "two")])
         self.check_signature(
             "to_A([(int, str), ...]) -> A([(int, str), ...])",
             {1: "one", 2: "two"},

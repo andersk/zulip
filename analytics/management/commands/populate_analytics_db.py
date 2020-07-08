@@ -101,9 +101,7 @@ class Command(BaseCommand):
         Subscription.objects.bulk_create(subs)
 
         def insert_fixture_data(
-            stat: CountStat,
-            fixture_data: Mapping[Optional[str], List[int]],
-            table: Type[BaseCount],
+            stat: CountStat, fixture_data: Mapping[Optional[str], List[int]], table: Type[BaseCount],
         ) -> None:
             end_times = time_range(
                 last_end_time, last_end_time, stat.frequency, len(list(fixture_data.values())[0]),

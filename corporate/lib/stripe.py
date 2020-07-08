@@ -373,9 +373,7 @@ def make_end_of_cycle_updates_if_needed(
                 realm=new_plan.customer.realm,
                 event_time=event_time,
                 event_type=RealmAuditLog.CUSTOMER_SWITCHED_FROM_MONTHLY_TO_ANNUAL_PLAN,
-                extra_data=ujson.dumps(
-                    {"monthly_plan_id": plan.id, "annual_plan_id": new_plan.id},
-                ),
+                extra_data=ujson.dumps({"monthly_plan_id": plan.id, "annual_plan_id": new_plan.id}),
             )
             return new_plan, new_plan_ledger_entry
 
@@ -453,12 +451,7 @@ def process_initial_upgrade(
         )
         raise BillingError("subscribing with existing subscription", BillingError.TRY_RELOADING)
 
-    (
-        billing_cycle_anchor,
-        next_invoice_date,
-        period_end,
-        price_per_license,
-    ) = compute_plan_parameters(
+    billing_cycle_anchor, next_invoice_date, period_end, price_per_license = compute_plan_parameters(
         automanage_licenses, billing_schedule, customer.default_discount, free_trial,
     )
     # The main design constraint in this function is that if you upgrade with a credit card, and the
@@ -627,9 +620,7 @@ def invoice_plan(plan: CustomerPlan, event_time: datetime) -> None:
                 .event_time
             )
             period_end = start_of_next_billing_cycle(plan, ledger_entry.event_time)
-            proration_fraction = (period_end - ledger_entry.event_time) / (
-                period_end - last_renewal
-            )
+            proration_fraction = (period_end - ledger_entry.event_time) / (period_end - last_renewal)
             price_args = {
                 "unit_amount": int(plan.price_per_license * proration_fraction + 0.5),
                 "quantity": ledger_entry.licenses - licenses_base,

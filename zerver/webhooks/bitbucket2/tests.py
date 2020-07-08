@@ -256,10 +256,7 @@ class Bitbucket2HookTests(WebhookTestCase):
             "HTTP_X_EVENT_KEY": "pullrequest:comment_created",
         }
         self.send_and_test_stream_message(
-            "pull_request_comment_action",
-            self.EXPECTED_TOPIC_PR_EVENTS,
-            expected_message,
-            **kwargs,
+            "pull_request_comment_action", self.EXPECTED_TOPIC_PR_EVENTS, expected_message, **kwargs,
         )
 
     def test_bitbucket2_on_pull_request_comment_created_with_custom_topic_in_url(self) -> None:
@@ -279,10 +276,7 @@ class Bitbucket2HookTests(WebhookTestCase):
             "HTTP_X_EVENT_KEY": "pullrequest:comment_updated",
         }
         self.send_and_test_stream_message(
-            "pull_request_comment_action",
-            self.EXPECTED_TOPIC_PR_EVENTS,
-            expected_message,
-            **kwargs,
+            "pull_request_comment_action", self.EXPECTED_TOPIC_PR_EVENTS, expected_message, **kwargs,
         )
 
     def test_bitbucket2_on_pull_request_comment_updated_with_custom_topic_in_url(self) -> None:
@@ -302,19 +296,14 @@ class Bitbucket2HookTests(WebhookTestCase):
             "HTTP_X_EVENT_KEY": "pullrequest:comment_deleted",
         }
         self.send_and_test_stream_message(
-            "pull_request_comment_action",
-            self.EXPECTED_TOPIC_PR_EVENTS,
-            expected_message,
-            **kwargs,
+            "pull_request_comment_action", self.EXPECTED_TOPIC_PR_EVENTS, expected_message, **kwargs,
         )
 
     def test_bitbucket2_on_repo_updated_event(self) -> None:
         expected_message = "eeshangarg changed the website of the **new-name** repo to **http://zulipchat.com**.\neeshangarg changed the name of the **new-name** repo from **test-repo** to **new-name**.\neeshangarg changed the language of the **new-name** repo to **python**.\neeshangarg changed the full name of the **new-name** repo from **webhooktest/test-repo** to **webhooktest/new-name**.\neeshangarg changed the description of the **new-name** repo to **Random description.**"
         expected_topic = "new-name"
         kwargs = {"HTTP_X_EVENT_KEY": "repo:updated"}
-        self.send_and_test_stream_message(
-            "repo_updated", expected_topic, expected_message, **kwargs,
-        )
+        self.send_and_test_stream_message("repo_updated", expected_topic, expected_message, **kwargs)
 
     def test_bitbucket2_on_push_one_tag_event(self) -> None:
         expected_message = (
@@ -328,7 +317,9 @@ class Bitbucket2HookTests(WebhookTestCase):
         )
 
     def test_bitbucket2_on_push_remove_tag_event(self) -> None:
-        expected_message = "kolaszek removed tag [a](https://bitbucket.org/kolaszek/repository-name/commits/tag/a)."
+        expected_message = (
+            "kolaszek removed tag [a](https://bitbucket.org/kolaszek/repository-name/commits/tag/a)."
+        )
         kwargs = {
             "HTTP_X_EVENT_KEY": "pullrequest:push",
         }

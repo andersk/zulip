@@ -600,8 +600,7 @@ class ClientDescriptorsTest(ZulipTestCase):
             self.assertEqual(len(client_info), 0)
 
             client_info = get_client_info_for_message_event(
-                message_event,
-                users=[dict(id=cordelia.id), dict(id=hamlet.id, flags=["mentioned"])],
+                message_event, users=[dict(id=cordelia.id), dict(id=hamlet.id, flags=["mentioned"])],
             )
             self.assertEqual(len(client_info), 1)
 
@@ -643,9 +642,7 @@ class ClientDescriptorsTest(ZulipTestCase):
 
         client1 = MockClient(user_profile_id=hamlet.id, apply_markdown=True, client_gravatar=False)
 
-        client2 = MockClient(
-            user_profile_id=hamlet.id, apply_markdown=False, client_gravatar=False,
-        )
+        client2 = MockClient(user_profile_id=hamlet.id, apply_markdown=False, client_gravatar=False)
 
         client3 = MockClient(user_profile_id=hamlet.id, apply_markdown=True, client_gravatar=True)
 
@@ -688,8 +685,7 @@ class ClientDescriptorsTest(ZulipTestCase):
         users: List[Dict[str, Any]] = []
 
         with mock.patch(
-            "zerver.tornado.event_queue.get_client_info_for_message_event",
-            return_value=client_info,
+            "zerver.tornado.event_queue.get_client_info_for_message_event", return_value=client_info,
         ):
             process_message_event(message_event, users)
 

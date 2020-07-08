@@ -169,7 +169,9 @@ Billing method: send invoice"""
 
     def test_customer_discount_created(self) -> None:
         expected_topic = "cus_00000000000000"
-        expected_message = "Discount created ([25.5% off](https://dashboard.stripe.com/coupons/25_00000000000000))."
+        expected_message = (
+            "Discount created ([25.5% off](https://dashboard.stripe.com/coupons/25_00000000000000))."
+        )
         self.send_and_test_stream_message(
             "customer_discount_created",
             expected_topic,

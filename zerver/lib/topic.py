@@ -109,9 +109,7 @@ def user_message_exists_for_topic(
     user_profile: UserProfile, recipient: Recipient, topic_name: str,
 ) -> bool:
     return UserMessage.objects.filter(
-        user_profile=user_profile,
-        message__recipient=recipient,
-        message__subject__iexact=topic_name,
+        user_profile=user_profile, message__recipient=recipient, message__subject__iexact=topic_name,
     ).exists()
 
 

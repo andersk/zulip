@@ -113,9 +113,7 @@ class LibratoWebhookHandler(LibratoWebhookParser):
     def handle_snapshot(self, snapshot: Dict[str, Any]) -> str:
         snapshot_template = "**{author_name}** sent a [snapshot]({image_url}) of [metric]({title})."
         author_name, image_url, title = self.parse_snapshot(snapshot)
-        content = snapshot_template.format(
-            author_name=author_name, image_url=image_url, title=title,
-        )
+        content = snapshot_template.format(author_name=author_name, image_url=image_url, title=title)
         return content
 
     def handle_alert_violation_message(self) -> str:

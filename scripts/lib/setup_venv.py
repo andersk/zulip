@@ -97,16 +97,7 @@ def get_venv_dependencies(vendor: str, os_version: str) -> List[str]:
 
 def install_venv_deps(pip: str, requirements_file: str) -> None:
     pip_requirements = os.path.join(ZULIP_PATH, "requirements", "pip.txt")
-    run(
-        [
-            pip,
-            "install",
-            "--force-reinstall",
-            "--require-hashes",
-            "--requirement",
-            pip_requirements,
-        ],
-    )
+    run([pip, "install", "--force-reinstall", "--require-hashes", "--requirement", pip_requirements])
     run([pip, "install", "--no-deps", "--require-hashes", "--requirement", requirements_file])
 
 
@@ -290,9 +281,7 @@ def setup_virtualenv(
     if target_venv_path is None:
         cached_venv_path = os.path.join(VENV_CACHE_PATH, sha1sum, "venv")
     else:
-        cached_venv_path = os.path.join(
-            VENV_CACHE_PATH, sha1sum, os.path.basename(target_venv_path),
-        )
+        cached_venv_path = os.path.join(VENV_CACHE_PATH, sha1sum, os.path.basename(target_venv_path))
     success_stamp = os.path.join(cached_venv_path, "success-stamp")
     if not os.path.exists(success_stamp):
         do_setup_virtualenv(cached_venv_path, requirements_file)

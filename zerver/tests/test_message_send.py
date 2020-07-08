@@ -214,11 +214,7 @@ class MessagePOSTTest(ZulipTestCase):
         # Cross realm bots should be allowed
         notification_bot = get_system_bot("notification-bot@zulip.com")
         internal_send_stream_message(
-            stream.realm,
-            notification_bot,
-            stream,
-            "Test topic",
-            "Test message by notification bot",
+            stream.realm, notification_bot, stream, "Test topic", "Test message by notification bot",
         )
         self.assertEqual(self.get_last_message().content, "Test message by notification bot")
 
@@ -283,11 +279,7 @@ class MessagePOSTTest(ZulipTestCase):
         # Cross realm bots should be allowed
         notification_bot = get_system_bot("notification-bot@zulip.com")
         internal_send_stream_message(
-            stream.realm,
-            notification_bot,
-            stream,
-            "Test topic",
-            "Test message by notification bot",
+            stream.realm, notification_bot, stream, "Test topic", "Test message by notification bot",
         )
         self.assertEqual(self.get_last_message().content, "Test message by notification bot")
 
@@ -1051,11 +1043,7 @@ class MessagePOSTTest(ZulipTestCase):
         self.make_stream(stream_name, invite_only=True)
 
         payload = dict(
-            type="stream",
-            to=stream_name,
-            client="test suite",
-            topic="whatever",
-            content="whatever",
+            type="stream", to=stream_name, client="test suite", topic="whatever", content="whatever",
         )
 
         result = self.api_post(bot, "/api/v1/messages", payload)
@@ -1099,11 +1087,7 @@ class MessagePOSTTest(ZulipTestCase):
         stream_name = "public stream"
         self.make_stream(stream_name, invite_only=False)
         payload = dict(
-            type="stream",
-            to=stream_name,
-            client="test suite",
-            topic="whatever",
-            content="whatever",
+            type="stream", to=stream_name, client="test suite", topic="whatever", content="whatever",
         )
 
         # Guest user can't send message to unsubscribed public streams

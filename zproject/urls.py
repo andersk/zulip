@@ -213,10 +213,7 @@ v1_api_and_json_patterns = [
     path(
         "bots",
         rest_dispatch,
-        {
-            "GET": "zerver.views.users.get_bots_backend",
-            "POST": "zerver.views.users.add_bot_backend",
-        },
+        {"GET": "zerver.views.users.get_bots_backend", "POST": "zerver.views.users.add_bot_backend"},
     ),
     path(
         "bots/<int:bot_id>/api_key/regenerate",
@@ -263,9 +260,7 @@ v1_api_and_json_patterns = [
         {"DELETE": "zerver.views.invite.revoke_multiuse_invite"},
     ),
     # mark messages as read (in bulk)
-    path(
-        "mark_all_as_read", rest_dispatch, {"POST": "zerver.views.message_flags.mark_all_as_read"},
-    ),
+    path("mark_all_as_read", rest_dispatch, {"POST": "zerver.views.message_flags.mark_all_as_read"}),
     path(
         "mark_stream_as_read",
         rest_dispatch,
@@ -302,9 +297,7 @@ v1_api_and_json_patterns = [
         {"POST": "zerver.views.message_send.render_message_backend"},
     ),
     path(
-        "messages/flags",
-        rest_dispatch,
-        {"POST": "zerver.views.message_flags.update_message_flags"},
+        "messages/flags", rest_dispatch, {"POST": "zerver.views.message_flags.update_message_flags"},
     ),
     path(
         "messages/<int:message_id>/history",
@@ -661,13 +654,9 @@ i18n_urls = [
     # apps; see https://github.com/zulip/zulip/issues/13081 for
     # background.  We can remove this once older versions of the
     # mobile app are no longer present in the wild.
-    re_path(
-        r"accounts/login/(google)/$", zerver.views.auth.start_social_login, name="login-social",
-    ),
+    re_path(r"accounts/login/(google)/$", zerver.views.auth.start_social_login, name="login-social"),
     path(
-        "accounts/login/start/sso/",
-        zerver.views.auth.start_remote_user_sso,
-        name="start-login-sso",
+        "accounts/login/start/sso/", zerver.views.auth.start_remote_user_sso, name="start-login-sso",
     ),
     path("accounts/login/sso/", zerver.views.auth.remote_user_sso, name="login-sso"),
     path("accounts/login/jwt/", zerver.views.auth.remote_user_jwt, name="login-jwt"),

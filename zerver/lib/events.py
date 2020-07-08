@@ -894,9 +894,7 @@ def do_events_register(
 
     notification_settings_null = client_capabilities.get("notification_settings_null", False)
     bulk_message_deletion = client_capabilities.get("bulk_message_deletion", False)
-    user_avatar_url_field_optional = client_capabilities.get(
-        "user_avatar_url_field_optional", False,
-    )
+    user_avatar_url_field_optional = client_capabilities.get("user_avatar_url_field_optional", False)
 
     if user_profile.realm.email_address_visibility != Realm.EMAIL_ADDRESS_VISIBILITY_EVERYONE:
         # If real email addresses are not available to the user, their

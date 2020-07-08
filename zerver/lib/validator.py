@@ -353,9 +353,7 @@ def validate_choice_field_data(field_data: ProfileFieldData) -> Dict[str, Dict[s
     This function is used to validate the data sent to the server while
     creating/editing choices of the choice field in Organization settings.
     """
-    validator = check_dict_only(
-        [("text", check_required_string), ("order", check_required_string)],
-    )
+    validator = check_dict_only([("text", check_required_string), ("order", check_required_string)])
 
     for key, value in field_data.items():
         if not key.strip():
@@ -415,11 +413,7 @@ def check_widget_content(widget_content: object) -> Dict[str, Any]:
             # We re-check "type" here just to avoid it looking
             # like we have extraneous keys.
             checker = check_dict(
-                [
-                    ("type", equals("choices")),
-                    ("heading", check_string),
-                    ("choices", check_choices),
-                ],
+                [("type", equals("choices")), ("heading", check_string), ("choices", check_choices)],
             )
 
             checker("extra_data", extra_data)

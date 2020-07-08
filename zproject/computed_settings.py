@@ -356,10 +356,7 @@ CACHES = {
 RATE_LIMITING_RULES = {
     "api_by_user": [(60, 200)],  # 200 requests max every minute
     "authenticate_by_username": [(1800, 5)],  # 5 login attempts within 30 minutes
-    "password_reset_form_by_email": [
-        (3600, 2),  # 2 reset emails per hour
-        (86400, 5),  # 5 per day
-    ],
+    "password_reset_form_by_email": [(3600, 2), (86400, 5)],  # 2 reset emails per hour  # 5 per day
 }
 
 # List of domains that, when applied to a request in a Tornado process,

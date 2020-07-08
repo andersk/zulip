@@ -236,12 +236,7 @@ python_rules = RuleList(
             "good_lines": ["topic_name"],
             "bad_lines": ['subject="foo"', " MAX_SUBJECT_LEN"],
             "exclude": FILES_WITH_LEGACY_SUBJECT,
-            "include_only": {
-                "zerver/data_import/",
-                "zerver/lib/",
-                "zerver/tests/",
-                "zerver/views/",
-            },
+            "include_only": {"zerver/data_import/", "zerver/lib/", "zerver/tests/", "zerver/views/"},
         },
         {
             "pattern": "msgid|MSGID",

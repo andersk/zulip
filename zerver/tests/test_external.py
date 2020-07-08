@@ -142,6 +142,5 @@ class RateLimitTests(ZulipTestCase):
             result = self.send_api_message(user, "some stuff")
             self.assertEqual(result.status_code, 429)
             mock_warn.assert_called_with(
-                "Deadlock trying to incr_ratelimit for %s",
-                f"RateLimitedUser:{user.id}:api_by_user",
+                "Deadlock trying to incr_ratelimit for %s", f"RateLimitedUser:{user.id}:api_by_user",
             )

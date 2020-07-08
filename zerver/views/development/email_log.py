@@ -28,9 +28,7 @@ def email_page(request: HttpRequest) -> HttpResponse:
     except FileNotFoundError:
         content = ""
     return render(
-        request,
-        "zerver/email_log.html",
-        {"log": content, "forward_address": get_forward_address()},
+        request, "zerver/email_log.html", {"log": content, "forward_address": get_forward_address()},
     )
 
 
@@ -85,9 +83,7 @@ def generate_all_emails(request: HttpRequest) -> HttpResponse:
     )
     assert result.status_code == 302
     # no account anywhere
-    result = client.post(
-        "/accounts/password/reset/", {"email": unregistered_email_1}, **host_kwargs,
-    )
+    result = client.post("/accounts/password/reset/", {"email": unregistered_email_1}, **host_kwargs)
     assert result.status_code == 302
 
     # Confirm account email

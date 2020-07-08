@@ -372,9 +372,7 @@ class MarkdownTest(ZulipTestCase):
 
     def load_markdown_tests(self) -> Tuple[Dict[str, Any], List[List[str]]]:
         test_fixtures = {}
-        with open(
-            os.path.join(os.path.dirname(__file__), "fixtures/markdown_test_cases.json"),
-        ) as f:
+        with open(os.path.join(os.path.dirname(__file__), "fixtures/markdown_test_cases.json")) as f:
             data = ujson.load(f)
         for test in data["regular_tests"]:
             test_fixtures[test["name"]] = test
@@ -814,9 +812,7 @@ class MarkdownTest(ZulipTestCase):
             "409030735191097344",
         )
         self.assertEqual(get_tweet_id("https://twitter.com/wdaher/status/1017581858"), "1017581858")
-        self.assertEqual(
-            get_tweet_id("https://twitter.com/wdaher/status/1017581858/"), "1017581858",
-        )
+        self.assertEqual(get_tweet_id("https://twitter.com/wdaher/status/1017581858/"), "1017581858")
         self.assertEqual(
             get_tweet_id("https://twitter.com/windyoona/status/410766290349879296/photo/1"),
             "410766290349879296",
@@ -898,9 +894,7 @@ class MarkdownTest(ZulipTestCase):
         converted = markdown_convert_wrapper(msg)
         self.assertEqual(
             converted,
-            "<p>{}</p>".format(
-                make_link("http://www.twitter.com/wdaher/status/999999999999999999"),
-            ),
+            "<p>{}</p>".format(make_link("http://www.twitter.com/wdaher/status/999999999999999999")),
         )
 
         msg = "http://www.twitter.com/wdaher/status/287977969287315456"
@@ -1798,9 +1792,7 @@ class MarkdownTest(ZulipTestCase):
         cordelia = self.example_user("cordelia")
         msg = Message(sender=sender_user_profile, sending_client=get_client("test"))
 
-        content = (
-            f"@**Mark Twin|{twin1.id}**, @**Mark Twin|{twin2.id}** and @**Cordelia Lear**, hi."
-        )
+        content = f"@**Mark Twin|{twin1.id}**, @**Mark Twin|{twin2.id}** and @**Cordelia Lear**, hi."
 
         self.assertEqual(
             render_markdown(msg, content),

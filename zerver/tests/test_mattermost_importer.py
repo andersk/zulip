@@ -299,9 +299,7 @@ class MatterMostImporter(ZulipTestCase):
             {malfoy_id, pansy_id, snape_id},
         )
         self.assertEqual(
-            subscriber_handler.get_users(
-                stream_id=stream_id_mapper.get("slytherin-quidditch-team"),
-            ),
+            subscriber_handler.get_users(stream_id=stream_id_mapper.get("slytherin-quidditch-team")),
             {malfoy_id, pansy_id},
         )
 
@@ -540,9 +538,7 @@ class MatterMostImporter(ZulipTestCase):
             self.get_set(total_reactions, "reaction_type"),
             {Reaction.REALM_EMOJI, Reaction.UNICODE_EMOJI},
         )
-        self.assertEqual(
-            self.get_set(total_reactions, "emoji_name"), {"tick", "smile", "world_map"},
-        )
+        self.assertEqual(self.get_set(total_reactions, "emoji_name"), {"tick", "smile", "world_map"})
         self.assertEqual(
             self.get_set(total_reactions, "emoji_code"),
             {tick_emoji_code, smile_emoji_code, world_map_emoji_code},
@@ -667,8 +663,7 @@ class MatterMostImporter(ZulipTestCase):
         exported_user_ids = self.get_set(realm["zerver_userprofile"], "id")
         exported_user_full_names = self.get_set(realm["zerver_userprofile"], "full_name")
         self.assertEqual(
-            {"Harry Potter", "Ron Weasley", "Ginny Weasley", "Tom Riddle"},
-            exported_user_full_names,
+            {"Harry Potter", "Ron Weasley", "Ginny Weasley", "Tom Riddle"}, exported_user_full_names,
         )
 
         exported_user_emails = self.get_set(realm["zerver_userprofile"], "email")
@@ -742,9 +737,7 @@ class MatterMostImporter(ZulipTestCase):
         self.assertEqual(huddle_messages[0].sender.email, "ginny@zulip.com")
         self.assertEqual(huddle_messages[0].content, "Who is going to Hogesmead this weekend?\n\n")
 
-        personal_messages = messages.filter(recipient__type=Recipient.PERSONAL).order_by(
-            "date_sent",
-        )
+        personal_messages = messages.filter(recipient__type=Recipient.PERSONAL).order_by("date_sent")
         personal_recipients = personal_messages.values_list("recipient", flat=True)
         self.assertEqual(len(personal_messages), 4)
         self.assertEqual(len(set(personal_recipients)), 3)

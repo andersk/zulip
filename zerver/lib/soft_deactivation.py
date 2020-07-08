@@ -309,9 +309,7 @@ def reactivate_user_if_soft_deactivated(user_profile: UserProfile) -> Union[User
     return None
 
 
-def get_users_for_soft_deactivation(
-    inactive_for_days: int, filter_kwargs: Any,
-) -> List[UserProfile]:
+def get_users_for_soft_deactivation(inactive_for_days: int, filter_kwargs: Any) -> List[UserProfile]:
     users_activity = list(
         UserActivity.objects.filter(
             user_profile__is_active=True,

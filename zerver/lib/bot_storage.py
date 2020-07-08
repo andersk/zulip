@@ -29,9 +29,7 @@ def get_bot_storage_size(bot_profile: UserProfile, key: Optional[str] = None) ->
         )
     else:
         try:
-            return len(key) + len(
-                BotStorageData.objects.get(bot_profile=bot_profile, key=key).value,
-            )
+            return len(key) + len(BotStorageData.objects.get(bot_profile=bot_profile, key=key).value)
         except BotStorageData.DoesNotExist:
             return 0
 
@@ -69,6 +67,4 @@ def is_key_in_bot_storage(bot_profile: UserProfile, key: str) -> bool:
 
 
 def get_keys_in_bot_storage(bot_profile: UserProfile) -> List[str]:
-    return list(
-        BotStorageData.objects.filter(bot_profile=bot_profile).values_list("key", flat=True),
-    )
+    return list(BotStorageData.objects.filter(bot_profile=bot_profile).values_list("key", flat=True))

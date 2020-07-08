@@ -71,9 +71,7 @@ class UserGroupTestCase(ZulipTestCase):
         self.assertTrue(check_remove_user_from_user_group(othello, user_group))
         self.assertFalse(check_remove_user_from_user_group(othello, user_group))
 
-        with mock.patch(
-            "zerver.lib.user_groups.remove_user_from_user_group", side_effect=Exception,
-        ):
+        with mock.patch("zerver.lib.user_groups.remove_user_from_user_group", side_effect=Exception):
             self.assertFalse(check_remove_user_from_user_group(othello, user_group))
 
 
@@ -119,8 +117,7 @@ class UserGroupAPITestCase(ZulipTestCase):
         result = self.client_get("/json/user_groups")
         self.assert_json_success(result)
         self.assert_length(
-            result.json()["user_groups"],
-            UserGroup.objects.filter(realm=user_profile.realm).count(),
+            result.json()["user_groups"], UserGroup.objects.filter(realm=user_profile.realm).count(),
         )
 
     def test_user_group_create_by_guest_user(self) -> None:

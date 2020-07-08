@@ -22,9 +22,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="stream",
-            name="is_in_zephyr_realm",
-            field=models.BooleanField(default=False),
+            model_name="stream", name="is_in_zephyr_realm", field=models.BooleanField(default=False),
         ),
         migrations.RunPython(
             populate_is_zephyr, reverse_code=migrations.RunPython.noop, elidable=True,

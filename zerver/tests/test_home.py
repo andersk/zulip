@@ -422,9 +422,7 @@ class HomeTest(ZulipTestCase):
         user.tos_version = None
         user.save()
 
-        with self.settings(FIRST_TIME_TOS_TEMPLATE="hello.html"), self.settings(
-            TOS_VERSION="99.99",
-        ):
+        with self.settings(FIRST_TIME_TOS_TEMPLATE="hello.html"), self.settings(TOS_VERSION="99.99"):
             result = self.client_post("/accounts/accept_terms/")
             self.assertEqual(result.status_code, 200)
             self.assert_in_response("I agree to the", result)
@@ -774,15 +772,13 @@ class HomeTest(ZulipTestCase):
         page_params = {"color_scheme": user_profile.COLOR_SCHEME_NIGHT}
         add_realm_logo_fields(page_params, user_profile.realm)
         self.assertEqual(
-            compute_navbar_logo_url(page_params),
-            "/static/images/logo/zulip-org-logo.png?version=0",
+            compute_navbar_logo_url(page_params), "/static/images/logo/zulip-org-logo.png?version=0",
         )
 
         page_params = {"color_scheme": user_profile.COLOR_SCHEME_LIGHT}
         add_realm_logo_fields(page_params, user_profile.realm)
         self.assertEqual(
-            compute_navbar_logo_url(page_params),
-            "/static/images/logo/zulip-org-logo.png?version=0",
+            compute_navbar_logo_url(page_params), "/static/images/logo/zulip-org-logo.png?version=0",
         )
 
         do_change_logo_source(
@@ -834,8 +830,7 @@ class HomeTest(ZulipTestCase):
         page_params = {"color_scheme": user_profile.COLOR_SCHEME_LIGHT}
         add_realm_logo_fields(page_params, user_profile.realm)
         self.assertEqual(
-            compute_navbar_logo_url(page_params),
-            "/static/images/logo/zulip-org-logo.png?version=0",
+            compute_navbar_logo_url(page_params), "/static/images/logo/zulip-org-logo.png?version=0",
         )
 
     def test_generate_204(self) -> None:
@@ -849,8 +844,7 @@ class HomeTest(ZulipTestCase):
         hamlet = self.example_user("hamlet")
         self.login_user(hamlet)
         self.client_post(
-            "/json/messages/flags",
-            {"messages": ujson.dumps([msg_id]), "op": "add", "flag": "read"},
+            "/json/messages/flags", {"messages": ujson.dumps([msg_id]), "op": "add", "flag": "read"},
         )
 
         # Manually process the UserActivity
@@ -908,9 +902,7 @@ class HomeTest(ZulipTestCase):
         sender = self.example_user(sender_name)
         return self.send_stream_message(sender, stream_name, content=content, topic_name=topic_name)
 
-    def soft_activate_and_get_unread_count(
-        self, stream: str = "Denmark", topic: str = "foo",
-    ) -> int:
+    def soft_activate_and_get_unread_count(self, stream: str = "Denmark", topic: str = "foo") -> int:
         stream_narrow = self._get_home_page(stream=stream, topic=topic)
         page_params = self._get_page_params(stream_narrow)
         return page_params["unread_msgs"]["count"]

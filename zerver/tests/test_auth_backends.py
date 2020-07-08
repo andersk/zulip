@@ -489,9 +489,7 @@ class AuthBackendTest(ZulipTestCase):
             dict(email="nonprimary@zulip.com", verified=True),
             dict(email="ignored@example.com", verified=False),
         ]
-        google_email_data = dict(
-            email=user.delivery_email, name=user.full_name, email_verified=True,
-        )
+        google_email_data = dict(email=user.delivery_email, name=user.full_name, email_verified=True)
         backends_to_test: Dict[str, Any] = {
             "google": {
                 "urls": [
@@ -757,9 +755,7 @@ class DesktopFlowTestingLib(ZulipTestCase):
         self.assertEqual(browser_url, "/login/")
         decrypted_key = self.verify_desktop_data_and_return_key(desktop_data, desktop_flow_otp)
 
-        result = self.client_get(
-            f"http://zulip.testserver/accounts/login/subdomain/{decrypted_key}",
-        )
+        result = self.client_get(f"http://zulip.testserver/accounts/login/subdomain/{decrypted_key}")
         self.assertEqual(result.status_code, 302)
         realm = get_realm("zulip")
         user_profile = get_user_by_delivery_email(email, realm)
@@ -1062,8 +1058,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
             m.output,
             [
                 self.logger_output(
-                    f"Failed login attempt for deactivated account: {user_profile.id}@zulip",
-                    "info",
+                    f"Failed login attempt for deactivated account: {user_profile.id}@zulip", "info",
                 ),
             ],
         )
@@ -1159,9 +1154,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
         account_data_dict = self.get_account_data_dict(email=self.email, name="Full Name")
 
         # Verify that the right thing happens with an invalid-format OTP
-        result = self.social_auth_test(
-            account_data_dict, subdomain="zulip", desktop_flow_otp="1234",
-        )
+        result = self.social_auth_test(account_data_dict, subdomain="zulip", desktop_flow_otp="1234")
         self.assert_json_error(result, "Invalid OTP")
         result = self.social_auth_test(
             account_data_dict, subdomain="zulip", desktop_flow_otp="invalido" * 8,
@@ -2825,8 +2818,7 @@ class GitHubAuthBackendTest(SocialAuthBase):
     def test_social_auth_github_team_member_success(self) -> None:
         account_data_dict = self.get_account_data_dict(email=self.email, name=self.name)
         with mock.patch(
-            "social_core.backends.github.GithubTeamOAuth2.user_data",
-            return_value=account_data_dict,
+            "social_core.backends.github.GithubTeamOAuth2.user_data", return_value=account_data_dict,
         ):
             result = self.social_auth_test(
                 account_data_dict, expect_choose_email_screen=False, subdomain="zulip",
@@ -4308,9 +4300,7 @@ class TestZulipRemoteUserBackend(DesktopFlowTestingLib, ZulipTestCase):
         self.assert_json_error_contains(result, "Invalid OTP", 400)
 
         result = self.client_get(
-            "/accounts/login/sso/",
-            dict(desktop_flow_otp=desktop_flow_otp),
-            REMOTE_USER=remote_user,
+            "/accounts/login/sso/", dict(desktop_flow_otp=desktop_flow_otp), REMOTE_USER=remote_user,
         )
         self.verify_desktop_flow_end_page(result, email, desktop_flow_otp)
 
@@ -5122,9 +5112,7 @@ class TestZulipLDAPUserPopulator(ZulipLDAPTestCase):
                 self.assertEqual(hamlet.full_name, "King Hamlet")
 
     def test_user_not_found_in_ldap(self) -> None:
-        with self.settings(
-            LDAP_DEACTIVATE_NON_MATCHING_USERS=False, LDAP_APPEND_DOMAIN="zulip.com",
-        ):
+        with self.settings(LDAP_DEACTIVATE_NON_MATCHING_USERS=False, LDAP_APPEND_DOMAIN="zulip.com"):
             othello = self.example_user("othello")  # othello isn't in our test directory
             mock_logger = mock.MagicMock()
             result = sync_user_from_ldap(othello, mock_logger)
@@ -5229,9 +5217,7 @@ class TestZulipLDAPUserPopulator(ZulipLDAPTestCase):
         ]
         for test_case in test_data:
             field = CustomProfileField.objects.get(realm=hamlet.realm, name=test_case["field_name"])
-            field_value = CustomProfileFieldValue.objects.get(
-                user_profile=hamlet, field=field,
-            ).value
+            field_value = CustomProfileFieldValue.objects.get(user_profile=hamlet, field=field).value
             self.assertEqual(field_value, test_case["expected_value"])
 
     def test_update_non_existent_profile_field(self) -> None:

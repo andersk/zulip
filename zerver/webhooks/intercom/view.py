@@ -235,9 +235,7 @@ def get_user_tagged_message(payload: Dict[str, Any], action: str) -> Tuple[str, 
     user = payload["data"]["item"]["user"]
     tag = payload["data"]["item"]["tag"]
     topic = get_topic_for_contacts(user)
-    body = "The tag `{tag_name}` was {action} the user.".format(
-        tag_name=tag["name"], action=action,
-    )
+    body = "The tag `{tag_name}` was {action} the user.".format(tag_name=tag["name"], action=action)
     return (topic, body)
 
 
@@ -260,9 +258,7 @@ EVENT_TO_FUNCTION_MAPPER = {
     "conversation.admin.opened": partial(get_conversation_admin_message, action="opened"),
     "conversation.admin.snoozed": partial(get_conversation_admin_message, action="snoozed"),
     "conversation.admin.unsnoozed": partial(get_conversation_admin_message, action="unsnoozed"),
-    "conversation.admin.replied": partial(
-        get_conversation_admin_reply_message, action="replied to",
-    ),
+    "conversation.admin.replied": partial(get_conversation_admin_reply_message, action="replied to"),
     "conversation.admin.noted": partial(
         get_conversation_admin_reply_message, action="added a note to",
     ),

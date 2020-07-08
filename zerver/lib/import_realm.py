@@ -162,9 +162,7 @@ def fix_upload_links(data: TableData, message_table: TableName) -> None:
                 if key in message["content"]:
                     message["content"] = message["content"].replace(key, value)
                     if message["rendered_content"]:
-                        message["rendered_content"] = message["rendered_content"].replace(
-                            key, value,
-                        )
+                        message["rendered_content"] = message["rendered_content"].replace(key, value)
 
 
 def create_subscription_events(data: TableData, realm_id: int) -> None:
@@ -935,18 +933,12 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
     update_model_ids(UserProfile, data, "user_profile")
     re_map_foreign_keys(data, "zerver_userprofile", "realm", related_table="realm")
     re_map_foreign_keys(data, "zerver_userprofile", "bot_owner", related_table="user_profile")
-    re_map_foreign_keys(
-        data, "zerver_userprofile", "default_sending_stream", related_table="stream",
-    )
+    re_map_foreign_keys(data, "zerver_userprofile", "default_sending_stream", related_table="stream")
     re_map_foreign_keys(
         data, "zerver_userprofile", "default_events_register_stream", related_table="stream",
     )
     re_map_foreign_keys(
-        data,
-        "zerver_userprofile",
-        "last_active_message_id",
-        related_table="message",
-        id_field=True,
+        data, "zerver_userprofile", "last_active_message_id", related_table="message", id_field=True,
     )
     for user_profile_dict in data["zerver_userprofile"]:
         user_profile_dict["password"] = None
@@ -1324,9 +1316,7 @@ def import_message_data(realm: Realm, sender_map: Dict[int, Record], import_dir:
         # guaranteed to have already imported all the Message objects
         # for this batch of UserMessage objects.
         re_map_foreign_keys(data, "zerver_usermessage", "message", related_table="message")
-        re_map_foreign_keys(
-            data, "zerver_usermessage", "user_profile", related_table="user_profile",
-        )
+        re_map_foreign_keys(data, "zerver_usermessage", "user_profile", related_table="user_profile")
         fix_bitfield_keys(data, "zerver_usermessage", "flags")
 
         bulk_import_user_message_data(data, dump_file_id)
