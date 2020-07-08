@@ -118,10 +118,7 @@ class CreateCustomProfileFieldTest(CustomProfileFieldTestCase):
         self.assert_json_error(result, "Field must have at least one choice.")
 
         data["field_data"] = ujson.dumps(
-            {
-                "python": {"text": "Python", "order": "1"},
-                "java": {"text": "Java", "order": "2"},
-            },
+            {"python": {"text": "Python", "order": "1"}, "java": {"text": "Java", "order": "2"}},
         )
         result = self.client_post("/json/realm/profile_fields", info=data)
         self.assert_json_success(result)
@@ -167,10 +164,7 @@ class CreateCustomProfileFieldTest(CustomProfileFieldTestCase):
         field = CustomProfileField.objects.get(name="Twitter", realm=realm)
         result = self.client_patch(
             f"/json/realm/profile_fields/{field.id}",
-            info={
-                "name": "Twitter username",
-                "field_type": CustomProfileField.EXTERNAL_ACCOUNT,
-            },
+            info={"name": "Twitter username", "field_type": CustomProfileField.EXTERNAL_ACCOUNT},
         )
         self.assert_json_error(result, "Default custom field cannot be updated.")
 

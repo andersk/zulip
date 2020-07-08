@@ -397,8 +397,7 @@ def notify_new_user(user_profile: UserProfile) -> None:
         with override_language(admin_realm.default_language):
             # We intentionally use the same strings as above to avoid translation burden.
             message = _("{user} just signed up for Zulip. (total: {user_count})").format(
-                user=f"{user_profile.full_name} <`{user_profile.email}`>",
-                user_count=user_count,
+                user=f"{user_profile.full_name} <`{user_profile.email}`>", user_count=user_count,
             )
             internal_send_stream_message(
                 admin_realm,
@@ -719,13 +718,7 @@ def do_activate_user(
     user_profile.date_joined = timezone_now()
     user_profile.tos_version = settings.TOS_VERSION
     user_profile.save(
-        update_fields=[
-            "is_active",
-            "date_joined",
-            "password",
-            "is_mirror_dummy",
-            "tos_version",
-        ],
+        update_fields=["is_active", "date_joined", "password", "is_mirror_dummy", "tos_version"],
     )
 
     event_time = user_profile.date_joined
@@ -926,9 +919,7 @@ def do_set_realm_notifications_stream(
 ) -> None:
     realm.notifications_stream = stream
     realm.save(update_fields=["notifications_stream"])
-    event = dict(
-        type="realm", op="update", property="notifications_stream_id", value=stream_id,
-    )
+    event = dict(type="realm", op="update", property="notifications_stream_id", value=stream_id)
     send_event(realm, event, active_user_ids(realm.id))
 
 
@@ -1467,9 +1458,7 @@ def get_recipient_info(
     # sure we have the data we need for that without extra database
     # queries.
     default_bot_user_ids = {
-        row["id"]
-        for row in rows
-        if row["is_bot"] and row["bot_type"] == UserProfile.DEFAULT_BOT
+        row["id"] for row in rows if row["is_bot"] and row["bot_type"] == UserProfile.DEFAULT_BOT
     }
 
     service_bot_tuples = [(row["id"], row["bot_type"]) for row in rows if is_service_bot(row)]
@@ -2009,9 +1998,7 @@ def notify_reaction_update(
     send_event(user_profile.realm, event, [um.user_profile_id for um in ums])
 
 
-def do_add_reaction_legacy(
-    user_profile: UserProfile, message: Message, emoji_name: str,
-) -> None:
+def do_add_reaction_legacy(user_profile: UserProfile, message: Message, emoji_name: str) -> None:
     (emoji_code, reaction_type) = emoji_name_to_emoji_code(user_profile.realm, emoji_name)
     reaction = Reaction(
         user_profile=user_profile,
@@ -2080,10 +2067,7 @@ def do_remove_reaction(
 
 
 def do_send_typing_notification(
-    realm: Realm,
-    sender: UserProfile,
-    recipient_user_profiles: List[UserProfile],
-    operator: str,
+    realm: Realm, sender: UserProfile, recipient_user_profiles: List[UserProfile], operator: str,
 ) -> None:
 
     sender_dict = {"user_id": sender.id, "email": sender.email}
@@ -2227,9 +2211,7 @@ def validate_recipient_user_profiles(
             realms.add(user_profile.realm_id)
 
     if len(realms) > 1:
-        raise ValidationError(
-            _("You can't send private messages outside of your organization."),
-        )
+        raise ValidationError(_("You can't send private messages outside of your organization."))
 
     return list(recipient_profiles_map.values())
 
@@ -3299,10 +3281,7 @@ def bulk_add_subscriptions(
         if peer_user_ids:
             for new_user_id in new_user_ids:
                 event = dict(
-                    type="subscription",
-                    op="peer_add",
-                    stream_id=stream.id,
-                    user_id=new_user_id,
+                    type="subscription", op="peer_add", stream_id=stream.id, user_id=new_user_id,
                 )
                 send_event(realm, event, peer_user_ids)
 
@@ -3509,11 +3488,7 @@ def log_subscription_property_change(
 
 
 def do_change_subscription_property(
-    user_profile: UserProfile,
-    sub: Subscription,
-    stream: Stream,
-    property_name: str,
-    value: Any,
+    user_profile: UserProfile, sub: Subscription, stream: Stream, property_name: str, value: Any,
 ) -> None:
     database_property_name = property_name
     event_property_name = property_name
@@ -3779,9 +3754,7 @@ def do_change_avatar_fields(
         notify_avatar_url_change(user_profile)
 
 
-def do_delete_avatar_image(
-    user: UserProfile, acting_user: Optional[UserProfile] = None,
-) -> None:
+def do_delete_avatar_image(user: UserProfile, acting_user: Optional[UserProfile] = None) -> None:
     do_change_avatar_fields(user, UserProfile.AVATAR_FROM_GRAVATAR, acting_user=acting_user)
     delete_avatar_image(user)
 
@@ -4420,9 +4393,7 @@ def do_change_default_stream_group_name(
         )
 
     if DefaultStreamGroup.objects.filter(name=new_group_name, realm=realm).exists():
-        raise JsonableError(
-            _("Default stream group '{}' already exists").format(new_group_name),
-        )
+        raise JsonableError(_("Default stream group '{}' already exists").format(new_group_name))
 
     group.name = new_group_name
     group.save()
@@ -4474,9 +4445,7 @@ def do_update_user_activity_interval(
     # up creating two overlapping intervals, but that shouldn't happen
     # often, and can be corrected for in post-processing
     try:
-        last = UserActivityInterval.objects.filter(user_profile=user_profile).order_by("-end")[
-            0
-        ]
+        last = UserActivityInterval.objects.filter(user_profile=user_profile).order_by("-end")[0]
         # There are two ways our intervals could overlap:
         # (1) The start of the new interval could be inside the old interval
         # (2) The end of the new interval could be inside the old interval
@@ -5171,9 +5140,7 @@ def do_update_message(
             "user_profile",
         )
         subs_to_new_stream = list(
-            get_active_subscriptions_for_stream_id(new_stream.id).select_related(
-                "user_profile",
-            ),
+            get_active_subscriptions_for_stream_id(new_stream.id).select_related("user_profile"),
         )
 
         new_stream_sub_ids = [user.user_profile_id for user in subs_to_new_stream]
@@ -6025,9 +5992,7 @@ def do_revoke_user_invite(prereg_user: PreregistrationUser) -> None:
 
 def do_revoke_multi_use_invite(multiuse_invite: MultiuseInvite) -> None:
     content_type = ContentType.objects.get_for_model(MultiuseInvite)
-    Confirmation.objects.filter(
-        content_type=content_type, object_id=multiuse_invite.id,
-    ).delete()
+    Confirmation.objects.filter(content_type=content_type, object_id=multiuse_invite.id).delete()
     multiuse_invite.delete()
     notify_invites_changed(multiuse_invite.referred_by)
 
@@ -6152,9 +6117,7 @@ def notify_realm_filters(realm: Realm) -> None:
 def do_add_realm_filter(realm: Realm, pattern: str, url_format_string: str) -> int:
     pattern = pattern.strip()
     url_format_string = url_format_string.strip()
-    realm_filter = RealmFilter(
-        realm=realm, pattern=pattern, url_format_string=url_format_string,
-    )
+    realm_filter = RealmFilter(realm=realm, pattern=pattern, url_format_string=url_format_string)
     realm_filter.full_clean()
     realm_filter.save()
     notify_realm_filters(realm)
@@ -6534,9 +6497,7 @@ def do_update_user_custom_profile_data_if_changed(
 def check_remove_custom_profile_field_value(user_profile: UserProfile, field_id: int) -> None:
     try:
         field = CustomProfileField.objects.get(realm=user_profile.realm, id=field_id)
-        field_value = CustomProfileFieldValue.objects.get(
-            field=field, user_profile=user_profile,
-        )
+        field_value = CustomProfileFieldValue.objects.get(field=field, user_profile=user_profile)
         field_value.delete()
         notify_user_update_custom_profile_data(
             user_profile,

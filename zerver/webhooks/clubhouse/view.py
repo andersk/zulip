@@ -52,8 +52,7 @@ STORY_UPDATE_PROJECT_TEMPLATE = (
     "The story {name_template} was moved from" " the **{old}** project to **{new}**."
 )
 STORY_UPDATE_TYPE_TEMPLATE = (
-    "The type of the story {name_template} was changed"
-    " from **{old_type}** to **{new_type}**."
+    "The type of the story {name_template} was changed" " from **{old_type}** to **{new_type}**."
 )
 DELETE_TEMPLATE = "The {entity_type} **{name}** was deleted."
 STORY_UPDATE_OWNER_TEMPLATE = "New owner added to the story {name_template}."

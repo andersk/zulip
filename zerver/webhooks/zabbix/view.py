@@ -42,9 +42,7 @@ def api_zabbix_webhook(
         message = MISCONFIGURED_PAYLOAD_ERROR_MESSAGE.format(
             bot_name=user_profile.full_name, support_email=FromAddress.SUPPORT,
         ).strip()
-        send_rate_limited_pm_notification_to_bot_owner(
-            user_profile, user_profile.realm, message,
-        )
+        send_rate_limited_pm_notification_to_bot_owner(user_profile, user_profile.realm, message)
 
         return json_error(_("Invalid payload"))
 

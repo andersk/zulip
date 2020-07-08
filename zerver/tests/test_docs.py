@@ -175,9 +175,7 @@ class DocPageTest(ZulipTestCase):
         # Why Zulip
         url = "/why-zulip/"
         title = '<meta property="og:title" content="Team chat with first-class threading">'
-        description = (
-            '<meta property="og:description" content="Most team chats are overwhelming'
-        )
+        description = '<meta property="og:description" content="Most team chats are overwhelming'
         self._test(url, title, doc_html_str=True)
         self._test(url, description, doc_html_str=True)
 

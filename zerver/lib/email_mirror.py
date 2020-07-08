@@ -60,9 +60,7 @@ def redact_email_address(error_message: str) -> str:
         else:
             try:
                 target_stream_id = decode_stream_email_address(email_address)[0].id
-                annotated_address = (
-                    f"{email_address} <Address to stream id: {target_stream_id}>"
-                )
+                annotated_address = f"{email_address} <Address to stream id: {target_stream_id}>"
                 redacted_message = error_message.replace(email_address, annotated_address)
             except ZulipEmailForwardError:
                 redacted_message = error_message.replace(
@@ -258,9 +256,7 @@ def extract_body(
 talon_initialized = False
 
 
-def extract_plaintext_body(
-    message: EmailMessage, include_quotes: bool = False,
-) -> Optional[str]:
+def extract_plaintext_body(message: EmailMessage, include_quotes: bool = False) -> Optional[str]:
     import talon
 
     global talon_initialized

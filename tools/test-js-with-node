@@ -273,9 +273,7 @@ def check_line_coverage(
         if log:
             print_error(f"{fn} no longer has complete node test coverage")
             print(
-                "  Lines missing coverage: {}".format(
-                    ", ".join(sorted(missing_lines, key=int)),
-                ),
+                "  Lines missing coverage: {}".format(", ".join(sorted(missing_lines, key=int))),
             )
             print()
         return False

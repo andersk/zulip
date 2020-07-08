@@ -61,10 +61,7 @@ parser.add_argument(
     "--streamlined", action="store_true", default=False, help="Avoid thumbor, etc.",
 )
 parser.add_argument(
-    "--force",
-    action="store_true",
-    default=False,
-    help="Run command despite possible problems.",
+    "--force", action="store_true", default=False, help="Run command despite possible problems.",
 )
 parser.add_argument(
     "--enable-tornado-logging",

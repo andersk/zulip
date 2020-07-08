@@ -148,9 +148,7 @@ class GogsHookTests(WebhookTestCase):
     def test_issue_comment_new(self) -> None:
         expected_topic = "test / Issue #3 New test issue"
         expected_message = """kostekIV [commented](https://try.gogs.io/kostekIV/test/issues/3#issuecomment-3635) on [Issue #3](https://try.gogs.io/kostekIV/test/issues/3):\n\n~~~ quote\nTest comment\n~~~"""
-        self.send_and_test_stream_message(
-            "issue_comment__new", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("issue_comment__new", expected_topic, expected_message)
 
     def test_issue_comment_edited(self) -> None:
         expected_topic = "test / Issue #3 New test issue"
@@ -162,9 +160,7 @@ class GogsHookTests(WebhookTestCase):
     def test_release_published(self) -> None:
         expected_topic = "zulip_test / v1.4 Title"
         expected_message = """cestrell published release [Title](https://try.gogs.io/cestrell/zulip_test) for tag v1.4."""
-        self.send_and_test_stream_message(
-            "release__published", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("release__published", expected_topic, expected_message)
 
     @patch("zerver.webhooks.gogs.view.check_send_webhook_message")
     def test_push_filtered_by_branches_ignore(

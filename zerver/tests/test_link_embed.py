@@ -367,9 +367,7 @@ class PreviewTestCase(ZulipTestCase):
             mocked_response_original = mock.Mock(
                 side_effect=self.create_mock_response(original_url),
             )
-            mocked_response_edited = mock.Mock(
-                side_effect=self.create_mock_response(edited_url),
-            )
+            mocked_response_edited = mock.Mock(side_effect=self.create_mock_response(edited_url))
 
             with self.settings(TEST_SUITE=False, CACHES=TEST_CACHES):
                 with mock.patch("requests.get", mocked_response_original):
@@ -704,9 +702,7 @@ class PreviewTestCase(ZulipTestCase):
 
         self.assertEqual(data, mocked_data)
         msg.refresh_from_db()
-        self.assertIn(
-            'a data-id="{}"'.format(escape(mocked_data["html"])), msg.rendered_content,
-        )
+        self.assertIn('a data-id="{}"'.format(escape(mocked_data["html"])), msg.rendered_content)
 
     @override_settings(INLINE_URL_EMBED_PREVIEW=True)
     def test_youtube_url_title_replaces_url(self) -> None:

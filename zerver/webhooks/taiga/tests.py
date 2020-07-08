@@ -53,9 +53,7 @@ class TaigaHookTests(WebhookTestCase):
 
     def test_taiga_userstory_changed_remove_sprint(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) removed user story **UserStory** from sprint Sprint2."
-        self.send_and_test_stream_message(
-            "userstory_changed_remove_sprint", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("userstory_changed_remove_sprint", self.TOPIC, message)
 
     def test_taiga_userstory_changed_description(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) updated description of user story **UserStory**."
@@ -79,9 +77,7 @@ class TaigaHookTests(WebhookTestCase):
 
     def test_taiga_userstory_comment_added(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) commented on user story **UserStory**."
-        self.send_and_test_stream_message(
-            "userstory_changed_comment_added", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("userstory_changed_comment_added", self.TOPIC, message)
 
     def test_taiga_userstory_changed_due_date(self) -> None:
         message = (

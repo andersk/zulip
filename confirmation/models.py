@@ -155,8 +155,7 @@ class ConfirmationType:
 _properties = {
     Confirmation.USER_REGISTRATION: ConfirmationType("check_prereg_key_and_redirect"),
     Confirmation.INVITATION: ConfirmationType(
-        "check_prereg_key_and_redirect",
-        validity_in_days=settings.INVITATION_LINK_VALIDITY_DAYS,
+        "check_prereg_key_and_redirect", validity_in_days=settings.INVITATION_LINK_VALIDITY_DAYS,
     ),
     Confirmation.EMAIL_CHANGE: ConfirmationType(
         "zerver.views.user_settings.confirm_email_change",

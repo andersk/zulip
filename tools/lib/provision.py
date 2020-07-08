@@ -205,10 +205,7 @@ if vendor == "debian" and os_version in [] or vendor == "ubuntu" and os_version 
 elif "debian" in os_families():
     SYSTEM_DEPENDENCIES = (
         UBUNTU_COMMON_APT_DEPENDENCIES
-        + [
-            pkg.format(POSTGRES_VERSION)
-            for pkg in ["postgresql-{0}", "postgresql-{0}-pgroonga"]
-        ]
+        + [pkg.format(POSTGRES_VERSION) for pkg in ["postgresql-{0}", "postgresql-{0}-pgroonga"]]
         + VENV_DEPENDENCIES
     )
 elif "rhel" in os_families():
@@ -416,9 +413,7 @@ def main(options: argparse.Namespace) -> "NoReturn":
 
     if not os.access(NODE_MODULES_CACHE_PATH, os.W_OK):
         run_as_root(["mkdir", "-p", NODE_MODULES_CACHE_PATH])
-        run_as_root(
-            ["chown", "{}:{}".format(os.getuid(), os.getgid()), NODE_MODULES_CACHE_PATH],
-        )
+        run_as_root(["chown", "{}:{}".format(os.getuid(), os.getgid()), NODE_MODULES_CACHE_PATH])
 
     # This is a wrapper around `yarn`, which we run last since
     # it can often fail due to network issues beyond our control.
@@ -477,11 +472,7 @@ def main(options: argparse.Namespace) -> "NoReturn":
         [
             provision_inner,
             *(["--force"] if options.is_force else []),
-            *(
-                ["--build-release-tarball-only"]
-                if options.is_build_release_tarball_only
-                else []
-            ),
+            *(["--build-release-tarball-only"] if options.is_build_release_tarball_only else []),
             *(["--skip-dev-db-build"] if options.skip_dev_db_build else []),
         ],
     )

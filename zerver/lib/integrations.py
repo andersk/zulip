@@ -352,9 +352,7 @@ WEBHOOK_INTEGRATIONS: List[WebhookIntegration] = [
     WebhookIntegration("codeship", ["continuous-integration", "deployment"]),
     WebhookIntegration("crashlytics", ["monitoring"]),
     WebhookIntegration("dialogflow", ["customer-support"], display_name="Dialogflow"),
-    WebhookIntegration(
-        "delighted", ["customer-support", "marketing"], display_name="Delighted",
-    ),
+    WebhookIntegration("delighted", ["customer-support", "marketing"], display_name="Delighted"),
     WebhookIntegration(
         "deskdotcom",
         ["customer-support"],
@@ -579,10 +577,7 @@ INTEGRATIONS: Dict[str, Integration] = {
 BOT_INTEGRATIONS: List[BotIntegration] = [
     BotIntegration("github_detail", ["version-control", "bots"], display_name="GitHub Detail"),
     BotIntegration(
-        "xkcd",
-        ["bots", "misc"],
-        display_name="xkcd",
-        logo="images/integrations/logos/xkcd.png",
+        "xkcd", ["bots", "misc"], display_name="xkcd", logo="images/integrations/logos/xkcd.png",
     ),
 ]
 
@@ -656,9 +651,7 @@ DOC_SCREENSHOT_CONFIG: Dict[str, List[ScreenshotConfig]] = {
         ),
     ],
     "bitbucket2": [
-        ScreenshotConfig(
-            "issue_created.json", "003.png", "bitbucket", bot_name="Bitbucket Bot",
-        ),
+        ScreenshotConfig("issue_created.json", "003.png", "bitbucket", bot_name="Bitbucket Bot"),
     ],
     "bitbucket3": [
         ScreenshotConfig(
@@ -671,8 +664,7 @@ DOC_SCREENSHOT_CONFIG: Dict[str, List[ScreenshotConfig]] = {
     "buildbot": [ScreenshotConfig("started.json")],
     "circleci": [
         ScreenshotConfig(
-            "github_bionic_production_build_success_multiple_parties.json",
-            image_name="001.png",
+            "github_bionic_production_build_success_multiple_parties.json", image_name="001.png",
         ),
         ScreenshotConfig(
             "bitbucket_private_repo_pull_request_failure.json", image_name="002.png",
@@ -740,10 +732,7 @@ DOC_SCREENSHOT_CONFIG: Dict[str, List[ScreenshotConfig]] = {
     "statuspage": [ScreenshotConfig("incident_created.json")],
     "stripe": [ScreenshotConfig("charge_succeeded__card.json")],
     "taiga": [ScreenshotConfig("userstory_changed_status.json")],
-    "teamcity": [
-        ScreenshotConfig("success.json"),
-        ScreenshotConfig("personal.json", "002.png"),
-    ],
+    "teamcity": [ScreenshotConfig("success.json"), ScreenshotConfig("personal.json", "002.png")],
     "thinkst": [ScreenshotConfig("canarytoken_real.json")],
     "transifex": [
         ScreenshotConfig(

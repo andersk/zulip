@@ -244,6 +244,4 @@ class EmailChangeTestCase(ZulipTestCase):
             get_user(old_email, user_profile.realm)
         with self.assertRaises(UserProfile.DoesNotExist):
             get_user_by_delivery_email(old_email, user_profile.realm)
-        self.assertEqual(
-            get_user_by_delivery_email(new_email, user_profile.realm), user_profile,
-        )
+        self.assertEqual(get_user_by_delivery_email(new_email, user_profile.realm), user_profile)

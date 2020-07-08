@@ -56,9 +56,7 @@ def events_register_backend(
         ),
         default=None,
     ),
-    event_types: Optional[Iterable[str]] = REQ(
-        validator=check_list(check_string), default=None,
-    ),
+    event_types: Optional[Iterable[str]] = REQ(validator=check_list(check_string), default=None),
     fetch_event_types: Optional[Iterable[str]] = REQ(
         validator=check_list(check_string), default=None,
     ),

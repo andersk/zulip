@@ -14,9 +14,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser: argparse.ArgumentParser) -> None:
         parser.add_argument(
-            "app_label",
-            nargs="?",
-            help="App label of an application to synchronize the state.",
+            "app_label", nargs="?", help="App label of an application to synchronize the state.",
         )
 
         parser.add_argument(

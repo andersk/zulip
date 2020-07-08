@@ -42,8 +42,7 @@ class Migration(migrations.Migration):
                 (
                     "user",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to=settings.AUTH_USER_MODEL,
+                        on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL,
                     ),
                 ),
                 ("property", models.CharField(max_length=40)),
@@ -169,8 +168,7 @@ class Migration(migrations.Migration):
                 (
                     "user",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to=settings.AUTH_USER_MODEL,
+                        on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL,
                     ),
                 ),
                 ("property", models.CharField(max_length=40)),
@@ -192,8 +190,7 @@ class Migration(migrations.Migration):
             name="usercount", unique_together={("user", "property", "end_time", "interval")},
         ),
         migrations.AlterUniqueTogether(
-            name="streamcount",
-            unique_together={("stream", "property", "end_time", "interval")},
+            name="streamcount", unique_together={("stream", "property", "end_time", "interval")},
         ),
         migrations.AlterUniqueTogether(
             name="realmcount", unique_together={("realm", "property", "end_time", "interval")},
@@ -202,7 +199,6 @@ class Migration(migrations.Migration):
             name="installationcount", unique_together={("property", "end_time", "interval")},
         ),
         migrations.AlterUniqueTogether(
-            name="huddlecount",
-            unique_together={("huddle", "property", "end_time", "interval")},
+            name="huddlecount", unique_together={("huddle", "property", "end_time", "interval")},
         ),
     ]

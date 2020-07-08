@@ -180,9 +180,7 @@ def bulk_fetch_display_recipients(
 
         return display_recipient
 
-    def personal_and_huddle_id_fetcher(
-        db_object: Tuple[int, List[UserDisplayRecipient]],
-    ) -> int:
+    def personal_and_huddle_id_fetcher(db_object: Tuple[int, List[UserDisplayRecipient]]) -> int:
         # db_object is a tuple, with recipient_id in the first position
         return db_object[0]
 

@@ -148,10 +148,7 @@ def build_realmemoji(
             # Some of the emojis we get from the api have invalid links
             # this is to prevent errors related to them
             realmemoji = RealmEmoji(
-                name=emoji_name,
-                id=emoji_id,
-                file_name=os.path.basename(url),
-                deactivated=False,
+                name=emoji_name, id=emoji_id, file_name=os.path.basename(url), deactivated=False,
             )
 
             realmemoji_dict = model_to_dict(realmemoji, exclude=["realm", "author"])
@@ -633,9 +630,7 @@ def process_long_term_idle_users(
     have a slightly slower first page load when coming back to
     Zulip.
     """
-    all_messages = get_messages_iterator(
-        slack_data_dir, added_channels, added_mpims, dm_members,
-    )
+    all_messages = get_messages_iterator(slack_data_dir, added_channels, added_mpims, dm_members)
 
     sender_counts: Dict[str, int] = defaultdict(int)
     recent_senders: Set[str] = set()
@@ -709,9 +704,7 @@ def convert_slack_workspace_messages(
         zerver_userprofile,
     )
 
-    all_messages = get_messages_iterator(
-        slack_data_dir, added_channels, added_mpims, dm_members,
-    )
+    all_messages = get_messages_iterator(slack_data_dir, added_channels, added_mpims, dm_members)
     logging.info("######### IMPORTING MESSAGES STARTED #########\n")
 
     total_reactions: List[ZerverFieldsT] = []
@@ -753,9 +746,7 @@ def convert_slack_workspace_messages(
             long_term_idle,
         )
 
-        message_json = dict(
-            zerver_message=zerver_message, zerver_usermessage=zerver_usermessage,
-        )
+        message_json = dict(zerver_message=zerver_message, zerver_usermessage=zerver_usermessage)
 
         message_file = f"/messages-{dump_file_id:06}.json"
         logging.info("Writing Messages to %s\n", output_dir + message_file)

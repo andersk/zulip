@@ -156,9 +156,7 @@ def ensure_no_empty_passwords(apps: StateApps, schema_editor: DatabaseSchemaEdit
     # If Zulip's built-in password authentication is not enabled on
     # the server level, then we plan to skip resetting any users' API
     # keys, since the bug requires EmailAuthBackend.
-    email_auth_enabled = (
-        "zproject.backends.EmailAuthBackend" in settings.AUTHENTICATION_BACKENDS
-    )
+    email_auth_enabled = "zproject.backends.EmailAuthBackend" in settings.AUTHENTICATION_BACKENDS
 
     # A quick note: This query could in theory exclude users with
     # is_active=False, is_bot=True, or realm__deactivated=True here to

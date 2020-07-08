@@ -184,11 +184,7 @@ def create_droplet(
 def delete_existing_records(records: List[digitalocean.Record], record_name: str) -> None:
     count = 0
     for record in records:
-        if (
-            record.name == record_name
-            and record.domain == "zulipdev.org"
-            and record.type == "A"
-        ):
+        if record.name == record_name and record.domain == "zulipdev.org" and record.type == "A":
             record.destroy()
             count = count + 1
     if count:

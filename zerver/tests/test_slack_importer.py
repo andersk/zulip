@@ -394,9 +394,7 @@ class SlackImporter(ZulipTestCase):
         self.assertEqual(customprofilefield_value[5]["value"], "test_skype_name")
 
         # test that the primary owner should always be imported first
-        self.assertDictEqual(
-            slack_user_id_to_zulip_user_id, test_slack_user_id_to_zulip_user_id,
-        )
+        self.assertDictEqual(slack_user_id_to_zulip_user_id, test_slack_user_id_to_zulip_user_id)
         self.assertEqual(len(avatar_list), 8)
 
         self.assertEqual(len(zerver_userprofile), 8)
@@ -612,8 +610,7 @@ class SlackImporter(ZulipTestCase):
         self.assertEqual(self.get_set(zerver_subscription, "user_profile"), {1, 5, 7, 8})
 
         self.assertEqual(
-            self.get_set(zerver_recipient, "id"),
-            self.get_set(zerver_subscription, "recipient"),
+            self.get_set(zerver_recipient, "id"), self.get_set(zerver_subscription, "recipient"),
         )
         self.assertEqual(self.get_set(zerver_recipient, "type_id"), {0, 1, 2, 3, 5, 7, 8})
         self.assertEqual(self.get_set(zerver_recipient, "type"), {1, 2, 3})
@@ -692,11 +689,7 @@ class SlackImporter(ZulipTestCase):
         self.assertEqual(len(realm.keys()), 5)
 
     def test_get_message_sending_user(self) -> None:
-        message_with_file = {
-            "subtype": "file",
-            "type": "message",
-            "file": {"user": "U064KUGRJ"},
-        }
+        message_with_file = {"subtype": "file", "type": "message", "file": {"user": "U064KUGRJ"}}
         message_without_file = {"subtype": "file", "type": "messge", "user": "U064KUGRJ"}
 
         user_file = get_message_sending_user(message_with_file)
@@ -914,8 +907,7 @@ class SlackImporter(ZulipTestCase):
         )
         self.assertEqual(zerver_message[2][EXPORT_TOPIC_NAME], "imported from slack")
         self.assertEqual(
-            zerver_message[1]["recipient"],
-            slack_recipient_name_to_zulip_recipient_id["random"],
+            zerver_message[1]["recipient"], slack_recipient_name_to_zulip_recipient_id["random"],
         )
         self.assertEqual(
             zerver_message[5]["recipient"],
@@ -985,13 +977,7 @@ class SlackImporter(ZulipTestCase):
         mock_get_messages_iterator.side_effect = fake_get_messages_iter
         mock_message.side_effect = [
             [zerver_message[:1], zerver_usermessage[:2], attachments, uploads, reactions[:1]],
-            [
-                zerver_message[1:2],
-                zerver_usermessage[2:5],
-                attachments,
-                uploads,
-                reactions[1:1],
-            ],
+            [zerver_message[1:2], zerver_usermessage[2:5], attachments, uploads, reactions[1:1]],
         ]
         # Hacky: We should include a zerver_userprofile, not the empty []
         test_reactions, uploads, zerver_attachment = convert_slack_workspace_messages(

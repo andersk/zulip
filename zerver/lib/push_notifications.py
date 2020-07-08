@@ -118,10 +118,7 @@ APNS_MAX_RETRIES = 3
 
 @statsd_increment("apple_push_notification")
 def send_apple_push_notification(
-    user_id: int,
-    devices: List[DeviceToken],
-    payload_data: Dict[str, Any],
-    remote: bool = False,
+    user_id: int, devices: List[DeviceToken], payload_data: Dict[str, Any], remote: bool = False,
 ) -> None:
     # We lazily do the APNS imports as part of optimizing Zulip's base
     # import time; since these are only needed in the push
@@ -366,9 +363,7 @@ def send_android_push_notification(
                 # Since we know the new ID is registered in our system we can just drop the old one.
                 logger.info("GCM: Got canonical ref %s, dropping %s", new_reg_id, reg_id)
 
-                DeviceTokenClass.objects.filter(
-                    token=reg_id, kind=DeviceTokenClass.GCM,
-                ).delete()
+                DeviceTokenClass.objects.filter(token=reg_id, kind=DeviceTokenClass.GCM).delete()
 
     if "errors" in res:
         for error, reg_ids in res["errors"].items():
@@ -565,7 +560,9 @@ def get_gcm_alert(message: Message) -> str:
     ):
         return f"New mention from {sender_str}"
     else:  # message.is_stream_message() and message.trigger == 'stream_push_notify'
-        return f"New stream message from {sender_str} in {get_display_recipient(message.recipient)}"
+        return (
+            f"New stream message from {sender_str} in {get_display_recipient(message.recipient)}"
+        )
 
 
 def get_mobile_push_content(rendered_content: str) -> str:
@@ -777,9 +774,7 @@ def get_remove_payload_gcm(
     return gcm_payload, gcm_options
 
 
-def get_remove_payload_apns(
-    user_profile: UserProfile, message_ids: List[int],
-) -> Dict[str, Any]:
+def get_remove_payload_apns(user_profile: UserProfile, message_ids: List[int]) -> Dict[str, Any]:
     zulip_data = get_base_payload(user_profile)
     zulip_data.update(
         {"event": "remove", "zulip_message_ids": ",".join(str(id) for id in message_ids)},

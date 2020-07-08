@@ -174,7 +174,9 @@ class TrelloHookTests(WebhookTestCase):
         )
 
     def test_trello_webhook_when_description_was_removed_from_card(self) -> None:
-        expected_message = "Marco Matarazzo removed description from [New Card](https://trello.com/c/P2r0z66z)."
+        expected_message = (
+            "Marco Matarazzo removed description from [New Card](https://trello.com/c/P2r0z66z)."
+        )
         self.send_and_test_stream_message(
             "removing_description_from_card", "Welcome Board", expected_message,
         )

@@ -5,9 +5,7 @@ from django.db.migrations.state import StateApps
 from zerver.lib.actions import render_stream_description
 
 
-def render_all_stream_descriptions(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def render_all_stream_descriptions(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     Stream = apps.get_model("zerver", "Stream")
     all_streams = Stream.objects.exclude(description="")
     for stream in all_streams:
@@ -23,9 +21,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="stream",
-            name="rendered_description",
-            field=models.TextField(default=""),
+            model_name="stream", name="rendered_description", field=models.TextField(default=""),
         ),
         migrations.RunPython(
             render_all_stream_descriptions,

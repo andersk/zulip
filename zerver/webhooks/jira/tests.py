@@ -160,9 +160,7 @@ Adding a comment. Oh, what a comment it is!
     def test_comment_deleted(self) -> None:
         expected_topic = "TOM-1: New Issue"
         expected_message = "Tomasz Kolek deleted a comment from [TOM-1: New Issue](https://zuliptomek.atlassian.net/browse/TOM-1) (assigned to **kolaszek@go2.pl**)."
-        self.send_and_test_stream_message(
-            "comment_deleted_v2", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("comment_deleted_v2", expected_topic, expected_message)
 
     def test_commented_markup(self) -> None:
         expected_topic = "TEST-7: Testing of rich text"

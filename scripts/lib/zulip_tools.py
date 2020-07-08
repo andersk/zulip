@@ -42,9 +42,7 @@ CYAN = "\x1b[36m"
 
 def overwrite_symlink(src: str, dst: str) -> None:
     while True:
-        tmp = tempfile.mktemp(
-            prefix="." + os.path.basename(dst) + ".", dir=os.path.dirname(dst),
-        )
+        tmp = tempfile.mktemp(prefix="." + os.path.basename(dst) + ".", dir=os.path.dirname(dst))
         try:
             os.symlink(src, tmp)
         except FileExistsError:

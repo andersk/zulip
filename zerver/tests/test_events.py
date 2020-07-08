@@ -608,9 +608,7 @@ class NormalActionsTest(BaseAction):
         mention = "@**" + user_profile.full_name + "**"
 
         for content in ["hello", mention]:
-            message = self.send_stream_message(
-                self.example_user("cordelia"), "Verona", content,
-            )
+            message = self.send_stream_message(self.example_user("cordelia"), "Verona", content)
 
             self.verify_action(
                 lambda: do_update_message_flags(
@@ -1138,9 +1136,7 @@ class NormalActionsTest(BaseAction):
         events = self.verify_action(lambda: self.register("test1@zulip.com", "test1"))
         self.assert_length(events, 1)
         realm_user_add_checker("events[0]", events[0])
-        new_user_profile = get_user_by_delivery_email(
-            "test1@zulip.com", self.user_profile.realm,
-        )
+        new_user_profile = get_user_by_delivery_email("test1@zulip.com", self.user_profile.realm)
         self.assertEqual(new_user_profile.delivery_email, "test1@zulip.com")
 
     def test_register_events_email_address_visibility(self) -> None:
@@ -1180,9 +1176,7 @@ class NormalActionsTest(BaseAction):
         events = self.verify_action(lambda: self.register("test1@zulip.com", "test1"))
         self.assert_length(events, 1)
         realm_user_add_checker("events[0]", events[0])
-        new_user_profile = get_user_by_delivery_email(
-            "test1@zulip.com", self.user_profile.realm,
-        )
+        new_user_profile = get_user_by_delivery_email("test1@zulip.com", self.user_profile.realm)
         self.assertEqual(new_user_profile.email, f"user{new_user_profile.id}@zulip.testserver")
 
     def test_alert_words_events(self) -> None:
@@ -1531,9 +1525,7 @@ class NormalActionsTest(BaseAction):
                 ("op", equals("update")),
                 (
                     "person",
-                    check_dict_only(
-                        [("delivery_email", check_string), ("user_id", check_int)],
-                    ),
+                    check_dict_only([("delivery_email", check_string), ("user_id", check_int)]),
                 ),
             ],
         )
@@ -1780,10 +1772,7 @@ class NormalActionsTest(BaseAction):
                 (
                     "person",
                     check_dict_only(
-                        [
-                            ("role", check_int_in(UserProfile.ROLE_TYPES)),
-                            ("user_id", check_int),
-                        ],
+                        [("role", check_int_in(UserProfile.ROLE_TYPES)), ("user_id", check_int)],
                     ),
                 ),
             ],
@@ -1809,10 +1798,7 @@ class NormalActionsTest(BaseAction):
                 (
                     "person",
                     check_dict_only(
-                        [
-                            ("role", check_int_in(UserProfile.ROLE_TYPES)),
-                            ("user_id", check_int),
-                        ],
+                        [("role", check_int_in(UserProfile.ROLE_TYPES)), ("user_id", check_int)],
                     ),
                 ),
             ],
@@ -1838,10 +1824,7 @@ class NormalActionsTest(BaseAction):
                 (
                     "person",
                     check_dict_only(
-                        [
-                            ("role", check_int_in(UserProfile.ROLE_TYPES)),
-                            ("user_id", check_int),
-                        ],
+                        [("role", check_int_in(UserProfile.ROLE_TYPES)), ("user_id", check_int)],
                     ),
                 ),
             ],
@@ -2394,10 +2377,7 @@ class NormalActionsTest(BaseAction):
             [
                 ("type", equals("realm_bot")),
                 ("op", equals("remove")),
-                (
-                    "bot",
-                    check_dict_only([("full_name", check_string), ("user_id", check_int)]),
-                ),
+                ("bot", check_dict_only([("full_name", check_string), ("user_id", check_int)])),
             ],
         )
         bot = self.create_bot("test")

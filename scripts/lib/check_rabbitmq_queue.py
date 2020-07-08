@@ -108,10 +108,7 @@ def analyze_queue_stats(
     else:
         # We slept recently, so treat this as a burst.
         if expected_time_to_clear_backlog > MAX_SECONDS_TO_CLEAR_FOR_BURSTS[queue_name]:
-            if (
-                expected_time_to_clear_backlog
-                > CRITICAL_SECONDS_TO_CLEAR_FOR_BURSTS[queue_name]
-            ):
+            if expected_time_to_clear_backlog > CRITICAL_SECONDS_TO_CLEAR_FOR_BURSTS[queue_name]:
                 status = CRITICAL
             else:
                 status = WARNING
@@ -138,9 +135,7 @@ def check_other_queues(queue_counts_dict: Dict[str, int]) -> List[Dict[str, Any]
             continue
 
         if count > CRITICAL_COUNT_THRESHOLD_DEFAULT:
-            results.append(
-                dict(status=CRITICAL, name=queue, message=f"count critical: {count}"),
-            )
+            results.append(dict(status=CRITICAL, name=queue, message=f"count critical: {count}"))
         elif count > WARN_COUNT_THRESHOLD_DEFAULT:
             results.append(dict(status=WARNING, name=queue, message=f"count warning: {count}"))
         else:

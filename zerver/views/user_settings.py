@@ -236,9 +236,7 @@ def json_change_notify_settings(
     notification_sound: Optional[str] = REQ(validator=check_string, default=None),
     enable_desktop_notifications: Optional[bool] = REQ(validator=check_bool, default=None),
     enable_sounds: Optional[bool] = REQ(validator=check_bool, default=None),
-    enable_offline_email_notifications: Optional[bool] = REQ(
-        validator=check_bool, default=None,
-    ),
+    enable_offline_email_notifications: Optional[bool] = REQ(validator=check_bool, default=None),
     enable_offline_push_notifications: Optional[bool] = REQ(validator=check_bool, default=None),
     enable_online_push_notifications: Optional[bool] = REQ(validator=check_bool, default=None),
     enable_digest_emails: Optional[bool] = REQ(validator=check_bool, default=None),
@@ -290,9 +288,7 @@ def set_avatar_backend(request: HttpRequest, user_profile: UserProfile) -> HttpR
             ),
         )
     upload_avatar_image(user_file, user_profile, user_profile)
-    do_change_avatar_fields(
-        user_profile, UserProfile.AVATAR_FROM_USER, acting_user=user_profile,
-    )
+    do_change_avatar_fields(user_profile, UserProfile.AVATAR_FROM_USER, acting_user=user_profile)
     user_avatar_url = avatar_url(user_profile)
 
     json_result = dict(avatar_url=user_avatar_url)

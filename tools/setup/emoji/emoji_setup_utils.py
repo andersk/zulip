@@ -109,18 +109,14 @@ def emoji_is_universal(emoji_dict: Dict[str, Any]) -> bool:
     return True
 
 
-def generate_codepoint_to_name_map(
-    emoji_name_maps: Dict[str, Dict[str, Any]],
-) -> Dict[str, str]:
+def generate_codepoint_to_name_map(emoji_name_maps: Dict[str, Dict[str, Any]]) -> Dict[str, str]:
     codepoint_to_name: Dict[str, str] = {}
     for emoji_code, name_info in emoji_name_maps.items():
         codepoint_to_name[emoji_code] = name_info["canonical_name"]
     return codepoint_to_name
 
 
-def generate_name_to_codepoint_map(
-    emoji_name_maps: Dict[str, Dict[str, Any]],
-) -> Dict[str, str]:
+def generate_name_to_codepoint_map(emoji_name_maps: Dict[str, Dict[str, Any]]) -> Dict[str, str]:
     name_to_codepoint = {}
     for emoji_code, name_info in emoji_name_maps.items():
         canonical_name = name_info["canonical_name"]

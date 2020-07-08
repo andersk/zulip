@@ -93,10 +93,7 @@ class Command(ZulipBaseCommand):
             ):
                 members.append(os.path.join(settings.DEPLOY_ROOT, settings.LOCAL_UPLOADS_DIR))
                 paths.append(
-                    (
-                        "uploads",
-                        os.path.join(settings.DEPLOY_ROOT, settings.LOCAL_UPLOADS_DIR),
-                    ),
+                    ("uploads", os.path.join(settings.DEPLOY_ROOT, settings.LOCAL_UPLOADS_DIR)),
                 )
 
             assert not any("|" in name or "|" in path for name, path in paths)

@@ -752,11 +752,7 @@ LOGGING: Dict[str, Any] = {
             "formatter": "default",
             "filename": AUTH_LOG_PATH,
         },
-        "console": {
-            "level": "DEBUG",
-            "class": "logging.StreamHandler",
-            "formatter": "default",
-        },
+        "console": {"level": "DEBUG", "class": "logging.StreamHandler", "formatter": "default"},
         "file": {
             "level": "DEBUG",
             "class": "logging.handlers.WatchedFileHandler",

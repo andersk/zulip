@@ -43,22 +43,19 @@ class Migration(migrations.Migration):
                 (
                     "message",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to="zerver.ArchivedMessage",
+                        on_delete=django.db.models.deletion.CASCADE, to="zerver.ArchivedMessage",
                     ),
                 ),
                 (
                     "user_profile",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to=settings.AUTH_USER_MODEL,
+                        on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL,
                     ),
                 ),
             ],
             options={"abstract": False},
         ),
         migrations.AlterUniqueTogether(
-            name="archivedreaction",
-            unique_together={("user_profile", "message", "emoji_name")},
+            name="archivedreaction", unique_together={("user_profile", "message", "emoji_name")},
         ),
     ]

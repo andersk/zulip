@@ -11,10 +11,7 @@ class NetlifyHookTests(WebhookTestCase):
         expected_message = "The build [objective-jepsen-35fbb2](http://objective-jepsen-35fbb2.netlify.com) on branch master is now building."
 
         self.send_and_test_stream_message(
-            "deploy_building",
-            expected_topic,
-            expected_message,
-            content_type="application/json",
+            "deploy_building", expected_topic, expected_message, content_type="application/json",
         )
 
     def test_created_message(self) -> None:
@@ -55,10 +52,7 @@ class NetlifyHookTests(WebhookTestCase):
         )
 
         self.send_and_test_stream_message(
-            "deploy_unlocked",
-            expected_topic,
-            expected_message,
-            content_type="application/json",
+            "deploy_unlocked", expected_topic, expected_message, content_type="application/json",
         )
 
     def get_body(self, fixture_name: str) -> str:

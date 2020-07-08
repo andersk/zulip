@@ -58,6 +58,4 @@ To restore a specific ArchiveTransaction:
                 ArchiveTransaction.objects.get(id=options["transaction_id"]),
             )
         else:
-            restore_all_data_from_archive(
-                restore_manual_transactions=options["restore_deleted"],
-            )
+            restore_all_data_from_archive(restore_manual_transactions=options["restore_deleted"])

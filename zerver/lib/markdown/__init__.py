@@ -750,9 +750,7 @@ class InlineInterestingLinkProcessor(markdown.treeprocessors.Treeprocessor):
             # A possible alternative, that avoids the redirect after hitting "Special:"
             # is using the first characters of md5($filename) to generate the url
             domain = parsed_url.scheme + "://" + parsed_url.netloc
-            correct_url = (
-                domain + parsed_url.path[:6] + "Special:FilePath" + parsed_url.path[5:]
-            )
+            correct_url = domain + parsed_url.path[:6] + "Special:FilePath" + parsed_url.path[5:]
             return correct_url
         if parsed_url.netloc == "linx.li":
             return "https://linx.li/s" + parsed_url.path
@@ -1147,9 +1145,7 @@ class InlineInterestingLinkProcessor(markdown.treeprocessors.Treeprocessor):
         # Collect unique URLs which are not quoted as we don't do
         # inline previews for links inside blockquotes.
         unique_previewable_urls = {
-            found_url.result[0]
-            for found_url in found_urls
-            if not found_url.family.in_blockquote
+            found_url.result[0] for found_url in found_urls if not found_url.family.in_blockquote
         }
 
         # Set has_link and similar flags whenever a message is processed by markdown
@@ -2078,9 +2074,7 @@ class Markdown(markdown.Markdown):
             100,
         )
         reg.register(UserMentionPattern(mention.find_mentions, self), "usermention", 95)
-        reg.register(
-            Tex(r"\B(?<!\$)\$\$(?P<body>[^\n_$](\\\$|[^$\n])*)\$\$(?!\$)\B"), "tex", 90,
-        )
+        reg.register(Tex(r"\B(?<!\$)\$\$(?P<body>[^\n_$](\\\$|[^$\n])*)\$\$(?!\$)\B"), "tex", 90)
         reg.register(
             StreamTopicPattern(get_compiled_stream_topic_link_regex(), self), "topic", 87,
         )
@@ -2099,9 +2093,7 @@ class Markdown(markdown.Markdown):
             "strong",
             35,
         )
-        reg.register(
-            markdown.inlinepatterns.SimpleTagPattern(EMPHASIS_RE, "em"), "emphasis", 30,
-        )
+        reg.register(markdown.inlinepatterns.SimpleTagPattern(EMPHASIS_RE, "em"), "emphasis", 30)
         reg.register(markdown.inlinepatterns.SimpleTagPattern(DEL_RE, "del"), "del", 25)
         reg.register(
             markdown.inlinepatterns.SimpleTextInlineProcessor(NOT_STRONG_RE), "not_strong", 20,
@@ -2117,9 +2109,7 @@ class Markdown(markdown.Markdown):
     ) -> markdown.util.Registry:
         for (pattern, format_string, id) in self.getConfig("realm_filters"):
             inlinePatterns.register(
-                RealmFilterPattern(pattern, format_string, self),
-                f"realm_filters/{pattern}",
-                45,
+                RealmFilterPattern(pattern, format_string, self), f"realm_filters/{pattern}", 45,
             )
         return inlinePatterns
 
@@ -2244,9 +2234,7 @@ def topic_links(realm_filters_key: int, topic_name: str) -> List[str]:
     return matches
 
 
-def maybe_update_markdown_engines(
-    realm_filters_key: Optional[int], email_gateway: bool,
-) -> None:
+def maybe_update_markdown_engines(realm_filters_key: Optional[int], email_gateway: bool) -> None:
     # If realm_filters_key is None, load all filters
     global realm_filter_data
     if realm_filters_key is None:
@@ -2447,9 +2435,7 @@ def do_convert(
     _md_engine.zulip_message = message
     _md_engine.zulip_realm = message_realm
     _md_engine.zulip_db_data = None  # for now
-    _md_engine.image_preview_enabled = image_preview_enabled(
-        message, message_realm, no_previews,
-    )
+    _md_engine.image_preview_enabled = image_preview_enabled(message, message_realm, no_previews)
     _md_engine.url_embed_preview_enabled = url_embed_preview_enabled(
         message, message_realm, no_previews,
     )

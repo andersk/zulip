@@ -130,9 +130,7 @@ def handle_event_payload(event: Dict[str, Any]) -> Tuple[str, str]:
                 if not context_line:
                     context_line = "\n"  # nocoverage
 
-                post_context = convert_lines_to_traceback_string(
-                    exception_frame["post_context"],
-                )
+                post_context = convert_lines_to_traceback_string(exception_frame["post_context"])
 
                 context.update(
                     {

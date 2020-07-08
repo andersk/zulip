@@ -17,9 +17,7 @@ from zerver.lib.validator import check_int, check_list
 from zerver.models import UserActivity, UserProfile
 
 
-def get_latest_update_message_flag_activity(
-    user_profile: UserProfile,
-) -> Optional[UserActivity]:
+def get_latest_update_message_flag_activity(user_profile: UserProfile) -> Optional[UserActivity]:
     return (
         UserActivity.objects.filter(user_profile=user_profile, query="update_message_flags")
         .order_by("last_visit")

@@ -155,9 +155,9 @@ class TestVideoCall(ZulipTestCase):
         self.assert_json_success(response)
 
     def test_create_bigbluebutton_link(self) -> None:
-        with mock.patch(
-            "zerver.views.video_calls.random.randint", return_value="1",
-        ), mock.patch("zerver.views.video_calls.random.SystemRandom.choice", return_value="A"):
+        with mock.patch("zerver.views.video_calls.random.randint", return_value="1"), mock.patch(
+            "zerver.views.video_calls.random.SystemRandom.choice", return_value="A",
+        ):
             response = self.client_get("/json/calls/bigbluebutton/create")
             self.assert_json_success(response)
             self.assertEqual(

@@ -198,10 +198,7 @@ def handle_digest_email(
     context.update({"unsubscribe_link": one_click_unsubscribe_link(user_profile, "digest")})
 
     home_view_streams = Subscription.objects.filter(
-        user_profile=user_profile,
-        recipient__type=Recipient.STREAM,
-        active=True,
-        is_muted=False,
+        user_profile=user_profile, recipient__type=Recipient.STREAM, active=True, is_muted=False,
     ).values_list("recipient__type_id", flat=True)
 
     if not user_profile.long_term_idle:

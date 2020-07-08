@@ -438,9 +438,7 @@ def sort_client_labels(data: Dict[str, Dict[str, List[int]]]) -> List[str]:
         label_sort_values[label] = i
     for i, label in enumerate(user_order):
         label_sort_values[label] = min(i - 0.1, label_sort_values.get(label, i))
-    return [
-        label for label, sort_value in sorted(label_sort_values.items(), key=lambda x: x[1])
-    ]
+    return [label for label, sort_value in sorted(label_sort_values.items(), key=lambda x: x[1])]
 
 
 def table_filtered_to_id(table: Type[BaseCount], key_id: int) -> QuerySet:
@@ -505,9 +503,7 @@ def get_time_series_by_subgroup(
         .filter(property=stat.property)
         .values_list("subgroup", "end_time", "value")
     )
-    value_dicts: Dict[Optional[str], Dict[datetime, int]] = defaultdict(
-        lambda: defaultdict(int),
-    )
+    value_dicts: Dict[Optional[str], Dict[datetime, int]] = defaultdict(lambda: defaultdict(int))
     for subgroup, end_time, value in queryset:
         value_dicts[subgroup][end_time] = value
     value_arrays = {}
@@ -813,9 +809,7 @@ def realm_summary_table(realm_minutes: Dict[str, float]) -> str:
     content = loader.render_to_string(
         "analytics/realm_summary_table.html",
         dict(
-            rows=rows,
-            num_active_sites=num_active_sites,
-            now=now.strftime("%Y-%m-%dT%H:%M:%SZ"),
+            rows=rows, num_active_sites=num_active_sites, now=now.strftime("%Y-%m-%dT%H:%M:%SZ"),
         ),
     )
     return content

@@ -453,9 +453,7 @@ def apply_event(
                     state["is_guest"] = person["role"] == UserProfile.ROLE_GUEST
                     # Recompute properties based on is_admin/is_guest
                     state["can_create_streams"] = user_profile.can_create_streams()
-                    state[
-                        "can_subscribe_other_users"
-                    ] = user_profile.can_subscribe_other_users()
+                    state["can_subscribe_other_users"] = user_profile.can_subscribe_other_users()
 
                     # TODO: Probably rather than writing the perfect
                     # live-update code for the case of racing with the
@@ -756,10 +754,7 @@ def apply_event(
                 remove_message_id_from_unread_mgs(state["raw_unread_msgs"], remove_id)
 
         # The remainder of this block is about maintaining recent_private_conversations
-        if (
-            "raw_recent_private_conversations" not in state
-            or event["message_type"] != "private"
-        ):
+        if "raw_recent_private_conversations" not in state or event["message_type"] != "private":
             return
 
         recipient_id = get_recent_conversations_recipient_id(

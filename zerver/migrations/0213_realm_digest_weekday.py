@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="realm",
-            name="digest_weekday",
-            field=models.SmallIntegerField(default=1),
+            model_name="realm", name="digest_weekday", field=models.SmallIntegerField(default=1),
         ),
     ]

@@ -215,9 +215,7 @@ class NarrowBuilderTest(ZulipTestCase):
         term = dict(operator="is", operand="unread", negated=True)
         self._do_add_term_test(term, "WHERE (flags & %(flags_1)s) != %(param_1)s")
 
-    def test_add_term_using_is_operator_non_private_operand_and_negated(
-        self,
-    ) -> None:  # NEGATED
+    def test_add_term_using_is_operator_non_private_operand_and_negated(self) -> None:  # NEGATED
         term = dict(operator="is", operand="starred", negated=True)
         where_clause = "WHERE (flags & %(flags_1)s) = %(param_1)s"
         params = dict(flags_1=UserMessage.flags.starred.mask, param_1=0)
@@ -254,9 +252,7 @@ class NarrowBuilderTest(ZulipTestCase):
         term = dict(operator="topic", operand="personal")
         self._do_add_term_test(term, "WHERE upper(subject) = upper(%(param_1)s)")
 
-    def test_add_term_using_topic_operator_personal_operand_and_negated(
-        self,
-    ) -> None:  # NEGATED
+    def test_add_term_using_topic_operator_personal_operand_and_negated(self) -> None:  # NEGATED
         term = dict(operator="topic", operand="personal", negated=True)
         self._do_add_term_test(term, "WHERE upper(subject) != upper(%(param_1)s)")
 
@@ -423,9 +419,7 @@ class NarrowBuilderTest(ZulipTestCase):
         term = dict(operator="has", operand="attachment")
         self._do_add_term_test(term, "WHERE has_attachment")
 
-    def test_add_term_using_has_operator_attachment_operand_and_negated(
-        self,
-    ) -> None:  # NEGATED
+    def test_add_term_using_has_operator_attachment_operand_and_negated(self) -> None:  # NEGATED
         term = dict(operator="has", operand="attachment", negated=True)
         self._do_add_term_test(term, "WHERE NOT has_attachment")
 
@@ -517,9 +511,7 @@ class NarrowLibraryTest(ZulipTestCase):
 
     def test_is_web_public_compatible(self) -> None:
         self.assertTrue(is_web_public_compatible([]))
-        self.assertTrue(
-            is_web_public_compatible([{"operator": "has", "operand": "attachment"}]),
-        )
+        self.assertTrue(is_web_public_compatible([{"operator": "has", "operand": "attachment"}]))
         self.assertTrue(is_web_public_compatible([{"operator": "has", "operand": "image"}]))
         self.assertTrue(is_web_public_compatible([{"operator": "search", "operand": "magic"}]))
         self.assertTrue(is_web_public_compatible([{"operator": "near", "operand": "15"}]))
@@ -542,9 +534,7 @@ class NarrowLibraryTest(ZulipTestCase):
                 [{"operator": "group-pm-with", "operand": "hamlet@zulip.com"}],
             ),
         )
-        self.assertTrue(
-            is_web_public_compatible([{"operator": "stream", "operand": "Denmark"}]),
-        )
+        self.assertTrue(is_web_public_compatible([{"operator": "stream", "operand": "Denmark"}]))
         self.assertTrue(
             is_web_public_compatible(
                 [
@@ -555,9 +545,7 @@ class NarrowLibraryTest(ZulipTestCase):
         )
         self.assertFalse(is_web_public_compatible([{"operator": "is", "operand": "starred"}]))
         self.assertFalse(is_web_public_compatible([{"operator": "is", "operand": "private"}]))
-        self.assertTrue(
-            is_web_public_compatible([{"operator": "streams", "operand": "public"}]),
-        )
+        self.assertTrue(is_web_public_compatible([{"operator": "streams", "operand": "public"}]))
         # Malformed input not allowed
         self.assertFalse(is_web_public_compatible([{"operator": "has"}]))
 
@@ -1707,9 +1695,7 @@ class GetOldMessagesTest(ZulipTestCase):
         self.send_stream_message(mit_user_profile, "Scotland", topic_name="\u03bb-topic.d")
         self.send_stream_message(mit_user_profile, "Scotland", topic_name="\u03bb-topic.d.d")
         self.send_stream_message(mit_user_profile, "Scotland", topic_name="\u03bb-topic.d.d.d")
-        self.send_stream_message(
-            mit_user_profile, "Scotland", topic_name="\u03bb-topic.d.d.d.d",
-        )
+        self.send_stream_message(mit_user_profile, "Scotland", topic_name="\u03bb-topic.d.d.d.d")
 
         narrow = [dict(operator="topic", operand="\u03bb-topic")]
         result = self.get_and_check_messages(
@@ -1864,18 +1850,14 @@ class GetOldMessagesTest(ZulipTestCase):
             dict(operator="search", operand="lunch"),
         ]
         result: Dict[str, Any] = self.get_and_check_messages(
-            dict(
-                narrow=ujson.dumps(narrow), anchor=next_message_id, num_before=0, num_after=10,
-            ),
+            dict(narrow=ujson.dumps(narrow), anchor=next_message_id, num_before=0, num_after=10),
         )
         self.assertEqual(len(result["messages"]), 2)
         messages = result["messages"]
 
         narrow = [dict(operator="search", operand="https://google.com")]
         link_search_result: Dict[str, Any] = self.get_and_check_messages(
-            dict(
-                narrow=ujson.dumps(narrow), anchor=next_message_id, num_before=0, num_after=10,
-            ),
+            dict(narrow=ujson.dumps(narrow), anchor=next_message_id, num_before=0, num_after=10),
         )
         self.assertEqual(len(link_search_result["messages"]), 1)
         self.assertEqual(
@@ -1921,9 +1903,7 @@ class GetOldMessagesTest(ZulipTestCase):
             dict(operator="search", operand="日本"),
         ]
         result = self.get_and_check_messages(
-            dict(
-                narrow=ujson.dumps(narrow), anchor=next_message_id, num_after=10, num_before=0,
-            ),
+            dict(narrow=ujson.dumps(narrow), anchor=next_message_id, num_after=10, num_before=0),
         )
         self.assertEqual(len(result["messages"]), 4)
         messages = result["messages"]
@@ -1967,10 +1947,7 @@ class GetOldMessagesTest(ZulipTestCase):
         self.subscribe(self.example_user("hamlet"), "Scotland")
 
         messages_to_search = [
-            (
-                "Gryffindor",
-                "Hogwart's house which values courage, bravery, nerve, and chivalry",
-            ),
+            ("Gryffindor", "Hogwart's house which values courage, bravery, nerve, and chivalry"),
             (
                 "Hufflepuff",
                 "Hogwart's house which values hard work, patience, justice, and loyalty.",
@@ -2065,9 +2042,7 @@ class GetOldMessagesTest(ZulipTestCase):
             dict(operator="search", operand="日本"),
         ]
         result: Dict[str, Any] = self.get_and_check_messages(
-            dict(
-                narrow=ujson.dumps(narrow), anchor=next_message_id, num_after=10, num_before=0,
-            ),
+            dict(narrow=ujson.dumps(narrow), anchor=next_message_id, num_after=10, num_before=0),
         )
         self.assertEqual(len(result["messages"]), 4)
         messages = result["messages"]
@@ -2133,9 +2108,7 @@ class GetOldMessagesTest(ZulipTestCase):
 
         narrow = [dict(operator="search", operand="https://google.com")]
         link_search_result: Dict[str, Any] = self.get_and_check_messages(
-            dict(
-                narrow=ujson.dumps(narrow), anchor=next_message_id, num_after=10, num_before=0,
-            ),
+            dict(narrow=ujson.dumps(narrow), anchor=next_message_id, num_after=10, num_before=0),
         )
         self.assertEqual(len(link_search_result["messages"]), 1)
         self.assertEqual(
@@ -2236,9 +2209,7 @@ class GetOldMessagesTest(ZulipTestCase):
         self.assertEqual(len(result["messages"]), 0)
 
     def test_get_visible_messages_with_anchor(self) -> None:
-        def messages_matches_ids(
-            messages: List[Dict[str, Any]], message_ids: List[int],
-        ) -> None:
+        def messages_matches_ids(messages: List[Dict[str, Any]], message_ids: List[int]) -> None:
             self.assertEqual(len(messages), len(message_ids))
             for message in messages:
                 assert message["id"] in message_ids
@@ -2249,9 +2220,7 @@ class GetOldMessagesTest(ZulipTestCase):
 
         message_ids = []
         for i in range(10):
-            message_ids.append(
-                self.send_stream_message(self.example_user("cordelia"), "Verona"),
-            )
+            message_ids.append(self.send_stream_message(self.example_user("cordelia"), "Verona"))
 
         data = self.get_messages_response(anchor=message_ids[9], num_before=9, num_after=0)
 
@@ -2403,9 +2372,7 @@ class GetOldMessagesTest(ZulipTestCase):
         messages_matches_ids(messages, message_ids[5:8])
 
         with first_visible_id_as(message_ids[5]):
-            data = self.get_messages_response(
-                anchor=message_ids[2], num_before=10, num_after=10,
-            )
+            data = self.get_messages_response(anchor=message_ids[2], num_before=10, num_after=10)
 
         messages = data["messages"]
         self.assertEqual(data["found_anchor"], False)
@@ -2590,9 +2557,7 @@ class GetOldMessagesTest(ZulipTestCase):
         invalid_operands = [["1"], [2], None]
         error_msg = 'elem["operand"] is not a string or integer'
         for operand in ["sender", "group-pm-with", "stream"]:
-            self.exercise_bad_narrow_operand_using_dict_api(
-                operand, invalid_operands, error_msg,
-            )
+            self.exercise_bad_narrow_operand_using_dict_api(operand, invalid_operands, error_msg)
 
         # str or int list is required for pm-with operator
         invalid_operands = [None]
@@ -2607,9 +2572,7 @@ class GetOldMessagesTest(ZulipTestCase):
         invalid_operands = [2, None, [1]]
         error_msg = 'elem["operand"] is not a string'
         for operand in ["is", "near", "has", "id"]:
-            self.exercise_bad_narrow_operand_using_dict_api(
-                operand, invalid_operands, error_msg,
-            )
+            self.exercise_bad_narrow_operand_using_dict_api(operand, invalid_operands, error_msg)
 
         # Disallow empty search terms
         error_msg = 'elem["operand"] cannot be blank.'
@@ -2656,9 +2619,7 @@ class GetOldMessagesTest(ZulipTestCase):
         """
         self.login("hamlet")
         bad_stream_content: Tuple[int, List[None], List[str]] = (0, [], ["x", "y"])
-        self.exercise_bad_narrow_operand(
-            "pm-with", bad_stream_content, "Bad value for 'narrow'",
-        )
+        self.exercise_bad_narrow_operand("pm-with", bad_stream_content, "Bad value for 'narrow'")
 
     def test_bad_narrow_nonexistent_stream(self) -> None:
         self.login("hamlet")
@@ -2741,19 +2702,14 @@ class GetOldMessagesTest(ZulipTestCase):
 
         user_profile = hamlet
 
-        anchor = find_first_unread_anchor(
-            sa_conn=sa_conn, user_profile=user_profile, narrow=[],
-        )
+        anchor = find_first_unread_anchor(sa_conn=sa_conn, user_profile=user_profile, narrow=[])
         self.assertEqual(anchor, first_message_id)
 
         # With the same data setup, we now want to test that a reasonable
         # search still gets the first message sent to Hamlet (before he
         # subscribed) and other recent messages to the stream.
         query_params = dict(
-            anchor="first_unread",
-            num_before=10,
-            num_after=10,
-            narrow='[["stream", "England"]]',
+            anchor="first_unread", num_before=10, num_after=10, narrow='[["stream", "England"]]',
         )
         request = POSTRequestMock(query_params, user_profile)
 
@@ -2915,9 +2871,7 @@ class GetOldMessagesTest(ZulipTestCase):
         # the `message_id = LARGER_THAN_MAX_MESSAGE_ID` hack.
         queries = [q for q in all_queries if "/* get_messages */" in q["sql"]]
         self.assertEqual(len(queries), 1)
-        self.assertIn(
-            f"AND zerver_message.id = {LARGER_THAN_MAX_MESSAGE_ID}", queries[0]["sql"],
-        )
+        self.assertIn(f"AND zerver_message.id = {LARGER_THAN_MAX_MESSAGE_ID}", queries[0]["sql"])
 
     def test_exclude_muting_conditions(self) -> None:
         realm = get_realm("zulip")
@@ -3015,21 +2969,15 @@ recipient_id = %(recipient_id_3)s AND upper(subject) = upper(%(param_2)s))\
 
         sql_template = "SELECT anon_1.message_id, anon_1.flags \nFROM (SELECT message_id, flags \nFROM zerver_usermessage \nWHERE user_profile_id = {hamlet_id} AND message_id = 0) AS anon_1 ORDER BY message_id ASC"
         sql = sql_template.format(**query_ids)
-        self.common_check_get_messages_query(
-            {"anchor": 0, "num_before": 0, "num_after": 0}, sql,
-        )
+        self.common_check_get_messages_query({"anchor": 0, "num_before": 0, "num_after": 0}, sql)
 
         sql_template = "SELECT anon_1.message_id, anon_1.flags \nFROM (SELECT message_id, flags \nFROM zerver_usermessage \nWHERE user_profile_id = {hamlet_id} AND message_id = 0) AS anon_1 ORDER BY message_id ASC"
         sql = sql_template.format(**query_ids)
-        self.common_check_get_messages_query(
-            {"anchor": 0, "num_before": 1, "num_after": 0}, sql,
-        )
+        self.common_check_get_messages_query({"anchor": 0, "num_before": 1, "num_after": 0}, sql)
 
         sql_template = "SELECT anon_1.message_id, anon_1.flags \nFROM (SELECT message_id, flags \nFROM zerver_usermessage \nWHERE user_profile_id = {hamlet_id} ORDER BY message_id ASC \n LIMIT 2) AS anon_1 ORDER BY message_id ASC"
         sql = sql_template.format(**query_ids)
-        self.common_check_get_messages_query(
-            {"anchor": 0, "num_before": 0, "num_after": 1}, sql,
-        )
+        self.common_check_get_messages_query({"anchor": 0, "num_before": 0, "num_after": 1}, sql)
 
         sql_template = "SELECT anon_1.message_id, anon_1.flags \nFROM (SELECT message_id, flags \nFROM zerver_usermessage \nWHERE user_profile_id = {hamlet_id} ORDER BY message_id ASC \n LIMIT 11) AS anon_1 ORDER BY message_id ASC"
         sql = sql_template.format(**query_ids)
@@ -3093,8 +3041,7 @@ recipient_id = %(recipient_id_3)s AND upper(subject) = upper(%(param_2)s))\
         sql_template = "SELECT anon_1.message_id, anon_1.flags \nFROM (SELECT message_id, flags \nFROM zerver_usermessage JOIN zerver_message ON zerver_usermessage.message_id = zerver_message.id \nWHERE user_profile_id = {hamlet_id} AND (flags & 2) != 0 ORDER BY message_id ASC \n LIMIT 10) AS anon_1 ORDER BY message_id ASC"
         sql = sql_template.format(**query_ids)
         self.common_check_get_messages_query(
-            {"anchor": 0, "num_before": 0, "num_after": 9, "narrow": '[["is", "starred"]]'},
-            sql,
+            {"anchor": 0, "num_before": 0, "num_after": 9, "narrow": '[["is", "starred"]]'}, sql,
         )
 
         sql_template = "SELECT anon_1.message_id, anon_1.flags \nFROM (SELECT message_id, flags \nFROM zerver_usermessage JOIN zerver_message ON zerver_usermessage.message_id = zerver_message.id \nWHERE user_profile_id = {hamlet_id} AND sender_id = {othello_id} ORDER BY message_id ASC \n LIMIT 10) AS anon_1 ORDER BY message_id ASC"
@@ -3112,12 +3059,7 @@ recipient_id = %(recipient_id_3)s AND upper(subject) = upper(%(param_2)s))\
         sql_template = "SELECT anon_1.message_id \nFROM (SELECT id AS message_id \nFROM zerver_message \nWHERE recipient_id = {scotland_recipient} ORDER BY zerver_message.id ASC \n LIMIT 10) AS anon_1 ORDER BY message_id ASC"
         sql = sql_template.format(**query_ids)
         self.common_check_get_messages_query(
-            {
-                "anchor": 0,
-                "num_before": 0,
-                "num_after": 9,
-                "narrow": '[["stream", "Scotland"]]',
-            },
+            {"anchor": 0, "num_before": 0, "num_after": 9, "narrow": '[["stream", "Scotland"]]'},
             sql,
         )
 
@@ -3143,8 +3085,7 @@ recipient_id = %(recipient_id_3)s AND upper(subject) = upper(%(param_2)s))\
         sql_template = "SELECT anon_1.message_id, anon_1.flags \nFROM (SELECT message_id, flags \nFROM zerver_usermessage JOIN zerver_message ON zerver_usermessage.message_id = zerver_message.id \nWHERE user_profile_id = {hamlet_id} AND upper(subject) = upper('blah') ORDER BY message_id ASC \n LIMIT 10) AS anon_1 ORDER BY message_id ASC"
         sql = sql_template.format(**query_ids)
         self.common_check_get_messages_query(
-            {"anchor": 0, "num_before": 0, "num_after": 9, "narrow": '[["topic", "blah"]]'},
-            sql,
+            {"anchor": 0, "num_before": 0, "num_after": 9, "narrow": '[["topic", "blah"]]'}, sql,
         )
 
         sql_template = "SELECT anon_1.message_id \nFROM (SELECT id AS message_id \nFROM zerver_message \nWHERE recipient_id = {scotland_recipient} AND upper(subject) = upper('blah') ORDER BY zerver_message.id ASC \n LIMIT 10) AS anon_1 ORDER BY message_id ASC"
@@ -3519,8 +3460,7 @@ class MessageVisibilityTest(ZulipTestCase):
     def test_update_first_visible_message_id(self) -> None:
         Message.objects.all().delete()
         message_ids = [
-            self.send_stream_message(self.example_user("othello"), "Scotland")
-            for i in range(15)
+            self.send_stream_message(self.example_user("othello"), "Scotland") for i in range(15)
         ]
 
         # If message_visibility_limit is None update_first_visible_message_id

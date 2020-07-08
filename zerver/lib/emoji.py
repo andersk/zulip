@@ -57,9 +57,7 @@ def emoji_name_to_emoji_code(realm: Realm, emoji_name: str) -> Tuple[str, str]:
     raise JsonableError(_("Emoji '{}' does not exist").format(emoji_name))
 
 
-def check_emoji_request(
-    realm: Realm, emoji_name: str, emoji_code: str, emoji_type: str,
-) -> None:
+def check_emoji_request(realm: Realm, emoji_name: str, emoji_code: str, emoji_type: str) -> None:
     # For a given realm and emoji type, checks whether an emoji
     # code is valid for new reactions, or not.
     if emoji_type == "realm_emoji":

@@ -18,8 +18,7 @@ class Migration(migrations.Migration):
         ),
         migrations.RemoveField(model_name="realmcount", name="interval"),
         migrations.AlterUniqueTogether(
-            name="streamcount",
-            unique_together={("stream", "property", "subgroup", "end_time")},
+            name="streamcount", unique_together={("stream", "property", "subgroup", "end_time")},
         ),
         migrations.RemoveField(model_name="streamcount", name="interval"),
         migrations.AlterUniqueTogether(

@@ -29,8 +29,7 @@ class Migration(migrations.Migration):
                 (
                     "referred_by",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to=settings.AUTH_USER_MODEL,
+                        on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL,
                     ),
                 ),
                 ("streams", models.ManyToManyField(to="zerver.Stream")),

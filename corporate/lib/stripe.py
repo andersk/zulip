@@ -118,9 +118,7 @@ def start_of_next_billing_cycle(plan: CustomerPlan, event_time: datetime) -> dat
         assert plan.next_invoice_date is not None  # for mypy
         return plan.next_invoice_date
 
-    months_per_period = {CustomerPlan.ANNUAL: 12, CustomerPlan.MONTHLY: 1}[
-        plan.billing_schedule
-    ]
+    months_per_period = {CustomerPlan.ANNUAL: 12, CustomerPlan.MONTHLY: 1}[plan.billing_schedule]
     periods = 1
     dt = plan.billing_cycle_anchor
     while dt <= event_time:
@@ -133,9 +131,7 @@ def next_invoice_date(plan: CustomerPlan) -> Optional[datetime]:
     if plan.status == CustomerPlan.ENDED:
         return None
     assert plan.next_invoice_date is not None  # for mypy
-    months_per_period = {CustomerPlan.ANNUAL: 12, CustomerPlan.MONTHLY: 1}[
-        plan.billing_schedule
-    ]
+    months_per_period = {CustomerPlan.ANNUAL: 12, CustomerPlan.MONTHLY: 1}[plan.billing_schedule]
     if plan.automanage_licenses:
         months_per_period = 1
     periods = 1
@@ -232,9 +228,7 @@ def stripe_get_customer(stripe_customer_id: str) -> stripe.Customer:
 
 
 @catch_stripe_errors
-def do_create_stripe_customer(
-    user: UserProfile, stripe_token: Optional[str] = None,
-) -> Customer:
+def do_create_stripe_customer(user: UserProfile, stripe_token: Optional[str] = None) -> Customer:
     realm = user.realm
     # We could do a better job of handling race conditions here, but if two
     # people from a realm try to upgrade at exactly the same time, the main
@@ -599,9 +593,7 @@ def update_license_ledger_if_needed(realm: Realm, event_time: datetime) -> None:
 
 def invoice_plan(plan: CustomerPlan, event_time: datetime) -> None:
     if plan.invoicing_status == CustomerPlan.STARTED:
-        raise NotImplementedError(
-            "Plan with invoicing_status==STARTED needs manual resolution.",
-        )
+        raise NotImplementedError("Plan with invoicing_status==STARTED needs manual resolution.")
     make_end_of_cycle_updates_if_needed(plan, event_time)
 
     if plan.invoicing_status == CustomerPlan.INITIAL_INVOICE_TO_BE_SENT:

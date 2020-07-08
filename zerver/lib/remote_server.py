@@ -55,13 +55,7 @@ def send_to_push_bouncer(
 
     try:
         res = requests.request(
-            method,
-            url,
-            data=post_data,
-            auth=api_auth,
-            timeout=30,
-            verify=True,
-            headers=headers,
+            method, url, data=post_data, auth=api_auth, timeout=30, verify=True, headers=headers,
         )
     except (
         requests.exceptions.Timeout,

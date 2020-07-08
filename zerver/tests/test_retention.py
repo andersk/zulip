@@ -59,8 +59,7 @@ class RetentionTestingBase(ZulipTestCase):
         self, expected_message_ids: List[int], expected_usermessage_ids: List[int],
     ) -> None:
         self.assertEqual(
-            set(ArchivedMessage.objects.values_list("id", flat=True)),
-            set(expected_message_ids),
+            set(ArchivedMessage.objects.values_list("id", flat=True)), set(expected_message_ids),
         )
 
         self.assertEqual(
@@ -78,9 +77,7 @@ class RetentionTestingBase(ZulipTestCase):
         # Check that the data was restored:
         self.assertEqual(
             set(
-                Message.objects.filter(id__in=expected_message_ids).values_list(
-                    "id", flat=True,
-                ),
+                Message.objects.filter(id__in=expected_message_ids).values_list("id", flat=True),
             ),
             set(expected_message_ids),
         )
@@ -96,8 +93,7 @@ class RetentionTestingBase(ZulipTestCase):
 
         # The Messages and UserMessages should still be in the archive - we don't delete them.
         self.assertEqual(
-            set(ArchivedMessage.objects.values_list("id", flat=True)),
-            set(expected_message_ids),
+            set(ArchivedMessage.objects.values_list("id", flat=True)), set(expected_message_ids),
         )
 
         self.assertEqual(
@@ -333,9 +329,7 @@ class TestArchiveMessagesGeneral(ArchiveMessagesTestingBase):
             self._verify_archive_data([], [])
 
             self.assertEqual(
-                set(
-                    Message.objects.filter(id__in=expired_msg_ids).values_list("id", flat=True),
-                ),
+                set(Message.objects.filter(id__in=expired_msg_ids).values_list("id", flat=True)),
                 set(expired_msg_ids),
             )
             self.assertEqual(
@@ -402,8 +396,7 @@ class TestArchiveMessagesGeneral(ArchiveMessagesTestingBase):
         # Now make `actual_message_id` expired too.  We still don't
         # delete the Attachment objects.
         self._change_messages_date_sent(
-            [msgs_ids["actual_message_id"]],
-            timezone_now() - timedelta(days=MIT_REALM_DAYS + 1),
+            [msgs_ids["actual_message_id"]], timezone_now() - timedelta(days=MIT_REALM_DAYS + 1),
         )
         archive_messages()
         self.assertEqual(Attachment.objects.count(), 3)
@@ -541,9 +534,7 @@ class TestArchivingReactions(ArchiveMessagesTestingBase, EmojiReactionBase):
         self.post_zulip_reaction(expired_msg_ids[1], "hamlet")
 
         reaction_ids = list(
-            Reaction.objects.filter(message_id__in=expired_msg_ids).values_list(
-                "id", flat=True,
-            ),
+            Reaction.objects.filter(message_id__in=expired_msg_ids).values_list("id", flat=True),
         )
 
         self.assertEqual(len(reaction_ids), 3)
@@ -865,9 +856,7 @@ class MoveMessageToArchiveWithReactions(MoveMessageToArchiveBase, EmojiReactionB
         move_messages_to_archive(message_ids=[msg_id])
 
         self.assertEqual(
-            set(
-                ArchivedReaction.objects.filter(message_id=msg_id).values_list("id", flat=True),
-            ),
+            set(ArchivedReaction.objects.filter(message_id=msg_id).values_list("id", flat=True)),
             set(reaction_ids),
         )
         self.assertEqual(Reaction.objects.filter(id__in=reaction_ids).count(), 0)

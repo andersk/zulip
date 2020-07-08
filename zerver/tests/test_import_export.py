@@ -1025,9 +1025,7 @@ class ImportExportTest(ZulipTestCase):
                 delivery_email=self.example_email("hamlet"), realm=r,
             )
             data_user_id = f'data-user-id="{mentioned_user.id}"'
-            mention_message = get_stream_messages(r).get(
-                rendered_content__contains=data_user_id,
-            )
+            mention_message = get_stream_messages(r).get(rendered_content__contains=data_user_id)
             return mention_message.content
 
         assert_realm_values(get_user_mention)

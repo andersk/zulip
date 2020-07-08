@@ -94,9 +94,7 @@ class GiteaHookTests(WebhookTestCase):
     def test_issue_comment_new(self) -> None:
         expected_topic = "test / Issue #3 Test issue"
         expected_message = """kostekIV [commented](https://try.gitea.io/kostekIV/test/issues/3#issuecomment-24400) on [Issue #3](https://try.gitea.io/kostekIV/test/issues/3):\n\n~~~ quote\ntest comment\n~~~"""
-        self.send_and_test_stream_message(
-            "issue_comment__new", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("issue_comment__new", expected_topic, expected_message)
 
     def test_issue_comment_in_pr(self) -> None:
         expected_topic = "test / Issue #1 dummy"

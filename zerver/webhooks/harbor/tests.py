@@ -33,9 +33,7 @@ Image scan completed for `example/test:latest`. Vulnerabilities by severity:
 * None: **131**
         """.strip()
 
-        self.send_and_test_stream_message(
-            "scanning_completed", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("scanning_completed", expected_topic, expected_message)
 
     def get_body(self, fixture_name: str) -> str:
         return self.webhook_fixture_data("harbor", fixture_name, file_type="json")

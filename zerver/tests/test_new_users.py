@@ -34,9 +34,7 @@ class SendLoginEmailTest(ZulipTestCase):
             user = self.example_user("hamlet")
             user.timezone = "US/Pacific"
             user.twenty_four_hour_time = False
-            user.date_joined = mock_time - datetime.timedelta(
-                seconds=JUST_CREATED_THRESHOLD + 1,
-            )
+            user.date_joined = mock_time - datetime.timedelta(seconds=JUST_CREATED_THRESHOLD + 1)
             user.save()
             password = initial_password(user.delivery_email)
             login_info = dict(username=user.delivery_email, password=password)

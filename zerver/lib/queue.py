@@ -105,9 +105,7 @@ class SimpleQueueClient:
     def ready(self) -> bool:
         return self.channel is not None
 
-    def ensure_queue(
-        self, queue_name: str, callback: Callable[[BlockingChannel], None],
-    ) -> None:
+    def ensure_queue(self, queue_name: str, callback: Callable[[BlockingChannel], None]) -> None:
         """Ensure that a given queue has been declared, and then call
            the callback with no arguments."""
         if self.connection is None or not self.connection.is_open:
@@ -314,9 +312,7 @@ class TornadoQueueClient(SimpleQueueClient):
         self._reconnect_consumer_callbacks()
         self.log.info("TornadoQueueClient connected")
 
-    def ensure_queue(
-        self, queue_name: str, callback: Callable[[BlockingChannel], None],
-    ) -> None:
+    def ensure_queue(self, queue_name: str, callback: Callable[[BlockingChannel], None]) -> None:
         def finish(frame: Any) -> None:
             assert self.channel is not None
             self.queues.add(queue_name)
@@ -326,9 +322,7 @@ class TornadoQueueClient(SimpleQueueClient):
             # If we're not connected yet, send this message
             # once we have created the channel
             if not self.ready():
-                self._on_open_cbs.append(
-                    lambda channel: self.ensure_queue(queue_name, callback),
-                )
+                self._on_open_cbs.append(lambda channel: self.ensure_queue(queue_name, callback))
                 return
 
             assert self.channel is not None

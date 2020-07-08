@@ -148,9 +148,7 @@ def process_count_stat(
             dependency_fill_time = last_successful_fill(dependency)
             if dependency_fill_time is None:
                 logger.warning(
-                    "DependentCountStat %s run before dependency %s.",
-                    stat.property,
-                    dependency,
+                    "DependentCountStat %s run before dependency %s.", stat.property, dependency,
                 )
                 return
             fill_to_time = min(fill_to_time, dependency_fill_time)
@@ -757,17 +755,13 @@ def get_count_stats(realm: Optional[Realm] = None) -> Dict[str, CountStat]:
         # Stats that measure user activity in the UserActivityInterval sense.
         CountStat(
             "1day_actives::day",
-            sql_data_collector(
-                UserCount, check_useractivityinterval_by_user_query(realm), None,
-            ),
+            sql_data_collector(UserCount, check_useractivityinterval_by_user_query(realm), None),
             CountStat.DAY,
             interval=timedelta(days=1) - UserActivityInterval.MIN_INTERVAL_LENGTH,
         ),
         CountStat(
             "15day_actives::day",
-            sql_data_collector(
-                UserCount, check_useractivityinterval_by_user_query(realm), None,
-            ),
+            sql_data_collector(UserCount, check_useractivityinterval_by_user_query(realm), None),
             CountStat.DAY,
             interval=timedelta(days=15) - UserActivityInterval.MIN_INTERVAL_LENGTH,
         ),

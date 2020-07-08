@@ -134,9 +134,7 @@ def get_force_push_commits_event_message(
     )
 
 
-def get_create_branch_event_message(
-    user_name: str, url: Optional[str], branch_name: str,
-) -> str:
+def get_create_branch_event_message(user_name: str, url: Optional[str], branch_name: str) -> str:
     if url is None:
         return CREATE_BRANCH_WITHOUT_URL_MESSAGE_TEMPLATE.format(
             user_name=user_name, branch_name=branch_name,

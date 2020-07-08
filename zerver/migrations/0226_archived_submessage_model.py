@@ -31,15 +31,13 @@ class Migration(migrations.Migration):
                 (
                     "message",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to="zerver.ArchivedMessage",
+                        on_delete=django.db.models.deletion.CASCADE, to="zerver.ArchivedMessage",
                     ),
                 ),
                 (
                     "sender",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to=settings.AUTH_USER_MODEL,
+                        on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL,
                     ),
                 ),
             ],

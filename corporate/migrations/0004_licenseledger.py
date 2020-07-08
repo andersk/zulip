@@ -27,8 +27,7 @@ class Migration(migrations.Migration):
                 (
                     "plan",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to="corporate.CustomerPlan",
+                        on_delete=django.db.models.deletion.CASCADE, to="corporate.CustomerPlan",
                     ),
                 ),
             ],

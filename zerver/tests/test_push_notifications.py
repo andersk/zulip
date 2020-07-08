@@ -144,10 +144,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
         realm.save()
 
         result = self.api_post(
-            hamlet,
-            endpoint,
-            dict(user_id=15, token=token, token_kind=token_kind),
-            subdomain="",
+            hamlet, endpoint, dict(user_id=15, token=token, token_kind=token_kind), subdomain="",
         )
         self.assert_json_error(result, "Must validate with valid Zulip server API key")
 
@@ -162,9 +159,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
             self.server_uuid, endpoint, {"user_id": user_id, "token_kind": token_kind},
         )
         self.assert_json_error(result, "Missing 'token' argument")
-        result = self.uuid_post(
-            self.server_uuid, endpoint, {"user_id": user_id, "token": token},
-        )
+        result = self.uuid_post(self.server_uuid, endpoint, {"user_id": user_id, "token": token})
         self.assert_json_error(result, "Missing 'token_kind' argument")
         result = self.uuid_post(
             self.server_uuid, endpoint, {"token": token, "token_kind": token_kind},
@@ -650,8 +645,7 @@ class AnalyticsBouncerTest(BouncerTestCase):
             return send_to_push_bouncer(*args)
 
         with mock.patch(
-            "zerver.lib.remote_server.send_to_push_bouncer",
-            side_effect=check_for_unwanted_data,
+            "zerver.lib.remote_server.send_to_push_bouncer", side_effect=check_for_unwanted_data,
         ):
             send_analytics_to_remote_server()
 
@@ -1101,9 +1095,7 @@ class HandlePushNotificationTest(PushNotificationTest):
         sender = self.example_user("iago")
         message_id = self.send_stream_message(sender, "public_stream", "test")
         missed_message = {"message_id": message_id}
-        with mock.patch(
-            "zerver.lib.push_notifications.logger.error",
-        ) as mock_logger, mock.patch(
+        with mock.patch("zerver.lib.push_notifications.logger.error") as mock_logger, mock.patch(
             "zerver.lib.push_notifications.push_notifications_enabled", return_value=True,
         ) as mock_push_notifications:
             handle_push_notification(self.user_profile.id, missed_message)
@@ -1170,9 +1162,7 @@ class TestAPNs(PushNotificationTest):
         )
 
     def send(
-        self,
-        devices: Optional[List[PushDeviceToken]] = None,
-        payload_data: Dict[str, Any] = {},
+        self, devices: Optional[List[PushDeviceToken]] = None, payload_data: Dict[str, Any] = {},
     ) -> None:
         if devices is None:
             devices = self.devices()
@@ -1199,9 +1189,9 @@ class TestAPNs(PushNotificationTest):
             zerver.lib.push_notifications._apns_client = None
 
     def test_not_configured(self) -> None:
-        with mock.patch(
-            "zerver.lib.push_notifications.get_apns_client",
-        ) as mock_get, mock.patch("zerver.lib.push_notifications.logger") as mock_logging:
+        with mock.patch("zerver.lib.push_notifications.get_apns_client") as mock_get, mock.patch(
+            "zerver.lib.push_notifications.logger",
+        ) as mock_logging:
             mock_get.return_value = None
             self.send()
             mock_logging.debug.assert_called_once_with(
@@ -1698,9 +1688,7 @@ class Result:
 class TestSendToPushBouncer(ZulipTestCase):
     @mock.patch("requests.request", return_value=Result(status=500))
     @mock.patch("logging.warning")
-    def test_500_error(
-        self, mock_request: mock.MagicMock, mock_warning: mock.MagicMock,
-    ) -> None:
+    def test_500_error(self, mock_request: mock.MagicMock, mock_warning: mock.MagicMock) -> None:
         with self.assertRaises(PushNotificationBouncerRetryLaterError):
             result, failed = send_to_push_bouncer("register", "register", {"data": "true"})
         mock_warning.assert_called_once()
@@ -1839,9 +1827,7 @@ class TestPushApi(BouncerTestCase):
                 self.assertEqual(len(tokens), 1)
                 self.assertEqual(tokens[0].token, token)
 
-                tokens = list(
-                    RemotePushDeviceToken.objects.filter(user_id=user.id, token=token),
-                )
+                tokens = list(RemotePushDeviceToken.objects.filter(user_id=user.id, token=token))
                 self.assertEqual(len(tokens), 1)
                 self.assertEqual(tokens[0].token, token)
 
@@ -1985,9 +1971,7 @@ class GCMSendTest(PushNotificationTest):
 
         data = self.get_gcm_data()
         send_android_push_notification_to_user(self.user_profile, data, {})
-        msg = (
-            "GCM: Got canonical ref %s " "replacing %s but new ID not " "registered! Updating."
-        )
+        msg = "GCM: Got canonical ref %s " "replacing %s but new ID not " "registered! Updating."
         mock_warning.assert_called_once_with(msg, t2, t1)
 
         self.assertEqual(get_count("1111"), 0)

@@ -64,8 +64,6 @@ def email_unsubscribe(
 ) -> HttpResponse:
     if email_type in email_unsubscribers:
         display_name, unsubscribe_function = email_unsubscribers[email_type]
-        return process_unsubscribe(
-            request, confirmation_key, display_name, unsubscribe_function,
-        )
+        return process_unsubscribe(request, confirmation_key, display_name, unsubscribe_function)
 
     return render(request, "zerver/unsubscribe_link_error.html")

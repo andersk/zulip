@@ -156,9 +156,7 @@ class TestZulipBaseCommand(ZulipTestCase):
             UserProfile.objects.filter(realm=self.zulip_realm, is_active=True),
             key=lambda x: x.email,
         )
-        user_profiles = self.get_users_sorted(
-            dict(users=None, all_users=True), self.zulip_realm,
-        )
+        user_profiles = self.get_users_sorted(dict(users=None, all_users=True), self.zulip_realm)
         self.assertEqual(user_profiles, expected_user_profiles)
 
         # Test include_deactivated
@@ -375,8 +373,7 @@ class TestPasswordRestEmail(ZulipTestCase):
         from django.core.mail import outbox
 
         self.assertRegex(
-            outbox[0].from_email,
-            fr"^Zulip Account Security <{self.TOKENIZED_NOREPLY_REGEX}>\Z",
+            outbox[0].from_email, fr"^Zulip Account Security <{self.TOKENIZED_NOREPLY_REGEX}>\Z",
         )
         self.assertIn("reset your password", outbox[0].body)
 

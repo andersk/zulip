@@ -99,9 +99,7 @@ def deactivate_user_backend(
     return _deactivate_user_profile_backend(request, user_profile, target)
 
 
-def deactivate_user_own_backend(
-    request: HttpRequest, user_profile: UserProfile,
-) -> HttpResponse:
+def deactivate_user_own_backend(request: HttpRequest, user_profile: UserProfile) -> HttpResponse:
     if UserProfile.objects.filter(realm=user_profile.realm, is_active=True).count() == 1:
         raise CannotDeactivateLastUserError(is_last_owner=False)
     if user_profile.is_realm_owner and check_last_owner(user_profile):
@@ -418,10 +416,7 @@ def add_bot_backend(
             user_profile, default_events_register_stream_name,
         )
 
-    if (
-        bot_type in (UserProfile.INCOMING_WEBHOOK_BOT, UserProfile.EMBEDDED_BOT)
-        and service_name
-    ):
+    if bot_type in (UserProfile.INCOMING_WEBHOOK_BOT, UserProfile.EMBEDDED_BOT) and service_name:
         check_valid_bot_config(bot_type, service_name, config_data)
 
     bot_profile = do_create_user(
@@ -606,9 +601,7 @@ def get_profile_backend(request: HttpRequest, user_profile: UserProfile) -> Http
 
     result["max_message_id"] = -1
 
-    messages = Message.objects.filter(usermessage__user_profile=user_profile).order_by("-id")[
-        :1
-    ]
+    messages = Message.objects.filter(usermessage__user_profile=user_profile).order_by("-id")[:1]
     if messages:
         result["max_message_id"] = messages[0].id
 

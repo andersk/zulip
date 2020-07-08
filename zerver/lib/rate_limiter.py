@@ -252,9 +252,7 @@ class TornadoInMemoryRateLimiterBackend(RateLimiterBackend):
             cls._garbage_collect_for_rule(now, time_window, max_count)
 
         reset_times_for_rule = cls.reset_times.setdefault((time_window, max_count), {})
-        new_reset = (
-            max(reset_times_for_rule.get(entity_key, now), now) + time_window / max_count
-        )
+        new_reset = max(reset_times_for_rule.get(entity_key, now), now) + time_window / max_count
 
         if new_reset > now + time_window:
             # Compute for how long the bucket will remain filled.
@@ -380,9 +378,7 @@ class RedisRateLimiterBackend(RateLimiterBackend):
         return calls_left, time_reset - now
 
     @classmethod
-    def is_ratelimited(
-        cls, entity_key: str, rules: List[Tuple[int, int]],
-    ) -> Tuple[bool, float]:
+    def is_ratelimited(cls, entity_key: str, rules: List[Tuple[int, int]]) -> Tuple[bool, float]:
         "Returns a tuple of (rate_limited, time_till_free)"
         assert rules
         list_key, set_key, blocking_key = cls.get_keys(entity_key)

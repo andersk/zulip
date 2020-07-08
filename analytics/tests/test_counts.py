@@ -76,9 +76,7 @@ class AnalyticsTestCase(ZulipTestCase):
     def setUp(self) -> None:
         super().setUp()
         self.default_realm = Realm.objects.create(
-            string_id="realmtest",
-            name="Realm Test",
-            date_created=self.TIME_ZERO - 2 * self.DAY,
+            string_id="realmtest", name="Realm Test", date_created=self.TIME_ZERO - 2 * self.DAY,
         )
         # used to generate unique names in self.create_*
         self.name_counter = 100
@@ -794,11 +792,7 @@ class TestCountStats(AnalyticsTestCase):
         self.assertTableState(
             RealmCount,
             ["value", "subgroup", "realm"],
-            [
-                [2, website_client_id],
-                [3, client2_id],
-                [2, website_client_id, self.second_realm],
-            ],
+            [[2, website_client_id], [3, client2_id], [2, website_client_id, self.second_realm]],
         )
         self.assertTableState(
             InstallationCount, ["value", "subgroup"], [[4, website_client_id], [3, client2_id]],
@@ -1295,42 +1289,40 @@ class TestLoggingCountStats(AnalyticsTestCase):
 
     def test_active_users_log_by_is_bot(self) -> None:
         property = "active_users_log:is_bot:day"
-        user = do_create_user(
-            "email", "password", self.default_realm, "full_name", "short_name",
-        )
+        user = do_create_user("email", "password", self.default_realm, "full_name", "short_name")
         self.assertEqual(
             1,
-            RealmCount.objects.filter(property=property, subgroup=False).aggregate(
-                Sum("value"),
-            )["value__sum"],
+            RealmCount.objects.filter(property=property, subgroup=False).aggregate(Sum("value"))[
+                "value__sum"
+            ],
         )
         do_deactivate_user(user)
         self.assertEqual(
             0,
-            RealmCount.objects.filter(property=property, subgroup=False).aggregate(
-                Sum("value"),
-            )["value__sum"],
+            RealmCount.objects.filter(property=property, subgroup=False).aggregate(Sum("value"))[
+                "value__sum"
+            ],
         )
         do_activate_user(user)
         self.assertEqual(
             1,
-            RealmCount.objects.filter(property=property, subgroup=False).aggregate(
-                Sum("value"),
-            )["value__sum"],
+            RealmCount.objects.filter(property=property, subgroup=False).aggregate(Sum("value"))[
+                "value__sum"
+            ],
         )
         do_deactivate_user(user)
         self.assertEqual(
             0,
-            RealmCount.objects.filter(property=property, subgroup=False).aggregate(
-                Sum("value"),
-            )["value__sum"],
+            RealmCount.objects.filter(property=property, subgroup=False).aggregate(Sum("value"))[
+                "value__sum"
+            ],
         )
         do_reactivate_user(user)
         self.assertEqual(
             1,
-            RealmCount.objects.filter(property=property, subgroup=False).aggregate(
-                Sum("value"),
-            )["value__sum"],
+            RealmCount.objects.filter(property=property, subgroup=False).aggregate(Sum("value"))[
+                "value__sum"
+            ],
         )
 
     def test_invites_sent(self) -> None:
@@ -1457,11 +1449,7 @@ class TestDeleteStats(AnalyticsTestCase):
     def test_do_drop_single_stat(self) -> None:
         user = self.create_user()
         stream = self.create_stream_with_recipient()[0]
-        count_args_to_delete = {
-            "property": "to_delete",
-            "end_time": self.TIME_ZERO,
-            "value": 10,
-        }
+        count_args_to_delete = {"property": "to_delete", "end_time": self.TIME_ZERO, "value": 10}
         count_args_to_save = {"property": "to_save", "end_time": self.TIME_ZERO, "value": 10}
 
         for count_args in [count_args_to_delete, count_args_to_save]:
@@ -1789,9 +1777,7 @@ class TestRealmActiveHumans(AnalyticsTestCase):
             "15day_actives::day",
             "realm_active_humans::day",
         ]:
-            FillState.objects.create(
-                property=property, state=FillState.DONE, end_time=time_zero,
-            )
+            FillState.objects.create(property=property, state=FillState.DONE, end_time=time_zero)
             process_count_stat(COUNT_STATS[property], time_zero + self.DAY)
         self.assertEqual(
             RealmCount.objects.filter(

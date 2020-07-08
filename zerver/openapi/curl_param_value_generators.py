@@ -111,9 +111,7 @@ def update_flags_message_ids() -> Dict[str, object]:
     }
 
 
-@openapi_param_value_generator(
-    ["/mark_stream_as_read:post", "/users/me/{stream_id}/topics:get"],
-)
+@openapi_param_value_generator(["/mark_stream_as_read:post", "/users/me/{stream_id}/topics:get"])
 def get_venice_stream_id() -> Dict[str, object]:
     return {
         "stream_id": helpers.get_stream_id("Venice"),

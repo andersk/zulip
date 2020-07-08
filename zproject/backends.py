@@ -633,9 +633,7 @@ class ZulipLDAPAuthBackendBase(ZulipAuthMixin, LDAPBackend):
         if "full_name" in settings.AUTH_LDAP_USER_ATTR_MAP:
             full_name_attr = settings.AUTH_LDAP_USER_ATTR_MAP["full_name"]
             short_name = full_name = ldap_user.attrs[full_name_attr][0]
-        elif all(
-            key in settings.AUTH_LDAP_USER_ATTR_MAP for key in {"first_name", "last_name"}
-        ):
+        elif all(key in settings.AUTH_LDAP_USER_ATTR_MAP for key in {"first_name", "last_name"}):
             first_name_attr = settings.AUTH_LDAP_USER_ATTR_MAP["first_name"]
             last_name_attr = settings.AUTH_LDAP_USER_ATTR_MAP["last_name"]
             short_name = ldap_user.attrs[first_name_attr][0]
@@ -693,9 +691,7 @@ class ZulipLDAPAuthBackendBase(ZulipAuthMixin, LDAPBackend):
             try:
                 field = fields_by_var_name[var_name]
             except KeyError:
-                raise ZulipLDAPException(
-                    f"Custom profile field with name {var_name} not found.",
-                )
+                raise ZulipLDAPException(f"Custom profile field with name {var_name} not found.")
             if existing_values.get(var_name) == value:
                 continue
             try:
@@ -746,9 +742,7 @@ class ZulipLDAPAuthBackend(ZulipLDAPAuthBackendBase):
         # authenticated user's data from LDAP.
         return super().authenticate(request=request, username=username, password=password)
 
-    def get_or_build_user(
-        self, username: str, ldap_user: _LDAPUser,
-    ) -> Tuple[UserProfile, bool]:
+    def get_or_build_user(self, username: str, ldap_user: _LDAPUser) -> Tuple[UserProfile, bool]:
         """The main function of our authentication backend extension of
         django-auth-ldap.  When this is called (from `authenticate`),
         django-auth-ldap will already have verified that the provided
@@ -1043,9 +1037,7 @@ class ExternalAuthMethod(ABC):
 
     @classmethod
     @abstractmethod
-    def dict_representation(
-        cls, realm: Optional[Realm] = None,
-    ) -> List[ExternalAuthMethodDictT]:
+    def dict_representation(cls, realm: Optional[Realm] = None) -> List[ExternalAuthMethodDictT]:
         """
         Method returning dictionaries representing the authentication methods
         corresponding to the backend that subclasses this. The documentation
@@ -1204,9 +1196,7 @@ class ZulipRemoteUserBackend(RemoteUserBackend, ExternalAuthMethod):
         return common_get_active_user(email, realm, return_data=return_data)
 
     @classmethod
-    def dict_representation(
-        cls, realm: Optional[Realm] = None,
-    ) -> List[ExternalAuthMethodDictT]:
+    def dict_representation(cls, realm: Optional[Realm] = None) -> List[ExternalAuthMethodDictT]:
         return [
             dict(
                 name=cls.name,
@@ -1569,9 +1559,7 @@ class SocialAuthMixin(ZulipAuthMixin, ExternalAuthMethod, BaseAuth):
             return None
 
     @classmethod
-    def dict_representation(
-        cls, realm: Optional[Realm] = None,
-    ) -> List[ExternalAuthMethodDictT]:
+    def dict_representation(cls, realm: Optional[Realm] = None) -> List[ExternalAuthMethodDictT]:
         return [
             dict(
                 name=cls.name,
@@ -2140,9 +2128,7 @@ class SAMLAuthBackend(SocialAuthMixin, SAMLAuth):
             result = super().auth_complete(*args, **kwargs)
         except self.SAMLRESPONSE_PARSING_EXCEPTIONS:
             # These can be raised if SAMLResponse is missing or badly formatted.
-            self.logger.info(
-                "/complete/saml/: error while parsing SAMLResponse:", exc_info=True,
-            )
+            self.logger.info("/complete/saml/: error while parsing SAMLResponse:", exc_info=True)
             # Fall through to returning None.
         finally:
             if result is None:
@@ -2183,9 +2169,7 @@ class SAMLAuthBackend(SocialAuthMixin, SAMLAuth):
         return None
 
     @classmethod
-    def dict_representation(
-        cls, realm: Optional[Realm] = None,
-    ) -> List[ExternalAuthMethodDictT]:
+    def dict_representation(cls, realm: Optional[Realm] = None) -> List[ExternalAuthMethodDictT]:
         result: List[ExternalAuthMethodDictT] = []
         for idp_name, idp_dict in settings.SOCIAL_AUTH_SAML_ENABLED_IDPS.items():
             if realm and not cls.validate_idp_for_subdomain(idp_name, realm.subdomain):

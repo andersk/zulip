@@ -49,9 +49,7 @@ class SubsNotificationSettingsTestCase(MigrationsTestCase):  # nocoverage
 
         stream_name = "Denmark"
         denmark = get_stream(stream_name, iago.realm)
-        denmark_recipient = Recipient.objects.get(
-            type=self.RECIPIENT_STREAM, type_id=denmark.id,
-        )
+        denmark_recipient = Recipient.objects.get(type=self.RECIPIENT_STREAM, type_id=denmark.id)
         denmark_sub = Subscription.objects.get(user_profile=iago, recipient=denmark_recipient)
         denmark_sub.desktop_notifications = False
         denmark_sub.audible_notifications = False
@@ -81,9 +79,7 @@ class SubsNotificationSettingsTestCase(MigrationsTestCase):  # nocoverage
         iago = UserProfile.objects.get(email="iago@zulip.com", realm=realm)
         stream_name = "Denmark"
         denmark = Stream.objects.get(realm=iago.realm, name=stream_name)
-        denmark_recipient = Recipient.objects.get(
-            type=self.RECIPIENT_STREAM, type_id=denmark.id,
-        )
+        denmark_recipient = Recipient.objects.get(type=self.RECIPIENT_STREAM, type_id=denmark.id)
         denmark_sub = Subscription.objects.get(user_profile=iago, recipient=denmark_recipient)
         self.assertEqual(denmark_sub.desktop_notifications, False)
         self.assertIsNone(denmark_sub.audible_notifications)

@@ -766,9 +766,7 @@ class MarkdownTest(ZulipTestCase):
 
     def test_inline_dropbox_negative(self) -> None:
         # Make sure we're not overzealous in our conversion:
-        msg = (
-            "Look at the new dropbox logo: https://www.dropbox.com/static/images/home_logo.png"
-        )
+        msg = "Look at the new dropbox logo: https://www.dropbox.com/static/images/home_logo.png"
         with mock.patch("zerver.lib.markdown.fetch_open_graph_image", return_value=None):
             converted = markdown_convert_wrapper(msg)
 
@@ -919,8 +917,7 @@ class MarkdownTest(ZulipTestCase):
             "<p>{}</p>\n{}".format(
                 make_link("http://www.twitter.com/wdaher/status/287977969287315456"),
                 make_inline_twitter_preview(
-                    "http://www.twitter.com/wdaher/status/287977969287315456",
-                    normal_tweet_html,
+                    "http://www.twitter.com/wdaher/status/287977969287315456", normal_tweet_html,
                 ),
             ),
         )
@@ -1327,8 +1324,7 @@ class MarkdownTest(ZulipTestCase):
         content = "/me makes a list\n* one\n* two"
         rendered_content = render_markdown(msg, content)
         self.assertEqual(
-            rendered_content,
-            "<p>/me makes a list</p>\n<ul>\n<li>one</li>\n<li>two</li>\n</ul>",
+            rendered_content, "<p>/me makes a list</p>\n<ul>\n<li>one</li>\n<li>two</li>\n</ul>",
         )
         self.assertTrue(Message.is_status_message(content, rendered_content))
 
@@ -2013,9 +2009,7 @@ class MarkdownTest(ZulipTestCase):
         msg = Message(sender=sender_user_profile, sending_client=get_client("test"))
 
         content = "Hey @*Nonexistent group*"
-        self.assertEqual(
-            render_markdown(msg, content), "<p>Hey @<em>Nonexistent group</em></p>",
-        )
+        self.assertEqual(render_markdown(msg, content), "<p>Hey @<em>Nonexistent group</em></p>")
         self.assertEqual(msg.mentions_user_group_ids, set())
 
     def test_stream_single(self) -> None:

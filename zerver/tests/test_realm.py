@@ -247,8 +247,7 @@ class RealmTest(ZulipTestCase):
 
         self.assertEqual(len(outbox), 1)
         self.assertRegex(
-            outbox[0].from_email,
-            fr"^Zulip Account Security <{self.TOKENIZED_NOREPLY_REGEX}>\Z",
+            outbox[0].from_email, fr"^Zulip Account Security <{self.TOKENIZED_NOREPLY_REGEX}>\Z",
         )
         self.assertIn("Reactivate your Zulip organization", outbox[0].subject)
         self.assertIn("Dear former administrators", outbox[0].body)
@@ -569,16 +568,14 @@ class RealmTest(ZulipTestCase):
         req = {"video_chat_provider": ujson.dumps(invalid_video_chat_provider_value)}
         result = self.client_patch("/json/realm", req)
         self.assert_json_error(
-            result,
-            ("Invalid video_chat_provider {}").format(invalid_video_chat_provider_value),
+            result, ("Invalid video_chat_provider {}").format(invalid_video_chat_provider_value),
         )
 
         req = {"video_chat_provider": ujson.dumps(Realm.VIDEO_CHAT_PROVIDERS["disabled"]["id"])}
         result = self.client_patch("/json/realm", req)
         self.assert_json_success(result)
         self.assertEqual(
-            get_realm("zulip").video_chat_provider,
-            Realm.VIDEO_CHAT_PROVIDERS["disabled"]["id"],
+            get_realm("zulip").video_chat_provider, Realm.VIDEO_CHAT_PROVIDERS["disabled"]["id"],
         )
 
         req = {
@@ -893,9 +890,7 @@ class ScrubRealmTest(ZulipTestCase):
 
         self.assertEqual(Message.objects.filter(sender__in=[iago, othello]).count(), 0)
         self.assertEqual(Message.objects.filter(sender__in=[cordelia, king]).count(), 10)
-        self.assertEqual(
-            UserMessage.objects.filter(user_profile__in=[iago, othello]).count(), 0,
-        )
+        self.assertEqual(UserMessage.objects.filter(user_profile__in=[iago, othello]).count(), 0)
         self.assertEqual(
             UserMessage.objects.filter(user_profile__in=[cordelia, king]).count(), 20,
         )

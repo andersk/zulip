@@ -59,9 +59,7 @@ def get_fixtures(request: HttpResponse, integration_name: str = REQ()) -> HttpRe
         )
 
     fixtures = {}
-    fixtures_dir = os.path.join(
-        ZULIP_PATH, f"zerver/webhooks/{valid_integration_name}/fixtures",
-    )
+    fixtures_dir = os.path.join(ZULIP_PATH, f"zerver/webhooks/{valid_integration_name}/fixtures")
     if not os.path.exists(fixtures_dir):
         msg = ('The integration "{valid_integration_name}" does not have fixtures.').format(
             valid_integration_name=valid_integration_name,
@@ -123,9 +121,7 @@ def send_all_webhook_fixture_messages(
             f'"{integration_name}" is not a valid webhook integration.', status=404,
         )
 
-    fixtures_dir = os.path.join(
-        ZULIP_PATH, f"zerver/webhooks/{valid_integration_name}/fixtures",
-    )
+    fixtures_dir = os.path.join(ZULIP_PATH, f"zerver/webhooks/{valid_integration_name}/fixtures")
     if not os.path.exists(fixtures_dir):
         msg = ('The integration "{valid_integration_name}" does not have fixtures.').format(
             valid_integration_name=valid_integration_name,

@@ -97,9 +97,7 @@ class TestIntegrationsDevPanel(ZulipTestCase):
         data = {
             "url": url,
             "body": body,
-            "custom_headers": ujson.dumps(
-                {"Content-Type": "application/x-www-form-urlencoded"},
-            ),
+            "custom_headers": ujson.dumps({"Content-Type": "application/x-www-form-urlencoded"}),
             "is_json": "false",
         }
 

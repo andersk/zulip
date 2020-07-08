@@ -455,8 +455,7 @@ class WorkerTest(ZulipTestCase):
                 with patch("logging.warning") as logging_warning_mock:
                     worker.start()
                     logging_warning_mock.assert_called_once_with(
-                        "Attempted to sign up already existing email to list: %s",
-                        "foo@bar.baz",
+                        "Attempted to sign up already existing email to list: %s", "foo@bar.baz",
                     )
 
     def test_signups_bad_request(self) -> None:

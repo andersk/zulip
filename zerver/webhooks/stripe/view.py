@@ -157,8 +157,7 @@ def topic_and_body(payload: Dict[str, Any]) -> Tuple[str, str]:
             if event == "created":
                 if object_["plan"]:
                     body += "\nPlan: [{plan_nickname}](https://dashboard.stripe.com/plans/{plan_id})".format(
-                        plan_nickname=object_["plan"]["nickname"],
-                        plan_id=object_["plan"]["id"],
+                        plan_nickname=object_["plan"]["nickname"], plan_id=object_["plan"]["id"],
                     )
                 if object_["quantity"]:
                     body += "\nQuantity: {}".format(object_["quantity"])

@@ -246,9 +246,7 @@ def convert_room_data(
             users = set()
             if api_token is not None:
                 hc = hypchat.HypChat(api_token)
-                room_data = hc.fromurl(
-                    "{}/v2/room/{}/member".format(hc.endpoint, in_dict["id"]),
-                )
+                room_data = hc.fromurl("{}/v2/room/{}/member".format(hc.endpoint, in_dict["id"]))
 
                 for item in room_data["items"]:
                     hipchat_user_id = item["id"]
@@ -284,10 +282,7 @@ def make_realm(realm_id: int) -> ZerverFieldsT:
 
 
 def write_avatar_data(
-    raw_user_data: List[ZerverFieldsT],
-    output_dir: str,
-    user_id_mapper: IdMapper,
-    realm_id: int,
+    raw_user_data: List[ZerverFieldsT], output_dir: str, user_id_mapper: IdMapper, realm_id: int,
 ) -> None:
     avatar_folder = os.path.join(output_dir, "avatars")
     avatar_realm_folder = os.path.join(avatar_folder, str(realm_id))

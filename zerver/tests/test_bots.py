@@ -77,9 +77,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
     def test_bot_domain(self) -> None:
         self.login("hamlet")
         self.create_bot()
-        self.assertTrue(
-            UserProfile.objects.filter(email="hambot-bot@zulip.testserver").exists(),
-        )
+        self.assertTrue(UserProfile.objects.filter(email="hambot-bot@zulip.testserver").exists())
         # The other cases are hard to test directly, since we don't allow creating bots from
         # the wrong subdomain, and because 'testserver.example.com' is not a valid domain for the bot's email.
         # So we just test the Raelm.get_bot_domain function.
@@ -620,9 +618,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
         self.login("othello")
         email = "hambot-bot@zulip.testserver"
 
-        result = self.client_post(
-            f"/json/bots/{self.get_bot_user(email).id}/api_key/regenerate",
-        )
+        result = self.client_post(f"/json/bots/{self.get_bot_user(email).id}/api_key/regenerate")
         self.assert_json_error(result, "Insufficient permission")
 
         bot_info = {
@@ -642,9 +638,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
         bot = self.get_bot()
         old_api_key = bot["api_key"]
         email = "hambot-bot@zulip.testserver"
-        result = self.client_post(
-            f"/json/bots/{self.get_bot_user(email).id}/api_key/regenerate",
-        )
+        result = self.client_post(f"/json/bots/{self.get_bot_user(email).id}/api_key/regenerate")
         self.assert_json_success(result)
         new_api_key = result.json()["api_key"]
         self.assertNotEqual(old_api_key, new_api_key)

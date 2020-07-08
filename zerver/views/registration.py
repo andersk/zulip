@@ -206,9 +206,7 @@ def accounts_register(request: HttpRequest) -> HttpResponse:
                     try:
                         ldap_username = backend.django_to_ldap_username(email)
                     except ZulipLDAPExceptionNoMatchingLDAPUser:
-                        logging.warning(
-                            "New account email %s could not be found in LDAP", email,
-                        )
+                        logging.warning("New account email %s could not be found in LDAP", email)
                         break
 
                     # Note that this `ldap_user` object is not a
@@ -244,9 +242,7 @@ def accounts_register(request: HttpRequest) -> HttpResponse:
             # filled out by the user) we want the form to validate,
             # so they can be directly registered without having to
             # go through this interstitial.
-            form = RegistrationForm(
-                {"full_name": ldap_full_name}, realm_creation=realm_creation,
-            )
+            form = RegistrationForm({"full_name": ldap_full_name}, realm_creation=realm_creation)
             request.session["authenticated_full_name"] = ldap_full_name
             name_validated = True
         elif realm is not None and realm.is_zephyr_mirror_realm:
@@ -530,9 +526,7 @@ def prepare_activation_url(
 
     activation_url = create_confirmation_link(prereg_user, confirmation_type)
     if settings.DEVELOPMENT and realm_creation:
-        request.session["confirmation_key"] = {
-            "confirmation_key": activation_url.split("/")[-1],
-        }
+        request.session["confirmation_key"] = {"confirmation_key": activation_url.split("/")[-1]}
     return activation_url
 
 
@@ -633,9 +627,7 @@ def accounts_home(
         invited_as = multiuse_object.invited_as
 
     if request.method == "POST":
-        form = HomepageForm(
-            request.POST, realm=realm, from_multiuse_invite=from_multiuse_invite,
-        )
+        form = HomepageForm(request.POST, realm=realm, from_multiuse_invite=from_multiuse_invite)
         if form.is_valid():
             email = form.cleaned_data["email"]
             activation_url = prepare_activation_url(

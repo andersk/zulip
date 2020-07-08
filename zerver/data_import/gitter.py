@@ -49,9 +49,7 @@ def gitter_workspace_to_realm(
     )
     realm = build_realm(zerver_realm, realm_id, domain_name)
 
-    zerver_userprofile, avatars, user_map = build_userprofile(
-        int(NOW), domain_name, gitter_data,
-    )
+    zerver_userprofile, avatars, user_map = build_userprofile(int(NOW), domain_name, gitter_data)
     zerver_stream, zerver_defaultstream, stream_map = build_stream_map(int(NOW), gitter_data)
     zerver_recipient, zerver_subscription = build_recipient_and_subscription(
         zerver_userprofile, zerver_stream,
@@ -182,9 +180,7 @@ def build_recipient_and_subscription(
     # For users
     for user in zerver_userprofile:
         zerver_recipient.append(build_recipient(user["id"], recipient_id, Recipient.PERSONAL))
-        zerver_subscription.append(
-            build_subscription(recipient_id, user["id"], subscription_id),
-        )
+        zerver_subscription.append(build_subscription(recipient_id, user["id"], subscription_id))
         recipient_id += 1
         subscription_id += 1
 

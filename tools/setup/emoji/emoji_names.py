@@ -1426,10 +1426,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     "1f6bb": {"canonical_name": "restroom", "aliases": []},
     "1f6ae": {"canonical_name": "put_litter_in_its_place", "aliases": []},
     "1f3a6": {"canonical_name": "cinema", "aliases": ["movie_theater"]},
-    "1f4f6": {
-        "canonical_name": "cell_reception",
-        "aliases": ["signal_strength", "signal_bars"],
-    },
+    "1f4f6": {"canonical_name": "cell_reception", "aliases": ["signal_strength", "signal_bars"]},
     # '1f201': {'canonical_name': 'X', 'aliases': ['koko']},
     "1f523": {"canonical_name": "symbols", "aliases": []},
     "2139": {"canonical_name": "info", "aliases": []},

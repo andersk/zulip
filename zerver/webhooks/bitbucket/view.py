@@ -27,9 +27,7 @@ def api_bitbucket_webhook(
             "sha": commit.get("raw_node"),
             "message": commit.get("message"),
             "url": "{}{}commits/{}".format(
-                payload.get("canon_url"),
-                repository.get("absolute_url"),
-                commit.get("raw_node"),
+                payload.get("canon_url"), repository.get("absolute_url"), commit.get("raw_node"),
             ),
         }
         for commit in payload["commits"]

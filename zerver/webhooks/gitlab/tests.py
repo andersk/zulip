@@ -140,9 +140,7 @@ class GitlabHookTests(WebhookTestCase):
         expected_message = "Adam Birds created [Issue #2](https://gitlab.com/adambirds/zulip-gitlab-test/issues/2) (assigned to adambirds, eeshangarg and timabbott):\n\n~~~ quote\nZulip Test Issue 2\n~~~"
 
         self.send_and_test_stream_message(
-            "issue_hook__issue_created_with_three_assignees",
-            expected_subject,
-            expected_message,
+            "issue_hook__issue_created_with_three_assignees", expected_subject, expected_message,
         )
 
     def test_create_confidential_issue_with_assignee_event_message(self) -> None:
@@ -492,9 +490,7 @@ class GitlabHookTests(WebhookTestCase):
 
     def test_issue_type_test_payload(self) -> None:
         expected_topic = "public-repo"
-        expected_message = (
-            "Webhook for **public-repo** has been configured successfully! :tada:"
-        )
+        expected_message = "Webhook for **public-repo** has been configured successfully! :tada:"
 
         self.send_and_test_stream_message(
             "test_hook__issue_test_payload", expected_topic, expected_message,
@@ -571,9 +567,7 @@ class GitlabHookTests(WebhookTestCase):
         expected_topic = "my-awesome-project / MR #3 New Merge Request"
         expected_message = "Tomasz Kolek created [MR #3](https://gitlab.com/tomaszkolek0/my-awesome-project/merge_requests/3) (assigned to Tomasz Kolek) from `tomek` to `master`:\n\n~~~ quote\ndescription of merge request\n~~~"
         self.send_and_test_stream_message(
-            "system_hook__merge_request_created_with_assignee",
-            expected_topic,
-            expected_message,
+            "system_hook__merge_request_created_with_assignee", expected_topic, expected_message,
         )
 
     def test_system_merge_request_closed_event_message(self) -> None:

@@ -64,10 +64,7 @@ New Prospect Application Trisha Troy (ID: 968190), applying for:
 """.strip()
 
         self.send_and_test_stream_message(
-            "prospect_created",
-            expected_topic,
-            expected_message,
-            content_type=self.CONTENT_TYPE,
+            "prospect_created", expected_topic, expected_message, content_type=self.CONTENT_TYPE,
         )
 
     @patch("zerver.webhooks.greenhouse.view.check_send_webhook_message")

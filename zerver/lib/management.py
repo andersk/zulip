@@ -144,9 +144,7 @@ You can use the command list_realms to find ID of the realms in this server."""
         # optimistically try to see if there is exactly one user with
         # that email; if so, we'll return it.
         try:
-            return UserProfile.objects.select_related().get(
-                delivery_email__iexact=email.strip(),
-            )
+            return UserProfile.objects.select_related().get(delivery_email__iexact=email.strip())
         except MultipleObjectsReturned:
             raise CommandError(
                 "This Zulip server contains multiple users with that email "
@@ -154,9 +152,7 @@ You can use the command list_realms to find ID of the realms in this server."""
                 "to specify which one to modify.",
             )
         except UserProfile.DoesNotExist:
-            raise CommandError(
-                f"This Zulip server does not contain a user with email '{email}'",
-            )
+            raise CommandError(f"This Zulip server does not contain a user with email '{email}'")
 
     def get_client(self) -> Client:
         """Returns a Zulip Client object to be used for things done in management commands"""

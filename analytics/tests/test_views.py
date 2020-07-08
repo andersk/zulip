@@ -593,10 +593,7 @@ class TestSupportEndpoint(ZulipTestCase):
             result: HttpResponse, email: str, invite: bool = False,
         ) -> None:
             self.assert_in_success_response(
-                [
-                    '<span class="label">preregistration user</span>\n',
-                    f"<b>Email</b>: {email}",
-                ],
+                ['<span class="label">preregistration user</span>\n', f"<b>Email</b>: {email}"],
                 result,
             )
             if invite:
@@ -777,8 +774,7 @@ class TestSupportEndpoint(ZulipTestCase):
         self.login_user(cordelia)
 
         result = self.client_post(
-            "/activity/support",
-            {"realm_id": f"{lear_realm.id}", "sponsorship_pending": "true"},
+            "/activity/support", {"realm_id": f"{lear_realm.id}", "sponsorship_pending": "true"},
         )
         self.assertEqual(result.status_code, 302)
         self.assertEqual(result["Location"], "/login/")
@@ -787,8 +783,7 @@ class TestSupportEndpoint(ZulipTestCase):
         self.login_user(iago)
 
         result = self.client_post(
-            "/activity/support",
-            {"realm_id": f"{lear_realm.id}", "sponsorship_pending": "true"},
+            "/activity/support", {"realm_id": f"{lear_realm.id}", "sponsorship_pending": "true"},
         )
         self.assert_in_success_response(
             ["Lear &amp; Co. marked as pending sponsorship."], result,

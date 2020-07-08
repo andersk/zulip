@@ -64,9 +64,7 @@ new_inactive_users = [
     user for user in all_users if user.last_visit < now - datetime.timedelta(minutes=10)
 ]
 old_inactive_users = [
-    user
-    for user in new_inactive_users
-    if user.last_visit < now - datetime.timedelta(minutes=60)
+    user for user in new_inactive_users if user.last_visit < now - datetime.timedelta(minutes=60)
 ]
 recently_inactive_users = set(new_inactive_users) - set(old_inactive_users)
 

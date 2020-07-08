@@ -506,8 +506,7 @@ class HomeTest(ZulipTestCase):
         result = self._get_home_page()
         page_params = self._get_page_params(result)
         self.assertEqual(
-            page_params["realm_signup_notifications_stream_id"],
-            get_stream("Denmark", realm).id,
+            page_params["realm_signup_notifications_stream_id"], get_stream("Denmark", realm).id,
         )
 
     def test_people(self) -> None:
@@ -684,9 +683,7 @@ class HomeTest(ZulipTestCase):
         self.assertNotIn("Invite more users", html)
 
     def test_show_billing(self) -> None:
-        customer = Customer.objects.create(
-            realm=get_realm("zulip"), stripe_customer_id="cus_id",
-        )
+        customer = Customer.objects.create(realm=get_realm("zulip"), stripe_customer_id="cus_id")
 
         # realm admin, but no CustomerPlan -> no billing link
         user = self.example_user("iago")

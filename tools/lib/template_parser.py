@@ -27,9 +27,7 @@ class TokenizerState:
 
 
 class Token:
-    def __init__(
-        self, kind: str, s: str, tag: str, line: int, col: int, line_span: int,
-    ) -> None:
+    def __init__(self, kind: str, s: str, tag: str, line: int, col: int, line_span: int) -> None:
         self.kind = kind
         self.s = s
         self.tag = tag
@@ -169,12 +167,7 @@ def tokenize(text: str) -> List[Token]:
 
         line_span = len(s.split("\n"))
         token = Token(
-            kind=kind,
-            s=s,
-            tag=tag.strip(),
-            line=state.line,
-            col=state.col,
-            line_span=line_span,
+            kind=kind, s=s, tag=tag.strip(), line=state.line, col=state.col, line_span=line_span,
         )
         tokens.append(token)
         advance(len(s))

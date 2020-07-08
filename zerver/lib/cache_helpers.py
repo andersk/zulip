@@ -71,21 +71,15 @@ def user_cache_items(
     # core serving path for lots of requests.
 
 
-def stream_cache_items(
-    items_for_remote_cache: Dict[str, Tuple[Stream]], stream: Stream,
-) -> None:
+def stream_cache_items(items_for_remote_cache: Dict[str, Tuple[Stream]], stream: Stream) -> None:
     items_for_remote_cache[get_stream_cache_key(stream.name, stream.realm_id)] = (stream,)
 
 
-def client_cache_items(
-    items_for_remote_cache: Dict[str, Tuple[Client]], client: Client,
-) -> None:
+def client_cache_items(items_for_remote_cache: Dict[str, Tuple[Client]], client: Client) -> None:
     items_for_remote_cache[get_client_cache_key(client.name)] = (client,)
 
 
-def huddle_cache_items(
-    items_for_remote_cache: Dict[str, Tuple[Huddle]], huddle: Huddle,
-) -> None:
+def huddle_cache_items(items_for_remote_cache: Dict[str, Tuple[Huddle]], huddle: Huddle) -> None:
     items_for_remote_cache[huddle_hash_cache_key(huddle.huddle_hash)] = (huddle,)
 
 

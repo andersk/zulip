@@ -352,8 +352,7 @@ class MatterMostImporter(ZulipTestCase):
 
         self.assertTrue(huddle_id_mapper.has(huddle_name))
         self.assertEqual(
-            subscriber_handler.get_users(huddle_id=huddle_id_mapper.get(huddle_name)),
-            {1, 2, 3},
+            subscriber_handler.get_users(huddle_id=huddle_id_mapper.get(huddle_name)), {1, 2, 3},
         )
 
     def test_write_emoticon_data(self) -> None:
@@ -748,18 +747,14 @@ class MatterMostImporter(ZulipTestCase):
             self.assertIsNotNone(message.rendered_content)
         self.assertEqual(len(messages), 11)
 
-        stream_messages = messages.filter(recipient__type=Recipient.STREAM).order_by(
-            "date_sent",
-        )
+        stream_messages = messages.filter(recipient__type=Recipient.STREAM).order_by("date_sent")
         stream_recipients = stream_messages.values_list("recipient", flat=True)
         self.assertEqual(len(stream_messages), 4)
         self.assertEqual(len(set(stream_recipients)), 2)
         self.assertEqual(stream_messages[0].sender.email, "ron@zulip.com")
         self.assertEqual(stream_messages[0].content, "ron joined the channel.\n\n")
 
-        huddle_messages = messages.filter(recipient__type=Recipient.HUDDLE).order_by(
-            "date_sent",
-        )
+        huddle_messages = messages.filter(recipient__type=Recipient.HUDDLE).order_by("date_sent")
         huddle_recipients = huddle_messages.values_list("recipient", flat=True)
         self.assertEqual(len(huddle_messages), 3)
         self.assertEqual(len(set(huddle_recipients)), 1)
@@ -782,9 +777,7 @@ class MatterMostImporter(ZulipTestCase):
         output_dir = self.make_import_output_dir("mattermost")
 
         do_convert_data(
-            mattermost_data_dir=mattermost_data_dir,
-            output_dir=output_dir,
-            masking_content=True,
+            mattermost_data_dir=mattermost_data_dir, output_dir=output_dir, masking_content=True,
         )
 
         harry_team_output_dir = self.team_output_dir(output_dir, "gryffindor")
@@ -797,9 +790,7 @@ class MatterMostImporter(ZulipTestCase):
         output_dir = self.make_import_output_dir("mattermost")
 
         do_convert_data(
-            mattermost_data_dir=mattermost_data_dir,
-            output_dir=output_dir,
-            masking_content=True,
+            mattermost_data_dir=mattermost_data_dir, output_dir=output_dir, masking_content=True,
         )
 
         harry_team_output_dir = self.team_output_dir(output_dir, "gryffindor")

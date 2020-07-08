@@ -485,9 +485,7 @@ class SingleUserPresenceTests(ZulipTestCase):
         self.assertEqual(
             set(result_dict["presence"].keys()), {"ZulipAndroid", "website", "aggregated"},
         )
-        self.assertEqual(
-            set(result_dict["presence"]["website"].keys()), {"status", "timestamp"},
-        )
+        self.assertEqual(set(result_dict["presence"]["website"].keys()), {"status", "timestamp"})
 
     def test_ping_only(self) -> None:
 

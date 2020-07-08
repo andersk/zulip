@@ -98,7 +98,9 @@ class ClubhouseWebhookTest(WebhookTestCase):
         )
 
     def test_epic_update_change_state(self) -> None:
-        expected_message = "State of the epic **New Cool Epic!** was changed from **to do** to **in progress**."
+        expected_message = (
+            "State of the epic **New Cool Epic!** was changed from **to do** to **in progress**."
+        )
         self.send_and_test_stream_message(
             "epic_update_change_state", "New Cool Epic!", expected_message,
         )

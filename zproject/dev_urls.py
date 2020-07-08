@@ -32,9 +32,7 @@ urls = [
         "node-coverage/<path:path>",
         serve,
         {
-            "document_root": os.path.join(
-                settings.DEPLOY_ROOT, "var/node-coverage/lcov-report",
-            ),
+            "document_root": os.path.join(settings.DEPLOY_ROOT, "var/node-coverage/lcov-report"),
             "show_indexes": True,
         },
     ),

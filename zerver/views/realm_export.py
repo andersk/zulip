@@ -81,9 +81,7 @@ def get_realm_exports(request: HttpRequest, user: UserProfile) -> HttpResponse:
 
 
 @require_realm_admin
-def delete_realm_export(
-    request: HttpRequest, user: UserProfile, export_id: int,
-) -> HttpResponse:
+def delete_realm_export(request: HttpRequest, user: UserProfile, export_id: int) -> HttpResponse:
     try:
         audit_log_entry = RealmAuditLog.objects.get(
             id=export_id, realm=user.realm, event_type=RealmAuditLog.REALM_EXPORTED,

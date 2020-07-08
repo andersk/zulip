@@ -456,9 +456,7 @@ def user_passes_test(
 
     def decorator(view_func: ViewFuncT) -> ViewFuncT:
         @wraps(view_func, assigned=available_attrs(view_func))
-        def _wrapped_view(
-            request: HttpRequest, *args: object, **kwargs: object
-        ) -> HttpResponse:
+        def _wrapped_view(request: HttpRequest, *args: object, **kwargs: object) -> HttpResponse:
             if test_func(request):
                 return view_func(request, *args, **kwargs)
             path = request.build_absolute_uri()

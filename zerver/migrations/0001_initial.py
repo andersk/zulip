@@ -216,10 +216,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ("content", models.TextField()),
                 ("rendered_content", models.TextField(null=True)),
                 ("rendered_content_version", models.IntegerField(null=True)),
-                (
-                    "pub_date",
-                    models.DateTimeField(db_index=True, verbose_name="date published"),
-                ),
+                ("pub_date", models.DateTimeField(db_index=True, verbose_name="date published")),
                 ("last_edit_time", models.DateTimeField(null=True)),
                 ("edit_history", models.TextField(null=True)),
                 ("has_attachment", models.BooleanField(db_index=True, default=False)),
@@ -260,8 +257,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "user",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to=settings.AUTH_USER_MODEL,
+                        on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL,
                     ),
                 ),
             ],
@@ -373,8 +369,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "user_profile",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to=settings.AUTH_USER_MODEL,
+                        on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL,
                     ),
                 ),
             ],
@@ -445,8 +440,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "user_profile",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to=settings.AUTH_USER_MODEL,
+                        on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL,
                     ),
                 ),
             ],
@@ -472,8 +466,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "user_profile",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to=settings.AUTH_USER_MODEL,
+                        on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL,
                     ),
                 ),
             ],
@@ -492,8 +485,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "user_profile",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to=settings.AUTH_USER_MODEL,
+                        on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL,
                     ),
                 ),
             ],
@@ -536,8 +528,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "user_profile",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to=settings.AUTH_USER_MODEL,
+                        on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL,
                     ),
                 ),
             ],
@@ -562,8 +553,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "user_profile",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to=settings.AUTH_USER_MODEL,
+                        on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL,
                     ),
                 ),
             ],
@@ -581,9 +571,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
             name="subscription", unique_together={("user_profile", "recipient")},
         ),
         migrations.AlterUniqueTogether(name="stream", unique_together={("name", "realm")}),
-        migrations.AlterUniqueTogether(
-            name="recipient", unique_together={("type", "type_id")},
-        ),
+        migrations.AlterUniqueTogether(name="recipient", unique_together={("type", "type_id")}),
         migrations.AlterUniqueTogether(
             name="realmfilter", unique_together={("realm", "pattern")},
         ),
@@ -711,8 +699,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
         ),
         migrations.RunSQL(sql=fts_sql),
         migrations.AlterModelManagers(
-            name="userprofile",
-            managers=[("objects", django.contrib.auth.models.UserManager())],
+            name="userprofile", managers=[("objects", django.contrib.auth.models.UserManager())],
         ),
         migrations.AlterField(
             model_name="preregistrationuser",
@@ -802,9 +789,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
             name="is_realm_admin",
             field=models.BooleanField(db_index=True, default=False),
         ),
-        migrations.AlterField(
-            model_name="realmemoji", name="img_url", field=models.URLField(),
-        ),
+        migrations.AlterField(model_name="realmemoji", name="img_url", field=models.URLField()),
         migrations.AlterField(
             model_name="realmemoji",
             name="name",
@@ -839,8 +824,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "owner",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to=settings.AUTH_USER_MODEL,
+                        on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL,
                     ),
                 ),
                 ("is_realm_public", models.BooleanField(default=False)),

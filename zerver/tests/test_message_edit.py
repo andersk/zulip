@@ -107,10 +107,7 @@ class EditMessageTest(ZulipTestCase):
         the cache against the database"""
         self.login("hamlet")
         msg_id = self.send_stream_message(
-            self.example_user("hamlet"),
-            "Scotland",
-            topic_name="editing",
-            content="before edit",
+            self.example_user("hamlet"), "Scotland", topic_name="editing", content="before edit",
         )
         result = self.client_patch(
             "/json/messages/" + str(msg_id), {"message_id": msg_id, "content": "after edit"},
@@ -191,10 +188,7 @@ class EditMessageTest(ZulipTestCase):
     def test_edit_message_no_changes(self) -> None:
         self.login("hamlet")
         msg_id = self.send_stream_message(
-            self.example_user("hamlet"),
-            "Scotland",
-            topic_name="editing",
-            content="before edit",
+            self.example_user("hamlet"), "Scotland", topic_name="editing", content="before edit",
         )
         result = self.client_patch("/json/messages/" + str(msg_id), {"message_id": msg_id})
         self.assert_json_error(result, "Nothing to change")
@@ -202,10 +196,7 @@ class EditMessageTest(ZulipTestCase):
     def test_edit_message_no_topic(self) -> None:
         self.login("hamlet")
         msg_id = self.send_stream_message(
-            self.example_user("hamlet"),
-            "Scotland",
-            topic_name="editing",
-            content="before edit",
+            self.example_user("hamlet"), "Scotland", topic_name="editing", content="before edit",
         )
         result = self.client_patch(
             "/json/messages/" + str(msg_id), {"message_id": msg_id, "topic": " "},
@@ -215,10 +206,7 @@ class EditMessageTest(ZulipTestCase):
     def test_edit_message_no_content(self) -> None:
         self.login("hamlet")
         msg_id = self.send_stream_message(
-            self.example_user("hamlet"),
-            "Scotland",
-            topic_name="editing",
-            content="before edit",
+            self.example_user("hamlet"), "Scotland", topic_name="editing", content="before edit",
         )
         result = self.client_patch(
             "/json/messages/" + str(msg_id), {"message_id": msg_id, "content": " "},
@@ -786,9 +774,7 @@ class EditMessageTest(ZulipTestCase):
         # because he has a UserMessage row.
         self.unsubscribe(hamlet, stream_name)
         users_to_be_notified = list(map(notify, [hamlet.id, cordelia.id]))
-        do_update_message_topic_success(
-            cordelia, message, "Another topic", users_to_be_notified,
-        )
+        do_update_message_topic_success(cordelia, message, "Another topic", users_to_be_notified)
 
         # Hamlet subscribes to the stream again and Cordelia unsubscribes, then Hamlet changes
         # the message topic. Cordelia won't receive any updates when a message on that stream is

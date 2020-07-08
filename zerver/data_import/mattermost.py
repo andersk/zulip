@@ -826,9 +826,7 @@ def do_convert_data(mattermost_data_dir: str, output_dir: str, masking_content: 
             zerver_huddle=zerver_huddle,
         )
 
-        personal_subscriptions = build_personal_subscriptions(
-            zerver_recipient=zerver_recipient,
-        )
+        personal_subscriptions = build_personal_subscriptions(zerver_recipient=zerver_recipient)
 
         # Mattermost currently supports only exporting messages from channels.
         # Personal messages and huddles are not exported.

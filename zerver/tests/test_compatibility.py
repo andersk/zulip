@@ -110,9 +110,7 @@ class CompatibilityTest(ZulipTestCase):
                 assert False  # nocoverage
 
     def test_insecure_desktop_app(self) -> None:
-        self.assertEqual(
-            is_outdated_desktop_app("ZulipDesktop/0.5.2 (Mac)"), (True, True, True),
-        )
+        self.assertEqual(is_outdated_desktop_app("ZulipDesktop/0.5.2 (Mac)"), (True, True, True))
         self.assertEqual(
             is_outdated_desktop_app(
                 "ZulipElectron/2.3.82 Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Zulip/2.3.82 Chrome/61.0.3163.100 Electron/2.0.9 Safari/537.36",

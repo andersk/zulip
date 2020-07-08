@@ -366,9 +366,7 @@ class TestServiceBotConfigHandler(ZulipTestCase):
                 self.bot_profile, "some key", "x" * (settings.BOT_CONFIG_SIZE_LIMIT - 8 + 1),
             ),
         )
-        set_bot_config(
-            self.bot_profile, "some key", "x" * (settings.BOT_CONFIG_SIZE_LIMIT - 20),
-        )
+        set_bot_config(self.bot_profile, "some key", "x" * (settings.BOT_CONFIG_SIZE_LIMIT - 20))
         set_bot_config(self.bot_profile, "another key", "x")
         self.assertRaisesMessage(
             ConfigError,

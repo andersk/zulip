@@ -80,9 +80,7 @@ def compute_stats(log_level: int) -> None:
     print(grand_total)
     logging.info("%15s | %s", "Client", "Percentage")
     for client in total_counts.keys():
-        logging.info(
-            "%15s | %s%%", client, round(100.0 * total_counts[client] / grand_total, 1),
-        )
+        logging.info("%15s | %s%%", client, round(100.0 * total_counts[client] / grand_total, 1))
 
 
 class Command(BaseCommand):

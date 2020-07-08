@@ -1094,9 +1094,9 @@ def estimate_recent_messages(realm: Realm, hours: int) -> int:
     stat = COUNT_STATS["messages_sent:is_bot:hour"]
     d = timezone_now() - datetime.timedelta(hours=hours)
     return (
-        RealmCount.objects.filter(
-            property=stat.property, end_time__gt=d, realm=realm,
-        ).aggregate(Sum("value"))["value__sum"]
+        RealmCount.objects.filter(property=stat.property, end_time__gt=d, realm=realm).aggregate(
+            Sum("value"),
+        )["value__sum"]
         or 0
     )
 

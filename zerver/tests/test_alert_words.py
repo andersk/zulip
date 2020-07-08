@@ -176,9 +176,7 @@ class AlertWordTests(ZulipTestCase):
 
         # We don't cause alerts for matches in URLs.
         self.assertFalse(
-            self.message_does_alert(
-                user_profile_hamlet, "Don't alert on http://t.co/one/ urls",
-            ),
+            self.message_does_alert(user_profile_hamlet, "Don't alert on http://t.co/one/ urls"),
         )
         self.assertFalse(
             self.message_does_alert(user_profile_hamlet, "Don't alert on http://t.co/one urls"),

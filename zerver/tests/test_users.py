@@ -324,9 +324,7 @@ class PermissionTest(ZulipTestCase):
     def test_non_admin_cannot_change_full_name(self) -> None:
         self.login("hamlet")
         req = dict(full_name=ujson.dumps("new name"))
-        result = self.client_patch(
-            "/json/users/{}".format(self.example_user("othello").id), req,
-        )
+        result = self.client_patch("/json/users/{}".format(self.example_user("othello").id), req)
         self.assert_json_error(result, "Insufficient permission")
 
     def test_admin_cannot_set_long_full_name(self) -> None:
@@ -1215,9 +1213,7 @@ class ActivateTest(ZulipTestCase):
         result = self.client_delete(f"/json/users/{invalid_user_id}")
         self.assert_json_error(result, "No such user")
 
-        result = self.client_delete(
-            "/json/users/{}".format(self.example_user("webhook_bot").id),
-        )
+        result = self.client_delete("/json/users/{}".format(self.example_user("webhook_bot").id))
         self.assert_json_error(result, "No such user")
 
         result = self.client_delete(f"/json/users/{desdemona.id}")
@@ -1320,9 +1316,7 @@ class ActivateTest(ZulipTestCase):
             self.assertEqual(
                 set(message.to),
                 {
-                    str(
-                        Address(display_name=hamlet.full_name, addr_spec=hamlet.delivery_email),
-                    ),
+                    str(Address(display_name=hamlet.full_name, addr_spec=hamlet.delivery_email)),
                     str(Address(display_name=iago.full_name, addr_spec=iago.delivery_email)),
                 },
             )
@@ -1618,9 +1612,7 @@ class GetProfileTest(ZulipTestCase):
         self.assertFalse(result["user"]["is_owner"])
 
         result = ujson.loads(
-            self.client_get(
-                f"/json/users/{user.id}?include_custom_profile_fields=true",
-            ).content,
+            self.client_get(f"/json/users/{user.id}?include_custom_profile_fields=true").content,
         )
 
         self.assertIn("profile_data", result["user"])
@@ -1637,9 +1629,7 @@ class GetProfileTest(ZulipTestCase):
         result = self.api_get(hamlet, "/api/v1/users")
         self.assert_json_success(result)
 
-        (my_user,) = [
-            user for user in result.json()["members"] if user["email"] == hamlet.email
-        ]
+        (my_user,) = [user for user in result.json()["members"] if user["email"] == hamlet.email]
 
         self.assertEqual(
             my_user["avatar_url"], avatar_url(hamlet),

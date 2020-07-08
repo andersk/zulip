@@ -83,8 +83,5 @@ def update_muted_topic(
         )
     elif op == "remove":
         return unmute_topic(
-            user_profile=user_profile,
-            stream_id=stream_id,
-            stream_name=stream,
-            topic_name=topic,
+            user_profile=user_profile, stream_id=stream_id, stream_name=stream, topic_name=topic,
         )

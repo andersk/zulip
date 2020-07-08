@@ -253,6 +253,4 @@ def join_bigbluebutton(
         redirect_url_base = add_query_to_redirect_url(
             settings.BIG_BLUE_BUTTON_URL + "api/join", join_params,
         )
-        return redirect(
-            add_query_arg_to_redirect_url(redirect_url_base, "checksum=" + checksum),
-        )
+        return redirect(add_query_arg_to_redirect_url(redirect_url_base, "checksum=" + checksum))

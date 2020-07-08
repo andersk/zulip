@@ -45,9 +45,7 @@ class GoogleCodeInTests(WebhookTestCase):
         expected_topic = "student-yqqtag"
         expected_message = "**eeshangarg** approved the task [Sails unspread it stopped at kearney](https://codein.withgoogle.com/dashboard/task-instances/6296903092273152/) (pending parental consent)."
         self.send_and_test_stream_message(
-            "task_approved_by_mentor_pending_parental_consent",
-            expected_topic,
-            expected_message,
+            "task_approved_by_mentor_pending_parental_consent", expected_topic, expected_message,
         )
 
     def test_needswork_event_message(self) -> None:

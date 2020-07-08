@@ -157,9 +157,7 @@ class ZulipTestCase(TestCase):
         elif "HTTP_USER_AGENT" not in kwargs:
             kwargs["HTTP_USER_AGENT"] = default_user_agent
 
-    def validate_api_response_openapi(
-        self, url: str, method: str, result: HttpResponse,
-    ) -> None:
+    def validate_api_response_openapi(self, url: str, method: str, result: HttpResponse) -> None:
         """
         Validates all API responses received by this test against Zulip's API documentation,
         declared in zerver/openapi/zulip.yaml.  This powerful test lets us use Zulip's
@@ -229,9 +227,7 @@ class ZulipTestCase(TestCase):
         return result
 
     @instrument_url
-    def client_options(
-        self, url: str, info: Dict[str, Any] = {}, **kwargs: Any
-    ) -> HttpResponse:
+    def client_options(self, url: str, info: Dict[str, Any] = {}, **kwargs: Any) -> HttpResponse:
         encoded = urllib.parse.urlencode(info)
         django_client = self.client  # see WRAPPER_COMMENT
         self.set_http_headers(kwargs)
@@ -640,9 +636,7 @@ class ZulipTestCase(TestCase):
         num_after: int = 100,
         use_first_unread_anchor: bool = False,
     ) -> List[Dict[str, Any]]:
-        data = self.get_messages_response(
-            anchor, num_before, num_after, use_first_unread_anchor,
-        )
+        data = self.get_messages_response(anchor, num_before, num_after, use_first_unread_anchor)
         return data["messages"]
 
     def users_subscribed_to_stream(self, stream_name: str, realm: Realm) -> List[UserProfile]:
@@ -954,11 +948,7 @@ class ZulipTestCase(TestCase):
         self.mock_initialize.return_value = self.mock_ldap
 
     def change_ldap_user_attr(
-        self,
-        username: str,
-        attr_name: str,
-        attr_value: Union[str, bytes],
-        binary: bool = False,
+        self, username: str, attr_name: str, attr_value: Union[str, bytes], binary: bool = False,
     ) -> None:
         """
         Method for changing the value of an attribute of a user entry in the mock

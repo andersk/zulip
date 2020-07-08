@@ -185,9 +185,7 @@ def maybe_send_to_registration(
             realm = None
         invited_as = PreregistrationUser.INVITE_AS["MEMBER"]
 
-    form = HomepageForm(
-        {"email": email}, realm=realm, from_multiuse_invite=from_multiuse_invite,
-    )
+    form = HomepageForm({"email": email}, realm=realm, from_multiuse_invite=from_multiuse_invite)
     if form.is_valid():
         # If the email address is allowed to sign up for an account in
         # this organization, construct a PreregistrationUser and
@@ -225,9 +223,7 @@ def maybe_send_to_registration(
             prereg_user.invited_as = invited_as
             prereg_user.save()
 
-        confirmation_link = create_confirmation_link(
-            prereg_user, Confirmation.USER_REGISTRATION,
-        )
+        confirmation_link = create_confirmation_link(prereg_user, Confirmation.USER_REGISTRATION)
         if is_signup:
             return redirect(confirmation_link)
 
@@ -897,9 +893,7 @@ def api_dev_fetch_api_key(request: HttpRequest, username: str = REQ()) -> HttpRe
     realm = get_realm(subdomain)
 
     return_data: Dict[str, bool] = {}
-    user_profile = authenticate(
-        dev_auth_username=username, realm=realm, return_data=return_data,
-    )
+    user_profile = authenticate(dev_auth_username=username, realm=realm, return_data=return_data)
     if return_data.get("inactive_realm"):
         return json_error(
             _("This organization has been deactivated."),

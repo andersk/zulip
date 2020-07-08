@@ -26,9 +26,7 @@ class NestedCodeBlocksRendererTreeProcessor(markdown.treeprocessors.Treeprocesso
         for block in nested_code_blocks:
             tag, text = block.result
             codehilite_block = self.get_codehilite_block(text)
-            self.replace_element(
-                block.family.grandparent, codehilite_block, block.family.parent,
-            )
+            self.replace_element(block.family.grandparent, codehilite_block, block.family.parent)
 
     def get_code_tags(self, e: Element) -> Optional[Tuple[str, Optional[str]]]:
         if e.tag == "code":

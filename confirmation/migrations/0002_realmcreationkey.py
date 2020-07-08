@@ -18,10 +18,7 @@ class Migration(migrations.Migration):
                         verbose_name="ID", serialize=False, auto_created=True, primary_key=True,
                     ),
                 ),
-                (
-                    "creation_key",
-                    models.CharField(max_length=40, verbose_name="activation key"),
-                ),
+                ("creation_key", models.CharField(max_length=40, verbose_name="activation key")),
                 (
                     "date_created",
                     models.DateTimeField(

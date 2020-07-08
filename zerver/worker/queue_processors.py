@@ -170,9 +170,7 @@ def retry_send_email_failures(
             error_class_name = e.__class__.__name__
 
             def on_failure(event: Dict[str, Any]) -> None:
-                logging.exception(
-                    "Event %r failed due to exception %s", event, error_class_name,
-                )
+                logging.exception("Event %r failed due to exception %s", event, error_class_name)
 
             retry_event(worker.queue_name, data, on_failure)
 
@@ -230,9 +228,7 @@ class QueueProcessingWorker(ABC):
         pass
 
     def do_consume(
-        self,
-        consume_func: Callable[[List[Dict[str, Any]]], None],
-        events: List[Dict[str, Any]],
+        self, consume_func: Callable[[List[Dict[str, Any]]], None], events: List[Dict[str, Any]],
     ) -> None:
         try:
             time_start = time.time()

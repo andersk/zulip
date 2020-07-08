@@ -821,9 +821,7 @@ class LocalUploadBackend(ZulipUploadBackend):
         if os.path.isfile(output_path):
             return
 
-        image_path = os.path.join(
-            settings.LOCAL_UPLOADS_DIR, "avatars", file_path + ".original",
-        )
+        image_path = os.path.join(settings.LOCAL_UPLOADS_DIR, "avatars", file_path + ".original")
         with open(image_path, "rb") as f:
             image_data = f.read()
         resized_medium = resize_avatar(image_data, MEDIUM_AVATAR_SIZE)
@@ -837,9 +835,7 @@ class LocalUploadBackend(ZulipUploadBackend):
         if os.path.isfile(output_path):
             return
 
-        image_path = os.path.join(
-            settings.LOCAL_UPLOADS_DIR, "avatars", file_path + ".original",
-        )
+        image_path = os.path.join(settings.LOCAL_UPLOADS_DIR, "avatars", file_path + ".original")
         with open(image_path, "rb") as f:
             image_data = f.read()
         resized_avatar = resize_avatar(image_data)

@@ -14,10 +14,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser: CommandParser) -> None:
         parser.add_argument(
-            "gitter_data",
-            nargs="+",
-            metavar="<gitter data>",
-            help="Gitter data in json format",
+            "gitter_data", nargs="+", metavar="<gitter data>", help="Gitter data in json format",
         )
 
         parser.add_argument(

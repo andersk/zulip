@@ -472,9 +472,7 @@ class FencedBlockPreprocessor(markdown.preprocessors.Preprocessor):
             if html is not None:
                 tex_paragraphs.append(html)
             else:
-                tex_paragraphs.append(
-                    '<span class="tex-error">' + escape(paragraph) + "</span>",
-                )
+                tex_paragraphs.append('<span class="tex-error">' + escape(paragraph) + "</span>")
         return "\n\n".join(tex_paragraphs)
 
     def placeholder(self, code: str) -> str:

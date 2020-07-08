@@ -165,11 +165,7 @@ class BeanstalkHookTests(WebhookTestCase):
 
 > Removed a file and added another one!"""
         self.api_stream_message(
-            self.test_user,
-            "svn_addremove",
-            expected_topic,
-            expected_message,
-            content_type=None,
+            self.test_user, "svn_addremove", expected_topic, expected_message, content_type=None,
         )
 
     def test_svn_changefile(self) -> None:

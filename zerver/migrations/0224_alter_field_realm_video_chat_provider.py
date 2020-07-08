@@ -71,9 +71,7 @@ class Migration(migrations.Migration):
             ),
         ),
         migrations.RunPython(
-            update_existing_video_chat_provider_values,
-            reverse_code=reverse_code,
-            elidable=True,
+            update_existing_video_chat_provider_values, reverse_code=reverse_code, elidable=True,
         ),
         migrations.RemoveField(model_name="realm", name="video_chat_provider_old"),
     ]

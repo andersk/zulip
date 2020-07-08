@@ -22,9 +22,7 @@ def profiled(func: FuncT) -> FuncT:
         ./tools/show-profile-results test_ratelimit_decrease.profile
 
     """
-    func_: Callable[
-        ..., object,
-    ] = func  # work around https://github.com/python/mypy/issues/9075
+    func_: Callable[..., object] = func  # work around https://github.com/python/mypy/issues/9075
 
     @wraps(func)
     def wrapped_func(*args: object, **kwargs: object) -> object:

@@ -171,9 +171,7 @@ v1_api_and_json_patterns = [
     # realm/deactivate -> zerver.views.deactivate_realm
     path("realm/deactivate", rest_dispatch, {"POST": "zerver.views.realm.deactivate_realm"}),
     path(
-        "realm/presence",
-        rest_dispatch,
-        {"GET": "zerver.views.presence.get_statuses_for_realm"},
+        "realm/presence", rest_dispatch, {"GET": "zerver.views.presence.get_statuses_for_realm"},
     ),
     # users -> zerver.views.users
     #
@@ -415,9 +413,7 @@ v1_api_and_json_patterns = [
     # user_groups -> zerver.views.user_groups
     path("user_groups", rest_dispatch, {"GET": "zerver.views.user_groups.get_user_group"}),
     path(
-        "user_groups/create",
-        rest_dispatch,
-        {"POST": "zerver.views.user_groups.add_user_group"},
+        "user_groups/create", rest_dispatch, {"POST": "zerver.views.user_groups.add_user_group"},
     ),
     path(
         "user_groups/<int:user_group_id>",
@@ -673,9 +669,7 @@ i18n_urls = [
     # We have a desktop-specific landing page in case we change our /
     # to not log in in the future. We don't want to require a new
     # desktop app build for everyone in that case
-    path(
-        "desktop_home/", zerver.views.home.desktop_home, name="zerver.views.home.desktop_home",
-    ),
+    path("desktop_home/", zerver.views.home.desktop_home, name="zerver.views.home.desktop_home"),
     # Backwards-compatibility (legacy) Google auth URL for the mobile
     # apps; see https://github.com/zulip/zulip/issues/13081 for
     # background.  We can remove this once older versions of the
@@ -977,12 +971,7 @@ urls += [
     path(
         "thumbnail",
         rest_dispatch,
-        {
-            "GET": (
-                "zerver.views.thumbnail.backend_serve_thumbnail",
-                {"override_api_url_scheme"},
-            ),
-        },
+        {"GET": ("zerver.views.thumbnail.backend_serve_thumbnail", {"override_api_url_scheme"})},
     ),
     # Avatars have the same constraint because their URLs are included
     # in API data structures used by both the mobile and web clients.

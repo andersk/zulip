@@ -74,9 +74,7 @@ def add_user_alert_words(user_profile: UserProfile, new_words: Iterable[str]) ->
 
 
 @transaction.atomic
-def remove_user_alert_words(
-    user_profile: UserProfile, delete_words: Iterable[str],
-) -> List[str]:
+def remove_user_alert_words(user_profile: UserProfile, delete_words: Iterable[str]) -> List[str]:
     # TODO: Ideally, this would be a bulk query, but Django doesn't have a `__iexact`.
     # We can clean this up if/when Postgres has more native support for case-insensitive fields.
     # If we turn this into a bulk operation, we will need to call flush_realm_alert_words() here.

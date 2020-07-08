@@ -341,8 +341,7 @@ def do_send_missedmessage_events_reply_in_zulip(
     unique_triggers = set(triggers)
     context.update(
         {
-            "mention": "mentioned" in unique_triggers
-            or "wildcard_mentioned" in unique_triggers,
+            "mention": "mentioned" in unique_triggers or "wildcard_mentioned" in unique_triggers,
             "stream_email_notify": "stream_email_notify" in unique_triggers,
             "mention_count": triggers.count("mentioned") + triggers.count("wildcard_mentioned"),
         },
@@ -358,9 +357,7 @@ def do_send_missedmessage_events_reply_in_zulip(
 
     from zerver.lib.email_mirror import create_missed_message_address
 
-    reply_to_address = create_missed_message_address(
-        user_profile, missed_messages[0]["message"],
-    )
+    reply_to_address = create_missed_message_address(user_profile, missed_messages[0]["message"])
     if reply_to_address == FromAddress.NOREPLY:
         reply_to_name = ""
     else:

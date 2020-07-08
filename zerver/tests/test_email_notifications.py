@@ -1054,9 +1054,7 @@ class TestMissedMessages(ZulipTestCase):
         # A path similar to our emoji path, but not in a link:
         test_data = "<p>Check out the file at: '/static/generated/emoji/images/emoji/'</p>"
         actual_output = relative_to_full_url("http://example.com", test_data)
-        expected_output = (
-            "<p>Check out the file at: '/static/generated/emoji/images/emoji/'</p>"
-        )
+        expected_output = "<p>Check out the file at: '/static/generated/emoji/images/emoji/'</p>"
         self.assertEqual(actual_output, expected_output)
 
         # An uploaded file

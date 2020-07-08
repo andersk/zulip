@@ -185,7 +185,9 @@ def write_log_line(
             )
 
         if remote_cache_time_delta > 0.005:
-            remote_cache_output = f" (mem: {format_timedelta(remote_cache_time_delta)}/{remote_cache_count_delta})"
+            remote_cache_output = (
+                f" (mem: {format_timedelta(remote_cache_time_delta)}/{remote_cache_count_delta})"
+            )
 
         if not suppress_statsd:
             statsd.timing(
@@ -195,9 +197,7 @@ def write_log_line(
 
     startup_output = ""
     if "startup_time_delta" in log_data and log_data["startup_time_delta"] > 0.005:
-        startup_output = " (+start: {})".format(
-            format_timedelta(log_data["startup_time_delta"]),
-        )
+        startup_output = " (+start: {})".format(format_timedelta(log_data["startup_time_delta"]))
 
     markdown_output = ""
     if "markdown_time_start" in log_data:
@@ -307,9 +307,7 @@ class LogRequests(MiddlewareMixin):
         # time (i.e. the time between receiving the request and
         # figuring out which view function to call, which is primarily
         # importing modules on the first start)
-        request._log_data["startup_time_delta"] = (
-            time.time() - request._log_data["time_started"]
-        )
+        request._log_data["startup_time_delta"] = time.time() - request._log_data["time_started"]
         # And then completely reset our tracking to only cover work
         # done as part of this request
         record_request_start_data(request._log_data)
@@ -420,9 +418,7 @@ class RateLimitMiddleware(MiddlewareMixin):
         response["X-RateLimit-Remaining"] = str(remaining_api_calls)
 
         # The full reset time is the maximum of the reset times for the limits that get applied:
-        reset_time = time.time() + max(
-            [result.secs_to_freedom for result in rate_limit_results],
-        )
+        reset_time = time.time() + max([result.secs_to_freedom for result in rate_limit_results])
         response["X-RateLimit-Reset"] = str(int(reset_time))
 
     def process_response(self, request: HttpRequest, response: HttpResponse) -> HttpResponse:

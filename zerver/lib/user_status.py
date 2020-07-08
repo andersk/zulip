@@ -8,9 +8,7 @@ from zerver.models import UserStatus
 
 def get_user_info_dict(realm_id: int) -> Dict[int, Dict[str, Any]]:
     rows = (
-        UserStatus.objects.filter(
-            user_profile__realm_id=realm_id, user_profile__is_active=True,
-        )
+        UserStatus.objects.filter(user_profile__realm_id=realm_id, user_profile__is_active=True)
         .exclude(Q(status=UserStatus.NORMAL) & Q(status_text=""))
         .values("user_profile_id", "status", "status_text")
     )

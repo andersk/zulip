@@ -147,9 +147,7 @@ class OpenAPIToolsTest(ZulipTestCase):
         # 'deep' opaque object. Also the parameters are a heterogenous
         # mix of arrays and objects to verify that our descent logic
         # correctly gets to the the deeply nested objects.
-        with open(
-            os.path.join(os.path.dirname(OPENAPI_SPEC_PATH), "testing.yaml"),
-        ) as test_file:
+        with open(os.path.join(os.path.dirname(OPENAPI_SPEC_PATH), "testing.yaml")) as test_file:
             test_dict = yaml.safe_load(test_file)
         openapi_spec.spec()["paths"]["testing"] = test_dict
         try:
@@ -675,9 +673,7 @@ so maybe we shouldn't include it in pending_endpoints.
                 # argument list matches what actually appears in the
                 # codebase.
 
-                openapi_parameter_names = {
-                    parameter["name"] for parameter in openapi_parameters
-                }
+                openapi_parameter_names = {parameter["name"] for parameter in openapi_parameters}
 
                 if len(accepted_arguments - openapi_parameter_names) > 0:  # nocoverage
                     print("Undocumented parameters for", url_pattern, method, function_name)
@@ -735,9 +731,7 @@ class ModifyExampleGenerationTestCase(ZulipTestCase):
         res = parse_language_and_options(
             "curl, exclude=['param1', \"param2\"], special=['param3']",
         )
-        self.assertEqual(
-            res, ("curl", {"exclude": ["param1", "param2"], "special": ["param3"]}),
-        )
+        self.assertEqual(res, ("curl", {"exclude": ["param1", "param2"], "special": ["param3"]}))
 
     def test_multiple_mixed_mod_arguments(self) -> None:
         res = parse_language_and_options(

@@ -3,9 +3,7 @@ from typing import Any, Optional
 from django.conf import settings
 from django.contrib.auth.signals import user_logged_in, user_logged_out
 from django.dispatch import receiver
-from django.utils.timezone import (
-    get_current_timezone_name as timezone_get_current_timezone_name,
-)
+from django.utils.timezone import get_current_timezone_name as timezone_get_current_timezone_name
 from django.utils.timezone import now as timezone_now
 from django.utils.translation import ugettext as _
 

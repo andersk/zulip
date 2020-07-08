@@ -88,9 +88,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         fp.name = "zulip.txt"
 
         # Upload file via API
-        result = self.api_post(
-            self.example_user("hamlet"), "/api/v1/user_uploads", {"file": fp},
-        )
+        result = self.api_post(self.example_user("hamlet"), "/api/v1/user_uploads", {"file": fp})
         self.assertIn("uri", result.json())
         uri = result.json()["uri"]
         base = "/user_uploads/"
@@ -117,9 +115,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         fp.name = "zulip.txt"
 
         # Upload file via API
-        result = self.api_post(
-            self.example_user("hamlet"), "/api/v1/user_uploads", {"file": fp},
-        )
+        result = self.api_post(self.example_user("hamlet"), "/api/v1/user_uploads", {"file": fp})
         self.assertIn("uri", result.json())
         uri = result.json()["uri"]
         base = "/user_uploads/"
@@ -147,9 +143,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         fp = StringIO("zulip!")
         fp.name = "pasted_file"
         result = self.api_post(
-            self.example_user("hamlet"),
-            "/api/v1/user_uploads?mimetype=image/png",
-            {"file": fp},
+            self.example_user("hamlet"), "/api/v1/user_uploads?mimetype=image/png", {"file": fp},
         )
         self.assertEqual(result.status_code, 200)
         uri = result.json()["uri"]
@@ -167,9 +161,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         # would be 1MB.
         with self.settings(MAX_FILE_UPLOAD_SIZE=0):
             result = self.client_post("/json/user_uploads", {"f1": fp})
-        self.assert_json_error(
-            result, "Uploaded file is larger than the allowed limit of 0 MiB",
-        )
+        self.assert_json_error(result, "Uploaded file is larger than the allowed limit of 0 MiB")
 
     def test_multiple_upload_failure(self) -> None:
         """
@@ -1233,9 +1225,7 @@ class AvatarTest(UploadSerializeMixin, ZulipTestCase):
         with get_test_image_file(self.correct_files[0][0]) as fp:
             with self.settings(MAX_AVATAR_FILE_SIZE=0):
                 result = self.client_post("/json/users/me/avatar", {"file": fp})
-        self.assert_json_error(
-            result, "Uploaded file is larger than the allowed limit of 0 MiB",
-        )
+        self.assert_json_error(result, "Uploaded file is larger than the allowed limit of 0 MiB")
 
     def tearDown(self) -> None:
         destroy_uploads()
@@ -1410,9 +1400,7 @@ class RealmIconTest(UploadSerializeMixin, ZulipTestCase):
         with get_test_image_file(self.correct_files[0][0]) as fp:
             with self.settings(MAX_ICON_FILE_SIZE=0):
                 result = self.client_post("/json/realm/icon", {"file": fp})
-        self.assert_json_error(
-            result, "Uploaded file is larger than the allowed limit of 0 MiB",
-        )
+        self.assert_json_error(result, "Uploaded file is larger than the allowed limit of 0 MiB")
 
     def tearDown(self) -> None:
         destroy_uploads()
@@ -1598,9 +1586,7 @@ class RealmLogoTest(UploadSerializeMixin, ZulipTestCase):
                 result = self.client_post(
                     "/json/realm/logo", {"file": fp, "night": ujson.dumps(self.night)},
                 )
-        self.assert_json_error(
-            result, "Uploaded file is larger than the allowed limit of 0 MiB",
-        )
+        self.assert_json_error(result, "Uploaded file is larger than the allowed limit of 0 MiB")
 
     def tearDown(self) -> None:
         destroy_uploads()
@@ -1928,9 +1914,7 @@ class S3Test(ZulipTestCase):
 
         user_profile = self.example_user("hamlet")
         image_file = get_test_image_file("img.png")
-        zerver.lib.upload.upload_backend.upload_realm_logo_image(
-            image_file, user_profile, night,
-        )
+        zerver.lib.upload.upload_backend.upload_realm_logo_image(image_file, user_profile, night)
 
         original_path_id = os.path.join(
             str(user_profile.realm.id), "realm", f"{file_name}.original",
@@ -1955,9 +1939,7 @@ class S3Test(ZulipTestCase):
         user_profile = self.example_user("hamlet")
         image_file = get_test_image_file("img.png")
         emoji_name = "emoji.png"
-        zerver.lib.upload.upload_backend.upload_emoji_image(
-            image_file, emoji_name, user_profile,
-        )
+        zerver.lib.upload.upload_backend.upload_emoji_image(image_file, emoji_name, user_profile)
 
         emoji_path = RealmEmoji.PATH_ID_TEMPLATE.format(
             realm_id=user_profile.realm_id, emoji_file_name=emoji_name,

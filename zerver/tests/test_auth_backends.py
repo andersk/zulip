@@ -1326,9 +1326,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
             self.assertEqual(query_params["email"], [email])
             encrypted_api_key = query_params["otp_encrypted_api_key"][0]
             user_api_keys = get_all_api_keys(get_user_by_delivery_email(email, realm))
-            self.assertIn(
-                otp_decrypt_api_key(encrypted_api_key, mobile_flow_otp), user_api_keys,
-            )
+            self.assertIn(otp_decrypt_api_key(encrypted_api_key, mobile_flow_otp), user_api_keys)
             return
         elif desktop_flow_otp:
             self.verify_desktop_flow_end_page(result, email, desktop_flow_otp)
@@ -1838,10 +1836,7 @@ class SAMLAuthBackendTest(SocialAuthBase):
 
             # Test the signup path too:
             result = self.social_auth_test(
-                account_data_dict,
-                is_signup=True,
-                subdomain="zulip",
-                next="/user_uploads/image",
+                account_data_dict, is_signup=True, subdomain="zulip", next="/user_uploads/image",
             )
             self.assertEqual(result.status_code, 302)
             self.assertEqual(result.url, self.CONFIG_ERROR_URL)
@@ -2095,9 +2090,7 @@ class SAMLAuthBackendTest(SocialAuthBase):
         # of configs here.
         idps_dict = copy.deepcopy(settings.SOCIAL_AUTH_SAML_ENABLED_IDPS)
         idps_dict["test_idp2"] = copy.deepcopy(idps_dict["test_idp"])
-        idps_dict["test_idp2"][
-            "url"
-        ] = "https://idp2.example.com/idp/profile/SAML2/Redirect/SSO"
+        idps_dict["test_idp2"]["url"] = "https://idp2.example.com/idp/profile/SAML2/Redirect/SSO"
         idps_dict["test_idp2"]["display_name"] = "Second Test IdP"
         idps_dict["test_idp2"]["limit_to_subdomains"] = ["zulip"]
 
@@ -2176,9 +2169,7 @@ class SAMLAuthBackendTest(SocialAuthBase):
     def test_social_auth_saml_require_limit_to_subdomains(self) -> None:
         idps_dict = copy.deepcopy(settings.SOCIAL_AUTH_SAML_ENABLED_IDPS)
         idps_dict["test_idp2"] = copy.deepcopy(idps_dict["test_idp"])
-        idps_dict["test_idp2"][
-            "url"
-        ] = "https://idp2.example.com/idp/profile/SAML2/Redirect/SSO"
+        idps_dict["test_idp2"]["url"] = "https://idp2.example.com/idp/profile/SAML2/Redirect/SSO"
         idps_dict["test_idp2"]["display_name"] = "Second Test IdP"
         idps_dict["test_idp2"]["limit_to_subdomains"] = ["zulip"]
 
@@ -2555,9 +2546,7 @@ class AppleIdAuthBackendTest(AppleAuthMixin, SocialAuthBase):
                     "Sign in with Apple failed: missing state parameter.", "info",
                 ),  # (1)
                 self.logger_output("Missing needed parameter state", "warning"),
-                self.logger_output(
-                    "Sign in with Apple failed: bad state token.", "info",
-                ),  # (2)
+                self.logger_output("Sign in with Apple failed: bad state token.", "info"),  # (2)
                 self.logger_output("Wrong state parameter given.", "warning"),
             ],
         )
@@ -3659,8 +3648,7 @@ class FetchAPIKeyTest(ZulipTestCase):
             result = self.client_post(
                 "/api/v1/fetch_api_key",
                 dict(
-                    username=self.example_email("hamlet"),
-                    password=self.ldap_password("hamlet"),
+                    username=self.example_email("hamlet"), password=self.ldap_password("hamlet"),
                 ),
             )
         self.assert_json_success(result)
@@ -3801,9 +3789,7 @@ class ExternalMethodDictsTests(ZulipTestCase):
         idps_dict = copy.deepcopy(settings.SOCIAL_AUTH_SAML_ENABLED_IDPS)
         # Create another IdP config, by copying the original one and changing some details.idps_dict['test_idp'])
         idps_dict["test_idp2"] = copy.deepcopy(idps_dict["test_idp"])
-        idps_dict["test_idp2"][
-            "url"
-        ] = "https://idp2.example.com/idp/profile/SAML2/Redirect/SSO"
+        idps_dict["test_idp2"]["url"] = "https://idp2.example.com/idp/profile/SAML2/Redirect/SSO"
         idps_dict["test_idp2"]["display_name"] = "Second Test IdP"
         idps_dict["test_idp2"]["limit_to_subdomains"] = ["zephyr"]
         with self.settings(
@@ -3897,9 +3883,7 @@ class FetchAuthBackends(ZulipTestCase):
         self.assertTrue(result.json()["is_incompatible"])
 
         with self.settings(ROOT_DOMAIN_LANDING_PAGE=False):
-            result = self.client_get(
-                "/api/v1/server_settings", subdomain="", HTTP_USER_AGENT="",
-            )
+            result = self.client_get("/api/v1/server_settings", subdomain="", HTTP_USER_AGENT="")
         check_result(result)
 
         with self.settings(ROOT_DOMAIN_LANDING_PAGE=False):
@@ -4601,8 +4585,7 @@ class DjangoToLDAPUsernameTests(ZulipTestCase):
             self.backend.django_to_ldap_username("no_such_email@example.com")
 
         self.assertEqual(
-            self.backend.django_to_ldap_username("aaron@zulip.com"),
-            self.ldap_username("aaron"),
+            self.backend.django_to_ldap_username("aaron@zulip.com"), self.ldap_username("aaron"),
         )
 
         with mock.patch("zproject.backends.logging.warning") as mock_warn:
@@ -4614,9 +4597,7 @@ class DjangoToLDAPUsernameTests(ZulipTestCase):
 
         # Test on a weird case of a user whose uid is an email and his actual "mail"
         # attribute is a different email address:
-        self.mock_ldap.directory[
-            "uid=some_user@organization_a.com,ou=users,dc=zulip,dc=com"
-        ] = {
+        self.mock_ldap.directory["uid=some_user@organization_a.com,ou=users,dc=zulip,dc=com"] = {
             "cn": ["Some User"],
             "uid": ["some_user@organization_a.com"],
             "mail": ["some_user@contactaddress.com"],
@@ -4641,9 +4622,7 @@ class DjangoToLDAPUsernameTests(ZulipTestCase):
                 "newuser_email_as_uid@zulip.com",
             )
 
-            self.mock_ldap.directory[
-                'uid="hamlet@test"@zulip.com",ou=users,dc=zulip,dc=com'
-            ] = {
+            self.mock_ldap.directory['uid="hamlet@test"@zulip.com",ou=users,dc=zulip,dc=com'] = {
                 "cn": ["King Hamlet"],
                 "uid": ['"hamlet@test"@zulip.com'],
             }
@@ -5677,9 +5656,7 @@ class EmailValidatorTestCase(ZulipTestCase):
         realm = inviter.realm
         do_set_realm_property(realm, "emails_restricted_to_domains", True)
         inviter.realm.refresh_from_db()
-        error = validate_email_is_valid(
-            "fred+5555@zulip.com", get_realm_email_validator(realm),
-        )
+        error = validate_email_is_valid("fred+5555@zulip.com", get_realm_email_validator(realm))
         self.assertIn("containing + are not allowed", error)
 
         cordelia_email = cordelia.delivery_email

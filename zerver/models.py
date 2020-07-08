@@ -763,9 +763,7 @@ def get_active_realm_emoji_uncached(realm: Realm) -> Dict[str, Dict[str, Any]]:
 def flush_realm_emoji(sender: Any, **kwargs: Any) -> None:
     realm = kwargs["instance"].realm
     cache_set(
-        get_realm_emoji_cache_key(realm),
-        get_realm_emoji_uncached(realm),
-        timeout=3600 * 24 * 7,
+        get_realm_emoji_cache_key(realm), get_realm_emoji_uncached(realm), timeout=3600 * 24 * 7,
     )
     cache_set(
         get_active_realm_emoji_cache_key(realm),

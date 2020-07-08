@@ -950,8 +950,7 @@ class StreamAdminTest(ZulipTestCase):
         events = []
         with tornado_redirected_to_list(events):
             result = self.client_patch(
-                f"/json/streams/{stream.id}",
-                {"message_retention_days": ujson.dumps("forever")},
+                f"/json/streams/{stream.id}", {"message_retention_days": ujson.dumps("forever")},
             )
         self.assert_json_success(result)
         event = events[0]["event"]
@@ -2466,9 +2465,7 @@ class SubscriptionRestApiTest(ZulipTestCase):
             "subscriptions": ujson.dumps([{"name": "my_test_stream_3", "color": "#0g0g0g"}]),
         }
         result = self.api_post(user, "/api/v1/users/me/subscriptions", request)
-        self.assert_json_error(
-            result, 'subscriptions[0]["color"] is not a valid hex color code',
-        )
+        self.assert_json_error(result, 'subscriptions[0]["color"] is not a valid hex color code')
 
     def test_api_valid_property(self) -> None:
         """
@@ -2908,9 +2905,7 @@ class SubscriptionAPITest(ZulipTestCase):
         null characters should return a JSON error.
         """
         stream_name = "abc\000"
-        result = self.common_subscribe_to_streams(
-            self.test_user, [stream_name], allow_fail=True,
-        )
+        result = self.common_subscribe_to_streams(self.test_user, [stream_name], allow_fail=True)
         self.assert_json_error(
             result, f"Stream name '{stream_name}' contains NULL (0x00) characters.",
         )
@@ -3468,9 +3463,7 @@ class SubscriptionAPITest(ZulipTestCase):
         invitee = self.example_user("iago")
         current_streams = self.get_streams(invitee)
         invite_streams = self.make_random_stream_names(current_streams)
-        self.assert_adding_subscriptions_for_principal(
-            invitee.id, invitee.realm, invite_streams,
-        )
+        self.assert_adding_subscriptions_for_principal(invitee.id, invitee.realm, invite_streams)
 
     def test_subscriptions_add_for_principal_legacy_emails(self) -> None:
         invitee = self.example_user("iago")
@@ -3623,9 +3616,7 @@ class SubscriptionAPITest(ZulipTestCase):
                 not_subbed.append(stream.name)
         random.shuffle(not_subbed)
         self.assertNotEqual(len(not_subbed), 0)  # necessary for full test coverage
-        try_to_remove = not_subbed[
-            :3
-        ]  # attempt to remove up to 3 streams not already subbed to
+        try_to_remove = not_subbed[:3]  # attempt to remove up to 3 streams not already subbed to
         streams_to_remove.extend(try_to_remove)
         self.helper_check_subs_before_and_after_remove(
             streams_to_remove,
@@ -4581,9 +4572,9 @@ class GetSubscribersTest(ZulipTestCase):
         """
         stream_name = gather_subscriptions(self.user_profile)[0][0]["name"]
         stream_id = get_stream(stream_name, self.user_profile.realm).id
-        expected_subscribers = gather_subscriptions(
-            self.user_profile, include_subscribers=True,
-        )[0][0]["subscribers"]
+        expected_subscribers = gather_subscriptions(self.user_profile, include_subscribers=True)[
+            0
+        ][0]["subscribers"]
         result = self.client_get(f"/json/streams/{stream_id}/members")
         self.assert_json_success(result)
         result_dict = result.json()
@@ -4749,17 +4740,13 @@ class StreamTrafficTest(ZulipTestCase):
         )
         # stream less than 7 days old
         self.assertEqual(
-            get_average_weekly_stream_traffic(
-                42, timezone_now() - timedelta(days=5), {42: 100},
-            ),
+            get_average_weekly_stream_traffic(42, timezone_now() - timedelta(days=5), {42: 100}),
             None,
         )
 
         # average traffic between 0 and 1
         self.assertEqual(
-            get_average_weekly_stream_traffic(
-                42, timezone_now() - timedelta(days=300), {42: 1},
-            ),
+            get_average_weekly_stream_traffic(42, timezone_now() - timedelta(days=300), {42: 1}),
             1,
         )
 

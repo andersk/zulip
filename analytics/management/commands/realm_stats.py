@@ -64,9 +64,7 @@ class Command(BaseCommand):
 
     def human_messages(self, realm: Realm, days_ago: int) -> int:
         sent_time_cutoff = timezone_now() - datetime.timedelta(days=days_ago)
-        return human_messages.filter(
-            sender__realm=realm, date_sent__gt=sent_time_cutoff,
-        ).count()
+        return human_messages.filter(sender__realm=realm, date_sent__gt=sent_time_cutoff).count()
 
     def api_messages(self, realm: Realm, days_ago: int) -> int:
         return self.total_messages(realm, days_ago) - self.human_messages(realm, days_ago)

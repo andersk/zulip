@@ -434,9 +434,7 @@ class APICodeExamplesPreprocessor(Preprocessor):
 
         path, method = function.rsplit(":", 1)
         fixture_dict = get_openapi_fixture(path, method, name)
-        fixture_json = json.dumps(
-            fixture_dict, indent=4, sort_keys=True, separators=(",", ": "),
-        )
+        fixture_json = json.dumps(fixture_dict, indent=4, sort_keys=True, separators=(",", ": "))
 
         fixture.append("``` json")
         fixture.extend(fixture_json.splitlines())

@@ -241,9 +241,7 @@ def normalize_fixture_data(
             r"[0-3]\d [A-Z][a-z]{2} 20[1-2]\d", "NORMALIZED DATE", file_content,
         )
         # IP addresses
-        file_content = re.sub(
-            r'"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}"', '"0.0.0.0"', file_content,
-        )
+        file_content = re.sub(r'"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}"', '"0.0.0.0"', file_content)
         # All timestamps not in tested_timestamp_fields
         file_content = re.sub(r": (1[5-9][0-9]{8})(?![0-9-])", ": 1000000000", file_content)
 
@@ -921,9 +919,7 @@ class StripeTest(StripeTestCase):
             customer_plan.refresh_from_db()
             realm.refresh_from_db()
             self.assertEqual(customer_plan.status, CustomerPlan.ACTIVE)
-            self.assertEqual(
-                customer_plan.next_invoice_date, add_months(free_trial_end_date, 1),
-            )
+            self.assertEqual(customer_plan.next_invoice_date, add_months(free_trial_end_date, 1))
             self.assertEqual(realm.plan_type, Realm.STANDARD)
             invoices = [invoice for invoice in stripe.Invoice.list(customer=stripe_customer.id)]
             self.assertEqual(len(invoices), 1)
@@ -1273,9 +1269,7 @@ class StripeTest(StripeTestCase):
         stripe_invoice = [
             invoice for invoice in stripe.Invoice.list(customer=stripe_customer_id)
         ][0]
-        self.assertEqual(
-            [8000 * 23, -8000 * 23], [item.amount for item in stripe_invoice.lines],
-        )
+        self.assertEqual([8000 * 23, -8000 * 23], [item.amount for item in stripe_invoice.lines])
         # Check that we correctly populated RealmAuditLog
         audit_log_entries = list(
             RealmAuditLog.objects.filter(acting_user=user)
@@ -1316,9 +1310,7 @@ class StripeTest(StripeTestCase):
         with patch("corporate.lib.stripe.billing_logger.warning") as mock_billing_logger:
             with self.assertRaises(BillingError) as context:
                 self.local_upgrade(self.seat_count, True, CustomerPlan.ANNUAL, "token")
-        self.assertEqual(
-            "subscribing with existing subscription", context.exception.description,
-        )
+        self.assertEqual("subscribing with existing subscription", context.exception.description)
         mock_billing_logger.assert_called()
 
     def test_check_upgrade_parameters(self) -> None:
@@ -1404,8 +1396,7 @@ class StripeTest(StripeTestCase):
         # Invoice exceeding max licenses
         check_max_licenses_error(MAX_INVOICED_LICENSES + 1)
         with patch(
-            "corporate.lib.stripe.get_latest_seat_count",
-            return_value=MAX_INVOICED_LICENSES + 5,
+            "corporate.lib.stripe.get_latest_seat_count", return_value=MAX_INVOICED_LICENSES + 5,
         ):
             check_max_licenses_error(MAX_INVOICED_LICENSES + 5)
 
@@ -1822,8 +1813,7 @@ class StripeTest(StripeTestCase):
         with patch("corporate.views.timezone_now", return_value=self.now):
             response = self.client_get("/billing/")
         self.assert_in_success_response(
-            ["be switched from monthly to annual billing on <strong>February 2, 2012"],
-            response,
+            ["be switched from monthly to annual billing on <strong>February 2, 2012"], response,
         )
 
         with patch("corporate.lib.stripe.get_latest_seat_count", return_value=20):
@@ -2014,8 +2004,7 @@ class StripeTest(StripeTestCase):
         with patch("corporate.views.timezone_now", return_value=self.now):
             response = self.client_get("/billing/")
         self.assert_in_success_response(
-            ["be switched from monthly to annual billing on <strong>February 2, 2012"],
-            response,
+            ["be switched from monthly to annual billing on <strong>February 2, 2012"], response,
         )
 
         invoice_plans_as_needed(self.next_month)
@@ -2118,9 +2107,7 @@ class StripeTest(StripeTestCase):
             CustomerPlan.objects.first().status, CustomerPlan.DOWNGRADE_AT_END_OF_CYCLE,
         )
 
-        response = self.client_post(
-            "/json/billing/plan/change", {"status": CustomerPlan.ACTIVE},
-        )
+        response = self.client_post("/json/billing/plan/change", {"status": CustomerPlan.ACTIVE})
         self.assert_json_success(response)
         self.assertEqual(CustomerPlan.objects.first().status, CustomerPlan.ACTIVE)
 
@@ -2213,9 +2200,7 @@ class StripeTest(StripeTestCase):
         with self.assertRaises(BillingError) as context:
             with patch("corporate.lib.stripe.timezone_now", return_value=self.now):
                 self.local_upgrade(self.seat_count, True, CustomerPlan.ANNUAL, "token")
-        self.assertEqual(
-            context.exception.description, "subscribing with existing subscription",
-        )
+        self.assertEqual(context.exception.description, "subscribing with existing subscription")
 
         invoice_plans_as_needed(self.next_year)
 
@@ -2689,8 +2674,7 @@ class InvoiceTest(StripeTestCase):
         invoice_plan(plan, self.now + timedelta(days=400))
 
         stripe_invoices = [
-            invoice
-            for invoice in stripe.Invoice.list(customer=plan.customer.stripe_customer_id)
+            invoice for invoice in stripe.Invoice.list(customer=plan.customer.stripe_customer_id)
         ]
         self.assertEqual(len(stripe_invoices), 2)
         self.assertIsNotNone(stripe_invoices[0].status_transitions.finalized_at)
@@ -2746,8 +2730,7 @@ class InvoiceTest(StripeTestCase):
         plan.save(update_fields=["fixed_price", "price_per_license"])
         invoice_plan(plan, self.next_year)
         stripe_invoices = [
-            invoice
-            for invoice in stripe.Invoice.list(customer=plan.customer.stripe_customer_id)
+            invoice for invoice in stripe.Invoice.list(customer=plan.customer.stripe_customer_id)
         ]
         self.assertEqual(len(stripe_invoices), 2)
         self.assertEqual(stripe_invoices[0].billing, "send_invoice")

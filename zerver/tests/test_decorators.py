@@ -271,9 +271,7 @@ class DecoratorTestCase(ZulipTestCase):
             return user_profile.email
 
         @api_key_only_webhook_view("ClientName")
-        def my_webhook_raises_exception(
-            request: HttpRequest, user_profile: UserProfile,
-        ) -> None:
+        def my_webhook_raises_exception(request: HttpRequest, user_profile: UserProfile) -> None:
             raise Exception("raised by webhook function")
 
         @api_key_only_webhook_view("ClientName")
@@ -512,9 +510,7 @@ class SkipRateLimitingTest(ZulipTestCase):
 class DecoratorLoggingTestCase(ZulipTestCase):
     def test_authenticated_rest_api_view_logging(self) -> None:
         @authenticated_rest_api_view(webhook_client_name="ClientName")
-        def my_webhook_raises_exception(
-            request: HttpRequest, user_profile: UserProfile,
-        ) -> None:
+        def my_webhook_raises_exception(request: HttpRequest, user_profile: UserProfile) -> None:
             raise Exception("raised by webhook function")
 
         webhook_bot_email = "webhook-bot@zulip.com"
@@ -559,9 +555,7 @@ body:
 
     def test_authenticated_rest_api_view_logging_unexpected_event(self) -> None:
         @authenticated_rest_api_view(webhook_client_name="ClientName")
-        def my_webhook_raises_exception(
-            request: HttpRequest, user_profile: UserProfile,
-        ) -> None:
+        def my_webhook_raises_exception(request: HttpRequest, user_profile: UserProfile) -> None:
             raise UnexpectedWebhookEventType("helloworld", "test_event")
 
         webhook_bot_email = "webhook-bot@zulip.com"
@@ -877,9 +871,7 @@ class ValidatorTestCase(ZulipTestCase):
             check_color("color", hex_color)
 
         for hex_color in y:
-            with self.assertRaisesRegex(
-                ValidationError, r"color is not a valid hex color code",
-            ):
+            with self.assertRaisesRegex(ValidationError, r"color is not a valid hex color code"):
                 check_color("color", hex_color)
 
         with self.assertRaisesRegex(ValidationError, r"color is not a string"):
@@ -954,9 +946,7 @@ class ValidatorTestCase(ZulipTestCase):
             "names": ["alice", "bob"],
             "city": "Boston",
         }
-        with self.assertRaisesRegex(
-            ValidationError, r"x contains a value that is not a string",
-        ):
+        with self.assertRaisesRegex(ValidationError, r"x contains a value that is not a string"):
             check_dict(value_validator=check_string)("x", x)
 
         x = {
@@ -1430,9 +1420,7 @@ class TestValidateApiKey(ZulipTestCase):
             api_key = get_api_key(self.webhook_bot)
             validate_api_key(HostRequestMock(), self.webhook_bot.email, api_key)
 
-    def test_validate_api_key_if_profile_is_incoming_webhook_and_is_webhook_is_set(
-        self,
-    ) -> None:
+    def test_validate_api_key_if_profile_is_incoming_webhook_and_is_webhook_is_set(self) -> None:
         api_key = get_api_key(self.webhook_bot)
         profile = validate_api_key(
             HostRequestMock(host="zulip.testserver"),
@@ -1906,12 +1894,7 @@ class CacheTestCase(ZulipTestCase):
 
         self.assertEqual(
             result_log,
-            [
-                "hello alice smith",
-                "hello bob barker",
-                "hello alice smith",
-                "hello cal johnson",
-            ],
+            ["hello alice smith", "hello bob barker", "hello alice smith", "hello cal johnson"],
         )
 
         work_log, result_log = test_greetings("goodbye")

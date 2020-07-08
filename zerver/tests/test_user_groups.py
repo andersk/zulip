@@ -484,9 +484,7 @@ class UserGroupAPITestCase(ZulipTestCase):
         result = self.client_delete(f"/json/user_groups/{user_group.id}")
         self.assert_json_success(result)
 
-        user_group = create_user_group(
-            name="support", members=[hamlet, iago], realm=iago.realm,
-        )
+        user_group = create_user_group(name="support", members=[hamlet, iago], realm=iago.realm)
 
         self.logout()
 

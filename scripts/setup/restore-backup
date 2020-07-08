@@ -47,9 +47,7 @@ def restore_backup(tarball_file: IO[bytes]) -> None:
     if settings.LOCAL_UPLOADS_DIR is not None:
         # We only need to restore LOCAL_UPLOADS_DIR if the system is
         # configured to locally host uploads.
-        paths.append(
-            ("uploads", os.path.join(settings.DEPLOY_ROOT, settings.LOCAL_UPLOADS_DIR)),
-        )
+        paths.append(("uploads", os.path.join(settings.DEPLOY_ROOT, settings.LOCAL_UPLOADS_DIR)))
 
     with tempfile.TemporaryDirectory(prefix="zulip-restore-backup-") as tmp:
         uid = os.getuid()

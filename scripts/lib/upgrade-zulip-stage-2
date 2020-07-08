@@ -185,9 +185,7 @@ subprocess.check_call(
 )
 
 # Make sure the right version of node is installed
-subprocess.check_call(
-    [os.path.join(deploy_path, "scripts", "lib", "install-node"), deploy_path],
-)
+subprocess.check_call([os.path.join(deploy_path, "scripts", "lib", "install-node"), deploy_path])
 
 # Generate any new secrets that were added in the new version required.
 # TODO: Do caching to only run this when it has changed.
@@ -251,12 +249,7 @@ else:
     # this run before we apply puppet changes (saving a bit of downtime).
     logging.info("Installing static assets...")
     subprocess.check_call(
-        [
-            "cp",
-            "-rT",
-            os.path.join(deploy_path, "prod-static/serve"),
-            "/home/zulip/prod-static",
-        ],
+        ["cp", "-rT", os.path.join(deploy_path, "prod-static/serve"), "/home/zulip/prod-static"],
         preexec_fn=su_to_zulip,
     )
 

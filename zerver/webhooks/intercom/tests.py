@@ -204,9 +204,7 @@ New user created:
 
     def test_user_tag_created(self) -> None:
         self.send_and_test_stream_message(
-            "user_tag_created",
-            "User: eeshangarg",
-            "The tag `developer` was added to the user.",
+            "user_tag_created", "User: eeshangarg", "The tag `developer` was added to the user.",
         )
 
     def test_user_tag_deleted(self) -> None:

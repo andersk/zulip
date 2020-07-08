@@ -183,9 +183,7 @@ def try_to_copy_venv(venv_path: str, new_packages: Set[str]) -> bool:
     old_packages = set()  # type: Set[str]
     for sha1sum in os.listdir(VENV_CACHE_PATH):
         curr_venv_path = os.path.join(VENV_CACHE_PATH, sha1sum, venv_name)
-        if curr_venv_path == venv_path or not os.path.exists(
-            get_index_filename(curr_venv_path),
-        ):
+        if curr_venv_path == venv_path or not os.path.exists(get_index_filename(curr_venv_path)):
             continue
 
         old_packages = get_venv_packages(curr_venv_path)
@@ -282,9 +280,7 @@ def do_patch_activate_script(venv_path: str) -> None:
 
 
 def setup_virtualenv(
-    target_venv_path: Optional[str],
-    requirements_file: str,
-    patch_activate_script: bool = False,
+    target_venv_path: Optional[str], requirements_file: str, patch_activate_script: bool = False,
 ) -> str:
 
     # Check if a cached version already exists

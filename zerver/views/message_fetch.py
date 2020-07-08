@@ -359,10 +359,7 @@ class NarrowBuilder:
         return query.where(maybe_negate(cond))
 
     def by_pm_with(
-        self,
-        query: Query,
-        operand: Union[str, Iterable[int]],
-        maybe_negate: ConditionTransform,
+        self, query: Query, operand: Union[str, Iterable[int]], maybe_negate: ConditionTransform,
     ) -> Query:
 
         try:
@@ -496,9 +493,7 @@ class NarrowBuilder:
         # We HTML-escape the topic in Postgres to avoid doing a server round-trip
         query = query.column(
             ts_locs_array(
-                literal("zulip.english_us_search"),
-                func.escape_html(topic_column_sa()),
-                tsquery,
+                literal("zulip.english_us_search"), func.escape_html(topic_column_sa()), tsquery,
             ).label("topic_matches"),
         )
 
@@ -791,10 +786,7 @@ def find_first_unread_anchor(
     )
 
     query, is_search = add_narrow_conditions(
-        user_profile=user_profile,
-        inner_msg_id_col=inner_msg_id_col,
-        query=query,
-        narrow=narrow,
+        user_profile=user_profile, inner_msg_id_col=inner_msg_id_col, query=query, narrow=narrow,
     )
 
     condition = column("flags").op("&")(UserMessage.flags.read.mask) == 0
@@ -905,10 +897,7 @@ def get_messages_backend(
     )
 
     query, is_search = add_narrow_conditions(
-        user_profile=user_profile,
-        inner_msg_id_col=inner_msg_id_col,
-        query=query,
-        narrow=narrow,
+        user_profile=user_profile, inner_msg_id_col=inner_msg_id_col, query=query, narrow=narrow,
     )
 
     if narrow is not None:

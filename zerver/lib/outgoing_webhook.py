@@ -240,9 +240,7 @@ def notify_bot_owner(
     if failure_message:
         notification_message += "\n" + failure_message
     if status_code:
-        notification_message += (
-            f"\nThe webhook got a response with status code *{status_code}*."
-        )
+        notification_message += f"\nThe webhook got a response with status code *{status_code}*."
     if response_content:
         notification_message += (
             "\nThe response contains the following payload:\n" f"```\n{response_content!r}\n```"
@@ -269,9 +267,7 @@ def request_retry(event: Dict[str, Any], failure_message: Optional[str] = None) 
         fail_with_message(event, "Bot is unavailable")
         notify_bot_owner(event, failure_message=failure_message)
         logging.warning(
-            "Maximum retries exceeded for trigger:%s event:%s",
-            bot_user.email,
-            event["command"],
+            "Maximum retries exceeded for trigger:%s event:%s", bot_user.email, event["command"],
         )
 
     retry_event("outgoing_webhooks", event, failure_processor)

@@ -16,9 +16,7 @@ from zerver.models import get_realm_stream
 
 class EmailTranslationTestCase(ZulipTestCase):
     def test_email_translation(self) -> None:
-        def check_translation(
-            phrase: str, request_type: str, *args: Any, **kwargs: Any
-        ) -> None:
+        def check_translation(phrase: str, request_type: str, *args: Any, **kwargs: Any) -> None:
             if request_type == "post":
                 self.client_post(*args, **kwargs)
             elif request_type == "patch":  # nocoverage: see comment below

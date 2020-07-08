@@ -45,9 +45,7 @@ def guess_zulip_user_from_teamcity(
         return None
 
 
-def get_teamcity_property_value(
-    property_list: List[Dict[str, str]], name: str,
-) -> Optional[str]:
+def get_teamcity_property_value(property_list: List[Dict[str, str]], name: str) -> Optional[str]:
     for property in property_list:
         if property["name"] == name:
             return property["value"]
@@ -68,9 +66,7 @@ def api_teamcity_webhook(
         message = MISCONFIGURED_PAYLOAD_TYPE_ERROR_MESSAGE.format(
             bot_name=user_profile.full_name, support_email=FromAddress.SUPPORT,
         ).strip()
-        send_rate_limited_pm_notification_to_bot_owner(
-            user_profile, user_profile.realm, message,
-        )
+        send_rate_limited_pm_notification_to_bot_owner(user_profile, user_profile.realm, message)
 
         return json_success()
 

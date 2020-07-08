@@ -35,9 +35,7 @@ PULL_REQUEST_MARKED_AS_NEEDS_WORK_TEMPLATE = (
 PULL_REQUEST_MARKED_AS_NEEDS_WORK_TEMPLATE_WITH_TITLE = """
 {user_name} marked [PR #{number} {title}]({url}) as \"needs work\".
 """.strip()
-PULL_REQUEST_REASSIGNED_TEMPLATE = (
-    "{user_name} reassigned [PR #{number}]({url}) to {assignees}."
-)
+PULL_REQUEST_REASSIGNED_TEMPLATE = "{user_name} reassigned [PR #{number}]({url}) to {assignees}."
 PULL_REQUEST_REASSIGNED_TEMPLATE_WITH_TITLE = """
 {user_name} reassigned [PR #{number} {title}]({url}) to {assignees}.
 """.strip()

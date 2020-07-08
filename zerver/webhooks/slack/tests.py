@@ -34,36 +34,28 @@ class SlackWebhookTests(WebhookTestCase):
 
         payload = self.get_body("message_info_missing_user_name")
         url = self.build_webhook_url()
-        result = self.client_post(
-            url, payload, content_type="application/x-www-form-urlencoded",
-        )
+        result = self.client_post(url, payload, content_type="application/x-www-form-urlencoded")
         self.assert_json_error(result, "Missing 'user_name' argument")
 
     def test_missing_data_channel_name(self) -> None:
 
         payload = self.get_body("message_info_missing_channel_name")
         url = self.build_webhook_url()
-        result = self.client_post(
-            url, payload, content_type="application/x-www-form-urlencoded",
-        )
+        result = self.client_post(url, payload, content_type="application/x-www-form-urlencoded")
         self.assert_json_error(result, "Missing 'channel_name' argument")
 
     def test_missing_data_text(self) -> None:
 
         payload = self.get_body("message_info_missing_text")
         url = self.build_webhook_url()
-        result = self.client_post(
-            url, payload, content_type="application/x-www-form-urlencoded",
-        )
+        result = self.client_post(url, payload, content_type="application/x-www-form-urlencoded")
         self.assert_json_error(result, "Missing 'text' argument")
 
     def test_invalid_channels_map_to_topics(self) -> None:
 
         payload = self.get_body("message_info")
         url = "{}{}".format(self.url, "&channels_map_to_topics=abc")
-        result = self.client_post(
-            url, payload, content_type="application/x-www-form-urlencoded",
-        )
+        result = self.client_post(url, payload, content_type="application/x-www-form-urlencoded")
         self.assert_json_error(
             result, "Error: channels_map_to_topics parameter other than 0 or 1",
         )

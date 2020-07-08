@@ -32,11 +32,7 @@ from zerver.lib.actions import (
 )
 from zerver.lib.addressee import Addressee
 from zerver.lib.cache import cache_delete, get_stream_cache_key
-from zerver.lib.message import (
-    MessageDict,
-    get_raw_unread_data,
-    get_recent_private_conversations,
-)
+from zerver.lib.message import MessageDict, get_raw_unread_data, get_recent_private_conversations
 from zerver.lib.test_classes import ZulipTestCase
 from zerver.lib.test_helpers import (
     get_user_messages,

@@ -322,9 +322,7 @@ def fix_message_rendered_content(
                 for mention in user_group_mentions:
                     old_user_group_id = int(mention["data-user-group-id"])
                     if old_user_group_id in user_group_id_map:
-                        mention["data-user-group-id"] = str(
-                            user_group_id_map[old_user_group_id],
-                        )
+                        mention["data-user-group-id"] = str(user_group_id_map[old_user_group_id])
                 message["rendered_content"] = str(soup)
             continue
 
@@ -904,9 +902,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
         notifications_stream_id = None
     realm.notifications_stream_id = None
     if realm.signup_notifications_stream_id is not None:
-        signup_notifications_stream_id: Optional[int] = int(
-            realm.signup_notifications_stream_id,
-        )
+        signup_notifications_stream_id: Optional[int] = int(realm.signup_notifications_stream_id)
     else:
         signup_notifications_stream_id = None
     realm.signup_notifications_stream_id = None
@@ -933,9 +929,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
         logging.info("Adding to ID map: %s %s", item["id"], get_system_bot(item["email"]).id)
         new_user_id = get_system_bot(item["email"]).id
         update_id_map(table="user_profile", old_id=item["id"], new_id=new_user_id)
-        new_recipient_id = Recipient.objects.get(
-            type=Recipient.PERSONAL, type_id=new_user_id,
-        ).id
+        new_recipient_id = Recipient.objects.get(type=Recipient.PERSONAL, type_id=new_user_id).id
         update_id_map(table="recipient", old_id=item["recipient_id"], new_id=new_recipient_id)
 
     # Merge in zerver_userprofile_mirrordummy
@@ -1076,9 +1070,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
         bulk_import_model(data, MutedTopic)
 
     if "zerver_service" in data:
-        re_map_foreign_keys(
-            data, "zerver_service", "user_profile", related_table="user_profile",
-        )
+        re_map_foreign_keys(data, "zerver_service", "user_profile", related_table="user_profile")
         fix_service_tokens(data, "zerver_service")
         update_model_ids(Service, data, "service")
         bulk_import_model(data, Service)

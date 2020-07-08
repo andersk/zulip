@@ -8,9 +8,7 @@ COLOR_SCHEME_AUTOMATIC = 1
 COLOR_SCHEME_NIGHT = 2
 
 # Set color_scheme to night mode, if night_mode is True.
-def set_color_scheme_to_night_mode(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def set_color_scheme_to_night_mode(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     UserProfile = apps.get_model("zerver", "UserProfile")
     UserProfile.objects.filter(night_mode=True).update(color_scheme=COLOR_SCHEME_NIGHT)
 

@@ -35,9 +35,7 @@ assert_running_as_root(strip_lib_from_paths=True)
 os.umask(0o22)
 
 logging.Formatter.converter = time.gmtime
-logging.basicConfig(
-    format="%(asctime)s upgrade-zulip-from-git: %(message)s", level=logging.INFO,
-)
+logging.basicConfig(format="%(asctime)s upgrade-zulip-from-git: %(message)s", level=logging.INFO)
 
 parser = argparse.ArgumentParser()
 parser.add_argument("refname", help="Git reference, e.g. a branch, tag, or commit ID.")

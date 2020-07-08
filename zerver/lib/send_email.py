@@ -21,13 +21,7 @@ from django.utils.translation import ugettext as _
 from confirmation.models import generate_key
 from scripts.setup.inline_email_css import inline_template
 from zerver.lib.logging_util import log_to_file
-from zerver.models import (
-    EMAIL_TYPES,
-    Realm,
-    ScheduledEmail,
-    UserProfile,
-    get_user_profile_by_id,
-)
+from zerver.models import EMAIL_TYPES, Realm, ScheduledEmail, UserProfile, get_user_profile_by_id
 
 ## Logging setup ##
 

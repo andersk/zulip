@@ -364,9 +364,7 @@ class MissedMessageNotificationsTest(ZulipTestCase):
             return get_client_descriptor(queue_id)
 
         def destroy_event_queue(queue_id: str) -> None:
-            result = self.tornado_call(
-                cleanup_event_queue, user_profile, {"queue_id": queue_id},
-            )
+            result = self.tornado_call(cleanup_event_queue, user_profile, {"queue_id": queue_id})
             self.assert_json_success(result)
 
         client_descriptor = allocate_event_queue()

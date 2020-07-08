@@ -158,8 +158,7 @@ def run() -> None:
         [*semgrep_command, "--lang=python"],
         ["py"],
         fix_arg="--autofix",
-        description="Syntactic Grep (semgrep) Code Search Tool "
-        "(config: ./tools/semgrep.yml)",
+        description="Syntactic Grep (semgrep) Code Search Tool " "(config: ./tools/semgrep.yml)",
     )
 
     linter_config.external_linter(

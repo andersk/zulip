@@ -15,9 +15,7 @@ CSS_SOURCE_PATH = os.path.join(EMAIL_TEMPLATES_PATH, "email.css")
 def configure_cssutils() -> None:
     # These properties are not supported by cssutils by default and will
     # result in warnings when premailer package is run.
-    properties[Profiles.CSS_LEVEL_2][
-        "-ms-interpolation-mode"
-    ] = r"none|bicubic|nearest-neighbor"
+    properties[Profiles.CSS_LEVEL_2]["-ms-interpolation-mode"] = r"none|bicubic|nearest-neighbor"
     properties[Profiles.CSS_LEVEL_2]["-ms-text-size-adjust"] = r"none|auto|{percentage}"
     properties[Profiles.CSS_LEVEL_2]["mso-table-lspace"] = r"0|{num}(pt)"
     properties[Profiles.CSS_LEVEL_2]["mso-table-rspace"] = r"0|{num}(pt)"
@@ -30,13 +28,7 @@ def configure_cssutils() -> None:
     )
 
     profile.addProfiles(
-        [
-            (
-                Profiles.CSS_LEVEL_2,
-                properties[Profiles.CSS_LEVEL_2],
-                macros[Profiles.CSS_LEVEL_2],
-            ),
-        ],
+        [(Profiles.CSS_LEVEL_2, properties[Profiles.CSS_LEVEL_2], macros[Profiles.CSS_LEVEL_2])],
     )
 
 

@@ -154,9 +154,7 @@ class ReactionEmojiTest(ZulipTestCase):
             "emoji_name": "smile",
         }
 
-        result = self.api_post(
-            sender, f"/api/v1/messages/{message_id}/reactions", reaction_info,
-        )
+        result = self.api_post(sender, f"/api/v1/messages/{message_id}/reactions", reaction_info)
         self.assert_json_success(result)
 
         # Fetch the now-created UserMessage object to confirm it exists and is historical
@@ -505,9 +503,7 @@ class EmojiReactionBase(ZulipTestCase):
         if "reaction_type" not in reaction_info:
             reaction_info["reaction_type"] = self.reaction_type
         sender = self.example_user(sender)
-        result = self.api_post(
-            sender, f"/api/v1/messages/{message_id}/reactions", reaction_info,
-        )
+        result = self.api_post(sender, f"/api/v1/messages/{message_id}/reactions", reaction_info)
         return result
 
     def post_zulip_reaction(self, message_id: int = 1, sender: str = "hamlet") -> HttpResponse:
@@ -531,9 +527,7 @@ class EmojiReactionBase(ZulipTestCase):
         )
         return result
 
-    def delete_zulip_reaction(
-        self, message_id: int = 1, sender: str = "hamlet",
-    ) -> HttpResponse:
+    def delete_zulip_reaction(self, message_id: int = 1, sender: str = "hamlet") -> HttpResponse:
         reaction_info = {
             "emoji_name": "zulip",
             "emoji_code": "zulip",
@@ -893,9 +887,7 @@ class RealmEmojiReactionTests(EmojiReactionBase):
         }
         sender = self.example_user("hamlet")
         message_id = 1
-        result = self.api_post(
-            sender, f"/api/v1/messages/{message_id}/reactions", reaction_info,
-        )
+        result = self.api_post(sender, f"/api/v1/messages/{message_id}/reactions", reaction_info)
         self.assert_json_error(result, "Invalid emoji type.")
 
 

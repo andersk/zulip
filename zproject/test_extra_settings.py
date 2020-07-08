@@ -177,9 +177,7 @@ SOCIAL_AUTH_APPLE_BUNDLE_ID = "com.zulip.bundle.id"
 SOCIAL_AUTH_APPLE_CLIENT = "com.zulip.chat"
 SOCIAL_AUTH_APPLE_KEY = "KEYISKEY"
 SOCIAL_AUTH_APPLE_TEAM = "TEAMSTRING"
-SOCIAL_AUTH_APPLE_SECRET = get_from_file_if_exists(
-    "zerver/tests/fixtures/apple/private_key.pem",
-)
+SOCIAL_AUTH_APPLE_SECRET = get_from_file_if_exists("zerver/tests/fixtures/apple/private_key.pem")
 
 APPLE_JWK = get_from_file_if_exists("zerver/tests/fixtures/apple/jwk")
 APPLE_ID_TOKEN_GENERATION_KEY = get_from_file_if_exists(
@@ -206,12 +204,8 @@ THUMBOR_SERVES_CAMO = True
 DEVELOPMENT_LOG_EMAILS = False
 
 SOCIAL_AUTH_SAML_SP_ENTITY_ID = "http://" + EXTERNAL_HOST
-SOCIAL_AUTH_SAML_SP_PUBLIC_CERT = get_from_file_if_exists(
-    "zerver/tests/fixtures/saml/zulip.crt",
-)
-SOCIAL_AUTH_SAML_SP_PRIVATE_KEY = get_from_file_if_exists(
-    "zerver/tests/fixtures/saml/zulip.key",
-)
+SOCIAL_AUTH_SAML_SP_PUBLIC_CERT = get_from_file_if_exists("zerver/tests/fixtures/saml/zulip.crt")
+SOCIAL_AUTH_SAML_SP_PRIVATE_KEY = get_from_file_if_exists("zerver/tests/fixtures/saml/zulip.key")
 
 SOCIAL_AUTH_SAML_ORG_INFO = {
     "en-US": {

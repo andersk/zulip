@@ -413,10 +413,7 @@ python_rules = RuleList(
             "pattern": "from os.path",
             "description": "Don't use from when importing from the standard library",
         },
-        {
-            "pattern": "import os.path",
-            "description": "Use import os instead of import os.path",
-        },
+        {"pattern": "import os.path", "description": "Use import os instead of import os.path"},
         {
             "pattern": r"(logging|logger)\.warn\W",
             "description": "Logger.warn is a deprecated alias for Logger.warning; Use 'warning' instead of 'warn'.",
@@ -613,10 +610,7 @@ prose_style_rules: List["Rule"] = [
         "description": "Organization is spelled with a z",
         "exclude_line": {("docs/translating/french.md", "* organization - **organisation**")},
     },
-    {
-        "pattern": "!!! warning",
-        "description": "!!! warning is invalid; it's spelled '!!! warn'",
-    },
+    {"pattern": "!!! warning", "description": "!!! warning is invalid; it's spelled '!!! warn'"},
     {"pattern": "Terms of service", "description": "The S in Terms of Service is capitalized"},
     {
         "pattern": "[^-_p]botserver(?!rc)|bot server",

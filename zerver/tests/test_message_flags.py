@@ -47,9 +47,7 @@ class FirstUnreadAnchorTests(ZulipTestCase):
         self.assert_json_success(result)
 
         # Send a new message (this will be unread)
-        new_message_id = self.send_stream_message(
-            self.example_user("othello"), "Verona", "test",
-        )
+        new_message_id = self.send_stream_message(self.example_user("othello"), "Verona", "test")
 
         # If we call get_messages with use_first_unread_anchor=True, we
         # should get the message we just sent
@@ -107,9 +105,7 @@ class FirstUnreadAnchorTests(ZulipTestCase):
         result = self.client_post("/json/mark_all_as_read")
         self.assert_json_success(result)
 
-        new_message_id = self.send_stream_message(
-            self.example_user("othello"), "Verona", "test",
-        )
+        new_message_id = self.send_stream_message(self.example_user("othello"), "Verona", "test")
 
         messages_response = self.get_messages_response(
             anchor="first_unread", num_before=0, num_after=1,
@@ -251,9 +247,7 @@ class UnreadCountTests(ZulipTestCase):
     def test_mark_all_in_invalid_stream_read(self) -> None:
         self.login("hamlet")
         invalid_stream_id = "12345678"
-        result = self.client_post(
-            "/json/mark_stream_as_read", {"stream_id": invalid_stream_id},
-        )
+        result = self.client_post("/json/mark_stream_as_read", {"stream_id": invalid_stream_id})
         self.assert_json_error(result, "Invalid stream id")
 
     def test_mark_all_topics_unread_with_invalid_stream_name(self) -> None:
@@ -485,9 +479,7 @@ class PushNotificationMarkReadFlowsTest(ZulipTestCase):
             "/json/mark_stream_as_read",
             {"stream_id": str(stream.id), "topic_name": "test_topic"},
         )
-        self.assertEqual(
-            self.get_mobile_push_notification_ids(user_profile), [third_message_id],
-        )
+        self.assertEqual(self.get_mobile_push_notification_ids(user_profile), [third_message_id])
 
         fourth_message_id = self.send_stream_message(
             self.example_user("cordelia"), "test_stream", "hello", "test_topic",

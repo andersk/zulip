@@ -96,9 +96,7 @@ class TestEncodeDecode(ZulipTestCase):
         )
         email_address_all_options = email_address_all_options.format(stream.email_token)
         token, options = decode_email_address(email_address_all_options)
-        self._assert_options(
-            options, show_sender=True, include_footer=True, include_quotes=True,
-        )
+        self._assert_options(options, show_sender=True, include_footer=True, include_quotes=True)
         self.assertEqual(token, stream.email_token)
 
         email_address = email_address.replace("@testserver", "@zulip.org")
@@ -1304,8 +1302,7 @@ class TestEmailMirrorTornadoView(ZulipTestCase):
 
         result = self.send_offline_message(mm_address, self.example_user("cordelia"))
         self.assert_json_error(
-            result,
-            "5.1.1 Bad destination mailbox address: Missed message address out of uses.",
+            result, "5.1.1 Bad destination mailbox address: Missed message address out of uses.",
         )
 
     def test_wrong_missed_email_private_message(self) -> None:

@@ -151,9 +151,7 @@ def get_status_dict_by_realm(
 
     presence_rows = list(query)
 
-    mobile_query = PushDeviceToken.objects.distinct("user_id").values_list(
-        "user_id", flat=True,
-    )
+    mobile_query = PushDeviceToken.objects.distinct("user_id").values_list("user_id", flat=True)
 
     user_profile_ids = [presence_row["user_profile__id"] for presence_row in presence_rows]
     if len(user_profile_ids) == 0:
@@ -165,9 +163,7 @@ def get_status_dict_by_realm(
         # a realm with 0 active users.
         return {}
 
-    mobile_query = query_for_ids(
-        query=mobile_query, user_ids=user_profile_ids, field="user_id",
-    )
+    mobile_query = query_for_ids(query=mobile_query, user_ids=user_profile_ids, field="user_id")
     mobile_user_ids = set(mobile_query)
 
     return get_status_dicts_for_rows(presence_rows, mobile_user_ids, slim_presence)

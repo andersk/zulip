@@ -70,16 +70,12 @@ def generate_all_emails(request: HttpRequest) -> HttpResponse:
 
     # Password reset emails
     # active account in realm
-    result = client.post(
-        "/accounts/password/reset/", {"email": registered_email}, **host_kwargs,
-    )
+    result = client.post("/accounts/password/reset/", {"email": registered_email}, **host_kwargs)
     assert result.status_code == 302
     # deactivated user
     user.is_active = False
     user.save(update_fields=["is_active"])
-    result = client.post(
-        "/accounts/password/reset/", {"email": registered_email}, **host_kwargs,
-    )
+    result = client.post("/accounts/password/reset/", {"email": registered_email}, **host_kwargs)
     assert result.status_code == 302
     user.is_active = True
     user.save(update_fields=["is_active"])
@@ -125,9 +121,7 @@ def generate_all_emails(request: HttpRequest) -> HttpResponse:
 
     # Email change successful
     key = (
-        Confirmation.objects.filter(type=Confirmation.EMAIL_CHANGE)
-        .latest("id")
-        .confirmation_key
+        Confirmation.objects.filter(type=Confirmation.EMAIL_CHANGE).latest("id").confirmation_key
     )
     url = confirmation_url(key, realm, Confirmation.EMAIL_CHANGE)
     user_profile = get_user_by_delivery_email(registered_email, realm)

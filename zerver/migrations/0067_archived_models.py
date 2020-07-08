@@ -51,10 +51,7 @@ class Migration(migrations.Migration):
                 ("content", models.TextField()),
                 ("rendered_content", models.TextField(null=True)),
                 ("rendered_content_version", models.IntegerField(null=True)),
-                (
-                    "pub_date",
-                    models.DateTimeField(db_index=True, verbose_name="date published"),
-                ),
+                ("pub_date", models.DateTimeField(db_index=True, verbose_name="date published")),
                 ("last_edit_time", models.DateTimeField(null=True)),
                 ("edit_history", models.TextField(null=True)),
                 ("has_attachment", models.BooleanField(db_index=True, default=False)),
@@ -73,8 +70,7 @@ class Migration(migrations.Migration):
                 (
                     "sender",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to=settings.AUTH_USER_MODEL,
+                        on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL,
                     ),
                 ),
                 (
@@ -123,15 +119,13 @@ class Migration(migrations.Migration):
                 (
                     "message",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to="zerver.ArchivedMessage",
+                        on_delete=django.db.models.deletion.CASCADE, to="zerver.ArchivedMessage",
                     ),
                 ),
                 (
                     "user_profile",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to=settings.AUTH_USER_MODEL,
+                        on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL,
                     ),
                 ),
             ],

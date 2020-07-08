@@ -362,7 +362,9 @@ class GithubWebhookTest(WebhookTestCase):
         )
 
     def test_pull_request_unassigned_msg(self) -> None:
-        expected_message = "eeshangarg unassigned [PR #1](https://github.com/zulip-test-org/helloworld/pull/1)."
+        expected_message = (
+            "eeshangarg unassigned [PR #1](https://github.com/zulip-test-org/helloworld/pull/1)."
+        )
         self.send_and_test_stream_message(
             "pull_request__unassigned",
             "helloworld / PR #1 Mention that Zulip rocks!",

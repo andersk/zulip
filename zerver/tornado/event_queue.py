@@ -525,9 +525,7 @@ def dump_event_queues(port: int) -> None:
     start = time.time()
 
     with open(persistent_queue_filename(port), "w") as stored_queues:
-        ujson.dump(
-            [(qid, client.to_dict()) for (qid, client) in clients.items()], stored_queues,
-        )
+        ujson.dump([(qid, client.to_dict()) for (qid, client) in clients.items()], stored_queues)
 
     logging.info(
         "Tornado %d dumped %d event queues in %.3fs", port, len(clients), time.time() - start,
@@ -888,9 +886,7 @@ def maybe_enqueue_notifications(
     # mention.  Eventually, we'll add settings to allow email
     # notifications to match the model of push notifications
     # above.
-    if idle and (
-        private_message or mentioned or wildcard_mention_notify or stream_email_notify
-    ):
+    if idle and (private_message or mentioned or wildcard_mention_notify or stream_email_notify):
         notice = build_offline_notification(user_profile_id, message_id)
         if private_message:
             notice["trigger"] = "private_message"
