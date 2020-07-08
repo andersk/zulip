@@ -209,8 +209,7 @@ class WorkerTest(ZulipTestCase):
         othello_info = arg_dict[othello.id]
         self.assertEqual(othello_info["count"], 1)
         self.assertEqual(
-            {m["message"].content for m in othello_info["missed_messages"]},
-            {"where art thou, othello?"},
+            {m["message"].content for m in othello_info["missed_messages"]}, {"where art thou, othello?"},
         )
 
     def test_push_notifications_worker(self) -> None:
@@ -417,11 +416,9 @@ class WorkerTest(ZulipTestCase):
         with simulated_queue_client(lambda: fake_client):
             worker = queue_processors.SignupWorker()
             worker.setup()
-            with patch(
-                "zerver.worker.queue_processors.requests.post", return_value=fake_response,
-            ), patch("zerver.lib.queue.queue_json_publish", side_effect=fake_publish), patch(
-                "logging.info",
-            ), self.settings(
+            with patch("zerver.worker.queue_processors.requests.post", return_value=fake_response), patch(
+                "zerver.lib.queue.queue_json_publish", side_effect=fake_publish,
+            ), patch("logging.info"), self.settings(
                 MAILCHIMP_API_KEY="one-two", PRODUCTION=True, ZULIP_FRIENDS_LIST_ID="id",
             ):
                 worker.start()

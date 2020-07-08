@@ -717,9 +717,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
                 + fp_path_id
                 + ")"
             )
-            self.send_stream_message(
-                self.example_user("hamlet"), f"test-subscribe {i % 5}", body, "test",
-            )
+            self.send_stream_message(self.example_user("hamlet"), f"test-subscribe {i % 5}", body, "test")
         self.logout()
 
         user = self.example_user("aaron")
@@ -1604,9 +1602,7 @@ class LocalStorageTest(UploadSerializeMixin, ZulipTestCase):
             f.write("dummy")
 
         uri = upload_export_tarball(user_profile.realm, tarball_path)
-        self.assertTrue(
-            os.path.isfile(os.path.join(settings.LOCAL_UPLOADS_DIR, "avatars", tarball_path)),
-        )
+        self.assertTrue(os.path.isfile(os.path.join(settings.LOCAL_UPLOADS_DIR, "avatars", tarball_path)))
 
         result = re.search(re.compile(r"([A-Za-z0-9\-_]{24})"), uri)
         if result is not None:
@@ -1905,7 +1901,9 @@ class S3Test(ZulipTestCase):
         result = re.search(re.compile(r"([0-9a-fA-F]{32})"), uri)
         if result is not None:
             hex_value = result.group(1)
-        expected_url = f"https://{bucket.name}.s3.amazonaws.com/exports/{hex_value}/{os.path.basename(tarball_path)}"
+        expected_url = (
+            f"https://{bucket.name}.s3.amazonaws.com/exports/{hex_value}/{os.path.basename(tarball_path)}"
+        )
         self.assertEqual(uri, expected_url)
 
         # Delete the tarball.

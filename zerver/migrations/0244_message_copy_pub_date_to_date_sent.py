@@ -18,9 +18,7 @@ def sql_copy_pub_date_to_date_sent(id_range_lower_bound: int, id_range_upper_bou
     """,
     )
     with connection.cursor() as cursor:
-        cursor.execute(
-            query, {"lower_bound": id_range_lower_bound, "upper_bound": id_range_upper_bound},
-        )
+        cursor.execute(query, {"lower_bound": id_range_lower_bound, "upper_bound": id_range_upper_bound})
 
 
 def copy_pub_date_to_date_sent(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:

@@ -28,10 +28,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={
-                "verbose_name": "confirmation email",
-                "verbose_name_plural": "confirmation emails",
-            },
+            options={"verbose_name": "confirmation email", "verbose_name_plural": "confirmation emails"},
             bases=(models.Model,),
         ),
     ]

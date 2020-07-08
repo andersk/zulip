@@ -218,9 +218,7 @@ class RealmTest(ZulipTestCase):
         self.assertTrue(realm.deactivated)
         confirmation_url = create_confirmation_link(realm, Confirmation.REALM_REACTIVATION)
         response = self.client_get(confirmation_url)
-        self.assert_in_success_response(
-            ["Your organization has been successfully reactivated"], response,
-        )
+        self.assert_in_success_response(["Your organization has been successfully reactivated"], response)
         realm = get_realm("zulip")
         self.assertFalse(realm.deactivated)
 
@@ -247,9 +245,7 @@ class RealmTest(ZulipTestCase):
         admins = realm.get_human_admin_users()
         confirmation_url = self.get_confirmation_url_from_outbox(admins[0].delivery_email)
         response = self.client_get(confirmation_url)
-        self.assert_in_success_response(
-            ["Your organization has been successfully reactivated"], response,
-        )
+        self.assert_in_success_response(["Your organization has been successfully reactivated"], response)
         realm = get_realm("zulip")
         self.assertFalse(realm.deactivated)
 
@@ -585,9 +581,7 @@ class RealmTest(ZulipTestCase):
 
         with self.settings(BILLING_ENABLED=False):
             self.assertEqual(do_create_realm("onpremise", "onpremise").plan_type, Realm.SELF_HOSTED)
-            self.assertEqual(
-                get_realm("onpremise").max_invites, settings.INVITES_DEFAULT_REALM_DAILY_MAX,
-            )
+            self.assertEqual(get_realm("onpremise").max_invites, settings.INVITES_DEFAULT_REALM_DAILY_MAX)
             self.assertEqual(get_realm("onpremise").message_visibility_limit, None)
             self.assertEqual(get_realm("onpremise").upload_quota_gb, None)
 

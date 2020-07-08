@@ -16,10 +16,7 @@ def check_pyflakes(files: List[str], options: argparse.Namespace) -> bool:
             "local variable 'message_retention_days' is assigned to but never used",
         ),
         ("settings.py", "settings import *' used; unable to detect undefined names"),
-        (
-            "settings.py",
-            "'from .prod_settings_template import *' used; unable to detect undefined names",
-        ),
+        ("settings.py", "'from .prod_settings_template import *' used; unable to detect undefined names"),
         ("settings.py", "settings.*' imported but unused"),
         ("settings.py", "'.prod_settings_template.*' imported but unused"),
         # Sphinx adds `tags` specially to the environment when running conf.py.

@@ -67,9 +67,7 @@ class RealmDomainTest(ZulipTestCase):
 
         do_change_user_role(mit_user_profile, UserProfile.ROLE_REALM_ADMINISTRATOR)
 
-        result = self.client_post(
-            "/json/realm/domains", info=data, HTTP_HOST=mit_user_profile.realm.host,
-        )
+        result = self.client_post("/json/realm/domains", info=data, HTTP_HOST=mit_user_profile.realm.host)
         self.assert_json_success(result)
 
     def test_patch_realm_domain(self) -> None:

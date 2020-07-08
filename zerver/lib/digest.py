@@ -38,9 +38,7 @@ DIGEST_CUTOFF = 5
 
 def inactive_since(user_profile: UserProfile, cutoff: datetime.datetime) -> bool:
     # Hasn't used the app in the last DIGEST_CUTOFF (5) days.
-    most_recent_visit = [
-        row.last_visit for row in UserActivity.objects.filter(user_profile=user_profile)
-    ]
+    most_recent_visit = [row.last_visit for row in UserActivity.objects.filter(user_profile=user_profile)]
 
     if not most_recent_visit:
         # This person has never used the app.

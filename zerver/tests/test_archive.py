@@ -103,19 +103,13 @@ class WebPublicTopicHistoryTest(ZulipTestCase):
         do_change_stream_web_public(test_stream, True)
 
         self.send_stream_message(
-            self.example_user("iago"),
-            "Test Public Archives",
-            "Test Message 3",
-            topic_name="first_topic",
+            self.example_user("iago"), "Test Public Archives", "Test Message 3", topic_name="first_topic",
         )
         self.send_stream_message(
             self.example_user("iago"), "Test Public Archives", "Test Message", topic_name="TopicGlobal",
         )
         self.send_stream_message(
-            self.example_user("iago"),
-            "Test Public Archives",
-            "Test Message 2",
-            topic_name="topicglobal",
+            self.example_user("iago"), "Test Public Archives", "Test Message 2", topic_name="topicglobal",
         )
         self.send_stream_message(
             self.example_user("iago"),
@@ -124,10 +118,7 @@ class WebPublicTopicHistoryTest(ZulipTestCase):
             topic_name="second_topic",
         )
         self.send_stream_message(
-            self.example_user("iago"),
-            "Test Public Archives",
-            "Test Message 4",
-            topic_name="TopicGlobal",
+            self.example_user("iago"), "Test Public Archives", "Test Message 4", topic_name="TopicGlobal",
         )
 
         result = self.client_get("/archive/streams/" + str(test_stream.id) + "/topics")

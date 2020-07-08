@@ -40,9 +40,7 @@ class Command(ZulipBaseCommand):
         self.add_realm_args(parser)
 
     def handle(self, *args: Any, **options: Any) -> None:
-        if (not options["api_key"] and not options["email"]) or (
-            options["api_key"] and options["email"]
-        ):
+        if (not options["api_key"] and not options["email"]) or (options["api_key"] and options["email"]):
             raise CommandError("Please enter either an email or API key to manage")
 
         realm = self.get_realm(options)
@@ -52,9 +50,7 @@ class Command(ZulipBaseCommand):
             try:
                 user_profile = get_user_profile_by_api_key(options["api_key"])
             except UserProfile.DoesNotExist:
-                raise CommandError(
-                    "Unable to get user profile for api key {}".format(options["api_key"]),
-                )
+                raise CommandError("Unable to get user profile for api key {}".format(options["api_key"]))
 
         users = [user_profile]
         if options["bots"]:

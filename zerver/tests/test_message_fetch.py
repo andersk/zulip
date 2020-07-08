@@ -89,9 +89,7 @@ def mute_stream(realm: Realm, user_profile: str, stream_name: str) -> None:
 
 
 def first_visible_id_as(message_id: int) -> Any:
-    return mock.patch(
-        "zerver.views.message_fetch.get_first_visible_message_id", return_value=message_id,
-    )
+    return mock.patch("zerver.views.message_fetch.get_first_visible_message_id", return_value=message_id)
 
 
 class NarrowBuilderTest(ZulipTestCase):
@@ -336,9 +334,7 @@ class NarrowBuilderTest(ZulipTestCase):
         term = dict(operator="pm-with", operand=" ,,, ,,, ,")
         self.assertRaises(BadNarrowOperator, self._build_query, term)
 
-    def test_add_term_using_pm_with_operator_with_existing_and_non_existing_user_as_operand(
-        self,
-    ) -> None:
+    def test_add_term_using_pm_with_operator_with_existing_and_non_existing_user_as_operand(self) -> None:
         term = dict(operator="pm-with", operand=self.othello_email + ",non-existing@zulip.com")
         self.assertRaises(BadNarrowOperator, self._build_query, term)
 
@@ -511,9 +507,7 @@ class NarrowLibraryTest(ZulipTestCase):
                 [{"operator": "id", "operand": "15"}, {"operator": "has", "operand": "attachment"}],
             ),
         )
-        self.assertTrue(
-            is_web_public_compatible([{"operator": "sender", "operand": "hamlet@zulip.com"}]),
-        )
+        self.assertTrue(is_web_public_compatible([{"operator": "sender", "operand": "hamlet@zulip.com"}]))
         self.assertFalse(
             is_web_public_compatible([{"operator": "pm-with", "operand": "hamlet@zulip.com"}]),
         )
@@ -523,10 +517,7 @@ class NarrowLibraryTest(ZulipTestCase):
         self.assertTrue(is_web_public_compatible([{"operator": "stream", "operand": "Denmark"}]))
         self.assertTrue(
             is_web_public_compatible(
-                [
-                    {"operator": "stream", "operand": "Denmark"},
-                    {"operator": "topic", "operand": "logic"},
-                ],
+                [{"operator": "stream", "operand": "Denmark"}, {"operator": "topic", "operand": "logic"}],
             ),
         )
         self.assertFalse(is_web_public_compatible([{"operator": "is", "operand": "starred"}]))
@@ -1895,8 +1886,7 @@ class GetOldMessagesTest(ZulipTestCase):
         (english_message,) = [m for m in messages if m[TOPIC_NAME] == "english"]
         self.assertEqual(english_message[MATCH_TOPIC], "english")
         self.assertIn(
-            english_message["match_content"],
-            '<p>I want to go to <span class="highlight">日本</span>!</p>',
+            english_message["match_content"], '<p>I want to go to <span class="highlight">日本</span>!</p>',
         )
 
         # Multiple search operands with unicode
@@ -2554,9 +2544,7 @@ class GetOldMessagesTest(ZulipTestCase):
             result = self.client_get("/json/messages", params)
             self.assert_json_error_contains(result, error_msg)
 
-    def exercise_bad_narrow_operand(
-        self, operator: str, operands: Sequence[Any], error_msg: str,
-    ) -> None:
+    def exercise_bad_narrow_operand(self, operator: str, operands: Sequence[Any], error_msg: str) -> None:
         other_params: List[Tuple[str, Any]] = [("anchor", 0), ("num_before", 0), ("num_after", 0)]
         for operand in operands:
             post_params = dict(other_params + [("narrow", ujson.dumps([[operator, operand]]))])
@@ -2945,36 +2933,21 @@ recipient_id = %(recipient_id_3)s AND upper(subject) = upper(%(param_2)s))\
         sql_template = "SELECT anon_1.message_id, anon_1.flags \nFROM (SELECT message_id, flags \nFROM zerver_usermessage JOIN zerver_message ON zerver_usermessage.message_id = zerver_message.id \nWHERE user_profile_id = {hamlet_id} AND (sender_id = {othello_id} AND recipient_id = {hamlet_recipient} OR sender_id = {hamlet_id} AND recipient_id = {othello_recipient}) AND message_id = 0) AS anon_1 ORDER BY message_id ASC"
         sql = sql_template.format(**query_ids)
         self.common_check_get_messages_query(
-            {
-                "anchor": 0,
-                "num_before": 0,
-                "num_after": 0,
-                "narrow": f'[["pm-with", "{othello_email}"]]',
-            },
+            {"anchor": 0, "num_before": 0, "num_after": 0, "narrow": f'[["pm-with", "{othello_email}"]]'},
             sql,
         )
 
         sql_template = "SELECT anon_1.message_id, anon_1.flags \nFROM (SELECT message_id, flags \nFROM zerver_usermessage JOIN zerver_message ON zerver_usermessage.message_id = zerver_message.id \nWHERE user_profile_id = {hamlet_id} AND (sender_id = {othello_id} AND recipient_id = {hamlet_recipient} OR sender_id = {hamlet_id} AND recipient_id = {othello_recipient}) AND message_id = 0) AS anon_1 ORDER BY message_id ASC"
         sql = sql_template.format(**query_ids)
         self.common_check_get_messages_query(
-            {
-                "anchor": 0,
-                "num_before": 1,
-                "num_after": 0,
-                "narrow": f'[["pm-with", "{othello_email}"]]',
-            },
+            {"anchor": 0, "num_before": 1, "num_after": 0, "narrow": f'[["pm-with", "{othello_email}"]]'},
             sql,
         )
 
         sql_template = "SELECT anon_1.message_id, anon_1.flags \nFROM (SELECT message_id, flags \nFROM zerver_usermessage JOIN zerver_message ON zerver_usermessage.message_id = zerver_message.id \nWHERE user_profile_id = {hamlet_id} AND (sender_id = {othello_id} AND recipient_id = {hamlet_recipient} OR sender_id = {hamlet_id} AND recipient_id = {othello_recipient}) ORDER BY message_id ASC \n LIMIT 10) AS anon_1 ORDER BY message_id ASC"
         sql = sql_template.format(**query_ids)
         self.common_check_get_messages_query(
-            {
-                "anchor": 0,
-                "num_before": 0,
-                "num_after": 9,
-                "narrow": f'[["pm-with", "{othello_email}"]]',
-            },
+            {"anchor": 0, "num_before": 0, "num_after": 9, "narrow": f'[["pm-with", "{othello_email}"]]'},
             sql,
         )
 

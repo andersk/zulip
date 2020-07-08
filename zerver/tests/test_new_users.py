@@ -137,11 +137,7 @@ class TestBrowserAndOsUserAgentStrings(ZulipTestCase):
                 "Internet Explorer",
                 "Windows",
             ),
-            (
-                "Mozilla/5.0 (Android; Mobile; rv:27.0) " + "Gecko/27.0 Firefox/27.0",
-                "Firefox",
-                "Android",
-            ),
+            ("Mozilla/5.0 (Android; Mobile; rv:27.0) " + "Gecko/27.0 Firefox/27.0", "Firefox", "Android"),
             (
                 "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) "
                 "AppleWebKit/602.1.50 (KHTML, like Gecko) "

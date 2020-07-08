@@ -121,8 +121,7 @@ templates = {
         "create": "[{user}]({user_link}) created issue {subject}.",
         "set_assigned_to": "[{user}]({user_link}) assigned issue {subject} to {new}.",
         "unset_assigned_to": "[{user}]({user_link}) unassigned issue {subject}.",
-        "changed_assigned_to": "[{user}]({user_link}) reassigned issue {subject}"
-        " from {old} to {new}.",
+        "changed_assigned_to": "[{user}]({user_link}) reassigned issue {subject}" " from {old} to {new}.",
         "set_milestone": "[{user}]({user_link}) added issue {subject} to sprint {new}.",
         "unset_milestone": "[{user}]({user_link}) detached issue {subject} from sprint {old}.",
         "changed_priority": "[{user}]({user_link}) changed priority of issue "

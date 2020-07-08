@@ -286,9 +286,7 @@ def get_page_build_body(payload: Dict[str, Any]) -> str:
     action = actions.get(status, f"is {status}")
     action.format(CONTENT_MESSAGE_TEMPLATE.format(message=build["error"]["message"]))
 
-    return "Github Pages build, triggered by {}, {}.".format(
-        payload["build"]["pusher"]["login"], action,
-    )
+    return "Github Pages build, triggered by {}, {}.".format(payload["build"]["pusher"]["login"], action)
 
 
 def get_status_body(payload: Dict[str, Any]) -> str:

@@ -471,12 +471,8 @@ class ImportExportTest(ZulipTestCase):
         hamlet = self.example_user("hamlet")
         user_ids = {cordelia.id, hamlet.id}
 
-        pm_a_msg_id = self.send_personal_message(
-            self.example_user("AARON"), self.example_user("othello"),
-        )
-        pm_b_msg_id = self.send_personal_message(
-            self.example_user("cordelia"), self.example_user("iago"),
-        )
+        pm_a_msg_id = self.send_personal_message(self.example_user("AARON"), self.example_user("othello"))
+        pm_b_msg_id = self.send_personal_message(self.example_user("cordelia"), self.example_user("iago"))
         pm_c_msg_id = self.send_personal_message(
             self.example_user("hamlet"), self.example_user("othello"),
         )
@@ -550,12 +546,8 @@ class ImportExportTest(ZulipTestCase):
         )
 
         # Create PMs
-        pm_a_msg_id = self.send_personal_message(
-            self.example_user("AARON"), self.example_user("othello"),
-        )
-        pm_b_msg_id = self.send_personal_message(
-            self.example_user("cordelia"), self.example_user("iago"),
-        )
+        pm_a_msg_id = self.send_personal_message(self.example_user("AARON"), self.example_user("othello"))
+        pm_b_msg_id = self.send_personal_message(self.example_user("cordelia"), self.example_user("iago"))
         pm_c_msg_id = self.send_personal_message(
             self.example_user("hamlet"), self.example_user("othello"),
         )
@@ -946,9 +938,7 @@ class ImportExportTest(ZulipTestCase):
         # are replaced correctly with the values of newer realm.
 
         def get_user_mention(r: Realm) -> Set[Any]:
-            mentioned_user = UserProfile.objects.get(
-                delivery_email=self.example_email("hamlet"), realm=r,
-            )
+            mentioned_user = UserProfile.objects.get(delivery_email=self.example_email("hamlet"), realm=r)
             data_user_id = f'data-user-id="{mentioned_user.id}"'
             mention_message = get_stream_messages(r).get(rendered_content__contains=data_user_id)
             return mention_message.content

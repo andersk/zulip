@@ -1468,9 +1468,7 @@ class TestActiveUsersAudit(AnalyticsTestCase):
         self.add_event(RealmAuditLog.USER_CREATED, 2)
         self.add_event(RealmAuditLog.USER_DEACTIVATED, 1)
         process_count_stat(self.stat, self.TIME_ZERO)
-        self.assertTableState(
-            UserCount, ["subgroup", "end_time"], [["false", self.TIME_ZERO - self.DAY]],
-        )
+        self.assertTableState(UserCount, ["subgroup", "end_time"], [["false", self.TIME_ZERO - self.DAY]])
 
     def test_user_deactivated_then_reactivated_with_day_gap(self) -> None:
         self.add_event(RealmAuditLog.USER_DEACTIVATED, 2)

@@ -180,10 +180,7 @@ class FrontHookTests(WebhookTestCase):
         )
 
         self.send_and_test_stream_message(
-            "mention",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "mention", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_comment(self) -> None:
@@ -191,10 +188,7 @@ class FrontHookTests(WebhookTestCase):
         expected_message = "**Bender Rodriguez** left a comment:\n" "```quote\nSure.\n```"
 
         self.send_and_test_stream_message(
-            "comment",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "comment", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     # Conversation manually assigned to another teammate.

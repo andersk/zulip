@@ -191,9 +191,7 @@ class EditMessageTest(ZulipTestCase):
         msg_id = self.send_stream_message(
             self.example_user("hamlet"), "Scotland", topic_name="editing", content="before edit",
         )
-        result = self.client_patch(
-            "/json/messages/" + str(msg_id), {"message_id": msg_id, "topic": " "},
-        )
+        result = self.client_patch("/json/messages/" + str(msg_id), {"message_id": msg_id, "topic": " "})
         self.assert_json_error(result, "Topic can't be empty")
 
     def test_edit_message_no_content(self) -> None:
@@ -1019,8 +1017,7 @@ class EditMessageTest(ZulipTestCase):
             has_message_access(guest_user, Message.objects.get(id=msg_id_to_test_acesss), None), True,
         )
         self.assertEqual(
-            has_message_access(non_guest_user, Message.objects.get(id=msg_id_to_test_acesss), None),
-            True,
+            has_message_access(non_guest_user, Message.objects.get(id=msg_id_to_test_acesss), None), True,
         )
 
         result = self.client_patch(
@@ -1038,8 +1035,7 @@ class EditMessageTest(ZulipTestCase):
             has_message_access(guest_user, Message.objects.get(id=msg_id_to_test_acesss), None), False,
         )
         self.assertEqual(
-            has_message_access(non_guest_user, Message.objects.get(id=msg_id_to_test_acesss), None),
-            True,
+            has_message_access(non_guest_user, Message.objects.get(id=msg_id_to_test_acesss), None), True,
         )
         self.assertEqual(
             UserMessage.objects.filter(

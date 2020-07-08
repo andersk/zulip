@@ -196,9 +196,7 @@ class HomepageForm(forms.Form):
         except DisposableEmailError:
             raise ValidationError(_("Please use your real email address."))
         except EmailContainsPlusError:
-            raise ValidationError(
-                _("Email addresses containing + are not allowed in this organization."),
-            )
+            raise ValidationError(_("Email addresses containing + are not allowed in this organization."))
 
         validate_email_not_already_in_realm(realm, email)
 

@@ -19,9 +19,7 @@ class Migration(migrations.Migration):
             model_name="confirmation", name="date_sent", field=models.DateTimeField(db_index=True),
         ),
         migrations.AlterField(
-            model_name="confirmation",
-            name="object_id",
-            field=models.PositiveIntegerField(db_index=True),
+            model_name="confirmation", name="object_id", field=models.PositiveIntegerField(db_index=True),
         ),
         migrations.AlterField(
             model_name="realmcreationkey",

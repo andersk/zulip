@@ -189,9 +189,7 @@ class MessagePOSTTest(ZulipTestCase):
             short_name="whatever2", full_name="whatever2", user_profile=non_admin_profile,
         )
         self._send_and_verify_message(
-            non_admin_owned_bot,
-            stream_name,
-            "Only organization administrators can send to this stream.",
+            non_admin_owned_bot, stream_name, "Only organization administrators can send to this stream.",
         )
 
         # Bots without owner (except cross realm bot) cannot send to announcement only streams
@@ -685,9 +683,7 @@ class MessagePOSTTest(ZulipTestCase):
             "DNS.dnslookup",
             return_value=[["espuser:*:95494:101:Esp Classroom,,,:/mit/espuser:/bin/athena/bash"]],
         ):
-            result2 = self.api_post(
-                self.mit_user("espuser"), "/api/v1/messages", msg, subdomain="zephyr",
-            )
+            result2 = self.api_post(self.mit_user("espuser"), "/api/v1/messages", msg, subdomain="zephyr")
             self.assert_json_success(result2)
 
         self.assertEqual(ujson.loads(result1.content)["id"], ujson.loads(result2.content)["id"])

@@ -168,9 +168,7 @@ class RateLimiterBackend(ABC):
 
     @classmethod
     @abstractmethod
-    def get_api_calls_left(
-        cls, entity_key: str, range_seconds: int, max_calls: int,
-    ) -> Tuple[int, float]:
+    def get_api_calls_left(cls, entity_key: str, range_seconds: int, max_calls: int) -> Tuple[int, float]:
         pass
 
     @classmethod
@@ -246,9 +244,7 @@ class TornadoInMemoryRateLimiterBackend(RateLimiterBackend):
         return False, 0.0
 
     @classmethod
-    def get_api_calls_left(
-        cls, entity_key: str, range_seconds: int, max_calls: int,
-    ) -> Tuple[int, float]:
+    def get_api_calls_left(cls, entity_key: str, range_seconds: int, max_calls: int) -> Tuple[int, float]:
         now = time.time()
         if (range_seconds, max_calls) in cls.reset_times and entity_key in cls.reset_times[
             (range_seconds, max_calls)
@@ -324,9 +320,7 @@ class RedisRateLimiterBackend(RateLimiterBackend):
             client.delete(key)
 
     @classmethod
-    def get_api_calls_left(
-        cls, entity_key: str, range_seconds: int, max_calls: int,
-    ) -> Tuple[int, float]:
+    def get_api_calls_left(cls, entity_key: str, range_seconds: int, max_calls: int) -> Tuple[int, float]:
         list_key, set_key, _ = cls.get_keys(entity_key)
         # Count the number of values in our sorted set
         # that are between now and the cutoff

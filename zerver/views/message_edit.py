@@ -131,9 +131,7 @@ def update_message_backend(
     if message.sender == user_profile:
         pass
     elif (content is None) and (
-        is_no_topic_msg
-        or user_profile.is_realm_admin
-        or user_profile.realm.allow_community_topic_editing
+        is_no_topic_msg or user_profile.is_realm_admin or user_profile.realm.allow_community_topic_editing
     ):
         pass
     else:

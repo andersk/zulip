@@ -142,9 +142,7 @@ from zerver.tornado.event_queue import (
 )
 
 
-def check_events_dict(
-    required_keys: List[Tuple[str, Validator[object]]],
-) -> Validator[Dict[str, object]]:
+def check_events_dict(required_keys: List[Tuple[str, Validator[object]]]) -> Validator[Dict[str, object]]:
     required_keys.append(("id", check_int))
     keys = [key[0] for key in required_keys]
     assert len(keys) == len(set(keys))
@@ -329,9 +327,7 @@ class NormalActionsTest(BaseAction):
     def create_bot(self, email: str, **extras: Any) -> UserProfile:
         return self.create_test_bot(email, self.user_profile, **extras)
 
-    def realm_bot_schema(
-        self, field_name: str, check: Validator[object],
-    ) -> Validator[Dict[str, object]]:
+    def realm_bot_schema(self, field_name: str, check: Validator[object]) -> Validator[Dict[str, object]]:
         return check_events_dict(
             [
                 ("type", equals("realm_bot")),
@@ -1015,10 +1011,7 @@ class NormalActionsTest(BaseAction):
 
         events = self.verify_action(
             lambda: do_update_user_presence(
-                self.example_user("cordelia"),
-                get_client("website"),
-                timezone_now(),
-                UserPresence.ACTIVE,
+                self.example_user("cordelia"), get_client("website"), timezone_now(), UserPresence.ACTIVE,
             ),
             slim_presence=True,
         )
@@ -1322,9 +1315,7 @@ class NormalActionsTest(BaseAction):
         default_stream_groups_checker("events[0]", events[0])
 
         events = self.verify_action(
-            lambda: do_change_default_stream_group_name(
-                self.user_profile.realm, group, "New Group Name",
-            ),
+            lambda: do_change_default_stream_group_name(self.user_profile.realm, group, "New Group Name"),
         )
         default_stream_groups_checker("events[0]", events[0])
 
@@ -2078,9 +2069,7 @@ class NormalActionsTest(BaseAction):
 
     def test_change_bot_avatar_source(self) -> None:
         bot = self.create_bot("test")
-        action = lambda: do_change_avatar_fields(
-            bot, bot.AVATAR_FROM_USER, acting_user=self.user_profile,
-        )
+        action = lambda: do_change_avatar_fields(bot, bot.AVATAR_FROM_USER, acting_user=self.user_profile)
         events = self.verify_action(action, num_events=2)
         self.realm_bot_schema("avatar_url", check_string)("events[0]", events[0])
         self.assertEqual(events[1]["type"], "realm_user")
@@ -2804,9 +2793,7 @@ class NormalActionsTest(BaseAction):
         failed_schema_checker("events[1]", events[1])
 
     def test_has_zoom_token(self) -> None:
-        schema_checker = check_events_dict(
-            [("type", equals("has_zoom_token")), ("value", equals(True))],
-        )
+        schema_checker = check_events_dict([("type", equals("has_zoom_token")), ("value", equals(True))])
         events = self.verify_action(
             lambda: do_set_zoom_token(self.user_profile, {"access_token": "token"}),
         )
@@ -2979,11 +2966,7 @@ class UserDisplayActionTest(BaseAction):
                     (
                         "person",
                         check_dict_only(
-                            [
-                                ("email", check_string),
-                                ("user_id", check_int),
-                                ("timezone", check_string),
-                            ],
+                            [("email", check_string), ("user_id", check_int), ("timezone", check_string)],
                         ),
                     ),
                 ],

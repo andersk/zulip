@@ -135,9 +135,7 @@ def build_stream_map(
     for data in gitter_data:
         if "room" in data and data["room"] not in stream_map:
             stream.append(
-                build_stream(
-                    timestamp, realm_id, data["room"], f'Gitter room {data["room"]}', stream_id,
-                ),
+                build_stream(timestamp, realm_id, data["room"], f'Gitter room {data["room"]}', stream_id),
             )
             stream_map[data["room"]] = stream_id
             stream_id += 1

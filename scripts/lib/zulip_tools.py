@@ -479,9 +479,7 @@ def is_digest_obsolete(
     return new_hash != old_hash
 
 
-def write_new_digest(
-    hash_name: str, filenames: Sequence[str], extra_strings: Sequence[str] = [],
-) -> None:
+def write_new_digest(hash_name: str, filenames: Sequence[str], extra_strings: Sequence[str] = []) -> None:
     hash_path = os.path.join(get_dev_uuid_var_path(), hash_name)
     new_hash = files_and_string_digest(filenames, extra_strings)
     with open(hash_path, "w") as f:

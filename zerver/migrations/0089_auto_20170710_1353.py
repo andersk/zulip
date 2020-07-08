@@ -10,9 +10,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="userprofile",
-            name="last_active_message_id",
-            field=models.IntegerField(null=True),
+            model_name="userprofile", name="last_active_message_id", field=models.IntegerField(null=True),
         ),
         migrations.AddField(
             model_name="userprofile",

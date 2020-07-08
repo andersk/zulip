@@ -18,9 +18,7 @@ from zerver.models import Realm, UserGroup, UserGroupMembership, get_realm
 
 
 class UserGroupTestCase(ZulipTestCase):
-    def create_user_group_for_test(
-        self, group_name: str, realm: Realm = get_realm("zulip"),
-    ) -> UserGroup:
+    def create_user_group_for_test(self, group_name: str, realm: Realm = get_realm("zulip")) -> UserGroup:
         members = [self.example_user("othello")]
         return create_user_group(group_name, members, realm)
 

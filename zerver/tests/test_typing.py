@@ -143,9 +143,7 @@ class TypingHappyPathTest(ZulipTestCase):
         expected_recipient_ids = {user.id}
         events: List[Mapping[str, Any]] = []
         with tornado_redirected_to_list(events):
-            result = self.api_post(
-                user, "/api/v1/typing", {"to": ujson.dumps([user.id]), "op": "start"},
-            )
+            result = self.api_post(user, "/api/v1/typing", {"to": ujson.dumps([user.id]), "op": "start"})
         self.assert_json_success(result)
         self.assertEqual(len(events), 1)
 

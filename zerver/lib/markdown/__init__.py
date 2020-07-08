@@ -1405,9 +1405,7 @@ class Emoji(markdown.inlinepatterns.Pattern):
         if self.md.zulip_message and name in active_realm_emoji:
             return make_realm_emoji(active_realm_emoji[name]["source_url"], orig_syntax)
         elif name == "zulip":
-            return make_realm_emoji(
-                "/static/generated/emoji/images/emoji/unicode/zulip.png", orig_syntax,
-            )
+            return make_realm_emoji("/static/generated/emoji/images/emoji/unicode/zulip.png", orig_syntax)
         elif name in name_to_codepoint:
             return make_emoji(name_to_codepoint[name], orig_syntax)
         else:
@@ -1961,9 +1959,7 @@ class Markdown(markdown.Markdown):
         # ulist - replaced by ours
         # quote - replaced by ours
         parser = markdown.blockprocessors.BlockParser(self)
-        parser.blockprocessors.register(
-            markdown.blockprocessors.EmptyBlockProcessor(parser), "empty", 95,
-        )
+        parser.blockprocessors.register(markdown.blockprocessors.EmptyBlockProcessor(parser), "empty", 95)
         parser.blockprocessors.register(ListIndentProcessor(parser), "indent", 90)
         if not self.getConfig("code_block_processor_disabled"):
             parser.blockprocessors.register(

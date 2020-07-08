@@ -40,9 +40,7 @@ class Command(ZulipBaseCommand):
             check_config()
 
         if not settings.ZULIP_ORG_ID:
-            raise CommandError(
-                "Missing zulip_org_id; run scripts/setup/generate_secrets.py to generate.",
-            )
+            raise CommandError("Missing zulip_org_id; run scripts/setup/generate_secrets.py to generate.")
         if not settings.ZULIP_ORG_KEY:
             raise CommandError(
                 "Missing zulip_org_key; run scripts/setup/generate_secrets.py to generate.",
@@ -79,9 +77,7 @@ class Command(ZulipBaseCommand):
             )
             tos_prompt = input("Do you agree to the Terms of Service? [Y/n] ")
             print("")
-            if not (
-                tos_prompt.lower() == "y" or tos_prompt.lower() == "" or tos_prompt.lower() == "yes"
-            ):
+            if not (tos_prompt.lower() == "y" or tos_prompt.lower() == "" or tos_prompt.lower() == "yes"):
                 raise CommandError("Aborting, since Terms of Service have not been accepted.")
 
         registration_url = settings.PUSH_NOTIFICATION_BOUNCER_URL + "/api/v1/remotes/server/register"

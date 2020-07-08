@@ -22,9 +22,7 @@ def api_helloworld_webhook(
     body = "Hello! I am happy to be here! :smile:"
 
     # try to add the Wikipedia article of the day
-    body_template = (
-        "\nThe Wikipedia featured article for today is **[{featured_title}]({featured_url})**"
-    )
+    body_template = "\nThe Wikipedia featured article for today is **[{featured_title}]({featured_url})**"
     body += body_template.format(**payload)
 
     topic = "Hello World"

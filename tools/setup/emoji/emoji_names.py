@@ -1147,10 +1147,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     "1f511": {"canonical_name": "key", "aliases": []},
     # encrypted from https://www.iemoji.com/view/emoji/1081/objects/old-key,
     # secret from https://mashable.com/2015/10/23/ios-9-1-emoji-guide/
-    "1f5dd": {
-        "canonical_name": "secret",
-        "aliases": ["dungeon", "old_key", "encrypted", "clue", "hint"],
-    },
+    "1f5dd": {"canonical_name": "secret", "aliases": ["dungeon", "old_key", "encrypted", "clue", "hint"]},
     "1f6aa": {"canonical_name": "door", "aliases": []},
     "1f6cb": {"canonical_name": "living_room", "aliases": ["furniture", "couch_and_lamp", "lifestyles"]},
     "1f6cf": {"canonical_name": "bed", "aliases": ["bedroom"]},

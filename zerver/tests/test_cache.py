@@ -221,16 +221,14 @@ class SafeCacheFunctionsTest(ZulipTestCase):
             safe_cache_set_many(items)
             mock_warn.assert_called_once()
             self.assertEqual(
-                mock_warn.call_args[0][1],
-                ["SafeFunctionsTest:\nbadkey1", "SafeFunctionsTest:\nbadkey2"],
+                mock_warn.call_args[0][1], ["SafeFunctionsTest:\nbadkey1", "SafeFunctionsTest:\nbadkey2"],
             )
 
         with patch("zerver.lib.cache.logger.warning") as mock_warn:
             result = safe_cache_get_many(list(items.keys()))
             mock_warn.assert_called_once()
             self.assertEqual(
-                mock_warn.call_args[0][1],
-                ["SafeFunctionsTest:\nbadkey1", "SafeFunctionsTest:\nbadkey2"],
+                mock_warn.call_args[0][1], ["SafeFunctionsTest:\nbadkey1", "SafeFunctionsTest:\nbadkey2"],
             )
 
             self.assertEqual(result, {})
@@ -244,16 +242,14 @@ class SafeCacheFunctionsTest(ZulipTestCase):
             safe_cache_set_many(items)
             mock_warn.assert_called_once()
             self.assertEqual(
-                mock_warn.call_args[0][1],
-                ["SafeFunctionsTest:\nbadkey1", "SafeFunctionsTest:\nbadkey2"],
+                mock_warn.call_args[0][1], ["SafeFunctionsTest:\nbadkey1", "SafeFunctionsTest:\nbadkey2"],
             )
 
         with patch("zerver.lib.cache.logger.warning") as mock_warn:
             result = safe_cache_get_many(list(items.keys()))
             mock_warn.assert_called_once()
             self.assertEqual(
-                mock_warn.call_args[0][1],
-                ["SafeFunctionsTest:\nbadkey1", "SafeFunctionsTest:\nbadkey2"],
+                mock_warn.call_args[0][1], ["SafeFunctionsTest:\nbadkey1", "SafeFunctionsTest:\nbadkey2"],
             )
 
             self.assertEqual(result, good_items)

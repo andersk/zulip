@@ -35,9 +35,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "user_group",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="zerver.UserGroup",
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.UserGroup"),
                 ),
                 (
                     "user_profile",

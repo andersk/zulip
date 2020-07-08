@@ -19,10 +19,7 @@ from zerver.worker.queue_processors import FetchLinksEmbedData
 TEST_CACHES = {
     "default": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache", "LOCATION": "default"},
     "database": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache", "LOCATION": "url-preview"},
-    "in-memory": {
-        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
-        "LOCATION": "url-preview",
-    },
+    "in-memory": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache", "LOCATION": "url-preview"},
 }
 
 
@@ -326,9 +323,7 @@ class PreviewTestCase(ZulipTestCase):
         self.assertNotIn(f'<a href="{url}" title="The Rock">The Rock</a>', msg.rendered_content)
 
         # Mock the network request result so the test can be fast without Internet
-        mocked_response = mock.Mock(
-            side_effect=self.create_mock_response(url, relative_url=relative_url),
-        )
+        mocked_response = mock.Mock(side_effect=self.create_mock_response(url, relative_url=relative_url))
 
         # Run the queue processor to potentially rerender things
         with self.settings(TEST_SUITE=False, CACHES=TEST_CACHES):
@@ -643,9 +638,7 @@ class PreviewTestCase(ZulipTestCase):
         # FIXME: Should we really cache this, especially without cache invalidation?
         self.assertIsNone(cached_data)
         msg.refresh_from_db()
-        self.assertEqual(
-            '<p><a href="http://test.org/x">http://test.org/x</a></p>', msg.rendered_content,
-        )
+        self.assertEqual('<p><a href="http://test.org/x">http://test.org/x</a></p>', msg.rendered_content)
 
     @override_settings(INLINE_URL_EMBED_PREVIEW=True)
     def test_safe_oembed_html_url(self) -> None:
@@ -672,8 +665,7 @@ class PreviewTestCase(ZulipTestCase):
         with self.settings(TEST_SUITE=False, CACHES=TEST_CACHES):
             with mock.patch("requests.get", mocked_response):
                 with mock.patch(
-                    "zerver.lib.url_preview.preview.get_oembed_data",
-                    lambda *args, **kwargs: mocked_data,
+                    "zerver.lib.url_preview.preview.get_oembed_data", lambda *args, **kwargs: mocked_data,
                 ):
                     FetchLinksEmbedData().consume(event)
                     data = link_embed_data_from_cache(url)

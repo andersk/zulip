@@ -357,9 +357,7 @@ def access_stream_for_unmute_topic_by_name(
     return stream
 
 
-def access_stream_for_unmute_topic_by_id(
-    user_profile: UserProfile, stream_id: int, error: str,
-) -> Stream:
+def access_stream_for_unmute_topic_by_id(user_profile: UserProfile, stream_id: int, error: str) -> Stream:
     try:
         stream = Stream.objects.get(id=stream_id, realm_id=user_profile.realm_id)
     except Stream.DoesNotExist:

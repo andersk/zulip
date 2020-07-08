@@ -136,9 +136,7 @@ Traceback:
 **timestamp:** 2020-04-28 13:56:05
 **assignee:** No one
 ```"""
-        self.send_and_test_stream_message(
-            "issue_created_for_exception", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("issue_created_for_exception", expected_topic, expected_message)
 
     def test_issue_created_for_message(self) -> None:
         expected_topic = "A simple message-based issue."

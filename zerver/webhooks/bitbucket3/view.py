@@ -35,9 +35,7 @@ PULL_REQUEST_REASSIGNED_TEMPLATE = "{user_name} reassigned [PR #{number}]({url})
 PULL_REQUEST_REASSIGNED_TEMPLATE_WITH_TITLE = """
 {user_name} reassigned [PR #{number} {title}]({url}) to {assignees}.
 """.strip()
-PULL_REQUEST_REASSIGNED_TO_NONE_TEMPLATE = (
-    "{user_name} removed all reviewers from [PR #{number}]({url})."
-)
+PULL_REQUEST_REASSIGNED_TO_NONE_TEMPLATE = "{user_name} removed all reviewers from [PR #{number}]({url})."
 PULL_REQUEST_REASSIGNED_TO_NONE_TEMPLATE_WITH_TITLE = """
 {user_name} removed all reviewers from [PR #{number} {title}]({url})
 """.strip()
@@ -295,13 +293,9 @@ def get_pr_reassigned_body(payload: Dict[str, Any], include_title: Optional[bool
     )
 
 
-def pr_handler(
-    payload: Dict[str, Any], action: str, include_title: bool = False,
-) -> List[Dict[str, str]]:
+def pr_handler(payload: Dict[str, Any], action: str, include_title: bool = False) -> List[Dict[str, str]]:
     pr = payload["pullRequest"]
-    subject = get_pr_subject(
-        pr["toRef"]["repository"]["name"], type="PR", id=pr["id"], title=pr["title"],
-    )
+    subject = get_pr_subject(pr["toRef"]["repository"]["name"], type="PR", id=pr["id"], title=pr["title"])
     if action in ["opened", "modified"]:
         body = get_pr_opened_or_modified_body(payload, action, include_title)
     elif action == "needs_work":
@@ -318,9 +312,7 @@ def pr_comment_handler(
     payload: Dict[str, Any], action: str, include_title: bool = False,
 ) -> List[Dict[str, str]]:
     pr = payload["pullRequest"]
-    subject = get_pr_subject(
-        pr["toRef"]["repository"]["name"], type="PR", id=pr["id"], title=pr["title"],
-    )
+    subject = get_pr_subject(pr["toRef"]["repository"]["name"], type="PR", id=pr["id"], title=pr["title"])
     message = payload["comment"]["text"]
     if action == "deleted their comment on":
         message = f"~~{message}~~"

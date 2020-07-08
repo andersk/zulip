@@ -96,9 +96,7 @@ class Bitbucket2HookTests(WebhookTestCase):
 
     def test_bitbucket2_on_commit_comment_created_event(self) -> None:
         expected_message = "kolaszek [commented](https://bitbucket.org/kolaszek/repository-name/commits/32c4ea19aa3af10acd08e419e2c354941a365d74#comment-3354963) on [32c4ea1](https://bitbucket.org/kolaszek/repository-name/commits/32c4ea19aa3af10acd08e419e2c354941a365d74):\n~~~ quote\nNice fix!\n~~~"
-        self.send_and_test_stream_message(
-            "commit_comment_created", self.EXPECTED_TOPIC, expected_message,
-        )
+        self.send_and_test_stream_message("commit_comment_created", self.EXPECTED_TOPIC, expected_message)
 
     def test_bitbucket2_on_commit_status_changed_event(self) -> None:
         expected_message = "[System mybuildtool](https://my-build-tool.com/builds/MY-PROJECT/BUILD-777) changed status of [9fec847](https://bitbucket.org/kolaszek/repository-name/commits/9fec847784abb10b2fa567ee63b85bd238955d0e) to SUCCESSFUL."
@@ -203,7 +201,9 @@ class Bitbucket2HookTests(WebhookTestCase):
         )
 
     def test_bitbucket2_on_pull_request_unapproved_event(self) -> None:
-        expected_message = "kolaszek unapproved [PR #1](https://bitbucket.org/kolaszek/repository-name/pull-requests/1)."
+        expected_message = (
+            "kolaszek unapproved [PR #1](https://bitbucket.org/kolaszek/repository-name/pull-requests/1)."
+        )
         kwargs = {
             "HTTP_X_EVENT_KEY": "pullrequest:unapproved",
         }
@@ -304,9 +304,7 @@ class Bitbucket2HookTests(WebhookTestCase):
         kwargs = {
             "HTTP_X_EVENT_KEY": "pullrequest:push",
         }
-        self.send_and_test_stream_message(
-            "push_one_tag", self.EXPECTED_TOPIC, expected_message, **kwargs,
-        )
+        self.send_and_test_stream_message("push_one_tag", self.EXPECTED_TOPIC, expected_message, **kwargs)
 
     def test_bitbucket2_on_push_remove_tag_event(self) -> None:
         expected_message = (
@@ -345,8 +343,7 @@ class Bitbucket2HookTests(WebhookTestCase):
         self.do_test_topic(msg, self.EXPECTED_TOPIC_BRANCH_EVENTS)
         msg = self.get_last_message()
         self.do_test_message(
-            msg,
-            "kolaszek pushed tag [a](https://bitbucket.org/kolaszek/repository-name/commits/tag/a).",
+            msg, "kolaszek pushed tag [a](https://bitbucket.org/kolaszek/repository-name/commits/tag/a).",
         )
         self.do_test_topic(msg, self.EXPECTED_TOPIC)
 
@@ -364,8 +361,7 @@ class Bitbucket2HookTests(WebhookTestCase):
         self.do_test_topic(msg, self.EXPECTED_TOPIC_BRANCH_EVENTS)
         msg = self.get_last_message()
         self.do_test_message(
-            msg,
-            "kolaszek pushed tag [a](https://bitbucket.org/kolaszek/repository-name/commits/tag/a).",
+            msg, "kolaszek pushed tag [a](https://bitbucket.org/kolaszek/repository-name/commits/tag/a).",
         )
         self.do_test_topic(msg, self.EXPECTED_TOPIC)
 

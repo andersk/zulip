@@ -194,11 +194,7 @@ class Command(BaseCommand):
         )
 
         parser.add_argument(
-            "--huddles",
-            dest="num_huddles",
-            type=int,
-            default=3,
-            help="The number of huddles to create.",
+            "--huddles", dest="num_huddles", type=int, default=3, help="The number of huddles to create.",
         )
 
         parser.add_argument(
@@ -434,10 +430,7 @@ class Command(BaseCommand):
             # will (in some cases) send the notification as a PM to the
             # owner of the webhook bot, so bot_owner can't be None
             create_users(
-                zulip_realm,
-                zulip_webhook_bots,
-                bot_type=UserProfile.INCOMING_WEBHOOK_BOT,
-                bot_owner=zoe,
+                zulip_realm, zulip_webhook_bots, bot_type=UserProfile.INCOMING_WEBHOOK_BOT, bot_owner=zoe,
             )
             aaron = get_user_by_delivery_email("AARON@zulip.com", zulip_realm)
 
@@ -738,9 +731,7 @@ class Command(BaseCommand):
                     .annotate(pointer=Max("message_id")),
                 )
                 for user in users:
-                    UserProfile.objects.filter(id=user["user_profile_id"]).update(
-                        pointer=user["pointer"],
-                    )
+                    UserProfile.objects.filter(id=user["user_profile_id"]).update(pointer=user["pointer"])
 
             create_user_groups()
 
@@ -755,9 +746,7 @@ class Command(BaseCommand):
             count = options["num_messages"] // threads
             if i < options["num_messages"] % threads:
                 count += 1
-            jobs.append(
-                (count, personals_pairs, options, self.stdout.write, random.randint(0, 10 ** 10)),
-            )
+            jobs.append((count, personals_pairs, options, self.stdout.write, random.randint(0, 10 ** 10)))
 
         for job in jobs:
             generate_and_send_messages(job)
@@ -808,9 +797,7 @@ def generate_and_send_messages(
     random.shuffle(dialog)
     texts = itertools.cycle(dialog)
 
-    recipient_streams: List[int] = [
-        klass.id for klass in Recipient.objects.filter(type=Recipient.STREAM)
-    ]
+    recipient_streams: List[int] = [klass.id for klass in Recipient.objects.filter(type=Recipient.STREAM)]
     recipient_huddles: List[int] = [h.id for h in Recipient.objects.filter(type=Recipient.HUDDLE)]
 
     huddle_members: Dict[int, List[int]] = {}

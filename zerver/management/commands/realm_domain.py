@@ -15,11 +15,7 @@ class Command(ZulipBaseCommand):
 
     def add_arguments(self, parser: ArgumentParser) -> None:
         parser.add_argument(
-            "--op",
-            dest="op",
-            type=str,
-            default="show",
-            help="What operation to do (add, show, remove).",
+            "--op", dest="op", type=str, default="show", help="What operation to do (add, show, remove).",
         )
         parser.add_argument(
             "--allow-subdomains",

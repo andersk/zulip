@@ -254,9 +254,7 @@ class Realm(models.Model):
 
     USER_GROUP_EDIT_POLICY_MEMBERS = 1
     USER_GROUP_EDIT_POLICY_ADMINS = 2
-    user_group_edit_policy: int = models.PositiveSmallIntegerField(
-        default=USER_GROUP_EDIT_POLICY_MEMBERS,
-    )
+    user_group_edit_policy: int = models.PositiveSmallIntegerField(default=USER_GROUP_EDIT_POLICY_MEMBERS)
     USER_GROUP_EDIT_POLICY_TYPES = [
         USER_GROUP_EDIT_POLICY_MEMBERS,
         USER_GROUP_EDIT_POLICY_ADMINS,
@@ -1254,8 +1252,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     @property
     def is_realm_admin(self) -> bool:
         return (
-            self.role == UserProfile.ROLE_REALM_ADMINISTRATOR
-            or self.role == UserProfile.ROLE_REALM_OWNER
+            self.role == UserProfile.ROLE_REALM_ADMINISTRATOR or self.role == UserProfile.ROLE_REALM_OWNER
         )
 
     @is_realm_admin.setter
@@ -1473,9 +1470,7 @@ def filter_to_valid_prereg_users(query: QuerySet) -> QuerySet:
     active_value = confirmation_settings.STATUS_ACTIVE
     revoked_value = confirmation_settings.STATUS_REVOKED
     lowest_datetime = timezone_now() - datetime.timedelta(days=days_to_activate)
-    return query.exclude(status__in=[active_value, revoked_value]).filter(
-        invited_at__gte=lowest_datetime,
-    )
+    return query.exclude(status__in=[active_value, revoked_value]).filter(invited_at__gte=lowest_datetime)
 
 
 class MultiuseInvite(models.Model):
@@ -2209,9 +2204,7 @@ class UserMessage(AbstractUserMessage):
 
 def get_usermessage_by_message_id(user_profile: UserProfile, message_id: int) -> Optional[UserMessage]:
     try:
-        return UserMessage.objects.select_related().get(
-            user_profile=user_profile, message__id=message_id,
-        )
+        return UserMessage.objects.select_related().get(user_profile=user_profile, message__id=message_id)
     except UserMessage.DoesNotExist:
         return None
 

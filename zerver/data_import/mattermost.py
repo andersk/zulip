@@ -559,9 +559,7 @@ def write_message_data(
         post_types = ["channel_post", "direct_post"]
     else:
         post_types = ["channel_post"]
-        logging.warning(
-            "Skipping importing huddles and PMs since there are multiple teams in the export",
-        )
+        logging.warning("Skipping importing huddles and PMs since there are multiple teams in the export")
 
     for post_type in post_types:
         process_posts(

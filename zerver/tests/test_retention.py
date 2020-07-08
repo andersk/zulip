@@ -74,9 +74,7 @@ class RetentionTestingBase(ZulipTestCase):
         )
 
         self.assertEqual(
-            set(
-                UserMessage.objects.filter(id__in=expected_usermessage_ids).values_list("id", flat=True),
-            ),
+            set(UserMessage.objects.filter(id__in=expected_usermessage_ids).values_list("id", flat=True)),
             set(expected_usermessage_ids),
         )
 
@@ -410,9 +408,7 @@ class TestArchiveMessagesGeneral(ArchiveMessagesTestingBase):
         )
 
     def test_restoring_and_rearchiving(self) -> None:
-        expired_msg_ids = self._make_mit_messages(
-            7, timezone_now() - timedelta(days=MIT_REALM_DAYS + 1),
-        )
+        expired_msg_ids = self._make_mit_messages(7, timezone_now() - timedelta(days=MIT_REALM_DAYS + 1))
         expired_usermsg_ids = self._get_usermessage_ids(expired_msg_ids)
 
         archive_messages(chunk_size=4)
@@ -830,9 +826,7 @@ class TestCleaningArchive(ArchiveMessagesTestingBase):
         self.assertEqual(remaining_transactions[0].id, transactions[-1].id)
         # And corresponding ArchivedMessages should have been deleted:
         self.assertFalse(ArchivedMessage.objects.filter(id__in=message_ids_to_clean).exists())
-        self.assertFalse(
-            ArchivedUserMessage.objects.filter(message_id__in=message_ids_to_clean).exists(),
-        )
+        self.assertFalse(ArchivedUserMessage.objects.filter(message_id__in=message_ids_to_clean).exists())
 
         for message in ArchivedMessage.objects.all():
             self.assertEqual(message.archive_transaction_id, remaining_transactions[0].id)
@@ -945,13 +939,9 @@ class TestRestoreStreamMessages(ArchiveMessagesTestingBase):
         message_ids_to_archive_by_policy = [
             self.send_stream_message(hamlet, stream_name, str(i)) for i in range(0, 2)
         ]
-        usermessage_ids_to_archive_by_policy = self._get_usermessage_ids(
-            message_ids_to_archive_by_policy,
-        )
+        usermessage_ids_to_archive_by_policy = self._get_usermessage_ids(message_ids_to_archive_by_policy)
 
-        expected_archived_message_ids = (
-            message_ids_to_archive_manually + message_ids_to_archive_by_policy
-        )
+        expected_archived_message_ids = message_ids_to_archive_manually + message_ids_to_archive_by_policy
         expected_archived_usermessage_ids = (
             usermessage_ids_to_archive_manually + usermessage_ids_to_archive_by_policy
         )

@@ -249,9 +249,7 @@ class GithubWebhookTest(WebhookTestCase):
 
     def test_repository_msg(self) -> None:
         expected_message = "baxterthehacker created the repository [baxterandthehackers/public-repo](https://github.com/baxterandthehackers/public-repo)."
-        self.send_and_test_stream_message(
-            "repository", self.EXPECTED_TOPIC_REPO_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("repository", self.EXPECTED_TOPIC_REPO_EVENTS, expected_message)
 
     def test_team_add_msg(self) -> None:
         expected_message = "The repository [baxterandthehackers/public-repo](https://github.com/baxterandthehackers/public-repo) was added to team github."
@@ -263,9 +261,7 @@ class GithubWebhookTest(WebhookTestCase):
 
     def test_page_build_msg(self) -> None:
         expected_message = "Github Pages build, triggered by baxterthehacker, has finished building."
-        self.send_and_test_stream_message(
-            "page_build", self.EXPECTED_TOPIC_REPO_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("page_build", self.EXPECTED_TOPIC_REPO_EVENTS, expected_message)
 
     def test_status_msg(self) -> None:
         expected_message = "[9049f12](https://github.com/baxterthehacker/public-repo/commit/9049f1265b7d61be4a8904a9a27120d2064dab3b) changed its status to success."
@@ -299,9 +295,7 @@ class GithubWebhookTest(WebhookTestCase):
         self.url = self.build_webhook_url(topic="notifications")
         expected_topic = "notifications"
         expected_message = "baxterthehacker created [PR Review Comment on #1 Update the README with new information](https://github.com/baxterthehacker/public-repo/pull/1#discussion_r29724692):\n\n~~~ quote\nMaybe you should use more emojji on this line.\n~~~"
-        self.send_and_test_stream_message(
-            "pull_request_review_comment", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request_review_comment", expected_topic, expected_message)
 
     def test_push_tag_msg(self) -> None:
         expected_message = "baxterthehacker pushed tag abc."
@@ -403,9 +397,7 @@ A temporary team so that I can get some webhook fixtures!
     def test_team_edited_privacy(self) -> None:
         expected_topic = "team Testing Team"
         expected_message = """Team visibility changed to `secret`"""
-        self.send_and_test_stream_message(
-            "team__edited_privacy_secret", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("team__edited_privacy_secret", expected_topic, expected_message)
 
     @patch("zerver.webhooks.github.view.check_send_webhook_message")
     def test_check_run_in_progress_ignore(self, check_send_webhook_message_mock: MagicMock) -> None:

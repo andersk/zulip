@@ -114,9 +114,7 @@ def generate_and_save_stripe_fixture(
         # Note that mock is not the same as mocked_function, even though their
         # definitions look the same
         mock = operator.attrgetter(mocked_function_name)(sys.modules[__name__])
-        fixture_path = stripe_fixture_path(
-            decorated_function_name, mocked_function_name, mock.call_count,
-        )
+        fixture_path = stripe_fixture_path(decorated_function_name, mocked_function_name, mock.call_count)
         try:
             with responses.RequestsMock() as request_mock:
                 request_mock.add_passthru("https://api.stripe.com")
@@ -143,17 +141,13 @@ def read_stripe_fixture(
 ) -> Callable[[Any, Any], Any]:
     def _read_stripe_fixture(*args: Any, **kwargs: Any) -> Any:
         mock = operator.attrgetter(mocked_function_name)(sys.modules[__name__])
-        fixture_path = stripe_fixture_path(
-            decorated_function_name, mocked_function_name, mock.call_count,
-        )
+        fixture_path = stripe_fixture_path(decorated_function_name, mocked_function_name, mock.call_count)
         fixture = ujson.load(open(fixture_path))
         # Check for StripeError fixtures
         if "json_body" in fixture:
             requestor = stripe.api_requestor.APIRequestor()
             # This function will raise the relevant StripeError according to the fixture
-            requestor.interpret_response(
-                fixture["http_body"], fixture["http_status"], fixture["headers"],
-            )
+            requestor.interpret_response(fixture["http_body"], fixture["http_status"], fixture["headers"])
         return stripe.util.convert_to_stripe_object(fixture)
 
     return _read_stripe_fixture
@@ -1185,8 +1179,7 @@ class StripeTest(StripeTestCase):
             .order_by("id"),
         )
         self.assertEqual(
-            audit_log_entries,
-            [RealmAuditLog.STRIPE_CUSTOMER_CREATED, RealmAuditLog.STRIPE_CARD_CHANGED],
+            audit_log_entries, [RealmAuditLog.STRIPE_CUSTOMER_CREATED, RealmAuditLog.STRIPE_CARD_CHANGED],
         )
         # Check that we did not update Realm
         realm = get_realm("zulip")
@@ -2453,9 +2446,7 @@ class LicenseLedgerTest(StripeTestCase):
             update_license_ledger_for_automanaged_plan(realm, plan, self.now)
         # Increase, but after renewal date, and below last year's high watermark
         with patch("corporate.lib.stripe.get_latest_seat_count", return_value=22):
-            update_license_ledger_for_automanaged_plan(
-                realm, plan, self.next_year + timedelta(seconds=1),
-            )
+            update_license_ledger_for_automanaged_plan(realm, plan, self.next_year + timedelta(seconds=1))
 
         ledger_entries = list(
             LicenseLedger.objects.values_list(

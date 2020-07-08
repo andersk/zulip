@@ -211,9 +211,7 @@ class TestSendWebhookFixtureMessage(ZulipTestCase):
         self.url = "/some/url/with/hook"
 
     @patch("zerver.management.commands.send_webhook_fixture_message.Command.print_help")
-    def test_check_if_command_exits_when_fixture_param_is_empty(
-        self, print_help_mock: MagicMock,
-    ) -> None:
+    def test_check_if_command_exits_when_fixture_param_is_empty(self, print_help_mock: MagicMock) -> None:
         with self.assertRaises(CommandError):
             call_command(self.COMMAND_NAME, url=self.url)
 

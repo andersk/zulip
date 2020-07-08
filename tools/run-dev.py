@@ -43,10 +43,7 @@ parser = argparse.ArgumentParser(description=DESCRIPTION, formatter_class=argpar
 parser.add_argument("--test", action="store_true", help="Use the testing database and ports")
 parser.add_argument("--minify", action="store_true", help="Minifies assets for testing in dev")
 parser.add_argument(
-    "--interface",
-    action="store",
-    default=None,
-    help="Set the IP or hostname for the proxy to listen on",
+    "--interface", action="store", default=None, help="Set the IP or hostname for the proxy to listen on",
 )
 parser.add_argument(
     "--no-clear-memcached",

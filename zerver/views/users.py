@@ -268,9 +268,7 @@ def patch_bot_backend(
         if default_events_register_stream == "":
             stream = None
         else:
-            (stream, recipient, sub) = access_stream_by_name(
-                user_profile, default_events_register_stream,
-            )
+            (stream, recipient, sub) = access_stream_by_name(user_profile, default_events_register_stream)
         do_change_default_events_register_stream(bot, stream)
     if default_all_public_streams is not None:
         do_change_default_all_public_streams(bot, default_all_public_streams)
@@ -453,9 +451,7 @@ def add_bot_backend(
 @require_member_or_admin
 def get_bots_backend(request: HttpRequest, user_profile: UserProfile) -> HttpResponse:
     bot_profiles = UserProfile.objects.filter(is_bot=True, is_active=True, bot_owner=user_profile)
-    bot_profiles = bot_profiles.select_related(
-        "default_sending_stream", "default_events_register_stream",
-    )
+    bot_profiles = bot_profiles.select_related("default_sending_stream", "default_events_register_stream")
     bot_profiles = bot_profiles.order_by("date_joined")
 
     def bot_info(bot_profile: UserProfile) -> Dict[str, Any]:

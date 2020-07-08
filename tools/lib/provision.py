@@ -312,9 +312,7 @@ def install_yum_deps(deps_to_install: List[str]) -> None:
         # Our tooling expects these postgres scripts to be at
         # well-known paths.  There's an argument for eventually
         # making our tooling auto-detect, but this is simpler.
-        run_as_root(
-            ["ln", "-nsf", "/usr/{}/bin/{}".format(postgres_dir, cmd), "/usr/bin/{}".format(cmd)],
-        )
+        run_as_root(["ln", "-nsf", "/usr/{}/bin/{}".format(postgres_dir, cmd), "/usr/bin/{}".format(cmd)])
 
     # From here, we do the first-time setup/initialization for the postgres database.
     pg_datadir = "/var/lib/pgsql/{}/data".format(POSTGRES_VERSION)

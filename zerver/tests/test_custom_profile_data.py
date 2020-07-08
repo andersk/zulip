@@ -219,17 +219,12 @@ class CreateCustomProfileFieldTest(CustomProfileFieldTestCase):
         self.assert_json_error(result, "Malformed URL pattern.")
 
         data["field_data"] = ujson.dumps(
-            {
-                "subtype": "custom",
-                "url_pattern": "https://www.reddit.com/%(username)s/user/%(username)s",
-            },
+            {"subtype": "custom", "url_pattern": "https://www.reddit.com/%(username)s/user/%(username)s"},
         )
         result = self.client_post("/json/realm/profile_fields", info=data)
         self.assert_json_error(result, "Malformed URL pattern.")
 
-        data["field_data"] = ujson.dumps(
-            {"subtype": "custom", "url_pattern": "reddit.com/%(username)s"},
-        )
+        data["field_data"] = ujson.dumps({"subtype": "custom", "url_pattern": "reddit.com/%(username)s"})
         result = self.client_post("/json/realm/profile_fields", info=data)
         self.assert_json_error(result, 'field_data["url_pattern"] is not a URL')
 

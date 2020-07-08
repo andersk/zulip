@@ -40,18 +40,12 @@ class EmailChangeTestCase(ZulipTestCase):
         new_email = "hamlet-new@zulip.com"
         self.login("hamlet")
         obj = EmailChangeStatus.objects.create(
-            new_email=new_email,
-            old_email=old_email,
-            user_profile=user_profile,
-            realm=user_profile.realm,
+            new_email=new_email, old_email=old_email, user_profile=user_profile, realm=user_profile.realm,
         )
         key = generate_key()
         date_sent = now() - datetime.timedelta(days=2)
         Confirmation.objects.create(
-            content_object=obj,
-            date_sent=date_sent,
-            confirmation_key=key,
-            type=Confirmation.EMAIL_CHANGE,
+            content_object=obj, date_sent=date_sent, confirmation_key=key, type=Confirmation.EMAIL_CHANGE,
         )
         url = confirmation_url(key, user_profile.realm, Confirmation.EMAIL_CHANGE)
         response = self.client_get(url)
@@ -70,10 +64,7 @@ class EmailChangeTestCase(ZulipTestCase):
         new_realm = get_realm("zulip")
         self.login("hamlet")
         obj = EmailChangeStatus.objects.create(
-            new_email=new_email,
-            old_email=old_email,
-            user_profile=user_profile,
-            realm=user_profile.realm,
+            new_email=new_email, old_email=old_email, user_profile=user_profile, realm=user_profile.realm,
         )
         key = generate_key()
         Confirmation.objects.create(
@@ -83,9 +74,7 @@ class EmailChangeTestCase(ZulipTestCase):
         response = self.client_get(url)
 
         self.assertEqual(response.status_code, 200)
-        self.assert_in_success_response(
-            ["This confirms that the email address for your Zulip"], response,
-        )
+        self.assert_in_success_response(["This confirms that the email address for your Zulip"], response)
         user_profile = get_user_by_delivery_email(new_email, new_realm)
         self.assertTrue(bool(user_profile))
         obj.refresh_from_db()
@@ -202,10 +191,7 @@ class EmailChangeTestCase(ZulipTestCase):
         old_email = user_profile.delivery_email
         new_email = "hamlet-new@zulip.com"
         obj = EmailChangeStatus.objects.create(
-            new_email=new_email,
-            old_email=old_email,
-            user_profile=user_profile,
-            realm=user_profile.realm,
+            new_email=new_email, old_email=old_email, user_profile=user_profile, realm=user_profile.realm,
         )
         key = generate_key()
         Confirmation.objects.create(
@@ -215,9 +201,7 @@ class EmailChangeTestCase(ZulipTestCase):
         response = self.client_get(url)
 
         self.assertEqual(response.status_code, 200)
-        self.assert_in_success_response(
-            ["This confirms that the email address for your Zulip"], response,
-        )
+        self.assert_in_success_response(["This confirms that the email address for your Zulip"], response)
         user_profile = get_user_profile_by_id(user_profile.id)
         self.assertEqual(user_profile.delivery_email, new_email)
         self.assertEqual(user_profile.email, f"user{user_profile.id}@zulip.testserver")

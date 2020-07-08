@@ -351,9 +351,7 @@ def accounts_register(request: HttpRequest) -> HttpResponse:
                 return_data=return_data,
             )
             if user_profile is None:
-                can_use_different_backend = email_auth_enabled(realm) or any_social_backend_enabled(
-                    realm,
-                )
+                can_use_different_backend = email_auth_enabled(realm) or any_social_backend_enabled(realm)
                 if settings.LDAP_APPEND_DOMAIN:
                     # In LDAP_APPEND_DOMAIN configurations, we don't allow making a non-ldap account
                     # if the email matches the ldap domain.
@@ -435,9 +433,7 @@ def accounts_register(request: HttpRequest) -> HttpResponse:
         if return_data.get("invalid_subdomain"):
             # By construction, this should never happen.
             logging.error(
-                "Subdomain mismatch in registration %s: %s",
-                realm.subdomain,
-                user_profile.delivery_email,
+                "Subdomain mismatch in registration %s: %s", realm.subdomain, user_profile.delivery_email,
             )
             return redirect("/")
 
@@ -584,16 +580,12 @@ def create_realm(request: HttpRequest, creation_key: Optional[str] = None) -> Ht
     else:
         form = RealmCreationForm()
     return render(
-        request,
-        "zerver/create_realm.html",
-        context={"form": form, "current_url": request.get_full_path},
+        request, "zerver/create_realm.html", context={"form": form, "current_url": request.get_full_path},
     )
 
 
 def accounts_home(
-    request: HttpRequest,
-    multiuse_object_key: str = "",
-    multiuse_object: Optional[MultiuseInvite] = None,
+    request: HttpRequest, multiuse_object_key: str = "", multiuse_object: Optional[MultiuseInvite] = None,
 ) -> HttpResponse:
     try:
         realm = get_realm(get_subdomain(request))
@@ -620,9 +612,7 @@ def accounts_home(
                 email, request, streams=streams_to_subscribe, invited_as=invited_as,
             )
             try:
-                send_confirm_registration_email(
-                    email, activation_url, request.LANGUAGE_CODE, realm=realm,
-                )
+                send_confirm_registration_email(email, activation_url, request.LANGUAGE_CODE, realm=realm)
             except smtplib.SMTPException as e:
                 logging.error("Error in accounts_home: %s", str(e))
                 return HttpResponseRedirect("/config-error/smtp")

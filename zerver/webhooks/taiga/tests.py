@@ -86,7 +86,9 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("userstory_changed_assigned", self.TOPIC, message)
 
     def test_taiga_userstory_comment_added(self) -> None:
-        message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) commented on user story **UserStory**."
+        message = (
+            "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) commented on user story **UserStory**."
+        )
         self.send_and_test_stream_message("userstory_changed_comment_added", self.TOPIC, message)
 
     def test_taiga_userstory_changed_due_date(self) -> None:
@@ -318,7 +320,5 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("relateduserstory_deleted", self.TOPIC, message)
 
     def test_taiga_webhook_test(self) -> None:
-        message = (
-            "[Jan](https://tree.taiga.io/profile/kostek) triggered a test of the Taiga integration."
-        )
+        message = "[Jan](https://tree.taiga.io/profile/kostek) triggered a test of the Taiga integration."
         self.send_and_test_stream_message("webhook_test", self.TOPIC, message)

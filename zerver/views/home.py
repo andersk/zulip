@@ -167,9 +167,7 @@ def home_real(request: HttpRequest) -> HttpResponse:
         )
     (unsupported_browser, browser_name) = is_unsupported_browser(client_user_agent)
     if unsupported_browser:
-        return render(
-            request, "zerver/unsupported_browser.html", context={"browser_name": browser_name},
-        )
+        return render(request, "zerver/unsupported_browser.html", context={"browser_name": browser_name})
 
     # We need to modify the session object every two weeks or it will expire.
     # This line makes reloading the page a sufficient action to keep the

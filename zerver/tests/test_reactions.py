@@ -814,9 +814,7 @@ class RealmEmojiReactionTests(EmojiReactionBase):
         result = self.post_reaction(self.default_reaction_info, sender="AARON")
         self.assert_json_success(result)
 
-        reactions = self.get_message_reactions(
-            1, self.default_reaction_info["emoji_code"], "realm_emoji",
-        )
+        reactions = self.get_message_reactions(1, self.default_reaction_info["emoji_code"], "realm_emoji")
         self.assertEqual(len(reactions), 2)
 
     def test_remove_realm_emoji_reaction(self) -> None:

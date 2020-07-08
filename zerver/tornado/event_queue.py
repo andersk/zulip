@@ -561,9 +561,7 @@ def setup_event_queue(port: int) -> None:
 
     # Set up event queue garbage collection
     ioloop = tornado.ioloop.IOLoop.instance()
-    pc = tornado.ioloop.PeriodicCallback(
-        lambda: gc_event_queues(port), EVENT_QUEUE_GC_FREQ_MSECS, ioloop,
-    )
+    pc = tornado.ioloop.PeriodicCallback(lambda: gc_event_queues(port), EVENT_QUEUE_GC_FREQ_MSECS, ioloop)
     pc.start()
 
     send_restart_events(immediate=settings.DEVELOPMENT)
@@ -698,9 +696,7 @@ def request_event_queue(
     return None
 
 
-def get_user_events(
-    user_profile: UserProfile, queue_id: str, last_event_id: int,
-) -> List[Dict[str, Any]]:
+def get_user_events(user_profile: UserProfile, queue_id: str, last_event_id: int) -> List[Dict[str, Any]]:
     if settings.TORNADO_SERVER:
         tornado_uri = get_tornado_uri(user_profile.realm)
         post_data: Dict[str, Any] = {

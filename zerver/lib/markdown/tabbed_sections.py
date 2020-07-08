@@ -74,9 +74,7 @@ TAB_DISPLAY_NAMES = {
 
 class TabbedSectionsGenerator(Extension):
     def extendMarkdown(self, md: markdown.Markdown, md_globals: Dict[str, Any]) -> None:
-        md.preprocessors.add(
-            "tabbed_sections", TabbedSectionsPreprocessor(md, self.getConfigs()), "_end",
-        )
+        md.preprocessors.add("tabbed_sections", TabbedSectionsPreprocessor(md, self.getConfigs()), "_end")
 
 
 class TabbedSectionsPreprocessor(Preprocessor):
@@ -90,9 +88,7 @@ class TabbedSectionsPreprocessor(Preprocessor):
                 tab_class = "has-tabs"
             else:
                 tab_class = "no-tabs"
-                tab_section["tabs"] = [
-                    {"tab_name": "null_tab", "start": tab_section["start_tabs_index"]},
-                ]
+                tab_section["tabs"] = [{"tab_name": "null_tab", "start": tab_section["start_tabs_index"]}]
             nav_bar = self.generate_nav_bar(tab_section)
             content_blocks = self.generate_content_blocks(tab_section, lines)
             rendered_tabs = CODE_SECTION_TEMPLATE.format(

@@ -343,9 +343,7 @@ class PasswordResetTest(ZulipTestCase):
         # Reset your password
         with self.settings(PASSWORD_MIN_LENGTH=3, PASSWORD_MIN_GUESSES=1000):
             # Verify weak passwords don't work.
-            result = self.client_post(
-                final_reset_url, {"new_password1": "easy", "new_password2": "easy"},
-            )
+            result = self.client_post(final_reset_url, {"new_password1": "easy", "new_password2": "easy"})
             self.assert_in_response("The password is too weak.", result)
 
             result = self.client_post(
@@ -534,9 +532,7 @@ class PasswordResetTest(ZulipTestCase):
             email = self.example_email("hamlet")
             with patch("logging.info") as mock_logging:
                 result = self.client_post("/accounts/password/reset/", {"email": email})
-                mock_logging.assert_called_once_with(
-                    "Password reset not allowed for user in LDAP domain",
-                )
+                mock_logging.assert_called_once_with("Password reset not allowed for user in LDAP domain")
         from django.core.mail import outbox
 
         self.assertEqual(len(outbox), 0)
@@ -1020,9 +1016,7 @@ class InviteUserTest(InviteUserBase):
     def test_successful_invite_user_as_owner_from_owner_account(self) -> None:
         self.login("desdemona")
         invitee = self.nonreg_email("alice")
-        result = self.invite(
-            invitee, ["Denmark"], invite_as=PreregistrationUser.INVITE_AS["REALM_OWNER"],
-        )
+        result = self.invite(invitee, ["Denmark"], invite_as=PreregistrationUser.INVITE_AS["REALM_OWNER"])
         self.assert_json_success(result)
         self.assertTrue(find_key_by_email(invitee))
 
@@ -1042,9 +1036,7 @@ class InviteUserTest(InviteUserBase):
     def test_successful_invite_user_as_admin_from_admin_account(self) -> None:
         self.login("iago")
         invitee = self.nonreg_email("alice")
-        result = self.invite(
-            invitee, ["Denmark"], invite_as=PreregistrationUser.INVITE_AS["REALM_ADMIN"],
-        )
+        result = self.invite(invitee, ["Denmark"], invite_as=PreregistrationUser.INVITE_AS["REALM_ADMIN"])
         self.assert_json_success(result)
         self.assertTrue(find_key_by_email(invitee))
 
@@ -1136,9 +1128,7 @@ class InviteUserTest(InviteUserBase):
         email = "alice-test@zulip.com"
         email2 = "bob-test@zulip.com"
         invitee = f"Alice Test <{email}>, {email2}"
-        self.assert_json_error(
-            self.invite(invitee, ["Denmark"]), "Must be an organization administrator",
-        )
+        self.assert_json_error(self.invite(invitee, ["Denmark"]), "Must be an organization administrator")
 
         # Now verify an administrator can do it
         self.login("iago")
@@ -1250,8 +1240,7 @@ earl-test@zulip.com""",
         self.login("hamlet")
         invitee_emails = "foo@zulip.com"
         self.assert_json_error(
-            self.invite(invitee_emails, []),
-            "You must specify at least one stream for invitees to join.",
+            self.invite(invitee_emails, []), "You must specify at least one stream for invitees to join.",
         )
 
         for address in ("noatsign.com", "outsideyourdomain@example.net"):
@@ -2659,9 +2648,7 @@ class RealmCreationTest(ZulipTestCase):
             self.assert_in_response("unavailable", result)
 
         # test valid use of root domain
-        result = self.submit_reg_form_for_user(
-            email, password, realm_subdomain="", realm_name=realm_name,
-        )
+        result = self.submit_reg_form_for_user(email, password, realm_subdomain="", realm_name=realm_name)
         self.assertEqual(result.status_code, 302)
         self.assertTrue(result.url.startswith("http://testserver/accounts/login/subdomain/"))
 
@@ -2689,11 +2676,7 @@ class RealmCreationTest(ZulipTestCase):
 
         # test valid use of root domain
         result = self.submit_reg_form_for_user(
-            email,
-            password,
-            realm_subdomain="abcdef",
-            realm_in_root_domain="true",
-            realm_name=realm_name,
+            email, password, realm_subdomain="abcdef", realm_in_root_domain="true", realm_name=realm_name,
         )
         self.assertEqual(result.status_code, 302)
         self.assertTrue(result.url.startswith("http://testserver/accounts/login/subdomain/"))
@@ -2709,9 +2692,7 @@ class RealmCreationTest(ZulipTestCase):
 
     def test_subdomain_check_api(self) -> None:
         result = self.client_get("/json/realm/subdomain/zulip")
-        self.assert_in_success_response(
-            ["Subdomain unavailable. Please choose a different one."], result,
-        )
+        self.assert_in_success_response(["Subdomain unavailable. Please choose a different one."], result)
 
         result = self.client_get("/json/realm/subdomain/zu_lip")
         self.assert_in_success_response(
@@ -3353,8 +3334,7 @@ class UserSignUpTest(InviteUserBase):
         email = "iago+label@zulip.com"
         form = HomepageForm({"email": email}, realm=realm)
         self.assertIn(
-            "Email addresses containing + are not allowed in this organization.",
-            form.errors["email"][0],
+            "Email addresses containing + are not allowed in this organization.", form.errors["email"][0],
         )
 
     def test_failed_signup_due_to_invite_required(self) -> None:
@@ -4515,40 +4495,28 @@ class FollowupEmailTest(ZulipTestCase):
     def test_followup_day2_email(self) -> None:
         user_profile = self.example_user("hamlet")
         # Test date_joined == Sunday
-        user_profile.date_joined = datetime.datetime(
-            2018, 1, 7, 1, 0, 0, 0, tzinfo=datetime.timezone.utc,
-        )
+        user_profile.date_joined = datetime.datetime(2018, 1, 7, 1, 0, 0, 0, tzinfo=datetime.timezone.utc)
         self.assertEqual(followup_day2_email_delay(user_profile), datetime.timedelta(days=2, hours=-1))
         # Test date_joined == Tuesday
-        user_profile.date_joined = datetime.datetime(
-            2018, 1, 2, 1, 0, 0, 0, tzinfo=datetime.timezone.utc,
-        )
+        user_profile.date_joined = datetime.datetime(2018, 1, 2, 1, 0, 0, 0, tzinfo=datetime.timezone.utc)
         self.assertEqual(followup_day2_email_delay(user_profile), datetime.timedelta(days=2, hours=-1))
         # Test date_joined == Thursday
-        user_profile.date_joined = datetime.datetime(
-            2018, 1, 4, 1, 0, 0, 0, tzinfo=datetime.timezone.utc,
-        )
+        user_profile.date_joined = datetime.datetime(2018, 1, 4, 1, 0, 0, 0, tzinfo=datetime.timezone.utc)
         self.assertEqual(followup_day2_email_delay(user_profile), datetime.timedelta(days=1, hours=-1))
         # Test date_joined == Friday
-        user_profile.date_joined = datetime.datetime(
-            2018, 1, 5, 1, 0, 0, 0, tzinfo=datetime.timezone.utc,
-        )
+        user_profile.date_joined = datetime.datetime(2018, 1, 5, 1, 0, 0, 0, tzinfo=datetime.timezone.utc)
         self.assertEqual(followup_day2_email_delay(user_profile), datetime.timedelta(days=3, hours=-1))
 
         # Time offset of America/Phoenix is -07:00
         user_profile.timezone = "America/Phoenix"
         # Test date_joined == Friday in UTC, but Thursday in the user's timezone
-        user_profile.date_joined = datetime.datetime(
-            2018, 1, 5, 1, 0, 0, 0, tzinfo=datetime.timezone.utc,
-        )
+        user_profile.date_joined = datetime.datetime(2018, 1, 5, 1, 0, 0, 0, tzinfo=datetime.timezone.utc)
         self.assertEqual(followup_day2_email_delay(user_profile), datetime.timedelta(days=1, hours=-1))
 
 
 class NoReplyEmailTest(ZulipTestCase):
     def test_noreply_email_address(self) -> None:
-        self.assertTrue(
-            re.search(self.TOKENIZED_NOREPLY_REGEX, FromAddress.tokenized_no_reply_address()),
-        )
+        self.assertTrue(re.search(self.TOKENIZED_NOREPLY_REGEX, FromAddress.tokenized_no_reply_address()))
 
         with self.settings(ADD_TOKENS_TO_NOREPLY_ADDRESS=False):
             self.assertEqual(FromAddress.tokenized_no_reply_address(), "noreply@testserver")

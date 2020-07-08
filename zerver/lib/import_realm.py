@@ -423,14 +423,7 @@ def re_map_foreign_keys(
     assert "usermessage" not in related_table
 
     re_map_foreign_keys_internal(
-        data[table],
-        table,
-        field_name,
-        related_table,
-        verbose,
-        id_field,
-        recipient_field,
-        reaction_field,
+        data[table], table, field_name, related_table, verbose, id_field, recipient_field, reaction_field,
     )
 
 
@@ -492,11 +485,7 @@ def re_map_foreign_keys_internal(
 
 
 def re_map_foreign_keys_many_to_many(
-    data: TableData,
-    table: TableName,
-    field_name: Field,
-    related_table: TableName,
-    verbose: bool = False,
+    data: TableData, table: TableName, field_name: Field, related_table: TableName, verbose: bool = False,
 ) -> None:
     """
     We need to assign new ids to rows during the import/export
@@ -1064,9 +1053,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
     bulk_import_model(data, UserActivity)
 
     fix_datetime_fields(data, "zerver_useractivityinterval")
-    re_map_foreign_keys(
-        data, "zerver_useractivityinterval", "user_profile", related_table="user_profile",
-    )
+    re_map_foreign_keys(data, "zerver_useractivityinterval", "user_profile", related_table="user_profile")
     update_model_ids(UserActivityInterval, data, "useractivityinterval")
     bulk_import_model(data, UserActivityInterval)
 

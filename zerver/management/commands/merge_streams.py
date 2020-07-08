@@ -50,9 +50,7 @@ class Command(ZulipBaseCommand):
         message_ids_to_clear = list(
             Message.objects.filter(recipient=recipient_to_destroy).values_list("id", flat=True),
         )
-        count = Message.objects.filter(recipient=recipient_to_destroy).update(
-            recipient=recipient_to_keep,
-        )
+        count = Message.objects.filter(recipient=recipient_to_destroy).update(recipient=recipient_to_keep)
         print(f"Moved {count} messages")
         bulk_delete_cache_keys(message_ids_to_clear)
 

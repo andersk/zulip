@@ -171,10 +171,7 @@ class ZulipTestCase(TestCase):
             return
         url = re.sub(r"\?.*", "", url)
         validate_against_openapi_schema(
-            content,
-            url.replace("/json/", "/").replace("/api/v1/", "/"),
-            method,
-            str(result.status_code),
+            content, url.replace("/json/", "/").replace("/api/v1/", "/"), method, str(result.status_code),
         )
 
     @instrument_url
@@ -374,9 +371,7 @@ class ZulipTestCase(TestCase):
     ) -> HttpResponse:
         if password is None:
             password = initial_password(email)
-        result = self.client_post(
-            "/accounts/login/", {"username": email, "password": password}, **kwargs,
-        )
+        result = self.client_post("/accounts/login/", {"username": email, "password": password}, **kwargs)
         self.assertNotEqual(result.status_code, 500)
         return result
 
@@ -706,9 +701,7 @@ class ZulipTestCase(TestCase):
         self.assertEqual(get_session_dict_user(self.client.session), user_id)
 
     def webhook_fixture_data(self, type: str, action: str, file_type: str = "json") -> str:
-        fn = os.path.join(
-            os.path.dirname(__file__), f"../webhooks/{type}/fixtures/{action}.{file_type}",
-        )
+        fn = os.path.join(os.path.dirname(__file__), f"../webhooks/{type}/fixtures/{action}.{file_type}")
         return open(fn).read()
 
     def fixture_file_name(self, file_name: str, type: str = "") -> str:

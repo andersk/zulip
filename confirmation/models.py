@@ -56,9 +56,7 @@ def get_object_from_key(
     if len(confirmation_key) not in (24, 40):
         raise ConfirmationKeyException(ConfirmationKeyException.WRONG_LENGTH)
     try:
-        confirmation = Confirmation.objects.get(
-            confirmation_key=confirmation_key, type=confirmation_type,
-        )
+        confirmation = Confirmation.objects.get(confirmation_key=confirmation_key, type=confirmation_type)
     except Confirmation.DoesNotExist:
         raise ConfirmationKeyException(ConfirmationKeyException.DOES_NOT_EXIST)
 

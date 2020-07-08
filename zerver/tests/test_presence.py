@@ -285,9 +285,7 @@ class UserPresenceTests(ZulipTestCase):
         self.assertEqual(interval.start, third_time)
         self.assertEqual(interval.end, third_time + UserActivityInterval.MIN_INTERVAL_LENGTH)
 
-        self.assertEqual(
-            seconds_usage_between(user_profile, time_zero, third_time).total_seconds(), 1500,
-        )
+        self.assertEqual(seconds_usage_between(user_profile, time_zero, third_time).total_seconds(), 1500)
         self.assertEqual(
             seconds_usage_between(
                 user_profile, time_zero, third_time + timedelta(seconds=10),
@@ -476,10 +474,7 @@ class UserPresenceAggregationTests(ZulipTestCase):
             self.client_post("/json/users/me/presence", {"status": status})
         with mock.patch(timezone_util, return_value=validate_time - datetime.timedelta(seconds=2)):
             self.api_post(
-                user,
-                "/api/v1/users/me/presence",
-                {"status": status},
-                HTTP_USER_AGENT="ZulipAndroid/1.0",
+                user, "/api/v1/users/me/presence", {"status": status}, HTTP_USER_AGENT="ZulipAndroid/1.0",
             )
         with mock.patch(timezone_util, return_value=validate_time - datetime.timedelta(seconds=7)):
             latest_result = self.api_post(

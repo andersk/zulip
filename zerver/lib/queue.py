@@ -156,9 +156,7 @@ class SimpleQueueClient:
             ),
         )
 
-    def register_json_consumer(
-        self, queue_name: str, callback: Callable[[Dict[str, Any]], None],
-    ) -> None:
+    def register_json_consumer(self, queue_name: str, callback: Callable[[Dict[str, Any]], None]) -> None:
         def wrapped_callback(
             ch: BlockingChannel, method: Basic.Deliver, properties: pika.BasicProperties, body: str,
         ) -> None:

@@ -607,9 +607,7 @@ class ClientDescriptorsTest(ZulipTestCase):
         hamlet = self.example_user("hamlet")
 
         class MockClient:
-            def __init__(
-                self, user_profile_id: int, apply_markdown: bool, client_gravatar: bool,
-            ) -> None:
+            def __init__(self, user_profile_id: int, apply_markdown: bool, client_gravatar: bool) -> None:
                 self.user_profile_id = user_profile_id
                 self.apply_markdown = apply_markdown
                 self.client_gravatar = client_gravatar

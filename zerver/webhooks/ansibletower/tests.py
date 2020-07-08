@@ -113,9 +113,7 @@ Job: [#2722 System - Updates - Ubuntu](http://awx.example.co.uk/#/jobs/playbook/
             "(http://awx.example.co.uk/#/jobs/inventory/2724) was successful."
         )
 
-        self.send_and_test_stream_message(
-            "inventory_update_successful", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("inventory_update_successful", expected_topic, expected_message)
 
     def test_ansibletower_inventory_update_failed_message(self) -> None:
         """

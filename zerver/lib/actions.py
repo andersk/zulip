@@ -674,9 +674,7 @@ def do_create_user(
         modified_user=user_profile,
         event_type=RealmAuditLog.USER_CREATED,
         event_time=event_time,
-        extra_data=ujson.dumps(
-            {RealmAuditLog.ROLE_COUNT: realm_user_count_by_role(user_profile.realm)},
-        ),
+        extra_data=ujson.dumps({RealmAuditLog.ROLE_COUNT: realm_user_count_by_role(user_profile.realm)}),
     )
     do_increment_logging_stat(
         user_profile.realm, COUNT_STATS["active_users_log:is_bot:day"], user_profile.is_bot, event_time,
@@ -715,9 +713,7 @@ def do_activate_user(user_profile: UserProfile, acting_user: Optional[UserProfil
         acting_user=acting_user,
         event_type=RealmAuditLog.USER_ACTIVATED,
         event_time=event_time,
-        extra_data=ujson.dumps(
-            {RealmAuditLog.ROLE_COUNT: realm_user_count_by_role(user_profile.realm)},
-        ),
+        extra_data=ujson.dumps({RealmAuditLog.ROLE_COUNT: realm_user_count_by_role(user_profile.realm)}),
     )
     do_increment_logging_stat(
         user_profile.realm, COUNT_STATS["active_users_log:is_bot:day"], user_profile.is_bot, event_time,
@@ -741,9 +737,7 @@ def do_reactivate_user(user_profile: UserProfile, acting_user: Optional[UserProf
         acting_user=acting_user,
         event_type=RealmAuditLog.USER_REACTIVATED,
         event_time=event_time,
-        extra_data=ujson.dumps(
-            {RealmAuditLog.ROLE_COUNT: realm_user_count_by_role(user_profile.realm)},
-        ),
+        extra_data=ujson.dumps({RealmAuditLog.ROLE_COUNT: realm_user_count_by_role(user_profile.realm)}),
     )
     do_increment_logging_stat(
         user_profile.realm, COUNT_STATS["active_users_log:is_bot:day"], user_profile.is_bot, event_time,
@@ -1002,9 +996,7 @@ def do_deactivate_user(
         acting_user=acting_user,
         event_type=RealmAuditLog.USER_DEACTIVATED,
         event_time=event_time,
-        extra_data=ujson.dumps(
-            {RealmAuditLog.ROLE_COUNT: realm_user_count_by_role(user_profile.realm)},
-        ),
+        extra_data=ujson.dumps({RealmAuditLog.ROLE_COUNT: realm_user_count_by_role(user_profile.realm)}),
     )
     do_increment_logging_stat(
         user_profile.realm,
@@ -1618,9 +1610,7 @@ def do_send_messages(
 
         # Claim attachments in message
         for message in messages:
-            if do_claim_attachments(
-                message["message"], message["message"].potential_attachment_path_ids,
-            ):
+            if do_claim_attachments(message["message"], message["message"].potential_attachment_path_ids):
                 message["message"].has_attachment = True
                 message["message"].save(update_fields=["has_attachment"])
 
@@ -3181,9 +3171,7 @@ def bulk_add_subscriptions(
 
         if peer_user_ids:
             for new_user_id in new_user_ids:
-                event = dict(
-                    type="subscription", op="peer_add", stream_id=stream.id, user_id=new_user_id,
-                )
+                event = dict(type="subscription", op="peer_add", stream_id=stream.id, user_id=new_user_id)
                 send_event(realm, event, peer_user_ids)
 
     return (
@@ -3345,9 +3333,7 @@ def bulk_remove_subscriptions(
     for stream in streams:
         send_peer_remove_event(stream=stream)
 
-    new_vacant_streams = [
-        stream for stream in set(occupied_streams_before) - set(occupied_streams_after)
-    ]
+    new_vacant_streams = [stream for stream in set(occupied_streams_before) - set(occupied_streams_after)]
     new_vacant_private_streams = [stream for stream in new_vacant_streams if stream.invite_only]
     new_vacant_public_streams = [stream for stream in new_vacant_streams if not stream.invite_only]
     if new_vacant_public_streams:
@@ -4248,9 +4234,9 @@ def do_remove_streams_from_default_stream_group(
     for stream in streams:
         if stream not in group.streams.all():
             raise JsonableError(
-                _(
-                    "Stream '{stream_name}' is not present in default stream group '{group_name}'",
-                ).format(stream_name=stream.name, group_name=group.name),
+                _("Stream '{stream_name}' is not present in default stream group '{group_name}'").format(
+                    stream_name=stream.name, group_name=group.name,
+                ),
             )
         group.streams.remove(stream)
 
@@ -5926,9 +5912,7 @@ def do_add_realm_filter(realm: Realm, pattern: str, url_format_string: str) -> i
     return realm_filter.id
 
 
-def do_remove_realm_filter(
-    realm: Realm, pattern: Optional[str] = None, id: Optional[int] = None,
-) -> None:
+def do_remove_realm_filter(realm: Realm, pattern: Optional[str] = None, id: Optional[int] = None) -> None:
     if pattern is not None:
         RealmFilter.objects.get(realm=realm, pattern=pattern).delete()
     else:
@@ -6067,9 +6051,7 @@ def do_get_streams(
     return streams
 
 
-def notify_attachment_update(
-    user_profile: UserProfile, op: str, attachment_dict: Dict[str, Any],
-) -> None:
+def notify_attachment_update(user_profile: UserProfile, op: str, attachment_dict: Dict[str, Any]) -> None:
     event = {
         "type": "attachment",
         "op": op,

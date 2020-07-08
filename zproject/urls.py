@@ -318,9 +318,7 @@ v1_api_and_json_patterns = [
     ),
     # attachments -> zerver.views.attachments
     path("attachments", rest_dispatch, {"GET": "zerver.views.attachments.list_by_user"}),
-    path(
-        "attachments/<int:attachment_id>", rest_dispatch, {"DELETE": "zerver.views.attachments.remove"},
-    ),
+    path("attachments/<int:attachment_id>", rest_dispatch, {"DELETE": "zerver.views.attachments.remove"}),
     # typing -> zerver.views.typing
     # POST sends a typing notification event to recipients
     path("typing", rest_dispatch, {"POST": "zerver.views.typing.send_notification_backend"}),
@@ -831,9 +829,7 @@ i18n_urls = [
         {"template_name": "zerver/for-open-source.html"},
     ),
     path(
-        "for/research/",
-        zerver.views.portico.landing_view,
-        {"template_name": "zerver/for-research.html"},
+        "for/research/", zerver.views.portico.landing_view, {"template_name": "zerver/for-research.html"},
     ),
     path(
         "for/companies/",

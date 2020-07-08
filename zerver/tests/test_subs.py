@@ -645,8 +645,7 @@ class StreamAdminTest(ZulipTestCase):
         with tornado_redirected_to_list(events):
             stream_id = stream_name_uni_exists.id
             result = self.client_patch(
-                f"/json/streams/{stream_id}",
-                {"new_name": ujson.dumps("नाम में क्या रक्खा हे".encode())},
+                f"/json/streams/{stream_id}", {"new_name": ujson.dumps("नाम में क्या रक्खा हे".encode())},
             )
         self.assert_json_success(result)
         # While querying, system can handle unicode strings.
@@ -797,9 +796,7 @@ class StreamAdminTest(ZulipTestCase):
 
         self.assertEqual("Test description", stream.description)
 
-        result = self.client_patch(
-            f"/json/streams/{stream_id}", {"description": ujson.dumps("a" * 1025)},
-        )
+        result = self.client_patch(f"/json/streams/{stream_id}", {"description": ujson.dumps("a" * 1025)})
         self.assert_json_error(
             result, f"description is too long (limit: {Stream.MAX_DESCRIPTION_LENGTH} characters)",
         )
@@ -1779,9 +1776,7 @@ class DefaultStreamGroupTest(ZulipTestCase):
             f"/json/default_stream_groups/{group_id}/streams",
             {"op": "remove", "stream_names": ujson.dumps(new_stream_names)},
         )
-        self.assert_json_error(
-            result, "Stream 'stream4' is not present in default stream group 'group1'",
-        )
+        self.assert_json_error(result, "Stream 'stream4' is not present in default stream group 'group1'")
 
         # Test changing description of default stream group
         new_description = "new group1 description"
@@ -3388,9 +3383,7 @@ class SubscriptionAPITest(ZulipTestCase):
             self.test_user, self.streams, {"principals": ujson.dumps([principal])}, allow_fail=True,
         )
         self.assert_json_error(
-            result,
-            f"User not authorized to execute queries on behalf of '{principal}'",
-            status_code=403,
+            result, f"User not authorized to execute queries on behalf of '{principal}'", status_code=403,
         )
 
     def helper_check_subs_before_and_after_remove(
@@ -3417,9 +3410,7 @@ class SubscriptionAPITest(ZulipTestCase):
         self.assert_json_success(result)
         json = result.json()
         for key, val in json_dict.items():
-            self.assertEqual(
-                sorted(val), sorted(json[key]),
-            )  # we don't care about the order of the items
+            self.assertEqual(sorted(val), sorted(json[key]))  # we don't care about the order of the items
         user = get_user(email, realm)
         new_streams = self.get_streams(user)
         self.assertEqual(sorted(new_streams), sorted(new_subs))
@@ -4050,9 +4041,7 @@ class GetSubscribersTest(ZulipTestCase):
         ]
         self.assertEqual(sorted(result["subscribers"]), sorted(true_subscribers))
 
-    def make_subscriber_request(
-        self, stream_id: int, user: Optional[UserProfile] = None,
-    ) -> HttpResponse:
+    def make_subscriber_request(self, stream_id: int, user: Optional[UserProfile] = None) -> HttpResponse:
         if user is None:
             user = self.user_profile
         return self.api_get(user, f"/api/v1/streams/{stream_id}/members")
@@ -4512,9 +4501,7 @@ class StreamTrafficTest(ZulipTestCase):
         # significant digits calculation gets applied
         # old stream
         self.assertEqual(
-            get_average_weekly_stream_traffic(
-                42, timezone_now() - timedelta(days=300), {42: 98 * 4 + 3},
-            ),
+            get_average_weekly_stream_traffic(42, timezone_now() - timedelta(days=300), {42: 98 * 4 + 3}),
             98,
         )
         # stream between 7 and 27 days old

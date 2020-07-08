@@ -31,7 +31,9 @@ class TestIntegrationsDevPanel(ZulipTestCase):
 
     def test_check_send_webhook_fixture_message_for_success_without_headers(self) -> None:
         bot = get_user("webhook-bot@zulip.com", self.zulip_realm)
-        url = f"/api/v1/external/airbrake?api_key={bot.api_key}&stream=Denmark&topic=Airbrake Notifications"
+        url = (
+            f"/api/v1/external/airbrake?api_key={bot.api_key}&stream=Denmark&topic=Airbrake Notifications"
+        )
         target_url = "/devtools/integrations/check_send_webhook_fixture_message"
         with open("zerver/webhooks/airbrake/fixtures/error_message.json") as f:
             body = f.read()

@@ -147,7 +147,5 @@ class TestReport(ZulipTestCase):
 
     def test_report_csp_violations(self) -> None:
         fixture_data = self.fixture_data("csp_report.json")
-        result = self.client_post(
-            "/report/csp_violations", fixture_data, content_type="application/json",
-        )
+        result = self.client_post("/report/csp_violations", fixture_data, content_type="application/json")
         self.assert_json_success(result)

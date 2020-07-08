@@ -494,9 +494,7 @@ class PrivacyTermsTest(ZulipTestCase):
         self.assert_not_in_success_response([not_configured_message], response)
 
     def test_custom_privacy_policy_template(self) -> None:
-        not_configured_message = (
-            "This installation of Zulip does not have a configured " "privacy policy"
-        )
+        not_configured_message = "This installation of Zulip does not have a configured " "privacy policy"
         with self.settings(PRIVACY_POLICY=None):
             response = self.client_get("/privacy/")
         self.assert_in_success_response([not_configured_message], response)

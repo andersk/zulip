@@ -104,8 +104,5 @@ class ThinkstHookTests(WebhookTestCase):
         )
 
         self.send_and_test_stream_message(
-            "canarytoken_real",
-            "foo",
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "canarytoken_real", "foo", expected_message, content_type="application/x-www-form-urlencoded",
         )

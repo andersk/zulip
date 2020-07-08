@@ -383,10 +383,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ),
                 ("name", models.CharField(db_index=True, max_length=60)),
                 ("invite_only", models.NullBooleanField(default=False)),
-                (
-                    "email_token",
-                    models.CharField(default=generate_email_token_for_stream, max_length=32),
-                ),
+                ("email_token", models.CharField(default=generate_email_token_for_stream, max_length=32)),
                 ("description", models.CharField(default="", max_length=1024)),
                 ("date_created", models.DateTimeField(default=django.utils.timezone.now)),
                 ("deactivated", models.BooleanField(default=False)),
@@ -413,9 +410,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ("notifications", models.BooleanField(default=False)),
                 (
                     "recipient",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="zerver.Recipient",
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Recipient"),
                 ),
                 (
                     "user_profile",
@@ -692,9 +687,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
             reverse_sql="DROP INDEX upper_stream_name_idx;",
         ),
         migrations.AddField(
-            model_name="userprofile",
-            name="left_side_userlist",
-            field=models.BooleanField(default=False),
+            model_name="userprofile", name="left_side_userlist", field=models.BooleanField(default=False),
         ),
         migrations.AlterModelOptions(
             name="realm",

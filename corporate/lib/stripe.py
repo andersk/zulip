@@ -710,9 +710,7 @@ def process_downgrade(plan: CustomerPlan) -> None:
 
 def estimate_annual_recurring_revenue_by_realm() -> Dict[str, int]:  # nocoverage
     annual_revenue = {}
-    for plan in CustomerPlan.objects.filter(status=CustomerPlan.ACTIVE).select_related(
-        "customer__realm",
-    ):
+    for plan in CustomerPlan.objects.filter(status=CustomerPlan.ACTIVE).select_related("customer__realm"):
         # TODO: figure out what to do for plans that don't automatically
         # renew, but which probably will renew
         renewal_cents = renewal_amount(plan, timezone_now())

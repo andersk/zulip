@@ -739,10 +739,7 @@ def convert_slack_workspace_messages(
 
 
 def get_messages_iterator(
-    slack_data_dir: str,
-    added_channels: Dict[str, Any],
-    added_mpims: AddedMPIMsT,
-    dm_members: DMMembersT,
+    slack_data_dir: str, added_channels: Dict[str, Any], added_mpims: AddedMPIMsT, dm_members: DMMembersT,
 ) -> Iterator[ZerverFieldsT]:
     """This function is an iterator that returns all the messages across
        all Slack channels, in order by timestamp.  It's important to
@@ -1085,10 +1082,7 @@ def build_reactions(
         for slack_user_id in slack_reaction["users"]:
             reaction_id = NEXT_ID("reaction")
             reaction = Reaction(
-                id=reaction_id,
-                emoji_code=emoji_code,
-                emoji_name=emoji_name,
-                reaction_type=reaction_type,
+                id=reaction_id, emoji_code=emoji_code, emoji_name=emoji_name, reaction_type=reaction_type,
             )
 
             reaction_dict = model_to_dict(reaction, exclude=["message", "user_profile"])

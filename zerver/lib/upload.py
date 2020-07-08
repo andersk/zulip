@@ -424,11 +424,7 @@ class S3UploadBackend(ZulipUploadBackend):
         content_type: Optional[str],
     ) -> None:
         upload_image_to_s3(
-            self.avatar_bucket,
-            s3_file_name + ".original",
-            content_type,
-            target_user_profile,
-            image_data,
+            self.avatar_bucket, s3_file_name + ".original", content_type, target_user_profile, image_data,
         )
 
         # custom 500px wide version

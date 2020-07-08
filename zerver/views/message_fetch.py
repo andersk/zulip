@@ -399,9 +399,7 @@ class NarrowBuilder:
                     column("sender_id") == other_participant.id,
                     column("recipient_id") == self_recipient_id,
                 ),
-                and_(
-                    column("sender_id") == self.user_profile.id, column("recipient_id") == recipient.id,
-                ),
+                and_(column("sender_id") == self.user_profile.id, column("recipient_id") == recipient.id),
             )
             return query.where(maybe_negate(cond))
 
@@ -640,9 +638,7 @@ def get_stream_from_narrow_access_unchecked(
     return None
 
 
-def exclude_muting_conditions(
-    user_profile: UserProfile, narrow: OptionalNarrowListT,
-) -> List[Selectable]:
+def exclude_muting_conditions(user_profile: UserProfile, narrow: OptionalNarrowListT) -> List[Selectable]:
     conditions = []
     stream_id = None
     try:
@@ -703,10 +699,7 @@ def get_base_query_for_search(
 
 
 def add_narrow_conditions(
-    user_profile: UserProfile,
-    inner_msg_id_col: ColumnElement,
-    query: Query,
-    narrow: OptionalNarrowListT,
+    user_profile: UserProfile, inner_msg_id_col: ColumnElement, query: Query, narrow: OptionalNarrowListT,
 ) -> Tuple[Query, bool]:
     is_search = False  # for now
 
@@ -735,9 +728,7 @@ def add_narrow_conditions(
     return (query, is_search)
 
 
-def find_first_unread_anchor(
-    sa_conn: Any, user_profile: UserProfile, narrow: OptionalNarrowListT,
-) -> int:
+def find_first_unread_anchor(sa_conn: Any, user_profile: UserProfile, narrow: OptionalNarrowListT) -> int:
     # We always need UserMessage in our query, because it has the unread
     # flag for the user.
     need_user_message = True

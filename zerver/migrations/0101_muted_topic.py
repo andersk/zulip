@@ -23,9 +23,7 @@ class Migration(migrations.Migration):
                 ("topic_name", models.CharField(max_length=60)),
                 (
                     "recipient",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="zerver.Recipient",
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Recipient"),
                 ),
                 (
                     "stream",

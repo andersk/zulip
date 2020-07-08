@@ -390,9 +390,7 @@ def remove_subscriptions_backend(
     streams, __ = list_to_streams(streams_as_dict, user_profile)
 
     if principals:
-        people_to_unsub = {
-            principal_to_user_profile(user_profile, principal) for principal in principals
-        }
+        people_to_unsub = {principal_to_user_profile(user_profile, principal) for principal in principals}
     else:
         people_to_unsub = {user_profile}
 
@@ -482,9 +480,7 @@ def add_subscriptions_backend(
     # can_create_streams policy and check_stream_name policy is inside
     # list_to_streams.
     existing_streams, created_streams = list_to_streams(stream_dicts, user_profile, autocreate=True)
-    authorized_streams, unauthorized_streams = filter_stream_authorization(
-        user_profile, existing_streams,
-    )
+    authorized_streams, unauthorized_streams = filter_stream_authorization(user_profile, existing_streams)
     if len(unauthorized_streams) > 0 and authorization_errors_fatal:
         return json_error(
             _("Unable to access stream ({stream_name}).").format(
@@ -552,9 +548,7 @@ def add_subscriptions_backend(
             recipient_user = email_to_user_profile[email]
 
             msg = you_were_just_subscribed_message(
-                acting_user=user_profile,
-                recipient_user=recipient_user,
-                stream_names=notify_stream_names,
+                acting_user=user_profile, recipient_user=recipient_user, stream_names=notify_stream_names,
             )
 
             notifications.append(

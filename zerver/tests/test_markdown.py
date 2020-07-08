@@ -203,11 +203,7 @@ class MarkdownMiscTest(ZulipTestCase):
 
         def make_user(email: str, full_name: str) -> UserProfile:
             return create_user(
-                email=email,
-                password="whatever",
-                realm=realm,
-                full_name=full_name,
-                short_name="whatever",
+                email=email, password="whatever", realm=realm, full_name=full_name, short_name="whatever",
             )
 
         fred1 = make_user("fred1@example.com", "Fred Flintstone")
@@ -773,9 +769,7 @@ class MarkdownTest(ZulipTestCase):
 
     def test_inline_github_preview(self) -> None:
         # Test photo album previews
-        msg = (
-            "Test: https://github.com/zulip/zulip/blob/master/static/images/logo/zulip-icon-128x128.png"
-        )
+        msg = "Test: https://github.com/zulip/zulip/blob/master/static/images/logo/zulip-icon-128x128.png"
         converted = markdown_convert_wrapper(msg)
 
         self.assertEqual(
@@ -797,8 +791,7 @@ class MarkdownTest(ZulipTestCase):
             "409030735191097344",
         )
         self.assertEqual(
-            get_tweet_id("http://twitter.com/VizzQuotes/status/409030735191097344"),
-            "409030735191097344",
+            get_tweet_id("http://twitter.com/VizzQuotes/status/409030735191097344"), "409030735191097344",
         )
         self.assertEqual(
             get_tweet_id("http://twitter.com/VizzQuotes/statuses/409030735191097344"),
@@ -1656,9 +1649,7 @@ class MarkdownTest(ZulipTestCase):
         content = "@_**King Hamlet**"
         self.assertEqual(
             render_markdown(msg, content),
-            '<p><span class="user-mention silent" '
-            f'data-user-id="{user_id}">'
-            "King Hamlet</span></p>",
+            '<p><span class="user-mention silent" ' f'data-user-id="{user_id}">' "King Hamlet</span></p>",
         )
         self.assertEqual(msg.mentions_user_ids, set())
 
@@ -1742,11 +1733,7 @@ class MarkdownTest(ZulipTestCase):
 
         def make_user(email: str, full_name: str) -> UserProfile:
             return create_user(
-                email=email,
-                password="whatever",
-                realm=realm,
-                full_name=full_name,
-                short_name="whatever",
+                email=email, password="whatever", realm=realm, full_name=full_name, short_name="whatever",
             )
 
         sender_user_profile = self.example_user("othello")

@@ -23,9 +23,7 @@ class SubdomainsTest(ZulipTestCase):
             root_aliases: Sequence[str] = [],
         ) -> None:
             with self.settings(
-                EXTERNAL_HOST=external_host,
-                REALM_HOSTS=realm_hosts,
-                ROOT_SUBDOMAIN_ALIASES=root_aliases,
+                EXTERNAL_HOST=external_host, REALM_HOSTS=realm_hosts, ROOT_SUBDOMAIN_ALIASES=root_aliases,
             ):
                 self.assertEqual(get_subdomain(request_mock(host)), expected)
                 if plusport and ":" not in host:

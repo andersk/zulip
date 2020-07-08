@@ -1431,8 +1431,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
         test_service_name = "converter"
         test_bot_handler = get_bot_handler(test_service_name)
         self.assertEqual(
-            str(type(test_bot_handler)),
-            "<class 'zulip_bots.bots.converter.converter.ConverterHandler'>",
+            str(type(test_bot_handler)), "<class 'zulip_bots.bots.converter.converter.ConverterHandler'>",
         )
 
         # Test for invalid service.
@@ -1524,8 +1523,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
         }
         bot_info.update(extras)
         with patch(
-            "zulip_bots.bots.giphy.giphy.GiphyHandler.validate_config",
-            side_effect=ConfigValidationError,
+            "zulip_bots.bots.giphy.giphy.GiphyHandler.validate_config", side_effect=ConfigValidationError,
         ):
             result = self.client_post("/json/bots", bot_info)
         self.assert_json_error(result, "Invalid configuration data!")

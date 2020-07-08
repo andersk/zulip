@@ -180,10 +180,7 @@ def run_archiving_in_chunks(
 
 
 def move_expired_messages_to_archive_by_recipient(
-    recipient: Recipient,
-    message_retention_days: int,
-    realm: Realm,
-    chunk_size: int = MESSAGE_BATCH_SIZE,
+    recipient: Recipient, message_retention_days: int, realm: Realm, chunk_size: int = MESSAGE_BATCH_SIZE,
 ) -> int:
     assert message_retention_days != -1
 
@@ -378,10 +375,7 @@ def move_related_objects_to_archive(msg_ids: List[int]) -> None:
 
 
 def archive_messages_by_recipient(
-    recipient: Recipient,
-    message_retention_days: int,
-    realm: Realm,
-    chunk_size: int = MESSAGE_BATCH_SIZE,
+    recipient: Recipient, message_retention_days: int, realm: Realm, chunk_size: int = MESSAGE_BATCH_SIZE,
 ) -> int:
     return move_expired_messages_to_archive_by_recipient(
         recipient, message_retention_days, realm, chunk_size,

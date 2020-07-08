@@ -945,9 +945,7 @@ def fetch_usermessages(
 ) -> List[Record]:
     # UserMessage export security rule: You can export UserMessages
     # for the messages you exported for the users in your realm.
-    user_message_query = UserMessage.objects.filter(
-        user_profile__realm=realm, message_id__in=message_ids,
-    )
+    user_message_query = UserMessage.objects.filter(user_profile__realm=realm, message_id__in=message_ids)
     if consent_message_id is not None:
         consented_user_ids = get_consented_user_ids(consent_message_id)
         user_profile_ids = user_profile_ids & consented_user_ids

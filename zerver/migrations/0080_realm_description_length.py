@@ -9,7 +9,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AlterField(
-            model_name="realm", name="description", field=models.TextField(null=True),
-        ),
+        migrations.AlterField(model_name="realm", name="description", field=models.TextField(null=True)),
     ]

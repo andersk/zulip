@@ -110,9 +110,7 @@ def get_legacy_user_info(
     return result
 
 
-def get_presence_for_user(
-    user_profile_id: int, slim_presence: bool = False,
-) -> Dict[str, Dict[str, Any]]:
+def get_presence_for_user(user_profile_id: int, slim_presence: bool = False) -> Dict[str, Dict[str, Any]]:
     query = UserPresence.objects.filter(user_profile_id=user_profile_id).values(
         "client__name",
         "status",

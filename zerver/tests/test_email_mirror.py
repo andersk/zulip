@@ -68,17 +68,13 @@ class TestEncodeDecode(ZulipTestCase):
         self.assertEqual(email_address, f"dev-help.{stream.email_token}@testserver")
 
         # The default form of the email address (with an option - "include-footer"):
-        token, options = decode_email_address(
-            f"dev-help.{stream.email_token}.include-footer@testserver",
-        )
+        token, options = decode_email_address(f"dev-help.{stream.email_token}.include-footer@testserver")
         self._assert_options(options, include_footer=True)
         self.assertEqual(token, stream.email_token)
 
         # Using + instead of . as the separator is also supported for backwards compatibility,
         # since that was the original form of addresses that we used:
-        token, options = decode_email_address(
-            f"dev-help+{stream.email_token}+include-footer@testserver",
-        )
+        token, options = decode_email_address(f"dev-help+{stream.email_token}+include-footer@testserver")
         self._assert_options(options, include_footer=True)
         self.assertEqual(token, stream.email_token)
 

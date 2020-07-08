@@ -403,10 +403,7 @@ def remote_user_sso(
 
     email = remote_user_to_email(remote_user)
     data_dict = ExternalAuthDataDict(
-        email=email,
-        mobile_flow_otp=mobile_flow_otp,
-        desktop_flow_otp=desktop_flow_otp,
-        redirect_to=next,
+        email=email, mobile_flow_otp=mobile_flow_otp, desktop_flow_otp=desktop_flow_otp, redirect_to=next,
     )
     if realm:
         data_dict["subdomain"] = realm.subdomain
@@ -640,9 +637,7 @@ def redirect_to_misconfigured_ldap_notice(error_type: int) -> HttpResponse:
 def show_deactivation_notice(request: HttpRequest) -> HttpResponse:
     realm = get_realm_from_request(request)
     if realm and realm.deactivated:
-        return render(
-            request, "zerver/deactivated.html", context={"deactivated_domain_name": realm.name},
-        )
+        return render(request, "zerver/deactivated.html", context={"deactivated_domain_name": realm.name})
 
     return HttpResponseRedirect(reverse("zerver.views.auth.login_page"))
 
@@ -883,9 +878,7 @@ def api_dev_list_users(request: HttpRequest) -> HttpResponse:
                 dict(email=u.delivery_email, realm_uri=u.realm.uri) for u in users if u.is_realm_admin
             ],
             direct_users=[
-                dict(email=u.delivery_email, realm_uri=u.realm.uri)
-                for u in users
-                if not u.is_realm_admin
+                dict(email=u.delivery_email, realm_uri=u.realm.uri) for u in users if not u.is_realm_admin
             ],
         ),
     )
@@ -894,9 +887,7 @@ def api_dev_list_users(request: HttpRequest) -> HttpResponse:
 @csrf_exempt
 @require_post
 @has_request_variables
-def api_fetch_api_key(
-    request: HttpRequest, username: str = REQ(), password: str = REQ(),
-) -> HttpResponse:
+def api_fetch_api_key(request: HttpRequest, username: str = REQ(), password: str = REQ()) -> HttpResponse:
     return_data: Dict[str, bool] = {}
     subdomain = get_subdomain(request)
     realm = get_realm(subdomain)

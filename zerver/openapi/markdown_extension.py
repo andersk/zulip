@@ -66,9 +66,7 @@ DEFAULT_EXAMPLE = {
 def parse_language_and_options(input_str: Optional[str]) -> Tuple[str, Dict[str, Any]]:
     if not input_str:
         return ("", {})
-    language_and_options = re.match(
-        r"(?P<language>\w+)(,\s*(?P<options>[\"\'\w\d\[\],= ]+))?", input_str,
-    )
+    language_and_options = re.match(r"(?P<language>\w+)(,\s*(?P<options>[\"\'\w\d\[\],= ]+))?", input_str)
     assert language_and_options is not None
     kwargs_pattern = re.compile(r"(?P<key>\w+)\s*=\s*(?P<value>[\'\"\w\d]+|\[[\'\",\w\d ]+\])")
     language = language_and_options.group("language")
@@ -82,9 +80,7 @@ def parse_language_and_options(input_str: Optional[str]) -> Tuple[str, Dict[str,
     return (language, {})
 
 
-def extract_code_example(
-    source: List[str], snippet: List[Any], example_regex: Pattern[str],
-) -> List[Any]:
+def extract_code_example(source: List[str], snippet: List[Any], example_regex: Pattern[str]) -> List[Any]:
     start = -1
     end = -1
     for line in source:
@@ -131,9 +127,7 @@ def render_python_code_example(function: str, admin_config: bool = False, **kwar
     return code_example
 
 
-def render_javascript_code_example(
-    function: str, admin_config: bool = False, **kwargs: Any
-) -> List[str]:
+def render_javascript_code_example(function: str, admin_config: bool = False, **kwargs: Any) -> List[str]:
     function_source_lines = []
     with open("zerver/openapi/javascript_examples.js") as f:
         parsing = False
@@ -321,10 +315,7 @@ def generate_curl_example(
 
 
 def render_curl_example(
-    function: str,
-    api_url: str,
-    exclude: Optional[List[str]] = None,
-    include: Optional[List[str]] = None,
+    function: str, api_url: str, exclude: Optional[List[str]] = None, include: Optional[List[str]] = None,
 ) -> List[str]:
     """ A simple wrapper around generate_curl_example. """
     parts = function.split(":")

@@ -532,9 +532,7 @@ class ZulipLDAPAuthBackendBase(ZulipAuthMixin, LDAPBackend):
         if _LDAPUser(self, result).attrs is None:
             # Check that there actually is an ldap entry matching the result username
             # we want to return. Otherwise, raise an exception.
-            error_message = (
-                "No ldap user matching django_to_ldap_username result: {}. Input username: {}"
-            )
+            error_message = "No ldap user matching django_to_ldap_username result: {}. Input username: {}"
             raise ZulipLDAPExceptionNoMatchingLDAPUser(error_message.format(result, username))
 
         return result
@@ -610,9 +608,7 @@ class ZulipLDAPAuthBackendBase(ZulipAuthMixin, LDAPBackend):
         """Implements the userAccountControl check for whether a user has been
         disabled in an Active Directory server being integrated with
         Zulip via LDAP."""
-        account_control_value = ldap_user.attrs[settings.AUTH_LDAP_USER_ATTR_MAP["userAccountControl"]][
-            0
-        ]
+        account_control_value = ldap_user.attrs[settings.AUTH_LDAP_USER_ATTR_MAP["userAccountControl"]][0]
         ldap_disabled = bool(int(account_control_value) & LDAP_USER_ACCOUNT_CONTROL_DISABLED_MASK)
         return ldap_disabled
 
@@ -1585,9 +1581,7 @@ class GitHubAuthBackend(SocialAuthMixin, GithubOAuth2):
         # addresses, because structurally, we only want to allow email
         # addresses that can receive emails, and those cannot.
         email_objs = self.get_all_associated_email_objects(*args, **kwargs)
-        return [
-            email for email in email_objs if not email["email"].endswith("@users.noreply.github.com")
-        ]
+        return [email for email in email_objs if not email["email"].endswith("@users.noreply.github.com")]
 
     def user_data(self, access_token: str, *args: Any, **kwargs: Any) -> Dict[str, str]:
         """This patched user_data function lets us combine together the 3
@@ -1717,11 +1711,7 @@ class AppleAuthBackend(SocialAuthMixin, AppleIdAuth):
         # Generate a random string of 32 alphanumeric characters.
         state = self.state_token()
         put_dict_in_redis(
-            redis_client,
-            "apple_auth_{token}",
-            data_to_store,
-            self.REDIS_EXPIRATION_SECONDS,
-            token=state,
+            redis_client, "apple_auth_{token}", data_to_store, self.REDIS_EXPIRATION_SECONDS, token=state,
         )
         return state
 

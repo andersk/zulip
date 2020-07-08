@@ -65,9 +65,7 @@ class StripeHookTests(WebhookTestCase):
 
     def test_customer_created(self) -> None:
         expected_topic = "cus_00000000000000"
-        expected_message = (
-            "[Customer](https://dashboard.stripe.com/customers/cus_00000000000000) created"
-        )
+        expected_message = "[Customer](https://dashboard.stripe.com/customers/cus_00000000000000) created"
         self.send_and_test_stream_message(
             "customer_created",
             expected_topic,
@@ -87,9 +85,7 @@ class StripeHookTests(WebhookTestCase):
 
     def test_customer_deleted(self) -> None:
         expected_topic = "cus_00000000000000"
-        expected_message = (
-            "[Customer](https://dashboard.stripe.com/customers/cus_00000000000000) deleted"
-        )
+        expected_message = "[Customer](https://dashboard.stripe.com/customers/cus_00000000000000) deleted"
         self.send_and_test_stream_message(
             "customer_deleted",
             expected_topic,

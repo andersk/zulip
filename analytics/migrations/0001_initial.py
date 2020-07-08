@@ -35,9 +35,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "huddle",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="zerver.Recipient",
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Recipient"),
                 ),
                 (
                     "user",

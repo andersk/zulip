@@ -326,9 +326,7 @@ def send_android_push_notification(
             if reg_id == new_reg_id:
                 # I'm not sure if this should happen. In any case, not really actionable.
                 logger.warning("GCM: Got canonical ref but it already matches our ID %s!", reg_id)
-            elif not DeviceTokenClass.objects.filter(
-                token=new_reg_id, kind=DeviceTokenClass.GCM,
-            ).count():
+            elif not DeviceTokenClass.objects.filter(token=new_reg_id, kind=DeviceTokenClass.GCM).count():
                 # This case shouldn't happen; any time we get a canonical ref it should have been
                 # previously registered in our system.
                 #
@@ -773,9 +771,7 @@ def handle_remove_push_notification(user_profile_id: int, message_ids: List[int]
         android_devices = list(
             PushDeviceToken.objects.filter(user=user_profile, kind=PushDeviceToken.GCM),
         )
-        apple_devices = list(
-            PushDeviceToken.objects.filter(user=user_profile, kind=PushDeviceToken.APNS),
-        )
+        apple_devices = list(PushDeviceToken.objects.filter(user=user_profile, kind=PushDeviceToken.APNS))
         if android_devices:
             send_android_push_notification(android_devices, gcm_payload, gcm_options)
         if apple_devices:

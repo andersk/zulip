@@ -83,11 +83,7 @@ class UserSoftDeactivationTests(ZulipTestCase):
         count = 150
         for user_profile in UserProfile.objects.all():
             UserActivity.objects.get_or_create(
-                user_profile=user_profile,
-                client=client,
-                query=query,
-                count=count,
-                last_visit=last_visit,
+                user_profile=user_profile, client=client, query=query, count=count, last_visit=last_visit,
             )
         filter_kwargs = dict(user_profile__realm=get_realm("zulip"))
         users_to_deactivate = get_users_for_soft_deactivation(-1, filter_kwargs)
@@ -190,11 +186,7 @@ class UserSoftDeactivationTests(ZulipTestCase):
         count = 150
         for user_profile in users:
             UserActivity.objects.get_or_create(
-                user_profile=user_profile,
-                client=client,
-                query=query,
-                count=count,
-                last_visit=last_visit,
+                user_profile=user_profile, client=client, query=query, count=count, last_visit=last_visit,
             )
 
         with mock.patch("logging.info"):
@@ -206,27 +198,21 @@ class UserSoftDeactivationTests(ZulipTestCase):
         # Verify that deactivated users are caught up automatically
 
         message_id = self.send_stream_message(sender, stream_name)
-        received_count = UserMessage.objects.filter(
-            user_profile__in=users, message_id=message_id,
-        ).count()
+        received_count = UserMessage.objects.filter(user_profile__in=users, message_id=message_id).count()
         self.assertEqual(0, received_count)
 
         with mock.patch("logging.info"):
             users_deactivated = do_auto_soft_deactivate_users(-1, realm)
 
         self.assert_length(users_deactivated, 0)  # all users are already deactivated
-        received_count = UserMessage.objects.filter(
-            user_profile__in=users, message_id=message_id,
-        ).count()
+        received_count = UserMessage.objects.filter(user_profile__in=users, message_id=message_id).count()
         self.assertEqual(len(users), received_count)
 
         # Verify that deactivated users are NOT caught up if
         # AUTO_CATCH_UP_SOFT_DEACTIVATED_USERS is off
 
         message_id = self.send_stream_message(sender, stream_name)
-        received_count = UserMessage.objects.filter(
-            user_profile__in=users, message_id=message_id,
-        ).count()
+        received_count = UserMessage.objects.filter(user_profile__in=users, message_id=message_id).count()
         self.assertEqual(0, received_count)
 
         with self.settings(AUTO_CATCH_UP_SOFT_DEACTIVATED_USERS=False):
@@ -234,9 +220,7 @@ class UserSoftDeactivationTests(ZulipTestCase):
                 users_deactivated = do_auto_soft_deactivate_users(-1, realm)
 
         self.assert_length(users_deactivated, 0)  # all users are already deactivated
-        received_count = UserMessage.objects.filter(
-            user_profile__in=users, message_id=message_id,
-        ).count()
+        received_count = UserMessage.objects.filter(user_profile__in=users, message_id=message_id).count()
         self.assertEqual(0, received_count)
 
 

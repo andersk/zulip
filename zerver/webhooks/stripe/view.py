@@ -63,10 +63,7 @@ def topic_and_body(payload: Dict[str, Any]) -> Tuple[str, str]:
         if not previous_attributes:  # nocoverage
             raise SuppressedEvent()
         return "".join(
-            "\n* "
-            + attribute.replace("_", " ").capitalize()
-            + " is now "
-            + stringify(object_[attribute])
+            "\n* " + attribute.replace("_", " ").capitalize() + " is now " + stringify(object_[attribute])
             for attribute in sorted(previous_attributes.keys())
         )
 

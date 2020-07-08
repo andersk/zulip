@@ -167,9 +167,7 @@ class RealmExportTest(ZulipTestCase):
         for i in range(0, 5):
             exports.append(
                 RealmAuditLog(
-                    realm=admin.realm,
-                    event_type=RealmAuditLog.REALM_EXPORTED,
-                    event_time=timezone_now(),
+                    realm=admin.realm, event_type=RealmAuditLog.REALM_EXPORTED, event_time=timezone_now(),
                 ),
             )
         RealmAuditLog.objects.bulk_create(exports)
@@ -190,8 +188,7 @@ class RealmExportTest(ZulipTestCase):
 
         # Space limit is set as 10 GiB
         with patch(
-            "zerver.models.Realm.currently_used_upload_space_bytes",
-            return_value=11 * 1024 * 1024 * 1024,
+            "zerver.models.Realm.currently_used_upload_space_bytes", return_value=11 * 1024 * 1024 * 1024,
         ):
             result = self.client_post("/json/export/realm")
         self.assert_json_error(

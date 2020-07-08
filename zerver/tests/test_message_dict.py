@@ -88,9 +88,7 @@ class MessageDictTest(ZulipTestCase):
             )
             return narrow_dict
 
-        def get_fetch_payload(
-            msg_id: int, apply_markdown: bool, client_gravatar: bool,
-        ) -> Dict[str, Any]:
+        def get_fetch_payload(msg_id: int, apply_markdown: bool, client_gravatar: bool) -> Dict[str, Any]:
             msg = reload_message(msg_id)
             unhydrated_dict = MessageDict.to_dict_uncached_helper([msg])[0]
             # The next step mutates the dict in place

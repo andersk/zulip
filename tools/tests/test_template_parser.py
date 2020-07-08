@@ -16,11 +16,7 @@ except ImportError:
 
 class ParserTest(unittest.TestCase):
     def _assert_validate_error(
-        self,
-        error: str,
-        fn: Optional[str] = None,
-        text: Optional[str] = None,
-        check_indent: bool = True,
+        self, error: str, fn: Optional[str] = None, text: Optional[str] = None, check_indent: bool = True,
     ) -> None:
         with self.assertRaisesRegex(TemplateParserException, error):
             validate(fn=fn, text=text, check_indent=check_indent)

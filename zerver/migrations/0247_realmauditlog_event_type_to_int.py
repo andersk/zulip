@@ -97,9 +97,7 @@ class Migration(migrations.Migration):
             name="event_type",
             field=models.CharField(max_length=40, null=True),
         ),
-        migrations.RunPython(
-            update_existing_event_type_values, reverse_code=reverse_code, elidable=True,
-        ),
+        migrations.RunPython(update_existing_event_type_values, reverse_code=reverse_code, elidable=True),
         migrations.RemoveField(model_name="realmauditlog", name="event_type"),
         migrations.RenameField(
             model_name="realmauditlog", old_name="event_type_int", new_name="event_type",

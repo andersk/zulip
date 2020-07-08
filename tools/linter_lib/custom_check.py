@@ -157,13 +157,9 @@ js_rules = RuleList(
         },
         {
             "pattern": r"""compose_error\(["']""",
-            "description": "Argument to compose_error should be a literal string enclosed "
-            "by i18n.t()",
+            "description": "Argument to compose_error should be a literal string enclosed " "by i18n.t()",
         },
-        {
-            "pattern": r"ui.report_success\(",
-            "description": "Deprecated function, use ui_report.success.",
-        },
+        {"pattern": r"ui.report_success\(", "description": "Deprecated function, use ui_report.success."},
         {
             "pattern": r"""report.success\(["']""",
             "description": "Argument to report_success should be a literal string enclosed "
@@ -801,10 +797,7 @@ handlebars_rules = RuleList(
             "pattern": r"{{/tr}}[\.\?!]",
             "description": "Period should be part of the translatable string.",
         },
-        {
-            "pattern": "{{t (\"|') ",
-            "description": "Translatable strings should not have leading spaces.",
-        },
+        {"pattern": "{{t (\"|') ", "description": "Translatable strings should not have leading spaces."},
         {
             "pattern": "{{t '[^']+ ' }}",
             "description": "Translatable strings should not have trailing spaces.",

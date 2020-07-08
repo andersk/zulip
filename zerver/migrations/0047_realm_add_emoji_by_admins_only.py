@@ -10,8 +10,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="realm",
-            name="add_emoji_by_admins_only",
-            field=models.BooleanField(default=False),
+            model_name="realm", name="add_emoji_by_admins_only", field=models.BooleanField(default=False),
         ),
     ]

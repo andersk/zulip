@@ -19,13 +19,9 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name="realm",
-            name="inline_url_embed_preview",
-            field=models.BooleanField(default=False),
+            model_name="realm", name="inline_url_embed_preview", field=models.BooleanField(default=False),
         ),
         migrations.RunPython(
-            disable_realm_inline_url_embed_preview,
-            reverse_code=migrations.RunPython.noop,
-            elidable=True,
+            disable_realm_inline_url_embed_preview, reverse_code=migrations.RunPython.noop, elidable=True,
         ),
     ]

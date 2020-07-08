@@ -26,8 +26,6 @@ class Migration(migrations.Migration):
             ),
         ),
         migrations.AddField(
-            model_name="customerplan",
-            name="invoicing_status",
-            field=models.SmallIntegerField(default=1),
+            model_name="customerplan", name="invoicing_status", field=models.SmallIntegerField(default=1),
         ),
     ]

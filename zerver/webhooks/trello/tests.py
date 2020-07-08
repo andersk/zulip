@@ -88,9 +88,7 @@ class TrelloHookTests(WebhookTestCase):
         expected_message = (
             "TomaszKolek removed Trello from [Welcome Board](https://trello.com/b/iqXXzYEj)."
         )
-        self.send_and_test_stream_message(
-            "removing_member_from_board", "Welcome Board", expected_message,
-        )
+        self.send_and_test_stream_message("removing_member_from_board", "Welcome Board", expected_message)
 
     def test_trello_webhook_when_member_was_added_to_board(self) -> None:
         expected_message = "TomaszKolek added Trello to [Welcome Board](https://trello.com/b/iqXXzYEj)."
@@ -137,9 +135,7 @@ class TrelloHookTests(WebhookTestCase):
 
     def test_trello_webhook_when_description_was_added_to_card(self) -> None:
         expected_message = "Marco Matarazzo set description for [New Card](https://trello.com/c/P2r0z66z) to:\n~~~ quote\nNew Description\n~~~"
-        self.send_and_test_stream_message(
-            "adding_description_to_card", "Welcome Board", expected_message,
-        )
+        self.send_and_test_stream_message("adding_description_to_card", "Welcome Board", expected_message)
 
     def test_trello_webhook_when_description_was_removed_from_card(self) -> None:
         expected_message = (

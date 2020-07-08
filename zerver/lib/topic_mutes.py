@@ -14,8 +14,7 @@ def get_topic_mutes(user_profile: UserProfile) -> List[Tuple[str, str, float]]:
         "stream__name", "topic_name", "date_muted",
     )
     return [
-        (row["stream__name"], row["topic_name"], datetime_to_timestamp(row["date_muted"]))
-        for row in rows
+        (row["stream__name"], row["topic_name"], datetime_to_timestamp(row["date_muted"])) for row in rows
     ]
 
 

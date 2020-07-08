@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="userprofile",
-            name="enable_login_emails",
-            field=models.BooleanField(default=True),
+            model_name="userprofile", name="enable_login_emails", field=models.BooleanField(default=True),
         ),
     ]

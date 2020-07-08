@@ -20,9 +20,7 @@ def sql_copy_id_to_bigint_id(id_range_lower_bound: int, id_range_upper_bound: in
     """,
     )
     with connection.cursor() as cursor:
-        cursor.execute(
-            query, {"lower_bound": id_range_lower_bound, "upper_bound": id_range_upper_bound},
-        )
+        cursor.execute(query, {"lower_bound": id_range_lower_bound, "upper_bound": id_range_upper_bound})
 
 
 def copy_id_to_bigid(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
@@ -32,9 +30,7 @@ def copy_id_to_bigid(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> No
         return
 
     #  TODO: is  the below lookup fast enough, considering there's no index on bigint_id?
-    first_uncopied_id = UserMessage.objects.filter(bigint_id__isnull=True).aggregate(Min("id"))[
-        "id__min"
-    ]
+    first_uncopied_id = UserMessage.objects.filter(bigint_id__isnull=True).aggregate(Min("id"))["id__min"]
     # Note: the below id can fall in a segment
     # where bigint_id = id already, but it's not a big problem
     # this will just do some redundant UPDATEs.

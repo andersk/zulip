@@ -503,9 +503,7 @@ class GetUnreadMsgsTest(ZulipTestCase):
 
         for stream_name, topic_name in tups:
             message_ids[topic_name] = [
-                self.send_stream_message(
-                    sender=cordelia, stream_name=stream_name, topic_name=topic_name,
-                )
+                self.send_stream_message(sender=cordelia, stream_name=stream_name, topic_name=topic_name)
                 for i in range(3)
             ]
             all_message_ids |= set(message_ids[topic_name])
@@ -760,9 +758,7 @@ class GetUnreadMsgsTest(ZulipTestCase):
         self.assertEqual(result["mentions"], [])
 
         # Test with a muted stream
-        um = UserMessage.objects.get(
-            user_profile_id=user_profile.id, message_id=muted_stream_message_id,
-        )
+        um = UserMessage.objects.get(user_profile_id=user_profile.id, message_id=muted_stream_message_id)
         um.flags = UserMessage.flags.mentioned
         um.save()
         result = get_unread_data()
@@ -944,9 +940,7 @@ class MessageAccessTests(ZulipTestCase):
         """
         self.login("hamlet")
         message_ids = [
-            self.send_personal_message(
-                self.example_user("hamlet"), self.example_user("hamlet"), "test",
-            ),
+            self.send_personal_message(self.example_user("hamlet"), self.example_user("hamlet"), "test"),
         ]
 
         # Starring private messages you didn't receive fails.

@@ -561,9 +561,7 @@ class SlackImporter(ZulipTestCase):
         # We can't do an assertDictEqual since during the construction of Personal
         # recipients, slack_user_id_to_zulip_user_id are iterated in different order in Python 3.5 and 3.6.
         self.assertEqual(set(slack_recipient_name_to_zulip_recipient_id.keys()), slack_recipient_names)
-        self.assertEqual(
-            set(slack_recipient_name_to_zulip_recipient_id.values()), {i for i in range(11)},
-        )
+        self.assertEqual(set(slack_recipient_name_to_zulip_recipient_id.values()), {i for i in range(11)})
 
         # functioning of zerver subscriptions are already tested in the helper functions
         # This is to check the concatenation of the output lists from the helper functions
@@ -592,9 +590,7 @@ class SlackImporter(ZulipTestCase):
         self.assertEqual(self.get_set(realm["zerver_huddle"], "id"), {0, 1, 2})
         self.assertEqual(realm["zerver_userpresence"], [])
 
-    @mock.patch(
-        "zerver.data_import.slack.users_to_zerver_userprofile", return_value=[[], [], {}, [], []],
-    )
+    @mock.patch("zerver.data_import.slack.users_to_zerver_userprofile", return_value=[[], [], {}, [], []])
     @mock.patch(
         "zerver.data_import.slack.channels_to_zerver_stream",
         return_value=[{"zerver_stream": []}, {}, {}, {}, {}],
@@ -614,9 +610,7 @@ class SlackImporter(ZulipTestCase):
             dm_members,
             avatar_list,
             em,
-        ) = slack_workspace_to_realm(
-            "testdomain", realm_id, user_list, "test-realm", "./random_path", {},
-        )
+        ) = slack_workspace_to_realm("testdomain", realm_id, user_list, "test-realm", "./random_path", {})
         test_zerver_realmdomain = [
             {"realm": realm_id, "allow_subdomains": False, "domain": "testdomain", "id": realm_id},
         ]

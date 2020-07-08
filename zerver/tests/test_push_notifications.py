@@ -251,9 +251,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
 
         remote_tokens = RemotePushDeviceToken.objects.filter(token=payload["token"])
         self.assertEqual(len(remote_tokens), 1)
-        result = self.uuid_post(
-            self.server_uuid, "/api/v1/remotes/push/unregister/all", dict(user_id=10),
-        )
+        result = self.uuid_post(self.server_uuid, "/api/v1/remotes/push/unregister/all", dict(user_id=10))
         self.assert_json_success(result)
 
         remote_tokens = RemotePushDeviceToken.objects.filter(token=payload["token"])
@@ -317,9 +315,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
                     result, "ConnectionError while trying to connect to push notification bouncer", 502,
                 )
 
-            with mock.patch(
-                "zerver.lib.remote_server.requests.request", return_value=Result(status=500),
-            ):
+            with mock.patch("zerver.lib.remote_server.requests.request", return_value=Result(status=500)):
                 result = self.client_post(endpoint, {"token": token}, subdomain="zulip")
                 self.assert_json_error(result, "Received 500 from push notification bouncer", 502)
 
@@ -344,9 +340,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
 
         # Remove tokens
         for endpoint, token, kind in endpoints:
-            result = self.client_delete(
-                endpoint, {"token": token, "token_kind": kind}, subdomain="zulip",
-            )
+            result = self.client_delete(endpoint, {"token": token, "token_kind": kind}, subdomain="zulip")
             self.assert_json_success(result)
             tokens = list(
                 RemotePushDeviceToken.objects.filter(user_id=user.id, token=token, server=server),
@@ -1282,9 +1276,7 @@ class TestAPNs(PushNotificationTest):
 class TestGetAPNsPayload(PushNotificationTest):
     def test_get_message_payload_apns_personal_message(self) -> None:
         user_profile = self.example_user("othello")
-        message_id = self.send_personal_message(
-            self.sender, user_profile, "Content of personal message",
-        )
+        message_id = self.send_personal_message(self.sender, user_profile, "Content of personal message")
         message = Message.objects.get(id=message_id)
         message.trigger = "private_message"
         payload = get_message_payload_apns(user_profile, message)
@@ -1646,8 +1638,7 @@ class TestSendToPushBouncer(ZulipTestCase):
         # This is the exception our decorator uses for an invalid Zulip server
         error_obj = InvalidZulipServerError("testRole")
         with mock.patch(
-            "requests.request",
-            return_value=Result(status=400, content=ujson.dumps(error_obj.to_json())),
+            "requests.request", return_value=Result(status=400, content=ujson.dumps(error_obj.to_json())),
         ):
             with self.assertRaises(PushNotificationBouncerException) as exc:
                 send_to_push_bouncer("register", "register", {"msg": "true"})
@@ -1769,9 +1760,7 @@ class TestPushApi(BouncerTestCase):
 
         # PushDeviceToken will include all the device tokens.
         tokens = list(PushDeviceToken.objects.values_list("token", flat=True))
-        self.assertEqual(
-            tokens, ["apple-tokenaa", "android-token-1", "apple-tokenbb", "android-token-2"],
-        )
+        self.assertEqual(tokens, ["apple-tokenaa", "android-token-1", "apple-tokenbb", "android-token-2"])
 
         # RemotePushDeviceToken will only include tokens of
         # the devices using push notification bouncer.

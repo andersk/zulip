@@ -564,8 +564,7 @@ class TestSupportEndpoint(ZulipTestCase):
             else:
                 self.assert_not_in_success_response(['<span class="label">invite</span>'], result)
                 self.assert_in_success_response(
-                    ["<b>Expires in</b>: 1\xa0day", "<b>Status</b>: Link has never been clicked"],
-                    result,
+                    ["<b>Expires in</b>: 1\xa0day", "<b>Status</b>: Link has never been clicked"], result,
                 )
 
         def check_realm_creation_query_result(result: HttpResponse, email: str) -> None:
@@ -699,9 +698,7 @@ class TestSupportEndpoint(ZulipTestCase):
         lear_realm = get_realm("lear")
         self.login_user(cordelia)
 
-        result = self.client_post(
-            "/activity/support", {"realm_id": f"{lear_realm.id}", "discount": "25"},
-        )
+        result = self.client_post("/activity/support", {"realm_id": f"{lear_realm.id}", "discount": "25"})
         self.assertEqual(result.status_code, 302)
         self.assertEqual(result["Location"], "/login/")
 
@@ -780,9 +777,7 @@ class TestSupportEndpoint(ZulipTestCase):
         lear_realm = get_realm("lear")
         self.login_user(cordelia)
 
-        result = self.client_post(
-            "/activity/support", {"realm_id": f"{lear_realm.id}", "discount": "25"},
-        )
+        result = self.client_post("/activity/support", {"realm_id": f"{lear_realm.id}", "discount": "25"})
         self.assertEqual(result.status_code, 302)
         self.assertEqual(result["Location"], "/login/")
 

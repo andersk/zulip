@@ -40,9 +40,7 @@ Usage: ./manage.py deliver_email
             sleep_forever()
 
         while True:
-            email_jobs_to_deliver = ScheduledEmail.objects.filter(
-                scheduled_timestamp__lte=timezone_now(),
-            )
+            email_jobs_to_deliver = ScheduledEmail.objects.filter(scheduled_timestamp__lte=timezone_now())
             if email_jobs_to_deliver:
                 for job in email_jobs_to_deliver:
                     try:

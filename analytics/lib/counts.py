@@ -745,9 +745,7 @@ def get_count_stats(realm: Optional[Realm] = None) -> Dict[str, CountStat]:
             CountStat.DAY,
             interval=timedelta(days=15) - UserActivityInterval.MIN_INTERVAL_LENGTH,
         ),
-        CountStat(
-            "minutes_active::day", DataCollector(UserCount, do_pull_minutes_active), CountStat.DAY,
-        ),
+        CountStat("minutes_active::day", DataCollector(UserCount, do_pull_minutes_active), CountStat.DAY),
         # Rate limiting stats
         # Used to limit the number of invitation emails sent by a realm
         LoggingCountStat("invites_sent::day", RealmCount, CountStat.DAY),

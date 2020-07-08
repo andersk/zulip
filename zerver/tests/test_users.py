@@ -774,8 +774,7 @@ class AdminCreateUserTest(ZulipTestCase):
         self.assert_json_error(result, "Missing 'full_name' argument")
 
         result = self.client_post(
-            "/json/users",
-            dict(email="romeo@not-zulip.com", password="xxxx", full_name="Romeo Montague"),
+            "/json/users", dict(email="romeo@not-zulip.com", password="xxxx", full_name="Romeo Montague"),
         )
         self.assert_json_error(result, "Missing 'short_name' argument")
 
@@ -939,9 +938,7 @@ class UserProfileTest(ZulipTestCase):
         self.assertEqual(result[cordelia.email].email, cordelia.email)
 
         result = bulk_get_users(
-            [hamlet.email, cordelia.email, webhook_bot.email],
-            None,
-            base_query=UserProfile.objects.all(),
+            [hamlet.email, cordelia.email, webhook_bot.email], None, base_query=UserProfile.objects.all(),
         )
         self.assertEqual(result[hamlet.email].email, hamlet.email)
         self.assertEqual(result[cordelia.email].email, cordelia.email)

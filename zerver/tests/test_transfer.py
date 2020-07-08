@@ -56,8 +56,7 @@ class TransferUploadsToS3Test(ZulipTestCase):
             open(avatar_disk_path(user, original=True), "rb").read(),
         )
         self.assertEqual(
-            medium_image_key.get()["Body"].read(),
-            open(avatar_disk_path(user, medium=True), "rb").read(),
+            medium_image_key.get()["Body"].read(), open(avatar_disk_path(user, medium=True), "rb").read(),
         )
 
     @mock_s3

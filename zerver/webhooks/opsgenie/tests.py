@@ -33,10 +33,7 @@ class OpsGenieHookTests(WebhookTestCase):
 """.strip()
 
         self.send_and_test_stream_message(
-            "addnote",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "addnote", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_addrecipient_alert(self) -> None:
@@ -67,10 +64,7 @@ class OpsGenieHookTests(WebhookTestCase):
 """.strip()
 
         self.send_and_test_stream_message(
-            "addtags",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "addtags", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_addteam_alert(self) -> None:
@@ -84,10 +78,7 @@ class OpsGenieHookTests(WebhookTestCase):
 """.strip()
 
         self.send_and_test_stream_message(
-            "addteam",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "addteam", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_assignownership_alert(self) -> None:

@@ -1168,9 +1168,7 @@ def get_activity(request: HttpRequest) -> HttpResponse:
 
     title = "Activity"
 
-    return render(
-        request, "analytics/activity.html", context=dict(data=data, title=title, is_home=True),
-    )
+    return render(request, "analytics/activity.html", context=dict(data=data, title=title, is_home=True))
 
 
 def get_confirmations(

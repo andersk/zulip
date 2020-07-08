@@ -101,9 +101,7 @@ class GitlabHookTests(WebhookTestCase):
         expected_message = "Joe Bloggs created [Issue #1](https://gitlab.example.co.uk/joe.bloggs/testing/issues/1):\n\n~~~ quote\nTesting\n~~~"
 
         self.send_and_test_stream_message(
-            "issue_hook__confidential_issue_created_without_assignee",
-            expected_subject,
-            expected_message,
+            "issue_hook__confidential_issue_created_without_assignee", expected_subject, expected_message,
         )
 
     def test_create_issue_with_custom_topic_in_url(self) -> None:
@@ -201,7 +199,9 @@ class GitlabHookTests(WebhookTestCase):
 
     def test_close_issue_event_message(self) -> None:
         expected_topic = "my-awesome-project / Issue #1 Issue title_new"
-        expected_message = "Tomasz Kolek closed [Issue #1](https://gitlab.com/tomaszkolek0/my-awesome-project/issues/1)."
+        expected_message = (
+            "Tomasz Kolek closed [Issue #1](https://gitlab.com/tomaszkolek0/my-awesome-project/issues/1)."
+        )
 
         self.send_and_test_stream_message("issue_hook__issue_closed", expected_topic, expected_message)
 

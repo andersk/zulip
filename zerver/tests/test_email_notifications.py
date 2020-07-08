@@ -620,9 +620,7 @@ class TestMissedMessages(ZulipTestCase):
             False, show_message_content=False, message_content_disabled_by_user=True,
         )
         mail.outbox = []
-        self._extra_context_in_huddle_missed_stream_messages_two_others(
-            False, show_message_content=False,
-        )
+        self._extra_context_in_huddle_missed_stream_messages_two_others(False, show_message_content=False)
 
     @override_settings(SEND_MISSED_MESSAGE_EMAILS_AS_USER=True)
     def test_extra_context_in_missed_stream_messages_as_user(self) -> None:
@@ -788,9 +786,7 @@ class TestMissedMessages(ZulipTestCase):
 
     def test_stream_link_in_missed_message(self) -> None:
         msg_id = self.send_personal_message(
-            self.example_user("othello"),
-            self.example_user("hamlet"),
-            "Come and join us in #**Verona**.",
+            self.example_user("othello"), self.example_user("hamlet"), "Come and join us in #**Verona**.",
         )
         stream_id = get_stream("Verona", get_realm("zulip")).id
         href = f"http://zulip.testserver/#narrow/stream/{stream_id}-Verona"

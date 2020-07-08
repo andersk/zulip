@@ -407,9 +407,7 @@ def do_send_missedmessage_events_reply_in_zulip(
     else:
         context.update(
             {
-                "messages": build_message_list(
-                    user_profile, list(m["message"] for m in missed_messages),
-                ),
+                "messages": build_message_list(user_profile, list(m["message"] for m in missed_messages)),
                 "sender_str": ", ".join(sender.full_name for sender in senders),
                 "realm_str": user_profile.realm.name,
                 "show_message_content": True,
@@ -549,9 +547,7 @@ def enqueue_welcome_emails(user: UserProfile, realm_creation: bool = False) -> N
         from_address = FromAddress.support_placeholder
 
     other_account_count = (
-        UserProfile.objects.filter(delivery_email__iexact=user.delivery_email)
-        .exclude(id=user.id)
-        .count()
+        UserProfile.objects.filter(delivery_email__iexact=user.delivery_email).exclude(id=user.id).count()
     )
     unsubscribe_link = one_click_unsubscribe_link(user, "welcome")
     context = common_context(user)

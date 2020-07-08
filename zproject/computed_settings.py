@@ -453,11 +453,7 @@ TWITTER_ACCESS_TOKEN_SECRET = get_secret("twitter_access_token_secret")
 
 # These are the bots that Zulip sends automated messages as.
 INTERNAL_BOTS = [
-    {
-        "var_name": "NOTIFICATION_BOT",
-        "email_template": "notification-bot@%s",
-        "name": "Notification Bot",
-    },
+    {"var_name": "NOTIFICATION_BOT", "email_template": "notification-bot@%s", "name": "Notification Bot"},
     {"var_name": "EMAIL_GATEWAY_BOT", "email_template": "emailgateway@%s", "name": "Email Gateway"},
     {"var_name": "NAGIOS_SEND_BOT", "email_template": "nagios-send-bot@%s", "name": "Nagios Send Bot"},
     {
