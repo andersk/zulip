@@ -271,9 +271,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
         # Test that we don't mangle the email field with
         # email_address_visiblity limited to admins
         user = self.example_user("hamlet")
-        do_set_realm_property(
-            user.realm, "email_address_visibility", Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS,
-        )
+        do_set_realm_property(user.realm, "email_address_visibility", Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS)
         user.refresh_from_db()
 
         self.login_user(user)
@@ -1000,9 +998,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
 
         # HAPPY PATH
         with get_test_image_file("img.png") as fp:
-            result = self.client_patch_multipart(
-                f"/json/bots/{self.get_bot_user(email).id}", dict(file=fp),
-            )
+            result = self.client_patch_multipart(f"/json/bots/{self.get_bot_user(email).id}", dict(file=fp))
             profile = get_user(bot_email, bot_realm)
             self.assertEqual(profile.avatar_version, 2)
             # Make sure that avatar image that we've uploaded is same with avatar image in the server

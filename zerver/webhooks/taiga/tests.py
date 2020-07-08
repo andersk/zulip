@@ -261,7 +261,9 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("epic_changed_assigned", self.TOPIC, message)
 
     def test_taiga_epic_changed_unassigned(self) -> None:
-        message = "[Eeshan Garg](https://tree.taiga.io/profile/eeshangarg) unassigned epic **Zulip is awesome!**."
+        message = (
+            "[Eeshan Garg](https://tree.taiga.io/profile/eeshangarg) unassigned epic **Zulip is awesome!**."
+        )
         self.send_and_test_stream_message("epic_changed_unassigned", self.TOPIC, message)
 
     def test_taiga_epic_changed_reassigned(self) -> None:
@@ -293,7 +295,9 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("epic_changed_description", self.TOPIC, message)
 
     def test_taiga_epic_changed_commented(self) -> None:
-        message = "[Eeshan Garg](https://tree.taiga.io/profile/eeshangarg) commented on epic **Zulip is great!**."
+        message = (
+            "[Eeshan Garg](https://tree.taiga.io/profile/eeshangarg) commented on epic **Zulip is great!**."
+        )
         self.send_and_test_stream_message("epic_changed_commented", self.TOPIC, message)
 
     def test_taiga_epic_deleted(self) -> None:

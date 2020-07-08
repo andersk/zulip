@@ -262,9 +262,7 @@ class Realm(models.Model):
 
     PRIVATE_MESSAGE_POLICY_UNLIMITED = 1
     PRIVATE_MESSAGE_POLICY_DISABLED = 2
-    private_message_policy: int = models.PositiveSmallIntegerField(
-        default=PRIVATE_MESSAGE_POLICY_UNLIMITED,
-    )
+    private_message_policy: int = models.PositiveSmallIntegerField(default=PRIVATE_MESSAGE_POLICY_UNLIMITED)
     PRIVATE_MESSAGE_POLICY_TYPES = [
         PRIVATE_MESSAGE_POLICY_UNLIMITED,
         PRIVATE_MESSAGE_POLICY_DISABLED,
@@ -1140,9 +1138,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
         (TUTORIAL_STARTED, "Started"),
         (TUTORIAL_FINISHED, "Finished"),
     )
-    tutorial_status: str = models.CharField(
-        default=TUTORIAL_WAITING, choices=TUTORIAL_STATES, max_length=1,
-    )
+    tutorial_status: str = models.CharField(default=TUTORIAL_WAITING, choices=TUTORIAL_STATES, max_length=1)
 
     # Contains serialized JSON of the form:
     #    [("step 1", true), ("step 2", false)]

@@ -39,9 +39,7 @@ def add_apns_device_token(
 
 @human_users_only
 @has_request_variables
-def add_android_reg_id(
-    request: HttpRequest, user_profile: UserProfile, token: str = REQ(),
-) -> HttpResponse:
+def add_android_reg_id(request: HttpRequest, user_profile: UserProfile, token: str = REQ()) -> HttpResponse:
     validate_token(token, PushDeviceToken.GCM)
     add_push_device_token(user_profile, token, PushDeviceToken.GCM)
     return json_success()

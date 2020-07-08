@@ -76,10 +76,7 @@ class GitlabHookTests(WebhookTestCase):
         expected_message = "Tomasz Kolek pushed tag xyz."
 
         self.send_and_test_stream_message(
-            "tag_push_hook__add_tag",
-            expected_topic,
-            expected_message,
-            HTTP_X_GITLAB_EVENT="Tag Push Hook",
+            "tag_push_hook__add_tag", expected_topic, expected_message, HTTP_X_GITLAB_EVENT="Tag Push Hook",
         )
 
     def test_remove_tag_event_message(self) -> None:
@@ -219,7 +216,9 @@ class GitlabHookTests(WebhookTestCase):
 
     def test_reopen_issue_event_message(self) -> None:
         expected_topic = "my-awesome-project / Issue #1 Issue title_new"
-        expected_message = "Tomasz Kolek reopened [Issue #1](https://gitlab.com/tomaszkolek0/my-awesome-project/issues/1)."
+        expected_message = (
+            "Tomasz Kolek reopened [Issue #1](https://gitlab.com/tomaszkolek0/my-awesome-project/issues/1)."
+        )
 
         self.send_and_test_stream_message("issue_hook__issue_reopened", expected_topic, expected_message)
 
@@ -243,18 +242,14 @@ class GitlabHookTests(WebhookTestCase):
         expected_topic = "my-awesome-project / MR #1 Tomek"
         expected_message = "Tomasz Kolek [commented](https://gitlab.com/tomaszkolek0/my-awesome-project/merge_requests/1#note_14171860) on [MR #1](https://gitlab.com/tomaszkolek0/my-awesome-project/merge_requests/1):\n\n~~~ quote\nNice merge request!\n~~~"
 
-        self.send_and_test_stream_message(
-            "note_hook__merge_request_note", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("note_hook__merge_request_note", expected_topic, expected_message)
 
     def test_note_merge_request_with_custom_topic_in_url(self) -> None:
         self.url = self.build_webhook_url(topic="notifications")
         expected_topic = "notifications"
         expected_message = "[[my-awesome-project](https://gitlab.com/tomaszkolek0/my-awesome-project)] Tomasz Kolek [commented](https://gitlab.com/tomaszkolek0/my-awesome-project/merge_requests/1#note_14171860) on [MR #1 Tomek](https://gitlab.com/tomaszkolek0/my-awesome-project/merge_requests/1):\n\n~~~ quote\nNice merge request!\n~~~"
 
-        self.send_and_test_stream_message(
-            "note_hook__merge_request_note", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("note_hook__merge_request_note", expected_topic, expected_message)
 
     def test_note_issue_event_message(self) -> None:
         expected_topic = "my-awesome-project / Issue #2 abc"

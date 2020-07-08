@@ -31,7 +31,5 @@ class Migration(migrations.Migration):
                 max_length=20,
             ),
         ),
-        migrations.RunPython(
-            change_emojiset_choice, reverse_code=migrations.RunPython.noop, elidable=True,
-        ),
+        migrations.RunPython(change_emojiset_choice, reverse_code=migrations.RunPython.noop, elidable=True),
     ]

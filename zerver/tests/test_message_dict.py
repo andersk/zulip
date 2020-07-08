@@ -228,9 +228,7 @@ class MessageDictTest(ZulipTestCase):
         # because there is an ugly hack we need to cover.  So don't just say "row = message".
         row = MessageDict.get_raw_db_rows([message.id])[0]
         dct = MessageDict.build_dict_from_raw_db_row(row)
-        error_content = (
-            "<p>[Zulip note: Sorry, we could not understand the formatting of your message]</p>"
-        )
+        error_content = "<p>[Zulip note: Sorry, we could not understand the formatting of your message]</p>"
         self.assertEqual(dct["rendered_content"], error_content)
 
     def test_topic_links_use_stream_realm(self) -> None:
@@ -574,9 +572,7 @@ class TestMessageForIdsDisplayRecipientFetching(ZulipTestCase):
         )
 
         self._verify_display_recipient(messages[0]["display_recipient"], [hamlet, cordelia, othello])
-        self._verify_display_recipient(
-            messages[1]["display_recipient"], get_stream("Verona", hamlet.realm),
-        )
+        self._verify_display_recipient(messages[1]["display_recipient"], get_stream("Verona", hamlet.realm))
         self._verify_display_recipient(messages[2]["display_recipient"], [hamlet, cordelia])
         self._verify_display_recipient(
             messages[3]["display_recipient"], get_stream("Denmark", hamlet.realm),

@@ -145,9 +145,7 @@ def process_count_stat(stat: CountStat, fill_to_time: datetime, realm: Optional[
         for dependency in stat.dependencies:
             dependency_fill_time = last_successful_fill(dependency)
             if dependency_fill_time is None:
-                logger.warning(
-                    "DependentCountStat %s run before dependency %s.", stat.property, dependency,
-                )
+                logger.warning("DependentCountStat %s run before dependency %s.", stat.property, dependency)
                 return
             fill_to_time = min(fill_to_time, dependency_fill_time)
 
@@ -385,11 +383,7 @@ def do_pull_minutes_active(
 
     rows = [
         UserCount(
-            user_id=ids[0],
-            realm_id=ids[1],
-            property=property,
-            end_time=end_time,
-            value=int(seconds // 60),
+            user_id=ids[0], realm_id=ids[1], property=property, end_time=end_time, value=int(seconds // 60),
         )
         for ids, seconds in seconds_active.items()
         if seconds >= 60

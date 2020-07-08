@@ -51,17 +51,13 @@ class ClubhouseWebhookTest(WebhookTestCase):
 
     def test_story_update_add_comment(self) -> None:
         expected_message = "New comment added to the story [Add cool feature!](https://app.clubhouse.io/zulip/story/11):\n``` quote\nJust leaving a comment here!\n```"
-        self.send_and_test_stream_message(
-            "story_update_add_comment", "Add cool feature!", expected_message,
-        )
+        self.send_and_test_stream_message("story_update_add_comment", "Add cool feature!", expected_message)
 
     def test_epic_update_add_description(self) -> None:
         expected_message = (
             "New description added to the epic **New Cool Epic!**:\n``` quote\nAdded a description!\n```"
         )
-        self.send_and_test_stream_message(
-            "epic_update_add_description", "New Cool Epic!", expected_message,
-        )
+        self.send_and_test_stream_message("epic_update_add_description", "New Cool Epic!", expected_message)
 
     def test_epic_update_remove_description(self) -> None:
         expected_message = "Description for the epic **New Cool Epic!** was removed."
@@ -87,9 +83,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
 
     def test_story_update_change_description(self) -> None:
         expected_message = "Description for the story [Add cool feature!](https://app.clubhouse.io/zulip/story/11) was changed from:\n``` quote\nWe should probably add this cool feature!\n```\nto\n``` quote\nWe should probably add this cool feature! Just edited this. :)\n```"
-        self.send_and_test_stream_message(
-            "story_update_description", "Add cool feature!", expected_message,
-        )
+        self.send_and_test_stream_message("story_update_description", "Add cool feature!", expected_message)
 
     def test_epic_update_change_state(self) -> None:
         expected_message = (
@@ -143,9 +137,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
             "The story [Add cool feature!](https://app.clubhouse.io/zulip/story/11) was moved from **Release 1.9**"
             " to **Clubhouse Fork**."
         )
-        self.send_and_test_stream_message(
-            "story_update_change_epic", "Add cool feature!", expected_message,
-        )
+        self.send_and_test_stream_message("story_update_change_epic", "Add cool feature!", expected_message)
 
     def test_story_epic_added(self) -> None:
         expected_message = "The story [Add cool feature!](https://app.clubhouse.io/zulip/story/11) was added to the epic **Release 1.9**."
@@ -153,9 +145,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
 
     def test_story_epic_removed(self) -> None:
         expected_message = "The story [Add cool feature!](https://app.clubhouse.io/zulip/story/11) was removed from the epic **Release 1.9**."
-        self.send_and_test_stream_message(
-            "story_update_remove_epic", "Add cool feature!", expected_message,
-        )
+        self.send_and_test_stream_message("story_update_remove_epic", "Add cool feature!", expected_message)
 
     def test_story_estimate_changed(self) -> None:
         expected_message = "The estimate for the story [Add cool feature!](https://app.clubhouse.io/zulip/story/11) was set to 4 points."
@@ -182,9 +172,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
         )
 
     @patch("zerver.lib.webhooks.common.check_send_webhook_message")
-    def test_story_file_attachment_removed_ignore(
-        self, check_send_webhook_message_mock: MagicMock,
-    ) -> None:
+    def test_story_file_attachment_removed_ignore(self, check_send_webhook_message_mock: MagicMock) -> None:
         payload = self.get_body("story_update_remove_attachment")
         result = self.client_post(self.url, payload, content_type="application/json")
         self.assertFalse(check_send_webhook_message_mock.called)
@@ -215,9 +203,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
 
     def test_story_update_type(self) -> None:
         expected_message = "The type of the story [Add cool feature!](https://app.clubhouse.io/zulip/story/11) was changed from **feature** to **bug**."
-        self.send_and_test_stream_message(
-            "story_update_change_type", "Add cool feature!", expected_message,
-        )
+        self.send_and_test_stream_message("story_update_change_type", "Add cool feature!", expected_message)
 
     def test_story_update_add_github_pull_request(self) -> None:
         expected_message = "New GitHub PR [#10](https://github.com/eeshangarg/Scheduler/pull/10) opened for story [Testing pull requests with Story](https://app.clubhouse.io/zulip/story/28) (Unscheduled -> Ready for Review)."

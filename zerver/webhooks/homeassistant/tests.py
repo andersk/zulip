@@ -11,10 +11,7 @@ class HomeAssistantHookTests(WebhookTestCase):
         expected_message = "The sun will be shining today!"
 
         self.send_and_test_stream_message(
-            "simplereq",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "simplereq", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_req_with_title(self) -> None:

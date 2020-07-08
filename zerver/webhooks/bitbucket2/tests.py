@@ -71,16 +71,12 @@ class Bitbucket2HookTests(WebhookTestCase):
 
     def test_bitbucket2_on_force_push_event(self) -> None:
         expected_message = "kolaszek [force pushed](https://bitbucket.org/kolaszek/repository-name/branch/master) to branch master. Head is now 25f93d22b719e2d678a7ad5ee0ef0d1fcdf39c12."
-        self.send_and_test_stream_message(
-            "force_push", self.EXPECTED_TOPIC_BRANCH_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("force_push", self.EXPECTED_TOPIC_BRANCH_EVENTS, expected_message)
 
     def test_bitbucket2_on_force_push_event_filtered_by_branches(self) -> None:
         self.url = self.build_webhook_url(branches="master,development")
         expected_message = "kolaszek [force pushed](https://bitbucket.org/kolaszek/repository-name/branch/master) to branch master. Head is now 25f93d22b719e2d678a7ad5ee0ef0d1fcdf39c12."
-        self.send_and_test_stream_message(
-            "force_push", self.EXPECTED_TOPIC_BRANCH_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("force_push", self.EXPECTED_TOPIC_BRANCH_EVENTS, expected_message)
 
     def test_bitbucket2_on_remove_branch_event(self) -> None:
         expected_message = "kolaszek deleted branch master."
@@ -220,10 +216,7 @@ class Bitbucket2HookTests(WebhookTestCase):
             "HTTP_X_EVENT_KEY": "pullrequest:rejected",
         }
         self.send_and_test_stream_message(
-            "pull_request_fulfilled_or_rejected",
-            self.EXPECTED_TOPIC_PR_EVENTS,
-            expected_message,
-            **kwargs,
+            "pull_request_fulfilled_or_rejected", self.EXPECTED_TOPIC_PR_EVENTS, expected_message, **kwargs,
         )
 
     def test_bitbucket2_on_pull_request_fulfilled_event(self) -> None:
@@ -234,10 +227,7 @@ class Bitbucket2HookTests(WebhookTestCase):
             "HTTP_X_EVENT_KEY": "pullrequest:fulfilled",
         }
         self.send_and_test_stream_message(
-            "pull_request_fulfilled_or_rejected",
-            self.EXPECTED_TOPIC_PR_EVENTS,
-            expected_message,
-            **kwargs,
+            "pull_request_fulfilled_or_rejected", self.EXPECTED_TOPIC_PR_EVENTS, expected_message, **kwargs,
         )
 
     def test_bitbucket2_on_pull_request_comment_created_event(self) -> None:

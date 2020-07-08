@@ -19,10 +19,7 @@ Build update (see [build log](https://ci.solanolabs.com:443/reports/3316175)):
 """.strip()
 
         self.send_and_test_stream_message(
-            "build_001",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "build_001", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_solano_message_002(self) -> None:
@@ -38,10 +35,7 @@ Build update (see [build log](https://ci.solanolabs.com:443/reports/3316723)):
 """.strip()
 
         self.send_and_test_stream_message(
-            "build_002",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "build_002", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_solano_message_received(self) -> None:

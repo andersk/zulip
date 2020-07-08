@@ -48,9 +48,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="usergroup",
             name="members",
-            field=models.ManyToManyField(
-                through="zerver.UserGroupMembership", to=settings.AUTH_USER_MODEL,
-            ),
+            field=models.ManyToManyField(through="zerver.UserGroupMembership", to=settings.AUTH_USER_MODEL),
         ),
         migrations.AddField(
             model_name="usergroup",

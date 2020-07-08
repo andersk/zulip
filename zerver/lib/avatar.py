@@ -88,11 +88,7 @@ def get_avatar_field(
     info to try to avoid stale caches.
     """
     url = _get_unversioned_avatar_url(
-        user_profile_id=user_id,
-        avatar_source=avatar_source,
-        realm_id=realm_id,
-        email=email,
-        medium=medium,
+        user_profile_id=user_id, avatar_source=avatar_source, realm_id=realm_id, email=email, medium=medium,
     )
     url += f"&version={avatar_version:d}"
     return url

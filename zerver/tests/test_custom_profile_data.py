@@ -425,9 +425,7 @@ class UpdateCustomProfileFieldTest(CustomProfileFieldTestCase):
         )
         self.assert_json_error(result, "A field with that label already exists.")
 
-    def assert_error_update_invalid_value(
-        self, field_name: str, new_value: object, error_msg: str,
-    ) -> None:
+    def assert_error_update_invalid_value(self, field_name: str, new_value: object, error_msg: str) -> None:
         self.login("iago")
         realm = get_realm("zulip")
         field = CustomProfileField.objects.get(name=field_name, realm=realm)

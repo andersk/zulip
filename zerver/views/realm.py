@@ -171,10 +171,7 @@ def update_realm(
         if allow_community_topic_editing is None:
             allow_community_topic_editing = realm.allow_community_topic_editing
         do_set_realm_message_editing(
-            realm,
-            allow_message_editing,
-            message_content_edit_limit_seconds,
-            allow_community_topic_editing,
+            realm, allow_message_editing, message_content_edit_limit_seconds, allow_community_topic_editing,
         )
         data["allow_message_editing"] = allow_message_editing
         data["message_content_edit_limit_seconds"] = message_content_edit_limit_seconds
@@ -189,9 +186,7 @@ def update_realm(
     # Realm.notifications_stream and Realm.signup_notifications_stream are not boolean,
     # str or integer field, and thus doesn't fit into the do_set_realm_property framework.
     if notifications_stream_id is not None:
-        if realm.notifications_stream is None or (
-            realm.notifications_stream.id != notifications_stream_id
-        ):
+        if realm.notifications_stream is None or (realm.notifications_stream.id != notifications_stream_id):
             new_notifications_stream = None
             if notifications_stream_id >= 0:
                 (new_notifications_stream, recipient, sub) = access_stream_by_id(

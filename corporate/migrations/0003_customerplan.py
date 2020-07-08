@@ -34,9 +34,7 @@ class Migration(migrations.Migration):
                 ("status", models.SmallIntegerField(default=1)),
                 (
                     "customer",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="corporate.Customer",
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="corporate.Customer"),
                 ),
             ],
         ),

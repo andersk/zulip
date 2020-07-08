@@ -44,9 +44,7 @@ def upload_emoji(
 
 
 def delete_emoji(request: HttpRequest, user_profile: UserProfile, emoji_name: str) -> HttpResponse:
-    if not RealmEmoji.objects.filter(
-        realm=user_profile.realm, name=emoji_name, deactivated=False,
-    ).exists():
+    if not RealmEmoji.objects.filter(realm=user_profile.realm, name=emoji_name, deactivated=False).exists():
         raise JsonableError(_("Emoji '{}' does not exist").format(emoji_name))
     check_emoji_admin(user_profile, emoji_name)
     do_remove_realm_emoji(user_profile.realm, emoji_name)

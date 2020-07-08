@@ -1106,8 +1106,7 @@ def assertEqual(key: str, result: Dict[str, Any], fixture: Dict[str, Any]) -> No
         first = f"{key} = {result[key]}"
         second = f"{key} = {fixture[key]}"
         raise AssertionError(
-            "Actual and expected outputs do not match; showing diff:\n"
-            + mdiff.diff_strings(first, second),
+            "Actual and expected outputs do not match; showing diff:\n" + mdiff.diff_strings(first, second),
         )
     else:
         assert result[key] == fixture[key]

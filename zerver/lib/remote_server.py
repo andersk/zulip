@@ -125,11 +125,7 @@ def build_analytics_data(
     floatify_datetime_fields(data, "analytics_realmcount")
     floatify_datetime_fields(data, "analytics_installationcount")
     floatify_datetime_fields(data, "zerver_realmauditlog")
-    return (
-        data["analytics_realmcount"],
-        data["analytics_installationcount"],
-        data["zerver_realmauditlog"],
-    )
+    return (data["analytics_realmcount"], data["analytics_installationcount"], data["zerver_realmauditlog"])
 
 
 def send_analytics_to_remote_server() -> None:

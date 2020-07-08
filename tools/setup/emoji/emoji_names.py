@@ -200,10 +200,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     "1f447": {"canonical_name": "point_down", "aliases": []},
     # People/114 is point_up. These seemed better than naming it point_up_2,
     # and point_of_information means it will come up in typeahead for 'point'
-    "261d": {
-        "canonical_name": "wait_one_second",
-        "aliases": ["point_of_information", "asking_a_question"],
-    },
+    "261d": {"canonical_name": "wait_one_second", "aliases": ["point_of_information", "asking_a_question"]},
     "270b": {"canonical_name": "hand", "aliases": ["raised_hand"]},
     # seems like best emoji for stop, raised_back_of_hand doesn't seem that
     # useful

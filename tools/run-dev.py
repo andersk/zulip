@@ -221,9 +221,7 @@ class BaseHandler(web.RequestHandler):
     # target server port
     target_port: int
 
-    def _add_request_headers(
-        self, exclude_lower_headers_list: Sequence[str] = [],
-    ) -> httputil.HTTPHeaders:
+    def _add_request_headers(self, exclude_lower_headers_list: Sequence[str] = []) -> httputil.HTTPHeaders:
         headers = httputil.HTTPHeaders()
         for header, v in self.request.headers.get_all():
             if header.lower() not in exclude_lower_headers_list:

@@ -563,10 +563,7 @@ class Command(BaseCommand):
             )
             birthday = try_add_realm_custom_profile_field(zulip_realm, "Birthday", CustomProfileField.DATE)
             favorite_website = try_add_realm_custom_profile_field(
-                zulip_realm,
-                "Favorite website",
-                CustomProfileField.URL,
-                hint="Or your personal blog's URL",
+                zulip_realm, "Favorite website", CustomProfileField.URL, hint="Or your personal blog's URL",
             )
             mentor = try_add_realm_custom_profile_field(zulip_realm, "Mentor", CustomProfileField.USER)
             github_profile = try_add_realm_default_custom_profile_field(zulip_realm, "github")
@@ -604,9 +601,7 @@ class Command(BaseCommand):
             )
         else:
             zulip_realm = get_realm("zulip")
-            recipient_streams = [
-                klass.type_id for klass in Recipient.objects.filter(type=Recipient.STREAM)
-            ]
+            recipient_streams = [klass.type_id for klass in Recipient.objects.filter(type=Recipient.STREAM)]
 
         # Extract a list of all users
         user_profiles: List[UserProfile] = list(UserProfile.objects.filter(is_bot=False))
@@ -625,11 +620,7 @@ class Command(BaseCommand):
                 if user.full_name[0] <= "H":
                     client = get_client("ZulipAndroid")
                 UserPresence.objects.get_or_create(
-                    user_profile=user,
-                    realm_id=user.realm_id,
-                    client=client,
-                    timestamp=date,
-                    status=status,
+                    user_profile=user, realm_id=user.realm_id, client=client, timestamp=date, status=status,
                 )
 
         user_profiles_ids = [user_profile.id for user_profile in user_profiles]

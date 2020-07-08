@@ -718,9 +718,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
             field=models.BooleanField(default=False),
         ),
         migrations.AlterField(
-            model_name="userprofile",
-            name="enable_stream_sounds",
-            field=models.BooleanField(default=False),
+            model_name="userprofile", name="enable_stream_sounds", field=models.BooleanField(default=False),
         ),
         migrations.AddField(
             model_name="userprofile",
@@ -785,8 +783,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 validators=[
                     django.core.validators.MinLengthValidator(1),
                     django.core.validators.RegexValidator(
-                        message="Invalid characters in emoji name",
-                        regex="^[0-9a-zA-Z.\\-_]+(?<![.\\-_])$",
+                        message="Invalid characters in emoji name", regex="^[0-9a-zA-Z.\\-_]+(?<![.\\-_])$",
                     ),
                 ],
             ),

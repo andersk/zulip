@@ -47,9 +47,7 @@ def reverse_notification_settings(apps: StateApps, schema_editor: DatabaseSchema
     for sub_setting_name, user_setting_name in SETTINGS_MAP.items():
         sub_filter_kwargs = {sub_setting_name: None}
         update_kwargs = {sub_setting_name: True}
-        Subscription.objects.filter(recipient__type__in=[1, 3], **sub_filter_kwargs).update(
-            **update_kwargs,
-        )
+        Subscription.objects.filter(recipient__type__in=[1, 3], **sub_filter_kwargs).update(**update_kwargs)
 
 
 class Migration(migrations.Migration):

@@ -269,9 +269,7 @@ class ZulipUploadBackend:
     def get_realm_logo_url(self, realm_id: int, version: int, night: bool) -> str:
         raise NotImplementedError()
 
-    def upload_emoji_image(
-        self, emoji_file: File, emoji_file_name: str, user_profile: UserProfile,
-    ) -> None:
+    def upload_emoji_image(self, emoji_file: File, emoji_file_name: str, user_profile: UserProfile) -> None:
         raise NotImplementedError()
 
     def get_emoji_url(self, emoji_file_name: str, realm_id: int) -> str:
@@ -398,9 +396,7 @@ class S3UploadBackend(ZulipUploadBackend):
     ) -> str:
         if target_realm is None:
             target_realm = user_profile.realm
-        s3_file_name = "/".join(
-            [str(target_realm.id), random_name(18), sanitize_name(uploaded_file_name)],
-        )
+        s3_file_name = "/".join([str(target_realm.id), random_name(18), sanitize_name(uploaded_file_name)])
         url = f"/user_uploads/{s3_file_name}"
 
         upload_image_to_s3(
@@ -564,9 +560,7 @@ class S3UploadBackend(ZulipUploadBackend):
             self.avatar_bucket, s3_file_name, "image/png", user_profile, resized_avatar,
         )
 
-    def upload_emoji_image(
-        self, emoji_file: File, emoji_file_name: str, user_profile: UserProfile,
-    ) -> None:
+    def upload_emoji_image(self, emoji_file: File, emoji_file_name: str, user_profile: UserProfile) -> None:
         content_type = guess_type(emoji_file.name)[0]
         emoji_path = RealmEmoji.PATH_ID_TEMPLATE.format(
             realm_id=user_profile.realm_id, emoji_file_name=emoji_file_name,
@@ -800,9 +794,7 @@ class LocalUploadBackend(ZulipUploadBackend):
         resized_avatar = resize_avatar(image_data)
         write_local_file("avatars", file_path + ".png", resized_avatar)
 
-    def upload_emoji_image(
-        self, emoji_file: File, emoji_file_name: str, user_profile: UserProfile,
-    ) -> None:
+    def upload_emoji_image(self, emoji_file: File, emoji_file_name: str, user_profile: UserProfile) -> None:
         emoji_path = RealmEmoji.PATH_ID_TEMPLATE.format(
             realm_id=user_profile.realm_id, emoji_file_name=emoji_file_name,
         )

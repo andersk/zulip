@@ -11,9 +11,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="userstatus",
-            name="status_text",
-            field=models.CharField(default="", max_length=255),
+            model_name="userstatus", name="status_text", field=models.CharField(default="", max_length=255),
         ),
         migrations.AlterField(
             model_name="userstatus", name="status", field=models.PositiveSmallIntegerField(default=0),

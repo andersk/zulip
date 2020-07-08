@@ -104,10 +104,7 @@ New [Error](http://app.raygun.io/error-url) occurred:
 """.strip()
 
         self.send_and_test_stream_message(
-            "new_error",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "new_error", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_reoccurred_error_message(self) -> None:

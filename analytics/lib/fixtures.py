@@ -54,9 +54,7 @@ def generate_time_series_data(
     else:
         raise AssertionError(f"Unknown frequency: {frequency}")
     if length < 2:
-        raise AssertionError(
-            "Must be generating at least 2 data points. " f"Currently generating {length}",
-        )
+        raise AssertionError("Must be generating at least 2 data points. " f"Currently generating {length}")
     growth_base = growth ** (1.0 / (length - 1))
     values_no_noise = [seasonality[i % len(seasonality)] * (growth_base ** i) for i in range(length)]
 

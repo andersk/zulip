@@ -155,9 +155,7 @@ def get_outgoing_webhook_service_handler(service: Service) -> Any:
     return service_interface
 
 
-def send_response_message(
-    bot_id: int, message_info: Dict[str, Any], response_data: Dict[str, Any],
-) -> None:
+def send_response_message(bot_id: int, message_info: Dict[str, Any], response_data: Dict[str, Any]) -> None:
     """
     bot_id is the user_id of the bot sending the response
 

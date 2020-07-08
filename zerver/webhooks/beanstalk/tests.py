@@ -81,11 +81,7 @@ class BeanstalkHookTests(WebhookTestCase):
 
 {(commits_info * COMMITS_LIMIT)}[and {50 - COMMITS_LIMIT} more commit(s)]"""
         self.api_stream_message(
-            self.test_user,
-            "git_morethanlimitcommits",
-            expected_topic,
-            expected_message,
-            content_type=None,
+            self.test_user, "git_morethanlimitcommits", expected_topic, expected_message, content_type=None,
         )
 
     def test_git_more_than_limit_filtered_by_branches(self) -> None:
@@ -96,11 +92,7 @@ class BeanstalkHookTests(WebhookTestCase):
 
 {(commits_info * COMMITS_LIMIT)}[and {50 - COMMITS_LIMIT} more commit(s)]"""
         self.api_stream_message(
-            self.test_user,
-            "git_morethanlimitcommits",
-            expected_topic,
-            expected_message,
-            content_type=None,
+            self.test_user, "git_morethanlimitcommits", expected_topic, expected_message, content_type=None,
         )
 
     @patch("zerver.webhooks.beanstalk.view.check_send_webhook_message")

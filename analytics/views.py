@@ -102,10 +102,7 @@ def render_stats(
     analytics_ready: bool = True,
 ) -> HttpRequest:
     page_params = dict(
-        data_url_suffix=data_url_suffix,
-        for_installation=for_installation,
-        remote=remote,
-        debug_mode=False,
+        data_url_suffix=data_url_suffix, for_installation=for_installation, remote=remote, debug_mode=False,
     )
     return render(
         request,
@@ -317,9 +314,7 @@ def get_chart_data(
         end = convert_to_UTC(end)
     if start is not None and end is not None and start > end:
         raise JsonableError(
-            _("Start time is later than end time. Start: {start}, End: {end}").format(
-                start=start, end=end,
-            ),
+            _("Start time is later than end time. Start: {start}, End: {end}").format(start=start, end=end),
         )
 
     if realm is None:
@@ -333,9 +328,7 @@ def get_chart_data(
         # table.
         assert server is not None
         if not aggregate_table.objects.filter(server=server).exists():
-            raise JsonableError(
-                _("No analytics data available. Please contact your server administrator."),
-            )
+            raise JsonableError(_("No analytics data available. Please contact your server administrator."))
         if start is None:
             start = aggregate_table.objects.filter(server=server).first().end_time
         if end is None:
@@ -364,9 +357,7 @@ def get_chart_data(
                 start,
                 end,
             )
-            raise JsonableError(
-                _("No analytics data available. Please contact your server administrator."),
-            )
+            raise JsonableError(_("No analytics data available. Please contact your server administrator."))
 
     assert len({stat.frequency for stat in stats}) == 1
     end_times = time_range(start, end, stats[0].frequency, min_length)

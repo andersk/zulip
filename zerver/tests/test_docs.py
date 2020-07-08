@@ -84,9 +84,7 @@ class DocPageTest(ZulipTestCase):
                 self.assert_in_success_response(
                     ['<meta name="description" content="Zulip combines'], result,
                 )
-            self.assert_not_in_success_response(
-                ['<meta name="robots" content="noindex,nofollow">'], result,
-            )
+            self.assert_not_in_success_response(['<meta name="robots" content="noindex,nofollow">'], result)
 
             # Test the URL on the "zephyr" subdomain with the landing page setting
             result = self.get_doc(url, subdomain="zephyr")
@@ -97,9 +95,7 @@ class DocPageTest(ZulipTestCase):
             for s in extra_strings:
                 self.assertIn(s, str(result.content))
             if not doc_html_str:
-                self.assert_in_success_response(
-                    ['<meta name="robots" content="noindex,nofollow">'], result,
-                )
+                self.assert_in_success_response(['<meta name="robots" content="noindex,nofollow">'], result)
 
     def test_api_doc_endpoints(self) -> None:
         current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -482,9 +478,7 @@ class PrivacyTermsTest(ZulipTestCase):
         )
 
     def test_custom_terms_of_service_template(self) -> None:
-        not_configured_message = (
-            "This installation of Zulip does not have a configured " "terms of service"
-        )
+        not_configured_message = "This installation of Zulip does not have a configured " "terms of service"
         with self.settings(TERMS_OF_SERVICE=None):
             response = self.client_get("/terms/")
         self.assert_in_success_response([not_configured_message], response)
@@ -505,9 +499,7 @@ class PrivacyTermsTest(ZulipTestCase):
 
     def test_custom_privacy_policy_template_with_absolute_url(self) -> None:
         current_dir = os.path.dirname(os.path.abspath(__file__))
-        abs_path = os.path.join(
-            current_dir, "..", "..", "templates/zerver/tests/markdown/test_markdown.md",
-        )
+        abs_path = os.path.join(current_dir, "..", "..", "templates/zerver/tests/markdown/test_markdown.md")
         with self.settings(PRIVACY_POLICY=abs_path):
             response = self.client_get("/privacy/")
         self.assert_in_success_response(["This is some <em>bold text</em>."], response)

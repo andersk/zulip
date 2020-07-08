@@ -18,9 +18,7 @@ from .card_actions import IGNORED_CARD_ACTIONS, SUPPORTED_CARD_ACTIONS, process_
 @return_success_on_head_request
 @has_request_variables
 def api_trello_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    payload: Mapping[str, Any] = REQ(argument_type="body"),
+    request: HttpRequest, user_profile: UserProfile, payload: Mapping[str, Any] = REQ(argument_type="body"),
 ) -> HttpResponse:
     payload = ujson.loads(request.body)
     action_type = payload["action"].get("type")

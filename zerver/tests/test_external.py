@@ -36,23 +36,15 @@ class MITNameTest(ZulipTestCase):
             self.assertEqual(compute_mit_user_fullname("sipbexch@mit.edu"), "Exch Sipb")
 
     def test_invalid_hesiod(self) -> None:
-        with mock.patch(
-            "DNS.dnslookup", side_effect=DNS.Base.ServerError("DNS query status: NXDOMAIN", 3),
-        ):
+        with mock.patch("DNS.dnslookup", side_effect=DNS.Base.ServerError("DNS query status: NXDOMAIN", 3)):
             self.assertEqual(compute_mit_user_fullname("1234567890@mit.edu"), "1234567890@mit.edu")
-        with mock.patch(
-            "DNS.dnslookup", side_effect=DNS.Base.ServerError("DNS query status: NXDOMAIN", 3),
-        ):
+        with mock.patch("DNS.dnslookup", side_effect=DNS.Base.ServerError("DNS query status: NXDOMAIN", 3)):
             self.assertEqual(compute_mit_user_fullname("ec-discuss@mit.edu"), "ec-discuss@mit.edu")
 
     def test_mailinglist(self) -> None:
-        with mock.patch(
-            "DNS.dnslookup", side_effect=DNS.Base.ServerError("DNS query status: NXDOMAIN", 3),
-        ):
+        with mock.patch("DNS.dnslookup", side_effect=DNS.Base.ServerError("DNS query status: NXDOMAIN", 3)):
             self.assertRaises(ValidationError, email_is_not_mit_mailing_list, "1234567890@mit.edu")
-        with mock.patch(
-            "DNS.dnslookup", side_effect=DNS.Base.ServerError("DNS query status: NXDOMAIN", 3),
-        ):
+        with mock.patch("DNS.dnslookup", side_effect=DNS.Base.ServerError("DNS query status: NXDOMAIN", 3)):
             self.assertRaises(ValidationError, email_is_not_mit_mailing_list, "ec-discuss@mit.edu")
 
     def test_notmailinglist(self) -> None:

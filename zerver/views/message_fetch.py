@@ -446,9 +446,7 @@ class NarrowBuilder:
             match_positions_character(column("rendered_content"), keywords).label("content_matches"),
         )
         query = query.column(
-            match_positions_character(func.escape_html(topic_column_sa()), keywords).label(
-                "topic_matches",
-            ),
+            match_positions_character(func.escape_html(topic_column_sa()), keywords).label("topic_matches"),
         )
         condition = column("search_pgroonga").op("&@~")(operand_escaped)
         return query.where(maybe_negate(condition))
@@ -805,9 +803,7 @@ def get_messages_backend(
     num_before: int = REQ(converter=to_non_negative_int),
     num_after: int = REQ(converter=to_non_negative_int),
     narrow: OptionalNarrowListT = REQ("narrow", converter=narrow_parameter, default=None),
-    use_first_unread_anchor_val: bool = REQ(
-        "use_first_unread_anchor", validator=check_bool, default=False,
-    ),
+    use_first_unread_anchor_val: bool = REQ("use_first_unread_anchor", validator=check_bool, default=False),
     client_gravatar: bool = REQ(validator=check_bool, default=False),
     apply_markdown: bool = REQ(validator=check_bool, default=True),
 ) -> HttpResponse:

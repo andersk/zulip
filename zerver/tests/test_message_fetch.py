@@ -504,9 +504,7 @@ class NarrowLibraryTest(ZulipTestCase):
             ),
         )
         self.assertTrue(is_web_public_compatible([{"operator": "sender", "operand": "hamlet@zulip.com"}]))
-        self.assertFalse(
-            is_web_public_compatible([{"operator": "pm-with", "operand": "hamlet@zulip.com"}]),
-        )
+        self.assertFalse(is_web_public_compatible([{"operator": "pm-with", "operand": "hamlet@zulip.com"}]))
         self.assertFalse(
             is_web_public_compatible([{"operator": "group-pm-with", "operand": "hamlet@zulip.com"}]),
         )
@@ -1455,9 +1453,7 @@ class GetOldMessagesTest(ZulipTestCase):
         do_deactivate_user(aaron)
         self.assertFalse(aaron.is_active)
 
-        personals = [
-            m for m in get_user_messages(self.example_user("hamlet")) if not m.is_stream_message()
-        ]
+        personals = [m for m in get_user_messages(self.example_user("hamlet")) if not m.is_stream_message()]
         for personal in personals:
             emails = dr_emails(get_display_recipient(personal.recipient))
             self.login_user(me)
@@ -1849,10 +1845,7 @@ class GetOldMessagesTest(ZulipTestCase):
         ]
         multi_search_result: Dict[str, Any] = self.get_and_check_messages(
             dict(
-                narrow=ujson.dumps(multi_search_narrow),
-                anchor=next_message_id,
-                num_after=10,
-                num_before=0,
+                narrow=ujson.dumps(multi_search_narrow), anchor=next_message_id, num_after=10, num_before=0,
             ),
         )
         self.assertEqual(len(multi_search_result["messages"]), 1)
@@ -1891,10 +1884,7 @@ class GetOldMessagesTest(ZulipTestCase):
         ]
         multi_search_result = self.get_and_check_messages(
             dict(
-                narrow=ujson.dumps(multi_search_narrow),
-                anchor=next_message_id,
-                num_after=10,
-                num_before=0,
+                narrow=ujson.dumps(multi_search_narrow), anchor=next_message_id, num_after=10, num_before=0,
             ),
         )
         self.assertEqual(len(multi_search_result["messages"]), 1)
@@ -2029,10 +2019,7 @@ class GetOldMessagesTest(ZulipTestCase):
         ]
         multi_search_result: Dict[str, Any] = self.get_and_check_messages(
             dict(
-                narrow=ujson.dumps(multi_search_narrow),
-                anchor=next_message_id,
-                num_after=10,
-                num_before=0,
+                narrow=ujson.dumps(multi_search_narrow), anchor=next_message_id, num_after=10, num_before=0,
             ),
         )
         self.assertEqual(len(multi_search_result["messages"]), 1)
@@ -2048,10 +2035,7 @@ class GetOldMessagesTest(ZulipTestCase):
         ]
         multi_search_result = self.get_and_check_messages(
             dict(
-                narrow=ujson.dumps(multi_search_narrow),
-                anchor=next_message_id,
-                num_after=10,
-                num_before=0,
+                narrow=ujson.dumps(multi_search_narrow), anchor=next_message_id, num_after=10, num_before=0,
             ),
         )
         self.assertEqual(len(multi_search_result["messages"]), 1)
@@ -2399,9 +2383,7 @@ class GetOldMessagesTest(ZulipTestCase):
         self.assertEqual(data["history_limited"], False)
 
         with first_visible_id_as(0):
-            data = self.get_messages_response(
-                anchor=LARGER_THAN_MAX_MESSAGE_ID, num_before=20, num_after=0,
-            )
+            data = self.get_messages_response(anchor=LARGER_THAN_MAX_MESSAGE_ID, num_before=20, num_after=0)
 
         messages = data["messages"]
         self.assert_length(messages, 10)
@@ -3305,9 +3287,7 @@ class MessageHasKeywordsTest(ZulipTestCase):
         msg = Message.objects.get(id=msg_id)
 
         with mock.patch("zerver.lib.actions.do_claim_attachments", wraps=do_claim_attachments) as m:
-            self.update_message(
-                msg, f"[link](http://{hamlet.realm.host}/user_uploads/{dummy_path_ids[0]})",
-            )
+            self.update_message(msg, f"[link](http://{hamlet.realm.host}/user_uploads/{dummy_path_ids[0]})")
             self.assertTrue(m.called)
             m.reset_mock()
 

@@ -92,10 +92,7 @@ def create_confirmation_link(
 
 
 def confirmation_url(
-    confirmation_key: str,
-    realm: Optional[Realm],
-    confirmation_type: int,
-    url_args: Mapping[str, str] = {},
+    confirmation_key: str, realm: Optional[Realm], confirmation_type: int, url_args: Mapping[str, str] = {},
 ) -> str:
     url_args = dict(url_args)
     url_args["confirmation_key"] = confirmation_key

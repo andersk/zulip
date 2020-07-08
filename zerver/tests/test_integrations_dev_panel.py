@@ -31,9 +31,7 @@ class TestIntegrationsDevPanel(ZulipTestCase):
 
     def test_check_send_webhook_fixture_message_for_success_without_headers(self) -> None:
         bot = get_user("webhook-bot@zulip.com", self.zulip_realm)
-        url = (
-            f"/api/v1/external/airbrake?api_key={bot.api_key}&stream=Denmark&topic=Airbrake Notifications"
-        )
+        url = f"/api/v1/external/airbrake?api_key={bot.api_key}&stream=Denmark&topic=Airbrake Notifications"
         target_url = "/devtools/integrations/check_send_webhook_fixture_message"
         with open("zerver/webhooks/airbrake/fixtures/error_message.json") as f:
             body = f.read()
@@ -91,7 +89,9 @@ class TestIntegrationsDevPanel(ZulipTestCase):
         self,
     ) -> None:
         bot = get_user("webhook-bot@zulip.com", self.zulip_realm)
-        url = f"/api/v1/external/wordpress?api_key={bot.api_key}&stream=Denmark&topic=Wordpress Notifications"
+        url = (
+            f"/api/v1/external/wordpress?api_key={bot.api_key}&stream=Denmark&topic=Wordpress Notifications"
+        )
         target_url = "/devtools/integrations/check_send_webhook_fixture_message"
         with open("zerver/webhooks/wordpress/fixtures/publish_post_no_data_provided.txt") as f:
             body = f.read()
@@ -127,10 +127,7 @@ class TestIntegrationsDevPanel(ZulipTestCase):
         os_path_exists_mock.return_value = False
         target_url = "/devtools/integrations/airbrake/fixtures"
         response = self.client_get(target_url)
-        expected_response = {
-            "msg": 'The integration "airbrake" does not have fixtures.',
-            "result": "error",
-        }
+        expected_response = {"msg": 'The integration "airbrake" does not have fixtures.', "result": "error"}
         self.assertEqual(response.status_code, 404)
         self.assertEqual(ujson.loads(response.content), expected_response)
 
@@ -207,66 +204,42 @@ class TestIntegrationsDevPanel(ZulipTestCase):
         response = self.client_post(target_url, data)
         expected_responses = [
             {
-                "message": {
-                    "msg": "Unknown WordPress webhook action: WordPress Action",
-                    "result": "error",
-                },
+                "message": {"msg": "Unknown WordPress webhook action: WordPress Action", "result": "error"},
                 "fixture_name": "user_register.txt",
                 "status_code": 400,
             },
             {
-                "message": {
-                    "msg": "Unknown WordPress webhook action: WordPress Action",
-                    "result": "error",
-                },
+                "message": {"msg": "Unknown WordPress webhook action: WordPress Action", "result": "error"},
                 "fixture_name": "publish_post_no_data_provided.txt",
                 "status_code": 400,
             },
             {
-                "message": {
-                    "msg": "Unknown WordPress webhook action: WordPress Action",
-                    "result": "error",
-                },
+                "message": {"msg": "Unknown WordPress webhook action: WordPress Action", "result": "error"},
                 "fixture_name": "unknown_action_no_data.txt",
                 "status_code": 400,
             },
             {
-                "message": {
-                    "msg": "Unknown WordPress webhook action: WordPress Action",
-                    "result": "error",
-                },
+                "message": {"msg": "Unknown WordPress webhook action: WordPress Action", "result": "error"},
                 "fixture_name": "publish_page.txt",
                 "status_code": 400,
             },
             {
-                "message": {
-                    "msg": "Unknown WordPress webhook action: WordPress Action",
-                    "result": "error",
-                },
+                "message": {"msg": "Unknown WordPress webhook action: WordPress Action", "result": "error"},
                 "fixture_name": "unknown_action_no_hook_provided.txt",
                 "status_code": 400,
             },
             {
-                "message": {
-                    "msg": "Unknown WordPress webhook action: WordPress Action",
-                    "result": "error",
-                },
+                "message": {"msg": "Unknown WordPress webhook action: WordPress Action", "result": "error"},
                 "fixture_name": "publish_post_type_not_provided.txt",
                 "status_code": 400,
             },
             {
-                "message": {
-                    "msg": "Unknown WordPress webhook action: WordPress Action",
-                    "result": "error",
-                },
+                "message": {"msg": "Unknown WordPress webhook action: WordPress Action", "result": "error"},
                 "fixture_name": "wp_login.txt",
                 "status_code": 400,
             },
             {
-                "message": {
-                    "msg": "Unknown WordPress webhook action: WordPress Action",
-                    "result": "error",
-                },
+                "message": {"msg": "Unknown WordPress webhook action: WordPress Action", "result": "error"},
                 "fixture_name": "publish_post.txt",
                 "status_code": 400,
             },

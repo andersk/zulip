@@ -281,10 +281,7 @@ def access_stream_common(
 
 
 def access_stream_by_id(
-    user_profile: UserProfile,
-    stream_id: int,
-    require_active: bool = True,
-    allow_realm_admin: bool = False,
+    user_profile: UserProfile, stream_id: int, require_active: bool = True, allow_realm_admin: bool = False,
 ) -> Tuple[Stream, Recipient, Optional[Subscription]]:
     stream = get_stream_by_id(stream_id)
 

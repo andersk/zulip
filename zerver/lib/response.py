@@ -43,9 +43,7 @@ def json_response(
 ) -> HttpResponse:
     content = {"result": res_type, "msg": msg}
     content.update(data)
-    return HttpResponse(
-        content=ujson.dumps(content) + "\n", content_type="application/json", status=status,
-    )
+    return HttpResponse(content=ujson.dumps(content) + "\n", content_type="application/json", status=status)
 
 
 def json_success(data: Mapping[str, Any] = {}) -> HttpResponse:
@@ -60,9 +58,7 @@ def json_response_from_error(exception: JsonableError) -> HttpResponse:
     middleware takes care of transforming it into a response by
     calling this function.
     """
-    return json_response(
-        "error", msg=exception.msg, data=exception.data, status=exception.http_status_code,
-    )
+    return json_response("error", msg=exception.msg, data=exception.data, status=exception.http_status_code)
 
 
 def json_error(msg: str, data: Mapping[str, Any] = {}, status: int = 400) -> HttpResponse:

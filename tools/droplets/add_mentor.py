@@ -53,9 +53,7 @@ if __name__ == "__main__":
     authorized_keys = os.path.expanduser("~/.ssh/authorized_keys")
 
     if args.remove:
-        remove_re = re.compile(
-            "#<{0}>{{{{.+}}}}<{0}>(\n)?".format(args.username), re.DOTALL | re.MULTILINE,
-        )
+        remove_re = re.compile("#<{0}>{{{{.+}}}}<{0}>(\n)?".format(args.username), re.DOTALL | re.MULTILINE)
 
         with open(authorized_keys, "r+") as f:
             old_content = f.read()

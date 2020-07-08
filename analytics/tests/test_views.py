@@ -79,9 +79,7 @@ class TestGetChartData(ZulipTestCase):
         self.end_times_hour = [
             ceiling_to_hour(self.realm.date_created) + timedelta(hours=i) for i in range(4)
         ]
-        self.end_times_day = [
-            ceiling_to_day(self.realm.date_created) + timedelta(days=i) for i in range(4)
-        ]
+        self.end_times_day = [ceiling_to_day(self.realm.date_created) + timedelta(days=i) for i in range(4)]
 
     def data(self, i: int) -> List[int]:
         return [0, 0, i, 0]
@@ -139,11 +137,7 @@ class TestGetChartData(ZulipTestCase):
                 "msg": "",
                 "end_times": [datetime_to_timestamp(dt) for dt in self.end_times_day],
                 "frequency": CountStat.DAY,
-                "everyone": {
-                    "_1day": self.data(100),
-                    "_15day": self.data(100),
-                    "all_time": self.data(100),
-                },
+                "everyone": {"_1day": self.data(100), "_15day": self.data(100), "all_time": self.data(100)},
                 "display_order": None,
                 "result": "success",
             },
@@ -270,9 +264,7 @@ class TestGetChartData(ZulipTestCase):
         self.assertEqual(data["user"], {"human": [0], "bot": [0]})
 
         FillState.objects.create(
-            property="messages_sent:message_type:day",
-            end_time=self.end_times_day[0],
-            state=FillState.DONE,
+            property="messages_sent:message_type:day", end_time=self.end_times_day[0], state=FillState.DONE,
         )
         result = self.client_get(
             "/json/analytics/chart_data", {"chart_name": "messages_sent_by_message_type"},

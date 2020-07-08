@@ -439,13 +439,10 @@ def add_subscriptions_backend(
     streams_raw: Iterable[Dict[str, str]] = REQ("subscriptions", validator=add_subscriptions_schema),
     invite_only: bool = REQ(validator=check_bool, default=False),
     stream_post_policy: int = REQ(
-        validator=check_int_in(Stream.STREAM_POST_POLICY_TYPES),
-        default=Stream.STREAM_POST_POLICY_EVERYONE,
+        validator=check_int_in(Stream.STREAM_POST_POLICY_TYPES), default=Stream.STREAM_POST_POLICY_EVERYONE,
     ),
     history_public_to_subscribers: Optional[bool] = REQ(validator=check_bool, default=None),
-    message_retention_days: Union[str, int] = REQ(
-        validator=check_string_or_int, default=RETENTION_DEFAULT,
-    ),
+    message_retention_days: Union[str, int] = REQ(validator=check_string_or_int, default=RETENTION_DEFAULT),
     announce: bool = REQ(validator=check_bool, default=False),
     principals: Union[Sequence[str], Sequence[int]] = REQ(
         validator=check_principals, default=EMPTY_PRINCIPALS,

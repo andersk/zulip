@@ -595,9 +595,7 @@ def bulk_import_user_message_data(data: TableData, dump_file_id: int) -> None:
     def process_batch(items: List[Dict[str, Any]]) -> None:
         ums = [
             UserMessageLite(
-                user_profile_id=item["user_profile_id"],
-                message_id=item["message_id"],
-                flags=item["flags"],
+                user_profile_id=item["user_profile_id"], message_id=item["message_id"], flags=item["flags"],
             )
             for item in items
         ]
@@ -708,11 +706,7 @@ def import_uploads(
             # Should be kept in sync with its equivalent in zerver/lib/uploads in the
             # function 'upload_message_file'
             relative_path = "/".join(
-                [
-                    str(record["realm_id"]),
-                    random_name(18),
-                    sanitize_name(os.path.basename(record["path"])),
-                ],
+                [str(record["realm_id"]), random_name(18), sanitize_name(os.path.basename(record["path"]))],
             )
             path_maps["attachment_path"][record["s3_path"]] = relative_path
 
@@ -1062,9 +1056,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
     re_map_foreign_keys(
         data, "zerver_customprofilefieldvalue", "user_profile", related_table="user_profile",
     )
-    re_map_foreign_keys(
-        data, "zerver_customprofilefieldvalue", "field", related_table="customprofilefield",
-    )
+    re_map_foreign_keys(data, "zerver_customprofilefieldvalue", "field", related_table="customprofilefield")
     fix_customprofilefield(data)
     update_model_ids(CustomProfileFieldValue, data, related_table="customprofilefieldvalue")
     bulk_import_model(data, CustomProfileFieldValue)

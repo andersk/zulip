@@ -108,9 +108,7 @@ class FirstUnreadAnchorTests(ZulipTestCase):
         with mock.patch(
             "zerver.views.message_fetch.get_first_visible_message_id", return_value=new_message_id,
         ):
-            messages_response = self.get_messages_response(
-                anchor="first_unread", num_before=0, num_after=1,
-            )
+            messages_response = self.get_messages_response(anchor="first_unread", num_before=0, num_after=1)
         self.assertEqual(messages_response["messages"][0]["id"], new_message_id)
         self.assertEqual(messages_response["anchor"], new_message_id)
 
@@ -135,9 +133,7 @@ class UnreadCountTests(ZulipTestCase):
             "zerver.lib.push_notifications.push_notifications_enabled", return_value=True,
         ) as mock_push_notifications_enabled:
             self.unread_msg_ids = [
-                self.send_personal_message(
-                    self.example_user("iago"), self.example_user("hamlet"), "hello",
-                ),
+                self.send_personal_message(self.example_user("iago"), self.example_user("hamlet"), "hello"),
                 self.send_personal_message(
                     self.example_user("iago"), self.example_user("hamlet"), "hello2",
                 ),
@@ -635,10 +631,7 @@ class GetUnreadMsgsTest(ZulipTestCase):
         # Send a message to ourself.
         hamlet_msg = send_unread_pm(other_user=hamlet)
         apply_unread_message_event(
-            user_profile=hamlet,
-            state=raw_unread_data,
-            message=MessageDict.wide_dict(hamlet_msg),
-            flags=[],
+            user_profile=hamlet, state=raw_unread_data, message=MessageDict.wide_dict(hamlet_msg), flags=[],
         )
         self.assertEqual(
             set(pm_dict.keys()), {othello_msg.id, cordelia_msg.id, hamlet_msg.id},
@@ -807,8 +800,7 @@ class MessageAccessTests(ZulipTestCase):
         self.assert_json_error(result, "Invalid flag: 'invalid'")
 
         result = self.client_post(
-            "/json/messages/flags",
-            {"messages": ujson.dumps([message]), "op": "add", "flag": "is_private"},
+            "/json/messages/flags", {"messages": ujson.dumps([message]), "op": "add", "flag": "is_private"},
         )
         self.assert_json_error(result, "Invalid flag: 'is_private'")
 
@@ -987,9 +979,7 @@ class MessageAccessTests(ZulipTestCase):
         self.send_stream_message(sender, "Verona", content=content)
 
         sent_message = (
-            UserMessage.objects.filter(user_profile=self.example_user("hamlet"))
-            .order_by("id")
-            .reverse()[0]
+            UserMessage.objects.filter(user_profile=self.example_user("hamlet")).order_by("id").reverse()[0]
         )
         self.assertEqual(sent_message.message.content, content)
         self.assertFalse(sent_message.flags.starred)

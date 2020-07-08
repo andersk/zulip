@@ -706,9 +706,7 @@ def apply_event(
             message_ids = [event["message_id"]]
         else:
             message_ids = event["message_ids"]  # nocoverage
-        max_message = (
-            Message.objects.filter(usermessage__user_profile=user_profile).order_by("-id").first()
-        )
+        max_message = Message.objects.filter(usermessage__user_profile=user_profile).order_by("-id").first()
         if max_message:
             state["max_message_id"] = max_message.id
         else:
@@ -996,6 +994,4 @@ def post_process_state(
 
     if not notification_settings_null and "subscriptions" in ret:
         for stream_dict in ret["subscriptions"] + ret["unsubscribed"]:
-            handle_stream_notifications_compatibility(
-                user_profile, stream_dict, notification_settings_null,
-            )
+            handle_stream_notifications_compatibility(user_profile, stream_dict, notification_settings_null)

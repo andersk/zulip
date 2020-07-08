@@ -37,10 +37,7 @@ import a database dump from one or more JSON files."""
         parser.add_argument("subdomain", metavar="<subdomain>", type=str, help="Subdomain")
 
         parser.add_argument(
-            "export_paths",
-            nargs="+",
-            metavar="<export path>",
-            help="list of export directories to import",
+            "export_paths", nargs="+", metavar="<export path>", help="list of export directories to import",
         )
         parser.add_argument(
             "--processes",

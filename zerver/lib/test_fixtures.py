@@ -102,8 +102,7 @@ class Database:
         run(env_prelude + ["./manage.py", "migrate", "--no-input"])
 
         run(
-            env_prelude
-            + ["./manage.py", "get_migration_status", "--output=" + self.migration_status_file],
+            env_prelude + ["./manage.py", "get_migration_status", "--output=" + self.migration_status_file],
         )
 
     def what_to_do_with_migrations(self) -> str:

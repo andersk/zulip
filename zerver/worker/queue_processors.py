@@ -531,9 +531,7 @@ class MissedMessageWorker(QueueProcessingWorker):
                 continue
             events = self.events_by_recipient[user_profile_id]
             logging.info(
-                "Batch-processing %s missedmessage_emails events for user %s",
-                len(events),
-                user_profile_id,
+                "Batch-processing %s missedmessage_emails events for user %s", len(events), user_profile_id,
             )
             handle_missedmessage_emails(user_profile_id, events)
             del self.events_by_recipient[user_profile_id]
@@ -768,9 +766,7 @@ class DeferredWorker(QueueProcessingWorker):
                 export_event.extra_data = ujson.dumps(dict(failed_timestamp=timezone_now().timestamp()))
                 export_event.save(update_fields=["extra_data"])
                 logging.error(
-                    "Data export for %s failed after %s",
-                    user_profile.realm.string_id,
-                    time.time() - start,
+                    "Data export for %s failed after %s", user_profile.realm.string_id, time.time() - start,
                 )
                 notify_realm_export(user_profile)
                 return
@@ -778,9 +774,7 @@ class DeferredWorker(QueueProcessingWorker):
             assert public_url is not None
 
             # Update the extra_data field now that the export is complete.
-            export_event.extra_data = ujson.dumps(
-                dict(export_path=urllib.parse.urlparse(public_url).path),
-            )
+            export_event.extra_data = ujson.dumps(dict(export_path=urllib.parse.urlparse(public_url).path))
             export_event.save(update_fields=["extra_data"])
 
             # Send a private message notification letting the user who

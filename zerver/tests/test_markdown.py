@@ -794,8 +794,7 @@ class MarkdownTest(ZulipTestCase):
             get_tweet_id("http://twitter.com/VizzQuotes/status/409030735191097344"), "409030735191097344",
         )
         self.assertEqual(
-            get_tweet_id("http://twitter.com/VizzQuotes/statuses/409030735191097344"),
-            "409030735191097344",
+            get_tweet_id("http://twitter.com/VizzQuotes/statuses/409030735191097344"), "409030735191097344",
         )
         self.assertEqual(get_tweet_id("https://twitter.com/wdaher/status/1017581858"), "1017581858")
         self.assertEqual(get_tweet_id("https://twitter.com/wdaher/status/1017581858/"), "1017581858")
@@ -860,9 +859,7 @@ class MarkdownTest(ZulipTestCase):
 
         msg = "http://www.twitter.com/wdaher/status/3"
         converted = markdown_convert_wrapper(msg)
-        self.assertEqual(
-            converted, "<p>{}</p>".format(make_link("http://www.twitter.com/wdaher/status/3")),
-        )
+        self.assertEqual(converted, "<p>{}</p>".format(make_link("http://www.twitter.com/wdaher/status/3")))
 
         # id too long
         msg = "http://www.twitter.com/wdaher/status/2879779692873154569"
@@ -1873,8 +1870,7 @@ class MarkdownTest(ZulipTestCase):
         )
 
         assert_mentions(
-            "Attention @*support*, @*frontend* and @*backend*\ngroups.",
-            {"support", "frontend", "backend"},
+            "Attention @*support*, @*frontend* and @*backend*\ngroups.", {"support", "frontend", "backend"},
         )
 
     def test_user_group_mention_multiple(self) -> None:

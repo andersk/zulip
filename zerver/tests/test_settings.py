@@ -216,8 +216,7 @@ class ChangeSettingsTest(ZulipTestCase):
                 result = self.client_patch(
                     "/json/settings",
                     dict(
-                        old_password=initial_password(self.example_email("hamlet")),
-                        new_password="ignored",
+                        old_password=initial_password(self.example_email("hamlet")), new_password="ignored",
                     ),
                 )
                 self.assert_json_error(result, "You're making too many attempts! Try again in 10 seconds.")
@@ -227,8 +226,7 @@ class ChangeSettingsTest(ZulipTestCase):
                 json_result = self.client_patch(
                     "/json/settings",
                     dict(
-                        old_password=initial_password(self.example_email("hamlet")),
-                        new_password="foobar1",
+                        old_password=initial_password(self.example_email("hamlet")), new_password="foobar1",
                     ),
                 )
                 self.assert_json_success(json_result)
@@ -329,9 +327,7 @@ class ChangeSettingsTest(ZulipTestCase):
 
     def test_change_user_display_setting(self) -> None:
         """Test updating each non-boolean setting in UserProfile property_types"""
-        user_settings = (
-            s for s in UserProfile.property_types if UserProfile.property_types[s] is not bool
-        )
+        user_settings = (s for s in UserProfile.property_types if UserProfile.property_types[s] is not bool)
         for setting in user_settings:
             self.do_test_change_user_display_setting(setting)
 

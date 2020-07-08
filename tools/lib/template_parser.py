@@ -166,9 +166,7 @@ def tokenize(text: str) -> List[Token]:
             )
 
         line_span = len(s.split("\n"))
-        token = Token(
-            kind=kind, s=s, tag=tag.strip(), line=state.line, col=state.col, line_span=line_span,
-        )
+        token = Token(kind=kind, s=s, tag=tag.strip(), line=state.line, col=state.col, line_span=line_span)
         tokens.append(token)
         advance(len(s))
 

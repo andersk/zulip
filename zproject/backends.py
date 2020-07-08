@@ -644,9 +644,7 @@ class ZulipLDAPAuthBackendBase(ZulipAuthMixin, LDAPBackend):
                 raise ZulipLDAPException(e.msg)
             do_change_full_name(user_profile, full_name, None)
 
-    def sync_custom_profile_fields_from_ldap(
-        self, user_profile: UserProfile, ldap_user: _LDAPUser,
-    ) -> None:
+    def sync_custom_profile_fields_from_ldap(self, user_profile: UserProfile, ldap_user: _LDAPUser) -> None:
         values_by_var_name: Dict[str, Union[int, str, List[int]]] = {}
         for attr, ldap_attr in settings.AUTH_LDAP_USER_ATTR_MAP.items():
             if not attr.startswith("custom_profile_field__"):

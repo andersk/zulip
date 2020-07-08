@@ -70,8 +70,7 @@ def loc_to_abs_offset(loc_str: str) -> int:
 
 
 replication_info = run_sql_query(
-    "sender_host, status, pg_last_wal_replay_lsn(), pg_last_wal_receive_lsn()"
-    " from pg_stat_wal_receiver",
+    "sender_host, status, pg_last_wal_replay_lsn(), pg_last_wal_receive_lsn()" " from pg_stat_wal_receiver",
 )
 
 if replication_info:

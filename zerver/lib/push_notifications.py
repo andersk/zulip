@@ -666,9 +666,7 @@ def get_apns_alert_subtitle(message: Message) -> str:
     return message.sender.full_name + ":"
 
 
-def get_apns_badge_count(
-    user_profile: UserProfile, read_messages_ids: Optional[Sequence[int]] = [],
-) -> int:
+def get_apns_badge_count(user_profile: UserProfile, read_messages_ids: Optional[Sequence[int]] = []) -> int:
     return (
         UserMessage.objects.filter(user_profile=user_profile)
         .extra(where=[UserMessage.where_active_push_notification()])

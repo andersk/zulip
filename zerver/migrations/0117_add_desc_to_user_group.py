@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="usergroup",
-            name="description",
-            field=models.CharField(default="", max_length=1024),
+            model_name="usergroup", name="description", field=models.CharField(default="", max_length=1024),
         ),
     ]

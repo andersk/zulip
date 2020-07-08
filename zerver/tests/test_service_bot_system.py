@@ -417,9 +417,7 @@ class TestServiceBotEventTriggers(ZulipTestCase):
             trigger = "mention"
             message_type = Recipient._type_names[Recipient.STREAM]
 
-            def check_values_passed(
-                queue_name: Any, trigger_event: Union[Mapping[Any, Any], Any],
-            ) -> None:
+            def check_values_passed(queue_name: Any, trigger_event: Union[Mapping[Any, Any], Any]) -> None:
                 self.assertEqual(queue_name, expected_queue_name)
                 self.assertEqual(trigger_event["message"]["content"], content)
                 self.assertEqual(trigger_event["message"]["display_recipient"], recipient)
@@ -434,9 +432,7 @@ class TestServiceBotEventTriggers(ZulipTestCase):
             self.assertTrue(mock_queue_json_publish.called)
 
     @mock.patch("zerver.lib.actions.queue_json_publish")
-    def test_no_trigger_on_stream_message_without_mention(
-        self, mock_queue_json_publish: mock.Mock,
-    ) -> None:
+    def test_no_trigger_on_stream_message_without_mention(self, mock_queue_json_publish: mock.Mock) -> None:
         sender = self.user_profile
         self.send_stream_message(sender, "Denmark")
         self.assertFalse(mock_queue_json_publish.called)
@@ -459,9 +455,7 @@ class TestServiceBotEventTriggers(ZulipTestCase):
             sender = self.user_profile
             recipient = self.bot_profile
 
-            def check_values_passed(
-                queue_name: Any, trigger_event: Union[Mapping[Any, Any], Any],
-            ) -> None:
+            def check_values_passed(queue_name: Any, trigger_event: Union[Mapping[Any, Any], Any]) -> None:
                 self.assertEqual(queue_name, expected_queue_name)
                 self.assertEqual(trigger_event["user_profile_id"], self.bot_profile.id)
                 self.assertEqual(trigger_event["trigger"], "private_message")
@@ -502,9 +496,7 @@ class TestServiceBotEventTriggers(ZulipTestCase):
             recipients = [self.bot_profile, self.second_bot_profile]
             profile_ids = [self.bot_profile.id, self.second_bot_profile.id]
 
-            def check_values_passed(
-                queue_name: Any, trigger_event: Union[Mapping[Any, Any], Any],
-            ) -> None:
+            def check_values_passed(queue_name: Any, trigger_event: Union[Mapping[Any, Any], Any]) -> None:
                 self.assertEqual(queue_name, expected_queue_name)
                 self.assertIn(trigger_event["user_profile_id"], profile_ids)
                 profile_ids.remove(trigger_event["user_profile_id"])

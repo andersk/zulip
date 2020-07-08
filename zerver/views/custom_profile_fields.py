@@ -179,9 +179,7 @@ def reorder_realm_custom_profile_fields(
 @human_users_only
 @has_request_variables
 def remove_user_custom_profile_data(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    data: List[int] = REQ(validator=check_list(check_int)),
+    request: HttpRequest, user_profile: UserProfile, data: List[int] = REQ(validator=check_list(check_int)),
 ) -> HttpResponse:
     for field_id in data:
         check_remove_custom_profile_field_value(user_profile, field_id)

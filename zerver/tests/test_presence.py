@@ -334,9 +334,7 @@ class UserPresenceTests(ZulipTestCase):
         self.assertEqual(filter_presence_idle_user_ids({user_profile.id}), [user_profile.id])
 
         # Active presence from the mobile app doesn't count
-        self.client_post(
-            "/json/users/me/presence", {"status": "active"}, HTTP_USER_AGENT="ZulipMobile/1.0",
-        )
+        self.client_post("/json/users/me/presence", {"status": "active"}, HTTP_USER_AGENT="ZulipMobile/1.0")
         self.assertEqual(filter_presence_idle_user_ids({user_profile.id}), [user_profile.id])
 
         self.client_post("/json/users/me/presence", {"status": "active"})
@@ -502,10 +500,7 @@ class UserPresenceAggregationTests(ZulipTestCase):
             return_value=validate_time - datetime.timedelta(seconds=1),
         ):
             result = self.api_post(
-                user,
-                "/api/v1/users/me/presence",
-                {"status": "active"},
-                HTTP_USER_AGENT="ZulipTestDev/1.0",
+                user, "/api/v1/users/me/presence", {"status": "active"}, HTTP_USER_AGENT="ZulipTestDev/1.0",
             )
         result_dict = result.json()
         self.assertDictEqual(
@@ -550,10 +545,7 @@ class UserPresenceAggregationTests(ZulipTestCase):
             return_value=validate_time - datetime.timedelta(seconds=3),
         ):
             self.api_post(
-                user,
-                "/api/v1/users/me/presence",
-                {"status": "active"},
-                HTTP_USER_AGENT="ZulipTestDev/1.0",
+                user, "/api/v1/users/me/presence", {"status": "active"}, HTTP_USER_AGENT="ZulipTestDev/1.0",
             )
         result_dict = self._send_presence_for_aggregated_tests(user, "idle", validate_time)
         self.assertDictEqual(
@@ -586,10 +578,7 @@ class GetRealmStatusesTest(ZulipTestCase):
         hamlet = self.example_user("hamlet")
 
         result = self.api_post(
-            othello,
-            "/api/v1/users/me/presence",
-            dict(status="active"),
-            HTTP_USER_AGENT="ZulipAndroid/1.0",
+            othello, "/api/v1/users/me/presence", dict(status="active"), HTTP_USER_AGENT="ZulipAndroid/1.0",
         )
 
         result = self.api_post(
@@ -626,10 +615,7 @@ class GetRealmStatusesTest(ZulipTestCase):
         hamlet.save(update_fields=["presence_enabled"])
 
         result = self.api_post(
-            othello,
-            "/api/v1/users/me/presence",
-            dict(status="active"),
-            HTTP_USER_AGENT="ZulipAndroid/1.0",
+            othello, "/api/v1/users/me/presence", dict(status="active"), HTTP_USER_AGENT="ZulipAndroid/1.0",
         )
 
         result = self.api_post(

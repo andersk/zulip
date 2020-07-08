@@ -181,10 +181,7 @@ v1_api_and_json_patterns = [
     path(
         "users",
         rest_dispatch,
-        {
-            "GET": "zerver.views.users.get_members_backend",
-            "POST": "zerver.views.users.create_user_backend",
-        },
+        {"GET": "zerver.views.users.get_members_backend", "POST": "zerver.views.users.create_user_backend"},
     ),
     path(
         "users/<int:user_id>/reactivate",
@@ -232,10 +229,7 @@ v1_api_and_json_patterns = [
     path(
         "invites",
         rest_dispatch,
-        {
-            "GET": "zerver.views.invite.get_user_invites",
-            "POST": "zerver.views.invite.invite_users_backend",
-        },
+        {"GET": "zerver.views.invite.get_user_invites", "POST": "zerver.views.invite.invite_users_backend"},
     ),
     path("invites/<int:prereg_id>", rest_dispatch, {"DELETE": "zerver.views.invite.revoke_user_invite"}),
     path(
@@ -245,9 +239,7 @@ v1_api_and_json_patterns = [
     ),
     # invites/multiuse -> zerver.views.invite
     path(
-        "invites/multiuse",
-        rest_dispatch,
-        {"POST": "zerver.views.invite.generate_multiuse_invite_backend"},
+        "invites/multiuse", rest_dispatch, {"POST": "zerver.views.invite.generate_multiuse_invite_backend"},
     ),
     # invites/multiuse -> zerver.views.invite
     path(
@@ -309,10 +301,7 @@ v1_api_and_json_patterns = [
     path(
         "messages/<int:message_id>/reactions",
         rest_dispatch,
-        {
-            "POST": "zerver.views.reactions.add_reaction",
-            "DELETE": "zerver.views.reactions.remove_reaction",
-        },
+        {"POST": "zerver.views.reactions.add_reaction", "DELETE": "zerver.views.reactions.remove_reaction"},
     ),
     # attachments -> zerver.views.attachments
     path("attachments", rest_dispatch, {"GET": "zerver.views.attachments.list_by_user"}),
@@ -665,9 +654,7 @@ i18n_urls = [
         name="django.contrib.auth.views.login",
     ),
     path(
-        "accounts/logout/",
-        zerver.views.auth.logout_then_login,
-        name="zerver.views.auth.logout_then_login",
+        "accounts/logout/", zerver.views.auth.logout_then_login, name="zerver.views.auth.logout_then_login",
     ),
     path(
         "accounts/webathena_kerberos_login/",
@@ -824,13 +811,9 @@ i18n_urls = [
         zerver.views.portico.landing_view,
         {"template_name": "zerver/for-open-source.html"},
     ),
+    path("for/research/", zerver.views.portico.landing_view, {"template_name": "zerver/for-research.html"}),
     path(
-        "for/research/", zerver.views.portico.landing_view, {"template_name": "zerver/for-research.html"},
-    ),
-    path(
-        "for/companies/",
-        zerver.views.portico.landing_view,
-        {"template_name": "zerver/for-companies.html"},
+        "for/companies/", zerver.views.portico.landing_view, {"template_name": "zerver/for-companies.html"},
     ),
     path(
         "for/working-groups-and-communities/",
@@ -960,9 +943,7 @@ v1_api_mobile_patterns = [
     ),
     # This is for fetching the emails of the admins and the users.
     path(
-        "dev_list_users",
-        zerver.views.auth.api_dev_list_users,
-        name="zerver.views.auth.api_dev_list_users",
+        "dev_list_users", zerver.views.auth.api_dev_list_users, name="zerver.views.auth.api_dev_list_users",
     ),
     # Used to present the GOOGLE_CLIENT_ID to mobile apps
     path(

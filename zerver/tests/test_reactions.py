@@ -197,9 +197,7 @@ class ReactionEmojiTest(ZulipTestCase):
         self.assertEqual(reaction_type, "unicode_emoji")
 
         # Test override unicode emoji.
-        overriding_emoji = RealmEmoji.objects.create(
-            name="astonished", realm=realm, file_name="astonished",
-        )
+        overriding_emoji = RealmEmoji.objects.create(name="astonished", realm=realm, file_name="astonished")
         emoji_code, reaction_type = emoji_name_to_emoji_code(realm, "astonished")
         self.assertEqual(emoji_code, str(overriding_emoji.id))
         self.assertEqual(reaction_type, "realm_emoji")
@@ -504,9 +502,7 @@ class EmojiReactionBase(ZulipTestCase):
         result = self.delete_reaction(reaction_info, message_id, sender)
         return result
 
-    def get_message_reactions(
-        self, message_id: int, emoji_code: str, reaction_type: str,
-    ) -> List[Reaction]:
+    def get_message_reactions(self, message_id: int, emoji_code: str, reaction_type: str) -> List[Reaction]:
         message = Message.objects.get(id=message_id)
         reactions = Reaction.objects.filter(
             message=message, emoji_code=emoji_code, reaction_type=reaction_type,
@@ -635,8 +631,7 @@ class DefaultEmojiReactionTests(EmojiReactionBase):
     def test_delete_insufficient_arguments_reaction(self) -> None:
         result = self.delete_reaction({})
         self.assert_json_error(
-            result,
-            "At least one of the following " "arguments must be present: emoji_name, " "emoji_code",
+            result, "At least one of the following " "arguments must be present: emoji_name, " "emoji_code",
         )
 
     def test_delete_non_existing_emoji_reaction(self) -> None:

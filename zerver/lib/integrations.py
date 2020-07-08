@@ -555,10 +555,7 @@ BOT_INTEGRATIONS: List[BotIntegration] = [
 
 HUBOT_INTEGRATIONS: List[HubotIntegration] = [
     HubotIntegration(
-        "assembla",
-        ["version-control", "project-management"],
-        display_name="Assembla",
-        logo_alt="Assembla",
+        "assembla", ["version-control", "project-management"], display_name="Assembla", logo_alt="Assembla",
     ),
     HubotIntegration("bonusly", ["hr"]),
     HubotIntegration("chartbeat", ["marketing"], display_name="Chartbeat"),
@@ -603,9 +600,7 @@ NO_SCREENSHOT_WEBHOOKS = {
 
 DOC_SCREENSHOT_CONFIG: Dict[str, List[ScreenshotConfig]] = {
     "airbrake": [ScreenshotConfig("error_message.json")],
-    "alertmanager": [
-        ScreenshotConfig("alert.json", extra_params={"name": "topic", "desc": "description"}),
-    ],
+    "alertmanager": [ScreenshotConfig("alert.json", extra_params={"name": "topic", "desc": "description"})],
     "ansibletower": [ScreenshotConfig("job_successful_multiple_hosts.json")],
     "appfollow": [ScreenshotConfig("review.json")],
     "appveyor": [ScreenshotConfig("appveyor_build_success.json")],

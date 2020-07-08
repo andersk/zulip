@@ -77,10 +77,7 @@ class WorkerTest(ZulipTestCase):
         UserActivity.objects.filter(user_profile=user.id, client=get_client("ios")).delete()
 
         data = dict(
-            user_profile_id=user.id,
-            client_id=get_client("ios").id,
-            time=time.time(),
-            query="send_message",
+            user_profile_id=user.id, client_id=get_client("ios").id, time=time.time(), query="send_message",
         )
         fake_client.queue.append(("user_activity", data))
 
@@ -238,13 +235,9 @@ class WorkerTest(ZulipTestCase):
         with simulated_queue_client(lambda: fake_client):
             worker = queue_processors.PushNotificationsWorker()
             worker.setup()
-            with patch(
-                "zerver.worker.queue_processors.handle_push_notification",
-            ) as mock_handle_new, patch(
+            with patch("zerver.worker.queue_processors.handle_push_notification") as mock_handle_new, patch(
                 "zerver.worker.queue_processors.handle_remove_push_notification",
-            ) as mock_handle_remove, patch(
-                "zerver.worker.queue_processors.initialize_push_notifications",
-            ):
+            ) as mock_handle_remove, patch("zerver.worker.queue_processors.initialize_push_notifications"):
                 event_new = generate_new_message_notification()
                 event_remove = generate_remove_notification()
                 fake_client.queue.append(("missedmessage_mobile_notifications", event_new))
@@ -561,8 +554,7 @@ class WorkerTest(ZulipTestCase):
         self.assert_length(events, 4)
 
         self.assertEqual(
-            [event["type"] for event in events],
-            ["good", "fine", "unexpected behaviour", "back to normal"],
+            [event["type"] for event in events], ["good", "fine", "unexpected behaviour", "back to normal"],
         )
 
     def test_worker_noname(self) -> None:

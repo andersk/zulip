@@ -1028,9 +1028,7 @@ class InviteUserTest(InviteUserBase):
     def test_invite_user_as_owner_from_admin_account(self) -> None:
         self.login("iago")
         invitee = self.nonreg_email("alice")
-        response = self.invite(
-            invitee, ["Denmark"], invite_as=PreregistrationUser.INVITE_AS["REALM_OWNER"],
-        )
+        response = self.invite(invitee, ["Denmark"], invite_as=PreregistrationUser.INVITE_AS["REALM_OWNER"])
         self.assert_json_error(response, "Must be an organization owner")
 
     def test_successful_invite_user_as_admin_from_admin_account(self) -> None:
@@ -1049,9 +1047,7 @@ class InviteUserTest(InviteUserBase):
     def test_invite_user_as_admin_from_normal_account(self) -> None:
         self.login("hamlet")
         invitee = self.nonreg_email("alice")
-        response = self.invite(
-            invitee, ["Denmark"], invite_as=PreregistrationUser.INVITE_AS["REALM_ADMIN"],
-        )
+        response = self.invite(invitee, ["Denmark"], invite_as=PreregistrationUser.INVITE_AS["REALM_ADMIN"])
         self.assert_json_error(response, "Must be an organization administrator")
 
     def test_invite_user_as_invalid_type(self) -> None:
@@ -1162,9 +1158,7 @@ class InviteUserTest(InviteUserBase):
 
         self.submit_reg_form_for_user(invitee, "password")
         invitee_profile = self.nonreg_user("alice")
-        invitee_msg_ids = [
-            um.message_id for um in UserMessage.objects.filter(user_profile=invitee_profile)
-        ]
+        invitee_msg_ids = [um.message_id for um in UserMessage.objects.filter(user_profile=invitee_profile)]
         self.assertTrue(public_msg_id in invitee_msg_ids)
         self.assertFalse(secret_msg_id in invitee_msg_ids)
         self.assertFalse(invitee_profile.is_realm_admin)
@@ -1250,9 +1244,7 @@ earl-test@zulip.com""",
             )
         self.check_sent_emails([])
 
-        self.assert_json_error(
-            self.invite("", ["Denmark"]), "You must specify at least one email address.",
-        )
+        self.assert_json_error(self.invite("", ["Denmark"]), "You must specify at least one email address.")
         self.check_sent_emails([])
 
     def test_guest_user_invitation(self) -> None:
@@ -3304,9 +3296,7 @@ class UserSignUpTest(InviteUserBase):
 
         email = "user@acme.com"
         form = HomepageForm({"email": email}, realm=realm)
-        self.assertIn(
-            f"Your email address, {email}, is not in one of the domains", form.errors["email"][0],
-        )
+        self.assertIn(f"Your email address, {email}, is not in one of the domains", form.errors["email"][0])
 
     def test_failed_signup_due_to_disposable_email(self) -> None:
         realm = get_realm("zulip")
@@ -3413,9 +3403,7 @@ class UserSignUpTest(InviteUserBase):
             self.assert_not_in_success_response(["id_password"], result)
 
             # Test the TypeError exception handler
-            with patch(
-                "zproject.backends.ZulipLDAPAuthBackendBase.get_mapped_name", side_effect=TypeError,
-            ):
+            with patch("zproject.backends.ZulipLDAPAuthBackendBase.get_mapped_name", side_effect=TypeError):
                 result = self.submit_reg_form_for_user(
                     email,
                     password,

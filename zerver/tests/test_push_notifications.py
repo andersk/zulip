@@ -177,9 +177,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
         realm.string_id = ""
         realm.save()
 
-        result = self.api_post(
-            hamlet, endpoint, dict(user_id=user_id, token_kind=token_kind, token=token),
-        )
+        result = self.api_post(hamlet, endpoint, dict(user_id=user_id, token_kind=token_kind, token=token))
         self.assert_json_error(result, "Must validate with valid Zulip server API key")
 
         result = self.uuid_post(
@@ -322,9 +320,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
             result = self.client_post(endpoint, {"token": token}, subdomain="zulip")
             self.assert_json_success(result)
 
-            tokens = list(
-                RemotePushDeviceToken.objects.filter(user_id=user.id, token=token, server=server),
-            )
+            tokens = list(RemotePushDeviceToken.objects.filter(user_id=user.id, token=token, server=server))
             self.assertEqual(len(tokens), 1)
             self.assertEqual(tokens[0].token, token)
 
@@ -336,9 +332,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
         for endpoint, token, kind in endpoints:
             result = self.client_delete(endpoint, {"token": token, "token_kind": kind}, subdomain="zulip")
             self.assert_json_success(result)
-            tokens = list(
-                RemotePushDeviceToken.objects.filter(user_id=user.id, token=token, server=server),
-            )
+            tokens = list(RemotePushDeviceToken.objects.filter(user_id=user.id, token=token, server=server))
             self.assertEqual(len(tokens), 0)
 
         # Re-add copies of those tokens
@@ -1291,9 +1285,7 @@ class TestGetAPNsPayload(PushNotificationTest):
         self.assertDictEqual(payload, expected)
 
     @mock.patch("zerver.lib.push_notifications.push_notifications_enabled", return_value=True)
-    def test_get_message_payload_apns_huddle_message(
-        self, mock_push_notifications: mock.MagicMock,
-    ) -> None:
+    def test_get_message_payload_apns_huddle_message(self, mock_push_notifications: mock.MagicMock) -> None:
         user_profile = self.example_user("othello")
         message_id = self.send_huddle_message(
             self.sender, [self.example_user("othello"), self.example_user("cordelia")],
@@ -1826,9 +1818,7 @@ class GCMSendTest(PushNotificationTest):
         )
 
     @mock.patch("zerver.lib.push_notifications.logger.warning")
-    def test_json_request_raises_ioerror(
-        self, mock_warn: mock.MagicMock, mock_gcm: mock.MagicMock,
-    ) -> None:
+    def test_json_request_raises_ioerror(self, mock_warn: mock.MagicMock, mock_gcm: mock.MagicMock) -> None:
         mock_gcm.json_request.side_effect = IOError("error")
         send_android_push_notification_to_user(self.user_profile, {}, {})
         mock_warn.assert_called_with("Error while pushing to GCM", exc_info=True)
@@ -2187,6 +2177,4 @@ class PushBouncerSignupTest(ZulipTestCase):
             contact_email="server-admin@example.com",
         )
         result = self.client_post("/api/v1/remotes/server/register", request)
-        self.assert_json_error(
-            result, f"Zulip server auth failure: key does not match role {zulip_org_id}",
-        )
+        self.assert_json_error(result, f"Zulip server auth failure: key does not match role {zulip_org_id}")

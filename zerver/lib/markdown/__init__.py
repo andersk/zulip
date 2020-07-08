@@ -610,8 +610,7 @@ class InlineInterestingLinkProcessor(markdown.treeprocessors.Treeprocessor):
             url = url.lstrip("/")
             img.set("src", "/thumbnail?url={}&size=thumbnail".format(urllib.parse.quote(url, safe="")))
             img.set(
-                "data-src-fullsize",
-                "/thumbnail?url={}&size=full".format(urllib.parse.quote(url, safe="")),
+                "data-src-fullsize", "/thumbnail?url={}&size=full".format(urllib.parse.quote(url, safe="")),
             )
         else:
             img.set("src", url)
@@ -800,9 +799,7 @@ class InlineInterestingLinkProcessor(markdown.treeprocessors.Treeprocessor):
         )
         id_re = r"([0-9A-Za-z_-]+)"
         youtube_re = r"^({schema_re}?{host_re}{param_re}?)?{id_re}(?(1).+)?$"
-        youtube_re = youtube_re.format(
-            schema_re=schema_re, host_re=host_re, id_re=id_re, param_re=param_re,
-        )
+        youtube_re = youtube_re.format(schema_re=schema_re, host_re=host_re, id_re=id_re, param_re=param_re)
         match = re.match(youtube_re, url)
         # URLs of the form youtube.com/playlist?list=<list-id> are incorrectly matched
         if match is None or match.group(2) == "playlist":
@@ -1943,9 +1940,7 @@ class Markdown(markdown.Markdown):
         # reference - references don't make sense in a chat context.
         preprocessors = markdown.util.Registry()
         preprocessors.register(MarkdownListPreprocessor(self), "hanging_lists", 35)
-        preprocessors.register(
-            markdown.preprocessors.NormalizeWhitespace(self), "normalize_whitespace", 30,
-        )
+        preprocessors.register(markdown.preprocessors.NormalizeWhitespace(self), "normalize_whitespace", 30)
         preprocessors.register(fenced_code.FencedBlockPreprocessor(self), "fenced_code_block", 25)
         preprocessors.register(AlertWordNotificationProcessor(self), "custom_text_notifications", 20)
         return preprocessors
@@ -1962,9 +1957,7 @@ class Markdown(markdown.Markdown):
         parser.blockprocessors.register(markdown.blockprocessors.EmptyBlockProcessor(parser), "empty", 95)
         parser.blockprocessors.register(ListIndentProcessor(parser), "indent", 90)
         if not self.getConfig("code_block_processor_disabled"):
-            parser.blockprocessors.register(
-                markdown.blockprocessors.CodeBlockProcessor(parser), "code", 85,
-            )
+            parser.blockprocessors.register(markdown.blockprocessors.CodeBlockProcessor(parser), "code", 85)
         parser.blockprocessors.register(HashHeaderProcessor(parser), "hashheader", 80)
         # We get priority 75 from 'table' extension
         parser.blockprocessors.register(markdown.blockprocessors.HRProcessor(parser), "hr", 70)
@@ -2023,9 +2016,7 @@ class Markdown(markdown.Markdown):
         # Reserve priority 45-54 for Realm Filters
         reg = self.register_realm_filters(reg)
         reg.register(markdown.inlinepatterns.HtmlInlineProcessor(ENTITY_RE, self), "entity", 40)
-        reg.register(
-            markdown.inlinepatterns.SimpleTagPattern(r"(\*\*)([^\n]+?)\2", "strong"), "strong", 35,
-        )
+        reg.register(markdown.inlinepatterns.SimpleTagPattern(r"(\*\*)([^\n]+?)\2", "strong"), "strong", 35)
         reg.register(markdown.inlinepatterns.SimpleTagPattern(EMPHASIS_RE, "em"), "emphasis", 30)
         reg.register(markdown.inlinepatterns.SimpleTagPattern(DEL_RE, "del"), "del", 25)
         reg.register(markdown.inlinepatterns.SimpleTextInlineProcessor(NOT_STRONG_RE), "not_strong", 20)

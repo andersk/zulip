@@ -792,9 +792,7 @@ class HomeTest(ZulipTestCase):
             f"/user_avatars/{user_profile.realm_id}/realm/logo.png?version=2",
         )
 
-        do_change_logo_source(
-            user_profile.realm, Realm.LOGO_UPLOADED, night=True, acting_user=user_profile,
-        )
+        do_change_logo_source(user_profile.realm, Realm.LOGO_UPLOADED, night=True, acting_user=user_profile)
         page_params = {"color_scheme": user_profile.COLOR_SCHEME_NIGHT}
         add_realm_logo_fields(page_params, user_profile.realm)
         self.assertEqual(
@@ -811,9 +809,7 @@ class HomeTest(ZulipTestCase):
 
         # This configuration isn't super supported in the UI and is a
         # weird choice, but we have a test for it anyway.
-        do_change_logo_source(
-            user_profile.realm, Realm.LOGO_DEFAULT, night=False, acting_user=user_profile,
-        )
+        do_change_logo_source(user_profile.realm, Realm.LOGO_DEFAULT, night=False, acting_user=user_profile)
         page_params = {"color_scheme": user_profile.COLOR_SCHEME_NIGHT}
         add_realm_logo_fields(page_params, user_profile.realm)
         self.assertEqual(

@@ -574,9 +574,7 @@ class RealmTest(ZulipTestCase):
         with self.settings(BILLING_ENABLED=True):
             self.assertEqual(do_create_realm("hosted", "hosted").plan_type, Realm.LIMITED)
             self.assertEqual(get_realm("hosted").max_invites, settings.INVITES_DEFAULT_REALM_DAILY_MAX)
-            self.assertEqual(
-                get_realm("hosted").message_visibility_limit, Realm.MESSAGE_VISIBILITY_LIMITED,
-            )
+            self.assertEqual(get_realm("hosted").message_visibility_limit, Realm.MESSAGE_VISIBILITY_LIMITED)
             self.assertEqual(get_realm("hosted").upload_quota_gb, Realm.UPLOAD_QUOTA_LIMITED)
 
         with self.settings(BILLING_ENABLED=False):

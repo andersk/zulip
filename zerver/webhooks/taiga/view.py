@@ -126,8 +126,7 @@ templates = {
         "{subject} from {old} to {new}.",
         "changed_severity": "[{user}]({user_link}) changed severity of issue "
         "{subject} from {old} to {new}.",
-        "changed_status": "[{user}]({user_link}) changed status of issue {subject}"
-        " from {old} to {new}.",
+        "changed_status": "[{user}]({user_link}) changed status of issue {subject}" " from {old} to {new}.",
         "changed_type": "[{user}]({user_link}) changed type of issue {subject} from {old} to {new}.",
         "renamed": "[{user}]({user_link}) renamed issue {old} to **{new}**.",
         "description_diff": "[{user}]({user_link}) updated description of issue {subject}.",

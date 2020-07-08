@@ -55,10 +55,7 @@ message body 4
 """.strip()
 
         self.send_and_test_stream_message(
-            "long_post",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "long_post", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_incorrect_message(self) -> None:

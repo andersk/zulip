@@ -103,9 +103,7 @@ def revoke_user_invite(request: HttpRequest, user_profile: UserProfile, prereg_i
 
 @require_realm_admin
 @has_request_variables
-def revoke_multiuse_invite(
-    request: HttpRequest, user_profile: UserProfile, invite_id: int,
-) -> HttpResponse:
+def revoke_multiuse_invite(request: HttpRequest, user_profile: UserProfile, invite_id: int) -> HttpResponse:
 
     try:
         invite = MultiuseInvite.objects.get(id=invite_id)

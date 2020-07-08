@@ -929,9 +929,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
     def test_social_auth_no_key(self) -> None:
         account_data_dict = self.get_account_data_dict(email=self.email, name=self.name)
         with self.settings(**{self.CLIENT_KEY_SETTING: None}):
-            result = self.social_auth_test(
-                account_data_dict, subdomain="zulip", next="/user_uploads/image",
-            )
+            result = self.social_auth_test(account_data_dict, subdomain="zulip", next="/user_uploads/image")
             self.assertEqual(result.status_code, 302)
             self.assertEqual(result.url, self.CONFIG_ERROR_URL)
 
@@ -1731,9 +1729,7 @@ class SAMLAuthBackendTest(SocialAuthBase):
         """
         account_data_dict = self.get_account_data_dict(email=self.email, name=self.name)
         with self.settings(SOCIAL_AUTH_SAML_ENABLED_IDPS=None):
-            result = self.social_auth_test(
-                account_data_dict, subdomain="zulip", next="/user_uploads/image",
-            )
+            result = self.social_auth_test(account_data_dict, subdomain="zulip", next="/user_uploads/image")
             self.assertEqual(result.status_code, 302)
             self.assertEqual(result.url, self.CONFIG_ERROR_URL)
 
@@ -1944,11 +1940,7 @@ class SAMLAuthBackendTest(SocialAuthBase):
             self.assertEqual("/login/", result.url)
         self.assertEqual(
             m.output,
-            [
-                self.logger_output(
-                    "/login/saml/ : Bad idp param: KeyError: {}.".format("'bad_idp'"), "info",
-                ),
-            ],
+            [self.logger_output("/login/saml/ : Bad idp param: KeyError: {}.".format("'bad_idp'"), "info")],
         )
 
     def test_social_auth_invalid_email(self) -> None:
@@ -4784,8 +4776,7 @@ class TestLDAP(ZulipLDAPTestCase):
     @override_settings(AUTHENTICATION_BACKENDS=("zproject.backends.ZulipLDAPAuthBackend",))
     def test_login_success_when_user_does_not_exist_with_split_full_name_mapping(self) -> None:
         with self.settings(
-            LDAP_APPEND_DOMAIN="zulip.com",
-            AUTH_LDAP_USER_ATTR_MAP={"first_name": "sn", "last_name": "cn"},
+            LDAP_APPEND_DOMAIN="zulip.com", AUTH_LDAP_USER_ATTR_MAP={"first_name": "sn", "last_name": "cn"},
         ):
             user_profile = self.backend.authenticate(
                 request=mock.MagicMock(),

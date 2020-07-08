@@ -70,9 +70,7 @@ def delete_all_deactivated_user_sessions() -> None:
             delete_session(session)
 
 
-def set_expirable_session_var(
-    session: Session, var_name: str, var_value: Any, expiry_seconds: int,
-) -> None:
+def set_expirable_session_var(session: Session, var_name: str, var_value: Any, expiry_seconds: int) -> None:
     expire_at = datetime_to_timestamp(timezone_now() + timedelta(seconds=expiry_seconds))
     session[var_name] = {"value": var_value, "expire_at": expire_at}
 

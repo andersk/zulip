@@ -71,6 +71,4 @@ than max_api_calls! (trying to trim) %s %s",
             # We can warn on our zset being too large, but we don't know what
             # elements to trim. We'd have to go through every list item and take
             # the intersection. The best we can do is expire it
-            self._check_within_range(
-                zset, lambda: client.zcount(zset, 0, now), lambda key, max_calls: None,
-            )
+            self._check_within_range(zset, lambda: client.zcount(zset, 0, now), lambda key, max_calls: None)

@@ -536,9 +536,7 @@ def start_social_login(
         # This backend requires the name of the IdP (from the list of configured ones)
         # to be passed as the parameter.
         if not extra_arg or extra_arg not in settings.SOCIAL_AUTH_SAML_ENABLED_IDPS:
-            logging.info(
-                "Attempted to initiate SAML authentication with wrong idp argument: %s", extra_arg,
-            )
+            logging.info("Attempted to initiate SAML authentication with wrong idp argument: %s", extra_arg)
             return redirect_to_config_error("saml")
         extra_url_params = {"idp": extra_arg}
 
@@ -564,9 +562,7 @@ def start_social_signup(
             return result
 
         if not extra_arg or extra_arg not in settings.SOCIAL_AUTH_SAML_ENABLED_IDPS:
-            logging.info(
-                "Attempted to initiate SAML authentication with wrong idp argument: %s", extra_arg,
-            )
+            logging.info("Attempted to initiate SAML authentication with wrong idp argument: %s", extra_arg)
             return redirect_to_config_error("saml")
         extra_url_params = {"idp": extra_arg}
     return oauth_redirect_to_root(
@@ -613,9 +609,7 @@ def get_dev_users(realm: Optional[Realm] = None, extra_users_count: int = 10) ->
     # it still makes sense to limit how many extra users we render to
     # support performance testing with DevAuthBackend.
     if realm is not None:
-        users_query = UserProfile.objects.select_related().filter(
-            is_bot=False, is_active=True, realm=realm,
-        )
+        users_query = UserProfile.objects.select_related().filter(is_bot=False, is_active=True, realm=realm)
     else:
         users_query = UserProfile.objects.select_related().filter(is_bot=False, is_active=True)
 
@@ -855,9 +849,7 @@ def api_dev_fetch_api_key(request: HttpRequest, username: str = REQ()) -> HttpRe
             _("This organization has been deactivated."), data={"reason": "realm deactivated"}, status=403,
         )
     if return_data.get("inactive_user"):
-        return json_error(
-            _("Your account has been disabled."), data={"reason": "user disable"}, status=403,
-        )
+        return json_error(_("Your account has been disabled."), data={"reason": "user disable"}, status=403)
     if user_profile is None:
         return json_error(_("This user is not registered."), data={"reason": "unregistered"}, status=403)
     do_login(request, user_profile)
@@ -897,9 +889,7 @@ def api_fetch_api_key(request: HttpRequest, username: str = REQ(), password: str
         request=request, username=username, password=password, realm=realm, return_data=return_data,
     )
     if return_data.get("inactive_user"):
-        return json_error(
-            _("Your account has been disabled."), data={"reason": "user disable"}, status=403,
-        )
+        return json_error(_("Your account has been disabled."), data={"reason": "user disable"}, status=403)
     if return_data.get("inactive_realm"):
         return json_error(
             _("This organization has been deactivated."), data={"reason": "realm deactivated"}, status=403,

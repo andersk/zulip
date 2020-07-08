@@ -101,9 +101,7 @@ class RealmFilterTest(ZulipTestCase):
     def test_delete(self) -> None:
         self.login("iago")
         realm = get_realm("zulip")
-        filter_id = do_add_realm_filter(
-            realm, "#(?P<id>[123])", "https://realm.com/my_realm_filter/%(id)s",
-        )
+        filter_id = do_add_realm_filter(realm, "#(?P<id>[123])", "https://realm.com/my_realm_filter/%(id)s")
         filters_count = RealmFilter.objects.count()
         result = self.client_delete(f"/json/realm/filters/{filter_id + 1}")
         self.assert_json_error(result, "Filter not found")

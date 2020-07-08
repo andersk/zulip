@@ -28,11 +28,7 @@ usage = """test-js-with-puppeteer [options]
 parser = argparse.ArgumentParser(usage)
 
 parser.add_argument(
-    "--interactive",
-    dest="interactive",
-    action="store_true",
-    default=False,
-    help="Run tests interactively",
+    "--interactive", dest="interactive", action="store_true", default=False, help="Run tests interactively",
 )
 parser.add_argument(
     "--force",

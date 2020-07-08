@@ -360,9 +360,7 @@ def process_raw_message_batch(
                 raw_message["channel_name"], Recipient.STREAM,
             )
         elif "huddle_name" in raw_message:
-            recipient_id = get_recipient_id_from_receiver_name(
-                raw_message["huddle_name"], Recipient.HUDDLE,
-            )
+            recipient_id = get_recipient_id_from_receiver_name(raw_message["huddle_name"], Recipient.HUDDLE)
         elif "pm_members" in raw_message:
             members = raw_message["pm_members"]
             member_ids = {user_id_mapper.get(member) for member in members}
@@ -749,9 +747,7 @@ def do_convert_data(mattermost_data_dir: str, output_dir: str, masking_content: 
         realm_output_dir = os.path.join(output_dir, team_name)
 
         reset_mirror_dummy_users(username_to_user)
-        label_mirror_dummy_users(
-            len(mattermost_data["team"]), team_name, mattermost_data, username_to_user,
-        )
+        label_mirror_dummy_users(len(mattermost_data["team"]), team_name, mattermost_data, username_to_user)
 
         convert_user_data(
             user_handler=user_handler,

@@ -870,8 +870,7 @@ class AvatarTest(UploadSerializeMixin, ZulipTestCase):
                 backend.get_avatar_url("hash", False), "https://bucket.s3.amazonaws.com/hash?x=x",
             )
             self.assertEqual(
-                backend.get_avatar_url("hash", True),
-                "https://bucket.s3.amazonaws.com/hash-medium.png?x=x",
+                backend.get_avatar_url("hash", True), "https://bucket.s3.amazonaws.com/hash-medium.png?x=x",
             )
             self.assertEqual(
                 backend.get_realm_icon_url(15, 1),
@@ -1101,9 +1100,7 @@ class AvatarTest(UploadSerializeMixin, ZulipTestCase):
 
         source_medium_path_id = avatar_disk_path(source_user_profile, medium=True)
         target_medium_path_id = avatar_disk_path(target_user_profile, medium=True)
-        self.assertEqual(
-            open(source_medium_path_id, "rb").read(), open(target_medium_path_id, "rb").read(),
-        )
+        self.assertEqual(open(source_medium_path_id, "rb").read(), open(target_medium_path_id, "rb").read())
 
     def test_delete_avatar_image(self) -> None:
         self.login("hamlet")

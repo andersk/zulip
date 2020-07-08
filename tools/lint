@@ -156,9 +156,7 @@ def run() -> None:
     )
 
     linter_config.external_linter(
-        "thirdparty",
-        ["tools/check-thirdparty"],
-        description="Check docs/THIRDPARTY copyright file syntax",
+        "thirdparty", ["tools/check-thirdparty"], description="Check docs/THIRDPARTY copyright file syntax",
     )
 
     @linter_config.lint

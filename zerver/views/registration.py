@@ -255,9 +255,7 @@ def accounts_register(request: HttpRequest) -> HttpResponse:
             if prereg_user.full_name_validated:
                 request.session["authenticated_full_name"] = prereg_user.full_name
                 name_validated = True
-                form = RegistrationForm(
-                    {"full_name": prereg_user.full_name}, realm_creation=realm_creation,
-                )
+                form = RegistrationForm({"full_name": prereg_user.full_name}, realm_creation=realm_creation)
             else:
                 form = RegistrationForm(
                     initial={"full_name": prereg_user.full_name}, realm_creation=realm_creation,

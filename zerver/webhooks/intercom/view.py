@@ -86,8 +86,7 @@ def strip_tags(html: str) -> str:
 
 def get_topic_for_contacts(user: Dict[str, Any]) -> str:
     topic = "{type}: {name}".format(
-        type=user["type"].capitalize(),
-        name=user.get("name") or user.get("pseudonym") or user.get("email"),
+        type=user["type"].capitalize(), name=user.get("name") or user.get("pseudonym") or user.get("email"),
     )
 
     return topic

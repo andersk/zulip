@@ -11,9 +11,7 @@ def change_realm_audit_log_event_type_tense(apps: StateApps, schema_editor: Data
     RealmAuditLog.objects.filter(event_type="user_change_avatar_source").update(
         event_type="user_avatar_source_changed",
     )
-    RealmAuditLog.objects.filter(event_type="bot_owner_changed").update(
-        event_type="user_bot_owner_changed",
-    )
+    RealmAuditLog.objects.filter(event_type="bot_owner_changed").update(event_type="user_bot_owner_changed")
 
 
 class Migration(migrations.Migration):

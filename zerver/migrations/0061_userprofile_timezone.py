@@ -10,8 +10,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="userprofile",
-            name="timezone",
-            field=models.CharField(default="UTC", max_length=40),
+            model_name="userprofile", name="timezone", field=models.CharField(default="UTC", max_length=40),
         ),
     ]

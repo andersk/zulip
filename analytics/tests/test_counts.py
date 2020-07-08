@@ -1331,8 +1331,7 @@ class TestLoggingCountStats(AnalyticsTestCase):
         client = get_client("website")
         do_mark_all_as_read(user2, client)
         self.assertEqual(
-            1,
-            UserCount.objects.filter(property=read_count_property).aggregate(Sum("value"))["value__sum"],
+            1, UserCount.objects.filter(property=read_count_property).aggregate(Sum("value"))["value__sum"],
         )
         self.assertEqual(
             1,
@@ -1343,8 +1342,7 @@ class TestLoggingCountStats(AnalyticsTestCase):
         self.send_stream_message(user1, stream.name)
         do_mark_stream_messages_as_read(user2, client, stream)
         self.assertEqual(
-            3,
-            UserCount.objects.filter(property=read_count_property).aggregate(Sum("value"))["value__sum"],
+            3, UserCount.objects.filter(property=read_count_property).aggregate(Sum("value"))["value__sum"],
         )
         self.assertEqual(
             2,
@@ -1354,8 +1352,7 @@ class TestLoggingCountStats(AnalyticsTestCase):
         message = self.send_stream_message(user2, stream.name)
         do_update_message_flags(user1, client, "add", "read", [message])
         self.assertEqual(
-            4,
-            UserCount.objects.filter(property=read_count_property).aggregate(Sum("value"))["value__sum"],
+            4, UserCount.objects.filter(property=read_count_property).aggregate(Sum("value"))["value__sum"],
         )
         self.assertEqual(
             3,
@@ -1563,11 +1560,7 @@ class TestActiveUsersAudit(AnalyticsTestCase):
         for user in [user1, user3, user4]:
             self.assertTrue(
                 UserCount.objects.filter(
-                    user=user,
-                    property=self.current_property,
-                    subgroup="false",
-                    end_time=end_time,
-                    value=1,
+                    user=user, property=self.current_property, subgroup="false", end_time=end_time, value=1,
                 ).exists(),
             )
         self.assertFalse(UserCount.objects.filter(user=user2, end_time=end_time).exists())
@@ -1675,11 +1668,7 @@ class TestRealmActiveHumans(AnalyticsTestCase):
         update_user_activity_interval(user1, time_zero)
         update_user_activity_interval(user2, time_zero)
         do_deactivate_user(user2)
-        for property in [
-            "active_users_audit:is_bot:day",
-            "15day_actives::day",
-            "realm_active_humans::day",
-        ]:
+        for property in ["active_users_audit:is_bot:day", "15day_actives::day", "realm_active_humans::day"]:
             FillState.objects.create(property=property, state=FillState.DONE, end_time=time_zero)
             process_count_stat(COUNT_STATS[property], time_zero + self.DAY)
         self.assertEqual(

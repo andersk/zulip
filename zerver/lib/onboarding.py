@@ -60,9 +60,7 @@ def send_initial_pms(user: UserProfile) -> None:
     if user.is_realm_admin:
         help_url = user.realm.uri + "/help/getting-your-organization-started-with-zulip"
         organization_setup_text = (
-            "* "
-            + _("[Read the guide]({help_url}) for getting your organization started with Zulip")
-            + "\n"
+            "* " + _("[Read the guide]({help_url}) for getting your organization started with Zulip") + "\n"
         ).format(help_url=help_url)
 
     content = (

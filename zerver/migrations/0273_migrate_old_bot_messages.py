@@ -46,9 +46,7 @@ def fix_messages(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
 
     def fix_messages_by_bot(bot_profile: Any) -> None:
         Message.objects.filter(sender=bot_profile).update(sender=notification_bot)
-        Message.objects.filter(recipient=bot_profile.recipient).update(
-            recipient=notification_bot.recipient,
-        )
+        Message.objects.filter(recipient=bot_profile.recipient).update(recipient=notification_bot.recipient)
 
     def clean_up_bot(bot_profile: Any) -> None:
         huddle_recipient_ids = Subscription.objects.filter(

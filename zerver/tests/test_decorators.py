@@ -98,9 +98,7 @@ class DecoratorTestCase(ZulipTestCase):
         self.assertEqual(get_client_name(req), "ZulipMobile")
 
         # TODO: This should ideally be Firefox.
-        req.META[
-            "HTTP_USER_AGENT"
-        ] = "Mozilla/5.0 (X11; Linux x86_64; rv:73.0) Gecko/20100101 Firefox/73.0"
+        req.META["HTTP_USER_AGENT"] = "Mozilla/5.0 (X11; Linux x86_64; rv:73.0) Gecko/20100101 Firefox/73.0"
         self.assertEqual(get_client_name(req), "Mozilla")
 
         # TODO: This should ideally be Chrome.
@@ -1180,9 +1178,7 @@ class FetchAPIKeyTest(ZulipTestCase):
 
     def test_fetch_api_key_email_address_visibility(self) -> None:
         user = self.example_user("cordelia")
-        do_set_realm_property(
-            user.realm, "email_address_visibility", Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS,
-        )
+        do_set_realm_property(user.realm, "email_address_visibility", Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS)
 
         self.login_user(user)
         result = self.client_post(
@@ -1407,9 +1403,7 @@ class TestValidateApiKey(ZulipTestCase):
         with self.settings(RUNNING_INSIDE_TORNADO=False):
             api_key = get_api_key(self.default_bot)
             with mock.patch("logging.warning") as mock_warning:
-                with self.assertRaisesRegex(
-                    JsonableError, "Account is not associated with this subdomain",
-                ):
+                with self.assertRaisesRegex(JsonableError, "Account is not associated with this subdomain"):
                     validate_api_key(
                         HostRequestMock(host=settings.EXTERNAL_HOST), self.default_bot.email, api_key,
                     )
@@ -1422,9 +1416,7 @@ class TestValidateApiKey(ZulipTestCase):
                 )
 
             with mock.patch("logging.warning") as mock_warning:
-                with self.assertRaisesRegex(
-                    JsonableError, "Account is not associated with this subdomain",
-                ):
+                with self.assertRaisesRegex(JsonableError, "Account is not associated with this subdomain"):
                     validate_api_key(
                         HostRequestMock(host="acme." + settings.EXTERNAL_HOST),
                         self.default_bot.email,
@@ -1839,8 +1831,7 @@ class CacheTestCase(ZulipTestCase):
         self.assertEqual(work_log, ["hello alice smith", "hello bob barker", "hello cal johnson"])
 
         self.assertEqual(
-            result_log,
-            ["hello alice smith", "hello bob barker", "hello alice smith", "hello cal johnson"],
+            result_log, ["hello alice smith", "hello bob barker", "hello alice smith", "hello cal johnson"],
         )
 
         work_log, result_log = test_greetings("goodbye")

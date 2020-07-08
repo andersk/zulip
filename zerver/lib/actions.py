@@ -826,10 +826,7 @@ def do_set_realm_authentication_methods(
         ),
     )
     event = dict(
-        type="realm",
-        op="update_dict",
-        property="default",
-        data=dict(authentication_methods=updated_value),
+        type="realm", op="update_dict", property="default", data=dict(authentication_methods=updated_value),
     )
     send_event(realm, event, active_user_ids(realm.id))
 
@@ -1866,9 +1863,7 @@ def bulk_insert_ums(ums: List[UserMessageLite]) -> None:
 
 
 def do_add_submessage(realm: Realm, sender_id: int, message_id: int, msg_type: str, content: str) -> None:
-    submessage = SubMessage(
-        sender_id=sender_id, message_id=message_id, msg_type=msg_type, content=content,
-    )
+    submessage = SubMessage(sender_id=sender_id, message_id=message_id, msg_type=msg_type, content=content)
     submessage.save()
 
     event = dict(
@@ -2118,9 +2113,7 @@ def validate_recipient_user_profiles(
         if (
             not user_profile.is_active and not user_profile.is_mirror_dummy and not allow_deactivated
         ) or user_profile.realm.deactivated:
-            raise ValidationError(
-                _("'{email}' is no longer using Zulip.").format(email=user_profile.email),
-            )
+            raise ValidationError(_("'{email}' is no longer using Zulip.").format(email=user_profile.email))
         recipient_profiles_map[user_profile.id] = user_profile
         if not is_cross_realm_bot_email(user_profile.email):
             realms.add(user_profile.realm_id)
@@ -2356,9 +2349,7 @@ def check_default_stream_group_name(group_name: str) -> None:
             )
 
 
-def send_rate_limited_pm_notification_to_bot_owner(
-    sender: UserProfile, realm: Realm, content: str,
-) -> None:
+def send_rate_limited_pm_notification_to_bot_owner(sender: UserProfile, realm: Realm, content: str) -> None:
     """
     Sends a PM error notification to a bot's owner if one hasn't already
     been sent in the last 5 minutes.
@@ -4536,9 +4527,7 @@ def do_update_mobile_push_notification(
     do_clear_mobile_push_notifications_for_ids(list(remove_notify_users), [message.id])
 
 
-def do_clear_mobile_push_notifications_for_ids(
-    user_profile_ids: List[int], message_ids: List[int],
-) -> None:
+def do_clear_mobile_push_notifications_for_ids(user_profile_ids: List[int], message_ids: List[int]) -> None:
     if len(message_ids) == 0:
         return
 
@@ -5899,9 +5888,7 @@ def get_emails_from_user_ids(user_ids: Sequence[int]) -> Dict[int, str]:
 
 
 def do_add_realm_domain(realm: Realm, domain: str, allow_subdomains: bool) -> (RealmDomain):
-    realm_domain = RealmDomain.objects.create(
-        realm=realm, domain=domain, allow_subdomains=allow_subdomains,
-    )
+    realm_domain = RealmDomain.objects.create(realm=realm, domain=domain, allow_subdomains=allow_subdomains)
     event = dict(
         type="realm_domains",
         op="add",
@@ -6119,11 +6106,7 @@ def try_add_realm_default_custom_profile_field(realm: Realm, field_subtype: str)
 
 
 def try_add_realm_custom_profile_field(
-    realm: Realm,
-    name: str,
-    field_type: int,
-    hint: str = "",
-    field_data: Optional[ProfileFieldData] = None,
+    realm: Realm, name: str, field_type: int, hint: str = "", field_data: Optional[ProfileFieldData] = None,
 ) -> CustomProfileField:
     field = CustomProfileField(realm=realm, name=name, field_type=field_type)
     field.hint = hint
@@ -6237,8 +6220,7 @@ def check_remove_custom_profile_field_value(user_profile: UserProfile, field_id:
         field_value = CustomProfileFieldValue.objects.get(field=field, user_profile=user_profile)
         field_value.delete()
         notify_user_update_custom_profile_data(
-            user_profile,
-            {"id": field_id, "value": None, "rendered_value": None, "type": field.field_type},
+            user_profile, {"id": field_id, "value": None, "rendered_value": None, "type": field.field_type},
         )
     except CustomProfileField.DoesNotExist:
         raise JsonableError(_("Field id {id} not found.").format(id=field_id))
@@ -6430,9 +6412,7 @@ def bulk_add_members_to_user_group(user_group: UserGroup, user_profiles: List[Us
 
 
 def remove_members_from_user_group(user_group: UserGroup, user_profiles: List[UserProfile]) -> None:
-    UserGroupMembership.objects.filter(
-        user_group_id=user_group.id, user_profile__in=user_profiles,
-    ).delete()
+    UserGroupMembership.objects.filter(user_group_id=user_group.id, user_profile__in=user_profiles).delete()
 
     user_ids = [up.id for up in user_profiles]
     do_send_user_group_members_update_event("remove_members", user_group, user_ids)

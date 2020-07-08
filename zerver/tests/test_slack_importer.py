@@ -970,9 +970,7 @@ class SlackImporter(ZulipTestCase):
         mock_attachment: mock.Mock,
         mock_requests_get: mock.Mock,
     ) -> None:
-        test_slack_dir = os.path.join(
-            settings.DEPLOY_ROOT, "zerver", "tests", "fixtures", "slack_fixtures",
-        )
+        test_slack_dir = os.path.join(settings.DEPLOY_ROOT, "zerver", "tests", "fixtures", "slack_fixtures")
         test_slack_zip_file = os.path.join(test_slack_dir, "test_slack_importer.zip")
         test_slack_unzipped_file = os.path.join(test_slack_dir, "test_slack_importer")
 

@@ -274,11 +274,7 @@ def main() -> None:
         "--verbose", dest="verbose", action="store_true", default=False, help="Show detailed output",
     )
     parser.add_argument(
-        "--reverse",
-        dest="reverse",
-        action="store_true",
-        default=False,
-        help="Run tests in reverse order.",
+        "--reverse", dest="reverse", action="store_true", default=False, help="Run tests in reverse order.",
     )
     parser.add_argument(
         "--rerun",

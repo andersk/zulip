@@ -150,9 +150,7 @@ def sew_messages_and_reactions(
     return list(converted_messages.values())
 
 
-def sew_messages_and_submessages(
-    messages: List[Dict[str, Any]], submessages: List[Dict[str, Any]],
-) -> None:
+def sew_messages_and_submessages(messages: List[Dict[str, Any]], submessages: List[Dict[str, Any]]) -> None:
     # This is super similar to sew_messages_and_reactions.
     for message in messages:
         message["submessages"] = []
@@ -210,9 +208,7 @@ class MessageDict:
         return obj
 
     @staticmethod
-    def post_process_dicts(
-        objs: List[Dict[str, Any]], apply_markdown: bool, client_gravatar: bool,
-    ) -> None:
+    def post_process_dicts(objs: List[Dict[str, Any]], apply_markdown: bool, client_gravatar: bool) -> None:
         """
         NOTE: This function mutates the objects in
               the `objs` list, rather than making

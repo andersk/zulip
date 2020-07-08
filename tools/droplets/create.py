@@ -271,11 +271,7 @@ if __name__ == "__main__":
 
     # create droplet
     ip_address = create_droplet(
-        my_token=api_token,
-        template_id=template_id,
-        username=username,
-        tags=args.tags,
-        user_data=user_data,
+        my_token=api_token, template_id=template_id, username=username, tags=args.tags, user_data=user_data,
     )
 
     # create dns entry

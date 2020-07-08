@@ -3,9 +3,7 @@ from django.db.backends.postgresql.schema import DatabaseSchemaEditor
 from django.db.migrations.state import StateApps
 
 
-def clear_message_sent_by_message_type_values(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def clear_message_sent_by_message_type_values(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     UserCount = apps.get_model("analytics", "UserCount")
     StreamCount = apps.get_model("analytics", "StreamCount")
     RealmCount = apps.get_model("analytics", "RealmCount")

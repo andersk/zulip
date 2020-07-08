@@ -156,9 +156,7 @@ def check_none_or(sub_validator: Validator[ResultT]) -> Validator[Optional[Resul
     return f
 
 
-def check_list(
-    sub_validator: Validator[ResultT], length: Optional[int] = None,
-) -> Validator[List[ResultT]]:
+def check_list(sub_validator: Validator[ResultT], length: Optional[int] = None) -> Validator[List[ResultT]]:
     def f(var_name: str, val: object) -> List[ResultT]:
         if not isinstance(val, list):
             raise ValidationError(_("{var_name} is not a list").format(var_name=var_name))

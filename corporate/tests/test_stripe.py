@@ -211,9 +211,7 @@ def normalize_fixture_data(
         for pattern, translation in pattern_translations.items():
             for match in re.findall(pattern, file_content):
                 if match not in normalized_values[pattern]:
-                    normalized_values[pattern][match] = translation % (
-                        len(normalized_values[pattern]) + 1,
-                    )
+                    normalized_values[pattern][match] = translation % (len(normalized_values[pattern]) + 1,)
                 file_content = file_content.replace(match, normalized_values[pattern][match])
         file_content = re.sub(r'(?<="risk_score": )(\d+)', "00", file_content)
         file_content = re.sub(r'(?<="times_redeemed": )(\d+)', "00", file_content)
@@ -742,9 +740,7 @@ class StripeTest(StripeTestCase):
             with patch("corporate.lib.stripe.timezone_now", return_value=self.now):
                 self.upgrade()
 
-            stripe_customer = stripe_get_customer(
-                Customer.objects.get(realm=user.realm).stripe_customer_id,
-            )
+            stripe_customer = stripe_get_customer(Customer.objects.get(realm=user.realm).stripe_customer_id)
             self.assertEqual(stripe_customer.default_source.id[:5], "card_")
             self.assertEqual(stripe_customer.description, "zulip (Zulip Dev)")
             self.assertEqual(stripe_customer.discount, None)
@@ -791,10 +787,7 @@ class StripeTest(StripeTestCase):
             self.assertEqual(
                 audit_log_entries,
                 [
-                    (
-                        RealmAuditLog.STRIPE_CUSTOMER_CREATED,
-                        timestamp_to_datetime(stripe_customer.created),
-                    ),
+                    (RealmAuditLog.STRIPE_CUSTOMER_CREATED, timestamp_to_datetime(stripe_customer.created)),
                     (RealmAuditLog.STRIPE_CARD_CHANGED, timestamp_to_datetime(stripe_customer.created)),
                     (RealmAuditLog.CUSTOMER_PLAN_CREATED, self.now),
                     # TODO: Check for REALM_PLAN_TYPE_CHANGED
@@ -956,9 +949,7 @@ class StripeTest(StripeTestCase):
             with patch("corporate.lib.stripe.timezone_now", return_value=self.now):
                 self.upgrade(invoice=True)
 
-            stripe_customer = stripe_get_customer(
-                Customer.objects.get(realm=user.realm).stripe_customer_id,
-            )
+            stripe_customer = stripe_get_customer(Customer.objects.get(realm=user.realm).stripe_customer_id)
             self.assertEqual(stripe_customer.discount, None)
             self.assertEqual(stripe_customer.email, user.email)
             metadata_dict = dict(stripe_customer.metadata)
@@ -987,11 +978,7 @@ class StripeTest(StripeTestCase):
             )
 
             LicenseLedger.objects.get(
-                plan=plan,
-                is_renewal=True,
-                event_time=self.now,
-                licenses=123,
-                licenses_at_next_renewal=123,
+                plan=plan, is_renewal=True, event_time=self.now, licenses=123, licenses_at_next_renewal=123,
             )
             audit_log_entries = list(
                 RealmAuditLog.objects.filter(acting_user=user)
@@ -1001,10 +988,7 @@ class StripeTest(StripeTestCase):
             self.assertEqual(
                 audit_log_entries,
                 [
-                    (
-                        RealmAuditLog.STRIPE_CUSTOMER_CREATED,
-                        timestamp_to_datetime(stripe_customer.created),
-                    ),
+                    (RealmAuditLog.STRIPE_CUSTOMER_CREATED, timestamp_to_datetime(stripe_customer.created)),
                     (RealmAuditLog.CUSTOMER_PLAN_CREATED, self.now),
                     # TODO: Check for REALM_PLAN_TYPE_CHANGED
                     # (RealmAuditLog.REALM_PLAN_TYPE_CHANGED, Kandra()),

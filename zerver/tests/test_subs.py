@@ -878,9 +878,7 @@ class StreamAdminTest(ZulipTestCase):
         do_change_plan_type(realm, Realm.LIMITED)
         stream = self.subscribe(user_profile, "stream_name1")
 
-        result = self.client_patch(
-            f"/json/streams/{stream.id}", {"message_retention_days": ujson.dumps(2)},
-        )
+        result = self.client_patch(f"/json/streams/{stream.id}", {"message_retention_days": ujson.dumps(2)})
         self.assert_json_error(result, "Available on Zulip Standard. Upgrade to access.")
 
         do_change_plan_type(realm, Realm.SELF_HOSTED)
@@ -965,9 +963,7 @@ class StreamAdminTest(ZulipTestCase):
         )
         self.assert_json_error(result, "Bad value for 'message_retention_days': -1")
 
-        result = self.client_patch(
-            f"/json/streams/{stream.id}", {"message_retention_days": ujson.dumps(0)},
-        )
+        result = self.client_patch(f"/json/streams/{stream.id}", {"message_retention_days": ujson.dumps(0)})
         self.assert_json_error(result, "Bad value for 'message_retention_days': 0")
 
     def test_change_stream_message_retention_days_requires_realm_owner(self) -> None:
@@ -976,15 +972,11 @@ class StreamAdminTest(ZulipTestCase):
         realm = user_profile.realm
         stream = self.subscribe(user_profile, "stream_name1")
 
-        result = self.client_patch(
-            f"/json/streams/{stream.id}", {"message_retention_days": ujson.dumps(2)},
-        )
+        result = self.client_patch(f"/json/streams/{stream.id}", {"message_retention_days": ujson.dumps(2)})
         self.assert_json_error(result, "Must be an organization owner")
 
         do_change_user_role(user_profile, UserProfile.ROLE_REALM_OWNER)
-        result = self.client_patch(
-            f"/json/streams/{stream.id}", {"message_retention_days": ujson.dumps(2)},
-        )
+        result = self.client_patch(f"/json/streams/{stream.id}", {"message_retention_days": ujson.dumps(2)})
         self.assert_json_success(result)
         stream = get_stream("stream_name1", realm)
         self.assertEqual(stream.message_retention_days, 2)
@@ -3311,10 +3303,7 @@ class SubscriptionAPITest(ZulipTestCase):
         with self.assertRaises(UserProfile.DoesNotExist):
             get_user(invalid_principal, invalid_principal_realm)
         result = self.common_subscribe_to_streams(
-            self.test_user,
-            self.streams,
-            {"principals": ujson.dumps([invalid_principal])},
-            allow_fail=True,
+            self.test_user, self.streams, {"principals": ujson.dumps([invalid_principal])}, allow_fail=True,
         )
         self.assert_json_error(
             result,
@@ -3328,10 +3317,7 @@ class SubscriptionAPITest(ZulipTestCase):
         with self.assertRaises(UserProfile.DoesNotExist):
             get_user_profile_by_id_in_realm(invalid_principal, invalid_principal_realm)
         result = self.common_subscribe_to_streams(
-            self.test_user,
-            self.streams,
-            {"principals": ujson.dumps([invalid_principal])},
-            allow_fail=True,
+            self.test_user, self.streams, {"principals": ujson.dumps([invalid_principal])}, allow_fail=True,
         )
         self.assert_json_error(
             result,
@@ -3667,9 +3653,7 @@ class SubscriptionAPITest(ZulipTestCase):
 
         # This should result in user not in realm
         with self.assertRaises(ValidationError):
-            validate_user_access_to_subscribers_helper(
-                user_profile, stream_dict, lambda user_profile: True,
-            )
+            validate_user_access_to_subscribers_helper(user_profile, stream_dict, lambda user_profile: True)
 
     def test_subscriptions_query_count(self) -> None:
         """

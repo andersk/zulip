@@ -162,11 +162,7 @@ def build_realmemoji(
 def users_to_zerver_userprofile(
     slack_data_dir: str, users: List[ZerverFieldsT], realm_id: int, timestamp: Any, domain_name: str,
 ) -> Tuple[
-    List[ZerverFieldsT],
-    List[ZerverFieldsT],
-    SlackToZulipUserIDT,
-    List[ZerverFieldsT],
-    List[ZerverFieldsT],
+    List[ZerverFieldsT], List[ZerverFieldsT], SlackToZulipUserIDT, List[ZerverFieldsT], List[ZerverFieldsT],
 ]:
     """
     Returns:
@@ -416,9 +412,7 @@ def channels_to_zerver_stream(
     realm: Dict[str, Any],
     slack_user_id_to_zulip_user_id: SlackToZulipUserIDT,
     zerver_userprofile: List[ZerverFieldsT],
-) -> Tuple[
-    Dict[str, List[ZerverFieldsT]], AddedChannelsT, AddedMPIMsT, DMMembersT, SlackToZulipRecipientT,
-]:
+) -> Tuple[Dict[str, List[ZerverFieldsT]], AddedChannelsT, AddedMPIMsT, DMMembersT, SlackToZulipRecipientT]:
     """
     Returns:
     1. realm, Converted Realm data
@@ -797,11 +791,7 @@ def channel_message_to_zerver_message(
     domain_name: str,
     long_term_idle: Set[int],
 ) -> Tuple[
-    List[ZerverFieldsT],
-    List[ZerverFieldsT],
-    List[ZerverFieldsT],
-    List[ZerverFieldsT],
-    List[ZerverFieldsT],
+    List[ZerverFieldsT], List[ZerverFieldsT], List[ZerverFieldsT], List[ZerverFieldsT], List[ZerverFieldsT],
 ]:
     """
     Returns:

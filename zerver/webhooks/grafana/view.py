@@ -39,9 +39,7 @@ def api_grafana_webhook(
     )
 
     if payload.get("imageUrl") is not None:
-        body += "\n[Click to view visualization]({visualization})".format(
-            visualization=payload["imageUrl"],
-        )
+        body += "\n[Click to view visualization]({visualization})".format(visualization=payload["imageUrl"])
 
     body = body.strip()
 

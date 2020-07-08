@@ -235,9 +235,7 @@ def fill_appropriate_message_content(
 
 
 def get_filled_card_url_template(payload: Mapping[str, Any]) -> str:
-    return TRELLO_CARD_URL_TEMPLATE.format(
-        card_name=get_card_name(payload), card_url=get_card_url(payload),
-    )
+    return TRELLO_CARD_URL_TEMPLATE.format(card_name=get_card_name(payload), card_url=get_card_url(payload))
 
 
 def get_card_url(payload: Mapping[str, Any]) -> str:

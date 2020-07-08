@@ -6,9 +6,7 @@ from django.db.migrations.state import StateApps
 BOT_CREATION_EVERYONE = 1
 
 
-def set_initial_value_for_bot_creation_policy(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def set_initial_value_for_bot_creation_policy(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     Realm = apps.get_model("zerver", "Realm")
     Realm.BOT_CREATION_EVERYONE = 1
     Realm.BOT_CREATION_LIMIT_GENERIC_BOTS = 2

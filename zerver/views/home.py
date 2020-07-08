@@ -161,9 +161,7 @@ def home_real(request: HttpRequest) -> HttpResponse:
     )
     if banned_desktop_app:
         return render(
-            request,
-            "zerver/insecure_desktop_app.html",
-            context={"auto_update_broken": auto_update_broken},
+            request, "zerver/insecure_desktop_app.html", context={"auto_update_broken": auto_update_broken},
         )
     (unsupported_browser, browser_name) = is_unsupported_browser(client_user_agent)
     if unsupported_browser:

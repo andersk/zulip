@@ -12,9 +12,7 @@ def generate_missed_message_token() -> str:
     return "mm" + generate_random_token(32)
 
 
-def move_missed_message_addresses_to_database(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def move_missed_message_addresses_to_database(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     redis_client = get_redis_client()
     MissedMessageEmailAddress = apps.get_model("zerver", "MissedMessageEmailAddress")
     UserProfile = apps.get_model("zerver", "UserProfile")

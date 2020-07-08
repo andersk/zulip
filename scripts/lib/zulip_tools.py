@@ -442,9 +442,7 @@ def files_and_string_digest(filenames: Sequence[str], extra_strings: Sequence[st
     return sha1sum.hexdigest()
 
 
-def is_digest_obsolete(
-    hash_name: str, filenames: Sequence[str], extra_strings: Sequence[str] = [],
-) -> bool:
+def is_digest_obsolete(hash_name: str, filenames: Sequence[str], extra_strings: Sequence[str] = []) -> bool:
     """
     In order to determine if we need to run some
     process, we calculate a digest of the important

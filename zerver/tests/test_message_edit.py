@@ -197,9 +197,7 @@ class EditMessageTest(ZulipTestCase):
         msg_id = self.send_stream_message(
             self.example_user("hamlet"), "Scotland", topic_name="editing", content="before edit",
         )
-        result = self.client_patch(
-            "/json/messages/" + str(msg_id), {"message_id": msg_id, "content": " "},
-        )
+        result = self.client_patch("/json/messages/" + str(msg_id), {"message_id": msg_id, "content": " "})
         self.assert_json_success(result)
         content = Message.objects.filter(id=msg_id).values_list("content", flat=True)[0]
         self.assertEqual(content, "(deleted)")

@@ -615,9 +615,7 @@ def run_parallel_wrapper(
     return run_parallel(wrapping_function, job_lists, threads=threads)
 
 
-def process_uploads(
-    upload_list: List[ZerverFieldsT], upload_dir: str, threads: int,
-) -> List[ZerverFieldsT]:
+def process_uploads(upload_list: List[ZerverFieldsT], upload_dir: str, threads: int) -> List[ZerverFieldsT]:
     """
     This function downloads the uploads and saves it in the realm's upload directory.
     Required parameters:

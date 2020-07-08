@@ -231,9 +231,7 @@ def generate_sprite_css_files(
 
 
 def setup_emoji_farms(cache_path: str, emoji_data: List[Dict[str, Any]]) -> None:
-    def ensure_emoji_image(
-        emoji_dict: Dict[str, Any], src_emoji_farm: str, target_emoji_farm: str,
-    ) -> None:
+    def ensure_emoji_image(emoji_dict: Dict[str, Any], src_emoji_farm: str, target_emoji_farm: str) -> None:
         # We use individual images from emoji farm for rendering emojis
         # in notification messages. We have a custom emoji formatter in
         # notifications processing code that converts `span` tags to

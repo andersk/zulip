@@ -246,9 +246,7 @@ def message_stream_count(user_profile: UserProfile) -> int:
 
 def most_recent_usermessage(user_profile: UserProfile) -> UserMessage:
     query = (
-        UserMessage.objects.select_related("message")
-        .filter(user_profile=user_profile)
-        .order_by("-message")
+        UserMessage.objects.select_related("message").filter(user_profile=user_profile).order_by("-message")
     )
     return query[0]  # Django does LIMIT here
 

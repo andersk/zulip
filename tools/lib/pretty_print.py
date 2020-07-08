@@ -59,10 +59,7 @@ def pretty_print_html(html: str, num_spaces: int = 4) -> str:
 
                 if is_block:
                     if (
-                        (
-                            token.kind == "handlebars_start"
-                            and stack[-1]["token_kind"] == "handlebars_start"
-                        )
+                        (token.kind == "handlebars_start" and stack[-1]["token_kind"] == "handlebars_start")
                         or (
                             token.kind
                             in {

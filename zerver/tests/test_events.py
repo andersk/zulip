@@ -364,9 +364,7 @@ class NormalActionsTest(BaseAction):
             self.example_user("hamlet"),
             self.example_user("othello"),
         ]
-        self.verify_action(
-            lambda: self.send_huddle_message(self.example_user("cordelia"), huddle, "hola"),
-        )
+        self.verify_action(lambda: self.send_huddle_message(self.example_user("cordelia"), huddle, "hola"))
 
     def test_stream_send_message_events(self) -> None:
         def get_checker(check_gravatar: Validator[Optional[str]]) -> Validator[Dict[str, object]]:
@@ -636,8 +634,7 @@ class NormalActionsTest(BaseAction):
         message_id = self.send_stream_message(self.example_user("hamlet"), "Verona", "hello")
         message = Message.objects.get(id=message_id)
         events = self.verify_action(
-            lambda: do_add_reaction_legacy(self.user_profile, message, "tada"),
-            state_change_expected=False,
+            lambda: do_add_reaction_legacy(self.user_profile, message, "tada"), state_change_expected=False,
         )
         schema_checker("events[0]", events[0])
 
@@ -1289,9 +1286,7 @@ class NormalActionsTest(BaseAction):
         group = lookup_default_stream_groups(["group1"], self.user_profile.realm)[0]
         venice_stream = get_stream("Venice", self.user_profile.realm)
         events = self.verify_action(
-            lambda: do_add_streams_to_default_stream_group(
-                self.user_profile.realm, group, [venice_stream],
-            ),
+            lambda: do_add_streams_to_default_stream_group(self.user_profile.realm, group, [venice_stream]),
         )
         default_stream_groups_checker("events[0]", events[0])
 
@@ -1328,9 +1323,7 @@ class NormalActionsTest(BaseAction):
         do_change_user_role(self.user_profile, UserProfile.ROLE_GUEST)
         venice_stream = get_stream("Venice", self.user_profile.realm)
         self.verify_action(
-            lambda: do_add_streams_to_default_stream_group(
-                self.user_profile.realm, group, [venice_stream],
-            ),
+            lambda: do_add_streams_to_default_stream_group(self.user_profile.realm, group, [venice_stream]),
             state_change_expected=False,
             num_events=0,
         )
@@ -1352,9 +1345,7 @@ class NormalActionsTest(BaseAction):
     def test_default_streams_events_guest(self) -> None:
         do_change_user_role(self.user_profile, UserProfile.ROLE_GUEST)
         stream = get_stream("Scotland", self.user_profile.realm)
-        self.verify_action(
-            lambda: do_add_default_stream(stream), state_change_expected=False, num_events=0,
-        )
+        self.verify_action(lambda: do_add_default_stream(stream), state_change_expected=False, num_events=0)
         self.verify_action(
             lambda: do_remove_default_stream(stream), state_change_expected=False, num_events=0,
         )
@@ -1945,9 +1936,7 @@ class NormalActionsTest(BaseAction):
                 ("op", equals("change")),
                 (
                     "realm_domain",
-                    check_dict_only(
-                        [("domain", equals("zulip.org")), ("allow_subdomains", equals(True))],
-                    ),
+                    check_dict_only([("domain", equals("zulip.org")), ("allow_subdomains", equals(True))]),
                 ),
             ],
         )
@@ -2533,9 +2522,7 @@ class NormalActionsTest(BaseAction):
                             ("create_time", check_int),
                             (
                                 "messages",
-                                check_list(
-                                    check_dict_only([("id", check_int), ("date_sent", check_int)]),
-                                ),
+                                check_list(check_dict_only([("id", check_int), ("date_sent", check_int)])),
                             ),
                         ],
                     ),
@@ -2582,9 +2569,7 @@ class NormalActionsTest(BaseAction):
                             ("create_time", check_int),
                             (
                                 "messages",
-                                check_list(
-                                    check_dict_only([("id", check_int), ("date_sent", check_int)]),
-                                ),
+                                check_list(check_dict_only([("id", check_int), ("date_sent", check_int)])),
                             ),
                         ],
                     ),

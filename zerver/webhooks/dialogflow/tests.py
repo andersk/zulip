@@ -12,9 +12,7 @@ class DialogflowHookTests(WebhookTestCase):
     def test_dialogflow_weather_app(self) -> None:
         self.url = self.build_webhook_url(email="AARON@zulip.com", username="aaron", user_ip="127.0.0.1")
         expected_message = "The weather sure looks great !"
-        self.send_and_test_private_message(
-            "weather_app", expected_message, content_type="application/json",
-        )
+        self.send_and_test_private_message("weather_app", expected_message, content_type="application/json")
 
     def test_dialogflow_alternate_result(self) -> None:
         self.url = self.build_webhook_url(email="AARON@zulip.com", username="aaron", user_ip="127.0.0.1")

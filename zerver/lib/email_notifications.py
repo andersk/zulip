@@ -361,9 +361,7 @@ def do_send_missedmessage_events_reply_in_zulip(
             huddle_display_name = " and ".join(other_recipients)
             context.update({"huddle_display_name": huddle_display_name})
         elif len(other_recipients) == 3:
-            huddle_display_name = (
-                f"{other_recipients[0]}, {other_recipients[1]}, and {other_recipients[2]}"
-            )
+            huddle_display_name = f"{other_recipients[0]}, {other_recipients[1]}, and {other_recipients[2]}"
             context.update({"huddle_display_name": huddle_display_name})
         else:
             huddle_display_name = "{}, and {} others".format(

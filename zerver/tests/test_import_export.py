@@ -593,9 +593,7 @@ class ImportExportTest(ZulipTestCase):
         self.assertEqual(exported_message["content"], um.message.content)
 
         public_stream_names = ["Denmark", "Rome", "Scotland", "Venice", "Verona"]
-        public_stream_ids = Stream.objects.filter(name__in=public_stream_names).values_list(
-            "id", flat=True,
-        )
+        public_stream_ids = Stream.objects.filter(name__in=public_stream_names).values_list("id", flat=True)
         public_stream_recipients = Recipient.objects.filter(
             type_id__in=public_stream_ids, type=Recipient.STREAM,
         )
@@ -969,9 +967,7 @@ class ImportExportTest(ZulipTestCase):
         # are okay with using bs4 for this.  lxml package also has
         # similar behavior.
         orig_polonius_user = self.example_user("polonius")
-        original_msg = Message.objects.get(
-            content=special_characters_message, sender__realm=original_realm,
-        )
+        original_msg = Message.objects.get(content=special_characters_message, sender__realm=original_realm)
         self.assertEqual(
             original_msg.rendered_content,
             '<div class="codehilite"><pre><span></span><code>&#39;\n</code></pre></div>\n\n\n'
@@ -980,9 +976,7 @@ class ImportExportTest(ZulipTestCase):
         imported_polonius_user = UserProfile.objects.get(
             delivery_email=self.example_email("polonius"), realm=imported_realm,
         )
-        imported_msg = Message.objects.get(
-            content=special_characters_message, sender__realm=imported_realm,
-        )
+        imported_msg = Message.objects.get(content=special_characters_message, sender__realm=imported_realm)
         self.assertEqual(
             imported_msg.rendered_content,
             '<div class="codehilite"><pre><span></span><code>\'\n</code></pre></div>\n'

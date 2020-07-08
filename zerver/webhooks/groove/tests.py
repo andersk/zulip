@@ -121,10 +121,7 @@ This is a note added to  a ticket
 """.strip()
 
         self.send_and_test_stream_message(
-            "note_added",
-            expected_topic,
-            expected_message,
-            content_type="application/x-ww-form-urlencoded",
+            "note_added", expected_topic, expected_message, content_type="application/x-ww-form-urlencoded",
         )
 
     def get_body(self, fixture_name: str) -> str:
