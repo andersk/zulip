@@ -251,9 +251,7 @@ class MatterMostImporter(ZulipTestCase):
         self.assertEqual(
             subscriber_handler.get_users(stream_id=stream_id_mapper.get("gryffindor-quidditch-team")), {harry_id},
         )
-        self.assertEqual(
-            subscriber_handler.get_users(stream_id=stream_id_mapper.get("dumbledores-army")), {harry_id},
-        )
+        self.assertEqual(subscriber_handler.get_users(stream_id=stream_id_mapper.get("dumbledores-army")), {harry_id})
 
         team_name = "slytherin"
         zerver_stream = convert_channel_data(

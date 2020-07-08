@@ -24,9 +24,7 @@ class Migration(migrations.Migration):
             field=models.BooleanField(default=None, null=True),
         ),
         migrations.AlterField(
-            model_name="subscription",
-            name="email_notifications",
-            field=models.BooleanField(default=None, null=True),
+            model_name="subscription", name="email_notifications", field=models.BooleanField(default=None, null=True),
         ),
         migrations.AlterField(
             model_name="subscription", name="is_muted", field=models.BooleanField(default=False, null=True),

@@ -121,9 +121,7 @@ class WorkerTest(ZulipTestCase):
 
         hamlet2_msg_id = self.send_personal_message(from_user=cordelia, to_user=hamlet, content="goodbye hamlet")
 
-        hamlet3_msg_id = self.send_personal_message(
-            from_user=cordelia, to_user=hamlet, content="hello again hamlet",
-        )
+        hamlet3_msg_id = self.send_personal_message(from_user=cordelia, to_user=hamlet, content="hello again hamlet")
 
         othello_msg_id = self.send_personal_message(
             from_user=cordelia, to_user=othello, content="where art thou, othello?",

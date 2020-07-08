@@ -36,9 +36,7 @@ def get_components_update_body(payload: Dict[str, Any]) -> str:
 
 
 def get_incident_topic(payload: Dict[str, Any]) -> str:
-    return TOPIC_TEMPLATE.format(
-        name=payload["incident"]["name"], description=payload["page"]["status_description"],
-    )
+    return TOPIC_TEMPLATE.format(name=payload["incident"]["name"], description=payload["page"]["status_description"])
 
 
 def get_component_topic(payload: Dict[str, Any]) -> str:

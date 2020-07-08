@@ -24,9 +24,7 @@ class MITNameTest(ZulipTestCase):
             "DNS.dnslookup",
             return_value=[["starnine:*:84233:101:Athena Consulting Exchange User,,,:/mit/starnine:/bin/bash"]],
         ):
-            self.assertEqual(
-                compute_mit_user_fullname(self.mit_email("starnine")), "Athena Consulting Exchange User",
-            )
+            self.assertEqual(compute_mit_user_fullname(self.mit_email("starnine")), "Athena Consulting Exchange User")
         with mock.patch(
             "DNS.dnslookup", return_value=[["sipbexch:*:87824:101:Exch Sipb,,,:/mit/sipbexch:/bin/athena/bash"]],
         ):
@@ -118,8 +116,7 @@ class RateLimitTests(ZulipTestCase):
         RateLimitedUser(user).clear_history()
 
         with mock.patch(
-            "zerver.lib.rate_limiter.RedisRateLimiterBackend.incr_ratelimit",
-            side_effect=RateLimiterLockingException,
+            "zerver.lib.rate_limiter.RedisRateLimiterBackend.incr_ratelimit", side_effect=RateLimiterLockingException,
         ):
             result = self.send_api_message(user, "some stuff")
             self.assertEqual(result.status_code, 429)

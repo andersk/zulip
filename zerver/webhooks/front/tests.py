@@ -118,10 +118,7 @@ class FrontHookTests(WebhookTestCase):
         expected_message = "**Leela Turanga** added tag **Urgent**."
 
         self.send_and_test_stream_message(
-            "conversation_tagged",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "conversation_tagged", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     # Conversation automatically assigned to a teammate who replied to it.
@@ -161,9 +158,7 @@ class FrontHookTests(WebhookTestCase):
 
     def test_mention(self) -> None:
         expected_topic = "cnv_keocka"
-        expected_message = (
-            "**Leela Turanga** left a comment:\n" "```quote\n@bender Could you take it from here?\n```"
-        )
+        expected_message = "**Leela Turanga** left a comment:\n" "```quote\n@bender Could you take it from here?\n```"
 
         self.send_and_test_stream_message(
             "mention", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",

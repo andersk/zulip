@@ -13,12 +13,7 @@ class Migration(migrations.Migration):
             model_name="userprofile",
             name="emojiset",
             field=models.CharField(
-                choices=[
-                    ("apple", "Apple"),
-                    ("emojione", "Emoji One"),
-                    ("google", "Google"),
-                    ("twitter", "Twitter"),
-                ],
+                choices=[("apple", "Apple"), ("emojione", "Emoji One"), ("google", "Google"), ("twitter", "Twitter")],
                 default="google",
                 max_length=20,
             ),

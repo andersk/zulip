@@ -326,9 +326,7 @@ class ZulipPasswordResetForm(PasswordResetForm):
             )
         else:
             context["active_account_in_realm"] = False
-            active_accounts_in_other_realms = UserProfile.objects.filter(
-                delivery_email__iexact=email, is_active=True,
-            )
+            active_accounts_in_other_realms = UserProfile.objects.filter(delivery_email__iexact=email, is_active=True)
             if active_accounts_in_other_realms:
                 context["active_accounts_in_other_realms"] = active_accounts_in_other_realms
             language = request.LANGUAGE_CODE

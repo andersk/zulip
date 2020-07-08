@@ -1300,9 +1300,7 @@ def import_attachments(data: TableData) -> None:
             INSERT INTO {m2m_table_name} ({parent_id}, {child_id}) VALUES %s
         """,
         ).format(
-            m2m_table_name=Identifier(m2m_table_name),
-            parent_id=Identifier(parent_id),
-            child_id=Identifier(child_id),
+            m2m_table_name=Identifier(m2m_table_name), parent_id=Identifier(parent_id), child_id=Identifier(child_id),
         )
         tups = [(row[parent_id], row[child_id]) for row in m2m_rows]
         execute_values(cursor.cursor, sql_template, tups)

@@ -890,9 +890,7 @@ class MarkdownTest(ZulipTestCase):
             converted,
             "<p>{}</p>\n{}".format(
                 make_link("http://twitter.com/wdaher/status/287977969287315456"),
-                make_inline_twitter_preview(
-                    "http://twitter.com/wdaher/status/287977969287315456", normal_tweet_html,
-                ),
+                make_inline_twitter_preview("http://twitter.com/wdaher/status/287977969287315456", normal_tweet_html),
             ),
         )
 
@@ -911,12 +909,8 @@ class MarkdownTest(ZulipTestCase):
                 make_link("http://twitter.com/wdaher/status/287977969287315457"),
                 make_link("http://twitter.com/wdaher/status/287977969287315457"),
                 make_link("http://twitter.com/wdaher/status/287977969287315457"),
-                make_inline_twitter_preview(
-                    "http://twitter.com/wdaher/status/287977969287315456", normal_tweet_html,
-                ),
-                make_inline_twitter_preview(
-                    "http://twitter.com/wdaher/status/287977969287315457", normal_tweet_html,
-                ),
+                make_inline_twitter_preview("http://twitter.com/wdaher/status/287977969287315456", normal_tweet_html),
+                make_inline_twitter_preview("http://twitter.com/wdaher/status/287977969287315457", normal_tweet_html),
             ),
         )
 
@@ -935,12 +929,8 @@ class MarkdownTest(ZulipTestCase):
                 make_link("http://twitter.com/wdaher/status/287977969287315457"),
                 make_link("https://twitter.com/wdaher/status/287977969287315456"),
                 make_link("http://twitter.com/wdaher/status/287977969287315460"),
-                make_inline_twitter_preview(
-                    "http://twitter.com/wdaher/status/287977969287315456", normal_tweet_html,
-                ),
-                make_inline_twitter_preview(
-                    "http://twitter.com/wdaher/status/287977969287315457", normal_tweet_html,
-                ),
+                make_inline_twitter_preview("http://twitter.com/wdaher/status/287977969287315456", normal_tweet_html),
+                make_inline_twitter_preview("http://twitter.com/wdaher/status/287977969287315457", normal_tweet_html),
                 make_inline_twitter_preview(
                     "https://twitter.com/wdaher/status/287977969287315456", normal_tweet_html,
                 ),

@@ -243,9 +243,7 @@ class ChangeSettingsTest(ZulipTestCase):
 
             result = self.client_patch(
                 "/json/settings",
-                dict(
-                    old_password=self.ldap_password("hamlet"), new_password="ignored",  # hamlet's password in ldap
-                ),
+                dict(old_password=self.ldap_password("hamlet"), new_password="ignored"),  # hamlet's password in ldap
             )
             self.assert_json_error(result, "Your Zulip password is managed in LDAP")
 

@@ -58,12 +58,7 @@ class SlowQueryTest(ZulipTestCase):
 
 class OpenGraphTest(ZulipTestCase):
     def check_title_and_description(
-        self,
-        path: str,
-        title: str,
-        in_description: List[str],
-        not_in_description: List[str],
-        status_code: int = 200,
+        self, path: str, title: str, in_description: List[str], not_in_description: List[str], status_code: int = 200,
     ) -> None:
         response = self.client_get(path)
         self.assertEqual(response.status_code, status_code)

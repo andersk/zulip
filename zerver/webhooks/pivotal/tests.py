@@ -26,9 +26,7 @@ class PivotalV3HookTests(WebhookTestCase):
         expected_message = 'Leo Franchi added "My new Feature story" \
 (unscheduled feature):\n\n~~~ quote\nThis is my long description\n~~~\n\n \
 [(view)](https://www.pivotaltracker.com/s/projects/807213/stories/48276573).'
-        self.send_and_test_stream_message(
-            "created", expected_topic, expected_message, content_type="application/xml",
-        )
+        self.send_and_test_stream_message("created", expected_topic, expected_message, content_type="application/xml")
 
     def test_delivered(self) -> None:
         expected_topic = "Another new story"
@@ -64,9 +62,7 @@ class PivotalV3HookTests(WebhookTestCase):
         expected_topic = "Another new story"
         expected_message = 'Leo Franchi started "Another new story" \
 [(view)](https://www.pivotaltracker.com/s/projects/807213/stories/48278289).'
-        self.send_and_test_stream_message(
-            "started", expected_topic, expected_message, content_type="application/xml",
-        )
+        self.send_and_test_stream_message("started", expected_topic, expected_message, content_type="application/xml")
 
     def test_created_estimate(self) -> None:
         expected_topic = "Another new story"
@@ -118,9 +114,7 @@ A comment on the story
 * Description is
 
 > What a description"""
-        self.send_and_test_stream_message(
-            "created", expected_topic, expected_message, content_type="application/xml",
-        )
+        self.send_and_test_stream_message("created", expected_topic, expected_message, content_type="application/xml")
 
     def test_delivered(self) -> None:
         expected_topic = "#63486316: Story of the Year"
@@ -159,9 +153,7 @@ Try again next time
         expected_topic = "#63495972: Fresh Story"
         expected_message = """Leo Franchi updated [Hard Code](https://www.pivotaltracker.com/s/projects/807213): [Fresh Story](http://www.pivotaltracker.com/story/show/63495972):
 * state changed from **unstarted** to **started**"""
-        self.send_and_test_stream_message(
-            "started", expected_topic, expected_message, content_type="application/xml",
-        )
+        self.send_and_test_stream_message("started", expected_topic, expected_message, content_type="application/xml")
 
     def test_created_estimate(self) -> None:
         expected_topic = "#63496066: Pivotal Test"

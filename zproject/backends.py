@@ -2009,8 +2009,7 @@ class SAMLAuthBackend(SocialAuthMixin, SAMLAuth):
         subdomain = self.choose_subdomain(relayed_params)
         if subdomain is None:
             error_msg = (
-                "/complete/saml/: Can't figure out subdomain for this authentication request. "
-                + "relayed_params: %s"
+                "/complete/saml/: Can't figure out subdomain for this authentication request. " + "relayed_params: %s"
             )
             self.logger.info(error_msg, relayed_params)
             return None

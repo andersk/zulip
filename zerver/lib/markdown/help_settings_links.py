@@ -24,11 +24,7 @@ link_mapping = {
     "uploaded-files": ["Settings", "Uploaded files", "/#settings/uploaded-files"],
     "muted-topics": ["Settings", "Muted topics", "/#settings/muted-topics"],
     "organization-profile": ["Manage organization", "Organization profile", "/#organization/organization-profile"],
-    "organization-settings": [
-        "Manage organization",
-        "Organization settings",
-        "/#organization/organization-settings",
-    ],
+    "organization-settings": ["Manage organization", "Organization settings", "/#organization/organization-settings"],
     "organization-permissions": [
         "Manage organization",
         "Organization permissions",
@@ -38,11 +34,7 @@ link_mapping = {
     "auth-methods": ["Manage organization", "Authentication methods", "/#organization/auth-methods"],
     "user-groups-admin": ["Manage organization", "User groups", "/#organization/user-groups-admin"],
     "user-list-admin": ["Manage organization", "Users", "/#organization/user-list-admin"],
-    "deactivated-users-admin": [
-        "Manage organization",
-        "Deactivated users",
-        "/#organization/deactivated-users-admin",
-    ],
+    "deactivated-users-admin": ["Manage organization", "Deactivated users", "/#organization/deactivated-users-admin"],
     "bot-list-admin": ["Manage organization", "Bots", "/#organization/bot-list-admin"],
     "default-streams-list": ["Manage organization", "Default streams", "/#organization/default-streams-list"],
     "filter-settings": ["Manage organization", "Linkifiers", "/#organization/filter-settings"],

@@ -296,9 +296,7 @@ class Realm(models.Model):
 
     allow_message_editing: bool = models.BooleanField(default=True)
     DEFAULT_MESSAGE_CONTENT_EDIT_LIMIT_SECONDS = 600  # if changed, also change in admin.js, setting_org.js
-    message_content_edit_limit_seconds: int = models.IntegerField(
-        default=DEFAULT_MESSAGE_CONTENT_EDIT_LIMIT_SECONDS,
-    )
+    message_content_edit_limit_seconds: int = models.IntegerField(default=DEFAULT_MESSAGE_CONTENT_EDIT_LIMIT_SECONDS)
 
     # Whether users have access to message edit history
     allow_edit_history: bool = models.BooleanField(default=True)
@@ -492,9 +490,7 @@ class Realm(models.Model):
         """
         # TODO: Change return type to QuerySet[UserProfile]
         return UserProfile.objects.filter(
-            realm=self,
-            is_active=True,
-            role__in=[UserProfile.ROLE_REALM_ADMINISTRATOR, UserProfile.ROLE_REALM_OWNER],
+            realm=self, is_active=True, role__in=[UserProfile.ROLE_REALM_ADMINISTRATOR, UserProfile.ROLE_REALM_OWNER],
         )
 
     def get_human_admin_users(self) -> QuerySet:
@@ -515,9 +511,7 @@ class Realm(models.Model):
         return UserProfile.objects.filter(realm=self, is_active=True).select_related()
 
     def get_human_owner_users(self) -> QuerySet:
-        return UserProfile.objects.filter(
-            realm=self, is_bot=False, role=UserProfile.ROLE_REALM_OWNER, is_active=True,
-        )
+        return UserProfile.objects.filter(realm=self, is_bot=False, role=UserProfile.ROLE_REALM_OWNER, is_active=True)
 
     def get_bot_domain(self) -> str:
         return get_fake_email_domain()
@@ -808,9 +802,7 @@ def realm_filters_for_realm_remote_cache(realm_id: int) -> List[Tuple[str, str, 
 def all_realm_filters() -> Dict[int, List[Tuple[str, str, int]]]:
     filters: DefaultDict[int, List[Tuple[str, str, int]]] = defaultdict(list)
     for realm_filter in RealmFilter.objects.all():
-        filters[realm_filter.realm_id].append(
-            (realm_filter.pattern, realm_filter.url_format_string, realm_filter.id),
-        )
+        filters[realm_filter.realm_id].append((realm_filter.pattern, realm_filter.url_format_string, realm_filter.id))
 
     return filters
 

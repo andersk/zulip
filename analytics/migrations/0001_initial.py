@@ -24,19 +24,14 @@ class Migration(migrations.Migration):
             fields=[
                 ("id", models.AutoField(verbose_name="ID", serialize=False, auto_created=True, primary_key=True)),
                 ("huddle", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Recipient")),
-                (
-                    "user",
-                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
-                ),
+                ("user", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
                 ("property", models.CharField(max_length=40)),
                 ("end_time", models.DateTimeField()),
                 ("interval", models.CharField(max_length=20)),
                 ("value", models.BigIntegerField()),
                 (
                     "anomaly",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="analytics.Anomaly", null=True,
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="analytics.Anomaly", null=True),
                 ),
             ],
             bases=(models.Model,),
@@ -51,9 +46,7 @@ class Migration(migrations.Migration):
                 ("value", models.BigIntegerField()),
                 (
                     "anomaly",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="analytics.Anomaly", null=True,
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="analytics.Anomaly", null=True),
                 ),
             ],
             bases=(models.Model,),
@@ -69,9 +62,7 @@ class Migration(migrations.Migration):
                 ("value", models.BigIntegerField()),
                 (
                     "anomaly",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="analytics.Anomaly", null=True,
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="analytics.Anomaly", null=True),
                 ),
             ],
             bases=(models.Model,),
@@ -88,9 +79,7 @@ class Migration(migrations.Migration):
                 ("value", models.BigIntegerField()),
                 (
                     "anomaly",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="analytics.Anomaly", null=True,
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="analytics.Anomaly", null=True),
                 ),
             ],
             bases=(models.Model,),
@@ -100,19 +89,14 @@ class Migration(migrations.Migration):
             fields=[
                 ("id", models.AutoField(verbose_name="ID", serialize=False, auto_created=True, primary_key=True)),
                 ("realm", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm")),
-                (
-                    "user",
-                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
-                ),
+                ("user", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
                 ("property", models.CharField(max_length=40)),
                 ("end_time", models.DateTimeField()),
                 ("interval", models.CharField(max_length=20)),
                 ("value", models.BigIntegerField()),
                 (
                     "anomaly",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="analytics.Anomaly", null=True,
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="analytics.Anomaly", null=True),
                 ),
             ],
             bases=(models.Model,),

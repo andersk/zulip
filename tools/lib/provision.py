@@ -66,9 +66,7 @@ try:
     )
     os.remove(os.path.join(VAR_DIR_PATH, "zulip-test-symlink"))
 except OSError:
-    print(
-        FAIL + "Error: Unable to create symlinks." "Make sure you have permission to create symbolic links." + ENDC,
-    )
+    print(FAIL + "Error: Unable to create symlinks." "Make sure you have permission to create symbolic links." + ENDC)
     print("See this page for more information:")
     print("  https://zulip.readthedocs.io/en/latest/development/setup-vagrant.html#os-symlink-error")
     sys.exit(1)
@@ -438,11 +436,7 @@ if __name__ == "__main__":
     description = "Provision script to install Zulip"
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument(
-        "--force",
-        action="store_true",
-        dest="is_force",
-        default=False,
-        help="Ignore all provisioning optimizations.",
+        "--force", action="store_true", dest="is_force", default=False, help="Ignore all provisioning optimizations.",
     )
 
     parser.add_argument(

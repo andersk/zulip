@@ -109,9 +109,7 @@ def slack_workspace_to_realm(
         added_mpims,
         dm_members,
         slack_recipient_name_to_zulip_recipient_id,
-    ) = channels_to_zerver_stream(
-        slack_data_dir, realm_id, realm, slack_user_id_to_zulip_user_id, zerver_userprofile,
-    )
+    ) = channels_to_zerver_stream(slack_data_dir, realm_id, realm, slack_user_id_to_zulip_user_id, zerver_userprofile)
 
     zerver_realmemoji, emoji_url_map = build_realmemoji(custom_emoji_list, realm_id)
     realm["zerver_realmemoji"] = zerver_realmemoji
@@ -1061,12 +1059,7 @@ def build_reactions(
 
 
 def build_uploads(
-    user_id: int,
-    realm_id: int,
-    email: str,
-    fileinfo: ZerverFieldsT,
-    s3_path: str,
-    uploads_list: List[ZerverFieldsT],
+    user_id: int, realm_id: int, email: str, fileinfo: ZerverFieldsT, s3_path: str, uploads_list: List[ZerverFieldsT],
 ) -> None:
     upload = dict(
         path=fileinfo["url_private"],  # Save slack's url here, which is used later while processing
@@ -1216,9 +1209,7 @@ def do_convert_data(slack_zip_file: str, output_dir: str, token: str, threads: i
         dm_members,
         avatar_list,
         emoji_url_map,
-    ) = slack_workspace_to_realm(
-        domain_name, realm_id, user_list, realm_subdomain, slack_data_dir, custom_emoji_list,
-    )
+    ) = slack_workspace_to_realm(domain_name, realm_id, user_list, realm_subdomain, slack_data_dir, custom_emoji_list)
 
     reactions, uploads_list, zerver_attachment = convert_slack_workspace_messages(
         slack_data_dir,

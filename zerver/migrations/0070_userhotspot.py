@@ -18,10 +18,7 @@ class Migration(migrations.Migration):
                 ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
                 ("hotspot", models.CharField(max_length=30)),
                 ("timestamp", models.DateTimeField(default=django.utils.timezone.now)),
-                (
-                    "user",
-                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
-                ),
+                ("user", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.AlterUniqueTogether(name="userhotspot", unique_together={("user", "hotspot")}),

@@ -29,8 +29,7 @@ def setup_realm_internal_bots(realm: Realm) -> None:
     already exists.
     """
     internal_bots = [
-        (bot["name"], bot["email_template"] % (settings.INTERNAL_BOT_DOMAIN,))
-        for bot in settings.REALM_INTERNAL_BOTS
+        (bot["name"], bot["email_template"] % (settings.INTERNAL_BOT_DOMAIN,)) for bot in settings.REALM_INTERNAL_BOTS
     ]
     create_users(realm, internal_bots, bot_type=UserProfile.DEFAULT_BOT)
     bots = UserProfile.objects.filter(
@@ -102,9 +101,7 @@ def send_initial_realm_messages(realm: Realm) -> None:
             "To manage this stream, go to [Stream settings]({stream_settings_url}) "
             "and click on `{initial_private_stream_name}`.",
         )
-    ).format(
-        stream_settings_url="#streams/subscribed", initial_private_stream_name=Realm.INITIAL_PRIVATE_STREAM_NAME,
-    )
+    ).format(stream_settings_url="#streams/subscribed", initial_private_stream_name=Realm.INITIAL_PRIVATE_STREAM_NAME)
 
     content1_of_topic_demonstration_topic = (
         _(
@@ -120,10 +117,7 @@ def send_initial_realm_messages(realm: Realm) -> None:
     ).format(about_topics_help_url="/help/about-streams-and-topics")
 
     content_of_swimming_turtles_topic = (
-        _(
-            "This is a message on stream #**{default_notification_stream_name}** with the "
-            "topic `swimming turtles`.",
-        )
+        _("This is a message on stream #**{default_notification_stream_name}** with the " "topic `swimming turtles`.")
         + "\n"
         "\n"
         "[](/static/images/cute/turtle.png)"

@@ -23,7 +23,5 @@ class Migration(migrations.Migration):
             ],
             bases=(models.Model,),
         ),
-        migrations.AlterUniqueTogether(
-            name="reaction", unique_together={("user_profile", "message", "emoji_name")},
-        ),
+        migrations.AlterUniqueTogether(name="reaction", unique_together={("user_profile", "message", "emoji_name")}),
     ]

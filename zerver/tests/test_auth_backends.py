@@ -1062,10 +1062,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
         )
         self.verify_desktop_flow_app_page(result)
         result = self.social_auth_test(
-            account_data_dict,
-            subdomain="zulip",
-            expect_choose_email_screen=False,
-            desktop_flow_otp=desktop_flow_otp,
+            account_data_dict, subdomain="zulip", expect_choose_email_screen=False, desktop_flow_otp=desktop_flow_otp,
         )
         self.verify_desktop_flow_end_page(result, self.email, desktop_flow_otp)
 
@@ -1550,13 +1547,7 @@ class SAMLAuthBackendTest(SocialAuthBase):
         **extra_data: Any,
     ) -> HttpResponse:
         url, headers = self.prepare_login_url_and_headers(
-            subdomain,
-            mobile_flow_otp,
-            desktop_flow_otp,
-            is_signup,
-            next,
-            multiuse_object_key,
-            user_agent=user_agent,
+            subdomain, mobile_flow_otp, desktop_flow_otp, is_signup, next, multiuse_object_key, user_agent=user_agent,
         )
 
         result = self.client_get(url, **headers)
@@ -1701,8 +1692,7 @@ class SAMLAuthBackendTest(SocialAuthBase):
     def test_social_auth_complete_when_base_exc_is_raised(self) -> None:
         with mock.patch.object(OneLogin_Saml2_Response, "is_valid", return_value=True):
             with mock.patch(
-                "social_core.backends.saml.SAMLAuth.auth_complete",
-                side_effect=AuthStateForbidden("State forbidden"),
+                "social_core.backends.saml.SAMLAuth.auth_complete", side_effect=AuthStateForbidden("State forbidden"),
             ), self.assertLogs(self.logger_string, level="WARNING") as m:
                 saml_response = self.generate_saml_response(self.email, self.name)
                 relay_state = ujson.dumps(
@@ -1832,8 +1822,7 @@ class SAMLAuthBackendTest(SocialAuthBase):
             self.assertEqual(result.status_code, 302)
             self.assertEqual("/login/", result.url)
         self.assertEqual(
-            m.output,
-            [self.logger_output("/login/saml/ : Bad idp param: KeyError: {}.".format("'bad_idp'"), "info")],
+            m.output, [self.logger_output("/login/saml/ : Bad idp param: KeyError: {}.".format("'bad_idp'"), "info")],
         )
 
     def test_social_auth_invalid_email(self) -> None:
@@ -3409,9 +3398,7 @@ class ExternalMethodDictsTests(ZulipTestCase):
                 expected_button_id_strings.append(f'id="{{}}_auth_button_saml:{name}"')
 
             result = self.client_get("/login/")
-            self.assert_in_success_response(
-                [string.format("login") for string in expected_button_id_strings], result,
-            )
+            self.assert_in_success_response([string.format("login") for string in expected_button_id_strings], result)
 
             result = self.client_get("/register/")
             self.assert_in_success_response(
@@ -3514,8 +3501,7 @@ class FetchAuthBackends(ZulipTestCase):
         with self.settings(ROOT_DOMAIN_LANDING_PAGE=False):
             result = self.client_get("/api/v1/server_settings", subdomain="zulip", HTTP_USER_AGENT="")
         check_result(
-            result,
-            [("realm_name", check_string), ("realm_description", check_string), ("realm_icon", check_string)],
+            result, [("realm_name", check_string), ("realm_description", check_string), ("realm_icon", check_string)],
         )
 
         # Verify invalid subdomain
@@ -4231,9 +4217,7 @@ class TestLDAP(ZulipLDAPTestCase):
     def test_generate_dev_ldap_dir(self) -> None:
         ldap_dir = generate_dev_ldap_dir("A", 10)
         self.assertEqual(len(ldap_dir), 10)
-        regex = re.compile(
-            r"(uid\=)+[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+(\,ou\=users\,dc\=zulip\,dc\=com)",
-        )
+        regex = re.compile(r"(uid\=)+[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+(\,ou\=users\,dc\=zulip\,dc\=com)")
         common_attrs = ["cn", "userPassword", "phoneNumber", "birthDate"]
         for key, value in ldap_dir.items():
             self.assertTrue(regex.match(key))

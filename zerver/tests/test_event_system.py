@@ -409,9 +409,7 @@ class FetchInitialStateDataTest(ZulipTestCase):
         user_profile = self.example_user("aaron")
         self.assertFalse(user_profile.is_realm_admin)
 
-        do_set_realm_property(
-            user_profile.realm, "email_address_visibility", Realm.EMAIL_ADDRESS_VISIBILITY_EVERYONE,
-        )
+        do_set_realm_property(user_profile.realm, "email_address_visibility", Realm.EMAIL_ADDRESS_VISIBILITY_EVERYONE)
         result = fetch_initial_state_data(
             user_profile, None, "", client_gravatar=False, user_avatar_url_field_optional=False,
         )
@@ -429,9 +427,7 @@ class FetchInitialStateDataTest(ZulipTestCase):
         user_profile = self.example_user("iago")
         self.assertTrue(user_profile.is_realm_admin)
 
-        do_set_realm_property(
-            user_profile.realm, "email_address_visibility", Realm.EMAIL_ADDRESS_VISIBILITY_EVERYONE,
-        )
+        do_set_realm_property(user_profile.realm, "email_address_visibility", Realm.EMAIL_ADDRESS_VISIBILITY_EVERYONE)
         result = fetch_initial_state_data(
             user_profile, None, "", client_gravatar=False, user_avatar_url_field_optional=False,
         )

@@ -370,9 +370,7 @@ def write_emoticon_data(realm_id: int, data_dir: str, output_dir: str) -> List[Z
 
         shutil.copyfile(source_path, target_path)
 
-        return dict(
-            path=target_path, s3_path=target_path, file_name=target_fn, realm_id=realm_id, name=data["name"],
-        )
+        return dict(path=target_path, s3_path=target_path, file_name=target_fn, realm_id=realm_id, name=data["name"])
 
     emoji_records = list(map(process, flat_data))
     create_converted_data_files(emoji_records, output_dir, "/emoji/records.json")
@@ -459,11 +457,7 @@ def write_message_data(
 
 
 def get_hipchat_sender_id(
-    realm_id: int,
-    slim_mode: bool,
-    message_dict: Dict[str, Any],
-    user_id_mapper: IdMapper,
-    user_handler: UserHandler,
+    realm_id: int, slim_mode: bool, message_dict: Dict[str, Any], user_id_mapper: IdMapper, user_handler: UserHandler,
 ) -> Optional[int]:
     """
     The HipChat export is inconsistent in how it renders

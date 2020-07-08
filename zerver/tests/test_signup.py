@@ -112,9 +112,7 @@ class RedirectAndLogIntoSubdomainTestCase(ZulipTestCase):
         )
 
         data_dict = ExternalAuthDataDict(is_signup=True, multiuse_object_key="key")
-        response = redirect_and_log_into_subdomain(
-            ExternalAuthResult(user_profile=user_profile, data_dict=data_dict),
-        )
+        response = redirect_and_log_into_subdomain(ExternalAuthResult(user_profile=user_profile, data_dict=data_dict))
         data = load_subdomain_token(response)
         self.assertDictEqual(
             data,
@@ -335,9 +333,7 @@ class PasswordResetTest(ZulipTestCase):
             result = self.client_post(final_reset_url, {"new_password1": "easy", "new_password2": "easy"})
             self.assert_in_response("The password is too weak.", result)
 
-            result = self.client_post(
-                final_reset_url, {"new_password1": "f657gdGGk9", "new_password2": "f657gdGGk9"},
-            )
+            result = self.client_post(final_reset_url, {"new_password1": "f657gdGGk9", "new_password2": "f657gdGGk9"})
             # password reset succeeded
             self.assertEqual(result.status_code, 302)
             self.assertTrue(result["Location"].endswith("/password/done/"))
@@ -1211,8 +1207,7 @@ earl-test@zulip.com""",
 
         for address in ("noatsign.com", "outsideyourdomain@example.net"):
             self.assert_json_error(
-                self.invite(address, ["Denmark"]),
-                "Some emails did not validate, so we didn't send any invitations.",
+                self.invite(address, ["Denmark"]), "Some emails did not validate, so we didn't send any invitations.",
             )
         self.check_sent_emails([])
 
@@ -1562,9 +1557,7 @@ so we didn't send them an invitation. We did send invitations to everyone else!"
         email_change_key = email_change_url.split("/")[-1]
         url = "/accounts/do_confirm/" + email_change_key
         result = self.client_get(url)
-        self.assert_in_success_response(
-            ["Whoops. We couldn't find your " "confirmation link in the system."], result,
-        )
+        self.assert_in_success_response(["Whoops. We couldn't find your " "confirmation link in the system."], result)
 
     def test_confirmation_expired(self) -> None:
         email = self.nonreg_email("alice")
@@ -1580,9 +1573,7 @@ so we didn't send them an invitation. We did send invitations to everyone else!"
 
         target_url = "/" + url.split("/", 3)[3]
         result = self.client_get(target_url)
-        self.assert_in_success_response(
-            ["Whoops. The confirmation link has expired " "or been deactivated."], result,
-        )
+        self.assert_in_success_response(["Whoops. The confirmation link has expired " "or been deactivated."], result)
 
     def test_send_more_than_one_invite_to_same_user(self) -> None:
         self.user_profile = self.example_user("iago")
@@ -1846,9 +1837,7 @@ class InvitationsTestCase(InviteUserBase):
 
         # Test deleting multiuse invite from another realm
         mit_realm = get_realm("zephyr")
-        multiuse_invite_in_mit = MultiuseInvite.objects.create(
-            referred_by=self.mit_user("sipbtest"), realm=mit_realm,
-        )
+        multiuse_invite_in_mit = MultiuseInvite.objects.create(referred_by=self.mit_user("sipbtest"), realm=mit_realm)
         create_confirmation_link(multiuse_invite_in_mit, Confirmation.MULTIUSE_INVITE)
         error_result = self.client_delete("/json/invites/multiuse/" + str(multiuse_invite_in_mit.id))
         self.assert_json_error(error_result, "No such invitation")

@@ -8,9 +8,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AlterField(
-            model_name="installationcount", name="interval", field=models.CharField(max_length=8),
-        ),
+        migrations.AlterField(model_name="installationcount", name="interval", field=models.CharField(max_length=8)),
         migrations.AlterField(
             model_name="installationcount", name="property", field=models.CharField(max_length=32),
         ),

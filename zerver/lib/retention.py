@@ -380,9 +380,7 @@ def archive_personal_and_huddle_messages(realm: Realm, chunk_size: int = MESSAGE
     logger.info("Done. Archived %s messages", message_count)
 
 
-def archive_stream_messages(
-    realm: Realm, streams: List[Stream], chunk_size: int = STREAM_MESSAGE_BATCH_SIZE,
-) -> None:
+def archive_stream_messages(realm: Realm, streams: List[Stream], chunk_size: int = STREAM_MESSAGE_BATCH_SIZE) -> None:
     if not streams:
         return
 

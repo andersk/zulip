@@ -13,8 +13,6 @@ class Migration(migrations.Migration):
         migrations.RunSQL("ALTER TABLE zerver_usermessage DROP COLUMN id_old;"),
         migrations.RemoveField(model_name="archivedusermessage", name="bigint_id"),
         migrations.AlterField(
-            model_name="archivedusermessage",
-            name="id",
-            field=models.BigAutoField(primary_key=True, serialize=False),
+            model_name="archivedusermessage", name="id", field=models.BigAutoField(primary_key=True, serialize=False),
         ),
     ]

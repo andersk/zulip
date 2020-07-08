@@ -92,9 +92,7 @@ def get_legacy_user_info(presence_rows: List[Dict[str, Any]], mobile_user_ids: S
     # The word "aggegrated" here is possibly misleading.
     # It's really just the most recent client's info.
     result["aggregated"] = dict(
-        client=most_recent_info["client"],
-        status=most_recent_info["status"],
-        timestamp=most_recent_info["timestamp"],
+        client=most_recent_info["client"], status=most_recent_info["status"], timestamp=most_recent_info["timestamp"],
     )
 
     # Build a dictionary of client -> info.  There should

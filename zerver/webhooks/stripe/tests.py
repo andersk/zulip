@@ -195,10 +195,7 @@ Amount due: 0.00 INR
             "[Invoice item](https://dashboard.stripe.com/invoiceitems/ii_00000000000000) created for 10.00 CAD"
         )
         self.send_and_test_stream_message(
-            "invoiceitem_created",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "invoiceitem_created", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_invoice_paid(self) -> None:

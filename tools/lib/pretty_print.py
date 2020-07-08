@@ -143,9 +143,7 @@ def pretty_print_html(html: str, num_spaces: int = 4) -> str:
                             - info["extra_indent_prev"]
                         )
                     elif start_line + info["line_span"] - 1 == end_line and info["line_span"] > 1:
-                        offsets[end_line] = (
-                            1 + info["extra_indent"] + (info["depth"] + 1) * num_spaces
-                        ) - adjustment
+                        offsets[end_line] = (1 + info["extra_indent"] + (info["depth"] + 1) * num_spaces) - adjustment
                         # We would like singleton tags and tags which spread over
                         # multiple lines to have 2 space indentation.
                         offsets[end_line] -= 2

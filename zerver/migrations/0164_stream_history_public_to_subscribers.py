@@ -6,9 +6,7 @@ from django.db.backends.postgresql.schema import DatabaseSchemaEditor
 from django.db.migrations.state import StateApps
 
 
-def set_initial_value_for_history_public_to_subscribers(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def set_initial_value_for_history_public_to_subscribers(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     stream_model = apps.get_model("zerver", "Stream")
     streams = stream_model.objects.all()
 

@@ -828,9 +828,7 @@ def upload_avatar_image(
     target_user_profile: UserProfile,
     content_type: Optional[str] = None,
 ) -> None:
-    upload_backend.upload_avatar_image(
-        user_file, acting_user_profile, target_user_profile, content_type=content_type,
-    )
+    upload_backend.upload_avatar_image(user_file, acting_user_profile, target_user_profile, content_type=content_type)
 
 
 def delete_avatar_image(user_profile: UserProfile) -> None:

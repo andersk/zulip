@@ -763,9 +763,7 @@ class StripeTest(StripeTestCase):
                 licenses_at_next_renewal=self.seat_count,
             )
             audit_log_entries = list(
-                RealmAuditLog.objects.filter(acting_user=user)
-                .values_list("event_type", "event_time")
-                .order_by("id"),
+                RealmAuditLog.objects.filter(acting_user=user).values_list("event_type", "event_time").order_by("id"),
             )
             self.assertEqual(
                 audit_log_entries,
@@ -958,9 +956,7 @@ class StripeTest(StripeTestCase):
                 plan=plan, is_renewal=True, event_time=self.now, licenses=123, licenses_at_next_renewal=123,
             )
             audit_log_entries = list(
-                RealmAuditLog.objects.filter(acting_user=user)
-                .values_list("event_type", "event_time")
-                .order_by("id"),
+                RealmAuditLog.objects.filter(acting_user=user).values_list("event_type", "event_time").order_by("id"),
             )
             self.assertEqual(
                 audit_log_entries,

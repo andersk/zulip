@@ -109,9 +109,7 @@ def json_change_settings(
                 return json_error(_("Wrong password!"))
         except RateLimited as e:
             secs_to_freedom = int(float(str(e)))
-            return json_error(
-                _("You're making too many attempts! Try again in {} seconds.").format(secs_to_freedom),
-            )
+            return json_error(_("You're making too many attempts! Try again in {} seconds.").format(secs_to_freedom))
 
         if not check_password_strength(new_password):
             return json_error(_("New password is too weak!"))

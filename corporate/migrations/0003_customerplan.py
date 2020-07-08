@@ -27,10 +27,7 @@ class Migration(migrations.Migration):
                 ("next_billing_date", models.DateTimeField(db_index=True)),
                 ("tier", models.SmallIntegerField()),
                 ("status", models.SmallIntegerField(default=1)),
-                (
-                    "customer",
-                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="corporate.Customer"),
-                ),
+                ("customer", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="corporate.Customer")),
             ],
         ),
     ]

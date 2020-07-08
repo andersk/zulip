@@ -12,9 +12,7 @@ class Command(BaseCommand):
     help = "Generate statistics on user activity."
 
     def add_arguments(self, parser: ArgumentParser) -> None:
-        parser.add_argument(
-            "realms", metavar="<realm>", type=str, nargs="*", help="realm to generate statistics for",
-        )
+        parser.add_argument("realms", metavar="<realm>", type=str, nargs="*", help="realm to generate statistics for")
 
     def messages_sent_by(self, user: UserProfile, week: int) -> int:
         start = timezone_now() - datetime.timedelta(days=(week + 1) * 7)

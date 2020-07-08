@@ -319,11 +319,7 @@ def main(options: argparse.Namespace) -> int:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--force",
-        action="store_true",
-        dest="is_force",
-        default=False,
-        help="Ignore all provisioning optimizations.",
+        "--force", action="store_true", dest="is_force", default=False, help="Ignore all provisioning optimizations.",
     )
 
     parser.add_argument(

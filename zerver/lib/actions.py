@@ -809,9 +809,7 @@ def do_set_realm_authentication_methods(
             },
         ),
     )
-    event = dict(
-        type="realm", op="update_dict", property="default", data=dict(authentication_methods=updated_value),
-    )
+    event = dict(type="realm", op="update_dict", property="default", data=dict(authentication_methods=updated_value))
     send_event(realm, event, active_user_ids(realm.id))
 
 
@@ -973,11 +971,7 @@ def do_deactivate_user(
         extra_data=ujson.dumps({RealmAuditLog.ROLE_COUNT: realm_user_count_by_role(user_profile.realm)}),
     )
     do_increment_logging_stat(
-        user_profile.realm,
-        COUNT_STATS["active_users_log:is_bot:day"],
-        user_profile.is_bot,
-        event_time,
-        increment=-1,
+        user_profile.realm, COUNT_STATS["active_users_log:is_bot:day"], user_profile.is_bot, event_time, increment=-1,
     )
     if settings.BILLING_ENABLED:
         update_license_ledger_if_needed(user_profile.realm, event_time)
@@ -1361,9 +1355,7 @@ def get_recipient_info(
     # direct recipient or were mentioned; for now, we're just making
     # sure we have the data we need for that without extra database
     # queries.
-    default_bot_user_ids = {
-        row["id"] for row in rows if row["is_bot"] and row["bot_type"] == UserProfile.DEFAULT_BOT
-    }
+    default_bot_user_ids = {row["id"] for row in rows if row["is_bot"] and row["bot_type"] == UserProfile.DEFAULT_BOT}
 
     service_bot_tuples = [(row["id"], row["bot_type"]) for row in rows if is_service_bot(row)]
 
@@ -2272,9 +2264,7 @@ def check_default_stream_group_name(group_name: str) -> None:
         raise JsonableError(_("Invalid default stream group name '{}'").format(group_name))
     if len(group_name) > DefaultStreamGroup.MAX_NAME_LENGTH:
         raise JsonableError(
-            _("Default stream group name too long (limit: {} characters)").format(
-                DefaultStreamGroup.MAX_NAME_LENGTH,
-            ),
+            _("Default stream group name too long (limit: {} characters)").format(DefaultStreamGroup.MAX_NAME_LENGTH),
         )
     for i in group_name:
         if ord(i) == 0:
@@ -2614,9 +2604,7 @@ def internal_send_stream_message_by_name(
     return message_ids[0]
 
 
-def internal_send_huddle_message(
-    realm: Realm, sender: UserProfile, emails: List[str], content: str,
-) -> Optional[int]:
+def internal_send_huddle_message(realm: Realm, sender: UserProfile, emails: List[str], content: str) -> Optional[int]:
     addressee = Addressee.for_private(emails, realm)
     message = _internal_prep_message(realm=realm, sender=sender, addressee=addressee, content=content)
     if message is None:
@@ -3448,9 +3436,7 @@ def notify_avatar_url_change(user_profile: UserProfile) -> None:
         send_event(
             user_profile.realm,
             dict(
-                type="realm_bot",
-                op="update",
-                bot=dict(user_id=user_profile.id, avatar_url=avatar_url(user_profile)),
+                type="realm_bot", op="update", bot=dict(user_id=user_profile.id, avatar_url=avatar_url(user_profile)),
             ),
             bot_owner_user_ids(user_profile),
         )
@@ -3616,11 +3602,7 @@ def do_change_default_events_register_stream(
     user_profile.save(update_fields=["default_events_register_stream"])
     if log:
         log_event(
-            {
-                "type": "user_change_default_events_register_stream",
-                "user": user_profile.email,
-                "stream": str(stream),
-            },
+            {"type": "user_change_default_events_register_stream", "user": user_profile.email, "stream": str(stream)},
         )
     if user_profile.is_bot:
         if stream:
@@ -3642,9 +3624,7 @@ def do_change_default_all_public_streams(user_profile: UserProfile, value: bool,
     user_profile.default_all_public_streams = value
     user_profile.save(update_fields=["default_all_public_streams"])
     if log:
-        log_event(
-            {"type": "user_change_default_all_public_streams", "user": user_profile.email, "value": str(value)},
-        )
+        log_event({"type": "user_change_default_all_public_streams", "user": user_profile.email, "value": str(value)})
     if user_profile.is_bot:
         send_event(
             user_profile.realm,
@@ -4016,9 +3996,7 @@ def do_create_default_stream_group(realm: Realm, group_name: str, description: s
             )
 
     check_default_stream_group_name(group_name)
-    (group, created) = DefaultStreamGroup.objects.get_or_create(
-        name=group_name, realm=realm, description=description,
-    )
+    (group, created) = DefaultStreamGroup.objects.get_or_create(name=group_name, realm=realm, description=description)
     if not created:
         raise JsonableError(_("Default stream group '{group_name}' already exists").format(group_name=group_name))
 
@@ -4075,9 +4053,7 @@ def do_change_default_stream_group_name(realm: Realm, group: DefaultStreamGroup,
     notify_default_stream_groups(realm)
 
 
-def do_change_default_stream_group_description(
-    realm: Realm, group: DefaultStreamGroup, new_description: str,
-) -> None:
+def do_change_default_stream_group_description(realm: Realm, group: DefaultStreamGroup, new_description: str) -> None:
     group.description = new_description
     group.save()
     notify_default_stream_groups(realm)
@@ -4421,22 +4397,14 @@ def do_update_message_flags(
     else:
         raise AssertionError("Invalid message flags operation")
 
-    event = {
-        "type": "update_message_flags",
-        "operation": operation,
-        "flag": flag,
-        "messages": messages,
-        "all": False,
-    }
+    event = {"type": "update_message_flags", "operation": operation, "flag": flag, "messages": messages, "all": False}
     send_event(user_profile.realm, event, [user_profile.id])
 
     if flag == "read" and operation == "add":
         event_time = timezone_now()
         do_clear_mobile_push_notifications_for_ids([user_profile.id], messages)
 
-        do_increment_logging_stat(
-            user_profile, COUNT_STATS["messages_read::hour"], None, event_time, increment=count,
-        )
+        do_increment_logging_stat(user_profile, COUNT_STATS["messages_read::hour"], None, event_time, increment=count)
         do_increment_logging_stat(
             user_profile, COUNT_STATS["messages_read_interactions::hour"], None, event_time, increment=min(1, count),
         )
@@ -5921,11 +5889,7 @@ def do_remove_realm_custom_profile_fields(realm: Realm) -> None:
 
 
 def try_update_realm_custom_profile_field(
-    realm: Realm,
-    field: CustomProfileField,
-    name: str,
-    hint: str = "",
-    field_data: Optional[ProfileFieldData] = None,
+    realm: Realm, field: CustomProfileField, name: str, hint: str = "", field_data: Optional[ProfileFieldData] = None,
 ) -> None:
     field.name = name
     field.hint = hint
@@ -6244,7 +6208,5 @@ def do_delete_realm_export(user_profile: UserProfile, export: RealmAuditLog) -> 
 
 
 def get_topic_messages(user_profile: UserProfile, stream: Stream, topic_name: str) -> List[Message]:
-    query = UserMessage.objects.filter(user_profile=user_profile, message__recipient=stream.recipient).order_by(
-        "id",
-    )
+    query = UserMessage.objects.filter(user_profile=user_profile, message__recipient=stream.recipient).order_by("id")
     return [um.message for um in filter_by_topic_name_via_message(query, topic_name)]

@@ -422,12 +422,7 @@ class PreviewTestCase(ZulipTestCase):
         url = "http://test.org/"
         msg_id = self.send_personal_message(self.example_user("hamlet"), self.example_user("cordelia"), content=url)
         msg = Message.objects.select_related("sender").get(id=msg_id)
-        event = {
-            "message_id": msg_id,
-            "urls": [url],
-            "message_realm_id": msg.sender.realm_id,
-            "message_content": url,
-        }
+        event = {"message_id": msg_id, "urls": [url], "message_realm_id": msg.sender.realm_id, "message_content": url}
         with self.settings(INLINE_URL_EMBED_PREVIEW=True, TEST_SUITE=False, CACHES=TEST_CACHES):
             with mock.patch("requests.get", mock.Mock(side_effect=ConnectionError())):
                 FetchLinksEmbedData().consume(event)
@@ -569,12 +564,7 @@ class PreviewTestCase(ZulipTestCase):
                 self.example_user("hamlet"), self.example_user("cordelia"), content=url,
             )
         msg = Message.objects.select_related("sender").get(id=msg_id)
-        event = {
-            "message_id": msg_id,
-            "urls": [url],
-            "message_realm_id": msg.sender.realm_id,
-            "message_content": url,
-        }
+        event = {"message_id": msg_id, "urls": [url], "message_realm_id": msg.sender.realm_id, "message_content": url}
 
         with mock.patch("zerver.lib.url_preview.preview.get_oembed_data", side_effect=lambda *args, **kwargs: None):
             with mock.patch("zerver.lib.url_preview.preview.valid_content_type", side_effect=lambda k: True):
@@ -623,12 +613,7 @@ class PreviewTestCase(ZulipTestCase):
                 self.example_user("hamlet"), self.example_user("cordelia"), content=url,
             )
         msg = Message.objects.select_related("sender").get(id=msg_id)
-        event = {
-            "message_id": msg_id,
-            "urls": [url],
-            "message_realm_id": msg.sender.realm_id,
-            "message_content": url,
-        }
+        event = {"message_id": msg_id, "urls": [url], "message_realm_id": msg.sender.realm_id, "message_content": url}
 
         mocked_data = {
             "html": f'<iframe src="{url}"></iframe>',
@@ -657,12 +642,7 @@ class PreviewTestCase(ZulipTestCase):
                 self.example_user("hamlet"), self.example_user("cordelia"), content=url,
             )
         msg = Message.objects.select_related("sender").get(id=msg_id)
-        event = {
-            "message_id": msg_id,
-            "urls": [url],
-            "message_realm_id": msg.sender.realm_id,
-            "message_content": url,
-        }
+        event = {"message_id": msg_id, "urls": [url], "message_realm_id": msg.sender.realm_id, "message_content": url}
 
         mocked_data = {"title": "Clearer Code at Scale - Static Types at Zulip and Dropbox"}
         mocked_response = mock.Mock(side_effect=self.create_mock_response(url))

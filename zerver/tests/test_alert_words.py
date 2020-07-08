@@ -126,9 +126,7 @@ class AlertWordTests(ZulipTestCase):
     def test_json_list_remove(self) -> None:
         self.login("hamlet")
 
-        result = self.client_post(
-            "/json/users/me/alert_words", {"alert_words": ujson.dumps(["one", "two", "three"])},
-        )
+        result = self.client_post("/json/users/me/alert_words", {"alert_words": ujson.dumps(["one", "two", "three"])})
         self.assert_json_success(result)
         self.assertEqual(set(result.json()["alert_words"]), {"one", "two", "three"})
 
@@ -146,9 +144,7 @@ class AlertWordTests(ZulipTestCase):
         self.login("hamlet")
         user_profile_hamlet = self.example_user("hamlet")
 
-        result = self.client_post(
-            "/json/users/me/alert_words", {"alert_words": ujson.dumps(["one", "two", "three"])},
-        )
+        result = self.client_post("/json/users/me/alert_words", {"alert_words": ujson.dumps(["one", "two", "three"])})
         self.assert_json_success(result)
         self.assertEqual(set(result.json()["alert_words"]), {"one", "two", "three"})
 

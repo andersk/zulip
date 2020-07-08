@@ -146,9 +146,7 @@ class TestFollowupEmails(ZulipTestCase):
     @override_settings(
         AUTHENTICATION_BACKENDS=("zproject.backends.ZulipLDAPAuthBackend", "zproject.backends.ZulipDummyBackend"),
         # configure email search for email address in the uid attribute:
-        AUTH_LDAP_REVERSE_EMAIL_SEARCH=LDAPSearch(
-            "ou=users,dc=zulip,dc=com", ldap.SCOPE_ONELEVEL, "(uid=%(email)s)",
-        ),
+        AUTH_LDAP_REVERSE_EMAIL_SEARCH=LDAPSearch("ou=users,dc=zulip,dc=com", ldap.SCOPE_ONELEVEL, "(uid=%(email)s)"),
     )
     def test_day1_email_ldap_case_a_login_credentials(self) -> None:
         self.init_default_ldap_database()

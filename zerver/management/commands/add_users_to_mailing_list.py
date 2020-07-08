@@ -53,9 +53,7 @@ class Command(BaseCommand):
             api_key.split("-")[1], options["list_id"],
         )
 
-        for user in UserProfile.objects.filter(is_bot=False, is_active=True).values(
-            "email", "full_name", "realm_id",
-        ):
+        for user in UserProfile.objects.filter(is_bot=False, is_active=True).values("email", "full_name", "realm_id"):
             data = {
                 "email_address": user["email"],
                 "list_id": options["list_id"],

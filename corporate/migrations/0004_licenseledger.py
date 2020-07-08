@@ -19,10 +19,7 @@ class Migration(migrations.Migration):
                 ("event_time", models.DateTimeField()),
                 ("licenses", models.IntegerField()),
                 ("licenses_at_next_renewal", models.IntegerField(null=True)),
-                (
-                    "plan",
-                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="corporate.CustomerPlan"),
-                ),
+                ("plan", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="corporate.CustomerPlan")),
             ],
         ),
     ]

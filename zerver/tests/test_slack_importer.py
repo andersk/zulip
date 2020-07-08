@@ -481,11 +481,7 @@ class SlackImporter(ZulipTestCase):
         recipient_id = 12
         zerver_subscription: List[Dict[str, Any]] = []
         final_subscription_id = get_subscription(
-            channel_members,
-            zerver_subscription,
-            recipient_id,
-            slack_user_id_to_zulip_user_id,
-            subscription_id_count,
+            channel_members, zerver_subscription, recipient_id, slack_user_id_to_zulip_user_id, subscription_id_count,
         )
         # sanity checks
         self.assertEqual(final_subscription_id, 4)
@@ -824,8 +820,7 @@ class SlackImporter(ZulipTestCase):
         self.assertEqual(zerver_message[2][EXPORT_TOPIC_NAME], "imported from slack")
         self.assertEqual(zerver_message[1]["recipient"], slack_recipient_name_to_zulip_recipient_id["random"])
         self.assertEqual(
-            zerver_message[5]["recipient"],
-            slack_recipient_name_to_zulip_recipient_id["mpdm-user9--user2--user10-1"],
+            zerver_message[5]["recipient"], slack_recipient_name_to_zulip_recipient_id["mpdm-user9--user2--user10-1"],
         )
         self.assertEqual(
             zerver_message[6]["recipient"], slack_recipient_name_to_zulip_recipient_id["mpdm-user6--user7--user4-1"],

@@ -525,9 +525,7 @@ class StreamAdminTest(ZulipTestCase):
         events: List[Mapping[str, Any]] = []
         with tornado_redirected_to_list(events):
             stream_id = get_stream("private_stream", user_profile.realm).id
-            result = self.client_patch(
-                f"/json/streams/{stream_id}", {"description": ujson.dumps("Test description")},
-            )
+            result = self.client_patch(f"/json/streams/{stream_id}", {"description": ujson.dumps("Test description")})
         self.assert_json_success(result)
         # Should be just a description change event
         self.assert_length(events, 1)
@@ -733,9 +731,7 @@ class StreamAdminTest(ZulipTestCase):
         events: List[Mapping[str, Any]] = []
         with tornado_redirected_to_list(events):
             stream_id = get_stream("stream_name1", realm).id
-            result = self.client_patch(
-                f"/json/streams/{stream_id}", {"description": ujson.dumps("Test description")},
-            )
+            result = self.client_patch(f"/json/streams/{stream_id}", {"description": ujson.dumps("Test description")})
         self.assert_json_success(result)
 
         event = events[0]["event"]
@@ -1638,8 +1634,7 @@ class DefaultStreamGroupTest(ZulipTestCase):
         self.assert_json_error(result, 'Invalid value for "op". Specify one of "add" or "remove".')
 
         result = self.client_patch(
-            "/json/default_stream_groups/12345/streams",
-            {"op": "add", "stream_names": ujson.dumps(new_stream_names)},
+            "/json/default_stream_groups/12345/streams", {"op": "add", "stream_names": ujson.dumps(new_stream_names)},
         )
         self.assert_json_error(result, "Default stream group with id '12345' does not exist.")
 
@@ -3270,9 +3265,7 @@ class SubscriptionAPITest(ZulipTestCase):
         random_streams = self.make_random_stream_names(self.streams)
         self.assertNotEqual(len(random_streams), 0)  # necessary for full test coverage
         streams_to_remove = random_streams[:1]  # pick only one fake stream, to make checking the error message easy
-        result = self.client_delete(
-            "/json/users/me/subscriptions", {"subscriptions": ujson.dumps(streams_to_remove)},
-        )
+        result = self.client_delete("/json/users/me/subscriptions", {"subscriptions": ujson.dumps(streams_to_remove)})
         self.assert_json_error(result, f"Stream(s) ({random_streams[0]}) do not exist")
 
     def helper_subscriptions_exists(self, stream: str, expect_success: bool, subscribed: bool) -> None:
@@ -3545,9 +3538,7 @@ class SubscriptionAPITest(ZulipTestCase):
         self.test_realm.save()
         with queries_captured() as queries:
             self.common_subscribe_to_streams(
-                self.test_user,
-                [new_streams[2]],
-                dict(announce="true", principals=ujson.dumps([user1.id, user2.id])),
+                self.test_user, [new_streams[2]], dict(announce="true", principals=ujson.dumps([user1.id, user2.id])),
             )
         self.assert_length(queries, 52)
 
@@ -3878,9 +3869,7 @@ class GetSubscribersTest(ZulipTestCase):
             self.example_user("othello").id,
             self.example_user("cordelia").id,
         ]
-        self.common_subscribe_to_streams(
-            self.user_profile, streams, dict(principals=ujson.dumps(users_to_subscribe)),
-        )
+        self.common_subscribe_to_streams(self.user_profile, streams, dict(principals=ujson.dumps(users_to_subscribe)))
 
         msg = """
             @**King Hamlet** subscribed you to the following streams:

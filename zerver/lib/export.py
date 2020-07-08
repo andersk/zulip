@@ -668,10 +668,7 @@ def get_realm_config() -> Config:
     )
 
     Config(
-        table="zerver_mutedtopic",
-        model=MutedTopic,
-        normal_parent=user_profile_config,
-        parent_key="user_profile__in",
+        table="zerver_mutedtopic", model=MutedTopic, normal_parent=user_profile_config, parent_key="user_profile__in",
     )
 
     Config(
@@ -1153,9 +1150,7 @@ def export_uploads_and_avatars(realm: Realm, output_dir: Path) -> None:
         )
     else:
         # Some bigger installations will have their data stored on S3.
-        export_files_from_s3(
-            realm, settings.S3_AVATAR_BUCKET, output_dir=avatars_output_dir, processing_avatars=True,
-        )
+        export_files_from_s3(realm, settings.S3_AVATAR_BUCKET, output_dir=avatars_output_dir, processing_avatars=True)
         export_files_from_s3(realm, settings.S3_AUTH_UPLOADS_BUCKET, output_dir=uploads_output_dir)
         export_files_from_s3(realm, settings.S3_AVATAR_BUCKET, output_dir=emoji_output_dir, processing_emoji=True)
         export_files_from_s3(
@@ -1303,9 +1298,7 @@ def export_files_from_s3(
         record = _get_exported_s3_record(bucket_name, key, processing_emoji)
 
         record["path"] = key.key
-        _save_s3_object_to_file(
-            key, output_dir, processing_avatars, processing_emoji, processing_realm_icon_and_logo,
-        )
+        _save_s3_object_to_file(key, output_dir, processing_avatars, processing_emoji, processing_realm_icon_and_logo)
 
         records.append(record)
         count += 1

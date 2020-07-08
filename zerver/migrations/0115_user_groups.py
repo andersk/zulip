@@ -23,10 +23,7 @@ class Migration(migrations.Migration):
             name="UserGroupMembership",
             fields=[
                 ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
-                (
-                    "user_group",
-                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.UserGroup"),
-                ),
+                ("user_group", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.UserGroup")),
                 (
                     "user_profile",
                     models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
@@ -43,8 +40,6 @@ class Migration(migrations.Migration):
             name="realm",
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm"),
         ),
-        migrations.AlterUniqueTogether(
-            name="usergroupmembership", unique_together={("user_group", "user_profile")},
-        ),
+        migrations.AlterUniqueTogether(name="usergroupmembership", unique_together={("user_group", "user_profile")}),
         migrations.AlterUniqueTogether(name="usergroup", unique_together={("realm", "name")}),
     ]

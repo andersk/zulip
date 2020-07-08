@@ -172,9 +172,7 @@ def write_log_line(
         remote_cache_count_delta = get_remote_cache_requests() - log_data["remote_cache_requests_start"]
         if "remote_cache_requests_stopped" in log_data:
             # (now - restarted) + (stopped - start) = (now - start) + (stopped - restarted)
-            remote_cache_time_delta += (
-                log_data["remote_cache_time_stopped"] - log_data["remote_cache_time_restarted"]
-            )
+            remote_cache_time_delta += log_data["remote_cache_time_stopped"] - log_data["remote_cache_time_restarted"]
             remote_cache_count_delta += (
                 log_data["remote_cache_requests_stopped"] - log_data["remote_cache_requests_restarted"]
             )

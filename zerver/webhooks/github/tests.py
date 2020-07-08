@@ -362,9 +362,7 @@ A temporary team so that I can get some webhook fixtures!
     @patch("zerver.webhooks.github.view.check_send_webhook_message")
     def test_check_run_in_progress_ignore(self, check_send_webhook_message_mock: MagicMock) -> None:
         payload = self.get_body("check_run__in_progress")
-        result = self.client_post(
-            self.url, payload, HTTP_X_GITHUB_EVENT="check_run", content_type="application/json",
-        )
+        result = self.client_post(self.url, payload, HTTP_X_GITHUB_EVENT="check_run", content_type="application/json")
         self.assertFalse(check_send_webhook_message_mock.called)
         self.assert_json_success(result)
 

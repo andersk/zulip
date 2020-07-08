@@ -214,9 +214,7 @@ def get_wiki_pages_body(payload: Dict[str, Any]) -> str:
     wiki_page_info_template = "* {action} [{title}]({url})\n"
     wiki_info = ""
     for page in payload["pages"]:
-        wiki_info += wiki_page_info_template.format(
-            action=page["action"], title=page["title"], url=page["html_url"],
-        )
+        wiki_info += wiki_page_info_template.format(action=page["action"], title=page["title"], url=page["html_url"])
     return f"{get_sender_name(payload)}:\n{wiki_info.rstrip()}"
 
 

@@ -181,9 +181,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
         # We do a bit of hackery here to the API_KEYS cache just to
         # make the code simple for sending an incorrect API key.
         self.API_KEYS[self.server_uuid] = "invalid"
-        result = self.uuid_post(
-            self.server_uuid, endpoint, dict(user_id=user_id, token_kind=token_kind, token=token),
-        )
+        result = self.uuid_post(self.server_uuid, endpoint, dict(user_id=user_id, token_kind=token_kind, token=token))
         self.assert_json_error(
             result, "Zulip server auth failure: key does not match role 1234-abcd", status_code=401,
         )
@@ -1741,9 +1739,7 @@ class GCMSendTest(PushNotificationTest):
 
     @mock.patch("zerver.lib.push_notifications.logger.warning")
     @mock.patch("zerver.lib.push_notifications.logger.info")
-    def test_success(
-        self, mock_info: mock.MagicMock, mock_warning: mock.MagicMock, mock_gcm: mock.MagicMock,
-    ) -> None:
+    def test_success(self, mock_info: mock.MagicMock, mock_warning: mock.MagicMock, mock_gcm: mock.MagicMock) -> None:
         res = {}
         res["success"] = {token: ind for ind, token in enumerate(self.gcm_tokens)}
         mock_gcm.json_request.return_value = res

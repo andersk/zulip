@@ -427,9 +427,7 @@ class MissedMessageNotificationsTest(ZulipTestCase):
         # Test the hook with a mention; this should trigger notifications
         client_descriptor = allocate_event_queue()
         self.assertTrue(client_descriptor.event_queue.empty())
-        msg_id = self.send_stream_message(
-            self.example_user("iago"), "Denmark", content="@**King Hamlet** what's up?",
-        )
+        msg_id = self.send_stream_message(self.example_user("iago"), "Denmark", content="@**King Hamlet** what's up?")
         with mock.patch("zerver.tornado.event_queue.maybe_enqueue_notifications") as mock_enqueue:
             missedmessage_hook(user_profile.id, client_descriptor, True)
             mock_enqueue.assert_called_once()
@@ -740,9 +738,7 @@ class FileReloadLogicTest(ZulipTestCase):
     def test_persistent_queue_filename(self) -> None:
         with self.settings(JSON_PERSISTENT_QUEUE_FILENAME_PATTERN="/home/zulip/tornado/event_queues%s.json"):
             self.assertEqual(persistent_queue_filename(9993), "/home/zulip/tornado/event_queues.json")
-            self.assertEqual(
-                persistent_queue_filename(9993, last=True), "/home/zulip/tornado/event_queues.json.last",
-            )
+            self.assertEqual(persistent_queue_filename(9993, last=True), "/home/zulip/tornado/event_queues.json.last")
         with self.settings(
             JSON_PERSISTENT_QUEUE_FILENAME_PATTERN="/home/zulip/tornado/event_queues%s.json", TORNADO_PROCESSES=4,
         ):
@@ -973,8 +969,7 @@ class EventQueueTest(ZulipTestCase):
         queue.push({"type": "restart", "server_generation": 1, "timestamp": "1"})
         # Verify the server_generation event is stored as a virtual event
         self.assertEqual(
-            queue.virtual_events,
-            {"restart": {"id": 0, "type": "restart", "server_generation": 1, "timestamp": "1"}},
+            queue.virtual_events, {"restart": {"id": 0, "type": "restart", "server_generation": 1, "timestamp": "1"}},
         )
         # And we can reconstruct newest_pruned_id etc.
         self.verify_to_dict_end_to_end(client)
@@ -982,8 +977,7 @@ class EventQueueTest(ZulipTestCase):
         queue.push({"type": "unknown", "timestamp": "1"})
         self.assertEqual(list(queue.queue), [{"id": 1, "type": "unknown", "timestamp": "1"}])
         self.assertEqual(
-            queue.virtual_events,
-            {"restart": {"id": 0, "type": "restart", "server_generation": 1, "timestamp": "1"}},
+            queue.virtual_events, {"restart": {"id": 0, "type": "restart", "server_generation": 1, "timestamp": "1"}},
         )
         # And we can still reconstruct newest_pruned_id etc. correctly
         self.verify_to_dict_end_to_end(client)

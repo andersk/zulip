@@ -126,7 +126,9 @@ class GogsHookTests(WebhookTestCase):
 
     def test_issues_edited(self) -> None:
         expected_topic = "test / Issue #3 New test issue"
-        expected_message = """kostekIV edited [Issue #3](https://try.gogs.io/kostekIV/test/issues/3):\n\n~~~ quote\nTest edit\n~~~"""
+        expected_message = (
+            """kostekIV edited [Issue #3](https://try.gogs.io/kostekIV/test/issues/3):\n\n~~~ quote\nTest edit\n~~~"""
+        )
         self.send_and_test_stream_message("issues__edited", expected_topic, expected_message)
 
     def test_issues_assignee(self) -> None:
@@ -136,7 +138,9 @@ class GogsHookTests(WebhookTestCase):
 
     def test_issues_closed(self) -> None:
         expected_topic = "test / Issue #3 New test issue"
-        expected_message = """kostekIV closed [Issue #3](https://try.gogs.io/kostekIV/test/issues/3):\n\n~~~ quote\nClosed #3\n~~~"""
+        expected_message = (
+            """kostekIV closed [Issue #3](https://try.gogs.io/kostekIV/test/issues/3):\n\n~~~ quote\nClosed #3\n~~~"""
+        )
         self.send_and_test_stream_message("issues__closed", expected_topic, expected_message)
 
     def test_issue_comment_new(self) -> None:

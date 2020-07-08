@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name="customerplan",
-            name="next_invoice_date",
-            field=models.DateTimeField(db_index=True, null=True),
+            model_name="customerplan", name="next_invoice_date", field=models.DateTimeField(db_index=True, null=True),
         ),
     ]

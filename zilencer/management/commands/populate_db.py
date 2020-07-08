@@ -416,9 +416,7 @@ class Command(BaseCommand):
             zulip_outgoing_bots = [
                 ("Outgoing Webhook", "outgoing-webhook@zulip.com"),
             ]
-            create_users(
-                zulip_realm, zulip_outgoing_bots, bot_type=UserProfile.OUTGOING_WEBHOOK_BOT, bot_owner=aaron,
-            )
+            create_users(zulip_realm, zulip_outgoing_bots, bot_type=UserProfile.OUTGOING_WEBHOOK_BOT, bot_owner=aaron)
             outgoing_webhook = get_user("outgoing-webhook@zulip.com", zulip_realm)
             add_service(
                 "outgoing-webhook",

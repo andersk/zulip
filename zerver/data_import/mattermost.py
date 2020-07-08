@@ -54,9 +54,7 @@ def make_realm(realm_id: int, team: Dict[str, Any]) -> ZerverFieldsT:
     return realm
 
 
-def process_user(
-    user_dict: Dict[str, Any], realm_id: int, team_name: str, user_id_mapper: IdMapper,
-) -> ZerverFieldsT:
+def process_user(user_dict: Dict[str, Any], realm_id: int, team_name: str, user_id_mapper: IdMapper) -> ZerverFieldsT:
     def is_team_admin(user_dict: Dict[str, Any]) -> bool:
         if user_dict["teams"] is None:
             return False
@@ -282,9 +280,7 @@ def build_reactions(
             continue
 
         reaction_id = NEXT_ID("reaction")
-        reaction = Reaction(
-            id=reaction_id, emoji_code=emoji_code, emoji_name=emoji_name, reaction_type=reaction_type,
-        )
+        reaction = Reaction(id=reaction_id, emoji_code=emoji_code, emoji_name=emoji_name, reaction_type=reaction_type)
 
         reaction_dict = model_to_dict(reaction, exclude=["message", "user_profile"])
         reaction_dict["message"] = message_id
@@ -615,9 +611,7 @@ def write_emoticon_data(
 
         shutil.copyfile(source_path, target_path)
 
-        return dict(
-            path=target_path, s3_path=target_path, file_name=target_fn, realm_id=realm_id, name=data["name"],
-        )
+        return dict(path=target_path, s3_path=target_path, file_name=target_fn, realm_id=realm_id, name=data["name"])
 
     emoji_records = list(map(process, flat_data))
     create_converted_data_files(emoji_records, output_dir, "/emoji/records.json")

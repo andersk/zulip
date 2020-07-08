@@ -80,9 +80,7 @@ def check_html_templates(templates: Iterable[str], all_dups: bool, fix: bool) ->
             "searchbox_form",
             "searchbox",
         ]
-        bad_ids_dict = {
-            ids: fns for ids, fns in template_id_dict.items() if (ids not in IGNORE_IDS) and len(fns) > 1
-        }
+        bad_ids_dict = {ids: fns for ids, fns in template_id_dict.items() if (ids not in IGNORE_IDS) and len(fns) > 1}
 
         if all_dups:
             ignorable_ids_dict = {

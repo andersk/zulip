@@ -122,9 +122,7 @@ def process_count_stat(stat: CountStat, fill_to_time: datetime, realm: Optional[
     fill_state = FillState.objects.filter(property=stat.property).first()
     if fill_state is None:
         currently_filled = installation_epoch()
-        fill_state = FillState.objects.create(
-            property=stat.property, end_time=currently_filled, state=FillState.DONE,
-        )
+        fill_state = FillState.objects.create(property=stat.property, end_time=currently_filled, state=FillState.DONE)
         logger.info("INITIALIZED %s %s", stat.property, currently_filled)
     elif fill_state.state == FillState.STARTED:
         logger.info("UNDO START %s %s", stat.property, fill_state.end_time)

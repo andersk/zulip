@@ -503,9 +503,7 @@ def apply_event(
                     bot["is_active"] = False
 
         if event["op"] == "delete":
-            state["realm_bots"] = [
-                item for item in state["realm_bots"] if item["user_id"] != event["bot"]["user_id"]
-            ]
+            state["realm_bots"] = [item for item in state["realm_bots"] if item["user_id"] != event["bot"]["user_id"]]
 
         if event["op"] == "update":
             for bot in state["realm_bots"]:

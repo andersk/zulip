@@ -163,9 +163,7 @@ def accounts_register(request: HttpRequest) -> HttpResponse:
             )
         except EmailContainsPlusError:
             return render(
-                request,
-                "zerver/invalid_email.html",
-                context={"realm_name": realm.name, "email_contains_plus": True},
+                request, "zerver/invalid_email.html", context={"realm_name": realm.name, "email_contains_plus": True},
             )
 
         if realm.deactivated:

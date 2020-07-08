@@ -53,9 +53,7 @@ class FlockHookTests(WebhookTestCase):
     def test_flock_pinned(self) -> None:
         expected_topic = "Flock notifications"
         expected_message = "Rishabh rawat pinned an item to the conversation"
-        self.send_and_test_stream_message(
-            "pinned", expected_topic, expected_message, content_type="application/json",
-        )
+        self.send_and_test_stream_message("pinned", expected_topic, expected_message, content_type="application/json")
 
     def test_flock_reminder(self) -> None:
         expected_topic = "Flock notifications"

@@ -515,18 +515,7 @@ class NormalActionsTest(BaseAction):
 
         events = self.verify_action(
             lambda: do_update_message(
-                self.user_profile,
-                message,
-                stream,
-                topic,
-                propagate_mode,
-                True,
-                True,
-                None,
-                None,
-                set(),
-                set(),
-                None,
+                self.user_profile, message, stream, topic, propagate_mode, True, True, None, None, set(), set(), None,
             ),
             state_change_expected=True,
             # There are 3 events generated for this action
@@ -770,9 +759,7 @@ class NormalActionsTest(BaseAction):
         do_create_multiuse_invite_link(self.user_profile, PreregistrationUser.INVITE_AS["MEMBER"], streams)
 
         multiuse_object = MultiuseInvite.objects.get()
-        events = self.verify_action(
-            lambda: do_revoke_multi_use_invite(multiuse_object), state_change_expected=False,
-        )
+        events = self.verify_action(lambda: do_revoke_multi_use_invite(multiuse_object), state_change_expected=False)
         schema_checker("events[0]", events[0])
 
     def test_invitation_accept_invite_event(self) -> None:
@@ -910,22 +897,16 @@ class NormalActionsTest(BaseAction):
             "id": field_id,
             "value": "New value",
         }
-        events = self.verify_action(
-            lambda: do_update_user_custom_profile_data_if_changed(self.user_profile, [field]),
-        )
+        events = self.verify_action(lambda: do_update_user_custom_profile_data_if_changed(self.user_profile, [field]))
         schema_checker_with_rendered_value("events[0]", events[0])
 
         # Test we pass correct stringify value in custom-user-field data event
-        field_id = self.user_profile.realm.customprofilefield_set.get(
-            realm=self.user_profile.realm, name="Mentor",
-        ).id
+        field_id = self.user_profile.realm.customprofilefield_set.get(realm=self.user_profile.realm, name="Mentor").id
         field = {
             "id": field_id,
             "value": [self.example_user("ZOE").id],
         }
-        events = self.verify_action(
-            lambda: do_update_user_custom_profile_data_if_changed(self.user_profile, [field]),
-        )
+        events = self.verify_action(lambda: do_update_user_custom_profile_data_if_changed(self.user_profile, [field]))
         schema_checker_basic("events[0]", events[0])
 
     def test_presence_events(self) -> None:
@@ -2417,10 +2398,7 @@ class NormalActionsTest(BaseAction):
                             ("size", check_int),
                             ("path_id", check_string),
                             ("create_time", check_int),
-                            (
-                                "messages",
-                                check_list(check_dict_only([("id", check_int), ("date_sent", check_int)])),
-                            ),
+                            ("messages", check_list(check_dict_only([("id", check_int), ("date_sent", check_int)]))),
                         ],
                     ),
                 ),
@@ -2464,10 +2442,7 @@ class NormalActionsTest(BaseAction):
                             ("size", check_int),
                             ("path_id", check_string),
                             ("create_time", check_int),
-                            (
-                                "messages",
-                                check_list(check_dict_only([("id", check_int), ("date_sent", check_int)])),
-                            ),
+                            ("messages", check_list(check_dict_only([("id", check_int), ("date_sent", check_int)]))),
                         ],
                     ),
                 ),
@@ -2857,11 +2832,7 @@ class SubscribeActionTest(BaseAction):
             ],
         )
         add_schema_checker = check_events_dict(
-            [
-                ("type", equals("subscription")),
-                ("op", equals("add")),
-                ("subscriptions", subscription_schema_checker),
-            ],
+            [("type", equals("subscription")), ("op", equals("add")), ("subscriptions", subscription_schema_checker)],
         )
         remove_schema_checker = check_events_dict(
             [

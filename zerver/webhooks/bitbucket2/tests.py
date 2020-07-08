@@ -105,9 +105,7 @@ class Bitbucket2HookTests(WebhookTestCase):
         self.send_and_test_stream_message("issue_created", expected_topic, expected_message)
 
     def test_bitbucket2_on_issue_updated_event(self) -> None:
-        expected_message = (
-            "kolaszek updated [Issue #1](https://bitbucket.org/kolaszek/repository-name/issues/2/bug)."
-        )
+        expected_message = "kolaszek updated [Issue #1](https://bitbucket.org/kolaszek/repository-name/issues/2/bug)."
         self.send_and_test_stream_message("issue_updated", self.EXPECTED_TOPIC_ISSUE_EVENTS, expected_message)
 
     def test_bitbucket2_on_issue_commented_event(self) -> None:
@@ -337,9 +335,7 @@ class Bitbucket2HookTests(WebhookTestCase):
             "HTTP_X_EVENT_KEY": "pullrequest:push",
         }
         expected_message = "kolaszek pushed tag [a](https://bitbucket.org/kolaszek/repository-name/commits/tag/a)."
-        self.send_and_test_stream_message(
-            "more_than_one_push_event", self.EXPECTED_TOPIC, expected_message, **kwargs,
-        )
+        self.send_and_test_stream_message("more_than_one_push_event", self.EXPECTED_TOPIC, expected_message, **kwargs)
 
     @patch("zerver.webhooks.bitbucket2.view.check_send_webhook_message")
     def test_bitbucket2_on_push_event_filtered_by_branches_ignore(

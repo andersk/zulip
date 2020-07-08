@@ -171,7 +171,9 @@ class ClubhouseWebhookTest(WebhookTestCase):
         self.send_and_test_stream_message("story_update_add_label", "An epic story!", expected_message)
 
     def test_story_label_added_label_name_in_actions(self) -> None:
-        expected_message = "The label **sad** was added to the story [An emotional story!](https://app.clubhouse.io/zulip/story/28)."
+        expected_message = (
+            "The label **sad** was added to the story [An emotional story!](https://app.clubhouse.io/zulip/story/28)."
+        )
         self.send_and_test_stream_message(
             "story_update_add_label_name_in_action", "An emotional story!", expected_message,
         )

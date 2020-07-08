@@ -38,9 +38,11 @@ def timeout(timeout: float, func: Callable[..., ResultT], *args: Any, **kwargs: 
         def __init__(self) -> None:
             threading.Thread.__init__(self)
             self.result: Optional[ResultT] = None
-            self.exc_info: Tuple[
-                Optional[Type[BaseException]], Optional[BaseException], Optional[TracebackType],
-            ] = (None, None, None)
+            self.exc_info: Tuple[Optional[Type[BaseException]], Optional[BaseException], Optional[TracebackType]] = (
+                None,
+                None,
+                None,
+            )
 
             # Don't block the whole program from exiting
             # if this is the only thread left.

@@ -28,7 +28,5 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RemoveField(model_name="realm", name="google_hangouts_domain"),
-        migrations.RunPython(
-            remove_google_hangouts_provider, reverse_code=migrations.RunPython.noop, elidable=True,
-        ),
+        migrations.RunPython(remove_google_hangouts_provider, reverse_code=migrations.RunPython.noop, elidable=True),
     ]

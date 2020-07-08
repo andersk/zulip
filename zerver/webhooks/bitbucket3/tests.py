@@ -97,9 +97,7 @@ class Bitbucket3HookTests(WebhookTestCase):
     def test_pr_opened_without_description(self) -> None:
         expected_topic = "sandbox / PR #2 Add notes feature."
         expected_message = """[hypro999](http://139.59.64.214:7990/users/hypro999) opened [PR #2](http://139.59.64.214:7990/projects/SBOX/repos/sandbox/pull-requests/2) from `master` to `master`."""
-        self.send_and_test_stream_message(
-            "pull_request_opened_without_description", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request_opened_without_description", expected_topic, expected_message)
 
     def test_pr_opened_with_two_reviewers(self) -> None:
         expected_topic = "sandbox / PR #5 Add Notes Feature"

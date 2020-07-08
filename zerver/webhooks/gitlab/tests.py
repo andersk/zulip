@@ -50,18 +50,14 @@ class GitlabHookTests(WebhookTestCase):
         expected_topic = "my-awesome-project / tomek"
         commits_info = "* b ([66abd2d](https://gitlab.com/tomaszkolek0/my-awesome-project/commit/66abd2da28809ffa128ed0447965cf11d7f863a7))\n"
         expected_message = f"Tomasz Kolek [pushed](https://gitlab.com/tomaszkolek0/my-awesome-project/compare/5fcdd5551fc3085df79bece2c32b1400802ac407...eb6ae1e591e0819dc5bf187c6bfe18ec065a80e9) 50 commits to branch tomek.\n\n{commits_info * COMMITS_LIMIT}[and {50 - COMMITS_LIMIT} more commit(s)]"
-        self.send_and_test_stream_message(
-            "push_hook__push_commits_more_than_limit", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("push_hook__push_commits_more_than_limit", expected_topic, expected_message)
 
     def test_push_commits_more_than_limit_message_filtered_by_branches(self) -> None:
         self.url = self.build_webhook_url(branches="master,tomek")
         expected_topic = "my-awesome-project / tomek"
         commits_info = "* b ([66abd2d](https://gitlab.com/tomaszkolek0/my-awesome-project/commit/66abd2da28809ffa128ed0447965cf11d7f863a7))\n"
         expected_message = f"Tomasz Kolek [pushed](https://gitlab.com/tomaszkolek0/my-awesome-project/compare/5fcdd5551fc3085df79bece2c32b1400802ac407...eb6ae1e591e0819dc5bf187c6bfe18ec065a80e9) 50 commits to branch tomek.\n\n{commits_info * COMMITS_LIMIT}[and {50 - COMMITS_LIMIT} more commit(s)]"
-        self.send_and_test_stream_message(
-            "push_hook__push_commits_more_than_limit", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("push_hook__push_commits_more_than_limit", expected_topic, expected_message)
 
     def test_remove_branch_event_message(self) -> None:
         expected_topic = "my-awesome-project / tomek"
@@ -112,9 +108,7 @@ class GitlabHookTests(WebhookTestCase):
         expected_topic = "my-awesome-project / Issue #1 Issue title"
         expected_message = "Tomasz Kolek created [Issue #1](https://gitlab.com/tomaszkolek0/my-awesome-project/issues/1) (assigned to Tomasz Kolek):\n\n~~~ quote\nIssue description\n~~~"
 
-        self.send_and_test_stream_message(
-            "issue_hook__issue_created_with_assignee", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("issue_hook__issue_created_with_assignee", expected_topic, expected_message)
 
     def test_create_issue_with_two_assignees_event_message(self) -> None:
         expected_subject = "Zulip GitLab Test / Issue #2 Zulip Test Issue 2"
@@ -202,9 +196,7 @@ class GitlabHookTests(WebhookTestCase):
         expected_subject = "testing / Issue #1 Testing Test"
         expected_message = "Joe Bloggs closed [Issue #1](https://gitlab.example.co.uk/joe.bloggs/testing/issues/1)."
 
-        self.send_and_test_stream_message(
-            "issue_hook__confidential_issue_closed", expected_subject, expected_message,
-        )
+        self.send_and_test_stream_message("issue_hook__confidential_issue_closed", expected_subject, expected_message)
 
     def test_reopen_issue_event_message(self) -> None:
         expected_topic = "my-awesome-project / Issue #1 Issue title_new"
@@ -216,9 +208,7 @@ class GitlabHookTests(WebhookTestCase):
 
     def test_reopen_confidential_issue_event_message(self) -> None:
         expected_subject = "testing / Issue #1 Testing Test"
-        expected_message = (
-            "Joe Bloggs reopened [Issue #1](https://gitlab.example.co.uk/joe.bloggs/testing/issues/1)."
-        )
+        expected_message = "Joe Bloggs reopened [Issue #1](https://gitlab.example.co.uk/joe.bloggs/testing/issues/1)."
 
         self.send_and_test_stream_message(
             "issue_hook__confidential_issue_reopened", expected_subject, expected_message,
@@ -463,14 +453,10 @@ class GitlabHookTests(WebhookTestCase):
         )
 
     @patch("zerver.lib.webhooks.common.check_send_webhook_message")
-    def test_push_event_message_filtered_by_branches_ignore(
-        self, check_send_webhook_message_mock: MagicMock,
-    ) -> None:
+    def test_push_event_message_filtered_by_branches_ignore(self, check_send_webhook_message_mock: MagicMock) -> None:
         self.url = self.build_webhook_url(branches="master,development")
         payload = self.get_body("push_hook")
-        result = self.client_post(
-            self.url, payload, HTTP_X_GITLAB_EVENT="Push Hook", content_type="application/json",
-        )
+        result = self.client_post(self.url, payload, HTTP_X_GITLAB_EVENT="Push Hook", content_type="application/json")
         self.assertFalse(check_send_webhook_message_mock.called)
         self.assert_json_success(result)
 
@@ -480,9 +466,7 @@ class GitlabHookTests(WebhookTestCase):
     ) -> None:
         self.url = self.build_webhook_url(branches="master,development")
         payload = self.get_body("push_hook__push_commits_more_than_limit")
-        result = self.client_post(
-            self.url, payload, HTTP_X_GITLAB_EVENT="Push Hook", content_type="application/json",
-        )
+        result = self.client_post(self.url, payload, HTTP_X_GITLAB_EVENT="Push Hook", content_type="application/json")
         self.assertFalse(check_send_webhook_message_mock.called)
         self.assert_json_success(result)
 
@@ -494,7 +478,9 @@ class GitlabHookTests(WebhookTestCase):
     def test_job_hook_event_topic(self) -> None:
         self.url = self.build_webhook_url(topic="provided topic")
         expected_topic = "provided topic"
-        expected_message = "[[gitlab_test](http://192.168.64.1:3005/gitlab-org/gitlab-test)] Build test from test stage was created."
+        expected_message = (
+            "[[gitlab_test](http://192.168.64.1:3005/gitlab-org/gitlab-test)] Build test from test stage was created."
+        )
         self.send_and_test_stream_message("job_hook__build_created", expected_topic, expected_message)
 
     def test_system_push_event_message(self) -> None:

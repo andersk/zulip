@@ -440,9 +440,7 @@ class TestArchivingSubMessages(ArchiveMessagesTestingBase):
             content='{"name": "jack", "salary": 10}',
         )
 
-        submessage_ids = list(
-            SubMessage.objects.filter(message_id__in=expired_msg_ids).values_list("id", flat=True),
-        )
+        submessage_ids = list(SubMessage.objects.filter(message_id__in=expired_msg_ids).values_list("id", flat=True))
 
         self.assertEqual(len(submessage_ids), 3)
         self.assertEqual(SubMessage.objects.filter(id__in=submessage_ids).count(), 3)
@@ -477,8 +475,7 @@ class TestArchivingReactions(ArchiveMessagesTestingBase, EmojiReactionBase):
         self.assertEqual(Reaction.objects.filter(id__in=reaction_ids).count(), 0)
 
         self.assertEqual(
-            set(ArchivedReaction.objects.filter(id__in=reaction_ids).values_list("id", flat=True)),
-            set(reaction_ids),
+            set(ArchivedReaction.objects.filter(id__in=reaction_ids).values_list("id", flat=True)), set(reaction_ids),
         )
 
         restore_all_data_from_archive()
@@ -629,9 +626,7 @@ class MoveMessageToArchiveGeneral(MoveMessageToArchiveBase):
             self.assertEqual(
                 set(attachment_id_to_message_ids[attachment_id]),
                 set(
-                    ArchivedMessage.objects.filter(archivedattachment__id=attachment_id).values_list(
-                        "id", flat=True,
-                    ),
+                    ArchivedMessage.objects.filter(archivedattachment__id=attachment_id).values_list("id", flat=True),
                 ),
             )
 
@@ -900,9 +895,7 @@ class TestRestoreStreamMessages(ArchiveMessagesTestingBase):
         usermessage_ids_to_archive_by_policy = self._get_usermessage_ids(message_ids_to_archive_by_policy)
 
         expected_archived_message_ids = message_ids_to_archive_manually + message_ids_to_archive_by_policy
-        expected_archived_usermessage_ids = (
-            usermessage_ids_to_archive_manually + usermessage_ids_to_archive_by_policy
-        )
+        expected_archived_usermessage_ids = usermessage_ids_to_archive_manually + usermessage_ids_to_archive_by_policy
 
         self._set_stream_message_retention_value(stream, 5)
         self._change_messages_date_sent(message_ids_to_archive_by_policy, timezone_now() - timedelta(days=6))

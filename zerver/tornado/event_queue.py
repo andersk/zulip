@@ -608,9 +608,7 @@ def fetch_events(query: Mapping[str, Any]) -> Dict[str, Any]:
             if orig_queue_id is None:
                 response["queue_id"] = queue_id
             if len(response["events"]) == 1:
-                extra_log_data = "[{}/{}/{}]".format(
-                    queue_id, len(response["events"]), response["events"][0]["type"],
-                )
+                extra_log_data = "[{}/{}/{}]".format(queue_id, len(response["events"]), response["events"][0]["type"])
             else:
                 extra_log_data = "[{}/{}]".format(queue_id, len(response["events"]))
             if was_connected:
@@ -1201,10 +1199,7 @@ def process_notification(notice: Mapping[str, Any]) -> None:
     else:
         process_event(event, cast(Iterable[int], users))
     logging.debug(
-        "Tornado: Event %s for %s users took %sms",
-        event["type"],
-        len(users),
-        int(1000 * (time.time() - start_time)),
+        "Tornado: Event %s for %s users took %sms", event["type"], len(users), int(1000 * (time.time() - start_time)),
     )
 
 

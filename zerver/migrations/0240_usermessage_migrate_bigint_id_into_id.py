@@ -32,9 +32,7 @@ class Migration(migrations.Migration):
                 # in the future makemigration calls.
                 migrations.RemoveField(model_name="usermessage", name="bigint_id"),
                 migrations.AlterField(
-                    model_name="usermessage",
-                    name="id",
-                    field=models.BigAutoField(primary_key=True, serialize=False),
+                    model_name="usermessage", name="id", field=models.BigAutoField(primary_key=True, serialize=False),
                 ),
             ],
         ),

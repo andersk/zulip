@@ -196,10 +196,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ("token", models.CharField(max_length=4096, unique=True)),
                 ("last_updated", models.DateTimeField(auto_now=True, default=django.utils.timezone.now)),
                 ("ios_app_id", models.TextField(null=True)),
-                (
-                    "user",
-                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
-                ),
+                ("user", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(

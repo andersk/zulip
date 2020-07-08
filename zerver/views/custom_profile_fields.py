@@ -105,9 +105,7 @@ def create_realm_custom_profile_field(
         if is_default_external_field(field_type, field_data):
             field_subtype = field_data["subtype"]
             assert isinstance(field_subtype, str)
-            field = try_add_realm_default_custom_profile_field(
-                realm=user_profile.realm, field_subtype=field_subtype,
-            )
+            field = try_add_realm_default_custom_profile_field(realm=user_profile.realm, field_subtype=field_subtype)
             return json_success({"id": field.id})
         else:
             field = try_add_realm_custom_profile_field(
@@ -119,9 +117,7 @@ def create_realm_custom_profile_field(
 
 
 @require_realm_admin
-def delete_realm_custom_profile_field(
-    request: HttpRequest, user_profile: UserProfile, field_id: int,
-) -> HttpResponse:
+def delete_realm_custom_profile_field(request: HttpRequest, user_profile: UserProfile, field_id: int) -> HttpResponse:
     try:
         field = CustomProfileField.objects.get(id=field_id)
     except CustomProfileField.DoesNotExist:

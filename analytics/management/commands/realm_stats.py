@@ -28,9 +28,7 @@ class Command(BaseCommand):
     help = "Generate statistics on realm activity."
 
     def add_arguments(self, parser: ArgumentParser) -> None:
-        parser.add_argument(
-            "realms", metavar="<realm>", type=str, nargs="*", help="realm to generate statistics for",
-        )
+        parser.add_argument("realms", metavar="<realm>", type=str, nargs="*", help="realm to generate statistics for")
 
     def active_users(self, realm: Realm) -> List[UserProfile]:
         # Has been active (on the website, for now) in the last 7 days.

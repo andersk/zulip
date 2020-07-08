@@ -117,9 +117,7 @@ class MessageDictTest(ZulipTestCase):
                 msg_id, apply_markdown=apply_markdown, client_gravatar=client_gravatar,
             )
 
-            fetch_payload = get_fetch_payload(
-                msg_id, apply_markdown=apply_markdown, client_gravatar=client_gravatar,
-            )
+            fetch_payload = get_fetch_payload(msg_id, apply_markdown=apply_markdown, client_gravatar=client_gravatar)
 
             self.assertEqual(send_message_payload, fetch_payload)
 
@@ -329,11 +327,7 @@ class MessageHydrationTest(ZulipTestCase):
         cordelia = self.example_user("cordelia")
         display_recipient: List[UserDisplayRecipient] = [
             dict(
-                email="aaron@example.com",
-                full_name="Aaron Smith",
-                short_name="Aaron",
-                id=999,
-                is_mirror_dummy=False,
+                email="aaron@example.com", full_name="Aaron Smith", short_name="Aaron", id=999, is_mirror_dummy=False,
             ),
         ]
 

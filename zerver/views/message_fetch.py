@@ -341,9 +341,7 @@ class NarrowBuilder:
         cond = self.msg_id_column == literal(operand)
         return query.where(maybe_negate(cond))
 
-    def by_pm_with(
-        self, query: Query, operand: Union[str, Iterable[int]], maybe_negate: ConditionTransform,
-    ) -> Query:
+    def by_pm_with(self, query: Query, operand: Union[str, Iterable[int]], maybe_negate: ConditionTransform) -> Query:
 
         try:
             if isinstance(operand, str):
@@ -435,9 +433,7 @@ class NarrowBuilder:
         query_extract_keywords = func.pgroonga_query_extract_keywords
         operand_escaped = func.escape_html(operand)
         keywords = query_extract_keywords(operand_escaped)
-        query = query.column(
-            match_positions_character(column("rendered_content"), keywords).label("content_matches"),
-        )
+        query = query.column(match_positions_character(column("rendered_content"), keywords).label("content_matches"))
         query = query.column(
             match_positions_character(func.escape_html(topic_column_sa()), keywords).label("topic_matches"),
         )

@@ -35,10 +35,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="reaction",
-            name="emoji_code",
-            field=models.TextField(default="unset"),
-            preserve_default=False,
+            model_name="reaction", name="emoji_code", field=models.TextField(default="unset"), preserve_default=False,
         ),
         migrations.AddField(
             model_name="reaction",

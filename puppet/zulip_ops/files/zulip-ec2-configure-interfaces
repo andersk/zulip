@@ -116,18 +116,7 @@ for device in macs.values():
         # See https://unix.stackexchange.com/a/4421/933
         subprocess.check_call(["/sbin/ip", "rule", "add", "fwmark", dev_num, "table", dev_num])
         subprocess.check_call(
-            [
-                "/sbin/ip",
-                "route",
-                "add",
-                "0.0.0.0/0",
-                "table",
-                dev_num,
-                "dev",
-                f"ens{device_number}",
-                "via",
-                gateway,
-            ],
+            ["/sbin/ip", "route", "add", "0.0.0.0/0", "table", dev_num, "dev", f"ens{device_number}", "via", gateway],
         )
         subprocess.check_call(
             [

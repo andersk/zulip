@@ -284,8 +284,7 @@ class UserPresenceTests(ZulipTestCase):
             2400,
         )
         self.assertEqual(
-            seconds_usage_between(user_profile, time_zero, third_time - timedelta(seconds=100)).total_seconds(),
-            1500,
+            seconds_usage_between(user_profile, time_zero, third_time - timedelta(seconds=100)).total_seconds(), 1500,
         )
         self.assertEqual(
             seconds_usage_between(
@@ -403,9 +402,7 @@ class SingleUserPresenceTests(ZulipTestCase):
         user = self.example_user("othello")
         self.login_user(user)
         result = self.client_post("/json/users/me/presence", {"status": "active"})
-        result = self.client_post(
-            "/json/users/me/presence", {"status": "active"}, HTTP_USER_AGENT="ZulipDesktop/1.0",
-        )
+        result = self.client_post("/json/users/me/presence", {"status": "active"}, HTTP_USER_AGENT="ZulipDesktop/1.0")
         result = self.api_post(
             user, "/api/v1/users/me/presence", {"status": "idle"}, HTTP_USER_AGENT="ZulipAndroid/1.0",
         )
@@ -517,9 +514,7 @@ class UserPresenceAggregationTests(ZulipTestCase):
         with mock.patch(
             "zerver.views.presence.timezone_now", return_value=validate_time - datetime.timedelta(seconds=3),
         ):
-            self.api_post(
-                user, "/api/v1/users/me/presence", {"status": "active"}, HTTP_USER_AGENT="ZulipTestDev/1.0",
-            )
+            self.api_post(user, "/api/v1/users/me/presence", {"status": "active"}, HTTP_USER_AGENT="ZulipTestDev/1.0")
         result_dict = self._send_presence_for_aggregated_tests(user, "idle", validate_time)
         self.assertDictEqual(
             result_dict["presence"]["aggregated"],
@@ -534,10 +529,7 @@ class UserPresenceAggregationTests(ZulipTestCase):
             result_dict = self._send_presence_for_aggregated_tests(user, "idle", validate_time)
         self.assertDictEqual(
             result_dict["presence"]["aggregated"],
-            {
-                "status": "offline",
-                "timestamp": datetime_to_timestamp(validate_time - datetime.timedelta(seconds=2)),
-            },
+            {"status": "offline", "timestamp": datetime_to_timestamp(validate_time - datetime.timedelta(seconds=2))},
         )
 
 

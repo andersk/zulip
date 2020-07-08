@@ -341,9 +341,7 @@ class ElementPair:
         self.value = value
 
 
-def walk_tree_with_family(
-    root: Element, processor: Callable[[Element], Optional[_T]],
-) -> List[ResultWithFamily[_T]]:
+def walk_tree_with_family(root: Element, processor: Callable[[Element], Optional[_T]]) -> List[ResultWithFamily[_T]]:
     results = []
 
     queue = deque([ElementPair(parent=None, value=root)])
@@ -836,11 +834,7 @@ class InlineInterestingLinkProcessor(markdown.treeprocessors.Treeprocessor):
         return None
 
     def twitter_text(
-        self,
-        text: str,
-        urls: List[Dict[str, str]],
-        user_mentions: List[Dict[str, Any]],
-        media: List[Dict[str, Any]],
+        self, text: str, urls: List[Dict[str, str]], user_mentions: List[Dict[str, Any]], media: List[Dict[str, Any]],
     ) -> Element:
         """
         Use data from the twitter API to turn links, mentions and media into A
@@ -1085,11 +1079,7 @@ class InlineInterestingLinkProcessor(markdown.treeprocessors.Treeprocessor):
 
             uncle = grandparent[insertion_index]
             inline_image_classes = ["message_inline_image", "message_inline_ref"]
-            if (
-                uncle.tag != "div"
-                or "class" not in uncle.keys()
-                or uncle.attrib["class"] not in inline_image_classes
-            ):
+            if uncle.tag != "div" or "class" not in uncle.keys() or uncle.attrib["class"] not in inline_image_classes:
                 return insertion_index
 
             uncle_link = list(uncle.iter(tag="a"))[0].attrib["href"]

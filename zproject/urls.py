@@ -216,9 +216,7 @@ v1_api_and_json_patterns = [
     # invites/multiuse -> zerver.views.invite
     path("invites/multiuse", rest_dispatch, {"POST": "zerver.views.invite.generate_multiuse_invite_backend"}),
     # invites/multiuse -> zerver.views.invite
-    path(
-        "invites/multiuse/<int:invite_id>", rest_dispatch, {"DELETE": "zerver.views.invite.revoke_multiuse_invite"},
-    ),
+    path("invites/multiuse/<int:invite_id>", rest_dispatch, {"DELETE": "zerver.views.invite.revoke_multiuse_invite"}),
     # mark messages as read (in bulk)
     path("mark_all_as_read", rest_dispatch, {"POST": "zerver.views.message_flags.mark_all_as_read"}),
     path("mark_stream_as_read", rest_dispatch, {"POST": "zerver.views.message_flags.mark_stream_as_read"}),
@@ -298,10 +296,7 @@ v1_api_and_json_patterns = [
     path(
         "users/me",
         rest_dispatch,
-        {
-            "GET": "zerver.views.users.get_profile_backend",
-            "DELETE": "zerver.views.users.deactivate_user_own_backend",
-        },
+        {"GET": "zerver.views.users.get_profile_backend", "DELETE": "zerver.views.users.deactivate_user_own_backend"},
     ),
     path("users/me/presence", rest_dispatch, {"POST": "zerver.views.presence.update_active_status_backend"}),
     path("users/me/status", rest_dispatch, {"POST": "zerver.views.presence.update_user_status_backend"}),
@@ -329,10 +324,7 @@ v1_api_and_json_patterns = [
     path(
         "user_groups/<int:user_group_id>",
         rest_dispatch,
-        {
-            "PATCH": "zerver.views.user_groups.edit_user_group",
-            "DELETE": "zerver.views.user_groups.delete_user_group",
-        },
+        {"PATCH": "zerver.views.user_groups.edit_user_group", "DELETE": "zerver.views.user_groups.delete_user_group"},
     ),
     path(
         "user_groups/<int:user_group_id>/members",
@@ -434,9 +426,7 @@ v1_api_and_json_patterns = [
         rest_dispatch,
         {"POST": "zerver.views.streams.add_default_stream", "DELETE": "zerver.views.streams.remove_default_stream"},
     ),
-    path(
-        "default_stream_groups/create", rest_dispatch, {"POST": "zerver.views.streams.create_default_stream_group"},
-    ),
+    path("default_stream_groups/create", rest_dispatch, {"POST": "zerver.views.streams.create_default_stream_group"}),
     path(
         "default_stream_groups/<int:group_id>",
         rest_dispatch,

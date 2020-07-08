@@ -1235,9 +1235,7 @@ class GetOldMessagesTest(ZulipTestCase):
                 self.assertIn(field, message)
         return result
 
-    def message_visibility_test(
-        self, narrow: List[Dict[str, str]], message_ids: List[int], pivot_index: int,
-    ) -> None:
+    def message_visibility_test(self, narrow: List[Dict[str, str]], message_ids: List[int], pivot_index: int) -> None:
         num_before = len(message_ids)
 
         post_params = dict(
@@ -2453,9 +2451,7 @@ class GetOldMessagesTest(ZulipTestCase):
 
     def test_bad_narrow_nonexistent_stream(self) -> None:
         self.login("hamlet")
-        self.exercise_bad_narrow_operand(
-            "stream", ["non-existent stream"], "Invalid narrow operator: unknown stream",
-        )
+        self.exercise_bad_narrow_operand("stream", ["non-existent stream"], "Invalid narrow operator: unknown stream")
 
         non_existing_stream_id = 1232891381239
         self.exercise_bad_narrow_operand_using_dict_api(
@@ -2543,8 +2539,7 @@ class GetOldMessagesTest(ZulipTestCase):
 
         messages = result["messages"]
         self.assertEqual(
-            {msg["id"] for msg in messages},
-            {unsub_message_id, muted_message_id, first_message_id, extra_message_id},
+            {msg["id"] for msg in messages}, {unsub_message_id, muted_message_id, first_message_id, extra_message_id},
         )
 
     def test_use_first_unread_anchor_with_some_unread_messages(self) -> None:

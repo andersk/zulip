@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RenameField(
-            model_name="userprofile",
-            old_name="enable_stream_sounds",
-            new_name="enable_stream_audible_notifications",
+            model_name="userprofile", old_name="enable_stream_sounds", new_name="enable_stream_audible_notifications",
         ),
     ]

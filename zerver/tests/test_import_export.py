@@ -943,8 +943,7 @@ class ImportExportTest(ZulipTestCase):
         # Check recipient_id was generated correctly for the imported users and streams.
         for user_profile in UserProfile.objects.filter(realm=imported_realm):
             self.assertEqual(
-                user_profile.recipient_id,
-                Recipient.objects.get(type=Recipient.PERSONAL, type_id=user_profile.id).id,
+                user_profile.recipient_id, Recipient.objects.get(type=Recipient.PERSONAL, type_id=user_profile.id).id,
             )
         for stream in Stream.objects.filter(realm=imported_realm):
             self.assertEqual(stream.recipient_id, Recipient.objects.get(type=Recipient.STREAM, type_id=stream.id).id)
@@ -952,8 +951,7 @@ class ImportExportTest(ZulipTestCase):
         for huddle_object in Huddle.objects.all():
             # Huddles don't have a realm column, so we just test all Huddles for simplicity.
             self.assertEqual(
-                huddle_object.recipient_id,
-                Recipient.objects.get(type=Recipient.HUDDLE, type_id=huddle_object.id).id,
+                huddle_object.recipient_id, Recipient.objects.get(type=Recipient.HUDDLE, type_id=huddle_object.id).id,
             )
 
     def test_import_files_from_local(self) -> None:

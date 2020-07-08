@@ -103,9 +103,7 @@ def bulk_fetch_display_recipients(recipient_tuples: Set[Tuple[int, int, int]]) -
     # Now we have to create display_recipients for personal and huddle messages.
     # We do this via generic_bulk_cached_fetch, supplying apprioprate functions to it.
 
-    def personal_and_huddle_query_function(
-        recipient_ids: List[int],
-    ) -> List[Tuple[int, List[UserDisplayRecipient]]]:
+    def personal_and_huddle_query_function(recipient_ids: List[int]) -> List[Tuple[int, List[UserDisplayRecipient]]]:
         """
         Return a list of tuples of the form (recipient_id, [list of UserProfiles])
         where [list of UserProfiles] has users corresponding to the recipient,

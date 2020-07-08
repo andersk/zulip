@@ -480,9 +480,7 @@ class EditMessageTest(ZulipTestCase):
 
     def test_edit_message_content_limit(self) -> None:
         def set_message_editing_params(
-            allow_message_editing: bool,
-            message_content_edit_limit_seconds: int,
-            allow_community_topic_editing: bool,
+            allow_message_editing: bool, message_content_edit_limit_seconds: int, allow_community_topic_editing: bool,
         ) -> None:
             result = self.client_patch(
                 "/json/realm",
@@ -555,9 +553,7 @@ class EditMessageTest(ZulipTestCase):
 
     def test_allow_community_topic_editing(self) -> None:
         def set_message_editing_params(
-            allow_message_editing: bool,
-            message_content_edit_limit_seconds: int,
-            allow_community_topic_editing: bool,
+            allow_message_editing: bool, message_content_edit_limit_seconds: int, allow_community_topic_editing: bool,
         ) -> None:
             result = self.client_patch(
                 "/json/realm",
@@ -591,9 +587,7 @@ class EditMessageTest(ZulipTestCase):
 
         self.login("iago")
         # send a message in the past
-        id_ = self.send_stream_message(
-            self.example_user("hamlet"), "Scotland", content="content", topic_name="topic",
-        )
+        id_ = self.send_stream_message(self.example_user("hamlet"), "Scotland", content="content", topic_name="topic")
         message = Message.objects.get(id=id_)
         message.date_sent = message.date_sent - datetime.timedelta(seconds=180)
         message.save()
@@ -940,8 +934,7 @@ class EditMessageTest(ZulipTestCase):
         messages = get_topic_messages(user_profile, old_stream, "test")
         self.assertEqual(len(messages), 1)
         self.assertEqual(
-            messages[0].content,
-            f"This topic was moved by @_**Iago|{user_profile.id}** to #**new stream>new topic**",
+            messages[0].content, f"This topic was moved by @_**Iago|{user_profile.id}** to #**new stream>new topic**",
         )
 
         messages = get_topic_messages(user_profile, new_stream, "new topic")
@@ -974,12 +967,7 @@ class EditMessageTest(ZulipTestCase):
 
         result = self.client_patch(
             "/json/messages/" + str(msg_id),
-            {
-                "message_id": msg_id,
-                "stream_id": new_stream.id,
-                "propagate_mode": "change_all",
-                "topic": "new topic",
-            },
+            {"message_id": msg_id, "stream_id": new_stream.id, "propagate_mode": "change_all", "topic": "new topic"},
         )
         self.assert_json_success(result)
 

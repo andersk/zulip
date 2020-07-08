@@ -765,9 +765,7 @@ class AdminCreateUserTest(ZulipTestCase):
         self.assert_json_error(result, "Email 'romeo@not-zulip.com' not allowed in this organization")
 
         RealmDomain.objects.create(realm=get_realm("zulip"), domain="zulip.net")
-        valid_params = dict(
-            email="romeo@zulip.net", password="xxxx", full_name="Romeo Montague", short_name="Romeo",
-        )
+        valid_params = dict(email="romeo@zulip.net", password="xxxx", full_name="Romeo Montague", short_name="Romeo")
         # Check can't use a bad password with zxcvbn enabled
         with self.settings(PASSWORD_MIN_LENGTH=6, PASSWORD_MIN_GUESSES=1000):
             result = self.client_post("/json/users", valid_params)

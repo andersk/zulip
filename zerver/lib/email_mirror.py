@@ -303,9 +303,7 @@ def extract_and_upload_attachments(message: EmailMessage, realm: Realm) -> str:
                 attachment_links.append(formatted_link)
             else:
                 logger.warning(
-                    "Payload is not bytes (invalid attachment %s in message from %s).",
-                    filename,
-                    message.get("From"),
+                    "Payload is not bytes (invalid attachment %s in message from %s).", filename, message.get("From"),
                 )
 
     return "\n".join(attachment_links)

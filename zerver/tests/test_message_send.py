@@ -1076,9 +1076,7 @@ class ScheduledMessageTest(ZulipTestCase):
         self.assertEqual(message.scheduled_timestamp, convert_to_UTC(defer_until))
         self.assertEqual(message.delivery_type, ScheduledMessage.SEND_LATER)
         # Scheduling a message for reminders.
-        result = self.do_schedule_message(
-            "stream", "Verona", content + " 2", defer_until_str, delivery_type="remind",
-        )
+        result = self.do_schedule_message("stream", "Verona", content + " 2", defer_until_str, delivery_type="remind")
         message = self.last_scheduled_message()
         self.assert_json_success(result)
         self.assertEqual(message.delivery_type, ScheduledMessage.REMIND)
@@ -1881,11 +1879,7 @@ class TestCrossRealmPMs(ZulipTestCase):
 class TestAddressee(ZulipTestCase):
     def test_addressee_for_user_ids(self) -> None:
         realm = get_realm("zulip")
-        user_ids = [
-            self.example_user("cordelia").id,
-            self.example_user("hamlet").id,
-            self.example_user("othello").id,
-        ]
+        user_ids = [self.example_user("cordelia").id, self.example_user("hamlet").id, self.example_user("othello").id]
 
         result = Addressee.for_user_ids(user_ids=user_ids, realm=realm)
         user_profiles = result.user_profiles()
@@ -1925,11 +1919,7 @@ class TestAddressee(ZulipTestCase):
         stream = get_stream("Denmark", realm)
 
         result = Addressee.legacy_build(
-            sender=sender,
-            message_type_name="stream",
-            message_to=[stream.id],
-            topic_name="random_topic",
-            realm=realm,
+            sender=sender, message_type_name="stream", message_to=[stream.id], topic_name="random_topic", realm=realm,
         )
 
         stream_id = result.stream_id()

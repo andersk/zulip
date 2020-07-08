@@ -143,9 +143,7 @@ class BeanstalkHookTests(WebhookTestCase):
         expected_message = """Leo Franchi pushed [revision 2](http://lfranchi-svn.beanstalkapp.com/work-test/changesets/2):
 
 > Added some code"""
-        self.api_stream_message(
-            self.test_user, "svn_changefile", expected_topic, expected_message, content_type=None,
-        )
+        self.api_stream_message(self.test_user, "svn_changefile", expected_topic, expected_message, content_type=None)
 
     def get_body(self, fixture_name: str) -> Dict[str, str]:
         return {"payload": self.webhook_fixture_data("beanstalk", fixture_name)}

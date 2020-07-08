@@ -314,9 +314,7 @@ def get_caches_to_be_purged(caches_dir: str, caches_in_use: Set[str], threshold_
     return caches_to_purge
 
 
-def purge_unused_caches(
-    caches_dir: str, caches_in_use: Set[str], cache_type: str, args: argparse.Namespace,
-) -> None:
+def purge_unused_caches(caches_dir: str, caches_in_use: Set[str], cache_type: str, args: argparse.Namespace) -> None:
     all_caches = {os.path.join(caches_dir, cache) for cache in os.listdir(caches_dir)}
     caches_to_purge = get_caches_to_be_purged(caches_dir, caches_in_use, args.threshold_days)
     caches_to_keep = all_caches - caches_to_purge

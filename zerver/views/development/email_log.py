@@ -104,9 +104,7 @@ def generate_all_emails(request: HttpRequest) -> HttpResponse:
     assert result.status_code == 200
 
     # Verification for new email
-    result = client.patch(
-        "/json/settings", urllib.parse.urlencode({"email": "hamlets-new@zulip.com"}), **host_kwargs,
-    )
+    result = client.patch("/json/settings", urllib.parse.urlencode({"email": "hamlets-new@zulip.com"}), **host_kwargs)
     assert result.status_code == 200
 
     # Email change successful

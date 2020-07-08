@@ -132,9 +132,7 @@ class TestRealmAuditLog(ZulipTestCase):
         password = "test1"
         do_change_password(user, password)
         self.assertEqual(
-            RealmAuditLog.objects.filter(
-                event_type=RealmAuditLog.USER_PASSWORD_CHANGED, event_time__gte=now,
-            ).count(),
+            RealmAuditLog.objects.filter(event_type=RealmAuditLog.USER_PASSWORD_CHANGED, event_time__gte=now).count(),
             1,
         )
         self.assertIsNone(validate_password(password, user))
@@ -145,8 +143,7 @@ class TestRealmAuditLog(ZulipTestCase):
         new_email = "test@example.com"
         do_change_user_delivery_email(user, new_email)
         self.assertEqual(
-            RealmAuditLog.objects.filter(event_type=RealmAuditLog.USER_EMAIL_CHANGED, event_time__gte=now).count(),
-            1,
+            RealmAuditLog.objects.filter(event_type=RealmAuditLog.USER_EMAIL_CHANGED, event_time__gte=now).count(), 1,
         )
         self.assertEqual(new_email, user.delivery_email)
 

@@ -1022,9 +1022,7 @@ class TestCountStats(AnalyticsTestCase):
         self.create_interval(user6, 20 * self.MINUTE, 19 * self.MINUTE)
 
         do_fill_count_stat_at_hour(stat, self.TIME_ZERO)
-        self.assertTableState(
-            UserCount, ["value", "user"], [[61, user2], [121, user3], [24 * 60, user4], [1, user6]],
-        )
+        self.assertTableState(UserCount, ["value", "user"], [[61, user2], [121, user3], [24 * 60, user4], [1, user6]])
         self.assertTableState(
             RealmCount, ["value", "realm"], [[61 + 121 + 24 * 60, self.default_realm], [1, self.second_realm]],
         )
