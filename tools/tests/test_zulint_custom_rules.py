@@ -30,9 +30,7 @@ class TestRuleList(TestCase):
             for line_tuple in rule.get("exclude_line", {}):
                 path = line_tuple[0]
                 abs_path = os.path.abspath(os.path.join(ROOT_DIR, path))
-                self.assertTrue(
-                    os.path.isfile(abs_path), f"The file '{path}' doesn't exist. {CHECK_MESSAGE}",
-                )
+                self.assertTrue(os.path.isfile(abs_path), f"The file '{path}' doesn't exist. {CHECK_MESSAGE}")
 
             for path in rule.get("include_only", {}):
                 if not os.path.splitext(path)[1]:
@@ -47,9 +45,7 @@ class TestRuleList(TestCase):
             pattern = rule["pattern"]
             for line in rule.get("good_lines", []):
                 # create=True is superfluous when mocking built-ins in Python >= 3.5
-                with patch(
-                    "builtins.open", return_value=StringIO(line + "\n\n"), create=True, autospec=True,
-                ):
+                with patch("builtins.open", return_value=StringIO(line + "\n\n"), create=True, autospec=True):
                     self.assertFalse(
                         RuleList([], [rule]).custom_check_file("foo.bar", "baz", ""),
                         f"The pattern '{pattern}' matched the line '{line}' while it shouldn't.",

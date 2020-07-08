@@ -98,9 +98,7 @@ class Bitbucket2HookTests(WebhookTestCase):
 
     def test_bitbucket2_on_issue_created_event(self) -> None:
         expected_message = "kolaszek created [Issue #1](https://bitbucket.org/kolaszek/repository-name/issues/2/bug) (assigned to kolaszek):\n\n~~~ quote\nSuch a bug\n~~~"
-        self.send_and_test_stream_message(
-            "issue_created", self.EXPECTED_TOPIC_ISSUE_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("issue_created", self.EXPECTED_TOPIC_ISSUE_EVENTS, expected_message)
 
     def test_bitbucket2_on_issue_created_with_custom_topic_in_url(self) -> None:
         self.url = self.build_webhook_url(topic="notifications")
@@ -112,9 +110,7 @@ class Bitbucket2HookTests(WebhookTestCase):
         expected_message = (
             "kolaszek updated [Issue #1](https://bitbucket.org/kolaszek/repository-name/issues/2/bug)."
         )
-        self.send_and_test_stream_message(
-            "issue_updated", self.EXPECTED_TOPIC_ISSUE_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("issue_updated", self.EXPECTED_TOPIC_ISSUE_EVENTS, expected_message)
 
     def test_bitbucket2_on_issue_commented_event(self) -> None:
         expected_message = "kolaszek [commented](https://bitbucket.org/kolaszek/repository-name/issues/2#comment-28973596) on [Issue #1](https://bitbucket.org/kolaszek/repository-name/issues/2/bug)."
@@ -298,7 +294,9 @@ class Bitbucket2HookTests(WebhookTestCase):
         self.send_and_test_stream_message("push_remove_tag", self.EXPECTED_TOPIC, expected_message, **kwargs)
 
     def test_bitbucket2_on_push_more_than_one_tag_event(self) -> None:
-        expected_message = "kolaszek pushed tag [{name}](https://bitbucket.org/kolaszek/repository-name/commits/tag/{name})."
+        expected_message = (
+            "kolaszek pushed tag [{name}](https://bitbucket.org/kolaszek/repository-name/commits/tag/{name})."
+        )
         kwargs = {
             "HTTP_X_EVENT_KEY": "pullrequest:push",
         }

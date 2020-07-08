@@ -750,9 +750,7 @@ class TestMissedMessages(ZulipTestCase):
             "Extremely personal message with a realm emoji :green_tick:!",
         )
         realm_emoji_id = realm.get_active_emoji()["green_tick"]["id"]
-        realm_emoji_url = (
-            f"http://zulip.testserver/user_avatars/{realm.id}/emoji/images/{realm_emoji_id}.png"
-        )
+        realm_emoji_url = f"http://zulip.testserver/user_avatars/{realm.id}/emoji/images/{realm_emoji_id}.png"
         verify_body_include = [
             f'<img alt=":green_tick:" src="{realm_emoji_url}" title="green tick" style="height: 20px;">',
         ]

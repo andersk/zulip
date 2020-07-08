@@ -319,9 +319,7 @@ class MatterMostImporter(ZulipTestCase):
         huddle_name = generate_huddle_name(huddle_members)
 
         self.assertTrue(huddle_id_mapper.has(huddle_name))
-        self.assertEqual(
-            subscriber_handler.get_users(huddle_id=huddle_id_mapper.get(huddle_name)), {1, 2, 3},
-        )
+        self.assertEqual(subscriber_handler.get_users(huddle_id=huddle_id_mapper.get(huddle_name)), {1, 2, 3})
 
     def test_write_emoticon_data(self) -> None:
         fixture_file_name = self.fixture_file_name("export.json", "mattermost_fixtures")

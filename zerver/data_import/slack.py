@@ -577,9 +577,7 @@ def get_subscription(
     subscription_id: int,
 ) -> int:
     for slack_user_id in channel_members:
-        sub = build_subscription(
-            recipient_id, slack_user_id_to_zulip_user_id[slack_user_id], subscription_id,
-        )
+        sub = build_subscription(recipient_id, slack_user_id_to_zulip_user_id[slack_user_id], subscription_id)
         zerver_subscription.append(sub)
         subscription_id += 1
     return subscription_id

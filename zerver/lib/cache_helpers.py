@@ -118,9 +118,7 @@ def get_streams() -> List[Stream]:
 
 
 def get_users() -> List[UserProfile]:
-    return UserProfile.objects.select_related().filter(
-        long_term_idle=False, realm__in=get_active_realm_ids(),
-    )
+    return UserProfile.objects.select_related().filter(long_term_idle=False, realm__in=get_active_realm_ids())
 
 
 # Format is (objects query, items filler function, timeout, batch size)

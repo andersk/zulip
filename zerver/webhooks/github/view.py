@@ -57,9 +57,7 @@ def get_opened_or_update_pull_request_body(payload: Dict[str, Any], include_titl
     )
 
 
-def get_assigned_or_unassigned_pull_request_body(
-    payload: Dict[str, Any], include_title: bool = False,
-) -> str:
+def get_assigned_or_unassigned_pull_request_body(payload: Dict[str, Any], include_title: bool = False) -> str:
     pull_request = payload["pull_request"]
     assignee = pull_request.get("assignee")
     if assignee is not None:

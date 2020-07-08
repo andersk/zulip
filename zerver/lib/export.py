@@ -462,10 +462,7 @@ class Config:
 
 
 def export_from_config(
-    response: TableData,
-    config: Config,
-    seed_object: Optional[Any] = None,
-    context: Optional[Context] = None,
+    response: TableData, config: Config, seed_object: Optional[Any] = None, context: Optional[Context] = None,
 ) -> None:
     table = config.table
     parent = config.parent
@@ -1156,9 +1153,7 @@ def export_uploads_and_avatars(realm: Realm, output_dir: Path) -> None:
     if settings.LOCAL_UPLOADS_DIR:
         # Small installations and developers will usually just store files locally.
         export_uploads_from_local(
-            realm,
-            local_dir=os.path.join(settings.LOCAL_UPLOADS_DIR, "files"),
-            output_dir=uploads_output_dir,
+            realm, local_dir=os.path.join(settings.LOCAL_UPLOADS_DIR, "files"), output_dir=uploads_output_dir,
         )
         export_avatars_from_local(
             realm,
@@ -1166,9 +1161,7 @@ def export_uploads_and_avatars(realm: Realm, output_dir: Path) -> None:
             output_dir=avatars_output_dir,
         )
         export_emoji_from_local(
-            realm,
-            local_dir=os.path.join(settings.LOCAL_UPLOADS_DIR, "avatars"),
-            output_dir=emoji_output_dir,
+            realm, local_dir=os.path.join(settings.LOCAL_UPLOADS_DIR, "avatars"), output_dir=emoji_output_dir,
         )
         export_realm_icons(
             realm, local_dir=os.path.join(settings.LOCAL_UPLOADS_DIR), output_dir=realm_icons_output_dir,
@@ -1684,9 +1677,7 @@ def get_single_user_config() -> Config:
     # access to in an organization.
 
     # zerver_userprofile
-    user_profile_config = Config(
-        table="zerver_userprofile", is_seeded=True, exclude=["password", "api_key"],
-    )
+    user_profile_config = Config(table="zerver_userprofile", is_seeded=True, exclude=["password", "api_key"])
 
     # zerver_subscription
     subscription_config = Config(

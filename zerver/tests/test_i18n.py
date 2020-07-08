@@ -154,10 +154,7 @@ class FrontendRegexTestCase(ZulipTestCase):
         command = makemessages.Command()
 
         data = [
-            (
-                "{{#tr context}}english text with __variable__{{/tr}}{{/tr}}",
-                "english text with __variable__",
-            ),
+            ("{{#tr context}}english text with __variable__{{/tr}}{{/tr}}", "english text with __variable__"),
             ('{{t "english text" }}, "extra"}}', "english text"),
             ("{{t 'english text' }}, 'extra'}}", "english text"),
             ("{{> template var=(t 'english text') }}, 'extra'}}", "english text"),

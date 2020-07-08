@@ -307,9 +307,7 @@ def finish_desktop_flow(request: HttpRequest, user_profile: UserProfile, otp: st
     desktop_data = (iv + AESGCM(key).encrypt(iv, token.encode(), b"")).hex()
     context = {
         "desktop_data": desktop_data,
-        "browser_url": reverse(
-            "zerver.views.auth.login_page", kwargs={"template_name": "zerver/login.html"},
-        ),
+        "browser_url": reverse("zerver.views.auth.login_page", kwargs={"template_name": "zerver/login.html"}),
         "realm_icon_url": realm_icon_url(user_profile.realm),
     }
     return render(request, "zerver/desktop_redirect.html", context=context)
@@ -549,9 +547,7 @@ def start_social_login(request: HttpRequest, backend: str, extra_arg: Optional[s
 
 
 @handle_desktop_flow
-def start_social_signup(
-    request: HttpRequest, backend: str, extra_arg: Optional[str] = None,
-) -> HttpResponse:
+def start_social_signup(request: HttpRequest, backend: str, extra_arg: Optional[str] = None) -> HttpResponse:
     backend_url = reverse("social:begin", args=[backend])
     extra_url_params: Dict[str, str] = {}
     if backend == "saml":

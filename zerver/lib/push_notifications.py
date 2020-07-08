@@ -192,9 +192,7 @@ def send_apple_push_notification(
             # could be multiple for different Zulip servers).
             DeviceTokenClass.objects.filter(token=device.token, kind=DeviceTokenClass.APNS).delete()
         else:
-            logger.warning(
-                "APNs: Failed to send for user %d to device %s: %s", user_id, device.token, result,
-            )
+            logger.warning("APNs: Failed to send for user %d to device %s: %s", user_id, device.token, result)
 
 
 #
@@ -785,9 +783,7 @@ def handle_push_notification(user_profile_id: int, missed_message: Dict[str, Any
     if not push_notifications_enabled():
         return
     user_profile = get_user_profile_by_id(user_profile_id)
-    if not (
-        receives_offline_push_notifications(user_profile) or receives_online_notifications(user_profile)
-    ):
+    if not (receives_offline_push_notifications(user_profile) or receives_online_notifications(user_profile)):
         return
 
     try:

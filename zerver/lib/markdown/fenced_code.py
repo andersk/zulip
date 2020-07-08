@@ -302,9 +302,7 @@ class QuoteHandler(BaseHandler):
 
 
 class SpoilerHandler(BaseHandler):
-    def __init__(
-        self, processor: Any, output: MutableSequence[str], fence: str, spoiler_header: str,
-    ) -> None:
+    def __init__(self, processor: Any, output: MutableSequence[str], fence: str, spoiler_header: str) -> None:
         self.processor = processor
         self.output = output
         self.fence = fence

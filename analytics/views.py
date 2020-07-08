@@ -118,9 +118,7 @@ def stats(request: HttpRequest) -> HttpResponse:
         # TODO: Make @zulip_login_required pass the UserProfile so we
         # can use @require_member_or_admin
         raise JsonableError(_("Not allowed for guest users"))
-    return render_stats(
-        request, "", realm.name or realm.string_id, analytics_ready=is_analytics_ready(realm),
-    )
+    return render_stats(request, "", realm.name or realm.string_id, analytics_ready=is_analytics_ready(realm))
 
 
 @require_server_admin
@@ -141,9 +139,7 @@ def stats_for_realm(request: HttpRequest, realm_str: str) -> HttpResponse:
 
 @require_server_admin
 @has_request_variables
-def stats_for_remote_realm(
-    request: HttpRequest, remote_server_id: int, remote_realm_id: int,
-) -> HttpResponse:
+def stats_for_remote_realm(request: HttpRequest, remote_server_id: int, remote_realm_id: int) -> HttpResponse:
     server = RemoteZulipServer.objects.get(id=remote_server_id)
     return render_stats(
         request,
@@ -385,12 +381,7 @@ def get_chart_data(
         for stat in stats:
             data[aggregation_level[table]].update(
                 get_time_series_by_subgroup(
-                    stat,
-                    table,
-                    id_value[table],
-                    end_times,
-                    subgroup_to_label[stat],
-                    include_empty_subgroups,
+                    stat, table, id_value[table], end_times, subgroup_to_label[stat], include_empty_subgroups,
                 ),
             )
 
@@ -1293,9 +1284,7 @@ def support(request: HttpRequest) -> HttpResponse:
 
     def realm_admin_emails(realm: Realm) -> str:
         return ", ".join(
-            realm.get_human_admin_users()
-            .order_by("delivery_email")
-            .values_list("delivery_email", flat=True),
+            realm.get_human_admin_users().order_by("delivery_email").values_list("delivery_email", flat=True),
         )
 
     context["realm_admin_emails"] = realm_admin_emails

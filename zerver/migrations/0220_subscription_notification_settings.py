@@ -26,8 +26,6 @@ class Migration(migrations.Migration):
             field=models.NullBooleanField(default=None),
         ),
         migrations.AlterField(
-            model_name="subscription",
-            name="push_notifications",
-            field=models.NullBooleanField(default=None),
+            model_name="subscription", name="push_notifications", field=models.NullBooleanField(default=None),
         ),
     ]

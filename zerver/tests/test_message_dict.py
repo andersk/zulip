@@ -519,9 +519,7 @@ class TestMessageForIdsDisplayRecipientFetching(ZulipTestCase):
             allow_edit_history=False,
         )
 
-        self._verify_display_recipient(
-            messages[0]["display_recipient"], get_stream("Verona", cordelia.realm),
-        )
+        self._verify_display_recipient(messages[0]["display_recipient"], get_stream("Verona", cordelia.realm))
         self._verify_display_recipient(
             messages[1]["display_recipient"], get_stream("Denmark", cordelia.realm),
         )

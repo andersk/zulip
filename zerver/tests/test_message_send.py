@@ -334,9 +334,7 @@ class MessagePOSTTest(ZulipTestCase):
                 "topic": "Test topic",
             },
         )
-        self.assert_json_error(
-            result, "Stream '&amp;&lt;&quot;&#39;&gt;&lt;non-existent&gt;' does not exist",
-        )
+        self.assert_json_error(result, "Stream '&amp;&lt;&quot;&#39;&gt;&lt;non-existent&gt;' does not exist")
 
     def test_personal_message(self) -> None:
         """
@@ -1330,11 +1328,7 @@ class StreamMessagesTest(ZulipTestCase):
         cache_delete(get_stream_cache_key(stream_name, realm.id))
         with queries_captured() as queries:
             check_send_stream_message(
-                sender=sender,
-                client=sending_client,
-                stream_name=stream_name,
-                topic=topic_name,
-                body=content,
+                sender=sender, client=sending_client, stream_name=stream_name, topic=topic_name, body=content,
             )
 
         self.assert_length(queries, 14)

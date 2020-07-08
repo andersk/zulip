@@ -791,9 +791,7 @@ def is_local_addr(addr: str) -> bool:
 # of events.  We protect them from the outside world by checking a shared
 # secret, and also the originating IP (for now).
 def authenticate_notify(request: HttpRequest) -> bool:
-    return (
-        is_local_addr(request.META["REMOTE_ADDR"]) and request.POST.get("secret") == settings.SHARED_SECRET
-    )
+    return is_local_addr(request.META["REMOTE_ADDR"]) and request.POST.get("secret") == settings.SHARED_SECRET
 
 
 def client_is_exempt_from_rate_limiting(request: HttpRequest) -> bool:

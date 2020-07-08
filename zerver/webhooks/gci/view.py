@@ -86,9 +86,7 @@ def get_needswork_event_body(payload: Dict[str, Any]) -> str:
 
 
 def get_extend_event_body(payload: Dict[str, Any]) -> str:
-    template = "{} by {days} day(s).".format(
-        GCI_MESSAGE_TEMPLATE.rstrip("."), days=payload["extension_days"],
-    )
+    template = "{} by {days} day(s).".format(GCI_MESSAGE_TEMPLATE.rstrip("."), days=payload["extension_days"])
     return template.format(
         actor=payload["author"],
         action="extended the deadline for",

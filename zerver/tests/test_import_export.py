@@ -1143,9 +1143,7 @@ class ImportExportTest(ZulipTestCase):
 
         with patch("logging.info"):
             with self.settings(BILLING_ENABLED=True):
-                realm = do_import_realm(
-                    os.path.join(settings.TEST_WORKER_DIR, "test-export"), "test-zulip-1",
-                )
+                realm = do_import_realm(os.path.join(settings.TEST_WORKER_DIR, "test-export"), "test-zulip-1")
                 self.assertEqual(realm.plan_type, Realm.LIMITED)
                 self.assertEqual(realm.max_invites, 100)
                 self.assertEqual(realm.upload_quota_gb, 5)
@@ -1156,9 +1154,7 @@ class ImportExportTest(ZulipTestCase):
                     ).exists(),
                 )
             with self.settings(BILLING_ENABLED=False):
-                realm = do_import_realm(
-                    os.path.join(settings.TEST_WORKER_DIR, "test-export"), "test-zulip-2",
-                )
+                realm = do_import_realm(os.path.join(settings.TEST_WORKER_DIR, "test-export"), "test-zulip-2")
                 self.assertEqual(realm.plan_type, Realm.SELF_HOSTED)
                 self.assertEqual(realm.max_invites, 100)
                 self.assertEqual(realm.upload_quota_gb, None)

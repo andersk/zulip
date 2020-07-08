@@ -326,7 +326,9 @@ class GitlabHookTests(WebhookTestCase):
 
     def test_merge_request_reopened_event_message(self) -> None:
         expected_topic = "my-awesome-project / MR #1 Update the README with author ..."
-        expected_message = "Eeshan Garg reopened [MR #1](https://gitlab.com/eeshangarg/my-awesome-project/merge_requests/1)."
+        expected_message = (
+            "Eeshan Garg reopened [MR #1](https://gitlab.com/eeshangarg/my-awesome-project/merge_requests/1)."
+        )
 
         self.send_and_test_stream_message(
             "merge_request_hook__merge_request_reopened", expected_topic, expected_message,
@@ -334,7 +336,9 @@ class GitlabHookTests(WebhookTestCase):
 
     def test_merge_request_approved_event_message(self) -> None:
         expected_topic = "my-awesome-project / MR #1 Update the README with author ..."
-        expected_message = "Eeshan Garg approved [MR #1](https://gitlab.com/eeshangarg/my-awesome-project/merge_requests/1)."
+        expected_message = (
+            "Eeshan Garg approved [MR #1](https://gitlab.com/eeshangarg/my-awesome-project/merge_requests/1)."
+        )
 
         self.send_and_test_stream_message(
             "merge_request_hook__merge_request_approved", expected_topic, expected_message,

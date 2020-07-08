@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name="realm",
-            name="allow_community_topic_editing",
-            field=models.BooleanField(default=True),
+            model_name="realm", name="allow_community_topic_editing", field=models.BooleanField(default=True),
         ),
     ]

@@ -7,9 +7,7 @@ from django.db.migrations.state import StateApps
 from django.utils.timezone import now as timezone_now
 
 
-def backfill_user_activations_and_deactivations(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def backfill_user_activations_and_deactivations(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     migration_time = timezone_now()
     RealmAuditLog = apps.get_model("zerver", "RealmAuditLog")
     UserProfile = apps.get_model("zerver", "UserProfile")
@@ -51,9 +49,7 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    models.AutoField(
-                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID",
-                    ),
+                    models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID"),
                 ),
                 ("event_type", models.CharField(max_length=40)),
                 ("backfilled", models.BooleanField(default=False)),

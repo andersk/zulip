@@ -193,9 +193,7 @@ class TestArchiveMessagesGeneral(ArchiveMessagesTestingBase):
         """General test for archiving expired messages properly with
         multiple realms involved"""
         # Make some expired messages in MIT:
-        expired_mit_msg_ids = self._make_mit_messages(
-            5, timezone_now() - timedelta(days=MIT_REALM_DAYS + 1),
-        )
+        expired_mit_msg_ids = self._make_mit_messages(5, timezone_now() - timedelta(days=MIT_REALM_DAYS + 1))
         # Make some non-expired messages in MIT:
         self._make_mit_messages(4, timezone_now() - timedelta(days=MIT_REALM_DAYS - 1))
 
@@ -223,9 +221,7 @@ class TestArchiveMessagesGeneral(ArchiveMessagesTestingBase):
         self._set_realm_message_retention_value(self.zulip_realm, -1)
 
         # Make some expired messages in MIT:
-        expired_mit_msg_ids = self._make_mit_messages(
-            5, timezone_now() - timedelta(days=MIT_REALM_DAYS + 1),
-        )
+        expired_mit_msg_ids = self._make_mit_messages(5, timezone_now() - timedelta(days=MIT_REALM_DAYS + 1))
         # Make some non-expired messages in MIT:
         self._make_mit_messages(4, timezone_now() - timedelta(days=MIT_REALM_DAYS - 1))
 
@@ -317,9 +313,7 @@ class TestArchiveMessagesGeneral(ArchiveMessagesTestingBase):
         """End-to-end test of the archiving tool, directly calling
         archive_messages."""
         # Make some expired messages in MIT:
-        expired_mit_msg_ids = self._make_mit_messages(
-            5, timezone_now() - timedelta(days=MIT_REALM_DAYS + 1),
-        )
+        expired_mit_msg_ids = self._make_mit_messages(5, timezone_now() - timedelta(days=MIT_REALM_DAYS + 1))
         # Make some non-expired messages in MIT:
         self._make_mit_messages(4, timezone_now() - timedelta(days=MIT_REALM_DAYS - 1))
 
@@ -504,8 +498,7 @@ class TestArchivingReactions(ArchiveMessagesTestingBase, EmojiReactionBase):
 
         restore_all_data_from_archive()
         self.assertEqual(
-            set(Reaction.objects.filter(id__in=reaction_ids).values_list("id", flat=True)),
-            set(reaction_ids),
+            set(Reaction.objects.filter(id__in=reaction_ids).values_list("id", flat=True)), set(reaction_ids),
         )
 
 
@@ -788,8 +781,7 @@ class MoveMessageToArchiveWithReactions(MoveMessageToArchiveBase, EmojiReactionB
 
         restore_all_data_from_archive()
         self.assertEqual(
-            set(Reaction.objects.filter(id__in=reaction_ids).values_list("id", flat=True)),
-            set(reaction_ids),
+            set(Reaction.objects.filter(id__in=reaction_ids).values_list("id", flat=True)), set(reaction_ids),
         )
 
 

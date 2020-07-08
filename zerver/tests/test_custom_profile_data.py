@@ -280,9 +280,7 @@ class DeleteCustomProfileFieldTest(CustomProfileFieldTestCase):
         realm = get_realm("zulip")
 
         invalid_field_id = 1234
-        result = self.client_delete(
-            "/json/users/me/profile_data", {"data": ujson.dumps([invalid_field_id])},
-        )
+        result = self.client_delete("/json/users/me/profile_data", {"data": ujson.dumps([invalid_field_id])})
         self.assert_json_error(result, f"Field id {invalid_field_id} not found.")
 
         field = CustomProfileField.objects.get(name="Mentor", realm=realm)

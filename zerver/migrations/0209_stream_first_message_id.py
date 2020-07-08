@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="stream",
-            name="first_message_id",
-            field=models.IntegerField(db_index=True, null=True),
+            model_name="stream", name="first_message_id", field=models.IntegerField(db_index=True, null=True),
         ),
     ]

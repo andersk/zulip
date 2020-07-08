@@ -401,10 +401,7 @@ def format_user_row(
             client_gravatar=client_gravatar,
         )
 
-    if (
-        realm.email_address_visibility == Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS
-        and acting_user.is_realm_admin
-    ):
+    if realm.email_address_visibility == Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS and acting_user.is_realm_admin:
         result["delivery_email"] = row["delivery_email"]
 
     if is_bot:

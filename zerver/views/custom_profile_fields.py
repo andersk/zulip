@@ -188,10 +188,7 @@ def update_user_custom_profile_data(
     data: List[Dict[str, Union[int, str, List[int]]]] = REQ(
         validator=check_list(
             check_dict_only(
-                [
-                    ("id", check_int),
-                    ("value", check_union([check_int, check_string, check_list(check_int)])),
-                ],
+                [("id", check_int), ("value", check_union([check_int, check_string, check_list(check_int)]))],
             ),
         ),
     ),

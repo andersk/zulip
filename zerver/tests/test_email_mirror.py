@@ -1273,8 +1273,7 @@ class TestEmailMirrorTornadoView(ZulipTestCase):
         mm_address = "mm" + ("x" * 32) + "@testserver"
         result = self.send_offline_message(mm_address, self.example_user("cordelia"))
         self.assert_json_error(
-            result,
-            "5.1.1 Bad destination mailbox address: Missed message address expired or doesn't exist.",
+            result, "5.1.1 Bad destination mailbox address: Missed message address expired or doesn't exist.",
         )
 
 

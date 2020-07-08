@@ -130,9 +130,7 @@ class LibratoWebhookHandler(LibratoWebhookParser):
             content += self.generate_violated_metric_condition(violation, condition)
         return content
 
-    def generate_violated_metric_condition(
-        self, violation: Dict[str, Any], condition: Dict[str, Any],
-    ) -> str:
+    def generate_violated_metric_condition(self, violation: Dict[str, Any], condition: Dict[str, Any]) -> str:
         summary_function, threshold, condition_type, duration = self.parse_condition(condition)
         metric_name, recorded_at = self.parse_violation(violation)
         metric_condition_template = (

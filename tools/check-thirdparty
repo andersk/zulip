@@ -49,9 +49,7 @@ dumped = c.dump()
 if dumped != "".join(lines):
     print(f"{COPYRIGHT_FILENAME}: Changes expected:")
     sys.stdout.writelines(
-        difflib.unified_diff(
-            lines, io.StringIO(dumped).readlines(), COPYRIGHT_FILENAME, COPYRIGHT_FILENAME,
-        ),
+        difflib.unified_diff(lines, io.StringIO(dumped).readlines(), COPYRIGHT_FILENAME, COPYRIGHT_FILENAME),
     )
     status = 1
 

@@ -294,9 +294,7 @@ def generate_curl_example(
         if exclude is not None and param_name in exclude:
             continue
 
-        example_value = get_openapi_param_example_value_as_string(
-            endpoint, method, param, curl_argument=True,
-        )
+        example_value = get_openapi_param_example_value_as_string(endpoint, method, param, curl_argument=True)
         lines.append(example_value)
 
     if "requestBody" in operation_entry:

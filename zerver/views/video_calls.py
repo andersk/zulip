@@ -243,8 +243,6 @@ def join_bigbluebutton(
             quote_via=quote,
         )
 
-        checksum = hashlib.sha1(
-            ("join" + join_params + settings.BIG_BLUE_BUTTON_SECRET).encode(),
-        ).hexdigest()
+        checksum = hashlib.sha1(("join" + join_params + settings.BIG_BLUE_BUTTON_SECRET).encode()).hexdigest()
         redirect_url_base = add_query_to_redirect_url(settings.BIG_BLUE_BUTTON_URL + "api/join", join_params)
         return redirect(add_query_arg_to_redirect_url(redirect_url_base, "checksum=" + checksum))

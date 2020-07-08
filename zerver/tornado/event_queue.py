@@ -1266,8 +1266,7 @@ def send_notification_http(realm: Realm, data: Mapping[str, Any]) -> None:
     if settings.TORNADO_SERVER and not settings.RUNNING_INSIDE_TORNADO:
         tornado_uri = get_tornado_uri(realm)
         requests_client.post(
-            tornado_uri + "/notify_tornado",
-            data=dict(data=ujson.dumps(data), secret=settings.SHARED_SECRET),
+            tornado_uri + "/notify_tornado", data=dict(data=ujson.dumps(data), secret=settings.SHARED_SECRET),
         )
     else:
         process_notification(data)

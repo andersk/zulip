@@ -163,9 +163,7 @@ def check_list(sub_validator: Validator[ResultT], length: Optional[int] = None) 
 
         if length is not None and length != len(val):
             raise ValidationError(
-                _("{container} should have exactly {length} items").format(
-                    container=var_name, length=length,
-                ),
+                _("{container} should have exactly {length} items").format(container=var_name, length=length),
             )
 
         for i, item in enumerate(val):
@@ -272,8 +270,7 @@ def check_dict_only(
     optional_keys: Iterable[Tuple[str, Validator[ResultT]]] = [],
 ) -> Validator[Dict[str, ResultT]]:
     return cast(
-        Validator[Dict[str, ResultT]],
-        check_dict(required_keys, optional_keys, _allow_only_listed_keys=True),
+        Validator[Dict[str, ResultT]], check_dict(required_keys, optional_keys, _allow_only_listed_keys=True),
     )
 
 

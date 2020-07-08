@@ -711,9 +711,7 @@ class DesktopFlowTestingLib(ZulipTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn(b"<h1>Finish desktop login</h1>", response.content)
 
-    def verify_desktop_flow_end_page(
-        self, response: HttpResponse, email: str, desktop_flow_otp: str,
-    ) -> None:
+    def verify_desktop_flow_end_page(self, response: HttpResponse, email: str, desktop_flow_otp: str) -> None:
         self.assertEqual(response.status_code, 200)
 
         soup = BeautifulSoup(response.content, "html.parser")
@@ -1029,19 +1027,14 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
         with mock.patch("zerver.middleware.get_realm", return_value=get_realm("zulip")):
             # This mock.patch case somewhat hackishly arranges it so
             # that we switch realms halfway through the test
-            result = self.social_auth_test(
-                account_data_dict, subdomain="invalid", next="/user_uploads/image",
-            )
+            result = self.social_auth_test(account_data_dict, subdomain="invalid", next="/user_uploads/image")
         self.assertEqual(result.status_code, 302)
         self.assertEqual(result.url, "/accounts/find/")
 
     def test_social_auth_invalid_email(self) -> None:
         account_data_dict = self.get_account_data_dict(email="invalid", name=self.name)
         result = self.social_auth_test(
-            account_data_dict,
-            expect_choose_email_screen=True,
-            subdomain="zulip",
-            next="/user_uploads/image",
+            account_data_dict, expect_choose_email_screen=True, subdomain="zulip", next="/user_uploads/image",
         )
         self.assertEqual(result.status_code, 302)
         self.assertEqual(result.url, "/login/?next=/user_uploads/image")
@@ -1054,9 +1047,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
 
     def test_user_cannot_log_into_wrong_subdomain(self) -> None:
         account_data_dict = self.get_account_data_dict(email=self.email, name=self.name)
-        result = self.social_auth_test(
-            account_data_dict, expect_choose_email_screen=True, subdomain="zephyr",
-        )
+        result = self.social_auth_test(account_data_dict, expect_choose_email_screen=True, subdomain="zephyr")
         self.assertTrue(result.url.startswith("http://zephyr.testserver/accounts/login/subdomain/"))
         result = self.client_get(result.url.replace("http://zephyr.testserver", ""), subdomain="zephyr")
         self.assert_in_success_response(
@@ -1940,10 +1931,7 @@ class SAMLAuthBackendTest(SocialAuthBase):
         """
         account_data_dict = self.get_account_data_dict(email="invalid", name=self.name)
         result = self.social_auth_test(
-            account_data_dict,
-            expect_choose_email_screen=True,
-            subdomain="zulip",
-            next="/user_uploads/image",
+            account_data_dict, expect_choose_email_screen=True, subdomain="zulip", next="/user_uploads/image",
         )
         self.assertEqual(result.status_code, 302)
         self.assertEqual(result.url, "/login/")
@@ -2668,8 +2656,7 @@ class GitHubAuthBackendTest(SocialAuthBase):
             m.output,
             [
                 self.logger_output(
-                    "Social auth ({}) failed because user has no verified emails".format("GitHub"),
-                    "warning",
+                    "Social auth ({}) failed because user has no verified emails".format("GitHub"), "warning",
                 ),
             ],
         )
@@ -3057,8 +3044,7 @@ class GoogleAuthBackendTest(SocialAuthBase):
             m.output,
             [
                 self.logger_output(
-                    "Social auth ({}) failed because user has no verified emails".format("Google"),
-                    "warning",
+                    "Social auth ({}) failed because user has no verified emails".format("Google"), "warning",
                 ),
             ],
         )
@@ -4174,9 +4160,7 @@ class TestJWTLogin(ZulipTestCase):
             web_token = jwt.encode(payload, key, algorithm).decode("utf8")
             data = {"json_web_token": web_token}
             result = self.client_post("/accounts/login/jwt/", data)
-            self.assert_json_error_contains(
-                result, "No organization specified in JSON web token claims", 400,
-            )
+            self.assert_json_error_contains(result, "No organization specified in JSON web token claims", 400)
 
     def test_login_failure_when_key_does_not_exist(self) -> None:
         data = {"json_web_token": "not relevant"}
@@ -4290,9 +4274,7 @@ class DjangoToLDAPUsernameTests(ZulipTestCase):
         with self.assertRaises(ZulipLDAPExceptionNoMatchingLDAPUser):
             self.backend.django_to_ldap_username("no_such_email@example.com")
 
-        self.assertEqual(
-            self.backend.django_to_ldap_username("aaron@zulip.com"), self.ldap_username("aaron"),
-        )
+        self.assertEqual(self.backend.django_to_ldap_username("aaron@zulip.com"), self.ldap_username("aaron"))
 
         with mock.patch("zproject.backends.logging.warning") as mock_warn:
             with self.assertRaises(ZulipLDAPExceptionNoMatchingLDAPUser):

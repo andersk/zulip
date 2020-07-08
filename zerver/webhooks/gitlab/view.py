@@ -231,9 +231,7 @@ def get_build_hook_event_body(payload: Dict[str, Any]) -> str:
         action = "started"
     else:
         action = f"changed status to {build_status}"
-    return "Build {} from {} stage {}.".format(
-        payload.get("build_name"), payload.get("build_stage"), action,
-    )
+    return "Build {} from {} stage {}.".format(payload.get("build_name"), payload.get("build_stage"), action)
 
 
 def get_test_event_body(payload: Dict[str, Any]) -> str:

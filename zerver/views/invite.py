@@ -55,9 +55,7 @@ def invite_users_backend(
         try:
             (stream, recipient, sub) = access_stream_by_id(user_profile, stream_id)
         except JsonableError:
-            return json_error(
-                _("Stream does not exist with id: {}. No invites were sent.").format(stream_id),
-            )
+            return json_error(_("Stream does not exist with id: {}. No invites were sent.").format(stream_id))
         streams.append(stream)
 
     do_invite_users(user_profile, invitee_emails, streams, invite_as)
@@ -121,9 +119,7 @@ def revoke_multiuse_invite(request: HttpRequest, user_profile: UserProfile, invi
 
 @require_member_or_admin
 @has_request_variables
-def resend_user_invite_email(
-    request: HttpRequest, user_profile: UserProfile, prereg_id: int,
-) -> HttpResponse:
+def resend_user_invite_email(request: HttpRequest, user_profile: UserProfile, prereg_id: int) -> HttpResponse:
     try:
         prereg_user = PreregistrationUser.objects.get(id=prereg_id)
     except PreregistrationUser.DoesNotExist:

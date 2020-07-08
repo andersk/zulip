@@ -48,11 +48,7 @@ link_mapping = {
         "/#organization/deactivated-users-admin",
     ],
     "bot-list-admin": ["Manage organization", "Bots", "/#organization/bot-list-admin"],
-    "default-streams-list": [
-        "Manage organization",
-        "Default streams",
-        "/#organization/default-streams-list",
-    ],
+    "default-streams-list": ["Manage organization", "Default streams", "/#organization/default-streams-list"],
     "filter-settings": ["Manage organization", "Linkifiers", "/#organization/filter-settings"],
     "profile-field-settings": [
         "Manage organization",

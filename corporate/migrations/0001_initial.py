@@ -18,17 +18,13 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    models.AutoField(
-                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID",
-                    ),
+                    models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID"),
                 ),
                 ("state", models.CharField(max_length=20)),
                 ("last_modified", models.DateTimeField(auto_now=True)),
                 (
                     "log_row",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="zerver.RealmAuditLog",
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.RealmAuditLog"),
                 ),
                 (
                     "realm",
@@ -43,9 +39,7 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    models.AutoField(
-                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID",
-                    ),
+                    models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID"),
                 ),
                 ("percent_off", models.SmallIntegerField(unique=True)),
                 ("stripe_coupon_id", models.CharField(max_length=255, unique=True)),
@@ -56,9 +50,7 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    models.AutoField(
-                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID",
-                    ),
+                    models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID"),
                 ),
                 ("stripe_customer_id", models.CharField(max_length=255, unique=True)),
                 ("has_billing_relationship", models.BooleanField(default=False)),
@@ -73,9 +65,7 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    models.AutoField(
-                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID",
-                    ),
+                    models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID"),
                 ),
                 ("nickname", models.CharField(max_length=40, unique=True)),
                 ("stripe_plan_id", models.CharField(max_length=255, unique=True)),

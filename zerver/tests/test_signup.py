@@ -212,9 +212,7 @@ class AddNewUserHistoryTest(ZulipTestCase):
             add_new_user_history(user_profile, streams)
 
         # Our first message is in the user's history
-        self.assertTrue(
-            UserMessage.objects.filter(user_profile=user_profile, message_id=message_id).exists(),
-        )
+        self.assertTrue(UserMessage.objects.filter(user_profile=user_profile, message_id=message_id).exists())
         # The race message is in the user's history and marked unread.
         self.assertTrue(
             UserMessage.objects.filter(user_profile=user_profile, message_id=race_message_id).exists(),
@@ -833,11 +831,7 @@ class InviteUserBase(ZulipTestCase):
             stream_ids.append(self.get_stream_id(stream_name))
         return self.client_post(
             "/json/invites",
-            {
-                "invitee_emails": invitee_emails,
-                "stream_ids": ujson.dumps(stream_ids),
-                "invite_as": invite_as,
-            },
+            {"invitee_emails": invitee_emails, "stream_ids": ujson.dumps(stream_ids), "invite_as": invite_as},
         )
 
 
@@ -2617,9 +2611,7 @@ class RealmCreationTest(ZulipTestCase):
 
         # test root domain will fail with ROOT_DOMAIN_LANDING_PAGE
         with self.settings(ROOT_DOMAIN_LANDING_PAGE=True):
-            result = self.submit_reg_form_for_user(
-                email, password, realm_subdomain="", realm_name=realm_name,
-            )
+            result = self.submit_reg_form_for_user(email, password, realm_subdomain="", realm_name=realm_name)
             self.assert_in_response("unavailable", result)
 
         # test valid use of root domain
@@ -2641,11 +2633,7 @@ class RealmCreationTest(ZulipTestCase):
         # test root domain will fail with ROOT_DOMAIN_LANDING_PAGE
         with self.settings(ROOT_DOMAIN_LANDING_PAGE=True):
             result = self.submit_reg_form_for_user(
-                email,
-                password,
-                realm_subdomain="abcdef",
-                realm_in_root_domain="true",
-                realm_name=realm_name,
+                email, password, realm_subdomain="abcdef", realm_in_root_domain="true", realm_name=realm_name,
             )
             self.assert_in_response("unavailable", result)
 
@@ -3624,9 +3612,7 @@ class UserSignUpTest(InviteUserBase):
             self.assertEqual(user_profile.short_name, "shortname")
 
             # Test custom profile fields are properly synced.
-            phone_number_field = CustomProfileField.objects.get(
-                realm=user_profile.realm, name="Phone number",
-            )
+            phone_number_field = CustomProfileField.objects.get(realm=user_profile.realm, name="Phone number")
             phone_number_field_value = CustomProfileFieldValue.objects.get(
                 user_profile=user_profile, field=phone_number_field,
             )

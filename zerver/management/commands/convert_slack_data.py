@@ -13,9 +13,7 @@ class Command(BaseCommand):
     help = """Convert the Slack data into Zulip data format."""
 
     def add_arguments(self, parser: CommandParser) -> None:
-        parser.add_argument(
-            "slack_data_zip", nargs="+", metavar="<slack data zip>", help="Zipped slack data",
-        )
+        parser.add_argument("slack_data_zip", nargs="+", metavar="<slack data zip>", help="Zipped slack data")
 
         parser.add_argument(
             "--token", metavar="<slack_token>", type=str, help="Slack legacy token of the organsation",

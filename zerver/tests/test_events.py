@@ -565,9 +565,7 @@ class NormalActionsTest(BaseAction):
         )
         user_profile = self.example_user("hamlet")
         events = self.verify_action(
-            lambda: do_update_message_flags(
-                user_profile, get_client("website"), "add", "starred", [message],
-            ),
+            lambda: do_update_message_flags(user_profile, get_client("website"), "add", "starred", [message]),
             state_change_expected=True,
         )
         schema_checker("events[0]", events[0])
@@ -908,9 +906,7 @@ class NormalActionsTest(BaseAction):
                             ("user_id", check_int),
                             (
                                 "custom_profile_field",
-                                check_dict_only(
-                                    [("id", check_int), ("value", check_none_or(check_string))],
-                                ),
+                                check_dict_only([("id", check_int), ("value", check_none_or(check_string))]),
                             ),
                         ],
                     ),
@@ -1358,11 +1354,7 @@ class NormalActionsTest(BaseAction):
                     "muted_topics",
                     check_list(
                         check_tuple(
-                            [
-                                check_string,  # stream name
-                                check_string,  # topic name
-                                check_int,  # timestamp
-                            ],
+                            [check_string, check_string, check_int],  # stream name  # topic name  # timestamp
                         ),
                     ),
                 ),
@@ -1550,9 +1542,7 @@ class NormalActionsTest(BaseAction):
         do_change_subscription_property(self.user_profile, sub, stream, "pin_to_top", False)
         for pinned in (True, False):
             events = self.verify_action(
-                lambda: do_change_subscription_property(
-                    self.user_profile, sub, stream, "pin_to_top", pinned,
-                ),
+                lambda: do_change_subscription_property(self.user_profile, sub, stream, "pin_to_top", pinned),
             )
             schema_checker("events[0]", events[0])
 
@@ -1615,10 +1605,7 @@ class NormalActionsTest(BaseAction):
         ):
             events = self.verify_action(
                 lambda: do_set_realm_message_editing(
-                    self.user_profile.realm,
-                    allow_message_editing,
-                    message_content_edit_limit_seconds,
-                    False,
+                    self.user_profile.realm, allow_message_editing, message_content_edit_limit_seconds, False,
                 ),
             )
             schema_checker("events[0]", events[0])
@@ -1872,11 +1859,7 @@ class NormalActionsTest(BaseAction):
                 check_realm_emoji_fields(f"{var_name}[{k}]", v)
 
         schema_checker = check_events_dict(
-            [
-                ("type", equals("realm_emoji")),
-                ("op", equals("update")),
-                ("realm_emoji", realm_emoji_checker),
-            ],
+            [("type", equals("realm_emoji")), ("op", equals("update")), ("realm_emoji", realm_emoji_checker)],
         )
         author = self.example_user("iago")
         with get_test_image_file("img.png") as img_file:
@@ -1902,9 +1885,7 @@ class NormalActionsTest(BaseAction):
         events = self.verify_action(lambda: do_add_realm_filter(self.user_profile.realm, regex, url))
         schema_checker("events[0]", events[0])
 
-        events = self.verify_action(
-            lambda: do_remove_realm_filter(self.user_profile.realm, "#(?P<id>[123])"),
-        )
+        events = self.verify_action(lambda: do_remove_realm_filter(self.user_profile.realm, "#(?P<id>[123])"))
         schema_checker("events[0]", events[0])
 
     def test_realm_domain_events(self) -> None:
@@ -2077,9 +2058,7 @@ class NormalActionsTest(BaseAction):
                 ("property", equals("night_logo")),
                 (
                     "data",
-                    check_dict_only(
-                        [("night_logo_url", check_string), ("night_logo_source", check_string)],
-                    ),
+                    check_dict_only([("night_logo_url", check_string), ("night_logo_source", check_string)]),
                 ),
             ],
         )
@@ -2740,9 +2719,7 @@ class NormalActionsTest(BaseAction):
         with mock.patch("zerver.lib.export.do_export_realm", side_effect=Exception("test")):
             with stdout_suppressed():
                 events = self.verify_action(
-                    lambda: self.client_post("/json/export/realm"),
-                    state_change_expected=False,
-                    num_events=2,
+                    lambda: self.client_post("/json/export/realm"), state_change_expected=False, num_events=2,
                 )
 
         pending_schema_checker("events[0]", events[0])
@@ -2978,9 +2955,7 @@ class SubscribeActionTest(BaseAction):
                 ("op", equals("remove")),
                 (
                     "subscriptions",
-                    check_list(
-                        check_dict_only([("name", equals("test_stream")), ("stream_id", check_int)]),
-                    ),
+                    check_list(check_dict_only([("name", equals("test_stream")), ("stream_id", check_int)])),
                 ),
             ],
         )

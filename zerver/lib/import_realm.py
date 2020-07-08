@@ -144,9 +144,7 @@ def fix_datetime_fields(data: TableData, table: TableName) -> None:
     for item in data[table]:
         for field_name in DATE_FIELDS[table]:
             if item[field_name] is not None:
-                item[field_name] = datetime.datetime.fromtimestamp(
-                    item[field_name], tz=datetime.timezone.utc,
-                )
+                item[field_name] = datetime.datetime.fromtimestamp(item[field_name], tz=datetime.timezone.utc)
 
 
 def fix_upload_links(data: TableData, message_table: TableName) -> None:
@@ -267,9 +265,7 @@ def fix_customprofilefield(data: TableData) -> None:
             item["value"] = ujson.dumps(new_id_list)
 
 
-def fix_message_rendered_content(
-    realm: Realm, sender_map: Dict[int, Record], messages: List[Record],
-) -> None:
+def fix_message_rendered_content(realm: Realm, sender_map: Dict[int, Record], messages: List[Record]) -> None:
     """
     This function sets the rendered_content of all the messages
     after the messages have been imported from a non-Zulip platform.
@@ -1064,9 +1060,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
         import_uploads(realm, os.path.join(import_dir, "emoji"), processes, processing_emojis=True)
 
     if os.path.exists(os.path.join(import_dir, "realm_icons")):
-        import_uploads(
-            realm, os.path.join(import_dir, "realm_icons"), processes, processing_realm_icons=True,
-        )
+        import_uploads(realm, os.path.join(import_dir, "realm_icons"), processes, processing_realm_icons=True)
 
     sender_map = {user["id"]: user for user in data["zerver_userprofile"]}
 
@@ -1076,12 +1070,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
     re_map_foreign_keys(data, "zerver_reaction", "message", related_table="message")
     re_map_foreign_keys(data, "zerver_reaction", "user_profile", related_table="user_profile")
     re_map_foreign_keys(
-        data,
-        "zerver_reaction",
-        "emoji_code",
-        related_table="realmemoji",
-        id_field=True,
-        reaction_field=True,
+        data, "zerver_reaction", "emoji_code", related_table="realmemoji", id_field=True, reaction_field=True,
     )
     update_model_ids(Reaction, data, "reaction")
     bulk_import_model(data, Reaction)

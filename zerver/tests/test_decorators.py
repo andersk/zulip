@@ -1171,9 +1171,7 @@ class FetchAPIKeyTest(ZulipTestCase):
     def test_fetch_api_key_success(self) -> None:
         user = self.example_user("cordelia")
         self.login_user(user)
-        result = self.client_post(
-            "/json/fetch_api_key", dict(password=initial_password(user.delivery_email)),
-        )
+        result = self.client_post("/json/fetch_api_key", dict(password=initial_password(user.delivery_email)))
         self.assert_json_success(result)
 
     def test_fetch_api_key_email_address_visibility(self) -> None:
@@ -1181,9 +1179,7 @@ class FetchAPIKeyTest(ZulipTestCase):
         do_set_realm_property(user.realm, "email_address_visibility", Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS)
 
         self.login_user(user)
-        result = self.client_post(
-            "/json/fetch_api_key", dict(password=initial_password(user.delivery_email)),
-        )
+        result = self.client_post("/json/fetch_api_key", dict(password=initial_password(user.delivery_email)))
         self.assert_json_success(result)
 
     def test_fetch_api_key_wrong_password(self) -> None:
@@ -1333,9 +1329,7 @@ class TestIncomingWebhookBot(ZulipTestCase):
         self.assert_json_success(result)
         post_params = {"anchor": 1, "num_before": 1, "num_after": 1}
         result = self.api_get(webhook_bot, "/api/v1/messages", dict(post_params))
-        self.assert_json_error(
-            result, "This API is not available to incoming webhook bots.", status_code=401,
-        )
+        self.assert_json_error(result, "This API is not available to incoming webhook bots.", status_code=401)
 
 
 class TestValidateApiKey(ZulipTestCase):
@@ -1593,9 +1587,7 @@ class TestAuthenticatedJsonPostViewDecorator(ZulipTestCase):
         # we deactivate user's realm manually because do_deactivate_user removes user session
         user_profile.realm.deactivated = True
         user_profile.realm.save()
-        self.assert_json_error_contains(
-            self._do_test(user_profile), "This organization has been deactivated",
-        )
+        self.assert_json_error_contains(self._do_test(user_profile), "This organization has been deactivated")
         do_reactivate_realm(user_profile.realm)
 
     def _do_test(self, user: UserProfile) -> HttpResponse:

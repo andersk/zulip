@@ -96,9 +96,7 @@ def api_semaphore_webhook(
     content, project_name, branch_name = (
         semaphore_classic(payload) if "event" in payload else semaphore_2(payload)
     )
-    subject = (
-        TOPIC_TEMPLATE.format(project=project_name, branch=branch_name) if branch_name else project_name
-    )
+    subject = TOPIC_TEMPLATE.format(project=project_name, branch=branch_name) if branch_name else project_name
     check_send_webhook_message(request, user_profile, subject, content)
     return json_success()
 

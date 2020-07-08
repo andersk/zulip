@@ -38,9 +38,7 @@ from zerver.models import (
 
 
 class RealmTest(ZulipTestCase):
-    def assert_user_profile_cache_gets_new_name(
-        self, user_profile: UserProfile, new_realm_name: str,
-    ) -> None:
+    def assert_user_profile_cache_gets_new_name(self, user_profile: UserProfile, new_realm_name: str) -> None:
         self.assertEqual(user_profile.realm.name, new_realm_name)
 
     def test_realm_creation_ensures_internal_realms(self) -> None:
@@ -548,9 +546,7 @@ class RealmTest(ZulipTestCase):
         req = {"video_chat_provider": ujson.dumps(Realm.VIDEO_CHAT_PROVIDERS["disabled"]["id"])}
         result = self.client_patch("/json/realm", req)
         self.assert_json_success(result)
-        self.assertEqual(
-            get_realm("zulip").video_chat_provider, Realm.VIDEO_CHAT_PROVIDERS["disabled"]["id"],
-        )
+        self.assertEqual(get_realm("zulip").video_chat_provider, Realm.VIDEO_CHAT_PROVIDERS["disabled"]["id"])
 
         req = {"video_chat_provider": ujson.dumps(Realm.VIDEO_CHAT_PROVIDERS["jitsi_meet"]["id"])}
         result = self.client_patch("/json/realm", req)

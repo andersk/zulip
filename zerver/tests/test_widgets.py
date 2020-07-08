@@ -136,9 +136,7 @@ class WidgetContentTestCase(ZulipTestCase):
         stream_name = "Verona"
         content = "/tictactoe"
 
-        payload = dict(
-            type="stream", to=stream_name, client="test suite", topic="whatever", content=content,
-        )
+        payload = dict(type="stream", to=stream_name, client="test suite", topic="whatever", content=content)
         result = self.api_post(sender, "/api/v1/messages", payload)
         self.assert_json_success(result)
 
@@ -158,9 +156,7 @@ class WidgetContentTestCase(ZulipTestCase):
         # for the poll options.
         content = "/poll What is your favorite color?\n\nRed\nGreen  \n\n   Blue\n - Yellow"
 
-        payload = dict(
-            type="stream", to=stream_name, client="test suite", topic="whatever", content=content,
-        )
+        payload = dict(type="stream", to=stream_name, client="test suite", topic="whatever", content=content)
         result = self.api_post(sender, "/api/v1/messages", payload)
         self.assert_json_success(result)
 

@@ -233,9 +233,7 @@ class TestProcessCountStat(AnalyticsTestCase):
         ).format(default_realm_id=Literal(self.default_realm.id), property=Literal(property))
         return CountStat(property, sql_data_collector(RealmCount, query, None), CountStat.HOUR)
 
-    def assertFillStateEquals(
-        self, stat: CountStat, end_time: datetime, state: int = FillState.DONE,
-    ) -> None:
+    def assertFillStateEquals(self, stat: CountStat, end_time: datetime, state: int = FillState.DONE) -> None:
         fill_state = FillState.objects.filter(property=stat.property).first()
         self.assertEqual(fill_state.end_time, end_time)
         self.assertEqual(fill_state.state, state)
@@ -440,9 +438,7 @@ class TestCountStats(AnalyticsTestCase):
         # This realm should not show up in the *Count tables for any of the
         # messages_* CountStats
         self.no_message_realm = Realm.objects.create(
-            string_id="no-message-realm",
-            name="No Message Realm",
-            date_created=self.TIME_ZERO - 2 * self.DAY,
+            string_id="no-message-realm", name="No Message Realm", date_created=self.TIME_ZERO - 2 * self.DAY,
         )
         self.create_user(realm=self.no_message_realm)
         self.create_stream_with_recipient(realm=self.no_message_realm)
@@ -466,12 +462,7 @@ class TestCountStats(AnalyticsTestCase):
         self.assertTableState(
             RealmCount,
             ["value", "subgroup", "realm"],
-            [
-                [2, "true"],
-                [1, "false"],
-                [3, "false", self.second_realm],
-                [1, "false", self.no_message_realm],
-            ],
+            [[2, "true"], [1, "false"], [3, "false", self.second_realm], [1, "false", self.no_message_realm]],
         )
         self.assertTableState(InstallationCount, ["value", "subgroup"], [[2, "true"], [5, "false"]])
         self.assertTableState(UserCount, [], [])
@@ -490,9 +481,7 @@ class TestCountStats(AnalyticsTestCase):
 
         # To be excluded
         self.create_user(
-            email="test@second.analytics",
-            realm=self.second_realm,
-            date_joined=self.TIME_ZERO - 2 * self.DAY,
+            email="test@second.analytics", realm=self.second_realm, date_joined=self.TIME_ZERO - 2 * self.DAY,
         )
 
         do_fill_count_stat_at_hour(stat, self.TIME_ZERO, self.default_realm)
@@ -1334,8 +1323,7 @@ class TestLoggingCountStats(AnalyticsTestCase):
             1, UserCount.objects.filter(property=read_count_property).aggregate(Sum("value"))["value__sum"],
         )
         self.assertEqual(
-            1,
-            UserCount.objects.filter(property=interactions_property).aggregate(Sum("value"))["value__sum"],
+            1, UserCount.objects.filter(property=interactions_property).aggregate(Sum("value"))["value__sum"],
         )
 
         self.send_stream_message(user1, stream.name)
@@ -1345,8 +1333,7 @@ class TestLoggingCountStats(AnalyticsTestCase):
             3, UserCount.objects.filter(property=read_count_property).aggregate(Sum("value"))["value__sum"],
         )
         self.assertEqual(
-            2,
-            UserCount.objects.filter(property=interactions_property).aggregate(Sum("value"))["value__sum"],
+            2, UserCount.objects.filter(property=interactions_property).aggregate(Sum("value"))["value__sum"],
         )
 
         message = self.send_stream_message(user2, stream.name)
@@ -1355,8 +1342,7 @@ class TestLoggingCountStats(AnalyticsTestCase):
             4, UserCount.objects.filter(property=read_count_property).aggregate(Sum("value"))["value__sum"],
         )
         self.assertEqual(
-            3,
-            UserCount.objects.filter(property=interactions_property).aggregate(Sum("value"))["value__sum"],
+            3, UserCount.objects.filter(property=interactions_property).aggregate(Sum("value"))["value__sum"],
         )
 
 

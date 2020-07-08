@@ -248,9 +248,7 @@ def auth_rate_limiting_already_applied(request: HttpRequest) -> bool:
     if not hasattr(request, "_ratelimits_applied"):
         return False
 
-    return any(
-        isinstance(r.entity, RateLimitedAuthenticationByUsername) for r in request._ratelimits_applied
-    )
+    return any(isinstance(r.entity, RateLimitedAuthenticationByUsername) for r in request._ratelimits_applied)
 
 
 # Django's authentication mechanism uses introspection on the various authenticate() functions

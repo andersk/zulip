@@ -14,9 +14,7 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    models.AutoField(
-                        serialize=False, auto_created=True, verbose_name="ID", primary_key=True,
-                    ),
+                    models.AutoField(serialize=False, auto_created=True, verbose_name="ID", primary_key=True),
                 ),
                 ("user_id", models.BigIntegerField()),
                 ("kind", models.PositiveSmallIntegerField(choices=[(1, "apns"), (2, "gcm")])),
@@ -30,9 +28,7 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    models.AutoField(
-                        serialize=False, auto_created=True, verbose_name="ID", primary_key=True,
-                    ),
+                    models.AutoField(serialize=False, auto_created=True, verbose_name="ID", primary_key=True),
                 ),
                 ("uuid", models.CharField(unique=True, max_length=36)),
                 ("api_key", models.CharField(max_length=64)),

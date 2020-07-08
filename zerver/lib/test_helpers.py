@@ -172,9 +172,7 @@ def queries_captured(
             stop = time.time()
             duration = stop - start
             if include_savepoints or not isinstance(sql, str) or "SAVEPOINT" not in sql:
-                queries.append(
-                    {"sql": self.mogrify(sql, params).decode("utf-8"), "time": f"{duration:.3f}"},
-                )
+                queries.append({"sql": self.mogrify(sql, params).decode("utf-8"), "time": f"{duration:.3f}"})
 
     def cursor_execute(self: TimeTrackingCursor, sql: Query, params: Optional[Params] = None) -> None:
         return wrapper_execute(self, super(TimeTrackingCursor, self).execute, sql, params)

@@ -606,10 +606,7 @@ class GetUnreadMsgsTest(ZulipTestCase):
         cordelia_msg = send_unread_pm(other_user=cordelia)
 
         apply_unread_message_event(
-            user_profile=hamlet,
-            state=raw_unread_data,
-            message=MessageDict.wide_dict(cordelia_msg),
-            flags=[],
+            user_profile=hamlet, state=raw_unread_data, message=MessageDict.wide_dict(cordelia_msg), flags=[],
         )
         self.assertEqual(
             set(pm_dict.keys()), {othello_msg.id, cordelia_msg.id},

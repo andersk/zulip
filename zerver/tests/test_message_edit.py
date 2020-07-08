@@ -759,8 +759,7 @@ class EditMessageTest(ZulipTestCase):
 
         users_to_be_notified = sorted(map(notify, [cordelia.id, hamlet.id]), key=itemgetter("id"))
         result = self.client_patch(
-            "/json/messages/" + str(message_id),
-            {"message_id": message_id, "content": "Hello @**everyone**"},
+            "/json/messages/" + str(message_id), {"message_id": message_id, "content": "Hello @**everyone**"},
         )
         self.assert_json_success(result)
 

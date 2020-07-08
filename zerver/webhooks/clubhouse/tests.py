@@ -46,7 +46,9 @@ class ClubhouseWebhookTest(WebhookTestCase):
         self.send_and_test_stream_message("epic_create", "New Epic!", expected_message)
 
     def test_epic_update_add_comment(self) -> None:
-        expected_message = "New comment added to the epic **New Cool Epic!**:\n``` quote\nAdded a comment on this Epic!\n```"
+        expected_message = (
+            "New comment added to the epic **New Cool Epic!**:\n``` quote\nAdded a comment on this Epic!\n```"
+        )
         self.send_and_test_stream_message("epic_update_add_comment", "New Cool Epic!", expected_message)
 
     def test_story_update_add_comment(self) -> None:

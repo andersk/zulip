@@ -50,9 +50,7 @@ class TestIntegrationsDevPanel(ZulipTestCase):
             "msg": "",
         }
         response_content = ujson.loads(response.content)
-        response_content["responses"][0]["message"] = ujson.loads(
-            response_content["responses"][0]["message"],
-        )
+        response_content["responses"][0]["message"] = ujson.loads(response_content["responses"][0]["message"])
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response_content, expected_response)
 
@@ -87,9 +85,7 @@ class TestIntegrationsDevPanel(ZulipTestCase):
 
     def test_check_send_webhook_fixture_message_for_success_with_headers_and_non_json_fixtures(self) -> None:
         bot = get_user("webhook-bot@zulip.com", self.zulip_realm)
-        url = (
-            f"/api/v1/external/wordpress?api_key={bot.api_key}&stream=Denmark&topic=Wordpress Notifications"
-        )
+        url = f"/api/v1/external/wordpress?api_key={bot.api_key}&stream=Denmark&topic=Wordpress Notifications"
         target_url = "/devtools/integrations/check_send_webhook_fixture_message"
         with open("zerver/webhooks/wordpress/fixtures/publish_post_no_data_provided.txt") as f:
             body = f.read()
@@ -154,16 +150,8 @@ class TestIntegrationsDevPanel(ZulipTestCase):
 
         response = self.client_post(target_url, data)
         expected_responses = [
-            {
-                "fixture_name": "sample.json",
-                "status_code": 200,
-                "message": {"msg": "", "result": "success"},
-            },
-            {
-                "fixture_name": "review.json",
-                "status_code": 200,
-                "message": {"msg": "", "result": "success"},
-            },
+            {"fixture_name": "sample.json", "status_code": 200, "message": {"msg": "", "result": "success"}},
+            {"fixture_name": "review.json", "status_code": 200, "message": {"msg": "", "result": "success"}},
         ]
         responses = ujson.loads(response.content)["responses"]
         for r in responses:

@@ -1271,10 +1271,7 @@ class GetOldMessagesTest(ZulipTestCase):
         num_before = len(message_ids)
 
         post_params = dict(
-            narrow=ujson.dumps(narrow),
-            num_before=num_before,
-            num_after=0,
-            anchor=LARGER_THAN_MAX_MESSAGE_ID,
+            narrow=ujson.dumps(narrow), num_before=num_before, num_after=0, anchor=LARGER_THAN_MAX_MESSAGE_ID,
         )
         payload = self.client_get("/json/messages", dict(post_params))
         self.assert_json_success(payload)
@@ -1408,9 +1405,7 @@ class GetOldMessagesTest(ZulipTestCase):
         self.assertEqual(message["avatar_url"], None)
 
         # Now verify client_gravatar doesn't run with EMAIL_ADDRESS_VISIBILITY_ADMINS
-        do_set_realm_property(
-            hamlet.realm, "email_address_visibility", Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS,
-        )
+        do_set_realm_property(hamlet.realm, "email_address_visibility", Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS)
         result = self.get_and_check_messages(dict(client_gravatar=ujson.dumps(True)))
         message = result["messages"][0]
         self.assertIn("gravatar.com", message["avatar_url"])
@@ -1838,9 +1833,7 @@ class GetOldMessagesTest(ZulipTestCase):
             dict(operator="search", operand="after"),
         ]
         multi_search_result: Dict[str, Any] = self.get_and_check_messages(
-            dict(
-                narrow=ujson.dumps(multi_search_narrow), anchor=next_message_id, num_after=10, num_before=0,
-            ),
+            dict(narrow=ujson.dumps(multi_search_narrow), anchor=next_message_id, num_after=10, num_before=0),
         )
         self.assertEqual(len(multi_search_result["messages"]), 1)
         self.assertEqual(
@@ -1861,8 +1854,7 @@ class GetOldMessagesTest(ZulipTestCase):
         japanese_message = [m for m in messages if m[TOPIC_NAME] == "日本"][-1]
         self.assertEqual(japanese_message[MATCH_TOPIC], '<span class="highlight">日本</span>')
         self.assertEqual(
-            japanese_message["match_content"],
-            '<p>昨日、<span class="highlight">日本</span>' + " のお菓子を送りました。</p>",
+            japanese_message["match_content"], '<p>昨日、<span class="highlight">日本</span>' + " のお菓子を送りました。</p>",
         )
 
         (english_message,) = [m for m in messages if m[TOPIC_NAME] == "english"]
@@ -1877,9 +1869,7 @@ class GetOldMessagesTest(ZulipTestCase):
             dict(operator="search", operand="今日は"),
         ]
         multi_search_result = self.get_and_check_messages(
-            dict(
-                narrow=ujson.dumps(multi_search_narrow), anchor=next_message_id, num_after=10, num_before=0,
-            ),
+            dict(narrow=ujson.dumps(multi_search_narrow), anchor=next_message_id, num_after=10, num_before=0),
         )
         self.assertEqual(len(multi_search_result["messages"]), 1)
         self.assertEqual(
@@ -1896,10 +1886,7 @@ class GetOldMessagesTest(ZulipTestCase):
             ("Gryffindor", "Hogwart's house which values courage, bravery, nerve, and chivalry"),
             ("Hufflepuff", "Hogwart's house which values hard work, patience, justice, and loyalty."),
             ("Ravenclaw", "Hogwart's house which values intelligence, creativity, learning, and wit"),
-            (
-                "Slytherin",
-                "Hogwart's house which  values ambition, cunning, leadership, and resourcefulness",
-            ),
+            ("Slytherin", "Hogwart's house which  values ambition, cunning, leadership, and resourcefulness"),
         ]
 
         message_ids = []
@@ -1958,10 +1945,7 @@ class GetOldMessagesTest(ZulipTestCase):
 
         for topic, content in messages_to_search:
             self.send_stream_message(
-                sender=self.example_user("cordelia"),
-                stream_name="Verona",
-                content=content,
-                topic_name=topic,
+                sender=self.example_user("cordelia"), stream_name="Verona", content=content, topic_name=topic,
             )
 
         # We use brute force here and update our text search index
@@ -2011,9 +1995,7 @@ class GetOldMessagesTest(ZulipTestCase):
             dict(operator="search", operand="wiki"),
         ]
         multi_search_result: Dict[str, Any] = self.get_and_check_messages(
-            dict(
-                narrow=ujson.dumps(multi_search_narrow), anchor=next_message_id, num_after=10, num_before=0,
-            ),
+            dict(narrow=ujson.dumps(multi_search_narrow), anchor=next_message_id, num_after=10, num_before=0),
         )
         self.assertEqual(len(multi_search_result["messages"]), 1)
         self.assertEqual(
@@ -2027,9 +2009,7 @@ class GetOldMessagesTest(ZulipTestCase):
             dict(operator="search", operand="べました"),
         ]
         multi_search_result = self.get_and_check_messages(
-            dict(
-                narrow=ujson.dumps(multi_search_narrow), anchor=next_message_id, num_after=10, num_before=0,
-            ),
+            dict(narrow=ujson.dumps(multi_search_narrow), anchor=next_message_id, num_after=10, num_before=0),
         )
         self.assertEqual(len(multi_search_result["messages"]), 1)
         self.assertEqual(
@@ -2053,10 +2033,7 @@ class GetOldMessagesTest(ZulipTestCase):
         ]
         special_search_result: Dict[str, Any] = self.get_and_check_messages(
             dict(
-                narrow=ujson.dumps(special_search_narrow),
-                anchor=next_message_id,
-                num_after=10,
-                num_before=0,
+                narrow=ujson.dumps(special_search_narrow), anchor=next_message_id, num_after=10, num_before=0,
             ),
         )
         self.assertEqual(len(special_search_result["messages"]), 1)
@@ -2070,10 +2047,7 @@ class GetOldMessagesTest(ZulipTestCase):
         ]
         special_search_result = self.get_and_check_messages(
             dict(
-                narrow=ujson.dumps(special_search_narrow),
-                anchor=next_message_id,
-                num_after=10,
-                num_before=0,
+                narrow=ujson.dumps(special_search_narrow), anchor=next_message_id, num_after=10, num_before=0,
             ),
         )
         self.assertEqual(len(special_search_result["messages"]), 1)
@@ -2924,8 +2898,7 @@ recipient_id = %(recipient_id_3)s AND upper(subject) = upper(%(param_2)s))\
         sql_template = "SELECT anon_1.message_id, anon_1.flags \nFROM (SELECT message_id, flags \nFROM zerver_usermessage JOIN zerver_message ON zerver_usermessage.message_id = zerver_message.id \nWHERE user_profile_id = {hamlet_id} AND sender_id = {othello_id} ORDER BY message_id ASC \n LIMIT 10) AS anon_1 ORDER BY message_id ASC"
         sql = sql_template.format(**query_ids)
         self.common_check_get_messages_query(
-            {"anchor": 0, "num_before": 0, "num_after": 9, "narrow": f'[["sender", "{othello_email}"]]'},
-            sql,
+            {"anchor": 0, "num_before": 0, "num_after": 9, "narrow": f'[["sender", "{othello_email}"]]'}, sql,
         )
 
         sql_template = "SELECT anon_1.message_id \nFROM (SELECT id AS message_id \nFROM zerver_message \nWHERE recipient_id = {scotland_recipient} ORDER BY zerver_message.id ASC \n LIMIT 10) AS anon_1 ORDER BY message_id ASC"
@@ -2974,8 +2947,7 @@ recipient_id = %(recipient_id_3)s AND upper(subject) = upper(%(param_2)s))\
         sql_template = "SELECT anon_1.message_id, anon_1.flags \nFROM (SELECT message_id, flags \nFROM zerver_usermessage JOIN zerver_message ON zerver_usermessage.message_id = zerver_message.id \nWHERE user_profile_id = {hamlet_id} AND sender_id = {hamlet_id} AND recipient_id = {hamlet_recipient} ORDER BY message_id ASC \n LIMIT 10) AS anon_1 ORDER BY message_id ASC"
         sql = sql_template.format(**query_ids)
         self.common_check_get_messages_query(
-            {"anchor": 0, "num_before": 0, "num_after": 9, "narrow": f'[["pm-with", "{hamlet_email}"]]'},
-            sql,
+            {"anchor": 0, "num_before": 0, "num_after": 9, "narrow": f'[["pm-with", "{hamlet_email}"]]'}, sql,
         )
 
         sql_template = "SELECT anon_1.message_id, anon_1.flags \nFROM (SELECT message_id, flags \nFROM zerver_usermessage JOIN zerver_message ON zerver_usermessage.message_id = zerver_message.id \nWHERE user_profile_id = {hamlet_id} AND recipient_id = {scotland_recipient} AND (flags & 2) != 0 ORDER BY message_id ASC \n LIMIT 10) AS anon_1 ORDER BY message_id ASC"
@@ -3045,12 +3017,7 @@ WHERE user_profile_id = {hamlet_id} AND (content ILIKE '%jumping%' OR subject IL
 """
         sql = sql_template.format(**query_ids)
         self.common_check_get_messages_query(
-            {
-                "anchor": 0,
-                "num_before": 0,
-                "num_after": 9,
-                "narrow": '[["search", "\\"jumping\\" quickly"]]',
-            },
+            {"anchor": 0, "num_before": 0, "num_after": 9, "narrow": '[["search", "\\"jumping\\" quickly"]]'},
             sql,
         )
 

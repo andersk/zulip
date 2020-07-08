@@ -46,9 +46,7 @@ class WorkerTest(ZulipTestCase):
             self.consumers: Dict[str, Callable[[Dict[str, Any]], None]] = {}
             self.queue: List[Tuple[str, Any]] = []
 
-        def register_json_consumer(
-            self, queue_name: str, callback: Callable[[Dict[str, Any]], None],
-        ) -> None:
+        def register_json_consumer(self, queue_name: str, callback: Callable[[Dict[str, Any]], None]) -> None:
             self.consumers[queue_name] = callback
 
         def start_consuming(self) -> None:
@@ -85,9 +83,7 @@ class WorkerTest(ZulipTestCase):
         # having the client name instead of id, to test the queue
         # worker handles it correctly. That compatibility code can
         # be deleted in a later release, and this test should then be cleaned up.
-        data_old_format = dict(
-            user_profile_id=user.id, client="ios", time=time.time(), query="send_message",
-        )
+        data_old_format = dict(user_profile_id=user.id, client="ios", time=time.time(), query="send_message")
         fake_client.queue.append(("user_activity", data_old_format))
 
         with loopworker_sleep_mock:

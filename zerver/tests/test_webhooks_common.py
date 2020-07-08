@@ -139,9 +139,7 @@ class MissingEventHeaderTestCase(WebhookTestCase):
     def test_missing_event_header(self) -> None:
         self.subscribe(self.test_user, self.STREAM_NAME)
         result = self.client_post(
-            self.url,
-            self.get_body("ticket_state_changed"),
-            content_type="application/x-www-form-urlencoded",
+            self.url, self.get_body("ticket_state_changed"), content_type="application/x-www-form-urlencoded",
         )
         self.assert_json_error(result, "Missing the HTTP event header 'X_GROOVE_EVENT'")
 

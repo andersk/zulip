@@ -11,9 +11,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="customprofilefield",
-            name="field_data",
-            field=models.TextField(default="", null=True),
+            model_name="customprofilefield", name="field_data", field=models.TextField(default="", null=True),
         ),
         migrations.AlterField(
             model_name="customprofilefield",

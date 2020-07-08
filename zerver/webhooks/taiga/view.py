@@ -93,8 +93,7 @@ templates = {
         " from {old} to {new}.",
         "set_estimated_start": "[{user}]({user_link}) changed estimated start of sprint {subject}"
         " to {new}.",
-        "set_estimated_finish": "[{user}]({user_link}) set estimated finish of sprint {subject}"
-        " to {new}.",
+        "set_estimated_finish": "[{user}]({user_link}) set estimated finish of sprint {subject}" " to {new}.",
         "delete": "[{user}]({user_link}) deleted sprint {subject}.",
     },
     "task": {

@@ -44,8 +44,7 @@ shebang_rules: List["Rule"] = [
     # buildFHSUserEnv sandbox).
     {
         "pattern": "^#!(?! *(?:/usr/bin/env|/bin/sh)(?: |$))",
-        "description": "Use `#!/usr/bin/env foo` instead of `#!/path/foo`"
-        " for interpreters other than sh.",
+        "description": "Use `#!/usr/bin/env foo` instead of `#!/path/foo`" " for interpreters other than sh.",
     },
     {
         "pattern": "^#!/usr/bin/env python$",
@@ -104,10 +103,7 @@ js_rules = RuleList(
             "good_lines": ["topic_name"],
             "bad_lines": ['subject="foo"', " MAX_SUBJECT_LEN"],
         },
-        {
-            "pattern": r"[^_]function\(",
-            "description": 'The keyword "function" should be followed by a space',
-        },
+        {"pattern": r"[^_]function\(", "description": 'The keyword "function" should be followed by a space'},
         {
             "pattern": "msgid|MSGID",
             "description": 'Avoid using "msgid" as a variable name; use "message_id" instead.',

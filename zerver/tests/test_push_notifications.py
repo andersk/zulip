@@ -600,9 +600,7 @@ class AnalyticsBouncerTest(BouncerTestCase):
                 self.assertNotIn("modified_user", str(args))
             return send_to_push_bouncer(*args)
 
-        with mock.patch(
-            "zerver.lib.remote_server.send_to_push_bouncer", side_effect=check_for_unwanted_data,
-        ):
+        with mock.patch("zerver.lib.remote_server.send_to_push_bouncer", side_effect=check_for_unwanted_data):
             send_analytics_to_remote_server()
 
     @override_settings(PUSH_NOTIFICATION_BOUNCER_URL="https://push.zulip.org.example.com")
@@ -1223,8 +1221,7 @@ class TestAPNs(PushNotificationTest):
     def test_modernize_apns_payload(self) -> None:
         payload = {"alert": "Message from Hamlet", "badge": 0, "custom": {"zulip": {"message_ids": [3]}}}
         self.assertEqual(
-            modernize_apns_payload({"alert": "Message from Hamlet", "message_ids": [3], "badge": 0}),
-            payload,
+            modernize_apns_payload({"alert": "Message from Hamlet", "message_ids": [3], "badge": 0}), payload,
         )
         self.assertEqual(modernize_apns_payload(payload), payload)
 
@@ -1580,10 +1577,7 @@ class TestSendNotificationsToBouncer(ZulipTestCase):
             "gcm_options": {},
         }
         mock_send.assert_called_with(
-            "POST",
-            "push/notify",
-            ujson.dumps(post_data),
-            extra_headers={"Content-type": "application/json"},
+            "POST", "push/notify", ujson.dumps(post_data), extra_headers={"Content-type": "application/json"},
         )
 
 
@@ -1934,8 +1928,7 @@ class TestClearOnRead(ZulipTestCase):
         stream = self.subscribe(hamlet, "Denmark")
 
         message_ids = [
-            self.send_stream_message(self.example_user("iago"), stream.name, f"yo {i}")
-            for i in range(n_msgs)
+            self.send_stream_message(self.example_user("iago"), stream.name, f"yo {i}") for i in range(n_msgs)
         ]
         UserMessage.objects.filter(user_profile_id=hamlet.id, message_id__in=message_ids).update(
             flags=F("flags").bitor(UserMessage.flags.active_mobile_push_notification),

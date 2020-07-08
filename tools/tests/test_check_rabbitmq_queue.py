@@ -141,9 +141,7 @@ class AnalyzeQueueStatsTests(TestCase):
         start_time = time.time()
         with mock.patch.dict(
             "scripts.lib.check_rabbitmq_queue.CRITICAL_SECONDS_TO_CLEAR_FOR_BURSTS", {"name": 600},
-        ), mock.patch.dict(
-            "scripts.lib.check_rabbitmq_queue.MAX_SECONDS_TO_CLEAR_FOR_BURSTS", {"name": 600},
-        ):
+        ), mock.patch.dict("scripts.lib.check_rabbitmq_queue.MAX_SECONDS_TO_CLEAR_FOR_BURSTS", {"name": 600}):
             with mock.patch("time.time", return_value=start_time + 599):
                 result = analyze_queue_stats(
                     "name",

@@ -24,9 +24,7 @@ def clear_preregistrationuser_invited_as_admin(apps: StateApps, schema_editor: D
     INVITED_AS_MEMBER = 1
     INVITED_AS_REALM_ADMIN = 2
     PreregistrationUser = apps.get_model("zerver", "PreregistrationUser")
-    PreregistrationUser.objects.filter(invited_as=INVITED_AS_REALM_ADMIN).update(
-        invited_as=INVITED_AS_MEMBER,
-    )
+    PreregistrationUser.objects.filter(invited_as=INVITED_AS_REALM_ADMIN).update(invited_as=INVITED_AS_MEMBER)
 
 
 class Migration(migrations.Migration):

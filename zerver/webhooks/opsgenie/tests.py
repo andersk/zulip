@@ -16,10 +16,7 @@ class OpsGenieHookTests(WebhookTestCase):
 """.strip()
 
         self.send_and_test_stream_message(
-            "acknowledge",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "acknowledge", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_addnote_alert(self) -> None:

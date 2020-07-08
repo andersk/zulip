@@ -386,9 +386,7 @@ def csrf_failure(request: HttpRequest, reason: str = "") -> HttpResponse:
 
 
 class RateLimitMiddleware(MiddlewareMixin):
-    def set_response_headers(
-        self, response: HttpResponse, rate_limit_results: List[RateLimitResult],
-    ) -> None:
+    def set_response_headers(self, response: HttpResponse, rate_limit_results: List[RateLimitResult]) -> None:
         # The limit on the action that was requested is the minimum of the limits that get applied:
         limit = min([result.entity.max_api_calls() for result in rate_limit_results])
         response["X-RateLimit-Limit"] = str(limit)

@@ -858,11 +858,7 @@ LOGGING: Dict[str, Any] = {
             "handlers": ["file", "errors_file"],
             "propagate": False,
         },
-        "zulip.zerver.webhooks": {
-            "level": "DEBUG",
-            "handlers": ["file", "errors_file"],
-            "propagate": False,
-        },
+        "zulip.zerver.webhooks": {"level": "DEBUG", "handlers": ["file", "errors_file"], "propagate": False},
     },
 }
 

@@ -348,8 +348,7 @@ class TestGetChartData(ZulipTestCase):
         data = result.json()
         self.assertEqual(data["end_times"], [datetime_to_timestamp(dt) for dt in self.end_times_day])
         self.assertEqual(
-            data["everyone"],
-            {"_1day": self.data(100), "_15day": self.data(100), "all_time": self.data(100)},
+            data["everyone"], {"_1day": self.data(100), "_15day": self.data(100), "all_time": self.data(100)},
         )
         # test min_length larger than filled data
         result = self.client_get(
@@ -361,11 +360,7 @@ class TestGetChartData(ZulipTestCase):
         self.assertEqual(data["end_times"], [datetime_to_timestamp(dt) for dt in end_times])
         self.assertEqual(
             data["everyone"],
-            {
-                "_1day": [0] + self.data(100),
-                "_15day": [0] + self.data(100),
-                "all_time": [0] + self.data(100),
-            },
+            {"_1day": [0] + self.data(100), "_15day": [0] + self.data(100), "all_time": [0] + self.data(100)},
         )
 
     def test_non_existent_chart(self) -> None:
@@ -439,9 +434,7 @@ class TestGetChartData(ZulipTestCase):
         user = self.example_user("hamlet")
         self.login_user(user)
 
-        result = self.client_get(
-            "/json/analytics/chart_data/realm/zulip", {"chart_name": "number_of_humans"},
-        )
+        result = self.client_get("/json/analytics/chart_data/realm/zulip", {"chart_name": "number_of_humans"})
         self.assert_json_error(result, "Must be an server administrator", 400)
 
         user = self.example_user("hamlet")
@@ -455,9 +448,7 @@ class TestGetChartData(ZulipTestCase):
         )
         self.assert_json_error(result, "Invalid organization", 400)
 
-        result = self.client_get(
-            "/json/analytics/chart_data/realm/zulip", {"chart_name": "number_of_humans"},
-        )
+        result = self.client_get("/json/analytics/chart_data/realm/zulip", {"chart_name": "number_of_humans"})
         self.assert_json_success(result)
 
     def test_get_chart_data_for_installation(self) -> None:
@@ -541,8 +532,7 @@ class TestSupportEndpoint(ZulipTestCase):
             if invite:
                 self.assert_in_success_response(['<span class="label">invite</span>'], result)
                 self.assert_in_success_response(
-                    ["<b>Expires in</b>: 1\xa0week, 3", "<b>Status</b>: Link has never been clicked"],
-                    result,
+                    ["<b>Expires in</b>: 1\xa0week, 3", "<b>Status</b>: Link has never been clicked"], result,
                 )
                 self.assert_in_success_response([], result)
             else:
@@ -659,9 +649,7 @@ class TestSupportEndpoint(ZulipTestCase):
         cordelia = self.example_user("cordelia")
         self.login_user(cordelia)
 
-        result = self.client_post(
-            "/activity/support", {"realm_id": f"{cordelia.realm_id}", "plan_type": "2"},
-        )
+        result = self.client_post("/activity/support", {"realm_id": f"{cordelia.realm_id}", "plan_type": "2"})
         self.assertEqual(result.status_code, 302)
         self.assertEqual(result["Location"], "/login/")
 
@@ -669,9 +657,7 @@ class TestSupportEndpoint(ZulipTestCase):
         self.login_user(iago)
 
         with mock.patch("analytics.views.do_change_plan_type") as m:
-            result = self.client_post(
-                "/activity/support", {"realm_id": f"{iago.realm_id}", "plan_type": "2"},
-            )
+            result = self.client_post("/activity/support", {"realm_id": f"{iago.realm_id}", "plan_type": "2"})
             m.assert_called_once_with(get_realm("zulip"), 2)
             self.assert_in_success_response(
                 ["Plan type of Zulip Dev changed from self hosted to limited"], result,
@@ -689,9 +675,7 @@ class TestSupportEndpoint(ZulipTestCase):
         self.login("iago")
 
         with mock.patch("analytics.views.attach_discount_to_realm") as m:
-            result = self.client_post(
-                "/activity/support", {"realm_id": f"{lear_realm.id}", "discount": "25"},
-            )
+            result = self.client_post("/activity/support", {"realm_id": f"{lear_realm.id}", "discount": "25"})
             m.assert_called_once_with(get_realm("lear"), 25)
             self.assert_in_success_response(["Discount of Lear &amp; Co. changed to 25 from None"], result)
 

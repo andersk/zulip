@@ -193,9 +193,7 @@ def do_delete_counts_at_hour(stat: CountStat, end_time: datetime) -> None:
         InstallationCount.objects.filter(property=stat.property, end_time=end_time).delete()
 
 
-def do_aggregate_to_summary_table(
-    stat: CountStat, end_time: datetime, realm: Optional[Realm] = None,
-) -> None:
+def do_aggregate_to_summary_table(stat: CountStat, end_time: datetime, realm: Optional[Realm] = None) -> None:
     cursor = connection.cursor()
 
     # Aggregate into RealmCount
@@ -670,9 +668,7 @@ def get_count_stats(realm: Optional[Realm] = None) -> Dict[str, CountStat]:
         ),
         CountStat(
             "messages_sent:client:day",
-            sql_data_collector(
-                UserCount, count_message_by_user_query(realm), (Message, "sending_client_id"),
-            ),
+            sql_data_collector(UserCount, count_message_by_user_query(realm), (Message, "sending_client_id")),
             CountStat.DAY,
         ),
         CountStat(

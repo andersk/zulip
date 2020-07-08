@@ -215,17 +215,11 @@ parser.add_argument(
     "-A", "--use-basic-auth", action="store_true", help="Add basic auth headers to the request",
 )
 parser.add_argument(
-    "-Q",
-    "--payload-as-query-param",
-    action="store_true",
-    help="Send payload as query param instead of body",
+    "-Q", "--payload-as-query-param", action="store_true", help="Send payload as query param instead of body",
 )
 parser.add_argument("-P", "--payload-param-name", type=str, help="Param name to use for the payload")
 parser.add_argument(
-    "-H",
-    "--custom-headers",
-    type=custom_headers,
-    help="Any additional headers to be sent with the request.",
+    "-H", "--custom-headers", type=custom_headers, help="Any additional headers to be sent with the request.",
 )
 
 options = parser.parse_args()

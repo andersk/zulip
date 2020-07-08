@@ -93,10 +93,7 @@ IGNORED_PHRASES = [
     r"user@example.com",
     # Fragments of larger strings
     (r"your subscriptions on your Streams page"),
-    (
-        r"Change notification settings for individual streams on your "
-        '<a href="/#streams">Streams page</a>.'
-    ),
+    (r"Change notification settings for individual streams on your " '<a href="/#streams">Streams page</a>.'),
     (
         r"Looking for our "
         '<a href="/integrations" target="_blank">Integrations</a> or '

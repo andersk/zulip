@@ -80,11 +80,7 @@ def serve_file_url_backend(
 
 
 def serve_file(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    realm_id_str: str,
-    filename: str,
-    url_only: bool = False,
+    request: HttpRequest, user_profile: UserProfile, realm_id_str: str, filename: str, url_only: bool = False,
 ) -> HttpResponse:
     path_id = f"{realm_id_str}/{filename}"
     is_authorized = validate_attachment_request(user_profile, path_id)

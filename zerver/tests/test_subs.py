@@ -188,9 +188,7 @@ class TestCreateStreams(ZulipTestCase):
         realm = user.realm
         self.login_user(user)
         post_data = {
-            "subscriptions": ujson.dumps(
-                [{"name": "new_stream", "description": "multi\nline\ndescription"}],
-            ),
+            "subscriptions": ujson.dumps([{"name": "new_stream", "description": "multi\nline\ndescription"}]),
             "invite_only": ujson.dumps(False),
         }
         result = self.api_post(user, "/api/v1/users/me/subscriptions", post_data, subdomain="zulip")
@@ -1639,11 +1637,7 @@ class DefaultStreamGroupTest(ZulipTestCase):
 
         result = self.client_post(
             "/json/default_stream_groups/create",
-            {
-                "group_name": group_name,
-                "description": description,
-                "stream_names": ujson.dumps(stream_names),
-            },
+            {"group_name": group_name, "description": description, "stream_names": ujson.dumps(stream_names)},
         )
         self.assert_json_success(result)
         default_stream_groups = get_default_stream_groups(realm)
@@ -1655,11 +1649,7 @@ class DefaultStreamGroupTest(ZulipTestCase):
         # Try adding the same streams to the group.
         result = self.client_post(
             "/json/default_stream_groups/create",
-            {
-                "group_name": group_name,
-                "description": description,
-                "stream_names": ujson.dumps(stream_names),
-            },
+            {"group_name": group_name, "description": description, "stream_names": ujson.dumps(stream_names)},
         )
         self.assert_json_error(result, "Default stream group 'group1' already exists")
 
@@ -1715,9 +1705,7 @@ class DefaultStreamGroupTest(ZulipTestCase):
             f"/json/default_stream_groups/{group_id}/streams",
             {"op": "add", "stream_names": ujson.dumps(new_stream_names)},
         )
-        self.assert_json_error(
-            result, "Stream 'stream4' is already present in default stream group 'group1'",
-        )
+        self.assert_json_error(result, "Stream 'stream4' is already present in default stream group 'group1'")
 
         # Test removing streams from default stream group
         result = self.client_patch(
@@ -1843,9 +1831,7 @@ class DefaultStreamGroupTest(ZulipTestCase):
             "/json/default_stream_groups/create",
             {"group_name": "abc\000", "description": description, "stream_names": ujson.dumps(stream_names)},
         )
-        self.assert_json_error(
-            result, "Default stream group name 'abc\000' contains NULL (0x00) characters.",
-        )
+        self.assert_json_error(result, "Default stream group name 'abc\000' contains NULL (0x00) characters.")
 
         # Also test that lookup_default_stream_groups raises an
         # error if we pass it a bad name.  This function is used
@@ -2017,9 +2003,7 @@ class SubscriptionPropertiesTest(ZulipTestCase):
         subs = gather_subscriptions(test_user)[0]
 
         sub = Subscription.objects.get(
-            recipient__type=Recipient.STREAM,
-            recipient__type_id=subs[0]["stream_id"],
-            user_profile=test_user,
+            recipient__type=Recipient.STREAM, recipient__type_id=subs[0]["stream_id"], user_profile=test_user,
         )
         self.assertEqual(sub.is_muted, False)
 
@@ -2040,9 +2024,7 @@ class SubscriptionPropertiesTest(ZulipTestCase):
         self.assertEqual(events[0]["event"]["property"], "in_home_view")
         self.assertEqual(events[0]["event"]["value"], False)
         sub = Subscription.objects.get(
-            recipient__type=Recipient.STREAM,
-            recipient__type_id=subs[0]["stream_id"],
-            user_profile=test_user,
+            recipient__type=Recipient.STREAM, recipient__type_id=subs[0]["stream_id"], user_profile=test_user,
         )
         self.assertEqual(sub.is_muted, True)
 
@@ -2070,9 +2052,7 @@ class SubscriptionPropertiesTest(ZulipTestCase):
         self.assertEqual(events[0]["event"]["value"], True)
         self.assert_json_success(result)
         sub = Subscription.objects.get(
-            recipient__type=Recipient.STREAM,
-            recipient__type_id=subs[0]["stream_id"],
-            user_profile=test_user,
+            recipient__type=Recipient.STREAM, recipient__type_id=subs[0]["stream_id"], user_profile=test_user,
         )
         self.assertEqual(sub.is_muted, False)
 
@@ -2099,9 +2079,7 @@ class SubscriptionPropertiesTest(ZulipTestCase):
         self.assertEqual(events[0]["event"]["value"], False)
 
         sub = Subscription.objects.get(
-            recipient__type=Recipient.STREAM,
-            recipient__type_id=subs[0]["stream_id"],
-            user_profile=test_user,
+            recipient__type=Recipient.STREAM, recipient__type_id=subs[0]["stream_id"], user_profile=test_user,
         )
         self.assertEqual(sub.is_muted, True)
 
@@ -3621,9 +3599,7 @@ class SubscriptionAPITest(ZulipTestCase):
         }
 
         # For this test to work, othello can't be in the no_othello_here realm
-        self.assertNotEqual(
-            user_profile.realm.id, realm.id, "Expected othello user to not be in this realm.",
-        )
+        self.assertNotEqual(user_profile.realm.id, realm.id, "Expected othello user to not be in this realm.")
 
         # This should result in missing user
         with self.assertRaises(ValidationError):
@@ -3828,8 +3804,7 @@ class GetStreamsTest(ZulipTestCase):
         json2 = ujson.loads(result2.content)
 
         self.assertEqual(
-            sorted([s["name"] for s in json["streams"]]),
-            sorted([s["name"] for s in json2["subscriptions"]]),
+            sorted([s["name"] for s in json["streams"]]), sorted([s["name"] for s in json2["subscriptions"]]),
         )
 
         # Check it correctly lists all public streams with include_subscribed=false
@@ -4432,8 +4407,7 @@ class StreamTrafficTest(ZulipTestCase):
         # significant digits calculation gets applied
         # old stream
         self.assertEqual(
-            get_average_weekly_stream_traffic(42, timezone_now() - timedelta(days=300), {42: 98 * 4 + 3}),
-            98,
+            get_average_weekly_stream_traffic(42, timezone_now() - timedelta(days=300), {42: 98 * 4 + 3}), 98,
         )
         # stream between 7 and 27 days old
         self.assertEqual(

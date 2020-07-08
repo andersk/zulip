@@ -96,9 +96,7 @@ class BeanstalkHookTests(WebhookTestCase):
         )
 
     @patch("zerver.webhooks.beanstalk.view.check_send_webhook_message")
-    def test_git_single_filtered_by_branches_ignore(
-        self, check_send_webhook_message_mock: MagicMock,
-    ) -> None:
+    def test_git_single_filtered_by_branches_ignore(self, check_send_webhook_message_mock: MagicMock) -> None:
         self.url = self.build_webhook_url(branches="changes,development")
         payload = self.get_body("git_singlecommit")
         result = self.api_post(self.test_user, self.url, payload)

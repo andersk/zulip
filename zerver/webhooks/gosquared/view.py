@@ -36,9 +36,7 @@ def api_gosquared_webhook(
         user_num = payload["concurrents"]
         user_acc = payload["siteDetails"]["acct"]
         acc_url = "https://www.gosquared.com/now/" + user_acc
-        body = TRAFFIC_SPIKE_TEMPLATE.format(
-            website_name=domain_name, website_url=acc_url, user_num=user_num,
-        )
+        body = TRAFFIC_SPIKE_TEMPLATE.format(website_name=domain_name, website_url=acc_url, user_num=user_num)
         topic = f"GoSquared - {domain_name}"
         check_send_webhook_message(request, user_profile, topic, body)
 

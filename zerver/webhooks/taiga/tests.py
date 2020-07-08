@@ -40,9 +40,7 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("userstory_changed_reassigned", self.TOPIC, message)
 
     def test_taiga_userstory_changed_unassigned(self) -> None:
-        message = (
-            "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) unassigned user story **UserStory**."
-        )
+        message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) unassigned user story **UserStory**."
         self.send_and_test_stream_message("userstory_changed_unassigned", self.TOPIC, message)
 
     def test_taiga_userstory_changed_points(self) -> None:
@@ -123,7 +121,9 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("task_changed_unblocked", self.TOPIC, message)
 
     def test_taiga_task_changed_assigned(self) -> None:
-        message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) assigned task **New Task** to TomaszKolek."
+        message = (
+            "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) assigned task **New Task** to TomaszKolek."
+        )
         self.send_and_test_stream_message("task_changed_assigned", self.TOPIC, message)
 
     def test_taiga_task_changed_reassigned(self) -> None:

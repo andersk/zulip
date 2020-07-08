@@ -14,9 +14,7 @@ from zerver.models import Message, UserProfile
 
 
 def archive(request: HttpRequest, stream_id: int, topic_name: str) -> HttpResponse:
-    def get_response(
-        rendered_message_list: List[str], is_web_public: bool, stream_name: str,
-    ) -> HttpResponse:
+    def get_response(rendered_message_list: List[str], is_web_public: bool, stream_name: str) -> HttpResponse:
         return render(
             request,
             "zerver/archive/index.html",

@@ -499,11 +499,7 @@ def build_attachment(
 
 
 def process_avatars(
-    avatar_list: List[ZerverFieldsT],
-    avatar_dir: str,
-    realm_id: int,
-    threads: int,
-    size_url_suffix: str = "",
+    avatar_list: List[ZerverFieldsT], avatar_dir: str, realm_id: int, threads: int, size_url_suffix: str = "",
 ) -> List[ZerverFieldsT]:
     """
     This function gets the avatar of the user and saves it in the

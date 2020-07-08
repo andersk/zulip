@@ -57,7 +57,9 @@ class StripeHookTests(WebhookTestCase):
     # ACH payment (really a 'payment', rather than a 'charge')
     def test_charge_succeeded__invoice(self) -> None:
         expected_topic = "cus_00000000000000"
-        expected_message = "[Payment](https://dashboard.stripe.com/payments/py_000000000000000000000000) for $1.00 succeeded"
+        expected_message = (
+            "[Payment](https://dashboard.stripe.com/payments/py_000000000000000000000000) for $1.00 succeeded"
+        )
         self.send_and_test_stream_message(
             "charge_succeeded__invoice",
             expected_topic,
@@ -179,9 +181,7 @@ Billing method: send invoice"""
 
     def test_invoice_payment_failed(self) -> None:
         expected_topic = "cus_00000000000000"
-        expected_message = (
-            "[Invoice](https://dashboard.stripe.com/invoices/in_00000000000000) payment failed"
-        )
+        expected_message = "[Invoice](https://dashboard.stripe.com/invoices/in_00000000000000) payment failed"
         self.send_and_test_stream_message(
             "invoice_payment_failed",
             expected_topic,

@@ -19,7 +19,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(
-            backfill_last_message_id, reverse_code=migrations.RunPython.noop, elidable=True,
-        ),
+        migrations.RunPython(backfill_last_message_id, reverse_code=migrations.RunPython.noop, elidable=True),
     ]

@@ -359,9 +359,7 @@ def delete_messages(msg_ids: List[int]) -> None:
 
 def delete_expired_attachments(realm: Realm) -> None:
     attachments_deleted, _ = Attachment.objects.filter(
-        messages__isnull=True,
-        realm_id=realm.id,
-        id__in=ArchivedAttachment.objects.filter(realm_id=realm.id),
+        messages__isnull=True, realm_id=realm.id, id__in=ArchivedAttachment.objects.filter(realm_id=realm.id),
     ).delete()
 
     if attachments_deleted > 0:
@@ -377,9 +375,7 @@ def move_related_objects_to_archive(msg_ids: List[int]) -> None:
 def archive_messages_by_recipient(
     recipient: Recipient, message_retention_days: int, realm: Realm, chunk_size: int = MESSAGE_BATCH_SIZE,
 ) -> int:
-    return move_expired_messages_to_archive_by_recipient(
-        recipient, message_retention_days, realm, chunk_size,
-    )
+    return move_expired_messages_to_archive_by_recipient(recipient, message_retention_days, realm, chunk_size)
 
 
 def archive_personal_and_huddle_messages(realm: Realm, chunk_size: int = MESSAGE_BATCH_SIZE) -> None:

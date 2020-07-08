@@ -38,9 +38,7 @@ Usage examples:
                 display_string_id = realm.string_id if realm.string_id != "" else "''"
                 if realm.deactivated:
                     print(
-                        self.style.ERROR(
-                            outer_format % (realm.id, display_string_id, realm.name, realm.uri),
-                        ),
+                        self.style.ERROR(outer_format % (realm.id, display_string_id, realm.name, realm.uri)),
                     )
                     deactivated = True
                 else:

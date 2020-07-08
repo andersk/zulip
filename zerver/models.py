@@ -699,7 +699,9 @@ class RealmEmoji(models.Model):
     PATH_ID_TEMPLATE = "{realm_id}/emoji/images/{emoji_file_name}"
 
     def __str__(self) -> str:
-        return f"<RealmEmoji({self.realm.string_id}): {self.id} {self.name} {self.deactivated} {self.file_name}>"
+        return (
+            f"<RealmEmoji({self.realm.string_id}): {self.id} {self.name} {self.deactivated} {self.file_name}>"
+        )
 
 
 def get_realm_emoji_dicts(realm: Realm, only_active_emojis: bool = False) -> Dict[str, Dict[str, Any]]:
@@ -1275,10 +1277,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     @property
     def allowed_bot_types(self) -> List[int]:
         allowed_bot_types = []
-        if (
-            self.is_realm_admin
-            or not self.realm.bot_creation_policy == Realm.BOT_CREATION_LIMIT_GENERIC_BOTS
-        ):
+        if self.is_realm_admin or not self.realm.bot_creation_policy == Realm.BOT_CREATION_LIMIT_GENERIC_BOTS:
             allowed_bot_types.append(UserProfile.DEFAULT_BOT)
         allowed_bot_types += [
             UserProfile.INCOMING_WEBHOOK_BOT,
@@ -2827,7 +2826,9 @@ class ScheduledMessage(models.Model):
 
     def __str__(self) -> str:
         display_recipient = get_display_recipient(self.recipient)
-        return f"<ScheduledMessage: {display_recipient} {self.subject} {self.sender} {self.scheduled_timestamp}>"
+        return (
+            f"<ScheduledMessage: {display_recipient} {self.subject} {self.sender} {self.scheduled_timestamp}>"
+        )
 
 
 EMAIL_TYPES = {
@@ -3028,9 +3029,7 @@ class CustomProfileField(models.Model):
     CHOICE_FIELD_VALIDATORS: Dict[int, ExtendedValidator] = {
         item[0]: item[2] for item in CHOICE_FIELD_TYPE_DATA
     }
-    USER_FIELD_VALIDATORS: Dict[int, RealmUserValidator] = {
-        item[0]: item[2] for item in USER_FIELD_TYPE_DATA
-    }
+    USER_FIELD_VALIDATORS: Dict[int, RealmUserValidator] = {item[0]: item[2] for item in USER_FIELD_TYPE_DATA}
 
     FIELD_TYPE_DATA: List[FieldElement] = [
         # Type, Display Name, Validator, Converter, Keyword

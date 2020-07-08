@@ -134,9 +134,7 @@ def generate_and_save_stripe_fixture(
     return _generate_and_save_stripe_fixture
 
 
-def read_stripe_fixture(
-    decorated_function_name: str, mocked_function_name: str,
-) -> Callable[[Any, Any], Any]:
+def read_stripe_fixture(decorated_function_name: str, mocked_function_name: str) -> Callable[[Any, Any], Any]:
     def _read_stripe_fixture(*args: Any, **kwargs: Any) -> Any:
         mock = operator.attrgetter(mocked_function_name)(sys.modules[__name__])
         fixture_path = stripe_fixture_path(decorated_function_name, mocked_function_name, mock.call_count)
@@ -320,9 +318,7 @@ class StripeTestCase(ZulipTestCase):
         ]
 
         # Deactivate all users in our realm that aren't in our whitelist.
-        UserProfile.objects.filter(realm_id=realm.id).exclude(email__in=active_emails).update(
-            is_active=False,
-        )
+        UserProfile.objects.filter(realm_id=realm.id).exclude(email__in=active_emails).update(is_active=False)
 
         # sanity check our 8 expected users are active
         self.assertEqual(
@@ -1446,9 +1442,7 @@ class StripeTest(StripeTestCase):
         realm = Realm.objects.create(string_id="second", name="second")
         UserProfile.objects.create(realm=realm, email="member@second.com")
         for i in range(5):
-            UserProfile.objects.create(
-                realm=realm, email=f"guest{i}@second.com", role=UserProfile.ROLE_GUEST,
-            )
+            UserProfile.objects.create(realm=realm, email=f"guest{i}@second.com", role=UserProfile.ROLE_GUEST)
         self.assertEqual(get_latest_seat_count(realm), 1)
         # Test 1 member and 6 guests
         UserProfile.objects.create(realm=realm, email="guest5@second.com", role=UserProfile.ROLE_GUEST)
@@ -1501,8 +1495,7 @@ class StripeTest(StripeTestCase):
         )
         stripe_invoice = [invoice for invoice in stripe.Invoice.list(customer=stripe_customer_id)][0]
         self.assertEqual(
-            [1200 * self.seat_count, -1200 * self.seat_count],
-            [item.amount for item in stripe_invoice.lines],
+            [1200 * self.seat_count, -1200 * self.seat_count], [item.amount for item in stripe_invoice.lines],
         )
         # Check CustomerPlan reflects the discount
         plan = CustomerPlan.objects.get(price_per_license=1200, discount=Decimal(85))
@@ -1518,8 +1511,7 @@ class StripeTest(StripeTestCase):
         )
         stripe_invoice = [invoice for invoice in stripe.Invoice.list(customer=stripe_customer_id)][0]
         self.assertEqual(
-            [6000 * self.seat_count, -6000 * self.seat_count],
-            [item.amount for item in stripe_invoice.lines],
+            [6000 * self.seat_count, -6000 * self.seat_count], [item.amount for item in stripe_invoice.lines],
         )
         plan = CustomerPlan.objects.get(price_per_license=6000, discount=Decimal(25))
 
@@ -1611,9 +1603,7 @@ class StripeTest(StripeTestCase):
         with patch("corporate.lib.stripe.get_latest_seat_count", return_value=20):
             update_license_ledger_if_needed(user.realm, self.now)
         self.assertEqual(
-            LicenseLedger.objects.order_by("-id")
-            .values_list("licenses", "licenses_at_next_renewal")
-            .first(),
+            LicenseLedger.objects.order_by("-id").values_list("licenses", "licenses_at_next_renewal").first(),
             (20, 20),
         )
 
@@ -1633,9 +1623,7 @@ class StripeTest(StripeTestCase):
         self.assertEqual(get_realm("zulip").plan_type, Realm.LIMITED)
         self.assertEqual(CustomerPlan.objects.first().status, CustomerPlan.ENDED)
         self.assertEqual(
-            LicenseLedger.objects.order_by("-id")
-            .values_list("licenses", "licenses_at_next_renewal")
-            .first(),
+            LicenseLedger.objects.order_by("-id").values_list("licenses", "licenses_at_next_renewal").first(),
             (20, 20),
         )
 
@@ -1643,9 +1631,7 @@ class StripeTest(StripeTestCase):
         with patch("corporate.lib.stripe.get_latest_seat_count", return_value=40):
             update_license_ledger_if_needed(user.realm, self.next_year)
         self.assertEqual(
-            LicenseLedger.objects.order_by("-id")
-            .values_list("licenses", "licenses_at_next_renewal")
-            .first(),
+            LicenseLedger.objects.order_by("-id").values_list("licenses", "licenses_at_next_renewal").first(),
             (20, 20),
         )
 
@@ -1697,9 +1683,7 @@ class StripeTest(StripeTestCase):
             update_license_ledger_if_needed(user.realm, self.now)
         self.assertEqual(LicenseLedger.objects.filter(plan=monthly_plan).count(), 2)
         self.assertEqual(
-            LicenseLedger.objects.order_by("-id")
-            .values_list("licenses", "licenses_at_next_renewal")
-            .first(),
+            LicenseLedger.objects.order_by("-id").values_list("licenses", "licenses_at_next_renewal").first(),
             (20, 20),
         )
 

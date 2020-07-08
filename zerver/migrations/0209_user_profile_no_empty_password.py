@@ -148,9 +148,7 @@ def ensure_no_empty_passwords(apps: StateApps, schema_editor: DatabaseSchemaEdit
             modified_user=user_profile,
             event_type=event_type,
             event_time=event_time,
-            extra_data=ujson.dumps(
-                {"migration_id": MIGRATION_ID, "affected_user_type": affected_user_type},
-            ),
+            extra_data=ujson.dumps({"migration_id": MIGRATION_ID, "affected_user_type": affected_user_type}),
         )
 
     # If Zulip's built-in password authentication is not enabled on

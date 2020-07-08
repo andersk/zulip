@@ -131,9 +131,7 @@ class EditMessageSideEffectsTest(ZulipTestCase):
         if connected_to_zulip:
             with self._cordelia_connected_to_zulip():
                 info = self._get_queued_data_for_message_update(
-                    message_id=message_id,
-                    content=updated_content,
-                    expect_short_circuit=expect_short_circuit,
+                    message_id=message_id, content=updated_content, expect_short_circuit=expect_short_circuit,
                 )
         else:
             info = self._get_queued_data_for_message_update(

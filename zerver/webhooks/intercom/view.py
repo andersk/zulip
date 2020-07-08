@@ -171,9 +171,7 @@ def get_conversation_admin_single_created_message(payload: Dict[str, Any]) -> Tu
     user = payload["data"]["item"]["user"]
     conversation_body = payload["data"]["item"]["conversation_message"]["body"]
     content = strip_tags(conversation_body)
-    body = CONVERSATION_ADMIN_INITIATED_CONVERSATION.format(
-        admin_name=assignee.get("name"), content=content,
-    )
+    body = CONVERSATION_ADMIN_INITIATED_CONVERSATION.format(admin_name=assignee.get("name"), content=content)
     topic = get_topic_for_contacts(user)
     return (topic, body)
 

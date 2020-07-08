@@ -1027,9 +1027,7 @@ class OpenAPIAttributesTest(ZulipTestCase):
                             cnt += 1
                         continue
                     validate_schema(response_schema)
-                    assert validate_against_openapi_schema(
-                        response_schema["example"], path, method, response,
-                    )
+                    assert validate_against_openapi_schema(response_schema["example"], path, method, response)
 
 
 class OpenAPIRegexTest(ZulipTestCase):

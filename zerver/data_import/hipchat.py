@@ -289,10 +289,7 @@ def write_avatar_data(
     os.makedirs(avatar_realm_folder, exist_ok=True)
 
     avatar_records = convert_avatar_data(
-        avatar_folder=avatar_folder,
-        raw_data=raw_user_data,
-        user_id_mapper=user_id_mapper,
-        realm_id=realm_id,
+        avatar_folder=avatar_folder, raw_data=raw_user_data, user_id_mapper=user_id_mapper, realm_id=realm_id,
     )
 
     create_converted_data_files(avatar_records, output_dir, "/avatars/records.json")

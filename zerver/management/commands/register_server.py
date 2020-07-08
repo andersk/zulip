@@ -45,9 +45,7 @@ class Command(ZulipBaseCommand):
             raise CommandError("Missing zulip_org_key; run scripts/setup/generate_secrets.py to generate.")
         if settings.PUSH_NOTIFICATION_BOUNCER_URL is None:
             if settings.DEVELOPMENT:
-                settings.PUSH_NOTIFICATION_BOUNCER_URL = (
-                    settings.EXTERNAL_URI_SCHEME + settings.EXTERNAL_HOST
-                )
+                settings.PUSH_NOTIFICATION_BOUNCER_URL = settings.EXTERNAL_URI_SCHEME + settings.EXTERNAL_HOST
             else:
                 raise CommandError(
                     "Please uncomment PUSH_NOTIFICATION_BOUNCER_URL "

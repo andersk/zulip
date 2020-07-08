@@ -79,9 +79,7 @@ class TestBasics(ZulipTestCase):
         message_id = self.send_stream_message(sender=cordelia, stream_name=stream_name)
         self.login_user(cordelia)
 
-        payload = dict(
-            message_id=message_id, msg_type="whatever", content='{"name": "alice", "salary": 20}',
-        )
+        payload = dict(message_id=message_id, msg_type="whatever", content='{"name": "alice", "salary": 20}')
         with mock.patch("zerver.lib.actions.send_event") as m:
             result = self.client_post("/json/submessage", payload)
         self.assert_json_success(result)

@@ -18,9 +18,7 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    models.AutoField(
-                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID",
-                    ),
+                    models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID"),
                 ),
                 ("emoji_name", models.TextField()),
                 (
@@ -36,10 +34,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 ("emoji_code", models.TextField()),
-                (
-                    "archive_timestamp",
-                    models.DateTimeField(db_index=True, default=django.utils.timezone.now),
-                ),
+                ("archive_timestamp", models.DateTimeField(db_index=True, default=django.utils.timezone.now)),
                 (
                     "message",
                     models.ForeignKey(

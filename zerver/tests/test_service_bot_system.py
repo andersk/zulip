@@ -48,9 +48,7 @@ class TestServiceBotBasics(ZulipTestCase):
             recipient_type=Recipient.PERSONAL,
         )
 
-        expected = dict(
-            outgoing_webhooks=[dict(trigger="private_message", user_profile_id=outgoing_bot.id)],
-        )
+        expected = dict(outgoing_webhooks=[dict(trigger="private_message", user_profile_id=outgoing_bot.id)])
 
         self.assertEqual(event_dict, expected)
 

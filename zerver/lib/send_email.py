@@ -101,9 +101,7 @@ def build_email(
             .strip()
             .replace("\n", "")
         )
-        message = loader.render_to_string(
-            template_prefix + ".txt", context=context, using="Jinja2_plaintext",
-        )
+        message = loader.render_to_string(template_prefix + ".txt", context=context, using="Jinja2_plaintext")
 
         try:
             html_message = loader.render_to_string(template_prefix + ".html", context)

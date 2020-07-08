@@ -246,9 +246,7 @@ class ThumbnailTest(ZulipTestCase):
         # Tests the /api/v1/thumbnail api endpoint with ?api_key
         # auth.
         user_profile = self.example_user("hamlet")
-        result = self.client_get(
-            f"/thumbnail?url={quoted_uri}&size=full&api_key={get_api_key(user_profile)}",
-        )
+        result = self.client_get(f"/thumbnail?url={quoted_uri}&size=full&api_key={get_api_key(user_profile)}")
         self.assertEqual(result.status_code, 302, result)
         expected_part_url = get_file_path_urlpart(uri)
         self.assertIn(expected_part_url, result.url)

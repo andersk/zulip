@@ -1020,9 +1020,7 @@ def do_deactivate_user(
             do_deactivate_user(profile, acting_user=acting_user, _cascade=False)
 
 
-def do_deactivate_stream(
-    stream: Stream, log: bool = True, acting_user: Optional[UserProfile] = None,
-) -> None:
+def do_deactivate_stream(stream: Stream, log: bool = True, acting_user: Optional[UserProfile] = None) -> None:
 
     # Get the affected user ids *before* we deactivate everybody.
     affected_user_ids = can_access_stream_user_ids(stream)
@@ -1877,11 +1875,7 @@ def do_add_submessage(realm: Realm, sender_id: int, message_id: int, msg_type: s
 
 
 def notify_reaction_update(user_profile: UserProfile, message: Message, reaction: Reaction, op: str) -> None:
-    user_dict = {
-        "user_id": user_profile.id,
-        "email": user_profile.email,
-        "full_name": user_profile.full_name,
-    }
+    user_dict = {"user_id": user_profile.id, "email": user_profile.email, "full_name": user_profile.full_name}
 
     event: Dict[str, Any] = {
         "type": "reaction",
@@ -1981,9 +1975,7 @@ def do_send_typing_notification(
     sender_dict = {"user_id": sender.id, "email": sender.email}
 
     # Include a list of recipients in the event body to help identify where the typing is happening
-    recipient_dicts = [
-        {"user_id": profile.id, "email": profile.email} for profile in recipient_user_profiles
-    ]
+    recipient_dicts = [{"user_id": profile.id, "email": profile.email} for profile in recipient_user_profiles]
     event = dict(type="typing", op=operator, sender=sender_dict, recipients=recipient_dicts)
 
     # Only deliver the notification to active user recipients
@@ -2367,9 +2359,7 @@ def send_rate_limited_pm_notification_to_bot_owner(sender: UserProfile, realm: R
     if last_reminder and timezone_now() - last_reminder <= waitperiod:
         return
 
-    internal_send_private_message(
-        realm, get_system_bot(settings.NOTIFICATION_BOT), sender.bot_owner, content,
-    )
+    internal_send_private_message(realm, get_system_bot(settings.NOTIFICATION_BOT), sender.bot_owner, content)
 
     sender.last_reminder = timezone_now()
     sender.save(update_fields=["last_reminder"])
@@ -3691,11 +3681,7 @@ def do_change_default_sending_stream(
     user_profile.save(update_fields=["default_sending_stream"])
     if log:
         log_event(
-            {
-                "type": "user_change_default_sending_stream",
-                "user": user_profile.email,
-                "stream": str(stream),
-            },
+            {"type": "user_change_default_sending_stream", "user": user_profile.email, "stream": str(stream)},
         )
     if user_profile.is_bot:
         if stream:
@@ -3788,9 +3774,7 @@ def do_change_user_role(
             },
         ),
     )
-    event = dict(
-        type="realm_user", op="update", person=dict(user_id=user_profile.id, role=user_profile.role),
-    )
+    event = dict(type="realm_user", op="update", person=dict(user_id=user_profile.id, role=user_profile.role))
     send_event(user_profile.realm, event, active_user_ids(user_profile.realm_id))
 
 
@@ -4165,9 +4149,9 @@ def do_add_streams_to_default_stream_group(
             )
         if stream in group.streams.all():
             raise JsonableError(
-                _(
-                    "Stream '{stream_name}' is already present in default stream group '{group_name}'",
-                ).format(stream_name=stream.name, group_name=group.name),
+                _("Stream '{stream_name}' is already present in default stream group '{group_name}'").format(
+                    stream_name=stream.name, group_name=group.name,
+                ),
             )
         group.streams.add(stream)
 
@@ -4191,9 +4175,7 @@ def do_remove_streams_from_default_stream_group(
     notify_default_stream_groups(realm)
 
 
-def do_change_default_stream_group_name(
-    realm: Realm, group: DefaultStreamGroup, new_group_name: str,
-) -> None:
+def do_change_default_stream_group_name(realm: Realm, group: DefaultStreamGroup, new_group_name: str) -> None:
     if group.name == new_group_name:
         raise JsonableError(_("This default stream group is already named '{}'").format(new_group_name))
 
@@ -4359,11 +4341,7 @@ def update_user_activity_interval(user_profile: UserProfile, log_time: datetime.
 
 
 def update_user_presence(
-    user_profile: UserProfile,
-    client: Client,
-    log_time: datetime.datetime,
-    status: int,
-    new_user_input: bool,
+    user_profile: UserProfile, client: Client, log_time: datetime.datetime, status: int, new_user_input: bool,
 ) -> None:
     event = {
         "user_profile_id": user_profile.id,
@@ -4716,11 +4694,7 @@ def update_to_dict_cache(changed_messages: List[Message], realm_id: Optional[int
 def do_update_embedded_data(
     user_profile: UserProfile, message: Message, content: Optional[str], rendered_content: Optional[str],
 ) -> None:
-    event: Dict[str, Any] = {
-        "type": "update_message",
-        "sender": user_profile.email,
-        "message_id": message.id,
-    }
+    event: Dict[str, Any] = {"type": "update_message", "sender": user_profile.email, "message_id": message.id}
     changed_messages = [message]
 
     ums = UserMessage.objects.filter(message=message.id)
@@ -5285,9 +5259,7 @@ def gather_subscriptions_helper(user_profile: UserProfile, include_subscribers: 
         # Backwards-compatibility for clients that haven't been
         # updated for the is_announcement_only -> stream_post_policy
         # migration.
-        stream_dict["is_announcement_only"] = (
-            stream["stream_post_policy"] == Stream.STREAM_POST_POLICY_ADMINS
-        )
+        stream_dict["is_announcement_only"] = stream["stream_post_policy"] == Stream.STREAM_POST_POLICY_ADMINS
 
         # Add a few computed fields not directly from the data models.
         stream_dict["stream_weekly_traffic"] = get_average_weekly_stream_traffic(
@@ -6294,9 +6266,7 @@ def get_service_dicts_for_bot(user_profile_id: int) -> List[Dict[str, Any]]:
         ]
     elif user_profile.bot_type == UserProfile.EMBEDDED_BOT:
         try:
-            service_dicts = [
-                {"config_data": get_bot_config(user_profile), "service_name": services[0].name},
-            ]
+            service_dicts = [{"config_data": get_bot_config(user_profile), "service_name": services[0].name}]
         # A ConfigError just means that there are no config entries for user_profile.
         except ConfigError:
             pass

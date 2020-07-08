@@ -186,9 +186,7 @@ def access_stream_for_send_message(
     if forwarder_user_profile is not None and forwarder_user_profile.is_api_super_user:
         return
 
-    if sender.is_bot and (
-        sender.bot_owner is not None and subscribed_to_stream(sender.bot_owner, stream.id)
-    ):
+    if sender.is_bot and (sender.bot_owner is not None and subscribed_to_stream(sender.bot_owner, stream.id)):
         # Bots can send to any stream their owner can.
         return
 
@@ -323,9 +321,7 @@ def access_stream_by_name(
     return (stream, recipient, sub)
 
 
-def access_stream_for_unmute_topic_by_name(
-    user_profile: UserProfile, stream_name: str, error: str,
-) -> Stream:
+def access_stream_for_unmute_topic_by_name(user_profile: UserProfile, stream_name: str, error: str) -> Stream:
     """
     It may seem a little silly to have this helper function for unmuting
     topics, but it gets around a linter warning, and it helps to be able
@@ -405,9 +401,7 @@ def filter_stream_authorization(
 ) -> Tuple[List[Stream], List[Stream]]:
     streams_subscribed: Set[int] = set()
     recipient_ids = [stream.recipient_id for stream in streams]
-    subs = Subscription.objects.filter(
-        user_profile=user_profile, recipient_id__in=recipient_ids, active=True,
-    )
+    subs = Subscription.objects.filter(user_profile=user_profile, recipient_id__in=recipient_ids, active=True)
 
     for sub in subs:
         streams_subscribed.add(sub.recipient.type_id)

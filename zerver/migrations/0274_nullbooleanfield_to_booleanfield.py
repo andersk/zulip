@@ -42,8 +42,6 @@ class Migration(migrations.Migration):
             field=models.BooleanField(default=None, null=True),
         ),
         migrations.AlterField(
-            model_name="userprofile",
-            name="enter_sends",
-            field=models.BooleanField(default=False, null=True),
+            model_name="userprofile", name="enter_sends", field=models.BooleanField(default=False, null=True),
         ),
     ]

@@ -198,14 +198,8 @@ class SlackImporter(ZulipTestCase):
 
     @mock.patch("zerver.data_import.slack.get_data_file")
     def test_users_to_zerver_userprofile(self, mock_get_data_file: mock.Mock) -> None:
-        custom_profile_field_user1 = {
-            "Xf06054BBB": {"value": "random1"},
-            "Xf023DSCdd": {"value": "employee"},
-        }
-        custom_profile_field_user2 = {
-            "Xf06054BBB": {"value": "random2"},
-            "Xf023DSCdd": {"value": "employer"},
-        }
+        custom_profile_field_user1 = {"Xf06054BBB": {"value": "random1"}, "Xf023DSCdd": {"value": "employee"}}
+        custom_profile_field_user2 = {"Xf06054BBB": {"value": "random2"}, "Xf023DSCdd": {"value": "employer"}}
         user_data = [
             {
                 "id": "U08RGD1RD",
@@ -573,9 +567,7 @@ class SlackImporter(ZulipTestCase):
         self.assertEqual(self.get_set(zerver_subscription, "recipient"), {i for i in range(11)})
         self.assertEqual(self.get_set(zerver_subscription, "user_profile"), {1, 5, 7, 8})
 
-        self.assertEqual(
-            self.get_set(zerver_recipient, "id"), self.get_set(zerver_subscription, "recipient"),
-        )
+        self.assertEqual(self.get_set(zerver_recipient, "id"), self.get_set(zerver_subscription, "recipient"))
         self.assertEqual(self.get_set(zerver_recipient, "type_id"), {0, 1, 2, 3, 5, 7, 8})
         self.assertEqual(self.get_set(zerver_recipient, "type"), {1, 2, 3})
 
@@ -803,13 +795,7 @@ class SlackImporter(ZulipTestCase):
         subscriber_map: Dict[int, Set[int]] = dict()
         added_channels: Dict[str, Tuple[str, int]] = {"random": ("c5", 1), "general": ("c6", 2)}
 
-        (
-            zerver_message,
-            zerver_usermessage,
-            attachment,
-            uploads,
-            reaction,
-        ) = channel_message_to_zerver_message(
+        zerver_message, zerver_usermessage, attachment, uploads, reaction = channel_message_to_zerver_message(
             1,
             user_data,
             slack_user_id_to_zulip_user_id,
@@ -848,9 +834,7 @@ class SlackImporter(ZulipTestCase):
             zerver_message[4]["recipient"], slack_recipient_name_to_zulip_recipient_id["general"],
         )
         self.assertEqual(zerver_message[2][EXPORT_TOPIC_NAME], "imported from slack")
-        self.assertEqual(
-            zerver_message[1]["recipient"], slack_recipient_name_to_zulip_recipient_id["random"],
-        )
+        self.assertEqual(zerver_message[1]["recipient"], slack_recipient_name_to_zulip_recipient_id["random"])
         self.assertEqual(
             zerver_message[5]["recipient"],
             slack_recipient_name_to_zulip_recipient_id["mpdm-user9--user2--user10-1"],

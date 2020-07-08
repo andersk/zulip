@@ -170,11 +170,7 @@ class Command(BaseCommand):
         )
 
         parser.add_argument(
-            "--extra-bots",
-            dest="extra_bots",
-            type=int,
-            default=0,
-            help="The number of extra bots to create",
+            "--extra-bots", dest="extra_bots", type=int, default=0, help="The number of extra bots to create",
         )
 
         parser.add_argument(
@@ -546,10 +542,7 @@ class Command(BaseCommand):
                 zulip_realm, "Biography", CustomProfileField.LONG_TEXT, hint="What are you known for?",
             )
             favorite_food = try_add_realm_custom_profile_field(
-                zulip_realm,
-                "Favorite food",
-                CustomProfileField.SHORT_TEXT,
-                hint="Or drink, if you'd prefer",
+                zulip_realm, "Favorite food", CustomProfileField.SHORT_TEXT, hint="Or drink, if you'd prefer",
             )
             field_data: ProfileFieldData = {
                 "vim": {"text": "Vim", "order": "1"},

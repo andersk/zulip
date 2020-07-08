@@ -109,9 +109,7 @@ class GithubWebhookTest(WebhookTestCase):
 
     def test_commit_comment_msg(self) -> None:
         expected_message = "baxterthehacker [commented](https://github.com/baxterthehacker/public-repo/commit/9049f1265b7d61be4a8904a9a27120d2064dab3b#commitcomment-11056394) on [9049f12](https://github.com/baxterthehacker/public-repo/commit/9049f1265b7d61be4a8904a9a27120d2064dab3b):\n~~~ quote\nThis is a really good change! :+1:\n~~~"
-        self.send_and_test_stream_message(
-            "commit_comment", self.EXPECTED_TOPIC_REPO_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("commit_comment", self.EXPECTED_TOPIC_REPO_EVENTS, expected_message)
 
     def test_create_msg(self) -> None:
         expected_message = "baxterthehacker created tag 0.0.1."
@@ -141,9 +139,7 @@ class GithubWebhookTest(WebhookTestCase):
 
     def test_issue_comment_msg(self) -> None:
         expected_message = "baxterthehacker [commented](https://github.com/baxterthehacker/public-repo/issues/2#issuecomment-99262140) on [Issue #2](https://github.com/baxterthehacker/public-repo/issues/2):\n\n~~~ quote\nYou are totally right! I'll get this fixed right away.\n~~~"
-        self.send_and_test_stream_message(
-            "issue_comment", self.EXPECTED_TOPIC_ISSUE_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("issue_comment", self.EXPECTED_TOPIC_ISSUE_EVENTS, expected_message)
 
     def test_issue_comment_deleted_msg(self) -> None:
         expected_topic = "Scheduler / Issue #5 This is a new issue"

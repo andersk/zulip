@@ -9,8 +9,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="realm",
-            name="waiting_period_threshold",
-            field=models.PositiveIntegerField(default=0),
+            model_name="realm", name="waiting_period_threshold", field=models.PositiveIntegerField(default=0),
         ),
     ]

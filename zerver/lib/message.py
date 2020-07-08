@@ -225,10 +225,7 @@ class MessageDict:
 
     @staticmethod
     def finalize_payload(
-        obj: Dict[str, Any],
-        apply_markdown: bool,
-        client_gravatar: bool,
-        keep_rendered_content: bool = False,
+        obj: Dict[str, Any], apply_markdown: bool, client_gravatar: bool, keep_rendered_content: bool = False,
     ) -> Dict[str, Any]:
         """
         Make a shallow copy of the incoming dict to avoid
@@ -250,10 +247,7 @@ class MessageDict:
 
     @staticmethod
     def _finalize_payload(
-        obj: Dict[str, Any],
-        apply_markdown: bool,
-        client_gravatar: bool,
-        keep_rendered_content: bool = False,
+        obj: Dict[str, Any], apply_markdown: bool, client_gravatar: bool, keep_rendered_content: bool = False,
     ) -> None:
         MessageDict.set_sender_avatar(obj, client_gravatar)
         if apply_markdown:

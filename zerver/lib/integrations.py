@@ -427,10 +427,7 @@ WEBHOOK_INTEGRATIONS: List[WebhookIntegration] = [
     WebhookIntegration("trello", ["project-management"]),
     WebhookIntegration("updown", ["monitoring"]),
     WebhookIntegration(
-        "yo",
-        ["communication"],
-        function="zerver.webhooks.yo.view.api_yo_app_webhook",
-        display_name="Yo App",
+        "yo", ["communication"], function="zerver.webhooks.yo.view.api_yo_app_webhook", display_name="Yo App",
     ),
     WebhookIntegration("wordpress", ["marketing"], display_name="WordPress"),
     WebhookIntegration("zapier", ["meta-integration"]),
@@ -469,9 +466,7 @@ INTEGRATIONS: Dict[str, Integration] = {
         doc="zerver/integrations/google-calendar.md",
     ),
     "hubot": Integration("hubot", "hubot", ["meta-integration", "bots"], doc="zerver/integrations/hubot.md"),
-    "irc": Integration(
-        "irc", "irc", ["communication"], display_name="IRC", doc="zerver/integrations/irc.md",
-    ),
+    "irc": Integration("irc", "irc", ["communication"], display_name="IRC", doc="zerver/integrations/irc.md"),
     "jenkins": Integration(
         "jenkins",
         "jenkins",
@@ -518,9 +513,7 @@ INTEGRATIONS: Dict[str, Integration] = {
     "redmine": Integration(
         "redmine", "redmine", ["project-management"], doc="zerver/integrations/redmine.md",
     ),
-    "rss": Integration(
-        "rss", "rss", ["communication"], display_name="RSS", doc="zerver/integrations/rss.md",
-    ),
+    "rss": Integration("rss", "rss", ["communication"], display_name="RSS", doc="zerver/integrations/rss.md"),
     "svn": Integration("svn", "svn", ["version-control"], doc="zerver/integrations/svn.md"),
     "trac": Integration("trac", "trac", ["project-management"], doc="zerver/integrations/trac.md"),
     "trello-plugin": Integration(
@@ -603,9 +596,7 @@ DOC_SCREENSHOT_CONFIG: Dict[str, List[ScreenshotConfig]] = {
     "basecamp": [ScreenshotConfig("doc_active.json")],
     "beanstalk": [ScreenshotConfig("git_multiple.json", use_basic_auth=True, payload_as_query_param=True)],
     # 'beeminder': [ScreenshotConfig('derail_worried.json')],
-    "bitbucket": [
-        ScreenshotConfig("push.json", "002.png", use_basic_auth=True, payload_as_query_param=True),
-    ],
+    "bitbucket": [ScreenshotConfig("push.json", "002.png", use_basic_auth=True, payload_as_query_param=True)],
     "bitbucket2": [ScreenshotConfig("issue_created.json", "003.png", "bitbucket", bot_name="Bitbucket Bot")],
     "bitbucket3": [
         ScreenshotConfig(
@@ -643,9 +634,7 @@ DOC_SCREENSHOT_CONFIG: Dict[str, List[ScreenshotConfig]] = {
     "harbor": [ScreenshotConfig("scanning_completed.json")],
     "hellosign": [
         ScreenshotConfig(
-            "signatures_signed_by_one_signatory.json",
-            payload_as_query_param=True,
-            payload_param_name="json",
+            "signatures_signed_by_one_signatory.json", payload_as_query_param=True, payload_param_name="json",
         ),
     ],
     "helloworld": [ScreenshotConfig("hello.json")],
@@ -682,12 +671,7 @@ DOC_SCREENSHOT_CONFIG: Dict[str, List[ScreenshotConfig]] = {
     "transifex": [
         ScreenshotConfig(
             "",
-            extra_params={
-                "project": "Zulip Mobile",
-                "language": "en",
-                "resource": "file",
-                "reviewed": "100",
-            },
+            extra_params={"project": "Zulip Mobile", "language": "en", "resource": "file", "reviewed": "100"},
         ),
     ],
     "travis": [ScreenshotConfig("build.json", payload_as_query_param=True)],

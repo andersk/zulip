@@ -100,10 +100,7 @@ class FrontHookTests(WebhookTestCase):
         )
 
         self.send_and_test_stream_message(
-            "mention_all",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "mention_all", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     # Scenario 2: Conversation starts from an inbound message.
