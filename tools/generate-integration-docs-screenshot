@@ -122,10 +122,7 @@ def custom_headers(headers_json: str) -> Dict[str, str]:
 
 
 def send_bot_payload_message(
-    bot: UserProfile,
-    integration: WebhookIntegration,
-    fixture_path: str,
-    config: ScreenshotConfig,
+    bot: UserProfile, integration: WebhookIntegration, fixture_path: str, config: ScreenshotConfig,
 ) -> bool:
     # Delete all messages, so new message is the only one it's message group
     Message.objects.filter(sender=bot).delete()
@@ -245,9 +242,7 @@ prepare_puppeteer_run()
 if options.all:
     for key, value in vars(options).items():
         if key != "all" and value:
-            print(
-                "Generating screenshots for all integrations. Ignoring all command-line options",
-            )
+            print("Generating screenshots for all integrations. Ignoring all command-line options")
     for integration_name, screenshot_configs in DOC_SCREENSHOT_CONFIG.items():
         for screenshot_config in screenshot_configs:
             generate_screenshot_from_config(integration_name, screenshot_config)

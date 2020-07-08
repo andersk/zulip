@@ -1,16 +1,5 @@
 import time
-from typing import (
-    Any,
-    Callable,
-    Dict,
-    Iterable,
-    List,
-    Mapping,
-    Optional,
-    Sequence,
-    TypeVar,
-    Union,
-)
+from typing import Any, Callable, Dict, Iterable, List, Mapping, Optional, Sequence, TypeVar, Union
 
 from psycopg2.extensions import connection, cursor
 from psycopg2.sql import Composable

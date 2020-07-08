@@ -99,9 +99,7 @@ def parse_cache_script_args(description: str) -> argparse.Namespace:
 
 
 def get_deploy_root() -> str:
-    return os.path.realpath(
-        os.path.normpath(os.path.join(os.path.dirname(__file__), "..", "..")),
-    )
+    return os.path.realpath(os.path.normpath(os.path.join(os.path.dirname(__file__), "..", "..")))
 
 
 def get_deployment_version(extract_path: str) -> str:

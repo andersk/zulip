@@ -195,9 +195,7 @@ class EditMessageSideEffectsTest(ZulipTestCase):
     def test_second_mention_is_ignored(self) -> None:
         original_content = "hello @**Cordelia Lear**"
         updated_content = "re-mention @**Cordelia Lear**"
-        self._send_and_update_message(
-            original_content, updated_content, expect_short_circuit=True,
-        )
+        self._send_and_update_message(original_content, updated_content, expect_short_circuit=True)
 
     def _turn_on_stream_push_for_cordelia(self) -> None:
         """
@@ -222,9 +220,7 @@ class EditMessageSideEffectsTest(ZulipTestCase):
         # also did a push.
         original_content = "no mention"
         updated_content = "nothing special about updated message"
-        self._send_and_update_message(
-            original_content, updated_content, expect_short_circuit=True,
-        )
+        self._send_and_update_message(original_content, updated_content, expect_short_circuit=True)
 
     def _cordelia_connected_to_zulip(self) -> Any:
         """

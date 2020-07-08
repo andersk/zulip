@@ -61,10 +61,7 @@ def update_user_status_backend(
         return json_error(_("Client did not pass any new values."))
 
     do_update_user_status(
-        user_profile=user_profile,
-        away=away,
-        status_text=status_text,
-        client_id=request.client.id,
+        user_profile=user_profile, away=away, status_text=status_text, client_id=request.client.id,
     )
 
     return json_success()

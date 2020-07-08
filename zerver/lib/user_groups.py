@@ -34,10 +34,7 @@ def user_groups_in_realm_serialized(realm: Realm) -> List[Dict[str, Any]]:
     group_dicts: Dict[str, Any] = {}
     for user_group in realm_groups:
         group_dicts[user_group.id] = dict(
-            id=user_group.id,
-            name=user_group.name,
-            description=user_group.description,
-            members=[],
+            id=user_group.id, name=user_group.name, description=user_group.description, members=[],
         )
 
     membership = UserGroupMembership.objects.filter(user_group__realm=realm).values_list(

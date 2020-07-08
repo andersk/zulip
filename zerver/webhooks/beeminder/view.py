@@ -43,11 +43,7 @@ def api_beeminder_webhook(
 
     topic = "beekeeper"
     body = MESSAGE_TEMPLATE.format(
-        goal_name=goal_name,
-        time=time_remain,
-        limsum=limsum,
-        pledge=pledge,
-        expression=expression,
+        goal_name=goal_name, time=time_remain, limsum=limsum, pledge=pledge, expression=expression,
     )
     check_send_webhook_message(request, user_profile, topic, body)
     return json_success()

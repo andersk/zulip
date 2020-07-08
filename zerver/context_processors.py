@@ -11,10 +11,7 @@ from version import (
     ZULIP_VERSION,
 )
 from zerver.decorator import get_client_name
-from zerver.lib.realm_description import (
-    get_realm_rendered_description,
-    get_realm_text_description,
-)
+from zerver.lib.realm_description import get_realm_rendered_description, get_realm_text_description
 from zerver.lib.realm_icon import get_realm_icon_url
 from zerver.lib.send_email import FromAddress
 from zerver.lib.subdomains import get_subdomain

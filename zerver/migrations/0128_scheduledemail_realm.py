@@ -14,9 +14,7 @@ def set_realm_for_existing_scheduledemails(
     for scheduledemail in scheduledemail_model.objects.all():
         if scheduledemail.type == 3:  # ScheduledEmail.INVITATION_REMINDER
             # Don't think this can be None, but just be safe
-            prereg = preregistrationuser_model.objects.filter(
-                email=scheduledemail.address,
-            ).first()
+            prereg = preregistrationuser_model.objects.filter(email=scheduledemail.address).first()
             if prereg is not None:
                 scheduledemail.realm = prereg.realm
         else:

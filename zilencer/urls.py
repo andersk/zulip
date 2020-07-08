@@ -26,9 +26,7 @@ v1_api_and_json_patterns = [
         {"POST": "zilencer.views.unregister_all_remote_push_devices"},
     ),
     path(
-        "remotes/push/notify",
-        rest_dispatch,
-        {"POST": "zilencer.views.remote_server_notify_push"},
+        "remotes/push/notify", rest_dispatch, {"POST": "zilencer.views.remote_server_notify_push"},
     ),
     # Push signup doesn't use the REST API, since there's no auth.
     path("remotes/server/register", zilencer.views.register_remote_server),

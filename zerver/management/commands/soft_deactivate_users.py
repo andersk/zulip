@@ -15,9 +15,7 @@ from zerver.lib.soft_deactivation import (
 from zerver.models import Realm, UserProfile
 
 
-def get_users_from_emails(
-    emails: List[str], filter_kwargs: Dict[str, Realm],
-) -> List[UserProfile]:
+def get_users_from_emails(emails: List[str], filter_kwargs: Dict[str, Realm]) -> List[UserProfile]:
     # Bug: Ideally, this would be case-insensitive like our other email queries.
     users = UserProfile.objects.filter(delivery_email__in=emails, **filter_kwargs)
 

@@ -414,9 +414,7 @@ class TestServiceBotEventTriggers(ZulipTestCase):
         )
 
     @mock.patch("zerver.lib.actions.queue_json_publish")
-    def test_trigger_on_stream_mention_from_user(
-        self, mock_queue_json_publish: mock.Mock,
-    ) -> None:
+    def test_trigger_on_stream_mention_from_user(self, mock_queue_json_publish: mock.Mock) -> None:
         for bot_type, expected_queue_name in BOT_TYPE_TO_QUEUE_NAME.items():
             self.bot_profile.bot_type = bot_type
             self.bot_profile.save()
@@ -432,9 +430,7 @@ class TestServiceBotEventTriggers(ZulipTestCase):
                 self.assertEqual(queue_name, expected_queue_name)
                 self.assertEqual(trigger_event["message"]["content"], content)
                 self.assertEqual(trigger_event["message"]["display_recipient"], recipient)
-                self.assertEqual(
-                    trigger_event["message"]["sender_email"], self.user_profile.email,
-                )
+                self.assertEqual(trigger_event["message"]["sender_email"], self.user_profile.email)
                 self.assertEqual(trigger_event["message"]["type"], message_type)
                 self.assertEqual(trigger_event["trigger"], trigger)
                 self.assertEqual(trigger_event["user_profile_id"], self.bot_profile.id)
@@ -507,9 +503,7 @@ class TestServiceBotEventTriggers(ZulipTestCase):
             self.assertFalse(mock_queue_json_publish.called)
 
     @mock.patch("zerver.lib.actions.queue_json_publish")
-    def test_trigger_on_huddle_message_from_user(
-        self, mock_queue_json_publish: mock.Mock,
-    ) -> None:
+    def test_trigger_on_huddle_message_from_user(self, mock_queue_json_publish: mock.Mock) -> None:
         for bot_type, expected_queue_name in BOT_TYPE_TO_QUEUE_NAME.items():
             self.bot_profile.bot_type = bot_type
             self.bot_profile.save()

@@ -37,9 +37,7 @@ def api_wordpress_webhook(
     hook = hook.rstrip()
 
     if hook == "publish_post" or hook == "publish_page":
-        data = PUBLISH_POST_OR_PAGE_TEMPLATE.format(
-            type=post_type, title=post_title, url=post_url,
-        )
+        data = PUBLISH_POST_OR_PAGE_TEMPLATE.format(type=post_type, title=post_title, url=post_url)
 
     elif hook == "user_register":
         data = USER_REGISTER_TEMPLATE.format(name=display_name, email=user_email)

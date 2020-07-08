@@ -17,10 +17,7 @@ from zerver.lib.actions import (
     do_send_realm_reactivation_email,
     do_set_realm_property,
 )
-from zerver.lib.realm_description import (
-    get_realm_rendered_description,
-    get_realm_text_description,
-)
+from zerver.lib.realm_description import get_realm_rendered_description, get_realm_text_description
 from zerver.lib.send_email import send_future_email
 from zerver.lib.streams import create_stream_if_needed
 from zerver.lib.test_classes import ZulipTestCase
@@ -551,8 +548,7 @@ class RealmTest(ZulipTestCase):
 
     def test_change_video_chat_provider(self) -> None:
         self.assertEqual(
-            get_realm("zulip").video_chat_provider,
-            Realm.VIDEO_CHAT_PROVIDERS["jitsi_meet"]["id"],
+            get_realm("zulip").video_chat_provider, Realm.VIDEO_CHAT_PROVIDERS["jitsi_meet"]["id"],
         )
         self.login("iago")
 
@@ -574,8 +570,7 @@ class RealmTest(ZulipTestCase):
         result = self.client_patch("/json/realm", req)
         self.assert_json_success(result)
         self.assertEqual(
-            get_realm("zulip").video_chat_provider,
-            Realm.VIDEO_CHAT_PROVIDERS["jitsi_meet"]["id"],
+            get_realm("zulip").video_chat_provider, Realm.VIDEO_CHAT_PROVIDERS["jitsi_meet"]["id"],
         )
 
         req = {
@@ -867,9 +862,7 @@ class ScrubRealmTest(ZulipTestCase):
         self.assertEqual(Message.objects.filter(sender__in=[iago, othello]).count(), 10)
         self.assertEqual(Message.objects.filter(sender__in=[cordelia, king]).count(), 10)
         self.assertEqual(UserMessage.objects.filter(user_profile__in=[iago, othello]).count(), 20)
-        self.assertEqual(
-            UserMessage.objects.filter(user_profile__in=[cordelia, king]).count(), 20,
-        )
+        self.assertEqual(UserMessage.objects.filter(user_profile__in=[cordelia, king]).count(), 20)
 
         self.assertNotEqual(CustomProfileField.objects.filter(realm=zulip).count(), 0)
 
@@ -879,9 +872,7 @@ class ScrubRealmTest(ZulipTestCase):
         self.assertEqual(Message.objects.filter(sender__in=[iago, othello]).count(), 0)
         self.assertEqual(Message.objects.filter(sender__in=[cordelia, king]).count(), 10)
         self.assertEqual(UserMessage.objects.filter(user_profile__in=[iago, othello]).count(), 0)
-        self.assertEqual(
-            UserMessage.objects.filter(user_profile__in=[cordelia, king]).count(), 20,
-        )
+        self.assertEqual(UserMessage.objects.filter(user_profile__in=[cordelia, king]).count(), 20)
 
         self.assertEqual(Attachment.objects.filter(realm=zulip).count(), 0)
         self.assertEqual(Attachment.objects.filter(realm=lear).count(), 2)

@@ -42,9 +42,7 @@ def set_bot_storage(bot_profile: UserProfile, entries: List[Tuple[str, str]]) ->
     for key, value in entries:
         assert isinstance(key, str), "Key type should be str."
         assert isinstance(value, str), "Value type should be str."
-        storage_size_difference += (len(key) + len(value)) - get_bot_storage_size(
-            bot_profile, key,
-        )
+        storage_size_difference += (len(key) + len(value)) - get_bot_storage_size(bot_profile, key)
     new_storage_size = get_bot_storage_size(bot_profile) + storage_size_difference
     if new_storage_size > storage_size_limit:
         raise StateError(

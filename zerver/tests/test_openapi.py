@@ -152,11 +152,7 @@ class OpenAPIToolsTest(ZulipTestCase):
         openapi_spec.spec()["paths"]["testing"] = test_dict
         try:
             validate_against_openapi_schema(
-                (
-                    test_dict["test1"]["responses"]["200"]["content"]["application/json"][
-                        "example"
-                    ]
-                ),
+                (test_dict["test1"]["responses"]["200"]["content"]["application/json"]["example"]),
                 "testing",
                 "test1",
                 "200",
@@ -626,9 +622,7 @@ do not match the types declared in the implementation of {function.__name__}.\n"
                 url_pattern = self.convert_regex_to_url_pattern(regex_pattern)
 
                 if "intentionally_undocumented" in tags:
-                    self.ensure_no_documentation_if_intentionally_undocumented(
-                        url_pattern, method,
-                    )
+                    self.ensure_no_documentation_if_intentionally_undocumented(url_pattern, method)
                     continue
 
                 if url_pattern in self.pending_endpoints:
@@ -650,9 +644,7 @@ so maybe we shouldn't include it in pending_endpoints.
                         url_pattern, method, include_url_parameters=False,
                     )
                 except Exception:  # nocoverage
-                    raise AssertionError(
-                        f"Could not find OpenAPI docs for {method} {url_pattern}",
-                    )
+                    raise AssertionError(f"Could not find OpenAPI docs for {method} {url_pattern}")
 
                 # We now have everything we need to understand the
                 # function as defined in our urls.py:
@@ -1053,9 +1045,9 @@ class OpenAPIAttributesTest(ZulipTestCase):
                 tag = openapi_spec[path][method]["tags"][0]
                 assert tag in VALID_TAGS
                 for response in openapi_spec[path][method]["responses"]:
-                    response_schema = openapi_spec[path][method]["responses"][response][
-                        "content"
-                    ]["application/json"]["schema"]
+                    response_schema = openapi_spec[path][method]["responses"][response]["content"][
+                        "application/json"
+                    ]["schema"]
                     if "oneOf" in response_schema:
                         cnt = 0
                         for entry in response_schema["oneOf"]:

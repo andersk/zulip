@@ -56,9 +56,7 @@ class SlackWebhookTests(WebhookTestCase):
         payload = self.get_body("message_info")
         url = "{}{}".format(self.url, "&channels_map_to_topics=abc")
         result = self.client_post(url, payload, content_type="application/x-www-form-urlencoded")
-        self.assert_json_error(
-            result, "Error: channels_map_to_topics parameter other than 0 or 1",
-        )
+        self.assert_json_error(result, "Error: channels_map_to_topics parameter other than 0 or 1")
 
     def get_body(self, fixture_name: str) -> str:
 

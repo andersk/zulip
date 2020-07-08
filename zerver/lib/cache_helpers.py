@@ -47,9 +47,7 @@ def message_fetch_objects() -> List[Any]:
     )
 
 
-def message_cache_items(
-    items_for_remote_cache: Dict[str, Tuple[bytes]], message: Message,
-) -> None:
+def message_cache_items(items_for_remote_cache: Dict[str, Tuple[bytes]], message: Message) -> None:
     """
     Note: this code is untested, and the caller has been
     commented out for a while.

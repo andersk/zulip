@@ -227,9 +227,7 @@ class TestDigestEmailMessages(ZulipTestCase):
                     client=get_client("test_client"),
                 )
         # Check that an active user is not enqueued
-        with mock.patch(
-            "zerver.lib.digest.queue_digest_recipient",
-        ) as mock_queue_digest_recipient:
+        with mock.patch("zerver.lib.digest.queue_digest_recipient") as mock_queue_digest_recipient:
             enqueue_emails(cutoff)
             self.assertEqual(mock_queue_digest_recipient.call_count, 0)
 

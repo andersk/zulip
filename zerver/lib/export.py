@@ -778,11 +778,7 @@ def get_realm_config() -> Config:
     Config(
         table="zerver_subscription",
         virtual_parent=user_profile_config,
-        concat_and_destroy=[
-            "_user_subscription",
-            "_stream_subscription",
-            "_huddle_subscription",
-        ],
+        concat_and_destroy=["_user_subscription", "_stream_subscription", "_huddle_subscription"],
     )
 
     return realm_config
@@ -1214,9 +1210,7 @@ def export_uploads_and_avatars(realm: Realm, output_dir: Path) -> None:
             output_dir=avatars_output_dir,
             processing_avatars=True,
         )
-        export_files_from_s3(
-            realm, settings.S3_AUTH_UPLOADS_BUCKET, output_dir=uploads_output_dir,
-        )
+        export_files_from_s3(realm, settings.S3_AUTH_UPLOADS_BUCKET, output_dir=uploads_output_dir)
         export_files_from_s3(
             realm, settings.S3_AVATAR_BUCKET, output_dir=emoji_output_dir, processing_emoji=True,
         )

@@ -11,7 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterUniqueTogether(
-            name="remotepushdevicetoken",
-            unique_together={("server", "user_id", "kind", "token")},
+            name="remotepushdevicetoken", unique_together={("server", "user_id", "kind", "token")},
         ),
     ]

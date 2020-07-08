@@ -13,9 +13,7 @@ class TopicHistoryTest(ZulipTestCase):
         # Send a message to this new stream from another user
         self.subscribe(self.mit_user("starnine"), stream_name)
         stream = get_stream(stream_name, user_profile.realm)
-        self.send_stream_message(
-            self.mit_user("starnine"), stream_name, topic_name="secret topic",
-        )
+        self.send_stream_message(self.mit_user("starnine"), stream_name, topic_name="secret topic")
 
         # Now subscribe this MIT user to the new stream and verify
         # that the new topic is not accessible
@@ -166,9 +164,7 @@ class TopicDeleteTest(ZulipTestCase):
         self.assertEqual(self.get_last_message().id, last_msg_id)
 
         # Make stream private with limited history
-        do_change_stream_invite_only(
-            stream, invite_only=True, history_public_to_subscribers=False,
-        )
+        do_change_stream_invite_only(stream, invite_only=True, history_public_to_subscribers=False)
 
         # ADMIN USER subscribed now
         user_profile = self.example_user("iago")

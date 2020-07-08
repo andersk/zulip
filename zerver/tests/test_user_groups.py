@@ -221,9 +221,7 @@ class UserGroupAPITestCase(ZulipTestCase):
             "name": marketing_user_group.name,
         }
         result = self.client_patch(f"/json/user_groups/{support_user_group.id}", info=params)
-        self.assert_json_error(
-            result, f"User group '{marketing_user_group.name}' already exists.",
-        )
+        self.assert_json_error(result, f"User group '{marketing_user_group.name}' already exists.")
 
     def test_user_group_delete(self) -> None:
         hamlet = self.example_user("hamlet")

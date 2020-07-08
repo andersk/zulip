@@ -26,10 +26,7 @@ class ZulipRedisKeyOfWrongFormatError(ZulipRedisError):
 
 def get_redis_client() -> redis.StrictRedis:
     return redis.StrictRedis(
-        host=settings.REDIS_HOST,
-        port=settings.REDIS_PORT,
-        password=settings.REDIS_PASSWORD,
-        db=0,
+        host=settings.REDIS_HOST, port=settings.REDIS_PORT, password=settings.REDIS_PASSWORD, db=0,
     )
 
 
@@ -43,9 +40,7 @@ def put_dict_in_redis(
 ) -> str:
     key_length = len(key_format) - len("{token}") + token_length
     if key_length > MAX_KEY_LENGTH:
-        error_msg = (
-            "Requested key too long in put_dict_in_redis. Key format: %s, token length: %s"
-        )
+        error_msg = "Requested key too long in put_dict_in_redis. Key format: %s, token length: %s"
         raise ZulipRedisKeyTooLongError(error_msg % (key_format, token_length))
     if token is None:
         token = generate_random_token(token_length)

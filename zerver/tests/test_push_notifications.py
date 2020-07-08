@@ -516,9 +516,7 @@ class AnalyticsBouncerTest(BouncerTestCase):
         check_counts(12, 3, 2, 2)
 
         (realm_count_data, installation_count_data, realmauditlog_data) = build_analytics_data(
-            RealmCount.objects.all(),
-            InstallationCount.objects.all(),
-            RealmAuditLog.objects.all(),
+            RealmCount.objects.all(), InstallationCount.objects.all(), RealmAuditLog.objects.all(),
         )
         result = self.uuid_post(
             self.server_uuid,
@@ -963,9 +961,7 @@ class HandlePushNotificationTest(PushNotificationTest):
         ) as mock_push_notifications:
 
             handle_push_notification(self.user_profile.id, missed_message)
-            mock_send_apple.assert_called_with(
-                self.user_profile.id, apple_devices, {"apns": True},
-            )
+            mock_send_apple.assert_called_with(self.user_profile.id, apple_devices, {"apns": True})
             mock_send_android.assert_called_with(android_devices, {"gcm": True}, {})
             mock_push_notifications.assert_called_once()
 
@@ -1008,9 +1004,7 @@ class HandlePushNotificationTest(PushNotificationTest):
                 },
                 {"priority": "normal"},
             )
-            user_message = UserMessage.objects.get(
-                user_profile=self.user_profile, message=message,
-            )
+            user_message = UserMessage.objects.get(user_profile=self.user_profile, message=message)
             self.assertEqual(user_message.flags.active_mobile_push_notification, False)
 
     def test_non_bouncer_push_remove(self) -> None:
@@ -1067,9 +1061,7 @@ class HandlePushNotificationTest(PushNotificationTest):
                     },
                 },
             )
-            user_message = UserMessage.objects.get(
-                user_profile=self.user_profile, message=message,
-            )
+            user_message = UserMessage.objects.get(user_profile=self.user_profile, message=message)
             self.assertEqual(user_message.flags.active_mobile_push_notification, False)
 
     def test_user_message_does_not_exist(self) -> None:
@@ -1132,9 +1124,7 @@ class HandlePushNotificationTest(PushNotificationTest):
         ) as mock_push_notifications:
             handle_push_notification(self.user_profile.id, missed_message)
             mock_logger.assert_not_called()
-            mock_send_apple.assert_called_with(
-                self.user_profile.id, apple_devices, {"apns": True},
-            )
+            mock_send_apple.assert_called_with(self.user_profile.id, apple_devices, {"apns": True})
             mock_send_android.assert_called_with(android_devices, {"gcm": True}, {})
             mock_push_notifications.assert_called_once()
 
@@ -1923,9 +1913,7 @@ class GCMSendTest(PushNotificationTest):
         mock_warning.assert_not_called()
 
     @mock.patch("zerver.lib.push_notifications.logger.warning")
-    def test_canonical_equal(
-        self, mock_warning: mock.MagicMock, mock_gcm: mock.MagicMock,
-    ) -> None:
+    def test_canonical_equal(self, mock_warning: mock.MagicMock, mock_gcm: mock.MagicMock) -> None:
         res = {}
         res["canonical"] = {1: 1}
         mock_gcm.json_request.return_value = res

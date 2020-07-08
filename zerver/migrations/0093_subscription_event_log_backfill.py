@@ -5,9 +5,7 @@ from django.db.models import Max
 from django.utils.timezone import now as timezone_now
 
 
-def backfill_subscription_log_events(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def backfill_subscription_log_events(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     migration_time = timezone_now()
     RealmAuditLog = apps.get_model("zerver", "RealmAuditLog")
     Subscription = apps.get_model("zerver", "Subscription")

@@ -263,9 +263,7 @@ def do_aggregate_to_summary_table(
         """,
         )
         start = time.time()
-        cursor.execute(
-            installationcount_query, {"property": stat.property, "end_time": end_time},
-        )
+        cursor.execute(installationcount_query, {"property": stat.property, "end_time": end_time})
         end = time.time()
         logger.info(
             "%s InstallationCount aggregation (%dms/%sr)",
@@ -356,9 +354,7 @@ def do_pull_by_sql_query(
     # think about how to convert python datetimes to SQL datetimes.
     query_ = query({"subgroup": subgroup, "group_by_clause": group_by_clause})
     cursor = connection.cursor()
-    cursor.execute(
-        query_, {"property": property, "time_start": start_time, "time_end": end_time},
-    )
+    cursor.execute(query_, {"property": property, "time_start": start_time, "time_end": end_time})
     rowcount = cursor.rowcount
     cursor.close()
     return rowcount
@@ -762,9 +758,7 @@ def get_count_stats(realm: Optional[Realm] = None) -> Dict[str, CountStat]:
             interval=timedelta(days=15) - UserActivityInterval.MIN_INTERVAL_LENGTH,
         ),
         CountStat(
-            "minutes_active::day",
-            DataCollector(UserCount, do_pull_minutes_active),
-            CountStat.DAY,
+            "minutes_active::day", DataCollector(UserCount, do_pull_minutes_active), CountStat.DAY,
         ),
         # Rate limiting stats
         # Used to limit the number of invitation emails sent by a realm

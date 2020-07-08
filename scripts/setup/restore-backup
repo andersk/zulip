@@ -90,9 +90,7 @@ def restore_backup(tarball_file: IO[bytes]) -> None:
 
         run(
             [
-                os.path.join(
-                    settings.DEPLOY_ROOT, "scripts", "setup", "terminate-psql-sessions",
-                ),
+                os.path.join(settings.DEPLOY_ROOT, "scripts", "setup", "terminate-psql-sessions"),
                 db["NAME"],
             ],
             env=postgres_env,
@@ -131,13 +129,7 @@ def restore_backup(tarball_file: IO[bytes]) -> None:
                 .decode("utf-8")
             )
             if rabbitmq_host in ["127.0.0.1", "::1", "localhost", "localhost6"]:
-                run(
-                    [
-                        os.path.join(
-                            settings.DEPLOY_ROOT, "scripts", "setup", "configure-rabbitmq",
-                        ),
-                    ],
-                )
+                run([os.path.join(settings.DEPLOY_ROOT, "scripts", "setup", "configure-rabbitmq")])
 
             # In production, we also need to do a `zulip-puppet-apply`
             # in order to apply any configuration from

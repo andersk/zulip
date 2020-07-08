@@ -54,8 +54,6 @@ To restore a specific ArchiveTransaction:
         if realm:
             restore_data_from_archive_by_realm(realm)
         elif options["transaction_id"]:
-            restore_data_from_archive(
-                ArchiveTransaction.objects.get(id=options["transaction_id"]),
-            )
+            restore_data_from_archive(ArchiveTransaction.objects.get(id=options["transaction_id"]))
         else:
             restore_all_data_from_archive(restore_manual_transactions=options["restore_deleted"])

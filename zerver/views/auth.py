@@ -298,9 +298,7 @@ def login_or_register_remote_user(
     return HttpResponseRedirect(redirect_to)
 
 
-def finish_desktop_flow(
-    request: HttpRequest, user_profile: UserProfile, otp: str,
-) -> HttpResponse:
+def finish_desktop_flow(request: HttpRequest, user_profile: UserProfile, otp: str) -> HttpResponse:
     """
     The desktop otp flow returns to the app (through the clipboard)
     a token that allows obtaining (through log_into_subdomain) a logged in session
@@ -554,8 +552,7 @@ def start_social_login(
         # to be passed as the parameter.
         if not extra_arg or extra_arg not in settings.SOCIAL_AUTH_SAML_ENABLED_IDPS:
             logging.info(
-                "Attempted to initiate SAML authentication with wrong idp argument: %s",
-                extra_arg,
+                "Attempted to initiate SAML authentication with wrong idp argument: %s", extra_arg,
             )
             return redirect_to_config_error("saml")
         extra_url_params = {"idp": extra_arg}
@@ -585,8 +582,7 @@ def start_social_signup(
 
         if not extra_arg or extra_arg not in settings.SOCIAL_AUTH_SAML_ENABLED_IDPS:
             logging.info(
-                "Attempted to initiate SAML authentication with wrong idp argument: %s",
-                extra_arg,
+                "Attempted to initiate SAML authentication with wrong idp argument: %s", extra_arg,
             )
             return redirect_to_config_error("saml")
         extra_url_params = {"idp": extra_arg}
@@ -627,15 +623,11 @@ def log_into_subdomain(request: HttpRequest, token: str) -> HttpResponse:
 def redirect_and_log_into_subdomain(result: ExternalAuthResult) -> HttpResponse:
     token = result.store_data()
     realm = get_realm(result.data_dict["subdomain"])
-    subdomain_login_uri = realm.uri + reverse(
-        "zerver.views.auth.log_into_subdomain", args=[token],
-    )
+    subdomain_login_uri = realm.uri + reverse("zerver.views.auth.log_into_subdomain", args=[token])
     return redirect(subdomain_login_uri)
 
 
-def get_dev_users(
-    realm: Optional[Realm] = None, extra_users_count: int = 10,
-) -> List[UserProfile]:
+def get_dev_users(realm: Optional[Realm] = None, extra_users_count: int = 10) -> List[UserProfile]:
     # Development environments usually have only a few users, but
     # it still makes sense to limit how many extra users we render to
     # support performance testing with DevAuthBackend.
@@ -721,9 +713,7 @@ class TwoFactorLoginView(BaseTwoFactorLoginView):
 
         realm = get_realm_from_request(self.request)
         redirect_to = realm.uri if realm else "/"
-        context["next"] = self.request.POST.get(
-            "next", self.request.GET.get("next", redirect_to),
-        )
+        context["next"] = self.request.POST.get("next", self.request.GET.get("next", redirect_to))
         return context
 
     def done(self, form_list: List[Form], **kwargs: Any) -> HttpResponse:
@@ -747,9 +737,7 @@ class TwoFactorLoginView(BaseTwoFactorLoginView):
 
 
 @has_request_variables
-def login_page(
-    request: HttpRequest, next: str = REQ(default="/"), **kwargs: Any,
-) -> HttpResponse:
+def login_page(request: HttpRequest, next: str = REQ(default="/"), **kwargs: Any) -> HttpResponse:
     # To support previewing the Zulip login pages, we have a special option
     # that disables the default behavior of redirecting logged-in users to the
     # logged-in app.

@@ -53,9 +53,7 @@ class Command(ZulipBaseCommand):
             members.append("zulip-backup/postgres-version")
 
             if settings.DEVELOPMENT:
-                members.append(
-                    os.path.join(settings.DEPLOY_ROOT, "zproject", "dev-secrets.conf"),
-                )
+                members.append(os.path.join(settings.DEPLOY_ROOT, "zproject", "dev-secrets.conf"))
                 paths.append(("zproject", os.path.join(settings.DEPLOY_ROOT, "zproject")))
             else:
                 members.append("/etc/zulip")
@@ -87,9 +85,7 @@ class Command(ZulipBaseCommand):
             if (
                 not options["skip_uploads"]
                 and settings.LOCAL_UPLOADS_DIR is not None
-                and os.path.exists(
-                    os.path.join(settings.DEPLOY_ROOT, settings.LOCAL_UPLOADS_DIR),
-                )
+                and os.path.exists(os.path.join(settings.DEPLOY_ROOT, settings.LOCAL_UPLOADS_DIR))
             ):
                 members.append(os.path.join(settings.DEPLOY_ROOT, settings.LOCAL_UPLOADS_DIR))
                 paths.append(
@@ -112,9 +108,7 @@ class Command(ZulipBaseCommand):
                 else:
                     tarball_path = options["output"]
 
-                run(
-                    ["tar", "-C", tmp, "-cPzf", tarball_path] + transform_args + ["--"] + members,
-                )
+                run(["tar", "-C", tmp, "-cPzf", tarball_path] + transform_args + ["--"] + members)
                 print(f"Backup tarball written to {tarball_path}")
             except BaseException:
                 if options["output"] is None:

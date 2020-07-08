@@ -28,9 +28,7 @@ class Command(ZulipBaseCommand):
 
     def handle(self, *args: Any, **options: str) -> None:
         if options["entire_server"]:
-            users = UserProfile.objects.filter(
-                is_active=True, is_bot=False, is_mirror_dummy=False,
-            )
+            users = UserProfile.objects.filter(is_active=True, is_bot=False, is_mirror_dummy=False)
         else:
             realm = self.get_realm(options)
             try:

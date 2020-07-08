@@ -131,9 +131,7 @@ def build_stream_map(
     stream.append(
         build_stream(timestamp, realm_id, "from gitter", "Imported from gitter", stream_id),
     )
-    defaultstream = build_defaultstream(
-        realm_id=realm_id, stream_id=stream_id, defaultstream_id=0,
-    )
+    defaultstream = build_defaultstream(realm_id=realm_id, stream_id=stream_id, defaultstream_id=0)
     stream_id += 1
 
     # Gathering streams from gitter_data

@@ -363,9 +363,7 @@ def get_pull_request_review_comment_body(
 def get_pull_request_review_requested_body(
     payload: Dict[str, Any], include_title: bool = False,
 ) -> str:
-    requested_reviewer = (
-        [payload["requested_reviewer"]] if "requested_reviewer" in payload else []
-    )
+    requested_reviewer = [payload["requested_reviewer"]] if "requested_reviewer" in payload else []
     requested_reviewers = payload["pull_request"]["requested_reviewers"] or requested_reviewer
 
     requested_team = [payload["requested_team"]] if "requested_team" in payload else []

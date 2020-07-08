@@ -11,9 +11,7 @@ from tools.lib.html_branches import (
 )
 
 ZULIP_PATH = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-TEST_TEMPLATES_DIR = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), "test_template_data",
-)
+TEST_TEMPLATES_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "test_template_data")
 
 
 class TestHtmlBranches(unittest.TestCase):
@@ -113,9 +111,7 @@ class TestHtmlBranches(unittest.TestCase):
             branches[1].staircase_text(),
             "\n    html\n        body\n            p\n                br\n",
         )
-        self.assertEqual(
-            branches[2].staircase_text(), "\n    html\n        body\n            p\n",
-        )
+        self.assertEqual(branches[2].staircase_text(), "\n    html\n        body\n            p\n")
 
     def test_build_id_dict(self) -> None:
         templates = ["test_template1.html", "test_template2.html"]

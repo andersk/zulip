@@ -31,7 +31,5 @@ class Migration(migrations.Migration):
                 ),
             ],
         ),
-        migrations.AlterUniqueTogether(
-            name="userhotspot", unique_together={("user", "hotspot")},
-        ),
+        migrations.AlterUniqueTogether(name="userhotspot", unique_together={("user", "hotspot")}),
     ]

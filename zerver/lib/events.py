@@ -508,9 +508,7 @@ def apply_event(
                         if "rendered_value" in person["custom_profile_field"]:
                             p["profile_data"][custom_field_id] = {
                                 "value": custom_field_new_value,
-                                "rendered_value": person["custom_profile_field"][
-                                    "rendered_value"
-                                ],
+                                "rendered_value": person["custom_profile_field"]["rendered_value"],
                             }
                         else:
                             p["profile_data"][custom_field_id] = {
@@ -621,9 +619,9 @@ def apply_event(
 
             if event["property"] in policy_permission_dict.keys():
                 if policy_permission_dict[event["property"]] in state:
-                    state[
-                        policy_permission_dict[event["property"]]
-                    ] = user_profile.has_permission(event["property"])
+                    state[policy_permission_dict[event["property"]]] = user_profile.has_permission(
+                        event["property"],
+                    )
 
         elif event["op"] == "update_dict":
             for key, value in event["data"].items():

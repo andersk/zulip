@@ -682,9 +682,7 @@ API_KEY_ONLY_WEBHOOK_LOG_PATH = zulip_path("/var/log/zulip/webhooks_errors.log")
 WEBHOOK_UNEXPECTED_EVENTS_LOG_PATH = zulip_path("/var/log/zulip/webhooks_unexpected_events.log")
 SOFT_DEACTIVATION_LOG_PATH = zulip_path("/var/log/zulip/soft_deactivation.log")
 TRACEMALLOC_DUMP_DIR = zulip_path("/var/log/zulip/tracemalloc")
-SCHEDULED_MESSAGE_DELIVERER_LOG_PATH = zulip_path(
-    "/var/log/zulip/scheduled_message_deliverer.log",
-)
+SCHEDULED_MESSAGE_DELIVERER_LOG_PATH = zulip_path("/var/log/zulip/scheduled_message_deliverer.log")
 RETENTION_LOG_PATH = zulip_path("/var/log/zulip/message_retention.log")
 AUTH_LOG_PATH = zulip_path("/var/log/zulip/auth.log")
 

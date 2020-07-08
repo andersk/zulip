@@ -375,9 +375,7 @@ def process_raw_message_batch(
             else:
                 recipient_id = get_recipient_id_from_receiver_name(members[0], Recipient.PERSONAL)
         else:
-            raise AssertionError(
-                "raw_message without channel_name, huddle_name or pm_members key",
-            )
+            raise AssertionError("raw_message without channel_name, huddle_name or pm_members key")
 
         rendered_content = None
 
@@ -802,9 +800,7 @@ def do_convert_data(mattermost_data_dir: str, output_dir: str, masking_content: 
         all_users = user_handler.get_all_users()
 
         zerver_recipient = build_recipients(
-            zerver_userprofile=all_users,
-            zerver_stream=zerver_stream,
-            zerver_huddle=zerver_huddle,
+            zerver_userprofile=all_users, zerver_stream=zerver_stream, zerver_huddle=zerver_huddle,
         )
         realm["zerver_recipient"] = zerver_recipient
 

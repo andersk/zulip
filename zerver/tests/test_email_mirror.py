@@ -1173,8 +1173,7 @@ class TestScriptMTA(ZulipTestCase):
         os.write(write_pipe, mail.encode())
         os.close(write_pipe)
         subprocess.check_call(
-            [script, "-r", stream_to_address, "-s", settings.SHARED_SECRET, "-t"],
-            stdin=read_pipe,
+            [script, "-r", stream_to_address, "-s", settings.SHARED_SECRET, "-t"], stdin=read_pipe,
         )
 
     def test_error_no_recipient(self) -> None:
@@ -1239,8 +1238,7 @@ class TestEmailMirrorTornadoView(ZulipTestCase):
             MirrorWorker().consume(event)
 
             self.assertEqual(
-                self.get_last_message().content,
-                "This is a plain-text message for testing Zulip.",
+                self.get_last_message().content, "This is a plain-text message for testing Zulip.",
             )
 
         mock_queue_json_publish.side_effect = check_queue_json_publish

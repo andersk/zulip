@@ -514,9 +514,7 @@ class EmojiReactionBase(ZulipTestCase):
         if "reaction_type" not in reaction_info:
             reaction_info["reaction_type"] = self.reaction_type
         sender = self.example_user(sender)
-        result = self.api_delete(
-            sender, f"/api/v1/messages/{message_id}/reactions", reaction_info,
-        )
+        result = self.api_delete(sender, f"/api/v1/messages/{message_id}/reactions", reaction_info)
         return result
 
     def delete_zulip_reaction(self, message_id: int = 1, sender: str = "hamlet") -> HttpResponse:

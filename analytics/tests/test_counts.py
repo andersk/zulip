@@ -98,9 +98,7 @@ class AnalyticsTestCase(ZulipTestCase):
         for key, value in defaults.items():
             kwargs[key] = kwargs.get(key, value)
         kwargs["delivery_email"] = kwargs["email"]
-        with mock.patch(
-            "zerver.lib.create_user.timezone_now", return_value=kwargs["date_joined"],
-        ):
+        with mock.patch("zerver.lib.create_user.timezone_now", return_value=kwargs["date_joined"]):
             pass_kwargs: Dict[str, Any] = {}
             if kwargs["is_bot"]:
                 pass_kwargs["bot_type"] = UserProfile.DEFAULT_BOT
@@ -1450,9 +1448,7 @@ class TestDeleteStats(AnalyticsTestCase):
         FillState.objects.create(
             property="to_delete", end_time=self.TIME_ZERO, state=FillState.DONE,
         )
-        FillState.objects.create(
-            property="to_save", end_time=self.TIME_ZERO, state=FillState.DONE,
-        )
+        FillState.objects.create(property="to_save", end_time=self.TIME_ZERO, state=FillState.DONE)
 
         analytics = apps.get_app_config("analytics")
         for table in list(analytics.models.values()):
@@ -1620,18 +1616,10 @@ class TestActiveUsersAudit(AnalyticsTestCase):
         )
 
     def test_end_to_end_with_actions_dot_py(self) -> None:
-        user1 = do_create_user(
-            "email1", "password", self.default_realm, "full_name", "short_name",
-        )
-        user2 = do_create_user(
-            "email2", "password", self.default_realm, "full_name", "short_name",
-        )
-        user3 = do_create_user(
-            "email3", "password", self.default_realm, "full_name", "short_name",
-        )
-        user4 = do_create_user(
-            "email4", "password", self.default_realm, "full_name", "short_name",
-        )
+        user1 = do_create_user("email1", "password", self.default_realm, "full_name", "short_name")
+        user2 = do_create_user("email2", "password", self.default_realm, "full_name", "short_name")
+        user3 = do_create_user("email3", "password", self.default_realm, "full_name", "short_name")
+        user4 = do_create_user("email4", "password", self.default_realm, "full_name", "short_name")
         do_deactivate_user(user2)
         do_activate_user(user3)
         do_reactivate_user(user4)
@@ -1672,11 +1660,7 @@ class TestRealmActiveHumans(AnalyticsTestCase):
         if end_time is None:
             end_time = self.TIME_ZERO
         UserCount.objects.create(
-            user=user,
-            realm=user.realm,
-            property="15day_actives::day",
-            end_time=end_time,
-            value=1,
+            user=user, realm=user.realm, property="15day_actives::day", end_time=end_time, value=1,
         )
 
     def test_basic_boolean_logic(self) -> None:
@@ -1749,12 +1733,8 @@ class TestRealmActiveHumans(AnalyticsTestCase):
         )
 
     def test_end_to_end(self) -> None:
-        user1 = do_create_user(
-            "email1", "password", self.default_realm, "full_name", "short_name",
-        )
-        user2 = do_create_user(
-            "email2", "password", self.default_realm, "full_name", "short_name",
-        )
+        user1 = do_create_user("email1", "password", self.default_realm, "full_name", "short_name")
+        user2 = do_create_user("email2", "password", self.default_realm, "full_name", "short_name")
         do_create_user("email3", "password", self.default_realm, "full_name", "short_name")
         time_zero = floor_to_day(timezone_now()) + self.DAY
         update_user_activity_interval(user1, time_zero)
@@ -1773,6 +1753,4 @@ class TestRealmActiveHumans(AnalyticsTestCase):
             ).count(),
             1,
         )
-        self.assertEqual(
-            RealmCount.objects.filter(property="realm_active_humans::day").count(), 1,
-        )
+        self.assertEqual(RealmCount.objects.filter(property="realm_active_humans::day").count(), 1)

@@ -335,9 +335,7 @@ def log_exception_to_webhook_logger(
     header_text = ""
     for header in request.META.keys():
         if header.lower().startswith("http_x"):
-            header_text += custom_header_template.format(
-                header=header, value=request.META[header],
-            )
+            header_text += custom_header_template.format(header=header, value=request.META[header])
 
     header_message = header_text if header_text else None
 
@@ -728,10 +726,7 @@ def process_as_post(view_func: ViewFuncT) -> ViewFuncT:
                 # FILES property, so we are essentially setting request.FILES here.  (In
                 # Django 1.5 FILES was still a read-only property.)
                 request.POST, request._files = MultiPartParser(
-                    request.META,
-                    BytesIO(request.body),
-                    request.upload_handlers,
-                    request.encoding,
+                    request.META, BytesIO(request.body), request.upload_handlers, request.encoding,
                 ).parse()
             else:
                 request.POST = QueryDict(request.body, encoding=request.encoding)

@@ -79,9 +79,7 @@ class ChangeSettingsTest(ZulipTestCase):
         # with Django's client (to test the password change
         # with as few moving parts as possible).
         self.assertTrue(
-            self.client.login(
-                username=user.delivery_email, password="foobar1", realm=user.realm,
-            ),
+            self.client.login(username=user.delivery_email, password="foobar1", realm=user.realm),
         )
         self.assert_logged_in_user_id(user.id)
 

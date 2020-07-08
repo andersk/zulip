@@ -552,8 +552,7 @@ class ImportExportTest(ZulipTestCase):
 
         # Create huddles
         self.send_huddle_message(
-            self.example_user("iago"),
-            [self.example_user("cordelia"), self.example_user("AARON")],
+            self.example_user("iago"), [self.example_user("cordelia"), self.example_user("AARON")],
         )
         huddle_a = Huddle.objects.last()
         self.send_huddle_message(
@@ -877,9 +876,7 @@ class ImportExportTest(ZulipTestCase):
         def get_custom_profile_with_field_type_user(
             r: Realm,
         ) -> Tuple[Set[Any], Set[Any], Set[FrozenSet[str]]]:
-            fields = CustomProfileField.objects.filter(
-                field_type=CustomProfileField.USER, realm=r,
-            )
+            fields = CustomProfileField.objects.filter(field_type=CustomProfileField.USER, realm=r)
 
             def get_email(user_id: int) -> str:
                 return UserProfile.objects.get(id=user_id).email
@@ -957,9 +954,7 @@ class ImportExportTest(ZulipTestCase):
         assert_realm_values(get_muted_topics)
 
         # test usergroups
-        assert_realm_values(
-            lambda r: {group.name for group in UserGroup.objects.filter(realm=r)},
-        )
+        assert_realm_values(lambda r: {group.name for group in UserGroup.objects.filter(realm=r)})
 
         def get_user_membership(r: str) -> Set[str]:
             usergroup = UserGroup.objects.get(realm=r, name="hamletcharacters")
@@ -1022,9 +1017,7 @@ class ImportExportTest(ZulipTestCase):
         def get_stream_mention(r: Realm) -> Set[Any]:
             mentioned_stream = get_stream("Denmark", r)
             data_stream_id = f'data-stream-id="{mentioned_stream.id}"'
-            mention_message = get_stream_messages(r).get(
-                rendered_content__contains=data_stream_id,
-            )
+            mention_message = get_stream_messages(r).get(rendered_content__contains=data_stream_id)
             return mention_message.content
 
         assert_realm_values(get_stream_mention)

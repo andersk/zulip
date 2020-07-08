@@ -652,12 +652,7 @@ class SlackImporter(ZulipTestCase):
             "testdomain", realm_id, user_list, "test-realm", "./random_path", {},
         )
         test_zerver_realmdomain = [
-            {
-                "realm": realm_id,
-                "allow_subdomains": False,
-                "domain": "testdomain",
-                "id": realm_id,
-            },
+            {"realm": realm_id, "allow_subdomains": False, "domain": "testdomain", "id": realm_id},
         ]
         # Functioning already tests in helper functions
         self.assertEqual(slack_user_id_to_zulip_user_id, {})
@@ -1037,12 +1032,8 @@ class SlackImporter(ZulipTestCase):
         # Also the unzipped data file should be removed if the test fails at 'do_convert_data'
         self.rm_tree(test_slack_unzipped_file)
 
-        user_data_fixture = ujson.loads(
-            self.fixture_data("user_data.json", type="slack_fixtures"),
-        )
-        team_info_fixture = ujson.loads(
-            self.fixture_data("team_info.json", type="slack_fixtures"),
-        )
+        user_data_fixture = ujson.loads(self.fixture_data("user_data.json", type="slack_fixtures"))
+        team_info_fixture = ujson.loads(self.fixture_data("team_info.json", type="slack_fixtures"))
         mock_get_slack_api_data.side_effect = [
             user_data_fixture["members"],
             {},
@@ -1133,9 +1124,7 @@ class SlackImporter(ZulipTestCase):
 
         image_path = zerver_attachment[0]["path_id"]
         self.assertIn("/SlackImportAttachment/", image_path)
-        expected_content = (
-            f"[Apple](/user_uploads/{image_path})\n[banana](example.com/banana.zip)"
-        )
+        expected_content = f"[Apple](/user_uploads/{image_path})\n[banana](example.com/banana.zip)"
         self.assertEqual(info["content"], expected_content)
 
         self.assertTrue(info["has_link"])

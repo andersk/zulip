@@ -39,9 +39,7 @@ class IntegrationsTestCase(ZulipTestCase):
     def test_no_missing_doc_screenshot_config(self) -> None:
         webhook_names = {webhook.name for webhook in WEBHOOK_INTEGRATIONS}
         webhooks_with_screenshot_config = set(DOC_SCREENSHOT_CONFIG.keys())
-        missing_webhooks = (
-            webhook_names - webhooks_with_screenshot_config - NO_SCREENSHOT_WEBHOOKS
-        )
+        missing_webhooks = webhook_names - webhooks_with_screenshot_config - NO_SCREENSHOT_WEBHOOKS
         message = (
             f"These webhooks are missing screenshot config: {missing_webhooks}.\n"
             "Add them to zerver.lib.integrations.DOC_SCREENSHOT_CONFIG"

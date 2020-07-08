@@ -201,10 +201,7 @@ def send_apple_push_notification(
             ).delete()
         else:
             logger.warning(
-                "APNs: Failed to send for user %d to device %s: %s",
-                user_id,
-                device.token,
-                result,
+                "APNs: Failed to send for user %d to device %s: %s", user_id, device.token, result,
             )
 
 

@@ -50,9 +50,7 @@ class TransferUploadsToS3Test(ZulipTestCase):
         medium_image_key = bucket.Object(path_id + "-medium.png")
 
         self.assertEqual(len(list(bucket.objects.all())), 3)
-        self.assertEqual(
-            image_key.get()["Body"].read(), open(avatar_disk_path(user), "rb").read(),
-        )
+        self.assertEqual(image_key.get()["Body"].read(), open(avatar_disk_path(user), "rb").read())
         self.assertEqual(
             original_image_key.get()["Body"].read(),
             open(avatar_disk_path(user, original=True), "rb").read(),

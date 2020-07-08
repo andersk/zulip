@@ -8,12 +8,8 @@ class UpdownHookTests(WebhookTestCase):
 
     def test_updown_check_down_event(self) -> None:
         expected_topic = "https://updown.io"
-        expected_message = (
-            "Service is `down`. It returned a 500 error at 2016-02-07 13:11:43 UTC."
-        )
-        self.send_and_test_stream_message(
-            "check_down_one_event", expected_topic, expected_message,
-        )
+        expected_message = "Service is `down`. It returned a 500 error at 2016-02-07 13:11:43 UTC."
+        self.send_and_test_stream_message("check_down_one_event", expected_topic, expected_message)
 
     def test_updown_check_up_again_event(self) -> None:
         expected_topic = "https://updown.io"

@@ -54,9 +54,7 @@ class StreamRecipientMap:
         )
 
         cursor = connection.cursor()
-        cursor.execute(
-            query, {"STREAM": Recipient.STREAM, "recipient_ids": tuple(recipient_ids)},
-        )
+        cursor.execute(query, {"STREAM": Recipient.STREAM, "recipient_ids": tuple(recipient_ids)})
         rows = cursor.fetchall()
         cursor.close()
         for recip_id, stream_id in rows:

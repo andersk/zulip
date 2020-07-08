@@ -33,9 +33,7 @@ def create_filter(
 
 
 @require_realm_admin
-def delete_filter(
-    request: HttpRequest, user_profile: UserProfile, filter_id: int,
-) -> HttpResponse:
+def delete_filter(request: HttpRequest, user_profile: UserProfile, filter_id: int) -> HttpResponse:
     try:
         do_remove_realm_filter(realm=user_profile.realm, id=filter_id)
     except RealmFilter.DoesNotExist:

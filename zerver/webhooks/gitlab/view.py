@@ -92,9 +92,7 @@ def get_issue_created_event_body(payload: Dict[str, Any], include_title: bool = 
     )
 
 
-def get_issue_event_body(
-    payload: Dict[str, Any], action: str, include_title: bool = False,
-) -> str:
+def get_issue_event_body(payload: Dict[str, Any], action: str, include_title: bool = False) -> str:
     return get_issue_event_message(
         get_issue_user_name(payload),
         action,
@@ -112,9 +110,7 @@ def get_merge_request_updated_event_body(
             payload, "added commit(s) to", include_title=include_title,
         )
 
-    return get_merge_request_open_or_updated_body(
-        payload, "updated", include_title=include_title,
-    )
+    return get_merge_request_open_or_updated_body(payload, "updated", include_title=include_title)
 
 
 def get_merge_request_event_body(
@@ -213,9 +209,7 @@ def get_commented_issue_event_body(payload: Dict[str, Any], include_title: bool 
 def get_commented_snippet_event_body(payload: Dict[str, Any], include_title: bool = False) -> str:
     comment = payload["object_attributes"]
     action = "[commented]({}) on".format(comment["url"])
-    url = "{}/snippets/{}".format(
-        payload["project"].get("web_url"), payload["snippet"].get("id"),
-    )
+    url = "{}/snippets/{}".format(payload["project"].get("web_url"), payload["snippet"].get("id"))
 
     return get_pull_request_event_message(
         get_issue_user_name(payload),

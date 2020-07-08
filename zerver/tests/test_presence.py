@@ -247,18 +247,14 @@ class UserPresenceTests(ZulipTestCase):
         """Mostly a test for UserActivityInterval"""
         user_profile = self.example_user("hamlet")
         self.login("hamlet")
-        self.assertEqual(
-            UserActivityInterval.objects.filter(user_profile=user_profile).count(), 0,
-        )
+        self.assertEqual(UserActivityInterval.objects.filter(user_profile=user_profile).count(), 0)
         time_zero = timezone_now().replace(microsecond=0)
         with mock.patch("zerver.views.presence.timezone_now", return_value=time_zero):
             result = self.client_post(
                 "/json/users/me/presence", {"status": "active", "new_user_input": "true"},
             )
         self.assert_json_success(result)
-        self.assertEqual(
-            UserActivityInterval.objects.filter(user_profile=user_profile).count(), 1,
-        )
+        self.assertEqual(UserActivityInterval.objects.filter(user_profile=user_profile).count(), 1)
         interval = UserActivityInterval.objects.get(user_profile=user_profile)
         self.assertEqual(interval.start, time_zero)
         self.assertEqual(interval.end, time_zero + UserActivityInterval.MIN_INTERVAL_LENGTH)
@@ -270,9 +266,7 @@ class UserPresenceTests(ZulipTestCase):
                 "/json/users/me/presence", {"status": "active", "new_user_input": "true"},
             )
         self.assert_json_success(result)
-        self.assertEqual(
-            UserActivityInterval.objects.filter(user_profile=user_profile).count(), 1,
-        )
+        self.assertEqual(UserActivityInterval.objects.filter(user_profile=user_profile).count(), 1)
         interval = UserActivityInterval.objects.get(user_profile=user_profile)
         self.assertEqual(interval.start, time_zero)
         self.assertEqual(interval.end, second_time + UserActivityInterval.MIN_INTERVAL_LENGTH)
@@ -283,9 +277,7 @@ class UserPresenceTests(ZulipTestCase):
                 "/json/users/me/presence", {"status": "active", "new_user_input": "true"},
             )
         self.assert_json_success(result)
-        self.assertEqual(
-            UserActivityInterval.objects.filter(user_profile=user_profile).count(), 2,
-        )
+        self.assertEqual(UserActivityInterval.objects.filter(user_profile=user_profile).count(), 2)
         interval = UserActivityInterval.objects.filter(user_profile=user_profile).order_by(
             "start",
         )[0]
@@ -501,22 +493,16 @@ class UserPresenceAggregationTests(ZulipTestCase):
     ) -> Dict[str, Dict[str, Any]]:
         self.login_user(user)
         timezone_util = "zerver.views.presence.timezone_now"
-        with mock.patch(
-            timezone_util, return_value=validate_time - datetime.timedelta(seconds=5),
-        ):
+        with mock.patch(timezone_util, return_value=validate_time - datetime.timedelta(seconds=5)):
             self.client_post("/json/users/me/presence", {"status": status})
-        with mock.patch(
-            timezone_util, return_value=validate_time - datetime.timedelta(seconds=2),
-        ):
+        with mock.patch(timezone_util, return_value=validate_time - datetime.timedelta(seconds=2)):
             self.api_post(
                 user,
                 "/api/v1/users/me/presence",
                 {"status": status},
                 HTTP_USER_AGENT="ZulipAndroid/1.0",
             )
-        with mock.patch(
-            timezone_util, return_value=validate_time - datetime.timedelta(seconds=7),
-        ):
+        with mock.patch(timezone_util, return_value=validate_time - datetime.timedelta(seconds=7)):
             latest_result = self.api_post(
                 user,
                 "/api/v1/users/me/presence",

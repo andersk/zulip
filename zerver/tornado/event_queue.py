@@ -43,10 +43,7 @@ from zerver.lib.utils import statsd
 from zerver.middleware import async_request_timer_restart
 from zerver.models import Client, Realm, UserProfile
 from zerver.tornado.autoreload import add_reload_hook
-from zerver.tornado.descriptors import (
-    clear_descriptor_by_handler_id,
-    set_descriptor_by_handler_id,
-)
+from zerver.tornado.descriptors import clear_descriptor_by_handler_id, set_descriptor_by_handler_id
 from zerver.tornado.exceptions import BadEventQueueIdError
 from zerver.tornado.handlers import (
     clear_handler_by_id,
@@ -361,9 +358,7 @@ class EventQueue:
         contents: List[Dict[str, Any]] = []
         virtual_id_map: Dict[str, Dict[str, Any]] = {}
         for event_type in self.virtual_events:
-            virtual_id_map[self.virtual_events[event_type]["id"]] = self.virtual_events[
-                event_type
-            ]
+            virtual_id_map[self.virtual_events[event_type]["id"]] = self.virtual_events[event_type]
         virtual_ids = sorted(list(virtual_id_map.keys()))
 
         # Merge the virtual events into their final place in the queue

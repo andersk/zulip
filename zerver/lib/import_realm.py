@@ -1145,16 +1145,11 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
     # importer from slack
     # For Zulip export, this doesn't exist
     if os.path.exists(os.path.join(import_dir, "emoji")):
-        import_uploads(
-            realm, os.path.join(import_dir, "emoji"), processes, processing_emojis=True,
-        )
+        import_uploads(realm, os.path.join(import_dir, "emoji"), processes, processing_emojis=True)
 
     if os.path.exists(os.path.join(import_dir, "realm_icons")):
         import_uploads(
-            realm,
-            os.path.join(import_dir, "realm_icons"),
-            processes,
-            processing_realm_icons=True,
+            realm, os.path.join(import_dir, "realm_icons"), processes, processing_realm_icons=True,
         )
 
     sender_map = {user["id"]: user for user in data["zerver_userprofile"]}

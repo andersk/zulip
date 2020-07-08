@@ -118,8 +118,7 @@ class DecoratorTestCase(ZulipTestCase):
     def test_REQ_aliases(self) -> None:
         @has_request_variables
         def double(
-            request: HttpRequest,
-            x: int = REQ(whence="number", aliases=["x", "n"], converter=int),
+            request: HttpRequest, x: int = REQ(whence="number", aliases=["x", "n"], converter=int),
         ) -> int:
             return x + x
 
@@ -1409,9 +1408,7 @@ class TestValidateApiKey(ZulipTestCase):
             validate_api_key(HostRequestMock(), self.default_bot.email, api_key)
         self._change_is_active_field(self.default_bot, True)
 
-    def test_validate_api_key_if_profile_is_incoming_webhook_and_is_webhook_is_unset(
-        self,
-    ) -> None:
+    def test_validate_api_key_if_profile_is_incoming_webhook_and_is_webhook_is_unset(self) -> None:
         with self.assertRaises(JsonableError):
             api_key = get_api_key(self.webhook_bot)
             validate_api_key(HostRequestMock(), self.webhook_bot.email, api_key)
@@ -1600,10 +1597,7 @@ class TestAuthenticatedJsonPostViewDecorator(ZulipTestCase):
                 self._do_test(user), "Account is not associated with this " "subdomain",
             )
             mock_warning.assert_called_with(
-                "User %s (%s) attempted to access API on wrong subdomain (%s)",
-                email,
-                "zulip",
-                "",
+                "User %s (%s) attempted to access API on wrong subdomain (%s)", email, "zulip", "",
             )
 
         with mock.patch("logging.warning") as mock_warning, mock.patch(
@@ -1668,10 +1662,7 @@ class TestAuthenticatedJsonViewDecorator(ZulipTestCase):
                 self._do_test(email), "Account is not associated with this " "subdomain",
             )
             mock_warning.assert_called_with(
-                "User %s (%s) attempted to access API on wrong subdomain (%s)",
-                email,
-                "zulip",
-                "",
+                "User %s (%s) attempted to access API on wrong subdomain (%s)", email, "zulip", "",
             )
 
         with mock.patch("logging.warning") as mock_warning, mock.patch(
@@ -1882,9 +1873,7 @@ class CacheTestCase(ZulipTestCase):
             return (work_log, result_log)
 
         work_log, result_log = test_greetings("hello")
-        self.assertEqual(
-            work_log, ["hello alice smith", "hello bob barker", "hello cal johnson"],
-        )
+        self.assertEqual(work_log, ["hello alice smith", "hello bob barker", "hello cal johnson"])
 
         self.assertEqual(
             result_log,

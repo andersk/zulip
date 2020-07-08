@@ -155,12 +155,7 @@ time_start = time.time()
 
 send_zulip(
     zulip_sender,
-    {
-        "type": "private",
-        "content": msg_to_send,
-        "subject": "time to send",
-        "to": recipient.email,
-    },
+    {"type": "private", "content": msg_to_send, "subject": "time to send", "to": recipient.email},
 )
 
 msg_content: List[str] = []

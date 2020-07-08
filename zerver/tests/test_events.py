@@ -348,18 +348,14 @@ class NormalActionsTest(BaseAction):
         for i in range(3):
             content = "mentioning... @**" + user.full_name + "** hello " + str(i)
             self.verify_action(
-                lambda: self.send_stream_message(
-                    self.example_user("cordelia"), "Verona", content,
-                ),
+                lambda: self.send_stream_message(self.example_user("cordelia"), "Verona", content),
             )
 
     def test_wildcard_mentioned_send_message_events(self) -> None:
         for i in range(3):
             content = "mentioning... @**all** hello " + str(i)
             self.verify_action(
-                lambda: self.send_stream_message(
-                    self.example_user("cordelia"), "Verona", content,
-                ),
+                lambda: self.send_stream_message(self.example_user("cordelia"), "Verona", content),
             )
 
     def test_pm_send_message_events(self) -> None:
@@ -1267,9 +1263,7 @@ class NormalActionsTest(BaseAction):
             ],
         )
         description = "Backend team to deal with backend code."
-        events = self.verify_action(
-            lambda: do_update_user_group_description(backend, description),
-        )
+        events = self.verify_action(lambda: do_update_user_group_description(backend, description))
         user_group_update_checker("events[0]", events[0])
 
         # Test add members
@@ -1489,9 +1483,7 @@ class NormalActionsTest(BaseAction):
         )
         events = self.verify_action(
             lambda: do_change_avatar_fields(
-                self.user_profile,
-                UserProfile.AVATAR_FROM_GRAVATAR,
-                acting_user=self.user_profile,
+                self.user_profile, UserProfile.AVATAR_FROM_GRAVATAR, acting_user=self.user_profile,
             ),
         )
         schema_checker("events[0]", events[0])
@@ -2015,9 +2007,7 @@ class NormalActionsTest(BaseAction):
                 ("op", equals("add")),
                 (
                     "realm_domain",
-                    check_dict_only(
-                        [("domain", check_string), ("allow_subdomains", check_bool)],
-                    ),
+                    check_dict_only([("domain", check_string), ("allow_subdomains", check_bool)]),
                 ),
             ],
         )
@@ -2658,9 +2648,7 @@ class NormalActionsTest(BaseAction):
                             (
                                 "messages",
                                 check_list(
-                                    check_dict_only(
-                                        [("id", check_int), ("date_sent", check_int)],
-                                    ),
+                                    check_dict_only([("id", check_int), ("date_sent", check_int)]),
                                 ),
                             ),
                         ],
@@ -2685,9 +2673,7 @@ class NormalActionsTest(BaseAction):
             base = "/user_uploads/"
             self.assertEqual(base, uri[: len(base)])
 
-        events = self.verify_action(
-            lambda: do_upload(), num_events=1, state_change_expected=False,
-        )
+        events = self.verify_action(lambda: do_upload(), num_events=1, state_change_expected=False)
         schema_checker("events[0]", events[0])
 
         # Verify that the DB has the attachment marked as unclaimed
@@ -2711,9 +2697,7 @@ class NormalActionsTest(BaseAction):
                             (
                                 "messages",
                                 check_list(
-                                    check_dict_only(
-                                        [("id", check_int), ("date_sent", check_int)],
-                                    ),
+                                    check_dict_only([("id", check_int), ("date_sent", check_int)]),
                                 ),
                             ),
                         ],
@@ -2728,9 +2712,7 @@ class NormalActionsTest(BaseAction):
         assert uri is not None
         body = f"First message ...[zulip.txt](http://{hamlet.realm.host}" + uri + ")"
         events = self.verify_action(
-            lambda: self.send_stream_message(
-                self.example_user("hamlet"), "Denmark", body, "test",
-            ),
+            lambda: self.send_stream_message(self.example_user("hamlet"), "Denmark", body, "test"),
             num_events=2,
         )
         schema_checker("events[0]", events[0])

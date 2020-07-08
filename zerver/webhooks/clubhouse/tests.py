@@ -252,9 +252,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
     def test_story_update_add_github_branch(self) -> None:
         expected_message = "New GitHub branch [eeshangarg/ch27/testing-pull-requests-with-story](https://github.com/eeshangarg/scheduler/tree/eeshangarg/ch27/testing-pull-requests-with-story) associated with story [Testing pull requests with Story](https://app.clubhouse.io/zulip/story/27) (Unscheduled -> In Development)."
         self.send_and_test_stream_message(
-            "story_update_add_github_branch",
-            "Testing pull requests with Story",
-            expected_message,
+            "story_update_add_github_branch", "Testing pull requests with Story", expected_message,
         )
 
     @patch("zerver.lib.webhooks.common.check_send_webhook_message")

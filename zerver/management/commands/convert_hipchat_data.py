@@ -31,10 +31,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser: CommandParser) -> None:
         parser.add_argument(
-            "hipchat_tar",
-            nargs="+",
-            metavar="<hipchat data tarfile>",
-            help="tar of Hipchat data",
+            "hipchat_tar", nargs="+", metavar="<hipchat data tarfile>", help="tar of Hipchat data",
         )
 
         parser.add_argument(

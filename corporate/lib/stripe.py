@@ -300,10 +300,7 @@ def make_end_of_cycle_updates_if_needed(
 ) -> Tuple[Optional[CustomerPlan], Optional[LicenseLedger]]:
     last_ledger_entry = LicenseLedger.objects.filter(plan=plan).order_by("-id").first()
     last_renewal = (
-        LicenseLedger.objects.filter(plan=plan, is_renewal=True)
-        .order_by("-id")
-        .first()
-        .event_time
+        LicenseLedger.objects.filter(plan=plan, is_renewal=True).order_by("-id").first().event_time
     )
     next_billing_cycle = start_of_next_billing_cycle(plan, last_renewal)
     if next_billing_cycle <= event_time:

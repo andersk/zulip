@@ -138,9 +138,7 @@ def get_denmark_stream_id_and_topic() -> Dict[str, object]:
     topic_name = "Tivoli Gardens"
 
     helpers.subscribe(helpers.example_user("iago"), stream_name)
-    helpers.send_stream_message(
-        helpers.example_user("hamlet"), stream_name, topic_name=topic_name,
-    )
+    helpers.send_stream_message(helpers.example_user("hamlet"), stream_name, topic_name=topic_name)
 
     return {
         "stream_id": helpers.get_stream_id(stream_name),
@@ -226,9 +224,7 @@ def create_user_group_data() -> Dict[str, object]:
     }
 
 
-@openapi_param_value_generator(
-    ["/user_groups/{group_id}:patch", "/user_groups/{group_id}:delete"],
-)
+@openapi_param_value_generator(["/user_groups/{group_id}:patch", "/user_groups/{group_id}:delete"])
 def get_temp_user_group_id() -> Dict[str, object]:
     user_group, _ = UserGroup.objects.get_or_create(name="temp", realm=get_realm("zulip"))
     return {

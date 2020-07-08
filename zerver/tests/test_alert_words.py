@@ -163,16 +163,12 @@ class AlertWordTests(ZulipTestCase):
         self.assertTrue(self.message_does_alert(user_profile_hamlet, "two normal alerts"))
         # Alerts with surrounding punctuation work.
         self.assertTrue(self.message_does_alert(user_profile_hamlet, "This one? should alert"))
-        self.assertTrue(
-            self.message_does_alert(user_profile_hamlet, "Definitely time for three."),
-        )
+        self.assertTrue(self.message_does_alert(user_profile_hamlet, "Definitely time for three."))
         # Multiple alerts in a message work.
         self.assertTrue(self.message_does_alert(user_profile_hamlet, "One two three o'clock"))
         # Alerts are case-insensitive.
         self.assertTrue(self.message_does_alert(user_profile_hamlet, "One o'clock"))
-        self.assertTrue(
-            self.message_does_alert(user_profile_hamlet, "Case of ONE, won't stop me"),
-        )
+        self.assertTrue(self.message_does_alert(user_profile_hamlet, "Case of ONE, won't stop me"))
 
         # We don't cause alerts for matches in URLs.
         self.assertFalse(

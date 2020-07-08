@@ -423,9 +423,7 @@ class Runner(DiscoverRunner):
         self.teardown_test_environment()
         failed = self.suite_result(suite, result)
         if not failed:
-            write_instrumentation_reports(
-                full_suite=full_suite, include_webhooks=include_webhooks,
-            )
+            write_instrumentation_reports(full_suite=full_suite, include_webhooks=include_webhooks)
         return failed, result.failed_tests
 
 

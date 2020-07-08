@@ -2469,9 +2469,7 @@ class GetOldMessagesTest(ZulipTestCase):
         MAX_MESSAGES_PER_FETCH messages returns an error message.
         """
         self.login("hamlet")
-        result = self.client_get(
-            "/json/messages", dict(anchor=1, num_before=3000, num_after=3000),
-        )
+        result = self.client_get("/json/messages", dict(anchor=1, num_before=3000, num_after=3000))
         self.assert_json_error(result, "Too many messages requested (maximum 5000).")
         result = self.client_get("/json/messages", dict(anchor=1, num_before=6000, num_after=0))
         self.assert_json_error(result, "Too many messages requested (maximum 5000).")

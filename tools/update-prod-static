@@ -23,9 +23,7 @@ sanity_check.check_venv(__file__)
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
-    "--prev-deploy",
-    metavar="DIR",
-    help="a previous deploy from which to reuse files if possible",
+    "--prev-deploy", metavar="DIR", help="a previous deploy from which to reuse files if possible",
 )
 args = parser.parse_args()
 prev_deploy = args.prev_deploy

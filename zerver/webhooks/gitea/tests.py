@@ -27,23 +27,17 @@ class GiteaHookTests(WebhookTestCase):
     def test_pull_request_opened(self) -> None:
         expected_topic = "test / PR #1905 New pr"
         expected_message = """kostekIV opened [PR #4](https://try.gitea.io/kostekIV/test/pulls/4) from `test-branch` to `master`."""
-        self.send_and_test_stream_message(
-            "pull_request__opened", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request__opened", expected_topic, expected_message)
 
     def test_pull_request_merged(self) -> None:
         expected_topic = "test / PR #1905 New pr"
         expected_message = """kostekIV merged [PR #4](https://try.gitea.io/kostekIV/test/pulls/4) from `test-branch` to `master`."""
-        self.send_and_test_stream_message(
-            "pull_request__merged", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request__merged", expected_topic, expected_message)
 
     def test_pull_request_edited(self) -> None:
         expected_topic = "test / PR #1906 test 2"
         expected_message = """kostekIV edited [PR #5](https://try.gitea.io/kostekIV/test/pulls/5) from `d` to `master`."""
-        self.send_and_test_stream_message(
-            "pull_request__edited", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request__edited", expected_topic, expected_message)
 
     def test_pull_request_reopened(self) -> None:
         expected_topic = "test / PR #1906 test 2"
@@ -55,9 +49,7 @@ class GiteaHookTests(WebhookTestCase):
     def test_pull_request_closed(self) -> None:
         expected_topic = "test / PR #1906 test 2"
         expected_message = """kostekIV closed [PR #5](https://try.gitea.io/kostekIV/test/pulls/5) from `d` to `master`."""
-        self.send_and_test_stream_message(
-            "pull_request__closed", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request__closed", expected_topic, expected_message)
 
     def test_pull_request_assigned(self) -> None:
         expected_topic = "test / PR #1906 test 2"
@@ -99,9 +91,7 @@ class GiteaHookTests(WebhookTestCase):
     def test_issue_comment_in_pr(self) -> None:
         expected_topic = "test / Issue #1 dummy"
         expected_message = """kostekIV [commented](https://try.gitea.io/kostekIV/test/pulls/1/files#issuecomment-24399) on [Issue #1](https://try.gitea.io/kostekIV/test/issues/1):\n\n~~~ quote\ntest comment\n~~~"""
-        self.send_and_test_stream_message(
-            "issue_comment__in_pr", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("issue_comment__in_pr", expected_topic, expected_message)
 
     def test_issue_comment_edited(self) -> None:
         expected_topic = "test / Issue #3 Test issue 2"

@@ -165,10 +165,7 @@ def update_user_backend(
             return json_error(
                 _("The owner permission cannot be removed from the only organization owner."),
             )
-        if (
-            UserProfile.ROLE_REALM_OWNER in [role, target.role]
-            and not user_profile.is_realm_owner
-        ):
+        if UserProfile.ROLE_REALM_OWNER in [role, target.role] and not user_profile.is_realm_owner:
             raise OrganizationOwnerRequired()
         do_change_user_role(target, role, acting_user=user_profile)
 
@@ -458,9 +455,7 @@ def add_bot_backend(
         api_key=api_key,
         avatar_url=avatar_url(bot_profile),
         default_sending_stream=get_stream_name(bot_profile.default_sending_stream),
-        default_events_register_stream=get_stream_name(
-            bot_profile.default_events_register_stream,
-        ),
+        default_events_register_stream=get_stream_name(bot_profile.default_events_register_stream),
         default_all_public_streams=bot_profile.default_all_public_streams,
     )
     return json_success(json_result)

@@ -89,9 +89,7 @@ class CreateCustomProfileFieldTest(CustomProfileFieldTestCase):
         result = self.client_post("/json/realm/profile_fields", info=data)
         self.assert_json_error(result, "field_data is not a dict")
 
-        data["field_data"] = ujson.dumps(
-            {"python": {"text": "Python"}, "java": {"text": "Java"}},
-        )
+        data["field_data"] = ujson.dumps({"python": {"text": "Python"}, "java": {"text": "Java"}})
         result = self.client_post("/json/realm/profile_fields", info=data)
         self.assert_json_error(result, "order key is missing from field_data")
 
@@ -328,9 +326,7 @@ class DeleteCustomProfileFieldTest(CustomProfileFieldTestCase):
         do_remove_realm_custom_profile_field(realm, field)
 
         self.assertFalse(self.custom_field_exists_in_realm(field.id))
-        self.assertEqual(
-            user_profile.customprofilefieldvalue_set.count(), self.original_count - 1,
-        )
+        self.assertEqual(user_profile.customprofilefieldvalue_set.count(), self.original_count - 1)
 
 
 class UpdateCustomProfileFieldTest(CustomProfileFieldTestCase):
@@ -426,9 +422,7 @@ class UpdateCustomProfileFieldTest(CustomProfileFieldTestCase):
     def test_update_is_aware_of_uniqueness(self) -> None:
         self.login("iago")
         realm = get_realm("zulip")
-        field_1 = try_add_realm_custom_profile_field(
-            realm, "Phone", CustomProfileField.SHORT_TEXT,
-        )
+        field_1 = try_add_realm_custom_profile_field(realm, "Phone", CustomProfileField.SHORT_TEXT)
 
         field_2 = try_add_realm_custom_profile_field(
             realm, "Phone 1", CustomProfileField.SHORT_TEXT,
@@ -475,9 +469,7 @@ class UpdateCustomProfileFieldTest(CustomProfileFieldTestCase):
 
     def test_update_invalid_url(self) -> None:
         field_name = "Favorite website"
-        self.assert_error_update_invalid_value(
-            field_name, "not URL", f"{field_name} is not a URL",
-        )
+        self.assert_error_update_invalid_value(field_name, "not URL", f"{field_name} is not a URL")
 
     def test_update_invalid_user_field(self) -> None:
         field_name = "Mentor"

@@ -16,11 +16,7 @@ from zerver.lib.actions import (
 )
 from zerver.lib.events import fetch_initial_state_data, get_raw_user_data
 from zerver.lib.test_classes import ZulipTestCase
-from zerver.lib.test_helpers import (
-    POSTRequestMock,
-    queries_captured,
-    stub_event_queue_user_events,
-)
+from zerver.lib.test_helpers import POSTRequestMock, queries_captured, stub_event_queue_user_events
 from zerver.lib.users import get_api_key
 from zerver.models import (
     Realm,
@@ -657,9 +653,7 @@ class ClientDescriptorsTest(ZulipTestCase):
             user_profile_id=hamlet.id, apply_markdown=False, client_gravatar=False,
         )
 
-        client3 = MockClient(
-            user_profile_id=hamlet.id, apply_markdown=True, client_gravatar=True,
-        )
+        client3 = MockClient(user_profile_id=hamlet.id, apply_markdown=True, client_gravatar=True)
 
         client4 = MockClient(
             user_profile_id=hamlet.id, apply_markdown=False, client_gravatar=True,

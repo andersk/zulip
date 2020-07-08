@@ -509,11 +509,7 @@ class S3UploadBackend(ZulipUploadBackend):
 
         image_data = icon_file.read()
         upload_image_to_s3(
-            self.avatar_bucket,
-            s3_file_name + ".original",
-            content_type,
-            user_profile,
-            image_data,
+            self.avatar_bucket, s3_file_name + ".original", content_type, user_profile, image_data,
         )
 
         resized_data = resize_avatar(image_data)
@@ -539,11 +535,7 @@ class S3UploadBackend(ZulipUploadBackend):
 
         image_data = logo_file.read()
         upload_image_to_s3(
-            self.avatar_bucket,
-            s3_file_name + ".original",
-            content_type,
-            user_profile,
-            image_data,
+            self.avatar_bucket, s3_file_name + ".original", content_type, user_profile, image_data,
         )
 
         resized_data = resize_logo(image_data)
@@ -852,9 +844,7 @@ class LocalUploadBackend(ZulipUploadBackend):
     def get_emoji_url(self, emoji_file_name: str, realm_id: int) -> str:
         return os.path.join(
             "/user_avatars",
-            RealmEmoji.PATH_ID_TEMPLATE.format(
-                realm_id=realm_id, emoji_file_name=emoji_file_name,
-            ),
+            RealmEmoji.PATH_ID_TEMPLATE.format(realm_id=realm_id, emoji_file_name=emoji_file_name),
         )
 
     def upload_export_tarball(self, realm: Realm, tarball_path: str) -> str:

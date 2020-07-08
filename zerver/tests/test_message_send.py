@@ -1292,9 +1292,7 @@ class StreamMessagesTest(ZulipTestCase):
         ]
         a_subscriber = non_bot_subscribers[0]
         self.login_user(a_subscriber)
-        self.send_stream_message(
-            a_subscriber, stream_name, content=content, topic_name=topic_name,
-        )
+        self.send_stream_message(a_subscriber, stream_name, content=content, topic_name=topic_name)
 
         # Did all of the subscribers get the message?
         new_subscriber_messages = []
@@ -1865,11 +1863,7 @@ class InternalPrepTest(ZulipTestCase):
 
         with mock.patch("logging.exception") as m:
             internal_send_stream_message(
-                realm=realm,
-                sender=cordelia,
-                topic="whatever",
-                content=bad_content,
-                stream=stream,
+                realm=realm, sender=cordelia, topic="whatever", content=bad_content, stream=stream,
             )
 
         m.assert_called_once_with(

@@ -175,10 +175,7 @@ def ensure_no_empty_passwords(apps: StateApps, schema_editor: DatabaseSchemaEdit
             user_profile.password = make_password(None)
             update_fields = ["password"]
             write_realm_audit_log_entry(
-                user_profile,
-                event_time,
-                USER_PASSWORD_CHANGED,
-                AFFECTED_USER_TYPE_EMPTY_PASSWORD,
+                user_profile, event_time, USER_PASSWORD_CHANGED, AFFECTED_USER_TYPE_EMPTY_PASSWORD,
             )
 
             if email_auth_enabled and not user_profile.is_bot:
@@ -200,8 +197,7 @@ def ensure_no_empty_passwords(apps: StateApps, schema_editor: DatabaseSchemaEdit
             continue
 
         elif (
-            email_auth_enabled
-            and user_profile.id in password_change_user_ids_api_key_reset_needed
+            email_auth_enabled and user_profile.id in password_change_user_ids_api_key_reset_needed
         ):
             # For these users, we just need to reset the API key.
             reset_user_api_key(user_profile)

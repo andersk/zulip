@@ -19,9 +19,7 @@ EMOJI_MAP_FILE = os.path.join(TOOLS_DIR, "setup", "emoji", "emoji_map.json")
 UNIFIED_REACTIONS_FILE = os.path.join(
     ZULIP_PATH, "zerver", "management", "data", "unified_reactions.json",
 )
-EMOJI_DATA_FILE = os.path.join(
-    ZULIP_PATH, "node_modules", "emoji-datasource-google", "emoji.json",
-)
+EMOJI_DATA_FILE = os.path.join(ZULIP_PATH, "node_modules", "emoji-datasource-google", "emoji.json")
 EMOJI_CACHE = os.path.join(ZULIP_PATH, "static", "generated", "emoji")
 OUTPUT_FILE = os.path.join(EMOJI_CACHE, "emoji_names_table.html")
 

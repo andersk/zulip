@@ -186,9 +186,7 @@ def queries_captured(
     ) -> None:
         return wrapper_execute(self, super(TimeTrackingCursor, self).execute, sql, params)
 
-    def cursor_executemany(
-        self: TimeTrackingCursor, sql: Query, params: Iterable[Params],
-    ) -> None:
+    def cursor_executemany(self: TimeTrackingCursor, sql: Query, params: Iterable[Params]) -> None:
         return wrapper_execute(
             self, super(TimeTrackingCursor, self).executemany, sql, params,
         )  # nocoverage -- doesn't actually get used in tests

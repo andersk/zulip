@@ -356,9 +356,7 @@ def dump_emojis(cache_path: str) -> None:
 
     # `emoji.json` or any other data file can be sourced from any of the supported
     # emojiset packages, they all contain the same data files.
-    EMOJI_DATA_FILE_PATH = os.path.join(
-        NODE_MODULES_PATH, "emoji-datasource-google", "emoji.json",
-    )
+    EMOJI_DATA_FILE_PATH = os.path.join(NODE_MODULES_PATH, "emoji-datasource-google", "emoji.json")
     with open(EMOJI_DATA_FILE_PATH) as emoji_data_file:
         emoji_data = ujson.load(emoji_data_file)
     emoji_catalog = generate_emoji_catalog(emoji_data, EMOJI_NAME_MAPS)

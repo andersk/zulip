@@ -106,9 +106,7 @@ You can use the command list_realms to find ID of the realms in this server."""
                 raise CommandError("You can't use both -u/--users and -a/--all-users.")
 
             if all_users and realm is None:
-                raise CommandError(
-                    "The --all-users option requires a realm; please pass --realm.",
-                )
+                raise CommandError("The --all-users option requires a realm; please pass --realm.")
 
             if all_users:
                 user_profiles = UserProfile.objects.filter(realm=realm)

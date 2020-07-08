@@ -248,9 +248,7 @@ class MessageDictTest(ZulipTestCase):
         topic_name = "test #123"
 
         realm_filter = RealmFilter(
-            realm=zulip_realm,
-            pattern=r"#(?P<id>[0-9]{2,8})",
-            url_format_string=url_format_string,
+            realm=zulip_realm, pattern=r"#(?P<id>[0-9]{2,8})", url_format_string=url_format_string,
         )
         self.assertEqual(
             realm_filter.__str__(),

@@ -808,9 +808,7 @@ def realm_summary_table(realm_minutes: Dict[str, float]) -> str:
 
     content = loader.render_to_string(
         "analytics/realm_summary_table.html",
-        dict(
-            rows=rows, num_active_sites=num_active_sites, now=now.strftime("%Y-%m-%dT%H:%M:%SZ"),
-        ),
+        dict(rows=rows, num_active_sites=num_active_sites, now=now.strftime("%Y-%m-%dT%H:%M:%SZ")),
     )
     return content
 
@@ -1302,11 +1300,7 @@ def support(request: HttpRequest) -> HttpResponse:
 
         preregistration_users = PreregistrationUser.objects.filter(email__in=key_words)
         confirmations += get_confirmations(
-            [
-                Confirmation.USER_REGISTRATION,
-                Confirmation.INVITATION,
-                Confirmation.REALM_CREATION,
-            ],
+            [Confirmation.USER_REGISTRATION, Confirmation.INVITATION, Confirmation.REALM_CREATION],
             preregistration_users,
             hostname=request.get_host(),
         )
@@ -1556,9 +1550,7 @@ def realm_user_summary_table(
     for email, records in itertools.groupby(all_records, by_email):
         user_records[email] = get_user_activity_summary(list(records))
 
-    def get_last_visit(
-        user_summary: Dict[str, Dict[str, datetime]], k: str,
-    ) -> Optional[datetime]:
+    def get_last_visit(user_summary: Dict[str, Dict[str, datetime]], k: str) -> Optional[datetime]:
         if k in user_summary:
             return user_summary[k]["last_visit"]
         else:

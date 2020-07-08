@@ -45,9 +45,7 @@ def upload_emoji(
     return json_success()
 
 
-def delete_emoji(
-    request: HttpRequest, user_profile: UserProfile, emoji_name: str,
-) -> HttpResponse:
+def delete_emoji(request: HttpRequest, user_profile: UserProfile, emoji_name: str) -> HttpResponse:
     if not RealmEmoji.objects.filter(
         realm=user_profile.realm, name=emoji_name, deactivated=False,
     ).exists():

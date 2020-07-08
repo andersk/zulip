@@ -51,9 +51,7 @@ logger = logging.getLogger("zulip.fetch_contributors_json")
 
 
 def fetch_contributors(repo_link: str) -> Optional[List[Dict[str, Dict[str, Any]]]]:
-    r: requests.Response = requests.get(
-        repo_link, verify=os.environ.get("CUSTOM_CA_CERTIFICATES"),
-    )
+    r: requests.Response = requests.get(repo_link, verify=os.environ.get("CUSTOM_CA_CERTIFICATES"))
     return r.json() if r.status_code == 200 else None
 
 

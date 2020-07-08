@@ -55,9 +55,7 @@ class MatterMostImporter(ZulipTestCase):
 
         self.assertEqual(len(mattermost_data["post"]["channel_post"]), 20)
         self.assertEqual(mattermost_data["post"]["channel_post"][0]["team"], "gryffindor")
-        self.assertEqual(
-            mattermost_data["post"]["channel_post"][0]["channel"], "dumbledores-army",
-        )
+        self.assertEqual(mattermost_data["post"]["channel_post"][0]["channel"], "dumbledores-army")
         self.assertEqual(mattermost_data["post"]["channel_post"][0]["user"], "harry")
         self.assertEqual(len(mattermost_data["post"]["channel_post"][0]["replies"]), 1)
 
@@ -217,8 +215,7 @@ class MatterMostImporter(ZulipTestCase):
         self.assertEqual(zerver_stream[1]["name"], "Gryffindor quidditch team")
         self.assertEqual(zerver_stream[1]["invite_only"], False)
         self.assertEqual(
-            zerver_stream[1]["description"],
-            "A place for talking about Gryffindor quidditch team",
+            zerver_stream[1]["description"], "A place for talking about Gryffindor quidditch team",
         )
         self.assertEqual(zerver_stream[1]["rendered_description"], "")
         self.assertEqual(zerver_stream[1]["realm"], 3)
@@ -240,9 +237,7 @@ class MatterMostImporter(ZulipTestCase):
         harry_id = user_id_mapper.get("harry")
         self.assertEqual({ron_id, harry_id}, {1, 2})
         self.assertEqual(
-            subscriber_handler.get_users(
-                stream_id=stream_id_mapper.get("gryffindor-common-room"),
-            ),
+            subscriber_handler.get_users(stream_id=stream_id_mapper.get("gryffindor-common-room")),
             {ron_id, harry_id},
         )
         self.assertEqual(
@@ -270,9 +265,7 @@ class MatterMostImporter(ZulipTestCase):
         harry_id = user_id_mapper.get("harry")
         self.assertIn(harry_id, {1, 2})
         self.assertEqual(
-            subscriber_handler.get_users(
-                stream_id=stream_id_mapper.get("gryffindor-common-room"),
-            ),
+            subscriber_handler.get_users(stream_id=stream_id_mapper.get("gryffindor-common-room")),
             {harry_id},
         )
         self.assertEqual(
@@ -749,9 +742,7 @@ class MatterMostImporter(ZulipTestCase):
         self.assertEqual(len(huddle_messages), 3)
         self.assertEqual(len(set(huddle_recipients)), 1)
         self.assertEqual(huddle_messages[0].sender.email, "ginny@zulip.com")
-        self.assertEqual(
-            huddle_messages[0].content, "Who is going to Hogesmead this weekend?\n\n",
-        )
+        self.assertEqual(huddle_messages[0].content, "Who is going to Hogesmead this weekend?\n\n")
 
         personal_messages = messages.filter(recipient__type=Recipient.PERSONAL).order_by(
             "date_sent",

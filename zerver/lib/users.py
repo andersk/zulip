@@ -329,9 +329,7 @@ def validate_user_custom_profile_data(
             raise JsonableError(error.message)
 
 
-def compute_show_invites_and_add_streams(
-    user_profile: Optional[UserProfile],
-) -> Tuple[bool, bool]:
+def compute_show_invites_and_add_streams(user_profile: Optional[UserProfile]) -> Tuple[bool, bool]:
     if user_profile is None:
         return False, False
 

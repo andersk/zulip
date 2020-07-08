@@ -27,9 +27,7 @@ def get_caches_in_use(threshold_days: int) -> Set[str]:
         # In dev always include the currently active cache in order
         # not to break current installation in case dependencies
         # are updated with bumping the provision version.
-        CURRENT_CACHE = os.path.dirname(
-            os.path.realpath(os.path.join(ZULIP_PATH, "node_modules")),
-        )
+        CURRENT_CACHE = os.path.dirname(os.path.realpath(os.path.join(ZULIP_PATH, "node_modules")))
         caches_in_use.add(CURRENT_CACHE)
 
     for setup_dir in setups_to_check:

@@ -68,31 +68,23 @@ class GogsHookTests(WebhookTestCase):
     def test_pull_request_opened(self) -> None:
         expected_topic = "try-git / PR #1 Title Text for Pull Request"
         expected_message = """john opened [PR #1](http://localhost:3000/john/try-git/pulls/1) from `feature` to `master`."""
-        self.send_and_test_stream_message(
-            "pull_request__opened", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request__opened", expected_topic, expected_message)
 
     def test_pull_request_opened_with_custom_topic_in_url(self) -> None:
         self.url = self.build_webhook_url(topic="notifications")
         expected_topic = "notifications"
         expected_message = """john opened [PR #1 Title Text for Pull Request](http://localhost:3000/john/try-git/pulls/1) from `feature` to `master`."""
-        self.send_and_test_stream_message(
-            "pull_request__opened", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request__opened", expected_topic, expected_message)
 
     def test_pull_request_closed(self) -> None:
         expected_topic = "try-git / PR #1 Title Text for Pull Request"
         expected_message = """john closed [PR #1](http://localhost:3000/john/try-git/pulls/1) from `feature` to `master`."""
-        self.send_and_test_stream_message(
-            "pull_request__closed", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request__closed", expected_topic, expected_message)
 
     def test_pull_request_merged(self) -> None:
         expected_topic = "try-git / PR #2 Title Text for Pull Request"
         expected_message = """john merged [PR #2](http://localhost:3000/john/try-git/pulls/2) from `feature` to `master`."""
-        self.send_and_test_stream_message(
-            "pull_request__merged", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request__merged", expected_topic, expected_message)
 
     def test_pull_request_reopened(self) -> None:
         expected_topic = "test / PR #1349 reopened"
@@ -104,9 +96,7 @@ class GogsHookTests(WebhookTestCase):
     def test_pull_request_edited(self) -> None:
         expected_topic = "test / PR #1349 Test"
         expected_message = """kostekIV edited [PR #2](https://try.gogs.io/kostekIV/test/pulls/2) from `c` to `master`."""
-        self.send_and_test_stream_message(
-            "pull_request__edited", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request__edited", expected_topic, expected_message)
 
     def test_pull_request_assigned(self) -> None:
         expected_topic = "test / PR #1349 Test"

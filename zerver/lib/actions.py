@@ -400,11 +400,7 @@ def notify_new_user(user_profile: UserProfile) -> None:
                 user=f"{user_profile.full_name} <`{user_profile.email}`>", user_count=user_count,
             )
             internal_send_stream_message(
-                admin_realm,
-                sender,
-                signups_stream,
-                user_profile.realm.display_subdomain,
-                message,
+                admin_realm, sender, signups_stream, user_profile.realm.display_subdomain, message,
             )
 
     except Stream.DoesNotExist:
@@ -707,9 +703,7 @@ def do_create_user(
     return user_profile
 
 
-def do_activate_user(
-    user_profile: UserProfile, acting_user: Optional[UserProfile] = None,
-) -> None:
+def do_activate_user(user_profile: UserProfile, acting_user: Optional[UserProfile] = None) -> None:
     user_profile.is_active = True
     user_profile.is_mirror_dummy = False
     user_profile.set_unusable_password()
@@ -898,9 +892,7 @@ def do_set_realm_message_editing(
     send_event(realm, event, active_user_ids(realm.id))
 
 
-def do_set_realm_message_deleting(
-    realm: Realm, message_content_delete_limit_seconds: int,
-) -> None:
+def do_set_realm_message_deleting(realm: Realm, message_content_delete_limit_seconds: int) -> None:
     realm.message_content_delete_limit_seconds = message_content_delete_limit_seconds
     realm.save(update_fields=["message_content_delete_limit_seconds"])
     event = dict(
@@ -2315,9 +2307,7 @@ def extract_private_recipients(s: str) -> Union[List[str], List[int]]:
 def get_validated_user_ids(user_ids: Iterable[int]) -> List[int]:
     for user_id in user_ids:
         if not isinstance(user_id, int):
-            raise JsonableError(
-                _("Recipient lists may contain emails or user IDs, but not both."),
-            )
+            raise JsonableError(_("Recipient lists may contain emails or user IDs, but not both."))
 
     return list(set(user_ids))
 
@@ -2325,9 +2315,7 @@ def get_validated_user_ids(user_ids: Iterable[int]) -> List[int]:
 def get_validated_emails(emails: Iterable[str]) -> List[str]:
     for email in emails:
         if not isinstance(email, str):
-            raise JsonableError(
-                _("Recipient lists may contain emails or user IDs, but not both."),
-            )
+            raise JsonableError(_("Recipient lists may contain emails or user IDs, but not both."))
 
     return list(filter(bool, {email.strip() for email in emails}))
 
@@ -3447,9 +3435,7 @@ def bulk_remove_subscriptions(
         stream for stream in set(occupied_streams_before) - set(occupied_streams_after)
     ]
     new_vacant_private_streams = [stream for stream in new_vacant_streams if stream.invite_only]
-    new_vacant_public_streams = [
-        stream for stream in new_vacant_streams if not stream.invite_only
-    ]
+    new_vacant_public_streams = [stream for stream in new_vacant_streams if not stream.invite_only]
     if new_vacant_public_streams:
         event = dict(
             type="stream",
@@ -4661,11 +4647,7 @@ def do_mark_stream_messages_as_read(
     count = msgs.update(flags=F("flags").bitor(UserMessage.flags.read))
 
     event = dict(
-        type="update_message_flags",
-        operation="add",
-        flag="read",
-        messages=message_ids,
-        all=False,
+        type="update_message_flags", operation="add", flag="read", messages=message_ids, all=False,
     )
     event_time = timezone_now()
 
@@ -4699,9 +4681,7 @@ def do_update_mobile_push_notification(
     if not message.is_stream_message():
         return
 
-    remove_notify_users = (
-        prior_mention_user_ids - message.mentions_user_ids - stream_push_user_ids
-    )
+    remove_notify_users = prior_mention_user_ids - message.mentions_user_ids - stream_push_user_ids
     do_clear_mobile_push_notifications_for_ids(list(remove_notify_users), [message.id])
 
 
@@ -5141,9 +5121,7 @@ def do_update_message(
         # TODO: Extend this list to also contain users losing access
         # due to the messages moving to a private stream they are not
         # subscribed to.
-        subs_losing_access = [
-            sub for sub in subs_losing_usermessages if sub.user_profile.is_guest
-        ]
+        subs_losing_access = [sub for sub in subs_losing_usermessages if sub.user_profile.is_guest]
         ums = ums.exclude(
             user_profile_id__in=[sub.user_profile_id for sub in subs_losing_usermessages],
         )
@@ -5244,9 +5222,7 @@ def do_update_message(
 
             if new_stream is not None:
                 assert delete_event_notify_user_ids is not None
-                subscribers = subscribers.exclude(
-                    user_profile_id__in=delete_event_notify_user_ids,
-                )
+                subscribers = subscribers.exclude(user_profile_id__in=delete_event_notify_user_ids)
 
             # All users that are subscribed to the stream must be
             # notified when a message is edited
@@ -5799,10 +5775,7 @@ def do_invite_users(
     if not realm.invite_required:
         # Inhibit joining an open realm to send spam invitations.
         min_age = datetime.timedelta(days=settings.INVITES_MIN_USER_AGE_DAYS)
-        if (
-            user_profile.date_joined > timezone_now() - min_age
-            and not user_profile.is_realm_admin
-        ):
+        if user_profile.date_joined > timezone_now() - min_age and not user_profile.is_realm_admin:
             raise InvitationError(
                 _(
                     "Your account is too new to send invites for this organization. "
@@ -6157,10 +6130,7 @@ def do_remove_realm_domain(
     realm = realm_domain.realm
     domain = realm_domain.domain
     realm_domain.delete()
-    if (
-        RealmDomain.objects.filter(realm=realm).count() == 0
-        and realm.emails_restricted_to_domains
-    ):
+    if RealmDomain.objects.filter(realm=realm).count() == 0 and realm.emails_restricted_to_domains:
         # If this was the last realm domain, we mark the realm as no
         # longer restricted to domain, because the feature doesn't do
         # anything if there are no domains, and this is probably less
@@ -6582,11 +6552,7 @@ def get_service_dicts_for_bot(user_profile_id: int) -> List[Dict[str, Any]]:
     service_dicts: List[Dict[str, Any]] = []
     if user_profile.bot_type == UserProfile.OUTGOING_WEBHOOK_BOT:
         service_dicts = [
-            {
-                "base_url": service.base_url,
-                "interface": service.interface,
-                "token": service.token,
-            }
+            {"base_url": service.base_url, "interface": service.interface, "token": service.token}
             for service in services
         ]
     elif user_profile.bot_type == UserProfile.EMBEDDED_BOT:

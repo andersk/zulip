@@ -325,9 +325,7 @@ class TestMissedMessages(ZulipTestCase):
     ) -> None:
         for i in range(0, 11):
             self.send_stream_message(self.example_user("othello"), "Denmark", content=str(i))
-        self.send_stream_message(
-            self.example_user("othello"), "Denmark", "11", topic_name="test2",
-        )
+        self.send_stream_message(self.example_user("othello"), "Denmark", "11", topic_name="test2")
         msg_id = self.send_stream_message(
             self.example_user("othello"), "denmark", "@**King Hamlet**",
         )
@@ -372,9 +370,7 @@ class TestMissedMessages(ZulipTestCase):
     ) -> None:
         for i in range(1, 6):
             self.send_stream_message(self.example_user("othello"), "Denmark", content=str(i))
-        self.send_stream_message(
-            self.example_user("othello"), "Denmark", "11", topic_name="test2",
-        )
+        self.send_stream_message(self.example_user("othello"), "Denmark", "11", topic_name="test2")
         msg_id = self.send_stream_message(self.example_user("othello"), "denmark", "@**all**")
 
         if show_message_content:
@@ -414,9 +410,7 @@ class TestMissedMessages(ZulipTestCase):
     def _extra_context_in_missed_stream_messages_email_notify(self, send_as_user: bool) -> None:
         for i in range(0, 11):
             self.send_stream_message(self.example_user("othello"), "Denmark", content=str(i))
-        self.send_stream_message(
-            self.example_user("othello"), "Denmark", "11", topic_name="test2",
-        )
+        self.send_stream_message(self.example_user("othello"), "Denmark", "11", topic_name="test2")
         msg_id = self.send_stream_message(self.example_user("othello"), "denmark", "12")
         verify_body_include = [
             "Othello, the Moor of Venice: 1 2 3 4 5 6 7 8 9 10 12 -- ",
@@ -527,9 +521,7 @@ class TestMissedMessages(ZulipTestCase):
         )
 
         if show_message_content:
-            verify_body_include = [
-                "Othello, the Moor of Venice: Group personal message! -- Reply",
-            ]
+            verify_body_include = ["Othello, the Moor of Venice: Group personal message! -- Reply"]
             email_subject = "Group PMs with Iago and Othello, the Moor of Venice"
             verify_body_does_not_include: List[str] = []
         else:

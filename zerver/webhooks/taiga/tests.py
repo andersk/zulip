@@ -143,7 +143,9 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("task_deleted", self.TOPIC, message)
 
     def test_taiga_task_changed_comment_added(self) -> None:
-        message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) commented on task **New Task**."
+        message = (
+            "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) commented on task **New Task**."
+        )
         self.send_and_test_stream_message("task_changed_comment_added", self.TOPIC, message)
 
     def test_taiga_task_changed_due_date(self) -> None:

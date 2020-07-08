@@ -644,9 +644,7 @@ def get_subscribers_backend(
     user_profile: UserProfile,
     stream_id: int = REQ("stream", converter=to_non_negative_int),
 ) -> HttpResponse:
-    (stream, recipient, sub) = access_stream_by_id(
-        user_profile, stream_id, allow_realm_admin=True,
-    )
+    (stream, recipient, sub) = access_stream_by_id(user_profile, stream_id, allow_realm_admin=True)
     subscribers = get_subscriber_emails(stream, user_profile)
 
     return json_success({"subscribers": subscribers})

@@ -161,9 +161,7 @@ def update_realm_custom_profile_field(
 
     validate_custom_profile_field(name, hint, field.field_type, field_data)
     try:
-        try_update_realm_custom_profile_field(
-            realm, field, name, hint=hint, field_data=field_data,
-        )
+        try_update_realm_custom_profile_field(realm, field, name, hint=hint, field_data=field_data)
     except IntegrityError:
         return json_error(_("A field with that label already exists."))
     return json_success()

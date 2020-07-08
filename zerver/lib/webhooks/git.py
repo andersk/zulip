@@ -113,9 +113,7 @@ def get_push_commits_event_message(
             committers_details = f"{committers_details}, {name} ({number_of_commits})"
 
         if len(committers_items) > 1:
-            committers_details = "{} and {} ({})".format(
-                committers_details, *committers_items[-1],
-            )
+            committers_details = "{} and {} ({})".format(committers_details, *committers_items[-1])
 
         return PUSH_COMMITS_MESSAGE_TEMPLATE_WITH_COMMITTERS.format(
             user_name=user_name,

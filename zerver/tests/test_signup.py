@@ -327,9 +327,7 @@ class PasswordResetTest(ZulipTestCase):
         self.assertTrue(result["Location"].endswith("/accounts/password/reset/done/"))
         result = self.client_get(result["Location"])
 
-        self.assert_in_response(
-            "Check your email in a few minutes to finish the process.", result,
-        )
+        self.assert_in_response("Check your email in a few minutes to finish the process.", result)
 
         # Check that the password reset email is from a noreply address.
         body = self.get_reset_mail_body()
@@ -381,9 +379,7 @@ class PasswordResetTest(ZulipTestCase):
         self.assertTrue(result["Location"].endswith("/accounts/password/reset/done/"))
         result = self.client_get(result["Location"])
 
-        self.assert_in_response(
-            "Check your email in a few minutes to finish the process.", result,
-        )
+        self.assert_in_response("Check your email in a few minutes to finish the process.", result)
 
         # Check that the password reset email is from a noreply address.
         body = self.get_reset_mail_body()
@@ -406,9 +402,7 @@ class PasswordResetTest(ZulipTestCase):
         self.assertTrue(result["Location"].endswith("/accounts/password/reset/done/"))
         result = self.client_get(result["Location"])
 
-        self.assert_in_response(
-            "Check your email in a few minutes to finish the process.", result,
-        )
+        self.assert_in_response("Check your email in a few minutes to finish the process.", result)
 
         # Check that the password reset email is from a noreply address.
         body = self.get_reset_mail_body()
@@ -433,9 +427,7 @@ class PasswordResetTest(ZulipTestCase):
         self.assertTrue(result["Location"].endswith("/accounts/password/reset/done/"))
         result = self.client_get(result["Location"])
 
-        self.assert_in_response(
-            "Check your email in a few minutes to finish the process.", result,
-        )
+        self.assert_in_response("Check your email in a few minutes to finish the process.", result)
 
         # Check that the password reset email is from a noreply address.
         from django.core.mail import outbox
@@ -460,13 +452,9 @@ class PasswordResetTest(ZulipTestCase):
             self.assert_length(outbox, 2)
 
             # Resetting for a different address works though.
-            self.client_post(
-                "/accounts/password/reset/", {"email": self.example_email("othello")},
-            )
+            self.client_post("/accounts/password/reset/", {"email": self.example_email("othello")})
             self.assert_length(outbox, 3)
-            self.client_post(
-                "/accounts/password/reset/", {"email": self.example_email("othello")},
-            )
+            self.client_post("/accounts/password/reset/", {"email": self.example_email("othello")})
             self.assert_length(outbox, 4)
 
         # After time, password reset emails can be sent again.
@@ -490,9 +478,7 @@ class PasswordResetTest(ZulipTestCase):
         self.assertTrue(result["Location"].endswith("/accounts/password/reset/done/"))
         result = self.client_get(result["Location"])
 
-        self.assert_in_response(
-            "Check your email in a few minutes to finish the process.", result,
-        )
+        self.assert_in_response("Check your email in a few minutes to finish the process.", result)
 
         body = self.get_reset_mail_body("zephyr")
         self.assertIn("Somebody (possibly you) requested a new password", body)
@@ -514,9 +500,7 @@ class PasswordResetTest(ZulipTestCase):
 
         # check the redirect link telling you to check mail for password reset link
         self.assertEqual(result.status_code, 404)
-        self.assert_in_response(
-            "There is no Zulip organization hosted at this subdomain.", result,
-        )
+        self.assert_in_response("There is no Zulip organization hosted at this subdomain.", result)
 
         from django.core.mail import outbox
 
@@ -540,9 +524,7 @@ class PasswordResetTest(ZulipTestCase):
         self.assertTrue(result["Location"].endswith("/accounts/password/reset/done/"))
         result = self.client_get(result["Location"])
 
-        self.assert_in_response(
-            "Check your email in a few minutes to finish the process.", result,
-        )
+        self.assert_in_response("Check your email in a few minutes to finish the process.", result)
 
         from django.core.mail import outbox
 
@@ -681,9 +663,7 @@ class LoginTest(ZulipTestCase):
     def test_login_invalid_subdomain(self) -> None:
         result = self.login_with_return(self.example_email("hamlet"), "xxx", subdomain="invalid")
         self.assertEqual(result.status_code, 404)
-        self.assert_in_response(
-            "There is no Zulip organization hosted at this subdomain.", result,
-        )
+        self.assert_in_response("There is no Zulip organization hosted at this subdomain.", result)
         self.assert_logged_in_user_id(None)
 
     def test_register(self) -> None:
@@ -2542,9 +2522,7 @@ class RealmCreationTest(ZulipTestCase):
         result = self.submit_reg_form_for_user(email, password, realm_subdomain=string_id)
         self.assertEqual(result.status_code, 302)
         self.assertTrue(
-            result["Location"].startswith(
-                "http://zuliptest.testserver/accounts/login/subdomain/",
-            ),
+            result["Location"].startswith("http://zuliptest.testserver/accounts/login/subdomain/"),
         )
 
         # Make sure the realm is created
@@ -3681,8 +3659,7 @@ class UserSignUpTest(InviteUserBase):
 
             # Full name should be set from LDAP
             self.assert_in_success_response(
-                ["We just need you to do one last thing.", full_name, "newuser@zulip.com"],
-                result,
+                ["We just need you to do one last thing.", full_name, "newuser@zulip.com"], result,
             )
 
             # Submit the final form with the wrong password.
@@ -4757,8 +4734,7 @@ class RealmRedirectTest(ZulipTestCase):
     def test_realm_redirect_with_next_param(self) -> None:
         result = self.client_get("/accounts/go/?next=billing")
         self.assert_in_success_response(
-            ["Enter your organization's Zulip URL", 'action="/accounts/go/?next=billing"'],
-            result,
+            ["Enter your organization's Zulip URL", 'action="/accounts/go/?next=billing"'], result,
         )
 
         result = self.client_post("/accounts/go/?next=billing", {"subdomain": "lear"})

@@ -29,19 +29,7 @@ for any particular type of object.
 """
 import re
 from datetime import datetime
-from typing import (
-    Any,
-    Callable,
-    Dict,
-    Iterable,
-    List,
-    Optional,
-    Set,
-    Tuple,
-    Union,
-    cast,
-    overload,
-)
+from typing import Any, Callable, Dict, Iterable, List, Optional, Set, Tuple, Union, cast, overload
 
 import ujson
 from django.core.exceptions import ValidationError

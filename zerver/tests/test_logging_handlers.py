@@ -176,8 +176,7 @@ class AdminNotifyHandlerTest(ZulipTestCase):
             self.handler.emit(record)
         with self.settings(STAGING_ERROR_NOTIFICATIONS=False):
             with patch(
-                "zerver.logging_handlers.queue_json_publish",
-                side_effect=Exception("queue error"),
+                "zerver.logging_handlers.queue_json_publish", side_effect=Exception("queue error"),
             ):
                 self.handler.emit(record)
 

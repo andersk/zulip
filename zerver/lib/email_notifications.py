@@ -120,9 +120,7 @@ def fix_emojis(content: str, base_url: str, emojiset: str) -> str:
     return content
 
 
-def build_message_list(
-    user_profile: UserProfile, messages: List[Message],
-) -> List[Dict[str, Any]]:
+def build_message_list(user_profile: UserProfile, messages: List[Message]) -> List[Dict[str, Any]]:
     """
     Builds the message list object for the missed message email template.
     The messages are collapsed into per-recipient and per-sender blocks, like
@@ -163,9 +161,7 @@ def build_message_list(
         # structure of the URL to leverage. We can't use `relative_to_full_url()`
         # function here because it uses a stricter regex which will not work for
         # plain text.
-        plain = re.sub(
-            r"/user_uploads/(\S*)", user_profile.realm.uri + r"/user_uploads/\1", plain,
-        )
+        plain = re.sub(r"/user_uploads/(\S*)", user_profile.realm.uri + r"/user_uploads/\1", plain)
 
         assert message.rendered_content is not None
         html = message.rendered_content

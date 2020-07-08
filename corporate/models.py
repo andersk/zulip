@@ -44,9 +44,7 @@ class CustomerPlan(models.Model):
     MONTHLY = 2
     billing_schedule: int = models.SmallIntegerField()
 
-    next_invoice_date: Optional[datetime.datetime] = models.DateTimeField(
-        db_index=True, null=True,
-    )
+    next_invoice_date: Optional[datetime.datetime] = models.DateTimeField(db_index=True, null=True)
     invoiced_through: Optional["LicenseLedger"] = models.ForeignKey(
         "LicenseLedger", null=True, on_delete=CASCADE, related_name="+",
     )

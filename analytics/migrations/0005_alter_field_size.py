@@ -12,9 +12,7 @@ class Migration(migrations.Migration):
             model_name="installationcount", name="interval", field=models.CharField(max_length=8),
         ),
         migrations.AlterField(
-            model_name="installationcount",
-            name="property",
-            field=models.CharField(max_length=32),
+            model_name="installationcount", name="property", field=models.CharField(max_length=32),
         ),
         migrations.AlterField(
             model_name="realmcount", name="interval", field=models.CharField(max_length=8),

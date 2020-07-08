@@ -21,9 +21,7 @@ class TestTimestamp(ZulipTestCase):
             parser.parse("2017-01-01 00:00:00.123 UTC"),
             parser.parse("2017-01-01 00:00:00.123").replace(tzinfo=timezone.utc),
         ]:
-            self.assertEqual(
-                timestamp_to_datetime(timestamp), dt - timedelta(microseconds=123000),
-            )
+            self.assertEqual(timestamp_to_datetime(timestamp), dt - timedelta(microseconds=123000))
             self.assertEqual(datetime_to_timestamp(dt), timestamp)
 
         for dt in [

@@ -9,9 +9,7 @@ from django.db.models import Count
 from django.utils.timezone import now as timezone_now
 
 
-def set_realm_admins_as_realm_owners(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def set_realm_admins_as_realm_owners(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     UserProfile = apps.get_model("zerver", "UserProfile")
     RealmAuditLog = apps.get_model("zerver", "RealmAuditLog")
 

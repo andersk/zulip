@@ -27,12 +27,7 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
 from django.contrib.postgres.fields import JSONField
 from django.core.exceptions import ValidationError
-from django.core.validators import (
-    MinLengthValidator,
-    RegexValidator,
-    URLValidator,
-    validate_email,
-)
+from django.core.validators import MinLengthValidator, RegexValidator, URLValidator, validate_email
 from django.db import models, transaction
 from django.db.models import CASCADE, Manager, Q, Sum
 from django.db.models.query import QuerySet
@@ -389,10 +384,7 @@ class Realm(models.Model):
         # ID 3 reserved for optional Zoom, see below.
     }
 
-    if (
-        settings.VIDEO_ZOOM_CLIENT_ID is not None
-        and settings.VIDEO_ZOOM_CLIENT_SECRET is not None
-    ):
+    if settings.VIDEO_ZOOM_CLIENT_ID is not None and settings.VIDEO_ZOOM_CLIENT_SECRET is not None:
         VIDEO_CHAT_PROVIDERS["zoom"] = {
             "name": "Zoom",
             "id": 3,
@@ -707,8 +699,7 @@ class RealmEmoji(models.Model):
             # The second part of the regex (negative lookbehind) disallows names
             # ending with one of the punctuation characters.
             RegexValidator(
-                regex=r"^[0-9a-z.\-_]+(?<![.\-_])$",
-                message=_("Invalid characters in emoji name"),
+                regex=r"^[0-9a-z.\-_]+(?<![.\-_])$", message=_("Invalid characters in emoji name"),
             ),
         ],
     )
@@ -805,9 +796,7 @@ class RealmFilter(models.Model):
     id: int = models.AutoField(auto_created=True, primary_key=True, verbose_name="ID")
     realm: Realm = models.ForeignKey(Realm, on_delete=CASCADE)
     pattern: str = models.TextField(validators=[filter_pattern_validator])
-    url_format_string: str = models.TextField(
-        validators=[URLValidator(), filter_format_validator],
-    )
+    url_format_string: str = models.TextField(validators=[URLValidator(), filter_format_validator])
 
     class Meta:
         unique_together = ("realm", "pattern")
@@ -1603,9 +1592,7 @@ class Stream(models.Model):
     # TODO: Implement policy to restrict posting to a user group or admins.
 
     # Who in the organization has permission to send messages to this stream.
-    stream_post_policy: int = models.PositiveSmallIntegerField(
-        default=STREAM_POST_POLICY_EVERYONE,
-    )
+    stream_post_policy: int = models.PositiveSmallIntegerField(default=STREAM_POST_POLICY_EVERYONE)
     STREAM_POST_POLICY_TYPES = [
         STREAM_POST_POLICY_EVERYONE,
         STREAM_POST_POLICY_ADMINS,
@@ -1757,9 +1744,7 @@ def get_client_remote_cache(name: str) -> Client:
 
 @cache_with_key(get_stream_cache_key, timeout=3600 * 24 * 7)
 def get_realm_stream(stream_name: str, realm_id: int) -> Stream:
-    return Stream.objects.select_related().get(
-        name__iexact=stream_name.strip(), realm_id=realm_id,
-    )
+    return Stream.objects.select_related().get(name__iexact=stream_name.strip(), realm_id=realm_id)
 
 
 def stream_name_in_use(stream_name: str, realm_id: int) -> bool:
@@ -1900,9 +1885,7 @@ class AbstractMessage(models.Model):
 
     def __str__(self) -> str:
         display_recipient = get_display_recipient(self.recipient)
-        return (
-            f"<{self.__class__.__name__}: {display_recipient} / {self.subject} / {self.sender}>"
-        )
+        return f"<{self.__class__.__name__}: {display_recipient} / {self.subject} / {self.sender}>"
 
 
 class ArchiveTransaction(models.Model):
@@ -3058,9 +3041,7 @@ class UserHotspot(models.Model):
         unique_together = ("user", "hotspot")
 
 
-def check_valid_user_ids(
-    realm_id: int, val: object, allow_deactivated: bool = False,
-) -> List[int]:
+def check_valid_user_ids(realm_id: int, val: object, allow_deactivated: bool = False) -> List[int]:
     user_ids = check_list(check_int)("User IDs", val)
     realm = Realm.objects.get(id=realm_id)
     for user_id in user_ids:

@@ -61,11 +61,7 @@ class SubsNotificationSettingsTestCase(MigrationsTestCase):  # nocoverage
         iago_sub.audible_notifications = False
         iago_sub.push_notifications = True
         iago_sub.save(
-            update_fields=[
-                "desktop_notifications",
-                "audible_notifications",
-                "push_notifications",
-            ],
+            update_fields=["desktop_notifications", "audible_notifications", "push_notifications"],
         )
 
     def test_subs_migrated(self) -> None:

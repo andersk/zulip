@@ -499,9 +499,7 @@ def get_hipchat_sender_id(
         # Some Hipchat instances just give us a person's
         # name in the sender field for NotificationMessage.
         # We turn them into a mirror user.
-        mirror_user = user_handler.get_mirror_user(
-            realm_id=realm_id, name=message_dict["sender"],
-        )
+        mirror_user = user_handler.get_mirror_user(realm_id=realm_id, name=message_dict["sender"])
         sender_id = mirror_user["id"]
         return sender_id
 

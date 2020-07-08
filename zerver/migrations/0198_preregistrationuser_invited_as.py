@@ -5,9 +5,7 @@ from django.db.backends.postgresql.schema import DatabaseSchemaEditor
 from django.db.migrations.state import StateApps
 
 
-def set_initial_value_for_invited_as(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def set_initial_value_for_invited_as(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     PreregistrationUser = apps.get_model("zerver", "PreregistrationUser")
     for user in PreregistrationUser.objects.all():
         if user.invited_as_admin:

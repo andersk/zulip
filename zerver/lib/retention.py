@@ -368,9 +368,7 @@ def delete_expired_attachments(realm: Realm) -> None:
     ).delete()
 
     if attachments_deleted > 0:
-        logger.info(
-            "Cleaned up %s attachments for realm %s", attachments_deleted, realm.string_id,
-        )
+        logger.info("Cleaned up %s attachments for realm %s", attachments_deleted, realm.string_id)
 
 
 def move_related_objects_to_archive(msg_ids: List[int]) -> None:

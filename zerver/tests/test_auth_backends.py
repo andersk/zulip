@@ -1098,9 +1098,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
     def test_user_cannot_log_into_nonexisting_realm(self) -> None:
         account_data_dict = self.get_account_data_dict(email=self.email, name=self.name)
         result = self.social_auth_test(account_data_dict, subdomain="nonexistent")
-        self.assert_in_response(
-            "There is no Zulip organization hosted at this subdomain.", result,
-        )
+        self.assert_in_response("There is no Zulip organization hosted at this subdomain.", result)
         self.assertEqual(result.status_code, 404)
 
     def test_user_cannot_log_into_wrong_subdomain(self) -> None:
@@ -1841,9 +1839,7 @@ class SAMLAuthBackendTest(SocialAuthBase):
         self.assert_in_success_response(["SAML authentication"], result)
 
     def test_saml_auth_works_without_private_public_keys(self) -> None:
-        with self.settings(
-            SOCIAL_AUTH_SAML_SP_PUBLIC_CERT="", SOCIAL_AUTH_SAML_SP_PRIVATE_KEY="",
-        ):
+        with self.settings(SOCIAL_AUTH_SAML_SP_PUBLIC_CERT="", SOCIAL_AUTH_SAML_SP_PRIVATE_KEY=""):
             self.test_social_auth_success()
 
     def test_saml_auth_enabled(self) -> None:
@@ -1904,8 +1900,7 @@ class SAMLAuthBackendTest(SocialAuthBase):
             self.assertEqual(result.status_code, 302)
             self.assertIn("login", result.url)
         self.assertEqual(
-            m.output,
-            [self.logger_output("/complete/saml/: No SAMLResponse in request.", "info")],
+            m.output, [self.logger_output("/complete/saml/: No SAMLResponse in request.", "info")],
         )
 
         # Check that POSTing the RelayState, but with missing SAMLResponse,
@@ -1919,8 +1914,7 @@ class SAMLAuthBackendTest(SocialAuthBase):
             self.assertEqual(result.status_code, 302)
             self.assertIn("login", result.url)
         self.assertEqual(
-            m.output,
-            [self.logger_output("/complete/saml/: No SAMLResponse in request.", "info")],
+            m.output, [self.logger_output("/complete/saml/: No SAMLResponse in request.", "info")],
         )
 
         # Now test bad SAMLResponses.
@@ -2827,9 +2821,7 @@ class GitHubAuthBackendTest(SocialAuthBase):
             m.output,
             [
                 self.logger_output(
-                    "Social auth ({}) failed because user has no verified emails".format(
-                        "GitHub",
-                    ),
+                    "Social auth ({}) failed because user has no verified emails".format("GitHub"),
                     "warning",
                 ),
             ],
@@ -3242,9 +3234,7 @@ class GoogleAuthBackendTest(SocialAuthBase):
             m.output,
             [
                 self.logger_output(
-                    "Social auth ({}) failed because user has no verified emails".format(
-                        "Google",
-                    ),
+                    "Social auth ({}) failed because user has no verified emails".format("Google"),
                     "warning",
                 ),
             ],
@@ -3393,9 +3383,7 @@ class GoogleAuthBackendTest(SocialAuthBase):
         with mock.patch("logging.warning") as mock_warn:
             token = generate_random_token(ExternalAuthResult.LOGIN_TOKEN_LENGTH)
             result = self.get_log_into_subdomain(data, force_token=token)
-            mock_warn.assert_called_once_with(
-                "log_into_subdomain: Invalid token given: %s", token,
-            )
+            mock_warn.assert_called_once_with("log_into_subdomain: Invalid token given: %s", token)
         self.assertEqual(result.status_code, 400)
         self.assert_in_response("Invalid or expired login session.", result)
 
@@ -3521,11 +3509,7 @@ class GoogleAuthBackendTest(SocialAuthBase):
         self.assertIn("do_confirm/" + confirmation_key, result.url)
         result = self.client_get(result.url)
         self.assert_in_response('action="/accounts/register/"', result)
-        data2 = {
-            "from_confirmation": "1",
-            "full_name": data["full_name"],
-            "key": confirmation_key,
-        }
+        data2 = {"from_confirmation": "1", "full_name": data["full_name"], "key": confirmation_key}
         result = self.client_post("/accounts/register/", data2, subdomain="zulip")
         self.assert_in_response("We just need you to do one last thing", result)
 
@@ -3588,9 +3572,7 @@ class JSONFetchAPIKeyTest(ZulipTestCase):
     def test_wrong_password(self) -> None:
         user = self.example_user("hamlet")
         self.login_user(user)
-        result = self.client_post(
-            "/json/fetch_api_key", dict(user_profile=user, password="wrong"),
-        )
+        result = self.client_post("/json/fetch_api_key", dict(user_profile=user, password="wrong"))
         self.assert_json_error(result, "Your username or password is incorrect.", 400)
 
 
@@ -3634,9 +3616,7 @@ class FetchAPIKeyTest(ZulipTestCase):
         with self.settings(LDAP_APPEND_DOMAIN="zulip.com"):
             result = self.client_post(
                 "/api/v1/fetch_api_key",
-                dict(
-                    username=self.example_email("hamlet"), password=self.ldap_password("hamlet"),
-                ),
+                dict(username=self.example_email("hamlet"), password=self.ldap_password("hamlet")),
             )
         self.assert_json_success(result)
 
@@ -4072,9 +4052,7 @@ class TestDevAuthBackend(ZulipTestCase):
                 self.assertEqual(result["Location"], "http://zephyr.testserver")
 
                 result = self.client_get("http://zephyr.testserver/devlogin/")
-                self.assert_not_in_success_response(
-                    ["iago@zulip.com", "hamlet@zulip.com"], result,
-                )
+                self.assert_not_in_success_response(["iago@zulip.com", "hamlet@zulip.com"], result)
                 self.assert_in_success_response(["starnine@mit.edu", "espuser@mit.edu"], result)
                 self.assert_in_success_response(["Click on a user to log in to MIT!"], result)
 
@@ -4356,9 +4334,7 @@ class TestZulipRemoteUserBackend(DesktopFlowTestingLib, ZulipTestCase):
         self.assert_json_error_contains(result, "Invalid OTP", 400)
 
         result = self.client_get(
-            "/accounts/login/sso/",
-            dict(desktop_flow_otp="invalido" * 8),
-            REMOTE_USER=remote_user,
+            "/accounts/login/sso/", dict(desktop_flow_otp="invalido" * 8), REMOTE_USER=remote_user,
         )
         self.assert_logged_in_user_id(None)
         self.assert_json_error_contains(result, "Invalid OTP", 400)
@@ -4552,8 +4528,7 @@ class DjangoToLDAPUsernameTests(ZulipTestCase):
             self.backend.django_to_ldap_username("hamlet"), self.ldap_username("hamlet"),
         )
         self.assertEqual(
-            self.backend.django_to_ldap_username("hamlet@zulip.com"),
-            self.ldap_username("hamlet"),
+            self.backend.django_to_ldap_username("hamlet@zulip.com"), self.ldap_username("hamlet"),
         )
         # If there are no matches through the email search, raise exception:
         with self.assertRaises(ZulipLDAPExceptionNoMatchingLDAPUser):
@@ -4686,8 +4661,7 @@ class TestLDAP(ZulipLDAPTestCase):
         for key, value in ldap_dir.items():
             self.assertTrue(regex.match(key))
             self.assertCountEqual(
-                list(value.keys()),
-                common_attrs + ["uid", "thumbnailPhoto", "userAccountControl"],
+                list(value.keys()), common_attrs + ["uid", "thumbnailPhoto", "userAccountControl"],
             )
 
         ldap_dir = generate_dev_ldap_dir("b", 9)
@@ -5583,8 +5557,7 @@ class TestAdminSetBackends(ZulipTestCase):
         # Log in as admin
         self.login("desdemona")
         result = self.client_patch(
-            "/json/realm",
-            {"authentication_methods": ujson.dumps({"Email": False, "Dev": False})},
+            "/json/realm", {"authentication_methods": ujson.dumps({"Email": False, "Dev": False})},
         )
         self.assert_json_error(result, "At least one authentication method must be enabled.")
         realm = get_realm("zulip")

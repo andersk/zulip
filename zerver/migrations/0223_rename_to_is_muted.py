@@ -10,8 +10,7 @@ def set_initial_value_for_is_muted(apps: StateApps, schema_editor: DatabaseSchem
     Subscription = apps.get_model("zerver", "Subscription")
     Subscription.objects.update(
         is_muted=Case(
-            When(in_home_view=True, then=Value(False)),
-            When(in_home_view=False, then=Value(True)),
+            When(in_home_view=True, then=Value(False)), When(in_home_view=False, then=Value(True)),
         ),
     )
 

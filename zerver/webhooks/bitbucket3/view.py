@@ -26,9 +26,7 @@ from zerver.webhooks.bitbucket2.view import (
     BITBUCKET_TOPIC_TEMPLATE,
 )
 
-BRANCH_UPDATED_MESSAGE_TEMPLATE = (
-    "{user_name} pushed to branch {branch_name}. Head is now {head}."
-)
+BRANCH_UPDATED_MESSAGE_TEMPLATE = "{user_name} pushed to branch {branch_name}. Head is now {head}."
 PULL_REQUEST_MARKED_AS_NEEDS_WORK_TEMPLATE = (
     '{user_name} marked [PR #{number}]({url}) as "needs work".'
 )
@@ -209,9 +207,7 @@ def get_pr_subject(repo: str, type: str, id: str, title: str) -> str:
     return TOPIC_WITH_PR_OR_ISSUE_INFO_TEMPLATE.format(repo=repo, type=type, id=id, title=title)
 
 
-def get_simple_pr_body(
-    payload: Dict[str, Any], action: str, include_title: Optional[bool],
-) -> str:
+def get_simple_pr_body(payload: Dict[str, Any], action: str, include_title: Optional[bool]) -> str:
     pr = payload["pullRequest"]
     return get_pull_request_event_message(
         user_name=get_user_name(payload),

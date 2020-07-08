@@ -846,9 +846,7 @@ def aggregate_message_dict(
 
 def get_inactive_recipient_ids(user_profile: UserProfile) -> List[int]:
     rows = (
-        get_stream_subscriptions_for_user(user_profile)
-        .filter(active=False)
-        .values("recipient_id")
+        get_stream_subscriptions_for_user(user_profile).filter(active=False).values("recipient_id")
     )
     inactive_recipient_ids = [row["recipient_id"] for row in rows]
     return inactive_recipient_ids

@@ -225,9 +225,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
             profile = get_user(email, realm)
             # Make sure that avatar image that we've uploaded is same with avatar image in the server
             self.assertTrue(
-                filecmp.cmp(
-                    fp.name, os.path.splitext(avatar_disk_path(profile))[0] + ".original",
-                ),
+                filecmp.cmp(fp.name, os.path.splitext(avatar_disk_path(profile))[0] + ".original"),
             )
         self.assert_num_bots_equal(1)
 
@@ -1011,9 +1009,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
             self.assertEqual(profile.avatar_version, 2)
             # Make sure that avatar image that we've uploaded is same with avatar image in the server
             self.assertTrue(
-                filecmp.cmp(
-                    fp.name, os.path.splitext(avatar_disk_path(profile))[0] + ".original",
-                ),
+                filecmp.cmp(fp.name, os.path.splitext(avatar_disk_path(profile))[0] + ".original"),
             )
         self.assert_json_success(result)
 

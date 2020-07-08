@@ -48,9 +48,7 @@ class SimpleQueueClient:
         self._connect()
 
     def _get_parameters(self) -> pika.ConnectionParameters:
-        credentials = pika.PlainCredentials(
-            settings.RABBITMQ_USERNAME, settings.RABBITMQ_PASSWORD,
-        )
+        credentials = pika.PlainCredentials(settings.RABBITMQ_USERNAME, settings.RABBITMQ_PASSWORD)
 
         # With BlockingConnection, we are passed
         # self.rabbitmq_heartbeat=0, which asks to explicitly disable
@@ -299,9 +297,7 @@ class TornadoQueueClient(SimpleQueueClient):
         except pika.exceptions.ConnectionClosed:
             # The connection didn't stay open long enough for this code to get to it.
             # Let _on_connection_closed deal with trying again.
-            self.log.warning(
-                "TornadoQueueClient couldn't open channel: connection already closed",
-            )
+            self.log.warning("TornadoQueueClient couldn't open channel: connection already closed")
 
     def _on_channel_open(self, channel: BlockingChannel) -> None:
         self.channel = channel

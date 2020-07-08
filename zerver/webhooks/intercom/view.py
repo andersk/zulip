@@ -159,9 +159,7 @@ def get_conversation_admin_message(payload: Dict[str, Any], action: str) -> Tupl
     return (topic, body)
 
 
-def get_conversation_admin_reply_message(
-    payload: Dict[str, Any], action: str,
-) -> Tuple[str, str]:
+def get_conversation_admin_reply_message(payload: Dict[str, Any], action: str) -> Tuple[str, str]:
     assignee = payload["data"]["item"]["assignee"]
     user = payload["data"]["item"]["user"]
     note = payload["data"]["item"]["conversation_parts"]["conversation_parts"][0]

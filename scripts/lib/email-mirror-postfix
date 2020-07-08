@@ -59,12 +59,7 @@ parser.add_argument(
 )
 
 parser.add_argument(
-    "-s",
-    "--shared-secret",
-    dest="shared_secret",
-    type=str,
-    default="",
-    help="Secret access key.",
+    "-s", "--shared-secret", dest="shared_secret", type=str, default="", help="Secret access key.",
 )
 
 parser.add_argument(

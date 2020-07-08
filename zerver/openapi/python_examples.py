@@ -250,9 +250,7 @@ def get_subscription_status(client: Client) -> None:
     # Check whether a user is a subscriber to a given stream.
     user_id = 7
     stream_id = 1
-    result = client.call_endpoint(
-        url=f"/users/{user_id}/subscriptions/{stream_id}", method="GET",
-    )
+    result = client.call_endpoint(url=f"/users/{user_id}/subscriptions/{stream_id}", method="GET")
     # {code_example|end}
     validate_against_openapi_schema(
         result, "/users/{user_id}/subscriptions/{stream_id}", "get", "200",
@@ -471,9 +469,7 @@ def toggle_mute_topic(client: Client) -> None:
     result = client.mute_topic(request)
     # {code_example|end}
 
-    validate_against_openapi_schema(
-        result, "/users/me/subscriptions/muted_topics", "patch", "200",
-    )
+    validate_against_openapi_schema(result, "/users/me/subscriptions/muted_topics", "patch", "200")
 
     # {code_example|start}
     # Unmute the topic "boat party" in the stream "Denmark"
@@ -486,9 +482,7 @@ def toggle_mute_topic(client: Client) -> None:
     result = client.mute_topic(request)
     # {code_example|end}
 
-    validate_against_openapi_schema(
-        result, "/users/me/subscriptions/muted_topics", "patch", "200",
-    )
+    validate_against_openapi_schema(result, "/users/me/subscriptions/muted_topics", "patch", "200")
 
 
 @openapi_test_function("/mark_all_as_read:post")

@@ -785,9 +785,7 @@ class AdminCreateUserTest(ZulipTestCase):
 
         result = self.client_post(
             "/json/users",
-            dict(
-                email="broken", password="xxxx", full_name="Romeo Montague", short_name="Romeo",
-            ),
+            dict(email="broken", password="xxxx", full_name="Romeo Montague", short_name="Romeo"),
         )
         self.assert_json_error(result, "Bad name or username")
 
@@ -1484,9 +1482,7 @@ class RecipientInfoTest(ZulipTestCase):
             stream_topic=stream_topic,
             possibly_mentioned_user_ids={service_bot.id},
         )
-        self.assertEqual(
-            info["service_bot_tuples"], [(service_bot.id, UserProfile.EMBEDDED_BOT)],
-        )
+        self.assertEqual(info["service_bot_tuples"], [(service_bot.id, UserProfile.EMBEDDED_BOT)])
 
         # Add a normal bot.
         normal_bot = do_create_user(

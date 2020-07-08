@@ -40,9 +40,9 @@ class LibratoWebhookParser:
 
     def parse_violation(self, violation: Dict[str, Any]) -> Tuple[str, str]:
         metric_name = violation["metric"]
-        recorded_at = datetime.fromtimestamp(
-            (violation["recorded_at"]), tz=timezone.utc,
-        ).strftime("%Y-%m-%d %H:%M:%S")
+        recorded_at = datetime.fromtimestamp((violation["recorded_at"]), tz=timezone.utc).strftime(
+            "%Y-%m-%d %H:%M:%S",
+        )
         return metric_name, recorded_at
 
     def parse_conditions(self) -> List[Dict[str, Any]]:
@@ -94,9 +94,7 @@ class LibratoWebhookHandler(LibratoWebhookParser):
         return topic_template.format(alert_name=alert_name)
 
     def handle_alert_clear_message(self) -> str:
-        alert_clear_template = (
-            "Alert [alert_name]({alert_url}) has cleared at {trigger_time} UTC!"
-        )
+        alert_clear_template = "Alert [alert_name]({alert_url}) has cleared at {trigger_time} UTC!"
         trigger_time = datetime.fromtimestamp(
             (self.payload["trigger_time"]), tz=timezone.utc,
         ).strftime("%Y-%m-%d %H:%M:%S")

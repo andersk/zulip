@@ -58,9 +58,7 @@ class Bitbucket3HookTests(WebhookTestCase):
             """[hypro999](http://139.59.64.214:7990/users/hypro999) created branch2 branch."""
         )
         expected_topic = self.EXPECTED_TOPIC_BRANCH_EVENTS.format(branch="branch2")
-        self.send_and_test_stream_message(
-            "repo_push_add_branch", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("repo_push_add_branch", expected_topic, expected_message)
 
     def test_push_add_tag(self) -> None:
         expected_message = (
@@ -178,17 +176,13 @@ class Bitbucket3HookTests(WebhookTestCase):
     def test_pr_deleted(self) -> None:
         expected_topic = "sandbox / PR #2 Add notes feature."
         expected_message = """[hypro999](http://139.59.64.214:7990/users/hypro999) deleted [PR #2](http://139.59.64.214:7990/projects/SBOX/repos/sandbox/pull-requests/2)."""
-        self.send_and_test_stream_message(
-            "pull_request_deleted", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request_deleted", expected_topic, expected_message)
 
     def test_pr_deleted_with_include_title(self) -> None:
         expected_topic = "custom_topic"
         expected_message = """[hypro999](http://139.59.64.214:7990/users/hypro999) deleted [PR #2 Add notes feature.](http://139.59.64.214:7990/projects/SBOX/repos/sandbox/pull-requests/2)"""
         self.url = self.build_webhook_url(topic="custom_topic")
-        self.send_and_test_stream_message(
-            "pull_request_deleted", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request_deleted", expected_topic, expected_message)
 
     def test_pr_declined(self) -> None:
         expected_topic = "sandbox / PR #7 Crazy Idea"

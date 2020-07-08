@@ -807,8 +807,7 @@ class StreamAdminTest(ZulipTestCase):
             f"/json/streams/{stream_id}", {"description": ujson.dumps("a" * 1025)},
         )
         self.assert_json_error(
-            result,
-            f"description is too long (limit: {Stream.MAX_DESCRIPTION_LENGTH} characters)",
+            result, f"description is too long (limit: {Stream.MAX_DESCRIPTION_LENGTH} characters)",
         )
 
         result = self.client_patch(
@@ -1399,9 +1398,7 @@ class StreamAdminTest(ZulipTestCase):
         self.assert_json_success(result)
 
         # Allow only administrators to create streams.
-        do_set_realm_property(
-            user_profile.realm, "create_stream_policy", Realm.POLICY_ADMINS_ONLY,
-        )
+        do_set_realm_property(user_profile.realm, "create_stream_policy", Realm.POLICY_ADMINS_ONLY)
 
         # Cannot create stream because not an admin.
         stream_name = ["admins_only"]
@@ -1751,9 +1748,7 @@ class DefaultStreamGroupTest(ZulipTestCase):
             f"/json/default_stream_groups/{group_id}/streams",
             {"op": "invalid", "stream_names": ujson.dumps(new_stream_names)},
         )
-        self.assert_json_error(
-            result, 'Invalid value for "op". Specify one of "add" or "remove".',
-        )
+        self.assert_json_error(result, 'Invalid value for "op". Specify one of "add" or "remove".')
 
         result = self.client_patch(
             "/json/default_stream_groups/12345/streams",
@@ -2539,9 +2534,7 @@ class SubscriptionRestApiTest(ZulipTestCase):
         self.login_user(user)
 
         result = self.api_patch(user, "/api/v1/users/me/subscriptions", {})
-        self.assert_json_error(
-            result, 'Nothing to do. Specify at least one of "add" or "delete".',
-        )
+        self.assert_json_error(result, 'Nothing to do. Specify at least one of "add" or "delete".')
 
     def test_patch_enforces_valid_stream_name_check(self) -> None:
         """
@@ -2630,9 +2623,7 @@ class SubscriptionAPITest(ZulipTestCase):
         but avoids names that appear in the list names_to_avoid.
         """
         random_streams = []
-        all_stream_names = [
-            stream.name for stream in Stream.objects.filter(realm=self.test_realm)
-        ]
+        all_stream_names = [stream.name for stream in Stream.objects.filter(realm=self.test_realm)]
         for stream in existing_stream_names:
             random_stream = stream + str(random.randint(0, 9))
             if random_stream not in all_stream_names:
@@ -2789,9 +2780,7 @@ class SubscriptionAPITest(ZulipTestCase):
         self.common_subscribe_to_streams(
             invitee,
             invite_streams,
-            extra_post_data=dict(
-                announce="true", principals=ujson.dumps([self.user_profile.id]),
-            ),
+            extra_post_data=dict(announce="true", principals=ujson.dumps([self.user_profile.id])),
         )
 
         msg = self.get_second_to_last_message()
@@ -2898,9 +2887,7 @@ class SubscriptionAPITest(ZulipTestCase):
 
     def test_user_settings_for_adding_streams(self) -> None:
         with mock.patch("zerver.models.UserProfile.can_create_streams", return_value=False):
-            result = self.common_subscribe_to_streams(
-                self.test_user, ["stream1"], allow_fail=True,
-            )
+            result = self.common_subscribe_to_streams(self.test_user, ["stream1"], allow_fail=True)
             self.assert_json_error(result, "User cannot create streams.")
 
         with mock.patch("zerver.models.UserProfile.can_create_streams", return_value=True):
@@ -3063,8 +3050,7 @@ class SubscriptionAPITest(ZulipTestCase):
         self.assertEqual(msg.topic_name(), "stream events")
         self.assertEqual(msg.sender.email, settings.NOTIFICATION_BOT)
         self.assertIn(
-            f"Stream created by @_**{self.test_user.full_name}|{self.test_user.id}**",
-            msg.content,
+            f"Stream created by @_**{self.test_user.full_name}|{self.test_user.id}**", msg.content,
         )
 
     def test_multi_user_subscription(self) -> None:
@@ -3654,9 +3640,7 @@ class SubscriptionAPITest(ZulipTestCase):
         Calling /json/subscriptions/exist on a stream to which you are not
         subbed should return that it exists and that you are not subbed.
         """
-        all_stream_names = [
-            stream.name for stream in Stream.objects.filter(realm=self.test_realm)
-        ]
+        all_stream_names = [stream.name for stream in Stream.objects.filter(realm=self.test_realm)]
         streams_not_subbed = list(set(all_stream_names) - set(self.streams))
         self.assertNotEqual(len(streams_not_subbed), 0)  # necessary for full test coverage
         self.helper_subscriptions_exists(streams_not_subbed[0], True, False)
@@ -4085,9 +4069,7 @@ class GetStreamsTest(ZulipTestCase):
         )
 
         # Check it correctly lists all public streams with include_subscribed=false
-        result = self.api_get(
-            user, "/api/v1/streams?include_public=true&include_subscribed=false",
-        )
+        result = self.api_get(user, "/api/v1/streams?include_public=true&include_subscribed=false")
         self.assert_json_success(result)
 
         json = result.json()
@@ -4379,9 +4361,7 @@ class GetSubscribersTest(ZulipTestCase):
             self.assert_length(queries, 5)
 
             # Ignore old streams.
-            never_subscribed = [
-                dct for dct in never_subscribed if dct["name"].startswith("test_")
-            ]
+            never_subscribed = [dct for dct in never_subscribed if dct["name"].startswith("test_")]
             return never_subscribed
 
         never_subscribed = get_never_subscribed()
@@ -4699,9 +4679,7 @@ class StreamTrafficTest(ZulipTestCase):
     def test_average_weekly_stream_traffic_calculation(self) -> None:
         # No traffic data for the stream
         self.assertEqual(
-            get_average_weekly_stream_traffic(
-                42, timezone_now() - timedelta(days=300), {1: 4003},
-            ),
+            get_average_weekly_stream_traffic(42, timezone_now() - timedelta(days=300), {1: 4003}),
             0,
         )
 

@@ -69,15 +69,11 @@ class RateLimiterBackendBase(ZulipTestCase):
         with mock.patch("time.time", return_value=now):
             calls_remaining, time_till_reset = obj.api_calls_left()
 
-        expected_calls_remaining, expected_time_till_reset = self.expected_api_calls_left(
-            obj, now,
-        )
+        expected_calls_remaining, expected_time_till_reset = self.expected_api_calls_left(obj, now)
         self.assertEqual(expected_calls_remaining, calls_remaining)
         self.assertEqual(expected_time_till_reset, time_till_reset)
 
-    def expected_api_calls_left(
-        self, obj: RateLimitedTestObject, now: float,
-    ) -> Tuple[int, float]:
+    def expected_api_calls_left(self, obj: RateLimitedTestObject, now: float) -> Tuple[int, float]:
         longest_rule = obj.get_rules()[-1]
         max_window, max_calls = longest_rule
         history = self.requests_record.get(obj.key())

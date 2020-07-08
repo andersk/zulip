@@ -200,10 +200,7 @@ def remote_server_notify_push(
 
 
 def validate_incoming_table_data(
-    server: RemoteZulipServer,
-    model: Any,
-    rows: List[Dict[str, Any]],
-    is_count_stat: bool = False,
+    server: RemoteZulipServer, model: Any, rows: List[Dict[str, Any]], is_count_stat: bool = False,
 ) -> None:
     last_id = get_last_id_from_server(server, model)
     for row in rows:

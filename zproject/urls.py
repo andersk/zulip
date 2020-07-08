@@ -170,9 +170,7 @@ v1_api_and_json_patterns = [
     ),
     # realm/deactivate -> zerver.views.deactivate_realm
     path("realm/deactivate", rest_dispatch, {"POST": "zerver.views.realm.deactivate_realm"}),
-    path(
-        "realm/presence", rest_dispatch, {"GET": "zerver.views.presence.get_statuses_for_realm"},
-    ),
+    path("realm/presence", rest_dispatch, {"GET": "zerver.views.presence.get_statuses_for_realm"}),
     # users -> zerver.views.users
     #
     # Since some of these endpoints do something different if used on
@@ -266,9 +264,7 @@ v1_api_and_json_patterns = [
     ),
     # mark messages as read (in bulk)
     path(
-        "mark_all_as_read",
-        rest_dispatch,
-        {"POST": "zerver.views.message_flags.mark_all_as_read"},
+        "mark_all_as_read", rest_dispatch, {"POST": "zerver.views.message_flags.mark_all_as_read"},
     ),
     path(
         "mark_stream_as_read",
@@ -412,9 +408,7 @@ v1_api_and_json_patterns = [
     ),
     # user_groups -> zerver.views.user_groups
     path("user_groups", rest_dispatch, {"GET": "zerver.views.user_groups.get_user_group"}),
-    path(
-        "user_groups/create", rest_dispatch, {"POST": "zerver.views.user_groups.add_user_group"},
-    ),
+    path("user_groups/create", rest_dispatch, {"POST": "zerver.views.user_groups.add_user_group"}),
     path(
         "user_groups/<int:user_group_id>",
         rest_dispatch,

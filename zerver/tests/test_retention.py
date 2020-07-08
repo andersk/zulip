@@ -5,11 +5,7 @@ from unittest import mock
 from django.conf import settings
 from django.utils.timezone import now as timezone_now
 
-from zerver.lib.actions import (
-    do_add_submessage,
-    do_delete_messages,
-    internal_send_private_message,
-)
+from zerver.lib.actions import do_add_submessage, do_delete_messages, internal_send_private_message
 from zerver.lib.retention import (
     archive_messages,
     clean_archived_data,
@@ -350,9 +346,7 @@ class TestArchiveMessagesGeneral(ArchiveMessagesTestingBase):
             [expired_crossrealm_msg_id], timezone_now() - timedelta(ZULIP_REALM_DAYS + 1),
         )
 
-        expired_msg_ids = (
-            expired_mit_msg_ids + expired_zulip_msg_ids + [expired_crossrealm_msg_id]
-        )
+        expired_msg_ids = expired_mit_msg_ids + expired_zulip_msg_ids + [expired_crossrealm_msg_id]
         expired_usermsg_ids = self._get_usermessage_ids(expired_msg_ids)
 
         archive_messages(chunk_size=2)  # Specify low chunk_size to test batching.
@@ -436,9 +430,7 @@ class TestArchiveMessagesGeneral(ArchiveMessagesTestingBase):
         self._verify_archive_data(expired_msg_ids, expired_usermsg_ids)
 
         transactions = ArchiveTransaction.objects.all()
-        self.assertEqual(
-            len(transactions), 2,
-        )  # With chunk_size 4, there should be 2 transactions
+        self.assertEqual(len(transactions), 2)  # With chunk_size 4, there should be 2 transactions
 
         restore_all_data_from_archive()
         transactions[0].refresh_from_db()
@@ -488,9 +480,7 @@ class TestArchivingSubMessages(ArchiveMessagesTestingBase):
         )
 
         submessage_ids = list(
-            SubMessage.objects.filter(message_id__in=expired_msg_ids).values_list(
-                "id", flat=True,
-            ),
+            SubMessage.objects.filter(message_id__in=expired_msg_ids).values_list("id", flat=True),
         )
 
         self.assertEqual(len(submessage_ids), 3)
@@ -533,9 +523,7 @@ class TestArchivingReactions(ArchiveMessagesTestingBase, EmojiReactionBase):
         self.assertEqual(Reaction.objects.filter(id__in=reaction_ids).count(), 0)
 
         self.assertEqual(
-            set(
-                ArchivedReaction.objects.filter(id__in=reaction_ids).values_list("id", flat=True),
-            ),
+            set(ArchivedReaction.objects.filter(id__in=reaction_ids).values_list("id", flat=True)),
             set(reaction_ids),
         )
 
@@ -807,9 +795,7 @@ class MoveMessageToArchiveWithSubMessages(MoveMessageToArchiveBase):
         move_messages_to_archive(message_ids=[msg_id])
 
         self.assertEqual(
-            set(
-                ArchivedSubMessage.objects.filter(message_id=msg_id).values_list("id", flat=True),
-            ),
+            set(ArchivedSubMessage.objects.filter(message_id=msg_id).values_list("id", flat=True)),
             set(submessage_ids),
         )
         self.assertEqual(SubMessage.objects.filter(id__in=submessage_ids).count(), 0)
@@ -861,9 +847,9 @@ class TestCleaningArchive(ArchiveMessagesTestingBase):
             transaction.save()
 
         message_ids_to_clean = list(
-            ArchivedMessage.objects.filter(
-                archive_transaction__in=transactions[0:-1],
-            ).values_list("id", flat=True),
+            ArchivedMessage.objects.filter(archive_transaction__in=transactions[0:-1]).values_list(
+                "id", flat=True,
+            ),
         )
 
         clean_archived_data()
@@ -1011,9 +997,7 @@ class TestRestoreStreamMessages(ArchiveMessagesTestingBase):
         move_messages_to_archive(message_ids_to_archive_manually)
         archive_messages()
 
-        self._verify_archive_data(
-            expected_archived_message_ids, expected_archived_usermessage_ids,
-        )
+        self._verify_archive_data(expected_archived_message_ids, expected_archived_usermessage_ids)
 
         restore_retention_policy_deletions_for_stream(stream)
 
@@ -1030,9 +1014,7 @@ class TestDoDeleteMessages(ZulipTestCase):
     def test_do_delete_messages_multiple(self) -> None:
         realm = get_realm("zulip")
         cordelia = self.example_user("cordelia")
-        message_ids = [
-            self.send_stream_message(cordelia, "Denmark", str(i)) for i in range(0, 10)
-        ]
+        message_ids = [self.send_stream_message(cordelia, "Denmark", str(i)) for i in range(0, 10)]
         messages = Message.objects.filter(id__in=message_ids)
 
         with queries_captured() as queries:
@@ -1042,9 +1024,7 @@ class TestDoDeleteMessages(ZulipTestCase):
 
         archived_messages = ArchivedMessage.objects.filter(id__in=message_ids)
         self.assertEqual(archived_messages.count(), len(message_ids))
-        self.assertEqual(
-            len({message.archive_transaction_id for message in archived_messages}), 1,
-        )
+        self.assertEqual(len({message.archive_transaction_id for message in archived_messages}), 1)
 
     def test_old_event_format_processed_correctly(self) -> None:
         """

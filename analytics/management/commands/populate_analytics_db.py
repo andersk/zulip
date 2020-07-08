@@ -223,9 +223,7 @@ class Command(BaseCommand):
         API, created = Client.objects.get_or_create(name="API: Python")
         zephyr_mirror, created = Client.objects.get_or_create(name="zephyr_mirror")
         unused, created = Client.objects.get_or_create(name="unused")
-        long_webhook, created = Client.objects.get_or_create(
-            name="ZulipLooooooooooongNameWebhook",
-        )
+        long_webhook, created = Client.objects.get_or_create(name="ZulipLooooooooooongNameWebhook")
 
         stat = COUNT_STATS["messages_sent:client:day"]
         user_data = {

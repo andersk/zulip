@@ -29,9 +29,7 @@ class GithubWebhookTest(WebhookTestCase):
 
     def test_ping_organization_event(self) -> None:
         expected_message = "GitHub webhook has been successfully configured by eeshangarg."
-        self.send_and_test_stream_message(
-            "ping__organization", "zulip-test-org", expected_message,
-        )
+        self.send_and_test_stream_message("ping__organization", "zulip-test-org", expected_message)
 
     def test_push_delete_branch(self) -> None:
         expected_message = "eeshangarg [deleted](https://github.com/eeshangarg/public-repo/compare/2e8cf535fb38...000000000000) the branch feature."
@@ -54,9 +52,7 @@ class GithubWebhookTest(WebhookTestCase):
     def test_push_1_commit_without_username(self) -> None:
         expected_message = "eeshangarg [pushed](https://github.com/eeshangarg/public-repo/compare/0383613da871...2e8cf535fb38) 1 commit to branch changes. Commits by John Snow (1).\n\n* Update the README ([2e8cf53](https://github.com/eeshangarg/public-repo/commit/2e8cf535fb38a3dab2476cdf856efda904ad4c94))"
         self.send_and_test_stream_message(
-            "push__1_commit_without_username",
-            self.EXPECTED_TOPIC_BRANCH_EVENTS,
-            expected_message,
+            "push__1_commit_without_username", self.EXPECTED_TOPIC_BRANCH_EVENTS, expected_message,
         )
 
     def test_push_1_commit_filtered_by_branches(self) -> None:
@@ -223,9 +219,7 @@ class GithubWebhookTest(WebhookTestCase):
         self.url = self.build_webhook_url(topic="notifications")
         expected_topic = "notifications"
         expected_message = "baxterthehacker opened [PR #1 Update the README with new information](https://github.com/baxterthehacker/public-repo/pull/1) from `changes` to `master`:\n\n~~~ quote\nThis is a pretty simple change that we need to pull into master.\n~~~"
-        self.send_and_test_stream_message(
-            "pull_request__opened", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request__opened", expected_topic, expected_message)
 
     def test_pull_request_synchronized_msg(self) -> None:
         expected_message = "baxterthehacker updated [PR #1](https://github.com/baxterthehacker/public-repo/pull/1) from `changes` to `master`."
@@ -243,9 +237,7 @@ class GithubWebhookTest(WebhookTestCase):
         self.url = self.build_webhook_url(topic="notifications")
         expected_topic = "notifications"
         expected_message = "baxterthehacker closed without merge [PR #1 Update the README with new information](https://github.com/baxterthehacker/public-repo/pull/1)."
-        self.send_and_test_stream_message(
-            "pull_request__closed", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request__closed", expected_topic, expected_message)
 
     def test_pull_request_merged_msg(self) -> None:
         expected_message = "baxterthehacker merged [PR #1](https://github.com/baxterthehacker/public-repo/pull/1)."
@@ -424,9 +416,7 @@ class GithubWebhookTest(WebhookTestCase):
         expected_message = """
 Check [randscape](http://github.com/github/hello-world/runs/4) completed (success). ([d6fde92](http://github.com/github/hello-world/commit/d6fde92930d4715a2b49857d24b940956b26d2d3))
 """.strip()
-        self.send_and_test_stream_message(
-            "check_run__completed", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("check_run__completed", expected_topic, expected_message)
 
     def test_team_edited_description(self) -> None:
         expected_topic = "team Testing"
@@ -463,15 +453,10 @@ A temporary team so that I can get some webhook fixtures!
         self.assert_json_success(result)
 
     @patch("zerver.webhooks.github.view.check_send_webhook_message")
-    def test_pull_request_labeled_ignore(
-        self, check_send_webhook_message_mock: MagicMock,
-    ) -> None:
+    def test_pull_request_labeled_ignore(self, check_send_webhook_message_mock: MagicMock) -> None:
         payload = self.get_body("pull_request__labeled")
         result = self.client_post(
-            self.url,
-            payload,
-            HTTP_X_GITHUB_EVENT="pull_request",
-            content_type="application/json",
+            self.url, payload, HTTP_X_GITHUB_EVENT="pull_request", content_type="application/json",
         )
         self.assertFalse(check_send_webhook_message_mock.called)
         self.assert_json_success(result)
@@ -482,10 +467,7 @@ A temporary team so that I can get some webhook fixtures!
     ) -> None:
         payload = self.get_body("pull_request__unlabeled")
         result = self.client_post(
-            self.url,
-            payload,
-            HTTP_X_GITHUB_EVENT="pull_request",
-            content_type="application/json",
+            self.url, payload, HTTP_X_GITHUB_EVENT="pull_request", content_type="application/json",
         )
         self.assertFalse(check_send_webhook_message_mock.called)
         self.assert_json_success(result)
@@ -496,10 +478,7 @@ A temporary team so that I can get some webhook fixtures!
     ) -> None:
         payload = self.get_body("pull_request__request_review_removed")
         result = self.client_post(
-            self.url,
-            payload,
-            HTTP_X_GITHUB_EVENT="pull_request",
-            content_type="application/json",
+            self.url, payload, HTTP_X_GITHUB_EVENT="pull_request", content_type="application/json",
         )
         self.assertFalse(check_send_webhook_message_mock.called)
         self.assert_json_success(result)

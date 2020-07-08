@@ -26,9 +26,7 @@ class MockRequest(HttpRequest):
         self.method = "POST"
         self.META = {"REMOTE_ADDR": "127.0.0.1"}
         anchor = (
-            UserMessage.objects.filter(user_profile=self.user)
-            .order_by("-message")[200]
-            .message_id
+            UserMessage.objects.filter(user_profile=self.user).order_by("-message")[200].message_id
         )
         self.REQUEST = {
             "anchor": anchor,
@@ -57,9 +55,7 @@ def profile_request(request: HttpRequest) -> HttpResponse:
 
 class Command(ZulipBaseCommand):
     def add_arguments(self, parser: CommandParser) -> None:
-        parser.add_argument(
-            "email", metavar="<email>", type=str, help="Email address of the user",
-        )
+        parser.add_argument("email", metavar="<email>", type=str, help="Email address of the user")
         self.add_realm_args(parser)
 
     def handle(self, *args: Any, **options: Any) -> None:

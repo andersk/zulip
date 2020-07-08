@@ -12,9 +12,7 @@ from zerver.lib.response import json_error, json_success
 from zerver.lib.webhooks.common import check_send_webhook_message
 from zerver.models import UserProfile
 
-NOTE_TEMPLATE = (
-    "{name} <{email}> added a {note_type} note to [ticket #{ticket_id}]({ticket_url})."
-)
+NOTE_TEMPLATE = "{name} <{email}> added a {note_type} note to [ticket #{ticket_id}]({ticket_url})."
 PROPERTY_CHANGE_TEMPLATE = """
 {name} <{email}> updated [ticket #{ticket_id}]({ticket_url}):
 

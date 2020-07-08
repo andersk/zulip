@@ -108,9 +108,7 @@ def create_stream_if_needed(
 
 
 def create_streams_if_needed(
-    realm: Realm,
-    stream_dicts: List[Mapping[str, Any]],
-    acting_user: Optional[UserProfile] = None,
+    realm: Realm, stream_dicts: List[Mapping[str, Any]], acting_user: Optional[UserProfile] = None,
 ) -> Tuple[List[Stream], List[Stream]]:
     """Note that stream_dict["name"] is assumed to already be stripped of
     whitespace"""

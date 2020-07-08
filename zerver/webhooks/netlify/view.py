@@ -13,13 +13,7 @@ from zerver.lib.webhooks.common import (
 )
 from zerver.models import UserProfile
 
-EVENTS = [
-    "deploy_failed",
-    "deploy_locked",
-    "deploy_unlocked",
-    "deploy_building",
-    "deploy_created",
-]
+EVENTS = ["deploy_failed", "deploy_locked", "deploy_unlocked", "deploy_building", "deploy_created"]
 
 fixture_to_headers = get_http_headers_from_filename("HTTP_X_NETLIFY_EVENT")
 

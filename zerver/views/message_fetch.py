@@ -1183,8 +1183,7 @@ def messages_in_narrow_backend(
         join(
             table("zerver_usermessage"),
             table("zerver_message"),
-            literal_column("zerver_usermessage.message_id")
-            == literal_column("zerver_message.id"),
+            literal_column("zerver_usermessage.message_id") == literal_column("zerver_message.id"),
         ),
     )
 

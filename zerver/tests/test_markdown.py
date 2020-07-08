@@ -230,12 +230,10 @@ class MarkdownMiscTest(ZulipTestCase):
 
         by_id = {row["id"]: row for row in lst}
         self.assertEqual(
-            by_id.get(fred2.id),
-            dict(email=fred2.email, full_name="Fred Flintstone", id=fred2.id),
+            by_id.get(fred2.id), dict(email=fred2.email, full_name="Fred Flintstone", id=fred2.id),
         )
         self.assertEqual(
-            by_id.get(fred4.id),
-            dict(email=fred4.email, full_name="Fred Flintstone", id=fred4.id),
+            by_id.get(fred4.id), dict(email=fred4.email, full_name="Fred Flintstone", id=fred4.id),
         )
 
     def test_mention_data(self) -> None:

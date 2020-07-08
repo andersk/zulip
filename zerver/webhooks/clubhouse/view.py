@@ -41,9 +41,7 @@ STORY_EPIC_CHANGED_TEMPLATE = (
     "The story {story_name_template} was moved from {old_epic_name_template}"
     " to {new_epic_name_template}."
 )
-STORY_ESTIMATE_TEMPLATE = (
-    "The estimate for the story {story_name_template} was set to {estimate}."
-)
+STORY_ESTIMATE_TEMPLATE = "The estimate for the story {story_name_template} was set to {estimate}."
 FILE_ATTACHMENT_TEMPLATE = (
     "A {type} attachment `{file_name}` was added to the story {name_template}."
 )

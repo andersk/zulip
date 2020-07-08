@@ -12,9 +12,7 @@ from django.db.migrations.state import StateApps
 from zerver.models import generate_email_token_for_stream
 
 
-def migrate_existing_attachment_data(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def migrate_existing_attachment_data(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     Attachment = apps.get_model("zerver", "Attachment")
     Recipient = apps.get_model("zerver", "Recipient")
     Stream = apps.get_model("zerver", "Stream")
@@ -794,9 +792,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
             field=models.TextField(
                 validators=[
                     django.core.validators.MinLengthValidator(1),
-                    django.core.validators.RegexValidator(
-                        regex="^[0-9a-zA-Z.\\-_]+(?<![.\\-_])$",
-                    ),
+                    django.core.validators.RegexValidator(regex="^[0-9a-zA-Z.\\-_]+(?<![.\\-_])$"),
                 ],
             ),
         ),
@@ -868,9 +864,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
         ),
         migrations.RunPython(code=migrate_existing_attachment_data, elidable=True),
         migrations.AddField(
-            model_name="subscription",
-            name="pin_to_top",
-            field=models.BooleanField(default=False),
+            model_name="subscription", name="pin_to_top", field=models.BooleanField(default=False),
         ),
         migrations.AddField(
             model_name="userprofile",

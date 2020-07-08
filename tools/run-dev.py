@@ -143,10 +143,7 @@ with open(pid_file_path, "w+") as f:
 
 def server_processes() -> List[List[str]]:
     main_cmds = [
-        ["./manage.py", "runserver"]
-        + manage_args
-        + runserver_args
-        + [f"127.0.0.1:{django_port}"],
+        ["./manage.py", "runserver"] + manage_args + runserver_args + [f"127.0.0.1:{django_port}"],
         ["env", "PYTHONUNBUFFERED=1", "./manage.py", "runtornado"]
         + manage_args
         + [f"127.0.0.1:{tornado_port}"],
@@ -202,9 +199,7 @@ def start_webpack_watcher() -> None:
     subprocess.Popen(webpack_cmd)
 
 
-def transform_url(
-    protocol: str, path: str, query: str, target_port: int, target_host: str,
-) -> str:
+def transform_url(protocol: str, path: str, query: str, target_port: int, target_host: str) -> str:
     # generate url with target host
     host = ":".join((target_host, str(target_port)))
     # Here we are going to rewrite the path a bit so that it is in parity with

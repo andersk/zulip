@@ -23,9 +23,7 @@ TICKET_STARTED_TEMPLATE = """
 ```
 """.strip()
 
-TICKET_ASSIGNED_TEMPLATE = (
-    "[#{number}: {title}]({app_url}) ({state}) assigned to {assignee_info}."
-)
+TICKET_ASSIGNED_TEMPLATE = "[#{number}: {title}]({app_url}) ({state}) assigned to {assignee_info}."
 
 AGENT_REPLIED_TEMPLATE = """
 {actor} {action} [ticket #{number}]({app_ticket_url}):

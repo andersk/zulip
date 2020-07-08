@@ -32,10 +32,7 @@ Reject Candidate Hector Porter (ID: 265788), applying for:
 """.strip()
 
         self.send_and_test_stream_message(
-            "candidate_rejected",
-            expected_topic,
-            expected_message,
-            content_type=self.CONTENT_TYPE,
+            "candidate_rejected", expected_topic, expected_message, content_type=self.CONTENT_TYPE,
         )
 
     def test_message_candidate_stage_change(self) -> None:

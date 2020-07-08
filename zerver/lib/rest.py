@@ -122,9 +122,7 @@ def rest_dispatch(request: HttpRequest, **kwargs: Any) -> HttpResponse:
             # rate limiting, because there are good reasons clients
             # might need to (e.g.) request a large number of uploaded
             # files or avatars in quick succession.
-            target_function = authenticated_rest_api_view(skip_rate_limiting=True)(
-                target_function,
-            )
+            target_function = authenticated_rest_api_view(skip_rate_limiting=True)(target_function)
         elif "override_api_url_scheme" in view_flags and request.GET.get("api_key") is not None:
             # This request uses legacy API authentication.  We
             # unfortunately need that in the React Native mobile apps,
@@ -139,9 +137,7 @@ def rest_dispatch(request: HttpRequest, **kwargs: Any) -> HttpResponse:
             auth_kwargs = {}
             if "override_api_url_scheme" in view_flags:
                 auth_kwargs["skip_rate_limiting"] = True
-            target_function = csrf_protect(
-                authenticated_json_view(target_function, **auth_kwargs),
-            )
+            target_function = csrf_protect(authenticated_json_view(target_function, **auth_kwargs))
 
         # most clients (mobile, bots, etc) use HTTP Basic Auth and REST calls, where instead of
         # username:password, we use email:apiKey

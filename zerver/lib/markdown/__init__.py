@@ -615,8 +615,7 @@ class InlineInterestingLinkProcessor(markdown.treeprocessors.Treeprocessor):
             # consistency in what gets passed to /thumbnail
             url = url.lstrip("/")
             img.set(
-                "src",
-                "/thumbnail?url={}&size=thumbnail".format(urllib.parse.quote(url, safe="")),
+                "src", "/thumbnail?url={}&size=thumbnail".format(urllib.parse.quote(url, safe="")),
             )
             img.set(
                 "data-src-fullsize",
@@ -754,14 +753,10 @@ class InlineInterestingLinkProcessor(markdown.treeprocessors.Treeprocessor):
         # TODO: The returned Dict could possibly be a TypedDict in future.
         parsed_url = urllib.parse.urlparse(url)
         if parsed_url.netloc == "dropbox.com" or parsed_url.netloc.endswith(".dropbox.com"):
-            is_album = parsed_url.path.startswith("/sc/") or parsed_url.path.startswith(
-                "/photos/",
-            )
+            is_album = parsed_url.path.startswith("/sc/") or parsed_url.path.startswith("/photos/")
             # Only allow preview Dropbox shared links
             if not (
-                parsed_url.path.startswith("/s/")
-                or parsed_url.path.startswith("/sh/")
-                or is_album
+                parsed_url.path.startswith("/s/") or parsed_url.path.startswith("/sh/") or is_album
             ):
                 return None
 
@@ -2055,17 +2050,13 @@ class Markdown(markdown.Markdown):
         # rules, that preserves the order from upstream but leaves
         # space for us to add our own.
         reg = markdown.util.Registry()
-        reg.register(
-            BacktickInlineProcessor(markdown.inlinepatterns.BACKTICK_RE), "backtick", 105,
-        )
+        reg.register(BacktickInlineProcessor(markdown.inlinepatterns.BACKTICK_RE), "backtick", 105)
         reg.register(
             markdown.inlinepatterns.DoubleTagPattern(STRONG_EM_RE, "strong,em"), "strong_em", 100,
         )
         reg.register(UserMentionPattern(mention.find_mentions, self), "usermention", 95)
         reg.register(Tex(r"\B(?<!\$)\$\$(?P<body>[^\n_$](\\\$|[^$\n])*)\$\$(?!\$)\B"), "tex", 90)
-        reg.register(
-            StreamTopicPattern(get_compiled_stream_topic_link_regex(), self), "topic", 87,
-        )
+        reg.register(StreamTopicPattern(get_compiled_stream_topic_link_regex(), self), "topic", 87)
         reg.register(StreamPattern(get_compiled_stream_link_regex(), self), "stream", 85)
         reg.register(Timestamp(r"<time:(?P<time>[^>]*?)>"), "timestamp", 75)
         reg.register(
@@ -2077,9 +2068,7 @@ class Markdown(markdown.Markdown):
         reg = self.register_realm_filters(reg)
         reg.register(markdown.inlinepatterns.HtmlInlineProcessor(ENTITY_RE, self), "entity", 40)
         reg.register(
-            markdown.inlinepatterns.SimpleTagPattern(r"(\*\*)([^\n]+?)\2", "strong"),
-            "strong",
-            35,
+            markdown.inlinepatterns.SimpleTagPattern(r"(\*\*)([^\n]+?)\2", "strong"), "strong", 35,
         )
         reg.register(markdown.inlinepatterns.SimpleTagPattern(EMPHASIS_RE, "em"), "emphasis", 30)
         reg.register(markdown.inlinepatterns.SimpleTagPattern(DEL_RE, "del"), "del", 25)
@@ -2119,9 +2108,7 @@ class Markdown(markdown.Markdown):
     def build_postprocessors(self) -> markdown.util.Registry:
         # These are the default python-markdown processors, unmodified.
         postprocessors = markdown.util.Registry()
-        postprocessors.register(
-            markdown.postprocessors.RawHtmlPostprocessor(self), "raw_html", 20,
-        )
+        postprocessors.register(markdown.postprocessors.RawHtmlPostprocessor(self), "raw_html", 20)
         postprocessors.register(
             markdown.postprocessors.AndSubstitutePostprocessor(), "amp_substitute", 15,
         )

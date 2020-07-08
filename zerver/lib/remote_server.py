@@ -100,9 +100,7 @@ def send_to_push_bouncer(
     return ujson.loads(res.content)
 
 
-def send_json_to_push_bouncer(
-    method: str, endpoint: str, post_data: Mapping[str, object],
-) -> None:
+def send_json_to_push_bouncer(method: str, endpoint: str, post_data: Mapping[str, object]) -> None:
     send_to_push_bouncer(
         method,
         endpoint,
@@ -167,8 +165,7 @@ def send_analytics_to_remote_server() -> None:
             id__gt=last_acked_installation_count_id,
         ),
         realmauditlog_query=RealmAuditLog.objects.filter(
-            event_type__in=RealmAuditLog.SYNCED_BILLING_EVENTS,
-            id__gt=last_acked_realmauditlog_id,
+            event_type__in=RealmAuditLog.SYNCED_BILLING_EVENTS, id__gt=last_acked_realmauditlog_id,
         ),
     )
 

@@ -210,11 +210,7 @@ class Command(BaseCommand):
         )
 
         parser.add_argument(
-            "--threads",
-            dest="threads",
-            type=int,
-            default=1,
-            help="The number of threads to use.",
+            "--threads", dest="threads", type=int, default=1, help="The number of threads to use.",
         )
 
         parser.add_argument(

@@ -71,9 +71,7 @@ def prettify_date(date_string: str) -> str:
     return date_string.replace("T", " ").replace(".000", "").replace("Z", " UTC")
 
 
-def process_card_action(
-    payload: Mapping[str, Any], action_type: str,
-) -> Optional[Tuple[str, str]]:
+def process_card_action(payload: Mapping[str, Any], action_type: str) -> Optional[Tuple[str, str]]:
     proper_action = get_proper_action(payload, action_type)
     if proper_action is not None:
         return get_subject(payload), get_body(payload, proper_action)

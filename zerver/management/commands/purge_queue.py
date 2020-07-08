@@ -33,8 +33,7 @@ class Command(BaseCommand):
         else:
             queue_name = options["queue_name"]
             if not (
-                queue_name in get_active_worker_queues()
-                or queue_name.startswith("notify_tornado")
+                queue_name in get_active_worker_queues() or queue_name.startswith("notify_tornado")
             ):
                 raise CommandError(f"Unknown queue {queue_name}")
 

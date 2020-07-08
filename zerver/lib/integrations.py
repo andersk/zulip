@@ -142,10 +142,7 @@ class BotIntegration(Integration):
         doc: Optional[str] = None,
     ) -> None:
         super().__init__(
-            name,
-            client_name=name,
-            categories=categories,
-            secondary_line_text=secondary_line_text,
+            name, client_name=name, categories=categories, secondary_line_text=secondary_line_text,
         )
 
         if logo is None:
@@ -470,11 +467,7 @@ INTEGRATIONS: Dict[str, Integration] = {
         "errbot", "errbot", ["meta-integration", "bots"], doc="zerver/integrations/errbot.md",
     ),
     "git": Integration(
-        "git",
-        "git",
-        ["version-control"],
-        stream_name="commits",
-        doc="zerver/integrations/git.md",
+        "git", "git", ["version-control"], stream_name="commits", doc="zerver/integrations/git.md",
     ),
     "google-calendar": Integration(
         "google-calendar",
@@ -518,9 +511,7 @@ INTEGRATIONS: Dict[str, Integration] = {
         doc="zerver/integrations/mercurial.md",
         stream_name="commits",
     ),
-    "nagios": Integration(
-        "nagios", "nagios", ["monitoring"], doc="zerver/integrations/nagios.md",
-    ),
+    "nagios": Integration("nagios", "nagios", ["monitoring"], doc="zerver/integrations/nagios.md"),
     "openshift": Integration(
         "openshift",
         "openshift",
@@ -538,9 +529,7 @@ INTEGRATIONS: Dict[str, Integration] = {
         ["version-control"],
         doc="zerver/integrations/phabricator.md",
     ),
-    "puppet": Integration(
-        "puppet", "puppet", ["deployment"], doc="zerver/integrations/puppet.md",
-    ),
+    "puppet": Integration("puppet", "puppet", ["deployment"], doc="zerver/integrations/puppet.md"),
     "redmine": Integration(
         "redmine", "redmine", ["project-management"], doc="zerver/integrations/redmine.md",
     ),
@@ -548,9 +537,7 @@ INTEGRATIONS: Dict[str, Integration] = {
         "rss", "rss", ["communication"], display_name="RSS", doc="zerver/integrations/rss.md",
     ),
     "svn": Integration("svn", "svn", ["version-control"], doc="zerver/integrations/svn.md"),
-    "trac": Integration(
-        "trac", "trac", ["project-management"], doc="zerver/integrations/trac.md",
-    ),
+    "trac": Integration("trac", "trac", ["project-management"], doc="zerver/integrations/trac.md"),
     "trello-plugin": Integration(
         "trello-plugin",
         "trello-plugin",
@@ -644,9 +631,7 @@ DOC_SCREENSHOT_CONFIG: Dict[str, List[ScreenshotConfig]] = {
     ],
     # 'beeminder': [ScreenshotConfig('derail_worried.json')],
     "bitbucket": [
-        ScreenshotConfig(
-            "push.json", "002.png", use_basic_auth=True, payload_as_query_param=True,
-        ),
+        ScreenshotConfig("push.json", "002.png", use_basic_auth=True, payload_as_query_param=True),
     ],
     "bitbucket2": [
         ScreenshotConfig("issue_created.json", "003.png", "bitbucket", bot_name="Bitbucket Bot"),
@@ -664,18 +649,14 @@ DOC_SCREENSHOT_CONFIG: Dict[str, List[ScreenshotConfig]] = {
         ScreenshotConfig(
             "github_bionic_production_build_success_multiple_parties.json", image_name="001.png",
         ),
-        ScreenshotConfig(
-            "bitbucket_private_repo_pull_request_failure.json", image_name="002.png",
-        ),
+        ScreenshotConfig("bitbucket_private_repo_pull_request_failure.json", image_name="002.png"),
     ],
     "clubhouse": [ScreenshotConfig("story_create.json")],
     "codeship": [ScreenshotConfig("error_build.json")],
     "crashlytics": [ScreenshotConfig("issue_message.json")],
     "delighted": [ScreenshotConfig("survey_response_updated_promoter.json")],
     "deskdotcom": [ScreenshotConfig("static_text.txt", "009.png", "desk", use_basic_auth=True)],
-    "dialogflow": [
-        ScreenshotConfig("weather_app.json", extra_params={"email": "iago@zulip.com"}),
-    ],
+    "dialogflow": [ScreenshotConfig("weather_app.json", extra_params={"email": "iago@zulip.com"})],
     "dropbox": [ScreenshotConfig("file_updated.json")],
     "errbit": [ScreenshotConfig("error_message.json")],
     "flock": [ScreenshotConfig("messages.json")],

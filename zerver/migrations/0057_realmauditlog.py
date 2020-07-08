@@ -70,9 +70,7 @@ class Migration(migrations.Migration):
                 (
                     "modified_stream",
                     models.ForeignKey(
-                        null=True,
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to="zerver.Stream",
+                        null=True, on_delete=django.db.models.deletion.CASCADE, to="zerver.Stream",
                     ),
                 ),
                 (

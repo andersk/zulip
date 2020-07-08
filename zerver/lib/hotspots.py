@@ -66,13 +66,7 @@ def get_next_hotspots(user: UserProfile) -> List[Dict[str, object]]:
     seen_hotspots = frozenset(
         UserHotspot.objects.filter(user=user).values_list("hotspot", flat=True),
     )
-    for hotspot in [
-        "intro_reply",
-        "intro_streams",
-        "intro_topics",
-        "intro_gear",
-        "intro_compose",
-    ]:
+    for hotspot in ["intro_reply", "intro_streams", "intro_topics", "intro_gear", "intro_compose"]:
         if hotspot not in seen_hotspots:
             return [
                 {

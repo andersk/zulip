@@ -137,9 +137,7 @@ def bounce_redis_key_prefix_for_testing(test_name: str) -> None:
     KEY_PREFIX = test_name + ":" + str(os.getpid()) + ":"
 
 
-def add_ratelimit_rule(
-    range_seconds: int, num_requests: int, domain: str = "api_by_user",
-) -> None:
+def add_ratelimit_rule(range_seconds: int, num_requests: int, domain: str = "api_by_user") -> None:
     "Add a rate-limiting rule to the ratelimiter"
     global rules
 

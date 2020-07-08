@@ -341,11 +341,7 @@ class ZulipTestCase(TestCase):
         return get_system_bot(settings.NOTIFICATION_BOT)
 
     def create_test_bot(
-        self,
-        short_name: str,
-        user_profile: UserProfile,
-        full_name: str = "Foo Bot",
-        **extras: Any,
+        self, short_name: str, user_profile: UserProfile, full_name: str = "Foo Bot", **extras: Any
     ) -> UserProfile:
         self.login_user(user_profile)
         bot_info = {
@@ -787,12 +783,8 @@ class ZulipTestCase(TestCase):
             stream = get_stream(stream_name, user_profile.realm)
             from_stream_creation = False
         except Stream.DoesNotExist:
-            stream, from_stream_creation = create_stream_if_needed(
-                user_profile.realm, stream_name,
-            )
-        bulk_add_subscriptions(
-            [stream], [user_profile], from_stream_creation=from_stream_creation,
-        )
+            stream, from_stream_creation = create_stream_if_needed(user_profile.realm, stream_name)
+        bulk_add_subscriptions([stream], [user_profile], from_stream_creation=from_stream_creation)
         return stream
 
     def unsubscribe(self, user_profile: UserProfile, stream_name: str) -> None:
@@ -820,9 +812,7 @@ class ZulipTestCase(TestCase):
             self.assert_json_success(result)
         return result
 
-    def check_user_subscribed_only_to_streams(
-        self, user_name: str, streams: List[Stream],
-    ) -> None:
+    def check_user_subscribed_only_to_streams(self, user_name: str, streams: List[Stream]) -> None:
         streams = sorted(streams, key=lambda x: x.name)
         subscribed_streams = gather_subscriptions(self.nonreg_user(user_name))[0]
 
@@ -1020,9 +1010,7 @@ class WebhookTestCase(ZulipTestCase):
             headers = get_fixture_http_headers(self.FIXTURE_DIR_NAME, fixture_name)
             headers = standardize_headers(headers)
             kwargs.update(headers)
-        msg = self.send_json_payload(
-            self.test_user, self.url, payload, self.STREAM_NAME, **kwargs,
-        )
+        msg = self.send_json_payload(self.test_user, self.url, payload, self.STREAM_NAME, **kwargs)
         self.do_test_topic(msg, expected_topic)
         self.do_test_message(msg, expected_message)
 
