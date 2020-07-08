@@ -590,9 +590,7 @@ class UpdateCustomProfileFieldTest(CustomProfileFieldTestCase):
         ]
         do_update_user_custom_profile_data_if_changed(iago, data)
 
-        with mock.patch(
-            "zerver.lib.actions.notify_user_update_custom_profile_data",
-        ) as mock_notify:
+        with mock.patch("zerver.lib.actions.notify_user_update_custom_profile_data") as mock_notify:
             # Attempting to "update" the field value, when it wouldn't actually change,
             # if always_notify is disabled, shouldn't trigger notify.
             do_update_user_custom_profile_data_if_changed(iago, data)
@@ -738,9 +736,7 @@ class ReorderCustomProfileFieldTest(CustomProfileFieldTestCase):
             .order_by("-order")
             .values_list("order", flat=True)
         )
-        result = self.client_patch(
-            "/json/realm/profile_fields", info={"order": ujson.dumps(order)},
-        )
+        result = self.client_patch("/json/realm/profile_fields", info={"order": ujson.dumps(order)})
         self.assert_json_success(result)
         fields = CustomProfileField.objects.filter(realm=realm).order_by("order")
         for field in fields:
@@ -756,9 +752,7 @@ class ReorderCustomProfileFieldTest(CustomProfileFieldTestCase):
         )
         order = list(order)
         order.append(4)
-        result = self.client_patch(
-            "/json/realm/profile_fields", info={"order": ujson.dumps(order)},
-        )
+        result = self.client_patch("/json/realm/profile_fields", info={"order": ujson.dumps(order)})
         self.assert_json_success(result)
         fields = CustomProfileField.objects.filter(realm=realm).order_by("order")
         for field in fields:
@@ -772,20 +766,14 @@ class ReorderCustomProfileFieldTest(CustomProfileFieldTestCase):
             .order_by("-order")
             .values_list("order", flat=True)
         )
-        result = self.client_patch(
-            "/json/realm/profile_fields", info={"order": ujson.dumps(order)},
-        )
+        result = self.client_patch("/json/realm/profile_fields", info={"order": ujson.dumps(order)})
         self.assert_json_error(result, "Must be an organization administrator")
 
     def test_reorder_invalid(self) -> None:
         self.login("iago")
         order = [100, 200, 300]
-        result = self.client_patch(
-            "/json/realm/profile_fields", info={"order": ujson.dumps(order)},
-        )
+        result = self.client_patch("/json/realm/profile_fields", info={"order": ujson.dumps(order)})
         self.assert_json_error(result, "Invalid order mapping.")
         order = [1, 2]
-        result = self.client_patch(
-            "/json/realm/profile_fields", info={"order": ujson.dumps(order)},
-        )
+        result = self.client_patch("/json/realm/profile_fields", info={"order": ujson.dumps(order)})
         self.assert_json_error(result, "Invalid order mapping.")

@@ -628,9 +628,7 @@ class SewMessageAndReactionTest(ZulipTestCase):
                 message.set_topic_name("whatever")
                 message.save()
                 needed_ids.append(message.id)
-                reaction = Reaction(
-                    user_profile=sender, message=message, emoji_name="simple_smile",
-                )
+                reaction = Reaction(user_profile=sender, message=message, emoji_name="simple_smile")
                 reaction.save()
 
         messages = Message.objects.filter(id__in=needed_ids).values(*["id", "content"])

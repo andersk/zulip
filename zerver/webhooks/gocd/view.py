@@ -11,9 +11,7 @@ from zerver.lib.response import json_success
 from zerver.lib.webhooks.common import check_send_webhook_message
 from zerver.models import UserProfile
 
-MESSAGE_TEMPLATE = (
-    "Author: {}\n" "Build status: {} {}\n" "Details: [build log]({})\n" "Comment: {}"
-)
+MESSAGE_TEMPLATE = "Author: {}\n" "Build status: {} {}\n" "Details: [build log]({})\n" "Comment: {}"
 
 
 @api_key_only_webhook_view("Gocd")

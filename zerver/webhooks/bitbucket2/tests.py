@@ -317,7 +317,9 @@ class Bitbucket2HookTests(WebhookTestCase):
         )
 
     def test_bitbucket2_on_push_one_tag_event(self) -> None:
-        expected_message = "kolaszek pushed tag [a](https://bitbucket.org/kolaszek/repository-name/commits/tag/a)."
+        expected_message = (
+            "kolaszek pushed tag [a](https://bitbucket.org/kolaszek/repository-name/commits/tag/a)."
+        )
         kwargs = {
             "HTTP_X_EVENT_KEY": "pullrequest:push",
         }
@@ -389,7 +391,9 @@ class Bitbucket2HookTests(WebhookTestCase):
         kwargs = {
             "HTTP_X_EVENT_KEY": "pullrequest:push",
         }
-        expected_message = "kolaszek pushed tag [a](https://bitbucket.org/kolaszek/repository-name/commits/tag/a)."
+        expected_message = (
+            "kolaszek pushed tag [a](https://bitbucket.org/kolaszek/repository-name/commits/tag/a)."
+        )
         self.send_and_test_stream_message(
             "more_than_one_push_event", self.EXPECTED_TOPIC, expected_message, **kwargs,
         )

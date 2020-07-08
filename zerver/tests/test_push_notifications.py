@@ -207,9 +207,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
             self.server_uuid, endpoint, dict(user_id=user_id, token_kind=token_kind, token=token),
         )
         self.assert_json_error(
-            result,
-            "Zulip server auth failure: key does not match role 1234-abcd",
-            status_code=401,
+            result, "Zulip server auth failure: key does not match role 1234-abcd", status_code=401,
         )
 
         del self.API_KEYS[self.server_uuid]
@@ -1691,9 +1689,7 @@ class TestSendToPushBouncer(ZulipTestCase):
         )
 
     @mock.patch("requests.request", return_value=Result(status=400, content="/"))
-    def test_400_error_when_content_is_not_serializable(
-        self, mock_request: mock.MagicMock,
-    ) -> None:
+    def test_400_error_when_content_is_not_serializable(self, mock_request: mock.MagicMock) -> None:
         with self.assertRaises(ValueError) as exc:
             send_to_push_bouncer("register", "register", {"msg": "true"})
         self.assertEqual(str(exc.exception), "Expected object or value")
@@ -1785,9 +1781,7 @@ class TestPushApi(BouncerTestCase):
 
         with self.settings(
             PUSH_NOTIFICATION_BOUNCER_URL="https://push.zulip.org.example.com",
-        ), mock.patch(
-            "zerver.lib.remote_server.requests.request", side_effect=self.bounce_request,
-        ):
+        ), mock.patch("zerver.lib.remote_server.requests.request", side_effect=self.bounce_request):
             # Enable push notification bouncer and add tokens.
             for endpoint, token in bouncer_requests:
                 # Test that we can push twice.
@@ -1827,9 +1821,7 @@ class TestPushApi(BouncerTestCase):
         # Tokens will be removed both locally and remotely.
         with self.settings(
             PUSH_NOTIFICATION_BOUNCER_URL="https://push.zulip.org.example.com",
-        ), mock.patch(
-            "zerver.lib.remote_server.requests.request", side_effect=self.bounce_request,
-        ):
+        ), mock.patch("zerver.lib.remote_server.requests.request", side_effect=self.bounce_request):
             for endpoint, token in bouncer_requests:
                 result = self.client_delete(endpoint, {"token": token})
                 self.assert_json_success(result)

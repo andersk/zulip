@@ -38,9 +38,7 @@ def build_message_from_gitlog(
     return subject, content
 
 
-def _transform_commits_list_to_common_format(
-    commits: List[Dict[str, Any]],
-) -> List[Dict[str, str]]:
+def _transform_commits_list_to_common_format(commits: List[Dict[str, Any]]) -> List[Dict[str, str]]:
     new_commits_list = []
     for commit in commits:
         new_commits_list.append(

@@ -788,11 +788,7 @@ html_rules: List["Rule"] = whitespace_rules + prose_style_rules + [
             "templates/corporate/zephyr.html",
             "templates/corporate/zephyr-mirror.html",
         },
-        "good_lines": [
-            "#my-style {color: blue;}",
-            'style="display: none"',
-            "style='display: none",
-        ],
+        "good_lines": ["#my-style {color: blue;}", 'style="display: none"', "style='display: none"],
         "bad_lines": ['<p style="color: blue;">Foo</p>', 'style = "color: blue;"'],
     },
 ]

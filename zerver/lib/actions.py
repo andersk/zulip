@@ -843,10 +843,7 @@ def do_set_realm_authentication_methods(
         acting_user=acting_user,
         extra_data=ujson.dumps(
             {
-                RealmAuditLog.OLD_VALUE: {
-                    "property": "authentication_methods",
-                    "value": old_value,
-                },
+                RealmAuditLog.OLD_VALUE: {"property": "authentication_methods", "value": old_value},
                 RealmAuditLog.NEW_VALUE: {
                     "property": "authentication_methods",
                     "value": updated_value,
@@ -1314,9 +1311,7 @@ def get_recipient_info(
                 user_profile_email_notifications=F(
                     "user_profile__enable_stream_email_notifications",
                 ),
-                user_profile_push_notifications=F(
-                    "user_profile__enable_stream_push_notifications",
-                ),
+                user_profile_push_notifications=F("user_profile__enable_stream_push_notifications"),
                 user_profile_wildcard_mentions_notify=F("user_profile__wildcard_mentions_notify"),
             )
             .values(
@@ -2006,9 +2001,7 @@ def do_add_reaction_legacy(user_profile: UserProfile, message: Message, emoji_na
     notify_reaction_update(user_profile, message, reaction, "add")
 
 
-def do_remove_reaction_legacy(
-    user_profile: UserProfile, message: Message, emoji_name: str,
-) -> None:
+def do_remove_reaction_legacy(user_profile: UserProfile, message: Message, emoji_name: str) -> None:
     reaction = Reaction.objects.filter(
         user_profile=user_profile, message=message, emoji_name=emoji_name,
     ).get()
@@ -2074,9 +2067,7 @@ def do_send_typing_notification(
 
 # check_send_typing_notification:
 # Checks the typing notification and sends it
-def check_send_typing_notification(
-    sender: UserProfile, user_ids: List[int], operator: str,
-) -> None:
+def check_send_typing_notification(sender: UserProfile, user_ids: List[int], operator: str) -> None:
 
     realm = sender.realm
     if len(user_ids) == 0:
@@ -2706,9 +2697,7 @@ def _internal_prep_message(
     try:
         return check_message(sender, get_client("Internal"), addressee, content, realm=realm)
     except JsonableError as e:
-        logging.exception(
-            "Error queueing internal message by %s: %s", sender.delivery_email, e.msg,
-        )
+        logging.exception("Error queueing internal message by %s: %s", sender.delivery_email, e.msg)
 
     return None
 
@@ -2721,9 +2710,7 @@ def internal_prep_stream_message(
     """
     addressee = Addressee.for_stream(stream, topic)
 
-    return _internal_prep_message(
-        realm=realm, sender=sender, addressee=addressee, content=content,
-    )
+    return _internal_prep_message(realm=realm, sender=sender, addressee=addressee, content=content)
 
 
 def internal_prep_stream_message_by_name(
@@ -2734,9 +2721,7 @@ def internal_prep_stream_message_by_name(
     """
     addressee = Addressee.for_stream_name(stream_name, topic)
 
-    return _internal_prep_message(
-        realm=realm, sender=sender, addressee=addressee, content=content,
-    )
+    return _internal_prep_message(realm=realm, sender=sender, addressee=addressee, content=content)
 
 
 def internal_prep_private_message(
@@ -2747,9 +2732,7 @@ def internal_prep_private_message(
     """
     addressee = Addressee.for_user_profile(recipient_user)
 
-    return _internal_prep_message(
-        realm=realm, sender=sender, addressee=addressee, content=content,
-    )
+    return _internal_prep_message(realm=realm, sender=sender, addressee=addressee, content=content)
 
 
 def internal_send_private_message(
@@ -4405,9 +4388,7 @@ def streams_to_dicts_sorted(streams: List[Stream]) -> List[Dict[str, Any]]:
     return sorted([stream.to_dict() for stream in streams], key=lambda elt: elt["name"])
 
 
-def default_stream_groups_to_dicts_sorted(
-    groups: List[DefaultStreamGroup],
-) -> List[Dict[str, Any]]:
+def default_stream_groups_to_dicts_sorted(groups: List[DefaultStreamGroup]) -> List[Dict[str, Any]]:
     return sorted([group.to_dict() for group in groups], key=lambda elt: elt["name"])
 
 
@@ -5246,9 +5227,7 @@ def do_update_message(
                     if sub.user_profile.is_guest and sub.user_profile_id not in subscriber_ids
                 ]
                 subscribers = subscribers.exclude(
-                    user_profile_id__in=[
-                        sub.user_profile_id for sub in old_stream_unsubbed_guests
-                    ],
+                    user_profile_id__in=[sub.user_profile_id for sub in old_stream_unsubbed_guests],
                 )
                 subscriber_ids = [user.user_profile_id for user in subscribers]
 
@@ -5896,9 +5875,7 @@ def do_get_user_invites(user_profile: UserProfile) -> List[Dict[str, Any]]:
         days=settings.INVITATION_LINK_VALIDITY_DAYS,
     )
     multiuse_confirmation_objs = Confirmation.objects.filter(
-        realm=user_profile.realm,
-        type=Confirmation.MULTIUSE_INVITE,
-        date_sent__gte=lowest_datetime,
+        realm=user_profile.realm, type=Confirmation.MULTIUSE_INVITE, date_sent__gte=lowest_datetime,
     )
     for confirmation_obj in multiuse_confirmation_objs:
         invite = confirmation_obj.content_object
@@ -6135,9 +6112,7 @@ def do_remove_realm_domain(
         # longer restricted to domain, because the feature doesn't do
         # anything if there are no domains, and this is probably less
         # confusing than the alternative.
-        do_set_realm_property(
-            realm, "emails_restricted_to_domains", False, acting_user=acting_user,
-        )
+        do_set_realm_property(realm, "emails_restricted_to_domains", False, acting_user=acting_user)
     event = dict(type="realm_domains", op="remove", domain=domain)
     send_event(realm, event, active_user_ids(realm.id))
 
@@ -6294,9 +6269,7 @@ def check_attachment_reference_change(message: Message) -> bool:
 
     to_remove = list(prev_attachments - new_attachments)
     if len(to_remove) > 0:
-        attachments_to_update = Attachment.objects.filter(
-            path_id__in=to_remove,
-        ).select_for_update()
+        attachments_to_update = Attachment.objects.filter(path_id__in=to_remove).select_for_update()
         message.attachment_set.remove(*attachments_to_update)
 
     to_add = list(new_attachments - prev_attachments)
@@ -6520,9 +6493,7 @@ def do_update_outgoing_webhook_service(
                 user_id=bot_profile.id,
                 services=[
                     dict(
-                        base_url=service.base_url,
-                        interface=service.interface,
-                        token=service.token,
+                        base_url=service.base_url, interface=service.interface, token=service.token,
                     ),
                 ],
             ),
@@ -6575,9 +6546,7 @@ def get_service_dicts_for_bots(
         bot_services_by_uid[service.user_profile_id].append(service)
 
     embedded_bot_ids = [
-        bot_dict["id"]
-        for bot_dict in bot_dicts
-        if bot_dict["bot_type"] == UserProfile.EMBEDDED_BOT
+        bot_dict["id"] for bot_dict in bot_dicts if bot_dict["bot_type"] == UserProfile.EMBEDDED_BOT
     ]
     embedded_bot_configs = get_bot_configs(embedded_bot_ids)
 
@@ -6640,9 +6609,7 @@ def do_send_user_group_members_update_event(
     send_event(user_group.realm, event, active_user_ids(user_group.realm_id))
 
 
-def bulk_add_members_to_user_group(
-    user_group: UserGroup, user_profiles: List[UserProfile],
-) -> None:
+def bulk_add_members_to_user_group(user_group: UserGroup, user_profiles: List[UserProfile]) -> None:
     memberships = [
         UserGroupMembership(user_group_id=user_group.id, user_profile=user_profile)
         for user_profile in user_profiles
@@ -6653,9 +6620,7 @@ def bulk_add_members_to_user_group(
     do_send_user_group_members_update_event("add_members", user_group, user_ids)
 
 
-def remove_members_from_user_group(
-    user_group: UserGroup, user_profiles: List[UserProfile],
-) -> None:
+def remove_members_from_user_group(user_group: UserGroup, user_profiles: List[UserProfile]) -> None:
     UserGroupMembership.objects.filter(
         user_group_id=user_group.id, user_profile__in=user_profiles,
     ).delete()
@@ -6721,9 +6686,7 @@ def do_delete_realm_export(user_profile: UserProfile, export: RealmAuditLog) -> 
     notify_realm_export(user_profile)
 
 
-def get_topic_messages(
-    user_profile: UserProfile, stream: Stream, topic_name: str,
-) -> List[Message]:
+def get_topic_messages(user_profile: UserProfile, stream: Stream, topic_name: str) -> List[Message]:
     query = UserMessage.objects.filter(
         user_profile=user_profile, message__recipient=stream.recipient,
     ).order_by("id")

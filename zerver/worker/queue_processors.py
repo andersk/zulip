@@ -125,9 +125,7 @@ worker_classes: Dict[str, Type["QueueProcessingWorker"]] = {}
 queues: Dict[str, Dict[str, Type["QueueProcessingWorker"]]] = {}
 
 
-def register_worker(
-    queue_name: str, clazz: Type["QueueProcessingWorker"], queue_type: str,
-) -> None:
+def register_worker(queue_name: str, clazz: Type["QueueProcessingWorker"], queue_type: str) -> None:
     if queue_type not in queues:
         queues[queue_type] = {}
     queues[queue_type][queue_name] = clazz

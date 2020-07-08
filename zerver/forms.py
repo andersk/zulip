@@ -20,10 +20,7 @@ from two_factor.forms import AuthenticationTokenForm as TwoFactorAuthenticationT
 from two_factor.utils import totp_digits
 
 from zerver.lib.actions import do_change_password, email_not_system_bot
-from zerver.lib.email_validation import (
-    email_allowed_for_realm,
-    validate_email_not_already_in_realm,
-)
+from zerver.lib.email_validation import email_allowed_for_realm, validate_email_not_already_in_realm
 from zerver.lib.name_restrictions import is_disposable_domain, is_reserved_subdomain
 from zerver.lib.rate_limiter import RateLimited, RateLimitedObject
 from zerver.lib.request import JsonableError

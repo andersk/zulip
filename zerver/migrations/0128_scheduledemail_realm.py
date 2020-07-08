@@ -50,8 +50,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="scheduledemail",
             name="realm",
-            field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm",
-            ),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm"),
         ),
     ]

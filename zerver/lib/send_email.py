@@ -161,7 +161,9 @@ class EmailNotDeliveredException(Exception):
 
 class DoubledEmailArgumentException(CommandError):
     def __init__(self, argument_name: str) -> None:
-        msg = f"Argument '{argument_name}' is ambiguously present in both options and email template."
+        msg = (
+            f"Argument '{argument_name}' is ambiguously present in both options and email template."
+        )
         super().__init__(msg)
 
 
@@ -375,9 +377,7 @@ def send_custom_email(users: List[UserProfile], options: Dict[str, Any]) -> None
             f.write(base_template.read().replace("{{ rendered_input }}", rendered_input))
 
     with open(subject_path, "w") as f:
-        f.write(
-            get_header(options.get("subject"), parsed_email_template.get("subject"), "subject"),
-        )
+        f.write(get_header(options.get("subject"), parsed_email_template.get("subject"), "subject"))
 
     inline_template(email_filename)
 

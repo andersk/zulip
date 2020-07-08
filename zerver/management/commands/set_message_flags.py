@@ -24,9 +24,7 @@ class Command(ZulipBaseCommand):
             help="Actually change message flags. Default is a dry run.",
         )
 
-        parser.add_argument(
-            "-f", "--flag", dest="flag", type=str, help="The flag to add of remove",
-        )
+        parser.add_argument("-f", "--flag", dest="flag", type=str, help="The flag to add of remove")
 
         parser.add_argument(
             "-o", "--op", dest="op", type=str, help="The operation to do: 'add' or 'remove'",

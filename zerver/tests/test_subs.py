@@ -196,9 +196,7 @@ class TestCreateStreams(ZulipTestCase):
             ),
             "invite_only": ujson.dumps(False),
         }
-        result = self.api_post(
-            user, "/api/v1/users/me/subscriptions", post_data, subdomain="zulip",
-        )
+        result = self.api_post(user, "/api/v1/users/me/subscriptions", post_data, subdomain="zulip")
         self.assert_json_success(result)
         stream = get_stream("new_stream", realm)
         self.assertEqual(stream.description, "multi line description")
@@ -1025,15 +1023,11 @@ class StreamAdminTest(ZulipTestCase):
         admin = self.example_user("iago")
 
         streams_raw = [{"name": "new_stream", "message_retention_days": 10}]
-        with self.assertRaisesRegex(
-            JsonableError, "User cannot create stream with this settings.",
-        ):
+        with self.assertRaisesRegex(JsonableError, "User cannot create stream with this settings."):
             list_to_streams(streams_raw, admin, autocreate=True)
 
         streams_raw = [{"name": "new_stream", "message_retention_days": -1}]
-        with self.assertRaisesRegex(
-            JsonableError, "User cannot create stream with this settings.",
-        ):
+        with self.assertRaisesRegex(JsonableError, "User cannot create stream with this settings."):
             list_to_streams(streams_raw, admin, autocreate=True)
 
         streams_raw = [{"name": "new_stream", "message_retention_days": None}]
@@ -1385,9 +1379,7 @@ class StreamAdminTest(ZulipTestCase):
         do_change_user_role(user_profile, UserProfile.ROLE_MEMBER)
 
         # Allow all members to create streams.
-        do_set_realm_property(
-            user_profile.realm, "create_stream_policy", Realm.POLICY_MEMBERS_ONLY,
-        )
+        do_set_realm_property(user_profile.realm, "create_stream_policy", Realm.POLICY_MEMBERS_ONLY)
         # Set waiting period to 10 days.
         do_set_realm_property(user_profile.realm, "waiting_period_threshold", 10)
 
@@ -1756,9 +1748,7 @@ class DefaultStreamGroupTest(ZulipTestCase):
         )
         self.assert_json_error(result, "Default stream group with id '12345' does not exist.")
 
-        result = self.client_patch(
-            f"/json/default_stream_groups/{group_id}/streams", {"op": "add"},
-        )
+        result = self.client_patch(f"/json/default_stream_groups/{group_id}/streams", {"op": "add"})
         self.assert_json_error(result, "Missing 'stream_names' argument")
 
         do_add_default_stream(new_streams[0])
@@ -1883,9 +1873,7 @@ class DefaultStreamGroupTest(ZulipTestCase):
         self.assert_length(default_stream_groups, 0)
 
         result = self.client_delete(f"/json/default_stream_groups/{group_id}")
-        self.assert_json_error(
-            result, f"Default stream group with id '{group_id}' does not exist.",
-        )
+        self.assert_json_error(result, f"Default stream group with id '{group_id}' does not exist.")
 
     def test_invalid_default_stream_group_name(self) -> None:
         self.login("iago")
@@ -2786,7 +2774,9 @@ class SubscriptionAPITest(ZulipTestCase):
         msg = self.get_second_to_last_message()
         self.assertEqual(msg.recipient.type, Recipient.STREAM)
         self.assertEqual(msg.sender_id, self.notification_bot().id)
-        expected_msg = f"@_**{invitee_full_name}|{invitee.id}** created a new stream #**{invite_streams[0]}**."
+        expected_msg = (
+            f"@_**{invitee_full_name}|{invitee.id}** created a new stream #**{invite_streams[0]}**."
+        )
         self.assertEqual(msg.content, expected_msg)
 
     def test_successful_cross_realm_notification(self) -> None:
@@ -2845,7 +2835,9 @@ class SubscriptionAPITest(ZulipTestCase):
 
         msg = self.get_second_to_last_message()
         self.assertEqual(msg.sender_id, self.notification_bot().id)
-        expected_msg = f"@_**{invitee_full_name}|{invitee.id}** created a new stream #**{invite_streams[0]}**."
+        expected_msg = (
+            f"@_**{invitee_full_name}|{invitee.id}** created a new stream #**{invite_streams[0]}**."
+        )
         self.assertEqual(msg.content, expected_msg)
 
     def test_non_ascii_stream_subscription(self) -> None:
@@ -2940,9 +2932,7 @@ class SubscriptionAPITest(ZulipTestCase):
             {"principals": ujson.dumps([invitee_user_id])},
             allow_fail=True,
         )
-        self.assert_json_error(
-            result, "Only administrators can modify other users' subscriptions.",
-        )
+        self.assert_json_error(result, "Only administrators can modify other users' subscriptions.")
 
         do_set_realm_property(realm, "invite_to_stream_policy", Realm.POLICY_MEMBERS_ONLY)
         self.common_subscribe_to_streams(
@@ -3439,9 +3429,7 @@ class SubscriptionAPITest(ZulipTestCase):
         invitee = self.example_user("iago")
         current_streams = self.get_streams(invitee)
         invite_streams = self.make_random_stream_names(current_streams)
-        self.assert_adding_subscriptions_for_principal(
-            invitee.email, invitee.realm, invite_streams,
-        )
+        self.assert_adding_subscriptions_for_principal(invitee.email, invitee.realm, invite_streams)
 
     def test_subscriptions_add_for_principal_deactivated(self) -> None:
         """
@@ -3529,10 +3517,7 @@ class SubscriptionAPITest(ZulipTestCase):
         # verify that principal exists (thus, the reason for the error is the cross-realming)
         self.assertIsInstance(profile, UserProfile)
         result = self.common_subscribe_to_streams(
-            self.test_user,
-            self.streams,
-            {"principals": ujson.dumps([principal])},
-            allow_fail=True,
+            self.test_user, self.streams, {"principals": ujson.dumps([principal])}, allow_fail=True,
         )
         self.assert_json_error(
             result,
@@ -3857,9 +3842,7 @@ class SubscriptionAPITest(ZulipTestCase):
 
         # This should result in missing user
         with self.assertRaises(ValidationError):
-            validate_user_access_to_subscribers_helper(
-                None, stream_dict, lambda user_profile: True,
-            )
+            validate_user_access_to_subscribers_helper(None, stream_dict, lambda user_profile: True)
 
         # This should result in user not in realm
         with self.assertRaises(ValidationError):
@@ -4130,9 +4113,7 @@ class InviteOnlyStreamTest(ZulipTestCase):
                     sub["invite_only"], False, "Normandy was mistakenly marked private",
                 )
             if sub["name"] == "Saxony":
-                self.assertEqual(
-                    sub["invite_only"], True, "Saxony was not properly marked private",
-                )
+                self.assertEqual(sub["invite_only"], True, "Saxony was not properly marked private")
 
     def test_inviteonly(self) -> None:
         # Creating an invite-only stream is allowed
@@ -4337,9 +4318,7 @@ class GetSubscribersTest(ZulipTestCase):
                 self.make_stream(stream_name, realm=realm)
 
             self.common_subscribe_to_streams(
-                self.user_profile,
-                public_streams,
-                dict(principals=ujson.dumps(users_to_subscribe)),
+                self.user_profile, public_streams, dict(principals=ujson.dumps(users_to_subscribe)),
             )
 
         create_public_streams()
@@ -4474,9 +4453,7 @@ class GetSubscribersTest(ZulipTestCase):
         )
 
         with queries_captured() as queries:
-            subscribed_streams, _ = gather_subscriptions(
-                mit_user_profile, include_subscribers=True,
-            )
+            subscribed_streams, _ = gather_subscriptions(mit_user_profile, include_subscribers=True)
 
         self.assertTrue(len(subscribed_streams) >= 2)
         for sub in subscribed_streams:
@@ -4536,9 +4513,9 @@ class GetSubscribersTest(ZulipTestCase):
         """
         stream_name = gather_subscriptions(self.user_profile)[0][0]["name"]
         stream_id = get_stream(stream_name, self.user_profile.realm).id
-        expected_subscribers = gather_subscriptions(self.user_profile, include_subscribers=True)[
+        expected_subscribers = gather_subscriptions(self.user_profile, include_subscribers=True)[0][
             0
-        ][0]["subscribers"]
+        ]["subscribers"]
         result = self.client_get(f"/json/streams/{stream_id}/members")
         self.assert_json_success(result)
         result_dict = result.json()
@@ -4708,8 +4685,7 @@ class StreamTrafficTest(ZulipTestCase):
 
         # average traffic between 0 and 1
         self.assertEqual(
-            get_average_weekly_stream_traffic(42, timezone_now() - timedelta(days=300), {42: 1}),
-            1,
+            get_average_weekly_stream_traffic(42, timezone_now() - timedelta(days=300), {42: 1}), 1,
         )
 
     def test_round_to_2_significant_digits(self) -> None:

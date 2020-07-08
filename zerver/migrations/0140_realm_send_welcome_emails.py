@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="realm",
-            name="send_welcome_emails",
-            field=models.BooleanField(default=True),
+            model_name="realm", name="send_welcome_emails", field=models.BooleanField(default=True),
         ),
     ]

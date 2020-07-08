@@ -15,11 +15,7 @@ class BeanstalkHookTests(WebhookTestCase):
 
 * add some stuff ([e50508d](http://lfranchi-svn.beanstalkapp.com/work-test/changesets/e50508df))"""
         self.api_stream_message(
-            self.test_user,
-            "git_singlecommit",
-            expected_topic,
-            expected_message,
-            content_type=None,
+            self.test_user, "git_singlecommit", expected_topic, expected_message, content_type=None,
         )
 
     def test_git_single_filtered_by_branches(self) -> None:
@@ -29,11 +25,7 @@ class BeanstalkHookTests(WebhookTestCase):
 
 * add some stuff ([e50508d](http://lfranchi-svn.beanstalkapp.com/work-test/changesets/e50508df))"""
         self.api_stream_message(
-            self.test_user,
-            "git_singlecommit",
-            expected_topic,
-            expected_message,
-            content_type=None,
+            self.test_user, "git_singlecommit", expected_topic, expected_message, content_type=None,
         )
 
     def test_git_multiple_committers(self) -> None:

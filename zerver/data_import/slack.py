@@ -427,11 +427,7 @@ def channels_to_zerver_stream(
     slack_user_id_to_zulip_user_id: SlackToZulipUserIDT,
     zerver_userprofile: List[ZerverFieldsT],
 ) -> Tuple[
-    Dict[str, List[ZerverFieldsT]],
-    AddedChannelsT,
-    AddedMPIMsT,
-    DMMembersT,
-    SlackToZulipRecipientT,
+    Dict[str, List[ZerverFieldsT]], AddedChannelsT, AddedMPIMsT, DMMembersT, SlackToZulipRecipientT,
 ]:
     """
     Returns:
@@ -1131,9 +1127,7 @@ def build_uploads(
     uploads_list: List[ZerverFieldsT],
 ) -> None:
     upload = dict(
-        path=fileinfo[
-            "url_private"
-        ],  # Save slack's url here, which is used later while processing
+        path=fileinfo["url_private"],  # Save slack's url here, which is used later while processing
         realm_id=realm_id,
         content_type=None,
         user_profile_id=user_id,
@@ -1275,9 +1269,7 @@ def do_convert_data(slack_zip_file: str, output_dir: str, token: str, threads: i
     user_list = get_slack_api_data("https://slack.com/api/users.list", "members", token=token)
     fetch_shared_channel_users(user_list, slack_data_dir, token)
 
-    custom_emoji_list = get_slack_api_data(
-        "https://slack.com/api/emoji.list", "emoji", token=token,
-    )
+    custom_emoji_list = get_slack_api_data("https://slack.com/api/emoji.list", "emoji", token=token)
 
     (
         realm,
@@ -1313,9 +1305,7 @@ def do_convert_data(slack_zip_file: str, output_dir: str, token: str, threads: i
 
     emoji_folder = os.path.join(output_dir, "emoji")
     os.makedirs(emoji_folder, exist_ok=True)
-    emoji_records = process_emojis(
-        realm["zerver_realmemoji"], emoji_folder, emoji_url_map, threads,
-    )
+    emoji_records = process_emojis(realm["zerver_realmemoji"], emoji_folder, emoji_url_map, threads)
 
     avatar_folder = os.path.join(output_dir, "avatars")
     avatar_realm_folder = os.path.join(avatar_folder, str(realm_id))

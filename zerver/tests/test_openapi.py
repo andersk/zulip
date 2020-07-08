@@ -718,9 +718,7 @@ class ModifyExampleGenerationTestCase(ZulipTestCase):
         self.assertEqual(res, ("curl", {"exclude": ["param1", "param2"]}))
 
     def test_multiple_list_mod_argument(self) -> None:
-        res = parse_language_and_options(
-            "curl, exclude=['param1', \"param2\"], special=['param3']",
-        )
+        res = parse_language_and_options("curl, exclude=['param1', \"param2\"], special=['param3']")
         self.assertEqual(res, ("curl", {"exclude": ["param1", "param2"], "special": ["param3"]}))
 
     def test_multiple_mixed_mod_arguments(self) -> None:
@@ -874,9 +872,7 @@ class TestCurlExampleGeneration(ZulipTestCase):
     }
 
     def curl_example(self, endpoint: str, method: str, *args: Any, **kwargs: Any) -> List[str]:
-        return generate_curl_example(
-            endpoint, method, "http://localhost:9991/api", *args, **kwargs,
-        )
+        return generate_curl_example(endpoint, method, "http://localhost:9991/api", *args, **kwargs)
 
     def test_generate_and_render_curl_example(self) -> None:
         generated_curl_example = self.curl_example("/get_stream_id", "GET")
@@ -1086,6 +1082,5 @@ class OpenAPIRegexTest(ZulipTestCase):
         )
         assert match_against_openapi_regex("/messages/23") == "/messages/{message_id}"
         assert (
-            match_against_openapi_regex("/realm/emoji/realm_emoji_1")
-            == "/realm/emoji/{emoji_name}"
+            match_against_openapi_regex("/realm/emoji/realm_emoji_1") == "/realm/emoji/{emoji_name}"
         )

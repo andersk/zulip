@@ -135,9 +135,7 @@ def get_display_recipient_by_id(
     from zerver.lib.display_recipient import get_display_recipient_remote_cache
 
     if recipient_id not in per_request_display_recipient_cache:
-        result = get_display_recipient_remote_cache(
-            recipient_id, recipient_type, recipient_type_id,
-        )
+        result = get_display_recipient_remote_cache(recipient_id, recipient_type, recipient_type_id)
         per_request_display_recipient_cache[recipient_id] = result
     return per_request_display_recipient_cache[recipient_id]
 
@@ -1681,9 +1679,7 @@ class Stream(models.Model):
                 result["stream_id"] = self.id
                 continue
             result[field_name] = getattr(self, field_name)
-        result["is_announcement_only"] = (
-            self.stream_post_policy == Stream.STREAM_POST_POLICY_ADMINS
-        )
+        result["is_announcement_only"] = self.stream_post_policy == Stream.STREAM_POST_POLICY_ADMINS
         return result
 
 
@@ -2555,9 +2551,7 @@ def get_system_bot(email: str) -> UserProfile:
     return UserProfile.objects.select_related().get(email__iexact=email.strip())
 
 
-def get_user_by_id_in_realm_including_cross_realm(
-    uid: int, realm: Optional[Realm],
-) -> UserProfile:
+def get_user_by_id_in_realm_including_cross_realm(uid: int, realm: Optional[Realm]) -> UserProfile:
     user_profile = get_user_profile_by_id(uid)
     if user_profile.realm == realm:
         return user_profile
@@ -3111,13 +3105,7 @@ class CustomProfileField(models.Model):
         (LONG_TEXT, str(_("Long text")), check_long_string, str, "LONG_TEXT"),
         (DATE, str(_("Date picker")), check_date, str, "DATE"),
         (URL, str(_("Link")), check_url, str, "URL"),
-        (
-            EXTERNAL_ACCOUNT,
-            str(_("External account")),
-            check_short_string,
-            str,
-            "EXTERNAL_ACCOUNT",
-        ),
+        (EXTERNAL_ACCOUNT, str(_("External account")), check_short_string, str, "EXTERNAL_ACCOUNT"),
     ]
 
     ALL_FIELD_TYPES = [*FIELD_TYPE_DATA, *CHOICE_FIELD_TYPE_DATA, *USER_FIELD_TYPE_DATA]

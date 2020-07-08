@@ -1032,9 +1032,7 @@ def process_message_event(
         client = client_data["client"]
         flags = client_data["flags"]
         is_sender: bool = client_data.get("is_sender", False)
-        extra_data: Optional[Mapping[str, bool]] = extra_user_data.get(
-            client.user_profile_id, None,
-        )
+        extra_data: Optional[Mapping[str, bool]] = extra_user_data.get(client.user_profile_id, None)
 
         if not client.accepts_messages():
             # The actual check is the accepts_event() check below;
@@ -1062,10 +1060,7 @@ def process_message_event(
             continue
 
         # The below prevents (Zephyr) mirroring loops.
-        if (
-            "mirror" in sending_client
-            and sending_client.lower() == client.client_type_name.lower()
-        ):
+        if "mirror" in sending_client and sending_client.lower() == client.client_type_name.lower():
             continue
 
         client.add_event(user_event)

@@ -44,11 +44,7 @@ link_mapping = {
         "Authentication methods",
         "/#organization/auth-methods",
     ],
-    "user-groups-admin": [
-        "Manage organization",
-        "User groups",
-        "/#organization/user-groups-admin",
-    ],
+    "user-groups-admin": ["Manage organization", "User groups", "/#organization/user-groups-admin"],
     "user-list-admin": ["Manage organization", "Users", "/#organization/user-list-admin"],
     "deactivated-users-admin": [
         "Manage organization",

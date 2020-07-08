@@ -825,8 +825,7 @@ class AdminCreateUserTest(ZulipTestCase):
 
         # Make sure the recipient field is set correctly.
         self.assertEqual(
-            new_user.recipient,
-            Recipient.objects.get(type=Recipient.PERSONAL, type_id=new_user.id),
+            new_user.recipient, Recipient.objects.get(type=Recipient.PERSONAL, type_id=new_user.id),
         )
 
         # we can't create the same user twice.

@@ -378,16 +378,12 @@ class ChangeSettingsTest(ZulipTestCase):
 
         with self.settings(AVATAR_CHANGES_DISABLED=True):
             result = self.client_delete("/json/users/me/avatar")
-            self.assert_json_error(
-                result, "Avatar changes are disabled in this organization.", 400,
-            )
+            self.assert_json_error(result, "Avatar changes are disabled in this organization.", 400)
 
         with self.settings(AVATAR_CHANGES_DISABLED=True):
             with get_test_image_file("img.png") as fp1:
                 result = self.client_post("/json/users/me/avatar", {"f1": fp1})
-            self.assert_json_error(
-                result, "Avatar changes are disabled in this organization.", 400,
-            )
+            self.assert_json_error(result, "Avatar changes are disabled in this organization.", 400)
 
 
 class UserChangesTest(ZulipTestCase):

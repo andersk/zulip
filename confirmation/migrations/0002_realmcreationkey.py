@@ -21,9 +21,7 @@ class Migration(migrations.Migration):
                 ("creation_key", models.CharField(max_length=40, verbose_name="activation key")),
                 (
                     "date_created",
-                    models.DateTimeField(
-                        default=django.utils.timezone.now, verbose_name="created",
-                    ),
+                    models.DateTimeField(default=django.utils.timezone.now, verbose_name="created"),
                 ),
             ],
         ),

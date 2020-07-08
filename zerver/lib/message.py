@@ -1023,9 +1023,7 @@ def apply_unread_message_event(
     if message["type"] == "stream":
         message_type = "stream"
     elif message["type"] == "private":
-        others = [
-            recip for recip in message["display_recipient"] if recip["id"] != user_profile.id
-        ]
+        others = [recip for recip in message["display_recipient"] if recip["id"] != user_profile.id]
         if len(others) <= 1:
             message_type = "private"
         else:

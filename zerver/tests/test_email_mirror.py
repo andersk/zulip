@@ -1437,9 +1437,7 @@ class TestEmailMirrorLogAndReport(ZulipTestCase):
         # Test for a stream address:
         stream_to_address = encode_email_address(stream)
         stream_address_parts = stream_to_address.split("@")
-        scrubbed_stream_address = (
-            "X" * len(stream_address_parts[0]) + "@" + stream_address_parts[1]
-        )
+        scrubbed_stream_address = "X" * len(stream_address_parts[0]) + "@" + stream_address_parts[1]
 
         error_message = "test message {}"
         error_message = error_message.format(stream_to_address)

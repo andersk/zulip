@@ -173,8 +173,7 @@ class UserGroupAPITestCase(ZulipTestCase):
         }
         result = self.client_patch(f"/json/user_groups/{user_group.id}", info=params)
         self.assert_json_error(
-            result,
-            "Only group members and organization administrators can administer this group.",
+            result, "Only group members and organization administrators can administer this group.",
         )
 
         self.logout()
@@ -260,8 +259,7 @@ class UserGroupAPITestCase(ZulipTestCase):
 
         result = self.client_delete(f"/json/user_groups/{user_group.id}")
         self.assert_json_error(
-            result,
-            "Only group members and organization administrators can administer this group.",
+            result, "Only group members and organization administrators can administer this group.",
         )
         self.assertEqual(UserGroup.objects.count(), 2)
 
@@ -330,8 +328,7 @@ class UserGroupAPITestCase(ZulipTestCase):
         params = {"add": ujson.dumps(add)}
         result = self.client_post(f"/json/user_groups/{user_group.id}/members", info=params)
         self.assert_json_error(
-            result,
-            "Only group members and organization administrators can administer this group.",
+            result, "Only group members and organization administrators can administer this group.",
         )
         self.assertEqual(UserGroupMembership.objects.count(), 4)
 
@@ -378,8 +375,7 @@ class UserGroupAPITestCase(ZulipTestCase):
         params = {"delete": ujson.dumps([hamlet.id])}
         result = self.client_post(f"/json/user_groups/{user_group.id}/members", info=params)
         self.assert_json_error(
-            result,
-            "Only group members and organization administrators can administer this group.",
+            result, "Only group members and organization administrators can administer this group.",
         )
         self.assertEqual(UserGroupMembership.objects.count(), 4)
 

@@ -35,10 +35,7 @@ class HelloSignHookTests(WebhookTestCase):
             "Eeshan Garg, John Smith, Jane Doe, and Stephen Strange."
         )
         self.send_and_test_stream_message(
-            "signatures_with_four_signatories",
-            expected_topic,
-            expected_message,
-            content_type=None,
+            "signatures_with_four_signatories", expected_topic, expected_message, content_type=None,
         )
 
     def test_signatures_message_with_own_subject(self) -> None:

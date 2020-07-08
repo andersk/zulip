@@ -17,11 +17,7 @@ from django.utils.translation import ugettext as _
 from zerver.decorator import statsd_increment
 from zerver.lib.avatar import absolute_avatar_url
 from zerver.lib.exceptions import JsonableError
-from zerver.lib.message import (
-    access_message,
-    bulk_access_messages_expect_usermessage,
-    huddle_users,
-)
+from zerver.lib.message import access_message, bulk_access_messages_expect_usermessage, huddle_users
 from zerver.lib.remote_server import send_json_to_push_bouncer, send_to_push_bouncer
 from zerver.lib.timestamp import datetime_to_timestamp
 from zerver.models import (
@@ -196,9 +192,7 @@ def send_apple_push_notification(
             logger.info("APNs: Removing invalid/expired token %s (%s)", device.token, result)
             # We remove all entries for this token (There
             # could be multiple for different Zulip servers).
-            DeviceTokenClass.objects.filter(
-                token=device.token, kind=DeviceTokenClass.APNS,
-            ).delete()
+            DeviceTokenClass.objects.filter(token=device.token, kind=DeviceTokenClass.APNS).delete()
         else:
             logger.warning(
                 "APNs: Failed to send for user %d to device %s: %s", user_id, device.token, result,
@@ -284,10 +278,7 @@ def parse_gcm_options(options: Dict[str, Any], data: Dict[str, Any]) -> str:
 
 @statsd_increment("android_push_notification")
 def send_android_push_notification(
-    devices: List[DeviceToken],
-    data: Dict[str, Any],
-    options: Dict[str, Any],
-    remote: bool = False,
+    devices: List[DeviceToken], data: Dict[str, Any], options: Dict[str, Any], remote: bool = False,
 ) -> None:
     """
     Send a GCM message to the given devices.
@@ -553,9 +544,7 @@ def get_gcm_alert(message: Message) -> str:
     ):
         return f"New mention from {sender_str}"
     else:  # message.is_stream_message() and message.trigger == 'stream_push_notify'
-        return (
-            f"New stream message from {sender_str} in {get_display_recipient(message.recipient)}"
-        )
+        return f"New stream message from {sender_str} in {get_display_recipient(message.recipient)}"
 
 
 def get_mobile_push_content(rendered_content: str) -> str:
@@ -804,9 +793,9 @@ def handle_remove_push_notification(user_profile_id: int, message_ids: List[int]
         if apple_devices:
             send_apple_push_notification(user_profile_id, apple_devices, apns_payload)
 
-    UserMessage.objects.filter(
-        user_profile_id=user_profile_id, message_id__in=message_ids,
-    ).update(flags=F("flags").bitand(~UserMessage.flags.active_mobile_push_notification))
+    UserMessage.objects.filter(user_profile_id=user_profile_id, message_id__in=message_ids).update(
+        flags=F("flags").bitand(~UserMessage.flags.active_mobile_push_notification),
+    )
 
 
 @statsd_increment("push_notifications")

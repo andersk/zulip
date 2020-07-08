@@ -805,9 +805,7 @@ def sanity_check_stream_data(response: TableData, config: Config, context: Conte
     if len(actual_streams - streams_in_response) > 0:
         print("Error: Some streams present in the realm were not exported:")
         print("    ", actual_streams - streams_in_response)
-        print(
-            "Usually, this is caused by a stream having been created that never had subscribers.",
-        )
+        print("Usually, this is caused by a stream having been created that never had subscribers.")
         print("(Due to a bug elsewhere in Zulip, not in the export tool)")
         raise AssertionError("Aborting!  Please investigate.")
 

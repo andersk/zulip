@@ -25,9 +25,7 @@ def openapi_param_value_generator(
     def ...
     """
 
-    def wrapper(
-        generator_func: Callable[[], Dict[str, object]],
-    ) -> Callable[[], Dict[str, object]]:
+    def wrapper(generator_func: Callable[[], Dict[str, object]]) -> Callable[[], Dict[str, object]]:
         @wraps(generator_func)
         def _record_calls_wrapper() -> Dict[str, object]:
             CALLED_GENERATOR_FUNCTIONS.add(generator_func.__name__)
@@ -153,16 +151,8 @@ def update_subscription_data() -> Dict[str, object]:
     helpers.subscribe(profile, "social")
     return {
         "subscription_data": [
-            {
-                "stream_id": helpers.get_stream_id("Verona"),
-                "property": "pin_to_top",
-                "value": True,
-            },
-            {
-                "stream_id": helpers.get_stream_id("social"),
-                "property": "color",
-                "value": "#f00f00",
-            },
+            {"stream_id": helpers.get_stream_id("Verona"), "property": "pin_to_top", "value": True},
+            {"stream_id": helpers.get_stream_id("social"), "property": "color", "value": "#f00f00"},
         ],
     }
 

@@ -199,9 +199,7 @@ def update_display_settings_backend(
     if default_language is not None and default_language not in get_available_language_codes():
         raise JsonableError(_("Invalid default_language"))
 
-    request_settings = {
-        k: v for k, v in list(locals().items()) if k in user_profile.property_types
-    }
+    request_settings = {k: v for k, v in list(locals().items()) if k in user_profile.property_types}
     result: Dict[str, Any] = {}
     for k, v in list(request_settings.items()):
         if v is not None and getattr(user_profile, k) != v:

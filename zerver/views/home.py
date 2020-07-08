@@ -269,8 +269,7 @@ def home_real(request: HttpRequest) -> HttpResponse:
         first_in_realm=first_in_realm,
         prompt_for_invites=prompt_for_invites,
         furthest_read_time=furthest_read_time,
-        has_mobile_devices=user_profile is not None
-        and num_push_devices_for_user(user_profile) > 0,
+        has_mobile_devices=user_profile is not None and num_push_devices_for_user(user_profile) > 0,
         bot_types=get_bot_types(user_profile),
         two_fa_enabled=two_fa_enabled,
         # Adding two_fa_enabled as condition saves us 3 queries when

@@ -106,10 +106,7 @@ def ts_locs_array(
     match_pos = func.sum(part_len).over(rows=(None, -1)) + len(TS_STOP)
     match_len = func.strpos(part, TS_STOP) - 1
     return func.array(
-        select([postgresql.array([match_pos, match_len])])
-        .select_from(parts)
-        .offset(1)
-        .as_scalar(),
+        select([postgresql.array([match_pos, match_len])]).select_from(parts).offset(1).as_scalar(),
     )
 
 
@@ -238,9 +235,7 @@ class NarrowBuilder:
             # Because you can see your own message history for
             # private streams you are no longer subscribed to, we
             # need get_stream_by_narrow_operand_access_unchecked here.
-            stream = get_stream_by_narrow_operand_access_unchecked(
-                operand, self.user_profile.realm,
-            )
+            stream = get_stream_by_narrow_operand_access_unchecked(operand, self.user_profile.realm)
         except Stream.DoesNotExist:
             raise BadNarrowOperator("unknown stream " + str(operand))
 
@@ -278,9 +273,7 @@ class NarrowBuilder:
             # but exclude any private subscribed streams.
             public_streams_queryset = get_public_streams_queryset(self.user_profile.realm)
             recipient_ids = (
-                Recipient.objects.filter(
-                    type=Recipient.STREAM, type_id__in=public_streams_queryset,
-                )
+                Recipient.objects.filter(type=Recipient.STREAM, type_id__in=public_streams_queryset)
                 .values_list("id", flat=True)
                 .order_by("id")
             )
@@ -679,10 +672,7 @@ def exclude_muting_conditions(
 
     if stream_id is None:
         rows = Subscription.objects.filter(
-            user_profile=user_profile,
-            active=True,
-            is_muted=True,
-            recipient__type=Recipient.STREAM,
+            user_profile=user_profile, active=True, is_muted=True, recipient__type=Recipient.STREAM,
         ).values("recipient_id")
         muted_recipient_ids = [row["recipient_id"] for row in rows]
         if len(muted_recipient_ids) > 0:
@@ -957,9 +947,7 @@ def get_messages_backend(
         message_ids = [row[0] for row in rows]
 
         # TODO: This could be done with an outer join instead of two queries
-        um_rows = UserMessage.objects.filter(
-            user_profile=user_profile, message__id__in=message_ids,
-        )
+        um_rows = UserMessage.objects.filter(user_profile=user_profile, message__id__in=message_ids)
         user_message_flags = {um.message_id: um.flags_list() for um in um_rows}
 
         for message_id in message_ids:

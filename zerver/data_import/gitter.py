@@ -44,9 +44,7 @@ def gitter_workspace_to_realm(
     4. stream_map, which is a dictionary to map from gitter rooms to zulip stream id
     """
     NOW = float(timezone_now().timestamp())
-    zerver_realm: List[ZerverFieldsT] = build_zerver_realm(
-        realm_id, realm_subdomain, NOW, "Gitter",
-    )
+    zerver_realm: List[ZerverFieldsT] = build_zerver_realm(realm_id, realm_subdomain, NOW, "Gitter")
     realm = build_realm(zerver_realm, realm_id, domain_name)
 
     zerver_userprofile, avatars, user_map = build_userprofile(int(NOW), domain_name, gitter_data)
@@ -266,9 +264,7 @@ def convert_gitter_workspace_messages(
 
 
 def get_usermentions(
-    message: Dict[str, Any],
-    user_map: Dict[str, int],
-    user_short_name_to_full_name: Dict[str, str],
+    message: Dict[str, Any], user_map: Dict[str, int], user_short_name_to_full_name: Dict[str, str],
 ) -> List[int]:
     mentioned_user_ids = []
     if "mentions" in message:
@@ -316,12 +312,7 @@ def do_convert_data(gitter_data_file: str, output_dir: str, threads: int = 6) ->
         user_short_name_to_full_name[userprofile["short_name"]] = userprofile["full_name"]
 
     convert_gitter_workspace_messages(
-        gitter_data,
-        output_dir,
-        subscriber_map,
-        user_map,
-        stream_map,
-        user_short_name_to_full_name,
+        gitter_data, output_dir, subscriber_map, user_map, stream_map, user_short_name_to_full_name,
     )
 
     avatar_folder = os.path.join(output_dir, "avatars")

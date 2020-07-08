@@ -233,12 +233,10 @@ class TestFollowupEmails(ZulipTestCase):
         )
         self.assertEqual(2, len(scheduled_emails))
         self.assertEqual(
-            ujson.loads(scheduled_emails[1].data)["template_prefix"],
-            "zerver/emails/followup_day2",
+            ujson.loads(scheduled_emails[1].data)["template_prefix"], "zerver/emails/followup_day2",
         )
         self.assertEqual(
-            ujson.loads(scheduled_emails[0].data)["template_prefix"],
-            "zerver/emails/followup_day1",
+            ujson.loads(scheduled_emails[0].data)["template_prefix"], "zerver/emails/followup_day1",
         )
 
         ScheduledEmail.objects.all().delete()
@@ -418,11 +416,7 @@ class TestMissedMessages(ZulipTestCase):
         ]
         email_subject = "#Denmark > test"
         self._test_cases(
-            msg_id,
-            verify_body_include,
-            email_subject,
-            send_as_user,
-            trigger="stream_email_notify",
+            msg_id, verify_body_include, email_subject, send_as_user, trigger="stream_email_notify",
         )
 
     def _extra_context_in_missed_stream_messages_mention_two_senders(
@@ -914,9 +908,7 @@ class TestMissedMessages(ZulipTestCase):
     def test_multiple_stream_messages_and_mentions(self) -> None:
         """Subject should be stream name and topic as usual."""
         hamlet = self.example_user("hamlet")
-        msg_id_1 = self.send_stream_message(
-            self.example_user("iago"), "Denmark", "Regular message",
-        )
+        msg_id_1 = self.send_stream_message(self.example_user("iago"), "Denmark", "Regular message")
         msg_id_2 = self.send_stream_message(
             self.example_user("othello"), "Denmark", "@**King Hamlet**",
         )

@@ -156,17 +156,12 @@ def maybe_send_to_registration(
         )
     elif desktop_flow_otp:
         set_expirable_session_var(
-            request.session,
-            "registration_desktop_flow_otp",
-            desktop_flow_otp,
-            expiry_seconds=3600,
+            request.session, "registration_desktop_flow_otp", desktop_flow_otp, expiry_seconds=3600,
         )
 
     if multiuse_object_key:
         from_multiuse_invite = True
-        multiuse_obj = Confirmation.objects.get(
-            confirmation_key=multiuse_object_key,
-        ).content_object
+        multiuse_obj = Confirmation.objects.get(confirmation_key=multiuse_object_key).content_object
         realm = multiuse_obj.realm
         invited_as = multiuse_obj.invited_as
     else:
@@ -253,9 +248,7 @@ def register_remote_user(request: HttpRequest, result: ExternalAuthResult) -> Ht
     return maybe_send_to_registration(request, **kwargs)
 
 
-def login_or_register_remote_user(
-    request: HttpRequest, result: ExternalAuthResult,
-) -> HttpResponse:
+def login_or_register_remote_user(request: HttpRequest, result: ExternalAuthResult) -> HttpResponse:
     """Given a successful authentication showing the user controls given
     email address (email) and potentially a UserProfile
     object (if the user already has a Zulip account), redirect the
@@ -564,9 +557,7 @@ def start_social_login(
         if not (getattr(settings, key_setting) and getattr(settings, secret_setting)):
             return redirect_to_config_error(backend)
 
-    return oauth_redirect_to_root(
-        request, backend_url, "social", extra_url_params=extra_url_params,
-    )
+    return oauth_redirect_to_root(request, backend_url, "social", extra_url_params=extra_url_params)
 
 
 @handle_desktop_flow
@@ -676,9 +667,7 @@ def add_dev_login_context(realm: Optional[Realm], context: Dict[str, Any]) -> No
         return sorted(lst, key=lambda u: u.delivery_email)
 
     context["direct_owners"] = sort([u for u in users if u.is_realm_owner])
-    context["direct_admins"] = sort(
-        [u for u in users if u.is_realm_admin and not u.is_realm_owner],
-    )
+    context["direct_admins"] = sort([u for u in users if u.is_realm_admin and not u.is_realm_owner])
     context["guest_users"] = sort([u for u in users if u.is_guest])
     context["direct_users"] = sort([u for u in users if not (u.is_realm_admin or u.is_guest)])
 
@@ -927,11 +916,7 @@ def api_fetch_api_key(
         # email. LDAP backend can authenticate against a non-email.
         validate_login_email(username)
     user_profile = authenticate(
-        request=request,
-        username=username,
-        password=password,
-        realm=realm,
-        return_data=return_data,
+        request=request, username=username, password=password, realm=realm, return_data=return_data,
     )
     if return_data.get("inactive_user"):
         return json_error(
@@ -1110,9 +1095,7 @@ def config_error_view(request: HttpRequest, error_category_name: str) -> HttpRes
         "saml": {"social_backend_name": "saml"},
         "smtp": {"error_name": "smtp_error"},
         "backend_disabled": {"error_name": "remoteuser_error_backend_disabled"},
-        "remote_user_header_missing": {
-            "error_name": "remoteuser_error_remote_user_header_missing",
-        },
+        "remote_user_header_missing": {"error_name": "remoteuser_error_remote_user_header_missing"},
     }
 
     return TemplateView.as_view(

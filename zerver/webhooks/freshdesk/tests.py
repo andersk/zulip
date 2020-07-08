@@ -86,9 +86,7 @@ Requester Bob <requester-bob@example.com> updated [ticket #11](http://test1234zz
         )
 
     @patch("zerver.lib.webhooks.common.check_send_webhook_message")
-    def test_unknown_event_payload_ignore(
-        self, check_send_webhook_message_mock: MagicMock,
-    ) -> None:
+    def test_unknown_event_payload_ignore(self, check_send_webhook_message_mock: MagicMock) -> None:
         """
         Ignore unknown event payloads.
         """

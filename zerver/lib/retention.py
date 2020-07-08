@@ -659,8 +659,7 @@ def restore_retention_policy_deletions_for_stream(stream: Stream) -> None:
     the messages deleted as a result.
     """
     relevant_transactions = ArchiveTransaction.objects.filter(
-        archivedmessage__recipient=stream.recipient,
-        type=ArchiveTransaction.RETENTION_POLICY_BASED,
+        archivedmessage__recipient=stream.recipient, type=ArchiveTransaction.RETENTION_POLICY_BASED,
     ).distinct("id")
 
     restore_data_from_archive_by_transactions(list(relevant_transactions))

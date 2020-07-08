@@ -139,16 +139,11 @@ def build_pagerduty_formatdict_v2(message: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def send_formated_pagerduty(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    message_type: str,
-    format_dict: Dict[str, Any],
+    request: HttpRequest, user_profile: UserProfile, message_type: str, format_dict: Dict[str, Any],
 ) -> None:
     if message_type in ("incident.trigger", "incident.unacknowledge"):
         template = INCIDENT_WITH_SERVICE_AND_ASSIGNEE
-    elif (
-        message_type == "incident.resolve" and format_dict.get("resolving_agent_info") is not None
-    ):
+    elif message_type == "incident.resolve" and format_dict.get("resolving_agent_info") is not None:
         template = INCIDENT_RESOLVED_WITH_AGENT
     elif message_type == "incident.resolve" and format_dict.get("resolving_agent_info") is None:
         template = INCIDENT_RESOLVED

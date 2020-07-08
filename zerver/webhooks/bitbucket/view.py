@@ -51,7 +51,5 @@ def api_bitbucket_webhook(
         )
         subject = TOPIC_WITH_BRANCH_TEMPLATE.format(repo=repository["name"], branch=branch)
 
-    check_send_webhook_message(
-        request, user_profile, subject, content, unquote_url_parameters=True,
-    )
+    check_send_webhook_message(request, user_profile, subject, content, unquote_url_parameters=True)
     return json_success()

@@ -39,9 +39,7 @@ class Command(BaseCommand):
 
         with open(options["destination"], "w") as result:
             result.write("[")
-            messages = Message.objects.filter(id__gt=latest - amount, id__lte=latest).order_by(
-                "id",
-            )
+            messages = Message.objects.filter(id__gt=latest - amount, id__lte=latest).order_by("id")
             for message in queryset_iterator(messages):
                 content = message.content
                 # In order to ensure that the output of this tool is

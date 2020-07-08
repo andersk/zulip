@@ -113,7 +113,5 @@ class Migration(migrations.Migration):
             name="file_name",
             field=models.TextField(db_index=True, null=True, blank=True),
         ),
-        migrations.RunPython(
-            migrate_realm_emoji_image_files, reverse_code=reversal, elidable=True,
-        ),
+        migrations.RunPython(migrate_realm_emoji_image_files, reverse_code=reversal, elidable=True),
     ]

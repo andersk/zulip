@@ -62,9 +62,7 @@ class EmailChangeTestCase(ZulipTestCase):
     def test_confirm_email_change(self) -> None:
         user_profile = self.example_user("hamlet")
         do_set_realm_property(
-            user_profile.realm,
-            "email_address_visibility",
-            Realm.EMAIL_ADDRESS_VISIBILITY_EVERYONE,
+            user_profile.realm, "email_address_visibility", Realm.EMAIL_ADDRESS_VISIBILITY_EVERYONE,
         )
 
         old_email = user_profile.delivery_email

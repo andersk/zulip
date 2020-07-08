@@ -161,9 +161,7 @@ class TestSlackOutgoingWebhookService(ZulipTestCase):
         }
 
         service_class = get_service_interface_class(SLACK_INTERFACE)
-        self.handler = service_class(
-            token="abcdef", user_profile=None, service_name="test-service",
-        )
+        self.handler = service_class(token="abcdef", user_profile=None, service_name="test-service")
 
     def test_build_bot_request_stream_message(self) -> None:
         request_data = self.handler.build_bot_request(self.stream_message_event)

@@ -394,9 +394,7 @@ WEBHOOK_INTEGRATIONS: List[WebhookIntegration] = [
     WebhookIntegration("jira", ["project-management"], display_name="JIRA"),
     WebhookIntegration("librato", ["monitoring"]),
     WebhookIntegration("mention", ["marketing"], display_name="Mention"),
-    WebhookIntegration(
-        "netlify", ["continuous-integration", "deployment"], display_name="Netlify",
-    ),
+    WebhookIntegration("netlify", ["continuous-integration", "deployment"], display_name="Netlify"),
     WebhookIntegration("newrelic", ["monitoring"], display_name="New Relic"),
     WebhookIntegration(
         "opbeat",
@@ -524,10 +522,7 @@ INTEGRATIONS: Dict[str, Integration] = {
         "perforce", "perforce", ["version-control"], doc="zerver/integrations/perforce.md",
     ),
     "phabricator": Integration(
-        "phabricator",
-        "phabricator",
-        ["version-control"],
-        doc="zerver/integrations/phabricator.md",
+        "phabricator", "phabricator", ["version-control"], doc="zerver/integrations/phabricator.md",
     ),
     "puppet": Integration("puppet", "puppet", ["deployment"], doc="zerver/integrations/puppet.md"),
     "redmine": Integration(

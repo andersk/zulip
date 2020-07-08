@@ -22,8 +22,7 @@ class Command(ZulipBaseCommand):
             Realm.objects.first()
         except ProgrammingError:
             raise CommandError(
-                "The Zulip database does not appear to exist. "
-                "Have you run initialize-database?",
+                "The Zulip database does not appear to exist. " "Have you run initialize-database?",
             )
 
         url = generate_realm_creation_url(by_admin=True)

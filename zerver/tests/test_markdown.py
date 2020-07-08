@@ -456,8 +456,7 @@ class MarkdownTest(ZulipTestCase):
             maybe_update_markdown_engines(realm.id, False)
             converted = markdown_convert(msg, message_realm=realm)
             self.assertEqual(
-                converted,
-                "<p>Check out this file file:///Volumes/myserver/Users/Shared/pi.py</p>",
+                converted, "<p>Check out this file file:///Volumes/myserver/Users/Shared/pi.py</p>",
             )
 
     def test_inline_bitcoin(self) -> None:
@@ -501,7 +500,9 @@ class MarkdownTest(ZulipTestCase):
             '<p><a href="https://www.youtube.com/playlist?list=PL8dPuuaLjXtNlUrzyH5r6jN9ulIgZBpdo">https://www.youtube.com/playlist?list=PL8dPuuaLjXtNlUrzyH5r6jN9ulIgZBpdo</a></p>',
         )
 
-        msg = "https://www.youtube.com/playlist?v=O5nskjZ_GoI&list=PL8dPuuaLjXtNlUrzyH5r6jN9ulIgZBpdo"
+        msg = (
+            "https://www.youtube.com/playlist?v=O5nskjZ_GoI&list=PL8dPuuaLjXtNlUrzyH5r6jN9ulIgZBpdo"
+        )
         converted = markdown_convert_wrapper(msg)
 
         self.assertEqual(
@@ -812,9 +813,7 @@ class MarkdownTest(ZulipTestCase):
             get_tweet_id("http://twitter.com/VizzQuotes/statuses/409030735191097344"),
             "409030735191097344",
         )
-        self.assertEqual(
-            get_tweet_id("https://twitter.com/wdaher/status/1017581858"), "1017581858",
-        )
+        self.assertEqual(get_tweet_id("https://twitter.com/wdaher/status/1017581858"), "1017581858")
         self.assertEqual(
             get_tweet_id("https://twitter.com/wdaher/status/1017581858/"), "1017581858",
         )
@@ -876,9 +875,7 @@ class MarkdownTest(ZulipTestCase):
 
         msg = "http://www.twitter.com/wdaher/"
         converted = markdown_convert_wrapper(msg)
-        self.assertEqual(
-            converted, "<p>{}</p>".format(make_link("http://www.twitter.com/wdaher/")),
-        )
+        self.assertEqual(converted, "<p>{}</p>".format(make_link("http://www.twitter.com/wdaher/")))
 
         msg = "http://www.twitter.com/wdaher/status/3"
         converted = markdown_convert_wrapper(msg)
@@ -1147,8 +1144,7 @@ class MarkdownTest(ZulipTestCase):
         )
         converted_topic = topic_links(realm.id, msg.topic_name())
         self.assertEqual(
-            converted_topic,
-            ["http://ftp.debian.org", "https://google.com/", "https://google.in/"],
+            converted_topic, ["http://ftp.debian.org", "https://google.com/", "https://google.in/"],
         )
 
     def test_realm_patterns(self) -> None:
@@ -1690,9 +1686,7 @@ class MarkdownTest(ZulipTestCase):
         content = "@**King Hamlet**"
         self.assertEqual(
             render_markdown(msg, content),
-            '<p><span class="user-mention" '
-            f'data-user-id="{user_id}">'
-            "@King Hamlet</span></p>",
+            '<p><span class="user-mention" ' f'data-user-id="{user_id}">' "@King Hamlet</span></p>",
         )
         self.assertEqual(msg.mentions_user_ids, {user_profile.id})
 

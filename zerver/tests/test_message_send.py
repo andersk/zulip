@@ -697,9 +697,7 @@ class MessagePOSTTest(ZulipTestCase):
         with mock.patch(
             "DNS.dnslookup",
             return_value=[
-                [
-                    "starnine:*:84233:101:Athena Consulting Exchange User,,,:/mit/starnine:/bin/bash",
-                ],
+                ["starnine:*:84233:101:Athena Consulting Exchange User,,,:/mit/starnine:/bin/bash"],
             ],
         ):
             result1 = self.api_post(
@@ -1178,9 +1176,7 @@ class ScheduledMessageTest(ZulipTestCase):
         # Scheduling a private message is successful.
         othello = self.example_user("othello")
         hamlet = self.example_user("hamlet")
-        result = self.do_schedule_message(
-            "private", othello.email, content + " 3", defer_until_str,
-        )
+        result = self.do_schedule_message("private", othello.email, content + " 3", defer_until_str)
         message = self.last_scheduled_message()
         self.assert_json_success(result)
         self.assertEqual(message.content, "Test message 3")
@@ -1523,9 +1519,7 @@ class StreamMessagesTest(ZulipTestCase):
 
         content = "test @**Normal Bot** rules"
 
-        user_ids = self._send_stream_message(
-            user=hamlet, stream_name=stream_name, content=content,
-        )
+        user_ids = self._send_stream_message(user=hamlet, stream_name=stream_name, content=content)
 
         self.assertIn(normal_bot.id, user_ids)
         user_message = most_recent_usermessage(normal_bot)

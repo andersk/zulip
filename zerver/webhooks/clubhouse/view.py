@@ -126,9 +126,7 @@ def get_story_create_body(payload: Dict[str, Any]) -> str:
         message = "New story [{name}]({app_url}) of type **{story_type}** was created."
         kwargs = action
     else:
-        message = (
-            "New story [{name}]({app_url}) was created and added to the epic **{epic_name}**."
-        )
+        message = "New story [{name}]({app_url}) was created and added to the epic **{epic_name}**."
         kwargs = {
             "name": action["name"],
             "app_url": action["app_url"],

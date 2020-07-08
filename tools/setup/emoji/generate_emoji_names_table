@@ -124,9 +124,7 @@ SORTED_CATEGORIES = [
 emoji_code_to_zulip_names: Dict[str, str] = {}
 emoji_code_to_iamcal_names: Dict[str, str] = {}
 emoji_code_to_gemoji_names: Dict[str, str] = {}
-emoji_collection: Dict[str, List[Dict[str, Any]]] = {
-    category: [] for category in SORTED_CATEGORIES
-}
+emoji_collection: Dict[str, List[Dict[str, Any]]] = {category: [] for category in SORTED_CATEGORIES}
 
 
 def generate_emoji_code_to_emoji_names_maps() -> None:

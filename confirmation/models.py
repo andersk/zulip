@@ -17,13 +17,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.utils.timezone import now as timezone_now
 
-from zerver.models import (
-    EmailChangeStatus,
-    MultiuseInvite,
-    PreregistrationUser,
-    Realm,
-    UserProfile,
-)
+from zerver.models import EmailChangeStatus, MultiuseInvite, PreregistrationUser, Realm, UserProfile
 
 
 class ConfirmationKeyException(Exception):

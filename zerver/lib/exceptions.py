@@ -256,6 +256,4 @@ class UnexpectedWebhookEventType(JsonableError):
 
     @staticmethod
     def msg_format() -> str:
-        return _(
-            "The '{event_type}' event isn't currently supported by the {webhook_name} webhook",
-        )
+        return _("The '{event_type}' event isn't currently supported by the {webhook_name} webhook")

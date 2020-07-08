@@ -82,9 +82,7 @@ def move_missed_message_addresses_to_database(
         # redis, but this small issue is probably worth the simplicity
         # of not having to figure out the precise timestamp.
         MissedMessageEmailAddress.objects.create(
-            message=message,
-            user_profile=user_profile,
-            email_token=generate_missed_message_token(),
+            message=message, user_profile=user_profile, email_token=generate_missed_message_token(),
         )
         # We successfully transferred this missed-message email's data
         # to the database, so this message can be deleted from redis.

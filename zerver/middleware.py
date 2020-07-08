@@ -190,9 +190,7 @@ def write_log_line(
             )
 
         if not suppress_statsd:
-            statsd.timing(
-                f"{statsd_path}.remote_cache.time", timedelta_ms(remote_cache_time_delta),
-            )
+            statsd.timing(f"{statsd_path}.remote_cache.time", timedelta_ms(remote_cache_time_delta))
             statsd.incr(f"{statsd_path}.remote_cache.querycount", remote_cache_count_delta)
 
     startup_output = ""
@@ -251,9 +249,7 @@ def write_log_line(
 
     if settings.PROFILE_ALL_REQUESTS:
         log_data["prof"].disable()
-        profile_path = "/tmp/profile.data.{}.{}".format(
-            path.split("/")[-1], int(time_delta * 1000),
-        )
+        profile_path = "/tmp/profile.data.{}.{}".format(path.split("/")[-1], int(time_delta * 1000))
         log_data["prof"].dump_stats(profile_path)
 
     # Log some additional data whenever we return certain 40x errors

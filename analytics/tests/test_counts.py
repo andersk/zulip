@@ -477,9 +477,7 @@ class TestCountStats(AnalyticsTestCase):
                 [1, "false", self.no_message_realm],
             ],
         )
-        self.assertTableState(
-            InstallationCount, ["value", "subgroup"], [[2, "true"], [5, "false"]],
-        )
+        self.assertTableState(InstallationCount, ["value", "subgroup"], [[2, "true"], [5, "false"]])
         self.assertTableState(UserCount, [], [])
         self.assertTableState(StreamCount, [], [])
 
@@ -543,9 +541,7 @@ class TestCountStats(AnalyticsTestCase):
             ["value", "subgroup", "realm"],
             [[2, "false"], [3, "true"], [1, "false", self.second_realm]],
         )
-        self.assertTableState(
-            InstallationCount, ["value", "subgroup"], [[3, "false"], [3, "true"]],
-        )
+        self.assertTableState(InstallationCount, ["value", "subgroup"], [[3, "false"], [3, "true"]])
         self.assertTableState(StreamCount, [], [])
 
     def test_messages_sent_by_is_bot_realm_constraint(self) -> None:
@@ -870,9 +866,7 @@ class TestCountStats(AnalyticsTestCase):
             ["value", "subgroup", "realm"],
             [[3, "false"], [2, "true"], [2, "false", self.second_realm]],
         )
-        self.assertTableState(
-            InstallationCount, ["value", "subgroup"], [[5, "false"], [2, "true"]],
-        )
+        self.assertTableState(InstallationCount, ["value", "subgroup"], [[5, "false"], [2, "true"]])
         self.assertTableState(UserCount, [], [])
 
     def test_messages_sent_to_stream_by_is_bot_realm_constraint(self) -> None:
@@ -915,9 +909,7 @@ class TestCountStats(AnalyticsTestCase):
         self, user: UserProfile, start_offset: timedelta, end_offset: timedelta,
     ) -> None:
         UserActivityInterval.objects.create(
-            user_profile=user,
-            start=self.TIME_ZERO - start_offset,
-            end=self.TIME_ZERO - end_offset,
+            user_profile=user, start=self.TIME_ZERO - start_offset, end=self.TIME_ZERO - end_offset,
         )
 
     def test_1day_actives(self) -> None:
@@ -1104,9 +1096,7 @@ class TestCountStats(AnalyticsTestCase):
 
         do_fill_count_stat_at_hour(stat, self.TIME_ZERO)
         self.assertTableState(
-            UserCount,
-            ["value", "user"],
-            [[61, user2], [121, user3], [24 * 60, user4], [1, user6]],
+            UserCount, ["value", "user"], [[61, user2], [121, user3], [24 * 60, user4], [1, user6]],
         )
         self.assertTableState(
             RealmCount,
@@ -1319,9 +1309,9 @@ class TestLoggingCountStats(AnalyticsTestCase):
         def assertInviteCountEquals(count: int) -> None:
             self.assertEqual(
                 count,
-                RealmCount.objects.filter(property=property, subgroup=None).aggregate(
-                    Sum("value"),
-                )["value__sum"],
+                RealmCount.objects.filter(property=property, subgroup=None).aggregate(Sum("value"))[
+                    "value__sum"
+                ],
             )
 
         user = self.create_user(email="first@domain.tld")
@@ -1558,9 +1548,7 @@ class TestActiveUsersAudit(AnalyticsTestCase):
                 [1, "true", second_realm],
             ],
         )
-        self.assertTableState(
-            InstallationCount, ["value", "subgroup"], [[3, "false"], [1, "true"]],
-        )
+        self.assertTableState(InstallationCount, ["value", "subgroup"], [[3, "false"], [1, "true"]])
         self.assertTableState(StreamCount, [], [])
 
     # Not that interesting a test if you look at the SQL query at hand, but
@@ -1611,9 +1599,7 @@ class TestActiveUsersAudit(AnalyticsTestCase):
         self.add_event(RealmAuditLog.USER_CREATED, 1, user=user3)
         self.add_event(RealmAuditLog.USER_DEACTIVATED, 0.5, user=user3)
         do_fill_count_stat_at_hour(self.stat, self.TIME_ZERO)
-        self.assertTableState(
-            UserCount, ["user", "subgroup"], [[user1, "false"], [user2, "false"]],
-        )
+        self.assertTableState(UserCount, ["user", "subgroup"], [[user1, "false"], [user2, "false"]])
 
     def test_end_to_end_with_actions_dot_py(self) -> None:
         user1 = do_create_user("email1", "password", self.default_realm, "full_name", "short_name")

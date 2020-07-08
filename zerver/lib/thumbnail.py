@@ -13,11 +13,7 @@ ZULIP_PATH = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__f
 sys.path.append(ZULIP_PATH)
 
 from zerver.lib.camo import get_camo_url
-from zthumbor.loaders.helpers import (
-    THUMBOR_EXTERNAL_TYPE,
-    THUMBOR_LOCAL_FILE_TYPE,
-    THUMBOR_S3_TYPE,
-)
+from zthumbor.loaders.helpers import THUMBOR_EXTERNAL_TYPE, THUMBOR_LOCAL_FILE_TYPE, THUMBOR_S3_TYPE
 
 
 def is_thumbor_enabled() -> bool:

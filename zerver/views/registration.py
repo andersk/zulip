@@ -43,10 +43,7 @@ from zerver.lib.actions import (
     lookup_default_stream_groups,
 )
 from zerver.lib.create_user import get_role_for_new_user
-from zerver.lib.email_validation import (
-    email_allowed_for_realm,
-    validate_email_not_already_in_realm,
-)
+from zerver.lib.email_validation import email_allowed_for_realm, validate_email_not_already_in_realm
 from zerver.lib.onboarding import send_initial_realm_messages, setup_realm_internal_bots
 from zerver.lib.pysa import mark_sanitized
 from zerver.lib.send_email import FromAddress, send_email
@@ -269,8 +266,7 @@ def accounts_register(request: HttpRequest) -> HttpResponse:
                 )
         elif "full_name" in request.POST:
             form = RegistrationForm(
-                initial={"full_name": request.POST.get("full_name")},
-                realm_creation=realm_creation,
+                initial={"full_name": request.POST.get("full_name")}, realm_creation=realm_creation,
             )
         else:
             form = RegistrationForm(realm_creation=realm_creation)
@@ -359,9 +355,9 @@ def accounts_register(request: HttpRequest) -> HttpResponse:
                 return_data=return_data,
             )
             if user_profile is None:
-                can_use_different_backend = email_auth_enabled(
+                can_use_different_backend = email_auth_enabled(realm) or any_social_backend_enabled(
                     realm,
-                ) or any_social_backend_enabled(realm)
+                )
                 if settings.LDAP_APPEND_DOMAIN:
                     # In LDAP_APPEND_DOMAIN configurations, we don't allow making a non-ldap account
                     # if the email matches the ldap domain.
@@ -660,9 +656,7 @@ def accounts_home(
     return render(request, "zerver/accounts_home.html", context=context)
 
 
-def accounts_home_from_multiuse_invite(
-    request: HttpRequest, confirmation_key: str,
-) -> HttpResponse:
+def accounts_home_from_multiuse_invite(request: HttpRequest, confirmation_key: str) -> HttpResponse:
     multiuse_object = None
     try:
         multiuse_object = get_object_from_key(confirmation_key, Confirmation.MULTIUSE_INVITE)

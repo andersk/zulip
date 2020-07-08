@@ -78,10 +78,7 @@ parser.add_argument(
     help="Skip doing puppet/apt upgrades.",
 )
 parser.add_argument(
-    "--skip-migrations",
-    dest="skip_migrations",
-    action="store_true",
-    help="Skip doing migrations.",
+    "--skip-migrations", dest="skip_migrations", action="store_true", help="Skip doing migrations.",
 )
 parser.add_argument(
     "--from-git",

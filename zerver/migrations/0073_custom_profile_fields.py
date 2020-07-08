@@ -24,12 +24,7 @@ class Migration(migrations.Migration):
                 (
                     "field_type",
                     models.PositiveSmallIntegerField(
-                        choices=[
-                            (1, "Integer"),
-                            (2, "Float"),
-                            (3, "Short text"),
-                            (4, "Long text"),
-                        ],
+                        choices=[(1, "Integer"), (2, "Float"), (3, "Short text"), (4, "Long text")],
                         default=3,
                     ),
                 ),
@@ -54,8 +49,7 @@ class Migration(migrations.Migration):
                 (
                     "field",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to="zerver.CustomProfileField",
+                        on_delete=django.db.models.deletion.CASCADE, to="zerver.CustomProfileField",
                     ),
                 ),
                 (

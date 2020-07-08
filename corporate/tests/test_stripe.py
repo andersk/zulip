@@ -127,8 +127,7 @@ def generate_and_save_stripe_fixture(
                 error_dict = e.__dict__
                 error_dict["headers"] = dict(error_dict["headers"])
                 f.write(
-                    json.dumps(error_dict, indent=2, separators=(",", ": "), sort_keys=True)
-                    + "\n",
+                    json.dumps(error_dict, indent=2, separators=(",", ": "), sort_keys=True) + "\n",
                 )
             raise e
         with open(fixture_path, "w") as f:
@@ -288,9 +287,7 @@ def mock_stripe(
                     decorated_function.__name__, mocked_function_name, mocked_function,
                 )  # nocoverage
             else:
-                side_effect = read_stripe_fixture(
-                    decorated_function.__name__, mocked_function_name,
-                )
+                side_effect = read_stripe_fixture(decorated_function.__name__, mocked_function_name)
             decorated_function = patch(mocked_function_name, side_effect=side_effect)(
                 decorated_function,
             )
@@ -590,10 +587,7 @@ class StripeTest(StripeTestCase):
                     RealmAuditLog.STRIPE_CUSTOMER_CREATED,
                     timestamp_to_datetime(stripe_customer.created),
                 ),
-                (
-                    RealmAuditLog.STRIPE_CARD_CHANGED,
-                    timestamp_to_datetime(stripe_customer.created),
-                ),
+                (RealmAuditLog.STRIPE_CARD_CHANGED, timestamp_to_datetime(stripe_customer.created)),
                 (RealmAuditLog.CUSTOMER_PLAN_CREATED, self.now),
                 # TODO: Check for REALM_PLAN_TYPE_CHANGED
                 # (RealmAuditLog.REALM_PLAN_TYPE_CHANGED, Kandra()),
@@ -802,9 +796,7 @@ class StripeTest(StripeTestCase):
             ]
             self.assertEqual(len(stripe_invoices), 0)
 
-            customer = Customer.objects.get(
-                stripe_customer_id=stripe_customer.id, realm=user.realm,
-            )
+            customer = Customer.objects.get(stripe_customer_id=stripe_customer.id, realm=user.realm)
             plan = CustomerPlan.objects.get(
                 customer=customer,
                 automanage_licenses=True,
@@ -1018,9 +1010,7 @@ class StripeTest(StripeTestCase):
             ]
             self.assertEqual(len(stripe_invoices), 0)
 
-            customer = Customer.objects.get(
-                stripe_customer_id=stripe_customer.id, realm=user.realm,
-            )
+            customer = Customer.objects.get(stripe_customer_id=stripe_customer.id, realm=user.realm)
             plan = CustomerPlan.objects.get(
                 customer=customer,
                 automanage_licenses=False,
@@ -1303,9 +1293,7 @@ class StripeTest(StripeTestCase):
     def test_check_upgrade_parameters(self) -> None:
         # Tests all the error paths except 'not enough licenses'
         def check_error(
-            error_description: str,
-            upgrade_params: Mapping[str, Any],
-            del_args: Sequence[str] = [],
+            error_description: str, upgrade_params: Mapping[str, Any], del_args: Sequence[str] = [],
         ) -> None:
             response = self.upgrade(talk_to_stripe=False, del_args=del_args, **upgrade_params)
             self.assert_json_error_contains(response, "Something went wrong. Please contact")
@@ -1406,8 +1394,7 @@ class StripeTest(StripeTestCase):
             response, "Something went wrong. Please contact desdemona+admin@zulip.com.",
         )
         self.assertEqual(
-            ujson.loads(response.content)["error_description"],
-            "uncaught exception during upgrade",
+            ujson.loads(response.content)["error_description"], "uncaught exception during upgrade",
         )
 
     def test_request_sponsorship(self) -> None:
@@ -2180,9 +2167,7 @@ class StripeTest(StripeTestCase):
         invoice_plans_as_needed(self.next_year)
 
         response = self.client_get("/billing/")
-        self.assert_in_success_response(
-            ["Your organization is on the <b>Zulip Free</b>"], response,
-        )
+        self.assert_in_success_response(["Your organization is on the <b>Zulip Free</b>"], response)
 
         with patch("corporate.lib.stripe.timezone_now", return_value=self.next_year):
             self.local_upgrade(self.seat_count, True, CustomerPlan.ANNUAL, "token")
@@ -2232,9 +2217,7 @@ class StripeTest(StripeTestCase):
 
         self.login_user(user)
         response = self.client_get("/billing/")
-        self.assert_in_success_response(
-            ["Your organization is on the <b>Zulip Free</b>"], response,
-        )
+        self.assert_in_success_response(["Your organization is on the <b>Zulip Free</b>"], response)
 
         # The extra users added in the final month are not charged
         with patch("corporate.lib.stripe.invoice_plan") as mocked:
@@ -2259,9 +2242,7 @@ class StripeTest(StripeTestCase):
 
         self.login_user(user)
         response = self.client_get("/billing/")
-        self.assert_in_success_response(
-            ["Your organization is on the <b>Zulip Free</b>"], response,
-        )
+        self.assert_in_success_response(["Your organization is on the <b>Zulip Free</b>"], response)
 
         with patch("corporate.lib.stripe.timezone_now", return_value=self.now):
             self.local_upgrade(self.seat_count, True, CustomerPlan.ANNUAL, "token")
@@ -2310,9 +2291,7 @@ class RequiresBillingAccessTest(ZulipTestCase):
         # Quite a hack, but probably fine for now
         string_with_all_endpoints = str(get_resolver("corporate.urls").reverse_dict)
         json_endpoints = {
-            word.strip("\"'()[],$")
-            for word in string_with_all_endpoints.split()
-            if "json/" in word
+            word.strip("\"'()[],$") for word in string_with_all_endpoints.split() if "json/" in word
         }
         # No need to test upgrade and sponsorship endpoints as they only require user to be logged in.
         json_endpoints.remove("json/billing/upgrade")

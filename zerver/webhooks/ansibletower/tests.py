@@ -30,9 +30,7 @@ class AnsibletowerHookTests(WebhookTestCase):
             "(http://awx.example.co.uk/#/jobs/project/2678) failed."
         )
 
-        self.send_and_test_stream_message(
-            "project_update_failed", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("project_update_failed", expected_topic, expected_message)
 
     def test_ansibletower_job_successful_multiple_hosts_message(self) -> None:
         """
@@ -173,9 +171,7 @@ Job: [#2722 System - Updates - Ubuntu](http://awx.example.co.uk/#/jobs/playbook/
             "(http://awx.example.co.uk/#/jobs/system/2721) was successful."
         )
 
-        self.send_and_test_stream_message(
-            "system_job_successful", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("system_job_successful", expected_topic, expected_message)
 
     def test_ansibletower_system_job_failed_message(self) -> None:
         """

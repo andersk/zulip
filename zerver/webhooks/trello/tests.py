@@ -22,9 +22,7 @@ class TrelloHookTests(WebhookTestCase):
 
     def test_trello_webhook_when_label_was_added_to_card(self) -> None:
         expected_message = 'TomaszKolek added a green label with "text value" to [Card name](https://trello.com/c/r33ylX2Z).'
-        self.send_and_test_stream_message(
-            "adding_label_to_card", "Welcome Board", expected_message,
-        )
+        self.send_and_test_stream_message("adding_label_to_card", "Welcome Board", expected_message)
 
     def test_trello_webhook_when_label_was_removing_from_card(self) -> None:
         expected_message = 'TomaszKolek removed a green label with "text value" from [New Card](https://trello.com/c/r33ylX2Z).'
@@ -94,9 +92,7 @@ class TrelloHookTests(WebhookTestCase):
 
     def test_trello_webhook_when_check_item_is_checked(self) -> None:
         expected_message = "Eeshan Garg checked **Tomatoes** in **Checklist** ([Something something](https://trello.com/c/R2thJK3P))."
-        self.send_and_test_stream_message(
-            "check_item_on_card_checklist", "Zulip", expected_message,
-        )
+        self.send_and_test_stream_message("check_item_on_card_checklist", "Zulip", expected_message)
 
     def test_trello_webhook_when_check_item_is_unchecked(self) -> None:
         expected_message = "Eeshan Garg unchecked **Tomatoes** in **Checklist** ([Something something](https://trello.com/c/R2thJK3P))."

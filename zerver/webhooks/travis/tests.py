@@ -24,10 +24,7 @@ class TravisHookTests(WebhookTestCase):
         )
 
         self.send_and_test_stream_message(
-            "build",
-            self.TOPIC,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "build", self.TOPIC, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_ignore_travis_pull_request_by_default(self) -> None:

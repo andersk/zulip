@@ -373,9 +373,7 @@ class APIMarkdownExtension(Extension):
             "generate_code_example", APICodeExamplesPreprocessor(md, self.getConfigs()), "_begin",
         )
         md.preprocessors.add(
-            "generate_api_description",
-            APIDescriptionPreprocessor(md, self.getConfigs()),
-            "_begin",
+            "generate_api_description", APIDescriptionPreprocessor(md, self.getConfigs()), "_begin",
         )
 
 
@@ -397,9 +395,7 @@ class APICodeExamplesPreprocessor(Preprocessor):
                     key = match.group(4)
                     argument = match.group(6)
                     if self.api_url is None:
-                        raise AssertionError(
-                            "Cannot render curl API examples without API URL set.",
-                        )
+                        raise AssertionError("Cannot render curl API examples without API URL set.")
                     options["api_url"] = self.api_url
 
                     if key == "fixture":

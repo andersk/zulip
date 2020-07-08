@@ -112,9 +112,7 @@ def get_push_subjects(payload: Dict[str, Any]) -> List[str]:
                 branch_name = change["new"]["name"]
             else:
                 branch_name = change["old"]["name"]
-            subjects_list.append(
-                str(get_subject_for_branch_specified_events(payload, branch_name)),
-            )
+            subjects_list.append(str(get_subject_for_branch_specified_events(payload, branch_name)))
     return subjects_list
 
 
@@ -283,9 +281,7 @@ def get_issue_commented_body(payload: Dict[str, Any], include_title: bool = Fals
     return get_issue_action_body(payload, action, include_title)
 
 
-def get_issue_action_body(
-    payload: Dict[str, Any], action: str, include_title: bool = False,
-) -> str:
+def get_issue_action_body(payload: Dict[str, Any], action: str, include_title: bool = False) -> str:
     issue = payload["issue"]
     assignee = None
     message = None

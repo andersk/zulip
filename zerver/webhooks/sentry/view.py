@@ -234,9 +234,7 @@ def api_sentry_webhook(
         if "event" in data:
             subject, body = handle_event_payload(data["event"])
         elif "issue" in data:
-            subject, body = handle_issue_payload(
-                payload["action"], data["issue"], payload["actor"],
-            )
+            subject, body = handle_issue_payload(payload["action"], data["issue"], payload["actor"])
         else:
             raise UnexpectedWebhookEventType("Sentry", str(list(data.keys())))
     else:

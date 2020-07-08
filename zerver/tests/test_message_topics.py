@@ -170,9 +170,7 @@ class TopicDeleteTest(ZulipTestCase):
         user_profile = self.example_user("iago")
         self.subscribe(user_profile, stream_name)
         self.login_user(user_profile)
-        new_last_msg_id = self.send_stream_message(
-            user_profile, stream_name, topic_name=topic_name,
-        )
+        new_last_msg_id = self.send_stream_message(user_profile, stream_name, topic_name=topic_name)
 
         # Now admin deletes all messages in topic -- which should only
         # delete new_last_msg_id, i.e. the one sent since they joined.

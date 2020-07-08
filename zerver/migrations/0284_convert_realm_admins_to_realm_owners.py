@@ -76,8 +76,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RunPython(
-            set_realm_admins_as_realm_owners,
-            reverse_code=migrations.RunPython.noop,
-            elidable=True,
+            set_realm_admins_as_realm_owners, reverse_code=migrations.RunPython.noop, elidable=True,
         ),
     ]

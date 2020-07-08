@@ -461,11 +461,7 @@ INTERNAL_BOTS = [
         "email_template": "notification-bot@%s",
         "name": "Notification Bot",
     },
-    {
-        "var_name": "EMAIL_GATEWAY_BOT",
-        "email_template": "emailgateway@%s",
-        "name": "Email Gateway",
-    },
+    {"var_name": "EMAIL_GATEWAY_BOT", "email_template": "emailgateway@%s", "name": "Email Gateway"},
     {
         "var_name": "NAGIOS_SEND_BOT",
         "email_template": "nagios-send-bot@%s",

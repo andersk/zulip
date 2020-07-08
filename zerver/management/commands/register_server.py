@@ -80,9 +80,7 @@ class Command(ZulipBaseCommand):
             tos_prompt = input("Do you agree to the Terms of Service? [Y/n] ")
             print("")
             if not (
-                tos_prompt.lower() == "y"
-                or tos_prompt.lower() == ""
-                or tos_prompt.lower() == "yes"
+                tos_prompt.lower() == "y" or tos_prompt.lower() == "" or tos_prompt.lower() == "yes"
             ):
                 raise CommandError("Aborting, since Terms of Service have not been accepted.")
 

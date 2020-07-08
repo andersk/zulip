@@ -254,9 +254,7 @@ def handle_updated_issue_event(payload: Dict[str, Any], user_profile: UserProfil
             from_field_string = get_in(payload, ["transition", "from_status"])
             target_field_string = "**{}**".format(get_in(payload, ["transition", "to_status"]))
             if target_field_string or from_field_string:
-                content = add_change_info(
-                    content, "status", from_field_string, target_field_string,
-                )
+                content = add_change_info(content, "status", from_field_string, target_field_string)
 
     return content
 
@@ -363,7 +361,5 @@ def api_jira_webhook(
     subject = get_issue_subject(payload)
     content: str = content_func(payload, user_profile)
 
-    check_send_webhook_message(
-        request, user_profile, subject, content, unquote_url_parameters=True,
-    )
+    check_send_webhook_message(request, user_profile, subject, content, unquote_url_parameters=True)
     return json_success()

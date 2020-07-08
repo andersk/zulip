@@ -97,11 +97,7 @@ class ReactionEmojiTest(ZulipTestCase):
                 "emoji_name": "smile",
                 "emoji_code": "263a",
                 "reaction_type": "unicode_emoji",
-                "user": {
-                    "email": "user10@zulip.testserver",
-                    "id": 10,
-                    "full_name": "King Hamlet",
-                },
+                "user": {"email": "user10@zulip.testserver", "id": 10, "full_name": "King Hamlet"},
                 "user_id": 10,
             },
         ]
@@ -304,9 +300,7 @@ class ReactionTest(ZulipTestCase):
             "emoji_name": "smile",
         }
 
-        first = self.api_post(
-            reaction_sender, f"/api/v1/messages/{pm_id}/reactions", reaction_info,
-        )
+        first = self.api_post(reaction_sender, f"/api/v1/messages/{pm_id}/reactions", reaction_info)
         self.assert_json_success(first)
 
         second = self.api_post(
@@ -658,9 +652,7 @@ class DefaultEmojiReactionTests(EmojiReactionBase):
         result = self.delete_reaction({})
         self.assert_json_error(
             result,
-            "At least one of the following "
-            "arguments must be present: emoji_name, "
-            "emoji_code",
+            "At least one of the following " "arguments must be present: emoji_name, " "emoji_code",
         )
 
     def test_delete_non_existing_emoji_reaction(self) -> None:
@@ -932,9 +924,7 @@ class ReactionAPIEventTest(EmojiReactionBase):
             "emoji_code": "1f354",
             "reaction_type": "unicode_emoji",
         }
-        add = self.post_reaction(
-            reaction_info, message_id=pm_id, sender=reaction_sender.short_name,
-        )
+        add = self.post_reaction(reaction_info, message_id=pm_id, sender=reaction_sender.short_name)
         self.assert_json_success(add)
 
         events: List[Mapping[str, Any]] = []

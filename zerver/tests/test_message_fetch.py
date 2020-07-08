@@ -516,10 +516,7 @@ class NarrowLibraryTest(ZulipTestCase):
         self.assertTrue(is_web_public_compatible([{"operator": "near", "operand": "15"}]))
         self.assertTrue(
             is_web_public_compatible(
-                [
-                    {"operator": "id", "operand": "15"},
-                    {"operator": "has", "operand": "attachment"},
-                ],
+                [{"operator": "id", "operand": "15"}, {"operator": "has", "operand": "attachment"}],
             ),
         )
         self.assertTrue(
@@ -2495,8 +2492,7 @@ class GetOldMessagesTest(ZulipTestCase):
                     other_params
                     + [(param, type)]
                     + [
-                        (other_param, 0)
-                        for other_param in int_params[:idx] + int_params[idx + 1 :]
+                        (other_param, 0) for other_param in int_params[:idx] + int_params[idx + 1 :]
                     ],
                 )
                 result = self.client_get("/json/messages", post_params)
@@ -2738,7 +2734,9 @@ class GetOldMessagesTest(ZulipTestCase):
         self.assertNotIn(f"AND message_id = {LARGER_THAN_MAX_MESSAGE_ID}", sql)
         self.assertIn("ORDER BY message_id ASC", sql)
 
-        cond = f"WHERE user_profile_id = {user_profile.id} AND message_id >= {first_unread_message_id}"
+        cond = (
+            f"WHERE user_profile_id = {user_profile.id} AND message_id >= {first_unread_message_id}"
+        )
         self.assertIn(cond, sql)
         cond = f"WHERE user_profile_id = {user_profile.id} AND message_id <= {first_unread_message_id - 1}"
         self.assertIn(cond, sql)
@@ -2750,9 +2748,7 @@ class GetOldMessagesTest(ZulipTestCase):
         # Have Othello send messages to Hamlet that he hasn't read.
         self.subscribe(self.example_user("hamlet"), "Scotland")
 
-        first_unread_message_id = self.send_stream_message(
-            self.example_user("othello"), "Scotland",
-        )
+        first_unread_message_id = self.send_stream_message(self.example_user("othello"), "Scotland")
         self.send_stream_message(self.example_user("othello"), "Scotland")
         self.send_stream_message(self.example_user("othello"), "Scotland")
         self.send_personal_message(
@@ -2968,9 +2964,7 @@ recipient_id = %(recipient_id_3)s AND upper(subject) = upper(%(param_2)s))\
 
         sql_template = "SELECT anon_1.message_id, anon_1.flags \nFROM (SELECT message_id, flags \nFROM zerver_usermessage \nWHERE user_profile_id = {hamlet_id} AND message_id <= 100 ORDER BY message_id DESC \n LIMIT 11) AS anon_1 ORDER BY message_id ASC"
         sql = sql_template.format(**query_ids)
-        self.common_check_get_messages_query(
-            {"anchor": 100, "num_before": 10, "num_after": 0}, sql,
-        )
+        self.common_check_get_messages_query({"anchor": 100, "num_before": 10, "num_after": 0}, sql)
 
         sql_template = "SELECT anon_1.message_id, anon_1.flags \nFROM ((SELECT message_id, flags \nFROM zerver_usermessage \nWHERE user_profile_id = {hamlet_id} AND message_id <= 99 ORDER BY message_id DESC \n LIMIT 10) UNION ALL (SELECT message_id, flags \nFROM zerver_usermessage \nWHERE user_profile_id = {hamlet_id} AND message_id >= 100 ORDER BY message_id ASC \n LIMIT 11)) AS anon_1 ORDER BY message_id ASC"
         sql = sql_template.format(**query_ids)
@@ -3404,9 +3398,7 @@ class MessageHasKeywordsTest(ZulipTestCase):
         msg_id = self.send_stream_message(hamlet, "Denmark", body, "test")
         msg = Message.objects.get(id=msg_id)
 
-        with mock.patch(
-            "zerver.lib.actions.do_claim_attachments", wraps=do_claim_attachments,
-        ) as m:
+        with mock.patch("zerver.lib.actions.do_claim_attachments", wraps=do_claim_attachments) as m:
             self.update_message(
                 msg, f"[link](http://{hamlet.realm.host}/user_uploads/{dummy_path_ids[0]})",
             )
@@ -3426,9 +3418,7 @@ class MessageHasKeywordsTest(ZulipTestCase):
             self.assertFalse(m.called)
             m.reset_mock()
 
-            self.update_message(
-                msg, f"[link](https://github.com/user_uploads/{dummy_path_ids[0]})",
-            )
+            self.update_message(msg, f"[link](https://github.com/user_uploads/{dummy_path_ids[0]})")
             self.assertFalse(m.called)
             m.reset_mock()
 

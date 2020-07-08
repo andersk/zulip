@@ -310,10 +310,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     # pedestrian seems like reasonable addition
     "1f6b6": {"canonical_name": "walking", "aliases": ["pedestrian"]},
     "1f3c3": {"canonical_name": "running", "aliases": ["runner"]},
-    "1f46b": {
-        "canonical_name": "man_and_woman_holding_hands",
-        "aliases": ["man_and_woman_couple"],
-    },
+    "1f46b": {"canonical_name": "man_and_woman_holding_hands", "aliases": ["man_and_woman_couple"]},
     # to parallel People/234
     "1f46d": {"canonical_name": "two_women_holding_hands", "aliases": ["women_couple"]},
     # to parallel People/234
@@ -1147,10 +1144,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     "26b1": {"canonical_name": "funeral_urn", "aliases": ["cremation"]},
     # amphora is too obscure, I think
     "1f3fa": {"canonical_name": "vase", "aliases": ["amphora"]},
-    "1f52e": {
-        "canonical_name": "crystal_ball",
-        "aliases": ["oracle", "future", "fortune_telling"],
-    },
+    "1f52e": {"canonical_name": "crystal_ball", "aliases": ["oracle", "future", "fortune_telling"]},
     "1f4ff": {"canonical_name": "prayer_beads", "aliases": []},
     "1f488": {"canonical_name": "barber", "aliases": ["striped_pole"]},
     # alchemy seems more useful and less obscure

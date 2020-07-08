@@ -45,10 +45,7 @@ App foo created
 **test title**
 test summary"""
         self.send_and_test_stream_message(
-            "unsupported_object",
-            expected_topic,
-            expected_message,
-            content_type="application/json",
+            "unsupported_object", expected_topic, expected_message, content_type="application/json",
         )
 
     def test_error_fixed(self) -> None:

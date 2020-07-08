@@ -18,9 +18,7 @@ class GithubWebhookTest(WebhookTestCase):
 
     def test_ping_event(self) -> None:
         expected_message = "GitHub webhook has been successfully configured by TomaszKolek."
-        self.send_and_test_stream_message(
-            "ping", self.EXPECTED_TOPIC_REPO_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("ping", self.EXPECTED_TOPIC_REPO_EVENTS, expected_message)
 
     def test_star_event(self) -> None:
         expected_message = "Codertocat starred the repository [Codertocat/Hello-World](https://github.com/Codertocat/Hello-World)."
@@ -147,9 +145,7 @@ class GithubWebhookTest(WebhookTestCase):
 
     def test_fork_msg(self) -> None:
         expected_message = "baxterandthehackers forked [public-repo](https://github.com/baxterandthehackers/public-repo)."
-        self.send_and_test_stream_message(
-            "fork", self.EXPECTED_TOPIC_REPO_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("fork", self.EXPECTED_TOPIC_REPO_EVENTS, expected_message)
 
     def test_issue_comment_msg(self) -> None:
         expected_message = "baxterthehacker [commented](https://github.com/baxterthehacker/public-repo/issues/2#issuecomment-99262140) on [Issue #2](https://github.com/baxterthehacker/public-repo/issues/2):\n\n~~~ quote\nYou are totally right! I'll get this fixed right away.\n~~~"
@@ -240,7 +236,9 @@ class GithubWebhookTest(WebhookTestCase):
         self.send_and_test_stream_message("pull_request__closed", expected_topic, expected_message)
 
     def test_pull_request_merged_msg(self) -> None:
-        expected_message = "baxterthehacker merged [PR #1](https://github.com/baxterthehacker/public-repo/pull/1)."
+        expected_message = (
+            "baxterthehacker merged [PR #1](https://github.com/baxterthehacker/public-repo/pull/1)."
+        )
         self.send_and_test_stream_message(
             "pull_request__merged", self.EXPECTED_TOPIC_PR_EVENTS, expected_message,
         )
@@ -442,9 +440,7 @@ A temporary team so that I can get some webhook fixtures!
         )
 
     @patch("zerver.webhooks.github.view.check_send_webhook_message")
-    def test_check_run_in_progress_ignore(
-        self, check_send_webhook_message_mock: MagicMock,
-    ) -> None:
+    def test_check_run_in_progress_ignore(self, check_send_webhook_message_mock: MagicMock) -> None:
         payload = self.get_body("check_run__in_progress")
         result = self.client_post(
             self.url, payload, HTTP_X_GITHUB_EVENT="check_run", content_type="application/json",

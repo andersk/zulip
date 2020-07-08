@@ -739,9 +739,7 @@ class MoveMessageToArchiveGeneral(MoveMessageToArchiveBase):
 
         self.assertEqual(
             set(
-                ArchivedAttachment.objects.filter(messages__id=msg_id).values_list(
-                    "id", flat=True,
-                ),
+                ArchivedAttachment.objects.filter(messages__id=msg_id).values_list("id", flat=True),
             ),
             set(attachment_ids),
         )

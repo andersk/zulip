@@ -65,9 +65,7 @@ PUSH_TAGS_MESSAGE_TEMPLATE = """{user_name} {action} tag {tag}"""
 TAG_WITH_URL_TEMPLATE = "[{tag_name}]({tag_url})"
 TAG_WITHOUT_URL_TEMPLATE = "{tag_name}"
 
-RELEASE_MESSAGE_TEMPLATE = (
-    "{user_name} {action} release [{release_name}]({url}) for tag {tagname}."
-)
+RELEASE_MESSAGE_TEMPLATE = "{user_name} {action} release [{release_name}]({url}) for tag {tagname}."
 
 
 def get_push_commits_event_message(

@@ -67,9 +67,7 @@ STR_VALUE = {
 }
 
 
-def update_existing_event_type_values(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def update_existing_event_type_values(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     RealmAuditLog = apps.get_model("zerver", "RealmAuditLog")
     for log_entry in RealmAuditLog.objects.all():
         log_entry.event_type_int = INT_VALUE[log_entry.event_type]
@@ -107,8 +105,6 @@ class Migration(migrations.Migration):
             model_name="realmauditlog", old_name="event_type_int", new_name="event_type",
         ),
         migrations.AlterField(
-            model_name="realmauditlog",
-            name="event_type",
-            field=models.PositiveSmallIntegerField(),
+            model_name="realmauditlog", name="event_type", field=models.PositiveSmallIntegerField(),
         ),
     ]

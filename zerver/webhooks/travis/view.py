@@ -49,11 +49,7 @@ def api_travis_webhook(
         emoji = f"(No emoji specified for status '{message_status}'.)"
 
     body = MESSAGE_TEMPLATE.format(
-        message["author_name"],
-        message_status,
-        emoji,
-        message["compare_url"],
-        message["build_url"],
+        message["author_name"], message_status, emoji, message["compare_url"], message["build_url"],
     )
     topic = "builds"
 

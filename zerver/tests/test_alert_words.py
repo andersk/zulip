@@ -118,8 +118,7 @@ class AlertWordTests(ZulipTestCase):
         self.login("hamlet")
 
         result = self.client_post(
-            "/json/users/me/alert_words",
-            {"alert_words": ujson.dumps(["one ", "\n two", "three"])},
+            "/json/users/me/alert_words", {"alert_words": ujson.dumps(["one ", "\n two", "three"])},
         )
         self.assert_json_success(result)
         self.assertEqual(set(result.json()["alert_words"]), {"one", "two", "three"})

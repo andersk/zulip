@@ -145,9 +145,7 @@ class GogsHookTests(WebhookTestCase):
     def test_issue_comment_edited(self) -> None:
         expected_topic = "test / Issue #3 New test issue"
         expected_message = """kostekIV edited a [comment](https://try.gogs.io/kostekIV/test/issues/3#issuecomment-3634) on [Issue #3](https://try.gogs.io/kostekIV/test/issues/3):\n\n~~~ quote\nedit comment\n~~~"""
-        self.send_and_test_stream_message(
-            "issue_comment__edited", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("issue_comment__edited", expected_topic, expected_message)
 
     def test_release_published(self) -> None:
         expected_topic = "zulip_test / v1.4 Title"

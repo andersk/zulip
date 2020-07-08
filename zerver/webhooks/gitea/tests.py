@@ -97,9 +97,7 @@ class GiteaHookTests(WebhookTestCase):
         expected_topic = "test / Issue #3 Test issue 2"
         expected_message = """kostekIV edited a [comment](https://try.gitea.io/kostekIV/test/issues/3#issuecomment-24400) on [Issue #3](https://try.gitea.io/kostekIV/test/issues/3):\n\n~~~ quote\nedit test comment\n~~~"""
 
-        self.send_and_test_stream_message(
-            "issue_comment__edited", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("issue_comment__edited", expected_topic, expected_message)
 
     @patch("zerver.webhooks.gogs.view.check_send_webhook_message")
     def test_push_filtered_by_branches_ignore(

@@ -13,9 +13,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="userpresence",
             name="realm",
-            field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm",
-            ),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm"),
         ),
         migrations.AlterIndexTogether(
             name="userpresence", index_together={("realm", "timestamp")},

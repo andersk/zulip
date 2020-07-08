@@ -179,18 +179,12 @@ def gogs_webhook_main(
     elif event == "issues":
         body = format_issues_event(payload, include_title=user_specified_topic is not None)
         topic = TOPIC_WITH_PR_OR_ISSUE_INFO_TEMPLATE.format(
-            repo=repo,
-            type="Issue",
-            id=payload["issue"]["number"],
-            title=payload["issue"]["title"],
+            repo=repo, type="Issue", id=payload["issue"]["number"], title=payload["issue"]["title"],
         )
     elif event == "issue_comment":
         body = format_issue_comment_event(payload, include_title=user_specified_topic is not None)
         topic = TOPIC_WITH_PR_OR_ISSUE_INFO_TEMPLATE.format(
-            repo=repo,
-            type="Issue",
-            id=payload["issue"]["number"],
-            title=payload["issue"]["title"],
+            repo=repo, type="Issue", id=payload["issue"]["number"], title=payload["issue"]["title"],
         )
     elif event == "release":
         body = format_release_event(payload, include_title=user_specified_topic is not None)

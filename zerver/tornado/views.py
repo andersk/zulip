@@ -76,9 +76,7 @@ def get_events_backend(
     client_gravatar: bool = REQ(
         default=False, validator=check_bool, intentionally_undocumented=True,
     ),
-    slim_presence: bool = REQ(
-        default=False, validator=check_bool, intentionally_undocumented=True,
-    ),
+    slim_presence: bool = REQ(default=False, validator=check_bool, intentionally_undocumented=True),
     all_public_streams: bool = REQ(
         default=False, validator=check_bool, intentionally_undocumented=True,
     ),
@@ -87,9 +85,7 @@ def get_events_backend(
     ),
     dont_block: bool = REQ(default=False, validator=check_bool),
     narrow: Iterable[Sequence[str]] = REQ(
-        default=[],
-        validator=check_list(check_list(check_string)),
-        intentionally_undocumented=True,
+        default=[], validator=check_list(check_list(check_string)), intentionally_undocumented=True,
     ),
     lifespan_secs: int = REQ(
         default=0, converter=to_non_negative_int, intentionally_undocumented=True,

@@ -21,9 +21,7 @@ def missing_any_realm_internal_bots() -> bool:
         for bot in settings.REALM_INTERNAL_BOTS
     ]
     bot_counts = dict(
-        UserProfile.objects.filter(email__in=bot_emails)
-        .values_list("email")
-        .annotate(Count("id")),
+        UserProfile.objects.filter(email__in=bot_emails).values_list("email").annotate(Count("id")),
     )
     realm_count = Realm.objects.count()
     return any(bot_counts.get(email, 0) < realm_count for email in bot_emails)
@@ -92,9 +90,7 @@ def send_initial_pms(user: UserProfile) -> None:
     )
 
     content = content.format(
-        apps_url="/apps",
-        settings_url="#settings",
-        organization_setup_text=organization_setup_text,
+        apps_url="/apps", settings_url="#settings", organization_setup_text=organization_setup_text,
     )
 
     internal_send_private_message(user.realm, get_system_bot(settings.WELCOME_BOT), user, content)

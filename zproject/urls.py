@@ -284,10 +284,7 @@ v1_api_and_json_patterns = [
         rest_dispatch,
         {
             "GET": "zerver.views.message_fetch.get_messages_backend",
-            "POST": (
-                "zerver.views.message_send.send_message_backend",
-                {"allow_incoming_webhooks"},
-            ),
+            "POST": ("zerver.views.message_send.send_message_backend", {"allow_incoming_webhooks"}),
         },
     ),
     path(
@@ -579,9 +576,7 @@ v1_api_and_json_patterns = [
     ),
     # used to register for an event queue in tornado
     path(
-        "register",
-        rest_dispatch,
-        {"POST": "zerver.views.events_register.events_register_backend"},
+        "register", rest_dispatch, {"POST": "zerver.views.events_register.events_register_backend"},
     ),
     # events -> zerver.tornado.views
     path(
@@ -870,17 +865,13 @@ i18n_urls = [
     # Landing page, features pages, signup form, etc.
     path("hello/", zerver.views.portico.hello_view, name="landing-page"),
     path("new-user/", RedirectView.as_view(url="/hello", permanent=True)),
-    path(
-        "features/", zerver.views.portico.landing_view, {"template_name": "zerver/features.html"},
-    ),
+    path("features/", zerver.views.portico.landing_view, {"template_name": "zerver/features.html"}),
     path("plans/", zerver.views.portico.plans_view, name="plans"),
     re_path(r"apps/(.*)$", zerver.views.portico.apps_view, name="zerver.views.home.apps_view"),
     path("team/", zerver.views.portico.team_view),
     path("history/", zerver.views.portico.landing_view, {"template_name": "zerver/history.html"}),
     path(
-        "why-zulip/",
-        zerver.views.portico.landing_view,
-        {"template_name": "zerver/why-zulip.html"},
+        "why-zulip/", zerver.views.portico.landing_view, {"template_name": "zerver/why-zulip.html"},
     ),
     path(
         "for/open-source/",
@@ -902,13 +893,9 @@ i18n_urls = [
         zerver.views.portico.landing_view,
         {"template_name": "zerver/for-working-groups-and-communities.html"},
     ),
+    path("security/", zerver.views.portico.landing_view, {"template_name": "zerver/security.html"}),
     path(
-        "security/", zerver.views.portico.landing_view, {"template_name": "zerver/security.html"},
-    ),
-    path(
-        "atlassian/",
-        zerver.views.portico.landing_view,
-        {"template_name": "zerver/atlassian.html"},
+        "atlassian/", zerver.views.portico.landing_view, {"template_name": "zerver/atlassian.html"},
     ),
     # Terms of Service and privacy pages.
     path("terms/", zerver.views.portico.terms_view, name="terms"),

@@ -53,9 +53,7 @@ import a database dump from one or more JSON files."""
 
     def do_destroy_and_rebuild_database(self, db_name: str) -> None:
         call_command("flush", verbosity=0, interactive=False)
-        subprocess.check_call(
-            [os.path.join(settings.DEPLOY_ROOT, "scripts/setup/flush-memcached")],
-        )
+        subprocess.check_call([os.path.join(settings.DEPLOY_ROOT, "scripts/setup/flush-memcached")])
 
     def handle(self, *args: Any, **options: Any) -> None:
         num_processes = int(options["processes"])

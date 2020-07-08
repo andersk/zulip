@@ -287,9 +287,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         self.logout()
         response = self.client_get(uri)
         self.assert_json_error(
-            response,
-            "Not logged in: API authentication or user session required",
-            status_code=401,
+            response, "Not logged in: API authentication or user session required", status_code=401,
         )
 
     def test_removed_file_download(self) -> None:
@@ -1017,9 +1015,7 @@ class AvatarTest(UploadSerializeMixin, ZulipTestCase):
 
         response = self.client_get("/avatar/cordelia@zulip.com?foo=bar")
         self.assert_json_error(
-            response,
-            "Not logged in: API authentication or user session required",
-            status_code=401,
+            response, "Not logged in: API authentication or user session required", status_code=401,
         )
 
     def test_get_user_avatar_medium(self) -> None:
@@ -1052,9 +1048,7 @@ class AvatarTest(UploadSerializeMixin, ZulipTestCase):
 
         response = self.client_get("/avatar/cordelia@zulip.com/medium?foo=bar")
         self.assert_json_error(
-            response,
-            "Not logged in: API authentication or user session required",
-            status_code=401,
+            response, "Not logged in: API authentication or user session required", status_code=401,
         )
 
     def test_non_valid_user_avatar(self) -> None:
@@ -1825,9 +1819,7 @@ class S3Test(ZulipTestCase):
         source_medium_image_key = bucket.Object(source_medium_path_id)
         target_medium_image_key = bucket.Object(target_medium_path_id)
         self.assertEqual(target_medium_image_key.key, target_medium_path_id)
-        self.assertEqual(
-            source_medium_image_key.content_type, target_medium_image_key.content_type,
-        )
+        self.assertEqual(source_medium_image_key.content_type, target_medium_image_key.content_type)
         source_medium_image_data = source_medium_image_key.get()["Body"].read()
         target_medium_image_data = target_medium_image_key.get()["Body"].read()
         self.assertEqual(source_medium_image_data, target_medium_image_data)
@@ -1994,16 +1986,13 @@ class UploadSpaceTests(UploadSerializeMixin, ZulipTestCase):
         upload_message_file("dummy.txt", len(data), "text/plain", data, self.user_profile)
         # notify_attachment_update function calls currently_used_upload_space_bytes which
         # updates the cache.
-        self.assertEqual(
-            len(data), cache_get(get_realm_used_upload_space_cache_key(self.realm))[0],
-        )
+        self.assertEqual(len(data), cache_get(get_realm_used_upload_space_cache_key(self.realm))[0])
         self.assertEqual(len(data), self.realm.currently_used_upload_space_bytes())
 
         data2 = b"more-data!"
         upload_message_file("dummy2.txt", len(data2), "text/plain", data2, self.user_profile)
         self.assertEqual(
-            len(data) + len(data2),
-            cache_get(get_realm_used_upload_space_cache_key(self.realm))[0],
+            len(data) + len(data2), cache_get(get_realm_used_upload_space_cache_key(self.realm))[0],
         )
         self.assertEqual(len(data) + len(data2), self.realm.currently_used_upload_space_bytes())
 
@@ -2011,8 +2000,7 @@ class UploadSpaceTests(UploadSerializeMixin, ZulipTestCase):
         attachment.file_name = "dummy1.txt"
         attachment.save(update_fields=["file_name"])
         self.assertEqual(
-            len(data) + len(data2),
-            cache_get(get_realm_used_upload_space_cache_key(self.realm))[0],
+            len(data) + len(data2), cache_get(get_realm_used_upload_space_cache_key(self.realm))[0],
         )
         self.assertEqual(len(data) + len(data2), self.realm.currently_used_upload_space_bytes())
 

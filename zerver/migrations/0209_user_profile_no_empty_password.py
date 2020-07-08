@@ -204,10 +204,7 @@ def ensure_no_empty_passwords(apps: StateApps, schema_editor: DatabaseSchemaEdit
             user_profile.save(update_fields=["api_key"])
 
             write_realm_audit_log_entry(
-                user_profile,
-                event_time,
-                USER_API_KEY_CHANGED,
-                AFFECTED_USER_TYPE_CHANGED_PASSWORD,
+                user_profile, event_time, USER_API_KEY_CHANGED, AFFECTED_USER_TYPE_CHANGED_PASSWORD,
             )
 
 

@@ -857,9 +857,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
         bot_info = {
             "full_name": "Fred",
         }
-        result = self.client_patch(
-            "/json/bots/{}".format(self.example_user("hamlet").id), bot_info,
-        )
+        result = self.client_patch("/json/bots/{}".format(self.example_user("hamlet").id), bot_info)
         self.assert_json_error(result, "No such bot")
 
     def test_patch_bot_owner(self) -> None:

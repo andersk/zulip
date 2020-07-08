@@ -368,9 +368,7 @@ def has_request_variables(view_func: ViewFuncT) -> ViewFuncT:
                 try:
                     val = ujson.loads(val)
                 except Exception:
-                    raise JsonableError(
-                        _('Argument "{}" is not valid JSON.').format(post_var_name),
-                    )
+                    raise JsonableError(_('Argument "{}" is not valid JSON.').format(post_var_name))
 
                 try:
                     val = param.validator(post_var_name, val)

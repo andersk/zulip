@@ -43,9 +43,7 @@ def get_bot_config_size(bot_profile: UserProfile, key: Optional[str] = None) -> 
         )
     else:
         try:
-            return len(key) + len(
-                BotConfigData.objects.get(bot_profile=bot_profile, key=key).value,
-            )
+            return len(key) + len(BotConfigData.objects.get(bot_profile=bot_profile, key=key).value)
         except BotConfigData.DoesNotExist:
             return 0
 

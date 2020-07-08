@@ -23,10 +23,7 @@ urls = [
     path(
         "coverage/<path:path>",
         serve,
-        {
-            "document_root": os.path.join(settings.DEPLOY_ROOT, "var/coverage"),
-            "show_indexes": True,
-        },
+        {"document_root": os.path.join(settings.DEPLOY_ROOT, "var/coverage"), "show_indexes": True},
     ),
     path(
         "node-coverage/<path:path>",

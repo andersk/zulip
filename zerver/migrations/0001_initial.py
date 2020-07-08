@@ -568,9 +568,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
         ),
         migrations.AlterUniqueTogether(name="stream", unique_together={("name", "realm")}),
         migrations.AlterUniqueTogether(name="recipient", unique_together={("type", "type_id")}),
-        migrations.AlterUniqueTogether(
-            name="realmfilter", unique_together={("realm", "pattern")},
-        ),
+        migrations.AlterUniqueTogether(name="realmfilter", unique_together={("realm", "pattern")}),
         migrations.AlterUniqueTogether(name="realmemoji", unique_together={("realm", "name")}),
         migrations.AddField(
             model_name="realm",
@@ -594,9 +592,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
             model_name="preregistrationuser",
             name="referred_by",
             field=models.ForeignKey(
-                null=True,
-                on_delete=django.db.models.deletion.CASCADE,
-                to=settings.AUTH_USER_MODEL,
+                null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL,
             ),
         ),
         migrations.AddField(
@@ -628,9 +624,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
         migrations.AddField(
             model_name="defaultstream",
             name="realm",
-            field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm",
-            ),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm"),
         ),
         migrations.AddField(
             model_name="defaultstream",
@@ -677,9 +671,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
         migrations.AddField(
             model_name="userprofile",
             name="realm",
-            field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm",
-            ),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm"),
         ),
         migrations.AddField(
             model_name="userprofile",
@@ -698,9 +690,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
             name="userprofile", managers=[("objects", django.contrib.auth.models.UserManager())],
         ),
         migrations.AlterField(
-            model_name="preregistrationuser",
-            name="email",
-            field=models.EmailField(max_length=254),
+            model_name="preregistrationuser", name="email", field=models.EmailField(max_length=254),
         ),
         migrations.AlterField(
             model_name="preregistrationuser",

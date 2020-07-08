@@ -574,9 +574,7 @@ class RealmTest(ZulipTestCase):
         )
 
         req = {
-            "video_chat_provider": ujson.dumps(
-                Realm.VIDEO_CHAT_PROVIDERS["big_blue_button"]["id"],
-            ),
+            "video_chat_provider": ujson.dumps(Realm.VIDEO_CHAT_PROVIDERS["big_blue_button"]["id"]),
         }
         result = self.client_patch("/json/realm", req)
         self.assert_json_success(result)
@@ -601,9 +599,7 @@ class RealmTest(ZulipTestCase):
             self.assertEqual(get_realm("hosted").upload_quota_gb, Realm.UPLOAD_QUOTA_LIMITED)
 
         with self.settings(BILLING_ENABLED=False):
-            self.assertEqual(
-                do_create_realm("onpremise", "onpremise").plan_type, Realm.SELF_HOSTED,
-            )
+            self.assertEqual(do_create_realm("onpremise", "onpremise").plan_type, Realm.SELF_HOSTED)
             self.assertEqual(
                 get_realm("onpremise").max_invites, settings.INVITES_DEFAULT_REALM_DAILY_MAX,
             )
@@ -755,9 +751,7 @@ class RealmAPITest(ZulipTestCase):
             ],
             video_chat_provider=[
                 dict(
-                    video_chat_provider=ujson.dumps(
-                        Realm.VIDEO_CHAT_PROVIDERS["jitsi_meet"]["id"],
-                    ),
+                    video_chat_provider=ujson.dumps(Realm.VIDEO_CHAT_PROVIDERS["jitsi_meet"]["id"]),
                 ),
             ],
         )
@@ -890,6 +884,4 @@ class ScrubRealmTest(ZulipTestCase):
         for user in lear_users:
             self.assertIsNone(re.search("Scrubbed [a-z0-9]{15}", user.full_name))
             self.assertIsNone(re.search("scrubbed-[a-z0-9]{15}@" + zulip.host, user.email))
-            self.assertIsNone(
-                re.search("scrubbed-[a-z0-9]{15}@" + zulip.host, user.delivery_email),
-            )
+            self.assertIsNone(re.search("scrubbed-[a-z0-9]{15}@" + zulip.host, user.delivery_email))

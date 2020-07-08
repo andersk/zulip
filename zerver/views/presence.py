@@ -99,9 +99,9 @@ def update_active_status_backend(
                 user_profile=user_profile, query="get_events", client__name="zephyr_mirror",
             )
 
-            ret[
-                "zephyr_mirror_active"
-            ] = activity.last_visit > timezone_now() - datetime.timedelta(minutes=5)
+            ret["zephyr_mirror_active"] = activity.last_visit > timezone_now() - datetime.timedelta(
+                minutes=5,
+            )
         except UserActivity.DoesNotExist:
             ret["zephyr_mirror_active"] = False
 

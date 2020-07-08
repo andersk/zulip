@@ -354,9 +354,7 @@ def write_emoticon_data(realm_id: int, data_dir: str, output_dir: str) -> List[Z
         # Handle the hc-migrate export format for emoticons.json.
         flat_data = [dict(path=d["path"], name=d["shortcut"]) for d in data["Emoticons"]]
     else:
-        flat_data = [
-            dict(path=d["Emoticon"]["path"], name=d["Emoticon"]["shortcut"]) for d in data
-        ]
+        flat_data = [dict(path=d["Emoticon"]["path"], name=d["Emoticon"]["shortcut"]) for d in data]
 
     emoji_folder = os.path.join(output_dir, "emoji")
     os.makedirs(emoji_folder, exist_ok=True)

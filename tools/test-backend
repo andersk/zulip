@@ -422,9 +422,7 @@ def main() -> None:
         if not options.no_cov_cleanup:
             import atexit
 
-            atexit.register(
-                lambda: cov.erase(),
-            )  # Ensure the data file gets cleaned up at the end.
+            atexit.register(lambda: cov.erase())  # Ensure the data file gets cleaned up at the end.
         cov.start()
     if options.profile:
         import cProfile
@@ -526,9 +524,7 @@ def main() -> None:
             prof.dump_stats(stats_file.name)
             print(f"Profile data saved to {stats_file.name}")
             print(f"You can visualize it using e.g. `snakeviz {shlex.quote(stats_file.name)}`")
-            print(
-                "Note: If you are using vagrant for development environment you will need to do:",
-            )
+            print("Note: If you are using vagrant for development environment you will need to do:")
             print("1.) `vagrant ssh -- -L 8080:127.0.0.1:8080`")
             print(f"2.) `snakeviz -s {shlex.quote(stats_file.name)}`")
 

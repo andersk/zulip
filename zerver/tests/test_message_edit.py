@@ -593,9 +593,7 @@ class EditMessageTest(ZulipTestCase):
         # out of time, only topic editing allowed
         set_message_editing_params(True, 120, False)
         do_edit_message_assert_success(id_, "B", True)
-        do_edit_message_assert_error(
-            id_, "C", "The time limit for editing this message has passed",
-        )
+        do_edit_message_assert_error(id_, "C", "The time limit for editing this message has passed")
 
         # infinite time, all edits allowed
         set_message_editing_params(True, 0, False)
@@ -686,9 +684,7 @@ class EditMessageTest(ZulipTestCase):
         set_message_editing_params(True, 0, True)
         do_edit_message_assert_success(id_, "E")
         self.login("cordelia")
-        do_edit_message_assert_error(
-            id_, "F", "The time limit for editing this message has passed",
-        )
+        do_edit_message_assert_error(id_, "F", "The time limit for editing this message has passed")
 
         # anyone should be able to edit "no topic" indefinitely
         message.set_topic_name("(no topic)")
@@ -819,14 +815,10 @@ class EditMessageTest(ZulipTestCase):
 
     def test_propagate_topic_forward(self) -> None:
         self.login("hamlet")
-        id1 = self.send_stream_message(
-            self.example_user("hamlet"), "Scotland", topic_name="topic1",
-        )
+        id1 = self.send_stream_message(self.example_user("hamlet"), "Scotland", topic_name="topic1")
         id2 = self.send_stream_message(self.example_user("iago"), "Scotland", topic_name="topic1")
         id3 = self.send_stream_message(self.example_user("iago"), "Rome", topic_name="topic1")
-        id4 = self.send_stream_message(
-            self.example_user("hamlet"), "Scotland", topic_name="topic2",
-        )
+        id4 = self.send_stream_message(self.example_user("hamlet"), "Scotland", topic_name="topic2")
         id5 = self.send_stream_message(self.example_user("iago"), "Scotland", topic_name="topic1")
 
         result = self.client_patch(
@@ -843,16 +835,10 @@ class EditMessageTest(ZulipTestCase):
 
     def test_propagate_all_topics(self) -> None:
         self.login("hamlet")
-        id1 = self.send_stream_message(
-            self.example_user("hamlet"), "Scotland", topic_name="topic1",
-        )
-        id2 = self.send_stream_message(
-            self.example_user("hamlet"), "Scotland", topic_name="topic1",
-        )
+        id1 = self.send_stream_message(self.example_user("hamlet"), "Scotland", topic_name="topic1")
+        id2 = self.send_stream_message(self.example_user("hamlet"), "Scotland", topic_name="topic1")
         id3 = self.send_stream_message(self.example_user("iago"), "Rome", topic_name="topic1")
-        id4 = self.send_stream_message(
-            self.example_user("hamlet"), "Scotland", topic_name="topic2",
-        )
+        id4 = self.send_stream_message(self.example_user("hamlet"), "Scotland", topic_name="topic2")
         id5 = self.send_stream_message(self.example_user("iago"), "Scotland", topic_name="topic1")
         id6 = self.send_stream_message(self.example_user("iago"), "Scotland", topic_name="topic3")
 
@@ -871,12 +857,8 @@ class EditMessageTest(ZulipTestCase):
 
     def test_propagate_all_topics_with_different_uppercase_letters(self) -> None:
         self.login("hamlet")
-        id1 = self.send_stream_message(
-            self.example_user("hamlet"), "Scotland", topic_name="topic1",
-        )
-        id2 = self.send_stream_message(
-            self.example_user("hamlet"), "Scotland", topic_name="Topic1",
-        )
+        id1 = self.send_stream_message(self.example_user("hamlet"), "Scotland", topic_name="topic1")
+        id2 = self.send_stream_message(self.example_user("hamlet"), "Scotland", topic_name="Topic1")
         id3 = self.send_stream_message(self.example_user("iago"), "Rome", topic_name="topiC1")
         id4 = self.send_stream_message(self.example_user("iago"), "Scotland", topic_name="toPic1")
 
@@ -893,9 +875,7 @@ class EditMessageTest(ZulipTestCase):
 
     def test_propagate_invalid(self) -> None:
         self.login("hamlet")
-        id1 = self.send_stream_message(
-            self.example_user("hamlet"), "Scotland", topic_name="topic1",
-        )
+        id1 = self.send_stream_message(self.example_user("hamlet"), "Scotland", topic_name="topic1")
 
         result = self.client_patch(
             "/json/messages/" + str(id1), {"topic": "edited", "propagate_mode": "invalid"},
@@ -1077,9 +1057,7 @@ class EditMessageTest(ZulipTestCase):
             True,
         )
         self.assertEqual(
-            has_message_access(
-                non_guest_user, Message.objects.get(id=msg_id_to_test_acesss), None,
-            ),
+            has_message_access(non_guest_user, Message.objects.get(id=msg_id_to_test_acesss), None),
             True,
         )
 
@@ -1099,9 +1077,7 @@ class EditMessageTest(ZulipTestCase):
             False,
         )
         self.assertEqual(
-            has_message_access(
-                non_guest_user, Message.objects.get(id=msg_id_to_test_acesss), None,
-            ),
+            has_message_access(non_guest_user, Message.objects.get(id=msg_id_to_test_acesss), None),
             True,
         )
         self.assertEqual(

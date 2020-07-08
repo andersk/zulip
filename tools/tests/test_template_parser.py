@@ -115,9 +115,7 @@ class ParserTest(unittest.TestCase):
         my_html = """
             {{# foo }
         """
-        self._assert_validate_error(
-            'Tag missing "}}" at Line 2 Col 13:"{{# foo }\n"', text=my_html,
-        )
+        self._assert_validate_error('Tag missing "}}" at Line 2 Col 13:"{{# foo }\n"', text=my_html)
 
     def test_validate_incomplete_django_tag_1(self) -> None:
         my_html = """

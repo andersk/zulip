@@ -68,10 +68,7 @@ from zerver.lib.avatar import avatar_url, is_avatar_new
 from zerver.lib.avatar_hash import user_avatar_content_hash
 from zerver.lib.create_user import get_role_for_new_user
 from zerver.lib.dev_ldap_directory import init_fakeldap
-from zerver.lib.email_validation import (
-    email_allowed_for_realm,
-    validate_email_not_already_in_realm,
-)
+from zerver.lib.email_validation import email_allowed_for_realm, validate_email_not_already_in_realm
 from zerver.lib.mobile_auth_otp import is_valid_otp
 from zerver.lib.rate_limiter import RateLimitedObject
 from zerver.lib.redis_utils import get_dict_from_redis, get_redis_client, put_dict_in_redis
@@ -184,9 +181,7 @@ def require_email_format_usernames(realm: Optional[Realm] = None) -> bool:
     return True
 
 
-def is_user_active(
-    user_profile: UserProfile, return_data: Optional[Dict[str, Any]] = None,
-) -> bool:
+def is_user_active(user_profile: UserProfile, return_data: Optional[Dict[str, Any]] = None) -> bool:
     if not user_profile.is_active:
         if return_data is not None:
             if user_profile.is_mirror_dummy:
@@ -1638,9 +1633,7 @@ class GitHubAuthBackend(SocialAuthMixin, GithubOAuth2):
             try:
                 return backend.user_data(access_token, *args, **kwargs)
             except AuthFailed:
-                return dict(
-                    auth_failed_reason="GitHub user is not member of required organization",
-                )
+                return dict(auth_failed_reason="GitHub user is not member of required organization")
 
         raise AssertionError("Invalid configuration")
 

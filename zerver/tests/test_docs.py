@@ -20,9 +20,7 @@ from zerver.views.documentation import add_api_uri_context
 class DocPageTest(ZulipTestCase):
     def get_doc(self, url: str, subdomain: str) -> HttpResponse:
         if url[0:23] == "/integrations/doc-html/":
-            return self.client_get(
-                url, subdomain=subdomain, HTTP_X_REQUESTED_WITH="XMLHttpRequest",
-            )
+            return self.client_get(url, subdomain=subdomain, HTTP_X_REQUESTED_WITH="XMLHttpRequest")
         return self.client_get(url, subdomain=subdomain)
 
     def print_msg_if_error(self, url: str, response: HttpResponse) -> None:  # nocoverage
@@ -242,9 +240,7 @@ class DocPageTest(ZulipTestCase):
         # TODO: Ideally, this Mozilla would be the specific browser.
         self.assertTrue('data-platform="Mozilla"' in result.content.decode("utf-8"))
 
-        result = self.client_get(
-            "/accounts/password/reset/", HTTP_USER_AGENT="ZulipElectron/1.0.0",
-        )
+        result = self.client_get("/accounts/password/reset/", HTTP_USER_AGENT="ZulipElectron/1.0.0")
         self.assertTrue('data-platform="ZulipElectron"' in result.content.decode("utf-8"))
 
 
@@ -253,8 +249,7 @@ class HelpTest(ZulipTestCase):
         result = self.client_get("/help/change-the-time-format")
         self.assertEqual(result.status_code, 200)
         self.assertIn(
-            'Go to <a href="/#settings/display-settings">Display settings</a>',
-            str(result.content),
+            'Go to <a href="/#settings/display-settings">Display settings</a>', str(result.content),
         )
         # Check that the sidebar was rendered properly.
         self.assertIn("Getting started with Zulip", str(result.content))

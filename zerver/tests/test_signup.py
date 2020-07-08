@@ -469,9 +469,7 @@ class PasswordResetTest(ZulipTestCase):
         email = self.example_email("hamlet")
 
         # start the password reset process by supplying an email address
-        result = self.client_post(
-            "/accounts/password/reset/", {"email": email}, subdomain="zephyr",
-        )
+        result = self.client_post("/accounts/password/reset/", {"email": email}, subdomain="zephyr")
 
         # check the redirect link telling you to check mail for password reset link
         self.assertEqual(result.status_code, 302)
@@ -1769,9 +1767,7 @@ so we didn't send them an invitation. We did send invitations to everyone else!"
         self.assertEqual(response.status_code, 302)
         self.assertEqual(
             response.url,
-            reverse("django.contrib.auth.views.login")
-            + "?email="
-            + urllib.parse.quote_plus(email),
+            reverse("django.contrib.auth.views.login") + "?email=" + urllib.parse.quote_plus(email),
         )
 
 
@@ -1861,9 +1857,7 @@ class InvitationsTestCase(InviteUserBase):
         prereg_user = PreregistrationUser.objects.get(email=invitee)
 
         # Verify that the scheduled email exists.
-        ScheduledEmail.objects.get(
-            address__iexact=invitee, type=ScheduledEmail.INVITATION_REMINDER,
-        )
+        ScheduledEmail.objects.get(address__iexact=invitee, type=ScheduledEmail.INVITATION_REMINDER)
 
         result = self.client_delete("/json/invites/" + str(prereg_user.id))
         self.assertEqual(result.status_code, 200)
@@ -1889,9 +1883,7 @@ class InvitationsTestCase(InviteUserBase):
 
         # Verify that the scheduled email exists.
         prereg_user = PreregistrationUser.objects.get(email=invitee, referred_by=user_profile)
-        ScheduledEmail.objects.get(
-            address__iexact=invitee, type=ScheduledEmail.INVITATION_REMINDER,
-        )
+        ScheduledEmail.objects.get(address__iexact=invitee, type=ScheduledEmail.INVITATION_REMINDER)
 
         # Verify another non-admin can't delete
         result = self.api_delete(
@@ -1901,9 +1893,7 @@ class InvitationsTestCase(InviteUserBase):
 
         # Verify that the scheduled email still exists.
         prereg_user = PreregistrationUser.objects.get(email=invitee, referred_by=user_profile)
-        ScheduledEmail.objects.get(
-            address__iexact=invitee, type=ScheduledEmail.INVITATION_REMINDER,
-        )
+        ScheduledEmail.objects.get(address__iexact=invitee, type=ScheduledEmail.INVITATION_REMINDER)
 
         # Verify deletion works.
         result = self.api_delete(user_profile, "/api/v1/invites/" + str(prereg_user.id))
@@ -2027,8 +2017,7 @@ class InvitationsTestCase(InviteUserBase):
         # Check that we have exactly one scheduled email, and that it is different
         self.assertEqual(scheduledemail_filter.count(), 1)
         self.assertNotEqual(
-            original_timestamp,
-            scheduledemail_filter.values_list("scheduled_timestamp", flat=True),
+            original_timestamp, scheduledemail_filter.values_list("scheduled_timestamp", flat=True),
         )
 
         self.assertEqual(result.status_code, 200)
@@ -2076,8 +2065,7 @@ class InvitationsTestCase(InviteUserBase):
         # Check that we have exactly one scheduled email, and that it is different
         self.assertEqual(scheduledemail_filter.count(), 1)
         self.assertNotEqual(
-            original_timestamp,
-            scheduledemail_filter.values_list("scheduled_timestamp", flat=True),
+            original_timestamp, scheduledemail_filter.values_list("scheduled_timestamp", flat=True),
         )
 
         self.assertEqual(result.status_code, 200)
@@ -2131,8 +2119,7 @@ class InvitationsTestCase(InviteUserBase):
         # Check that we have exactly one scheduled email, and that it is different
         self.assertEqual(scheduledemail_filter.count(), 1)
         self.assertNotEqual(
-            original_timestamp,
-            scheduledemail_filter.values_list("scheduled_timestamp", flat=True),
+            original_timestamp, scheduledemail_filter.values_list("scheduled_timestamp", flat=True),
         )
 
     def test_accessing_invites_in_another_realm(self) -> None:
@@ -2170,9 +2157,7 @@ class InvitationsTestCase(InviteUserBase):
 
         result = self.submit_reg_form_for_user(email, password, key=registration_key)
         self.assertEqual(result.status_code, 302)
-        prereg_user = PreregistrationUser.objects.get(
-            email=email, referred_by=inviter, realm=realm,
-        )
+        prereg_user = PreregistrationUser.objects.get(email=email, referred_by=inviter, realm=realm)
         self.assertEqual(prereg_user.status, confirmation_settings.STATUS_ACTIVE)
         user = get_user_by_delivery_email(email, realm)
         self.assertIsNotNone(user)
@@ -2217,9 +2202,7 @@ class MultiuseInviteTest(ZulipTestCase):
         self.realm.save()
 
     def generate_multiuse_invite_link(
-        self,
-        streams: Optional[List[Stream]] = None,
-        date_sent: Optional[datetime.datetime] = None,
+        self, streams: Optional[List[Stream]] = None, date_sent: Optional[datetime.datetime] = None,
     ) -> str:
         invite = MultiuseInvite(realm=self.realm, referred_by=self.example_user("iago"))
         invite.save()
@@ -2275,9 +2258,7 @@ class MultiuseInviteTest(ZulipTestCase):
 
     def test_expired_multiuse_link(self) -> None:
         email = self.nonreg_email("newuser")
-        date_sent = timezone_now() - datetime.timedelta(
-            days=settings.INVITATION_LINK_VALIDITY_DAYS,
-        )
+        date_sent = timezone_now() - datetime.timedelta(days=settings.INVITATION_LINK_VALIDITY_DAYS)
         invite_link = self.generate_multiuse_invite_link(date_sent=date_sent)
         result = self.client_post(invite_link, {"email": email})
 
@@ -2336,9 +2317,7 @@ class MultiuseInviteTest(ZulipTestCase):
         streams = [get_stream(stream_name, self.realm) for stream_name in stream_names]
         stream_ids = [stream.id for stream in streams]
 
-        result = self.client_post(
-            "/json/invites/multiuse", {"stream_ids": ujson.dumps(stream_ids)},
-        )
+        result = self.client_post("/json/invites/multiuse", {"stream_ids": ujson.dumps(stream_ids)})
         self.assert_json_success(result)
 
         invite_link = result.json()["invite_link"]
@@ -3531,8 +3510,7 @@ class UserSignUpTest(InviteUserBase):
 
             # Test the TypeError exception handler
             with patch(
-                "zproject.backends.ZulipLDAPAuthBackendBase.get_mapped_name",
-                side_effect=TypeError,
+                "zproject.backends.ZulipLDAPAuthBackendBase.get_mapped_name", side_effect=TypeError,
             ):
                 result = self.submit_reg_form_for_user(
                     email,

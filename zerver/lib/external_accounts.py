@@ -37,8 +37,7 @@ DEFAULT_EXTERNAL_ACCOUNTS = {
 
 def validate_external_account_field_data(field_data: ProfileFieldData) -> ProfileFieldData:
     field_validator = check_dict_only(
-        [("subtype", check_required_string)],
-        [("url_pattern", check_external_account_url_pattern)],
+        [("subtype", check_required_string)], [("url_pattern", check_external_account_url_pattern)],
     )
     field_validator("field_data", field_data)
 

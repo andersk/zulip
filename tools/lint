@@ -20,9 +20,7 @@ def run() -> None:
     parser.add_argument(
         "--force", default=False, action="store_true", help="Run tests despite possible problems.",
     )
-    parser.add_argument(
-        "--full", action="store_true", help="Check some things we typically ignore",
-    )
+    parser.add_argument("--full", action="store_true", help="Check some things we typically ignore")
     add_default_linter_arguments(parser)
     args = parser.parse_args()
 

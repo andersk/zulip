@@ -91,9 +91,7 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("userstory_changed_new_due_date", self.TOPIC, message)
 
     def test_taiga_task_created(self) -> None:
-        message = (
-            "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) created task **New Task**."
-        )
+        message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) created task **New Task**."
         self.send_and_test_stream_message("task_created", self.TOPIC, message)
 
     def test_taiga_task_changed_user_stories(self) -> None:
@@ -105,9 +103,7 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("task_changed_status", self.TOPIC, message)
 
     def test_taiga_task_changed_blocked(self) -> None:
-        message = (
-            "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) blocked task **New Task**."
-        )
+        message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) blocked task **New Task**."
         self.send_and_test_stream_message("task_changed_blocked", self.TOPIC, message)
 
     def test_taiga_task_changed_blocked_link(self) -> None:
@@ -137,9 +133,7 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("task_changed_description", self.TOPIC, message)
 
     def test_taiga_task_deleted(self) -> None:
-        message = (
-            "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) deleted task **New Task**."
-        )
+        message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) deleted task **New Task**."
         self.send_and_test_stream_message("task_deleted", self.TOPIC, message)
 
     def test_taiga_task_changed_comment_added(self) -> None:
@@ -318,5 +312,7 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("relateduserstory_deleted", self.TOPIC, message)
 
     def test_taiga_webhook_test(self) -> None:
-        message = "[Jan](https://tree.taiga.io/profile/kostek) triggered a test of the Taiga integration."
+        message = (
+            "[Jan](https://tree.taiga.io/profile/kostek) triggered a test of the Taiga integration."
+        )
         self.send_and_test_stream_message("webhook_test", self.TOPIC, message)

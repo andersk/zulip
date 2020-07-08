@@ -26,9 +26,7 @@ def api_alertmanager_webhook(
         annotations = alert.get("annotations", {})
 
         name = labels.get(name_field, annotations.get(name_field, "(unknown)"))
-        desc = labels.get(
-            desc_field, annotations.get(desc_field, f"<missing field: {desc_field}>"),
-        )
+        desc = labels.get(desc_field, annotations.get(desc_field, f"<missing field: {desc_field}>"))
 
         url = alert.get("generatorURL").replace("tab=1", "tab=0")
 

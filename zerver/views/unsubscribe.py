@@ -59,9 +59,7 @@ email_unsubscribers = {
 }
 
 # Login NOT required. These are for one-click unsubscribes.
-def email_unsubscribe(
-    request: HttpRequest, email_type: str, confirmation_key: str,
-) -> HttpResponse:
+def email_unsubscribe(request: HttpRequest, email_type: str, confirmation_key: str) -> HttpResponse:
     if email_type in email_unsubscribers:
         display_name, unsubscribe_function = email_unsubscribers[email_type]
         return process_unsubscribe(request, confirmation_key, display_name, unsubscribe_function)

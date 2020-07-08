@@ -262,9 +262,7 @@ class ImportExportTest(ZulipTestCase):
         avatar_path_id = user_avatar_path(user_profile)
         original_avatar_path_id = avatar_path_id + ".original"
 
-        emoji_path = RealmEmoji.PATH_ID_TEMPLATE.format(
-            realm_id=realm.id, emoji_file_name="1.png",
-        )
+        emoji_path = RealmEmoji.PATH_ID_TEMPLATE.format(realm_id=realm.id, emoji_file_name="1.png")
 
         with get_test_image_file("img.png") as img_file:
             upload_emoji_image(img_file, "1.png", user_profile)
@@ -557,21 +555,13 @@ class ImportExportTest(ZulipTestCase):
         huddle_a = Huddle.objects.last()
         self.send_huddle_message(
             self.example_user("ZOE"),
-            [
-                self.example_user("hamlet"),
-                self.example_user("AARON"),
-                self.example_user("othello"),
-            ],
+            [self.example_user("hamlet"), self.example_user("AARON"), self.example_user("othello")],
         )
         huddle_b = Huddle.objects.last()
 
         huddle_c_message_id = self.send_huddle_message(
             self.example_user("AARON"),
-            [
-                self.example_user("cordelia"),
-                self.example_user("ZOE"),
-                self.example_user("othello"),
-            ],
+            [self.example_user("cordelia"), self.example_user("ZOE"), self.example_user("othello")],
         )
 
         # Create PMs
@@ -661,9 +651,9 @@ class ImportExportTest(ZulipTestCase):
         ).values_list("id", flat=True)
 
         # Messages from Private Stream C are not exported since no member gave consent
-        private_stream_ids = Stream.objects.filter(
-            name__in=["Private A", "Private B"],
-        ).values_list("id", flat=True)
+        private_stream_ids = Stream.objects.filter(name__in=["Private A", "Private B"]).values_list(
+            "id", flat=True,
+        )
         private_stream_recipients = Recipient.objects.filter(
             type_id__in=private_stream_ids, type=Recipient.STREAM,
         )
@@ -769,9 +759,7 @@ class ImportExportTest(ZulipTestCase):
         self.send_stream_message(self.example_user("hamlet"), "Verona", stream_mention_message)
 
         user_group_mention_message = "Hello @*hamletcharacters*"
-        self.send_stream_message(
-            self.example_user("othello"), "Verona", user_group_mention_message,
-        )
+        self.send_stream_message(self.example_user("othello"), "Verona", user_group_mention_message)
 
         special_characters_message = "```\n'\n```\n@**Polonius**"
         self.send_stream_message(self.example_user("iago"), "Denmark", special_characters_message)
@@ -815,9 +803,7 @@ class ImportExportTest(ZulipTestCase):
 
         with patch("logging.info"):
             with self.settings(BILLING_ENABLED=False):
-                do_import_realm(
-                    os.path.join(settings.TEST_WORKER_DIR, "test-export"), "test-zulip",
-                )
+                do_import_realm(os.path.join(settings.TEST_WORKER_DIR, "test-export"), "test-zulip")
 
         # sanity checks
 
@@ -1093,9 +1079,7 @@ class ImportExportTest(ZulipTestCase):
 
         with self.settings(BILLING_ENABLED=False):
             with patch("logging.info"):
-                do_import_realm(
-                    os.path.join(settings.TEST_WORKER_DIR, "test-export"), "test-zulip",
-                )
+                do_import_realm(os.path.join(settings.TEST_WORKER_DIR, "test-export"), "test-zulip")
         imported_realm = Realm.objects.get(string_id="test-zulip")
 
         # Test attachments
@@ -1157,9 +1141,7 @@ class ImportExportTest(ZulipTestCase):
         self._export_realm(realm)
         with self.settings(BILLING_ENABLED=False):
             with patch("logging.info"):
-                do_import_realm(
-                    os.path.join(settings.TEST_WORKER_DIR, "test-export"), "test-zulip",
-                )
+                do_import_realm(os.path.join(settings.TEST_WORKER_DIR, "test-export"), "test-zulip")
         imported_realm = Realm.objects.get(string_id="test-zulip")
         with open(get_test_image_file("img.png").name, "rb") as f:
             test_image_data = f.read()

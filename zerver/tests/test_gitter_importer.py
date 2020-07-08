@@ -121,9 +121,7 @@ class GitterImporter(ZulipTestCase):
             {"text": "hi @user5", "mentions": [{"screenName": "user", "userId": "5712ds4"}]},
         ]
 
-        self.assertEqual(
-            get_usermentions(messages[0], user_map, user_short_name_to_full_name), [3],
-        )
+        self.assertEqual(get_usermentions(messages[0], user_map, user_short_name_to_full_name), [3])
         self.assertEqual(messages[0]["text"], "hi @**user name**")
         self.assertEqual(
             get_usermentions(messages[1], user_map, user_short_name_to_full_name), [5, 8],

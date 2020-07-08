@@ -243,9 +243,7 @@ def get_huddles_from_subscription(data: TableData, table: TableName) -> None:
     for subscription in data[table]:
         if subscription["recipient"] in ID_MAP["recipient_to_huddle_map"]:
             huddle_id = ID_MAP["recipient_to_huddle_map"][subscription["recipient"]]
-            id_map_to_list["huddle_to_user_list"][huddle_id].append(
-                subscription["user_profile_id"],
-            )
+            id_map_to_list["huddle_to_user_list"][huddle_id].append(subscription["user_profile_id"])
 
 
 def fix_customprofilefield(data: TableData) -> None:
@@ -556,9 +554,7 @@ def fix_bitfield_keys(data: TableData, table: TableName, field_name: Field) -> N
         del item[field_name + "_mask"]
 
 
-def fix_realm_authentication_bitfield(
-    data: TableData, table: TableName, field_name: Field,
-) -> None:
+def fix_realm_authentication_bitfield(data: TableData, table: TableName, field_name: Field) -> None:
     """Used to fixup the authentication_methods bitfield to be a string"""
     for item in data[table]:
         values_as_bitstring = "".join(["1" if field[1] else "0" for field in item[field_name]])
@@ -709,9 +705,7 @@ def import_uploads(
         if processing_avatars:
             # For avatars, we need to rehash the user ID with the
             # new server's avatar salt
-            relative_path = user_avatar_path_from_ids(
-                record["user_profile_id"], record["realm_id"],
-            )
+            relative_path = user_avatar_path_from_ids(record["user_profile_id"], record["realm_id"])
             if record["s3_path"].endswith(".original"):
                 relative_path += ".original"
             else:
@@ -882,9 +876,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
     # notifications_stream.
     update_model_ids(Stream, data, "stream")
     re_map_foreign_keys(data, "zerver_realm", "notifications_stream", related_table="stream")
-    re_map_foreign_keys(
-        data, "zerver_realm", "signup_notifications_stream", related_table="stream",
-    )
+    re_map_foreign_keys(data, "zerver_realm", "signup_notifications_stream", related_table="stream")
 
     fix_datetime_fields(data, "zerver_realm")
     # Fix realm subdomain information
@@ -932,9 +924,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
         update_id_map(table="recipient", old_id=item["recipient_id"], new_id=new_recipient_id)
 
     # Merge in zerver_userprofile_mirrordummy
-    data["zerver_userprofile"] = (
-        data["zerver_userprofile"] + data["zerver_userprofile_mirrordummy"]
-    )
+    data["zerver_userprofile"] = data["zerver_userprofile"] + data["zerver_userprofile_mirrordummy"]
     del data["zerver_userprofile_mirrordummy"]
     data["zerver_userprofile"].sort(key=lambda r: r["id"])
 
@@ -1011,9 +1001,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
     update_model_ids(Recipient, data, "recipient")
     bulk_import_model(data, Recipient)
     bulk_set_users_or_streams_recipient_fields(Stream, Stream.objects.filter(realm=realm))
-    bulk_set_users_or_streams_recipient_fields(
-        UserProfile, UserProfile.objects.filter(realm=realm),
-    )
+    bulk_set_users_or_streams_recipient_fields(UserProfile, UserProfile.objects.filter(realm=realm))
 
     re_map_foreign_keys(data, "zerver_subscription", "user_profile", related_table="user_profile")
     get_huddles_from_subscription(data, "zerver_subscription")
@@ -1030,9 +1018,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
         re_map_foreign_keys(
             data, "zerver_realmauditlog", "acting_user", related_table="user_profile",
         )
-        re_map_foreign_keys(
-            data, "zerver_realmauditlog", "modified_stream", related_table="stream",
-        )
+        re_map_foreign_keys(data, "zerver_realmauditlog", "modified_stream", related_table="stream")
         update_model_ids(RealmAuditLog, data, related_table="realmauditlog")
         bulk_import_model(data, RealmAuditLog)
     else:
@@ -1058,9 +1044,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
 
     if "zerver_mutedtopic" in data:
         fix_datetime_fields(data, "zerver_mutedtopic")
-        re_map_foreign_keys(
-            data, "zerver_mutedtopic", "user_profile", related_table="user_profile",
-        )
+        re_map_foreign_keys(data, "zerver_mutedtopic", "user_profile", related_table="user_profile")
         re_map_foreign_keys(data, "zerver_mutedtopic", "stream", related_table="stream")
         re_map_foreign_keys(data, "zerver_mutedtopic", "recipient", related_table="recipient")
         update_model_ids(MutedTopic, data, "mutedtopic")

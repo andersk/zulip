@@ -582,9 +582,7 @@ class MatterMostImporter(ZulipTestCase):
 
         exported_user_ids = self.get_set(realm["zerver_userprofile"], "id")
         exported_user_full_names = self.get_set(realm["zerver_userprofile"], "full_name")
-        self.assertEqual(
-            {"Harry Potter", "Ron Weasley", "Severus Snape"}, exported_user_full_names,
-        )
+        self.assertEqual({"Harry Potter", "Ron Weasley", "Severus Snape"}, exported_user_full_names)
 
         exported_user_emails = self.get_set(realm["zerver_userprofile"], "email")
         self.assertEqual(

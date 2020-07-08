@@ -44,9 +44,7 @@ class Command(BaseCommand):
             print("{:>10} {} public streams and".format("(", public_count), end=" ")
             print(f"{private_count} private streams )")
             print("------------")
-            print(
-                "{:>25} {:>15} {:>10} {:>12}".format("stream", "subscribers", "messages", "type"),
-            )
+            print("{:>25} {:>15} {:>10} {:>12}".format("stream", "subscribers", "messages", "type"))
 
             for stream in streams:
                 if stream.invite_only:

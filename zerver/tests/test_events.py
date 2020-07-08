@@ -872,9 +872,7 @@ class NormalActionsTest(BaseAction):
                 ("sender", check_dict_only([("email", check_string), ("user_id", check_int)])),
                 (
                     "recipients",
-                    check_list(
-                        check_dict_only([("email", check_string), ("user_id", check_int)]),
-                    ),
+                    check_list(check_dict_only([("email", check_string), ("user_id", check_int)])),
                 ),
             ],
         )
@@ -1370,9 +1368,7 @@ class NormalActionsTest(BaseAction):
         for stream_name in ["Scotland", "Verona", "Denmark"]:
             streams.append(get_stream(stream_name, self.user_profile.realm))
 
-        do_create_default_stream_group(
-            self.user_profile.realm, "group1", "This is group1", streams,
-        )
+        do_create_default_stream_group(self.user_profile.realm, "group1", "This is group1", streams)
         group = lookup_default_stream_groups(["group1"], self.user_profile.realm)[0]
 
         do_change_user_role(self.user_profile, UserProfile.ROLE_GUEST)
@@ -1493,10 +1489,7 @@ class NormalActionsTest(BaseAction):
             [
                 ("type", equals("realm_user")),
                 ("op", equals("update")),
-                (
-                    "person",
-                    check_dict_only([("full_name", check_string), ("user_id", check_int)]),
-                ),
+                ("person", check_dict_only([("full_name", check_string), ("user_id", check_int)])),
             ],
         )
         events = self.verify_action(
@@ -2240,10 +2233,7 @@ class NormalActionsTest(BaseAction):
             [
                 ("type", equals("realm_user")),
                 ("op", equals("update")),
-                (
-                    "person",
-                    check_dict_only([("user_id", check_int), ("bot_owner_id", check_int)]),
-                ),
+                ("person", check_dict_only([("user_id", check_int), ("bot_owner_id", check_int)])),
             ],
         )
 
@@ -2955,9 +2945,7 @@ class RealmPropertyActionTest(BaseAction):
         if vals is None:
             raise AssertionError(f"No test created for {name}")
         now = timezone_now()
-        do_set_realm_property(
-            self.user_profile.realm, name, vals[0], acting_user=self.user_profile,
-        )
+        do_set_realm_property(self.user_profile.realm, name, vals[0], acting_user=self.user_profile)
         self.assertEqual(
             RealmAuditLog.objects.filter(
                 realm=self.user_profile.realm,

@@ -66,8 +66,7 @@ class TestVideoCall(ZulipTestCase):
 
     def test_create_video_realm_redirect(self) -> None:
         response = self.client_get(
-            "/calls/zoom/complete",
-            {"code": "code", "state": '{"realm":"zephyr","sid":"somesid"}'},
+            "/calls/zoom/complete", {"code": "code", "state": '{"realm":"zephyr","sid":"somesid"}'},
         )
         self.assertEqual(response.status_code, 302)
         self.assertIn("http://zephyr.testserver/", response.url)

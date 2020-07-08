@@ -80,9 +80,7 @@ class TestZulipBaseCommand(ZulipTestCase):
 
         do_create_user(email, "password", mit_realm, "full_name", "short_name")
 
-        with self.assertRaisesRegex(
-            CommandError, "server contains multiple users with that email",
-        ):
+        with self.assertRaisesRegex(CommandError, "server contains multiple users with that email"):
             self.command.get_user(email, None)
 
     def test_get_user_profile_by_email(self) -> None:
@@ -161,8 +159,7 @@ class TestZulipBaseCommand(ZulipTestCase):
 
         # Test include_deactivated
         expected_user_profiles = sorted(
-            UserProfile.objects.filter(realm=self.zulip_realm, is_bot=False),
-            key=lambda x: x.email,
+            UserProfile.objects.filter(realm=self.zulip_realm, is_bot=False), key=lambda x: x.email,
         )
         user_profiles = self.get_users_sorted(
             dict(users=None, all_users=True),
@@ -182,8 +179,7 @@ class TestZulipBaseCommand(ZulipTestCase):
 
     def test_get_non_bot_users(self) -> None:
         expected_user_profiles = sorted(
-            UserProfile.objects.filter(realm=self.zulip_realm, is_bot=False),
-            key=lambda x: x.email,
+            UserProfile.objects.filter(realm=self.zulip_realm, is_bot=False), key=lambda x: x.email,
         )
         user_profiles = self.get_users_sorted(
             dict(users=None, all_users=True), self.zulip_realm, is_bot=False,

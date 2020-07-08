@@ -26,8 +26,7 @@ class Command(BaseCommand):
             "--time",
             "-t",
             type=str,
-            help="Update stat tables from current state to"
-            "--time. Defaults to the current time.",
+            help="Update stat tables from current state to" "--time. Defaults to the current time.",
             default=timezone_now().isoformat(),
         )
         parser.add_argument(

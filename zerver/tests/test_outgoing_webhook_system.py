@@ -231,9 +231,7 @@ class TestOutgoingWebhookMessaging(ZulipTestCase):
 
     @mock.patch(
         "requests.request",
-        return_value=ResponseMock(
-            200, {"response_string": "Hidley ho, I'm a webhook responding!"},
-        ),
+        return_value=ResponseMock(200, {"response_string": "Hidley ho, I'm a webhook responding!"}),
     )
     def test_pm_to_outgoing_webhook_bot(self, mock_requests_request: mock.Mock) -> None:
         bot_owner = self.example_user("othello")
@@ -253,13 +251,9 @@ class TestOutgoingWebhookMessaging(ZulipTestCase):
 
     @mock.patch(
         "requests.request",
-        return_value=ResponseMock(
-            200, {"response_string": "Hidley ho, I'm a webhook responding!"},
-        ),
+        return_value=ResponseMock(200, {"response_string": "Hidley ho, I'm a webhook responding!"}),
     )
-    def test_stream_message_to_outgoing_webhook_bot(
-        self, mock_requests_request: mock.Mock,
-    ) -> None:
+    def test_stream_message_to_outgoing_webhook_bot(self, mock_requests_request: mock.Mock) -> None:
         bot_owner = self.example_user("othello")
         bot = self.create_outgoing_bot(bot_owner)
 

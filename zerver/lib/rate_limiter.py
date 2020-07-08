@@ -47,9 +47,7 @@ class RateLimitedObject(ABC):
         if not hasattr(request, "_ratelimits_applied"):
             request._ratelimits_applied = []
         request._ratelimits_applied.append(
-            RateLimitResult(
-                entity=self, secs_to_freedom=time, remaining=0, over_limit=ratelimited,
-            ),
+            RateLimitResult(entity=self, secs_to_freedom=time, remaining=0, over_limit=ratelimited),
         )
         # Abort this request if the user is over their rate limits
         if ratelimited:
@@ -109,10 +107,7 @@ class RateLimitedUser(RateLimitedObject):
     def __init__(self, user: UserProfile, domain: str = "api_by_user") -> None:
         self.user = user
         self.domain = domain
-        if (
-            settings.RUNNING_INSIDE_TORNADO
-            and domain in settings.RATE_LIMITING_DOMAINS_FOR_TORNADO
-        ):
+        if settings.RUNNING_INSIDE_TORNADO and domain in settings.RATE_LIMITING_DOMAINS_FOR_TORNADO:
             backend: Optional[Type[RateLimiterBackend]] = TornadoInMemoryRateLimiterBackend
         else:
             backend = None
@@ -183,11 +178,7 @@ class RateLimiterBackend(ABC):
     @classmethod
     @abstractmethod
     def rate_limit_entity(
-        cls,
-        entity_key: str,
-        rules: List[Tuple[int, int]],
-        max_api_calls: int,
-        max_api_window: int,
+        cls, entity_key: str, rules: List[Tuple[int, int]], max_api_calls: int, max_api_window: int,
     ) -> Tuple[bool, float]:
         # Returns (ratelimited, secs_to_freedom)
         pass
@@ -226,9 +217,7 @@ class TornadoInMemoryRateLimiterBackend(RateLimiterBackend):
             del cls.reset_times[(time_window, max_count)]
 
     @classmethod
-    def need_to_limit(
-        cls, entity_key: str, time_window: int, max_count: int,
-    ) -> Tuple[bool, float]:
+    def need_to_limit(cls, entity_key: str, time_window: int, max_count: int) -> Tuple[bool, float]:
         """
         Returns a tuple of `(rate_limited, time_till_free)`.
         For simplicity, we have loosened the semantics here from
@@ -292,11 +281,7 @@ class TornadoInMemoryRateLimiterBackend(RateLimiterBackend):
 
     @classmethod
     def rate_limit_entity(
-        cls,
-        entity_key: str,
-        rules: List[Tuple[int, int]],
-        max_api_calls: int,
-        max_api_window: int,
+        cls, entity_key: str, rules: List[Tuple[int, int]], max_api_calls: int, max_api_window: int,
     ) -> Tuple[bool, float]:
         now = time.time()
         if entity_key in cls.timestamps_blocked_until:
@@ -322,8 +307,7 @@ class RedisRateLimiterBackend(RateLimiterBackend):
     @classmethod
     def get_keys(cls, entity_key: str) -> List[str]:
         return [
-            f"{KEY_PREFIX}ratelimit:{entity_key}:{keytype}"
-            for keytype in ["list", "zset", "block"]
+            f"{KEY_PREFIX}ratelimit:{entity_key}:{keytype}" for keytype in ["list", "zset", "block"]
         ]
 
     @classmethod
@@ -476,11 +460,7 @@ class RedisRateLimiterBackend(RateLimiterBackend):
 
     @classmethod
     def rate_limit_entity(
-        cls,
-        entity_key: str,
-        rules: List[Tuple[int, int]],
-        max_api_calls: int,
-        max_api_window: int,
+        cls, entity_key: str, rules: List[Tuple[int, int]], max_api_calls: int, max_api_window: int,
     ) -> Tuple[bool, float]:
         ratelimited, time = cls.is_ratelimited(entity_key, rules)
 

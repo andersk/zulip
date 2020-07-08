@@ -32,9 +32,7 @@ class ReviewBoardHookTests(WebhookTestCase):
     def test_review_request_closed(self) -> None:
         expected_topic = "Scheduler"
         expected_message = "**eeshangarg** closed [#1: Initial commit (first iteration)](https://rbcommons.com/s/zulip/r/1/):\n\n``` quote\n**Description**: Initial commit (first iteration)\n**Status**: submitted\n**Target people**: **drsbgarg**\n**Close type**: submitted\n**Branch**: master\n```"
-        self.send_and_test_stream_message(
-            "review_request_closed", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("review_request_closed", expected_topic, expected_message)
 
     def test_review_published(self) -> None:
         expected_topic = "Scheduler"

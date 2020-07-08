@@ -832,9 +832,7 @@ class ValidatorTestCase(ZulipTestCase):
             self.assertEqual(to_non_negative_int("-1"))
         with self.assertRaisesRegex(ValueError, re.escape("5 is too large (max 4)")):
             self.assertEqual(to_non_negative_int("5", max_int_size=4))
-        with self.assertRaisesRegex(
-            ValueError, re.escape(f"{2**32} is too large (max {2**32-1})"),
-        ):
+        with self.assertRaisesRegex(ValueError, re.escape(f"{2**32} is too large (max {2**32-1})")):
             self.assertEqual(to_non_negative_int(str(2 ** 32)))
 
     def test_to_positive_or_allowed_int(self) -> None:
@@ -1618,9 +1616,7 @@ class TestAuthenticatedJsonPostViewDecorator(ZulipTestCase):
         bot.set_password("test")
         bot.save()
         self.login_by_email(bot.email, password="test")
-        self.assert_json_error_contains(
-            self._do_test(bot), "Webhook bots can only access webhooks",
-        )
+        self.assert_json_error_contains(self._do_test(bot), "Webhook bots can only access webhooks")
 
     def test_authenticated_json_post_view_if_user_is_not_active(self) -> None:
         user_profile = self.example_user("hamlet")

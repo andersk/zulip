@@ -18,9 +18,7 @@ class YoHookTests(WebhookTestCase):
         )
         expected_message = "Yo from IAGO"
         self.send_and_test_private_message(
-            "",
-            expected_message=expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "", expected_message=expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def get_body(self, fixture_name: str) -> Dict[str, Any]:

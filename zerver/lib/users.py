@@ -37,10 +37,7 @@ def check_full_name(full_name_raw: str) -> str:
     if len(full_name) < UserProfile.MIN_NAME_LENGTH:
         raise JsonableError(_("Name too short!"))
     for character in full_name:
-        if (
-            unicodedata.category(character)[0] == "C"
-            or character in UserProfile.NAME_INVALID_CHARS
-        ):
+        if unicodedata.category(character)[0] == "C" or character in UserProfile.NAME_INVALID_CHARS:
             raise JsonableError(_("Invalid characters in name!"))
     # Names ending with e.g. `|15` could be ambiguous for
     # sloppily-written parsers of our markdown syntax for mentioning

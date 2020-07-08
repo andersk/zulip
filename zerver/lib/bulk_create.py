@@ -126,9 +126,7 @@ def bulk_set_users_or_streams_recipient_fields(
 
 
 # This is only sed in populate_db, so doesn't really need tests
-def bulk_create_streams(
-    realm: Realm, stream_dict: Dict[str, Dict[str, Any]],
-) -> None:  # nocoverage
+def bulk_create_streams(realm: Realm, stream_dict: Dict[str, Dict[str, Any]]) -> None:  # nocoverage
     existing_streams = frozenset(
         [
             name.lower()

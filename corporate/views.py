@@ -146,9 +146,7 @@ def upgrade(
         billing_schedule = {"annual": CustomerPlan.ANNUAL, "monthly": CustomerPlan.MONTHLY}[
             schedule
         ]
-        process_initial_upgrade(
-            user, licenses, automanage_licenses, billing_schedule, stripe_token,
-        )
+        process_initial_upgrade(user, licenses, automanage_licenses, billing_schedule, stripe_token)
     except BillingError as e:
         if not settings.TEST_SUITE:  # nocoverage
             billing_logger.warning(
@@ -307,10 +305,9 @@ def billing_home(request: HttpRequest) -> HttpResponse:
             if new_plan is not None:  # nocoverage
                 plan = new_plan
             assert plan is not None  # for mypy
-            plan_name = {
-                CustomerPlan.STANDARD: "Zulip Standard",
-                CustomerPlan.PLUS: "Zulip Plus",
-            }[plan.tier]
+            plan_name = {CustomerPlan.STANDARD: "Zulip Standard", CustomerPlan.PLUS: "Zulip Plus"}[
+                plan.tier
+            ]
             free_trial = plan.status == CustomerPlan.FREE_TRIAL
             downgrade_at_end_of_cycle = plan.status == CustomerPlan.DOWNGRADE_AT_END_OF_CYCLE
             switch_to_annual_at_end_of_cycle = (

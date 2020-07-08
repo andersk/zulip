@@ -53,9 +53,7 @@ class RemoteRealmAuditLog(AbstractRealmAuditLog):
     remote_id: int = models.IntegerField(db_index=True)
 
     def __str__(self) -> str:
-        return (
-            f"<RemoteRealmAuditLog: {self.server} {self.event_type} {self.event_time} {self.id}>"
-        )
+        return f"<RemoteRealmAuditLog: {self.server} {self.event_type} {self.event_time} {self.id}>"
 
 
 class RemoteInstallationCount(BaseCount):

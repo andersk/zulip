@@ -128,9 +128,7 @@ class ZulipTestCase(TestCase):
     django_client to fool the regext.
     """
     DEFAULT_SUBDOMAIN = "zulip"
-    TOKENIZED_NOREPLY_REGEX = settings.TOKENIZED_NOREPLY_EMAIL_ADDRESS.format(
-        token="[a-z0-9_]{24}",
-    )
+    TOKENIZED_NOREPLY_REGEX = settings.TOKENIZED_NOREPLY_EMAIL_ADDRESS.format(token="[a-z0-9_]{24}")
 
     def set_http_headers(self, kwargs: Dict[str, Any]) -> None:
         if "subdomain" in kwargs:
@@ -485,8 +483,7 @@ class ZulipTestCase(TestCase):
             url_pattern = settings.EXTERNAL_HOST + r"(\S+)>"
         for message in reversed(outbox):
             if any(
-                addr == email_address or addr.endswith(f" <{email_address}>")
-                for addr in message.to
+                addr == email_address or addr.endswith(f" <{email_address}>") for addr in message.to
             ):
                 match = re.search(url_pattern, message.body)
                 assert match is not None
@@ -584,9 +581,7 @@ class ZulipTestCase(TestCase):
 
         (sending_client, _) = Client.objects.get_or_create(name=sending_client_name)
 
-        return check_send_message(
-            from_user, sending_client, "private", to_user_ids, None, content,
-        )
+        return check_send_message(from_user, sending_client, "private", to_user_ids, None, content)
 
     def send_stream_message(
         self,
@@ -703,9 +698,7 @@ class ZulipTestCase(TestCase):
         for substring in substrings:
             self.assertIn(substring, decoded)
 
-    def assert_not_in_success_response(
-        self, substrings: List[str], response: HttpResponse,
-    ) -> None:
+    def assert_not_in_success_response(self, substrings: List[str], response: HttpResponse) -> None:
         self.assertEqual(response.status_code, 200)
         decoded = response.content.decode("utf-8")
         for substring in substrings:

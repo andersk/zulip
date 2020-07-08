@@ -103,9 +103,7 @@ class EditMessageSideEffectsTest(ZulipTestCase):
 
         queue_messages = []
 
-        def fake_publish(
-            queue_name: str, event: Union[Mapping[str, Any], str], *args: Any
-        ) -> None:
+        def fake_publish(queue_name: str, event: Union[Mapping[str, Any], str], *args: Any) -> None:
             queue_messages.append(dict(queue_name=queue_name, event=event))
 
         with mock.patch("zerver.tornado.event_queue.queue_json_publish") as m:
@@ -152,9 +150,7 @@ class EditMessageSideEffectsTest(ZulipTestCase):
     def test_updates_with_stream_mention(self) -> None:
         original_content = "no mention"
         updated_content = "now we mention @**Cordelia Lear**"
-        notification_message_data = self._send_and_update_message(
-            original_content, updated_content,
-        )
+        notification_message_data = self._send_and_update_message(original_content, updated_content)
 
         message_id = notification_message_data["message_id"]
         info = notification_message_data["info"]

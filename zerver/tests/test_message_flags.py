@@ -770,9 +770,7 @@ class GetUnreadMsgsTest(ZulipTestCase):
 
         self.assertEqual(result["mentions"], [])
 
-        um = UserMessage.objects.get(
-            user_profile_id=user_profile.id, message_id=stream_message_id,
-        )
+        um = UserMessage.objects.get(user_profile_id=user_profile.id, message_id=stream_message_id)
         um.flags |= UserMessage.flags.mentioned
         um.save()
         result = get_unread_data()

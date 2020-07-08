@@ -17,10 +17,7 @@ from zerver.models import Message, Realm, UserProfile
 from zerver.worker.queue_processors import FetchLinksEmbedData
 
 TEST_CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
-        "LOCATION": "default",
-    },
+    "default": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache", "LOCATION": "default"},
     "database": {
         "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
         "LOCATION": "url-preview",
@@ -317,9 +314,7 @@ class PreviewTestCase(ZulipTestCase):
     ) -> Message:
         url = "http://test.org/"
         with mock.patch("zerver.lib.actions.queue_json_publish") as patched:
-            msg_id = self.send_personal_message(
-                sender, self.example_user("cordelia"), content=url,
-            )
+            msg_id = self.send_personal_message(sender, self.example_user("cordelia"), content=url)
             if queue_should_run:
                 patched.assert_called_once()
                 queue = patched.call_args[0][0]

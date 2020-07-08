@@ -906,9 +906,7 @@ class HomeTest(ZulipTestCase):
         topic_name: str = "foo",
     ) -> int:
         sender = self.example_user(sender_name)
-        return self.send_stream_message(
-            sender, stream_name, content=content, topic_name=topic_name,
-        )
+        return self.send_stream_message(sender, stream_name, content=content, topic_name=topic_name)
 
     def soft_activate_and_get_unread_count(
         self, stream: str = "Denmark", topic: str = "foo",

@@ -23,9 +23,7 @@ class MITNameTest(ZulipTestCase):
         with mock.patch(
             "DNS.dnslookup",
             return_value=[
-                [
-                    "starnine:*:84233:101:Athena Consulting Exchange User,,,:/mit/starnine:/bin/bash",
-                ],
+                ["starnine:*:84233:101:Athena Consulting Exchange User,,,:/mit/starnine:/bin/bash"],
             ],
         ):
             self.assertEqual(

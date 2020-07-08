@@ -231,9 +231,7 @@ def remove_default_stream_group(
 def remove_default_stream(
     request: HttpRequest, user_profile: UserProfile, stream_id: int = REQ(validator=check_int),
 ) -> HttpResponse:
-    (stream, recipient, sub) = access_stream_by_id(
-        user_profile, stream_id, allow_realm_admin=True,
-    )
+    (stream, recipient, sub) = access_stream_by_id(user_profile, stream_id, allow_realm_admin=True)
     do_remove_default_stream(stream)
     return json_success()
 
@@ -492,9 +490,7 @@ def add_subscriptions_backend(
     # Validation of the streams arguments, including enforcement of
     # can_create_streams policy and check_stream_name policy is inside
     # list_to_streams.
-    existing_streams, created_streams = list_to_streams(
-        stream_dicts, user_profile, autocreate=True,
-    )
+    existing_streams, created_streams = list_to_streams(stream_dicts, user_profile, autocreate=True)
     authorized_streams, unauthorized_streams = filter_stream_authorization(
         user_profile, existing_streams,
     )

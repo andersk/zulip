@@ -471,9 +471,7 @@ def get_bots_backend(request: HttpRequest, user_profile: UserProfile) -> HttpRes
 
     def bot_info(bot_profile: UserProfile) -> Dict[str, Any]:
         default_sending_stream = get_stream_name(bot_profile.default_sending_stream)
-        default_events_register_stream = get_stream_name(
-            bot_profile.default_events_register_stream,
-        )
+        default_events_register_stream = get_stream_name(bot_profile.default_events_register_stream)
 
         # Bots are supposed to have only one API key, at least for now.
         # Therefore we can safely assume that one and only valid API key will be

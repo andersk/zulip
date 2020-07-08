@@ -113,9 +113,7 @@ def generate_all_emails(request: HttpRequest) -> HttpResponse:
 
     # Verification for new email
     result = client.patch(
-        "/json/settings",
-        urllib.parse.urlencode({"email": "hamlets-new@zulip.com"}),
-        **host_kwargs,
+        "/json/settings", urllib.parse.urlencode({"email": "hamlets-new@zulip.com"}), **host_kwargs,
     )
     assert result.status_code == 200
 
@@ -133,9 +131,7 @@ def generate_all_emails(request: HttpRequest) -> HttpResponse:
     enqueue_welcome_emails(user_profile)
 
     # Follow up day1 day2 emails for admin user
-    enqueue_welcome_emails(
-        get_user_by_delivery_email("iago@zulip.com", realm), realm_creation=True,
-    )
+    enqueue_welcome_emails(get_user_by_delivery_email("iago@zulip.com", realm), realm_creation=True)
 
     # Realm reactivation email
     do_send_realm_reactivation_email(realm)

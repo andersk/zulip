@@ -33,9 +33,7 @@ def canarytoken_message(message: Dict[str, Any]) -> Tuple[str, str]:
     return (topic, body)
 
 
-def canary_message(
-    message: Dict[str, Any], user_specified_topic: Optional[str],
-) -> Tuple[str, str]:
+def canary_message(message: Dict[str, Any], user_specified_topic: Optional[str]) -> Tuple[str, str]:
     """
     Construct the message for a canary-type request.
     """

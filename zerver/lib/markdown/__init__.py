@@ -712,8 +712,7 @@ class InlineInterestingLinkProcessor(markdown.treeprocessors.Treeprocessor):
             split_path = parsed_url.path.split("/")
             if len(split_path) > 3 and split_path[3] == "blob":
                 return urllib.parse.urljoin(
-                    "https://raw.githubusercontent.com",
-                    "/".join(split_path[0:3] + split_path[4:]),
+                    "https://raw.githubusercontent.com", "/".join(split_path[0:3] + split_path[4:]),
                 )
 
         return url
@@ -2095,9 +2094,7 @@ class Markdown(markdown.Markdown):
         treeprocessors = markdown.util.Registry()
         # We get priority 30 from 'hilite' extension
         treeprocessors.register(markdown.treeprocessors.InlineProcessor(self), "inline", 25)
-        treeprocessors.register(
-            markdown.treeprocessors.PrettifyTreeprocessor(self), "prettify", 20,
-        )
+        treeprocessors.register(markdown.treeprocessors.PrettifyTreeprocessor(self), "prettify", 20)
         treeprocessors.register(
             InlineInterestingLinkProcessor(self), "inline_interesting_links", 15,
         )
@@ -2137,9 +2134,7 @@ class Markdown(markdown.Markdown):
             self.treeprocessors.register(
                 markdown.treeprocessors.InlineProcessor(self), "inline", 25,
             )
-            self.preprocessors = get_sub_registry(
-                self.preprocessors, ["custom_text_notifications"],
-            )
+            self.preprocessors = get_sub_registry(self.preprocessors, ["custom_text_notifications"])
             self.parser.blockprocessors = get_sub_registry(
                 self.parser.blockprocessors, ["paragraph"],
             )

@@ -346,9 +346,7 @@ def get_pull_request_review_comment_body(
     if action == "created":
         message = payload["comment"]["body"]
 
-    title = "on #{} {}".format(
-        payload["pull_request"]["number"], payload["pull_request"]["title"],
-    )
+    title = "on #{} {}".format(payload["pull_request"]["number"], payload["pull_request"]["title"])
 
     return get_pull_request_event_message(
         get_sender_name(payload),
@@ -374,8 +372,7 @@ def get_pull_request_review_requested_body(
     pr_url = payload["pull_request"]["html_url"]
     message = "**{sender}** requested {reviewers} for a review on [PR #{pr_number}]({pr_url})."
     message_with_title = (
-        "**{sender}** requested {reviewers} for a review on "
-        "[PR #{pr_number} {title}]({pr_url})."
+        "**{sender}** requested {reviewers} for a review on " "[PR #{pr_number} {title}]({pr_url})."
     )
     body = message_with_title if include_title else message
 

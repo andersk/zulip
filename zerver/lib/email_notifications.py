@@ -183,9 +183,7 @@ def build_message_list(user_profile: UserProfile, messages: List[Message]) -> Li
         elif message.recipient.type == Recipient.HUDDLE:
             display_recipient = get_display_recipient(message.recipient)
             assert not isinstance(display_recipient, str)
-            narrow_link = get_narrow_url(
-                user_profile, message, display_recipient=display_recipient,
-            )
+            narrow_link = get_narrow_url(user_profile, message, display_recipient=display_recipient)
             other_recipients = [
                 r["full_name"] for r in display_recipient if r["id"] != user_profile.id
             ]
@@ -367,9 +365,7 @@ def do_send_missedmessage_events_reply_in_zulip(
         display_recipient = get_display_recipient(missed_messages[0]["message"].recipient)
         # Make sure that this is a list of strings, not a string.
         assert not isinstance(display_recipient, str)
-        other_recipients = [
-            r["full_name"] for r in display_recipient if r["id"] != user_profile.id
-        ]
+        other_recipients = [r["full_name"] for r in display_recipient if r["id"] != user_profile.id]
         context.update({"group_pm": True})
         if len(other_recipients) == 2:
             huddle_display_name = " and ".join(other_recipients)

@@ -436,9 +436,7 @@ class FetchInitialStateDataTest(ZulipTestCase):
         self.assertFalse(user_profile.is_realm_admin)
 
         do_set_realm_property(
-            user_profile.realm,
-            "email_address_visibility",
-            Realm.EMAIL_ADDRESS_VISIBILITY_EVERYONE,
+            user_profile.realm, "email_address_visibility", Realm.EMAIL_ADDRESS_VISIBILITY_EVERYONE,
         )
         result = fetch_initial_state_data(
             user_profile, None, "", client_gravatar=False, user_avatar_url_field_optional=False,
@@ -460,9 +458,7 @@ class FetchInitialStateDataTest(ZulipTestCase):
         self.assertTrue(user_profile.is_realm_admin)
 
         do_set_realm_property(
-            user_profile.realm,
-            "email_address_visibility",
-            Realm.EMAIL_ADDRESS_VISIBILITY_EVERYONE,
+            user_profile.realm, "email_address_visibility", Realm.EMAIL_ADDRESS_VISIBILITY_EVERYONE,
         )
         result = fetch_initial_state_data(
             user_profile, None, "", client_gravatar=False, user_avatar_url_field_optional=False,
@@ -645,9 +641,7 @@ class ClientDescriptorsTest(ZulipTestCase):
             def add_event(self, event: Dict[str, Any]) -> None:
                 self.events.append(event)
 
-        client1 = MockClient(
-            user_profile_id=hamlet.id, apply_markdown=True, client_gravatar=False,
-        )
+        client1 = MockClient(user_profile_id=hamlet.id, apply_markdown=True, client_gravatar=False)
 
         client2 = MockClient(
             user_profile_id=hamlet.id, apply_markdown=False, client_gravatar=False,
@@ -655,9 +649,7 @@ class ClientDescriptorsTest(ZulipTestCase):
 
         client3 = MockClient(user_profile_id=hamlet.id, apply_markdown=True, client_gravatar=True)
 
-        client4 = MockClient(
-            user_profile_id=hamlet.id, apply_markdown=False, client_gravatar=True,
-        )
+        client4 = MockClient(user_profile_id=hamlet.id, apply_markdown=False, client_gravatar=True)
 
         client_info = {
             "client:1": dict(client=client1, flags=["starred"]),

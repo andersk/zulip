@@ -803,9 +803,7 @@ class LocalUploadBackend(ZulipUploadBackend):
     def ensure_medium_avatar_image(self, user_profile: UserProfile) -> None:
         file_path = user_avatar_path(user_profile)
 
-        output_path = os.path.join(
-            settings.LOCAL_UPLOADS_DIR, "avatars", file_path + "-medium.png",
-        )
+        output_path = os.path.join(settings.LOCAL_UPLOADS_DIR, "avatars", file_path + "-medium.png")
         if os.path.isfile(output_path):
             return
 

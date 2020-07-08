@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name="remotezulipserver",
-            name="hostname",
-            field=models.CharField(max_length=128),
+            model_name="remotezulipserver", name="hostname", field=models.CharField(max_length=128),
         ),
     ]

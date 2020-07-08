@@ -596,10 +596,7 @@ class Command(BaseCommand):
                     {"id": favorite_food.id, "value": "Apples"},
                     {"id": favorite_editor.id, "value": "emacs"},
                     {"id": birthday.id, "value": "2000-1-1"},
-                    {
-                        "id": favorite_website.id,
-                        "value": "https://zulip.readthedocs.io/en/latest/",
-                    },
+                    {"id": favorite_website.id, "value": "https://zulip.readthedocs.io/en/latest/"},
                     {"id": mentor.id, "value": [hamlet.id]},
                     {"id": github_profile.id, "value": "zulip"},
                 ],
@@ -828,9 +825,7 @@ def generate_and_send_messages(
 
     huddle_members: Dict[int, List[int]] = {}
     for h in recipient_huddles:
-        huddle_members[h] = [
-            s.user_profile.id for s in Subscription.objects.filter(recipient_id=h)
-        ]
+        huddle_members[h] = [s.user_profile.id for s in Subscription.objects.filter(recipient_id=h)]
 
     # Generate different topics for each stream
     possible_topics = dict()

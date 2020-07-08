@@ -304,9 +304,7 @@ def access_stream_by_id(
 
 
 def get_public_streams_queryset(realm: Realm) -> "QuerySet[Stream]":
-    return Stream.objects.filter(
-        realm=realm, invite_only=False, history_public_to_subscribers=True,
-    )
+    return Stream.objects.filter(realm=realm, invite_only=False, history_public_to_subscribers=True)
 
 
 def get_stream_by_id(stream_id: int) -> Stream:
@@ -529,14 +527,10 @@ def access_default_stream_group_by_id(realm: Realm, group_id: int) -> DefaultStr
     try:
         return DefaultStreamGroup.objects.get(realm=realm, id=group_id)
     except DefaultStreamGroup.DoesNotExist:
-        raise JsonableError(
-            _("Default stream group with id '{}' does not exist.").format(group_id),
-        )
+        raise JsonableError(_("Default stream group with id '{}' does not exist.").format(group_id))
 
 
-def get_stream_by_narrow_operand_access_unchecked(
-    operand: Union[str, int], realm: Realm,
-) -> Stream:
+def get_stream_by_narrow_operand_access_unchecked(operand: Union[str, int], realm: Realm) -> Stream:
     """This is required over access_stream_* in certain cases where
     we need the stream data only to prepare a response that user can access
     and not send it out to unauthorized recipients.

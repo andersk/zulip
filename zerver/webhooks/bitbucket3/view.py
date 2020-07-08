@@ -406,11 +406,7 @@ def api_bitbucket3_webhook(
         data = handler(payload)
     for element in data:
         check_send_webhook_message(
-            request,
-            user_profile,
-            element["subject"],
-            element["body"],
-            unquote_url_parameters=True,
+            request, user_profile, element["subject"], element["body"], unquote_url_parameters=True,
         )
 
     return json_success()

@@ -63,9 +63,7 @@ def validate_bouncer_token_request(
 @has_request_variables
 def register_remote_server(
     request: HttpRequest,
-    zulip_org_id: str = REQ(
-        str_validator=check_string_fixed_length(RemoteZulipServer.UUID_LENGTH),
-    ),
+    zulip_org_id: str = REQ(str_validator=check_string_fixed_length(RemoteZulipServer.UUID_LENGTH)),
     zulip_org_key: str = REQ(
         str_validator=check_string_fixed_length(RemoteZulipServer.API_KEY_LENGTH),
     ),

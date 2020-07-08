@@ -148,9 +148,7 @@ def fetch_initial_state_data(
         state["realm_allow_message_editing"] = realm.allow_message_editing
         state["realm_allow_community_topic_editing"] = realm.allow_community_topic_editing
         state["realm_allow_message_deleting"] = realm.allow_message_deleting
-        state[
-            "realm_message_content_edit_limit_seconds"
-        ] = realm.message_content_edit_limit_seconds
+        state["realm_message_content_edit_limit_seconds"] = realm.message_content_edit_limit_seconds
         state[
             "realm_message_content_delete_limit_seconds"
         ] = realm.message_content_delete_limit_seconds
@@ -362,9 +360,7 @@ def apply_events(
             # `apply_event`.  For now, be careful in your choice of
             # `fetch_event_types`.
             continue
-        apply_event(
-            state, event, user_profile, client_gravatar, slim_presence, include_subscribers,
-        )
+        apply_event(state, event, user_profile, client_gravatar, slim_presence, include_subscribers)
 
 
 def apply_event(
@@ -454,11 +450,7 @@ def apply_event(
                     # current user changing roles, we should just do a
                     # full refetch.
                     if "never_subscribed" in state:
-                        (
-                            subscriptions,
-                            unsubscribed,
-                            never_subscribed,
-                        ) = gather_subscriptions_helper(
+                        subscriptions, unsubscribed, never_subscribed = gather_subscriptions_helper(
                             user_profile, include_subscribers=include_subscribers,
                         )
                         state["subscriptions"] = subscriptions

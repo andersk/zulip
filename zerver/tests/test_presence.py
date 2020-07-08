@@ -278,14 +278,14 @@ class UserPresenceTests(ZulipTestCase):
             )
         self.assert_json_success(result)
         self.assertEqual(UserActivityInterval.objects.filter(user_profile=user_profile).count(), 2)
-        interval = UserActivityInterval.objects.filter(user_profile=user_profile).order_by(
-            "start",
-        )[0]
+        interval = UserActivityInterval.objects.filter(user_profile=user_profile).order_by("start")[
+            0
+        ]
         self.assertEqual(interval.start, time_zero)
         self.assertEqual(interval.end, second_time + UserActivityInterval.MIN_INTERVAL_LENGTH)
-        interval = UserActivityInterval.objects.filter(user_profile=user_profile).order_by(
-            "start",
-        )[1]
+        interval = UserActivityInterval.objects.filter(user_profile=user_profile).order_by("start")[
+            1
+        ]
         self.assertEqual(interval.start, third_time)
         self.assertEqual(interval.end, third_time + UserActivityInterval.MIN_INTERVAL_LENGTH)
 
@@ -356,9 +356,7 @@ class UserPresenceTests(ZulipTestCase):
         """Zephyr mirror realms such as MIT never get a list of users"""
         user = self.mit_user("espuser")
         self.login_user(user)
-        result = self.client_post(
-            "/json/users/me/presence", {"status": "idle"}, subdomain="zephyr",
-        )
+        result = self.client_post("/json/users/me/presence", {"status": "idle"}, subdomain="zephyr")
         self.assert_json_success(result)
         self.assertEqual(result.json()["presences"], {})
 

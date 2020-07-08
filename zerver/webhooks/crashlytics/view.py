@@ -10,9 +10,7 @@ from zerver.lib.webhooks.common import check_send_webhook_message
 from zerver.models import UserProfile
 
 CRASHLYTICS_TOPIC_TEMPLATE = "{display_id}: {title}"
-CRASHLYTICS_MESSAGE_TEMPLATE = (
-    "[Issue]({url}) impacts at least {impacted_devices_count} device(s)."
-)
+CRASHLYTICS_MESSAGE_TEMPLATE = "[Issue]({url}) impacts at least {impacted_devices_count} device(s)."
 
 CRASHLYTICS_SETUP_TOPIC_TEMPLATE = "Setup"
 CRASHLYTICS_SETUP_MESSAGE_TEMPLATE = "Webhook has been successfully configured."

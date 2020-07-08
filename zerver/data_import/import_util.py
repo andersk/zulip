@@ -216,9 +216,7 @@ def build_public_stream_subscriptions(
     for recipient_id in public_stream_recipient_ids:
         for user_id in user_ids:
             subscription = build_subscription(
-                recipient_id=recipient_id,
-                user_id=user_id,
-                subscription_id=NEXT_ID("subscription"),
+                recipient_id=recipient_id, user_id=user_id, subscription_id=NEXT_ID("subscription"),
             )
             subscriptions.append(subscription)
 
@@ -245,9 +243,7 @@ def build_stream_subscriptions(
         user_ids = get_users(stream_id=stream_id)
         for user_id in user_ids:
             subscription = build_subscription(
-                recipient_id=recipient_id,
-                user_id=user_id,
-                subscription_id=NEXT_ID("subscription"),
+                recipient_id=recipient_id, user_id=user_id, subscription_id=NEXT_ID("subscription"),
             )
             subscriptions.append(subscription)
 
@@ -274,9 +270,7 @@ def build_huddle_subscriptions(
         user_ids = get_users(huddle_id=huddle_id)
         for user_id in user_ids:
             subscription = build_subscription(
-                recipient_id=recipient_id,
-                user_id=user_id,
-                subscription_id=NEXT_ID("subscription"),
+                recipient_id=recipient_id, user_id=user_id, subscription_id=NEXT_ID("subscription"),
             )
             subscriptions.append(subscription)
 
@@ -581,9 +575,7 @@ def process_avatars(
     return avatar_list + avatar_original_list
 
 
-def write_avatar_png(
-    avatar_folder: str, realm_id: int, user_id: int, bits: bytes,
-) -> ZerverFieldsT:
+def write_avatar_png(avatar_folder: str, realm_id: int, user_id: int, bits: bytes) -> ZerverFieldsT:
     """
     Use this function for conversions like Hipchat where
     the bits for the .png file come in something like
