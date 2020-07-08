@@ -595,9 +595,7 @@ class NormalActionsTest(BaseAction):
             message = self.send_stream_message(self.example_user("cordelia"), "Verona", content)
 
             self.verify_action(
-                lambda: do_update_message_flags(
-                    user_profile, get_client("website"), "add", "read", [message],
-                ),
+                lambda: do_update_message_flags(user_profile, get_client("website"), "add", "read", [message]),
                 state_change_expected=True,
             )
 
@@ -659,8 +657,7 @@ class NormalActionsTest(BaseAction):
         message = Message.objects.get(id=message_id)
         do_add_reaction_legacy(self.user_profile, message, "tada")
         events = self.verify_action(
-            lambda: do_remove_reaction_legacy(self.user_profile, message, "tada"),
-            state_change_expected=False,
+            lambda: do_remove_reaction_legacy(self.user_profile, message, "tada"), state_change_expected=False,
         )
         schema_checker("events[0]", events[0])
 
@@ -1342,9 +1339,7 @@ class NormalActionsTest(BaseAction):
         do_change_user_role(self.user_profile, UserProfile.ROLE_GUEST)
         stream = get_stream("Scotland", self.user_profile.realm)
         self.verify_action(lambda: do_add_default_stream(stream), state_change_expected=False, num_events=0)
-        self.verify_action(
-            lambda: do_remove_default_stream(stream), state_change_expected=False, num_events=0,
-        )
+        self.verify_action(lambda: do_remove_default_stream(stream), state_change_expected=False, num_events=0)
 
     def test_muted_topics_events(self) -> None:
         muted_topics_checker = check_events_dict(
@@ -1664,9 +1659,7 @@ class NormalActionsTest(BaseAction):
                 ("op", equals("update")),
                 (
                     "person",
-                    check_dict_only(
-                        [("role", check_int_in(UserProfile.ROLE_TYPES)), ("user_id", check_int)],
-                    ),
+                    check_dict_only([("role", check_int_in(UserProfile.ROLE_TYPES)), ("user_id", check_int)]),
                 ),
             ],
         )
@@ -1690,9 +1683,7 @@ class NormalActionsTest(BaseAction):
                 ("op", equals("update")),
                 (
                     "person",
-                    check_dict_only(
-                        [("role", check_int_in(UserProfile.ROLE_TYPES)), ("user_id", check_int)],
-                    ),
+                    check_dict_only([("role", check_int_in(UserProfile.ROLE_TYPES)), ("user_id", check_int)]),
                 ),
             ],
         )
@@ -1716,9 +1707,7 @@ class NormalActionsTest(BaseAction):
                 ("op", equals("update")),
                 (
                     "person",
-                    check_dict_only(
-                        [("role", check_int_in(UserProfile.ROLE_TYPES)), ("user_id", check_int)],
-                    ),
+                    check_dict_only([("role", check_int_in(UserProfile.ROLE_TYPES)), ("user_id", check_int)]),
                 ),
             ],
         )

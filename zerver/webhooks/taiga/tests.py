@@ -12,15 +12,11 @@ class TaigaHookTests(WebhookTestCase):
         self.url = self.build_webhook_url(topic=self.TOPIC)
 
     def test_taiga_userstory_deleted(self) -> None:
-        message = (
-            "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) deleted user story **New userstory**."
-        )
+        message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) deleted user story **New userstory**."
         self.send_and_test_stream_message("userstory_deleted", self.TOPIC, message)
 
     def test_taiga_userstory_created(self) -> None:
-        message = (
-            "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) created user story **New userstory**."
-        )
+        message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) created user story **New userstory**."
         self.send_and_test_stream_message("userstory_created", self.TOPIC, message)
 
     def test_taiga_userstory_changed_unblocked(self) -> None:
@@ -200,7 +196,9 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("issue_changed_subject", self.TOPIC, message)
 
     def test_taiga_issue_changed_description(self) -> None:
-        message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) updated description of issue **New issue**."
+        message = (
+            "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) updated description of issue **New issue**."
+        )
         self.send_and_test_stream_message("issue_changed_description", self.TOPIC, message)
 
     def test_taiga_issue_changed_type(self) -> None:
@@ -251,9 +249,7 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("issue_changed_remove_sprint", self.TOPIC, message)
 
     def test_taiga_epic_created(self) -> None:
-        message = (
-            "[Eeshan Garg](https://tree.taiga.io/profile/eeshangarg) created epic **Zulip is awesome!**."
-        )
+        message = "[Eeshan Garg](https://tree.taiga.io/profile/eeshangarg) created epic **Zulip is awesome!**."
         self.send_and_test_stream_message("epic_created", self.TOPIC, message)
 
     def test_taiga_epic_changed_assigned(self) -> None:
@@ -271,9 +267,7 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("epic_changed_reassigned", self.TOPIC, message)
 
     def test_taiga_epic_changed_blocked(self) -> None:
-        message = (
-            "[Eeshan Garg](https://tree.taiga.io/profile/eeshangarg) blocked epic **Zulip is awesome!**."
-        )
+        message = "[Eeshan Garg](https://tree.taiga.io/profile/eeshangarg) blocked epic **Zulip is awesome!**."
         self.send_and_test_stream_message("epic_changed_blocked", self.TOPIC, message)
 
     def test_taiga_epic_changed_unblocked(self) -> None:

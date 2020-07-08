@@ -146,10 +146,7 @@ def check_stream_name(stream_name: str) -> None:
 
 def subscribed_to_stream(user_profile: UserProfile, stream_id: int) -> bool:
     return Subscription.objects.filter(
-        user_profile=user_profile,
-        active=True,
-        recipient__type=Recipient.STREAM,
-        recipient__type_id=stream_id,
+        user_profile=user_profile, active=True, recipient__type=Recipient.STREAM, recipient__type_id=stream_id,
     ).exists()
 
 

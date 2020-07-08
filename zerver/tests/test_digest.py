@@ -173,9 +173,7 @@ class TestDigestEmailMessages(ZulipTestCase):
         cutoff = timezone_now()
         # Test Tuesday
         mock_django_timezone.return_value = datetime.datetime(year=2016, month=1, day=5)
-        all_user_profiles = UserProfile.objects.filter(
-            is_active=True, is_bot=False, enable_digest_emails=True,
-        )
+        all_user_profiles = UserProfile.objects.filter(is_active=True, is_bot=False, enable_digest_emails=True)
         # Check that all users without an a UserActivity entry are considered
         # inactive users and get enqueued.
         enqueue_emails(cutoff)

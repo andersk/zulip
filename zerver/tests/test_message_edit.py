@@ -111,9 +111,7 @@ class EditMessageTest(ZulipTestCase):
         self.assert_json_success(result)
         self.check_message(msg_id, topic_name="editing", content="after edit")
 
-        result = self.client_patch(
-            "/json/messages/" + str(msg_id), {"message_id": msg_id, "topic": "edited"},
-        )
+        result = self.client_patch("/json/messages/" + str(msg_id), {"message_id": msg_id, "topic": "edited"})
         self.assert_json_success(result)
         self.check_topic(msg_id, topic_name="edited")
 
@@ -398,13 +396,7 @@ class EditMessageTest(ZulipTestCase):
         self.assertEqual(history[0]["user_id"], hamlet.id)
         self.assertEqual(
             set(history[0].keys()),
-            {
-                "timestamp",
-                "prev_content",
-                "user_id",
-                "prev_rendered_content",
-                "prev_rendered_content_version",
-            },
+            {"timestamp", "prev_content", "user_id", "prev_rendered_content", "prev_rendered_content_version"},
         )
 
         result = self.client_patch(
@@ -1037,9 +1029,7 @@ class EditMessageTest(ZulipTestCase):
             0,
         )
         self.assertEqual(
-            has_message_access(
-                self.example_user("iago"), Message.objects.get(id=msg_id_to_test_acesss), None,
-            ),
+            has_message_access(self.example_user("iago"), Message.objects.get(id=msg_id_to_test_acesss), None),
             True,
         )
 

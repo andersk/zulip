@@ -742,12 +742,7 @@ class SlackImporter(ZulipTestCase):
                 "ts": "1433868549.000011",
                 "subtype": "file_share",
             },
-            {
-                "text": "random test",
-                "user": "U061A1R2R",
-                "ts": "1433868669.000012",
-                "channel_name": "general",
-            },
+            {"text": "random test", "user": "U061A1R2R", "ts": "1433868669.000012", "channel_name": "general"},
             {
                 "text": "Hello everyone",
                 "user": "U061A1R2R",
@@ -830,9 +825,7 @@ class SlackImporter(ZulipTestCase):
 
         self.assertEqual(zerver_message[3][EXPORT_TOPIC_NAME], "imported from slack")
         self.assertEqual(zerver_message[3]["content"], "/me added bot")
-        self.assertEqual(
-            zerver_message[4]["recipient"], slack_recipient_name_to_zulip_recipient_id["general"],
-        )
+        self.assertEqual(zerver_message[4]["recipient"], slack_recipient_name_to_zulip_recipient_id["general"])
         self.assertEqual(zerver_message[2][EXPORT_TOPIC_NAME], "imported from slack")
         self.assertEqual(zerver_message[1]["recipient"], slack_recipient_name_to_zulip_recipient_id["random"])
         self.assertEqual(

@@ -31,7 +31,9 @@ class PagerDutyHookTests(WebhookTestCase):
         self.send_and_test_stream_message("resolve_v2", "Incident 33", expected_message)
 
     def test_auto_resolved(self) -> None:
-        expected_message = "Incident [2](https://zulip-test.pagerduty.com/incidents/PX7K9J2) resolved:\n\n``` quote\nnew\n```"
+        expected_message = (
+            "Incident [2](https://zulip-test.pagerduty.com/incidents/PX7K9J2) resolved:\n\n``` quote\nnew\n```"
+        )
         self.send_and_test_stream_message("auto_resolved", "Incident 2", expected_message)
 
     def test_acknowledge(self) -> None:

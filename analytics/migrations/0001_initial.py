@@ -101,10 +101,7 @@ class Migration(migrations.Migration):
                     models.AutoField(verbose_name="ID", serialize=False, auto_created=True, primary_key=True),
                 ),
                 ("realm", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm")),
-                (
-                    "stream",
-                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Stream"),
-                ),
+                ("stream", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Stream")),
                 ("property", models.CharField(max_length=40)),
                 ("end_time", models.DateTimeField()),
                 ("interval", models.CharField(max_length=20)),

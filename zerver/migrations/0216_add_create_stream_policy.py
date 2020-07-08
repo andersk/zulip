@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="realm",
-            name="create_stream_policy",
-            field=models.PositiveSmallIntegerField(default=1),
+            model_name="realm", name="create_stream_policy", field=models.PositiveSmallIntegerField(default=1),
         ),
     ]

@@ -228,9 +228,7 @@ def get_logfile_name(venv_path: str) -> str:
     return "{}/setup-venv.log".format(venv_path)
 
 
-def create_log_entry(
-    target_log: str, parent: str, copied_packages: Set[str], new_packages: Set[str],
-) -> None:
+def create_log_entry(target_log: str, parent: str, copied_packages: Set[str], new_packages: Set[str]) -> None:
 
     venv_path = os.path.dirname(target_log)
     with open(target_log, "a") as writer:

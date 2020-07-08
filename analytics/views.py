@@ -164,11 +164,7 @@ def get_chart_data_for_realm(
 @require_server_admin_api
 @has_request_variables
 def get_chart_data_for_remote_realm(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    remote_server_id: int,
-    remote_realm_id: int,
-    **kwargs: Any,
+    request: HttpRequest, user_profile: UserProfile, remote_server_id: int, remote_realm_id: int, **kwargs: Any
 ) -> HttpResponse:
     server = RemoteZulipServer.objects.get(id=remote_server_id)
     return get_chart_data(

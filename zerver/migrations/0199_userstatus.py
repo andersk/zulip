@@ -21,10 +21,7 @@ class Migration(migrations.Migration):
                 ),
                 ("timestamp", models.DateTimeField()),
                 ("status", models.PositiveSmallIntegerField(default=1)),
-                (
-                    "client",
-                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Client"),
-                ),
+                ("client", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Client")),
                 (
                     "user_profile",
                     models.OneToOneField(

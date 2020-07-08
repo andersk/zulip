@@ -28,7 +28,5 @@ def get_realm_logo_url(realm: Realm, night: bool) -> str:
 
 def get_realm_logo_data(realm: Realm, night: bool) -> Dict[str, Any]:
     if night:
-        return dict(
-            night_logo_url=get_realm_logo_url(realm, night), night_logo_source=realm.night_logo_source,
-        )
+        return dict(night_logo_url=get_realm_logo_url(realm, night), night_logo_source=realm.night_logo_source)
     return dict(logo_url=get_realm_logo_url(realm, night), logo_source=realm.logo_source)

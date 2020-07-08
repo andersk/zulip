@@ -102,9 +102,7 @@ class MessageDictTest(ZulipTestCase):
         def test_message_id() -> int:
             hamlet = self.example_user("hamlet")
             self.login_user(hamlet)
-            msg_id = self.send_stream_message(
-                hamlet, "Scotland", topic_name="editing", content="before edit",
-            )
+            msg_id = self.send_stream_message(hamlet, "Scotland", topic_name="editing", content="before edit")
             return msg_id
 
         flag_setups = [
@@ -520,9 +518,7 @@ class TestMessageForIdsDisplayRecipientFetching(ZulipTestCase):
         )
 
         self._verify_display_recipient(messages[0]["display_recipient"], get_stream("Verona", cordelia.realm))
-        self._verify_display_recipient(
-            messages[1]["display_recipient"], get_stream("Denmark", cordelia.realm),
-        )
+        self._verify_display_recipient(messages[1]["display_recipient"], get_stream("Denmark", cordelia.realm))
 
     def test_display_recipient_huddle(self) -> None:
         hamlet = self.example_user("hamlet")

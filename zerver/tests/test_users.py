@@ -697,9 +697,7 @@ class PermissionTest(ZulipTestCase):
         new_profile_data = []
         field = CustomProfileField.objects.get(name="Biography", realm=realm)
         new_profile_data.append({"id": field.id, "value": "New hamlet Biography"})
-        result = self.client_patch(
-            f"/json/users/{hamlet.id}", {"profile_data": ujson.dumps(new_profile_data)},
-        )
+        result = self.client_patch(f"/json/users/{hamlet.id}", {"profile_data": ujson.dumps(new_profile_data)})
         self.assert_json_error(result, "Insufficient permission")
 
         result = self.client_patch(

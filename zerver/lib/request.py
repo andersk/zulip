@@ -131,9 +131,7 @@ class _REQ(Generic[ResultT]):
         assert converter is None or (
             validator is None and str_validator is None
         ), "converter and validator are mutually exclusive"
-        assert (
-            validator is None or str_validator is None
-        ), "validator and str_validator are mutually exclusive"
+        assert validator is None or str_validator is None, "validator and str_validator are mutually exclusive"
 
 
 # This factory function ensures that mypy can correctly analyze REQ.

@@ -32,11 +32,7 @@ class TestBasics(ZulipTestCase):
 
         expected_data = [
             dict(
-                id=sm1.id,
-                message_id=message_id,
-                sender_id=cordelia.id,
-                msg_type="whatever",
-                content="stuff1",
+                id=sm1.id, message_id=message_id, sender_id=cordelia.id, msg_type="whatever", content="stuff1",
             ),
             dict(
                 id=sm2.id, message_id=message_id, sender_id=hamlet.id, msg_type="whatever", content="stuff2",

@@ -44,10 +44,7 @@ class OpsGenieHookTests(WebhookTestCase):
 """.strip()
 
         self.send_and_test_stream_message(
-            "addrecipient",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "addrecipient", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_addtags_alert(self) -> None:
@@ -130,10 +127,7 @@ class OpsGenieHookTests(WebhookTestCase):
 """.strip()
 
         self.send_and_test_stream_message(
-            "customaction",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "customaction", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_delete_alert(self) -> None:

@@ -543,9 +543,7 @@ def apply_event(
             deleted_stream_ids = {stream["stream_id"] for stream in event["streams"]}
             state["streams"] = [s for s in state["streams"] if s["stream_id"] not in deleted_stream_ids]
             state["never_subscribed"] = [
-                stream
-                for stream in state["never_subscribed"]
-                if stream["stream_id"] not in deleted_stream_ids
+                stream for stream in state["never_subscribed"] if stream["stream_id"] not in deleted_stream_ids
             ]
 
         if event["op"] == "update":

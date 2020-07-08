@@ -75,9 +75,7 @@ def is_default_external_field(field_type: int, field_data: ProfileFieldData) -> 
     return True
 
 
-def validate_custom_profile_field(
-    name: str, hint: str, field_type: int, field_data: ProfileFieldData,
-) -> None:
+def validate_custom_profile_field(name: str, hint: str, field_type: int, field_data: ProfileFieldData) -> None:
     # Validate field data
     validate_custom_field_data(field_type, field_data)
 

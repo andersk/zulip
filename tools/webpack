@@ -136,11 +136,7 @@ parser.add_argument(
     help="generate a stub webpack-stats.json file (for backend testing)",
 )
 parser.add_argument(
-    "--quiet",
-    action="store_true",
-    dest="quiet",
-    default=False,
-    help="Minimizes webpack output while running",
+    "--quiet", action="store_true", dest="quiet", default=False, help="Minimizes webpack output while running",
 )
 parser.add_argument(
     "--watch",

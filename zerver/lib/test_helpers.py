@@ -261,9 +261,7 @@ def get_subscription(stream_name: str, user_profile: UserProfile) -> Subscriptio
 
 
 def get_user_messages(user_profile: UserProfile) -> List[Message]:
-    query = (
-        UserMessage.objects.select_related("message").filter(user_profile=user_profile).order_by("message")
-    )
+    query = UserMessage.objects.select_related("message").filter(user_profile=user_profile).order_by("message")
     return [um.message for um in query]
 
 
@@ -297,9 +295,7 @@ class HostRequestMock:
     """A mock request object where get_host() works.  Useful for testing
     routes that use Zulip's subdomains feature"""
 
-    def __init__(
-        self, user_profile: Optional[UserProfile] = None, host: str = settings.EXTERNAL_HOST,
-    ) -> None:
+    def __init__(self, user_profile: Optional[UserProfile] = None, host: str = settings.EXTERNAL_HOST) -> None:
         self.host = host
         self.GET: Dict[str, Any] = {}
         self.POST: Dict[str, Any] = {}
@@ -345,9 +341,7 @@ def instrument_url(f: UrlFuncT) -> UrlFuncT:
         return f
     else:
 
-        def wrapper(
-            self: "ZulipTestCase", url: str, info: Dict[str, Any] = {}, **kwargs: Any
-        ) -> HttpResponse:
+        def wrapper(self: "ZulipTestCase", url: str, info: Dict[str, Any] = {}, **kwargs: Any) -> HttpResponse:
             start = time.time()
             result = f(self, url, info, **kwargs)
             delay = time.time() - start

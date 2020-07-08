@@ -287,9 +287,7 @@ class UserPresenceTests(ZulipTestCase):
 
         self.assertEqual(seconds_usage_between(user_profile, time_zero, third_time).total_seconds(), 1500)
         self.assertEqual(
-            seconds_usage_between(
-                user_profile, time_zero, third_time + timedelta(seconds=10),
-            ).total_seconds(),
+            seconds_usage_between(user_profile, time_zero, third_time + timedelta(seconds=10)).total_seconds(),
             1510,
         )
         self.assertEqual(

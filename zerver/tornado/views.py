@@ -42,9 +42,7 @@ def cleanup_event_queue(
 
 @internal_notify_view(True)
 @has_request_variables
-def get_events_internal(
-    request: HttpRequest, user_profile_id: int = REQ(validator=check_int),
-) -> HttpResponse:
+def get_events_internal(request: HttpRequest, user_profile_id: int = REQ(validator=check_int)) -> HttpResponse:
     user_profile = get_user_profile_by_id(user_profile_id)
     request._requestor_for_logs = user_profile.format_requestor_for_logs()
     process_client(request, user_profile, client_name="internal")

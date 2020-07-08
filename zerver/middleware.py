@@ -297,9 +297,7 @@ class LogRequests(MiddlewareMixin):
         # done as part of this request
         record_request_start_data(request._log_data)
 
-    def process_response(
-        self, request: HttpRequest, response: StreamingHttpResponse,
-    ) -> StreamingHttpResponse:
+    def process_response(self, request: HttpRequest, response: StreamingHttpResponse) -> StreamingHttpResponse:
         if getattr(response, "asynchronous", False):
             # This special Tornado "asynchronous" response is
             # discarded after going through this code path as Tornado
@@ -489,9 +487,7 @@ def alter_content(request: HttpRequest, content: bytes) -> bytes:
 
 
 class FinalizeOpenGraphDescription(MiddlewareMixin):
-    def process_response(
-        self, request: HttpRequest, response: StreamingHttpResponse,
-    ) -> StreamingHttpResponse:
+    def process_response(self, request: HttpRequest, response: StreamingHttpResponse) -> StreamingHttpResponse:
 
         if getattr(request, "placeholder_open_graph_description", None) is not None:
             assert not response.streaming

@@ -171,9 +171,7 @@ def tokenize(text: str) -> List[Token]:
         advance(len(s))
 
         def add_pseudo_end_token(kind: str) -> None:
-            token = Token(
-                kind=kind, s="</" + tag + ">", tag=tag, line=state.line, col=state.col, line_span=1,
-            )
+            token = Token(kind=kind, s="</" + tag + ">", tag=tag, line=state.line, col=state.col, line_span=1)
             tokens.append(token)
 
         if kind == "html_singleton":

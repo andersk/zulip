@@ -43,9 +43,7 @@ def delete_logo_backend(
     # We don't actually delete the logo because it might still
     # be needed if the URL was cached and it is rewrited
     # in any case after next update.
-    do_change_logo_source(
-        user_profile.realm, user_profile.realm.LOGO_DEFAULT, night, acting_user=user_profile,
-    )
+    do_change_logo_source(user_profile.realm, user_profile.realm.LOGO_DEFAULT, night, acting_user=user_profile)
     return json_success()
 
 

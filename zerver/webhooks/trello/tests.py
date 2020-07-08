@@ -67,7 +67,9 @@ class TrelloHookTests(WebhookTestCase):
         self.send_and_test_stream_message("creating_card", "Welcome Board", expected_message)
 
     def test_trello_webhook_when_attachment_was_added_to_card(self) -> None:
-        expected_message = "TomaszKolek added [attachment_name](http://url.com) to [New card](https://trello.com/c/xPKXoSTQ)."
+        expected_message = (
+            "TomaszKolek added [attachment_name](http://url.com) to [New card](https://trello.com/c/xPKXoSTQ)."
+        )
         self.send_and_test_stream_message("adding_attachment_to_card", "Welcome Board", expected_message)
 
     def test_trello_webhook_when_checklist_was_added_to_card(self) -> None:
@@ -93,9 +95,7 @@ class TrelloHookTests(WebhookTestCase):
         self.send_and_test_stream_message("adding_member_to_board", "Welcome Board", expected_message)
 
     def test_trello_webhook_when_list_was_added_to_board(self) -> None:
-        expected_message = (
-            "TomaszKolek added New list list to [Welcome Board](https://trello.com/b/iqXXzYEj)."
-        )
+        expected_message = "TomaszKolek added New list list to [Welcome Board](https://trello.com/b/iqXXzYEj)."
         self.send_and_test_stream_message("adding_new_list_to_board", "Welcome Board", expected_message)
 
     def test_trello_webhook_when_comment_was_added_to_card(self) -> None:

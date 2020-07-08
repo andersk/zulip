@@ -10,8 +10,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="userprofile",
-            name="avatar_version",
-            field=models.PositiveSmallIntegerField(default=1),
+            model_name="userprofile", name="avatar_version", field=models.PositiveSmallIntegerField(default=1),
         ),
     ]

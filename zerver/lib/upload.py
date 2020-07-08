@@ -318,9 +318,7 @@ def upload_image_to_s3(
     if content_type not in INLINE_MIME_TYPES:
         content_disposition = "attachment"
 
-    key.put(
-        Body=contents, Metadata=metadata, ContentType=content_type, ContentDisposition=content_disposition,
-    )
+    key.put(Body=contents, Metadata=metadata, ContentType=content_type, ContentDisposition=content_disposition)
 
 
 def check_upload_within_quota(realm: Realm, uploaded_file_size: int) -> None:
@@ -423,11 +421,7 @@ class S3UploadBackend(ZulipUploadBackend):
         # custom 500px wide version
         resized_medium = resize_avatar(image_data, MEDIUM_AVATAR_SIZE)
         upload_image_to_s3(
-            self.avatar_bucket,
-            s3_file_name + "-medium.png",
-            "image/png",
-            target_user_profile,
-            resized_medium,
+            self.avatar_bucket, s3_file_name + "-medium.png", "image/png", target_user_profile, resized_medium,
         )
 
         resized_data = resize_avatar(image_data)
@@ -910,9 +904,7 @@ def create_attachment(file_name: str, path_id: str, user_profile: UserProfile, f
     return True
 
 
-def upload_message_image_from_request(
-    request: HttpRequest, user_file: File, user_profile: UserProfile,
-) -> str:
+def upload_message_image_from_request(request: HttpRequest, user_file: File, user_profile: UserProfile) -> str:
     uploaded_file_name, uploaded_file_size, content_type = get_file_info(request, user_file)
     return upload_message_file(
         uploaded_file_name, uploaded_file_size, content_type, user_file.read(), user_profile,

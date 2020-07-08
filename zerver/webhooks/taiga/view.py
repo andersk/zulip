@@ -64,8 +64,7 @@ templates = {
         "create": "[{user}]({user_link}) created user story {subject}.",
         "set_assigned_to": "[{user}]({user_link}) assigned user story {subject} to {new}.",
         "unset_assigned_to": "[{user}]({user_link}) unassigned user story {subject}.",
-        "changed_assigned_to": "[{user}]({user_link}) reassigned user story {subject}"
-        " from {old} to {new}.",
+        "changed_assigned_to": "[{user}]({user_link}) reassigned user story {subject}" " from {old} to {new}.",
         "points": "[{user}]({user_link}) changed estimation of user story {subject}.",
         "blocked": "[{user}]({user_link}) blocked user story {subject}.",
         "unblocked": "[{user}]({user_link}) unblocked user story {subject}.",
@@ -262,11 +261,7 @@ def parse_webhook_test(message: Mapping[str, Any]) -> Dict[str, Any]:
     return {
         "type": "webhook_test",
         "event": "test",
-        "values": {
-            "user": get_owner_name(message),
-            "user_link": get_owner_link(message),
-            "end_type": "test",
-        },
+        "values": {"user": get_owner_name(message), "user_link": get_owner_link(message), "end_type": "test"},
     }
 
 

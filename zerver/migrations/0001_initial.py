@@ -387,10 +387,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ("query", models.CharField(db_index=True, max_length=50)),
                 ("count", models.IntegerField()),
                 ("last_visit", models.DateTimeField(verbose_name="last visit")),
-                (
-                    "client",
-                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Client"),
-                ),
+                ("client", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Client")),
                 (
                     "user_profile",
                     models.ForeignKey(
@@ -464,10 +461,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ),
                 ("timestamp", models.DateTimeField(verbose_name="presence changed")),
                 ("status", models.PositiveSmallIntegerField(default=1)),
-                (
-                    "client",
-                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Client"),
-                ),
+                ("client", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Client")),
                 (
                     "user_profile",
                     models.ForeignKey(
@@ -500,9 +494,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
         migrations.AddField(
             model_name="preregistrationuser",
             name="realm",
-            field=models.ForeignKey(
-                null=True, on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm",
-            ),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm"),
         ),
         migrations.AddField(
             model_name="preregistrationuser",
@@ -593,9 +585,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
             model_name="preregistrationuser", name="email", field=models.EmailField(max_length=254),
         ),
         migrations.AlterField(
-            model_name="preregistrationuser",
-            name="streams",
-            field=models.ManyToManyField(to="zerver.Stream"),
+            model_name="preregistrationuser", name="streams", field=models.ManyToManyField(to="zerver.Stream"),
         ),
         migrations.AlterField(
             model_name="pushdevicetoken", name="last_updated", field=models.DateTimeField(auto_now=True),
@@ -636,9 +626,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
             reverse_sql="DROP INDEX upper_userprofile_email_idx;",
         ),
         migrations.AlterField(
-            model_name="userprofile",
-            name="is_active",
-            field=models.BooleanField(db_index=True, default=True),
+            model_name="userprofile", name="is_active", field=models.BooleanField(db_index=True, default=True),
         ),
         migrations.AlterField(
             model_name="userprofile", name="is_bot", field=models.BooleanField(db_index=True, default=False),

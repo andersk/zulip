@@ -40,9 +40,7 @@ def test_generated_curl_examples_for_success(client: Client) -> None:
             unescaped_html = html.unescape(curl_command_html)
             curl_command_text = unescaped_html[len("<p><code>curl\n") : -len("</code></p>")]
 
-            curl_command_text = curl_command_text.replace(
-                "BOT_EMAIL_ADDRESS:BOT_API_KEY", authentication_line,
-            )
+            curl_command_text = curl_command_text.replace("BOT_EMAIL_ADDRESS:BOT_API_KEY", authentication_line)
 
             print("Testing {} ...".format(curl_command_text.split("\n")[0]))
 

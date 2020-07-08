@@ -273,9 +273,7 @@ class NarrowBuilderTest(ZulipTestCase):
             "WHERE sender_id = %(sender_id_1)s AND recipient_id = %(recipient_id_1)s OR sender_id = %(sender_id_2)s AND recipient_id = %(recipient_id_2)s",
         )
 
-    def test_add_term_using_pm_with_operator_not_the_same_user_as_operand_and_negated(
-        self,
-    ) -> None:  # NEGATED
+    def test_add_term_using_pm_with_operator_not_the_same_user_as_operand_and_negated(self) -> None:  # NEGATED
         term = dict(operator="pm-with", operand=self.othello_email, negated=True)
         self._do_add_term_test(
             term,
@@ -284,9 +282,7 @@ class NarrowBuilderTest(ZulipTestCase):
 
     def test_add_term_using_pm_with_operator_the_same_user_as_operand(self) -> None:
         term = dict(operator="pm-with", operand=self.hamlet_email)
-        self._do_add_term_test(
-            term, "WHERE sender_id = %(sender_id_1)s AND recipient_id = %(recipient_id_1)s",
-        )
+        self._do_add_term_test(term, "WHERE sender_id = %(sender_id_1)s AND recipient_id = %(recipient_id_1)s")
 
     def test_add_term_using_pm_with_operator_the_same_user_as_operand_and_negated(self) -> None:  # NEGATED
         term = dict(operator="pm-with", operand=self.hamlet_email, negated=True)
@@ -550,10 +546,7 @@ class IncludeHistoryTest(ZulipTestCase):
         # Verify that with stream.history_public_to_subscribers, subscribed
         # users can access history.
         self.make_stream(
-            "private_stream_2",
-            realm=user_profile.realm,
-            invite_only=True,
-            history_public_to_subscribers=True,
+            "private_stream_2", realm=user_profile.realm, invite_only=True, history_public_to_subscribers=True,
         )
         subscribed_user_profile = self.example_user("cordelia")
         self.subscribe(subscribed_user_profile, "private_stream_2")
@@ -1620,9 +1613,7 @@ class GetOldMessagesTest(ZulipTestCase):
         self.send_stream_message(user, "\u03bb-stream.d")
 
         narrow = [dict(operator="stream", operand="\u03bb-stream")]
-        result = self.get_and_check_messages(
-            dict(num_after=2, narrow=ujson.dumps(narrow)), subdomain="zephyr",
-        )
+        result = self.get_and_check_messages(dict(num_after=2, narrow=ujson.dumps(narrow)), subdomain="zephyr")
 
         messages = get_user_messages(self.mit_user("starnine"))
         stream_messages = [msg for msg in messages if msg.is_stream_message()]
@@ -2338,9 +2329,7 @@ class GetOldMessagesTest(ZulipTestCase):
         self.assertEqual(data["history_limited"], False)
 
         with first_visible_id_as(0):
-            data = self.get_messages_response(
-                anchor=LARGER_THAN_MAX_MESSAGE_ID + 1, num_before=5, num_after=0,
-            )
+            data = self.get_messages_response(anchor=LARGER_THAN_MAX_MESSAGE_ID + 1, num_before=5, num_after=0)
 
         messages = data["messages"]
         self.assert_length(messages, 5)
@@ -2871,22 +2860,19 @@ recipient_id = %(recipient_id_3)s AND upper(subject) = upper(%(param_2)s))\
         sql_template = "SELECT anon_1.message_id, anon_1.flags \nFROM (SELECT message_id, flags \nFROM zerver_usermessage JOIN zerver_message ON zerver_usermessage.message_id = zerver_message.id \nWHERE user_profile_id = {hamlet_id} AND (sender_id = {othello_id} AND recipient_id = {hamlet_recipient} OR sender_id = {hamlet_id} AND recipient_id = {othello_recipient}) AND message_id = 0) AS anon_1 ORDER BY message_id ASC"
         sql = sql_template.format(**query_ids)
         self.common_check_get_messages_query(
-            {"anchor": 0, "num_before": 0, "num_after": 0, "narrow": f'[["pm-with", "{othello_email}"]]'},
-            sql,
+            {"anchor": 0, "num_before": 0, "num_after": 0, "narrow": f'[["pm-with", "{othello_email}"]]'}, sql,
         )
 
         sql_template = "SELECT anon_1.message_id, anon_1.flags \nFROM (SELECT message_id, flags \nFROM zerver_usermessage JOIN zerver_message ON zerver_usermessage.message_id = zerver_message.id \nWHERE user_profile_id = {hamlet_id} AND (sender_id = {othello_id} AND recipient_id = {hamlet_recipient} OR sender_id = {hamlet_id} AND recipient_id = {othello_recipient}) AND message_id = 0) AS anon_1 ORDER BY message_id ASC"
         sql = sql_template.format(**query_ids)
         self.common_check_get_messages_query(
-            {"anchor": 0, "num_before": 1, "num_after": 0, "narrow": f'[["pm-with", "{othello_email}"]]'},
-            sql,
+            {"anchor": 0, "num_before": 1, "num_after": 0, "narrow": f'[["pm-with", "{othello_email}"]]'}, sql,
         )
 
         sql_template = "SELECT anon_1.message_id, anon_1.flags \nFROM (SELECT message_id, flags \nFROM zerver_usermessage JOIN zerver_message ON zerver_usermessage.message_id = zerver_message.id \nWHERE user_profile_id = {hamlet_id} AND (sender_id = {othello_id} AND recipient_id = {hamlet_recipient} OR sender_id = {hamlet_id} AND recipient_id = {othello_recipient}) ORDER BY message_id ASC \n LIMIT 10) AS anon_1 ORDER BY message_id ASC"
         sql = sql_template.format(**query_ids)
         self.common_check_get_messages_query(
-            {"anchor": 0, "num_before": 0, "num_after": 9, "narrow": f'[["pm-with", "{othello_email}"]]'},
-            sql,
+            {"anchor": 0, "num_before": 0, "num_after": 9, "narrow": f'[["pm-with", "{othello_email}"]]'}, sql,
         )
 
         sql_template = "SELECT anon_1.message_id, anon_1.flags \nFROM (SELECT message_id, flags \nFROM zerver_usermessage JOIN zerver_message ON zerver_usermessage.message_id = zerver_message.id \nWHERE user_profile_id = {hamlet_id} AND (flags & 2) != 0 ORDER BY message_id ASC \n LIMIT 10) AS anon_1 ORDER BY message_id ASC"

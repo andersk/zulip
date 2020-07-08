@@ -309,7 +309,9 @@ class GitlabHookTests(WebhookTestCase):
 
     def test_merge_request_closed_event_message(self) -> None:
         expected_topic = "my-awesome-project / MR #2 NEW MR"
-        expected_message = "Tomasz Kolek closed [MR #2](https://gitlab.com/tomaszkolek0/my-awesome-project/merge_requests/2)."
+        expected_message = (
+            "Tomasz Kolek closed [MR #2](https://gitlab.com/tomaszkolek0/my-awesome-project/merge_requests/2)."
+        )
 
         self.send_and_test_stream_message(
             "merge_request_hook__merge_request_closed", expected_topic, expected_message,
@@ -360,7 +362,9 @@ class GitlabHookTests(WebhookTestCase):
 
     def test_merge_request_merged_event_message(self) -> None:
         expected_topic = "my-awesome-project / MR #3 New Merge Request"
-        expected_message = "Tomasz Kolek merged [MR #3](https://gitlab.com/tomaszkolek0/my-awesome-project/merge_requests/3)."
+        expected_message = (
+            "Tomasz Kolek merged [MR #3](https://gitlab.com/tomaszkolek0/my-awesome-project/merge_requests/3)."
+        )
 
         self.send_and_test_stream_message(
             "merge_request_hook__merge_request_merged", expected_topic, expected_message,
@@ -370,17 +374,13 @@ class GitlabHookTests(WebhookTestCase):
         expected_topic = "my-awesome-project"
         expected_message = 'Tomasz Kolek created [Wiki Page "how to"](https://gitlab.com/tomaszkolek0/my-awesome-project/wikis/how-to).'
 
-        self.send_and_test_stream_message(
-            "wiki_page_hook__wiki_page_opened", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("wiki_page_hook__wiki_page_opened", expected_topic, expected_message)
 
     def test_wiki_page_edited_event_message(self) -> None:
         expected_topic = "my-awesome-project"
         expected_message = 'Tomasz Kolek updated [Wiki Page "how to"](https://gitlab.com/tomaszkolek0/my-awesome-project/wikis/how-to).'
 
-        self.send_and_test_stream_message(
-            "wiki_page_hook__wiki_page_edited", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("wiki_page_hook__wiki_page_edited", expected_topic, expected_message)
 
     def test_build_created_event_message(self) -> None:
         expected_topic = "my-awesome-project / master"
@@ -536,7 +536,9 @@ class GitlabHookTests(WebhookTestCase):
 
     def test_system_merge_request_closed_event_message(self) -> None:
         expected_topic = "my-awesome-project / MR #2 NEW MR"
-        expected_message = "Tomasz Kolek closed [MR #2](https://gitlab.com/tomaszkolek0/my-awesome-project/merge_requests/2)."
+        expected_message = (
+            "Tomasz Kolek closed [MR #2](https://gitlab.com/tomaszkolek0/my-awesome-project/merge_requests/2)."
+        )
 
         self.send_and_test_stream_message(
             "system_hook__merge_request_closed", expected_topic, expected_message,
@@ -544,7 +546,9 @@ class GitlabHookTests(WebhookTestCase):
 
     def test_system_merge_request_merged_event_message(self) -> None:
         expected_topic = "my-awesome-project / MR #3 New Merge Request"
-        expected_message = "Tomasz Kolek merged [MR #3](https://gitlab.com/tomaszkolek0/my-awesome-project/merge_requests/3)."
+        expected_message = (
+            "Tomasz Kolek merged [MR #3](https://gitlab.com/tomaszkolek0/my-awesome-project/merge_requests/3)."
+        )
 
         self.send_and_test_stream_message(
             "system_hook__merge_request_merged", expected_topic, expected_message,

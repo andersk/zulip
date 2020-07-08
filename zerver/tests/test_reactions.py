@@ -135,9 +135,7 @@ class ReactionEmojiTest(ZulipTestCase):
         sender = user_profile
 
         # Verify that hamlet did not receive the message.
-        self.assertFalse(
-            UserMessage.objects.filter(user_profile=user_profile, message_id=message_id).exists(),
-        )
+        self.assertFalse(UserMessage.objects.filter(user_profile=user_profile, message_id=message_id).exists())
 
         # Have hamlet react to the message
         reaction_info = {
@@ -697,9 +695,7 @@ class DefaultEmojiReactionTests(EmojiReactionBase):
         user_profile = self.example_user("hamlet")
 
         # Verify that hamlet did not receive the message.
-        self.assertFalse(
-            UserMessage.objects.filter(user_profile=user_profile, message_id=message_id).exists(),
-        )
+        self.assertFalse(UserMessage.objects.filter(user_profile=user_profile, message_id=message_id).exists())
 
         # Have hamlet react to the message
         reaction_info = {

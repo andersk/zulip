@@ -12,10 +12,7 @@ class WordPressHookTests(WebhookTestCase):
         expected_message = "New post published:\n* [New Blog Post](http://example.com\n)"
 
         self.send_and_test_stream_message(
-            "publish_post",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "publish_post", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_publish_post_type_not_provided(self) -> None:
@@ -49,10 +46,7 @@ class WordPressHookTests(WebhookTestCase):
         expected_message = "New page published:\n* [New Blog Page](http://example.com\n)"
 
         self.send_and_test_stream_message(
-            "publish_page",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "publish_page", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_user_register(self) -> None:

@@ -48,9 +48,7 @@ class GoogleCodeInTests(WebhookTestCase):
     def test_extend_event_message(self) -> None:
         expected_topic = "student-yqqtag"
         expected_message = "**eeshangarg** extended the deadline for the task [Sails unspread it stopped at kearney](https://codein.withgoogle.com/dashboard/task-instances/6296903092273152/) by 1.0 day(s)."
-        self.send_and_test_stream_message(
-            "task_deadline_extended_by_mentor", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("task_deadline_extended_by_mentor", expected_topic, expected_message)
 
     def test_unassign_event_message(self) -> None:
         expected_topic = "student-yqqtag"

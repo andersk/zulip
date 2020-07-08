@@ -273,11 +273,7 @@ class CodeHandler(BaseHandler):
 
 class QuoteHandler(BaseHandler):
     def __init__(
-        self,
-        processor: Any,
-        output: MutableSequence[str],
-        fence: str,
-        default_language: Optional[str] = None,
+        self, processor: Any, output: MutableSequence[str], fence: str, default_language: Optional[str] = None,
     ) -> None:
         self.processor = processor
         self.output = output

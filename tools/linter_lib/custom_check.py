@@ -112,10 +112,7 @@ js_rules = RuleList(
             "pattern": r".*blueslip.warning\(.*",
             "description": "The module blueslip has no function warning, try using blueslip.warn",
         },
-        {
-            "pattern": r"i18n\.t\([^)]+[^,\{\)]$",
-            "description": "i18n string should not be a multiline string",
-        },
+        {"pattern": r"i18n\.t\([^)]+[^,\{\)]$", "description": "i18n string should not be a multiline string"},
         {
             "pattern": r"""i18n\.t\(['"].+?['"]\s*\+""",
             "description": "Do not concatenate arguments within i18n.t()",
@@ -379,10 +376,7 @@ python_rules = RuleList(
             "description": "Don't use datetime in backend code.\n"
             "See https://zulip.readthedocs.io/en/latest/contributing/code-style.html#naive-datetime-objects",
         },
-        {
-            "pattern": "from os.path",
-            "description": "Don't use from when importing from the standard library",
-        },
+        {"pattern": "from os.path", "description": "Don't use from when importing from the standard library"},
         {"pattern": "import os.path", "description": "Use import os instead of import os.path"},
         {
             "pattern": r"(logging|logger)\.warn\W",
@@ -769,24 +763,12 @@ handlebars_rules = RuleList(
             "pattern": "{{ t (\"|')",
             "description": 'There should be no spaces before the "t" in a translation tag.',
         },
-        {
-            "pattern": r"{{t '.*' }}[\.\?!]",
-            "description": "Period should be part of the translatable string.",
-        },
-        {
-            "pattern": r'{{t ".*" }}[\.\?!]',
-            "description": "Period should be part of the translatable string.",
-        },
+        {"pattern": r"{{t '.*' }}[\.\?!]", "description": "Period should be part of the translatable string."},
+        {"pattern": r'{{t ".*" }}[\.\?!]', "description": "Period should be part of the translatable string."},
         {"pattern": r"{{/tr}}[\.\?!]", "description": "Period should be part of the translatable string."},
         {"pattern": "{{t (\"|') ", "description": "Translatable strings should not have leading spaces."},
-        {
-            "pattern": "{{t '[^']+ ' }}",
-            "description": "Translatable strings should not have trailing spaces.",
-        },
-        {
-            "pattern": '{{t "[^"]+ " }}',
-            "description": "Translatable strings should not have trailing spaces.",
-        },
+        {"pattern": "{{t '[^']+ ' }}", "description": "Translatable strings should not have trailing spaces."},
+        {"pattern": '{{t "[^"]+ " }}', "description": "Translatable strings should not have trailing spaces."},
     ],
 )
 
@@ -798,10 +780,7 @@ jinja2_rules = RuleList(
             "pattern": r"{% endtrans %}[\.\?!]",
             "description": "Period should be part of the translatable string.",
         },
-        {
-            "pattern": r"{{ _(.+) }}[\.\?!]",
-            "description": "Period should be part of the translatable string.",
-        },
+        {"pattern": r"{{ _(.+) }}[\.\?!]", "description": "Period should be part of the translatable string."},
     ],
 )
 

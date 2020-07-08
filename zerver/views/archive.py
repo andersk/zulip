@@ -58,9 +58,7 @@ def archive(request: HttpRequest, stream_id: int, topic_name: str) -> HttpRespon
             status_message = msg.rendered_content[4 + 3 : -4]
         context = {
             "sender_full_name": msg.sender.full_name,
-            "timestampstr": datetime_to_timestamp(
-                msg.last_edit_time if msg.last_edit_time else msg.date_sent,
-            ),
+            "timestampstr": datetime_to_timestamp(msg.last_edit_time if msg.last_edit_time else msg.date_sent),
             "message_content": msg.rendered_content,
             "avatar_url": get_gravatar_url(msg.sender.delivery_email, 1),
             "include_sender": include_sender,

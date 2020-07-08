@@ -254,9 +254,7 @@ def setup_emoji_farms(cache_path: str, emoji_data: List[Dict[str, Any]]) -> None
         alt_name = alt_name or emojiset
 
         # Copy individual emoji images from npm packages.
-        src_emoji_farm = os.path.join(
-            NODE_MODULES_PATH, "emoji-datasource-" + emojiset, "img", alt_name, "64",
-        )
+        src_emoji_farm = os.path.join(NODE_MODULES_PATH, "emoji-datasource-" + emojiset, "img", alt_name, "64")
         target_emoji_farm = os.path.join(cache_path, "images-" + emojiset + "-64")
         os.makedirs(target_emoji_farm, exist_ok=True)
         print("Copying individual image files...")
@@ -286,17 +284,13 @@ def setup_emoji_farms(cache_path: str, emoji_data: List[Dict[str, Any]]) -> None
         setup_emoji_farm(emojiset, emoji_data)
 
     # Setup old google "blobs" emojiset.
-    GOOGLE_BLOB_EMOJI_DATA_PATH = os.path.join(
-        NODE_MODULES_PATH, "emoji-datasource-google-blob", "emoji.json",
-    )
+    GOOGLE_BLOB_EMOJI_DATA_PATH = os.path.join(NODE_MODULES_PATH, "emoji-datasource-google-blob", "emoji.json")
     with open(GOOGLE_BLOB_EMOJI_DATA_PATH) as fp:
         blob_emoji_data = ujson.load(fp)
     setup_emoji_farm("google-blob", blob_emoji_data, "google")
 
 
-def setup_old_emoji_farm(
-    cache_path: str, emoji_map: Dict[str, str], emoji_data: List[Dict[str, Any]],
-) -> None:
+def setup_old_emoji_farm(cache_path: str, emoji_map: Dict[str, str], emoji_data: List[Dict[str, Any]]) -> None:
     # Code for setting up old emoji farm.
     os.chdir(cache_path)
     emoji_cache_path = os.path.join(cache_path, "images", "emoji")

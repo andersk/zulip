@@ -87,9 +87,7 @@ def register_zoom_user(request: HttpRequest) -> HttpResponse:
 @has_request_variables
 def complete_zoom_user(
     request: HttpRequest,
-    state: Dict[str, str] = REQ(
-        validator=check_dict([("realm", check_string)], value_validator=check_string),
-    ),
+    state: Dict[str, str] = REQ(validator=check_dict([("realm", check_string)], value_validator=check_string)),
 ) -> HttpResponse:
     if get_subdomain(request) != state["realm"]:
         return redirect(urljoin(get_realm(state["realm"]).uri, request.get_full_path()))
@@ -163,9 +161,7 @@ def get_bigbluebutton_url(request: HttpRequest, user_profile: UserProfile) -> Ht
     # https://docs.bigbluebutton.org/dev/api.html#create for reference on the api calls
     # https://docs.bigbluebutton.org/dev/api.html#usage for reference for checksum
     id = "zulip-" + str(random.randint(100000000000, 999999999999))
-    password = "".join(
-        random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(10)
-    )
+    password = "".join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(10))
     checksum = hashlib.sha1(
         (
             "create"
@@ -182,11 +178,7 @@ def get_bigbluebutton_url(request: HttpRequest, user_profile: UserProfile) -> Ht
     url = add_query_to_redirect_url(
         "/calls/bigbluebutton/join",
         urlencode(
-            {
-                "meeting_id": '"' + id + '"',
-                "password": '"' + password + '"',
-                "checksum": '"' + checksum + '"',
-            },
+            {"meeting_id": '"' + id + '"', "password": '"' + password + '"', "checksum": '"' + checksum + '"'},
         ),
     )
     return json_success({"url": url})

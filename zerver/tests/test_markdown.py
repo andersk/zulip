@@ -1794,9 +1794,7 @@ class MarkdownTest(ZulipTestCase):
         content = "@_**Atomic #123**"
         self.assertEqual(
             render_markdown(msg, content),
-            '<p><span class="user-mention silent" '
-            f'data-user-id="{test_user.id}">'
-            "Atomic #123</span></p>",
+            '<p><span class="user-mention silent" ' f'data-user-id="{test_user.id}">' "Atomic #123</span></p>",
         )
         self.assertEqual(msg.mentions_user_ids, set())
 
@@ -1903,9 +1901,7 @@ class MarkdownTest(ZulipTestCase):
         self.create_user_group_for_test("support")
         self.login("hamlet")
 
-        msg_id = self.send_stream_message(
-            sender_user_profile, "Denmark", topic_name="editing", content="test",
-        )
+        msg_id = self.send_stream_message(sender_user_profile, "Denmark", topic_name="editing", content="test")
 
         def update_message_and_check_flag(content: str, mentioned: bool) -> None:
             result = self.client_patch(
@@ -2266,18 +2262,14 @@ class MarkdownTest(ZulipTestCase):
 class MarkdownApiTests(ZulipTestCase):
     def test_render_message_api(self) -> None:
         content = "That is a **bold** statement"
-        result = self.api_post(
-            self.example_user("othello"), "/api/v1/messages/render", dict(content=content),
-        )
+        result = self.api_post(self.example_user("othello"), "/api/v1/messages/render", dict(content=content))
         self.assert_json_success(result)
         self.assertEqual(result.json()["rendered"], "<p>That is a <strong>bold</strong> statement</p>")
 
     def test_render_mention_stream_api(self) -> None:
         """Determines whether we're correctly passing the realm context"""
         content = "This mentions #**Denmark** and @**King Hamlet**."
-        result = self.api_post(
-            self.example_user("othello"), "/api/v1/messages/render", dict(content=content),
-        )
+        result = self.api_post(self.example_user("othello"), "/api/v1/messages/render", dict(content=content))
         self.assert_json_success(result)
         user_id = self.example_user("hamlet").id
         stream_id = get_stream("Denmark", get_realm("zulip")).id

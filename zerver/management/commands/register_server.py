@@ -67,9 +67,7 @@ class Command(ZulipBaseCommand):
         print("")
 
         if not options["agree_to_terms_of_service"] and not options["rotate_key"]:
-            print(
-                "To register, you must agree to the Zulipchat Terms of Service: " "https://zulip.com/terms/",
-            )
+            print("To register, you must agree to the Zulipchat Terms of Service: " "https://zulip.com/terms/")
             tos_prompt = input("Do you agree to the Terms of Service? [Y/n] ")
             print("")
             if not (tos_prompt.lower() == "y" or tos_prompt.lower() == "" or tos_prompt.lower() == "yes"):
@@ -100,13 +98,6 @@ class Command(ZulipBaseCommand):
             if options["rotate_key"]:
                 print(f"Success! Updating {SECRETS_FILENAME} with the new key...")
                 subprocess.check_call(
-                    [
-                        "crudini",
-                        "--set",
-                        SECRETS_FILENAME,
-                        "secrets",
-                        "zulip_org_key",
-                        request["new_org_key"],
-                    ],
+                    ["crudini", "--set", SECRETS_FILENAME, "secrets", "zulip_org_key", request["new_org_key"]],
                 )
             print("Mobile Push Notification Service registration successfully updated!")

@@ -694,13 +694,7 @@ def convert_slack_workspace_messages(
         if len(message_data) == 0:
             break
 
-        (
-            zerver_message,
-            zerver_usermessage,
-            attachment,
-            uploads,
-            reactions,
-        ) = channel_message_to_zerver_message(
+        zerver_message, zerver_usermessage, attachment, uploads, reactions = channel_message_to_zerver_message(
             realm_id,
             users,
             slack_user_id_to_zulip_user_id,

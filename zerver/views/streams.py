@@ -137,9 +137,7 @@ def check_if_removing_someone_else(
 
 
 @require_realm_admin
-def deactivate_stream_backend(
-    request: HttpRequest, user_profile: UserProfile, stream_id: int,
-) -> HttpResponse:
+def deactivate_stream_backend(request: HttpRequest, user_profile: UserProfile, stream_id: int) -> HttpResponse:
     stream = access_stream_for_delete_or_update(user_profile, stream_id)
     do_deactivate_stream(stream, acting_user=user_profile)
     return json_success()

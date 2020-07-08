@@ -27,9 +27,7 @@ def email_page(request: HttpRequest) -> HttpResponse:
             content = f.read()
     except FileNotFoundError:
         content = ""
-    return render(
-        request, "zerver/email_log.html", {"log": content, "forward_address": get_forward_address()},
-    )
+    return render(request, "zerver/email_log.html", {"log": content, "forward_address": get_forward_address()})
 
 
 def clear_emails(request: HttpRequest) -> HttpResponse:

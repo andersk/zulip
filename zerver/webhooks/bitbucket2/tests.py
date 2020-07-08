@@ -80,9 +80,7 @@ class Bitbucket2HookTests(WebhookTestCase):
 
     def test_bitbucket2_on_remove_branch_event(self) -> None:
         expected_message = "kolaszek deleted branch master."
-        self.send_and_test_stream_message(
-            "remove_branch", self.EXPECTED_TOPIC_BRANCH_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("remove_branch", self.EXPECTED_TOPIC_BRANCH_EVENTS, expected_message)
 
     def test_bitbucket2_on_fork_event(self) -> None:
         expected_message = "User Tomasz(login: kolaszek) forked the repository into [kolaszek/repository-name2](https://bitbucket.org/kolaszek/repository-name2)."

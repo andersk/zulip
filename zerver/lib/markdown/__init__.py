@@ -1189,9 +1189,7 @@ class InlineInterestingLinkProcessor(markdown.treeprocessors.Treeprocessor):
             if self.is_image(url):
                 image_source = self.corrected_image_source(url)
                 if image_source is not None:
-                    found_url = ResultWithFamily(
-                        family=found_url.family, result=(image_source, image_source),
-                    )
+                    found_url = ResultWithFamily(family=found_url.family, result=(image_source, image_source))
                 self.handle_image_inlining(root, found_url)
                 continue
 
@@ -1629,9 +1627,7 @@ class MarkdownListPreprocessor(markdown.preprocessors.Preprocessor):
             li1 = self.LI_RE.match(lines[i])
             li2 = self.LI_RE.match(lines[i + 1])
             if not in_code_fence and lines[i]:
-                if (li2 and not li1) or (
-                    li1 and li2 and (len(li1.group(1)) == 1) != (len(li2.group(1)) == 1)
-                ):
+                if (li2 and not li1) or (li1 and li2 and (len(li1.group(1)) == 1) != (len(li2.group(1)) == 1)):
                     copy.insert(i + inserts + 1, "")
                     inserts += 1
         return copy
@@ -2145,10 +2141,7 @@ def maybe_update_markdown_engines(realm_filters_key: Optional[int], email_gatewa
         make_md_engine(ZEPHYR_MIRROR_MARKDOWN_KEY, False)
     else:
         realm_filters = realm_filters_for_realm(realm_filters_key)
-        if (
-            realm_filters_key not in realm_filter_data
-            or realm_filter_data[realm_filters_key] != realm_filters
-        ):
+        if realm_filters_key not in realm_filter_data or realm_filter_data[realm_filters_key] != realm_filters:
             # Realm filters data has changed, update `realm_filter_data` and any
             # of the existing markdown engines using this set of realm filters.
             realm_filter_data[realm_filters_key] = realm_filters

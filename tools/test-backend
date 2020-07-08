@@ -280,9 +280,7 @@ def main() -> None:
         dest="rerun",
         action="store_true",
         default=False,
-        help=(
-            "Run the tests which failed the last time " "test-backend was run.  Implies --nonfatal-errors."
-        ),
+        help=("Run the tests which failed the last time " "test-backend was run.  Implies --nonfatal-errors."),
     )
     parser.add_argument(
         "--include-webhooks",

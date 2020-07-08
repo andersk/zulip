@@ -158,9 +158,7 @@ def get_update_description_body(payload: Dict[str, Any], entity: str) -> str:
         "entity": entity,
         "new": desc["new"],
         "old": desc["old"],
-        "name_template": get_name_template(entity).format(
-            name=action["name"], app_url=action.get("app_url"),
-        ),
+        "name_template": get_name_template(entity).format(name=action["name"], app_url=action.get("app_url")),
     }
 
     if kwargs["new"] and kwargs["old"]:
@@ -215,9 +213,7 @@ def get_update_name_body(payload: Dict[str, Any], entity: str) -> str:
         "entity": entity,
         "new": name["new"],
         "old": name["old"],
-        "name_template": get_name_template(entity).format(
-            name=action["name"], app_url=action.get("app_url"),
-        ),
+        "name_template": get_name_template(entity).format(name=action["name"], app_url=action.get("app_url")),
     }
 
     return NAME_CHANGED_TEMPLATE.format(**kwargs)

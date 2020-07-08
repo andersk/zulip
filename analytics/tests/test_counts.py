@@ -1061,9 +1061,7 @@ class TestCountStats(AnalyticsTestCase):
             UserCount, ["value", "user"], [[61, user2], [121, user3], [24 * 60, user4], [1, user6]],
         )
         self.assertTableState(
-            RealmCount,
-            ["value", "realm"],
-            [[61 + 121 + 24 * 60, self.default_realm], [1, self.second_realm]],
+            RealmCount, ["value", "realm"], [[61 + 121 + 24 * 60, self.default_realm], [1, self.second_realm]],
         )
         self.assertTableState(InstallationCount, ["value"], [[61 + 121 + 24 * 60 + 1]])
         self.assertTableState(StreamCount, [], [])
@@ -1230,37 +1228,27 @@ class TestLoggingCountStats(AnalyticsTestCase):
         user = do_create_user("email", "password", self.default_realm, "full_name", "short_name")
         self.assertEqual(
             1,
-            RealmCount.objects.filter(property=property, subgroup=False).aggregate(Sum("value"))[
-                "value__sum"
-            ],
+            RealmCount.objects.filter(property=property, subgroup=False).aggregate(Sum("value"))["value__sum"],
         )
         do_deactivate_user(user)
         self.assertEqual(
             0,
-            RealmCount.objects.filter(property=property, subgroup=False).aggregate(Sum("value"))[
-                "value__sum"
-            ],
+            RealmCount.objects.filter(property=property, subgroup=False).aggregate(Sum("value"))["value__sum"],
         )
         do_activate_user(user)
         self.assertEqual(
             1,
-            RealmCount.objects.filter(property=property, subgroup=False).aggregate(Sum("value"))[
-                "value__sum"
-            ],
+            RealmCount.objects.filter(property=property, subgroup=False).aggregate(Sum("value"))["value__sum"],
         )
         do_deactivate_user(user)
         self.assertEqual(
             0,
-            RealmCount.objects.filter(property=property, subgroup=False).aggregate(Sum("value"))[
-                "value__sum"
-            ],
+            RealmCount.objects.filter(property=property, subgroup=False).aggregate(Sum("value"))["value__sum"],
         )
         do_reactivate_user(user)
         self.assertEqual(
             1,
-            RealmCount.objects.filter(property=property, subgroup=False).aggregate(Sum("value"))[
-                "value__sum"
-            ],
+            RealmCount.objects.filter(property=property, subgroup=False).aggregate(Sum("value"))["value__sum"],
         )
 
     def test_invites_sent(self) -> None:
@@ -1454,9 +1442,7 @@ class TestActiveUsersAudit(AnalyticsTestCase):
         for i in range(4):
             do_fill_count_stat_at_hour(self.stat, self.TIME_ZERO - i * self.DAY)
         self.assertTableState(
-            UserCount,
-            ["subgroup", "end_time"],
-            [["false", self.TIME_ZERO - i * self.DAY] for i in [3, 1, 0]],
+            UserCount, ["subgroup", "end_time"], [["false", self.TIME_ZERO - i * self.DAY] for i in [3, 1, 0]],
         )
 
     # Also tests that aggregation to RealmCount and InstallationCount is

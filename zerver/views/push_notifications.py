@@ -57,9 +57,7 @@ def remove_apns_device_token(
 
 @human_users_only
 @has_request_variables
-def remove_android_reg_id(
-    request: HttpRequest, user_profile: UserProfile, token: str = REQ(),
-) -> HttpResponse:
+def remove_android_reg_id(request: HttpRequest, user_profile: UserProfile, token: str = REQ()) -> HttpResponse:
     validate_token(token, PushDeviceToken.GCM)
     remove_push_device_token(user_profile, token, PushDeviceToken.GCM)
     return json_success()

@@ -132,10 +132,7 @@ class CreateCustomProfileFieldTest(CustomProfileFieldTestCase):
         result = self.client_post(
             "/json/realm/profile_fields",
             info=dict(
-                field_type=field_type,
-                field_data=field_data,
-                hint=invalid_field_hint,
-                name=invalid_field_name,
+                field_type=field_type, field_data=field_data, hint=invalid_field_hint, name=invalid_field_name,
             ),
         )
         self.assert_json_success(result)

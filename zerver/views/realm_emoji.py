@@ -32,9 +32,7 @@ def upload_emoji(
     emoji_file = list(request.FILES.values())[0]
     if (settings.MAX_EMOJI_FILE_SIZE * 1024 * 1024) < emoji_file.size:
         return json_error(
-            _("Uploaded file is larger than the allowed limit of {} MiB").format(
-                settings.MAX_EMOJI_FILE_SIZE,
-            ),
+            _("Uploaded file is larger than the allowed limit of {} MiB").format(settings.MAX_EMOJI_FILE_SIZE),
         )
 
     realm_emoji = check_add_realm_emoji(user_profile.realm, emoji_name, user_profile, emoji_file)

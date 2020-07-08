@@ -510,9 +510,7 @@ INTEGRATIONS: Dict[str, Integration] = {
         "phabricator", "phabricator", ["version-control"], doc="zerver/integrations/phabricator.md",
     ),
     "puppet": Integration("puppet", "puppet", ["deployment"], doc="zerver/integrations/puppet.md"),
-    "redmine": Integration(
-        "redmine", "redmine", ["project-management"], doc="zerver/integrations/redmine.md",
-    ),
+    "redmine": Integration("redmine", "redmine", ["project-management"], doc="zerver/integrations/redmine.md"),
     "rss": Integration("rss", "rss", ["communication"], display_name="RSS", doc="zerver/integrations/rss.md"),
     "svn": Integration("svn", "svn", ["version-control"], doc="zerver/integrations/svn.md"),
     "trac": Integration("trac", "trac", ["project-management"], doc="zerver/integrations/trac.md"),
@@ -605,9 +603,7 @@ DOC_SCREENSHOT_CONFIG: Dict[str, List[ScreenshotConfig]] = {
     ],
     "buildbot": [ScreenshotConfig("started.json")],
     "circleci": [
-        ScreenshotConfig(
-            "github_bionic_production_build_success_multiple_parties.json", image_name="001.png",
-        ),
+        ScreenshotConfig("github_bionic_production_build_success_multiple_parties.json", image_name="001.png"),
         ScreenshotConfig("bitbucket_private_repo_pull_request_failure.json", image_name="002.png"),
     ],
     "clubhouse": [ScreenshotConfig("story_create.json")],

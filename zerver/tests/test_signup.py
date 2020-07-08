@@ -262,8 +262,7 @@ class AddNewUserHistoryTest(ZulipTestCase):
         with patch("zerver.models.get_display_recipient", return_value="recip"):
             self.assertEqual(
                 str(message),
-                "<Message: recip /  / "
-                "<UserProfile: {} {}>>".format(user_profile.email, user_profile.realm),
+                "<Message: recip /  / " "<UserProfile: {} {}>>".format(user_profile.email, user_profile.realm),
             )
 
             user_message = most_recent_usermessage(user_profile)
@@ -793,9 +792,7 @@ https://www.google.com/images/srpr/logo4w.png</a></p>"""
 
 
 class InviteUserBase(ZulipTestCase):
-    def check_sent_emails(
-        self, correct_recipients: List[str], custom_from_name: Optional[str] = None,
-    ) -> None:
+    def check_sent_emails(self, correct_recipients: List[str], custom_from_name: Optional[str] = None) -> None:
         from django.core.mail import outbox
 
         self.assertEqual(len(outbox), len(correct_recipients))
@@ -2245,15 +2242,13 @@ class MultiuseInviteTest(ZulipTestCase):
     def test_multiuse_link_for_inviting_as_owner(self) -> None:
         self.login("iago")
         result = self.client_post(
-            "/json/invites/multiuse",
-            {"invite_as": ujson.dumps(PreregistrationUser.INVITE_AS["REALM_OWNER"])},
+            "/json/invites/multiuse", {"invite_as": ujson.dumps(PreregistrationUser.INVITE_AS["REALM_OWNER"])},
         )
         self.assert_json_error(result, "Must be an organization owner")
 
         self.login("desdemona")
         result = self.client_post(
-            "/json/invites/multiuse",
-            {"invite_as": ujson.dumps(PreregistrationUser.INVITE_AS["REALM_OWNER"])},
+            "/json/invites/multiuse", {"invite_as": ujson.dumps(PreregistrationUser.INVITE_AS["REALM_OWNER"])},
         )
         self.assert_json_success(result)
 
@@ -2398,9 +2393,7 @@ class RealmCreationTest(ZulipTestCase):
 
         result = self.submit_reg_form_for_user(email, password, realm_subdomain=string_id)
         self.assertEqual(result.status_code, 302)
-        self.assertTrue(
-            result["Location"].startswith("http://zuliptest.testserver/accounts/login/subdomain/"),
-        )
+        self.assertTrue(result["Location"].startswith("http://zuliptest.testserver/accounts/login/subdomain/"))
 
         # Make sure the realm is created
         realm = get_realm(string_id)
@@ -3831,9 +3824,7 @@ class UserSignUpTest(InviteUserBase):
         self.assert_in_response("Check your email so we can get started.", result)
 
         with self.settings(
-            POPULATE_PROFILE_VIA_LDAP=True,
-            LDAP_EMAIL_ATTR="mail",
-            AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map,
+            POPULATE_PROFILE_VIA_LDAP=True, LDAP_EMAIL_ATTR="mail", AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map,
         ):
             result = self.submit_reg_form_for_user(
                 email,
@@ -3871,9 +3862,7 @@ class UserSignUpTest(InviteUserBase):
         result = self.client_get(result["Location"])
         self.assert_in_response("Check your email so we can get started.", result)
         with self.settings(
-            POPULATE_PROFILE_VIA_LDAP=True,
-            LDAP_EMAIL_ATTR="mail",
-            AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map,
+            POPULATE_PROFILE_VIA_LDAP=True, LDAP_EMAIL_ATTR="mail", AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map,
         ):
             with patch("zerver.views.registration.logging.warning") as mock_warning:
                 result = self.submit_reg_form_for_user(
@@ -4252,9 +4241,7 @@ class TestLoginPage(ZulipTestCase):
 
         mock_get_host.return_value = "www.testserver.com"
         with self.settings(
-            ROOT_DOMAIN_LANDING_PAGE=True,
-            EXTERNAL_HOST="www.testserver.com",
-            ROOT_SUBDOMAIN_ALIASES=["test"],
+            ROOT_DOMAIN_LANDING_PAGE=True, EXTERNAL_HOST="www.testserver.com", ROOT_SUBDOMAIN_ALIASES=["test"],
         ):
             result = self.client_get("/en/login/")
             self.assertEqual(result.status_code, 302)

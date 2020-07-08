@@ -291,10 +291,7 @@ class DecoratorTestCase(ZulipTestCase):
                 api_result = my_webhook(request)
 
             mock_warning.assert_called_with(
-                "User %s (%s) attempted to access API on wrong subdomain (%s)",
-                webhook_bot_email,
-                "zulip",
-                "",
+                "User %s (%s) attempted to access API on wrong subdomain (%s)", webhook_bot_email, "zulip", "",
             )
 
         with mock.patch("logging.warning") as mock_warning:

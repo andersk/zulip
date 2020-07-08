@@ -755,9 +755,7 @@ class TestMissedMessages(ZulipTestCase):
             f'<img alt=":green_tick:" src="{realm_emoji_url}" title="green tick" style="height: 20px;">',
         ]
         email_subject = "PMs with Othello, the Moor of Venice"
-        self._test_cases(
-            msg_id, verify_body_include, email_subject, send_as_user=False, verify_html_body=True,
-        )
+        self._test_cases(msg_id, verify_body_include, email_subject, send_as_user=False, verify_html_body=True)
 
     def test_emojiset_in_missed_message(self) -> None:
         hamlet = self.example_user("hamlet")
@@ -772,9 +770,7 @@ class TestMissedMessages(ZulipTestCase):
             '<img alt=":hamburger:" src="http://zulip.testserver/static/generated/emoji/images-twitter-64/1f354.png" title="hamburger" style="height: 20px;">',
         ]
         email_subject = "PMs with Othello, the Moor of Venice"
-        self._test_cases(
-            msg_id, verify_body_include, email_subject, send_as_user=False, verify_html_body=True,
-        )
+        self._test_cases(msg_id, verify_body_include, email_subject, send_as_user=False, verify_html_body=True)
 
     def test_stream_link_in_missed_message(self) -> None:
         msg_id = self.send_personal_message(
@@ -784,9 +780,7 @@ class TestMissedMessages(ZulipTestCase):
         href = f"http://zulip.testserver/#narrow/stream/{stream_id}-Verona"
         verify_body_include = [f'<a class="stream" data-stream-id="5" href="{href}">#Verona</a']
         email_subject = "PMs with Othello, the Moor of Venice"
-        self._test_cases(
-            msg_id, verify_body_include, email_subject, send_as_user=False, verify_html_body=True,
-        )
+        self._test_cases(msg_id, verify_body_include, email_subject, send_as_user=False, verify_html_body=True)
 
     def test_sender_name_in_missed_message(self) -> None:
         hamlet = self.example_user("hamlet")

@@ -779,9 +779,7 @@ def do_convert_data(
 
     realm["zerver_subscription"] = zerver_subscription
 
-    zerver_realmemoji = write_emoticon_data(
-        realm_id=realm_id, data_dir=input_data_dir, output_dir=output_dir,
-    )
+    zerver_realmemoji = write_emoticon_data(realm_id=realm_id, data_dir=input_data_dir, output_dir=output_dir)
     realm["zerver_realmemoji"] = zerver_realmemoji
 
     subscriber_map = make_subscriber_map(zerver_subscription=zerver_subscription)

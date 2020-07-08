@@ -286,9 +286,7 @@ class FixUnreadTests(ZulipTestCase):
         realm = get_realm("zulip")
 
         def send_message(stream_name: str, topic_name: str) -> int:
-            msg_id = self.send_stream_message(
-                self.example_user("othello"), stream_name, topic_name=topic_name,
-            )
+            msg_id = self.send_stream_message(self.example_user("othello"), stream_name, topic_name=topic_name)
             um = UserMessage.objects.get(user_profile=user, message_id=msg_id)
             return um.id
 

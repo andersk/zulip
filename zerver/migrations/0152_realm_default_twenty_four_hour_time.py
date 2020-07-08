@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="realm",
-            name="default_twenty_four_hour_time",
-            field=models.BooleanField(default=False),
+            model_name="realm", name="default_twenty_four_hour_time", field=models.BooleanField(default=False),
         ),
     ]

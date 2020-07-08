@@ -774,9 +774,9 @@ class DeferredWorker(QueueProcessingWorker):
             # Send a private message notification letting the user who
             # triggered the export know the export finished.
             with override_language(user_profile.default_language):
-                content = _(
-                    "Your data export is complete and has been uploaded here:\n\n{public_url}",
-                ).format(public_url=public_url)
+                content = _("Your data export is complete and has been uploaded here:\n\n{public_url}").format(
+                    public_url=public_url,
+                )
             internal_send_private_message(
                 realm=user_profile.realm,
                 sender=get_system_bot(settings.NOTIFICATION_BOT),

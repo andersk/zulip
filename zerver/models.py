@@ -685,9 +685,7 @@ class RealmEmoji(models.Model):
             MinLengthValidator(1),
             # The second part of the regex (negative lookbehind) disallows names
             # ending with one of the punctuation characters.
-            RegexValidator(
-                regex=r"^[0-9a-z.\-_]+(?<![.\-_])$", message=_("Invalid characters in emoji name"),
-            ),
+            RegexValidator(regex=r"^[0-9a-z.\-_]+(?<![.\-_])$", message=_("Invalid characters in emoji name")),
         ],
     )
 
@@ -742,9 +740,7 @@ def flush_realm_emoji(sender: Any, **kwargs: Any) -> None:
     realm = kwargs["instance"].realm
     cache_set(get_realm_emoji_cache_key(realm), get_realm_emoji_uncached(realm), timeout=3600 * 24 * 7)
     cache_set(
-        get_active_realm_emoji_cache_key(realm),
-        get_active_realm_emoji_uncached(realm),
-        timeout=3600 * 24 * 7,
+        get_active_realm_emoji_cache_key(realm), get_active_realm_emoji_uncached(realm), timeout=3600 * 24 * 7,
     )
 
 

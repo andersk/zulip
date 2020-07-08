@@ -37,9 +37,7 @@ class TestVideoCall(ZulipTestCase):
         self.assertEqual(response.status_code, 200)
 
         responses.replace(
-            responses.POST,
-            "https://zoom.us/oauth/token",
-            json={"access_token": "newtoken", "expires_in": 60},
+            responses.POST, "https://zoom.us/oauth/token", json={"access_token": "newtoken", "expires_in": 60},
         )
 
         responses.add(

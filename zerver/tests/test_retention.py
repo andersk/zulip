@@ -683,9 +683,7 @@ class MoveMessageToArchiveGeneral(MoveMessageToArchiveBase):
 
         msg_id = self.send_personal_message(self.sender, self.recipient, body)
         # Simulate a reply with the same contents.
-        reply_msg_id = self.send_personal_message(
-            from_user=self.recipient, to_user=self.sender, content=body,
-        )
+        reply_msg_id = self.send_personal_message(from_user=self.recipient, to_user=self.sender, content=body)
 
         usermsg_ids = self._get_usermessage_ids([msg_id])
         attachment_ids = list(Attachment.objects.filter(messages__id=msg_id).values_list("id", flat=True))

@@ -82,9 +82,7 @@ def detect_narrowed_window(
         try:
             # TODO: We should support stream IDs and PMs here as well.
             narrow_stream_name = request.GET.get("stream")
-            (narrow_stream, ignored_rec, ignored_sub) = access_stream_by_name(
-                user_profile, narrow_stream_name,
-            )
+            (narrow_stream, ignored_rec, ignored_sub) = access_stream_by_name(user_profile, narrow_stream_name)
             narrow = [["stream", narrow_stream.name]]
         except Exception:
             logging.warning("Invalid narrow requested, ignoring", extra=dict(request=request))
@@ -156,9 +154,7 @@ def home(request: HttpRequest) -> HttpResponse:
 def home_real(request: HttpRequest) -> HttpResponse:
     # Before we do any real work, check if the app is banned.
     client_user_agent = request.META.get("HTTP_USER_AGENT", "")
-    (insecure_desktop_app, banned_desktop_app, auto_update_broken) = is_outdated_desktop_app(
-        client_user_agent,
-    )
+    (insecure_desktop_app, banned_desktop_app, auto_update_broken) = is_outdated_desktop_app(client_user_agent)
     if banned_desktop_app:
         return render(
             request, "zerver/insecure_desktop_app.html", context={"auto_update_broken": auto_update_broken},

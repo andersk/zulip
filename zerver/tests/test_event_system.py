@@ -548,9 +548,7 @@ class ClientDescriptorsTest(ZulipTestCase):
         self.assertEqual(dct["flags"], [])
         self.assertEqual(dct["is_sender"], False)
 
-        message_event = dict(
-            realm_id=realm.id, stream_name="whatever", sender_queue_id=client.event_queue.id,
-        )
+        message_event = dict(realm_id=realm.id, stream_name="whatever", sender_queue_id=client.event_queue.id)
 
         client_info = get_client_info_for_message_event(message_event, users=[])
         dct = client_info[client.event_queue.id]

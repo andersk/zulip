@@ -22,9 +22,7 @@ class MITNameTest(ZulipTestCase):
     def test_valid_hesiod(self) -> None:
         with mock.patch(
             "DNS.dnslookup",
-            return_value=[
-                ["starnine:*:84233:101:Athena Consulting Exchange User,,,:/mit/starnine:/bin/bash"],
-            ],
+            return_value=[["starnine:*:84233:101:Athena Consulting Exchange User,,,:/mit/starnine:/bin/bash"]],
         ):
             self.assertEqual(
                 compute_mit_user_fullname(self.mit_email("starnine")), "Athena Consulting Exchange User",

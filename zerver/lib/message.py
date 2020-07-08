@@ -1051,9 +1051,9 @@ def estimate_recent_messages(realm: Realm, hours: int) -> int:
     stat = COUNT_STATS["messages_sent:is_bot:hour"]
     d = timezone_now() - datetime.timedelta(hours=hours)
     return (
-        RealmCount.objects.filter(property=stat.property, end_time__gt=d, realm=realm).aggregate(
-            Sum("value"),
-        )["value__sum"]
+        RealmCount.objects.filter(property=stat.property, end_time__gt=d, realm=realm).aggregate(Sum("value"))[
+            "value__sum"
+        ]
         or 0
     )
 
@@ -1084,9 +1084,7 @@ def update_first_visible_message_id(realm: Realm) -> None:
     realm.save(update_fields=["first_visible_message_id"])
 
 
-def get_recent_conversations_recipient_id(
-    user_profile: UserProfile, recipient_id: int, sender_id: int,
-) -> int:
+def get_recent_conversations_recipient_id(user_profile: UserProfile, recipient_id: int, sender_id: int) -> int:
     """Helper for doing lookups of the recipient_id that
     get_recent_private_conversations would have used to record that
     message in its data structure.

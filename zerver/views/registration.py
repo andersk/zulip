@@ -423,10 +423,7 @@ def accounts_register(request: HttpRequest) -> HttpResponse:
         # This dummy_backend check below confirms the user is
         # authenticating to the correct subdomain.
         auth_result = authenticate(
-            username=user_profile.delivery_email,
-            realm=realm,
-            return_data=return_data,
-            use_dummy_backend=True,
+            username=user_profile.delivery_email, realm=realm, return_data=return_data, use_dummy_backend=True,
         )
         if return_data.get("invalid_subdomain"):
             # By construction, this should never happen.
@@ -466,9 +463,7 @@ def accounts_register(request: HttpRequest) -> HttpResponse:
 
 def login_and_go_to_home(request: HttpRequest, user_profile: UserProfile) -> HttpResponse:
     mobile_flow_otp = get_expirable_session_var(request.session, "registration_mobile_flow_otp", delete=True)
-    desktop_flow_otp = get_expirable_session_var(
-        request.session, "registration_desktop_flow_otp", delete=True,
-    )
+    desktop_flow_otp = get_expirable_session_var(request.session, "registration_desktop_flow_otp", delete=True)
     if mobile_flow_otp is not None:
         return finish_mobile_flow(request, user_profile, mobile_flow_otp)
     elif desktop_flow_otp is not None:

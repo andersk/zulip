@@ -595,9 +595,9 @@ class ImportExportTest(ZulipTestCase):
         public_stream_recipients = Recipient.objects.filter(
             type_id__in=public_stream_ids, type=Recipient.STREAM,
         )
-        public_stream_message_ids = Message.objects.filter(
-            recipient__in=public_stream_recipients,
-        ).values_list("id", flat=True)
+        public_stream_message_ids = Message.objects.filter(recipient__in=public_stream_recipients).values_list(
+            "id", flat=True,
+        )
 
         # Messages from Private Stream C are not exported since no member gave consent
         private_stream_ids = Stream.objects.filter(name__in=["Private A", "Private B"]).values_list(

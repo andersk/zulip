@@ -386,12 +386,7 @@ def process_raw_message_batch(
         )
         zerver_message.append(message)
         build_reactions(
-            realm_id,
-            total_reactions,
-            raw_message["reactions"],
-            message_id,
-            user_id_mapper,
-            zerver_realmemoji,
+            realm_id, total_reactions, raw_message["reactions"], message_id, user_id_mapper, zerver_realmemoji,
         )
 
     zerver_usermessage = make_user_messages(

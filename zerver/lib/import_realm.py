@@ -232,9 +232,7 @@ def get_huddles_from_subscription(data: TableData, table: TableName) -> None:
     Extract the IDs of the user_profiles involved in a huddle from the subscription object
     This helps to generate a unique huddle hash from the updated user_profile ids
     """
-    id_map_to_list["huddle_to_user_list"] = {
-        value: [] for value in ID_MAP["recipient_to_huddle_map"].values()
-    }
+    id_map_to_list["huddle_to_user_list"] = {value: [] for value in ID_MAP["recipient_to_huddle_map"].values()}
 
     for subscription in data[table]:
         if subscription["recipient"] in ID_MAP["recipient_to_huddle_map"]:
@@ -936,12 +934,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
         data, "zerver_recipient", "type_id", related_table="stream", recipient_field=True, id_field=True,
     )
     re_map_foreign_keys(
-        data,
-        "zerver_recipient",
-        "type_id",
-        related_table="user_profile",
-        recipient_field=True,
-        id_field=True,
+        data, "zerver_recipient", "type_id", related_table="user_profile", recipient_field=True, id_field=True,
     )
     re_map_foreign_keys(
         data, "zerver_recipient", "type_id", related_table="huddle", recipient_field=True, id_field=True,

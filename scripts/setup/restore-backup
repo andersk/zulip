@@ -60,9 +60,7 @@ def restore_backup(tarball_file: IO[bytes]) -> None:
 
         assert not any("|" in name or "|" in path for name, path in paths)
         transform_args = [
-            r"--transform=s|^zulip-backup/{}(/.*)?$|{}\1|x".format(
-                re.escape(name), path.replace("\\", r"\\"),
-            )
+            r"--transform=s|^zulip-backup/{}(/.*)?$|{}\1|x".format(re.escape(name), path.replace("\\", r"\\"))
             for name, path in paths
         ]
 

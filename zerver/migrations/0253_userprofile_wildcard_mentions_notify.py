@@ -11,9 +11,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="userprofile",
-            name="wildcard_mentions_notify",
-            field=models.BooleanField(default=True),
+            model_name="userprofile", name="wildcard_mentions_notify", field=models.BooleanField(default=True),
         ),
         migrations.AddField(
             model_name="subscription",

@@ -78,9 +78,7 @@ class ChangeSettingsTest(ZulipTestCase):
         # This is one of the few places we log in directly
         # with Django's client (to test the password change
         # with as few moving parts as possible).
-        self.assertTrue(
-            self.client.login(username=user.delivery_email, password="foobar1", realm=user.realm),
-        )
+        self.assertTrue(self.client.login(username=user.delivery_email, password="foobar1", realm=user.realm))
         self.assert_logged_in_user_id(user.id)
 
     def test_password_change_check_strength(self) -> None:
@@ -215,9 +213,7 @@ class ChangeSettingsTest(ZulipTestCase):
                 # We're over the limit, so we'll get blocked even with the correct password.
                 result = self.client_patch(
                     "/json/settings",
-                    dict(
-                        old_password=initial_password(self.example_email("hamlet")), new_password="ignored",
-                    ),
+                    dict(old_password=initial_password(self.example_email("hamlet")), new_password="ignored"),
                 )
                 self.assert_json_error(result, "You're making too many attempts! Try again in 10 seconds.")
 
@@ -225,9 +221,7 @@ class ChangeSettingsTest(ZulipTestCase):
             with mock.patch("time.time", return_value=start_time + 11):
                 json_result = self.client_patch(
                     "/json/settings",
-                    dict(
-                        old_password=initial_password(self.example_email("hamlet")), new_password="foobar1",
-                    ),
+                    dict(old_password=initial_password(self.example_email("hamlet")), new_password="foobar1"),
                 )
                 self.assert_json_success(json_result)
 

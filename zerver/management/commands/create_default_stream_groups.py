@@ -17,12 +17,7 @@ Create default stream groups which the users can choose during sign up.
         self.add_realm_args(parser, True)
 
         parser.add_argument(
-            "-n",
-            "--name",
-            dest="name",
-            type=str,
-            required=True,
-            help="Name of the group you want to create.",
+            "-n", "--name", dest="name", type=str, required=True, help="Name of the group you want to create.",
         )
 
         parser.add_argument(

@@ -38,9 +38,7 @@ urls = [
         serve,
         {"document_root": os.path.join(settings.DEPLOY_ROOT, "var/casper"), "show_indexes": True},
     ),
-    path(
-        "docs/<path:path>", serve, {"document_root": os.path.join(settings.DEPLOY_ROOT, "docs/_build/html")},
-    ),
+    path("docs/<path:path>", serve, {"document_root": os.path.join(settings.DEPLOY_ROOT, "docs/_build/html")}),
     # The special no-password login endpoint for development
     path(
         "devlogin/",

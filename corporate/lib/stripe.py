@@ -76,20 +76,7 @@ def unsign_string(signed_string: str, salt: str) -> str:
 def add_months(dt: datetime, months: int) -> datetime:
     assert months >= 0
     # It's fine that the max day in Feb is 28 for leap years.
-    MAX_DAY_FOR_MONTH = {
-        1: 31,
-        2: 28,
-        3: 31,
-        4: 30,
-        5: 31,
-        6: 30,
-        7: 31,
-        8: 31,
-        9: 30,
-        10: 31,
-        11: 30,
-        12: 31,
-    }
+    MAX_DAY_FOR_MONTH = {1: 31, 2: 28, 3: 31, 4: 30, 5: 31, 6: 30, 7: 31, 8: 31, 9: 30, 10: 31, 11: 30, 12: 31}
     year = dt.year
     month = dt.month + months
     while month > 12:
@@ -200,11 +187,7 @@ def catch_stripe_errors(func: CallableT) -> CallableT:
         except stripe.error.StripeError as e:
             err = e.json_body.get("error", {})
             billing_logger.error(
-                "Stripe error: %s %s %s %s",
-                e.http_status,
-                err.get("type"),
-                err.get("code"),
-                err.get("param"),
+                "Stripe error: %s %s %s %s", e.http_status, err.get("type"), err.get("code"), err.get("param"),
             )
             if isinstance(e, stripe.error.CardError):
                 # TODO: Look into i18n for this
@@ -545,9 +528,7 @@ def process_initial_upgrade(
     do_change_plan_type(realm, Realm.STANDARD)
 
 
-def update_license_ledger_for_automanaged_plan(
-    realm: Realm, plan: CustomerPlan, event_time: datetime,
-) -> None:
+def update_license_ledger_for_automanaged_plan(realm: Realm, plan: CustomerPlan, event_time: datetime) -> None:
     new_plan, last_ledger_entry = make_end_of_cycle_updates_if_needed(plan, event_time)
     if last_ledger_entry is None:
         return
@@ -557,10 +538,7 @@ def update_license_ledger_for_automanaged_plan(
     licenses = max(licenses_at_next_renewal, last_ledger_entry.licenses)
 
     LicenseLedger.objects.create(
-        plan=plan,
-        event_time=event_time,
-        licenses=licenses,
-        licenses_at_next_renewal=licenses_at_next_renewal,
+        plan=plan, event_time=event_time, licenses=licenses, licenses_at_next_renewal=licenses_at_next_renewal,
     )
 
 

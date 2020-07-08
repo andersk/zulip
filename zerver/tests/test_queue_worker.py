@@ -94,9 +94,7 @@ class WorkerTest(ZulipTestCase):
                     worker.start()
                 except AbortLoop:
                     pass
-                activity_records = UserActivity.objects.filter(
-                    user_profile=user.id, client=get_client("ios"),
-                )
+                activity_records = UserActivity.objects.filter(user_profile=user.id, client=get_client("ios"))
                 self.assertEqual(len(activity_records), 1)
                 self.assertEqual(activity_records[0].count, 2)
 
@@ -112,9 +110,7 @@ class WorkerTest(ZulipTestCase):
                     worker.start()
                 except AbortLoop:
                     pass
-                activity_records = UserActivity.objects.filter(
-                    user_profile=user.id, client=get_client("ios"),
-                )
+                activity_records = UserActivity.objects.filter(user_profile=user.id, client=get_client("ios"))
                 self.assertEqual(len(activity_records), 1)
                 self.assertEqual(activity_records[0].count, 3)
 
@@ -269,9 +265,7 @@ class WorkerTest(ZulipTestCase):
         stream_to_address = encode_email_address(stream)
         data = [
             dict(
-                msg_base64=base64.b64encode(b"\xf3test").decode(),
-                time=time.time(),
-                rcpt_to=stream_to_address,
+                msg_base64=base64.b64encode(b"\xf3test").decode(), time=time.time(), rcpt_to=stream_to_address,
             ),
         ] * 3
         for element in data:
@@ -295,9 +289,7 @@ class WorkerTest(ZulipTestCase):
         stream_to_address = encode_email_address(stream)
         data = [
             dict(
-                msg_base64=base64.b64encode(b"\xf3test").decode(),
-                time=time.time(),
-                rcpt_to=stream_to_address,
+                msg_base64=base64.b64encode(b"\xf3test").decode(), time=time.time(), rcpt_to=stream_to_address,
             ),
         ] * 5
         for element in data:
@@ -367,11 +359,9 @@ class WorkerTest(ZulipTestCase):
         with simulated_queue_client(lambda: fake_client):
             worker = queue_processors.EmailSendingWorker()
             worker.setup()
-            with patch(
-                "zerver.lib.send_email.build_email", side_effect=smtplib.SMTPServerDisconnected,
-            ), patch("zerver.lib.queue.queue_json_publish", side_effect=fake_publish), patch(
-                "logging.exception",
-            ):
+            with patch("zerver.lib.send_email.build_email", side_effect=smtplib.SMTPServerDisconnected), patch(
+                "zerver.lib.queue.queue_json_publish", side_effect=fake_publish,
+            ), patch("logging.exception"):
                 worker.start()
 
         self.assertEqual(data["failed_tries"], 1 + MAX_REQUEST_RETRIES)

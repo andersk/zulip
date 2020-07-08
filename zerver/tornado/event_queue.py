@@ -784,8 +784,7 @@ def missedmessage_hook(user_profile_id: int, client: ClientDescriptor, last_for_
         message_id = event["message"]["id"]
         # Pass on the information on whether a push or email notification was already sent.
         already_notified = dict(
-            push_notified=event.get("push_notified", False),
-            email_notified=event.get("email_notified", False),
+            push_notified=event.get("push_notified", False), email_notified=event.get("email_notified", False),
         )
         maybe_enqueue_notifications(
             user_profile_id,

@@ -37,9 +37,7 @@ def guess_zulip_user_from_harbor(harbor_username: str, realm: Realm) -> Optional
         return None
 
 
-def handle_push_image_event(
-    payload: Dict[str, Any], user_profile: UserProfile, operator_username: str,
-) -> str:
+def handle_push_image_event(payload: Dict[str, Any], user_profile: UserProfile, operator_username: str) -> str:
     image_name = payload["event_data"]["repository"]["repo_full_name"]
     image_tag = payload["event_data"]["resources"][0]["tag"]
 

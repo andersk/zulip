@@ -202,9 +202,7 @@ def get_simple_pr_body(payload: Dict[str, Any], action: str, include_title: Opti
     )
 
 
-def get_pr_opened_or_modified_body(
-    payload: Dict[str, Any], action: str, include_title: Optional[bool],
-) -> str:
+def get_pr_opened_or_modified_body(payload: Dict[str, Any], action: str, include_title: Optional[bool]) -> str:
     pr = payload["pullRequest"]
     description = pr.get("description")
     assignees_string = get_assignees_string(pr)

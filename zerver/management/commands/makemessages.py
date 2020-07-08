@@ -40,9 +40,7 @@ from django.core.management.commands import makemessages
 from django.template.base import BLOCK_TAG_END, BLOCK_TAG_START
 from django.utils.translation import template
 
-strip_whitespace_right = re.compile(
-    f"({BLOCK_TAG_START}-?\\s*(trans|pluralize).*?-{BLOCK_TAG_END})\\s+", re.U,
-)
+strip_whitespace_right = re.compile(f"({BLOCK_TAG_START}-?\\s*(trans|pluralize).*?-{BLOCK_TAG_END})\\s+", re.U)
 strip_whitespace_left = re.compile(
     f"\\s+({BLOCK_TAG_START}-\\s*(endtrans|pluralize).*?-?{BLOCK_TAG_END})", re.U,
 )
@@ -138,9 +136,7 @@ class Command(makemessages.Command):
         template.block_re = re.compile(
             template.block_re.pattern + "|" + r"""^-?\s*trans(?:\s+(?!'|")(?=.*?=.*?)|\s*-?$)""",
         )
-        template.plural_re = re.compile(
-            template.plural_re.pattern + "|" + r"""^-?\s*pluralize(?:\s+.+|-?$)""",
-        )
+        template.plural_re = re.compile(template.plural_re.pattern + "|" + r"""^-?\s*pluralize(?:\s+.+|-?$)""")
         template.constant_re = re.compile(r"""_\(((?:".*?")|(?:'.*?')).*\)""")
 
         def my_templatize(src: str, *args: Any, **kwargs: Any) -> str:
@@ -190,9 +186,7 @@ class Command(makemessages.Command):
                 with open(os.path.join(dirpath, filename)) as reader:
                     data = reader.read()
                     translation_strings.extend(self.extract_strings(data))
-        for dirpath, dirnames, filenames in itertools.chain(
-            os.walk("static/js"), os.walk("static/shared/js"),
-        ):
+        for dirpath, dirnames, filenames in itertools.chain(os.walk("static/js"), os.walk("static/shared/js")):
             for filename in [f for f in filenames if f.endswith(".js") or f.endswith(".ts")]:
                 if filename.startswith("."):
                     continue

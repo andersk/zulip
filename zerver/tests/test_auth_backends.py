@@ -454,10 +454,7 @@ class AuthBackendTest(ZulipTestCase):
         )
 
     @override_settings(
-        AUTHENTICATION_BACKENDS=(
-            "zproject.backends.GitHubAuthBackend",
-            "zproject.backends.GoogleAuthBackend",
-        ),
+        AUTHENTICATION_BACKENDS=("zproject.backends.GitHubAuthBackend", "zproject.backends.GoogleAuthBackend"),
     )
     def test_social_auth_backends(self) -> None:
         user = self.example_user("hamlet")
@@ -683,11 +680,7 @@ class RateLimitAuthenticationTests(ZulipTestCase):
             user_profile,
         )
         self.do_test_auth_rate_limiting(
-            attempt_authentication,
-            user_profile.delivery_email,
-            ldap_password,
-            "wrong_password",
-            user_profile,
+            attempt_authentication, user_profile.delivery_email, ldap_password, "wrong_password", user_profile,
         )
 
 
@@ -965,10 +958,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
     def test_social_auth_success(self) -> None:
         account_data_dict = self.get_account_data_dict(email=self.email, name=self.name)
         result = self.social_auth_test(
-            account_data_dict,
-            expect_choose_email_screen=False,
-            subdomain="zulip",
-            next="/user_uploads/image",
+            account_data_dict, expect_choose_email_screen=False, subdomain="zulip", next="/user_uploads/image",
         )
         data = load_subdomain_token(result)
         self.assertEqual(data["email"], self.example_email("hamlet"))
@@ -984,10 +974,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
     def test_when_social_auth_subdomain_is_not_set(self) -> None:
         account_data_dict = self.get_account_data_dict(email=self.email, name=self.name)
         result = self.social_auth_test(
-            account_data_dict,
-            subdomain="zulip",
-            expect_choose_email_screen=False,
-            next="/user_uploads/image",
+            account_data_dict, subdomain="zulip", expect_choose_email_screen=False, next="/user_uploads/image",
         )
         data = load_subdomain_token(result)
         self.assertEqual(data["email"], self.example_email("hamlet"))
@@ -1062,9 +1049,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
         mobile_flow_otp = "1234abcd" * 8
         account_data_dict = self.get_account_data_dict(email=self.email, name="Full Name")
         self.assertEqual(len(mail.outbox), 0)
-        self.user_profile.date_joined = timezone_now() - datetime.timedelta(
-            seconds=JUST_CREATED_THRESHOLD + 1,
-        )
+        self.user_profile.date_joined = timezone_now() - datetime.timedelta(seconds=JUST_CREATED_THRESHOLD + 1)
         self.user_profile.save()
 
         with self.settings(SEND_LOGIN_EMAILS=True):
@@ -1864,9 +1849,7 @@ class SAMLAuthBackendTest(SocialAuthBase):
         )
 
     def test_social_auth_complete_wrong_issuing_idp(self) -> None:
-        relay_state = ujson.dumps(
-            dict(state_token=SAMLAuthBackend.put_data_in_redis({"subdomain": "zulip"})),
-        )
+        relay_state = ujson.dumps(dict(state_token=SAMLAuthBackend.put_data_in_redis({"subdomain": "zulip"})))
         saml_response = self.generate_saml_response(email=self.example_email("hamlet"), name="King Hamlet")
 
         # We change the entity_id of the configured test IdP, which means it won't match
@@ -2484,10 +2467,7 @@ class AppleAuthBackendNativeFlowTest(AppleAuthMixin, SocialAuthBase):
             # from Apple servers. We need to mock that URL to return our key,
             # created for these tests.
             requests_mock.add(
-                requests_mock.GET,
-                self.BACKEND_CLASS.JWK_URL,
-                status=200,
-                json=json.loads(settings.APPLE_JWK),
+                requests_mock.GET, self.BACKEND_CLASS.JWK_URL, status=200, json=json.loads(settings.APPLE_JWK),
             )
             yield
 
@@ -2916,9 +2896,7 @@ class GitHubAuthBackendTest(SocialAuthBase):
         # As emails ending with `noreply.github.com` are excluded from
         # verified_emails, choosing it as an email should raise a `email
         # not associated` warning.
-        account_data_dict = self.get_account_data_dict(
-            email="hamlet@users.noreply.github.com", name=self.name,
-        )
+        account_data_dict = self.get_account_data_dict(email="hamlet@users.noreply.github.com", name=self.name)
         email_data = [
             dict(email="notprimary@zulip.com", verified=True),
             dict(email="hamlet@zulip.com", verified=True, primary=True),
@@ -3079,9 +3057,7 @@ class GoogleAuthBackendTest(SocialAuthBase):
         mobile_flow_otp = "1234abcd" * 8
         account_data_dict = self.get_account_data_dict(email=self.email, name="Full Name")
         self.assertEqual(len(mail.outbox), 0)
-        self.user_profile.date_joined = timezone_now() - datetime.timedelta(
-            seconds=JUST_CREATED_THRESHOLD + 1,
-        )
+        self.user_profile.date_joined = timezone_now() - datetime.timedelta(seconds=JUST_CREATED_THRESHOLD + 1)
         self.user_profile.save()
 
         with self.settings(SEND_LOGIN_EMAILS=True):
@@ -3224,11 +3200,7 @@ class GoogleAuthBackendTest(SocialAuthBase):
         self.assertIn("do_confirm/" + confirmation_key, result.url)
         result = self.client_get(result.url)
         self.assert_in_response('action="/accounts/register/"', result)
-        confirmation_data = {
-            "from_confirmation": "1",
-            "full_name": data["full_name"],
-            "key": confirmation_key,
-        }
+        confirmation_data = {"from_confirmation": "1", "full_name": data["full_name"], "key": confirmation_key}
         result = self.client_post("/accounts/register/", confirmation_data, subdomain="zulip")
         self.assert_in_response("We just need you to do one last thing", result)
 
@@ -3258,11 +3230,7 @@ class GoogleAuthBackendTest(SocialAuthBase):
         self.assertIn("do_confirm/" + confirmation_key, url)
         result = self.client_get(url)
         self.assert_in_response('action="/accounts/register/"', result)
-        confirmation_data = {
-            "from_confirmation": "1",
-            "full_name": data["full_name"],
-            "key": confirmation_key,
-        }
+        confirmation_data = {"from_confirmation": "1", "full_name": data["full_name"], "key": confirmation_key}
         result = self.client_post("/accounts/register/", confirmation_data, subdomain="zulip")
         self.assert_in_response("We just need you to do one last thing", result)
 
@@ -3638,11 +3606,7 @@ class FetchAuthBackends(ZulipTestCase):
             result = self.client_get("/api/v1/server_settings", subdomain="zulip", HTTP_USER_AGENT="")
         check_result(
             result,
-            [
-                ("realm_name", check_string),
-                ("realm_description", check_string),
-                ("realm_icon", check_string),
-            ],
+            [("realm_name", check_string), ("realm_description", check_string), ("realm_icon", check_string)],
         )
 
         # Verify invalid subdomain
@@ -4209,9 +4173,7 @@ class TestJWTLogin(ZulipTestCase):
     def test_login_failure_due_to_empty_subdomain(self) -> None:
         payload = {"user": "hamlet", "realm": "zulip.com"}
         with self.settings(JWT_AUTH_KEYS={"": {"key": "key", "algorithms": ["HS256"]}}):
-            with mock.patch("zerver.views.auth.get_subdomain", return_value=""), mock.patch(
-                "logging.warning",
-            ):
+            with mock.patch("zerver.views.auth.get_subdomain", return_value=""), mock.patch("logging.warning"):
                 key = settings.JWT_AUTH_KEYS[""]["key"]
                 [algorithm] = settings.JWT_AUTH_KEYS[""]["algorithms"]
                 web_token = jwt.encode(payload, key, algorithm).decode("utf8")

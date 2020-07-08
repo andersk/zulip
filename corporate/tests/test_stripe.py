@@ -502,10 +502,7 @@ class StripeTest(StripeTestCase):
             "amount": 8000 * self.seat_count,
             "description": "Zulip Standard",
             "discountable": False,
-            "period": {
-                "end": datetime_to_timestamp(self.next_year),
-                "start": datetime_to_timestamp(self.now),
-            },
+            "period": {"end": datetime_to_timestamp(self.next_year), "start": datetime_to_timestamp(self.now)},
             # There's no unit_amount on Line Items, probably because it doesn't show up on the
             # user-facing invoice. We could pull the Invoice Item instead and test unit_amount there,
             # but testing the amount and quantity seems sufficient.
@@ -641,10 +638,7 @@ class StripeTest(StripeTestCase):
             "amount": 8000 * 123,
             "description": "Zulip Standard",
             "discountable": False,
-            "period": {
-                "end": datetime_to_timestamp(self.next_year),
-                "start": datetime_to_timestamp(self.now),
-            },
+            "period": {"end": datetime_to_timestamp(self.next_year), "start": datetime_to_timestamp(self.now)},
             "plan": None,
             "proration": False,
             "quantity": 123,
@@ -1149,9 +1143,7 @@ class StripeTest(StripeTestCase):
         self.assertFalse(stripe.InvoiceItem.list(customer=stripe_customer_id))
         # Check that we correctly populated RealmAuditLog
         audit_log_entries = list(
-            RealmAuditLog.objects.filter(acting_user=user)
-            .values_list("event_type", flat=True)
-            .order_by("id"),
+            RealmAuditLog.objects.filter(acting_user=user).values_list("event_type", flat=True).order_by("id"),
         )
         self.assertEqual(
             audit_log_entries, [RealmAuditLog.STRIPE_CUSTOMER_CREATED, RealmAuditLog.STRIPE_CARD_CHANGED],
@@ -1185,9 +1177,7 @@ class StripeTest(StripeTestCase):
         self.assertEqual([8000 * 23, -8000 * 23], [item.amount for item in stripe_invoice.lines])
         # Check that we correctly populated RealmAuditLog
         audit_log_entries = list(
-            RealmAuditLog.objects.filter(acting_user=user)
-            .values_list("event_type", flat=True)
-            .order_by("id"),
+            RealmAuditLog.objects.filter(acting_user=user).values_list("event_type", flat=True).order_by("id"),
         )
         # TODO: Test for REALM_PLAN_TYPE_CHANGED as the last entry
         self.assertEqual(
@@ -1252,9 +1242,7 @@ class StripeTest(StripeTestCase):
             else:
                 del_args = []
                 upgrade_params["licenses"] = licenses
-            response = self.upgrade(
-                invoice=invoice, talk_to_stripe=False, del_args=del_args, **upgrade_params,
-            )
+            response = self.upgrade(invoice=invoice, talk_to_stripe=False, del_args=del_args, **upgrade_params)
             self.assert_json_error_contains(response, f"at least {min_licenses_in_response} users")
             self.assertEqual(ujson.loads(response.content)["error_description"], "not enough licenses")
 
@@ -1263,9 +1251,7 @@ class StripeTest(StripeTestCase):
             self.assert_json_error_contains(response, f"with more than {MAX_INVOICED_LICENSES} licenses")
             self.assertEqual(ujson.loads(response.content)["error_description"], "too many licenses")
 
-        def check_success(
-            invoice: bool, licenses: Optional[int], upgrade_params: Dict[str, Any] = {},
-        ) -> None:
+        def check_success(invoice: bool, licenses: Optional[int], upgrade_params: Dict[str, Any] = {}) -> None:
             if licenses is None:
                 del_args = ["licenses"]
             else:
@@ -1280,9 +1266,7 @@ class StripeTest(StripeTestCase):
         hamlet = self.example_user("hamlet")
         self.login_user(hamlet)
         # Autopay with licenses < seat count
-        check_min_licenses_error(
-            False, self.seat_count - 1, self.seat_count, {"license_management": "manual"},
-        )
+        check_min_licenses_error(False, self.seat_count - 1, self.seat_count, {"license_management": "manual"})
         # Autopay with not setting licenses
         check_min_licenses_error(False, None, self.seat_count, {"license_management": "manual"})
         # Invoice with licenses < MIN_INVOICED_LICENSES
@@ -1563,9 +1547,7 @@ class StripeTest(StripeTestCase):
             assert isinstance(stripe_source, stripe.Card)
             self.assertEqual(stripe_source.last4, "0341")
         self.assertEqual(len(list(stripe.Invoice.list(customer=stripe_customer_id, status="open"))), 1)
-        self.assertEqual(
-            1, RealmAuditLog.objects.filter(event_type=RealmAuditLog.STRIPE_CARD_CHANGED).count(),
-        )
+        self.assertEqual(1, RealmAuditLog.objects.filter(event_type=RealmAuditLog.STRIPE_CARD_CHANGED).count())
 
         # Replace with a valid card
         stripe_token = stripe_create_token(card_number="5555555555554444").id
@@ -1583,9 +1565,7 @@ class StripeTest(StripeTestCase):
         # Ideally we'd also test that we don't pay invoices with billing=='send_invoice'
         for stripe_invoice in stripe.Invoice.list(customer=stripe_customer_id):
             self.assertEqual(stripe_invoice.status, "paid")
-        self.assertEqual(
-            2, RealmAuditLog.objects.filter(event_type=RealmAuditLog.STRIPE_CARD_CHANGED).count(),
-        )
+        self.assertEqual(2, RealmAuditLog.objects.filter(event_type=RealmAuditLog.STRIPE_CARD_CHANGED).count())
 
     @patch("corporate.lib.stripe.billing_logger.info")
     def test_downgrade(self, mock_: Mock) -> None:
@@ -1833,9 +1813,7 @@ class StripeTest(StripeTestCase):
 
     @mock_stripe()
     @patch("corporate.lib.stripe.billing_logger.info")
-    def test_switch_from_monthly_plan_to_annual_plan_for_manual_license_management(
-        self, *mocks: Mock
-    ) -> None:
+    def test_switch_from_monthly_plan_to_annual_plan_for_manual_license_management(self, *mocks: Mock) -> None:
         user = self.example_user("hamlet")
         num_licenses = 35
 
@@ -2177,18 +2155,14 @@ class RequiresBillingAccessTest(ZulipTestCase):
         iago = self.example_user("iago")
         self.login_user(hamlet)
         with patch("corporate.views.do_replace_payment_source") as mocked1:
-            response = self.client_post(
-                "/json/billing/sources/change", {"stripe_token": ujson.dumps("token")},
-            )
+            response = self.client_post("/json/billing/sources/change", {"stripe_token": ujson.dumps("token")})
         self.assert_json_success(response)
         mocked1.assert_called()
 
         # Realm admins have access, even if they are not billing admins
         self.login_user(iago)
         with patch("corporate.views.do_replace_payment_source") as mocked2:
-            response = self.client_post(
-                "/json/billing/sources/change", {"stripe_token": ujson.dumps("token")},
-            )
+            response = self.client_post("/json/billing/sources/change", {"stripe_token": ujson.dumps("token")})
         self.assert_json_success(response)
         mocked2.assert_called()
 

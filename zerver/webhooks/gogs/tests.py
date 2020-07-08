@@ -160,9 +160,7 @@ class GogsHookTests(WebhookTestCase):
     def test_push_filtered_by_branches_ignore(self, check_send_webhook_message_mock: MagicMock) -> None:
         self.url = self.build_webhook_url(branches="changes,development")
         payload = self.get_body("push")
-        result = self.client_post(
-            self.url, payload, HTTP_X_GOGS_EVENT="push", content_type="application/json",
-        )
+        result = self.client_post(self.url, payload, HTTP_X_GOGS_EVENT="push", content_type="application/json")
         self.assertFalse(check_send_webhook_message_mock.called)
         self.assert_json_success(result)
 
@@ -172,9 +170,7 @@ class GogsHookTests(WebhookTestCase):
     ) -> None:
         self.url = self.build_webhook_url(branches="changes,development")
         payload = self.get_body("push__commits_more_than_limits")
-        result = self.client_post(
-            self.url, payload, HTTP_X_GOGS_EVENT="push", content_type="application/json",
-        )
+        result = self.client_post(self.url, payload, HTTP_X_GOGS_EVENT="push", content_type="application/json")
         self.assertFalse(check_send_webhook_message_mock.called)
         self.assert_json_success(result)
 
@@ -184,8 +180,6 @@ class GogsHookTests(WebhookTestCase):
     ) -> None:
         self.url = self.build_webhook_url(branches="changes,development")
         payload = self.get_body("push__commits_multiple_committers")
-        result = self.client_post(
-            self.url, payload, HTTP_X_GOGS_EVENT="push", content_type="application/json",
-        )
+        result = self.client_post(self.url, payload, HTTP_X_GOGS_EVENT="push", content_type="application/json")
         self.assertFalse(check_send_webhook_message_mock.called)
         self.assert_json_success(result)

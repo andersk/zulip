@@ -33,7 +33,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(
-            clear_duplicate_reactions, reverse_code=migrations.RunPython.noop, elidable=True,
-        ),
+        migrations.RunPython(clear_duplicate_reactions, reverse_code=migrations.RunPython.noop, elidable=True),
     ]

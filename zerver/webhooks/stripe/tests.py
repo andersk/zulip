@@ -46,7 +46,9 @@ class StripeHookTests(WebhookTestCase):
     # Credit card charge
     def test_charge_succeeded__card(self) -> None:
         expected_topic = "cus_00000000000000"
-        expected_message = "[Charge](https://dashboard.stripe.com/charges/ch_000000000000000000000000) for 1.00 AUD succeeded"
+        expected_message = (
+            "[Charge](https://dashboard.stripe.com/charges/ch_000000000000000000000000) for 1.00 AUD succeeded"
+        )
         self.send_and_test_stream_message(
             "charge_succeeded__card",
             expected_topic,
@@ -200,7 +202,9 @@ Amount due: 0.00 INR
 
     def test_invoiceitem_created(self) -> None:
         expected_topic = "cus_00000000000000"
-        expected_message = "[Invoice item](https://dashboard.stripe.com/invoiceitems/ii_00000000000000) created for 10.00 CAD"
+        expected_message = (
+            "[Invoice item](https://dashboard.stripe.com/invoiceitems/ii_00000000000000) created for 10.00 CAD"
+        )
         self.send_and_test_stream_message(
             "invoiceitem_created",
             expected_topic,

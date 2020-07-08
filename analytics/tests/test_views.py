@@ -76,9 +76,7 @@ class TestGetChartData(ZulipTestCase):
         self.realm = get_realm("zulip")
         self.user = self.example_user("hamlet")
         self.login_user(self.user)
-        self.end_times_hour = [
-            ceiling_to_hour(self.realm.date_created) + timedelta(hours=i) for i in range(4)
-        ]
+        self.end_times_hour = [ceiling_to_hour(self.realm.date_created) + timedelta(hours=i) for i in range(4)]
         self.end_times_day = [ceiling_to_day(self.realm.date_created) + timedelta(days=i) for i in range(4)]
 
     def data(self, i: int) -> List[int]:
@@ -165,9 +163,7 @@ class TestGetChartData(ZulipTestCase):
     def test_messages_sent_by_message_type(self) -> None:
         stat = COUNT_STATS["messages_sent:message_type:day"]
         self.insert_data(stat, ["public_stream", "private_message"], ["public_stream", "private_stream"])
-        result = self.client_get(
-            "/json/analytics/chart_data", {"chart_name": "messages_sent_by_message_type"},
-        )
+        result = self.client_get("/json/analytics/chart_data", {"chart_name": "messages_sent_by_message_type"})
         self.assert_json_success(result)
         data = result.json()
         self.assertEqual(
@@ -266,9 +262,7 @@ class TestGetChartData(ZulipTestCase):
         FillState.objects.create(
             property="messages_sent:message_type:day", end_time=self.end_times_day[0], state=FillState.DONE,
         )
-        result = self.client_get(
-            "/json/analytics/chart_data", {"chart_name": "messages_sent_by_message_type"},
-        )
+        result = self.client_get("/json/analytics/chart_data", {"chart_name": "messages_sent_by_message_type"})
         self.assert_json_success(result)
         data = result.json()
         self.assertEqual(
@@ -311,11 +305,7 @@ class TestGetChartData(ZulipTestCase):
         # valid start and end
         result = self.client_get(
             "/json/analytics/chart_data",
-            {
-                "chart_name": "number_of_humans",
-                "start": end_time_timestamps[1],
-                "end": end_time_timestamps[2],
-            },
+            {"chart_name": "number_of_humans", "start": end_time_timestamps[1], "end": end_time_timestamps[2]},
         )
         self.assert_json_success(result)
         data = result.json()
@@ -325,11 +315,7 @@ class TestGetChartData(ZulipTestCase):
         # start later then end
         result = self.client_get(
             "/json/analytics/chart_data",
-            {
-                "chart_name": "number_of_humans",
-                "start": end_time_timestamps[2],
-                "end": end_time_timestamps[1],
-            },
+            {"chart_name": "number_of_humans", "start": end_time_timestamps[2], "end": end_time_timestamps[1]},
         )
         self.assert_json_error_contains(result, "Start time is later than")
 
@@ -455,9 +441,7 @@ class TestGetChartData(ZulipTestCase):
         user = self.example_user("hamlet")
         self.login_user(user)
 
-        result = self.client_get(
-            "/json/analytics/chart_data/installation", {"chart_name": "number_of_humans"},
-        )
+        result = self.client_get("/json/analytics/chart_data/installation", {"chart_name": "number_of_humans"})
         self.assert_json_error(result, "Must be an server administrator", 400)
 
         user = self.example_user("hamlet")
@@ -466,9 +450,7 @@ class TestGetChartData(ZulipTestCase):
         stat = COUNT_STATS["realm_active_humans::day"]
         self.insert_data(stat, [None], [])
 
-        result = self.client_get(
-            "/json/analytics/chart_data/installation", {"chart_name": "number_of_humans"},
-        )
+        result = self.client_get("/json/analytics/chart_data/installation", {"chart_name": "number_of_humans"})
         self.assert_json_success(result)
 
 

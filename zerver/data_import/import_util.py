@@ -678,9 +678,7 @@ def process_emojis(
     logging.info("DOWNLOADING EMOJIS .......\n")
     for emoji in zerver_realmemoji:
         emoji_url = emoji_url_map[emoji["name"]]
-        emoji_path = RealmEmoji.PATH_ID_TEMPLATE.format(
-            realm_id=emoji["realm"], emoji_file_name=emoji["name"],
-        )
+        emoji_path = RealmEmoji.PATH_ID_TEMPLATE.format(realm_id=emoji["realm"], emoji_file_name=emoji["name"])
 
         upload_emoji_list.append([emoji_url, emoji_path])
 

@@ -88,9 +88,7 @@ def api_bitbucket2_webhook(
     return json_success()
 
 
-def get_subject_for_branch_specified_events(
-    payload: Dict[str, Any], branch_name: Optional[str] = None,
-) -> str:
+def get_subject_for_branch_specified_events(payload: Dict[str, Any], branch_name: Optional[str] = None) -> str:
     return TOPIC_WITH_BRANCH_TEMPLATE.format(
         repo=get_repository_name(payload["repository"]),
         branch=get_branch_name_for_push_event(payload) if branch_name is None else branch_name,
@@ -257,9 +255,7 @@ def get_commit_status_changed_body(payload: Dict[str, Any]) -> str:
     commit_id = commit_api_url.split("/")[-1]
 
     commit_info = "[{short_commit_id}]({repo_url}/commits/{commit_id})".format(
-        repo_url=get_repository_url(payload["repository"]),
-        short_commit_id=commit_id[:7],
-        commit_id=commit_id,
+        repo_url=get_repository_url(payload["repository"]), short_commit_id=commit_id[:7], commit_id=commit_id,
     )
 
     return BITBUCKET_COMMIT_STATUS_CHANGED_BODY.format(
@@ -330,9 +326,7 @@ def get_pull_request_created_or_updated_body(
     )
 
 
-def get_pull_request_comment_created_action_body(
-    payload: Dict[str, Any], include_title: bool = False,
-) -> str:
+def get_pull_request_comment_created_action_body(payload: Dict[str, Any], include_title: bool = False) -> str:
     action = "[commented]({})".format(payload["comment"]["links"]["html"]["href"])
     return get_pull_request_comment_action_body(payload, action, include_title)
 

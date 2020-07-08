@@ -853,18 +853,14 @@ class AvatarTest(UploadSerializeMixin, ZulipTestCase):
         self.assertEqual(backend.get_avatar_url("hash", False), "/user_avatars/hash.png?x=x")
         self.assertEqual(backend.get_avatar_url("hash", True), "/user_avatars/hash-medium.png?x=x")
         self.assertEqual(backend.get_realm_icon_url(15, 1), "/user_avatars/15/realm/icon.png?version=1")
-        self.assertEqual(
-            backend.get_realm_logo_url(15, 1, False), "/user_avatars/15/realm/logo.png?version=1",
-        )
+        self.assertEqual(backend.get_realm_logo_url(15, 1, False), "/user_avatars/15/realm/logo.png?version=1")
         self.assertEqual(
             backend.get_realm_logo_url(15, 1, True), "/user_avatars/15/realm/night_logo.png?version=1",
         )
 
         with self.settings(S3_AVATAR_BUCKET="bucket"):
             backend = S3UploadBackend()
-            self.assertEqual(
-                backend.get_avatar_url("hash", False), "https://bucket.s3.amazonaws.com/hash?x=x",
-            )
+            self.assertEqual(backend.get_avatar_url("hash", False), "https://bucket.s3.amazonaws.com/hash?x=x")
             self.assertEqual(
                 backend.get_avatar_url("hash", True), "https://bucket.s3.amazonaws.com/hash-medium.png?x=x",
             )
@@ -1026,7 +1022,9 @@ class AvatarTest(UploadSerializeMixin, ZulipTestCase):
 
         response = self.client_get("/avatar/nonexistent_user@zulip.com?foo=bar")
         redirect_url = response["Location"]
-        actual_url = "https://secure.gravatar.com/avatar/444258b521f152129eb0c162996e572d?d=identicon&version=1&foo=bar"
+        actual_url = (
+            "https://secure.gravatar.com/avatar/444258b521f152129eb0c162996e572d?d=identicon&version=1&foo=bar"
+        )
         self.assertEqual(redirect_url, actual_url)
 
     def test_valid_avatars(self) -> None:
@@ -1411,9 +1409,7 @@ class RealmLogoTest(UploadSerializeMixin, ZulipTestCase):
         response = self.client_get("/json/realm/logo", {"night": ujson.dumps(self.night)})
         redirect_url = response["Location"]
         self.assertTrue(
-            redirect_url.endswith(
-                get_realm_logo_url(realm, self.night) + f"&night={str(self.night).lower()}",
-            ),
+            redirect_url.endswith(get_realm_logo_url(realm, self.night) + f"&night={str(self.night).lower()}"),
         )
 
         is_night_str = str(self.night).lower()

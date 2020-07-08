@@ -134,9 +134,7 @@ Leo Franchi commented on [BUG-15: New bug with hook](http://lfranchi.com:8080/br
 This is the [first link](https://google.com) and this is the [second link](https://google.com) and this is the end.
 ```
 """.strip()
-        self.send_and_test_stream_message(
-            "commented_v2_with_two_full_links", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("commented_v2_with_two_full_links", expected_topic, expected_message)
 
     def test_comment_edited(self) -> None:
         expected_topic = "BUG-15: New bug with hook"
@@ -204,9 +202,7 @@ Adding a comment. Oh, what a comment it is!
     def test_comment_event_comment_created_no_issue_details(self) -> None:
         expected_topic = "10000: Upgrade Jira to get the issue title here."
         expected_message = """Hemanth V. Alluri commented on issue: *"Upgrade Jira to get the issue title here."*\n``` quote\nSounds like it’s pretty important. I’ll get this fixed ASAP!\n```"""
-        self.send_and_test_stream_message(
-            "comment_created_no_issue_details", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("comment_created_no_issue_details", expected_topic, expected_message)
 
     def test_comment_event_comment_edited(self) -> None:
         expected_topic = "SP-1: Add support for newer format Jira issue comment events"

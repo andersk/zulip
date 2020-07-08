@@ -175,9 +175,7 @@ def do_fill_count_stat_at_hour(stat: CountStat, end_time: datetime, realm: Optio
         timer = time.time()
         assert stat.data_collector.pull_function is not None
         rows_added = stat.data_collector.pull_function(stat.property, start_time, end_time, realm)
-        logger.info(
-            "%s run pull_function (%dms/%sr)", stat.property, (time.time() - timer) * 1000, rows_added,
-        )
+        logger.info("%s run pull_function (%dms/%sr)", stat.property, (time.time() - timer) * 1000, rows_added)
     do_aggregate_to_summary_table(stat, end_time, realm)
 
 
@@ -288,11 +286,7 @@ def do_increment_logging_stat(
         end_time = ceiling_to_hour(event_time)
 
     row, created = table.objects.get_or_create(
-        property=stat.property,
-        subgroup=subgroup,
-        end_time=end_time,
-        defaults={"value": increment},
-        **id_args,
+        property=stat.property, subgroup=subgroup, end_time=end_time, defaults={"value": increment}, **id_args,
     )
     if not created:
         row.value = F("value") + increment

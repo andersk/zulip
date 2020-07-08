@@ -24,15 +24,11 @@ def get_secret(key: str, default_value: str, development_only: bool = False) -> 
 
 
 @overload
-def get_secret(
-    key: str, default_value: Optional[str] = None, development_only: bool = False,
-) -> Optional[str]:
+def get_secret(key: str, default_value: Optional[str] = None, development_only: bool = False) -> Optional[str]:
     ...
 
 
-def get_secret(
-    key: str, default_value: Optional[str] = None, development_only: bool = False,
-) -> Optional[str]:
+def get_secret(key: str, default_value: Optional[str] = None, development_only: bool = False) -> Optional[str]:
     if development_only and PRODUCTION:
         return default_value
     return secrets_file.get("secrets", key, fallback=default_value)

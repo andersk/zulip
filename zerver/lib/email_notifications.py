@@ -558,9 +558,7 @@ def enqueue_welcome_emails(user: UserProfile, realm_creation: bool = False) -> N
         },
     )
     if user.is_realm_admin:
-        context["getting_started_link"] = (
-            user.realm.uri + "/help/getting-your-organization-started-with-zulip"
-        )
+        context["getting_started_link"] = user.realm.uri + "/help/getting-your-organization-started-with-zulip"
     else:
         context["getting_started_link"] = "https://zulip.com"
 

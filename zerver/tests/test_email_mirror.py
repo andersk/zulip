@@ -294,10 +294,7 @@ class TestStreamEmailMessagesSuccess(ZulipTestCase):
         stream = get_stream("Denmark", user_profile.realm)
 
         # stream address is angle-addr within multiple addresses
-        stream_to_addresses = [
-            "A.N. Other <another@example.org>",
-            f"Denmark <{encode_email_address(stream)}>",
-        ]
+        stream_to_addresses = ["A.N. Other <another@example.org>", f"Denmark <{encode_email_address(stream)}>"]
 
         incoming_valid_message = EmailMessage()
         incoming_valid_message.set_content("TestStreamEmailMessages Body")

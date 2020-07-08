@@ -332,9 +332,7 @@ class GithubWebhookTest(WebhookTestCase):
     def test_pull_request_review_requested_msg(self) -> None:
         expected_message = "**eeshangarg** requested [showell](https://github.com/showell) for a review on [PR #1](https://github.com/eeshangarg/Scheduler/pull/1)."
         self.send_and_test_stream_message(
-            "pull_request__review_requested",
-            "Scheduler / PR #1 This is just a test commit",
-            expected_message,
+            "pull_request__review_requested", "Scheduler / PR #1 This is just a test commit", expected_message,
         )
 
     def test_pull_request_review_requested_singular_key_msg(self) -> None:

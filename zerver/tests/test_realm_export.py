@@ -69,9 +69,7 @@ class RealmExportTest(ZulipTestCase):
         # Test that the export we have is the export we created.
         export_dict = result.json()["exports"]
         self.assertEqual(export_dict[0]["id"], audit_log_entry.id)
-        self.assertEqual(
-            export_dict[0]["export_url"], "https://test-avatar-bucket.s3.amazonaws.com" + path_id,
-        )
+        self.assertEqual(export_dict[0]["export_url"], "https://test-avatar-bucket.s3.amazonaws.com" + path_id)
         self.assertEqual(export_dict[0]["acting_user_id"], admin.id)
         self.assert_length(
             export_dict,

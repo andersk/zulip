@@ -138,15 +138,10 @@ v1_api_and_json_patterns = [
     path(
         "realm/filters",
         rest_dispatch,
-        {
-            "GET": "zerver.views.realm_filters.list_filters",
-            "POST": "zerver.views.realm_filters.create_filter",
-        },
+        {"GET": "zerver.views.realm_filters.list_filters", "POST": "zerver.views.realm_filters.create_filter"},
     ),
     path(
-        "realm/filters/<int:filter_id>",
-        rest_dispatch,
-        {"DELETE": "zerver.views.realm_filters.delete_filter"},
+        "realm/filters/<int:filter_id>", rest_dispatch, {"DELETE": "zerver.views.realm_filters.delete_filter"},
     ),
     # realm/profile_fields -> zerver.views.custom_profile_fields
     path(
@@ -449,9 +444,7 @@ v1_api_and_json_patterns = [
             "DELETE": "zerver.views.custom_profile_fields.remove_user_custom_profile_data",
         },
     ),
-    path(
-        "users/me/<int:stream_id>/topics", rest_dispatch, {"GET": "zerver.views.streams.get_topics_backend"},
-    ),
+    path("users/me/<int:stream_id>/topics", rest_dispatch, {"GET": "zerver.views.streams.get_topics_backend"}),
     # streams -> zerver.views.streams
     # (this API is only used externally)
     path("streams", rest_dispatch, {"GET": "zerver.views.streams.get_streams_backend"}),
@@ -563,9 +556,7 @@ v1_api_and_json_patterns = [
     path("calls/zoom/create", rest_dispatch, {"POST": "zerver.views.video_calls.make_zoom_video_call"}),
     # Used to generate a Big Blue Button video call URL
     path(
-        "calls/bigbluebutton/create",
-        rest_dispatch,
-        {"GET": "zerver.views.video_calls.get_bigbluebutton_url"},
+        "calls/bigbluebutton/create", rest_dispatch, {"GET": "zerver.views.video_calls.get_bigbluebutton_url"},
     ),
     # export/realm -> zerver.views.realm_export
     path(
@@ -622,9 +613,7 @@ i18n_urls = [
         name="zerver.views.auth.log_into_subdomain",
     ),
     path(
-        "accounts/login/local/",
-        zerver.views.auth.dev_direct_login,
-        name="zerver.views.auth.dev_direct_login",
+        "accounts/login/local/", zerver.views.auth.dev_direct_login, name="zerver.views.auth.dev_direct_login",
     ),
     # We have two entries for accounts/login; only the first one is
     # used for URL resolution.  The second here is to allow
@@ -663,9 +652,7 @@ i18n_urls = [
         ),
         name="django.contrib.auth.views.password_reset_confirm",
     ),
-    path(
-        "accounts/password/done/", PasswordResetCompleteView.as_view(template_name="zerver/reset_done.html"),
-    ),
+    path("accounts/password/done/", PasswordResetCompleteView.as_view(template_name="zerver/reset_done.html")),
     path(
         "accounts/deactivated/",
         zerver.views.auth.show_deactivation_notice,

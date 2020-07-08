@@ -2120,9 +2120,7 @@ class SAMLAuthBackend(SocialAuthMixin, SAMLAuth):
         return result
 
 
-def validate_otp_params(
-    mobile_flow_otp: Optional[str] = None, desktop_flow_otp: Optional[str] = None,
-) -> None:
+def validate_otp_params(mobile_flow_otp: Optional[str] = None, desktop_flow_otp: Optional[str] = None) -> None:
     for otp in [mobile_flow_otp, desktop_flow_otp]:
         if otp is not None and not is_valid_otp(otp):
             raise JsonableError(_("Invalid OTP"))

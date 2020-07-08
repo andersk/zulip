@@ -128,8 +128,7 @@ class AdminNotifyHandlerTest(ZulipTestCase):
         # Test that `add_request_metadata` throwing an exception is fine
         with patch("zerver.logging_handlers.traceback.print_exc"):
             with patch(
-                "zerver.logging_handlers.add_request_metadata",
-                side_effect=Exception("Unexpected exception!"),
+                "zerver.logging_handlers.add_request_metadata", side_effect=Exception("Unexpected exception!"),
             ):
                 report = self.run_handler(record)
         self.assertNotIn("user_email", report)

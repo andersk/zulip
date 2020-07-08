@@ -391,9 +391,7 @@ class NarrowBuilder:
             # with either of them as the sender.
             self_recipient_id = self.user_profile.recipient_id
             cond = or_(
-                and_(
-                    column("sender_id") == other_participant.id, column("recipient_id") == self_recipient_id,
-                ),
+                and_(column("sender_id") == other_participant.id, column("recipient_id") == self_recipient_id),
                 and_(column("sender_id") == self.user_profile.id, column("recipient_id") == recipient.id),
             )
             return query.where(maybe_negate(cond))

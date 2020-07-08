@@ -304,9 +304,7 @@ class TestCreateStreams(ZulipTestCase):
         # 4 UserMessages per subscriber: One for each of the subscribers, plus 1 for
         # each user in the notifications stream.
         announce_stream_subs = Subscription.objects.filter(recipient=announce_stream.recipient)
-        self.assertEqual(
-            final_usermessage_count - initial_usermessage_count, 4 + announce_stream_subs.count(),
-        )
+        self.assertEqual(final_usermessage_count - initial_usermessage_count, 4 + announce_stream_subs.count())
 
         def get_unread_stream_data(user: UserProfile) -> List[Dict[str, Any]]:
             raw_unread_data = get_raw_unread_data(user)
@@ -588,9 +586,7 @@ class StreamAdminTest(ZulipTestCase):
         events: List[Mapping[str, Any]] = []
         with tornado_redirected_to_list(events):
             stream_id = get_stream("stream_name1", user_profile.realm).id
-            result = self.client_patch(
-                f"/json/streams/{stream_id}", {"new_name": ujson.dumps("stream_name2")},
-            )
+            result = self.client_patch(f"/json/streams/{stream_id}", {"new_name": ujson.dumps("stream_name2")})
         self.assert_json_success(result)
         event = events[1]["event"]
         self.assertEqual(
@@ -1663,8 +1659,7 @@ class DefaultStreamGroupTest(ZulipTestCase):
             streams.append(new_stream)
 
         result = self.client_patch(
-            f"/json/default_stream_groups/{group_id}/streams",
-            {"stream_names": ujson.dumps(new_stream_names)},
+            f"/json/default_stream_groups/{group_id}/streams", {"stream_names": ujson.dumps(new_stream_names)},
         )
         self.assert_json_error(result, "Missing 'op' argument")
 
@@ -2036,13 +2031,7 @@ class SubscriptionPropertiesTest(ZulipTestCase):
                 "/api/v1/users/me/subscriptions/properties",
                 {
                     "subscription_data": ujson.dumps(
-                        [
-                            {
-                                "property": legacy_property_name,
-                                "value": True,
-                                "stream_id": subs[0]["stream_id"],
-                            },
-                        ],
+                        [{"property": legacy_property_name, "value": True, "stream_id": subs[0]["stream_id"]}],
                     ),
                 },
             )
@@ -2595,9 +2584,7 @@ class SubscriptionAPITest(ZulipTestCase):
         msg = self.get_second_to_last_message()
         self.assertEqual(msg.recipient.type, Recipient.STREAM)
         self.assertEqual(msg.sender_id, self.notification_bot().id)
-        expected_msg = (
-            f"@_**{invitee_full_name}|{invitee.id}** created a new stream #**{invite_streams[0]}**."
-        )
+        expected_msg = f"@_**{invitee_full_name}|{invitee.id}** created a new stream #**{invite_streams[0]}**."
         self.assertEqual(msg.content, expected_msg)
 
     def test_successful_cross_realm_notification(self) -> None:
@@ -2653,9 +2640,7 @@ class SubscriptionAPITest(ZulipTestCase):
 
         msg = self.get_second_to_last_message()
         self.assertEqual(msg.sender_id, self.notification_bot().id)
-        expected_msg = (
-            f"@_**{invitee_full_name}|{invitee.id}** created a new stream #**{invite_streams[0]}**."
-        )
+        expected_msg = f"@_**{invitee_full_name}|{invitee.id}** created a new stream #**{invite_streams[0]}**."
         self.assertEqual(msg.content, expected_msg)
 
     def test_non_ascii_stream_subscription(self) -> None:

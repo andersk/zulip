@@ -283,9 +283,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
         for endpoint, token, kind in endpoints:
             # Try adding/removing tokens that are too big...
             broken_token = "a" * 5000  # too big
-            result = self.client_post(
-                endpoint, {"token": broken_token, "token_kind": kind}, subdomain="zulip",
-            )
+            result = self.client_post(endpoint, {"token": broken_token, "token_kind": kind}, subdomain="zulip")
             self.assert_json_error(result, "Empty or invalid length token")
 
             result = self.client_delete(
@@ -294,14 +292,10 @@ class PushBouncerNotificationTest(BouncerTestCase):
             self.assert_json_error(result, "Empty or invalid length token")
 
             # Try to remove a non-existent token...
-            result = self.client_delete(
-                endpoint, {"token": "abcd1234", "token_kind": kind}, subdomain="zulip",
-            )
+            result = self.client_delete(endpoint, {"token": "abcd1234", "token_kind": kind}, subdomain="zulip")
             self.assert_json_error(result, "Token does not exist")
 
-            with mock.patch(
-                "zerver.lib.remote_server.requests.request", side_effect=requests.ConnectionError,
-            ):
+            with mock.patch("zerver.lib.remote_server.requests.request", side_effect=requests.ConnectionError):
                 result = self.client_post(endpoint, {"token": token}, subdomain="zulip")
                 self.assert_json_error(
                     result, "ConnectionError while trying to connect to push notification bouncer", 502,
@@ -900,9 +894,7 @@ class HandlePushNotificationTest(PushNotificationTest):
             PushDeviceToken.objects.filter(user=self.user_profile, kind=PushDeviceToken.GCM),
         )
 
-        apple_devices = list(
-            PushDeviceToken.objects.filter(user=self.user_profile, kind=PushDeviceToken.APNS),
-        )
+        apple_devices = list(PushDeviceToken.objects.filter(user=self.user_profile, kind=PushDeviceToken.APNS))
 
         missed_message = {
             "message_id": message.id,
@@ -981,9 +973,7 @@ class HandlePushNotificationTest(PushNotificationTest):
             PushDeviceToken.objects.filter(user=self.user_profile, kind=PushDeviceToken.GCM),
         )
 
-        apple_devices = list(
-            PushDeviceToken.objects.filter(user=self.user_profile, kind=PushDeviceToken.APNS),
-        )
+        apple_devices = list(PushDeviceToken.objects.filter(user=self.user_profile, kind=PushDeviceToken.APNS))
 
         with mock.patch(
             "zerver.lib.push_notifications" ".send_android_push_notification",
@@ -1064,9 +1054,7 @@ class HandlePushNotificationTest(PushNotificationTest):
             PushDeviceToken.objects.filter(user=self.user_profile, kind=PushDeviceToken.GCM),
         )
 
-        apple_devices = list(
-            PushDeviceToken.objects.filter(user=self.user_profile, kind=PushDeviceToken.APNS),
-        )
+        apple_devices = list(PushDeviceToken.objects.filter(user=self.user_profile, kind=PushDeviceToken.APNS))
 
         with mock.patch(
             "zerver.lib.push_notifications.get_message_payload_apns", return_value={"apns": True},
@@ -1092,9 +1080,7 @@ class TestAPNs(PushNotificationTest):
     def devices(self) -> List[DeviceToken]:
         return list(PushDeviceToken.objects.filter(user=self.user_profile, kind=PushDeviceToken.APNS))
 
-    def send(
-        self, devices: Optional[List[PushDeviceToken]] = None, payload_data: Dict[str, Any] = {},
-    ) -> None:
+    def send(self, devices: Optional[List[PushDeviceToken]] = None, payload_data: Dict[str, Any] = {}) -> None:
         if devices is None:
             devices = self.devices()
         send_apple_push_notification(self.user_profile.id, devices, payload_data)
@@ -1140,9 +1126,7 @@ class TestAPNs(PushNotificationTest):
 
     def test_success(self) -> None:
         self.setup_apns_tokens()
-        with self.mock_apns() as mock_apns, mock.patch(
-            "zerver.lib.push_notifications.logger",
-        ) as mock_logging:
+        with self.mock_apns() as mock_apns, mock.patch("zerver.lib.push_notifications.logger") as mock_logging:
             mock_apns.get_notification_result.return_value = "Success"
             self.send()
             mock_logging.warning.assert_not_called()
@@ -1155,9 +1139,7 @@ class TestAPNs(PushNotificationTest):
         import hyper
 
         self.setup_apns_tokens()
-        with self.mock_apns() as mock_apns, mock.patch(
-            "zerver.lib.push_notifications.logger",
-        ) as mock_logging:
+        with self.mock_apns() as mock_apns, mock.patch("zerver.lib.push_notifications.logger") as mock_logging:
             mock_apns.get_notification_result.side_effect = itertools.chain(
                 [hyper.http20.exceptions.StreamResetError()], itertools.repeat("Success"),
             )
@@ -1175,9 +1157,7 @@ class TestAPNs(PushNotificationTest):
 
     def test_http_retry_pipefail(self) -> None:
         self.setup_apns_tokens()
-        with self.mock_apns() as mock_apns, mock.patch(
-            "zerver.lib.push_notifications.logger",
-        ) as mock_logging:
+        with self.mock_apns() as mock_apns, mock.patch("zerver.lib.push_notifications.logger") as mock_logging:
             mock_apns.get_notification_result.side_effect = itertools.chain(
                 [BrokenPipeError()], itertools.repeat("Success"),
             )
@@ -1197,9 +1177,7 @@ class TestAPNs(PushNotificationTest):
         import hyper
 
         self.setup_apns_tokens()
-        with self.mock_apns() as mock_apns, mock.patch(
-            "zerver.lib.push_notifications.logger",
-        ) as mock_logging:
+        with self.mock_apns() as mock_apns, mock.patch("zerver.lib.push_notifications.logger") as mock_logging:
             mock_apns.get_notification_result.side_effect = itertools.chain(
                 [hyper.http20.exceptions.StreamResetError()],
                 [hyper.http20.exceptions.StreamResetError()],
@@ -1669,9 +1647,7 @@ class TestPushApi(BouncerTestCase):
             self.assert_json_error(result, "Token does not exist")
 
             # Use push notification bouncer and try to remove non-existing tokens.
-            with self.settings(
-                PUSH_NOTIFICATION_BOUNCER_URL="https://push.zulip.org.example.com",
-            ), mock.patch(
+            with self.settings(PUSH_NOTIFICATION_BOUNCER_URL="https://push.zulip.org.example.com"), mock.patch(
                 "zerver.lib.remote_server.requests.request", side_effect=self.bounce_request,
             ) as remote_server_request:
                 result = self.client_delete(endpoint, {"token": "abcd1234"})
@@ -1862,9 +1838,7 @@ class GCMSendTest(PushNotificationTest):
         self.assertEqual(get_count("3333"), 1)
 
     @mock.patch("zerver.lib.push_notifications.logger.info")
-    def test_canonical_pushdevice_different(
-        self, mock_info: mock.MagicMock, mock_gcm: mock.MagicMock,
-    ) -> None:
+    def test_canonical_pushdevice_different(self, mock_info: mock.MagicMock, mock_gcm: mock.MagicMock) -> None:
         res = {}
         old_token = hex_to_b64("1111")
         new_token = hex_to_b64("2222")

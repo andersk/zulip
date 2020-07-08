@@ -698,9 +698,7 @@ def do_activate_user(user_profile: UserProfile, acting_user: Optional[UserProfil
     user_profile.set_unusable_password()
     user_profile.date_joined = timezone_now()
     user_profile.tos_version = settings.TOS_VERSION
-    user_profile.save(
-        update_fields=["is_active", "date_joined", "password", "is_mirror_dummy", "tos_version"],
-    )
+    user_profile.save(update_fields=["is_active", "date_joined", "password", "is_mirror_dummy", "tos_version"])
 
     event_time = user_profile.date_joined
     RealmAuditLog.objects.create(
@@ -1000,17 +998,13 @@ def do_deactivate_user(
         update_license_ledger_if_needed(user_profile.realm, event_time)
 
     event = dict(
-        type="realm_user",
-        op="remove",
-        person=dict(user_id=user_profile.id, full_name=user_profile.full_name),
+        type="realm_user", op="remove", person=dict(user_id=user_profile.id, full_name=user_profile.full_name),
     )
     send_event(user_profile.realm, event, active_user_ids(user_profile.realm_id))
 
     if user_profile.is_bot:
         event = dict(
-            type="realm_bot",
-            op="remove",
-            bot=dict(user_id=user_profile.id, full_name=user_profile.full_name),
+            type="realm_bot", op="remove", bot=dict(user_id=user_profile.id, full_name=user_profile.full_name),
         )
         send_event(user_profile.realm, event, bot_owner_user_ids(user_profile))
 
@@ -1726,10 +1720,7 @@ def do_send_messages(
 
         if message["message"].recipient.type == Recipient.PERSONAL:
             welcome_bot_id = get_system_bot(settings.WELCOME_BOT).id
-            if (
-                welcome_bot_id in message["active_user_ids"]
-                and welcome_bot_id != message["message"].sender_id
-            ):
+            if welcome_bot_id in message["active_user_ids"] and welcome_bot_id != message["message"].sender_id:
                 send_welcome_bot_response(message)
 
         for queue_name, events in message["message"].service_queue_events.items():
@@ -1930,9 +1921,7 @@ def do_add_reaction_legacy(user_profile: UserProfile, message: Message, emoji_na
 
 
 def do_remove_reaction_legacy(user_profile: UserProfile, message: Message, emoji_name: str) -> None:
-    reaction = Reaction.objects.filter(
-        user_profile=user_profile, message=message, emoji_name=emoji_name,
-    ).get()
+    reaction = Reaction.objects.filter(user_profile=user_profile, message=message, emoji_name=emoji_name).get()
     reaction.delete()
     notify_reaction_update(user_profile, message, reaction, "remove")
 
@@ -2300,12 +2289,7 @@ def check_schedule_message(
     addressee = Addressee.legacy_build(sender, message_type_name, message_to, topic_name)
 
     message = check_message(
-        sender,
-        client,
-        addressee,
-        message_content,
-        realm=realm,
-        forwarder_user_profile=forwarder_user_profile,
+        sender, client, addressee, message_content, realm=realm, forwarder_user_profile=forwarder_user_profile,
     )
     message["deliver_at"] = deliver_at
     message["delivery_type"] = delivery_type
@@ -3366,9 +3350,7 @@ def do_change_password(user_profile: UserProfile, password: str, commit: bool = 
     )
 
 
-def do_change_full_name(
-    user_profile: UserProfile, full_name: str, acting_user: Optional[UserProfile],
-) -> None:
+def do_change_full_name(user_profile: UserProfile, full_name: str, acting_user: Optional[UserProfile]) -> None:
     old_name = user_profile.full_name
     user_profile.full_name = full_name
     user_profile.save(update_fields=["full_name"])
@@ -5294,9 +5276,7 @@ def gather_subscriptions_helper(user_profile: UserProfile, include_subscribers: 
     else:
         never_subscribed_stream_ids = set()
     never_subscribed_streams = [
-        ns_stream_dict
-        for ns_stream_dict in all_streams
-        if ns_stream_dict["id"] in never_subscribed_stream_ids
+        ns_stream_dict for ns_stream_dict in all_streams if ns_stream_dict["id"] in never_subscribed_stream_ids
     ]
 
     for stream in never_subscribed_streams:

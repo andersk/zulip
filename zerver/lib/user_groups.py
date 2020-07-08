@@ -74,9 +74,7 @@ def check_remove_user_from_user_group(user_profile: UserProfile, user_group: Use
         return False
 
 
-def create_user_group(
-    name: str, members: List[UserProfile], realm: Realm, description: str = "",
-) -> UserGroup:
+def create_user_group(name: str, members: List[UserProfile], realm: Realm, description: str = "") -> UserGroup:
     with transaction.atomic():
         user_group = UserGroup.objects.create(name=name, realm=realm, description=description)
         UserGroupMembership.objects.bulk_create(

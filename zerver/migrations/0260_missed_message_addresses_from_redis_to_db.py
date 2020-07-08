@@ -52,9 +52,9 @@ def move_missed_message_addresses_to_database(apps: StateApps, schema_editor: Da
             recipient = Recipient.objects.get(id=recipient_id)
 
             if recipient.type == RECIPIENT_STREAM:
-                message = Message.objects.filter(
-                    subject__iexact=topic_name, recipient_id=recipient.id,
-                ).latest("id")
+                message = Message.objects.filter(subject__iexact=topic_name, recipient_id=recipient.id).latest(
+                    "id",
+                )
             elif recipient.type == RECIPIENT_PERSONAL:
                 # Tie to the latest PM from the sender to this user;
                 # we expect at least one existed because it generated

@@ -288,12 +288,7 @@ class MessagePOSTTest(ZulipTestCase):
         result = self.api_post(
             user,
             "/api/v1/messages",
-            {
-                "type": "stream",
-                "client": "test suite",
-                "content": "Test message no to",
-                "topic": "Test topic",
-            },
+            {"type": "stream", "client": "test suite", "content": "Test message no to", "topic": "Test topic"},
         )
         self.assert_json_success(result)
 
@@ -510,8 +505,7 @@ class MessagePOSTTest(ZulipTestCase):
         self.login("hamlet")
         othello = self.example_user("othello")
         result = self.client_post(
-            "/json/messages",
-            {"type": "private", "content": " ", "client": "test suite", "to": othello.email},
+            "/json/messages", {"type": "private", "content": " ", "client": "test suite", "to": othello.email},
         )
         self.assert_json_error(result, "Message must not be empty")
 
@@ -522,13 +516,7 @@ class MessagePOSTTest(ZulipTestCase):
         self.login("hamlet")
         result = self.client_post(
             "/json/messages",
-            {
-                "type": "stream",
-                "to": "Verona",
-                "client": "test suite",
-                "content": "Test message",
-                "topic": "",
-            },
+            {"type": "stream", "to": "Verona", "client": "test suite", "content": "Test message", "topic": ""},
         )
         self.assert_json_error(result, "Topic can't be empty")
 
@@ -566,8 +554,7 @@ class MessagePOSTTest(ZulipTestCase):
         """
         self.login("hamlet")
         result = self.client_post(
-            "/json/messages",
-            {"type": "private", "content": "Test content", "client": "test suite", "to": ""},
+            "/json/messages", {"type": "private", "content": "Test content", "client": "test suite", "to": ""},
         )
         self.assert_json_error(result, "Message must have recipients")
 
@@ -658,9 +645,7 @@ class MessagePOSTTest(ZulipTestCase):
 
         with mock.patch(
             "DNS.dnslookup",
-            return_value=[
-                ["starnine:*:84233:101:Athena Consulting Exchange User,,,:/mit/starnine:/bin/bash"],
-            ],
+            return_value=[["starnine:*:84233:101:Athena Consulting Exchange User,,,:/mit/starnine:/bin/bash"]],
         ):
             result1 = self.api_post(self.mit_user("starnine"), "/api/v1/messages", msg, subdomain="zephyr")
             self.assert_json_success(result1)
@@ -1211,9 +1196,7 @@ class StreamMessagesTest(ZulipTestCase):
 
         # Outgoing webhook bots don't store UserMessage rows; they will be processed later.
         subscribers = [
-            subscriber
-            for subscriber in subscribers
-            if subscriber.bot_type != UserProfile.OUTGOING_WEBHOOK_BOT
+            subscriber for subscriber in subscribers if subscriber.bot_type != UserProfile.OUTGOING_WEBHOOK_BOT
         ]
 
         old_subscriber_messages = []
@@ -1536,9 +1519,7 @@ class StreamMessagesTest(ZulipTestCase):
         recent_conversations = get_recent_private_conversations(users[1])
         self.assertEqual(len(recent_conversations), 1)
         recent_conversation = list(recent_conversations.values())[0]
-        self.assertEqual(
-            set(recent_conversation["user_ids"]), {user.id for user in users if user != users[1]},
-        )
+        self.assertEqual(set(recent_conversation["user_ids"]), {user.id for user in users if user != users[1]})
         self.assertEqual(recent_conversation["max_message_id"], message2_id)
 
 

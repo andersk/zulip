@@ -38,9 +38,7 @@ logging.basicConfig(format="%(asctime)s upgrade-zulip-from-git: %(message)s", le
 parser = argparse.ArgumentParser()
 parser.add_argument("refname", help="Git reference, e.g. a branch, tag, or commit ID.")
 parser.add_argument(
-    "--remote-url",
-    dest="remote_url",
-    help="Override the Git remote URL configured in /etc/zulip/zulip.conf.",
+    "--remote-url", dest="remote_url", help="Override the Git remote URL configured in /etc/zulip/zulip.conf.",
 )
 args = parser.parse_args()
 
@@ -61,8 +59,7 @@ try:
     if not os.path.exists(LOCAL_GIT_CACHE_DIR):
         logging.info("Cloning the repository")
         subprocess.check_call(
-            ["git", "clone", "-q", remote_url, "--mirror", LOCAL_GIT_CACHE_DIR],
-            stdout=open("/dev/null", "w"),
+            ["git", "clone", "-q", remote_url, "--mirror", LOCAL_GIT_CACHE_DIR], stdout=open("/dev/null", "w"),
         )
     if os.stat(LOCAL_GIT_CACHE_DIR).st_uid == 0:
         subprocess.check_call(["chown", "-R", "zulip:zulip", LOCAL_GIT_CACHE_DIR])

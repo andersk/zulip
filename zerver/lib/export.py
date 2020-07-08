@@ -777,9 +777,7 @@ def sanity_check_stream_data(response: TableData, config: Config, context: Conte
         # complex to have a sanity check.
         return
 
-    actual_streams = {
-        stream.name for stream in Stream.objects.filter(realm=response["zerver_realm"][0]["id"])
-    }
+    actual_streams = {stream.name for stream in Stream.objects.filter(realm=response["zerver_realm"][0]["id"])}
     streams_in_response = {stream["name"] for stream in response["zerver_stream"]}
 
     if len(streams_in_response - actual_streams) > 0:
@@ -1550,11 +1548,7 @@ def do_export_realm(
     # have millions of messages.
     logging.info("Exporting .partial files messages")
     message_ids = export_partial_message_files(
-        realm,
-        response,
-        output_dir=output_dir,
-        public_only=public_only,
-        consent_message_id=consent_message_id,
+        realm, response, output_dir=output_dir, public_only=public_only, consent_message_id=consent_message_id,
     )
     logging.info("%d messages were exported", len(message_ids))
 

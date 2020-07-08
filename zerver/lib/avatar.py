@@ -109,11 +109,7 @@ def _get_unversioned_gravatar_url(email: str, medium: bool) -> str:
 
 
 def _get_unversioned_avatar_url(
-    user_profile_id: int,
-    avatar_source: str,
-    realm_id: int,
-    email: Optional[str] = None,
-    medium: bool = False,
+    user_profile_id: int, avatar_source: str, realm_id: int, email: Optional[str] = None, medium: bool = False,
 ) -> str:
     if avatar_source == "U":
         hash_key = user_avatar_path_from_ids(user_profile_id, realm_id)

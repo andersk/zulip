@@ -5,11 +5,7 @@ from zerver.lib.url_preview.parsers.base import BaseParser
 
 class GenericParser(BaseParser):
     def extract_data(self) -> Dict[str, Optional[str]]:
-        return {
-            "title": self._get_title(),
-            "description": self._get_description(),
-            "image": self._get_image(),
-        }
+        return {"title": self._get_title(), "description": self._get_description(), "image": self._get_image()}
 
     def _get_title(self) -> Optional[str]:
         soup = self._soup

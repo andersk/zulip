@@ -44,10 +44,7 @@ class RateLimiterBackendBase(ZulipTestCase):
         return obj
 
     def make_request(
-        self,
-        obj: RateLimitedTestObject,
-        expect_ratelimited: bool = False,
-        verify_api_calls_left: bool = True,
+        self, obj: RateLimitedTestObject, expect_ratelimited: bool = False, verify_api_calls_left: bool = True,
     ) -> None:
         key = obj.key()
         if key not in self.requests_record:

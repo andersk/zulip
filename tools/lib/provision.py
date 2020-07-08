@@ -53,9 +53,7 @@ with open("/proc/meminfo") as meminfo:
 ram_gb = float(ram_size) / 1024.0 / 1024.0
 if ram_gb < 1.5:
     print(
-        "You have insufficient RAM ({} GB) to run the Zulip development environment.".format(
-            round(ram_gb, 2),
-        ),
+        "You have insufficient RAM ({} GB) to run the Zulip development environment.".format(round(ram_gb, 2)),
     )
     print("We recommend at least 2 GB of RAM, and require at least 1.5 GB.")
     sys.exit(1)
@@ -238,9 +236,7 @@ if "fedora" in os_families():
     TSEARCH_STOPWORDS_PATH = "/usr/pgsql-{}/share/tsearch_data/".format(POSTGRES_VERSION)
 else:
     TSEARCH_STOPWORDS_PATH = "/usr/share/postgresql/{}/tsearch_data/".format(POSTGRES_VERSION)
-REPO_STOPWORDS_PATH = os.path.join(
-    ZULIP_PATH, "puppet", "zulip", "files", "postgresql", "zulip_english.stop",
-)
+REPO_STOPWORDS_PATH = os.path.join(ZULIP_PATH, "puppet", "zulip", "files", "postgresql", "zulip_english.stop")
 
 
 def install_system_deps() -> None:
@@ -324,8 +320,7 @@ def install_yum_deps(deps_to_install: List[str]) -> None:
         return
 
     run_as_root(
-        ["/usr/{}/bin/postgresql-{}-setup".format(postgres_dir, POSTGRES_VERSION), "initdb"],
-        sudo_args=["-H"],
+        ["/usr/{}/bin/postgresql-{}-setup".format(postgres_dir, POSTGRES_VERSION), "initdb"], sudo_args=["-H"],
     )
     # Use vendored pg_hba.conf, which enables password authentication.
     run_as_root(["cp", "-a", "puppet/zulip/files/postgresql/centos_pg_hba.conf", pg_hba_conf])
@@ -333,8 +328,7 @@ def install_yum_deps(deps_to_install: List[str]) -> None:
 
     # Link in tsearch data files
     overwrite_symlink(
-        "/usr/share/myspell/en_US.dic",
-        "/usr/pgsql-{}/share/tsearch_data/en_us.dict".format(POSTGRES_VERSION),
+        "/usr/share/myspell/en_US.dic", "/usr/pgsql-{}/share/tsearch_data/en_us.dict".format(POSTGRES_VERSION),
     )
     overwrite_symlink(
         "/usr/share/myspell/en_US.aff",
@@ -405,9 +399,7 @@ def main(options: argparse.Namespace) -> "NoReturn":
             setup_node_modules()
         except subprocess.CalledProcessError:
             print(
-                FAIL
-                + "`yarn install` is failing; check your network connection (and proxy settings)."
-                + ENDC,
+                FAIL + "`yarn install` is failing; check your network connection (and proxy settings)." + ENDC,
             )
             sys.exit(1)
 
