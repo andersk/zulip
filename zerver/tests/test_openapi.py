@@ -153,21 +153,21 @@ class OpenAPIToolsTest(ZulipTestCase):
         # mix of arrays and objects to verify that our descent logic
         # correctly gets to the the deeply nested objects.
         with open(os.path.join(os.path.dirname(OPENAPI_SPEC_PATH),
-                  "testing.yaml")) as test_file:
+                               "testing.yaml")) as test_file:
             test_dict = yaml.safe_load(test_file)
         openapi_spec.spec()['paths']['testing'] = test_dict
         try:
             validate_against_openapi_schema((test_dict['test1']['responses']['200']['content']
-                                            ['application/json']['example']),
+                                             ['application/json']['example']),
                                             'testing', 'test1', '200')
             with self.assertRaises(ValidationError, msg = 'Extraneous key "str4" in response\'s content'):
                 validate_against_openapi_schema((test_dict['test2']['responses']['200']
-                                                ['content']['application/json']['example']),
+                                                 ['content']['application/json']['example']),
                                                 'testing', 'test2', '200')
             with self.assertRaises(SchemaError, msg = 'Opaque object "obj"'):
                 # Checks for opaque objects
                 validate_schema((test_dict['test3']['responses']['200']
-                                ['content']['application/json']['schema']))
+                                 ['content']['application/json']['schema']))
         finally:
             openapi_spec.spec()['paths'].pop('testing', None)
 

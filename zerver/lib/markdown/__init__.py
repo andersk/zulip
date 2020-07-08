@@ -523,6 +523,7 @@ class InlineHttpsProcessor(markdown.treeprocessors.Treeprocessor):
 
 class BacktickInlineProcessor(markdown.inlinepatterns.BacktickInlineProcessor):
     """ Return a `<code>` element containing the matching text. """
+
     def handleMatch(self, m: Match[str], data: str) -> Tuple[Union[None, Element], int, int]:
         # Let upstream's implementation do its job as it is, we'll
         # just replace the text to not strip the group because it

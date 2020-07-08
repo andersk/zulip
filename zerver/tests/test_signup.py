@@ -1780,7 +1780,7 @@ class InvitationsTestCase(InviteUserBase):
 
         invitee = "DeleteMe@zulip.com"
         self.assert_json_success(self.invite(invitee, ['Denmark'],
-                                 invite_as=PreregistrationUser.INVITE_AS['REALM_OWNER']))
+                                             invite_as=PreregistrationUser.INVITE_AS['REALM_OWNER']))
         prereg_user = PreregistrationUser.objects.get(email=invitee)
         result = self.api_delete(self.example_user('iago'),
                                  '/api/v1/invites/' + str(prereg_user.id))

@@ -203,7 +203,7 @@ def sponsorship(request: HttpRequest, user: UserProfile,
 
     support_realm_uri = get_realm(settings.STAFF_SUBDOMAIN).uri
     support_url = urljoin(support_realm_uri, urlunsplit(("", "", reverse('analytics.views.support'),
-                          urlencode({"q": realm.string_id}), "")))
+                                                         urlencode({"q": realm.string_id}), "")))
 
     context = {
         "requested_by": requested_by,

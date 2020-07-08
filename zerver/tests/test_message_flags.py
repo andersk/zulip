@@ -38,6 +38,7 @@ class FirstUnreadAnchorTests(ZulipTestCase):
     we had the concept of a "pointer", and they may be a bit
     redundant in what they now check.
     '''
+
     def test_use_first_unread_anchor(self) -> None:
         self.login('hamlet')
 
