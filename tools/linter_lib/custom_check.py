@@ -637,9 +637,7 @@ html_rules: List["Rule"] = whitespace_rules + prose_style_rules + [
             "templates/corporate/upgrade.html",
         },
         "good_lines": ["{{ render_entrypoint('landing-page') }}"],
-        "bad_lines": [
-            '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>',
-        ],
+        "bad_lines": ['<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>'],
     },
     {
         "pattern": "title='[^{]",
@@ -773,10 +771,7 @@ jinja2_rules = RuleList(
     langs=["html"],
     rules=html_rules
     + [
-        {
-            "pattern": r"{% endtrans %}[\.\?!]",
-            "description": "Period should be part of the translatable string.",
-        },
+        {"pattern": r"{% endtrans %}[\.\?!]", "description": "Period should be part of the translatable string."},
         {"pattern": r"{{ _(.+) }}[\.\?!]", "description": "Period should be part of the translatable string."},
     ],
 )

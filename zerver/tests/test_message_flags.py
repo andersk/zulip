@@ -398,9 +398,7 @@ class PushNotificationMarkReadFlowsTest(ZulipTestCase):
         self.assert_json_success(result)
         self.assertEqual(self.get_mobile_push_notification_ids(user_profile), [])
 
-        message_id = self.send_stream_message(
-            self.example_user("cordelia"), "test_stream", "hello", "test_topic",
-        )
+        message_id = self.send_stream_message(self.example_user("cordelia"), "test_stream", "hello", "test_topic")
         second_message_id = self.send_stream_message(
             self.example_user("cordelia"), "test_stream", "hello", "other_topic",
         )
@@ -770,9 +768,7 @@ class GetUnreadMsgsTest(ZulipTestCase):
 
 class MessageAccessTests(ZulipTestCase):
     def test_update_invalid_flags(self) -> None:
-        message = self.send_personal_message(
-            self.example_user("cordelia"), self.example_user("hamlet"), "hello",
-        )
+        message = self.send_personal_message(self.example_user("cordelia"), self.example_user("hamlet"), "hello")
 
         self.login("hamlet")
         result = self.client_post(

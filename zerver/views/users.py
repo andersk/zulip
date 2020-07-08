@@ -225,9 +225,7 @@ def patch_bot_backend(
     bot_id: int,
     full_name: Optional[str] = REQ(default=None),
     bot_owner_id: Optional[int] = REQ(validator=check_int, default=None),
-    config_data: Optional[Dict[str, str]] = REQ(
-        default=None, validator=check_dict(value_validator=check_string),
-    ),
+    config_data: Optional[Dict[str, str]] = REQ(default=None, validator=check_dict(value_validator=check_string)),
     service_payload_url: Optional[str] = REQ(validator=check_url, default=None),
     service_interface: int = REQ(validator=check_int, default=1),
     default_sending_stream: Optional[str] = REQ(default=None),

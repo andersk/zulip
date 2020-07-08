@@ -793,8 +793,7 @@ class StreamAdminTest(ZulipTestCase):
         self.assert_json_success(result)
         stream = get_stream("stream_name1", realm)
         self.assertEqual(
-            stream.rendered_description,
-            '<p>See <a href="https://zulip.com/team">https://zulip.com/team</a></p>',
+            stream.rendered_description, '<p>See <a href="https://zulip.com/team">https://zulip.com/team</a></p>',
         )
 
     def test_change_stream_description_requires_realm_admin(self) -> None:
@@ -805,9 +804,7 @@ class StreamAdminTest(ZulipTestCase):
         do_change_user_role(user_profile, UserProfile.ROLE_MEMBER)
 
         stream_id = get_stream("stream_name1", user_profile.realm).id
-        result = self.client_patch(
-            f"/json/streams/{stream_id}", {"description": ujson.dumps("Test description")},
-        )
+        result = self.client_patch(f"/json/streams/{stream_id}", {"description": ujson.dumps("Test description")})
         self.assert_json_error(result, "Must be an organization administrator")
 
     def test_change_to_stream_post_policy_admins(self) -> None:
@@ -3188,9 +3185,7 @@ class SubscriptionAPITest(ZulipTestCase):
         do_deactivate_user(target_profile)
         result = self.common_subscribe_to_streams(self.test_user, "Denmark", post_data, allow_fail=True)
         self.assert_json_error(
-            result,
-            f"User not authorized to execute queries on behalf of '{target_profile.id}'",
-            status_code=403,
+            result, f"User not authorized to execute queries on behalf of '{target_profile.id}'", status_code=403,
         )
 
     def test_subscriptions_add_for_principal_invite_only(self) -> None:
@@ -3226,9 +3221,7 @@ class SubscriptionAPITest(ZulipTestCase):
             self.test_user, self.streams, {"principals": ujson.dumps([invalid_principal])}, allow_fail=True,
         )
         self.assert_json_error(
-            result,
-            f"User not authorized to execute queries on behalf of '{invalid_principal}'",
-            status_code=403,
+            result, f"User not authorized to execute queries on behalf of '{invalid_principal}'", status_code=403,
         )
 
     def test_subscription_add_invalid_principal(self) -> None:
@@ -3240,9 +3233,7 @@ class SubscriptionAPITest(ZulipTestCase):
             self.test_user, self.streams, {"principals": ujson.dumps([invalid_principal])}, allow_fail=True,
         )
         self.assert_json_error(
-            result,
-            f"User not authorized to execute queries on behalf of '{invalid_principal}'",
-            status_code=403,
+            result, f"User not authorized to execute queries on behalf of '{invalid_principal}'", status_code=403,
         )
 
     def test_subscription_add_principal_other_realm(self) -> None:
@@ -3274,9 +3265,7 @@ class SubscriptionAPITest(ZulipTestCase):
          "removed": ["Denmark", "Scotland", "Verona"],
          "not_removed": ["Rome"], "result": "success"}
         """
-        result = self.client_delete(
-            "/json/users/me/subscriptions", {"subscriptions": ujson.dumps(subscriptions)},
-        )
+        result = self.client_delete("/json/users/me/subscriptions", {"subscriptions": ujson.dumps(subscriptions)})
         self.assert_json_success(result)
         json = result.json()
         for key, val in json_dict.items():
@@ -3384,9 +3373,7 @@ class SubscriptionAPITest(ZulipTestCase):
         stream_name = "new_public_stream"
         cordelia = self.example_user("cordelia")
         self.common_subscribe_to_streams(cordelia, [stream_name], invite_only=False)
-        result = self.client_post(
-            "/json/subscriptions/exists", {"stream": stream_name, "autosubscribe": "false"},
-        )
+        result = self.client_post("/json/subscriptions/exists", {"stream": stream_name, "autosubscribe": "false"})
         self.assert_json_success(result)
         self.assertIn("subscribed", result.json())
         self.assertFalse(result.json()["subscribed"])
@@ -3413,9 +3400,7 @@ class SubscriptionAPITest(ZulipTestCase):
 
         # A user who is subscribed still sees the stream exists
         self.login("cordelia")
-        result = self.client_post(
-            "/json/subscriptions/exists", {"stream": stream_name, "autosubscribe": "false"},
-        )
+        result = self.client_post("/json/subscriptions/exists", {"stream": stream_name, "autosubscribe": "false"})
         self.assert_json_success(result)
         self.assertIn("subscribed", result.json())
         self.assertTrue(result.json()["subscribed"])
@@ -3678,8 +3663,7 @@ class GetStreamsTest(ZulipTestCase):
         # Check it correctly lists the bot owner's subs + all public streams +
         # the bot's subs
         result = self.api_get(
-            test_bot,
-            "/api/v1/streams?include_owner_subscribed=true&include_public=true&include_subscribed=true",
+            test_bot, "/api/v1/streams?include_owner_subscribed=true&include_public=true&include_subscribed=true",
         )
 
         self.assert_json_success(result)

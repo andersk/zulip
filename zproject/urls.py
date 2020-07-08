@@ -172,9 +172,7 @@ v1_api_and_json_patterns = [
         rest_dispatch,
         {"GET": "zerver.views.users.get_members_backend", "POST": "zerver.views.users.create_user_backend"},
     ),
-    path(
-        "users/<int:user_id>/reactivate", rest_dispatch, {"POST": "zerver.views.users.reactivate_user_backend"},
-    ),
+    path("users/<int:user_id>/reactivate", rest_dispatch, {"POST": "zerver.views.users.reactivate_user_backend"}),
     re_path(
         r"^users/(?!me/)(?P<email>[^/]*)/presence$",
         rest_dispatch,
@@ -217,9 +215,7 @@ v1_api_and_json_patterns = [
     ),
     path("invites/<int:prereg_id>", rest_dispatch, {"DELETE": "zerver.views.invite.revoke_user_invite"}),
     path(
-        "invites/<int:prereg_id>/resend",
-        rest_dispatch,
-        {"POST": "zerver.views.invite.resend_user_invite_email"},
+        "invites/<int:prereg_id>/resend", rest_dispatch, {"POST": "zerver.views.invite.resend_user_invite_email"},
     ),
     # invites/multiuse -> zerver.views.invite
     path("invites/multiuse", rest_dispatch, {"POST": "zerver.views.invite.generate_multiuse_invite_backend"}),
@@ -354,9 +350,7 @@ v1_api_and_json_patterns = [
         {"POST": "zerver.views.user_groups.update_user_group_backend"},
     ),
     # users/me -> zerver.views.user_settings
-    path(
-        "users/me/api_key/regenerate", rest_dispatch, {"POST": "zerver.views.user_settings.regenerate_api_key"},
-    ),
+    path("users/me/api_key/regenerate", rest_dispatch, {"POST": "zerver.views.user_settings.regenerate_api_key"}),
     path(
         "users/me/enter-sends",
         rest_dispatch,
@@ -441,9 +435,7 @@ v1_api_and_json_patterns = [
     path("get_stream_id", rest_dispatch, {"GET": "zerver.views.streams.json_get_stream_id"}),
     # GET returns "stream info" (undefined currently?), HEAD returns whether stream exists (200 or 404)
     path(
-        "streams/<int:stream_id>/members",
-        rest_dispatch,
-        {"GET": "zerver.views.streams.get_subscribers_backend"},
+        "streams/<int:stream_id>/members", rest_dispatch, {"GET": "zerver.views.streams.get_subscribers_backend"},
     ),
     path(
         "streams/<int:stream_id>",
@@ -454,9 +446,7 @@ v1_api_and_json_patterns = [
         },
     ),
     # Delete topic in stream
-    path(
-        "streams/<int:stream_id>/delete_topic", rest_dispatch, {"POST": "zerver.views.streams.delete_in_topic"},
-    ),
+    path("streams/<int:stream_id>/delete_topic", rest_dispatch, {"POST": "zerver.views.streams.delete_in_topic"}),
     path(
         "default_streams",
         rest_dispatch,
@@ -496,9 +486,7 @@ v1_api_and_json_patterns = [
     ),
     # muting -> zerver.views.muting
     path(
-        "users/me/subscriptions/muted_topics",
-        rest_dispatch,
-        {"PATCH": "zerver.views.muting.update_muted_topic"},
+        "users/me/subscriptions/muted_topics", rest_dispatch, {"PATCH": "zerver.views.muting.update_muted_topic"},
     ),
     # used to register for an event queue in tornado
     path("register", rest_dispatch, {"POST": "zerver.views.events_register.events_register_backend"}),
@@ -581,9 +569,7 @@ i18n_urls = [
         zerver.views.auth.start_social_login,
         name="login-social-extra-arg",
     ),
-    re_path(
-        r"^accounts/register/social/([\w,-]+)$", zerver.views.auth.start_social_signup, name="signup-social",
-    ),
+    re_path(r"^accounts/register/social/([\w,-]+)$", zerver.views.auth.start_social_signup, name="signup-social"),
     re_path(
         r"^accounts/register/social/([\w,-]+)/([\w,-]+)$",
         zerver.views.auth.start_social_signup,
@@ -618,8 +604,7 @@ i18n_urls = [
     ),
     path("accounts/password/reset/", zerver.views.auth.password_reset, name="zerver.views.auth.password_reset"),
     path(
-        "accounts/password/reset/done/",
-        PasswordResetDoneView.as_view(template_name="zerver/reset_emailed.html"),
+        "accounts/password/reset/done/", PasswordResetDoneView.as_view(template_name="zerver/reset_emailed.html"),
     ),
     re_path(
         r"^accounts/password/reset/(?P<uidb64>[0-9A-Za-z]+)/(?P<token>.+)/$",
@@ -640,9 +625,7 @@ i18n_urls = [
     path("digest/", zerver.views.digest.digest_page),
     # Registration views, require a confirmation ID.
     path(
-        "accounts/home/",
-        zerver.views.registration.accounts_home,
-        name="zerver.views.registration.accounts_home",
+        "accounts/home/", zerver.views.registration.accounts_home, name="zerver.views.registration.accounts_home",
     ),
     re_path(
         r"^accounts/send_confirm/(?P<email>[\S]+)?$",
@@ -684,14 +667,10 @@ i18n_urls = [
         name="zerver.views.home.accounts_accept_terms",
     ),
     # Find your account
-    path(
-        "accounts/find/", zerver.views.registration.find_account, name="zerver.views.registration.find_account",
-    ),
+    path("accounts/find/", zerver.views.registration.find_account, name="zerver.views.registration.find_account"),
     # Go to organization subdomain
     path(
-        "accounts/go/",
-        zerver.views.registration.realm_redirect,
-        name="zerver.views.registration.realm_redirect",
+        "accounts/go/", zerver.views.registration.realm_redirect, name="zerver.views.registration.realm_redirect",
     ),
     # Realm Creation
     path("new/", zerver.views.registration.create_realm, name="zerver.views.create_realm"),
@@ -752,9 +731,7 @@ i18n_urls = [
     path("team/", zerver.views.portico.team_view),
     path("history/", zerver.views.portico.landing_view, {"template_name": "zerver/history.html"}),
     path("why-zulip/", zerver.views.portico.landing_view, {"template_name": "zerver/why-zulip.html"}),
-    path(
-        "for/open-source/", zerver.views.portico.landing_view, {"template_name": "zerver/for-open-source.html"},
-    ),
+    path("for/open-source/", zerver.views.portico.landing_view, {"template_name": "zerver/for-open-source.html"}),
     path("for/research/", zerver.views.portico.landing_view, {"template_name": "zerver/for-research.html"}),
     path("for/companies/", zerver.views.portico.landing_view, {"template_name": "zerver/for-companies.html"}),
     path(

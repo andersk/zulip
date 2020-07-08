@@ -61,9 +61,7 @@ def bulk_get_user_profile_by_id(uids: List[int]) -> Dict[int, UserDisplayRecipie
         # the get_user_profile_by_id cache.
         # (Since we fetch only several fields here)
         cache_key_function=display_recipient_bulk_get_users_by_id_cache_key,
-        query_function=lambda ids: list(
-            UserProfile.objects.filter(id__in=ids).values(*display_recipient_fields),
-        ),
+        query_function=lambda ids: list(UserProfile.objects.filter(id__in=ids).values(*display_recipient_fields)),
         object_ids=uids,
         id_fetcher=user_dict_id_fetcher,
     )
@@ -176,9 +174,7 @@ def bulk_fetch_display_recipients(recipient_tuples: Set[Tuple[int, int, int]]) -
     # ItemT = Tuple[int, List[UserDisplayRecipient]] (recipient_id, list of corresponding users)
     # CacheItemT = List[UserDisplayRecipient] (display_recipient list)
     # ObjKT = int (recipient_id)
-    personal_and_huddle_display_recipients: Dict[
-        int, List[UserDisplayRecipient],
-    ] = transformed_bulk_cached_fetch(
+    personal_and_huddle_display_recipients: Dict[int, List[UserDisplayRecipient]] = transformed_bulk_cached_fetch(
         cache_key_function=display_recipient_cache_key,
         query_function=personal_and_huddle_query_function,
         object_ids=[recipient[0] for recipient in personal_and_huddle_recipients],

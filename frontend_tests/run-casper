@@ -45,9 +45,7 @@ parser.add_argument(
 parser.add_argument(
     "--force", dest="force", action="store_true", default=False, help="Run tests despite possible problems.",
 )
-parser.add_argument(
-    "--verbose", help="Whether or not to enable verbose mode", action="store_true", default=False,
-)
+parser.add_argument("--verbose", help="Whether or not to enable verbose mode", action="store_true", default=False)
 parser.add_argument(
     "--remote-debug",
     help="Whether or not to enable remote debugging on port 7777",
@@ -130,9 +128,7 @@ def run_tests(files: Iterable[str], external_host: str) -> None:
             test_name = os.path.basename(test_file)
             cmd = ["node_modules/.bin/casperjs"] + remote_debug + verbose + xunit_export + ["test", test_file]
             print(
-                "\n\n===================== {}\nRunning {}\n\n".format(
-                    test_name, " ".join(map(shlex.quote, cmd)),
-                ),
+                "\n\n===================== {}\nRunning {}\n\n".format(test_name, " ".join(map(shlex.quote, cmd))),
                 flush=True,
             )
             ret = subprocess.call(cmd)

@@ -102,9 +102,7 @@ class ThumbnailTest(ZulipTestCase):
             result = self.client_get(f"/thumbnail?url={quoted_url}&size=thumbnail")
             self.assertEqual(result.status_code, 302, result)
             expected_part_url = (
-                "/0x300/smart/filters:no_upscale():sharpen(0.5,0.2,true)/"
-                + encoded_url
-                + "/source_type/external"
+                "/0x300/smart/filters:no_upscale():sharpen(0.5,0.2,true)/" + encoded_url + "/source_type/external"
             )
             self.assertIn(expected_part_url, result.url)
 
@@ -114,9 +112,7 @@ class ThumbnailTest(ZulipTestCase):
             result = self.api_get(user_profile, f"/thumbnail?url={quoted_url}&size=thumbnail")
             self.assertEqual(result.status_code, 302, result)
             expected_part_url = (
-                "/0x300/smart/filters:no_upscale():sharpen(0.5,0.2,true)/"
-                + encoded_url
-                + "/source_type/external"
+                "/0x300/smart/filters:no_upscale():sharpen(0.5,0.2,true)/" + encoded_url + "/source_type/external"
             )
             self.assertIn(expected_part_url, result.url)
 
@@ -127,9 +123,7 @@ class ThumbnailTest(ZulipTestCase):
             )
             self.assertEqual(result.status_code, 302, result)
             expected_part_url = (
-                "/0x300/smart/filters:no_upscale():sharpen(0.5,0.2,true)/"
-                + encoded_url
-                + "/source_type/external"
+                "/0x300/smart/filters:no_upscale():sharpen(0.5,0.2,true)/" + encoded_url + "/source_type/external"
             )
             self.assertIn(expected_part_url, result.url)
 
@@ -140,9 +134,7 @@ class ThumbnailTest(ZulipTestCase):
             )
             self.assertEqual(result.status_code, 302, result)
             expected_part_url = (
-                "/0x300/smart/filters:no_upscale():sharpen(0.5,0.2,true)/"
-                + encoded_url
-                + "/source_type/external"
+                "/0x300/smart/filters:no_upscale():sharpen(0.5,0.2,true)/" + encoded_url + "/source_type/external"
             )
             self.assertIn(expected_part_url, result.url)
 

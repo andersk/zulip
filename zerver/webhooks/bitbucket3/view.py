@@ -301,9 +301,7 @@ def pr_handler(payload: Dict[str, Any], action: str, include_title: bool = False
     return [{"subject": subject, "body": body}]
 
 
-def pr_comment_handler(
-    payload: Dict[str, Any], action: str, include_title: bool = False,
-) -> List[Dict[str, str]]:
+def pr_comment_handler(payload: Dict[str, Any], action: str, include_title: bool = False) -> List[Dict[str, str]]:
     pr = payload["pullRequest"]
     subject = get_pr_subject(pr["toRef"]["repository"]["name"], type="PR", id=pr["id"], title=pr["title"])
     message = payload["comment"]["text"]

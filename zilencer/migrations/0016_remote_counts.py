@@ -14,10 +14,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="RemoteInstallationCount",
             fields=[
-                (
-                    "id",
-                    models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID"),
-                ),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
                 ("property", models.CharField(max_length=32)),
                 ("subgroup", models.CharField(max_length=16, null=True)),
                 ("end_time", models.DateTimeField()),
@@ -34,10 +31,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="RemoteRealmCount",
             fields=[
-                (
-                    "id",
-                    models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID"),
-                ),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
                 ("property", models.CharField(max_length=32)),
                 ("subgroup", models.CharField(max_length=16, null=True)),
                 ("end_time", models.DateTimeField()),
@@ -53,8 +47,7 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.AlterUniqueTogether(
-            name="remoterealmcount",
-            unique_together={("server", "realm_id", "property", "subgroup", "end_time")},
+            name="remoterealmcount", unique_together={("server", "realm_id", "property", "subgroup", "end_time")},
         ),
         migrations.AlterIndexTogether(name="remoterealmcount", index_together={("property", "end_time")}),
         migrations.AlterUniqueTogether(

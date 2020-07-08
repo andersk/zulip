@@ -696,10 +696,7 @@ class ImportExportTest(ZulipTestCase):
         # data to test import of muted topic
         stream = get_stream("Verona", original_realm)
         add_topic_mute(
-            user_profile=sample_user,
-            stream_id=stream.id,
-            recipient_id=stream.recipient.id,
-            topic_name="Verona2",
+            user_profile=sample_user, stream_id=stream.id, recipient_id=stream.recipient.id, topic_name="Verona2",
         )
 
         do_update_user_presence(sample_user, get_client("website"), timezone_now(), UserPresence.ACTIVE)

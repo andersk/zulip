@@ -1514,9 +1514,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
             "config_data": ujson.dumps(incorrect_bot_config_info),
         }
         bot_info.update(extras)
-        with patch(
-            "zulip_bots.bots.giphy.giphy.GiphyHandler.validate_config", side_effect=ConfigValidationError,
-        ):
+        with patch("zulip_bots.bots.giphy.giphy.GiphyHandler.validate_config", side_effect=ConfigValidationError):
             result = self.client_post("/json/bots", bot_info)
         self.assert_json_error(result, "Invalid configuration data!")
 

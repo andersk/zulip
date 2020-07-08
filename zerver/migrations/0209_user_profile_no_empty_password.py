@@ -83,9 +83,7 @@ def ensure_no_empty_passwords(apps: StateApps, schema_editor: DatabaseSchemaEdit
     # exposed; we store those users in
     # password_change_user_ids_no_reset_needed.
     password_change_user_ids = set(
-        RealmAuditLog.objects.filter(event_type=USER_PASSWORD_CHANGED).values_list(
-            "modified_user_id", flat=True,
-        ),
+        RealmAuditLog.objects.filter(event_type=USER_PASSWORD_CHANGED).values_list("modified_user_id", flat=True),
     )
     password_change_user_ids_api_key_reset_needed: Set[int] = set()
     password_change_user_ids_no_reset_needed: Set[int] = set()

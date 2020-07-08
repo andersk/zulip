@@ -203,12 +203,7 @@ elif "rhel" in os_families():
         COMMON_YUM_DEPENDENCIES
         + [
             pkg.format(POSTGRES_VERSION)
-            for pkg in [
-                "postgresql{0}-server",
-                "postgresql{0}",
-                "postgresql{0}-devel",
-                "postgresql{0}-pgroonga",
-            ]
+            for pkg in ["postgresql{0}-server", "postgresql{0}", "postgresql{0}-devel", "postgresql{0}-pgroonga"]
         ]
         + VENV_DEPENDENCIES
     )

@@ -406,11 +406,7 @@ class S3UploadBackend(ZulipUploadBackend):
         return self.delete_file_from_s3(path_id, self.uploads_bucket)
 
     def write_avatar_images(
-        self,
-        s3_file_name: str,
-        target_user_profile: UserProfile,
-        image_data: bytes,
-        content_type: Optional[str],
+        self, s3_file_name: str, target_user_profile: UserProfile, image_data: bytes, content_type: Optional[str],
     ) -> None:
         upload_image_to_s3(
             self.avatar_bucket, s3_file_name + ".original", content_type, target_user_profile, image_data,

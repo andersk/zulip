@@ -191,11 +191,7 @@ def build_message_list(user_profile: UserProfile, messages: List[Message]) -> Li
             header_html = (
                 f"<a href='{stream_link}'>{stream.name}</a> > <a href='{narrow_link}'>{message.topic_name()}</a>"
             )
-        return {
-            "plain": header,
-            "html": header_html,
-            "stream_message": message.recipient.type_name() == "stream",
-        }
+        return {"plain": header, "html": header_html, "stream_message": message.recipient.type_name() == "stream"}
 
     # # Collapse message list to
     # [
@@ -455,9 +451,7 @@ def handle_missedmessage_emails(user_profile_id: int, missed_email_events: Itera
     # messages that were permanently deleted, since those would now be
     # in the ArchivedMessage table, not the Message table.
     messages = Message.objects.filter(
-        usermessage__user_profile_id=user_profile,
-        id__in=message_ids,
-        usermessage__flags=~UserMessage.flags.read,
+        usermessage__user_profile_id=user_profile, id__in=message_ids, usermessage__flags=~UserMessage.flags.read,
     )
 
     # Cancel missed-message emails for deleted messages

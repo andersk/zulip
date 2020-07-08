@@ -14,10 +14,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="ScheduledEmail",
             fields=[
-                (
-                    "id",
-                    models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID"),
-                ),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
                 ("scheduled_timestamp", models.DateTimeField(db_index=True)),
                 ("data", models.TextField()),
                 ("address", models.EmailField(db_index=True, max_length=254, null=True)),

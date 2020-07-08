@@ -119,9 +119,7 @@ You can use the command list_realms to find ID of the realms in this server."""
         # throw an error if they don't exist.
         if realm is not None:
             try:
-                return UserProfile.objects.select_related().get(
-                    delivery_email__iexact=email.strip(), realm=realm,
-                )
+                return UserProfile.objects.select_related().get(delivery_email__iexact=email.strip(), realm=realm)
             except UserProfile.DoesNotExist:
                 raise CommandError(f"The realm '{realm}' does not contain a user with email '{email}'")
 

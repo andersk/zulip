@@ -121,9 +121,7 @@ class WorkerTest(ZulipTestCase):
 
         hamlet1_msg_id = self.send_personal_message(from_user=cordelia, to_user=hamlet, content="hi hamlet")
 
-        hamlet2_msg_id = self.send_personal_message(
-            from_user=cordelia, to_user=hamlet, content="goodbye hamlet",
-        )
+        hamlet2_msg_id = self.send_personal_message(from_user=cordelia, to_user=hamlet, content="goodbye hamlet")
 
         hamlet3_msg_id = self.send_personal_message(
             from_user=cordelia, to_user=hamlet, content="hello again hamlet",
@@ -264,9 +262,7 @@ class WorkerTest(ZulipTestCase):
         stream = get_stream("Denmark", get_realm("zulip"))
         stream_to_address = encode_email_address(stream)
         data = [
-            dict(
-                msg_base64=base64.b64encode(b"\xf3test").decode(), time=time.time(), rcpt_to=stream_to_address,
-            ),
+            dict(msg_base64=base64.b64encode(b"\xf3test").decode(), time=time.time(), rcpt_to=stream_to_address),
         ] * 3
         for element in data:
             fake_client.queue.append(("email_mirror", element))
@@ -288,9 +284,7 @@ class WorkerTest(ZulipTestCase):
         stream = get_stream("Denmark", realm)
         stream_to_address = encode_email_address(stream)
         data = [
-            dict(
-                msg_base64=base64.b64encode(b"\xf3test").decode(), time=time.time(), rcpt_to=stream_to_address,
-            ),
+            dict(msg_base64=base64.b64encode(b"\xf3test").decode(), time=time.time(), rcpt_to=stream_to_address),
         ] * 5
         for element in data:
             fake_client.queue.append(("email_mirror", element))
@@ -404,9 +398,9 @@ class WorkerTest(ZulipTestCase):
         with simulated_queue_client(lambda: fake_client):
             worker = queue_processors.SignupWorker()
             worker.setup()
-            with patch(
-                "zerver.worker.queue_processors.requests.post", return_value=fake_response,
-            ), self.settings(MAILCHIMP_API_KEY="one-two", PRODUCTION=True, ZULIP_FRIENDS_LIST_ID="id"):
+            with patch("zerver.worker.queue_processors.requests.post", return_value=fake_response), self.settings(
+                MAILCHIMP_API_KEY="one-two", PRODUCTION=True, ZULIP_FRIENDS_LIST_ID="id",
+            ):
                 with patch("logging.warning") as logging_warning_mock:
                     worker.start()
                     logging_warning_mock.assert_called_once_with(
@@ -426,9 +420,9 @@ class WorkerTest(ZulipTestCase):
         with simulated_queue_client(lambda: fake_client):
             worker = queue_processors.SignupWorker()
             worker.setup()
-            with patch(
-                "zerver.worker.queue_processors.requests.post", return_value=fake_response,
-            ), self.settings(MAILCHIMP_API_KEY="one-two", PRODUCTION=True, ZULIP_FRIENDS_LIST_ID="id"):
+            with patch("zerver.worker.queue_processors.requests.post", return_value=fake_response), self.settings(
+                MAILCHIMP_API_KEY="one-two", PRODUCTION=True, ZULIP_FRIENDS_LIST_ID="id",
+            ):
                 worker.start()
                 fake_response.raise_for_status.assert_called_once()
 

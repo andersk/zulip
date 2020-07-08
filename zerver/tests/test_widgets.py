@@ -163,9 +163,7 @@ class WidgetContentTestCase(ZulipTestCase):
 
         expected_submessage_content = dict(
             widget_type="poll",
-            extra_data=dict(
-                options=["Red", "Green", "Blue", "Yellow"], question="What is your favorite color?",
-            ),
+            extra_data=dict(options=["Red", "Green", "Blue", "Yellow"], question="What is your favorite color?"),
         )
 
         submessage = SubMessage.objects.get(message_id=message.id)

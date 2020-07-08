@@ -185,11 +185,7 @@ class TestOutgoingWebhookMessaging(ZulipTestCase):
         )
 
         add_service(
-            "weather",
-            user_profile=bot,
-            interface=Service.GENERIC,
-            base_url="weather_url",
-            token="weather_token",
+            "weather", user_profile=bot, interface=Service.GENERIC, base_url="weather_url", token="weather_token",
         )
 
         add_service(

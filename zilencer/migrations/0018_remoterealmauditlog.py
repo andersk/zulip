@@ -14,10 +14,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="RemoteRealmAuditLog",
             fields=[
-                (
-                    "id",
-                    models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID"),
-                ),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
                 ("realm_id", models.IntegerField(db_index=True)),
                 ("remote_id", models.IntegerField(db_index=True)),
                 ("event_time", models.DateTimeField(db_index=True)),

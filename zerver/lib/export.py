@@ -1159,9 +1159,7 @@ def export_uploads_and_avatars(realm: Realm, output_dir: Path) -> None:
             realm, settings.S3_AVATAR_BUCKET, output_dir=avatars_output_dir, processing_avatars=True,
         )
         export_files_from_s3(realm, settings.S3_AUTH_UPLOADS_BUCKET, output_dir=uploads_output_dir)
-        export_files_from_s3(
-            realm, settings.S3_AVATAR_BUCKET, output_dir=emoji_output_dir, processing_emoji=True,
-        )
+        export_files_from_s3(realm, settings.S3_AVATAR_BUCKET, output_dir=emoji_output_dir, processing_emoji=True)
         export_files_from_s3(
             realm,
             settings.S3_AVATAR_BUCKET,
@@ -1430,9 +1428,7 @@ def export_emoji_from_local(realm: Realm, local_dir: Path, output_dir: Path) -> 
     count = 0
     records = []
     for realm_emoji in RealmEmoji.objects.filter(realm_id=realm.id):
-        emoji_path = RealmEmoji.PATH_ID_TEMPLATE.format(
-            realm_id=realm.id, emoji_file_name=realm_emoji.file_name,
-        )
+        emoji_path = RealmEmoji.PATH_ID_TEMPLATE.format(realm_id=realm.id, emoji_file_name=realm_emoji.file_name)
 
         # Use 'mark_sanitized' to work around false positive caused by Pysa
         # thinking that 'realm' (and thus 'attachment' and 'attachment.path_id')
@@ -1758,10 +1754,7 @@ def get_analytics_config() -> Config:
     analytics_config = Config(table="zerver_analytics", is_seeded=True)
 
     Config(
-        table="analytics_realmcount",
-        model=RealmCount,
-        normal_parent=analytics_config,
-        parent_key="realm_id__in",
+        table="analytics_realmcount", model=RealmCount, normal_parent=analytics_config, parent_key="realm_id__in",
     )
 
     Config(

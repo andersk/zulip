@@ -403,13 +403,9 @@ def write_message_data(
     attachment_handler: AttachmentHandler,
 ) -> None:
 
-    stream_id_to_recipient_id = {
-        d["type_id"]: d["id"] for d in zerver_recipient if d["type"] == Recipient.STREAM
-    }
+    stream_id_to_recipient_id = {d["type_id"]: d["id"] for d in zerver_recipient if d["type"] == Recipient.STREAM}
 
-    user_id_to_recipient_id = {
-        d["type_id"]: d["id"] for d in zerver_recipient if d["type"] == Recipient.PERSONAL
-    }
+    user_id_to_recipient_id = {d["type_id"]: d["id"] for d in zerver_recipient if d["type"] == Recipient.PERSONAL}
 
     def get_stream_recipient_id(raw_message: ZerverFieldsT) -> int:
         fn_id = raw_message["fn_id"]

@@ -243,9 +243,7 @@ def setup_emoji_farms(cache_path: str, emoji_data: List[Dict[str, Any]]) -> None
         dst_file = os.path.join(target_emoji_farm, img_file_name)
         shutil.copy2(src_file, dst_file)
 
-    def setup_emoji_farm(
-        emojiset: str, emoji_data: List[Dict[str, Any]], alt_name: Optional[str] = None,
-    ) -> None:
+    def setup_emoji_farm(emojiset: str, emoji_data: List[Dict[str, Any]], alt_name: Optional[str] = None) -> None:
         # `alt_name` is an optional parameter that we use to avoid duplicating below
         # code. It is only used while setting up google-blob emojiset as it is just
         # a wrapper for an older version of emoji-datasource package due to which we

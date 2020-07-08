@@ -97,9 +97,7 @@ def convert_to_zulip_markdown(
         # Check user mentions and change mention format from
         # '<@slack_id|short_name>' to '@**full_name**'
         if re.findall(SLACK_USERMENTION_REGEX, tokens[iterator], re.VERBOSE):
-            tokens[iterator], user_id = get_user_mentions(
-                tokens[iterator], users, slack_user_id_to_zulip_user_id,
-            )
+            tokens[iterator], user_id = get_user_mentions(tokens[iterator], users, slack_user_id_to_zulip_user_id)
             if user_id is not None:
                 mentioned_users_id.append(user_id)
 

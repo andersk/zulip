@@ -664,9 +664,7 @@ class ClientDescriptorsTest(ZulipTestCase):
         # and we are interested in how messages are put on event queue.
         users: List[Dict[str, Any]] = []
 
-        with mock.patch(
-            "zerver.tornado.event_queue.get_client_info_for_message_event", return_value=client_info,
-        ):
+        with mock.patch("zerver.tornado.event_queue.get_client_info_for_message_event", return_value=client_info):
             process_message_event(message_event, users)
 
         # We are not closely examining avatar_url at this point, so

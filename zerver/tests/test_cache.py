@@ -315,9 +315,7 @@ class GenericBulkCachedFetchTest(ZulipTestCase):
         class CustomException(Exception):
             pass
 
-        def cache_key_function(
-            email: str,
-        ) -> str:  # nocoverage -- this is just here to make sure it's not called
+        def cache_key_function(email: str) -> str:  # nocoverage -- this is just here to make sure it's not called
             raise CustomException("The cache key function was called")
 
         def query_function(

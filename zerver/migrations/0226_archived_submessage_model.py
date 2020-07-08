@@ -16,10 +16,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="ArchivedSubMessage",
             fields=[
-                (
-                    "id",
-                    models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID"),
-                ),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
                 ("msg_type", models.TextField()),
                 ("content", models.TextField()),
                 ("archive_timestamp", models.DateTimeField(db_index=True, default=django.utils.timezone.now)),

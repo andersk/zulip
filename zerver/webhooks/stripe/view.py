@@ -144,9 +144,7 @@ def topic_and_body(payload: Dict[str, Any]) -> Tuple[str, str]:
             if event == "trial_will_end":
                 DAY = 60 * 60 * 24  # seconds in a day
                 # Basically always three: https://stripe.com/docs/api/python#event_types
-                body += " in {days} days".format(
-                    days=int((object_["trial_end"] - time.time() + DAY // 2) // DAY),
-                )
+                body += " in {days} days".format(days=int((object_["trial_end"] - time.time() + DAY // 2) // DAY))
             if event == "created":
                 if object_["plan"]:
                     body += "\nPlan: [{plan_nickname}](https://dashboard.stripe.com/plans/{plan_id})".format(

@@ -15,10 +15,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="ScheduledMessage",
             fields=[
-                (
-                    "id",
-                    models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID"),
-                ),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
                 ("subject", models.CharField(max_length=60)),
                 ("content", models.TextField()),
                 ("scheduled_timestamp", models.DateTimeField(db_index=True)),
@@ -38,9 +35,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "stream",
-                    models.ForeignKey(
-                        null=True, on_delete=django.db.models.deletion.CASCADE, to="zerver.Stream",
-                    ),
+                    models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to="zerver.Stream"),
                 ),
             ],
         ),

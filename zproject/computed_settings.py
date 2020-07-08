@@ -830,11 +830,7 @@ LOGGING: Dict[str, Any] = {
         "zerver.management.commands.deliver_email": {"level": "DEBUG"},
         "zerver.management.commands.enqueue_digest_emails": {"level": "DEBUG"},
         "zerver.management.commands.deliver_scheduled_messages": {"level": "DEBUG"},
-        "zulip.auth": {
-            "level": "DEBUG",
-            "handlers": DEFAULT_ZULIP_HANDLERS + ["auth_file"],
-            "propagate": False,
-        },
+        "zulip.auth": {"level": "DEBUG", "handlers": DEFAULT_ZULIP_HANDLERS + ["auth_file"], "propagate": False},
         "zulip.ldap": {
             "level": "DEBUG",
             "handlers": ["console", "ldap_file", "errors_file"],
@@ -875,9 +871,7 @@ POLL_TIMEOUT = 90 * 1000
 USING_APACHE_SSO = "zproject.backends.ZulipRemoteUserBackend" in AUTHENTICATION_BACKENDS
 
 ONLY_LDAP = False
-if len(AUTHENTICATION_BACKENDS) == 1 and (
-    AUTHENTICATION_BACKENDS[0] == "zproject.backends.ZulipLDAPAuthBackend"
-):
+if len(AUTHENTICATION_BACKENDS) == 1 and (AUTHENTICATION_BACKENDS[0] == "zproject.backends.ZulipLDAPAuthBackend"):
     ONLY_LDAP = True
 
 if len(AUTHENTICATION_BACKENDS) == 1 and (

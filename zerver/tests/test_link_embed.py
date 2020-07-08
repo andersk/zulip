@@ -483,8 +483,7 @@ class PreviewTestCase(ZulipTestCase):
         self.assertIsNone(cached_data)
         msg = Message.objects.select_related("sender").get(id=msg_id)
         self.assertEqual(
-            ('<p><a href="http://test.org/audio.mp3">' "http://test.org/audio.mp3</a></p>"),
-            msg.rendered_content,
+            ('<p><a href="http://test.org/audio.mp3">' "http://test.org/audio.mp3</a></p>"), msg.rendered_content,
         )
 
     @override_settings(INLINE_URL_EMBED_PREVIEW=True)

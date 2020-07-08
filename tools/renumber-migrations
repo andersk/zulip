@@ -73,9 +73,7 @@ if __name__ == "__main__":
                 # migrations graph structure, not the IDs, is what
                 # matters).
                 if migration_number not in MIGRATIONS_TO_SKIP:
-                    conflicts += [
-                        file_name for file_name in files_list if file_name.startswith(migration_number)
-                    ]
+                    conflicts += [file_name for file_name in files_list if file_name.startswith(migration_number)]
                     stack.append(migration_number)
 
         if len(conflicts) > 0:

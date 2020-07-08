@@ -658,10 +658,7 @@ def do_change_plan_status(plan: CustomerPlan, status: int) -> None:
     plan.status = status
     plan.save(update_fields=["status"])
     billing_logger.info(
-        "Change plan status: Customer.id: %s, CustomerPlan.id: %s, status: %s",
-        plan.customer.id,
-        plan.id,
-        status,
+        "Change plan status: Customer.id: %s, CustomerPlan.id: %s, status: %s", plan.customer.id, plan.id, status,
     )
 
 

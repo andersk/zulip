@@ -13,9 +13,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 parser = argparse.ArgumentParser(description="Run puppet")
 parser.add_argument("--force", "-f", action="store_true", help="Do not prompt with proposed changes")
-parser.add_argument(
-    "--config", action="store", default="/etc/zulip/zulip.conf", help="Alternate zulip.conf path",
-)
+parser.add_argument("--config", action="store", default="/etc/zulip/zulip.conf", help="Alternate zulip.conf path")
 args, extra_args = parser.parse_known_args()
 
 config = configparser.RawConfigParser()

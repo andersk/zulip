@@ -42,9 +42,7 @@ def get_push_event_body(payload: Dict[str, Any]) -> str:
 
 
 def get_normal_push_event_body(payload: Dict[str, Any]) -> str:
-    compare_url = "{}/compare/{}...{}".format(
-        get_project_homepage(payload), payload["before"], payload["after"],
-    )
+    compare_url = "{}/compare/{}...{}".format(get_project_homepage(payload), payload["before"], payload["after"])
 
     commits = [
         {
@@ -56,9 +54,7 @@ def get_normal_push_event_body(payload: Dict[str, Any]) -> str:
         for commit in payload["commits"]
     ]
 
-    return get_push_commits_event_message(
-        get_user_name(payload), compare_url, get_branch_name(payload), commits,
-    )
+    return get_push_commits_event_message(get_user_name(payload), compare_url, get_branch_name(payload), commits)
 
 
 def get_remove_branch_event_body(payload: Dict[str, Any]) -> str:

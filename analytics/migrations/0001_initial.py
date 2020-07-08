@@ -14,10 +14,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="Anomaly",
             fields=[
-                (
-                    "id",
-                    models.AutoField(verbose_name="ID", serialize=False, auto_created=True, primary_key=True),
-                ),
+                ("id", models.AutoField(verbose_name="ID", serialize=False, auto_created=True, primary_key=True)),
                 ("info", models.CharField(max_length=1000)),
             ],
             bases=(models.Model,),
@@ -25,14 +22,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="HuddleCount",
             fields=[
-                (
-                    "id",
-                    models.AutoField(verbose_name="ID", serialize=False, auto_created=True, primary_key=True),
-                ),
-                (
-                    "huddle",
-                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Recipient"),
-                ),
+                ("id", models.AutoField(verbose_name="ID", serialize=False, auto_created=True, primary_key=True)),
+                ("huddle", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Recipient")),
                 (
                     "user",
                     models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
@@ -53,10 +44,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="InstallationCount",
             fields=[
-                (
-                    "id",
-                    models.AutoField(verbose_name="ID", serialize=False, auto_created=True, primary_key=True),
-                ),
+                ("id", models.AutoField(verbose_name="ID", serialize=False, auto_created=True, primary_key=True)),
                 ("property", models.CharField(max_length=40)),
                 ("end_time", models.DateTimeField()),
                 ("interval", models.CharField(max_length=20)),
@@ -73,10 +61,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="RealmCount",
             fields=[
-                (
-                    "id",
-                    models.AutoField(verbose_name="ID", serialize=False, auto_created=True, primary_key=True),
-                ),
+                ("id", models.AutoField(verbose_name="ID", serialize=False, auto_created=True, primary_key=True)),
                 ("realm", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm")),
                 ("property", models.CharField(max_length=40)),
                 ("end_time", models.DateTimeField()),
@@ -94,10 +79,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="StreamCount",
             fields=[
-                (
-                    "id",
-                    models.AutoField(verbose_name="ID", serialize=False, auto_created=True, primary_key=True),
-                ),
+                ("id", models.AutoField(verbose_name="ID", serialize=False, auto_created=True, primary_key=True)),
                 ("realm", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm")),
                 ("stream", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Stream")),
                 ("property", models.CharField(max_length=40)),
@@ -116,10 +98,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="UserCount",
             fields=[
-                (
-                    "id",
-                    models.AutoField(verbose_name="ID", serialize=False, auto_created=True, primary_key=True),
-                ),
+                ("id", models.AutoField(verbose_name="ID", serialize=False, auto_created=True, primary_key=True)),
                 ("realm", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm")),
                 (
                     "user",

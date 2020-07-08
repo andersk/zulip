@@ -104,7 +104,9 @@ class ClubhouseWebhookTest(WebhookTestCase):
         )
 
     def test_story_update_add_owner(self) -> None:
-        expected_message = "New owner added to the story [A new story by Shakespeare!](https://app.clubhouse.io/zulip/story/26)."
+        expected_message = (
+            "New owner added to the story [A new story by Shakespeare!](https://app.clubhouse.io/zulip/story/26)."
+        )
         self.send_and_test_stream_message(
             "story_update_add_owner", "A new story by Shakespeare!", expected_message,
         )

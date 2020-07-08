@@ -113,9 +113,7 @@ def render_markdown_path(
             zerver.lib.markdown.help_emoticon_translations_table.makeExtension(),
         ]
     if md_macro_extension is None:
-        md_macro_extension = zerver.lib.markdown.include.makeExtension(
-            base_path="templates/zerver/help/include/",
-        )
+        md_macro_extension = zerver.lib.markdown.include.makeExtension(base_path="templates/zerver/help/include/")
     extensions = md_extensions
     if "api_url" in context:
         # We need to generate the API code examples extension each

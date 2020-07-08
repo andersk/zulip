@@ -26,9 +26,7 @@ class UpdownHookTests(WebhookTestCase):
         first_message_expected_message = "Service is `up` again after 1 second."
 
         second_message_expected_topic = "https://updown.io"
-        second_message_expected_message = (
-            "Service is `down`. It returned a 500 error at 2016-02-07 13:11:43 UTC."
-        )
+        second_message_expected_message = "Service is `down`. It returned a 500 error at 2016-02-07 13:11:43 UTC."
 
         self.send_and_test_stream_message("check_multiple_events")
         last_message = self.get_last_message()

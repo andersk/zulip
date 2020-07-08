@@ -115,9 +115,7 @@ class DecoratorTestCase(ZulipTestCase):
 
     def test_REQ_aliases(self) -> None:
         @has_request_variables
-        def double(
-            request: HttpRequest, x: int = REQ(whence="number", aliases=["x", "n"], converter=int),
-        ) -> int:
+        def double(request: HttpRequest, x: int = REQ(whence="number", aliases=["x", "n"], converter=int)) -> int:
             return x + x
 
         class Request:
@@ -187,9 +185,7 @@ class DecoratorTestCase(ZulipTestCase):
 
     def test_REQ_validator(self) -> None:
         @has_request_variables
-        def get_total(
-            request: HttpRequest, numbers: Iterable[int] = REQ(validator=check_list(check_int)),
-        ) -> int:
+        def get_total(request: HttpRequest, numbers: Iterable[int] = REQ(validator=check_list(check_int))) -> int:
             return sum(numbers)
 
         class Request:
@@ -266,9 +262,7 @@ class DecoratorTestCase(ZulipTestCase):
             raise Exception("raised by webhook function")
 
         @api_key_only_webhook_view("ClientName")
-        def my_webhook_raises_exception_unexpected_event(
-            request: HttpRequest, user_profile: UserProfile,
-        ) -> None:
+        def my_webhook_raises_exception_unexpected_event(request: HttpRequest, user_profile: UserProfile) -> None:
             raise UnexpectedWebhookEventType("helloworld", "test_event")
 
         webhook_bot_email = "webhook-bot@zulip.com"

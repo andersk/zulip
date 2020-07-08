@@ -323,9 +323,7 @@ def zcommand_backend(
 
 
 @has_request_variables
-def render_message_backend(
-    request: HttpRequest, user_profile: UserProfile, content: str = REQ(),
-) -> HttpResponse:
+def render_message_backend(request: HttpRequest, user_profile: UserProfile, content: str = REQ()) -> HttpResponse:
     message = Message()
     message.sender = user_profile
     message.content = content

@@ -149,9 +149,7 @@ class DocPageTest(ZulipTestCase):
         self._test("/emails/", "manually generate most of the emails by clicking")
 
         result = self.client_get(
-            "/integrations/doc-html/nonexistent_integration",
-            follow=True,
-            HTTP_X_REQUESTED_WITH="XMLHttpRequest",
+            "/integrations/doc-html/nonexistent_integration", follow=True, HTTP_X_REQUESTED_WITH="XMLHttpRequest",
         )
         self.assertEqual(result.status_code, 404)
 

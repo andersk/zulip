@@ -198,11 +198,7 @@ def get_chart_data_for_installation(
 @require_server_admin_api
 @has_request_variables
 def get_chart_data_for_remote_installation(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    remote_server_id: int,
-    chart_name: str = REQ(),
-    **kwargs: Any,
+    request: HttpRequest, user_profile: UserProfile, remote_server_id: int, chart_name: str = REQ(), **kwargs: Any
 ) -> HttpResponse:
     server = RemoteZulipServer.objects.get(id=remote_server_id)
     return get_chart_data(
@@ -325,8 +321,7 @@ def get_chart_data(
                 start = realm.date_created
         if end is None:
             end = max(
-                last_successful_fill(stat.property) or datetime.min.replace(tzinfo=timezone.utc)
-                for stat in stats
+                last_successful_fill(stat.property) or datetime.min.replace(tzinfo=timezone.utc) for stat in stats
             )
 
         if start > end and (timezone_now() - start > MAX_TIME_FOR_FULL_ANALYTICS_GENERATION):

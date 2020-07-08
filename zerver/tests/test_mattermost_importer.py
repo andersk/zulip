@@ -249,8 +249,7 @@ class MatterMostImporter(ZulipTestCase):
             subscriber_handler.get_users(stream_id=stream_id_mapper.get("gryffindor-common-room")), {harry_id},
         )
         self.assertEqual(
-            subscriber_handler.get_users(stream_id=stream_id_mapper.get("gryffindor-quidditch-team")),
-            {harry_id},
+            subscriber_handler.get_users(stream_id=stream_id_mapper.get("gryffindor-quidditch-team")), {harry_id},
         )
         self.assertEqual(
             subscriber_handler.get_users(stream_id=stream_id_mapper.get("dumbledores-army")), {harry_id},
@@ -613,9 +612,7 @@ class MatterMostImporter(ZulipTestCase):
 
         exported_user_ids = self.get_set(realm["zerver_userprofile"], "id")
         exported_user_full_names = self.get_set(realm["zerver_userprofile"], "full_name")
-        self.assertEqual(
-            {"Harry Potter", "Ron Weasley", "Ginny Weasley", "Tom Riddle"}, exported_user_full_names,
-        )
+        self.assertEqual({"Harry Potter", "Ron Weasley", "Ginny Weasley", "Tom Riddle"}, exported_user_full_names)
 
         exported_user_emails = self.get_set(realm["zerver_userprofile"], "email")
         self.assertEqual(

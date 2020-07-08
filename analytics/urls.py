@@ -14,13 +14,9 @@ i18n_urlpatterns = [
         name="analytics.views.get_realm_activity",
     ),
     path(
-        "user_activity/<str:email>/",
-        analytics.views.get_user_activity,
-        name="analytics.views.get_user_activity",
+        "user_activity/<str:email>/", analytics.views.get_user_activity, name="analytics.views.get_user_activity",
     ),
-    path(
-        "stats/realm/<str:realm_str>/", analytics.views.stats_for_realm, name="analytics.views.stats_for_realm",
-    ),
+    path("stats/realm/<str:realm_str>/", analytics.views.stats_for_realm, name="analytics.views.stats_for_realm"),
     path(
         "stats/installation",
         analytics.views.stats_for_installation,

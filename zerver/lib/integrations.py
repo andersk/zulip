@@ -446,9 +446,7 @@ INTEGRATIONS: Dict[str, Integration] = {
         doc="zerver/integrations/capistrano.md",
     ),
     "codebase": Integration("codebase", "codebase", ["version-control"], doc="zerver/integrations/codebase.md"),
-    "discourse": Integration(
-        "discourse", "discourse", ["communication"], doc="zerver/integrations/discourse.md",
-    ),
+    "discourse": Integration("discourse", "discourse", ["communication"], doc="zerver/integrations/discourse.md"),
     "email": Integration("email", "email", ["communication"], doc="zerver/integrations/email.md"),
     "errbot": Integration("errbot", "errbot", ["meta-integration", "bots"], doc="zerver/integrations/errbot.md"),
     "git": Integration(
@@ -660,8 +658,7 @@ DOC_SCREENSHOT_CONFIG: Dict[str, List[ScreenshotConfig]] = {
     "thinkst": [ScreenshotConfig("canarytoken_real.json")],
     "transifex": [
         ScreenshotConfig(
-            "",
-            extra_params={"project": "Zulip Mobile", "language": "en", "resource": "file", "reviewed": "100"},
+            "", extra_params={"project": "Zulip Mobile", "language": "en", "resource": "file", "reviewed": "100"},
         ),
     ],
     "travis": [ScreenshotConfig("build.json", payload_as_query_param=True)],

@@ -1199,8 +1199,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
 
             # Click confirm registration button.
             result = self.client_post(
-                "/accounts/register/",
-                {"full_name": expected_final_name, "key": confirmation_key, "terms": True},
+                "/accounts/register/", {"full_name": expected_final_name, "key": confirmation_key, "terms": True},
             )
 
         # Mobile and desktop flow have additional steps:
@@ -1864,8 +1863,7 @@ class SAMLAuthBackendTest(SocialAuthBase):
             self.assertEqual(result.status_code, 302)
             self.assertEqual("/login/", result.url)
         self.assertEqual(
-            m.output,
-            [self.logger_output("/login/saml/ : Bad idp param: KeyError: {}.".format("'idp'"), "info")],
+            m.output, [self.logger_output("/login/saml/ : Bad idp param: KeyError: {}.".format("'idp'"), "info")],
         )
 
         with self.assertLogs(self.logger_string, level="INFO") as m:
@@ -2627,12 +2625,8 @@ class GitHubAuthBackendTest(SocialAuthBase):
     @override_settings(SOCIAL_AUTH_GITHUB_TEAM_ID="zulip-webapp")
     def test_social_auth_github_team_member_success(self) -> None:
         account_data_dict = self.get_account_data_dict(email=self.email, name=self.name)
-        with mock.patch(
-            "social_core.backends.github.GithubTeamOAuth2.user_data", return_value=account_data_dict,
-        ):
-            result = self.social_auth_test(
-                account_data_dict, expect_choose_email_screen=False, subdomain="zulip",
-            )
+        with mock.patch("social_core.backends.github.GithubTeamOAuth2.user_data", return_value=account_data_dict):
+            result = self.social_auth_test(account_data_dict, expect_choose_email_screen=False, subdomain="zulip")
         data = load_subdomain_token(result)
         self.assertEqual(data["email"], self.example_email("hamlet"))
         self.assertEqual(data["full_name"], self.name)
@@ -2642,8 +2636,7 @@ class GitHubAuthBackendTest(SocialAuthBase):
     def test_social_auth_github_organization_not_member_failed(self) -> None:
         account_data_dict = self.get_account_data_dict(email=self.email, name=self.name)
         with mock.patch(
-            "social_core.backends.github.GithubOrganizationOAuth2.user_data",
-            side_effect=AuthFailed("Not found"),
+            "social_core.backends.github.GithubOrganizationOAuth2.user_data", side_effect=AuthFailed("Not found"),
         ), self.assertLogs(self.logger_string, level="INFO") as mock_info:
             result = self.social_auth_test(account_data_dict, subdomain="zulip")
             self.assertEqual(result.status_code, 302)
@@ -2658,9 +2651,7 @@ class GitHubAuthBackendTest(SocialAuthBase):
         with mock.patch(
             "social_core.backends.github.GithubOrganizationOAuth2.user_data", return_value=account_data_dict,
         ):
-            result = self.social_auth_test(
-                account_data_dict, expect_choose_email_screen=False, subdomain="zulip",
-            )
+            result = self.social_auth_test(account_data_dict, expect_choose_email_screen=False, subdomain="zulip")
         data = load_subdomain_token(result)
         self.assertEqual(data["email"], self.example_email("hamlet"))
         self.assertEqual(data["full_name"], self.name)
@@ -3000,9 +2991,7 @@ class GoogleAuthBackendTest(SocialAuthBase):
         mobile_flow_otp = "1234abcd" * 8
         account_data_dict = self.get_account_data_dict(email=self.email, name="Full Name")
 
-        with self.settings(
-            REALM_MOBILE_REMAP_URIS={"http://zulip.testserver": "http://zulip-mobile.testserver"},
-        ):
+        with self.settings(REALM_MOBILE_REMAP_URIS={"http://zulip.testserver": "http://zulip-mobile.testserver"}):
             result = self.social_auth_test(
                 account_data_dict,
                 subdomain="zulip",
@@ -3494,16 +3483,14 @@ class ExternalMethodDictsTests(ZulipTestCase):
             # 1 IdP enabled for all realms + a dict for github auth
             self.assert_length(external_auth_methods, 2)
             self.assertEqual(
-                [external_auth_methods[0]["name"], external_auth_methods[1]["name"]],
-                ["saml:test_idp", "github"],
+                [external_auth_methods[0]["name"], external_auth_methods[1]["name"]], ["saml:test_idp", "github"],
             )
 
             external_auth_methods = get_external_method_dicts(get_realm("zulip"))
             # Only test_idp enabled for the zulip realm, + github auth.
             self.assert_length(external_auth_methods, 2)
             self.assertEqual(
-                [external_auth_methods[0]["name"], external_auth_methods[1]["name"]],
-                ["saml:test_idp", "github"],
+                [external_auth_methods[0]["name"], external_auth_methods[1]["name"]], ["saml:test_idp", "github"],
             )
 
             external_auth_methods = get_external_method_dicts(get_realm("zephyr"))
@@ -3981,9 +3968,7 @@ class TestZulipRemoteUserBackend(DesktopFlowTestingLib, ZulipTestCase):
         self.assert_logged_in_user_id(None)
         self.assert_json_error_contains(result, "Invalid OTP", 400)
 
-        result = self.client_get(
-            "/accounts/login/sso/", dict(desktop_flow_otp="invalido" * 8), REMOTE_USER=email,
-        )
+        result = self.client_get("/accounts/login/sso/", dict(desktop_flow_otp="invalido" * 8), REMOTE_USER=email)
         self.assert_logged_in_user_id(None)
         self.assert_json_error_contains(result, "Invalid OTP", 400)
 
@@ -4174,8 +4159,7 @@ class DjangoToLDAPUsernameTests(ZulipTestCase):
             self.assertEqual(self.backend.django_to_ldap_username("hamlet"), "hamlet")
             self.assertEqual(self.backend.django_to_ldap_username("hamlet@zulip.com"), "hamlet")
             with self.assertRaisesRegex(
-                ZulipLDAPExceptionOutsideDomain,
-                "Email hamlet@example.com does not match LDAP domain zulip.com.",
+                ZulipLDAPExceptionOutsideDomain, "Email hamlet@example.com does not match LDAP domain zulip.com.",
             ):
                 self.backend.django_to_ldap_username("hamlet@example.com")
 

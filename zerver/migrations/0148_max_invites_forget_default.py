@@ -11,9 +11,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name="realm",
-            name="max_invites",
-            field=models.IntegerField(null=True, db_column="max_invites"),
+            model_name="realm", name="max_invites", field=models.IntegerField(null=True, db_column="max_invites"),
         ),
         migrations.RenameField(model_name="realm", old_name="max_invites", new_name="_max_invites"),
     ]

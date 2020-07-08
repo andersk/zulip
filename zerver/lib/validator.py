@@ -390,9 +390,7 @@ def check_widget_content(widget_content: object) -> Dict[str, Any]:
 
         if extra_data["type"] == "choices":
             check_choices = check_list(
-                check_dict(
-                    [("short_name", check_string), ("long_name", check_string), ("reply", check_string)],
-                ),
+                check_dict([("short_name", check_string), ("long_name", check_string), ("reply", check_string)]),
             )
 
             # We re-check "type" here just to avoid it looking

@@ -219,9 +219,7 @@ def build_public_stream_subscriptions(
 
 
 def build_stream_subscriptions(
-    get_users: Callable[..., Set[int]],
-    zerver_recipient: List[ZerverFieldsT],
-    zerver_stream: List[ZerverFieldsT],
+    get_users: Callable[..., Set[int]], zerver_recipient: List[ZerverFieldsT], zerver_stream: List[ZerverFieldsT],
 ) -> List[ZerverFieldsT]:
 
     subscriptions: List[ZerverFieldsT] = []
@@ -246,9 +244,7 @@ def build_stream_subscriptions(
 
 
 def build_huddle_subscriptions(
-    get_users: Callable[..., Set[int]],
-    zerver_recipient: List[ZerverFieldsT],
-    zerver_huddle: List[ZerverFieldsT],
+    get_users: Callable[..., Set[int]], zerver_recipient: List[ZerverFieldsT], zerver_huddle: List[ZerverFieldsT],
 ) -> List[ZerverFieldsT]:
 
     subscriptions: List[ZerverFieldsT] = []
@@ -276,9 +272,7 @@ def build_personal_subscriptions(zerver_recipient: List[ZerverFieldsT]) -> List[
 
     subscriptions: List[ZerverFieldsT] = []
 
-    personal_recipients = [
-        recipient for recipient in zerver_recipient if recipient["type"] == Recipient.PERSONAL
-    ]
+    personal_recipients = [recipient for recipient in zerver_recipient if recipient["type"] == Recipient.PERSONAL]
 
     for recipient in personal_recipients:
         recipient_id = recipient["id"]

@@ -27,10 +27,7 @@ class StatuspageHookTests(WebhookTestCase):
 * Description: The database issue is resolved.
 """.strip()
         self.send_and_test_stream_message(
-            "incident_update",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "incident_update", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_statuspage_component(self) -> None:

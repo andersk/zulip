@@ -16,12 +16,8 @@ from zerver.models import Message, Realm, UserProfile, get_system_bot
 
 
 def missing_any_realm_internal_bots() -> bool:
-    bot_emails = [
-        bot["email_template"] % (settings.INTERNAL_BOT_DOMAIN,) for bot in settings.REALM_INTERNAL_BOTS
-    ]
-    bot_counts = dict(
-        UserProfile.objects.filter(email__in=bot_emails).values_list("email").annotate(Count("id")),
-    )
+    bot_emails = [bot["email_template"] % (settings.INTERNAL_BOT_DOMAIN,) for bot in settings.REALM_INTERNAL_BOTS]
+    bot_counts = dict(UserProfile.objects.filter(email__in=bot_emails).values_list("email").annotate(Count("id")))
     realm_count = Realm.objects.count()
     return any(bot_counts.get(email, 0) < realm_count for email in bot_emails)
 

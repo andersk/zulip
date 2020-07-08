@@ -36,9 +36,7 @@ class GitlabHookTests(WebhookTestCase):
     def test_push_multiple_committers(self) -> None:
         expected_topic = "my-awesome-project / tomek"
         expected_message = "Tomasz Kolek [pushed](https://gitlab.com/tomaszkolek0/my-awesome-project/compare/5fcdd5551fc3085df79bece2c32b1400802ac407...eb6ae1e591e0819dc5bf187c6bfe18ec065a80e9) 2 commits to branch tomek. Commits by Ben (1) and Tomasz Kolek (1).\n\n* b ([66abd2d](https://gitlab.com/tomaszkolek0/my-awesome-project/commit/66abd2da28809ffa128ed0447965cf11d7f863a7))\n* c ([eb6ae1e](https://gitlab.com/tomaszkolek0/my-awesome-project/commit/eb6ae1e591e0819dc5bf187c6bfe18ec065a80e9))"
-        self.send_and_test_stream_message(
-            "push_hook__push_multiple_committers", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("push_hook__push_multiple_committers", expected_topic, expected_message)
 
     def test_push_multiple_committers_with_others(self) -> None:
         expected_topic = "my-awesome-project / tomek"

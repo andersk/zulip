@@ -23,9 +23,7 @@ v1_api_and_json_patterns = [
     # For receiving table data used in analytics and billing
     path("remotes/server/analytics", rest_dispatch, {"POST": "zilencer.views.remote_server_post_analytics"}),
     path(
-        "remotes/server/analytics/status",
-        rest_dispatch,
-        {"GET": "zilencer.views.remote_server_check_analytics"},
+        "remotes/server/analytics/status", rest_dispatch, {"GET": "zilencer.views.remote_server_check_analytics"},
     ),
 ]
 

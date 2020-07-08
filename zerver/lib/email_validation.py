@@ -90,9 +90,7 @@ def email_allowed_for_realm(email: str, realm: Realm) -> None:
     get_realm_email_validator(realm)(email)
 
 
-def validate_email_is_valid(
-    email: str, validate_email_allowed_in_realm: Callable[[str], None],
-) -> Optional[str]:
+def validate_email_is_valid(email: str, validate_email_allowed_in_realm: Callable[[str], None]) -> Optional[str]:
 
     try:
         validators.validate_email(email)

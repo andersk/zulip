@@ -122,9 +122,7 @@ def fetch_initial_state_data(
         # starting with the max_message_id.  They will get messages
         # newer than that ID via get_events()
         user_messages = (
-            UserMessage.objects.filter(user_profile=user_profile)
-            .order_by("-message_id")
-            .values("message_id")[:1]
+            UserMessage.objects.filter(user_profile=user_profile).order_by("-message_id").values("message_id")[:1]
         )
         if user_messages:
             state["max_message_id"] = user_messages[0]["message_id"]
@@ -150,9 +148,7 @@ def fetch_initial_state_data(
         state["realm_allow_message_deleting"] = realm.allow_message_deleting
         state["realm_message_content_edit_limit_seconds"] = realm.message_content_edit_limit_seconds
         state["realm_message_content_delete_limit_seconds"] = realm.message_content_delete_limit_seconds
-        state[
-            "realm_community_topic_editing_limit_seconds"
-        ] = Realm.DEFAULT_COMMUNITY_TOPIC_EDITING_LIMIT_SECONDS
+        state["realm_community_topic_editing_limit_seconds"] = Realm.DEFAULT_COMMUNITY_TOPIC_EDITING_LIMIT_SECONDS
         state["realm_icon_url"] = realm_icon_url(realm)
         state["realm_icon_source"] = realm.icon_source
         state["max_icon_file_size"] = settings.MAX_ICON_FILE_SIZE

@@ -127,9 +127,7 @@ def require_post(func: ViewFuncT) -> ViewFuncT:
 
 def require_realm_owner(func: ViewFuncT) -> ViewFuncT:
     @wraps(func)
-    def wrapper(
-        request: HttpRequest, user_profile: UserProfile, *args: object, **kwargs: object
-    ) -> HttpResponse:
+    def wrapper(request: HttpRequest, user_profile: UserProfile, *args: object, **kwargs: object) -> HttpResponse:
         if not user_profile.is_realm_owner:
             raise OrganizationOwnerRequired()
         return func(request, user_profile, *args, **kwargs)
@@ -139,9 +137,7 @@ def require_realm_owner(func: ViewFuncT) -> ViewFuncT:
 
 def require_realm_admin(func: ViewFuncT) -> ViewFuncT:
     @wraps(func)
-    def wrapper(
-        request: HttpRequest, user_profile: UserProfile, *args: object, **kwargs: object
-    ) -> HttpResponse:
+    def wrapper(request: HttpRequest, user_profile: UserProfile, *args: object, **kwargs: object) -> HttpResponse:
         if not user_profile.is_realm_admin:
             raise OrganizationAdministratorRequired()
         return func(request, user_profile, *args, **kwargs)
@@ -151,9 +147,7 @@ def require_realm_admin(func: ViewFuncT) -> ViewFuncT:
 
 def require_billing_access(func: ViewFuncT) -> ViewFuncT:
     @wraps(func)
-    def wrapper(
-        request: HttpRequest, user_profile: UserProfile, *args: object, **kwargs: object
-    ) -> HttpResponse:
+    def wrapper(request: HttpRequest, user_profile: UserProfile, *args: object, **kwargs: object) -> HttpResponse:
         if not user_profile.is_realm_admin and not user_profile.is_billing_admin:
             raise JsonableError(_("Must be a billing administrator or an organization administrator"))
         return func(request, user_profile, *args, **kwargs)
@@ -743,11 +737,7 @@ def authenticate_log_and_execute_json(
             return json_unauthorized()
 
         process_client(
-            request,
-            request.user,
-            is_browser_view=True,
-            skip_update_user_activity=True,
-            query=view_func.__name__,
+            request, request.user, is_browser_view=True, skip_update_user_activity=True, query=view_func.__name__,
         )
         return limited_view_func(request, request.user, *args, **kwargs)
 
@@ -765,9 +755,7 @@ def authenticate_log_and_execute_json(
 # @login_required behavior of redirecting to a login page doesn't make
 # sense for json views)
 def authenticated_json_view(
-    view_func: Callable[..., HttpResponse],
-    skip_rate_limiting: bool = False,
-    allow_unauthenticated: bool = False,
+    view_func: Callable[..., HttpResponse], skip_rate_limiting: bool = False, allow_unauthenticated: bool = False,
 ) -> Callable[..., HttpResponse]:
     @wraps(view_func)
     def _wrapped_view_func(request: HttpRequest, *args: object, **kwargs: object) -> HttpResponse:

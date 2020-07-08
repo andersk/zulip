@@ -420,12 +420,10 @@ def add_new_user_history(user_profile: UserProfile, streams: Iterable[Stream]) -
     one_week_ago = timezone_now() - datetime.timedelta(weeks=1)
 
     recipient_ids = [stream.recipient_id for stream in streams if not stream.invite_only]
-    recent_messages = Message.objects.filter(
-        recipient_id__in=recipient_ids, date_sent__gt=one_week_ago,
-    ).order_by("-id")
-    message_ids_to_use = list(
-        reversed(recent_messages.values_list("id", flat=True)[0:ONBOARDING_TOTAL_MESSAGES]),
+    recent_messages = Message.objects.filter(recipient_id__in=recipient_ids, date_sent__gt=one_week_ago).order_by(
+        "-id",
     )
+    message_ids_to_use = list(reversed(recent_messages.values_list("id", flat=True)[0:ONBOARDING_TOTAL_MESSAGES]))
     if len(message_ids_to_use) == 0:
         return
 
@@ -747,9 +745,7 @@ def active_humans_in_realm(realm: Realm) -> Sequence[UserProfile]:
     return UserProfile.objects.filter(realm=realm, is_active=True, is_bot=False)
 
 
-def do_set_realm_property(
-    realm: Realm, name: str, value: Any, acting_user: Optional[UserProfile] = None,
-) -> None:
+def do_set_realm_property(realm: Realm, name: str, value: Any, acting_user: Optional[UserProfile] = None) -> None:
     """Takes in a realm object, the name of an attribute to update, the
        value to update and and the user who initiated the update.
     """
@@ -2408,9 +2404,7 @@ def validate_stream_id_with_pm_notification(stream_id: int, realm: Realm, sender
     return stream
 
 
-def check_private_message_policy(
-    realm: Realm, sender: UserProfile, user_profiles: Sequence[UserProfile],
-) -> None:
+def check_private_message_policy(realm: Realm, sender: UserProfile, user_profiles: Sequence[UserProfile]) -> None:
     if realm.private_message_policy == Realm.PRIVATE_MESSAGE_POLICY_DISABLED:
         if sender.is_bot or (len(user_profiles) == 1 and user_profiles[0].is_bot):
             # We allow PMs only between users and bots, to avoid
@@ -3709,9 +3703,7 @@ def do_change_default_all_public_streams(user_profile: UserProfile, value: bool,
         )
 
 
-def do_change_user_role(
-    user_profile: UserProfile, value: int, acting_user: Optional[UserProfile] = None,
-) -> None:
+def do_change_user_role(user_profile: UserProfile, value: int, acting_user: Optional[UserProfile] = None) -> None:
     old_value = user_profile.role
     user_profile.role = value
     user_profile.save(update_fields=["role"])
@@ -3872,9 +3864,7 @@ def do_change_stream_description(stream: Stream, new_description: str) -> None:
     send_event(stream.realm, event, can_access_stream_user_ids(stream))
 
 
-def do_change_stream_message_retention_days(
-    stream: Stream, message_retention_days: Optional[int] = None,
-) -> None:
+def do_change_stream_message_retention_days(stream: Stream, message_retention_days: Optional[int] = None) -> None:
     stream.message_retention_days = message_retention_days
     stream.save(update_fields=["message_retention_days"])
 
@@ -4022,9 +4012,7 @@ def do_set_user_display_setting(
         )
 
 
-def lookup_default_stream_groups(
-    default_stream_group_names: List[str], realm: Realm,
-) -> List[DefaultStreamGroup]:
+def lookup_default_stream_groups(default_stream_group_names: List[str], realm: Realm) -> List[DefaultStreamGroup]:
     default_stream_groups = []
     for group_name in default_stream_group_names:
         try:
@@ -4362,9 +4350,7 @@ def do_mark_all_as_read(user_profile: UserProfile, client: Client) -> int:
 
     send_event(user_profile.realm, event, [user_profile.id])
 
-    do_increment_logging_stat(
-        user_profile, COUNT_STATS["messages_read::hour"], None, event_time, increment=count,
-    )
+    do_increment_logging_stat(user_profile, COUNT_STATS["messages_read::hour"], None, event_time, increment=count)
     do_increment_logging_stat(
         user_profile, COUNT_STATS["messages_read_interactions::hour"], None, event_time, increment=min(1, count),
     )
@@ -4397,9 +4383,7 @@ def do_mark_stream_messages_as_read(
     send_event(user_profile.realm, event, [user_profile.id])
     do_clear_mobile_push_notifications_for_ids([user_profile.id], message_ids)
 
-    do_increment_logging_stat(
-        user_profile, COUNT_STATS["messages_read::hour"], None, event_time, increment=count,
-    )
+    do_increment_logging_stat(user_profile, COUNT_STATS["messages_read::hour"], None, event_time, increment=count)
     do_increment_logging_stat(
         user_profile, COUNT_STATS["messages_read_interactions::hour"], None, event_time, increment=min(1, count),
     )
@@ -5255,9 +5239,7 @@ def gather_subscriptions_helper(user_profile: UserProfile, include_subscribers: 
                 stream["id"], stream["date_created"], recent_traffic,
             )
             # Backwards-compatibility addition of removed field.
-            stream_dict["is_announcement_only"] = (
-                stream["stream_post_policy"] == Stream.STREAM_POST_POLICY_ADMINS
-            )
+            stream_dict["is_announcement_only"] = stream["stream_post_policy"] == Stream.STREAM_POST_POLICY_ADMINS
 
             if is_public or user_profile.is_realm_admin:
                 subscribers = subscriber_map[stream["id"]]
@@ -5556,9 +5538,7 @@ def do_get_user_invites(user_profile: UserProfile) -> List[Dict[str, Any]]:
             PreregistrationUser.objects.filter(referred_by__realm=user_profile.realm),
         )
     else:
-        prereg_users = filter_to_valid_prereg_users(
-            PreregistrationUser.objects.filter(referred_by=user_profile),
-        )
+        prereg_users = filter_to_valid_prereg_users(PreregistrationUser.objects.filter(referred_by=user_profile))
 
     invites = []
 
@@ -5658,9 +5638,7 @@ def notify_realm_emoji(realm: Realm) -> None:
     send_event(realm, event, active_user_ids(realm.id))
 
 
-def check_add_realm_emoji(
-    realm: Realm, name: str, author: UserProfile, image_file: File,
-) -> Optional[RealmEmoji]:
+def check_add_realm_emoji(realm: Realm, name: str, author: UserProfile, image_file: File) -> Optional[RealmEmoji]:
     realm_emoji = RealmEmoji(realm=realm, name=name, author=author)
     realm_emoji.full_clean()
     realm_emoji.save()
@@ -6237,9 +6215,9 @@ def get_owned_bot_dicts(
     if user_profile.is_realm_admin and include_all_realm_bots_if_admin:
         result = get_bot_dicts_in_realm(user_profile.realm)
     else:
-        result = UserProfile.objects.filter(
-            realm=user_profile.realm, is_bot=True, bot_owner=user_profile,
-        ).values(*bot_dict_fields)
+        result = UserProfile.objects.filter(realm=user_profile.realm, is_bot=True, bot_owner=user_profile).values(
+            *bot_dict_fields,
+        )
     services_by_ids = get_service_dicts_for_bots(result, user_profile.realm)
     return [
         {

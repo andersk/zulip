@@ -34,9 +34,7 @@ class TestRuleList(TestCase):
 
             for path in rule.get("include_only", {}):
                 if not os.path.splitext(path)[1]:
-                    self.assertTrue(
-                        path.endswith("/"), f"The path '{path}' should end with '/'. {CHECK_MESSAGE}",
-                    )
+                    self.assertTrue(path.endswith("/"), f"The path '{path}' should end with '/'. {CHECK_MESSAGE}")
 
     def test_rule_patterns(self) -> None:
         """Verifies that the search regex specified in a custom rule actually matches

@@ -101,10 +101,7 @@ class UserStatusTest(ZulipTestCase):
 
         # Set Hamlet to NORMAL but in a meeting.
         update_user_status(
-            user_profile_id=hamlet.id,
-            status=UserStatus.NORMAL,
-            status_text="in a meeting",
-            client_id=client2.id,
+            user_profile_id=hamlet.id, status=UserStatus.NORMAL, status_text="in a meeting", client_id=client2.id,
         )
 
         self.assertEqual(
@@ -139,8 +136,7 @@ class UserStatusTest(ZulipTestCase):
         self.assert_json_success(result)
 
         self.assertEqual(
-            event_info.payload,
-            dict(type="user_status", user_id=hamlet.id, away=True, status_text="on vacation"),
+            event_info.payload, dict(type="user_status", user_id=hamlet.id, away=True, status_text="on vacation"),
         )
 
         self.assertEqual(

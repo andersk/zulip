@@ -24,9 +24,7 @@ def get_yarn_args(production: bool) -> List[str]:
     return yarn_args
 
 
-def generate_sha1sum_node_modules(
-    setup_dir: Optional[str] = None, production: bool = DEFAULT_PRODUCTION,
-) -> str:
+def generate_sha1sum_node_modules(setup_dir: Optional[str] = None, production: bool = DEFAULT_PRODUCTION) -> str:
     if setup_dir is None:
         setup_dir = os.path.realpath(os.getcwd())
     PACKAGE_JSON_FILE_PATH = os.path.join(setup_dir, "package.json")

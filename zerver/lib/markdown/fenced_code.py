@@ -222,9 +222,7 @@ class OuterHandler(BaseHandler):
         self.default_language = default_language
 
     def handle_line(self, line: str) -> None:
-        check_for_new_fence(
-            self.processor, self.output, line, self.run_content_validators, self.default_language,
-        )
+        check_for_new_fence(self.processor, self.output, line, self.run_content_validators, self.default_language)
 
     def done(self) -> None:
         self.processor.pop()

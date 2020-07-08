@@ -29,10 +29,7 @@ Usage examples:
             "'user' will calculate client activity of the user.",
         )
         parser.add_argument(
-            "--user",
-            dest="user",
-            type=str,
-            help="The email address of the user you want to calculate activity.",
+            "--user", dest="user", type=str, help="The email address of the user you want to calculate activity.",
         )
         self.add_realm_args(parser)
 

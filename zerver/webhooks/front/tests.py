@@ -115,10 +115,7 @@ class FrontHookTests(WebhookTestCase):
         )
 
         self.send_and_test_stream_message(
-            "inbound_message",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "inbound_message", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_conversation_tagged(self) -> None:

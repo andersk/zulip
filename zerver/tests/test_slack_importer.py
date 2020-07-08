@@ -870,10 +870,7 @@ class SlackImporter(ZulipTestCase):
         zerver_message = [{"id": 1, "ts": time}, {"id": 5, "ts": time}]
 
         def fake_get_messages_iter(
-            slack_data_dir: str,
-            added_channels: AddedChannelsT,
-            added_mpims: AddedMPIMsT,
-            dm_members: DMMembersT,
+            slack_data_dir: str, added_channels: AddedChannelsT, added_mpims: AddedMPIMsT, dm_members: DMMembersT,
         ) -> Iterator[ZerverFieldsT]:
             import copy
 
@@ -989,8 +986,7 @@ class SlackImporter(ZulipTestCase):
         realmauditlog = RealmAuditLog.objects.filter(realm=realm)
         realmauditlog_event_type = {log.event_type for log in realmauditlog}
         self.assertEqual(
-            realmauditlog_event_type,
-            {RealmAuditLog.SUBSCRIPTION_CREATED, RealmAuditLog.REALM_PLAN_TYPE_CHANGED},
+            realmauditlog_event_type, {RealmAuditLog.SUBSCRIPTION_CREATED, RealmAuditLog.REALM_PLAN_TYPE_CHANGED},
         )
 
         Realm.objects.filter(name=test_realm_subdomain).delete()

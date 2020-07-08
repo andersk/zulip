@@ -683,9 +683,7 @@ def find_account(request: HttpRequest) -> HttpResponse:
                     pass
 
     return render(
-        request,
-        "zerver/find_account.html",
-        context={"form": form, "current_url": lambda: url, "emails": emails},
+        request, "zerver/find_account.html", context={"form": form, "current_url": lambda: url, "emails": emails},
     )
 
 

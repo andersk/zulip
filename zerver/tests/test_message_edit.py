@@ -519,9 +519,7 @@ class EditMessageTest(ZulipTestCase):
             else:
                 self.check_message(id_, topic_name=new_topic, content=new_content)
 
-        def do_edit_message_assert_error(
-            id_: int, unique_str: str, error: str, topic_only: bool = False,
-        ) -> None:
+        def do_edit_message_assert_error(id_: int, unique_str: str, error: str, topic_only: bool = False) -> None:
             message = Message.objects.get(id=id_)
             old_topic = message.topic_name()
             old_content = message.content

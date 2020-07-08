@@ -556,9 +556,7 @@ class NormalActionsTest(BaseAction):
             ],
         )
 
-        message = self.send_personal_message(
-            self.example_user("cordelia"), self.example_user("hamlet"), "hello",
-        )
+        message = self.send_personal_message(self.example_user("cordelia"), self.example_user("hamlet"), "hello")
         user_profile = self.example_user("hamlet")
         events = self.verify_action(
             lambda: do_update_message_flags(user_profile, get_client("website"), "add", "starred", [message]),
@@ -1276,9 +1274,7 @@ class NormalActionsTest(BaseAction):
         default_stream_groups_checker("events[0]", events[0])
 
         events = self.verify_action(
-            lambda: do_change_default_stream_group_description(
-                self.user_profile.realm, group, "New description",
-            ),
+            lambda: do_change_default_stream_group_description(self.user_profile.realm, group, "New description"),
         )
         default_stream_groups_checker("events[0]", events[0])
 
@@ -2210,9 +2206,7 @@ class NormalActionsTest(BaseAction):
                             ("owner_id", check_none_or(check_int)),
                             (
                                 "services",
-                                check_list(
-                                    check_dict_only([("base_url", check_url), ("interface", check_int)]),
-                                ),
+                                check_list(check_dict_only([("base_url", check_url), ("interface", check_int)])),
                             ),
                         ],
                     ),
@@ -3010,9 +3004,7 @@ class SubscribeActionTest(BaseAction):
         peer_remove_schema_checker("events[0]", events[0])
 
         # Now remove the second user, to test the 'vacate' event flow
-        action = lambda: bulk_remove_subscriptions(
-            [self.example_user("hamlet")], [stream], get_client("website"),
-        )
+        action = lambda: bulk_remove_subscriptions([self.example_user("hamlet")], [stream], get_client("website"))
         events = self.verify_action(action, include_subscribers=include_subscribers, num_events=3)
         remove_schema_checker("events[0]", events[0])
 

@@ -11,10 +11,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="Deployment",
             fields=[
-                (
-                    "id",
-                    models.AutoField(verbose_name="ID", serialize=False, auto_created=True, primary_key=True),
-                ),
+                ("id", models.AutoField(verbose_name="ID", serialize=False, auto_created=True, primary_key=True)),
                 ("is_active", models.BooleanField(default=True)),
                 ("api_key", models.CharField(max_length=32, null=True)),
                 ("base_api_url", models.CharField(max_length=128)),

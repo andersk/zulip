@@ -157,9 +157,7 @@ class OpenAPIToolsTest(ZulipTestCase):
                 )
             with self.assertRaises(SchemaError, msg='Opaque object "obj"'):
                 # Checks for opaque objects
-                validate_schema(
-                    (test_dict["test3"]["responses"]["200"]["content"]["application/json"]["schema"]),
-                )
+                validate_schema((test_dict["test3"]["responses"]["200"]["content"]["application/json"]["schema"]))
         finally:
             openapi_spec.spec()["paths"].pop("testing", None)
 
@@ -617,9 +615,7 @@ so maybe we shouldn't include it in pending_endpoints.
                 try:
                     # Don't include OpenAPI parameters that live in
                     # the path; these are not extracted by REQ.
-                    openapi_parameters = get_openapi_parameters(
-                        url_pattern, method, include_url_parameters=False,
-                    )
+                    openapi_parameters = get_openapi_parameters(url_pattern, method, include_url_parameters=False)
                 except Exception:  # nocoverage
                     raise AssertionError(f"Could not find OpenAPI docs for {method} {url_pattern}")
 

@@ -60,9 +60,7 @@ def check_add_user_to_user_group(user_profile: UserProfile, user_group: UserGrou
 
 
 def remove_user_from_user_group(user_profile: UserProfile, user_group: UserGroup) -> int:
-    num_deleted, _ = UserGroupMembership.objects.filter(
-        user_profile=user_profile, user_group=user_group,
-    ).delete()
+    num_deleted, _ = UserGroupMembership.objects.filter(user_profile=user_profile, user_group=user_group).delete()
     return num_deleted
 
 

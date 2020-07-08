@@ -159,12 +159,7 @@ def retry_send_email_failures(
     def wrapper(worker: ConcreteQueueWorker, data: Dict[str, Any]) -> None:
         try:
             func(worker, data)
-        except (
-            smtplib.SMTPServerDisconnected,
-            socket.gaierror,
-            socket.timeout,
-            EmailNotDeliveredException,
-        ) as e:
+        except (smtplib.SMTPServerDisconnected, socket.gaierror, socket.timeout, EmailNotDeliveredException) as e:
             error_class_name = e.__class__.__name__
 
             def on_failure(event: Dict[str, Any]) -> None:

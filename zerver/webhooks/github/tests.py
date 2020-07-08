@@ -93,17 +93,13 @@ class GithubWebhookTest(WebhookTestCase):
     def test_push_50_commits(self) -> None:
         commit_info = "* Update README.md ([0d1a26e](https://github.com/baxterthehacker/public-repo/commit/0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c))\n"
         expected_message = f"baxterthehacker [pushed](https://github.com/baxterthehacker/public-repo/compare/9049f1265b7d...0d1a26e67d8f) 50 commits to branch changes.\n\n{commit_info * COMMITS_LIMIT}[and 30 more commit(s)]"
-        self.send_and_test_stream_message(
-            "push__50_commits", self.EXPECTED_TOPIC_BRANCH_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("push__50_commits", self.EXPECTED_TOPIC_BRANCH_EVENTS, expected_message)
 
     def test_push_50_commits_filtered_by_branches(self) -> None:
         self.url = self.build_webhook_url(branches="master,changes")
         commit_info = "* Update README.md ([0d1a26e](https://github.com/baxterthehacker/public-repo/commit/0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c))\n"
         expected_message = f"baxterthehacker [pushed](https://github.com/baxterthehacker/public-repo/compare/9049f1265b7d...0d1a26e67d8f) 50 commits to branch changes.\n\n{commit_info * COMMITS_LIMIT}[and 30 more commit(s)]"
-        self.send_and_test_stream_message(
-            "push__50_commits", self.EXPECTED_TOPIC_BRANCH_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("push__50_commits", self.EXPECTED_TOPIC_BRANCH_EVENTS, expected_message)
 
     def test_commit_comment_msg(self) -> None:
         expected_message = "baxterthehacker [commented](https://github.com/baxterthehacker/public-repo/commit/9049f1265b7d61be4a8904a9a27120d2064dab3b#commitcomment-11056394) on [9049f12](https://github.com/baxterthehacker/public-repo/commit/9049f1265b7d61be4a8904a9a27120d2064dab3b):\n~~~ quote\nThis is a really good change! :+1:\n~~~"
@@ -160,9 +156,7 @@ class GithubWebhookTest(WebhookTestCase):
 
     def test_membership_msg(self) -> None:
         expected_message = "baxterthehacker added [kdaigle](https://github.com/kdaigle) to the Contractors team."
-        self.send_and_test_stream_message(
-            "membership", self.EXPECTED_TOPIC_ORGANIZATION_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("membership", self.EXPECTED_TOPIC_ORGANIZATION_EVENTS, expected_message)
 
     def test_membership_removal_msg(self) -> None:
         expected_message = (
@@ -178,9 +172,7 @@ class GithubWebhookTest(WebhookTestCase):
 
     def test_pull_request_opened_msg(self) -> None:
         expected_message = "baxterthehacker opened [PR #1](https://github.com/baxterthehacker/public-repo/pull/1) from `changes` to `master`:\n\n~~~ quote\nThis is a pretty simple change that we need to pull into master.\n~~~"
-        self.send_and_test_stream_message(
-            "pull_request__opened", self.EXPECTED_TOPIC_PR_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request__opened", self.EXPECTED_TOPIC_PR_EVENTS, expected_message)
 
     def test_pull_request_opened_with_preassigned_assignee_msg(self) -> None:
         expected_topic = "Scheduler / PR #4 Improve README"
@@ -202,10 +194,10 @@ class GithubWebhookTest(WebhookTestCase):
         )
 
     def test_pull_request_closed_msg(self) -> None:
-        expected_message = "baxterthehacker closed without merge [PR #1](https://github.com/baxterthehacker/public-repo/pull/1)."
-        self.send_and_test_stream_message(
-            "pull_request__closed", self.EXPECTED_TOPIC_PR_EVENTS, expected_message,
+        expected_message = (
+            "baxterthehacker closed without merge [PR #1](https://github.com/baxterthehacker/public-repo/pull/1)."
         )
+        self.send_and_test_stream_message("pull_request__closed", self.EXPECTED_TOPIC_PR_EVENTS, expected_message)
 
     def test_pull_request_closed_msg_with_custom_topic_in_url(self) -> None:
         self.url = self.build_webhook_url(topic="notifications")
@@ -217,9 +209,7 @@ class GithubWebhookTest(WebhookTestCase):
         expected_message = (
             "baxterthehacker merged [PR #1](https://github.com/baxterthehacker/public-repo/pull/1)."
         )
-        self.send_and_test_stream_message(
-            "pull_request__merged", self.EXPECTED_TOPIC_PR_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request__merged", self.EXPECTED_TOPIC_PR_EVENTS, expected_message)
 
     def test_public_msg(self) -> None:
         expected_message = "baxterthehacker made the repository [baxterthehacker/public-repo](https://github.com/baxterthehacker/public-repo) public."
@@ -227,9 +217,7 @@ class GithubWebhookTest(WebhookTestCase):
 
     def test_wiki_pages_msg(self) -> None:
         expected_message = "jasonrudolph:\n* created [Home](https://github.com/baxterthehacker/public-repo/wiki/Home)\n* created [Home](https://github.com/baxterthehacker/public-repo/wiki/Home)"
-        self.send_and_test_stream_message(
-            "gollum__wiki_pages", self.EXPECTED_TOPIC_WIKI_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("gollum__wiki_pages", self.EXPECTED_TOPIC_WIKI_EVENTS, expected_message)
 
     def test_watch_msg(self) -> None:
         expected_message = "baxterthehacker starred the repository [baxterthehacker/public-repo](https://github.com/baxterthehacker/public-repo)."
@@ -289,9 +277,7 @@ class GithubWebhookTest(WebhookTestCase):
 
     def test_pull_request_edited_msg(self) -> None:
         expected_message = "baxterthehacker edited [PR #1](https://github.com/baxterthehacker/public-repo/pull/1) from `changes` to `master`."
-        self.send_and_test_stream_message(
-            "pull_request__edited", self.EXPECTED_TOPIC_PR_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request__edited", self.EXPECTED_TOPIC_PR_EVENTS, expected_message)
 
     def test_pull_request_assigned_msg(self) -> None:
         expected_message = "baxterthehacker assigned [PR #1](https://github.com/baxterthehacker/public-repo/pull/1) to baxterthehacker."

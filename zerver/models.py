@@ -1650,7 +1650,9 @@ class MutedTopic(models.Model):
         unique_together = ("user_profile", "stream", "topic_name")
 
     def __str__(self) -> str:
-        return f"<MutedTopic: ({self.user_profile.email}, {self.stream.name}, {self.topic_name}, {self.date_muted})>"
+        return (
+            f"<MutedTopic: ({self.user_profile.email}, {self.stream.name}, {self.topic_name}, {self.date_muted})>"
+        )
 
 
 class Client(models.Model):

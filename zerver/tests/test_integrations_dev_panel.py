@@ -249,9 +249,7 @@ class TestIntegrationsDevPanel(ZulipTestCase):
             expected_responses.remove(r)
 
     @patch("zerver.views.development.integrations.os.path.exists")
-    def test_send_all_webhook_fixture_messages_for_missing_fixtures(
-        self, os_path_exists_mock: MagicMock,
-    ) -> None:
+    def test_send_all_webhook_fixture_messages_for_missing_fixtures(self, os_path_exists_mock: MagicMock) -> None:
         os_path_exists_mock.return_value = False
         bot = get_user("webhook-bot@zulip.com", self.zulip_realm)
         url = (

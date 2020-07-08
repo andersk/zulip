@@ -13,10 +13,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="Coupon",
             fields=[
-                (
-                    "id",
-                    models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID"),
-                ),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
                 ("percent_off", models.SmallIntegerField(unique=True)),
                 ("stripe_coupon_id", models.CharField(max_length=255, unique=True)),
             ],

@@ -27,19 +27,10 @@ Example: ./manage.py realm_filters --realm=zulip --op=show
             "--op", dest="op", type=str, default="show", help="What operation to do (add, show, remove).",
         )
         parser.add_argument(
-            "pattern",
-            metavar="<pattern>",
-            type=str,
-            nargs="?",
-            default=None,
-            help="regular expression to match",
+            "pattern", metavar="<pattern>", type=str, nargs="?", default=None, help="regular expression to match",
         )
         parser.add_argument(
-            "url_format_string",
-            metavar="<url pattern>",
-            type=str,
-            nargs="?",
-            help="format string to substitute",
+            "url_format_string", metavar="<url pattern>", type=str, nargs="?", help="format string to substitute",
         )
         self.add_realm_args(parser, True)
 

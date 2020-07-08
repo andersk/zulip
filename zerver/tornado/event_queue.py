@@ -479,8 +479,7 @@ def gc_event_queues(port: int) -> None:
 
     if settings.PRODUCTION:
         logging.info(
-            "Tornado %d removed %d expired event queues owned by %d users in %.3fs."
-            "  Now %d active queues, %s",
+            "Tornado %d removed %d expired event queues owned by %d users in %.3fs." "  Now %d active queues, %s",
             port,
             len(to_remove),
             len(affected_users),
@@ -627,9 +626,7 @@ def fetch_events(query: Mapping[str, Any]) -> Dict[str, Any]:
         # After this point, dont_block=False, the queue is empty, and we
         # have a pre-existing queue, so we wait for new events.
         if was_connected:
-            logging.info(
-                "Disconnected handler for queue %s (%s/%s)", queue_id, user_profile_id, client_type_name,
-            )
+            logging.info("Disconnected handler for queue %s (%s/%s)", queue_id, user_profile_id, client_type_name)
     except JsonableError as e:
         return dict(type="error", exception=e)
 
@@ -716,12 +713,7 @@ NOTIFY_AFTER_IDLE_HOURS = 1
 
 
 def build_offline_notification(user_profile_id: int, message_id: int) -> Dict[str, Any]:
-    return {
-        "user_profile_id": user_profile_id,
-        "message_id": message_id,
-        "type": "add",
-        "timestamp": time.time(),
-    }
+    return {"user_profile_id": user_profile_id, "message_id": message_id, "type": "add", "timestamp": time.time()}
 
 
 def missedmessage_hook(user_profile_id: int, client: ClientDescriptor, last_for_client: bool) -> None:

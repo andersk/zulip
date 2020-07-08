@@ -47,10 +47,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="RealmAuditLog",
             fields=[
-                (
-                    "id",
-                    models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID"),
-                ),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
                 ("event_type", models.CharField(max_length=40)),
                 ("backfilled", models.BooleanField(default=False)),
                 ("event_time", models.DateTimeField()),
@@ -65,9 +62,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "modified_stream",
-                    models.ForeignKey(
-                        null=True, on_delete=django.db.models.deletion.CASCADE, to="zerver.Stream",
-                    ),
+                    models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to="zerver.Stream"),
                 ),
                 (
                     "modified_user",

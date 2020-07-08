@@ -385,9 +385,7 @@ Check [{name}]({html_url}) {status} ({conclusion}). ([{short_hash}]({commit_url}
         "html_url": payload["check_run"]["html_url"],
         "status": payload["check_run"]["status"],
         "short_hash": payload["check_run"]["head_sha"][:7],
-        "commit_url": "{}/commit/{}".format(
-            payload["repository"]["html_url"], payload["check_run"]["head_sha"],
-        ),
+        "commit_url": "{}/commit/{}".format(payload["repository"]["html_url"], payload["check_run"]["head_sha"]),
         "conclusion": payload["check_run"]["conclusion"],
     }
 
@@ -452,9 +450,7 @@ def get_subject_based_on_type(payload: Dict[str, Any], event: str) -> str:
             title=payload["issue"]["title"],
         )
     elif event.startswith("deployment"):
-        return "{} / Deployment on {}".format(
-            get_repository_name(payload), payload["deployment"]["environment"],
-        )
+        return "{} / Deployment on {}".format(get_repository_name(payload), payload["deployment"]["environment"])
     elif event == "membership":
         return "{} organization".format(payload["organization"]["login"])
     elif event == "team":

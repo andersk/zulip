@@ -203,9 +203,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
         credentials = "{}:{}".format("5678-efgh", "invalid")
         api_auth = "Basic " + base64.b64encode(credentials.encode("utf-8")).decode("utf-8")
         result = self.client_post(
-            endpoint,
-            {"user_id": user_id, "token_kind": token_kind, "token": token},
-            HTTP_AUTHORIZATION=api_auth,
+            endpoint, {"user_id": user_id, "token_kind": token_kind, "token": token}, HTTP_AUTHORIZATION=api_auth,
         )
         self.assert_json_error(result, "Zulip server auth failure: 5678-efgh is not registered", status_code=401)
 
@@ -389,9 +387,7 @@ class AnalyticsBouncerTest(BouncerTestCase):
             self.assertEqual(mock_request.call_count, mock_request_call_count)
             self.assertEqual(RemoteRealmCount.objects.count(), remote_realm_count)
             self.assertEqual(RemoteInstallationCount.objects.count(), remote_installation_count)
-            self.assertEqual(
-                RemoteRealmAuditLog.objects.count(), remote_audit_log_count + remote_realm_audit_log,
-            )
+            self.assertEqual(RemoteRealmAuditLog.objects.count(), remote_audit_log_count + remote_realm_audit_log)
 
         # Create some rows we'll send to remote server
         realm_stat = LoggingCountStat("invites_sent::day", RealmCount, CountStat.DAY)

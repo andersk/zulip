@@ -28,9 +28,7 @@ class Command(ZulipBaseCommand):
             help="Path to a markdown-format body for the email.",
         )
         parser.add_argument(
-            "--subject",
-            type=str,
-            help="Subject for the email. It can be declarated in markdown file in headers",
+            "--subject", type=str, help="Subject for the email. It can be declarated in markdown file in headers",
         )
         parser.add_argument(
             "--from-name",
@@ -38,9 +36,7 @@ class Command(ZulipBaseCommand):
             help="From line for the email. It can be declarated in markdown file in headers",
         )
         parser.add_argument("--reply-to", type=str, help="Optional reply-to line for the email")
-        parser.add_argument(
-            "--admins-only", help="Send only to organization administrators", action="store_true",
-        )
+        parser.add_argument("--admins-only", help="Send only to organization administrators", action="store_true")
 
         self.add_user_list_args(
             parser,

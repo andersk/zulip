@@ -16,10 +16,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="ArchivedAttachment",
             fields=[
-                (
-                    "id",
-                    models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID"),
-                ),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
                 ("file_name", models.TextField(db_index=True)),
                 ("path_id", models.TextField(db_index=True)),
                 ("is_realm_public", models.BooleanField(default=False)),
@@ -33,10 +30,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="ArchivedMessage",
             fields=[
-                (
-                    "id",
-                    models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID"),
-                ),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
                 ("subject", models.CharField(db_index=True, max_length=60)),
                 ("content", models.TextField()),
                 ("rendered_content", models.TextField(null=True)),
@@ -67,10 +61,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="ArchivedUserMessage",
             fields=[
-                (
-                    "id",
-                    models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID"),
-                ),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
                 (
                     "flags",
                     bitfield.models.BitField(

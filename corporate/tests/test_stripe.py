@@ -545,9 +545,7 @@ class StripeTest(StripeTestCase):
         )
         # Check RealmAuditLog
         audit_log_entries = list(
-            RealmAuditLog.objects.filter(acting_user=user)
-            .values_list("event_type", "event_time")
-            .order_by("id"),
+            RealmAuditLog.objects.filter(acting_user=user).values_list("event_type", "event_time").order_by("id"),
         )
         self.assertEqual(
             audit_log_entries,
@@ -665,9 +663,7 @@ class StripeTest(StripeTestCase):
         )
         # Check RealmAuditLog
         audit_log_entries = list(
-            RealmAuditLog.objects.filter(acting_user=user)
-            .values_list("event_type", "event_time")
-            .order_by("id"),
+            RealmAuditLog.objects.filter(acting_user=user).values_list("event_type", "event_time").order_by("id"),
         )
         self.assertEqual(
             audit_log_entries,
@@ -820,18 +816,14 @@ class StripeTest(StripeTestCase):
             with patch("corporate.lib.stripe.get_latest_seat_count", return_value=12):
                 update_license_ledger_if_needed(realm, self.now)
             self.assertEqual(
-                LicenseLedger.objects.order_by("-id")
-                .values_list("licenses", "licenses_at_next_renewal")
-                .first(),
+                LicenseLedger.objects.order_by("-id").values_list("licenses", "licenses_at_next_renewal").first(),
                 (12, 12),
             )
 
             with patch("corporate.lib.stripe.get_latest_seat_count", return_value=15):
                 update_license_ledger_if_needed(realm, self.next_month)
             self.assertEqual(
-                LicenseLedger.objects.order_by("-id")
-                .values_list("licenses", "licenses_at_next_renewal")
-                .first(),
+                LicenseLedger.objects.order_by("-id").values_list("licenses", "licenses_at_next_renewal").first(),
                 (15, 15),
             )
 
@@ -889,9 +881,7 @@ class StripeTest(StripeTestCase):
             with patch("corporate.lib.stripe.get_latest_seat_count", return_value=19):
                 update_license_ledger_if_needed(realm, add_months(free_trial_end_date, 10))
             self.assertEqual(
-                LicenseLedger.objects.order_by("-id")
-                .values_list("licenses", "licenses_at_next_renewal")
-                .first(),
+                LicenseLedger.objects.order_by("-id").values_list("licenses", "licenses_at_next_renewal").first(),
                 (19, 19),
             )
             invoice_plans_as_needed(add_months(free_trial_end_date, 10))
@@ -1349,8 +1339,7 @@ class StripeTest(StripeTestCase):
         self.login_user(self.example_user("othello"))
         response = self.client_get("/billing/")
         self.assert_in_success_response(
-            ["You must be an organization administrator or a billing administrator to view this page."],
-            response,
+            ["You must be an organization administrator or a billing administrator to view this page."], response,
         )
 
     def test_redirect_for_billing_home(self) -> None:
@@ -1628,9 +1617,7 @@ class StripeTest(StripeTestCase):
 
     @mock_stripe()
     @patch("corporate.lib.stripe.billing_logger.info")
-    def test_switch_from_monthly_plan_to_annual_plan_for_automatic_license_management(
-        self, *mocks: Mock
-    ) -> None:
+    def test_switch_from_monthly_plan_to_annual_plan_for_automatic_license_management(self, *mocks: Mock) -> None:
         user = self.example_user("hamlet")
 
         self.login_user(user)

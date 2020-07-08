@@ -371,9 +371,7 @@ def do_pull_minutes_active(
             seconds_active[(user_id, realm_id)] += (end - start).total_seconds()
 
     rows = [
-        UserCount(
-            user_id=ids[0], realm_id=ids[1], property=property, end_time=end_time, value=int(seconds // 60),
-        )
+        UserCount(user_id=ids[0], realm_id=ids[1], property=property, end_time=end_time, value=int(seconds // 60))
         for ids, seconds in seconds_active.items()
         if seconds >= 60
     ]

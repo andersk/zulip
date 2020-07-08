@@ -8,10 +8,7 @@ from django.utils.translation import ugettext as _
 from zerver.models import UserHotspot, UserProfile
 
 ALL_HOTSPOTS: Dict[str, Dict[str, str]] = {
-    "intro_reply": {
-        "title": _("Reply to a message"),
-        "description": _("Click anywhere on a message to reply."),
-    },
+    "intro_reply": {"title": _("Reply to a message"), "description": _("Click anywhere on a message to reply.")},
     "intro_streams": {
         "title": _("Catch up on a stream"),
         "description": _(

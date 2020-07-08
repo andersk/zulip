@@ -28,7 +28,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(
-            upgrade_create_stream_policy, reverse_code=migrations.RunPython.noop, elidable=True,
-        ),
+        migrations.RunPython(upgrade_create_stream_policy, reverse_code=migrations.RunPython.noop, elidable=True),
     ]

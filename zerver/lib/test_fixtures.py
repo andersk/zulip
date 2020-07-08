@@ -226,9 +226,7 @@ class Database:
 
 DEV_DATABASE = Database(platform="dev", database_name="zulip", settings="zproject.settings")
 
-TEST_DATABASE = Database(
-    platform="test", database_name="zulip_test_template", settings="zproject.test_settings",
-)
+TEST_DATABASE = Database(platform="test", database_name="zulip_test_template", settings="zproject.test_settings")
 
 
 def update_test_databases_if_required(rebuild_test_database: bool = False) -> None:

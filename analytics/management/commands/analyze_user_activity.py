@@ -51,11 +51,7 @@ is shown for all realms"""
         parser.add_argument("--realm", action="store")
         parser.add_argument("--date", action="store", default="2013-09-06")
         parser.add_argument(
-            "--duration",
-            action="store",
-            default=1,
-            type=int,
-            help="How many days to show usage information for",
+            "--duration", action="store", default=1, type=int, help="How many days to show usage information for",
         )
 
     def handle(self, *args: Any, **options: Any) -> None:

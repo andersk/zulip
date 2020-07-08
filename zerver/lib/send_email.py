@@ -75,8 +75,7 @@ def build_email(
             assert len(set([to_user.realm_id for to_user in to_users])) == 1
             realm = to_users[0].realm
         to_emails = [
-            str(Address(display_name=to_user.full_name, addr_spec=to_user.delivery_email))
-            for to_user in to_users
+            str(Address(display_name=to_user.full_name, addr_spec=to_user.delivery_email)) for to_user in to_users
         ]
 
     extra_headers = {}

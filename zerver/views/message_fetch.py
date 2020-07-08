@@ -400,9 +400,7 @@ class NarrowBuilder:
         cond = and_(column("sender_id") == self.user_profile.id, column("recipient_id") == recipient.id)
         return query.where(maybe_negate(cond))
 
-    def by_group_pm_with(
-        self, query: Query, operand: Union[str, int], maybe_negate: ConditionTransform,
-    ) -> Query:
+    def by_group_pm_with(self, query: Query, operand: Union[str, int], maybe_negate: ConditionTransform) -> Query:
         try:
             if isinstance(operand, str):
                 narrow_profile = get_user_including_cross_realm(operand, self.user_realm)
@@ -457,9 +455,9 @@ class NarrowBuilder:
         )
         # We HTML-escape the topic in Postgres to avoid doing a server round-trip
         query = query.column(
-            ts_locs_array(
-                literal("zulip.english_us_search"), func.escape_html(topic_column_sa()), tsquery,
-            ).label("topic_matches"),
+            ts_locs_array(literal("zulip.english_us_search"), func.escape_html(topic_column_sa()), tsquery).label(
+                "topic_matches",
+            ),
         )
 
         # Do quoted string matching.  We really want phrase

@@ -485,10 +485,7 @@ class PasswordResetTest(ZulipTestCase):
         self.assertEqual(len(outbox), 0)
 
     @override_settings(
-        AUTHENTICATION_BACKENDS=(
-            "zproject.backends.ZulipLDAPAuthBackend",
-            "zproject.backends.ZulipDummyBackend",
-        ),
+        AUTHENTICATION_BACKENDS=("zproject.backends.ZulipLDAPAuthBackend", "zproject.backends.ZulipDummyBackend"),
     )
     def test_ldap_auth_only(self) -> None:
         """If the email auth backend is not enabled, password reset should do nothing"""
@@ -1129,10 +1126,7 @@ class InviteUserTest(InviteUserBase):
             self.example_user("hamlet"), "Denmark", topic_name="Public topic", content="Public message",
         )
         secret_msg_id = self.send_stream_message(
-            self.example_user("hamlet"),
-            private_stream_name,
-            topic_name="Secret topic",
-            content="Secret message",
+            self.example_user("hamlet"), private_stream_name, topic_name="Secret topic", content="Secret message",
         )
         invitee = self.nonreg_email("alice")
         self.assert_json_success(self.invite(invitee, [private_stream_name, "Denmark"]))
@@ -1448,9 +1442,7 @@ so we didn't send them an invitation. We did send invitations to everyone else!"
 
         result = self.submit_reg_form_for_user(external_address, "password")
         self.assertEqual(result.status_code, 200)
-        self.assert_in_response(
-            "Zulip Dev, does not allow signups using emails\n        that contains +", result,
-        )
+        self.assert_in_response("Zulip Dev, does not allow signups using emails\n        that contains +", result)
 
     def test_invalid_email_check_after_confirming_email(self) -> None:
         self.login("hamlet")
@@ -1678,8 +1670,7 @@ so we didn't send them an invitation. We did send invitations to everyone else!"
         response = self.client_post(url, {"key": registration_key, "from_confirmation": 1, "full_name": "alice"})
         self.assertEqual(response.status_code, 302)
         self.assertEqual(
-            response.url,
-            reverse("django.contrib.auth.views.login") + "?email=" + urllib.parse.quote_plus(email),
+            response.url, reverse("django.contrib.auth.views.login") + "?email=" + urllib.parse.quote_plus(email),
         )
 
 
@@ -2631,9 +2622,7 @@ class RealmCreationTest(ZulipTestCase):
         self.assert_in_success_response(["Subdomain unavailable. Please choose a different one."], result)
 
         result = self.client_get("/json/realm/subdomain/zu_lip")
-        self.assert_in_success_response(
-            ["Subdomain can only have lowercase letters, numbers, and '-'s."], result,
-        )
+        self.assert_in_success_response(["Subdomain can only have lowercase letters, numbers, and '-'s."], result)
 
         result = self.client_get("/json/realm/subdomain/hufflepuff")
         self.assert_in_success_response(["available"], result)
@@ -3280,10 +3269,7 @@ class UserSignUpTest(InviteUserBase):
         self.assert_in_success_response(["Find your Zulip accounts"], result)
 
     @override_settings(
-        AUTHENTICATION_BACKENDS=(
-            "zproject.backends.ZulipLDAPAuthBackend",
-            "zproject.backends.ZulipDummyBackend",
-        ),
+        AUTHENTICATION_BACKENDS=("zproject.backends.ZulipLDAPAuthBackend", "zproject.backends.ZulipDummyBackend"),
     )
     def test_ldap_registration_from_confirmation(self) -> None:
         password = self.ldap_password("newuser")
@@ -3424,10 +3410,7 @@ class UserSignUpTest(InviteUserBase):
             self.assert_in_success_response(["id_password"], result)
 
     @override_settings(
-        AUTHENTICATION_BACKENDS=(
-            "zproject.backends.ZulipLDAPAuthBackend",
-            "zproject.backends.ZulipDummyBackend",
-        ),
+        AUTHENTICATION_BACKENDS=("zproject.backends.ZulipLDAPAuthBackend", "zproject.backends.ZulipDummyBackend"),
     )
     def test_ldap_registration_end_to_end(self) -> None:
         password = self.ldap_password("newuser")
@@ -3495,10 +3478,7 @@ class UserSignUpTest(InviteUserBase):
             self.assertEqual(user_profile.short_name, "shortname")
 
     @override_settings(
-        AUTHENTICATION_BACKENDS=(
-            "zproject.backends.ZulipLDAPAuthBackend",
-            "zproject.backends.ZulipDummyBackend",
-        ),
+        AUTHENTICATION_BACKENDS=("zproject.backends.ZulipLDAPAuthBackend", "zproject.backends.ZulipDummyBackend"),
     )
     def test_ldap_split_full_name_mapping(self) -> None:
         self.init_default_ldap_database()
@@ -3545,10 +3525,7 @@ class UserSignUpTest(InviteUserBase):
             self.assertEqual(user_profile.short_name, "First")
 
     @override_settings(
-        AUTHENTICATION_BACKENDS=(
-            "zproject.backends.ZulipLDAPAuthBackend",
-            "zproject.backends.ZulipDummyBackend",
-        ),
+        AUTHENTICATION_BACKENDS=("zproject.backends.ZulipLDAPAuthBackend", "zproject.backends.ZulipDummyBackend"),
     )
     def test_ldap_auto_registration_on_login(self) -> None:
         """The most common way for LDAP authentication to be used is with a
@@ -3621,10 +3598,7 @@ class UserSignUpTest(InviteUserBase):
             self.assertEqual(user_profile.delivery_email, email)
 
     @override_settings(
-        AUTHENTICATION_BACKENDS=(
-            "zproject.backends.ZulipLDAPAuthBackend",
-            "zproject.backends.ZulipDummyBackend",
-        ),
+        AUTHENTICATION_BACKENDS=("zproject.backends.ZulipLDAPAuthBackend", "zproject.backends.ZulipDummyBackend"),
     )
     def test_ldap_registration_when_names_changes_are_disabled(self) -> None:
         password = self.ldap_password("newuser")
@@ -4169,9 +4143,7 @@ class DeactivateUserTest(ZulipTestCase):
 
     def test_do_not_deactivate_final_user(self) -> None:
         realm = get_realm("zulip")
-        UserProfile.objects.filter(realm=realm).exclude(role=UserProfile.ROLE_REALM_OWNER).update(
-            is_active=False,
-        )
+        UserProfile.objects.filter(realm=realm).exclude(role=UserProfile.ROLE_REALM_OWNER).update(is_active=False)
         user = self.example_user("desdemona")
         self.login_user(user)
         result = self.client_delete("/json/users/me")

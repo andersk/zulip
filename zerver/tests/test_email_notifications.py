@@ -110,8 +110,7 @@ class TestCustomEmails(ZulipTestCase):
 
         markdown_template_path = "zerver/tests/fixtures/email/custom_emails/email_base_headers_test.source.html"
         send_custom_email(
-            [admin_user, non_admin_user],
-            {"markdown_template_path": markdown_template_path, "admins_only": True},
+            [admin_user, non_admin_user], {"markdown_template_path": markdown_template_path, "admins_only": True},
         )
         self.assertEqual(len(mail.outbox), 1)
         self.assertIn(admin_user.delivery_email, mail.outbox[0].to[0])
@@ -145,10 +144,7 @@ class TestFollowupEmails(ZulipTestCase):
     # See https://zulip.readthedocs.io/en/latest/production/authentication-methods.html#ldap-including-active-directory
     # for case details.
     @override_settings(
-        AUTHENTICATION_BACKENDS=(
-            "zproject.backends.ZulipLDAPAuthBackend",
-            "zproject.backends.ZulipDummyBackend",
-        ),
+        AUTHENTICATION_BACKENDS=("zproject.backends.ZulipLDAPAuthBackend", "zproject.backends.ZulipDummyBackend"),
         # configure email search for email address in the uid attribute:
         AUTH_LDAP_REVERSE_EMAIL_SEARCH=LDAPSearch(
             "ou=users,dc=zulip,dc=com", ldap.SCOPE_ONELEVEL, "(uid=%(email)s)",
@@ -171,10 +167,7 @@ class TestFollowupEmails(ZulipTestCase):
             self.assertEqual(email_data["context"]["ldap_username"], "newuser_email_as_uid@zulip.com")
 
     @override_settings(
-        AUTHENTICATION_BACKENDS=(
-            "zproject.backends.ZulipLDAPAuthBackend",
-            "zproject.backends.ZulipDummyBackend",
-        ),
+        AUTHENTICATION_BACKENDS=("zproject.backends.ZulipLDAPAuthBackend", "zproject.backends.ZulipDummyBackend"),
     )
     def test_day1_email_ldap_case_b_login_credentials(self) -> None:
         self.init_default_ldap_database()
@@ -194,10 +187,7 @@ class TestFollowupEmails(ZulipTestCase):
             self.assertEqual(email_data["context"]["ldap_username"], "newuser")
 
     @override_settings(
-        AUTHENTICATION_BACKENDS=(
-            "zproject.backends.ZulipLDAPAuthBackend",
-            "zproject.backends.ZulipDummyBackend",
-        ),
+        AUTHENTICATION_BACKENDS=("zproject.backends.ZulipLDAPAuthBackend", "zproject.backends.ZulipDummyBackend"),
     )
     def test_day1_email_ldap_case_c_login_credentials(self) -> None:
         self.init_default_ldap_database()

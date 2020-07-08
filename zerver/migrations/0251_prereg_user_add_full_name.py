@@ -11,9 +11,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="preregistrationuser",
-            name="full_name",
-            field=models.CharField(max_length=100, null=True),
+            model_name="preregistrationuser", name="full_name", field=models.CharField(max_length=100, null=True),
         ),
         migrations.AddField(
             model_name="preregistrationuser",

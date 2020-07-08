@@ -733,9 +733,7 @@ class MissedMessageNotificationsTest(ZulipTestCase):
         destroy_event_queue(client_descriptor.event_queue.id)
 
         # Clean up the state we just changed (not necessary unless we add more test code below)
-        change_subscription_properties(
-            user_profile, stream, sub, {"push_notifications": True, "is_muted": False},
-        )
+        change_subscription_properties(user_profile, stream, sub, {"push_notifications": True, "is_muted": False})
 
 
 class FileReloadLogicTest(ZulipTestCase):
@@ -746,8 +744,7 @@ class FileReloadLogicTest(ZulipTestCase):
                 persistent_queue_filename(9993, last=True), "/home/zulip/tornado/event_queues.json.last",
             )
         with self.settings(
-            JSON_PERSISTENT_QUEUE_FILENAME_PATTERN="/home/zulip/tornado/event_queues%s.json",
-            TORNADO_PROCESSES=4,
+            JSON_PERSISTENT_QUEUE_FILENAME_PATTERN="/home/zulip/tornado/event_queues%s.json", TORNADO_PROCESSES=4,
         ):
             self.assertEqual(persistent_queue_filename(9993), "/home/zulip/tornado/event_queues.9993.json")
             self.assertEqual(

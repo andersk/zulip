@@ -341,9 +341,7 @@ class NarrowBuilderTest(ZulipTestCase):
         self._do_add_term_test(term, "WHERE 1 != 1")
 
         # Test with at least one such group PM thread existing
-        self.send_huddle_message(
-            self.user_profile, [self.example_user("othello"), self.example_user("cordelia")],
-        )
+        self.send_huddle_message(self.user_profile, [self.example_user("othello"), self.example_user("cordelia")])
 
         term = dict(operator="group-pm-with", operand=self.othello_email)
         self._do_add_term_test(term, "WHERE recipient_id IN (%(recipient_id_1)s)")
@@ -489,9 +487,7 @@ class NarrowLibraryTest(ZulipTestCase):
         )
         self.assertTrue(is_web_public_compatible([{"operator": "sender", "operand": "hamlet@zulip.com"}]))
         self.assertFalse(is_web_public_compatible([{"operator": "pm-with", "operand": "hamlet@zulip.com"}]))
-        self.assertFalse(
-            is_web_public_compatible([{"operator": "group-pm-with", "operand": "hamlet@zulip.com"}]),
-        )
+        self.assertFalse(is_web_public_compatible([{"operator": "group-pm-with", "operand": "hamlet@zulip.com"}]))
         self.assertTrue(is_web_public_compatible([{"operator": "stream", "operand": "Denmark"}]))
         self.assertTrue(
             is_web_public_compatible(
@@ -1477,9 +1473,7 @@ class GetOldMessagesTest(ZulipTestCase):
 
         non_matching_message_ids.append(self.send_huddle_message(me, [iago, othello]))
 
-        non_matching_message_ids.append(
-            self.send_huddle_message(self.example_user("cordelia"), [iago, othello]),
-        )
+        non_matching_message_ids.append(self.send_huddle_message(self.example_user("cordelia"), [iago, othello]))
 
         self.login_user(me)
         test_operands = [cordelia.email, cordelia.id]
@@ -1795,8 +1789,7 @@ class GetOldMessagesTest(ZulipTestCase):
         self.assertEqual(meeting_message[MATCH_TOPIC], "meetings")
         self.assertEqual(
             meeting_message["match_content"],
-            '<p>discuss <span class="highlight">lunch</span> after '
-            + '<span class="highlight">lunch</span></p>',
+            '<p>discuss <span class="highlight">lunch</span> after ' + '<span class="highlight">lunch</span></p>',
         )
 
         (lunch_message,) = [m for m in messages if m[TOPIC_NAME] == "lunch plans"]
@@ -2562,9 +2555,7 @@ class GetOldMessagesTest(ZulipTestCase):
         # With the same data setup, we now want to test that a reasonable
         # search still gets the first message sent to Hamlet (before he
         # subscribed) and other recent messages to the stream.
-        query_params = dict(
-            anchor="first_unread", num_before=10, num_after=10, narrow='[["stream", "England"]]',
-        )
+        query_params = dict(anchor="first_unread", num_before=10, num_after=10, narrow='[["stream", "England"]]')
         request = POSTRequestMock(query_params, user_profile)
 
         payload = get_messages_backend(request, user_profile)

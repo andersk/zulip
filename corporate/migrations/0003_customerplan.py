@@ -14,10 +14,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="CustomerPlan",
             fields=[
-                (
-                    "id",
-                    models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID"),
-                ),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
                 ("licenses", models.IntegerField()),
                 ("automanage_licenses", models.BooleanField(default=False)),
                 ("charge_automatically", models.BooleanField(default=False)),

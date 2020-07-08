@@ -251,9 +251,7 @@ class MessagePOSTTest(ZulipTestCase):
         non_admin_owned_bot = self.create_test_bot(
             short_name="whatever2", full_name="whatever2", user_profile=non_admin_profile,
         )
-        self._send_and_verify_message(
-            non_admin_owned_bot, stream_name, "New members cannot send to this stream.",
-        )
+        self._send_and_verify_message(non_admin_owned_bot, stream_name, "New members cannot send to this stream.")
 
         # Bots without owner (except cross realm bot) cannot send to announcement only stream
         bot_without_owner = do_create_user(
@@ -1584,9 +1582,7 @@ class PersonalMessageSendTest(ZulipTestCase):
         """
         user_profile = self.example_user("hamlet")
         self.login_user(user_profile)
-        do_set_realm_property(
-            user_profile.realm, "private_message_policy", Realm.PRIVATE_MESSAGE_POLICY_DISABLED,
-        )
+        do_set_realm_property(user_profile.realm, "private_message_policy", Realm.PRIVATE_MESSAGE_POLICY_DISABLED)
         with self.assertRaises(JsonableError):
             self.send_personal_message(user_profile, self.example_user("cordelia"))
 

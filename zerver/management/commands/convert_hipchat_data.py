@@ -39,10 +39,7 @@ class Command(BaseCommand):
         )
 
         parser.add_argument(
-            "--mask",
-            dest="masking_content",
-            action="store_true",
-            help="Mask the content for privacy during QA.",
+            "--mask", dest="masking_content", action="store_true", help="Mask the content for privacy during QA.",
         )
 
         parser.add_argument(

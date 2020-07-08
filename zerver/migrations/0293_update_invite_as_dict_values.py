@@ -46,7 +46,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(
-            update_invite_as_dict_values, reverse_code=migrations.RunPython.noop, elidable=True,
-        ),
+        migrations.RunPython(update_invite_as_dict_values, reverse_code=migrations.RunPython.noop, elidable=True),
     ]

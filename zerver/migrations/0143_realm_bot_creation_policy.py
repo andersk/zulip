@@ -41,7 +41,5 @@ class Migration(migrations.Migration):
             name="bot_creation_policy",
             field=models.PositiveSmallIntegerField(default=BOT_CREATION_EVERYONE),
         ),
-        migrations.RunPython(
-            set_initial_value_for_bot_creation_policy, reverse_code=reverse_code, elidable=True,
-        ),
+        migrations.RunPython(set_initial_value_for_bot_creation_policy, reverse_code=reverse_code, elidable=True),
     ]

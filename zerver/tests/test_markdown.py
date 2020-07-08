@@ -790,8 +790,7 @@ class MarkdownTest(ZulipTestCase):
         self.assertEqual(get_tweet_id("https://twitter.com/wdaher/status/1017581858"), "1017581858")
         self.assertEqual(get_tweet_id("https://twitter.com/wdaher/status/1017581858/"), "1017581858")
         self.assertEqual(
-            get_tweet_id("https://twitter.com/windyoona/status/410766290349879296/photo/1"),
-            "410766290349879296",
+            get_tweet_id("https://twitter.com/windyoona/status/410766290349879296/photo/1"), "410766290349879296",
         )
         self.assertEqual(
             get_tweet_id("https://twitter.com/windyoona/status/410766290349879296/"), "410766290349879296",
