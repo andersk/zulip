@@ -69,17 +69,13 @@ class ReactionEmojiTest(ZulipTestCase):
         result = self.api_post(sender, "/api/v1/messages/1/reactions", reaction_info)
         self.assert_json_success(result)
         self.assertEqual(200, result.status_code)
-        self.assertTrue(
-            base_query.filter(emoji_name=reaction_info["emoji_name"]).exists(),
-        )
+        self.assertTrue(base_query.filter(emoji_name=reaction_info["emoji_name"]).exists())
 
         reaction_info["emoji_name"] = "green_tick"
         result = self.api_post(sender, "/api/v1/messages/1/reactions", reaction_info)
         self.assert_json_success(result)
         self.assertEqual(200, result.status_code)
-        self.assertTrue(
-            base_query.filter(emoji_name=reaction_info["emoji_name"]).exists(),
-        )
+        self.assertTrue(base_query.filter(emoji_name=reaction_info["emoji_name"]).exists())
 
     def test_cached_reaction_data(self) -> None:
         """
@@ -380,9 +376,7 @@ class ReactionTest(ZulipTestCase):
         self.assert_json_success(result)
 
         with mock.patch("zerver.lib.emoji.name_to_codepoint", name_to_codepoint={}):
-            result = self.api_delete(
-                sender, "/api/v1/messages/1/reactions", reaction_info,
-            )
+            result = self.api_delete(sender, "/api/v1/messages/1/reactions", reaction_info)
             self.assert_json_success(result)
 
     def test_remove_existing_reaction_with_deactivated_realm_emoji(self) -> None:

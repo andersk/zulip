@@ -203,9 +203,7 @@ class RealmEmojiTest(ZulipTestCase):
     def test_multiple_upload(self) -> None:
         self.login("iago")
         with get_test_image_file("img.png") as fp1, get_test_image_file("img.png") as fp2:
-            result = self.client_post(
-                "/json/realm/emoji/my_emoji", {"f1": fp1, "f2": fp2},
-            )
+            result = self.client_post("/json/realm/emoji/my_emoji", {"f1": fp1, "f2": fp2})
         self.assert_json_error(result, "You must upload exactly one file.")
 
     def test_emoji_upload_file_size_error(self) -> None:

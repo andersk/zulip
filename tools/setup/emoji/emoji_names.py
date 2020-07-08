@@ -431,10 +431,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     "1f40c": {"canonical_name": "snail", "aliases": []},
     # spiral_shell from unicode/gemoji, the others seemed like reasonable
     # additions
-    "1f41a": {
-        "canonical_name": "shell",
-        "aliases": ["seashell", "conch", "spiral_shell"],
-    },
+    "1f41a": {"canonical_name": "shell", "aliases": ["seashell", "conch", "spiral_shell"]},
     # unicode/gemoji have lady_beetle; hopefully with ladybug we get both the
     # people that prefer lady_beetle (with beetle) and ladybug. There is also
     # ladybird, but seems a bit much for this to complete for bird.
@@ -1272,10 +1269,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
         "canonical_name": "chart",
         "aliases": ["upwards_trend", "growing", "increasing"],
     },
-    "1f4c9": {
-        "canonical_name": "downwards_trend",
-        "aliases": ["shrinking", "decreasing"],
-    },
+    "1f4c9": {"canonical_name": "downwards_trend", "aliases": ["shrinking", "decreasing"]},
     "1f5d2": {"canonical_name": "spiral_notepad", "aliases": []},
     # '1f5d3': {'canonical_name': 'X', 'aliases': ['spiral_calendar_pad']},
     # swapped the following two largely due to the emojione glyphs

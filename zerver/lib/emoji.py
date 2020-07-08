@@ -88,9 +88,7 @@ def check_emoji_request(
         raise JsonableError(_("Invalid emoji type."))
 
 
-def check_emoji_admin(
-    user_profile: UserProfile, emoji_name: Optional[str] = None,
-) -> None:
+def check_emoji_admin(user_profile: UserProfile, emoji_name: Optional[str] = None) -> None:
     """Raises an exception if the user cannot administer the target realm
     emoji name in their organization."""
 

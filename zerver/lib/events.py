@@ -180,9 +180,7 @@ def fetch_initial_state_data(
         state["realm_upload_quota"] = realm.upload_quota_bytes()
         state["realm_plan_type"] = realm.plan_type
         state["zulip_plan_is_not_limited"] = realm.plan_type != Realm.LIMITED
-        state["upgrade_text_for_wide_organization_logo"] = str(
-            Realm.UPGRADE_TEXT_STANDARD,
-        )
+        state["upgrade_text_for_wide_organization_logo"] = str(Realm.UPGRADE_TEXT_STANDARD)
         state["realm_default_external_accounts"] = DEFAULT_EXTERNAL_ACCOUNTS
         state["jitsi_server_url"] = settings.JITSI_SERVER_URL
         state["development_environment"] = settings.DEVELOPMENT

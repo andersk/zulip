@@ -363,8 +363,7 @@ def fix_message_rendered_content(
             #   caught in markdown (which then returns None, causing the the
             #   rendered_content assert above to fire).
             logging.warning(
-                "Error in markdown rendering for message ID %s; continuing",
-                message["id"],
+                "Error in markdown rendering for message ID %s; continuing", message["id"],
             )
 
 
@@ -847,9 +846,7 @@ def import_uploads(
                 try:
                     upload_backend.ensure_medium_avatar_image(user_profile=user_profile)
                     if record.get("importer_should_thumbnail"):
-                        upload_backend.ensure_basic_avatar_image(
-                            user_profile=user_profile,
-                        )
+                        upload_backend.ensure_basic_avatar_image(user_profile=user_profile)
                 except BadImageError:
                     logging.warning(
                         "Could not thumbnail avatar image for user %s; ignoring",
@@ -1396,12 +1393,8 @@ def import_message_data(
             data = ujson.load(f)
 
         logging.info("Importing message dump %s", message_filename)
-        re_map_foreign_keys(
-            data, "zerver_message", "sender", related_table="user_profile",
-        )
-        re_map_foreign_keys(
-            data, "zerver_message", "recipient", related_table="recipient",
-        )
+        re_map_foreign_keys(data, "zerver_message", "sender", related_table="user_profile")
+        re_map_foreign_keys(data, "zerver_message", "recipient", related_table="recipient")
         re_map_foreign_keys(
             data, "zerver_message", "sending_client", related_table="client",
         )
@@ -1431,9 +1424,7 @@ def import_message_data(
         # Due to the structure of these message chunks, we're
         # guaranteed to have already imported all the Message objects
         # for this batch of UserMessage objects.
-        re_map_foreign_keys(
-            data, "zerver_usermessage", "message", related_table="message",
-        )
+        re_map_foreign_keys(data, "zerver_usermessage", "message", related_table="message")
         re_map_foreign_keys(
             data, "zerver_usermessage", "user_profile", related_table="user_profile",
         )

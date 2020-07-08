@@ -100,9 +100,7 @@ def get_board_name(payload: Mapping[str, Any]) -> str:
 
 
 def get_board_url(payload: Mapping[str, Any]) -> str:
-    return "https://trello.com/b/{}".format(
-        get_action_data(payload)["board"]["shortLink"],
-    )
+    return "https://trello.com/b/{}".format(get_action_data(payload)["board"]["shortLink"])
 
 
 def get_message_body(action_type: str) -> str:

@@ -119,10 +119,7 @@ def check_prereg_key_and_redirect(
     return render(
         request,
         "confirmation/confirm_preregistrationuser.html",
-        context={
-            "key": confirmation_key,
-            "full_name": request.GET.get("full_name", None),
-        },
+        context={"key": confirmation_key, "full_name": request.GET.get("full_name", None)},
     )
 
 
@@ -156,8 +153,7 @@ def accounts_register(request: HttpRequest) -> HttpResponse:
     else:
         if get_subdomain(request) != prereg_user.realm.string_id:
             return render_confirmation_key_error(
-                request,
-                ConfirmationKeyException(ConfirmationKeyException.DOES_NOT_EXIST),
+                request, ConfirmationKeyException(ConfirmationKeyException.DOES_NOT_EXIST),
             )
         realm = prereg_user.realm
         try:
@@ -569,9 +565,7 @@ def redirect_to_email_login_url(email: str) -> HttpResponseRedirect:
     return HttpResponseRedirect(redirect_url)
 
 
-def create_realm(
-    request: HttpRequest, creation_key: Optional[str] = None,
-) -> HttpResponse:
+def create_realm(request: HttpRequest, creation_key: Optional[str] = None) -> HttpResponse:
     try:
         key_record = validate_key(creation_key)
     except RealmCreationKey.Invalid:

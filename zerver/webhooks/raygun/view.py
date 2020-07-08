@@ -253,9 +253,7 @@ def activity_message(payload: Dict[str, Any]) -> str:
         assigned_to = payload["error"]["assignedTo"]
         message += f"{user} assigned {error_link_md} to {assigned_to}:\n"
 
-    message += "* **Timestamp**: {}\n".format(
-        parse_time(payload["error"]["activityDate"]),
-    )
+    message += "* **Timestamp**: {}\n".format(parse_time(payload["error"]["activityDate"]))
 
     message += make_app_info_chunk(payload["application"])
 

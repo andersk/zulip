@@ -58,9 +58,7 @@ Build [#1420](https://circleci.com/gh/Hypro999/zulip/1420) of `bionic-production
 - **Committer:** Hemanth V. Alluri (Hypro999)
 """.strip()
         self.send_and_test_stream_message(
-            "github_bionic_production_install_cancelled",
-            expected_topic,
-            expected_message,
+            "github_bionic_production_install_cancelled", expected_topic, expected_message,
         )
 
     def test_super_minimal_payload(self) -> None:

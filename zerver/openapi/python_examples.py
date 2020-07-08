@@ -828,9 +828,7 @@ def get_message_history(client: Client, message_id: int) -> None:
     result = client.get_message_history(message_id)
     # {code_example|end}
 
-    validate_against_openapi_schema(
-        result, "/messages/{message_id}/history", "get", "200",
-    )
+    validate_against_openapi_schema(result, "/messages/{message_id}/history", "get", "200")
 
 
 @openapi_test_function("/realm/emoji:get")

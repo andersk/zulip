@@ -269,10 +269,7 @@ class BaseAction(ZulipTestCase):
         return events
 
     def match_states(
-        self,
-        state1: Dict[str, Any],
-        state2: Dict[str, Any],
-        events: List[Dict[str, Any]],
+        self, state1: Dict[str, Any], state2: Dict[str, Any], events: List[Dict[str, Any]],
     ) -> None:
         def normalize(state: Dict[str, Any]) -> None:
             for u in state["never_subscribed"]:
@@ -906,9 +903,7 @@ class NormalActionsTest(BaseAction):
                 (
                     "recipients",
                     check_list(
-                        check_dict_only(
-                            [("email", check_string), ("user_id", check_int)],
-                        ),
+                        check_dict_only([("email", check_string), ("user_id", check_int)]),
                     ),
                 ),
             ],
@@ -1681,21 +1676,9 @@ class NormalActionsTest(BaseAction):
         for auth_method_dict in (
             {"Google": True, "Email": True, "GitHub": True, "LDAP": False, "Dev": False},
             {"Google": True, "Email": True, "GitHub": False, "LDAP": False, "Dev": False},
-            {
-                "Google": True,
-                "Email": False,
-                "GitHub": False,
-                "LDAP": False,
-                "Dev": False,
-            },
+            {"Google": True, "Email": False, "GitHub": False, "LDAP": False, "Dev": False},
             {"Google": True, "Email": False, "GitHub": True, "LDAP": False, "Dev": False},
-            {
-                "Google": False,
-                "Email": False,
-                "GitHub": False,
-                "LDAP": False,
-                "Dev": True,
-            },
+            {"Google": False, "Email": False, "GitHub": False, "LDAP": False, "Dev": True},
             {"Google": False, "Email": False, "GitHub": True, "LDAP": False, "Dev": True},
             {"Google": False, "Email": True, "GitHub": True, "LDAP": True, "Dev": False},
         ):
@@ -1822,9 +1805,7 @@ class NormalActionsTest(BaseAction):
         ):
             events = self.verify_action(
                 lambda: do_set_realm_notifications_stream(
-                    self.user_profile.realm,
-                    notifications_stream,
-                    notifications_stream_id,
+                    self.user_profile.realm, notifications_stream, notifications_stream_id,
                 ),
             )
             schema_checker("events[0]", events[0])
@@ -1967,9 +1948,7 @@ class NormalActionsTest(BaseAction):
                     ("setting", check_bool),
                 ],
             )
-            do_change_notification_settings(
-                self.user_profile, notification_setting, False,
-            )
+            do_change_notification_settings(self.user_profile, notification_setting, False)
 
             for setting_value in [True, False]:
                 events = self.verify_action(

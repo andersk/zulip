@@ -9,9 +9,7 @@ class CrashlyticsHookTests(WebhookTestCase):
     def test_crashlytics_verification_message(self) -> None:
         expected_topic = "Setup"
         expected_message = "Webhook has been successfully configured."
-        self.send_and_test_stream_message(
-            "verification", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("verification", expected_topic, expected_message)
 
     def test_crashlytics_build_in_success_status(self) -> None:
         expected_topic = "123: Issue Title"

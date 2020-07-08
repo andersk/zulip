@@ -436,8 +436,7 @@ class MarkdownTest(ZulipTestCase):
 
         print("Running Markdown Linkify tests")
         with mock.patch(
-            "zerver.lib.url_preview.preview.link_embed_data_from_cache",
-            return_value=None,
+            "zerver.lib.url_preview.preview.link_embed_data_from_cache", return_value=None,
         ):
             for inline_url, reference, url in linkify_tests:
                 try:
@@ -543,9 +542,7 @@ class MarkdownTest(ZulipTestCase):
     @override_settings(INLINE_IMAGE_PREVIEW=True)
     def test_inline_image_thumbnail_url(self) -> None:
         realm = get_realm("zephyr")
-        msg = (
-            "[foobar](/user_uploads/{realm_id}/50/w2G6ok9kr8AMCQCTNAUOFMln/IMG_0677.JPG)"
-        )
+        msg = "[foobar](/user_uploads/{realm_id}/50/w2G6ok9kr8AMCQCTNAUOFMln/IMG_0677.JPG)"
         msg = msg.format(realm_id=realm.id)
         thumbnail_img = '<img data-src-fullsize="/thumbnail?url=user_uploads%2F{realm_id}%2F50%2Fw2G6ok9kr8AMCQCTNAUOFMln%2FIMG_0677.JPG&amp;size=full" src="/thumbnail?url=user_uploads%2F{realm_id}%2F50%2Fw2G6ok9kr8AMCQCTNAUOFMln%2FIMG_0677.JPG&amp;size=thumbnail"><'
         thumbnail_img = thumbnail_img.format(realm_id=realm.id)
@@ -1101,9 +1098,7 @@ class MarkdownTest(ZulipTestCase):
         ).get()
         self.assertEqual(
             converted,
-            "<p>{}</p>".format(
-                emoji_img(":green_tick:", realm_emoji.file_name, realm.id),
-            ),
+            "<p>{}</p>".format(emoji_img(":green_tick:", realm_emoji.file_name, realm.id)),
         )
 
         # Deactivate realm emoji.
@@ -1215,8 +1210,7 @@ class MarkdownTest(ZulipTestCase):
         msg.set_topic_name("#444 https://google.com")
         converted_topic = topic_links(realm.id, msg.topic_name())
         self.assertEqual(
-            converted_topic,
-            ["https://trac.example.com/ticket/444", "https://google.com"],
+            converted_topic, ["https://trac.example.com/ticket/444", "https://google.com"],
         )
 
         RealmFilter(
@@ -1648,9 +1642,7 @@ class MarkdownTest(ZulipTestCase):
         self.assertTrue(msg_with_quote == msg_without_language_default_quote)
         self.assertTrue(msg_with_math == msg_without_language_default_math)
         self.assertTrue(
-            msg_without_language
-            == msg_with_none_default_py
-            == msg_without_language_final,
+            msg_without_language == msg_with_none_default_py == msg_without_language_final,
         )
 
         # Test checking inside nested quotes
@@ -1702,9 +1694,7 @@ class MarkdownTest(ZulipTestCase):
         content = "@**stream** test"
         self.assertEqual(
             render_markdown(msg, content),
-            '<p><span class="user-mention" data-user-id="*">'
-            "@stream"
-            "</span> test</p>",
+            '<p><span class="user-mention" data-user-id="*">' "@stream" "</span> test</p>",
         )
         self.assertTrue(msg.mentions_wildcard)
 
@@ -1890,8 +1880,7 @@ class MarkdownTest(ZulipTestCase):
 
         content = "Hey @**Nonexistent User**"
         self.assertEqual(
-            render_markdown(msg, content),
-            "<p>Hey @<strong>Nonexistent User</strong></p>",
+            render_markdown(msg, content), "<p>Hey @<strong>Nonexistent User</strong></p>",
         )
         self.assertEqual(msg.mentions_user_ids, set())
 
@@ -2428,9 +2417,7 @@ class MarkdownApiTests(ZulipTestCase):
     def test_render_message_api(self) -> None:
         content = "That is a **bold** statement"
         result = self.api_post(
-            self.example_user("othello"),
-            "/api/v1/messages/render",
-            dict(content=content),
+            self.example_user("othello"), "/api/v1/messages/render", dict(content=content),
         )
         self.assert_json_success(result)
         self.assertEqual(
@@ -2441,9 +2428,7 @@ class MarkdownApiTests(ZulipTestCase):
         """Determines whether we're correctly passing the realm context"""
         content = "This mentions #**Denmark** and @**King Hamlet**."
         result = self.api_post(
-            self.example_user("othello"),
-            "/api/v1/messages/render",
-            dict(content=content),
+            self.example_user("othello"), "/api/v1/messages/render", dict(content=content),
         )
         self.assert_json_success(result)
         user_id = self.example_user("hamlet").id

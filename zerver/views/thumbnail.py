@@ -29,9 +29,7 @@ def backend_serve_thumbnail(
     size_requested: str = REQ("size"),
 ) -> HttpResponse:
     if not validate_thumbnail_request(user_profile, url):
-        return HttpResponseForbidden(
-            _("<p>You are not authorized to view this file.</p>"),
-        )
+        return HttpResponseForbidden(_("<p>You are not authorized to view this file.</p>"))
 
     size = None
     if size_requested == "thumbnail":

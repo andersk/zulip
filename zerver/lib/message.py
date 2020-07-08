@@ -791,9 +791,7 @@ def huddle_users(recipient_id: int) -> str:
 
 
 def aggregate_message_dict(
-    input_dict: Dict[int, Dict[str, Any]],
-    lookup_fields: List[str],
-    collect_senders: bool,
+    input_dict: Dict[int, Dict[str, Any]], lookup_fields: List[str], collect_senders: bool,
 ) -> List[Dict[str, Any]]:
     lookup_dict: Dict[Tuple[Any, ...], Dict[str, Any]] = dict()
 
@@ -1010,9 +1008,7 @@ def aggregate_unread_data(raw_data: RawUnreadMessagesResult) -> UnreadMessagesRe
     )
 
     stream_objects = aggregate_message_dict(
-        input_dict=stream_dict,
-        lookup_fields=["stream_id", "topic"],
-        collect_senders=True,
+        input_dict=stream_dict, lookup_fields=["stream_id", "topic"], collect_senders=True,
     )
 
     huddle_objects = aggregate_message_dict(
@@ -1148,9 +1144,7 @@ def get_recent_conversations_recipient_id(
     """
     my_recipient_id = user_profile.id
     if recipient_id == my_recipient_id:
-        return UserProfile.objects.values_list("recipient_id", flat=True).get(
-            id=sender_id,
-        )
+        return UserProfile.objects.values_list("recipient_id", flat=True).get(id=sender_id)
     return recipient_id
 
 
@@ -1244,9 +1238,7 @@ def get_recent_private_conversations(
     # message conversations with, including PMs with yourself (those
     # will generate an empty list of user_ids).
     for recipient_id, max_message_id in rows:
-        recipient_map[recipient_id] = dict(
-            max_message_id=max_message_id, user_ids=list(),
-        )
+        recipient_map[recipient_id] = dict(max_message_id=max_message_id, user_ids=list())
 
     # Now we need to map all the recipient_id objects to lists of user IDs
     for (recipient_id, user_profile_id) in (

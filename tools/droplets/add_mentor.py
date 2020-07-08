@@ -76,7 +76,5 @@ if __name__ == "__main__":
                 f.write(append_key.format(username=args.username, key=key))
 
         print(f"Successfully added {args.username}'s SSH key!")
-        print(
-            "Can you let your mentor know that they can connect to this machine with:\n",
-        )
+        print("Can you let your mentor know that they can connect to this machine with:\n")
         print(f"    $ ssh zulipdev@{socket.gethostname()}\n")

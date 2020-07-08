@@ -441,10 +441,7 @@ def num_push_devices_for_user(
 
 
 def add_push_device_token(
-    user_profile: UserProfile,
-    token_str: str,
-    kind: int,
-    ios_app_id: Optional[str] = None,
+    user_profile: UserProfile, token_str: str, kind: int, ios_app_id: Optional[str] = None,
 ) -> None:
     logger.info(
         "Registering push device: %d %r %d %r",
@@ -490,9 +487,7 @@ def add_push_device_token(
         send_to_push_bouncer("POST", "push/register", post_data)
 
 
-def remove_push_device_token(
-    user_profile: UserProfile, token_str: str, kind: int,
-) -> None:
+def remove_push_device_token(user_profile: UserProfile, token_str: str, kind: int) -> None:
     try:
         token = PushDeviceToken.objects.get(token=token_str, kind=kind, user=user_profile)
         token.delete()
@@ -578,10 +573,7 @@ def get_gcm_alert(message: Message) -> str:
     Determine what alert string to display based on the missed messages.
     """
     sender_str = message.sender.full_name
-    if (
-        message.recipient.type == Recipient.HUDDLE
-        and message.trigger == "private_message"
-    ):
+    if message.recipient.type == Recipient.HUDDLE and message.trigger == "private_message":
         return f"New private group message from {sender_str}"
     elif (
         message.recipient.type == Recipient.PERSONAL
@@ -617,9 +609,7 @@ def get_mobile_push_content(rendered_content: str) -> str:
 
     def format_as_quote(quote_text: str) -> str:
         return "".join(
-            f"> {line}\n"
-            for line in quote_text.splitlines()
-            if line  # Remove empty lines
+            f"> {line}\n" for line in quote_text.splitlines() if line  # Remove empty lines
         )
 
     def render_olist(ol: lxml.html.HtmlElement) -> str:
@@ -860,9 +850,7 @@ def handle_remove_push_notification(user_profile_id: int, message_ids: List[int]
 
 
 @statsd_increment("push_notifications")
-def handle_push_notification(
-    user_profile_id: int, missed_message: Dict[str, Any],
-) -> None:
+def handle_push_notification(user_profile_id: int, missed_message: Dict[str, Any]) -> None:
     """
     missed_message is the event received by the
     zerver.worker.queue_processors.PushNotificationWorker.consume function.

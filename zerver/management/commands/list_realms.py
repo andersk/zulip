@@ -62,9 +62,7 @@ Usage examples:
             # Remove a field that is confusingly useless
             del realm_dict["_state"]
             # Fix the one bitfield to display useful data
-            realm_dict["authentication_methods"] = str(
-                realm.authentication_methods_dict(),
-            )
+            realm_dict["authentication_methods"] = str(realm.authentication_methods_dict())
 
             for key in identifier_attributes:
                 if realm.deactivated:

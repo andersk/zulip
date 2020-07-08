@@ -131,9 +131,7 @@ class EmailChangeTestCase(ZulipTestCase):
         activation_url = [s for s in body.split("\n") if s][2]
         response = self.client_get(activation_url)
 
-        self.assert_in_success_response(
-            ["This confirms that the email address"], response,
-        )
+        self.assert_in_success_response(["This confirms that the email address"], response)
 
         # Now confirm trying to change your email back doesn't throw an immediate error
         result = self.client_patch(url, {"email": "hamlet@zulip.com"})

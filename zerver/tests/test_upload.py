@@ -391,9 +391,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         )
         self.send_stream_message(self.example_user("hamlet"), "Denmark", body, "test")
         body = (
-            f"Second message ...[zulip.txt](http://{host}/user_uploads/"
-            + d1_path_id
-            + ")"
+            f"Second message ...[zulip.txt](http://{host}/user_uploads/" + d1_path_id + ")"
         )
         self.send_stream_message(self.example_user("hamlet"), "Denmark", body, "test")
 
@@ -434,9 +432,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
 
         # Then, have the owner PM it to another user, giving that other user access.
         body = (
-            f"Second message ...[zulip.txt](http://{host}/user_uploads/"
-            + d1_path_id
-            + ")"
+            f"Second message ...[zulip.txt](http://{host}/user_uploads/" + d1_path_id + ")"
         )
         self.send_personal_message(
             self.example_user("hamlet"), self.example_user("othello"), body,
@@ -949,8 +945,7 @@ class AvatarTest(UploadSerializeMixin, ZulipTestCase):
             backend.get_avatar_url("hash", True), "/user_avatars/hash-medium.png?x=x",
         )
         self.assertEqual(
-            backend.get_realm_icon_url(15, 1),
-            "/user_avatars/15/realm/icon.png?version=1",
+            backend.get_realm_icon_url(15, 1), "/user_avatars/15/realm/icon.png?version=1",
         )
         self.assertEqual(
             backend.get_realm_logo_url(15, 1, False),
@@ -1013,9 +1008,7 @@ class AvatarTest(UploadSerializeMixin, ZulipTestCase):
 
         with get_test_image_file("img.png") as fp1:
             result = self.client_post("/json/users/me/avatar", {"f1": fp1})
-        self.assert_json_error(
-            result, "Avatar changes are disabled in this organization.",
-        )
+        self.assert_json_error(result, "Avatar changes are disabled in this organization.")
 
     correct_files = [
         ("img.png", "png_resized.png"),
@@ -1181,9 +1174,7 @@ class AvatarTest(UploadSerializeMixin, ZulipTestCase):
             self.assertTrue(os.path.exists(medium_avatar_disk_path))
 
             # Verify that ensure_medium_avatar_url does not overwrite this file if it exists
-            with mock.patch(
-                "zerver.lib.upload.write_local_file",
-            ) as mock_write_local_file:
+            with mock.patch("zerver.lib.upload.write_local_file") as mock_write_local_file:
                 zerver.lib.upload.upload_backend.ensure_medium_avatar_image(user_profile)
                 self.assertFalse(mock_write_local_file.called)
 
@@ -1641,9 +1632,7 @@ class RealmLogoTest(UploadSerializeMixin, ZulipTestCase):
         do_change_logo_source(
             realm, Realm.LOGO_UPLOADED, self.night, acting_user=user_profile,
         )
-        result = self.client_delete(
-            "/json/realm/logo", {"night": ujson.dumps(self.night)},
-        )
+        result = self.client_delete("/json/realm/logo", {"night": ujson.dumps(self.night)})
         self.assert_json_success(result)
         realm = get_realm("zulip")
         if self.night:
@@ -1938,8 +1927,7 @@ class S3Test(ZulipTestCase):
         self.assertEqual(target_original_image_key.key, target_original_image_path_id)
         source_original_image_key = bucket.Object(source_original_image_path_id)
         self.assertEqual(
-            source_original_image_key.content_type,
-            target_original_image_key.content_type,
+            source_original_image_key.content_type, target_original_image_key.content_type,
         )
         source_image_data = source_original_image_key.get()["Body"].read()
         target_image_data = target_original_image_key.get()["Body"].read()
@@ -2104,18 +2092,13 @@ class SanitizeNameTests(ZulipTestCase):
         self.assertEqual(sanitize_name(".hidden"), ".hidden")
         self.assertEqual(sanitize_name(".hidden.txt"), ".hidden.txt")
         self.assertEqual(sanitize_name("tarball.tar.gz"), "tarball.tar.gz")
-        self.assertEqual(
-            sanitize_name(".hidden_tarball.tar.gz"), ".hidden_tarball.tar.gz",
-        )
-        self.assertEqual(
-            sanitize_name("Testing{}*&*#().ta&&%$##&&r.gz"), "Testing.tar.gz",
-        )
+        self.assertEqual(sanitize_name(".hidden_tarball.tar.gz"), ".hidden_tarball.tar.gz")
+        self.assertEqual(sanitize_name("Testing{}*&*#().ta&&%$##&&r.gz"), "Testing.tar.gz")
         self.assertEqual(sanitize_name("*testingfile?*.txt"), "testingfile.txt")
         self.assertEqual(sanitize_name("snowman☃.txt"), "snowman.txt")
         self.assertEqual(sanitize_name("테스트.txt"), "테스트.txt")
         self.assertEqual(
-            sanitize_name('~/."\\`\\?*"u0`000ssh/test.t**{}ar.gz'),
-            ".u0000sshtest.tar.gz",
+            sanitize_name('~/."\\`\\?*"u0`000ssh/test.t**{}ar.gz'), ".u0000sshtest.tar.gz",
         )
 
 
@@ -2227,9 +2210,7 @@ class DecompressionBombTests(ZulipTestCase):
             for url, error_string in self.test_urls.items():
                 fp.seek(0, 0)
                 if url == "/json/realm/logo":
-                    result = self.client_post(
-                        url, {"f1": fp, "night": ujson.dumps(False)},
-                    )
+                    result = self.client_post(url, {"f1": fp, "night": ujson.dumps(False)})
                 else:
                     result = self.client_post(url, {"f1": fp})
                 self.assert_json_error(result, error_string)

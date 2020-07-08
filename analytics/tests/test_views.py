@@ -80,8 +80,7 @@ class TestGetChartData(ZulipTestCase):
         self.user = self.example_user("hamlet")
         self.login_user(self.user)
         self.end_times_hour = [
-            ceiling_to_hour(self.realm.date_created) + timedelta(hours=i)
-            for i in range(4)
+            ceiling_to_hour(self.realm.date_created) + timedelta(hours=i) for i in range(4)
         ]
         self.end_times_day = [
             ceiling_to_day(self.realm.date_created) + timedelta(days=i) for i in range(4)
@@ -843,8 +842,7 @@ class TestSupportEndpoint(ZulipTestCase):
         self.login_user(cordelia)
 
         result = self.client_post(
-            "/activity/support",
-            {"realm_id": f"{lear_realm.id}", "status": "deactivated"},
+            "/activity/support", {"realm_id": f"{lear_realm.id}", "status": "deactivated"},
         )
         self.assertEqual(result.status_code, 302)
         self.assertEqual(result["Location"], "/login/")
@@ -919,14 +917,7 @@ class TestGetChartDataHelpers(ZulipTestCase):
 
     def test_sort_client_labels(self) -> None:
         data = {
-            "everyone": {
-                "a": [16],
-                "c": [15],
-                "b": [14],
-                "e": [13],
-                "d": [12],
-                "h": [11],
-            },
+            "everyone": {"a": [16], "c": [15], "b": [14], "e": [13], "d": [12], "h": [11]},
             "user": {"a": [6], "b": [5], "d": [4], "e": [3], "f": [2], "g": [1]},
         }
         self.assertEqual(

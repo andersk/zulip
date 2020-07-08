@@ -20,12 +20,7 @@ from analytics.models import (
     last_successful_fill,
 )
 from zerver.lib.logging_util import log_to_file
-from zerver.lib.timestamp import (
-    ceiling_to_day,
-    ceiling_to_hour,
-    floor_to_hour,
-    verify_UTC,
-)
+from zerver.lib.timestamp import ceiling_to_day, ceiling_to_hour, floor_to_hour, verify_UTC
 from zerver.models import (
     Message,
     Realm,
@@ -100,9 +95,7 @@ class DataCollector:
     def __init__(
         self,
         output_table: Type[BaseCount],
-        pull_function: Optional[
-            Callable[[str, datetime, datetime, Optional[Realm]], int]
-        ],
+        pull_function: Optional[Callable[[str, datetime, datetime, Optional[Realm]], int]],
     ) -> None:
         self.output_table = output_table
         self.pull_function = pull_function
@@ -409,10 +402,7 @@ def sql_data_collector(
 
 
 def do_pull_minutes_active(
-    property: str,
-    start_time: datetime,
-    end_time: datetime,
-    realm: Optional[Realm] = None,
+    property: str, start_time: datetime, end_time: datetime, realm: Optional[Realm] = None,
 ) -> int:
     user_activity_intervals = (
         UserActivityInterval.objects.filter(end__gt=start_time, start__lt=end_time)
@@ -740,9 +730,7 @@ def get_count_stats(realm: Optional[Realm] = None) -> Dict[str, CountStat]:
         CountStat(
             "messages_in_stream:is_bot:day",
             sql_data_collector(
-                StreamCount,
-                count_message_by_stream_query(realm),
-                (UserProfile, "is_bot"),
+                StreamCount, count_message_by_stream_query(realm), (UserProfile, "is_bot"),
             ),
             CountStat.DAY,
         ),

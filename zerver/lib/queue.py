@@ -163,9 +163,7 @@ class SimpleQueueClient:
         self.ensure_queue(
             queue_name,
             lambda channel: channel.basic_consume(
-                queue_name,
-                wrapped_consumer,
-                consumer_tag=self._generate_ctag(queue_name),
+                queue_name, wrapped_consumer, consumer_tag=self._generate_ctag(queue_name),
             ),
         )
 
@@ -359,9 +357,7 @@ class TornadoQueueClient(SimpleQueueClient):
         self.ensure_queue(
             queue_name,
             lambda channel: channel.basic_consume(
-                queue_name,
-                wrapped_consumer,
-                consumer_tag=self._generate_ctag(queue_name),
+                queue_name, wrapped_consumer, consumer_tag=self._generate_ctag(queue_name),
             ),
         )
 

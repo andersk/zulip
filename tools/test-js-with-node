@@ -262,10 +262,7 @@ def run_tests_via_node_js() -> int:
 
 
 def check_line_coverage(
-    fn: str,
-    line_coverage: Dict[Any, Any],
-    line_mapping: Dict[Any, Any],
-    log: bool = True,
+    fn: str, line_coverage: Dict[Any, Any], line_mapping: Dict[Any, Any], log: bool = True,
 ) -> bool:
     missing_lines = []
     for line in line_coverage:

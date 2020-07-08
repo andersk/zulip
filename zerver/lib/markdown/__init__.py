@@ -1984,9 +1984,7 @@ class LinkInlineProcessor(markdown.inlinepatterns.LinkInlineProcessor):
         return el, match_start, index
 
 
-def get_sub_registry(
-    r: markdown.util.Registry, keys: List[str],
-) -> markdown.util.Registry:
+def get_sub_registry(r: markdown.util.Registry, keys: List[str]) -> markdown.util.Registry:
     # Registry is a new class added by py-markdown to replace Ordered List.
     # Since Registry doesn't support .keys(), it is easier to make a new
     # object instead of removing keys from the existing object.
@@ -2259,9 +2257,7 @@ def make_md_engine(realm_filters_key: int, email_gateway: bool) -> None:
 
 
 def build_engine(
-    realm_filters: List[Tuple[str, str, int]],
-    realm_filters_key: int,
-    email_gateway: bool,
+    realm_filters: List[Tuple[str, str, int]], realm_filters_key: int, email_gateway: bool,
 ) -> markdown.Markdown:
     engine = Markdown(
         realm_filters=realm_filters,

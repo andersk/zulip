@@ -296,16 +296,16 @@ class UserPresenceTests(ZulipTestCase):
         self.assertEqual(
             UserActivityInterval.objects.filter(user_profile=user_profile).count(), 2,
         )
-        interval = UserActivityInterval.objects.filter(
-            user_profile=user_profile,
-        ).order_by("start")[0]
+        interval = UserActivityInterval.objects.filter(user_profile=user_profile).order_by(
+            "start",
+        )[0]
         self.assertEqual(interval.start, time_zero)
         self.assertEqual(
             interval.end, second_time + UserActivityInterval.MIN_INTERVAL_LENGTH,
         )
-        interval = UserActivityInterval.objects.filter(
-            user_profile=user_profile,
-        ).order_by("start")[1]
+        interval = UserActivityInterval.objects.filter(user_profile=user_profile).order_by(
+            "start",
+        )[1]
         self.assertEqual(interval.start, third_time)
         self.assertEqual(
             interval.end, third_time + UserActivityInterval.MIN_INTERVAL_LENGTH,
@@ -428,9 +428,7 @@ class UserPresenceTests(ZulipTestCase):
     def test_same_realm(self) -> None:
         espuser = self.mit_user("espuser")
         self.login_user(espuser)
-        self.client_post(
-            "/json/users/me/presence", {"status": "idle"}, subdomain="zephyr",
-        )
+        self.client_post("/json/users/me/presence", {"status": "idle"}, subdomain="zephyr")
         self.logout()
 
         # Ensure we don't see hamlet@zulip.com information leakage
@@ -512,8 +510,7 @@ class SingleUserPresenceTests(ZulipTestCase):
         result = self.client_get("/json/users/othello@zulip.com/presence")
         result_dict = result.json()
         self.assertEqual(
-            set(result_dict["presence"].keys()),
-            {"ZulipAndroid", "website", "aggregated"},
+            set(result_dict["presence"].keys()), {"ZulipAndroid", "website", "aggregated"},
         )
         self.assertEqual(
             set(result_dict["presence"]["website"].keys()), {"status", "timestamp"},
@@ -615,9 +612,7 @@ class UserPresenceAggregationTests(ZulipTestCase):
     def test_aggregated_presense_idle(self) -> None:
         user = self.example_user("othello")
         validate_time = timezone_now()
-        result_dict = self._send_presence_for_aggregated_tests(
-            user, "idle", validate_time,
-        )
+        result_dict = self._send_presence_for_aggregated_tests(user, "idle", validate_time)
         self.assertDictEqual(
             result_dict["presence"]["aggregated"],
             {
@@ -642,9 +637,7 @@ class UserPresenceAggregationTests(ZulipTestCase):
                 {"status": "active"},
                 HTTP_USER_AGENT="ZulipTestDev/1.0",
             )
-        result_dict = self._send_presence_for_aggregated_tests(
-            user, "idle", validate_time,
-        )
+        result_dict = self._send_presence_for_aggregated_tests(user, "idle", validate_time)
         self.assertDictEqual(
             result_dict["presence"]["aggregated"],
             {

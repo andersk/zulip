@@ -87,9 +87,7 @@ class TrelloHookTests(WebhookTestCase):
         )
 
     def test_trello_webhook_when_card_was_created(self) -> None:
-        expected_message = (
-            "TomaszKolek created [New card](https://trello.com/c/5qrgGdD5)."
-        )
+        expected_message = "TomaszKolek created [New card](https://trello.com/c/5qrgGdD5)."
         self.send_and_test_stream_message(
             "creating_card", "Welcome Board", expected_message,
         )

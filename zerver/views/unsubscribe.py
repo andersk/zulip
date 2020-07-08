@@ -3,11 +3,7 @@ from typing import Callable
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 
-from confirmation.models import (
-    Confirmation,
-    ConfirmationKeyException,
-    get_object_from_key,
-)
+from confirmation.models import Confirmation, ConfirmationKeyException, get_object_from_key
 from zerver.context_processors import common_context
 from zerver.lib.actions import do_change_notification_settings
 from zerver.lib.send_email import clear_scheduled_emails

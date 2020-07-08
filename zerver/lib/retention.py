@@ -139,9 +139,7 @@ def run_archiving_in_chunks(
     while True:
         start_time = time.time()
         with transaction.atomic():
-            archive_transaction = ArchiveTransaction.objects.create(
-                type=type, realm=realm,
-            )
+            archive_transaction = ArchiveTransaction.objects.create(type=type, realm=realm)
             new_chunk = move_rows(
                 Message,
                 query,
@@ -374,9 +372,7 @@ def delete_expired_attachments(realm: Realm) -> None:
 
     if attachments_deleted > 0:
         logger.info(
-            "Cleaned up %s attachments for realm %s",
-            attachments_deleted,
-            realm.string_id,
+            "Cleaned up %s attachments for realm %s", attachments_deleted, realm.string_id,
         )
 
 
@@ -401,9 +397,7 @@ def archive_personal_and_huddle_messages(
     realm: Realm, chunk_size: int = MESSAGE_BATCH_SIZE,
 ) -> None:
     logger.info("Archiving personal and huddle messages for realm %s", realm.string_id)
-    message_count = move_expired_personal_and_huddle_messages_to_archive(
-        realm, chunk_size,
-    )
+    message_count = move_expired_personal_and_huddle_messages_to_archive(realm, chunk_size)
     logger.info("Done. Archived %s messages", message_count)
 
 

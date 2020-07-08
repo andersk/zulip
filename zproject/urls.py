@@ -173,9 +173,7 @@ v1_api_and_json_patterns = [
     ),
     # realm/deactivate -> zerver.views.deactivate_realm
     path(
-        "realm/deactivate",
-        rest_dispatch,
-        {"POST": "zerver.views.realm.deactivate_realm"},
+        "realm/deactivate", rest_dispatch, {"POST": "zerver.views.realm.deactivate_realm"},
     ),
     path(
         "realm/presence",
@@ -371,15 +369,11 @@ v1_api_and_json_patterns = [
     # typing -> zerver.views.typing
     # POST sends a typing notification event to recipients
     path(
-        "typing",
-        rest_dispatch,
-        {"POST": "zerver.views.typing.send_notification_backend"},
+        "typing", rest_dispatch, {"POST": "zerver.views.typing.send_notification_backend"},
     ),
     # user_uploads -> zerver.views.upload
     path(
-        "user_uploads",
-        rest_dispatch,
-        {"POST": "zerver.views.upload.upload_file_backend"},
+        "user_uploads", rest_dispatch, {"POST": "zerver.views.upload.upload_file_backend"},
     ),
     re_path(
         r"^user_uploads/(?P<realm_id_str>(\d*|unk))/(?P<filename>.*)$",
@@ -439,9 +433,7 @@ v1_api_and_json_patterns = [
         },
     ),
     # user_groups -> zerver.views.user_groups
-    path(
-        "user_groups", rest_dispatch, {"GET": "zerver.views.user_groups.get_user_group"},
-    ),
+    path("user_groups", rest_dispatch, {"GET": "zerver.views.user_groups.get_user_group"}),
     path(
         "user_groups/create",
         rest_dispatch,
@@ -556,9 +548,7 @@ v1_api_and_json_patterns = [
     path("streams", rest_dispatch, {"GET": "zerver.views.streams.get_streams_backend"}),
     # GET returns `stream_id`, stream name should be encoded in the url query (in `stream` param)
     path(
-        "get_stream_id",
-        rest_dispatch,
-        {"GET": "zerver.views.streams.json_get_stream_id"},
+        "get_stream_id", rest_dispatch, {"GET": "zerver.views.streams.json_get_stream_id"},
     ),
     # GET returns "stream info" (undefined currently?), HEAD returns whether stream exists (200 or 404)
     path(
@@ -885,9 +875,7 @@ i18n_urls = [
         name="zerver.views.registration.realm_redirect",
     ),
     # Realm Creation
-    path(
-        "new/", zerver.views.registration.create_realm, name="zerver.views.create_realm",
-    ),
+    path("new/", zerver.views.registration.create_realm, name="zerver.views.create_realm"),
     re_path(
         r"^new/(?P<creation_key>[\w]+)$",
         zerver.views.registration.create_realm,

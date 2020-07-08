@@ -194,9 +194,7 @@ def write_log_line(
             statsd.timing(
                 f"{statsd_path}.remote_cache.time", timedelta_ms(remote_cache_time_delta),
             )
-            statsd.incr(
-                f"{statsd_path}.remote_cache.querycount", remote_cache_count_delta,
-            )
+            statsd.incr(f"{statsd_path}.remote_cache.querycount", remote_cache_count_delta)
 
     startup_output = ""
     if "startup_time_delta" in log_data and log_data["startup_time_delta"] > 0.005:

@@ -391,12 +391,9 @@ class StripeTestCase(ZulipTestCase):
         self.next_month = datetime(2012, 2, 2, 3, 4, 5, tzinfo=timezone.utc)
         self.next_year = datetime(2013, 1, 2, 3, 4, 5, tzinfo=timezone.utc)
 
-    def get_signed_seat_count_from_response(
-        self, response: HttpResponse,
-    ) -> Optional[str]:
+    def get_signed_seat_count_from_response(self, response: HttpResponse) -> Optional[str]:
         match = re.search(
-            r"name=\"signed_seat_count\" value=\"(.+)\"",
-            response.content.decode("utf-8"),
+            r"name=\"signed_seat_count\" value=\"(.+)\"", response.content.decode("utf-8"),
         )
         return match.group(1) if match else None
 
@@ -1016,9 +1013,7 @@ class StripeTest(StripeTestCase):
             self.assertEqual(len(invoices), 1)
 
             with patch("corporate.lib.stripe.get_latest_seat_count", return_value=19):
-                update_license_ledger_if_needed(
-                    realm, add_months(free_trial_end_date, 10),
-                )
+                update_license_ledger_if_needed(realm, add_months(free_trial_end_date, 10))
             self.assertEqual(
                 LicenseLedger.objects.order_by("-id")
                 .values_list("licenses", "licenses_at_next_renewal")
@@ -1446,10 +1441,7 @@ class StripeTest(StripeTestCase):
                 del_args = []
                 upgrade_params["licenses"] = licenses
             response = self.upgrade(
-                invoice=invoice,
-                talk_to_stripe=False,
-                del_args=del_args,
-                **upgrade_params,
+                invoice=invoice, talk_to_stripe=False, del_args=del_args, **upgrade_params,
             )
             self.assert_json_error_contains(
                 response, f"at least {min_licenses_in_response} users",
@@ -1585,8 +1577,7 @@ class StripeTest(StripeTestCase):
 
         response = self.client_get("/billing/")
         self.assert_in_success_response(
-            ["Your organization has requested sponsored or discounted hosting."],
-            response,
+            ["Your organization has requested sponsored or discounted hosting."], response,
         )
 
         self.login_user(self.example_user("othello"))
@@ -1774,14 +1765,10 @@ class StripeTest(StripeTestCase):
         self.upgrade()
         # Create an open invoice
         stripe_customer_id = Customer.objects.first().stripe_customer_id
-        stripe.InvoiceItem.create(
-            amount=5000, currency="usd", customer=stripe_customer_id,
-        )
+        stripe.InvoiceItem.create(amount=5000, currency="usd", customer=stripe_customer_id)
         stripe_invoice = stripe.Invoice.create(customer=stripe_customer_id)
         stripe.Invoice.finalize_invoice(stripe_invoice)
-        RealmAuditLog.objects.filter(
-            event_type=RealmAuditLog.STRIPE_CARD_CHANGED,
-        ).delete()
+        RealmAuditLog.objects.filter(event_type=RealmAuditLog.STRIPE_CARD_CHANGED).delete()
 
         # Replace with an invalid card
         stripe_token = stripe_create_token(card_number="4000000000009987").id
@@ -2599,10 +2586,7 @@ class BillingHelpersTest(ZulipTestCase):
             ((True, CustomerPlan.MONTHLY, 85), (anchor, month_later, month_later, 120)),
             ((False, CustomerPlan.ANNUAL, None), (anchor, year_later, year_later, 8000)),
             ((False, CustomerPlan.ANNUAL, 85), (anchor, year_later, year_later, 1200)),
-            (
-                (False, CustomerPlan.MONTHLY, None),
-                (anchor, month_later, month_later, 800),
-            ),
+            ((False, CustomerPlan.MONTHLY, None), (anchor, month_later, month_later, 800)),
             ((False, CustomerPlan.MONTHLY, 85), (anchor, month_later, month_later, 120)),
             # test exact math of Decimals; 800 * (1 - 87.25) = 101.9999999..
             (
@@ -2842,8 +2826,7 @@ class InvoiceTest(StripeTestCase):
             self.upgrade()
         # Increase
         with patch(
-            "corporate.lib.stripe.get_latest_seat_count",
-            return_value=self.seat_count + 3,
+            "corporate.lib.stripe.get_latest_seat_count", return_value=self.seat_count + 3,
         ):
             update_license_ledger_if_needed(
                 get_realm("zulip"), self.now + timedelta(days=100),
@@ -2857,24 +2840,21 @@ class InvoiceTest(StripeTestCase):
             )
         # Increase, but not past high watermark
         with patch(
-            "corporate.lib.stripe.get_latest_seat_count",
-            return_value=self.seat_count + 1,
+            "corporate.lib.stripe.get_latest_seat_count", return_value=self.seat_count + 1,
         ):
             update_license_ledger_if_needed(
                 get_realm("zulip"), self.now + timedelta(days=300),
             )
         # Increase, but after renewal date, and below last year's high watermark
         with patch(
-            "corporate.lib.stripe.get_latest_seat_count",
-            return_value=self.seat_count + 2,
+            "corporate.lib.stripe.get_latest_seat_count", return_value=self.seat_count + 2,
         ):
             update_license_ledger_if_needed(
                 get_realm("zulip"), self.now + timedelta(days=400),
             )
         # Increase, but after event_time
         with patch(
-            "corporate.lib.stripe.get_latest_seat_count",
-            return_value=self.seat_count + 3,
+            "corporate.lib.stripe.get_latest_seat_count", return_value=self.seat_count + 3,
         ):
             update_license_ledger_if_needed(
                 get_realm("zulip"), self.now + timedelta(days=500),

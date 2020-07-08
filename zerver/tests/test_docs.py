@@ -32,9 +32,7 @@ class DocPageTest(ZulipTestCase):
         if response.get("Content-Type") == "application/json":
             content = ujson.loads(response.content)
             print()
-            print(
-                "======================================================================",
-            )
+            print("======================================================================")
             print("ERROR: {}".format(content.get("msg")))
             print()
 
@@ -182,9 +180,7 @@ class DocPageTest(ZulipTestCase):
     def test_portico_pages_open_graph_metadata(self) -> None:
         # Why Zulip
         url = "/why-zulip/"
-        title = (
-            '<meta property="og:title" content="Team chat with first-class threading">'
-        )
+        title = '<meta property="og:title" content="Team chat with first-class threading">'
         description = (
             '<meta property="og:description" content="Most team chats are overwhelming'
         )

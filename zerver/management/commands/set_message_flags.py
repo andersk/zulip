@@ -88,9 +88,7 @@ class Command(ZulipBaseCommand):
 
         if not options["for_real"]:
             logging.info("Updating %s by %s %s", mids, op, flag)
-            logging.info(
-                "Dry run completed. Run with --for-real to change message flags.",
-            )
+            logging.info("Dry run completed. Run with --for-real to change message flags.")
             raise CommandError
 
         utils.run_in_batches(mids, 400, do_update, sleep_time=3)

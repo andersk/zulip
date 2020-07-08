@@ -93,9 +93,7 @@ def create_stream_if_needed(
         if stream.is_public():
             send_stream_creation_event(stream, active_non_guest_user_ids(stream.realm_id))
         else:
-            realm_admin_ids = [
-                user.id for user in stream.realm.get_admin_users_and_bots()
-            ]
+            realm_admin_ids = [user.id for user in stream.realm.get_admin_users_and_bots()]
             send_stream_creation_event(stream, realm_admin_ids)
 
         event_time = timezone_now()
@@ -126,9 +124,7 @@ def create_streams_if_needed(
             stream_post_policy=stream_dict.get(
                 "stream_post_policy", Stream.STREAM_POST_POLICY_EVERYONE,
             ),
-            history_public_to_subscribers=stream_dict.get(
-                "history_public_to_subscribers",
-            ),
+            history_public_to_subscribers=stream_dict.get("history_public_to_subscribers"),
             stream_description=stream_dict.get("description", ""),
             message_retention_days=stream_dict.get("message_retention_days", None),
             acting_user=acting_user,
@@ -154,9 +150,7 @@ def check_stream_name(stream_name: str) -> None:
     for i in stream_name:
         if ord(i) == 0:
             raise JsonableError(
-                _("Stream name '{}' contains NULL (0x00) characters.").format(
-                    stream_name,
-                ),
+                _("Stream name '{}' contains NULL (0x00) characters.").format(stream_name),
             )
 
 
@@ -183,9 +177,7 @@ def access_stream_for_send_message(
     ):
         pass
     elif stream.stream_post_policy == Stream.STREAM_POST_POLICY_ADMINS:
-        raise JsonableError(
-            _("Only organization administrators can send to this stream."),
-        )
+        raise JsonableError(_("Only organization administrators can send to this stream."))
     elif stream.stream_post_policy == Stream.STREAM_POST_POLICY_RESTRICT_NEW_MEMBERS:
         if sender.is_bot and (
             sender.bot_owner is not None and sender.bot_owner.is_new_member
@@ -425,9 +417,7 @@ def can_access_stream_history(user_profile: UserProfile, stream: Stream) -> bool
     return False
 
 
-def can_access_stream_history_by_name(
-    user_profile: UserProfile, stream_name: str,
-) -> bool:
+def can_access_stream_history_by_name(user_profile: UserProfile, stream_name: str) -> bool:
     try:
         stream = get_stream(stream_name, user_profile.realm)
     except Stream.DoesNotExist:
@@ -528,9 +518,7 @@ def list_to_streams(
         elif not autocreate:
             raise JsonableError(
                 _("Stream(s) ({}) do not exist").format(
-                    ", ".join(
-                        stream_dict["name"] for stream_dict in missing_stream_dicts
-                    ),
+                    ", ".join(stream_dict["name"] for stream_dict in missing_stream_dicts),
                 ),
             )
         elif message_retention_days_not_none:

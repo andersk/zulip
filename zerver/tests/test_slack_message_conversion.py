@@ -72,12 +72,7 @@ class SlackMessageConversion(ZulipTestCase):
                 "is_mirror_dummy": False,
                 "real_name": "John Doe",
             },
-            {
-                "id": "U09TYF5Sk",
-                "name": "Jane",
-                "is_mirror_dummy": False,
-                "deleted": True,
-            },
+            {"id": "U09TYF5Sk", "name": "Jane", "is_mirror_dummy": False, "deleted": True},
         ]  # Deleted users don't have 'real_name' key in Slack
         channel_map = {"general": ("C5Z73A7RA", 137)}
         message = "Hi <@U08RGD1RD|john>: How are you? <#C5Z73A7RA|general>"

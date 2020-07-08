@@ -165,9 +165,7 @@ class UnreadCountTests(ZulipTestCase):
     def test_new_message(self) -> None:
         self.login("hamlet")
         content = "Test message for unset read bit"
-        last_msg = self.send_stream_message(
-            self.example_user("hamlet"), "Verona", content,
-        )
+        last_msg = self.send_stream_message(self.example_user("hamlet"), "Verona", content)
         user_messages = list(UserMessage.objects.filter(message=last_msg))
         self.assertEqual(len(user_messages) > 0, True)
         for um in user_messages:
@@ -251,9 +249,7 @@ class UnreadCountTests(ZulipTestCase):
             else:
                 self.assertFalse(msg.flags.read)
 
-        unrelated_messages = list(
-            UserMessage.objects.filter(message=unrelated_message_id),
-        )
+        unrelated_messages = list(UserMessage.objects.filter(message=unrelated_message_id))
         for msg in unrelated_messages:
             if msg.user_profile.email == hamlet.email:
                 self.assertFalse(msg.flags.read)
@@ -316,9 +312,7 @@ class UnreadCountTests(ZulipTestCase):
             if msg.user_profile_id == user_profile.id:
                 self.assertTrue(msg.flags.read)
 
-        unrelated_messages = list(
-            UserMessage.objects.filter(message=unrelated_message_id),
-        )
+        unrelated_messages = list(UserMessage.objects.filter(message=unrelated_message_id))
         for msg in unrelated_messages:
             if msg.user_profile_id == user_profile.id:
                 self.assertFalse(msg.flags.read)
@@ -684,9 +678,7 @@ class GetUnreadMsgsTest(ZulipTestCase):
 
             # And since it was not sent by a human, it should not
             # be read, not even by the sender (Hamlet).
-            um = UserMessage.objects.get(
-                user_profile_id=hamlet.id, message_id=message_id,
-            )
+            um = UserMessage.objects.get(user_profile_id=hamlet.id, message_id=message_id)
             self.assertFalse(um.flags.read)
 
             return message
@@ -770,9 +762,7 @@ class GetUnreadMsgsTest(ZulipTestCase):
         self.mute_topic(user_profile, "Denmark", "muted-topic")
 
         stream_message_id = self.send_stream_message(sender, "Denmark", "hello")
-        muted_stream_message_id = self.send_stream_message(
-            sender, "Muted Stream", "hello",
-        )
+        muted_stream_message_id = self.send_stream_message(sender, "Muted Stream", "hello")
         muted_topic_message_id = self.send_stream_message(
             sender, "Denmark", topic_name="muted-topic", content="hello",
         )
@@ -795,9 +785,7 @@ class GetUnreadMsgsTest(ZulipTestCase):
 
         unread_pm = result["pms"][0]
         self.assertEqual(unread_pm["sender_id"], sender_id)
-        self.assertEqual(
-            unread_pm["unread_message_ids"], [pm1_message_id, pm2_message_id],
-        )
+        self.assertEqual(unread_pm["unread_message_ids"], [pm1_message_id, pm2_message_id])
         self.assertTrue("sender_ids" not in unread_pm)
 
         unread_stream = result["streams"][0]
@@ -1095,9 +1083,7 @@ class MessageAccessTests(ZulipTestCase):
         self.assert_json_error(result, "Invalid message(s)")
 
         stream_name = "private_stream_2"
-        self.make_stream(
-            stream_name, invite_only=True, history_public_to_subscribers=True,
-        )
+        self.make_stream(stream_name, invite_only=True, history_public_to_subscribers=True)
         self.subscribe(self.example_user("hamlet"), stream_name)
         self.login("hamlet")
         message_ids = [

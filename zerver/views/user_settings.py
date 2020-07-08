@@ -249,9 +249,7 @@ def json_change_notify_settings(
     ),
     wildcard_mentions_notify: Optional[bool] = REQ(validator=check_bool, default=None),
     notification_sound: Optional[str] = REQ(validator=check_string, default=None),
-    enable_desktop_notifications: Optional[bool] = REQ(
-        validator=check_bool, default=None,
-    ),
+    enable_desktop_notifications: Optional[bool] = REQ(validator=check_bool, default=None),
     enable_sounds: Optional[bool] = REQ(validator=check_bool, default=None),
     enable_offline_email_notifications: Optional[bool] = REQ(
         validator=check_bool, default=None,
@@ -324,9 +322,7 @@ def set_avatar_backend(request: HttpRequest, user_profile: UserProfile) -> HttpR
     return json_success(json_result)
 
 
-def delete_avatar_backend(
-    request: HttpRequest, user_profile: UserProfile,
-) -> HttpResponse:
+def delete_avatar_backend(request: HttpRequest, user_profile: UserProfile) -> HttpResponse:
     if avatar_changes_disabled(user_profile.realm) and not user_profile.is_realm_admin:
         return json_error(AVATAR_CHANGES_DISABLED_ERROR)
 

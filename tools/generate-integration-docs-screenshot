@@ -91,9 +91,7 @@ def create_integration_bot(
 
 def create_integration_stream(integration: WebhookIntegration, bot: UserProfile) -> None:
     assert isinstance(bot.bot_owner, UserProfile)
-    stream, created = create_stream_if_needed(
-        bot.bot_owner.realm, integration.stream_name,
-    )
+    stream, created = create_stream_if_needed(bot.bot_owner.realm, integration.stream_name)
     bulk_add_subscriptions([stream], [bot, bot.bot_owner], from_stream_creation=created)
 
 
@@ -148,9 +146,9 @@ def send_bot_payload_message(
     headers = get_requests_headers(integration.name, fixture_name)
     headers.update(config.custom_headers)
     if config.use_basic_auth:
-        credentials = base64.b64encode(
-            f"{bot.email}:{bot.api_key}".encode("utf8"),
-        ).decode("utf8")
+        credentials = base64.b64encode(f"{bot.email}:{bot.api_key}".encode("utf8")).decode(
+            "utf8",
+        )
         auth = f"basic {credentials}"
         headers.update(dict(Authorization=auth))
 

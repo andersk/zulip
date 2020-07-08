@@ -202,10 +202,7 @@ class SlackImporter(ZulipTestCase):
                 user="U061A3E0G",
             ),
             call(
-                "https://slack.com/api/team.info",
-                "team",
-                token="token",
-                team="T6LARQE2Z",
+                "https://slack.com/api/team.info", "team", token="token", team="T6LARQE2Z",
             ),
             call(
                 "https://slack.com/api/users.info",
@@ -214,10 +211,7 @@ class SlackImporter(ZulipTestCase):
                 user="U061A8H1G",
             ),
             call(
-                "https://slack.com/api/team.info",
-                "team",
-                token="token",
-                team="T7KJRQE8Y",
+                "https://slack.com/api/team.info", "team", token="token", team="T7KJRQE8Y",
             ),
         ]
         api_mock.assert_has_calls(api_calls, any_order=True)
@@ -786,26 +780,12 @@ class SlackImporter(ZulipTestCase):
     ) -> None:
 
         user_data = [
-            {
-                "id": "U066MTL5U",
-                "name": "john doe",
-                "deleted": False,
-                "real_name": "John",
-            },
-            {
-                "id": "U061A5N1G",
-                "name": "jane doe",
-                "deleted": False,
-                "real_name": "Jane",
-            },
+            {"id": "U066MTL5U", "name": "john doe", "deleted": False, "real_name": "John"},
+            {"id": "U061A5N1G", "name": "jane doe", "deleted": False, "real_name": "Jane"},
             {"id": "U061A1R2R", "name": "jon", "deleted": False, "real_name": "Jon"},
         ]
 
-        slack_user_id_to_zulip_user_id = {
-            "U066MTL5U": 5,
-            "U061A5N1G": 24,
-            "U061A1R2R": 43,
-        }
+        slack_user_id_to_zulip_user_id = {"U066MTL5U": 5, "U061A5N1G": 24, "U061A1R2R": 43}
 
         reactions = [{"name": "grinning", "users": ["U061A5N1G"], "count": 1}]
 

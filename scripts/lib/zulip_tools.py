@@ -355,12 +355,7 @@ def generate_sha1sum_emoji(zulip_path: str) -> str:
     ZULIP_EMOJI_DIR = os.path.join(zulip_path, "tools", "setup", "emoji")
     sha = hashlib.sha1()
 
-    filenames = [
-        "emoji_map.json",
-        "build_emoji",
-        "emoji_setup_utils.py",
-        "emoji_names.py",
-    ]
+    filenames = ["emoji_map.json", "build_emoji", "emoji_setup_utils.py", "emoji_names.py"]
 
     for filename in filenames:
         file_path = os.path.join(ZULIP_EMOJI_DIR, filename)
@@ -456,9 +451,7 @@ def os_families() -> Set[str]:
     return {distro_info["ID"], *distro_info.get("ID_LIKE", "").split()}
 
 
-def files_and_string_digest(
-    filenames: Sequence[str], extra_strings: Sequence[str],
-) -> str:
+def files_and_string_digest(filenames: Sequence[str], extra_strings: Sequence[str]) -> str:
     # see is_digest_obsolete for more context
     sha1sum = hashlib.sha1()
     for fn in filenames:

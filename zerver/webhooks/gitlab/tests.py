@@ -101,9 +101,7 @@ class GitlabHookTests(WebhookTestCase):
         expected_message = "Tomasz Kolek created [Issue #1](https://gitlab.com/tomaszkolek0/my-awesome-project/issues/1):\n\n~~~ quote\nIssue description\n~~~"
 
         self.send_and_test_stream_message(
-            "issue_hook__issue_created_without_assignee",
-            expected_topic,
-            expected_message,
+            "issue_hook__issue_created_without_assignee", expected_topic, expected_message,
         )
 
     def test_create_confidential_issue_without_assignee_event_message(self) -> None:
@@ -122,9 +120,7 @@ class GitlabHookTests(WebhookTestCase):
         expected_message = "[[my-awesome-project](https://gitlab.com/tomaszkolek0/my-awesome-project)] Tomasz Kolek created [Issue #1 Issue title](https://gitlab.com/tomaszkolek0/my-awesome-project/issues/1):\n\n~~~ quote\nIssue description\n~~~"
 
         self.send_and_test_stream_message(
-            "issue_hook__issue_created_without_assignee",
-            expected_topic,
-            expected_message,
+            "issue_hook__issue_created_without_assignee", expected_topic, expected_message,
         )
 
     def test_create_issue_with_assignee_event_message(self) -> None:
@@ -370,9 +366,7 @@ class GitlabHookTests(WebhookTestCase):
         expected_message = "Eeshan Garg reopened [MR #1](https://gitlab.com/eeshangarg/my-awesome-project/merge_requests/1)."
 
         self.send_and_test_stream_message(
-            "merge_request_hook__merge_request_reopened",
-            expected_topic,
-            expected_message,
+            "merge_request_hook__merge_request_reopened", expected_topic, expected_message,
         )
 
     def test_merge_request_approved_event_message(self) -> None:
@@ -380,9 +374,7 @@ class GitlabHookTests(WebhookTestCase):
         expected_message = "Eeshan Garg approved [MR #1](https://gitlab.com/eeshangarg/my-awesome-project/merge_requests/1)."
 
         self.send_and_test_stream_message(
-            "merge_request_hook__merge_request_approved",
-            expected_topic,
-            expected_message,
+            "merge_request_hook__merge_request_approved", expected_topic, expected_message,
         )
 
     def test_merge_request_updated_event_message(self) -> None:

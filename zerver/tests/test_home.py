@@ -478,9 +478,7 @@ class HomeTest(ZulipTestCase):
             page_params["realm_notifications_stream_id"], get_stream("Denmark", realm).id,
         )
 
-    def create_bot(
-        self, owner: UserProfile, bot_email: str, bot_name: str,
-    ) -> UserProfile:
+    def create_bot(self, owner: UserProfile, bot_email: str, bot_name: str) -> UserProfile:
         user = do_create_user(
             email=bot_email,
             password="123",
@@ -801,10 +799,7 @@ class HomeTest(ZulipTestCase):
         )
 
         do_change_logo_source(
-            user_profile.realm,
-            Realm.LOGO_UPLOADED,
-            night=False,
-            acting_user=user_profile,
+            user_profile.realm, Realm.LOGO_UPLOADED, night=False, acting_user=user_profile,
         )
         page_params = {"color_scheme": user_profile.COLOR_SCHEME_NIGHT}
         add_realm_logo_fields(page_params, user_profile.realm)

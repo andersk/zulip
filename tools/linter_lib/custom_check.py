@@ -715,9 +715,7 @@ html_rules: List["Rule"] = whitespace_rules + prose_style_rules + [
     {
         "pattern": "title='[^{]",
         "description": "`title` value should be translatable.",
-        "good_lines": [
-            '<link rel="author" title="{{ _(\'About these documents\') }}" />',
-        ],
+        "good_lines": ['<link rel="author" title="{{ _(\'About these documents\') }}" />'],
         "bad_lines": ["<p title='foo'></p>"],
     },
     {
@@ -760,10 +758,7 @@ html_rules: List["Rule"] = whitespace_rules + prose_style_rules + [
         "description": "Don't use inline event handlers (onclick=, etc. attributes) in HTML. Instead,"
         "attach a jQuery event handler ($('#foo').on('click', function () {...})) when "
         "the DOM is ready (inside a $(function () {...}) block).",
-        "exclude": {
-            "templates/zerver/dev_login.html",
-            "templates/corporate/upgrade.html",
-        },
+        "exclude": {"templates/zerver/dev_login.html", "templates/corporate/upgrade.html"},
         "good_lines": ["($('#foo').on('click', function () {}"],
         "bad_lines": [
             "<button id='foo' onclick='myFunction()'>Foo</button>",

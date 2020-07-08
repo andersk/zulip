@@ -261,9 +261,7 @@ def maybe_send_to_registration(
     return render(request, "zerver/accounts_home.html", context=context)
 
 
-def register_remote_user(
-    request: HttpRequest, result: ExternalAuthResult,
-) -> HttpResponse:
+def register_remote_user(request: HttpRequest, result: ExternalAuthResult) -> HttpResponse:
     # We have verified the user controls an email address, but
     # there's no associated Zulip user account.  Consider sending
     # the request to registration.
@@ -808,9 +806,7 @@ def login_page(
     if is_subdomain_root_or_alias(request) and settings.ROOT_DOMAIN_LANDING_PAGE:
         redirect_url = reverse("zerver.views.registration.realm_redirect")
         if request.GET:
-            redirect_url = add_query_to_redirect_url(
-                redirect_url, request.GET.urlencode(),
-            )
+            redirect_url = add_query_to_redirect_url(redirect_url, request.GET.urlencode())
         return HttpResponseRedirect(redirect_url)
 
     realm = get_realm_from_request(request)
@@ -951,9 +947,7 @@ def api_dev_fetch_api_key(request: HttpRequest, username: str = REQ()) -> HttpRe
         )
     if user_profile is None:
         return json_error(
-            _("This user is not registered."),
-            data={"reason": "unregistered"},
-            status=403,
+            _("This user is not registered."), data={"reason": "unregistered"}, status=403,
         )
     do_login(request, user_profile)
     api_key = get_api_key(user_profile)

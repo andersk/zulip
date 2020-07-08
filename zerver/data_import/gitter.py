@@ -330,9 +330,7 @@ def do_convert_data(gitter_data_file: str, output_dir: str, threads: int = 6) ->
         domain_name, gitter_data, realm_subdomain,
     )
 
-    subscriber_map = make_subscriber_map(
-        zerver_subscription=realm["zerver_subscription"],
-    )
+    subscriber_map = make_subscriber_map(zerver_subscription=realm["zerver_subscription"])
 
     # For user mentions
     user_short_name_to_full_name = {}

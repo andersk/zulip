@@ -212,9 +212,7 @@ def users_to_zerver_userprofile(
     # We have only one primary owner in slack, see link
     # https://get.slack.help/hc/en-us/articles/201912948-Owners-and-Administrators
     # This is to import the primary owner first from all the users
-    user_id_count = (
-        custom_profile_field_value_id_count
-    ) = custom_profile_field_id_count = 0
+    user_id_count = custom_profile_field_value_id_count = custom_profile_field_id_count = 0
     primary_owner_id = user_id_count
     user_id_count += 1
 
@@ -378,8 +376,7 @@ def build_customprofilefields_values(
 
 
 def process_customprofilefields(
-    customprofilefield: List[ZerverFieldsT],
-    customprofilefield_value: List[ZerverFieldsT],
+    customprofilefield: List[ZerverFieldsT], customprofilefield_value: List[ZerverFieldsT],
 ) -> None:
     for field in customprofilefield:
         for field_value in customprofilefield_value:
@@ -739,9 +736,7 @@ def convert_slack_workspace_messages(
 
     dump_file_id = 1
 
-    subscriber_map = make_subscriber_map(
-        zerver_subscription=realm["zerver_subscription"],
-    )
+    subscriber_map = make_subscriber_map(zerver_subscription=realm["zerver_subscription"])
 
     while True:
         message_data = []
@@ -914,9 +909,7 @@ def channel_message_to_zerver_message(
             ]
         elif "mpim_name" in message:
             is_private = True
-            recipient_id = slack_recipient_name_to_zulip_recipient_id[
-                message["mpim_name"]
-            ]
+            recipient_id = slack_recipient_name_to_zulip_recipient_id[message["mpim_name"]]
         elif "pm_name" in message:
             is_private = True
             sender = get_message_sending_user(message)
@@ -1078,9 +1071,7 @@ def process_message_files(
             ]
             file_user_email = get_user_email(file_user[0], domain_name)
 
-            s3_path, content_for_link = get_attachment_path_and_content(
-                fileinfo, realm_id,
-            )
+            s3_path, content_for_link = get_attachment_path_and_content(fileinfo, realm_id)
             markdown_links.append(content_for_link)
 
             build_uploads(

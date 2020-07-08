@@ -148,9 +148,7 @@ class RedirectAndLogIntoSubdomainTestCase(ZulipTestCase):
             full_name_validated=True,
             multiuse_object_key="key",
         )
-        response = redirect_and_log_into_subdomain(
-            ExternalAuthResult(data_dict=data_dict),
-        )
+        response = redirect_and_log_into_subdomain(ExternalAuthResult(data_dict=data_dict))
         data = load_subdomain_token(response)
         self.assertDictEqual(
             data,
@@ -288,9 +286,7 @@ class AddNewUserHistoryTest(ZulipTestCase):
         new_messages_count = message_stream_count(user_profile)
         self.assertEqual(new_messages_count, old_messages_count + 1)
 
-        recipient = Recipient.objects.get(
-            type_id=user_profile.id, type=Recipient.PERSONAL,
-        )
+        recipient = Recipient.objects.get(type_id=user_profile.id, type=Recipient.PERSONAL)
         message = most_recent_message(user_profile)
         self.assertEqual(message.recipient, recipient)
 
@@ -1635,9 +1631,7 @@ so we didn't send them an invitation. We did send invitations to everyone else!"
                 "referrer_realm_name": referrer.realm.name,
             },
         )
-        with self.settings(
-            EMAIL_BACKEND="django.core.mail.backends.console.EmailBackend",
-        ):
+        with self.settings(EMAIL_BACKEND="django.core.mail.backends.console.EmailBackend"):
             email = data["email"]
             send_future_email(
                 "zerver/emails/invitation_reminder",
@@ -1657,9 +1651,7 @@ so we didn't send them an invitation. We did send invitations to everyone else!"
         self.assertIn(FromAddress.NOREPLY, outbox[-1].from_email)
 
         # Now verify that signing up clears invite_reminder emails
-        with self.settings(
-            EMAIL_BACKEND="django.core.mail.backends.console.EmailBackend",
-        ):
+        with self.settings(EMAIL_BACKEND="django.core.mail.backends.console.EmailBackend"):
             email = data["email"]
             send_future_email(
                 "zerver/emails/invitation_reminder",
@@ -1688,18 +1680,14 @@ so we didn't send them an invitation. We did send invitations to everyone else!"
         with self.settings(INVITATION_LINK_VALIDITY_DAYS=4):
             self.invite("alice@zulip.com", ["Denmark"])
         self.assertEqual(
-            ScheduledEmail.objects.filter(
-                type=ScheduledEmail.INVITATION_REMINDER,
-            ).count(),
+            ScheduledEmail.objects.filter(type=ScheduledEmail.INVITATION_REMINDER).count(),
             1,
         )
         # Check invitation reminder email is not scheduled with 3 day link expiry
         with self.settings(INVITATION_LINK_VALIDITY_DAYS=3):
             self.invite("bob@zulip.com", ["Denmark"])
         self.assertEqual(
-            ScheduledEmail.objects.filter(
-                type=ScheduledEmail.INVITATION_REMINDER,
-            ).count(),
+            ScheduledEmail.objects.filter(type=ScheduledEmail.INVITATION_REMINDER).count(),
             1,
         )
 
@@ -1721,9 +1709,7 @@ so we didn't send them an invitation. We did send invitations to everyone else!"
         self.assertEqual(cm.exception.error_type, ConfirmationKeyException.DOES_NOT_EXIST)
 
         # Verify that using the wrong type doesn't work in the main confirm code path
-        email_change_url = create_confirmation_link(
-            prereg_user, Confirmation.EMAIL_CHANGE,
-        )
+        email_change_url = create_confirmation_link(prereg_user, Confirmation.EMAIL_CHANGE)
         email_change_key = email_change_url.split("/")[-1]
         url = "/accounts/do_confirm/" + email_change_key
         result = self.client_get(url)
@@ -1909,9 +1895,7 @@ class InvitationsTestCase(InviteUserBase):
             email="TestOne@zulip.com", referred_by=user_profile,
         )
         prereg_user_one.save()
-        expired_datetime = timezone_now() - datetime.timedelta(
-            days=(days_to_activate + 1),
-        )
+        expired_datetime = timezone_now() - datetime.timedelta(days=(days_to_activate + 1))
         prereg_user_two = PreregistrationUser(
             email="TestTwo@zulip.com", referred_by=user_profile,
         )
@@ -2207,9 +2191,7 @@ class InvitationsTestCase(InviteUserBase):
         prereg_user_one = PreregistrationUser(email=invitee, referred_by=user_profile)
         prereg_user_one.save()
         prereg_user = PreregistrationUser.objects.get(email=invitee)
-        error_result = self.client_post(
-            "/json/invites/" + str(prereg_user.id) + "/resend",
-        )
+        error_result = self.client_post("/json/invites/" + str(prereg_user.id) + "/resend")
         self.assert_json_error(error_result, "Must be an organization administrator")
 
     def test_resend_owner_invitation(self) -> None:
@@ -2235,9 +2217,7 @@ class InvitationsTestCase(InviteUserBase):
         # Test only organization owners can resend owner invitation.
         self.login("iago")
         prereg_user = PreregistrationUser.objects.get(email=invitee)
-        error_result = self.client_post(
-            "/json/invites/" + str(prereg_user.id) + "/resend",
-        )
+        error_result = self.client_post("/json/invites/" + str(prereg_user.id) + "/resend")
         self.assert_json_error(error_result, "Must be an organization owner")
 
         self.login("desdemona")
@@ -2264,9 +2244,7 @@ class InvitationsTestCase(InviteUserBase):
             email="email", referred_by=inviter, realm=inviter.realm,
         )
         self.login("iago")
-        error_result = self.client_post(
-            "/json/invites/" + str(prereg_user.id) + "/resend",
-        )
+        error_result = self.client_post("/json/invites/" + str(prereg_user.id) + "/resend")
         self.assert_json_error(error_result, "No such invitation")
         error_result = self.client_delete("/json/invites/" + str(prereg_user.id))
         self.assert_json_error(error_result, "No such invitation")
@@ -2645,9 +2623,7 @@ class RealmCreationTest(ZulipTestCase):
         # Create new realm with the email
         result = self.client_post("/new/", {"email": email})
         self.assertEqual(result.status_code, 302)
-        self.assertTrue(
-            result["Location"].endswith(f"/accounts/new/send_confirm/{email}"),
-        )
+        self.assertTrue(result["Location"].endswith(f"/accounts/new/send_confirm/{email}"))
         result = self.client_get(result["Location"])
         self.assert_in_response("Check your email so we can get started.", result)
 
@@ -2708,9 +2684,7 @@ class RealmCreationTest(ZulipTestCase):
     def test_create_realm_existing_email(self) -> None:
         self.check_able_to_create_realm("hamlet@zulip.com")
 
-    @override_settings(
-        AUTHENTICATION_BACKENDS=("zproject.backends.ZulipLDAPAuthBackend",),
-    )
+    @override_settings(AUTHENTICATION_BACKENDS=("zproject.backends.ZulipLDAPAuthBackend",))
     def test_create_realm_ldap_email(self) -> None:
         self.init_default_ldap_database()
 
@@ -2753,9 +2727,7 @@ class RealmCreationTest(ZulipTestCase):
         # Create new realm with the email
         result = self.client_post("/new/", {"email": email})
         self.assertEqual(result.status_code, 302)
-        self.assertTrue(
-            result["Location"].endswith(f"/accounts/new/send_confirm/{email}"),
-        )
+        self.assertTrue(result["Location"].endswith(f"/accounts/new/send_confirm/{email}"))
         result = self.client_get(result["Location"])
         self.assert_in_response("Check your email so we can get started.", result)
 
@@ -2798,9 +2770,7 @@ class RealmCreationTest(ZulipTestCase):
 
         result = self.client_post("/new/", {"email": email})
         self.assertEqual(result.status_code, 302)
-        self.assertTrue(
-            result["Location"].endswith(f"/accounts/new/send_confirm/{email}"),
-        )
+        self.assertTrue(result["Location"].endswith(f"/accounts/new/send_confirm/{email}"))
         result = self.client_get(result["Location"])
         self.assert_in_response("Check your email so we can get started.", result)
 
@@ -3207,9 +3177,7 @@ class UserSignUpTest(InviteUserBase):
                 "from_confirmation": "1",
             },
         )
-        self.assert_in_success_response(
-            ["We just need you to do one last thing."], result,
-        )
+        self.assert_in_success_response(["We just need you to do one last thing."], result)
 
         # Verify that the user is asked for name and password
         self.assert_in_success_response(["id_password", "id_full_name"], result)
@@ -3258,9 +3226,7 @@ class UserSignUpTest(InviteUserBase):
                 "from_confirmation": "1",
             },
         )
-        self.assert_in_success_response(
-            ["We just need you to do one last thing."], result,
-        )
+        self.assert_in_success_response(["We just need you to do one last thing."], result)
 
     def test_signup_with_weak_password(self) -> None:
         """
@@ -3445,9 +3411,7 @@ class UserSignUpTest(InviteUserBase):
         hamlet_in_zulip.tutorial_status = UserProfile.TUTORIAL_FINISHED
         hamlet_in_zulip.save()
 
-        result = self.client_post(
-            "/accounts/home/", {"email": email}, subdomain=subdomain,
-        )
+        result = self.client_post("/accounts/home/", {"email": email}, subdomain=subdomain)
         self.assertEqual(result.status_code, 302)
         result = self.client_get(result["Location"], subdomain=subdomain)
 
@@ -3486,9 +3450,7 @@ class UserSignUpTest(InviteUserBase):
         hamlet_in_zulip.tutorial_status = UserProfile.TUTORIAL_FINISHED
         hamlet_in_zulip.save()
 
-        result = self.client_post(
-            "/accounts/home/", {"email": email}, subdomain=subdomain,
-        )
+        result = self.client_post("/accounts/home/", {"email": email}, subdomain=subdomain)
         self.assertEqual(result.status_code, 302)
         result = self.client_get(result["Location"], subdomain=subdomain)
 
@@ -3644,8 +3606,7 @@ class UserSignUpTest(InviteUserBase):
         email = "user@acme.com"
         form = HomepageForm({"email": email}, realm=None)
         self.assertIn(
-            "organization you are trying to join using {} does "
-            "not exist".format(email),
+            "organization you are trying to join using {} does " "not exist".format(email),
             form.errors["email"][0],
         )
 
@@ -3850,11 +3811,7 @@ class UserSignUpTest(InviteUserBase):
 
             # Full name should be set from LDAP
             self.assert_in_success_response(
-                [
-                    "We just need you to do one last thing.",
-                    full_name,
-                    "newuser@zulip.com",
-                ],
+                ["We just need you to do one last thing.", full_name, "newuser@zulip.com"],
                 result,
             )
 
@@ -3984,9 +3941,7 @@ class UserSignUpTest(InviteUserBase):
             )
             self.assertEqual(phone_number_field_value.value, "a-new-number")
 
-    @override_settings(
-        AUTHENTICATION_BACKENDS=("zproject.backends.ZulipLDAPAuthBackend",),
-    )
+    @override_settings(AUTHENTICATION_BACKENDS=("zproject.backends.ZulipLDAPAuthBackend",))
     def test_ldap_registration_multiple_realms(self) -> None:
         password = self.ldap_password("newuser")
         email = "newuser@zulip.com"
@@ -4165,8 +4120,7 @@ class UserSignUpTest(InviteUserBase):
                 )
                 self.assertEqual(result.status_code, 200)
                 mock_warning.assert_called_once_with(
-                    "New account email %s could not be found in LDAP",
-                    "newuser@zulip.com",
+                    "New account email %s could not be found in LDAP", "newuser@zulip.com",
                 )
 
             result = self.submit_reg_form_for_user(
@@ -4335,9 +4289,7 @@ class UserSignUpTest(InviteUserBase):
     )
     def test_ldap_invite_user_as_admin(self) -> None:
         self.ldap_invite_and_signup_as(PreregistrationUser.INVITE_AS["REALM_ADMIN"])
-        user_profile = UserProfile.objects.get(
-            delivery_email=self.nonreg_email("newuser"),
-        )
+        user_profile = UserProfile.objects.get(delivery_email=self.nonreg_email("newuser"))
         self.assertTrue(user_profile.is_realm_admin)
 
     @override_settings(
@@ -4348,9 +4300,7 @@ class UserSignUpTest(InviteUserBase):
     )
     def test_ldap_invite_user_as_guest(self) -> None:
         self.ldap_invite_and_signup_as(PreregistrationUser.INVITE_AS["GUEST_USER"])
-        user_profile = UserProfile.objects.get(
-            delivery_email=self.nonreg_email("newuser"),
-        )
+        user_profile = UserProfile.objects.get(delivery_email=self.nonreg_email("newuser"))
         self.assertTrue(user_profile.is_guest)
 
     @override_settings(
@@ -4372,9 +4322,7 @@ class UserSignUpTest(InviteUserBase):
             PreregistrationUser.INVITE_AS["REALM_ADMIN"], streams=[stream_name],
         )
 
-        user_profile = UserProfile.objects.get(
-            delivery_email=self.nonreg_email("newuser"),
-        )
+        user_profile = UserProfile.objects.get(delivery_email=self.nonreg_email("newuser"))
         self.assertTrue(user_profile.is_realm_admin)
         sub = get_stream_subscriptions_for_user(user_profile).filter(
             recipient__type_id=stream.id,
@@ -4973,10 +4921,7 @@ class RealmRedirectTest(ZulipTestCase):
     def test_realm_redirect_with_next_param(self) -> None:
         result = self.client_get("/accounts/go/?next=billing")
         self.assert_in_success_response(
-            [
-                "Enter your organization's Zulip URL",
-                'action="/accounts/go/?next=billing"',
-            ],
+            ["Enter your organization's Zulip URL", 'action="/accounts/go/?next=billing"'],
             result,
         )
 

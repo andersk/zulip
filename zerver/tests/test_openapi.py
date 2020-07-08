@@ -802,9 +802,7 @@ class TestCurlExampleGeneration(ZulipTestCase):
     spec_mock_with_invalid_method: Dict[str, object] = {
         "security": [{"basicAuth": []}],
         "paths": {
-            "/endpoint": {
-                "brew": {},  # the data is irrelevant as is should be rejected.
-            },
+            "/endpoint": {"brew": {}},  # the data is irrelevant as is should be rejected.
         },
     }
 

@@ -10,7 +10,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name="preregistrationuser", name="invited_as_admin",
-        ),
+        migrations.RemoveField(model_name="preregistrationuser", name="invited_as_admin"),
     ]

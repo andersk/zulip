@@ -84,9 +84,7 @@ pg_args = {}
 # Path to the root of the Zulip codebase in production
 sys.path.insert(0, "/home/zulip/deployments/current")
 # Path to the root of the Zulip codebase in development
-sys.path.insert(
-    0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../..")),
-)
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../..")))
 try:
     os.environ["DJANGO_SETTINGS_MODULE"] = "zproject.settings"
     from django.conf import settings

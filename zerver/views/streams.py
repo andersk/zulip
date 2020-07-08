@@ -346,9 +346,7 @@ def update_subscriptions_backend(
     request: HttpRequest,
     user_profile: UserProfile,
     delete: Iterable[str] = REQ(validator=remove_subscriptions_schema, default=[]),
-    add: Iterable[Mapping[str, Any]] = REQ(
-        validator=add_subscriptions_schema, default=[],
-    ),
+    add: Iterable[Mapping[str, Any]] = REQ(validator=add_subscriptions_schema, default=[]),
 ) -> HttpResponse:
     if not add and not delete:
         return json_error(_('Nothing to do. Specify at least one of "add" or "delete".'))
@@ -591,9 +589,7 @@ def add_subscriptions_backend(
 
             # For each user, we notify them about newly subscribed streams, except for
             # streams that were newly created.
-            notify_stream_names = (
-                set(subscribed_stream_names) - newly_created_stream_names
-            )
+            notify_stream_names = set(subscribed_stream_names) - newly_created_stream_names
 
             if not notify_stream_names:
                 continue
@@ -621,9 +617,7 @@ def add_subscriptions_backend(
         if notifications_stream is not None:
             with override_language(notifications_stream.realm.default_language):
                 if len(created_streams) > 1:
-                    content = _(
-                        "{user_name} created the following streams: {stream_str}.",
-                    )
+                    content = _("{user_name} created the following streams: {stream_str}.")
                 else:
                     content = _("{user_name} created a new stream {stream_str}.")
                 topic = _("new streams")
@@ -742,9 +736,7 @@ def delete_in_topic(
         deletable_message_ids = UserMessage.objects.filter(
             user_profile=user_profile, message_id__in=messages,
         ).values_list("message_id", flat=True)
-        messages = [
-            message for message in messages if message.id in deletable_message_ids
-        ]
+        messages = [message for message in messages if message.id in deletable_message_ids]
 
     do_delete_messages(user_profile.realm, messages)
 

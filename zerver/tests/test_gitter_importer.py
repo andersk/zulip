@@ -29,9 +29,7 @@ class GitterImporter(ZulipTestCase):
 
         self.assertEqual(os.path.exists(os.path.join(output_dir, "avatars")), True)
         self.assertEqual(os.path.exists(os.path.join(output_dir, "emoji")), True)
-        self.assertEqual(
-            os.path.exists(os.path.join(output_dir, "attachment.json")), True,
-        )
+        self.assertEqual(os.path.exists(os.path.join(output_dir, "attachment.json")), True)
 
         realm = read_file("realm.json")
 

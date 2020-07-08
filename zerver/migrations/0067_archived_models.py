@@ -30,16 +30,12 @@ class Migration(migrations.Migration):
                 ("is_realm_public", models.BooleanField(default=False)),
                 (
                     "create_time",
-                    models.DateTimeField(
-                        db_index=True, default=django.utils.timezone.now,
-                    ),
+                    models.DateTimeField(db_index=True, default=django.utils.timezone.now),
                 ),
                 ("size", models.IntegerField(null=True)),
                 (
                     "archive_timestamp",
-                    models.DateTimeField(
-                        db_index=True, default=django.utils.timezone.now,
-                    ),
+                    models.DateTimeField(db_index=True, default=django.utils.timezone.now),
                 ),
             ],
             options={"abstract": False},
@@ -72,15 +68,12 @@ class Migration(migrations.Migration):
                 ("has_link", models.BooleanField(db_index=True, default=False)),
                 (
                     "archive_timestamp",
-                    models.DateTimeField(
-                        db_index=True, default=django.utils.timezone.now,
-                    ),
+                    models.DateTimeField(db_index=True, default=django.utils.timezone.now),
                 ),
                 (
                     "recipient",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to="zerver.Recipient",
+                        on_delete=django.db.models.deletion.CASCADE, to="zerver.Recipient",
                     ),
                 ),
                 (
@@ -134,9 +127,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "archive_timestamp",
-                    models.DateTimeField(
-                        db_index=True, default=django.utils.timezone.now,
-                    ),
+                    models.DateTimeField(db_index=True, default=django.utils.timezone.now),
                 ),
                 (
                     "message",

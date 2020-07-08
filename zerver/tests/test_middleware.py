@@ -35,9 +35,7 @@ class SlowQueryTest(ZulipTestCase):
 
     def test_slow_query_log(self) -> None:
         self.log_data["time_started"] = time.time() - self.SLOW_QUERY_TIME
-        with patch(
-            "zerver.middleware.slow_query_logger",
-        ) as mock_slow_query_logger, patch(
+        with patch("zerver.middleware.slow_query_logger") as mock_slow_query_logger, patch(
             "zerver.middleware.logger",
         ) as mock_normal_logger:
 

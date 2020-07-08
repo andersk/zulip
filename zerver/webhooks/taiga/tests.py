@@ -27,9 +27,7 @@ class TaigaHookTests(WebhookTestCase):
 
     def test_taiga_userstory_changed_subject(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) renamed user story from UserStory to **UserStoryNewSubject**."
-        self.send_and_test_stream_message(
-            "userstory_changed_subject", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("userstory_changed_subject", self.TOPIC, message)
 
     def test_taiga_userstory_changed_status(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) changed status of user story **UserStory** from Ready to In progress."
@@ -85,9 +83,7 @@ class TaigaHookTests(WebhookTestCase):
 
     def test_taiga_userstory_changed_blocked(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) blocked user story **UserStory**."
-        self.send_and_test_stream_message(
-            "userstory_changed_blocked", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("userstory_changed_blocked", self.TOPIC, message)
 
     def test_taiga_userstory_changed_assigned(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) assigned user story **UserStory** to TomaszKolek."
@@ -122,9 +118,7 @@ class TaigaHookTests(WebhookTestCase):
 
     def test_taiga_task_changed_user_stories(self) -> None:
         message = "[Eeshan Garg](https://tree.taiga.io/profile/eeshangarg) added task **Get this task done** to sprint Another one.\n[Eeshan Garg](https://tree.taiga.io/profile/eeshangarg) moved task **Get this task done** from user story #7 Yaar ne scirra! to #8 A related user story, which is epic."
-        self.send_and_test_stream_message(
-            "task_changed_user_stories", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("task_changed_user_stories", self.TOPIC, message)
 
     def test_taiga_task_changed_status(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) changed status of task **New Task** from New to In progress."
@@ -136,9 +130,7 @@ class TaigaHookTests(WebhookTestCase):
 
     def test_taiga_task_changed_blocked_link(self) -> None:
         message = "[Aditya Verma](https://tree.taiga.io/profile/orientor) blocked task [nice task](https://tree.taiga.io/project/orientor-sd/task/56)."
-        self.send_and_test_stream_message(
-            "task_changed_blocked_link", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("task_changed_blocked_link", self.TOPIC, message)
 
     def test_taiga_task_changed_unblocked(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) unblocked task **New Task**."
@@ -179,9 +171,7 @@ class TaigaHookTests(WebhookTestCase):
 
     def test_taiga_task_changed_new_due_date(self) -> None:
         message = "[Aditya Verma](https://tree.taiga.io/profile/orientor) set due date of task [nice task](https://tree.taiga.io/project/orientor-sd/task/56) to 2020-02-22."
-        self.send_and_test_stream_message(
-            "task_changed_new_due_date", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("task_changed_new_due_date", self.TOPIC, message)
 
     def test_taiga_sprint_created(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) created sprint **New sprint**."
@@ -225,9 +215,7 @@ class TaigaHookTests(WebhookTestCase):
 
     def test_taiga_issue_changed_description(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) updated description of issue **New issue**."
-        self.send_and_test_stream_message(
-            "issue_changed_description", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("issue_changed_description", self.TOPIC, message)
 
     def test_taiga_issue_changed_type(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) changed type of issue **New issue** from Bug to Question."

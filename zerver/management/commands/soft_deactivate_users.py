@@ -33,9 +33,7 @@ def get_users_from_emails(
 
 
 class Command(ZulipBaseCommand):
-    help = (
-        """Soft activate/deactivate users. Users are recognised by their emails here."""
-    )
+    help = """Soft activate/deactivate users. Users are recognised by their emails here."""
 
     def add_arguments(self, parser: ArgumentParser) -> None:
         self.add_realm_args(parser)

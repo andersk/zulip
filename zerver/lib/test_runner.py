@@ -242,9 +242,7 @@ class ParallelTestSuite(django_runner.ParallelTestSuite):
         # most of django_runner.ParallelTestSuite with our own suite
         # definitions.
         assert not isinstance(self.subsuites, SubSuiteList)
-        self.subsuites: Union[SubSuiteList, List[TestSuite]] = SubSuiteList(
-            self.subsuites,
-        )
+        self.subsuites: Union[SubSuiteList, List[TestSuite]] = SubSuiteList(self.subsuites)
 
 
 def check_import_error(test_name: str) -> None:

@@ -43,7 +43,9 @@ def put_dict_in_redis(
 ) -> str:
     key_length = len(key_format) - len("{token}") + token_length
     if key_length > MAX_KEY_LENGTH:
-        error_msg = "Requested key too long in put_dict_in_redis. Key format: %s, token length: %s"
+        error_msg = (
+            "Requested key too long in put_dict_in_redis. Key format: %s, token length: %s"
+        )
         raise ZulipRedisKeyTooLongError(error_msg % (key_format, token_length))
     if token is None:
         token = generate_random_token(token_length)

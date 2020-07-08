@@ -94,9 +94,7 @@ def get_or_create_key_prefix() -> str:
     filename = os.path.join(settings.DEPLOY_ROOT, "var", "remote_cache_prefix")
     try:
         fd = os.open(filename, os.O_CREAT | os.O_EXCL | os.O_RDWR, 0o444)
-        random_hash = hashlib.sha256(
-            str(random.getrandbits(256)).encode("utf-8"),
-        ).digest()
+        random_hash = hashlib.sha256(str(random.getrandbits(256)).encode("utf-8")).digest()
         prefix = base64.b16encode(random_hash)[:32].decode("utf-8").lower() + ":"
         # This does close the underlying file
         with os.fdopen(fd, "w") as f:
@@ -161,9 +159,7 @@ def get_cache_with_key(
                 return val[0]
             raise NotFoundInCache()
 
-        return cast(
-            FuncT, func_with_caching,
-        )  # https://github.com/python/mypy/issues/1927
+        return cast(FuncT, func_with_caching)  # https://github.com/python/mypy/issues/1927
 
     return decorator
 
@@ -216,9 +212,7 @@ def cache_with_key(
 
             return val
 
-        return cast(
-            FuncT, func_with_caching,
-        )  # https://github.com/python/mypy/issues/1927
+        return cast(FuncT, func_with_caching)  # https://github.com/python/mypy/issues/1927
 
     return decorator
 
@@ -304,9 +298,7 @@ def safe_cache_get_many(
 
 
 def cache_set_many(
-    items: Dict[str, Any],
-    cache_name: Optional[str] = None,
-    timeout: Optional[int] = None,
+    items: Dict[str, Any], cache_name: Optional[str] = None, timeout: Optional[int] = None,
 ) -> None:
     new_items = {}
     for key in items:
@@ -320,9 +312,7 @@ def cache_set_many(
 
 
 def safe_cache_set_many(
-    items: Dict[str, Any],
-    cache_name: Optional[str] = None,
-    timeout: Optional[int] = None,
+    items: Dict[str, Any], cache_name: Optional[str] = None, timeout: Optional[int] = None,
 ) -> None:
     """Variant of cache_set_many that drops saving any keys that fail
     validation, rather than throwing an exception visible to the

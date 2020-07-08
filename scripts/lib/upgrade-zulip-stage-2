@@ -200,10 +200,7 @@ subprocess.check_call(
 # Generate any new secrets that were added in the new version required.
 # TODO: Do caching to only run this when it has changed.
 subprocess.check_call(
-    [
-        os.path.join(deploy_path, "scripts", "setup", "generate_secrets.py"),
-        "--production",
-    ],
+    [os.path.join(deploy_path, "scripts", "setup", "generate_secrets.py"), "--production"],
 )
 
 # Unpleasant migration: Remove any legacy deployed copies of

@@ -67,9 +67,7 @@ class TestDigestEmailMessages(ZulipTestCase):
 
         hot_convo = kwargs["context"]["hot_conversations"][0]
 
-        expected_participants = {
-            self.example_user(sender).full_name for sender in senders
-        }
+        expected_participants = {self.example_user(sender).full_name for sender in senders}
 
         self.assertEqual(set(hot_convo["participants"]), expected_participants)
         self.assertEqual(hot_convo["count"], 5 - 2)  # 5 messages, but 2 shown
@@ -130,9 +128,7 @@ class TestDigestEmailMessages(ZulipTestCase):
         self.assertEqual(2, len(hot_conversations), [othello.id])
 
         hot_convo = hot_conversations[0]
-        expected_participants = {
-            self.example_user(sender).full_name for sender in senders
-        }
+        expected_participants = {self.example_user(sender).full_name for sender in senders}
 
         self.assertEqual(set(hot_convo["participants"]), expected_participants)
         self.assertEqual(hot_convo["count"], 5 - 2)  # 5 messages, but 2 shown
@@ -185,9 +181,7 @@ class TestDigestEmailMessages(ZulipTestCase):
         # Check that all users without an a UserActivity entry are considered
         # inactive users and get enqueued.
         enqueue_emails(cutoff)
-        self.assertEqual(
-            mock_queue_digest_recipient.call_count, all_user_profiles.count(),
-        )
+        self.assertEqual(mock_queue_digest_recipient.call_count, all_user_profiles.count())
         mock_queue_digest_recipient.reset_mock()
         for realm in Realm.objects.filter(deactivated=False, digest_emails_enabled=True):
             user_profiles = all_user_profiles.filter(realm=realm)
@@ -200,9 +194,7 @@ class TestDigestEmailMessages(ZulipTestCase):
                 )
         # Check that inactive users are enqueued
         enqueue_emails(cutoff)
-        self.assertEqual(
-            mock_queue_digest_recipient.call_count, all_user_profiles.count(),
-        )
+        self.assertEqual(mock_queue_digest_recipient.call_count, all_user_profiles.count())
 
     @mock.patch("zerver.lib.digest.queue_digest_recipient")
     @mock.patch("zerver.lib.digest.timezone_now")

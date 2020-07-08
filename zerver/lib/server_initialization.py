@@ -3,13 +3,7 @@ from typing import Iterable, Optional, Tuple
 from django.conf import settings
 
 from zerver.lib.bulk_create import bulk_create_users
-from zerver.models import (
-    Realm,
-    UserProfile,
-    email_to_username,
-    get_client,
-    get_system_bot,
-)
+from zerver.models import Realm, UserProfile, email_to_username, get_client, get_system_bot
 
 
 def server_initialized() -> bool:

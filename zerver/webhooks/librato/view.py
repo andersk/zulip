@@ -19,9 +19,7 @@ SNAPSHOT = "image_url"
 class LibratoWebhookParser:
     ALERT_URL_TEMPLATE = "https://metrics.librato.com/alerts#/{alert_id}"
 
-    def __init__(
-        self, payload: Dict[str, Any], attachments: List[Dict[str, Any]],
-    ) -> None:
+    def __init__(self, payload: Dict[str, Any], attachments: List[Dict[str, Any]]) -> None:
         self.payload = payload
         self.attachments = attachments
 
@@ -70,9 +68,7 @@ class LibratoWebhookParser:
 
 
 class LibratoWebhookHandler(LibratoWebhookParser):
-    def __init__(
-        self, payload: Dict[str, Any], attachments: List[Dict[str, Any]],
-    ) -> None:
+    def __init__(self, payload: Dict[str, Any], attachments: List[Dict[str, Any]]) -> None:
         super().__init__(payload, attachments)
         self.payload_available_types = {
             ALERT_CLEAR: self.handle_alert_clear_message,

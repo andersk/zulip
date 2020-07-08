@@ -173,9 +173,7 @@ def ccache_principal(name: Dict[str, str], realm: str) -> bytes:
     return (
         header
         + ccache_counted_octet_string(force_bytes(realm))
-        + b"".join(
-            ccache_counted_octet_string(force_bytes(c)) for c in name["nameString"]
-        )
+        + b"".join(ccache_counted_octet_string(force_bytes(c)) for c in name["nameString"])
     )
 
 

@@ -406,9 +406,7 @@ class ImportExportTest(ZulipTestCase):
         with open(fn) as f:
             self.assertEqual(f.read(), "zulip!")
         records = full_data["uploads_dir_records"]
-        self.assertEqual(
-            records[0]["path"], os.path.join(fields[0], fields[1], fields[2]),
-        )
+        self.assertEqual(records[0]["path"], os.path.join(fields[0], fields[1], fields[2]))
         self.assertEqual(records[0]["s3_path"], attachment_path_id)
         check_types(records[0]["user_profile_id"], records[0]["realm_id"])
 
@@ -773,9 +771,7 @@ class ImportExportTest(ZulipTestCase):
         )
         self.assertEqual(exported_recipient_id, exported_subscription_recipient)
 
-        exported_messages_recipient = self.get_set(
-            messages["zerver_message"], "recipient",
-        )
+        exported_messages_recipient = self.get_set(messages["zerver_message"], "recipient")
         self.assertIn(list(exported_messages_recipient)[0], exported_recipient_id)
 
     """
@@ -796,9 +792,7 @@ class ImportExportTest(ZulipTestCase):
         )
 
         user_mention_message = "@**King Hamlet** Hello"
-        self.send_stream_message(
-            self.example_user("iago"), "Verona", user_mention_message,
-        )
+        self.send_stream_message(self.example_user("iago"), "Verona", user_mention_message)
 
         stream_mention_message = "Subscribe to #**Denmark**"
         self.send_stream_message(
@@ -1004,9 +998,7 @@ class ImportExportTest(ZulipTestCase):
 
         def get_user_membership(r: str) -> Set[str]:
             usergroup = UserGroup.objects.get(realm=r, name="hamletcharacters")
-            usergroup_membership = UserGroupMembership.objects.filter(
-                user_group=usergroup,
-            )
+            usergroup_membership = UserGroupMembership.objects.filter(user_group=usergroup)
             users = {membership.user_profile.email for membership in usergroup_membership}
             return users
 
@@ -1124,9 +1116,7 @@ class ImportExportTest(ZulipTestCase):
         for user_profile in UserProfile.objects.filter(realm=imported_realm):
             self.assertEqual(
                 user_profile.recipient_id,
-                Recipient.objects.get(
-                    type=Recipient.PERSONAL, type_id=user_profile.id,
-                ).id,
+                Recipient.objects.get(type=Recipient.PERSONAL, type_id=user_profile.id).id,
             )
         for stream in Stream.objects.filter(realm=imported_realm):
             self.assertEqual(

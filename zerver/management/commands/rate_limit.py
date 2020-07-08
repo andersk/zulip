@@ -58,9 +58,7 @@ class Command(ZulipBaseCommand):
                 user_profile = get_user_profile_by_api_key(options["api_key"])
             except UserProfile.DoesNotExist:
                 raise CommandError(
-                    "Unable to get user profile for api key {}".format(
-                        options["api_key"],
-                    ),
+                    "Unable to get user profile for api key {}".format(options["api_key"]),
                 )
 
         users = [user_profile]

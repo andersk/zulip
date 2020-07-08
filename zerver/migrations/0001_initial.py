@@ -118,10 +118,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ("pointer", models.IntegerField()),
                 ("last_pointer_updater", models.CharField(max_length=64)),
                 ("api_key", models.CharField(max_length=32)),
-                (
-                    "enable_stream_desktop_notifications",
-                    models.BooleanField(default=True),
-                ),
+                ("enable_stream_desktop_notifications", models.BooleanField(default=True)),
                 ("enable_stream_sounds", models.BooleanField(default=True)),
                 ("enable_desktop_notifications", models.BooleanField(default=True)),
                 ("enable_sounds", models.BooleanField(default=True)),
@@ -284,9 +281,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ("token", models.CharField(max_length=4096, unique=True)),
                 (
                     "last_updated",
-                    models.DateTimeField(
-                        auto_now=True, default=django.utils.timezone.now,
-                    ),
+                    models.DateTimeField(auto_now=True, default=django.utils.timezone.now),
                 ),
                 ("ios_app_id", models.TextField(null=True)),
                 (
@@ -500,8 +495,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "recipient",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to="zerver.Recipient",
+                        on_delete=django.db.models.deletion.CASCADE, to="zerver.Recipient",
                     ),
                 ),
                 (
@@ -916,9 +910,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ("path_id", models.TextField(db_index=True)),
                 (
                     "create_time",
-                    models.DateTimeField(
-                        db_index=True, default=django.utils.timezone.now,
-                    ),
+                    models.DateTimeField(db_index=True, default=django.utils.timezone.now),
                 ),
                 ("messages", models.ManyToManyField(to="zerver.Message")),
                 (

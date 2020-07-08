@@ -58,9 +58,7 @@ class Command(ZulipBaseCommand):
                 members.append(
                     os.path.join(settings.DEPLOY_ROOT, "zproject", "dev-secrets.conf"),
                 )
-                paths.append(
-                    ("zproject", os.path.join(settings.DEPLOY_ROOT, "zproject")),
-                )
+                paths.append(("zproject", os.path.join(settings.DEPLOY_ROOT, "zproject")))
             else:
                 members.append("/etc/zulip")
                 paths.append(("settings", "/etc/zulip"))

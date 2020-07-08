@@ -485,8 +485,7 @@ class PreviewTestCase(ZulipTestCase):
                 FetchLinksEmbedData().consume(event)
         msg = Message.objects.get(id=msg_id)
         self.assertEqual(
-            '<p><a href="http://test.org/">http://test.org/</a></p>',
-            msg.rendered_content,
+            '<p><a href="http://test.org/">http://test.org/</a></p>', msg.rendered_content,
         )
 
     def test_invalid_link(self) -> None:
@@ -672,8 +671,7 @@ class PreviewTestCase(ZulipTestCase):
 
         msg.refresh_from_db()
         self.assertEqual(
-            '<p><a href="http://test.org/">http://test.org/</a></p>',
-            msg.rendered_content,
+            '<p><a href="http://test.org/">http://test.org/</a></p>', msg.rendered_content,
         )
 
     @override_settings(INLINE_URL_EMBED_PREVIEW=True)

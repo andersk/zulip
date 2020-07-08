@@ -236,8 +236,7 @@ class TestOutgoingWebhookMessaging(ZulipTestCase):
             self.assertEqual(message_data["sender_id"], sender.id)
 
         self.assertEqual(
-            url_token_tups,
-            {("weather_url", "weather_token"), ("qotd_url", "qotd_token")},
+            url_token_tups, {("weather_url", "weather_token"), ("qotd_url", "qotd_token")},
         )
 
     @mock.patch(

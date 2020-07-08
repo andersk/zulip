@@ -285,9 +285,7 @@ def get_narrow_url(
             display_recipient = get_display_recipient(message.recipient)
         assert display_recipient is not None
         assert not isinstance(display_recipient, str)
-        other_user_ids = [
-            r["id"] for r in display_recipient if r["id"] != user_profile.id
-        ]
+        other_user_ids = [r["id"] for r in display_recipient if r["id"] != user_profile.id]
         return huddle_narrow_url(realm=user_profile.realm, other_user_ids=other_user_ids)
     else:
         assert display_recipient is None

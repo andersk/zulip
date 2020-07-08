@@ -31,9 +31,7 @@ def get_alert_word_automaton(realm: Realm) -> ahocorasick.Automaton:
         for alert_word in alert_words:
             alert_word_lower = alert_word.lower()
             if alert_word_automaton.exists(alert_word_lower):
-                (key, user_ids_for_alert_word) = alert_word_automaton.get(
-                    alert_word_lower,
-                )
+                (key, user_ids_for_alert_word) = alert_word_automaton.get(alert_word_lower)
                 user_ids_for_alert_word.add(user_id)
             else:
                 alert_word_automaton.add_word(
@@ -51,16 +49,12 @@ def get_alert_word_automaton(realm: Realm) -> ahocorasick.Automaton:
 
 def user_alert_words(user_profile: UserProfile) -> List[str]:
     return list(
-        AlertWord.objects.filter(user_profile=user_profile).values_list(
-            "word", flat=True,
-        ),
+        AlertWord.objects.filter(user_profile=user_profile).values_list("word", flat=True),
     )
 
 
 @transaction.atomic
-def add_user_alert_words(
-    user_profile: UserProfile, new_words: Iterable[str],
-) -> List[str]:
+def add_user_alert_words(user_profile: UserProfile, new_words: Iterable[str]) -> List[str]:
     existing_words_lower = {word.lower() for word in user_alert_words(user_profile)}
 
     # Keeping the case, use a dictionary to get the set of

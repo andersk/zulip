@@ -26,9 +26,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "timestamp",
-                    models.DateTimeField(
-                        db_index=True, default=django.utils.timezone.now,
-                    ),
+                    models.DateTimeField(db_index=True, default=django.utils.timezone.now),
                 ),
                 ("restored", models.BooleanField(db_index=True, default=False)),
                 ("type", models.PositiveSmallIntegerField(db_index=True)),
@@ -42,14 +40,10 @@ class Migration(migrations.Migration):
                 ),
             ],
         ),
-        migrations.RemoveField(
-            model_name="archivedattachment", name="archive_timestamp",
-        ),
+        migrations.RemoveField(model_name="archivedattachment", name="archive_timestamp"),
         migrations.RemoveField(model_name="archivedmessage", name="archive_timestamp"),
         migrations.RemoveField(model_name="archivedreaction", name="archive_timestamp"),
-        migrations.RemoveField(
-            model_name="archivedsubmessage", name="archive_timestamp",
-        ),
+        migrations.RemoveField(model_name="archivedsubmessage", name="archive_timestamp"),
         migrations.RemoveField(
             model_name="archivedusermessage", name="archive_timestamp",
         ),

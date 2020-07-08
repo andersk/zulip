@@ -218,9 +218,7 @@ class TestVideoCall(ZulipTestCase):
         response = self.client_get(
             "/calls/bigbluebutton/join?meeting_id=%22zulip-1%22&password=%22a%22&checksum=%22check%22",
         )
-        self.assert_json_error(
-            response, "Error connecting to the Big Blue Button server.",
-        )
+        self.assert_json_error(response, "Error connecting to the Big Blue Button server.")
 
     @responses.activate
     def test_join_bigbluebutton_redirect_error_by_server(self) -> None:

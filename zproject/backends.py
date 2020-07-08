@@ -95,11 +95,7 @@ from zerver.lib.email_validation import (
 )
 from zerver.lib.mobile_auth_otp import is_valid_otp
 from zerver.lib.rate_limiter import RateLimitedObject
-from zerver.lib.redis_utils import (
-    get_dict_from_redis,
-    get_redis_client,
-    put_dict_in_redis,
-)
+from zerver.lib.redis_utils import get_dict_from_redis, get_redis_client, put_dict_in_redis
 from zerver.lib.request import JsonableError
 from zerver.lib.subdomains import get_subdomain
 from zerver.lib.users import check_full_name, validate_user_custom_profile_field
@@ -441,9 +437,7 @@ def is_valid_email(email: str) -> bool:
 def check_ldap_config() -> None:
     if not settings.LDAP_APPEND_DOMAIN:
         # Email search needs to be configured in this case.
-        assert (
-            settings.AUTH_LDAP_USERNAME_ATTR and settings.AUTH_LDAP_REVERSE_EMAIL_SEARCH
-        )
+        assert settings.AUTH_LDAP_USERNAME_ATTR and settings.AUTH_LDAP_REVERSE_EMAIL_SEARCH
 
 
 def find_ldap_users_by_email(email: str) -> Optional[List[_LDAPUser]]:
@@ -1150,8 +1144,7 @@ class ExternalAuthResult:
 
         if login_token is not None:
             assert (not data_dict) and (user_profile is None), (
-                "Passing in data_dict or user_profile "
-                + "with login_token is disallowed."
+                "Passing in data_dict or user_profile " + "with login_token is disallowed."
             )
             self.instantiate_with_token(login_token, delete_stored_data)
         else:
@@ -1301,9 +1294,7 @@ def social_associate_user_helper(
         return None
 
     if "auth_failed_reason" in kwargs.get("response", {}):
-        return_data["social_auth_failed_reason"] = kwargs["response"][
-            "auth_failed_reason"
-        ]
+        return_data["social_auth_failed_reason"] = kwargs["response"]["auth_failed_reason"]
         return None
     elif hasattr(backend, "get_verified_emails"):
         # Some social backends, like GitHubAuthBackend, don't
@@ -1802,9 +1793,7 @@ class AppleAuthBackend(SocialAuthMixin, AppleIdAuth):
     full_name_validated = True
     REDIS_EXPIRATION_SECONDS = 60 * 10
 
-    SCOPE_SEPARATOR = (
-        "%20"  # https://github.com/python-social-auth/social-core/issues/470
-    )
+    SCOPE_SEPARATOR = "%20"  # https://github.com/python-social-auth/social-core/issues/470
 
     def is_native_flow(self) -> bool:
         return self.strategy.request_data().get("native_flow", False)

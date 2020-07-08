@@ -329,9 +329,7 @@ def make_end_of_cycle_updates_if_needed(
             assert plan.next_invoice_date is not None
             plan.billing_cycle_anchor = plan.next_invoice_date.replace(microsecond=0)
             plan.status = CustomerPlan.ACTIVE
-            plan.save(
-                update_fields=["invoiced_through", "billing_cycle_anchor", "status"],
-            )
+            plan.save(update_fields=["invoiced_through", "billing_cycle_anchor", "status"])
             return (
                 None,
                 LicenseLedger.objects.create(
@@ -706,9 +704,7 @@ def invoice_plans_as_needed(event_time: datetime = timezone_now()) -> None:
 
 
 def attach_discount_to_realm(realm: Realm, discount: Decimal) -> None:
-    Customer.objects.update_or_create(
-        realm=realm, defaults={"default_discount": discount},
-    )
+    Customer.objects.update_or_create(realm=realm, defaults={"default_discount": discount})
 
 
 def update_sponsorship_status(realm: Realm, sponsorship_pending: bool) -> None:

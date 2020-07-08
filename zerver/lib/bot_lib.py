@@ -110,10 +110,7 @@ class EmbeddedBotHandler:
             )
         else:
             internal_send_huddle_message(
-                self.user_profile.realm,
-                self.user_profile,
-                recipients,
-                message["content"],
+                self.user_profile.realm, self.user_profile, recipients, message["content"],
             )
 
     def send_reply(self, message: Dict[str, Any], response: str) -> None:

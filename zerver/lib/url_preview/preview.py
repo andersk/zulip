@@ -115,7 +115,5 @@ def get_link_embed_data(
 
 
 @get_cache_with_key(preview_url_cache_key, cache_name=CACHE_NAME)
-def link_embed_data_from_cache(
-    url: str, maxwidth: int = 640, maxheight: int = 480,
-) -> Any:
+def link_embed_data_from_cache(url: str, maxwidth: int = 640, maxheight: int = 480) -> Any:
     return

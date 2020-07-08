@@ -52,9 +52,7 @@ i18n_urlpatterns = [
 # All of these paths are accessed by either a /json or /api prefix
 v1_api_and_json_patterns = [
     # get data for the graphs at /stats
-    path(
-        "analytics/chart_data", rest_dispatch, {"GET": "analytics.views.get_chart_data"},
-    ),
+    path("analytics/chart_data", rest_dispatch, {"GET": "analytics.views.get_chart_data"}),
     path(
         "analytics/chart_data/realm/<str:realm_str>",
         rest_dispatch,

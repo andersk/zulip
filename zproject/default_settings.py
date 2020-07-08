@@ -215,9 +215,7 @@ ERROR_BOT: Optional[str] = None
 # These are extra bot users for our end-to-end Nagios message
 # sending tests.
 NAGIOS_STAGING_SEND_BOT = "nagios-staging-send-bot@zulip.com" if PRODUCTION else None
-NAGIOS_STAGING_RECEIVE_BOT = (
-    "nagios-staging-receive-bot@zulip.com" if PRODUCTION else None
-)
+NAGIOS_STAGING_RECEIVE_BOT = "nagios-staging-receive-bot@zulip.com" if PRODUCTION else None
 # SYSTEM_BOT_REALM would be a constant always set to 'zulip',
 # except that it isn't that on Zulip Cloud.  We will likely do a
 # migration and eliminate this parameter in the future.

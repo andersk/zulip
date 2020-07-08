@@ -197,6 +197,4 @@ Try again next time
         )
 
     def get_body(self, fixture_name: str) -> str:
-        return self.webhook_fixture_data(
-            "pivotal", f"v5_{fixture_name}", file_type="json",
-        )
+        return self.webhook_fixture_data("pivotal", f"v5_{fixture_name}", file_type="json")

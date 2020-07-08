@@ -648,9 +648,7 @@ body:
         result = self.client_post(
             "/api/v1/external/zendesk", {}, HTTP_AUTHORIZATION=api_auth,
         )
-        self.assert_json_error(
-            result, "This endpoint requires HTTP basic authentication.",
-        )
+        self.assert_json_error(result, "This endpoint requires HTTP basic authentication.")
 
         api_auth = "Basic " + base64.b64encode(b"foo").decode("utf-8")
         result = self.client_post(
@@ -972,9 +970,7 @@ class ValidatorTestCase(ZulipTestCase):
         x = {
             "names": ["alice", "bob", {}],
         }
-        with self.assertRaisesRegex(
-            ValidationError, r'x\["names"\]\[2\] is not a string',
-        ):
+        with self.assertRaisesRegex(ValidationError, r'x\["names"\]\[2\] is not a string'):
             check_dict(keys)("x", x)
 
         x = {
@@ -1419,9 +1415,7 @@ class TestIncomingWebhookBot(ZulipTestCase):
         post_params = {"anchor": 1, "num_before": 1, "num_after": 1}
         result = self.api_get(webhook_bot, "/api/v1/messages", dict(post_params))
         self.assert_json_error(
-            result,
-            "This API is not available to incoming webhook bots.",
-            status_code=401,
+            result, "This API is not available to incoming webhook bots.", status_code=401,
         )
 
 
@@ -1853,9 +1847,7 @@ class TestRequireDecorators(ZulipTestCase):
     def test_require_non_guest_user_decorator(self) -> None:
         guest_user = self.example_user("polonius")
         self.login_user(guest_user)
-        result = self.common_subscribe_to_streams(
-            guest_user, ["Denmark"], allow_fail=True,
-        )
+        result = self.common_subscribe_to_streams(guest_user, ["Denmark"], allow_fail=True)
         self.assert_json_error(result, "Not allowed for guest users")
 
         outgoing_webhook_bot = self.example_user("outgoing_webhook_bot")
@@ -1883,9 +1875,7 @@ class ReturnSuccessOnHeadRequestDecorator(ZulipTestCase):
 
         response = test_function(request)
         self.assert_json_success(response)
-        self.assertNotEqual(
-            ujson.loads(response.content).get("msg"), "from_test_function",
-        )
+        self.assertNotEqual(ujson.loads(response.content).get("msg"), "from_test_function")
 
     def test_returns_normal_response_if_request_method_is_not_head(self) -> None:
         class HeadRequest:
@@ -1970,8 +1960,7 @@ class CacheTestCase(ZulipTestCase):
 
         work_log, result_log = test_greetings("goodbye")
         self.assertEqual(
-            work_log,
-            ["goodbye alice smith", "goodbye bob barker", "goodbye cal johnson"],
+            work_log, ["goodbye alice smith", "goodbye bob barker", "goodbye cal johnson"],
         )
 
         self.assertEqual(

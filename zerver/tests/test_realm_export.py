@@ -169,9 +169,7 @@ class RealmExportTest(ZulipTestCase):
         admin = self.example_user("iago")
         self.login_user(admin)
 
-        current_log = RealmAuditLog.objects.filter(
-            event_type=RealmAuditLog.REALM_EXPORTED,
-        )
+        current_log = RealmAuditLog.objects.filter(event_type=RealmAuditLog.REALM_EXPORTED)
         self.assertEqual(len(current_log), 0)
 
         exports = []
@@ -206,8 +204,7 @@ class RealmExportTest(ZulipTestCase):
         ):
             result = self.client_post("/json/export/realm")
         self.assert_json_error(
-            result,
-            f"Please request a manual export from {settings.ZULIP_ADMINISTRATOR}.",
+            result, f"Please request a manual export from {settings.ZULIP_ADMINISTRATOR}.",
         )
 
         # Message limit is set as 250000
@@ -215,6 +212,5 @@ class RealmExportTest(ZulipTestCase):
         realm_count.save(update_fields=["value"])
         result = self.client_post("/json/export/realm")
         self.assert_json_error(
-            result,
-            f"Please request a manual export from {settings.ZULIP_ADMINISTRATOR}.",
+            result, f"Please request a manual export from {settings.ZULIP_ADMINISTRATOR}.",
         )

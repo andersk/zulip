@@ -93,9 +93,7 @@ def run_in_batches(
             sleep(sleep_time)
 
 
-def make_safe_digest(
-    string: str, hash_func: Callable[[bytes], Any] = hashlib.sha1,
-) -> str:
+def make_safe_digest(string: str, hash_func: Callable[[bytes], Any] = hashlib.sha1) -> str:
     """
     return a hex digest of `string`.
     """

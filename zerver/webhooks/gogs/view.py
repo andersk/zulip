@@ -62,9 +62,7 @@ def format_new_branch_event(payload: Dict[str, Any]) -> str:
     return get_create_branch_event_message(**data)
 
 
-def format_pull_request_event(
-    payload: Dict[str, Any], include_title: bool = False,
-) -> str:
+def format_pull_request_event(payload: Dict[str, Any], include_title: bool = False) -> str:
 
     data = {
         "user_name": payload["pull_request"]["user"]["username"],

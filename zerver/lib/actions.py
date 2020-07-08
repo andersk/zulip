@@ -1290,9 +1290,7 @@ def send_welcome_bot_response(message: MutableMapping[str, Any]) -> None:
     welcome_bot = get_system_bot(settings.WELCOME_BOT)
     human_recipient_id = message["message"].sender.recipient_id
     if (
-        Message.objects.filter(
-            sender=welcome_bot, recipient_id=human_recipient_id,
-        ).count()
+        Message.objects.filter(sender=welcome_bot, recipient_id=human_recipient_id).count()
         < 2
     ):
         content = (
@@ -1558,9 +1556,7 @@ def get_service_bot_events(
             queue_name = "embedded_bots"
         else:
             logging.error(
-                "Unexpected bot_type for Service bot id=%s: %s",
-                user_profile_id,
-                bot_type,
+                "Unexpected bot_type for Service bot id=%s: %s", user_profile_id, bot_type,
             )
             return
 
@@ -2518,9 +2514,7 @@ def check_schedule_message(
 
 def check_default_stream_group_name(group_name: str) -> None:
     if group_name.strip() == "":
-        raise JsonableError(
-            _("Invalid default stream group name '{}'").format(group_name),
-        )
+        raise JsonableError(_("Invalid default stream group name '{}'").format(group_name))
     if len(group_name) > DefaultStreamGroup.MAX_NAME_LENGTH:
         raise JsonableError(
             _("Default stream group name too long (limit: {} characters)").format(
@@ -2775,9 +2769,7 @@ def check_message(
         try:
             check_widget_content(widget_content)
         except ValidationError as error:
-            raise JsonableError(
-                _("Widgets: {error_msg}").format(error_msg=error.message),
-            )
+            raise JsonableError(_("Widgets: {error_msg}").format(error_msg=error.message))
 
     return {
         "message": message,
@@ -3213,9 +3205,7 @@ def bulk_add_subscriptions(
 ) -> SubT:
     users = list(users)
 
-    recipients_map: Dict[int, int] = {
-        stream.id: stream.recipient_id for stream in streams
-    }
+    recipients_map: Dict[int, int] = {stream.id: stream.recipient_id for stream in streams}
     recipient_ids: List[int] = [recipient_id for recipient_id in recipients_map.values()]
 
     stream_map: Dict[int, Stream] = {}
@@ -3240,9 +3230,7 @@ def bulk_add_subscriptions(
             if sub.recipient_id in needs_new_sub:
                 needs_new_sub.remove(sub.recipient_id)
                 if sub.active:
-                    already_subscribed.append(
-                        (user_profile, stream_map[sub.recipient_id]),
-                    )
+                    already_subscribed.append((user_profile, stream_map[sub.recipient_id]))
                 else:
                     subs_to_activate.append((sub, stream_map[sub.recipient_id]))
                     # Mark the sub as active, without saving, so that
@@ -3260,10 +3248,7 @@ def bulk_add_subscriptions(
             color = pick_color(user_profile, subs_by_user[user_profile.id])
 
         sub_to_add = Subscription(
-            user_profile=user_profile,
-            active=True,
-            color=color,
-            recipient_id=recipient_id,
+            user_profile=user_profile, active=True, color=color, recipient_id=recipient_id,
         )
         subs_by_user[user_profile.id].append(sub_to_add)
         subs_to_add.append((sub_to_add, stream))
@@ -3911,10 +3896,7 @@ def do_change_icon_source(realm: Realm, icon_source: str, log: bool = True) -> N
 
 
 def do_change_logo_source(
-    realm: Realm,
-    logo_source: str,
-    night: bool,
-    acting_user: Optional[UserProfile] = None,
+    realm: Realm, logo_source: str, night: bool, acting_user: Optional[UserProfile] = None,
 ) -> None:
     if not night:
         realm.logo_source = logo_source
@@ -4228,9 +4210,7 @@ def do_rename_stream(
             sender,
             stream,
             Realm.STREAM_EVENTS_NOTIFICATION_TOPIC,
-            _(
-                "{user_name} renamed stream {old_stream_name} to {new_stream_name}.",
-            ).format(
+            _("{user_name} renamed stream {old_stream_name} to {new_stream_name}.").format(
                 user_name=f"@_**{user_profile.full_name}|{user_profile.id}**",
                 old_stream_name=f"**{old_name}**",
                 new_stream_name=f"**{new_name}**",
@@ -5067,9 +5047,7 @@ def get_user_info_for_message_updates(message_id: int) -> MessageUpdateUserInfoR
 
     mask = UserMessage.flags.mentioned | UserMessage.flags.wildcard_mentioned
 
-    mention_user_ids = {
-        row["user_profile_id"] for row in rows if int(row["flags"]) & mask
-    }
+    mention_user_ids = {row["user_profile_id"] for row in rows if int(row["flags"]) & mask}
 
     return dict(message_user_ids=message_user_ids, mention_user_ids=mention_user_ids)
 
@@ -5581,9 +5559,7 @@ STREAM_TRAFFIC_CALCULATION_MIN_AGE_DAYS = 7
 
 
 def get_average_weekly_stream_traffic(
-    stream_id: int,
-    stream_date_created: datetime.datetime,
-    recent_traffic: Dict[int, int],
+    stream_id: int, stream_date_created: datetime.datetime, recent_traffic: Dict[int, int],
 ) -> Optional[int]:
     try:
         stream_traffic = recent_traffic[stream_id]
@@ -5911,9 +5887,7 @@ def filter_presence_idle_user_ids(user_ids: Set[int]) -> List[int]:
     return sorted(list(idle_user_ids))
 
 
-def do_send_confirmation_email(
-    invitee: PreregistrationUser, referrer: UserProfile,
-) -> str:
+def do_send_confirmation_email(invitee: PreregistrationUser, referrer: UserProfile) -> str:
     """
     Send the confirmation/welcome e-mail to an invited user.
     """
@@ -6696,9 +6670,7 @@ def do_update_user_custom_profile_data_if_changed(
 
             field_value.value = field["value"]
             if field_value.field.is_renderable():
-                field_value.rendered_value = render_stream_description(
-                    str(field["value"]),
-                )
+                field_value.rendered_value = render_stream_description(str(field["value"]))
                 field_value.save(update_fields=["value", "rendered_value"])
             else:
                 field_value.save(update_fields=["value"])

@@ -7,9 +7,7 @@ class TimezoneNotUTCException(Exception):
 
 
 def verify_UTC(dt: datetime.datetime) -> None:
-    if dt.tzinfo is None or dt.tzinfo.utcoffset(dt) != datetime.timezone.utc.utcoffset(
-        dt,
-    ):
+    if dt.tzinfo is None or dt.tzinfo.utcoffset(dt) != datetime.timezone.utc.utcoffset(dt):
         raise TimezoneNotUTCException(f"Datetime {dt} does not have a UTC timezone.")
 
 

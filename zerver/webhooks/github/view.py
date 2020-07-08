@@ -383,9 +383,7 @@ def get_pull_request_review_requested_body(
     )
 
     requested_team = [payload["requested_team"]] if "requested_team" in payload else []
-    requested_team_reviewers = (
-        payload["pull_request"]["requested_teams"] or requested_team
-    )
+    requested_team_reviewers = payload["pull_request"]["requested_teams"] or requested_team
 
     sender = get_sender_name(payload)
     pr_number = payload["pull_request"]["number"]

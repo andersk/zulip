@@ -1670,9 +1670,7 @@ def do_export_realm(
     return tarball_path
 
 
-def export_attachment_table(
-    realm: Realm, output_dir: Path, message_ids: Set[int],
-) -> None:
+def export_attachment_table(realm: Realm, output_dir: Path, message_ids: Set[int]) -> None:
     response: TableData = {}
     fetch_attachment_data(response=response, realm_id=realm.id, message_ids=message_ids)
     output_file = os.path.join(output_dir, "attachment.json")

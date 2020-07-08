@@ -40,9 +40,7 @@ def wrapper_execute(
 class TimeTrackingCursor(cursor):
     """A psycopg2 cursor class that tracks the time spent executing queries."""
 
-    def execute(
-        self, query: Query, vars: Optional[Params] = None,
-    ) -> "TimeTrackingCursor":
+    def execute(self, query: Query, vars: Optional[Params] = None) -> "TimeTrackingCursor":
         return wrapper_execute(self, super().execute, query, vars)
 
     def executemany(

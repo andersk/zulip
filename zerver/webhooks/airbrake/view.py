@@ -27,9 +27,7 @@ def api_airbrake_webhook(
 
 
 def get_subject(payload: Dict[str, Any]) -> str:
-    return AIRBRAKE_TOPIC_TEMPLATE.format(
-        project_name=payload["error"]["project"]["name"],
-    )
+    return AIRBRAKE_TOPIC_TEMPLATE.format(project_name=payload["error"]["project"]["name"])
 
 
 def get_body(payload: Dict[str, Any]) -> str:

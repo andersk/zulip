@@ -86,11 +86,7 @@ def inline_template(template_source_name: str) -> None:
 
 
 def escape_jinja2_characters(text: str) -> str:
-    escaped_jinja2_characters = [
-        ("%7B%7B%20", "{{ "),
-        ("%20%7D%7D", " }}"),
-        ("&gt;", ">"),
-    ]
+    escaped_jinja2_characters = [("%7B%7B%20", "{{ "), ("%20%7D%7D", " }}"), ("&gt;", ">")]
     for escaped, original in escaped_jinja2_characters:
         text = text.replace(escaped, original)
     return text

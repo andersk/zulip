@@ -134,9 +134,7 @@ class ArchiveMessagesTestingBase(RetentionTestingBase):
         stream.message_retention_days = retention_period
         stream.save()
 
-    def _change_messages_date_sent(
-        self, msgs_ids: List[int], date_sent: datetime,
-    ) -> None:
+    def _change_messages_date_sent(self, msgs_ids: List[int], date_sent: datetime) -> None:
         Message.objects.filter(id__in=msgs_ids).update(date_sent=date_sent)
 
     def _make_mit_messages(self, message_quantity: int, date_sent: datetime) -> Any:
@@ -580,9 +578,7 @@ class TestArchivingReactions(ArchiveMessagesTestingBase, EmojiReactionBase):
 
         restore_all_data_from_archive()
         self.assertEqual(
-            set(
-                Reaction.objects.filter(id__in=reaction_ids).values_list("id", flat=True),
-            ),
+            set(Reaction.objects.filter(id__in=reaction_ids).values_list("id", flat=True)),
             set(reaction_ids),
         )
 
@@ -920,9 +916,7 @@ class MoveMessageToArchiveWithReactions(MoveMessageToArchiveBase, EmojiReactionB
 
         restore_all_data_from_archive()
         self.assertEqual(
-            set(
-                Reaction.objects.filter(id__in=reaction_ids).values_list("id", flat=True),
-            ),
+            set(Reaction.objects.filter(id__in=reaction_ids).values_list("id", flat=True)),
             set(reaction_ids),
         )
 

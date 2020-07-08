@@ -873,8 +873,7 @@ class StreamAdminTest(ZulipTestCase):
 
         stream_id = get_stream("stream_name1", user_profile.realm).id
         result = self.client_patch(
-            f"/json/streams/{stream_id}",
-            {"description": ujson.dumps("Test description")},
+            f"/json/streams/{stream_id}", {"description": ujson.dumps("Test description")},
         )
         self.assert_json_error(result, "Must be an organization administrator")
 
@@ -1277,9 +1276,7 @@ class StreamAdminTest(ZulipTestCase):
 
         # If the removal succeeded, then assert that Cordelia is no longer subscribed.
         if result.status_code not in [400]:
-            subbed_users = self.users_subscribed_to_stream(
-                stream_name, user_profile.realm,
-            )
+            subbed_users = self.users_subscribed_to_stream(stream_name, user_profile.realm)
             for user in target_users:
                 self.assertNotIn(user, subbed_users)
 
@@ -1575,10 +1572,7 @@ class StreamAdminTest(ZulipTestCase):
 
         result = self.client_delete(
             "/json/users/me/subscriptions",
-            {
-                "subscriptions": ujson.dumps([stream_name]),
-                "principals": ujson.dumps([99]),
-            },
+            {"subscriptions": ujson.dumps([stream_name]), "principals": ujson.dumps([99])},
         )
         self.assert_json_error(
             result,
@@ -1846,8 +1840,7 @@ class DefaultStreamGroupTest(ZulipTestCase):
             {"op": "add", "stream_names": ujson.dumps(new_stream_names)},
         )
         self.assert_json_error(
-            result,
-            "Stream 'stream4' is already present in default stream group 'group1'",
+            result, "Stream 'stream4' is already present in default stream group 'group1'",
         )
 
         # Test removing streams from default stream group
@@ -2006,8 +1999,7 @@ class DefaultStreamGroupTest(ZulipTestCase):
             },
         )
         self.assert_json_error(
-            result,
-            "Default stream group name 'abc\000' contains NULL (0x00) characters.",
+            result, "Default stream group name 'abc\000' contains NULL (0x00) characters.",
         )
 
         # Also test that lookup_default_stream_groups raises an
@@ -2107,9 +2099,7 @@ class SubscriptionPropertiesTest(ZulipTestCase):
         test_user = self.example_user("hamlet")
         self.login_user(test_user)
 
-        subscribed, unsubscribed, never_subscribed = gather_subscriptions_helper(
-            test_user,
-        )
+        subscribed, unsubscribed, never_subscribed = gather_subscriptions_helper(test_user)
         not_subbed = unsubscribed + never_subscribed
         result = self.api_post(
             test_user,
@@ -3012,9 +3002,7 @@ class SubscriptionAPITest(ZulipTestCase):
             )
             self.assert_json_error(result, "User cannot create streams.")
 
-        with mock.patch(
-            "zerver.models.UserProfile.can_create_streams", return_value=True,
-        ):
+        with mock.patch("zerver.models.UserProfile.can_create_streams", return_value=True):
             self.common_subscribe_to_streams(self.test_user, ["stream2"])
 
         # User should still be able to subscribe to an existing stream
@@ -3378,16 +3366,12 @@ class SubscriptionAPITest(ZulipTestCase):
     def test_guest_user_subscribe(self) -> None:
         """Guest users cannot subscribe themselves to anything"""
         guest_user = self.example_user("polonius")
-        result = self.common_subscribe_to_streams(
-            guest_user, ["Denmark"], allow_fail=True,
-        )
+        result = self.common_subscribe_to_streams(guest_user, ["Denmark"], allow_fail=True)
         self.assert_json_error(result, "Not allowed for guest users")
 
         # Verify the internal checks also block guest users.
         stream = get_stream("Denmark", guest_user.realm)
-        self.assertEqual(
-            filter_stream_authorization(guest_user, [stream]), ([], [stream]),
-        )
+        self.assertEqual(filter_stream_authorization(guest_user, [stream]), ([], [stream]))
 
         # Test UserProfile.can_create_streams for guest users.
         streams_raw = [
@@ -3407,9 +3391,7 @@ class SubscriptionAPITest(ZulipTestCase):
             guest_user, ["private_stream"], allow_fail=True,
         )
         self.assert_json_error(result, "Not allowed for guest users")
-        self.assertEqual(
-            filter_stream_authorization(guest_user, [stream]), ([], [stream]),
-        )
+        self.assertEqual(filter_stream_authorization(guest_user, [stream]), ([], [stream]))
 
     def test_users_getting_add_peer_event(self) -> None:
         """
@@ -3565,9 +3547,7 @@ class SubscriptionAPITest(ZulipTestCase):
 
         with queries_captured() as queries:
             self.common_subscribe_to_streams(
-                self.test_user,
-                streams,
-                dict(principals=ujson.dumps([self.test_user.id])),
+                self.test_user, streams, dict(principals=ujson.dumps([self.test_user.id])),
             )
         # Make sure we don't make O(streams) queries
         self.assert_length(queries, 16)
@@ -3797,9 +3777,7 @@ class SubscriptionAPITest(ZulipTestCase):
             stream.name for stream in Stream.objects.filter(realm=self.test_realm)
         ]
         streams_not_subbed = list(set(all_stream_names) - set(self.streams))
-        self.assertNotEqual(
-            len(streams_not_subbed), 0,
-        )  # necessary for full test coverage
+        self.assertNotEqual(len(streams_not_subbed), 0)  # necessary for full test coverage
         self.helper_subscriptions_exists(streams_not_subbed[0], True, False)
 
     def test_subscriptions_does_not_exist(self) -> None:
@@ -3840,8 +3818,7 @@ class SubscriptionAPITest(ZulipTestCase):
         self.assertFalse(result.json()["subscribed"])
 
         result = self.client_post(
-            "/json/subscriptions/exists",
-            {"stream": stream_name, "autosubscribe": "true"},
+            "/json/subscriptions/exists", {"stream": stream_name, "autosubscribe": "true"},
         )
         self.assert_json_success(result)
         self.assertIn("subscribed", result.json())
@@ -3857,8 +3834,7 @@ class SubscriptionAPITest(ZulipTestCase):
         stream = get_stream(stream_name, self.test_realm)
 
         result = self.client_post(
-            "/json/subscriptions/exists",
-            {"stream": stream_name, "autosubscribe": "true"},
+            "/json/subscriptions/exists", {"stream": stream_name, "autosubscribe": "true"},
         )
         # We can't see invite-only streams here
         self.assert_json_error(result, "Invalid stream name 'Saxony'", status_code=404)
@@ -4556,9 +4532,7 @@ class GetSubscribersTest(ZulipTestCase):
                 len(never_subscribed), len(public_streams) + len(private_streams),
             )
             for stream_dict in never_subscribed:
-                self.assertTrue(
-                    len(stream_dict["subscribers"]) == len(users_to_subscribe),
-                )
+                self.assertTrue(len(stream_dict["subscribers"]) == len(users_to_subscribe))
 
         test_admin_case()
 
@@ -4767,9 +4741,7 @@ class AccessStreamTest(ZulipTestCase):
         # Nobody can access a stream that doesn't exist
         with self.assertRaisesRegex(JsonableError, "Invalid stream id"):
             access_stream_by_id(hamlet, 501232)
-        with self.assertRaisesRegex(
-            JsonableError, "Invalid stream name 'invalid stream'",
-        ):
+        with self.assertRaisesRegex(JsonableError, "Invalid stream name 'invalid stream'"):
             access_stream_by_name(hamlet, "invalid stream")
 
         # Hamlet can access the private stream
@@ -4831,9 +4803,7 @@ class AccessStreamTest(ZulipTestCase):
         guest_user_profile = self.example_user("polonius")
         self.login_user(guest_user_profile)
         stream_name = "public_stream_1"
-        stream = self.make_stream(
-            stream_name, guest_user_profile.realm, invite_only=False,
-        )
+        stream = self.make_stream(stream_name, guest_user_profile.realm, invite_only=False)
 
         # Guest user don't have access to unsubscribed public streams
         with self.assertRaisesRegex(JsonableError, "Invalid stream id"):
@@ -4841,9 +4811,7 @@ class AccessStreamTest(ZulipTestCase):
 
         # Guest user have access to subscribed public streams
         self.subscribe(guest_user_profile, stream_name)
-        (stream_ret, rec_ret, sub_ret) = access_stream_by_id(
-            guest_user_profile, stream.id,
-        )
+        (stream_ret, rec_ret, sub_ret) = access_stream_by_id(guest_user_profile, stream.id)
         assert sub_ret is not None
         self.assertEqual(stream.id, stream_ret.id)
         self.assertEqual(sub_ret.recipient, rec_ret)
@@ -4857,9 +4825,7 @@ class AccessStreamTest(ZulipTestCase):
 
         # Guest user have access to subscribed private streams
         self.subscribe(guest_user_profile, stream_name)
-        (stream_ret, rec_ret, sub_ret) = access_stream_by_id(
-            guest_user_profile, stream.id,
-        )
+        (stream_ret, rec_ret, sub_ret) = access_stream_by_id(guest_user_profile, stream.id)
         assert sub_ret is not None
         self.assertEqual(stream.id, stream_ret.id)
         self.assertEqual(sub_ret.recipient, rec_ret)

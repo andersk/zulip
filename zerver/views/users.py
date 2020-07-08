@@ -190,11 +190,7 @@ def update_user_backend(
             raise OrganizationOwnerRequired()
         do_change_user_role(target, role, acting_user=user_profile)
 
-    if (
-        full_name is not None
-        and target.full_name != full_name
-        and full_name.strip() != ""
-    ):
+    if full_name is not None and target.full_name != full_name and full_name.strip() != "":
         # We don't respect `name_changes_disabled` here because the request
         # is on behalf of the administrator.
         check_change_full_name(target, full_name, user_profile)
@@ -337,9 +333,7 @@ def patch_bot_backend(
         service_payload_url=service_payload_url,
         config_data=config_data,
         default_sending_stream=get_stream_name(bot.default_sending_stream),
-        default_events_register_stream=get_stream_name(
-            bot.default_events_register_stream,
-        ),
+        default_events_register_stream=get_stream_name(bot.default_events_register_stream),
         default_all_public_streams=bot.default_all_public_streams,
     )
 
@@ -439,11 +433,9 @@ def add_bot_backend(
 
     default_events_register_stream = None
     if default_events_register_stream_name is not None:
-        (
-            default_events_register_stream,
-            ignored_rec,
-            ignored_sub,
-        ) = access_stream_by_name(user_profile, default_events_register_stream_name)
+        (default_events_register_stream, ignored_rec, ignored_sub) = access_stream_by_name(
+            user_profile, default_events_register_stream_name,
+        )
 
     if (
         bot_type in (UserProfile.INCOMING_WEBHOOK_BOT, UserProfile.EMBEDDED_BOT)
@@ -558,11 +550,7 @@ def get_members_backend(
     target_user = None
     if user_id is not None:
         target_user = access_user_by_id(
-            user_profile,
-            user_id,
-            allow_deactivated=True,
-            allow_bots=True,
-            read_only=True,
+            user_profile, user_id, allow_deactivated=True, allow_bots=True, read_only=True,
         )
 
     members = get_raw_user_data(
@@ -623,9 +611,7 @@ def create_user_backend(
     if not check_password_strength(password):
         return json_error(PASSWORD_TOO_WEAK_ERROR)
 
-    do_create_user(
-        email, password, realm, full_name, short_name, acting_user=user_profile,
-    )
+    do_create_user(email, password, realm, full_name, short_name, acting_user=user_profile)
     return json_success()
 
 

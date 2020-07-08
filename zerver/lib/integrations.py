@@ -464,10 +464,7 @@ INTEGRATIONS: Dict[str, Integration] = {
         doc="zerver/integrations/capistrano.md",
     ),
     "codebase": Integration(
-        "codebase",
-        "codebase",
-        ["version-control"],
-        doc="zerver/integrations/codebase.md",
+        "codebase", "codebase", ["version-control"], doc="zerver/integrations/codebase.md",
     ),
     "discourse": Integration(
         "discourse",
@@ -499,10 +496,7 @@ INTEGRATIONS: Dict[str, Integration] = {
         doc="zerver/integrations/google-calendar.md",
     ),
     "hubot": Integration(
-        "hubot",
-        "hubot",
-        ["meta-integration", "bots"],
-        doc="zerver/integrations/hubot.md",
+        "hubot", "hubot", ["meta-integration", "bots"], doc="zerver/integrations/hubot.md",
     ),
     "irc": Integration(
         "irc",
@@ -552,10 +546,7 @@ INTEGRATIONS: Dict[str, Integration] = {
         stream_name="deployments",
     ),
     "perforce": Integration(
-        "perforce",
-        "perforce",
-        ["version-control"],
-        doc="zerver/integrations/perforce.md",
+        "perforce", "perforce", ["version-control"], doc="zerver/integrations/perforce.md",
     ),
     "phabricator": Integration(
         "phabricator",
@@ -567,10 +558,7 @@ INTEGRATIONS: Dict[str, Integration] = {
         "puppet", "puppet", ["deployment"], doc="zerver/integrations/puppet.md",
     ),
     "redmine": Integration(
-        "redmine",
-        "redmine",
-        ["project-management"],
-        doc="zerver/integrations/redmine.md",
+        "redmine", "redmine", ["project-management"], doc="zerver/integrations/redmine.md",
     ),
     "rss": Integration(
         "rss",
@@ -732,9 +720,7 @@ DOC_SCREENSHOT_CONFIG: Dict[str, List[ScreenshotConfig]] = {
     "errbit": [ScreenshotConfig("error_message.json")],
     "flock": [ScreenshotConfig("messages.json")],
     "freshdesk": [
-        ScreenshotConfig(
-            "ticket_created.json", image_name="004.png", use_basic_auth=True,
-        ),
+        ScreenshotConfig("ticket_created.json", image_name="004.png", use_basic_auth=True),
     ],
     "front": [ScreenshotConfig("inbound_message.json")],
     "gci": [ScreenshotConfig("task_abandoned_by_student.json")],

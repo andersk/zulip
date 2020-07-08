@@ -416,9 +416,7 @@ class PermissionTest(ZulipTestCase):
 
         # Non-admin user can't admin another user
         with self.assertRaises(JsonableError):
-            access_user_by_id(
-                self.example_user("cordelia"), self.example_user("aaron").id,
-            )
+            access_user_by_id(self.example_user("cordelia"), self.example_user("aaron").id)
         # But does have read-only access to it.
         access_user_by_id(
             self.example_user("cordelia"), self.example_user("aaron").id, read_only=True,
@@ -1241,9 +1239,7 @@ class ActivateTest(ZulipTestCase):
         do_change_user_role(iago, UserProfile.ROLE_REALM_OWNER)
 
         # Cannot deactivate a user with the bot api
-        result = self.client_delete(
-            "/json/bots/{}".format(self.example_user("hamlet").id),
-        )
+        result = self.client_delete("/json/bots/{}".format(self.example_user("hamlet").id))
         self.assert_json_error(result, "No such bot")
 
         # Cannot deactivate a nonexistent user.
@@ -1360,8 +1356,7 @@ class ActivateTest(ZulipTestCase):
                 {
                     str(
                         Address(
-                            display_name=hamlet.full_name,
-                            addr_spec=hamlet.delivery_email,
+                            display_name=hamlet.full_name, addr_spec=hamlet.delivery_email,
                         ),
                     ),
                     str(

@@ -11,9 +11,7 @@ from psycopg2.sql import SQL
 BATCH_SIZE = 10000
 
 
-def sql_copy_id_to_bigint_id(
-    id_range_lower_bound: int, id_range_upper_bound: int,
-) -> None:
+def sql_copy_id_to_bigint_id(id_range_lower_bound: int, id_range_upper_bound: int) -> None:
     query = SQL(
         """
             UPDATE zerver_usermessage

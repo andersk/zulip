@@ -100,9 +100,7 @@ def generate_all_emails(request: HttpRequest) -> HttpResponse:
     assert result.status_code == 302
 
     # Confirm account email
-    result = client.post(
-        "/accounts/home/", {"email": unregistered_email_1}, **host_kwargs,
-    )
+    result = client.post("/accounts/home/", {"email": unregistered_email_1}, **host_kwargs)
     assert result.status_code == 302
 
     # Find account email

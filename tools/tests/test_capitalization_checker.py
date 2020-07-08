@@ -13,8 +13,7 @@ class GetSafeTextTestCase(TestCase):
         safe_text = get_safe_text(string)
         self.assertEqual(
             safe_text,
-            "Messages in __page_params_product_name__ "
-            "go to a stream and have a topic.",
+            "Messages in __page_params_product_name__ " "go to a stream and have a topic.",
         )
 
         string = "Zulip Zulip. Zulip some text!"

@@ -99,9 +99,7 @@ def serve_file(
     if is_authorized is None:
         return HttpResponseNotFound(_("<p>File not found.</p>"))
     if not is_authorized:
-        return HttpResponseForbidden(
-            _("<p>You are not authorized to view this file.</p>"),
-        )
+        return HttpResponseForbidden(_("<p>You are not authorized to view this file.</p>"))
     if settings.LOCAL_UPLOADS_DIR is not None:
         return serve_local(request, path_id, url_only)
 

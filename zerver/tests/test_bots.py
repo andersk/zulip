@@ -596,9 +596,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
         self.login("othello")
 
         # Cannot deactivate a user as a bot
-        result = self.client_delete(
-            "/json/bots/{}".format(self.example_user("hamlet").id),
-        )
+        result = self.client_delete("/json/bots/{}".format(self.example_user("hamlet").id))
         self.assert_json_error(result, "No such bot")
 
         email = "hambot-bot@zulip.testserver"
@@ -983,9 +981,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
         }
         email = "hambot-bot@zulip.testserver"
         result = self.client_patch(f"/json/bots/{self.get_bot_user(email).id}", bot_info)
-        self.assert_json_error(
-            result, "Failed to change owner, bots can't own other bots",
-        )
+        self.assert_json_error(result, "Failed to change owner, bots can't own other bots")
         profile = get_user(email, get_realm("zulip"))
         self.assertEqual(profile.bot_owner, self.example_user("hamlet"))
 

@@ -322,9 +322,7 @@ def install_yum_deps(deps_to_install: List[str]) -> None:
                 # The output is well-formed
                 yum_extra_flags = ["--skip-broken"]
             else:
-                print(
-                    "Unrecognized output. `subscription-manager` might not be available",
-                )
+                print("Unrecognized output. `subscription-manager` might not be available")
 
     run_as_root(["yum", "install", "-y"] + yum_extra_flags + deps_to_install)
     if "rhel" in os_families():

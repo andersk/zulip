@@ -27,11 +27,7 @@ class Command(BaseCommand):
             help="worker label",
         )
         parser.add_argument(
-            "--all",
-            dest="all",
-            action="store_true",
-            default=False,
-            help="run all queues",
+            "--all", dest="all", action="store_true", default=False, help="run all queues",
         )
         parser.add_argument(
             "--multi_threaded",

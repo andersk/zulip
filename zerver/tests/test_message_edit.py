@@ -431,9 +431,7 @@ class EditMessageTest(ZulipTestCase):
         self.subscribe(hamlet, "Scotland")
         self.subscribe(cordelia, "Scotland")
 
-        msg_id = self.send_stream_message(
-            hamlet, "Scotland", content="@**Cordelia Lear**",
-        )
+        msg_id = self.send_stream_message(hamlet, "Scotland", content="@**Cordelia Lear**")
 
         user_info = get_user_info_for_message_updates(msg_id)
         message_user_ids = user_info["message_user_ids"]
@@ -712,10 +710,7 @@ class EditMessageTest(ZulipTestCase):
         self.login("iago")
         # send a message in the past
         id_ = self.send_stream_message(
-            self.example_user("hamlet"),
-            "Scotland",
-            content="content",
-            topic_name="topic",
+            self.example_user("hamlet"), "Scotland", content="content", topic_name="topic",
         )
         message = Message.objects.get(id=id_)
         message.date_sent = message.date_sent - datetime.timedelta(seconds=180)
@@ -887,8 +882,7 @@ class EditMessageTest(ZulipTestCase):
                     arg_event["wildcard_mention_user_ids"], [cordelia.id, hamlet.id],
                 )
                 self.assertEqual(
-                    sorted(arg_notified_users, key=itemgetter("id")),
-                    users_to_be_notified,
+                    sorted(arg_notified_users, key=itemgetter("id")), users_to_be_notified,
                 )
                 called = True
         self.assertTrue(called)
@@ -990,8 +984,7 @@ class EditMessageTest(ZulipTestCase):
         )
 
         result = self.client_patch(
-            "/json/messages/" + str(id1),
-            {"topic": "edited", "propagate_mode": "invalid"},
+            "/json/messages/" + str(id1), {"topic": "edited", "propagate_mode": "invalid"},
         )
         self.assert_json_error(result, "Invalid propagate_mode")
         self.check_topic(id1, topic_name="topic1")
@@ -1383,9 +1376,7 @@ class DeleteMessageTest(ZulipTestCase):
         self.login("iago")
         hamlet = self.example_user("hamlet")
         msg_id = self.send_stream_message(hamlet, "Scotland")
-        result = self.client_delete(
-            f"/json/messages/{msg_id + 1}", {"message_id": msg_id},
-        )
+        result = self.client_delete(f"/json/messages/{msg_id + 1}", {"message_id": msg_id})
         self.assert_json_error(result, "Invalid message(s)")
         result = self.client_delete(f"/json/messages/{msg_id}")
         self.assert_json_success(result)

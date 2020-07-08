@@ -66,10 +66,7 @@ def json_response_from_error(exception: JsonableError) -> HttpResponse:
     calling this function.
     """
     return json_response(
-        "error",
-        msg=exception.msg,
-        data=exception.data,
-        status=exception.http_status_code,
+        "error", msg=exception.msg, data=exception.data, status=exception.http_status_code,
     )
 
 

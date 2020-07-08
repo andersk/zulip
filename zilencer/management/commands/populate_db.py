@@ -478,16 +478,12 @@ class Command(BaseCommand):
                 "Denmark": {"description": "A Scandinavian country"},
                 "Scotland": {"description": "Located in the United Kingdom"},
                 "Venice": {"description": "A northeastern Italian city"},
-                "Rome": {
-                    "description": "Yet another Italian city",
-                    "is_web_public": True,
-                },
+                "Rome": {"description": "Yet another Italian city", "is_web_public": True},
             }
 
             bulk_create_streams(zulip_realm, stream_dict)
             recipient_streams: List[int] = [
-                Stream.objects.get(name=name, realm=zulip_realm).id
-                for name in stream_list
+                Stream.objects.get(name=name, realm=zulip_realm).id for name in stream_list
             ]
 
             # Create subscriptions to streams.  The following
@@ -522,9 +518,7 @@ class Command(BaseCommand):
 
                     for stream_name in subscriptions_map[email]:
                         stream = Stream.objects.get(name=stream_name)
-                        r = Recipient.objects.get(
-                            type=Recipient.STREAM, type_id=stream.id,
-                        )
+                        r = Recipient.objects.get(type=Recipient.STREAM, type_id=stream.id)
                         subscriptions_list.append((profile, r))
             else:
                 num_streams = len(recipient_streams)

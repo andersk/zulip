@@ -223,10 +223,7 @@ def stats_for_remote_installation(
 @require_server_admin_api
 @has_request_variables
 def get_chart_data_for_installation(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    chart_name: str = REQ(),
-    **kwargs: Any,
+    request: HttpRequest, user_profile: UserProfile, chart_name: str = REQ(), **kwargs: Any
 ) -> HttpResponse:
     return get_chart_data(
         request=request, user_profile=user_profile, for_installation=True, **kwargs,

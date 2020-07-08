@@ -264,9 +264,7 @@ class WorkerTest(ZulipTestCase):
             ):
                 event_new = generate_new_message_notification()
                 event_remove = generate_remove_notification()
-                fake_client.queue.append(
-                    ("missedmessage_mobile_notifications", event_new),
-                )
+                fake_client.queue.append(("missedmessage_mobile_notifications", event_new))
                 fake_client.queue.append(
                     ("missedmessage_mobile_notifications", event_remove),
                 )
@@ -290,9 +288,7 @@ class WorkerTest(ZulipTestCase):
             ):
                 event_new = generate_new_message_notification()
                 event_remove = generate_remove_notification()
-                fake_client.queue.append(
-                    ("missedmessage_mobile_notifications", event_new),
-                )
+                fake_client.queue.append(("missedmessage_mobile_notifications", event_new))
                 fake_client.queue.append(
                     ("missedmessage_mobile_notifications", event_remove),
                 )
@@ -449,8 +445,7 @@ class WorkerTest(ZulipTestCase):
             worker = queue_processors.SignupWorker()
             worker.setup()
             with patch(
-                "zerver.worker.queue_processors.requests.post",
-                return_value=fake_response,
+                "zerver.worker.queue_processors.requests.post", return_value=fake_response,
             ), patch(
                 "zerver.lib.queue.queue_json_publish", side_effect=fake_publish,
             ), patch(
@@ -476,8 +471,7 @@ class WorkerTest(ZulipTestCase):
             worker = queue_processors.SignupWorker()
             worker.setup()
             with patch(
-                "zerver.worker.queue_processors.requests.post",
-                return_value=fake_response,
+                "zerver.worker.queue_processors.requests.post", return_value=fake_response,
             ), self.settings(
                 MAILCHIMP_API_KEY="one-two", PRODUCTION=True, ZULIP_FRIENDS_LIST_ID="id",
             ):
@@ -502,8 +496,7 @@ class WorkerTest(ZulipTestCase):
             worker = queue_processors.SignupWorker()
             worker.setup()
             with patch(
-                "zerver.worker.queue_processors.requests.post",
-                return_value=fake_response,
+                "zerver.worker.queue_processors.requests.post", return_value=fake_response,
             ), self.settings(
                 MAILCHIMP_API_KEY="one-two", PRODUCTION=True, ZULIP_FRIENDS_LIST_ID="id",
             ):

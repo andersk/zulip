@@ -12,9 +12,7 @@ class GithubWebhookTest(WebhookTestCase):
     EXPECTED_TOPIC_ISSUE_EVENTS = (
         "public-repo / Issue #2 Spelling error in the README file"
     )
-    EXPECTED_TOPIC_PR_EVENTS = (
-        "public-repo / PR #1 Update the README with new information"
-    )
+    EXPECTED_TOPIC_PR_EVENTS = "public-repo / PR #1 Update the README with new information"
     EXPECTED_TOPIC_DEPLOYMENT_EVENTS = "public-repo / Deployment on production"
     EXPECTED_TOPIC_ORGANIZATION_EVENTS = "baxterandthehackers organization"
     EXPECTED_TOPIC_BRANCH_EVENTS = "public-repo / changes"
@@ -34,9 +32,7 @@ class GithubWebhookTest(WebhookTestCase):
         self.send_and_test_stream_message("star", expected_topic, expected_message)
 
     def test_ping_organization_event(self) -> None:
-        expected_message = (
-            "GitHub webhook has been successfully configured by eeshangarg."
-        )
+        expected_message = "GitHub webhook has been successfully configured by eeshangarg."
         self.send_and_test_stream_message(
             "ping__organization", "zulip-test-org", expected_message,
         )
@@ -344,9 +340,7 @@ class GithubWebhookTest(WebhookTestCase):
     def test_pull_request_review_comment_msg(self) -> None:
         expected_message = "baxterthehacker created [PR Review Comment](https://github.com/baxterthehacker/public-repo/pull/1#discussion_r29724692):\n\n~~~ quote\nMaybe you should use more emojji on this line.\n~~~"
         self.send_and_test_stream_message(
-            "pull_request_review_comment",
-            self.EXPECTED_TOPIC_PR_EVENTS,
-            expected_message,
+            "pull_request_review_comment", self.EXPECTED_TOPIC_PR_EVENTS, expected_message,
         )
 
     def test_pull_request_review_comment_with_custom_topic_in_url(self) -> None:
@@ -536,10 +530,7 @@ A temporary team so that I can get some webhook fixtures!
         self.url = self.build_webhook_url(branches="master,development")
         payload = self.get_body("push__1_commit")
         result = self.client_post(
-            self.url,
-            payload,
-            content_type="application/json",
-            HTTP_X_GITHUB_EVENT="push",
+            self.url, payload, content_type="application/json", HTTP_X_GITHUB_EVENT="push",
         )
         self.assertFalse(check_send_webhook_message_mock.called)
         self.assert_json_success(result)
@@ -551,10 +542,7 @@ A temporary team so that I can get some webhook fixtures!
         self.url = self.build_webhook_url(branches="master,development")
         payload = self.get_body("push__50_commits")
         result = self.client_post(
-            self.url,
-            payload,
-            content_type="application/json",
-            HTTP_X_GITHUB_EVENT="push",
+            self.url, payload, content_type="application/json", HTTP_X_GITHUB_EVENT="push",
         )
         self.assertFalse(check_send_webhook_message_mock.called)
         self.assert_json_success(result)
@@ -566,10 +554,7 @@ A temporary team so that I can get some webhook fixtures!
         self.url = self.build_webhook_url(branches="master,development")
         payload = self.get_body("push__multiple_committers")
         result = self.client_post(
-            self.url,
-            payload,
-            content_type="application/json",
-            HTTP_X_GITHUB_EVENT="push",
+            self.url, payload, content_type="application/json", HTTP_X_GITHUB_EVENT="push",
         )
         self.assertFalse(check_send_webhook_message_mock.called)
         self.assert_json_success(result)
@@ -581,10 +566,7 @@ A temporary team so that I can get some webhook fixtures!
         self.url = self.build_webhook_url(branches="master,development")
         payload = self.get_body("push__multiple_committers_with_others")
         result = self.client_post(
-            self.url,
-            payload,
-            content_type="application/json",
-            HTTP_X_GITHUB_EVENT="push",
+            self.url, payload, content_type="application/json", HTTP_X_GITHUB_EVENT="push",
         )
         self.assertFalse(check_send_webhook_message_mock.called)
         self.assert_json_success(result)

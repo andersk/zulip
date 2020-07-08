@@ -31,9 +31,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "timestamp",
-                    models.DateTimeField(
-                        db_index=True, default=django.utils.timezone.now,
-                    ),
+                    models.DateTimeField(db_index=True, default=django.utils.timezone.now),
                 ),
                 ("times_used", models.PositiveIntegerField(db_index=True, default=0)),
                 (

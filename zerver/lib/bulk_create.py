@@ -156,16 +156,12 @@ def bulk_create_streams(
                     realm=realm,
                     name=name,
                     description=options["description"],
-                    rendered_description=render_stream_description(
-                        options["description"],
-                    ),
+                    rendered_description=render_stream_description(options["description"]),
                     invite_only=options.get("invite_only", False),
                     stream_post_policy=options.get(
                         "stream_post_policy", Stream.STREAM_POST_POLICY_EVERYONE,
                     ),
-                    history_public_to_subscribers=options[
-                        "history_public_to_subscribers"
-                    ],
+                    history_public_to_subscribers=options["history_public_to_subscribers"],
                     is_web_public=options.get("is_web_public", False),
                     is_in_zephyr_realm=realm.is_zephyr_mirror_realm,
                 ),

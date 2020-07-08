@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="realm",
-            name="max_invites",
-            field=models.IntegerField(default=100),
+            model_name="realm", name="max_invites", field=models.IntegerField(default=100),
         ),
     ]

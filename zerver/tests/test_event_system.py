@@ -368,9 +368,7 @@ class GetEventsTest(ZulipTestCase):
             self.assert_json_success(result)
             self.assert_length(events, 0)
 
-            self.send_personal_message(
-                user_profile, self.example_user("othello"), "hello",
-            )
+            self.send_personal_message(user_profile, self.example_user("othello"), "hello")
             self.send_stream_message(user_profile, "Denmark", "**hello**")
 
             result = self.tornado_call(

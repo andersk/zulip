@@ -14,11 +14,7 @@ from zerver.lib.webhooks.common import (
 from zerver.models import UserProfile
 
 from .board_actions import SUPPORTED_BOARD_ACTIONS, process_board_action
-from .card_actions import (
-    IGNORED_CARD_ACTIONS,
-    SUPPORTED_CARD_ACTIONS,
-    process_card_action,
-)
+from .card_actions import IGNORED_CARD_ACTIONS, SUPPORTED_CARD_ACTIONS, process_card_action
 
 
 @api_key_only_webhook_view("Trello")

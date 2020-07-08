@@ -26,9 +26,7 @@ class Migration(migrations.Migration):
                 ("base_site_url", models.CharField(max_length=128)),
                 (
                     "realms",
-                    models.ManyToManyField(
-                        related_name="_deployments", to="zerver.Realm",
-                    ),
+                    models.ManyToManyField(related_name="_deployments", to="zerver.Realm"),
                 ),
             ],
             options={},

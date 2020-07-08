@@ -600,10 +600,7 @@ def write_message_data(
 
 
 def write_emoticon_data(
-    realm_id: int,
-    custom_emoji_data: List[Dict[str, Any]],
-    data_dir: str,
-    output_dir: str,
+    realm_id: int, custom_emoji_data: List[Dict[str, Any]], data_dir: str, output_dir: str,
 ) -> List[ZerverFieldsT]:
     """
     This function does most of the work for processing emoticons, the bulk

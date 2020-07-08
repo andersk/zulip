@@ -81,9 +81,7 @@ def register_zoom_user(request: HttpRequest) -> HttpResponse:
     oauth = get_zoom_session(request.user)
     authorization_url, state = oauth.authorization_url(
         "https://zoom.us/oauth/authorize",
-        state=json.dumps(
-            {"realm": get_subdomain(request), "sid": get_zoom_sid(request)},
-        ),
+        state=json.dumps({"realm": get_subdomain(request), "sid": get_zoom_sid(request)}),
     )
     return redirect(authorization_url)
 
@@ -168,9 +166,7 @@ def deauthorize_zoom_user(request: HttpRequest) -> HttpResponse:
     return json_success()
 
 
-def get_bigbluebutton_url(
-    request: HttpRequest, user_profile: UserProfile,
-) -> HttpResponse:
+def get_bigbluebutton_url(request: HttpRequest, user_profile: UserProfile) -> HttpResponse:
     # https://docs.bigbluebutton.org/dev/api.html#create for reference on the api calls
     # https://docs.bigbluebutton.org/dev/api.html#usage for reference for checksum
     id = "zulip-" + str(random.randint(100000000000, 999999999999))

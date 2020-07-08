@@ -34,10 +34,7 @@ def clear_duplicate_counts(apps: StateApps, schema_editor: DatabaseSchemaEditor)
         total_value = realm_count.pop("value__sum")
         duplicate_counts = list(RealmCount.objects.filter(**realm_count))
         first_count = duplicate_counts[0]
-        if realm_count["property"] in [
-            "invites_sent::day",
-            "active_users_log:is_bot:day",
-        ]:
+        if realm_count["property"] in ["invites_sent::day", "active_users_log:is_bot:day"]:
             # For LoggingCountStat objects, the right fix is to combine the totals;
             # for other CountStat objects, we expect the duplicates to have the same value.
             # And so all we need to do is delete them.

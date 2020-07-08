@@ -83,17 +83,14 @@ def get_recipient_id_for_stream_name(realm: Realm, stream_name: str) -> str:
 def mute_stream(realm: Realm, user_profile: str, stream_name: str) -> None:
     stream = get_stream(stream_name, realm)
     recipient = stream.recipient
-    subscription = Subscription.objects.get(
-        recipient=recipient, user_profile=user_profile,
-    )
+    subscription = Subscription.objects.get(recipient=recipient, user_profile=user_profile)
     subscription.is_muted = True
     subscription.save()
 
 
 def first_visible_id_as(message_id: int) -> Any:
     return mock.patch(
-        "zerver.views.message_fetch.get_first_visible_message_id",
-        return_value=message_id,
+        "zerver.views.message_fetch.get_first_visible_message_id", return_value=message_id,
     )
 
 
@@ -466,9 +463,7 @@ class NarrowBuilderTest(ZulipTestCase):
         term = dict(operator="has", operand="link")
         self._do_add_term_test(term, "WHERE has_link")
 
-    def test_add_term_using_has_operator_link_operand_and_negated(
-        self,
-    ) -> None:  # NEGATED
+    def test_add_term_using_has_operator_link_operand_and_negated(self) -> None:  # NEGATED
         term = dict(operator="has", operand="link", negated=True)
         self._do_add_term_test(term, "WHERE NOT has_link")
 
@@ -1413,9 +1408,7 @@ class GetOldMessagesTest(ZulipTestCase):
             .values("id")
             .order_by("id")
         )
-        query_ids["public_streams_recipents"] = ", ".join(
-            str(r["id"]) for r in recipients
-        )
+        query_ids["public_streams_recipents"] = ", ".join(str(r["id"]) for r in recipients)
         return query_ids
 
     def test_content_types(self) -> None:
@@ -1768,9 +1761,7 @@ class GetOldMessagesTest(ZulipTestCase):
         # narrow view.
         self.subscribe(mit_user_profile, "Scotland")
         self.send_stream_message(mit_user_profile, "Scotland", topic_name="\u03bb-topic")
-        self.send_stream_message(
-            mit_user_profile, "Scotland", topic_name="\u03bb-topic.d",
-        )
+        self.send_stream_message(mit_user_profile, "Scotland", topic_name="\u03bb-topic.d")
         self.send_stream_message(
             mit_user_profile, "Scotland", topic_name="\u03bb-topic.d.d",
         )
@@ -2354,9 +2345,7 @@ class GetOldMessagesTest(ZulipTestCase):
                 self.send_stream_message(self.example_user("cordelia"), "Verona"),
             )
 
-        data = self.get_messages_response(
-            anchor=message_ids[9], num_before=9, num_after=0,
-        )
+        data = self.get_messages_response(anchor=message_ids[9], num_before=9, num_after=0)
 
         messages = data["messages"]
         self.assertEqual(data["found_anchor"], True)
@@ -2401,9 +2390,7 @@ class GetOldMessagesTest(ZulipTestCase):
         self.assertEqual(data["found_newest"], False)
         self.assertEqual(data["history_limited"], True)
 
-        data = self.get_messages_response(
-            anchor=message_ids[5], num_before=0, num_after=5,
-        )
+        data = self.get_messages_response(anchor=message_ids[5], num_before=0, num_after=5)
 
         messages = data["messages"]
         self.assertEqual(data["found_anchor"], True)
@@ -2482,9 +2469,7 @@ class GetOldMessagesTest(ZulipTestCase):
         self.assertEqual(data["found_newest"], False)
         self.assertEqual(data["history_limited"], False)
 
-        data = self.get_messages_response(
-            anchor=message_ids[5], num_before=5, num_after=4,
-        )
+        data = self.get_messages_response(anchor=message_ids[5], num_before=5, num_after=4)
 
         messages = data["messages"]
         self.assertEqual(data["found_anchor"], True)
@@ -2933,9 +2918,7 @@ class GetOldMessagesTest(ZulipTestCase):
         self.send_personal_message(
             self.example_user("othello"), self.example_user("cordelia"),
         )
-        self.send_personal_message(
-            self.example_user("othello"), self.example_user("iago"),
-        )
+        self.send_personal_message(self.example_user("othello"), self.example_user("iago"))
 
         query_params = dict(
             anchor="first_unread", num_before=10, num_after=10, narrow="[]",
@@ -2980,9 +2963,7 @@ class GetOldMessagesTest(ZulipTestCase):
         self.send_personal_message(
             self.example_user("othello"), self.example_user("cordelia"),
         )
-        self.send_personal_message(
-            self.example_user("othello"), self.example_user("iago"),
-        )
+        self.send_personal_message(self.example_user("othello"), self.example_user("iago"))
 
         query_params = dict(
             anchor="first_unread", num_before=10, num_after=10, narrow="[]",
@@ -3176,8 +3157,7 @@ recipient_id = %(recipient_id_3)s AND upper(subject) = upper(%(param_2)s))\
         )
         self.assertEqual(params["param_1"], "golf")
         self.assertEqual(
-            params["recipient_id_3"],
-            get_recipient_id_for_stream_name(realm, "web stuff"),
+            params["recipient_id_3"], get_recipient_id_for_stream_name(realm, "web stuff"),
         )
         self.assertEqual(params["param_2"], "css")
 
@@ -3700,9 +3680,7 @@ class MessageHasKeywordsTest(ZulipTestCase):
             self.assertTrue(m.called)
             m.reset_mock()
 
-            self.update_message(
-                msg, f"[new text link](/user_uploads/{dummy_path_ids[1]})",
-            )
+            self.update_message(msg, f"[new text link](/user_uploads/{dummy_path_ids[1]})")
             self.assertFalse(m.called)
             m.reset_mock()
 

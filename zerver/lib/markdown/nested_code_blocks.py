@@ -64,10 +64,7 @@ class NestedCodeBlocksRendererTreeProcessor(markdown.treeprocessors.Treeprocesso
         return div
 
     def replace_element(
-        self,
-        parent: Optional[Element],
-        replacement: Element,
-        element_to_replace: Element,
+        self, parent: Optional[Element], replacement: Element, element_to_replace: Element,
     ) -> None:
         if parent is None:
             return

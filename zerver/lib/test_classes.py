@@ -436,9 +436,7 @@ class ZulipTestCase(TestCase):
 
     def login_by_email(self, email: str, password: str) -> None:
         realm = get_realm("zulip")
-        self.assertTrue(
-            self.client.login(username=email, password=password, realm=realm),
-        )
+        self.assertTrue(self.client.login(username=email, password=password, realm=realm))
 
     def assert_login_failure(self, email: str, password: str) -> None:
         realm = get_realm("zulip")
@@ -596,8 +594,7 @@ class ZulipTestCase(TestCase):
         """
         subs = get_stream_subscriptions_for_user(user_profile).filter(active=True)
         return [
-            check_string("recipient", get_display_recipient(sub.recipient))
-            for sub in subs
+            check_string("recipient", get_display_recipient(sub.recipient)) for sub in subs
         ]
 
     def send_personal_message(
@@ -770,12 +767,9 @@ class ZulipTestCase(TestCase):
         """
         self.assertEqual(get_session_dict_user(self.client.session), user_id)
 
-    def webhook_fixture_data(
-        self, type: str, action: str, file_type: str = "json",
-    ) -> str:
+    def webhook_fixture_data(self, type: str, action: str, file_type: str = "json") -> str:
         fn = os.path.join(
-            os.path.dirname(__file__),
-            f"../webhooks/{type}/fixtures/{action}.{file_type}",
+            os.path.dirname(__file__), f"../webhooks/{type}/fixtures/{action}.{file_type}",
         )
         return open(fn).read()
 
@@ -868,9 +862,7 @@ class ZulipTestCase(TestCase):
             "invite_only": ujson.dumps(invite_only),
         }
         post_data.update(extra_post_data)
-        result = self.api_post(
-            user, "/api/v1/users/me/subscriptions", post_data, **kwargs,
-        )
+        result = self.api_post(user, "/api/v1/users/me/subscriptions", post_data, **kwargs)
         if not allow_fail:
             self.assert_json_success(result)
         return result
@@ -1106,9 +1098,7 @@ class WebhookTestCase(ZulipTestCase):
             kwargs.update(headers)
         # The sender profile shouldn't be passed any further in kwargs, so we pop it.
         sender = kwargs.pop("sender", self.test_user)
-        msg = self.send_json_payload(
-            sender, self.url, payload, stream_name=None, **kwargs,
-        )
+        msg = self.send_json_payload(sender, self.url, payload, stream_name=None, **kwargs)
         self.do_test_message(msg, expected_message)
 
         return msg

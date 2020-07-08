@@ -505,9 +505,7 @@ class EditMessageSideEffectsTest(ZulipTestCase):
         with mock.patch(
             "zerver.lib.push_notifications.push_notifications_enabled", return_value=True,
         ):
-            message_id = self._login_and_send_original_stream_message(
-                content="@**Iago**",
-            )
+            message_id = self._login_and_send_original_stream_message(content="@**Iago**")
 
         self.assertEqual(get_apns_badge_count(mentioned_user), 1)
 
@@ -538,9 +536,7 @@ class EditMessageSideEffectsTest(ZulipTestCase):
 
         self.assertEqual(get_apns_badge_count(group_mentioned_user), 0)
 
-    def test_not_clear_notification_when_mention_removed_but_stream_notified(
-        self,
-    ) -> None:
+    def test_not_clear_notification_when_mention_removed_but_stream_notified(self) -> None:
         mentioned_user = self.example_user("iago")
         mentioned_user.enable_stream_push_notifications = True
         mentioned_user.save()
@@ -550,9 +546,7 @@ class EditMessageSideEffectsTest(ZulipTestCase):
         with mock.patch(
             "zerver.lib.push_notifications.push_notifications_enabled", return_value=True,
         ):
-            message_id = self._login_and_send_original_stream_message(
-                content="@**Iago**",
-            )
+            message_id = self._login_and_send_original_stream_message(content="@**Iago**")
 
         self.assertEqual(get_apns_badge_count(mentioned_user), 1)
 

@@ -105,10 +105,7 @@ class CreateCustomProfileFieldTest(CustomProfileFieldTestCase):
         self.assert_json_error(result, 'field_data["order"] cannot be blank.')
 
         data["field_data"] = ujson.dumps(
-            {
-                "": {"text": "Python", "order": "1"},
-                "java": {"text": "Java", "order": "2"},
-            },
+            {"": {"text": "Python", "order": "1"}, "java": {"text": "Java", "order": "2"}},
         )
         result = self.client_post("/json/realm/profile_fields", info=data)
         self.assert_json_error(result, "'value' cannot be blank.")
@@ -376,10 +373,7 @@ class UpdateCustomProfileFieldTest(CustomProfileFieldTestCase):
         self.assertEqual(CustomProfileField.objects.count(), self.original_count)
         result = self.client_patch(
             f"/json/realm/profile_fields/{field.id}",
-            info={
-                "name": "New phone number",
-                "field_type": CustomProfileField.SHORT_TEXT,
-            },
+            info={"name": "New phone number", "field_type": CustomProfileField.SHORT_TEXT},
         )
         self.assert_json_success(result)
         field = CustomProfileField.objects.get(id=field.id, realm=realm)
@@ -429,9 +423,7 @@ class UpdateCustomProfileFieldTest(CustomProfileFieldTestCase):
         )
         self.assert_json_error(result, "Bad value for 'field_data': invalid")
 
-        field_data = ujson.dumps(
-            {"vim": "Vim", "emacs": {"order": "2", "text": "Emacs"}},
-        )
+        field_data = ujson.dumps({"vim": "Vim", "emacs": {"order": "2", "text": "Emacs"}})
         result = self.client_patch(
             f"/json/realm/profile_fields/{field.id}",
             info={"name": "Favorite editor", "field_data": field_data},

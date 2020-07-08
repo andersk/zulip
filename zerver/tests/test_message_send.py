@@ -359,8 +359,7 @@ class MessagePOSTTest(ZulipTestCase):
             },
         )
         self.assert_json_error(
-            result,
-            "Stream '&amp;&lt;&quot;&#39;&gt;&lt;non-existent&gt;' does not exist",
+            result, "Stream '&amp;&lt;&quot;&#39;&gt;&lt;non-existent&gt;' does not exist",
         )
 
     def test_personal_message(self) -> None:
@@ -647,9 +646,7 @@ class MessagePOSTTest(ZulipTestCase):
                 "sender": self.mit_email("sipbtest"),
                 "content": "Test message",
                 "client": "zephyr_mirror",
-                "to": ujson.dumps(
-                    [self.mit_email("starnine"), self.mit_email("espuser")],
-                ),
+                "to": ujson.dumps([self.mit_email("starnine"), self.mit_email("espuser")]),
             },
             subdomain="zephyr",
         )
@@ -1718,9 +1715,7 @@ class PersonalMessageSendTest(ZulipTestCase):
         self.assertEqual(old_messages, new_messages)
 
         user_profile = self.nonreg_user("test1")
-        recipient = Recipient.objects.get(
-            type_id=user_profile.id, type=Recipient.PERSONAL,
-        )
+        recipient = Recipient.objects.get(type_id=user_profile.id, type=Recipient.PERSONAL)
         self.assertEqual(most_recent_message(user_profile).recipient, recipient)
 
     def assert_personal(
@@ -1781,9 +1776,7 @@ class PersonalMessageSendTest(ZulipTestCase):
             self.send_personal_message(user_profile, self.example_user("cordelia"))
 
         bot_profile = self.create_test_bot("testbot", user_profile)
-        self.send_personal_message(
-            user_profile, get_system_bot(settings.NOTIFICATION_BOT),
-        )
+        self.send_personal_message(user_profile, get_system_bot(settings.NOTIFICATION_BOT))
         self.send_personal_message(user_profile, bot_profile)
         self.send_personal_message(bot_profile, user_profile)
 
@@ -1877,8 +1870,7 @@ class ExtractTest(ZulipTestCase):
         # Heterogeneous lists are not supported
         mixed = ujson.dumps(["eeshan@example.com", 3, 4])
         with self.assertRaisesRegex(
-            JsonableError,
-            "Recipient lists may contain emails or user IDs, but not both.",
+            JsonableError, "Recipient lists may contain emails or user IDs, but not both.",
         ):
             extract_private_recipients(mixed)
 
@@ -1896,8 +1888,7 @@ class ExtractTest(ZulipTestCase):
         # Heterogeneous lists are not supported
         mixed = ujson.dumps([3, 4, "eeshan@example.com"])
         with self.assertRaisesRegex(
-            JsonableError,
-            "Recipient lists may contain emails or user IDs, but not both.",
+            JsonableError, "Recipient lists may contain emails or user IDs, but not both.",
         ):
             extract_private_recipients(mixed)
 
@@ -1989,10 +1980,7 @@ class InternalPrepTest(ZulipTestCase):
         recipient_user = self.mit_user("starnine")
         with mock.patch("logging.exception") as logging_mock:
             result = internal_prep_private_message(
-                realm=realm,
-                sender=sender,
-                recipient_user=recipient_user,
-                content=content,
+                realm=realm, sender=sender, recipient_user=recipient_user, content=content,
             )
         logging_mock.assert_called_once_with(
             "Error queueing internal message by %s: %s",
@@ -2063,10 +2051,7 @@ class TestCrossRealmPMs(ZulipTestCase):
         user3 = self.create_user(user3_email)
         notification_bot = get_system_bot(notification_bot_email)
         with self.settings(
-            CROSS_REALM_BOT_EMAILS=[
-                "notification-bot@zulip.com",
-                "welcome-bot@zulip.com",
-            ],
+            CROSS_REALM_BOT_EMAILS=["notification-bot@zulip.com", "welcome-bot@zulip.com"],
         ):
             # HACK: We should probably be creating this "bot" user another
             # way, but since you can't register a user with a
@@ -2256,9 +2241,7 @@ class CheckMessageTest(ZulipTestCase):
         new_count = message_stream_count(parent)
         self.assertEqual(new_count, old_count + 2)
         self.assertEqual(ret["message"].sender.email, "othello-bot@zulip.com")
-        self.assertIn(
-            "does not have any subscribers", most_recent_message(parent).content,
-        )
+        self.assertIn("does not have any subscribers", most_recent_message(parent).content)
 
     def test_bot_pm_error_handling(self) -> None:
         # This just test some defensive code.

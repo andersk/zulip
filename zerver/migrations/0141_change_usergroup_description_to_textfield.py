@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name="usergroup",
-            name="description",
-            field=models.TextField(default=""),
+            model_name="usergroup", name="description", field=models.TextField(default=""),
         ),
     ]

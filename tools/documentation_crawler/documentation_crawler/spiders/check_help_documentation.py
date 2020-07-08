@@ -38,9 +38,7 @@ class UnusedImagesLinterSpider(BaseDocumentationSpider):
             unused_images_relatedpath = [
                 os.path.join(self.images_path, img) for img in unused_images
             ]
-            raise Exception(
-                exception_message.format(", ".join(unused_images_relatedpath)),
-            )
+            raise Exception(exception_message.format(", ".join(unused_images_relatedpath)))
 
 
 class HelpDocumentationSpider(UnusedImagesLinterSpider):

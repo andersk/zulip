@@ -22,9 +22,7 @@ class Bitbucket3HookTests(WebhookTestCase):
         expected_message = (
             "Congratulations! The Bitbucket Server webhook was configured successfully!"
         )
-        self.send_and_test_stream_message(
-            "diagnostics_ping", "my topic", expected_message,
-        )
+        self.send_and_test_stream_message("diagnostics_ping", "my topic", expected_message)
 
     # Core Repo Events:
     def test_commit_comment_added(self) -> None:
@@ -104,9 +102,7 @@ class Bitbucket3HookTests(WebhookTestCase):
         self.do_test_message(msg, expected_message_second)
 
         msg = self.get_second_to_last_message()
-        self.do_test_topic(
-            msg, self.EXPECTED_TOPIC_BRANCH_EVENTS.format(branch="branch1"),
-        )
+        self.do_test_topic(msg, self.EXPECTED_TOPIC_BRANCH_EVENTS.format(branch="branch1"))
         self.do_test_message(msg, expected_message_first)
 
     def test_push_update_multiple_branches_with_branch_filter(self) -> None:

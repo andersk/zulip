@@ -61,9 +61,7 @@ class Node:
 
 
 class TagInfo:
-    def __init__(
-        self, tag: str, classes: List[str], ids: List[str], token: Token,
-    ) -> None:
+    def __init__(self, tag: str, classes: List[str], ids: List[str], token: Token) -> None:
         self.tag = tag
         self.classes = classes
         self.ids = ids

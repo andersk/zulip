@@ -11,10 +11,7 @@ from django.contrib.auth.forms import (
     PasswordResetForm,
     SetPasswordForm,
 )
-from django.contrib.auth.tokens import (
-    PasswordResetTokenGenerator,
-    default_token_generator,
-)
+from django.contrib.auth.tokens import PasswordResetTokenGenerator, default_token_generator
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.http import HttpRequest
@@ -445,9 +442,7 @@ class OurAuthenticationForm(AuthenticationForm):
                     "Programming error: inactive realm in authentication form",
                 )
 
-            if return_data.get("inactive_user") and not return_data.get(
-                "is_mirror_dummy",
-            ):
+            if return_data.get("inactive_user") and not return_data.get("is_mirror_dummy"):
                 # We exclude mirror dummy accounts here. They should be treated as the
                 # user never having had an account, so we let them fall through to the
                 # normal invalid_login case below.
@@ -522,9 +517,7 @@ class FindMyTeamForm(forms.Form):
 
 
 class RealmRedirectForm(forms.Form):
-    subdomain = forms.CharField(
-        max_length=Realm.MAX_REALM_SUBDOMAIN_LENGTH, required=True,
-    )
+    subdomain = forms.CharField(max_length=Realm.MAX_REALM_SUBDOMAIN_LENGTH, required=True)
 
     def clean_subdomain(self) -> str:
         subdomain = self.cleaned_data["subdomain"]

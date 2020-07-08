@@ -228,9 +228,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
         del self.API_KEYS[self.server_uuid]
 
         credentials = "{}:{}".format("5678-efgh", "invalid")
-        api_auth = "Basic " + base64.b64encode(credentials.encode("utf-8")).decode(
-            "utf-8",
-        )
+        api_auth = "Basic " + base64.b64encode(credentials.encode("utf-8")).decode("utf-8")
         result = self.client_post(
             endpoint,
             {"user_id": user_id, "token_kind": token_kind, "token": token},
@@ -269,9 +267,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
         payload = self.get_generic_payload("register")
 
         # Verify correct results are success
-        result = self.uuid_post(
-            self.server_uuid, "/api/v1/remotes/push/register", payload,
-        )
+        result = self.uuid_post(self.server_uuid, "/api/v1/remotes/push/register", payload)
         self.assert_json_success(result)
 
         remote_tokens = RemotePushDeviceToken.objects.filter(token=payload["token"])
@@ -380,9 +376,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
             self.assertEqual(tokens[0].token, token)
 
         # User should have tokens for both devices now.
-        tokens = list(
-            RemotePushDeviceToken.objects.filter(user_id=user.id, server=server),
-        )
+        tokens = list(RemotePushDeviceToken.objects.filter(user_id=user.id, server=server))
         self.assertEqual(len(tokens), 2)
 
         # Remove tokens
@@ -402,9 +396,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
         for endpoint, token, kind in endpoints:
             result = self.client_post(endpoint, {"token": token}, subdomain="zulip")
             self.assert_json_success(result)
-        tokens = list(
-            RemotePushDeviceToken.objects.filter(user_id=user.id, server=server),
-        )
+        tokens = list(RemotePushDeviceToken.objects.filter(user_id=user.id, server=server))
         self.assertEqual(len(tokens), 2)
 
         # Now we want to remove them using the bouncer after an API key change.
@@ -424,9 +416,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
 
         # Now we successfully remove them:
         do_regenerate_api_key(user, user)
-        tokens = list(
-            RemotePushDeviceToken.objects.filter(user_id=user.id, server=server),
-        )
+        tokens = list(RemotePushDeviceToken.objects.filter(user_id=user.id, server=server))
         self.assertEqual(len(tokens), 0)
 
 
@@ -863,8 +853,7 @@ class HandlePushNotificationTest(PushNotificationTest):
                     "APNs: Removing invalid/expired token %s (%s)", token, "Unregistered",
                 )
             self.assertEqual(
-                RemotePushDeviceToken.objects.filter(kind=PushDeviceToken.APNS).count(),
-                0,
+                RemotePushDeviceToken.objects.filter(kind=PushDeviceToken.APNS).count(), 0,
             )
 
     def test_connection_error(self) -> None:
@@ -902,9 +891,7 @@ class HandlePushNotificationTest(PushNotificationTest):
     @mock.patch(
         "zerver.lib.push_notifications.push_notifications_enabled", return_value=True,
     )
-    def test_disabled_notifications(
-        self, mock_push_notifications: mock.MagicMock,
-    ) -> None:
+    def test_disabled_notifications(self, mock_push_notifications: mock.MagicMock) -> None:
         user_profile = self.example_user("hamlet")
         user_profile.enable_online_email_notifications = False
         user_profile.enable_online_push_notifications = False
@@ -1781,9 +1768,7 @@ class TestSendToPushBouncer(ZulipTestCase):
         self, mock_request: mock.MagicMock, mock_warning: mock.MagicMock,
     ) -> None:
         with self.assertRaises(PushNotificationBouncerRetryLaterError):
-            result, failed = send_to_push_bouncer(
-                "register", "register", {"data": "true"},
-            )
+            result, failed = send_to_push_bouncer("register", "register", {"data": "true"})
         mock_warning.assert_called_once()
 
     @mock.patch("requests.request", return_value=Result(status=400))
@@ -1939,9 +1924,7 @@ class TestPushApi(BouncerTestCase):
 
         # RemotePushDeviceToken will only include tokens of
         # the devices using push notification bouncer.
-        remote_tokens = list(
-            RemotePushDeviceToken.objects.values_list("token", flat=True),
-        )
+        remote_tokens = list(RemotePushDeviceToken.objects.values_list("token", flat=True))
         self.assertEqual(remote_tokens, ["apple-tokenbb", "android-token-2"])
 
         # Test removing tokens without using push notification bouncer.
@@ -2168,9 +2151,7 @@ class TestClearOnRead(ZulipTestCase):
         ]
         UserMessage.objects.filter(
             user_profile_id=hamlet.id, message_id__in=message_ids,
-        ).update(
-            flags=F("flags").bitor(UserMessage.flags.active_mobile_push_notification),
-        )
+        ).update(flags=F("flags").bitor(UserMessage.flags.active_mobile_push_notification))
 
         with mock.patch("zerver.lib.actions.queue_json_publish") as mock_publish:
             do_mark_stream_messages_as_read(hamlet, self.client, stream)

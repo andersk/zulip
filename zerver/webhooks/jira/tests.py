@@ -130,12 +130,8 @@ Leo Franchi commented on [BUG-15: New bug with hook](http://lfranchi.com:8080/br
 Adding a comment. Oh, what a comment it is!
 ```
 """.strip()
-        self.send_and_test_stream_message(
-            "commented_v1", expected_topic, expected_message,
-        )
-        self.send_and_test_stream_message(
-            "commented_v2", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("commented_v1", expected_topic, expected_message)
+        self.send_and_test_stream_message("commented_v2", expected_topic, expected_message)
 
     def test_commented_with_two_full_links(self) -> None:
         expected_topic = "BUG-15: New bug with hook"

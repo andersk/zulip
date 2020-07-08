@@ -60,9 +60,7 @@ class TestHtmlBranches(unittest.TestCase):
         self.assertEqual(tree.children[0].children[0].token.tag, "head")
 
         assert tree.children[0].children[0].children[0].token is not None
-        self.assertEqual(
-            tree.children[0].children[0].children[0].token.kind, "html_start",
-        )
+        self.assertEqual(tree.children[0].children[0].children[0].token.kind, "html_start")
         self.assertEqual(tree.children[0].children[0].children[0].token.tag, "title")
 
         assert tree.children[0].children[1].token is not None
@@ -70,9 +68,7 @@ class TestHtmlBranches(unittest.TestCase):
         self.assertEqual(tree.children[0].children[1].token.tag, "body")
 
         assert tree.children[0].children[1].children[0].token is not None
-        self.assertEqual(
-            tree.children[0].children[1].children[0].token.kind, "html_start",
-        )
+        self.assertEqual(tree.children[0].children[1].children[0].token.kind, "html_start")
         self.assertEqual(tree.children[0].children[1].children[0].token.tag, "p")
 
         assert tree.children[0].children[1].children[0].children[0].token is not None
@@ -85,9 +81,7 @@ class TestHtmlBranches(unittest.TestCase):
         )
 
         assert tree.children[0].children[1].children[1].token is not None
-        self.assertEqual(
-            tree.children[0].children[1].children[1].token.kind, "html_start",
-        )
+        self.assertEqual(tree.children[0].children[1].children[1].token.kind, "html_start")
         self.assertEqual(tree.children[0].children[1].children[1].token.tag, "p")
 
     def test_html_branches(self) -> None:
@@ -133,8 +127,7 @@ class TestHtmlBranches(unittest.TestCase):
         template_id_dict = build_id_dict(templates)
 
         self.assertEqual(
-            set(template_id_dict.keys()),
-            {"below_navbar", "hello_{{ message }}", "intro"},
+            set(template_id_dict.keys()), {"below_navbar", "hello_{{ message }}", "intro"},
         )
         self.assertEqual(
             template_id_dict["hello_{{ message }}"],

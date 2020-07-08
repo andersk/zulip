@@ -183,9 +183,7 @@ class NarrowBuilder:
         cond = column(col_name)
         return query.where(maybe_negate(cond))
 
-    def by_in(
-        self, query: Query, operand: str, maybe_negate: ConditionTransform,
-    ) -> Query:
+    def by_in(self, query: Query, operand: str, maybe_negate: ConditionTransform) -> Query:
         if operand == "home":
             conditions = exclude_muting_conditions(self.user_profile, [])
             return query.where(and_(*conditions))
@@ -194,9 +192,7 @@ class NarrowBuilder:
 
         raise BadNarrowOperator("unknown 'in' operand " + operand)
 
-    def by_is(
-        self, query: Query, operand: str, maybe_negate: ConditionTransform,
-    ) -> Query:
+    def by_is(self, query: Query, operand: str, maybe_negate: ConditionTransform) -> Query:
         if operand == "private":
             cond = column("flags").op("&")(UserMessage.flags.is_private.mask) != 0
             return query.where(maybe_negate(cond))
@@ -208,9 +204,7 @@ class NarrowBuilder:
             return query.where(maybe_negate(cond))
         elif operand == "mentioned":
             cond1 = column("flags").op("&")(UserMessage.flags.mentioned.mask) != 0
-            cond2 = (
-                column("flags").op("&")(UserMessage.flags.wildcard_mentioned.mask) != 0
-            )
+            cond2 = column("flags").op("&")(UserMessage.flags.wildcard_mentioned.mask) != 0
             cond = or_(cond1, cond2)
             return query.where(maybe_negate(cond))
         elif operand == "alerted":
@@ -218,9 +212,7 @@ class NarrowBuilder:
             return query.where(maybe_negate(cond))
         raise BadNarrowOperator("unknown 'is' operand " + operand)
 
-    _alphanum = frozenset(
-        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
-    )
+    _alphanum = frozenset("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
 
     def _pg_re_escape(self, pattern: str) -> str:
         """
@@ -370,9 +362,7 @@ class NarrowBuilder:
     ) -> Query:
         return query
 
-    def by_id(
-        self, query: Query, operand: str, maybe_negate: ConditionTransform,
-    ) -> Query:
+    def by_id(self, query: Query, operand: str, maybe_negate: ConditionTransform) -> Query:
         if not str(operand).isdigit():
             raise BadNarrowOperator("Invalid message ID")
         cond = self.msg_id_column == literal(operand)
@@ -502,9 +492,9 @@ class NarrowBuilder:
             ),
         )
         query = query.column(
-            match_positions_character(
-                func.escape_html(topic_column_sa()), keywords,
-            ).label("topic_matches"),
+            match_positions_character(func.escape_html(topic_column_sa()), keywords).label(
+                "topic_matches",
+            ),
         )
         condition = column("search_pgroonga").op("&@~")(operand_escaped)
         return query.where(maybe_negate(condition))

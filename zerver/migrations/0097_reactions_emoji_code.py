@@ -12,9 +12,7 @@ def populate_new_fields(apps: StateApps, schema_editor: DatabaseSchemaEditor) ->
     MIGRATION_DATA_PATH = os.path.join(
         os.path.dirname(os.path.dirname(__file__)), "management", "data",
     )
-    path_to_unified_reactions = os.path.join(
-        MIGRATION_DATA_PATH, "unified_reactions.json",
-    )
+    path_to_unified_reactions = os.path.join(MIGRATION_DATA_PATH, "unified_reactions.json")
     unified_reactions = ujson.load(open(path_to_unified_reactions))
 
     Reaction = apps.get_model("zerver", "Reaction")

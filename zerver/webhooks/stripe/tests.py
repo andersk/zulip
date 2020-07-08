@@ -63,7 +63,9 @@ class StripeHookTests(WebhookTestCase):
 
     def test_customer_created(self) -> None:
         expected_topic = "cus_00000000000000"
-        expected_message = "[Customer](https://dashboard.stripe.com/customers/cus_00000000000000) created"
+        expected_message = (
+            "[Customer](https://dashboard.stripe.com/customers/cus_00000000000000) created"
+        )
         self.send_and_test_stream_message(
             "customer_created",
             expected_topic,
@@ -83,7 +85,9 @@ class StripeHookTests(WebhookTestCase):
 
     def test_customer_deleted(self) -> None:
         expected_topic = "cus_00000000000000"
-        expected_message = "[Customer](https://dashboard.stripe.com/customers/cus_00000000000000) deleted"
+        expected_message = (
+            "[Customer](https://dashboard.stripe.com/customers/cus_00000000000000) deleted"
+        )
         self.send_and_test_stream_message(
             "customer_deleted",
             expected_topic,
@@ -213,9 +217,7 @@ Amount due: 0.00 INR
     def test_refund_event(self) -> None:
         expected_topic = "refunds"
         expected_message = "A [refund](https://dashboard.stripe.com/refunds/re_1Gib6ZHLwdCOCoR7VrzCnXlj) for a [charge](https://dashboard.stripe.com/charges/ch_1Gib61HLwdCOCoR71rnkccye) of 30000000 INR was updated."
-        self.send_and_test_stream_message(
-            "refund_event", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("refund_event", expected_topic, expected_message)
 
     def test_pseudo_refund_event(self) -> None:
         expected_topic = "refunds"

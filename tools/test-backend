@@ -525,9 +525,7 @@ def main() -> None:
             print(
                 "There are one or more fully covered files that are still in not_yet_fully_covered.",
             )
-            print(
-                "Remove the file(s) from not_yet_fully_covered in `tools/test-backend`.",
-            )
+            print("Remove the file(s) from not_yet_fully_covered in `tools/test-backend`.")
             failures = True
     if options.profile:
         prof.disable()

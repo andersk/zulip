@@ -160,9 +160,7 @@ class Command(BaseCommand):
 
         stat = COUNT_STATS["realm_active_humans::day"]
         realm_data = {
-            None: self.generate_fixture_data(
-                stat, 0.1, 0.03, 3, 0.5, 3, partial_sum=True,
-            ),
+            None: self.generate_fixture_data(stat, 0.1, 0.03, 3, 0.5, 3, partial_sum=True),
         }
         insert_fixture_data(stat, realm_data, RealmCount)
         installation_data = {
@@ -181,9 +179,7 @@ class Command(BaseCommand):
         }
         insert_fixture_data(stat, realm_data, RealmCount)
         installation_data = {
-            "false": self.generate_fixture_data(
-                stat, 1, 0.3, 6, 0.8, 2, partial_sum=True,
-            ),
+            "false": self.generate_fixture_data(stat, 1, 0.3, 6, 0.8, 2, partial_sum=True),
         }
         insert_fixture_data(stat, installation_data, InstallationCount)
         FillState.objects.create(
@@ -192,9 +188,7 @@ class Command(BaseCommand):
 
         stat = COUNT_STATS["messages_sent:is_bot:hour"]
         user_data: Mapping[Optional[str], List[int]] = {
-            "false": self.generate_fixture_data(
-                stat, 2, 1, 1.5, 0.6, 8, holiday_rate=0.1,
-            ),
+            "false": self.generate_fixture_data(stat, 2, 1, 1.5, 0.6, 8, holiday_rate=0.1),
         }
         insert_fixture_data(stat, user_data, UserCount)
         realm_data = {
@@ -237,9 +231,7 @@ class Command(BaseCommand):
         )
 
         website, created = Client.objects.get_or_create(name="website")
-        old_desktop, created = Client.objects.get_or_create(
-            name="desktop app Linux 0.3.7",
-        )
+        old_desktop, created = Client.objects.get_or_create(name="desktop app Linux 0.3.7")
         android, created = Client.objects.get_or_create(name="ZulipAndroid")
         iOS, created = Client.objects.get_or_create(name="ZulipiOS")
         react_native, created = Client.objects.get_or_create(name="ZulipMobile")

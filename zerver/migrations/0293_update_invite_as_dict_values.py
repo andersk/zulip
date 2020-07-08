@@ -25,9 +25,9 @@ def update_invite_as_dict_values(
     PreregistrationUser.objects.filter(invited_as=OLD_INVITE_AS_DICT["MEMBER"]).update(
         invited_as=NEW_INVITE_AS_DICT["MEMBER"],
     )
-    PreregistrationUser.objects.filter(
-        invited_as=OLD_INVITE_AS_DICT["GUEST_USER"],
-    ).update(invited_as=NEW_INVITE_AS_DICT["GUEST_USER"])
+    PreregistrationUser.objects.filter(invited_as=OLD_INVITE_AS_DICT["GUEST_USER"]).update(
+        invited_as=NEW_INVITE_AS_DICT["GUEST_USER"],
+    )
 
     MultiuseInvite.objects.filter(invited_as=OLD_INVITE_AS_DICT["REALM_OWNER"]).update(
         invited_as=NEW_INVITE_AS_DICT["REALM_OWNER"],

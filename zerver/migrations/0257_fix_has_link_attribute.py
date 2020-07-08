@@ -12,9 +12,7 @@ BATCH_SIZE = 1000
 
 def process_batch(apps: StateApps, id_start: int, id_end: int, last_id: int) -> None:
     Message = apps.get_model("zerver", "Message")
-    for message in Message.objects.filter(id__gte=id_start, id__lte=id_end).order_by(
-        "id",
-    ):
+    for message in Message.objects.filter(id__gte=id_start, id__lte=id_end).order_by("id"):
         if message.rendered_content == "":
             # There have been bugs in the past that made it possible
             # for a message to have "" as its rendered_content; we

@@ -83,7 +83,9 @@ if replication_info:
     if state != "streaming":
         report("CRITICAL", f"replica is in state {state}, not streaming")
 
-    msg = f"replica is {replay_lag} bytes behind in replay of WAL logs from {primary_server}"
+    msg = (
+        f"replica is {replay_lag} bytes behind in replay of WAL logs from {primary_server}"
+    )
     if replay_lag > 5 * 16 * 1024 ** 2:
         report("CRITICAL", msg)
     elif replay_lag > 16 * 1024 ** 2:
@@ -106,9 +108,7 @@ else:
     for replica in replication_info:
         (client_addr, state, sent_lsn, write_lsn, flush_lsn, replay_lsn) = replica
         if state != "streaming":
-            report(
-                "CRITICAL", f"replica {client_addr} is in state {state}, not streaming",
-            )
+            report("CRITICAL", f"replica {client_addr} is in state {state}, not streaming")
 
         sent_offset = loc_to_abs_offset(sent_lsn)
         lag: Dict[str, int] = {}

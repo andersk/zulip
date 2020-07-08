@@ -343,9 +343,7 @@ def check_upload_within_quota(realm: Realm, uploaded_file_size: int) -> None:
         )
 
 
-def get_file_info(
-    request: HttpRequest, user_file: File,
-) -> Tuple[str, int, Optional[str]]:
+def get_file_info(request: HttpRequest, user_file: File) -> Tuple[str, int, Optional[str]]:
 
     uploaded_file_name = user_file.name
     content_type = request.GET.get("mimetype")
@@ -398,8 +396,7 @@ class S3UploadBackend(ZulipUploadBackend):
         except botocore.exceptions.ClientError:
             file_name = path_id.split("/")[-1]
             logging.warning(
-                "%s does not exist. Its entry in the database will be removed.",
-                file_name,
+                "%s does not exist. Its entry in the database will be removed.", file_name,
             )
             return False
         key.delete()
@@ -642,11 +639,7 @@ class S3UploadBackend(ZulipUploadBackend):
             image_data,
         )
         upload_image_to_s3(
-            self.avatar_bucket,
-            emoji_path,
-            content_type,
-            user_profile,
-            resized_image_data,
+            self.avatar_bucket, emoji_path, content_type, user_profile, resized_image_data,
         )
 
     def get_emoji_url(self, emoji_file_name: str, realm_id: int) -> str:
@@ -731,9 +724,7 @@ def generate_unauthed_file_access_url(path_id: str) -> str:
     token = base64.b16encode(signed_data.encode("utf-8")).decode("utf-8")
 
     filename = path_id.split("/")[-1]
-    return reverse(
-        "zerver.views.upload.serve_local_file_unauthed", args=[token, filename],
-    )
+    return reverse("zerver.views.upload.serve_local_file_unauthed", args=[token, filename])
 
 
 def get_local_file_path_id_from_token(token: str) -> Optional[str]:

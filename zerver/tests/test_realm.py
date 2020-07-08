@@ -24,10 +24,7 @@ from zerver.lib.realm_description import (
 from zerver.lib.send_email import send_future_email
 from zerver.lib.streams import create_stream_if_needed
 from zerver.lib.test_classes import ZulipTestCase
-from zerver.lib.test_helpers import (
-    reset_emails_in_zulip_realm,
-    tornado_redirected_to_list,
-)
+from zerver.lib.test_helpers import reset_emails_in_zulip_realm, tornado_redirected_to_list
 from zerver.models import (
     Attachment,
     CustomProfileField,
@@ -66,9 +63,7 @@ class RealmTest(ZulipTestCase):
         new_name = "Zed You Elle Eye Pea"
         do_set_realm_property(realm, "name", new_name)
         self.assertEqual(get_realm(realm.string_id).name, new_name)
-        self.assert_user_profile_cache_gets_new_name(
-            self.example_user("hamlet"), new_name,
-        )
+        self.assert_user_profile_cache_gets_new_name(self.example_user("hamlet"), new_name)
 
     def test_update_realm_name_events(self) -> None:
         realm = get_realm("zulip")
@@ -234,9 +229,7 @@ class RealmTest(ZulipTestCase):
         realm = get_realm("zulip")
         do_deactivate_realm(realm)
         self.assertTrue(realm.deactivated)
-        confirmation_url = create_confirmation_link(
-            realm, Confirmation.REALM_REACTIVATION,
-        )
+        confirmation_url = create_confirmation_link(realm, Confirmation.REALM_REACTIVATION)
         response = self.client_get(confirmation_url)
         self.assert_in_success_response(
             ["Your organization has been successfully reactivated"], response,
@@ -337,9 +330,7 @@ class RealmTest(ZulipTestCase):
 
         new_signup_notifications_stream_id = 4
         req = dict(
-            signup_notifications_stream_id=ujson.dumps(
-                new_signup_notifications_stream_id,
-            ),
+            signup_notifications_stream_id=ujson.dumps(new_signup_notifications_stream_id),
         )
 
         result = self.client_patch("/json/realm", req)
@@ -530,9 +521,7 @@ class RealmTest(ZulipTestCase):
     def test_user_group_edit_policy(self) -> None:
         # We need an admin user.
         self.login("iago")
-        req = dict(
-            user_group_edit_policy=ujson.dumps(Realm.USER_GROUP_EDIT_POLICY_ADMINS),
-        )
+        req = dict(user_group_edit_policy=ujson.dumps(Realm.USER_GROUP_EDIT_POLICY_ADMINS))
         result = self.client_patch("/json/realm", req)
         self.assert_json_success(result)
 
@@ -980,9 +969,7 @@ class ScrubRealmTest(ZulipTestCase):
         lear_users = UserProfile.objects.filter(realm=lear)
         for user in lear_users:
             self.assertIsNone(re.search("Scrubbed [a-z0-9]{15}", user.full_name))
-            self.assertIsNone(
-                re.search("scrubbed-[a-z0-9]{15}@" + zulip.host, user.email),
-            )
+            self.assertIsNone(re.search("scrubbed-[a-z0-9]{15}@" + zulip.host, user.email))
             self.assertIsNone(
                 re.search("scrubbed-[a-z0-9]{15}@" + zulip.host, user.delivery_email),
             )

@@ -29,9 +29,7 @@ class Migration(migrations.Migration):
                 ("content", models.TextField()),
                 (
                     "archive_timestamp",
-                    models.DateTimeField(
-                        db_index=True, default=django.utils.timezone.now,
-                    ),
+                    models.DateTimeField(db_index=True, default=django.utils.timezone.now),
                 ),
                 (
                     "message",

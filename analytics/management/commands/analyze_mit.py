@@ -72,9 +72,7 @@ def compute_stats(log_level: int) -> None:
             if i < size:
                 top_percents[size] += percent_zulip * 1.0 / size
 
-        logging.debug(
-            "%40s | %10s | %s%%", email, total_user_counts[email], percent_zulip,
-        )
+        logging.debug("%40s | %10s | %s%%", email, total_user_counts[email], percent_zulip)
 
     logging.info("")
     for size in sorted(top_percents.keys()):

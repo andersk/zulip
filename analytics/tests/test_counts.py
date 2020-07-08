@@ -333,20 +333,12 @@ class TestProcessCountStat(AnalyticsTestCase):
         self.assertTableState(
             RealmCount,
             ["property", "value"],
-            [
-                [user_stat.property, 5],
-                [stream_stat.property, 5],
-                [realm_stat.property, 5],
-            ],
+            [[user_stat.property, 5], [stream_stat.property, 5], [realm_stat.property, 5]],
         )
         self.assertTableState(
             InstallationCount,
             ["property", "value"],
-            [
-                [user_stat.property, 5],
-                [stream_stat.property, 5],
-                [realm_stat.property, 5],
-            ],
+            [[user_stat.property, 5], [stream_stat.property, 5], [realm_stat.property, 5]],
         )
 
         # Change the logged data and mark FillState as dirty
@@ -365,20 +357,12 @@ class TestProcessCountStat(AnalyticsTestCase):
         self.assertTableState(
             RealmCount,
             ["property", "value"],
-            [
-                [user_stat.property, 6],
-                [stream_stat.property, 6],
-                [realm_stat.property, 6],
-            ],
+            [[user_stat.property, 6], [stream_stat.property, 6], [realm_stat.property, 6]],
         )
         self.assertTableState(
             InstallationCount,
             ["property", "value"],
-            [
-                [user_stat.property, 6],
-                [stream_stat.property, 6],
-                [realm_stat.property, 6],
-            ],
+            [[user_stat.property, 6], [stream_stat.property, 6], [realm_stat.property, 6]],
         )
 
     def test_process_dependent_stat(self) -> None:
@@ -1443,9 +1427,7 @@ class TestLoggingCountStats(AnalyticsTestCase):
         assertInviteCountEquals(5)
 
         # Revoking invite should not give you credit
-        do_revoke_user_invite(
-            PreregistrationUser.objects.filter(realm=user.realm).first(),
-        )
+        do_revoke_user_invite(PreregistrationUser.objects.filter(realm=user.realm).first())
         assertInviteCountEquals(5)
 
         # Resending invite should cost you
@@ -1467,9 +1449,9 @@ class TestLoggingCountStats(AnalyticsTestCase):
         do_mark_all_as_read(user2, client)
         self.assertEqual(
             1,
-            UserCount.objects.filter(property=read_count_property).aggregate(
-                Sum("value"),
-            )["value__sum"],
+            UserCount.objects.filter(property=read_count_property).aggregate(Sum("value"))[
+                "value__sum"
+            ],
         )
         self.assertEqual(
             1,
@@ -1483,9 +1465,9 @@ class TestLoggingCountStats(AnalyticsTestCase):
         do_mark_stream_messages_as_read(user2, client, stream)
         self.assertEqual(
             3,
-            UserCount.objects.filter(property=read_count_property).aggregate(
-                Sum("value"),
-            )["value__sum"],
+            UserCount.objects.filter(property=read_count_property).aggregate(Sum("value"))[
+                "value__sum"
+            ],
         )
         self.assertEqual(
             2,
@@ -1498,9 +1480,9 @@ class TestLoggingCountStats(AnalyticsTestCase):
         do_update_message_flags(user1, client, "add", "read", [message])
         self.assertEqual(
             4,
-            UserCount.objects.filter(property=read_count_property).aggregate(
-                Sum("value"),
-            )["value__sum"],
+            UserCount.objects.filter(property=read_count_property).aggregate(Sum("value"))[
+                "value__sum"
+            ],
         )
         self.assertEqual(
             3,
@@ -1865,9 +1847,7 @@ class TestRealmActiveHumans(AnalyticsTestCase):
         user2 = do_create_user(
             "email2", "password", self.default_realm, "full_name", "short_name",
         )
-        do_create_user(
-            "email3", "password", self.default_realm, "full_name", "short_name",
-        )
+        do_create_user("email3", "password", self.default_realm, "full_name", "short_name")
         time_zero = floor_to_day(timezone_now()) + self.DAY
         update_user_activity_interval(user1, time_zero)
         update_user_activity_interval(user2, time_zero)

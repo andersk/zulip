@@ -2389,9 +2389,7 @@ post_save.connect(flush_used_upload_space_cache, sender=Attachment)
 post_delete.connect(flush_used_upload_space_cache, sender=Attachment)
 
 
-def validate_attachment_request(
-    user_profile: UserProfile, path_id: str,
-) -> Optional[bool]:
+def validate_attachment_request(user_profile: UserProfile, path_id: str) -> Optional[bool]:
     try:
         attachment = Attachment.objects.get(path_id=path_id)
     except Attachment.DoesNotExist:
@@ -2471,9 +2469,7 @@ class Subscription(models.Model):
     audible_notifications: Optional[bool] = models.BooleanField(null=True, default=None)
     push_notifications: Optional[bool] = models.BooleanField(null=True, default=None)
     email_notifications: Optional[bool] = models.BooleanField(null=True, default=None)
-    wildcard_mentions_notify: Optional[bool] = models.BooleanField(
-        null=True, default=None,
-    )
+    wildcard_mentions_notify: Optional[bool] = models.BooleanField(null=True, default=None)
 
     class Meta:
         unique_together = ("user_profile", "recipient")
@@ -2712,8 +2708,7 @@ def get_huddle(id_list: List[int]) -> Huddle:
 
 
 @cache_with_key(
-    lambda huddle_hash, id_list: huddle_hash_cache_key(huddle_hash),
-    timeout=3600 * 24 * 7,
+    lambda huddle_hash, id_list: huddle_hash_cache_key(huddle_hash), timeout=3600 * 24 * 7,
 )
 def get_huddle_backend(huddle_hash: str, id_list: List[int]) -> Huddle:
     with transaction.atomic():

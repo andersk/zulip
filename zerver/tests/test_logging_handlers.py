@@ -249,9 +249,7 @@ class RateLimitFilterTest(ZulipTestCase):
             )
             raise Exception
 
-        with patch(
-            "zerver.lib.logging_util.cache.get", side_effect=mocked_cache_get,
-        ) as m:
+        with patch("zerver.lib.logging_util.cache.get", side_effect=mocked_cache_get) as m:
             logging.error(
                 "Log an error to trigger initial _RateLimitFilter.filter() call.",
             )

@@ -38,9 +38,7 @@ def get_source_type(url: str) -> str:
     return THUMBOR_S3_TYPE
 
 
-def generate_thumbnail_url(
-    path: str, size: str = "0x0", is_camo_url: bool = False,
-) -> str:
+def generate_thumbnail_url(path: str, size: str = "0x0", is_camo_url: bool = False) -> str:
     path = urljoin("/", path)
 
     if not is_thumbor_enabled():

@@ -482,8 +482,7 @@ class TestEmailMirrorMessagesWithAttachments(ZulipTestCase):
         incoming_valid_message["Reply-to"] = self.example_email("othello")
 
         with mock.patch(
-            "zerver.lib.email_mirror.upload_message_file",
-            return_value="https://test_url",
+            "zerver.lib.email_mirror.upload_message_file", return_value="https://test_url",
         ) as upload_message_file:
             process_message(incoming_valid_message)
             upload_message_file.assert_called_with(
@@ -523,8 +522,7 @@ class TestEmailMirrorMessagesWithAttachments(ZulipTestCase):
         incoming_valid_message["Reply-to"] = self.example_email("othello")
 
         with mock.patch(
-            "zerver.lib.email_mirror.upload_message_file",
-            return_value="https://test_url",
+            "zerver.lib.email_mirror.upload_message_file", return_value="https://test_url",
         ) as upload_message_file:
             process_message(incoming_valid_message)
             upload_message_file.assert_called_with(
@@ -569,8 +567,7 @@ class TestEmailMirrorMessagesWithAttachments(ZulipTestCase):
         incoming_valid_message["Reply-to"] = self.example_email("othello")
 
         with mock.patch(
-            "zerver.lib.email_mirror.upload_message_file",
-            return_value="https://test_url",
+            "zerver.lib.email_mirror.upload_message_file", return_value="https://test_url",
         ) as upload_message_file:
             process_message(incoming_valid_message)
             upload_message_file.assert_called_with(
@@ -620,9 +617,7 @@ class TestEmailMirrorMessagesWithAttachments(ZulipTestCase):
         self.subscribe(user_profile, "Denmark")
         stream = get_stream("Denmark", user_profile.realm)
         stream_address = f"Denmark.{stream.email_token}@testserver"
-        stream_address_prefer_html = (
-            f"Denmark.{stream.email_token}.prefer-html@testserver"
-        )
+        stream_address_prefer_html = f"Denmark.{stream.email_token}.prefer-html@testserver"
 
         text = "Test message"
         html = "<html><body><b>Test html message</b></body></html>"
@@ -654,9 +649,7 @@ class TestEmailMirrorMessagesWithAttachments(ZulipTestCase):
         self.login_user(user_profile)
         self.subscribe(user_profile, "Denmark")
         stream = get_stream("Denmark", user_profile.realm)
-        stream_address_prefer_html = (
-            f"Denmark.{stream.email_token}.prefer-html@testserver"
-        )
+        stream_address_prefer_html = f"Denmark.{stream.email_token}.prefer-html@testserver"
 
         text = "Test message"
         # This should be correctly identified as empty html body:

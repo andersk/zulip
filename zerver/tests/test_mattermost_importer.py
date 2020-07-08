@@ -81,12 +81,9 @@ class MatterMostImporter(ZulipTestCase):
         self.assertEqual(len(mattermost_data["post"]["direct_post"]), 7)
         self.assertEqual(mattermost_data["post"]["direct_post"][0]["user"], "ron")
         self.assertEqual(mattermost_data["post"]["direct_post"][0]["replies"], None)
+        self.assertEqual(mattermost_data["post"]["direct_post"][0]["message"], "hey harry")
         self.assertEqual(
-            mattermost_data["post"]["direct_post"][0]["message"], "hey harry",
-        )
-        self.assertEqual(
-            mattermost_data["post"]["direct_post"][0]["channel_members"],
-            ["ron", "harry"],
+            mattermost_data["post"]["direct_post"][0]["channel_members"], ["ron", "harry"],
         )
 
     def test_process_user(self) -> None:
@@ -575,9 +572,7 @@ class MatterMostImporter(ZulipTestCase):
             self.get_set(total_reactions, "emoji_code"),
             {tick_emoji_code, smile_emoji_code, world_map_emoji_code},
         )
-        self.assertEqual(
-            self.get_set(total_reactions, "user_profile"), {harry_id, ron_id},
-        )
+        self.assertEqual(self.get_set(total_reactions, "user_profile"), {harry_id, ron_id})
         self.assertEqual(len(self.get_set(total_reactions, "id")), 4)
         self.assertEqual(len(self.get_set(total_reactions, "message")), 1)
 
@@ -728,12 +723,7 @@ class MatterMostImporter(ZulipTestCase):
 
         exported_user_emails = self.get_set(realm["zerver_userprofile"], "email")
         self.assertEqual(
-            {
-                "harry@zulip.com",
-                "ron@zulip.com",
-                "ginny@zulip.com",
-                "voldemort@zulip.com",
-            },
+            {"harry@zulip.com", "ron@zulip.com", "ginny@zulip.com", "voldemort@zulip.com"},
             exported_user_emails,
         )
 

@@ -81,9 +81,7 @@ class BaseDocumentationSpider(scrapy.Spider):
     def check_fragment(self, response: Response) -> None:
         self.log(response)
         xpath_template = "//*[@id='{fragment}' or @name='{fragment}']"
-        m = re.match(
-            r".+\#(?P<fragment>.*)$", response.request.url,
-        )  # Get fragment value.
+        m = re.match(r".+\#(?P<fragment>.*)$", response.request.url)  # Get fragment value.
         if not m:
             return
         fragment = m.group("fragment")

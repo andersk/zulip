@@ -110,7 +110,5 @@ class EventsTestCase(TornadoWebTestCase):
         self.io_loop.call_later(0.1, process_events)
         response = self.wait()
         data = ujson.loads(response.body)
-        self.assertEqual(
-            data["events"], [{"type": "test", "data": "test data", "id": 0}],
-        )
+        self.assertEqual(data["events"], [{"type": "test", "data": "test data", "id": 0}])
         self.assertEqual(data["result"], "success")

@@ -481,9 +481,7 @@ def user_passes_test(
                 path = request.get_full_path()
             return redirect_to_login(path, resolved_login_url, redirect_field_name)
 
-        return cast(
-            ViewFuncT, _wrapped_view,
-        )  # https://github.com/python/mypy/issues/1927
+        return cast(ViewFuncT, _wrapped_view)  # https://github.com/python/mypy/issues/1927
 
     return decorator
 
@@ -565,9 +563,7 @@ def zulip_login_required(
     login_url: str = settings.HOME_NOT_LOGGED_IN,
 ) -> Union[Callable[[ViewFuncT], ViewFuncT], ViewFuncT]:
     actual_decorator = lambda function: user_passes_test(
-        logged_in_and_active,
-        login_url=login_url,
-        redirect_field_name=redirect_field_name,
+        logged_in_and_active, login_url=login_url, redirect_field_name=redirect_field_name,
     )(
         zulip_otp_required(redirect_field_name=redirect_field_name, login_url=login_url)(
             add_logging_data(function),

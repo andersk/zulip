@@ -64,10 +64,7 @@ message body 4
     def test_incorrect_message(self) -> None:
         with self.assertRaises(AssertionError) as e:
             self.send_and_test_stream_message(
-                "incorrect_post",
-                "",
-                "",
-                content_type="application/x-www-form-urlencoded",
+                "incorrect_post", "", "", content_type="application/x-www-form-urlencoded",
             )
 
         self.assertIn("events key is missing from payload", e.exception.args[0])

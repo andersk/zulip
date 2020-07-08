@@ -48,7 +48,9 @@ class TestCustomEmails(ZulipTestCase):
 
     def test_send_custom_email_headers(self) -> None:
         hamlet = self.example_user("hamlet")
-        markdown_template_path = "zerver/tests/fixtures/email/custom_emails/email_base_headers_test.source.html"
+        markdown_template_path = (
+            "zerver/tests/fixtures/email/custom_emails/email_base_headers_test.source.html"
+        )
         send_custom_email([hamlet], {"markdown_template_path": markdown_template_path})
         self.assertEqual(len(mail.outbox), 1)
         msg = mail.outbox[0]
@@ -82,7 +84,9 @@ class TestCustomEmails(ZulipTestCase):
         hamlet = self.example_user("hamlet")
         from_name = "from_name_test"
         email_subject = "subject_test"
-        markdown_template_path = "zerver/tests/fixtures/email/custom_emails/email_base_headers_test.source.html"
+        markdown_template_path = (
+            "zerver/tests/fixtures/email/custom_emails/email_base_headers_test.source.html"
+        )
 
         from zerver.lib.send_email import DoubledEmailArgumentException
 
@@ -106,7 +110,9 @@ class TestCustomEmails(ZulipTestCase):
 
         non_admin_user = self.example_user("cordelia")
 
-        markdown_template_path = "zerver/tests/fixtures/email/custom_emails/email_base_headers_test.source.html"
+        markdown_template_path = (
+            "zerver/tests/fixtures/email/custom_emails/email_base_headers_test.source.html"
+        )
         send_custom_email(
             [admin_user, non_admin_user],
             {"markdown_template_path": markdown_template_path, "admins_only": True},
@@ -163,9 +169,7 @@ class TestFollowupEmails(ZulipTestCase):
                 "newuser_email_as_uid@zulip.com",
                 self.ldap_password("newuser_email_as_uid@zulip.com"),
             )
-            user = UserProfile.objects.get(
-                delivery_email="newuser_email_as_uid@zulip.com",
-            )
+            user = UserProfile.objects.get(delivery_email="newuser_email_as_uid@zulip.com")
             scheduled_emails = ScheduledEmail.objects.filter(users=user)
 
             self.assertEqual(len(scheduled_emails), 2)
@@ -1030,9 +1034,7 @@ class TestMissedMessages(ZulipTestCase):
         )
 
         self.assertEqual(len(mail.outbox), 1)
-        self.assertEqual(
-            mail.outbox[0].subject, "#private_stream > test",
-        )  # email subject
+        self.assertEqual(mail.outbox[0].subject, "#private_stream > test")  # email subject
         email_text = mail.outbox[0].message().as_string()
         self.assertNotIn("Before subscribing", email_text)
         self.assertIn("After subscribing", email_text)
@@ -1110,9 +1112,7 @@ class TestMissedMessages(ZulipTestCase):
         # Specific test cases.
 
         # A path similar to our emoji path, but not in a link:
-        test_data = (
-            "<p>Check out the file at: '/static/generated/emoji/images/emoji/'</p>"
-        )
+        test_data = "<p>Check out the file at: '/static/generated/emoji/images/emoji/'</p>"
         actual_output = relative_to_full_url("http://example.com", test_data)
         expected_output = (
             "<p>Check out the file at: '/static/generated/emoji/images/emoji/'</p>"

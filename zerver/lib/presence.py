@@ -159,9 +159,7 @@ def get_status_dict_by_realm(
         "user_id", flat=True,
     )
 
-    user_profile_ids = [
-        presence_row["user_profile__id"] for presence_row in presence_rows
-    ]
+    user_profile_ids = [presence_row["user_profile__id"] for presence_row in presence_rows]
     if len(user_profile_ids) == 0:
         # This conditional is necessary because query_for_ids
         # throws an exception if passed an empty list.

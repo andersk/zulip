@@ -34,9 +34,7 @@ import a database dump from one or more JSON files."""
             help="Import into an existing nonempty database.",
         )
 
-        parser.add_argument(
-            "subdomain", metavar="<subdomain>", type=str, help="Subdomain",
-        )
+        parser.add_argument("subdomain", metavar="<subdomain>", type=str, help="Subdomain")
 
         parser.add_argument(
             "export_paths",
@@ -71,9 +69,7 @@ import a database dump from one or more JSON files."""
             db_name = settings.DATABASES["default"]["NAME"]
             self.do_destroy_and_rebuild_database(db_name)
         elif options["import_into_nonempty"]:
-            print(
-                "NOTE: The argument 'import_into_nonempty' is now the default behavior.",
-            )
+            print("NOTE: The argument 'import_into_nonempty' is now the default behavior.")
 
         check_subdomain_available(subdomain, from_management_command=True)
 

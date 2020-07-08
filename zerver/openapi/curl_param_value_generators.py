@@ -63,9 +63,7 @@ def patch_openapi_example_values(
                 param["example"] = realm_example_values[param_name]
 
     if request_body is not None:
-        properties = request_body["content"]["multipart/form-data"]["schema"][
-            "properties"
-        ]
+        properties = request_body["content"]["multipart/form-data"]["schema"]["properties"]
         for key, property in properties.items():
             if key in realm_example_values:
                 property["example"] = realm_example_values[key]
@@ -82,9 +80,7 @@ def patch_openapi_example_values(
 )
 def iago_message_id() -> Dict[str, object]:
     return {
-        "message_id": helpers.send_stream_message(
-            helpers.example_user("iago"), "Denmark",
-        ),
+        "message_id": helpers.send_stream_message(helpers.example_user("iago"), "Denmark"),
     }
 
 
@@ -234,10 +230,7 @@ def create_user() -> Dict[str, object]:
 @openapi_param_value_generator(["/user_groups/create:post"])
 def create_user_group_data() -> Dict[str, object]:
     return {
-        "members": [
-            helpers.example_user("hamlet").id,
-            helpers.example_user("othello").id,
-        ],
+        "members": [helpers.example_user("hamlet").id, helpers.example_user("othello").id],
     }
 
 

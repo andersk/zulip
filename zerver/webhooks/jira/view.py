@@ -278,9 +278,7 @@ def handle_created_issue_event(payload: Dict[str, Any], user_profile: UserProfil
         author=get_issue_author(payload),
         issue_string=get_issue_string(payload, with_title=True),
         priority=get_in(payload, ["issue", "fields", "priority", "name"]),
-        assignee=get_in(
-            payload, ["issue", "fields", "assignee", "displayName"], "no one",
-        ),
+        assignee=get_in(payload, ["issue", "fields", "assignee", "displayName"], "no one"),
     )
 
 

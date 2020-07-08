@@ -147,10 +147,7 @@ def restore_backup(tarball_file: IO[bytes]) -> None:
                 run(
                     [
                         os.path.join(
-                            settings.DEPLOY_ROOT,
-                            "scripts",
-                            "setup",
-                            "configure-rabbitmq",
+                            settings.DEPLOY_ROOT, "scripts", "setup", "configure-rabbitmq",
                         ),
                     ],
                 )

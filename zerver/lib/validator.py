@@ -197,9 +197,7 @@ def check_list(
 def check_tuple(sub_validators: List[Validator[ResultT]]) -> Validator[Tuple[Any, ...]]:
     def f(var_name: str, val: object) -> Tuple[Any, ...]:
         if not isinstance(val, tuple):
-            raise ValidationError(
-                _("{var_name} is not a tuple").format(var_name=var_name),
-            )
+            raise ValidationError(_("{var_name} is not a tuple").format(var_name=var_name))
 
         desired_len = len(sub_validators)
         if desired_len != len(val):

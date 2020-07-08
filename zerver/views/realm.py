@@ -6,11 +6,7 @@ from django.shortcuts import render
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_safe
 
-from confirmation.models import (
-    Confirmation,
-    ConfirmationKeyException,
-    get_object_from_key,
-)
+from confirmation.models import Confirmation, ConfirmationKeyException, get_object_from_key
 from zerver.decorator import require_realm_admin, require_realm_owner
 from zerver.forms import check_subdomain_available as check_subdomain
 from zerver.lib.actions import (
@@ -48,9 +44,7 @@ def update_realm(
     user_profile: UserProfile,
     name: Optional[str] = REQ(validator=check_string, default=None),
     description: Optional[str] = REQ(validator=check_string, default=None),
-    emails_restricted_to_domains: Optional[bool] = REQ(
-        validator=check_bool, default=None,
-    ),
+    emails_restricted_to_domains: Optional[bool] = REQ(validator=check_bool, default=None),
     disallow_disposable_email_addresses: Optional[bool] = REQ(
         validator=check_bool, default=None,
     ),
@@ -83,9 +77,7 @@ def update_realm(
         validator=check_dict([]), default=None,
     ),
     notifications_stream_id: Optional[int] = REQ(validator=check_int, default=None),
-    signup_notifications_stream_id: Optional[int] = REQ(
-        validator=check_int, default=None,
-    ),
+    signup_notifications_stream_id: Optional[int] = REQ(validator=check_int, default=None),
     message_retention_days_raw: Optional[Union[int, str]] = REQ(
         "message_retention_days", validator=check_string_or_int, default=None,
     ),
@@ -116,9 +108,7 @@ def update_realm(
         validator=check_bool, default=None,
     ),
     video_chat_provider: Optional[int] = REQ(validator=check_int, default=None),
-    default_code_block_language: Optional[str] = REQ(
-        validator=check_string, default=None,
-    ),
+    default_code_block_language: Optional[str] = REQ(validator=check_string, default=None),
     digest_weekday: Optional[int] = REQ(
         validator=check_int_in(Realm.DIGEST_WEEKDAY_VALUES), default=None,
     ),
@@ -221,9 +211,7 @@ def update_realm(
         != message_content_delete_limit_seconds
     ):
         do_set_realm_message_deleting(realm, message_content_delete_limit_seconds)
-        data[
-            "message_content_delete_limit_seconds"
-        ] = message_content_delete_limit_seconds
+        data["message_content_delete_limit_seconds"] = message_content_delete_limit_seconds
     # Realm.notifications_stream and Realm.signup_notifications_stream are not boolean,
     # str or integer field, and thus doesn't fit into the do_set_realm_property framework.
     if notifications_stream_id is not None:

@@ -81,9 +81,7 @@ if tornado_processes > 1:
         subprocess.check_call(["supervisorctl", "restart", f"zulip-tornado:port-{p}"])
 else:
     logging.info("Restarting Tornado process")
-    subprocess.check_call(
-        ["supervisorctl", "restart", "zulip-tornado", "zulip-tornado:*"],
-    )
+    subprocess.check_call(["supervisorctl", "restart", "zulip-tornado", "zulip-tornado:*"])
 
 # Restart the uWSGI and related processes via supervisorctl.
 logging.info("Stopping workers")

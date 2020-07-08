@@ -14,9 +14,7 @@ class TestIntegrationsDevPanel(ZulipTestCase):
         bot = get_user("webhook-bot@zulip.com", self.zulip_realm)
         url = f"/api/v1/external/airbrake?api_key={bot.api_key}"
         target_url = "/devtools/integrations/check_send_webhook_fixture_message"
-        body = (
-            "{}"  # This empty body should generate a KeyError on the webhook code side.
-        )
+        body = "{}"  # This empty body should generate a KeyError on the webhook code side.
 
         data = {
             "url": url,
@@ -88,9 +86,7 @@ class TestIntegrationsDevPanel(ZulipTestCase):
         self.assertEqual(response.status_code, 200)
 
         latest_msg = Message.objects.latest("id")
-        expected_message = (
-            "GitHub webhook has been successfully configured by eeshangarg."
-        )
+        expected_message = "GitHub webhook has been successfully configured by eeshangarg."
         self.assertEqual(latest_msg.content, expected_message)
         self.assertEqual(
             Stream.objects.get(id=latest_msg.recipient.type_id).name, "Denmark",

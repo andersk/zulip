@@ -33,9 +33,7 @@ NAME_CHANGED_TEMPLATE = (
     "``` quote\n{old}\n```\nto\n``` quote\n{new}\n```"
 )
 ARCHIVED_TEMPLATE = "The {entity} {name_template} was {action}."
-STORY_TASK_TEMPLATE = (
-    "Task **{task_description}** was {action} the story {name_template}."
-)
+STORY_TASK_TEMPLATE = "Task **{task_description}** was {action} the story {name_template}."
 STORY_TASK_COMPLETED_TEMPLATE = (
     "Task **{task_description}** ({name_template}) was completed. :tada:"
 )
@@ -52,9 +50,7 @@ STORY_ESTIMATE_TEMPLATE = (
 FILE_ATTACHMENT_TEMPLATE = (
     "A {type} attachment `{file_name}` was added to the story {name_template}."
 )
-STORY_LABEL_TEMPLATE = (
-    "The label **{label_name}** was added to the story {name_template}."
-)
+STORY_LABEL_TEMPLATE = "The label **{label_name}** was added to the story {name_template}."
 STORY_UPDATE_PROJECT_TEMPLATE = (
     "The story {name_template} was moved from" " the **{old}** project to **{new}**."
 )

@@ -22,8 +22,7 @@ def reverse_code(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     Subscription = apps.get_model("zerver", "Subscription")
     Subscription.objects.update(
         in_home_view=Case(
-            When(is_muted=True, then=Value(False)),
-            When(is_muted=False, then=Value(True)),
+            When(is_muted=True, then=Value(False)), When(is_muted=False, then=Value(True)),
         ),
     )
 

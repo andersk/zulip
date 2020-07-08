@@ -55,9 +55,7 @@ def api_bitbucket_webhook(
         content = get_push_commits_event_message(
             committer if committer is not None else "Someone", None, branch, commits,
         )
-        subject = TOPIC_WITH_BRANCH_TEMPLATE.format(
-            repo=repository["name"], branch=branch,
-        )
+        subject = TOPIC_WITH_BRANCH_TEMPLATE.format(repo=repository["name"], branch=branch)
 
     check_send_webhook_message(
         request, user_profile, subject, content, unquote_url_parameters=True,

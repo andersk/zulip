@@ -168,11 +168,7 @@ def send_analytics_to_remote_server() -> None:
     last_acked_installation_count_id = result["last_installation_count_id"]
     last_acked_realmauditlog_id = result["last_realmauditlog_id"]
 
-    (
-        realm_count_data,
-        installation_count_data,
-        realmauditlog_data,
-    ) = build_analytics_data(
+    (realm_count_data, installation_count_data, realmauditlog_data) = build_analytics_data(
         realm_count_query=RealmCount.objects.filter(id__gt=last_acked_realm_count_id),
         installation_count_query=InstallationCount.objects.filter(
             id__gt=last_acked_installation_count_id,
@@ -183,10 +179,7 @@ def send_analytics_to_remote_server() -> None:
         ),
     )
 
-    if (
-        len(realm_count_data) + len(installation_count_data) + len(realmauditlog_data)
-        == 0
-    ):
+    if len(realm_count_data) + len(installation_count_data) + len(realmauditlog_data) == 0:
         return
 
     request = {
