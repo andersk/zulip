@@ -1309,8 +1309,7 @@ class StreamMessagesTest(ZulipTestCase):
         self.send_stream_message(sender, "Denmark", content="whatever", topic_name="my topic")
         message = most_recent_message(receiving_user_profile)
         self.assertEqual(
-            str(message),
-            "<Message: Denmark / my topic / " "<UserProfile: {} {}>>".format(sender.email, sender.realm),
+            str(message), "<Message: Denmark / my topic / " "<UserProfile: {} {}>>".format(sender.email, sender.realm),
         )
 
     def test_message_mentions(self) -> None:

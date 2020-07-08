@@ -915,9 +915,7 @@ def channel_message_to_zerver_message(
             total_skipped_user_messages += num_skipped
 
     logging.debug(
-        "Created %s UserMessages; deferred %s due to long-term idle",
-        total_user_messages,
-        total_skipped_user_messages,
+        "Created %s UserMessages; deferred %s due to long-term idle", total_user_messages, total_skipped_user_messages,
     )
     return zerver_message, zerver_usermessage, zerver_attachment, uploads_list, reaction_list
 

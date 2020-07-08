@@ -597,9 +597,7 @@ non_html_template_engine_settings = deepcopy(base_template_engine_settings)
 non_html_template_engine_settings.update(
     {"NAME": "Jinja2_plaintext", "DIRS": [os.path.join(DEPLOY_ROOT, "templates")], "APP_DIRS": False},
 )
-non_html_template_engine_settings["OPTIONS"].update(
-    {"autoescape": False, "trim_blocks": True, "lstrip_blocks": True},
-)
+non_html_template_engine_settings["OPTIONS"].update({"autoescape": False, "trim_blocks": True, "lstrip_blocks": True})
 
 # django-two-factor uses the default Django template engine (not Jinja2), so we
 # need to add config for it here.
@@ -711,9 +709,7 @@ LOGGING: Dict[str, Any] = {
             "level": "ERROR",
             "class": "zerver.logging_handlers.AdminNotifyHandler",
             "filters": (
-                ["ZulipLimiter", "require_debug_false", "require_really_deployed"]
-                if not DEBUG_ERROR_REPORTING
-                else []
+                ["ZulipLimiter", "require_debug_false", "require_really_deployed"] if not DEBUG_ERROR_REPORTING else []
             ),
             "formatter": "default",
         },

@@ -11,10 +11,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name="archivedattachment",
-            name="size",
-            field=models.IntegerField(default=0),
-            preserve_default=False,
+            model_name="archivedattachment", name="size", field=models.IntegerField(default=0), preserve_default=False,
         ),
         migrations.AlterField(
             model_name="attachment", name="size", field=models.IntegerField(default=0), preserve_default=False,

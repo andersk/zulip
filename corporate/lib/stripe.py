@@ -51,9 +51,7 @@ def get_latest_seat_count(realm: Realm) -> int:
         .exclude(role=UserProfile.ROLE_GUEST)
         .count()
     )
-    guests = UserProfile.objects.filter(
-        realm=realm, is_active=True, is_bot=False, role=UserProfile.ROLE_GUEST,
-    ).count()
+    guests = UserProfile.objects.filter(realm=realm, is_active=True, is_bot=False, role=UserProfile.ROLE_GUEST).count()
     return max(non_guests, math.ceil(guests / 5))
 
 

@@ -269,9 +269,7 @@ def check_dict_only(
     required_keys: Iterable[Tuple[str, Validator[ResultT]]],
     optional_keys: Iterable[Tuple[str, Validator[ResultT]]] = [],
 ) -> Validator[Dict[str, ResultT]]:
-    return cast(
-        Validator[Dict[str, ResultT]], check_dict(required_keys, optional_keys, _allow_only_listed_keys=True),
-    )
+    return cast(Validator[Dict[str, ResultT]], check_dict(required_keys, optional_keys, _allow_only_listed_keys=True))
 
 
 def check_union(allowed_type_funcs: Iterable[Validator[ResultT]]) -> Validator[ResultT]:
@@ -395,9 +393,7 @@ def check_widget_content(widget_content: object) -> Dict[str, Any]:
 
             # We re-check "type" here just to avoid it looking
             # like we have extraneous keys.
-            checker = check_dict(
-                [("type", equals("choices")), ("heading", check_string), ("choices", check_choices)],
-            )
+            checker = check_dict([("type", equals("choices")), ("heading", check_string), ("choices", check_choices)])
 
             checker("extra_data", extra_data)
 

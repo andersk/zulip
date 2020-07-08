@@ -59,9 +59,7 @@ Image scan completed for `{image_name}:{image_tag}`. Vulnerabilities by severity
 """.strip()
 
 
-def handle_scanning_completed_event(
-    payload: Dict[str, Any], user_profile: UserProfile, operator_username: str,
-) -> str:
+def handle_scanning_completed_event(payload: Dict[str, Any], user_profile: UserProfile, operator_username: str) -> str:
     scan_results = ""
     scan_summaries = payload["event_data"]["resources"][0]["scan_overview"]["components"]["summary"]
     summaries_sorted = sorted(scan_summaries, key=lambda x: x["severity"], reverse=True)

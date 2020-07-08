@@ -47,9 +47,7 @@ def generate_time_series_data(
             holidays.extend([random() < holiday_rate] * 24)
     elif frequency == CountStat.DAY:
         length = days
-        seasonality = [8 * business_hours_base + 16 * non_business_hours_base] * 5 + [
-            24 * non_business_hours_base,
-        ] * 2
+        seasonality = [8 * business_hours_base + 16 * non_business_hours_base] * 5 + [24 * non_business_hours_base] * 2
         holidays = [random() < holiday_rate for i in range(days)]
     else:
         raise AssertionError(f"Unknown frequency: {frequency}")

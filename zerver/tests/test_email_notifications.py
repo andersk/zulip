@@ -250,9 +250,7 @@ class TestMissedMessages(ZulipTestCase):
             handle_missedmessage_emails(hamlet.id, [{"message_id": msg_id, "trigger": trigger}])
         if settings.EMAIL_GATEWAY_PATTERN != "":
             reply_to_addresses = [settings.EMAIL_GATEWAY_PATTERN % (t,) for t in tokens]
-            reply_to_emails = [
-                str(Address(display_name="Zulip", addr_spec=address)) for address in reply_to_addresses
-            ]
+            reply_to_emails = [str(Address(display_name="Zulip", addr_spec=address)) for address in reply_to_addresses]
         else:
             reply_to_emails = ["noreply@testserver"]
         msg = mail.outbox[0]
@@ -843,9 +841,7 @@ class TestMissedMessages(ZulipTestCase):
 
         mention_msg_id = self.send_stream_message(user, stream_name, "@**King Hamlet**")
 
-        handle_missedmessage_emails(
-            late_subscribed_user.id, [{"message_id": mention_msg_id, "trigger": "mentioned"}],
-        )
+        handle_missedmessage_emails(late_subscribed_user.id, [{"message_id": mention_msg_id, "trigger": "mentioned"}])
 
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].subject, "#private_stream > test")  # email subject
@@ -922,7 +918,9 @@ class TestMissedMessages(ZulipTestCase):
         self.assertEqual(actual_output, expected_output)
 
         # An uploaded file
-        test_data = '<a href="/user_uploads/{realm_id}/1f/some_random_value">/user_uploads/{realm_id}/1f/some_random_value</a>'
+        test_data = (
+            '<a href="/user_uploads/{realm_id}/1f/some_random_value">/user_uploads/{realm_id}/1f/some_random_value</a>'
+        )
         test_data = test_data.format(realm_id=zephyr_realm.id)
         actual_output = relative_to_full_url("http://example.com", test_data)
         expected_output = (

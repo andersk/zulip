@@ -303,9 +303,7 @@ class WorkerTest(ZulipTestCase):
                 # However, missed message emails don't get rate limited:
                 with self.settings(EMAIL_GATEWAY_PATTERN="%s@example.com"):
                     address = "mm" + ("x" * 32) + "@example.com"
-                    event = dict(
-                        msg_base64=base64.b64encode(b"\xf3test").decode(), time=time.time(), rcpt_to=address,
-                    )
+                    event = dict(msg_base64=base64.b64encode(b"\xf3test").decode(), time=time.time(), rcpt_to=address)
                     fake_client.queue.append(("email_mirror", event))
                     worker.start()
                     self.assertEqual(mock_mirror_email.call_count, 3)

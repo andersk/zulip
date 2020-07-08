@@ -454,9 +454,7 @@ def get_time_series_by_subgroup(
     include_empty_subgroups: bool,
 ) -> Dict[str, List[int]]:
     queryset = (
-        table_filtered_to_id(table, key_id)
-        .filter(property=stat.property)
-        .values_list("subgroup", "end_time", "value")
+        table_filtered_to_id(table, key_id).filter(property=stat.property).values_list("subgroup", "end_time", "value")
     )
     value_dicts: Dict[Optional[str], Dict[datetime, int]] = defaultdict(lambda: defaultdict(int))
     for subgroup, end_time, value in queryset:
@@ -1128,9 +1126,7 @@ def get_activity(request: HttpRequest) -> HttpResponse:
     return render(request, "analytics/activity.html", context=dict(data=data, title=title, is_home=True))
 
 
-def get_confirmations(
-    types: List[int], object_ids: List[int], hostname: Optional[str] = None,
-) -> List[Dict[str, Any]]:
+def get_confirmations(types: List[int], object_ids: List[int], hostname: Optional[str] = None) -> List[Dict[str, Any]]:
     lowest_datetime = timezone_now() - timedelta(days=30)
     confirmations = Confirmation.objects.filter(
         type__in=types, object_id__in=object_ids, date_sent__gte=lowest_datetime,

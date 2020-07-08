@@ -716,8 +716,7 @@ class NormalActionsTest(BaseAction):
         for stream_name in ["Denmark", "Scotland"]:
             streams.append(get_stream(stream_name, self.user_profile.realm))
         events = self.verify_action(
-            lambda: do_invite_users(self.user_profile, ["foo@zulip.com"], streams, False),
-            state_change_expected=False,
+            lambda: do_invite_users(self.user_profile, ["foo@zulip.com"], streams, False), state_change_expected=False,
         )
         schema_checker("events[0]", events[0])
 
@@ -1287,9 +1286,7 @@ class NormalActionsTest(BaseAction):
                 (
                     "muted_topics",
                     check_list(
-                        check_tuple(
-                            [check_string, check_string, check_int],  # stream name  # topic name  # timestamp
-                        ),
+                        check_tuple([check_string, check_string, check_int]),  # stream name  # topic name  # timestamp
                     ),
                 ),
             ],
@@ -1594,10 +1591,7 @@ class NormalActionsTest(BaseAction):
             [
                 ("type", equals("realm_user")),
                 ("op", equals("update")),
-                (
-                    "person",
-                    check_dict_only([("role", check_int_in(UserProfile.ROLE_TYPES)), ("user_id", check_int)]),
-                ),
+                ("person", check_dict_only([("role", check_int_in(UserProfile.ROLE_TYPES)), ("user_id", check_int)])),
             ],
         )
 
@@ -1618,10 +1612,7 @@ class NormalActionsTest(BaseAction):
             [
                 ("type", equals("realm_user")),
                 ("op", equals("update")),
-                (
-                    "person",
-                    check_dict_only([("role", check_int_in(UserProfile.ROLE_TYPES)), ("user_id", check_int)]),
-                ),
+                ("person", check_dict_only([("role", check_int_in(UserProfile.ROLE_TYPES)), ("user_id", check_int)])),
             ],
         )
 
@@ -1642,10 +1633,7 @@ class NormalActionsTest(BaseAction):
             [
                 ("type", equals("realm_user")),
                 ("op", equals("update")),
-                (
-                    "person",
-                    check_dict_only([("role", check_int_in(UserProfile.ROLE_TYPES)), ("user_id", check_int)]),
-                ),
+                ("person", check_dict_only([("role", check_int_in(UserProfile.ROLE_TYPES)), ("user_id", check_int)])),
             ],
         )
 

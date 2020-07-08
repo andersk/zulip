@@ -40,9 +40,7 @@ class LibratoWebhookParser:
 
     def parse_violation(self, violation: Dict[str, Any]) -> Tuple[str, str]:
         metric_name = violation["metric"]
-        recorded_at = datetime.fromtimestamp((violation["recorded_at"]), tz=timezone.utc).strftime(
-            "%Y-%m-%d %H:%M:%S",
-        )
+        recorded_at = datetime.fromtimestamp((violation["recorded_at"]), tz=timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
         return metric_name, recorded_at
 
     def parse_conditions(self) -> List[Dict[str, Any]]:

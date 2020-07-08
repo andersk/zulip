@@ -42,9 +42,7 @@ def handler_stats_string() -> str:
     return f"{len(handlers)} handlers, latest ID {current_handler_id}"
 
 
-def finish_handler(
-    handler_id: int, event_queue_id: str, contents: List[Dict[str, Any]], apply_markdown: bool,
-) -> None:
+def finish_handler(handler_id: int, event_queue_id: str, contents: List[Dict[str, Any]], apply_markdown: bool) -> None:
     err_msg = f"Got error finishing handler for queue {event_queue_id}"
     try:
         # We call async_request_timer_restart here in case we are

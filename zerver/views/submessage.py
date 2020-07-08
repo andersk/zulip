@@ -26,10 +26,6 @@ def process_submessage(
         return json_error(_("Invalid json for submessage"))
 
     do_add_submessage(
-        realm=user_profile.realm,
-        sender_id=user_profile.id,
-        message_id=message.id,
-        msg_type=msg_type,
-        content=content,
+        realm=user_profile.realm, sender_id=user_profile.id, message_id=message.id, msg_type=msg_type, content=content,
     )
     return json_success()

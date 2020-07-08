@@ -575,10 +575,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ("path_id", models.TextField(db_index=True)),
                 ("create_time", models.DateTimeField(db_index=True, default=django.utils.timezone.now)),
                 ("messages", models.ManyToManyField(to="zerver.Message")),
-                (
-                    "owner",
-                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
-                ),
+                ("owner", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
                 ("is_realm_public", models.BooleanField(default=False)),
             ],
         ),

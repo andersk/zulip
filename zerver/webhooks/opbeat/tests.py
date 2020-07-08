@@ -32,9 +32,7 @@ App foo created
 **[foo](https://opbeat.com/bar/foo/)**
 >language: nodejs
 >framework: custom"""
-        self.send_and_test_stream_message(
-            "new_app", expected_topic, expected_message, content_type="application/json",
-        )
+        self.send_and_test_stream_message("new_app", expected_topic, expected_message, content_type="application/json")
 
     def test_get_empty_value(self) -> None:
         self.assertEqual(get_value({"key": "value"}, "foo"), "")

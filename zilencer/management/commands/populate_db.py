@@ -170,11 +170,7 @@ class Command(BaseCommand):
         )
 
         parser.add_argument(
-            "--extra-streams",
-            dest="extra_streams",
-            type=int,
-            default=0,
-            help="The number of extra streams to create",
+            "--extra-streams", dest="extra_streams", type=int, default=0, help="The number of extra streams to create",
         )
 
         parser.add_argument(

@@ -1760,9 +1760,7 @@ def bulk_get_huddle_user_ids(recipients: List[Recipient]) -> Dict[int, List[int]
     result_dict: Dict[int, List[int]] = {}
     for recipient in recipients:
         result_dict[recipient.id] = [
-            subscription.user_profile_id
-            for subscription in subscriptions
-            if subscription.recipient_id == recipient.id
+            subscription.user_profile_id for subscription in subscriptions if subscription.recipient_id == recipient.id
         ]
 
     return result_dict
@@ -1874,9 +1872,7 @@ class Message(AbstractMessage):
         rendered_content: Optional[str], rendered_content_version: Optional[int], markdown_version: int,
     ) -> bool:
         return (
-            rendered_content is None
-            or rendered_content_version is None
-            or rendered_content_version < markdown_version
+            rendered_content is None or rendered_content_version is None or rendered_content_version < markdown_version
         )
 
     def sent_by_human(self) -> bool:
@@ -2636,10 +2632,7 @@ class UserPresence(models.Model):
 
         timestamp = datetime_to_timestamp(dt)
         return dict(
-            client=client_name,
-            status=presence_val,
-            timestamp=timestamp,
-            pushable=(push_enabled and has_push_devices),
+            client=client_name, status=presence_val, timestamp=timestamp, pushable=(push_enabled and has_push_devices),
         )
 
     def to_dict(self) -> Dict[str, Any]:
@@ -3007,9 +3000,7 @@ class CustomProfileField(models.Model):
 
     ALL_FIELD_TYPES = [*FIELD_TYPE_DATA, *CHOICE_FIELD_TYPE_DATA, *USER_FIELD_TYPE_DATA]
 
-    FIELD_VALIDATORS: Dict[int, Validator[Union[int, str, List[int]]]] = {
-        item[0]: item[2] for item in FIELD_TYPE_DATA
-    }
+    FIELD_VALIDATORS: Dict[int, Validator[Union[int, str, List[int]]]] = {item[0]: item[2] for item in FIELD_TYPE_DATA}
     FIELD_CONVERTERS: Dict[int, Callable[[Any], Any]] = {item[0]: item[3] for item in ALL_FIELD_TYPES}
     FIELD_TYPE_CHOICES: List[Tuple[int, str]] = [(item[0], item[1]) for item in ALL_FIELD_TYPES]
     FIELD_TYPE_CHOICES_DICT: Dict[str, Dict[str, Union[str, int]]] = {

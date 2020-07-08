@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name="userprofile",
-            name="enable_online_push_notifications",
-            field=models.BooleanField(default=True),
+            model_name="userprofile", name="enable_online_push_notifications", field=models.BooleanField(default=True),
         ),
     ]

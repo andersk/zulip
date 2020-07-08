@@ -197,9 +197,7 @@ New user created:
 
     def test_user_email_updated(self) -> None:
         self.send_and_test_stream_message(
-            "user_email_updated",
-            "Contact: Azure Bus from St. John's",
-            "User's email was updated to aaron@zulip.com.",
+            "user_email_updated", "Contact: Azure Bus from St. John's", "User's email was updated to aaron@zulip.com.",
         )
 
     def test_user_tag_created(self) -> None:

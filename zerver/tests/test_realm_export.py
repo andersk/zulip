@@ -171,11 +171,7 @@ class RealmExportTest(ZulipTestCase):
         admin = self.example_user("iago")
         self.login_user(admin)
         realm_count = RealmCount.objects.create(
-            realm_id=admin.realm.id,
-            end_time=timezone_now(),
-            subgroup=1,
-            value=0,
-            property="messages_sent:client:day",
+            realm_id=admin.realm.id, end_time=timezone_now(), subgroup=1, value=0, property="messages_sent:client:day",
         )
 
         # Space limit is set as 10 GiB

@@ -75,9 +75,7 @@ def set_expirable_session_var(session: Session, var_name: str, var_value: Any, e
     session[var_name] = {"value": var_value, "expire_at": expire_at}
 
 
-def get_expirable_session_var(
-    session: Session, var_name: str, default_value: Any = None, delete: bool = False,
-) -> Any:
+def get_expirable_session_var(session: Session, var_name: str, default_value: Any = None, delete: bool = False) -> Any:
     if var_name not in session:
         return default_value
 

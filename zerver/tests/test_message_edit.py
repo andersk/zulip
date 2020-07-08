@@ -340,10 +340,7 @@ class EditMessageTest(ZulipTestCase):
         self.login("hamlet")
 
         msg_id = self.send_stream_message(
-            self.example_user("hamlet"),
-            "Scotland",
-            topic_name="editing",
-            content="This message has not been edited.",
+            self.example_user("hamlet"), "Scotland", topic_name="editing", content="This message has not been edited.",
         )
 
         result = self.client_get(f"/json/messages/{msg_id}/history")
@@ -961,9 +958,7 @@ class EditMessageTest(ZulipTestCase):
         )
 
         self.assertEqual(has_message_access(guest_user, Message.objects.get(id=msg_id_to_test_acesss), None), True)
-        self.assertEqual(
-            has_message_access(non_guest_user, Message.objects.get(id=msg_id_to_test_acesss), None), True,
-        )
+        self.assertEqual(has_message_access(non_guest_user, Message.objects.get(id=msg_id_to_test_acesss), None), True)
 
         result = self.client_patch(
             "/json/messages/" + str(msg_id),
@@ -972,12 +967,9 @@ class EditMessageTest(ZulipTestCase):
         self.assert_json_success(result)
 
         self.assertEqual(has_message_access(guest_user, Message.objects.get(id=msg_id_to_test_acesss), None), False)
+        self.assertEqual(has_message_access(non_guest_user, Message.objects.get(id=msg_id_to_test_acesss), None), True)
         self.assertEqual(
-            has_message_access(non_guest_user, Message.objects.get(id=msg_id_to_test_acesss), None), True,
-        )
-        self.assertEqual(
-            UserMessage.objects.filter(user_profile_id=non_guest_user.id, message_id=msg_id_to_test_acesss).count(),
-            0,
+            UserMessage.objects.filter(user_profile_id=non_guest_user.id, message_id=msg_id_to_test_acesss).count(), 0,
         )
         self.assertEqual(
             has_message_access(self.example_user("iago"), Message.objects.get(id=msg_id_to_test_acesss), None), True,

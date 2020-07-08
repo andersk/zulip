@@ -309,9 +309,7 @@ def install_yum_deps(deps_to_install: List[str]) -> None:
         # Skip setup if it has been applied previously
         return
 
-    run_as_root(
-        ["/usr/{}/bin/postgresql-{}-setup".format(postgres_dir, POSTGRES_VERSION), "initdb"], sudo_args=["-H"],
-    )
+    run_as_root(["/usr/{}/bin/postgresql-{}-setup".format(postgres_dir, POSTGRES_VERSION), "initdb"], sudo_args=["-H"])
     # Use vendored pg_hba.conf, which enables password authentication.
     run_as_root(["cp", "-a", "puppet/zulip/files/postgresql/centos_pg_hba.conf", pg_hba_conf])
     # Later steps will ensure postgres is started

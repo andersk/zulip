@@ -162,9 +162,7 @@ def write_log_line(
         time_delta = time.time() - log_data["time_started"]
     if "time_stopped" in log_data:
         orig_time_delta = time_delta
-        time_delta = (log_data["time_stopped"] - log_data["time_started"]) + (
-            time.time() - log_data["time_restarted"]
-        )
+        time_delta = (log_data["time_stopped"] - log_data["time_started"]) + (time.time() - log_data["time_restarted"])
         optional_orig_delta = f" (lp: {format_timedelta(orig_time_delta)})"
     remote_cache_output = ""
     if "remote_cache_time_start" in log_data:

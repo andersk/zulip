@@ -300,9 +300,7 @@ def get_pull_request_action_body(payload: Dict[str, Any], action: str, include_t
     )
 
 
-def get_pull_request_created_or_updated_body(
-    payload: Dict[str, Any], action: str, include_title: bool = False,
-) -> str:
+def get_pull_request_created_or_updated_body(payload: Dict[str, Any], action: str, include_title: bool = False) -> str:
     pull_request = payload["pullrequest"]
     assignee = None
     if pull_request.get("reviewers"):
@@ -443,12 +441,8 @@ GET_SINGLE_MESSAGE_BODY_DEPENDING_ON_TYPE_MAPPER = {
     "pull_request_fulfilled": partial(get_pull_request_action_body, action="merged"),
     "pull_request_rejected": partial(get_pull_request_action_body, action="rejected"),
     "pull_request_comment_created": get_pull_request_comment_created_action_body,
-    "pull_request_comment_updated": partial(
-        get_pull_request_deleted_or_updated_comment_action_body, action="updated",
-    ),
-    "pull_request_comment_deleted": partial(
-        get_pull_request_deleted_or_updated_comment_action_body, action="deleted",
-    ),
+    "pull_request_comment_updated": partial(get_pull_request_deleted_or_updated_comment_action_body, action="updated"),
+    "pull_request_comment_deleted": partial(get_pull_request_deleted_or_updated_comment_action_body, action="deleted"),
     "push": get_push_bodies,
     "repo:updated": get_repo_updated_body,
 }

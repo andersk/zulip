@@ -927,9 +927,7 @@ class MessageAccessTests(ZulipTestCase):
         content = "Test message for star"
         self.send_stream_message(sender, "Verona", content=content)
 
-        sent_message = (
-            UserMessage.objects.filter(user_profile=self.example_user("hamlet")).order_by("id").reverse()[0]
-        )
+        sent_message = UserMessage.objects.filter(user_profile=self.example_user("hamlet")).order_by("id").reverse()[0]
         self.assertEqual(sent_message.message.content, content)
         self.assertFalse(sent_message.flags.starred)
 

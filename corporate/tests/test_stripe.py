@@ -1127,9 +1127,7 @@ class StripeTest(StripeTestCase):
         audit_log_entries = list(
             RealmAuditLog.objects.filter(acting_user=user).values_list("event_type", flat=True).order_by("id"),
         )
-        self.assertEqual(
-            audit_log_entries, [RealmAuditLog.STRIPE_CUSTOMER_CREATED, RealmAuditLog.STRIPE_CARD_CHANGED],
-        )
+        self.assertEqual(audit_log_entries, [RealmAuditLog.STRIPE_CUSTOMER_CREATED, RealmAuditLog.STRIPE_CARD_CHANGED])
         # Check that we did not update Realm
         realm = get_realm("zulip")
         self.assertNotEqual(realm.plan_type, Realm.STANDARD)
@@ -1212,10 +1210,7 @@ class StripeTest(StripeTestCase):
 
     def test_upgrade_license_counts(self) -> None:
         def check_min_licenses_error(
-            invoice: bool,
-            licenses: Optional[int],
-            min_licenses_in_response: int,
-            upgrade_params: Dict[str, Any] = {},
+            invoice: bool, licenses: Optional[int], min_licenses_in_response: int, upgrade_params: Dict[str, Any] = {},
         ) -> None:
             if licenses is None:
                 del_args = ["licenses"]
@@ -1320,9 +1315,7 @@ class StripeTest(StripeTestCase):
         self.assertEqual(response.url, "/billing/")
 
         response = self.client_get("/billing/")
-        self.assert_in_success_response(
-            ["Your organization has requested sponsored or discounted hosting."], response,
-        )
+        self.assert_in_success_response(["Your organization has requested sponsored or discounted hosting."], response)
 
         self.login_user(self.example_user("othello"))
         response = self.client_get("/billing/")
@@ -1811,8 +1804,7 @@ class StripeTest(StripeTestCase):
         self.assertEqual(len(annual_ledger_entries), 1)
         self.assertEqual(annual_ledger_entries[0].is_renewal, True)
         self.assertEqual(
-            annual_ledger_entries.values_list("licenses", "licenses_at_next_renewal")[0],
-            (num_licenses, num_licenses),
+            annual_ledger_entries.values_list("licenses", "licenses_at_next_renewal")[0], (num_licenses, num_licenses),
         )
         self.assertEqual(annual_plan.invoiced_through, None)
 

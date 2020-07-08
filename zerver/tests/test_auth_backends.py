@@ -399,21 +399,13 @@ class AuthBackendTest(ZulipTestCase):
 
         self.verify_backend(
             backend,
-            bad_kwargs=dict(
-                request=mock.MagicMock(), username=username, password=password, realm=get_realm("zephyr"),
-            ),
-            good_kwargs=dict(
-                request=mock.MagicMock(), username=username, password=password, realm=get_realm("zulip"),
-            ),
+            bad_kwargs=dict(request=mock.MagicMock(), username=username, password=password, realm=get_realm("zephyr")),
+            good_kwargs=dict(request=mock.MagicMock(), username=username, password=password, realm=get_realm("zulip")),
         )
         self.verify_backend(
             backend,
-            bad_kwargs=dict(
-                request=mock.MagicMock(), username=username, password=password, realm=get_realm("zephyr"),
-            ),
-            good_kwargs=dict(
-                request=mock.MagicMock(), username=username, password=password, realm=get_realm("zulip"),
-            ),
+            bad_kwargs=dict(request=mock.MagicMock(), username=username, password=password, realm=get_realm("zephyr")),
+            good_kwargs=dict(request=mock.MagicMock(), username=username, password=password, realm=get_realm("zulip")),
         )
 
     def test_devauth_backend(self) -> None:
@@ -782,11 +774,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
         return url, headers
 
     def social_auth_test_finish(
-        self,
-        result: HttpResponse,
-        account_data_dict: Dict[str, str],
-        expect_choose_email_screen: bool,
-        **headers: Any,
+        self, result: HttpResponse, account_data_dict: Dict[str, str], expect_choose_email_screen: bool, **headers: Any
     ) -> HttpResponse:
         parsed_url = urllib.parse.urlparse(result.url)
         csrf_state = urllib.parse.parse_qs(parsed_url.query)["state"]
@@ -1677,9 +1665,7 @@ class SAMLAuthBackendTest(SocialAuthBase):
             ) as m:
                 # This mock causes AuthFailed to be raised.
                 saml_response = self.generate_saml_response(self.email, self.name)
-                relay_state = ujson.dumps(
-                    dict(state_token=SAMLAuthBackend.put_data_in_redis({"subdomain": "zulip"})),
-                )
+                relay_state = ujson.dumps(dict(state_token=SAMLAuthBackend.put_data_in_redis({"subdomain": "zulip"})))
                 post_params = {"SAMLResponse": saml_response, "RelayState": relay_state}
                 result = self.client_post("/complete/saml/", post_params)
                 self.assertEqual(result.status_code, 302)
@@ -1695,9 +1681,7 @@ class SAMLAuthBackendTest(SocialAuthBase):
                 "social_core.backends.saml.SAMLAuth.auth_complete", side_effect=AuthStateForbidden("State forbidden"),
             ), self.assertLogs(self.logger_string, level="WARNING") as m:
                 saml_response = self.generate_saml_response(self.email, self.name)
-                relay_state = ujson.dumps(
-                    dict(state_token=SAMLAuthBackend.put_data_in_redis({"subdomain": "zulip"})),
-                )
+                relay_state = ujson.dumps(dict(state_token=SAMLAuthBackend.put_data_in_redis({"subdomain": "zulip"})))
                 post_params = {"SAMLResponse": saml_response, "RelayState": relay_state}
                 result = self.client_post("/complete/saml/", post_params)
                 self.assertEqual(result.status_code, 302)
@@ -1786,8 +1770,7 @@ class SAMLAuthBackendTest(SocialAuthBase):
                 self.assertEqual(result.status_code, 302)
                 self.assertEqual("/login/", result.url)
             self.assertEqual(
-                m.output,
-                [self.logger_output("/complete/saml/: No valid IdP as issuer of the SAMLResponse.", "info")],
+                m.output, [self.logger_output("/complete/saml/: No valid IdP as issuer of the SAMLResponse.", "info")],
             )
 
     def test_social_auth_complete_valid_get_idp_bad_samlresponse(self) -> None:
@@ -2182,11 +2165,7 @@ class AppleIdAuthBackendTest(AppleAuthMixin, SocialAuthBase):
     USER_INFO_URL = "/invalid-unused-url"
 
     def social_auth_test_finish(
-        self,
-        result: HttpResponse,
-        account_data_dict: Dict[str, str],
-        expect_choose_email_screen: bool,
-        **headers: Any,
+        self, result: HttpResponse, account_data_dict: Dict[str, str], expect_choose_email_screen: bool, **headers: Any
     ) -> HttpResponse:
         parsed_url = urllib.parse.urlparse(result.url)
         state = urllib.parse.parse_qs(parsed_url.query)["state"]
@@ -2426,9 +2405,7 @@ class AppleAuthBackendNativeFlowTest(AppleAuthMixin, SocialAuthBase):
 
         with self.apple_jwk_url_mock(), mock.patch("logging.info") as mock_info:
             result = self.client_get(url, **headers)
-            mock_info.assert_called_once_with(
-                "/complete/apple/: %s", "Authentication failed: Token validation failed",
-            )
+            mock_info.assert_called_once_with("/complete/apple/: %s", "Authentication failed: Token validation failed")
         return result
 
     def test_social_auth_desktop_success(self) -> None:
@@ -2462,11 +2439,7 @@ class GitHubAuthBackendTest(SocialAuthBase):
     email_data: List[Dict[str, Any]] = []
 
     def social_auth_test_finish(
-        self,
-        result: HttpResponse,
-        account_data_dict: Dict[str, str],
-        expect_choose_email_screen: bool,
-        **headers: Any,
+        self, result: HttpResponse, account_data_dict: Dict[str, str], expect_choose_email_screen: bool, **headers: Any
     ) -> HttpResponse:
         parsed_url = urllib.parse.urlparse(result.url)
         csrf_state = urllib.parse.parse_qs(parsed_url.query)["state"]
@@ -2564,9 +2537,7 @@ class GitHubAuthBackendTest(SocialAuthBase):
             result = self.social_auth_test(account_data_dict, subdomain="zulip")
             self.assertEqual(result.status_code, 302)
             self.assertEqual(result.url, "/login/")
-        self.assertEqual(
-            mock_info.output, [self.logger_output("GitHub user is not member of required team", "info")],
-        )
+        self.assertEqual(mock_info.output, [self.logger_output("GitHub user is not member of required team", "info")])
 
     @override_settings(SOCIAL_AUTH_GITHUB_TEAM_ID="zulip-webapp")
     def test_social_auth_github_team_member_success(self) -> None:
@@ -4796,9 +4767,7 @@ class TestZulipLDAPUserPopulator(ZulipLDAPTestCase):
     def test_update_custom_profile_field_invalid_data(self) -> None:
         self.change_ldap_user_attr("hamlet", "birthDate", "9999")
 
-        with self.settings(
-            AUTH_LDAP_USER_ATTR_MAP={"full_name": "cn", "custom_profile_field__birthday": "birthDate"},
-        ):
+        with self.settings(AUTH_LDAP_USER_ATTR_MAP={"full_name": "cn", "custom_profile_field__birthday": "birthDate"}):
             with self.assertRaisesRegex(ZulipLDAPException, "Invalid data for birthday field"):
                 self.perform_ldap_sync(self.example_user("hamlet"))
 
@@ -4807,9 +4776,7 @@ class TestZulipLDAPUserPopulator(ZulipLDAPTestCase):
         no_op_field = CustomProfileField.objects.get(realm=hamlet.realm, name="Phone number")
         expected_value = CustomProfileFieldValue.objects.get(user_profile=hamlet, field=no_op_field).value
 
-        with self.settings(
-            AUTH_LDAP_USER_ATTR_MAP={"full_name": "cn", "custom_profile_field__birthday": "birthDate"},
-        ):
+        with self.settings(AUTH_LDAP_USER_ATTR_MAP={"full_name": "cn", "custom_profile_field__birthday": "birthDate"}):
             self.perform_ldap_sync(self.example_user("hamlet"))
 
         actual_value = CustomProfileFieldValue.objects.get(user_profile=hamlet, field=no_op_field).value

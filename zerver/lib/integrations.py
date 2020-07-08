@@ -439,11 +439,7 @@ WEBHOOK_INTEGRATIONS: List[WebhookIntegration] = [
 INTEGRATIONS: Dict[str, Integration] = {
     "asana": Integration("asana", "asana", ["project-management"], doc="zerver/integrations/asana.md"),
     "capistrano": Integration(
-        "capistrano",
-        "capistrano",
-        ["deployment"],
-        display_name="Capistrano",
-        doc="zerver/integrations/capistrano.md",
+        "capistrano", "capistrano", ["deployment"], display_name="Capistrano", doc="zerver/integrations/capistrano.md",
     ),
     "codebase": Integration("codebase", "codebase", ["version-control"], doc="zerver/integrations/codebase.md"),
     "discourse": Integration("discourse", "discourse", ["communication"], doc="zerver/integrations/discourse.md"),

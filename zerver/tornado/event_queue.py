@@ -586,10 +586,7 @@ def fetch_events(query: Mapping[str, Any]) -> Dict[str, Any]:
             client = get_client_descriptor(queue_id)
             if user_profile_id != client.user_profile_id:
                 raise JsonableError(_("You are not authorized to get events from this queue"))
-            if (
-                client.event_queue.newest_pruned_id is not None
-                and last_event_id < client.event_queue.newest_pruned_id
-            ):
+            if client.event_queue.newest_pruned_id is not None and last_event_id < client.event_queue.newest_pruned_id:
                 raise JsonableError(
                     _("An event newer than {event_id} has already been pruned!").format(event_id=last_event_id),
                 )
@@ -877,9 +874,7 @@ def get_client_info_for_message_event(
     if "stream_name" in event_template and not event_template.get("invite_only"):
         realm_id = event_template["realm_id"]
         for client in get_client_descriptors_for_realm_all_streams(realm_id):
-            send_to_clients[client.event_queue.id] = dict(
-                client=client, flags=[], is_sender=is_sender_client(client),
-            )
+            send_to_clients[client.event_queue.id] = dict(client=client, flags=[], is_sender=is_sender_client(client))
 
     for user_data in users:
         user_profile_id: int = user_data["id"]
@@ -919,9 +914,7 @@ def process_message_event(event_template: Mapping[str, Any], users: Iterable[Map
 
     @cachify
     def get_client_payload(apply_markdown: bool, client_gravatar: bool) -> Dict[str, Any]:
-        return MessageDict.finalize_payload(
-            wide_dict, apply_markdown=apply_markdown, client_gravatar=client_gravatar,
-        )
+        return MessageDict.finalize_payload(wide_dict, apply_markdown=apply_markdown, client_gravatar=client_gravatar)
 
     # Extra user-specific data to include
     extra_user_data: Dict[int, Any] = {}

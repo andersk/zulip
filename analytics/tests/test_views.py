@@ -633,18 +633,14 @@ class TestSupportEndpoint(ZulipTestCase):
         cordelia = self.example_user("cordelia")
         self.login_user(cordelia)
 
-        result = self.client_post(
-            "/activity/support", {"realm_id": f"{lear_realm.id}", "sponsorship_pending": "true"},
-        )
+        result = self.client_post("/activity/support", {"realm_id": f"{lear_realm.id}", "sponsorship_pending": "true"})
         self.assertEqual(result.status_code, 302)
         self.assertEqual(result["Location"], "/login/")
 
         iago = self.example_user("iago")
         self.login_user(iago)
 
-        result = self.client_post(
-            "/activity/support", {"realm_id": f"{lear_realm.id}", "sponsorship_pending": "true"},
-        )
+        result = self.client_post("/activity/support", {"realm_id": f"{lear_realm.id}", "sponsorship_pending": "true"})
         self.assert_in_success_response(["Lear &amp; Co. marked as pending sponsorship."], result)
         customer = get_customer_by_realm(lear_realm)
         assert customer is not None

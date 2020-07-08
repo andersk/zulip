@@ -62,10 +62,7 @@ class FrontHookTests(WebhookTestCase):
         expected_message = "Deleted by **Leela Turanga**."
 
         self.send_and_test_stream_message(
-            "conversation_deleted",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "conversation_deleted", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_conversation_restored(self) -> None:

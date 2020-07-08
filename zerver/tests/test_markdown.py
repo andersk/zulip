@@ -234,8 +234,7 @@ class MarkdownMiscTest(ZulipTestCase):
         mention_data = MentionData(realm.id, content)
         self.assertEqual(mention_data.get_user_ids(), {hamlet.id, cordelia.id})
         self.assertEqual(
-            mention_data.get_user_by_id(hamlet.id),
-            dict(email=hamlet.email, full_name=hamlet.full_name, id=hamlet.id),
+            mention_data.get_user_by_id(hamlet.id), dict(email=hamlet.email, full_name=hamlet.full_name, id=hamlet.id),
         )
 
         user = mention_data.get_user_by_name("king hamLET")
@@ -777,9 +776,7 @@ class MarkdownTest(ZulipTestCase):
         self.assertEqual(
             get_tweet_id("http://twitter.com/#!/VizzQuotes/status/409030735191097344"), "409030735191097344",
         )
-        self.assertEqual(
-            get_tweet_id("http://twitter.com/VizzQuotes/status/409030735191097344"), "409030735191097344",
-        )
+        self.assertEqual(get_tweet_id("http://twitter.com/VizzQuotes/status/409030735191097344"), "409030735191097344")
         self.assertEqual(
             get_tweet_id("http://twitter.com/VizzQuotes/statuses/409030735191097344"), "409030735191097344",
         )
@@ -931,9 +928,7 @@ class MarkdownTest(ZulipTestCase):
                 make_link("http://twitter.com/wdaher/status/287977969287315460"),
                 make_inline_twitter_preview("http://twitter.com/wdaher/status/287977969287315456", normal_tweet_html),
                 make_inline_twitter_preview("http://twitter.com/wdaher/status/287977969287315457", normal_tweet_html),
-                make_inline_twitter_preview(
-                    "https://twitter.com/wdaher/status/287977969287315456", normal_tweet_html,
-                ),
+                make_inline_twitter_preview("https://twitter.com/wdaher/status/287977969287315456", normal_tweet_html),
             ),
         )
 
@@ -1519,8 +1514,7 @@ class MarkdownTest(ZulipTestCase):
 
         content = "@**all** test"
         self.assertEqual(
-            render_markdown(msg, content),
-            '<p><span class="user-mention" data-user-id="*">' "@all" "</span> test</p>",
+            render_markdown(msg, content), '<p><span class="user-mention" data-user-id="*">' "@all" "</span> test</p>",
         )
         self.assertTrue(msg.mentions_wildcard)
 
@@ -1648,9 +1642,7 @@ class MarkdownTest(ZulipTestCase):
         cordelia = self.example_user("cordelia")
         msg = Message(sender=othello, sending_client=get_client("test"))
 
-        content = (
-            "> @**King Hamlet** and @**Othello, the Moor of Venice**\n\n @**King Hamlet** and @**Cordelia Lear**"
-        )
+        content = "> @**King Hamlet** and @**Othello, the Moor of Venice**\n\n @**King Hamlet** and @**Cordelia Lear**"
         self.assertEqual(
             render_markdown(msg, content),
             "<blockquote>\n<p>"

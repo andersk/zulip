@@ -15,9 +15,7 @@ class Command(BaseCommand):
     def add_arguments(self, parser: CommandParser) -> None:
         parser.add_argument("slack_data_zip", nargs="+", metavar="<slack data zip>", help="Zipped slack data")
 
-        parser.add_argument(
-            "--token", metavar="<slack_token>", type=str, help="Slack legacy token of the organsation",
-        )
+        parser.add_argument("--token", metavar="<slack_token>", type=str, help="Slack legacy token of the organsation")
 
         parser.add_argument(
             "--output", dest="output_dir", action="store", default=None, help="Directory to write exported data to.",

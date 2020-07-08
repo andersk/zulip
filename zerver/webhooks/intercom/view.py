@@ -187,9 +187,7 @@ def get_conversation_user_replied_message(payload: Dict[str, Any]) -> Tuple[str,
     user = payload["data"]["item"]["user"]
     note = payload["data"]["item"]["conversation_parts"]["conversation_parts"][0]
     content = strip_tags(note["body"])
-    body = CONVERSATION_ADMIN_REPLY_TEMPLATE.format(
-        admin_name=user.get("name"), action="replied to", content=content,
-    )
+    body = CONVERSATION_ADMIN_REPLY_TEMPLATE.format(admin_name=user.get("name"), action="replied to", content=content)
     topic = get_topic_for_contacts(user)
     return (topic, body)
 

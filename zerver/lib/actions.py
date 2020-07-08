@@ -1750,9 +1750,7 @@ def create_user_messages(
     ids_with_alert_words = message.user_ids_with_alert_words
 
     for um in ums_to_create:
-        if (
-            um.user_profile_id == message.sender.id and message.sent_by_human()
-        ) or um.user_profile_id in mark_as_read:
+        if (um.user_profile_id == message.sender.id and message.sent_by_human()) or um.user_profile_id in mark_as_read:
             um.flags |= UserMessage.flags.read
         if wildcard:
             um.flags |= UserMessage.flags.wildcard_mentioned
@@ -2439,9 +2437,7 @@ def check_message(
         # This will raise JsonableError if there are problems.
 
         if sender.bot_type != sender.OUTGOING_WEBHOOK_BOT:
-            access_stream_for_send_message(
-                sender=sender, stream=stream, forwarder_user_profile=forwarder_user_profile,
-            )
+            access_stream_for_send_message(sender=sender, stream=stream, forwarder_user_profile=forwarder_user_profile)
 
     elif addressee.is_private():
         user_profiles = addressee.user_profiles()
@@ -3631,9 +3627,7 @@ def do_change_default_all_public_streams(user_profile: UserProfile, value: bool,
             dict(
                 type="realm_bot",
                 op="update",
-                bot=dict(
-                    user_id=user_profile.id, default_all_public_streams=user_profile.default_all_public_streams,
-                ),
+                bot=dict(user_id=user_profile.id, default_all_public_streams=user_profile.default_all_public_streams),
             ),
             bot_owner_user_ids(user_profile),
         )
@@ -4715,9 +4709,7 @@ def do_update_message(
         # delete_message event to them instead.
 
         subscribers = get_active_subscriptions_for_stream_id(stream_id).select_related("user_profile")
-        subs_to_new_stream = list(
-            get_active_subscriptions_for_stream_id(new_stream.id).select_related("user_profile"),
-        )
+        subs_to_new_stream = list(get_active_subscriptions_for_stream_id(new_stream.id).select_related("user_profile"))
 
         new_stream_sub_ids = [user.user_profile_id for user in subs_to_new_stream]
 

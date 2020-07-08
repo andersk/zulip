@@ -47,9 +47,7 @@ v1_api_and_json_patterns = [
         {"GET": "analytics.views.get_chart_data_for_realm"},
     ),
     path(
-        "analytics/chart_data/installation",
-        rest_dispatch,
-        {"GET": "analytics.views.get_chart_data_for_installation"},
+        "analytics/chart_data/installation", rest_dispatch, {"GET": "analytics.views.get_chart_data_for_installation"},
     ),
     path(
         "analytics/chart_data/remote/<int:remote_server_id>/installation",

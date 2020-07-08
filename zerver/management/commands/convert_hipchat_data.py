@@ -32,9 +32,7 @@ class Command(BaseCommand):
     def add_arguments(self, parser: CommandParser) -> None:
         parser.add_argument("hipchat_tar", nargs="+", metavar="<hipchat data tarfile>", help="tar of Hipchat data")
 
-        parser.add_argument(
-            "--output", dest="output_dir", action="store", help="Directory to write exported data to.",
-        )
+        parser.add_argument("--output", dest="output_dir", action="store", help="Directory to write exported data to.")
 
         parser.add_argument(
             "--mask", dest="masking_content", action="store_true", help="Mask the content for privacy during QA.",

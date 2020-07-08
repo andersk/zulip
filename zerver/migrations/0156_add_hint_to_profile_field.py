@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="customprofilefield",
-            name="hint",
-            field=models.CharField(default="", max_length=80, null=True),
+            model_name="customprofilefield", name="hint", field=models.CharField(default="", max_length=80, null=True),
         ),
     ]

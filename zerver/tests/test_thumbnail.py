@@ -118,9 +118,7 @@ class ThumbnailTest(ZulipTestCase):
 
             # Test api endpoint with legacy API authentication.
             user_profile = self.example_user("hamlet")
-            result = self.client_get(
-                f"/thumbnail?url={quoted_url}&size=thumbnail&api_key={get_api_key(user_profile)}",
-            )
+            result = self.client_get(f"/thumbnail?url={quoted_url}&size=thumbnail&api_key={get_api_key(user_profile)}")
             self.assertEqual(result.status_code, 302, result)
             expected_part_url = (
                 "/0x300/smart/filters:no_upscale():sharpen(0.5,0.2,true)/" + encoded_url + "/source_type/external"
@@ -129,9 +127,7 @@ class ThumbnailTest(ZulipTestCase):
 
             # Test a second logged-in user; they should also be able to access it
             user_profile = self.example_user("iago")
-            result = self.client_get(
-                f"/thumbnail?url={quoted_url}&size=thumbnail&api_key={get_api_key(user_profile)}",
-            )
+            result = self.client_get(f"/thumbnail?url={quoted_url}&size=thumbnail&api_key={get_api_key(user_profile)}")
             self.assertEqual(result.status_code, 302, result)
             expected_part_url = (
                 "/0x300/smart/filters:no_upscale():sharpen(0.5,0.2,true)/" + encoded_url + "/source_type/external"

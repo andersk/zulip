@@ -126,9 +126,7 @@ if FAKE_LDAP_MODE:
     AUTH_LDAP_REVERSE_EMAIL_SEARCH = LDAPSearch("ou=users,dc=zulip,dc=com", ldap.SCOPE_ONELEVEL, "(email=%(email)s)")
 
     if FAKE_LDAP_MODE == "a":
-        AUTH_LDAP_REVERSE_EMAIL_SEARCH = LDAPSearch(
-            "ou=users,dc=zulip,dc=com", ldap.SCOPE_ONELEVEL, "(uid=%(email)s)",
-        )
+        AUTH_LDAP_REVERSE_EMAIL_SEARCH = LDAPSearch("ou=users,dc=zulip,dc=com", ldap.SCOPE_ONELEVEL, "(uid=%(email)s)")
         AUTH_LDAP_USERNAME_ATTR = "uid"
         AUTH_LDAP_USER_ATTR_MAP = {
             "full_name": "cn",

@@ -117,11 +117,7 @@ def run() -> None:
         description="Checks commit messages for common formatting errors." "(config: .gitlint)",
     )
     linter_config.external_linter(
-        "isort",
-        ["isort"],
-        ["py"],
-        description="Sorts Python import statements",
-        check_arg=["--check-only", "--diff"],
+        "isort", ["isort"], ["py"], description="Sorts Python import statements", check_arg=["--check-only", "--diff"],
     )
 
     semgrep_command = [

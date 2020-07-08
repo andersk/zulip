@@ -21,9 +21,7 @@ class GiteaHookTests(WebhookTestCase):
 
     def test_new_branch(self) -> None:
         expected_topic = "test / test-branch"
-        expected_message = (
-            "kostekIV created [test-branch](https://try.gitea.io/kostekIV/test/src/test-branch) branch."
-        )
+        expected_message = "kostekIV created [test-branch](https://try.gitea.io/kostekIV/test/src/test-branch) branch."
         self.send_and_test_stream_message("create__branch", expected_topic, expected_message)
 
     def test_pull_request_opened(self) -> None:
@@ -68,7 +66,9 @@ class GiteaHookTests(WebhookTestCase):
 
     def test_issues_opened(self) -> None:
         expected_topic = "test / Issue #3 Test issue"
-        expected_message = """kostekIV opened [Issue #3](https://try.gitea.io/kostekIV/test/issues/3):\n\n~~~ quote\nTest body\n~~~"""
+        expected_message = (
+            """kostekIV opened [Issue #3](https://try.gitea.io/kostekIV/test/issues/3):\n\n~~~ quote\nTest body\n~~~"""
+        )
         self.send_and_test_stream_message("issues__opened", expected_topic, expected_message)
 
     def test_issues_edited(self) -> None:

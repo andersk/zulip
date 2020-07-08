@@ -283,16 +283,13 @@ class TestArchiveMessagesGeneral(ArchiveMessagesTestingBase):
         # Insert an exception near the end of the archiving process of a chunk:
         with mock.patch("zerver.lib.retention.delete_messages", side_effect=Exception):
             with self.assertRaises(Exception):
-                archive_messages(
-                    chunk_size=1000,
-                )  # Specify large chunk_size to ensure things happen in a single batch
+                archive_messages(chunk_size=1000)  # Specify large chunk_size to ensure things happen in a single batch
 
             # Archiving code has been executed, but because we got an exception, things should have been rolled back:
             self._verify_archive_data([], [])
 
             self.assertEqual(
-                set(Message.objects.filter(id__in=expired_msg_ids).values_list("id", flat=True)),
-                set(expired_msg_ids),
+                set(Message.objects.filter(id__in=expired_msg_ids).values_list("id", flat=True)), set(expired_msg_ids),
             )
             self.assertEqual(
                 set(UserMessage.objects.filter(id__in=expired_usermsg_ids).values_list("id", flat=True)),
@@ -625,9 +622,7 @@ class MoveMessageToArchiveGeneral(MoveMessageToArchiveBase):
         for attachment_id in archived_attachment_ids:
             self.assertEqual(
                 set(attachment_id_to_message_ids[attachment_id]),
-                set(
-                    ArchivedMessage.objects.filter(archivedattachment__id=attachment_id).values_list("id", flat=True),
-                ),
+                set(ArchivedMessage.objects.filter(archivedattachment__id=attachment_id).values_list("id", flat=True)),
             )
 
         restore_all_data_from_archive()
@@ -889,9 +884,7 @@ class TestRestoreStreamMessages(ArchiveMessagesTestingBase):
             self.send_stream_message(cordelia, stream_name, str(i)) for i in range(0, 2)
         ]
         usermessage_ids_to_archive_manually = self._get_usermessage_ids(message_ids_to_archive_manually)
-        message_ids_to_archive_by_policy = [
-            self.send_stream_message(hamlet, stream_name, str(i)) for i in range(0, 2)
-        ]
+        message_ids_to_archive_by_policy = [self.send_stream_message(hamlet, stream_name, str(i)) for i in range(0, 2)]
         usermessage_ids_to_archive_by_policy = self._get_usermessage_ids(message_ids_to_archive_by_policy)
 
         expected_archived_message_ids = message_ids_to_archive_manually + message_ids_to_archive_by_policy

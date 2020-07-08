@@ -57,7 +57,5 @@ class Command(BaseCommand):
 
         print("Converting Data ...")
         do_convert_data(
-            mattermost_data_dir=data_dir,
-            output_dir=output_dir,
-            masking_content=options.get("masking_content", False),
+            mattermost_data_dir=data_dir, output_dir=output_dir, masking_content=options.get("masking_content", False),
         )

@@ -1591,9 +1591,7 @@ def create_soft_link(source: Path, in_progress: bool = True) -> None:
         logging.info("See %s for output files", new_target)
 
 
-def launch_user_message_subprocesses(
-    threads: int, output_dir: Path, consent_message_id: Optional[int] = None,
-) -> None:
+def launch_user_message_subprocesses(threads: int, output_dir: Path, consent_message_id: Optional[int] = None) -> None:
     logging.info("Launching %d PARALLEL subprocesses to export UserMessage rows", threads)
     pids = {}
 

@@ -291,9 +291,7 @@ def list_of_tlds() -> List[str]:
     return tlds
 
 
-def walk_tree(
-    root: Element, processor: Callable[[Element], Optional[_T]], stop_after_first: bool = False,
-) -> List[_T]:
+def walk_tree(root: Element, processor: Callable[[Element], Optional[_T]], stop_after_first: bool = False) -> List[_T]:
     results = []
     queue = deque([root])
 

@@ -104,9 +104,7 @@ class SemaphoreHookTests(WebhookTestCase):
 * **Author**: radwo
 """.strip()
         with patch("zerver.webhooks.semaphore.view.is_github_repo", return_value=False):
-            self.send_and_test_stream_message(
-                "tag", expected_topic, expected_message, content_type="application/json",
-            )
+            self.send_and_test_stream_message("tag", expected_topic, expected_message, content_type="application/json")
 
     def test_semaphore_unknown_event(self) -> None:
         expected_topic = "notifications"
@@ -114,9 +112,7 @@ class SemaphoreHookTests(WebhookTestCase):
 [Notifications](https://semaphore.semaphoreci.com/workflows/a8704319-2422-4828-9b11-6b2afa3554e6) pipeline **stopped** for unknown event
 """.strip()
         with patch("zerver.webhooks.semaphore.tests.SemaphoreHookTests.get_body", self.get_unknown_event):
-            self.send_and_test_stream_message(
-                "tag", expected_topic, expected_message, content_type="application/json",
-            )
+            self.send_and_test_stream_message("tag", expected_topic, expected_message, content_type="application/json")
 
     def get_body(self, fixture_name: str) -> str:
         return self.webhook_fixture_data("semaphore", fixture_name, file_type="json")

@@ -220,11 +220,7 @@ AUTHENTICATION_BACKENDS: Tuple[str, ...] = (
 #
 # You will need to modify these SAML settings:
 SOCIAL_AUTH_SAML_ORG_INFO = {
-    "en-US": {
-        "displayname": "Example, Inc. Zulip",
-        "name": "zulip",
-        "url": "{}{}".format("https://", EXTERNAL_HOST),
-    },
+    "en-US": {"displayname": "Example, Inc. Zulip", "name": "zulip", "url": "{}{}".format("https://", EXTERNAL_HOST)},
 }
 SOCIAL_AUTH_SAML_ENABLED_IDPS = {
     # The fields are explained in detail here:

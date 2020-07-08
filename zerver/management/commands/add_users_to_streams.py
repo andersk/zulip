@@ -14,12 +14,7 @@ class Command(ZulipBaseCommand):
         self.add_user_list_args(parser, all_users_help="Add all users in realm to these streams.")
 
         parser.add_argument(
-            "-s",
-            "--streams",
-            dest="streams",
-            type=str,
-            required=True,
-            help="A comma-separated list of stream names.",
+            "-s", "--streams", dest="streams", type=str, required=True, help="A comma-separated list of stream names.",
         )
 
     def handle(self, **options: Any) -> None:

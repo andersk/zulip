@@ -159,10 +159,7 @@ def run_archiving_in_chunks(
         # when leaving the block).
         if len(new_chunk) > 0:
             logger.info(
-                "Archived %s messages in %.2fs in transaction %s.",
-                len(new_chunk),
-                total_time,
-                archive_transaction.id,
+                "Archived %s messages in %.2fs in transaction %s.", len(new_chunk), total_time, archive_transaction.id,
             )
 
         # We run the loop, until the query returns fewer results than chunk_size,

@@ -1668,9 +1668,7 @@ class InvitationsTestCase(InviteUserBase):
         prereg_user_three.save()
         prereg_user_four = PreregistrationUser(email="TestFour@zulip.com", referred_by=othello)
         prereg_user_four.save()
-        prereg_user_other_realm = PreregistrationUser(
-            email="TestOne@zulip.com", referred_by=self.mit_user("sipbtest"),
-        )
+        prereg_user_other_realm = PreregistrationUser(email="TestOne@zulip.com", referred_by=self.mit_user("sipbtest"))
         prereg_user_other_realm.save()
         multiuse_invite = MultiuseInvite.objects.create(referred_by=user_profile, realm=user_profile.realm)
         create_confirmation_link(multiuse_invite, Confirmation.MULTIUSE_INVITE)
@@ -1869,8 +1867,7 @@ class InvitationsTestCase(InviteUserBase):
         # Resend invite
         result = self.client_post("/json/invites/" + str(prereg_user.id) + "/resend")
         self.assertEqual(
-            ScheduledEmail.objects.filter(address__iexact=invitee, type=ScheduledEmail.INVITATION_REMINDER).count(),
-            1,
+            ScheduledEmail.objects.filter(address__iexact=invitee, type=ScheduledEmail.INVITATION_REMINDER).count(), 1,
         )
 
         # Check that we have exactly one scheduled email, and that it is different
@@ -1913,8 +1910,7 @@ class InvitationsTestCase(InviteUserBase):
         # Resend invite
         result = self.client_post("/json/invites/" + str(prereg_user.id) + "/resend")
         self.assertEqual(
-            ScheduledEmail.objects.filter(address__iexact=invitee, type=ScheduledEmail.INVITATION_REMINDER).count(),
-            1,
+            ScheduledEmail.objects.filter(address__iexact=invitee, type=ScheduledEmail.INVITATION_REMINDER).count(), 1,
         )
 
         # Check that we have exactly one scheduled email, and that it is different
@@ -1961,8 +1957,7 @@ class InvitationsTestCase(InviteUserBase):
         self.assert_json_success(result)
 
         self.assertEqual(
-            ScheduledEmail.objects.filter(address__iexact=invitee, type=ScheduledEmail.INVITATION_REMINDER).count(),
-            1,
+            ScheduledEmail.objects.filter(address__iexact=invitee, type=ScheduledEmail.INVITATION_REMINDER).count(), 1,
         )
 
         # Check that we have exactly one scheduled email, and that it is different
@@ -3040,9 +3035,7 @@ class UserSignUpTest(InviteUserBase):
         confirmation_url = self.get_confirmation_url_from_outbox(email)
         result = self.client_get(confirmation_url, subdomain=subdomain)
         self.assertEqual(result.status_code, 200)
-        result = self.submit_reg_form_for_user(
-            email, password, source_realm="on", HTTP_HOST=subdomain + ".testserver",
-        )
+        result = self.submit_reg_form_for_user(email, password, source_realm="on", HTTP_HOST=subdomain + ".testserver")
 
         hamlet = get_user(self.example_email("hamlet"), realm)
         self.assertEqual(hamlet.left_side_userlist, False)
@@ -3244,9 +3237,7 @@ class UserSignUpTest(InviteUserBase):
             raise AssertionError("Couldn't find a confirmation email.")
 
         with self.settings(
-            POPULATE_PROFILE_VIA_LDAP=True,
-            LDAP_APPEND_DOMAIN="zulip.com",
-            AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map,
+            POPULATE_PROFILE_VIA_LDAP=True, LDAP_APPEND_DOMAIN="zulip.com", AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map,
         ):
             result = self.client_get(confirmation_url)
             self.assertEqual(result.status_code, 200)
@@ -3372,9 +3363,7 @@ class UserSignUpTest(InviteUserBase):
         self.assert_in_response("Check your email so we can get started.", result)
 
         with self.settings(
-            POPULATE_PROFILE_VIA_LDAP=True,
-            LDAP_APPEND_DOMAIN="zulip.com",
-            AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map,
+            POPULATE_PROFILE_VIA_LDAP=True, LDAP_APPEND_DOMAIN="zulip.com", AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map,
         ):
             # Click confirmation link
             result = self.submit_reg_form_for_user(
@@ -3438,9 +3427,7 @@ class UserSignUpTest(InviteUserBase):
         self.assert_in_response("Check your email so we can get started.", result)
 
         with self.settings(
-            POPULATE_PROFILE_VIA_LDAP=True,
-            LDAP_APPEND_DOMAIN="zulip.com",
-            AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map,
+            POPULATE_PROFILE_VIA_LDAP=True, LDAP_APPEND_DOMAIN="zulip.com", AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map,
         ):
             # Click confirmation link
             result = self.submit_reg_form_for_user(
@@ -3491,9 +3478,7 @@ class UserSignUpTest(InviteUserBase):
         full_name = "New LDAP fullname"
 
         with self.settings(
-            POPULATE_PROFILE_VIA_LDAP=True,
-            LDAP_APPEND_DOMAIN="zulip.com",
-            AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map,
+            POPULATE_PROFILE_VIA_LDAP=True, LDAP_APPEND_DOMAIN="zulip.com", AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map,
         ):
             self.login_with_return(email, password, HTTP_HOST=subdomain + ".testserver")
 
@@ -3522,9 +3507,7 @@ class UserSignUpTest(InviteUserBase):
         do_create_realm("test", "test", False)
 
         with self.settings(
-            POPULATE_PROFILE_VIA_LDAP=True,
-            LDAP_APPEND_DOMAIN="zulip.com",
-            AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map,
+            POPULATE_PROFILE_VIA_LDAP=True, LDAP_APPEND_DOMAIN="zulip.com", AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map,
         ):
             subdomain = "zulip"
             self.login_with_return(email, password, HTTP_HOST=subdomain + ".testserver")
@@ -3559,9 +3542,7 @@ class UserSignUpTest(InviteUserBase):
         self.assert_in_response("Check your email so we can get started.", result)
 
         with self.settings(
-            POPULATE_PROFILE_VIA_LDAP=True,
-            LDAP_APPEND_DOMAIN="zulip.com",
-            AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map,
+            POPULATE_PROFILE_VIA_LDAP=True, LDAP_APPEND_DOMAIN="zulip.com", AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map,
         ):
             # Click confirmation link. This will 'authenticated_full_name'
             # session variable which will be used to set the fullname of
@@ -3612,9 +3593,7 @@ class UserSignUpTest(InviteUserBase):
         # If the user's email is inside the LDAP directory and we just
         # have a wrong password, then we refuse to create an account
         with self.settings(
-            POPULATE_PROFILE_VIA_LDAP=True,
-            LDAP_APPEND_DOMAIN="zulip.com",
-            AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map,
+            POPULATE_PROFILE_VIA_LDAP=True, LDAP_APPEND_DOMAIN="zulip.com", AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map,
         ):
             result = self.submit_reg_form_for_user(
                 email,
@@ -3643,9 +3622,7 @@ class UserSignUpTest(InviteUserBase):
         # If the user's email is not in the LDAP directory, but fits LDAP_APPEND_DOMAIN,
         # we refuse to create the account.
         with self.settings(
-            POPULATE_PROFILE_VIA_LDAP=True,
-            LDAP_APPEND_DOMAIN="zulip.com",
-            AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map,
+            POPULATE_PROFILE_VIA_LDAP=True, LDAP_APPEND_DOMAIN="zulip.com", AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map,
         ):
             result = self.submit_reg_form_for_user(
                 email,
@@ -3794,9 +3771,7 @@ class UserSignUpTest(InviteUserBase):
         password = self.ldap_password("newuser")
 
         with self.settings(
-            POPULATE_PROFILE_VIA_LDAP=True,
-            LDAP_APPEND_DOMAIN="zulip.com",
-            AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map,
+            POPULATE_PROFILE_VIA_LDAP=True, LDAP_APPEND_DOMAIN="zulip.com", AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map,
         ):
             # Invite user.
             self.login("iago")

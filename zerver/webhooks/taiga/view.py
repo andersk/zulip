@@ -55,8 +55,7 @@ templates = {
             "[{user}]({user_link}) added a related user story " "{userstory_subject} to the epic {epic_subject}."
         ),
         "delete": (
-            "[{user}]({user_link}) removed a related user story "
-            + "{userstory_subject} from the epic {epic_subject}."
+            "[{user}]({user_link}) removed a related user story " + "{userstory_subject} from the epic {epic_subject}."
         ),
     },
     "userstory": {
@@ -83,8 +82,7 @@ templates = {
     "milestone": {
         "create": "[{user}]({user_link}) created sprint {subject}.",
         "renamed": "[{user}]({user_link}) renamed sprint from {old} to **{new}**.",
-        "estimated_start": "[{user}]({user_link}) changed estimated start of sprint {subject}"
-        " from {old} to {new}.",
+        "estimated_start": "[{user}]({user_link}) changed estimated start of sprint {subject}" " from {old} to {new}.",
         "estimated_finish": "[{user}]({user_link}) changed estimated finish of sprint {subject}"
         " from {old} to {new}.",
         "set_estimated_start": "[{user}]({user_link}) changed estimated start of sprint {subject}" " to {new}.",

@@ -166,9 +166,7 @@ def get_openapi_parameters(endpoint: str, method: str, include_url_parameters: b
     return parameters
 
 
-def get_openapi_return_values(
-    endpoint: str, method: str, include_url_parameters: bool = True,
-) -> List[Dict[str, Any]]:
+def get_openapi_return_values(endpoint: str, method: str, include_url_parameters: bool = True) -> List[Dict[str, Any]]:
     openapi_endpoint = openapi_spec.spec()["paths"][endpoint][method.lower()]
     response = openapi_endpoint["responses"]["200"]["content"]["application/json"]["schema"]
     # In cases where we have used oneOf, the schemas only differ in examples

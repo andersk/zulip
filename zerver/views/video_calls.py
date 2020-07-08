@@ -177,9 +177,7 @@ def get_bigbluebutton_url(request: HttpRequest, user_profile: UserProfile) -> Ht
     ).hexdigest()
     url = add_query_to_redirect_url(
         "/calls/bigbluebutton/join",
-        urlencode(
-            {"meeting_id": '"' + id + '"', "password": '"' + password + '"', "checksum": '"' + checksum + '"'},
-        ),
+        urlencode({"meeting_id": '"' + id + '"', "password": '"' + password + '"', "checksum": '"' + checksum + '"'}),
     )
     return json_success({"url": url})
 

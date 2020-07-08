@@ -91,9 +91,7 @@ class Command(ZulipBaseCommand):
             help="Threads to use in exporting UserMessage objects in parallel",
         )
         parser.add_argument(
-            "--public-only",
-            action="store_true",
-            help="Export only public stream messages and associated attachments",
+            "--public-only", action="store_true", help="Export only public stream messages and associated attachments",
         )
         parser.add_argument(
             "--consent-message-id",

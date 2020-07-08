@@ -319,9 +319,7 @@ def do_rest_call(base_url: str, request_data: Any, event: Dict[str, Any], servic
 
     except requests.exceptions.ConnectionError:
         logging.info(
-            "Trigger event %s on %s resulted in a connection error. Retrying",
-            event["command"],
-            event["service_name"],
+            "Trigger event %s on %s resulted in a connection error. Retrying", event["command"], event["service_name"],
         )
         failure_message = "A connection error occurred. Is my bot server down?"
         request_retry(event, failure_message=failure_message)

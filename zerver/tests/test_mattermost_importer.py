@@ -221,8 +221,7 @@ class MatterMostImporter(ZulipTestCase):
         harry_id = user_id_mapper.get("harry")
         self.assertEqual({ron_id, harry_id}, {1, 2})
         self.assertEqual(
-            subscriber_handler.get_users(stream_id=stream_id_mapper.get("gryffindor-common-room")),
-            {ron_id, harry_id},
+            subscriber_handler.get_users(stream_id=stream_id_mapper.get("gryffindor-common-room")), {ron_id, harry_id},
         )
         self.assertEqual(
             subscriber_handler.get_users(stream_id=stream_id_mapper.get("gryffindor-quidditch-team")),

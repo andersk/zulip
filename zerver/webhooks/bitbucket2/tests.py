@@ -160,9 +160,7 @@ class Bitbucket2HookTests(WebhookTestCase):
         )
 
     def test_bitbucket2_on_pull_request_approved_event(self) -> None:
-        expected_message = (
-            "kolaszek approved [PR #1](https://bitbucket.org/kolaszek/repository-name/pull-requests/1)."
-        )
+        expected_message = "kolaszek approved [PR #1](https://bitbucket.org/kolaszek/repository-name/pull-requests/1)."
         kwargs = {
             "HTTP_X_EVENT_KEY": "pullrequest:approved",
         }
@@ -195,9 +193,7 @@ class Bitbucket2HookTests(WebhookTestCase):
         )
 
     def test_bitbucket2_on_pull_request_declined_event(self) -> None:
-        expected_message = (
-            "kolaszek rejected [PR #1](https://bitbucket.org/kolaszek/repository-name/pull-requests/1)."
-        )
+        expected_message = "kolaszek rejected [PR #1](https://bitbucket.org/kolaszek/repository-name/pull-requests/1)."
         kwargs = {
             "HTTP_X_EVENT_KEY": "pullrequest:rejected",
         }

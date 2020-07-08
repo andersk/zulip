@@ -346,9 +346,7 @@ def accounts_register(request: HttpRequest) -> HttpResponse:
                 if settings.LDAP_APPEND_DOMAIN:
                     # In LDAP_APPEND_DOMAIN configurations, we don't allow making a non-ldap account
                     # if the email matches the ldap domain.
-                    can_use_different_backend = can_use_different_backend and (
-                        not email_belongs_to_ldap(realm, email)
-                    )
+                    can_use_different_backend = can_use_different_backend and (not email_belongs_to_ldap(realm, email))
                 if return_data.get("no_matching_ldap_user") and can_use_different_backend:
                     # If both the LDAP and Email or Social auth backends are
                     # enabled, and there's no matching user in the LDAP

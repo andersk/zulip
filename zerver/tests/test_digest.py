@@ -192,9 +192,7 @@ class TestDigestEmailMessages(ZulipTestCase):
 
     @mock.patch("zerver.lib.digest.queue_digest_recipient")
     @mock.patch("zerver.lib.digest.timezone_now")
-    def test_disabled(
-        self, mock_django_timezone: mock.MagicMock, mock_queue_digest_recipient: mock.MagicMock,
-    ) -> None:
+    def test_disabled(self, mock_django_timezone: mock.MagicMock, mock_queue_digest_recipient: mock.MagicMock) -> None:
         cutoff = timezone_now()
         # A Tuesday
         mock_django_timezone.return_value = datetime.datetime(year=2016, month=1, day=5)
@@ -272,9 +270,7 @@ class TestDigestEmailMessages(ZulipTestCase):
     @override_settings(SEND_DIGEST_EMAILS=True)
     def test_new_stream_link(self, mock_django_timezone: mock.MagicMock) -> None:
         cutoff = datetime.datetime(year=2017, month=11, day=1, tzinfo=datetime.timezone.utc)
-        mock_django_timezone.return_value = datetime.datetime(
-            year=2017, month=11, day=5, tzinfo=datetime.timezone.utc,
-        )
+        mock_django_timezone.return_value = datetime.datetime(year=2017, month=11, day=5, tzinfo=datetime.timezone.utc)
         cordelia = self.example_user("cordelia")
         stream_id = create_stream_if_needed(cordelia.realm, "New stream")[0].id
         new_stream = gather_new_streams(cordelia, cutoff)[1]

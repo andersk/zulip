@@ -25,12 +25,7 @@ Create default stream groups which the users can choose during sign up.
         )
 
         parser.add_argument(
-            "-s",
-            "--streams",
-            dest="streams",
-            type=str,
-            required=True,
-            help="A comma-separated list of stream names.",
+            "-s", "--streams", dest="streams", type=str, required=True, help="A comma-separated list of stream names.",
         )
 
     def handle(self, *args: Any, **options: Any) -> None:

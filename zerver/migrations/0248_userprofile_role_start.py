@@ -40,8 +40,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name="userprofile", name="role", field=models.PositiveSmallIntegerField(null=True),
-        ),
+        migrations.AddField(model_name="userprofile", name="role", field=models.PositiveSmallIntegerField(null=True)),
         migrations.RunPython(update_role, reverse_code=reverse_code, elidable=True),
     ]

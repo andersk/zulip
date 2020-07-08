@@ -284,9 +284,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
 
         self.logout()
         response = self.client_get(uri)
-        self.assert_json_error(
-            response, "Not logged in: API authentication or user session required", status_code=401,
-        )
+        self.assert_json_error(response, "Not logged in: API authentication or user session required", status_code=401)
 
     def test_removed_file_download(self) -> None:
         """
@@ -347,9 +345,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
     def test_attachment_url_without_upload(self) -> None:
         hamlet = self.example_user("hamlet")
         self.login_user(hamlet)
-        body = (
-            f"Test message ...[zulip.txt](http://localhost:9991/user_uploads/{hamlet.realm_id}/64/fake_path_id.txt)"
-        )
+        body = f"Test message ...[zulip.txt](http://localhost:9991/user_uploads/{hamlet.realm_id}/64/fake_path_id.txt)"
         self.send_stream_message(self.example_user("hamlet"), "Denmark", body, "test")
         self.assertFalse(Attachment.objects.filter(path_id="1/64/fake_path_id.txt").exists())
 
@@ -963,9 +959,7 @@ class AvatarTest(UploadSerializeMixin, ZulipTestCase):
         self.assertTrue(redirect_url.endswith(str(avatar_url(cross_realm_bot)) + "&foo=bar"))
 
         response = self.client_get("/avatar/cordelia@zulip.com?foo=bar")
-        self.assert_json_error(
-            response, "Not logged in: API authentication or user session required", status_code=401,
-        )
+        self.assert_json_error(response, "Not logged in: API authentication or user session required", status_code=401)
 
     def test_get_user_avatar_medium(self) -> None:
         hamlet = self.example_user("hamlet")
@@ -996,9 +990,7 @@ class AvatarTest(UploadSerializeMixin, ZulipTestCase):
         self.assertTrue(redirect_url.endswith(str(avatar_url(cordelia, True)) + "&foo=bar"))
 
         response = self.client_get("/avatar/cordelia@zulip.com/medium?foo=bar")
-        self.assert_json_error(
-            response, "Not logged in: API authentication or user session required", status_code=401,
-        )
+        self.assert_json_error(response, "Not logged in: API authentication or user session required", status_code=401)
 
     def test_non_valid_user_avatar(self) -> None:
 

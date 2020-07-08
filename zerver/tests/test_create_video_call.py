@@ -65,9 +65,7 @@ class TestVideoCall(ZulipTestCase):
         self.assertIn("somesid", response.url)
 
     def test_create_video_sid_error(self) -> None:
-        response = self.client_get(
-            "/calls/zoom/complete", {"code": "code", "state": '{"realm":"zulip","sid":"bad"}'},
-        )
+        response = self.client_get("/calls/zoom/complete", {"code": "code", "state": '{"realm":"zulip","sid":"bad"}'})
         self.assert_json_error(response, "Invalid Zoom session identifier")
 
     @responses.activate

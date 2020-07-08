@@ -137,9 +137,7 @@ def get_square_size(emoji_data: List[Dict[str, Any]]) -> int:
     return n
 
 
-def generate_sprite_css_files(
-    cache_path: str, emoji_data: List[Dict[str, Any]], emojiset: str, alt_name: str,
-) -> None:
+def generate_sprite_css_files(cache_path: str, emoji_data: List[Dict[str, Any]], emojiset: str, alt_name: str) -> None:
     """
     Spritesheets are usually NxN squares.
     """

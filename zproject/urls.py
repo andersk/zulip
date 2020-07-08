@@ -197,9 +197,7 @@ v1_api_and_json_patterns = [
         rest_dispatch,
         {"GET": "zerver.views.users.get_bots_backend", "POST": "zerver.views.users.add_bot_backend"},
     ),
-    path(
-        "bots/<int:bot_id>/api_key/regenerate", rest_dispatch, {"POST": "zerver.views.users.regenerate_bot_api_key"},
-    ),
+    path("bots/<int:bot_id>/api_key/regenerate", rest_dispatch, {"POST": "zerver.views.users.regenerate_bot_api_key"}),
     path(
         "bots/<int:bot_id>",
         rest_dispatch,
@@ -381,9 +379,7 @@ v1_api_and_json_patterns = [
     # settings -> zerver.views.user_settings
     path("settings", rest_dispatch, {"PATCH": "zerver.views.user_settings.json_change_settings"}),
     path("settings/display", rest_dispatch, {"PATCH": "zerver.views.user_settings.update_display_settings_backend"}),
-    path(
-        "settings/notifications", rest_dispatch, {"PATCH": "zerver.views.user_settings.json_change_notify_settings"},
-    ),
+    path("settings/notifications", rest_dispatch, {"PATCH": "zerver.views.user_settings.json_change_notify_settings"}),
     # users/me/alert_words -> zerver.views.alert_words
     path(
         "users/me/alert_words",
@@ -803,9 +799,7 @@ v1_api_mobile_patterns = [
     # password/pair and returns an API key.
     path("fetch_api_key", zerver.views.auth.api_fetch_api_key, name="zerver.views.auth.api_fetch_api_key"),
     # This is for the signing in through the devAuthBackEnd on mobile apps.
-    path(
-        "dev_fetch_api_key", zerver.views.auth.api_dev_fetch_api_key, name="zerver.views.auth.api_dev_fetch_api_key",
-    ),
+    path("dev_fetch_api_key", zerver.views.auth.api_dev_fetch_api_key, name="zerver.views.auth.api_dev_fetch_api_key"),
     # This is for fetching the emails of the admins and the users.
     path("dev_list_users", zerver.views.auth.api_dev_list_users, name="zerver.views.auth.api_dev_list_users"),
     # Used to present the GOOGLE_CLIENT_ID to mobile apps

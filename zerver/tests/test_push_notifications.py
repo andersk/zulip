@@ -182,9 +182,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
         # make the code simple for sending an incorrect API key.
         self.API_KEYS[self.server_uuid] = "invalid"
         result = self.uuid_post(self.server_uuid, endpoint, dict(user_id=user_id, token_kind=token_kind, token=token))
-        self.assert_json_error(
-            result, "Zulip server auth failure: key does not match role 1234-abcd", status_code=401,
-        )
+        self.assert_json_error(result, "Zulip server auth failure: key does not match role 1234-abcd", status_code=401)
 
         del self.API_KEYS[self.server_uuid]
 
@@ -350,9 +348,9 @@ class AnalyticsBouncerTest(BouncerTestCase):
         user = self.example_user("hamlet")
         end_time = self.TIME_ZERO
 
-        with mock.patch(
-            "zerver.lib.remote_server.requests.request", side_effect=requests.ConnectionError,
-        ), mock.patch("zerver.lib.remote_server.logging.warning") as mock_warning:
+        with mock.patch("zerver.lib.remote_server.requests.request", side_effect=requests.ConnectionError), mock.patch(
+            "zerver.lib.remote_server.logging.warning",
+        ) as mock_warning:
             send_analytics_to_remote_server()
             mock_warning.assert_called_once_with(
                 "ConnectionError while trying to connect to push notification bouncer",
@@ -1538,9 +1536,7 @@ class TestSendToPushBouncer(ZulipTestCase):
 
         # This is the exception our decorator uses for an invalid Zulip server
         error_obj = InvalidZulipServerError("testRole")
-        with mock.patch(
-            "requests.request", return_value=Result(status=400, content=ujson.dumps(error_obj.to_json())),
-        ):
+        with mock.patch("requests.request", return_value=Result(status=400, content=ujson.dumps(error_obj.to_json()))):
             with self.assertRaises(PushNotificationBouncerException) as exc:
                 send_to_push_bouncer("register", "register", {"msg": "true"})
         self.assertEqual(

@@ -9,9 +9,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(model_name="installationcount", name="interval", field=models.CharField(max_length=8)),
-        migrations.AlterField(
-            model_name="installationcount", name="property", field=models.CharField(max_length=32),
-        ),
+        migrations.AlterField(model_name="installationcount", name="property", field=models.CharField(max_length=32)),
         migrations.AlterField(model_name="realmcount", name="interval", field=models.CharField(max_length=8)),
         migrations.AlterField(model_name="realmcount", name="property", field=models.CharField(max_length=32)),
         migrations.AlterField(model_name="streamcount", name="interval", field=models.CharField(max_length=8)),

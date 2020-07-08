@@ -104,10 +104,7 @@ js_rules = RuleList(
             "bad_lines": ['subject="foo"', " MAX_SUBJECT_LEN"],
         },
         {"pattern": r"[^_]function\(", "description": 'The keyword "function" should be followed by a space'},
-        {
-            "pattern": "msgid|MSGID",
-            "description": 'Avoid using "msgid" as a variable name; use "message_id" instead.',
-        },
+        {"pattern": "msgid|MSGID", "description": 'Avoid using "msgid" as a variable name; use "message_id" instead.'},
         {
             "pattern": r".*blueslip.warning\(.*",
             "description": "The module blueslip has no function warning, try using blueslip.warn",
@@ -678,9 +675,7 @@ html_rules: List["Rule"] = whitespace_rules + prose_style_rules + [
     {
         "pattern": "style ?=",
         "description": "Avoid using the `style=` attribute; we prefer styling in CSS files",
-        "exclude_pattern": r'.*style ?=["'
-        + "'"
-        + "](display: ?none|background: {{|color: {{|background-color: {{).*",
+        "exclude_pattern": r'.*style ?=["' + "'" + "](display: ?none|background: {{|color: {{|background-color: {{).*",
         "exclude": {
             # KaTeX output uses style attribute
             "templates/zerver/app/markdown_help.html",

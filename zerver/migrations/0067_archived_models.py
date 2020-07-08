@@ -47,10 +47,7 @@ class Migration(migrations.Migration):
                     "sender",
                     models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
                 ),
-                (
-                    "sending_client",
-                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Client"),
-                ),
+                ("sending_client", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Client")),
             ],
             options={"abstract": False},
             bases=(models.Model,),

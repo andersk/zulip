@@ -446,9 +446,7 @@ def remote_user_jwt(request: HttpRequest) -> HttpResponse:
 
     user_profile = authenticate(username=email, realm=realm, use_dummy_backend=True)
     if user_profile is None:
-        result = ExternalAuthResult(
-            data_dict={"email": email, "full_name": remote_user, "subdomain": realm.subdomain},
-        )
+        result = ExternalAuthResult(data_dict={"email": email, "full_name": remote_user, "subdomain": realm.subdomain})
     else:
         result = ExternalAuthResult(user_profile=user_profile)
 
@@ -885,9 +883,7 @@ def api_fetch_api_key(request: HttpRequest, username: str = REQ(), password: str
             _("Password auth is disabled in your team."), data={"reason": "password auth disabled"}, status=403,
         )
     if user_profile is None:
-        return json_error(
-            _("Your username or password is incorrect."), data={"reason": "incorrect_creds"}, status=403,
-        )
+        return json_error(_("Your username or password is incorrect."), data={"reason": "incorrect_creds"}, status=403)
 
     # Maybe sending 'user_logged_in' signal is the better approach:
     #   user_logged_in.send(sender=user_profile.__class__, request=request, user=user_profile)
@@ -1044,6 +1040,6 @@ def config_error_view(request: HttpRequest, error_category_name: str) -> HttpRes
         "remote_user_header_missing": {"error_name": "remoteuser_error_remote_user_header_missing"},
     }
 
-    return TemplateView.as_view(
-        template_name="zerver/config_error.html", extra_context=contexts[error_category_name],
-    )(request)
+    return TemplateView.as_view(template_name="zerver/config_error.html", extra_context=contexts[error_category_name])(
+        request,
+    )

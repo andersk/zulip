@@ -74,9 +74,7 @@ docs_without_macros = [
 @ignore_unhashable_lru_cache(512)
 @items_tuple_to_dict
 @register.filter(name="render_markdown_path", is_safe=True)
-def render_markdown_path(
-    markdown_file_path: str, context: Mapping[str, Any] = {}, pure_markdown: bool = False,
-) -> str:
+def render_markdown_path(markdown_file_path: str, context: Mapping[str, Any] = {}, pure_markdown: bool = False) -> str:
     """Given a path to a markdown file, return the rendered html.
 
     Note that this assumes that any HTML in the markdown file is

@@ -825,9 +825,7 @@ def get_inactive_recipient_ids(user_profile: UserProfile) -> List[int]:
 
 def get_muted_stream_ids(user_profile: UserProfile) -> List[int]:
     rows = (
-        get_stream_subscriptions_for_user(user_profile)
-        .filter(active=True, is_muted=True)
-        .values("recipient__type_id")
+        get_stream_subscriptions_for_user(user_profile).filter(active=True, is_muted=True).values("recipient__type_id")
     )
     muted_stream_ids = [row["recipient__type_id"] for row in rows]
     return muted_stream_ids

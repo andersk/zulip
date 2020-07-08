@@ -15,10 +15,7 @@ class RaygunHookTests(WebhookTestCase):
 """.strip()
 
         self.send_and_test_stream_message(
-            "error_status_changed",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "error_status_changed", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_comment_added_to_error_message(self) -> None:

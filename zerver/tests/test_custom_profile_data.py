@@ -131,9 +131,7 @@ class CreateCustomProfileFieldTest(CustomProfileFieldTestCase):
 
         result = self.client_post(
             "/json/realm/profile_fields",
-            info=dict(
-                field_type=field_type, field_data=field_data, hint=invalid_field_hint, name=invalid_field_name,
-            ),
+            info=dict(field_type=field_type, field_data=field_data, hint=invalid_field_hint, name=invalid_field_name),
         )
         self.assert_json_success(result)
         # Silently overwrite name and hint with values set in default fields dict
@@ -471,8 +469,7 @@ class UpdateCustomProfileFieldTest(CustomProfileFieldTestCase):
 
         # Update value of field
         result = self.client_patch(
-            "/json/users/me/profile_data",
-            {"data": ujson.dumps([{"id": f["id"], "value": f["value"]} for f in data])},
+            "/json/users/me/profile_data", {"data": ujson.dumps([{"id": f["id"], "value": f["value"]} for f in data])},
         )
         self.assert_json_success(result)
 

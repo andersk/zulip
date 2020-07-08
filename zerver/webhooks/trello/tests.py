@@ -19,9 +19,7 @@ class TrelloHookTests(WebhookTestCase):
         self.send_and_test_stream_message("changing_cards_list", "Welcome Board", expected_message)
 
     def test_trello_webhook_when_card_was_renamed(self) -> None:
-        expected_message = (
-            'TomaszKolek renamed the card from "Old name" to [New name](https://trello.com/c/r33ylX2Z).'
-        )
+        expected_message = 'TomaszKolek renamed the card from "Old name" to [New name](https://trello.com/c/r33ylX2Z).'
         self.send_and_test_stream_message("renaming_card", "Welcome Board", expected_message)
 
     def test_trello_webhook_when_label_was_added_to_card(self) -> None:
@@ -81,7 +79,9 @@ class TrelloHookTests(WebhookTestCase):
         self.send_and_test_stream_message("adding_checklist_to_card", "Welcome Board", expected_message)
 
     def test_trello_webhook_when_check_item_is_checked(self) -> None:
-        expected_message = "Eeshan Garg checked **Tomatoes** in **Checklist** ([Something something](https://trello.com/c/R2thJK3P))."
+        expected_message = (
+            "Eeshan Garg checked **Tomatoes** in **Checklist** ([Something something](https://trello.com/c/R2thJK3P))."
+        )
         self.send_and_test_stream_message("check_item_on_card_checklist", "Zulip", expected_message)
 
     def test_trello_webhook_when_check_item_is_unchecked(self) -> None:

@@ -176,9 +176,7 @@ def build_subscription(recipient_id: int, user_id: int, subscription_id: int) ->
 
 
 def build_public_stream_subscriptions(
-    zerver_userprofile: List[ZerverFieldsT],
-    zerver_recipient: List[ZerverFieldsT],
-    zerver_stream: List[ZerverFieldsT],
+    zerver_userprofile: List[ZerverFieldsT], zerver_recipient: List[ZerverFieldsT], zerver_stream: List[ZerverFieldsT],
 ) -> List[ZerverFieldsT]:
     """
     This function is only used for Hipchat now, but it may apply to

@@ -530,9 +530,7 @@ class SlackImporter(ZulipTestCase):
             "DRS3PSLDK": ("U064KUGRJ", "U064KUGRJ"),
         }
         slack_recipient_names = (
-            set(slack_user_id_to_zulip_user_id.keys())
-            | set(test_added_channels.keys())
-            | set(test_added_mpims.keys())
+            set(slack_user_id_to_zulip_user_id.keys()) | set(test_added_channels.keys()) | set(test_added_mpims.keys())
         )
 
         self.assertDictEqual(test_added_channels, added_channels)

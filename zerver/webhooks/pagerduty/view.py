@@ -120,9 +120,7 @@ def build_pagerduty_formatdict_v2(message: Dict[str, Any]) -> Dict[str, Any]:
     assignments = message["incident"]["assignments"]
     if assignments:
         assignee = assignments[0]["assignee"]
-        format_dict["assignee_info"] = ASSIGNEE_TEMPLATE.format(
-            username=assignee["summary"], url=assignee["html_url"],
-        )
+        format_dict["assignee_info"] = ASSIGNEE_TEMPLATE.format(username=assignee["summary"], url=assignee["html_url"])
     else:
         format_dict["assignee_info"] = "nobody"
 

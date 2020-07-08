@@ -244,9 +244,7 @@ class TornadoInMemoryRateLimiterBackend(RateLimiterBackend):
     @classmethod
     def get_api_calls_left(cls, entity_key: str, range_seconds: int, max_calls: int) -> Tuple[int, float]:
         now = time.time()
-        if (range_seconds, max_calls) in cls.reset_times and entity_key in cls.reset_times[
-            (range_seconds, max_calls)
-        ]:
+        if (range_seconds, max_calls) in cls.reset_times and entity_key in cls.reset_times[(range_seconds, max_calls)]:
             reset_time = cls.reset_times[(range_seconds, max_calls)][entity_key]
         else:
             return max_calls, 0

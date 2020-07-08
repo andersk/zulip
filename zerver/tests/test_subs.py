@@ -655,9 +655,7 @@ class StreamAdminTest(ZulipTestCase):
         del events[:]
         with tornado_redirected_to_list(events):
             stream_id = get_stream("stream_private_name1", realm).id
-            result = self.client_patch(
-                f"/json/streams/{stream_id}", {"new_name": ujson.dumps("stream_private_name2")},
-            )
+            result = self.client_patch(f"/json/streams/{stream_id}", {"new_name": ujson.dumps("stream_private_name2")})
         self.assert_json_success(result)
         notified_user_ids = set(events[1]["users"])
         self.assertEqual(notified_user_ids, can_access_stream_user_ids(stream_private))
@@ -1734,8 +1732,7 @@ class DefaultStreamGroupTest(ZulipTestCase):
         self.assert_json_error(result, "This default stream group is already named 'group1'")
 
         result = self.client_patch(
-            f"/json/default_stream_groups/{group_id}",
-            {"op": "change", "new_group_name": ujson.dumps(new_group_name)},
+            f"/json/default_stream_groups/{group_id}", {"op": "change", "new_group_name": ujson.dumps(new_group_name)},
         )
         self.assert_json_success(result)
         default_stream_groups = get_default_stream_groups(realm)
@@ -2419,9 +2416,7 @@ class SubscriptionAPITest(ZulipTestCase):
          "already_subscribed": {self.example_email("iago"): ["Venice", "Verona"]},
          "subscribed": {self.example_email("iago"): ["Venice8"]}}
         """
-        result = self.common_subscribe_to_streams(
-            self.test_user, subscriptions, other_params, invite_only=invite_only,
-        )
+        result = self.common_subscribe_to_streams(self.test_user, subscriptions, other_params, invite_only=invite_only)
         json = result.json()
         self.assertEqual(sorted(subscribed), sorted(json["subscribed"][email]))
         self.assertEqual(sorted(already_subscribed), sorted(json["already_subscribed"][email]))
@@ -3525,10 +3520,7 @@ class SubscriptionAPITest(ZulipTestCase):
         # Test creating private stream.
         with queries_captured() as queries:
             self.common_subscribe_to_streams(
-                self.test_user,
-                [new_streams[1]],
-                dict(principals=ujson.dumps([user1.id, user2.id])),
-                invite_only=True,
+                self.test_user, [new_streams[1]], dict(principals=ujson.dumps([user1.id, user2.id])), invite_only=True,
             )
         self.assert_length(queries, 40)
 
@@ -3830,9 +3822,7 @@ class GetSubscribersTest(ZulipTestCase):
         """
         self.assertIn("subscribers", result)
         self.assertIsInstance(result["subscribers"], list)
-        true_subscribers = [
-            user_profile.email for user_profile in self.users_subscribed_to_stream(stream_name, realm)
-        ]
+        true_subscribers = [user_profile.email for user_profile in self.users_subscribed_to_stream(stream_name, realm)]
         self.assertEqual(sorted(result["subscribers"]), sorted(true_subscribers))
 
     def make_subscriber_request(self, stream_id: int, user: Optional[UserProfile] = None) -> HttpResponse:
@@ -3954,10 +3944,7 @@ class GetSubscribersTest(ZulipTestCase):
 
         def create_private_streams() -> None:
             self.common_subscribe_to_streams(
-                self.user_profile,
-                private_streams,
-                dict(principals=ujson.dumps(users_to_subscribe)),
-                invite_only=True,
+                self.user_profile, private_streams, dict(principals=ujson.dumps(users_to_subscribe)), invite_only=True,
             )
 
         create_private_streams()

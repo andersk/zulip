@@ -32,9 +32,7 @@ PUSH_COMMITS_MESSAGE_TEMPLATE_WITHOUT_COMMITTERS = (
 """
 )
 PUSH_DELETE_BRANCH_MESSAGE_TEMPLATE = "{user_name} [deleted]({compare_url}) the branch {branch_name}."
-PUSH_LOCAL_BRANCH_WITHOUT_COMMITS_MESSAGE_TEMPLATE = (
-    "{user_name} [pushed]({compare_url}) " "the branch {branch_name}."
-)
+PUSH_LOCAL_BRANCH_WITHOUT_COMMITS_MESSAGE_TEMPLATE = "{user_name} [pushed]({compare_url}) " "the branch {branch_name}."
 PUSH_COMMITS_MESSAGE_EXTENSION = "Commits by {}"
 PUSH_COMMITTERS_LIMIT_INFO = 3
 

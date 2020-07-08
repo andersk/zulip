@@ -112,9 +112,7 @@ def add_members_to_group_backend(
 
     for user_profile in user_profiles:
         if user_profile.id in existing_member_ids:
-            raise JsonableError(
-                _("User {user_id} is already a member of this group").format(user_id=user_profile.id),
-            )
+            raise JsonableError(_("User {user_id} is already a member of this group").format(user_id=user_profile.id))
 
     bulk_add_members_to_user_group(user_group, user_profiles)
     return json_success()

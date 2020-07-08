@@ -154,9 +154,7 @@ def home_real(request: HttpRequest) -> HttpResponse:
     client_user_agent = request.META.get("HTTP_USER_AGENT", "")
     (insecure_desktop_app, banned_desktop_app, auto_update_broken) = is_outdated_desktop_app(client_user_agent)
     if banned_desktop_app:
-        return render(
-            request, "zerver/insecure_desktop_app.html", context={"auto_update_broken": auto_update_broken},
-        )
+        return render(request, "zerver/insecure_desktop_app.html", context={"auto_update_broken": auto_update_broken})
     (unsupported_browser, browser_name) = is_unsupported_browser(client_user_agent)
     if unsupported_browser:
         return render(request, "zerver/unsupported_browser.html", context={"browser_name": browser_name})

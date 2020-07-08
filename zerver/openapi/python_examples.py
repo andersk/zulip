@@ -88,9 +88,7 @@ def test_authorization_errors_fatal(client: Client, nonadmin_client: Client) -> 
         f"streams/{stream_id}", method="PATCH", request={"is_private": True},
     )
 
-    result = nonadmin_client.add_subscriptions(
-        streams=[{"name": "private_stream"}], authorization_errors_fatal=False,
-    )
+    result = nonadmin_client.add_subscriptions(streams=[{"name": "private_stream"}], authorization_errors_fatal=False)
 
     validate_against_openapi_schema(result, "/users/me/subscriptions", "post", "400_0")
 

@@ -482,9 +482,7 @@ def get_members_backend(
         client_gravatar = False
     target_user = None
     if user_id is not None:
-        target_user = access_user_by_id(
-            user_profile, user_id, allow_deactivated=True, allow_bots=True, read_only=True,
-        )
+        target_user = access_user_by_id(user_profile, user_id, allow_deactivated=True, allow_bots=True, read_only=True)
 
     members = get_raw_user_data(
         realm,

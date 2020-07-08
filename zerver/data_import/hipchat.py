@@ -82,11 +82,7 @@ def read_user_data(data_dir: str) -> List[ZerverFieldsT]:
 
 
 def convert_user_data(
-    user_handler: UserHandler,
-    slim_mode: bool,
-    user_id_mapper: IdMapper,
-    raw_data: List[ZerverFieldsT],
-    realm_id: int,
+    user_handler: UserHandler, slim_mode: bool, user_id_mapper: IdMapper, raw_data: List[ZerverFieldsT], realm_id: int,
 ) -> None:
     flat_data = [d["User"] for d in raw_data]
 

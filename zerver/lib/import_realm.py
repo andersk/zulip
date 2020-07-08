@@ -491,9 +491,7 @@ def re_map_foreign_keys_many_to_many(
     """
     for item in data[table]:
         old_id_list = item[field_name]
-        new_id_list = re_map_foreign_keys_many_to_many_internal(
-            table, field_name, related_table, old_id_list, verbose,
-        )
+        new_id_list = re_map_foreign_keys_many_to_many_internal(table, field_name, related_table, old_id_list, verbose)
         item[field_name] = new_id_list
         del item[field_name]
 
@@ -761,9 +759,7 @@ def import_uploads(
                 user_profile = get_user_profile_by_id(record["user_profile_id"])
                 if settings.LOCAL_UPLOADS_DIR is not None:
                     avatar_path = user_avatar_path_from_ids(user_profile.id, record["realm_id"])
-                    medium_file_path = (
-                        os.path.join(settings.LOCAL_UPLOADS_DIR, "avatars", avatar_path) + "-medium.png"
-                    )
+                    medium_file_path = os.path.join(settings.LOCAL_UPLOADS_DIR, "avatars", avatar_path) + "-medium.png"
                     if os.path.exists(medium_file_path):
                         # We remove the image here primarily to deal with
                         # issues when running the import script multiple

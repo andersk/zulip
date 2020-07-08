@@ -25,7 +25,5 @@ class Migration(migrations.Migration):
             ],
             bases=(models.Model,),
         ),
-        migrations.AlterUniqueTogether(
-            name="mutedtopic", unique_together={("user_profile", "stream", "topic_name")},
-        ),
+        migrations.AlterUniqueTogether(name="mutedtopic", unique_together={("user_profile", "stream", "topic_name")}),
     ]

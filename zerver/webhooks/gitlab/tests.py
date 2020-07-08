@@ -154,9 +154,7 @@ class GitlabHookTests(WebhookTestCase):
 
     def test_create_issue_with_null_description(self) -> None:
         expected_topic = "my-awesome-project / Issue #7 Issue without description"
-        expected_message = (
-            "Eeshan Garg created [Issue #7](https://gitlab.com/eeshangarg/my-awesome-project/issues/7)."
-        )
+        expected_message = "Eeshan Garg created [Issue #7](https://gitlab.com/eeshangarg/my-awesome-project/issues/7)."
         self.send_and_test_stream_message(
             "issue_hook__issue_opened_with_null_description", expected_topic, expected_message,
         )
@@ -173,9 +171,7 @@ class GitlabHookTests(WebhookTestCase):
         expected_subject = "testing / Issue #1 Testing"
         expected_message = "Joe Bloggs updated [Issue #1](https://gitlab.example.co.uk/joe.bloggs/testing/issues/1)."
 
-        self.send_and_test_stream_message(
-            "issue_hook__confidential_issue_updated", expected_subject, expected_message,
-        )
+        self.send_and_test_stream_message("issue_hook__confidential_issue_updated", expected_subject, expected_message)
 
     def test_update_issue_with_custom_topic_in_url(self) -> None:
         self.url = self.build_webhook_url(topic="notifications")
@@ -295,18 +291,14 @@ class GitlabHookTests(WebhookTestCase):
             "Tomasz Kolek closed [MR #2](https://gitlab.com/tomaszkolek0/my-awesome-project/merge_requests/2)."
         )
 
-        self.send_and_test_stream_message(
-            "merge_request_hook__merge_request_closed", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("merge_request_hook__merge_request_closed", expected_topic, expected_message)
 
     def test_merge_request_closed_with_custom_topic_in_url(self) -> None:
         self.url = self.build_webhook_url(topic="notifications")
         expected_topic = "notifications"
         expected_message = "[[my-awesome-project](https://gitlab.com/tomaszkolek0/my-awesome-project)] Tomasz Kolek closed [MR #2 NEW MR](https://gitlab.com/tomaszkolek0/my-awesome-project/merge_requests/2)."
 
-        self.send_and_test_stream_message(
-            "merge_request_hook__merge_request_closed", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("merge_request_hook__merge_request_closed", expected_topic, expected_message)
 
     def test_merge_request_reopened_event_message(self) -> None:
         expected_topic = "my-awesome-project / MR #1 Update the README with author ..."
@@ -348,9 +340,7 @@ class GitlabHookTests(WebhookTestCase):
             "Tomasz Kolek merged [MR #3](https://gitlab.com/tomaszkolek0/my-awesome-project/merge_requests/3)."
         )
 
-        self.send_and_test_stream_message(
-            "merge_request_hook__merge_request_merged", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("merge_request_hook__merge_request_merged", expected_topic, expected_message)
 
     def test_wiki_page_opened_event_message(self) -> None:
         expected_topic = "my-awesome-project"

@@ -103,9 +103,7 @@ class TestHtmlBranches(unittest.TestCase):
         self.assertEqual(branches[2].text(), "html body p")
 
         self.assertEqual(branches[0].staircase_text(), "\n    html\n        head\n            title\n")
-        self.assertEqual(
-            branches[1].staircase_text(), "\n    html\n        body\n            p\n                br\n",
-        )
+        self.assertEqual(branches[1].staircase_text(), "\n    html\n        body\n            p\n                br\n")
         self.assertEqual(branches[2].staircase_text(), "\n    html\n        body\n            p\n")
 
     def test_build_id_dict(self) -> None:

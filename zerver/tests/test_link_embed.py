@@ -368,9 +368,7 @@ class PreviewTestCase(ZulipTestCase):
                     self.assertIn(f'<a href="{edited_url}" title="The Rock">The Rock</a>', msg.rendered_content)
 
         with mock.patch("zerver.views.message_edit.queue_json_publish", wraps=wrapped_queue_json_publish) as patched:
-            result = self.client_patch(
-                "/json/messages/" + str(msg_id), {"message_id": msg_id, "content": edited_url},
-            )
+            result = self.client_patch("/json/messages/" + str(msg_id), {"message_id": msg_id, "content": edited_url})
             self.assert_json_success(result)
 
     def test_get_link_embed_data(self) -> None:
@@ -624,9 +622,7 @@ class PreviewTestCase(ZulipTestCase):
         mocked_response = mock.Mock(side_effect=self.create_mock_response(url))
         with self.settings(TEST_SUITE=False, CACHES=TEST_CACHES):
             with mock.patch("requests.get", mocked_response):
-                with mock.patch(
-                    "zerver.lib.url_preview.preview.get_oembed_data", lambda *args, **kwargs: mocked_data,
-                ):
+                with mock.patch("zerver.lib.url_preview.preview.get_oembed_data", lambda *args, **kwargs: mocked_data):
                     FetchLinksEmbedData().consume(event)
                     data = link_embed_data_from_cache(url)
 
@@ -649,8 +645,7 @@ class PreviewTestCase(ZulipTestCase):
         with self.settings(TEST_SUITE=False, CACHES=TEST_CACHES):
             with mock.patch("requests.get", mocked_response):
                 with mock.patch(
-                    "zerver.lib.markdown.link_preview.link_embed_data_from_cache",
-                    lambda *args, **kwargs: mocked_data,
+                    "zerver.lib.markdown.link_preview.link_embed_data_from_cache", lambda *args, **kwargs: mocked_data,
                 ):
                     FetchLinksEmbedData().consume(event)
 

@@ -322,9 +322,7 @@ def get_last_id_from_server(server: RemoteZulipServer, model: Any) -> int:
 
 
 @has_request_variables
-def remote_server_check_analytics(
-    request: HttpRequest, entity: Union[UserProfile, RemoteZulipServer],
-) -> HttpResponse:
+def remote_server_check_analytics(request: HttpRequest, entity: Union[UserProfile, RemoteZulipServer]) -> HttpResponse:
     server = validate_entity(entity)
 
     result = {

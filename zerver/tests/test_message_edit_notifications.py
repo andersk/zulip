@@ -251,11 +251,7 @@ class EditMessageSideEffectsTest(ZulipTestCase):
         original_content = "no mention"
         updated_content = "nothing special about updated message"
         self._send_and_update_message(
-            original_content,
-            updated_content,
-            expect_short_circuit=True,
-            connected_to_zulip=True,
-            present_on_web=True,
+            original_content, updated_content, expect_short_circuit=True, connected_to_zulip=True, present_on_web=True,
         )
 
     def test_always_push_notify_for_fully_present_mentioned_user(self) -> None:

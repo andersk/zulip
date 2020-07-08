@@ -1422,9 +1422,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
         # Test for valid service.
         test_service_name = "converter"
         test_bot_handler = get_bot_handler(test_service_name)
-        self.assertEqual(
-            str(type(test_bot_handler)), "<class 'zulip_bots.bots.converter.converter.ConverterHandler'>",
-        )
+        self.assertEqual(str(type(test_bot_handler)), "<class 'zulip_bots.bots.converter.converter.ConverterHandler'>")
 
         # Test for invalid service.
         test_service_name = "incorrect_bot_service_foo"

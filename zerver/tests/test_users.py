@@ -679,8 +679,7 @@ class PermissionTest(ZulipTestCase):
         self.assert_json_error(result, "Insufficient permission")
 
         result = self.client_patch(
-            "/json/users/{}".format(self.example_user("cordelia").id),
-            {"profile_data": ujson.dumps(new_profile_data)},
+            "/json/users/{}".format(self.example_user("cordelia").id), {"profile_data": ujson.dumps(new_profile_data)},
         )
         self.assert_json_error(result, "Insufficient permission")
 

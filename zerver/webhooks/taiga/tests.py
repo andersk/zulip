@@ -198,7 +198,9 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("issue_changed_reassigned", self.TOPIC, message)
 
     def test_taiga_issue_changed_subject(self) -> None:
-        message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) renamed issue New issue to **New issueNewSubject**."
+        message = (
+            "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) renamed issue New issue to **New issueNewSubject**."
+        )
         self.send_and_test_stream_message("issue_changed_subject", self.TOPIC, message)
 
     def test_taiga_issue_changed_description(self) -> None:

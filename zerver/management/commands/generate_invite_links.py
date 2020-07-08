@@ -21,11 +21,7 @@ class Command(ZulipBaseCommand):
             help="Override that the domain is restricted to external users.",
         )
         parser.add_argument(
-            "emails",
-            metavar="<email>",
-            type=str,
-            nargs="*",
-            help="email of users to generate an activation link for",
+            "emails", metavar="<email>", type=str, nargs="*", help="email of users to generate an activation link for",
         )
         self.add_realm_args(parser, True)
 

@@ -52,13 +52,7 @@ class SlackMessageConversion(ZulipTestCase):
         # For this test, only relevant keys are 'id', 'name', 'deleted'
         # and 'real_name'
         users = [
-            {
-                "id": "U0CBK5KAT",
-                "name": "aaron.anzalone",
-                "deleted": False,
-                "is_mirror_dummy": False,
-                "real_name": "",
-            },
+            {"id": "U0CBK5KAT", "name": "aaron.anzalone", "deleted": False, "is_mirror_dummy": False, "real_name": ""},
             {"id": "U08RGD1RD", "name": "john", "deleted": False, "is_mirror_dummy": False, "real_name": "John Doe"},
             {"id": "U09TYF5Sk", "name": "Jane", "is_mirror_dummy": False, "deleted": True},
         ]  # Deleted users don't have 'real_name' key in Slack

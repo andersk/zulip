@@ -179,9 +179,7 @@ def update_realm(
         if realm.notifications_stream is None or (realm.notifications_stream.id != notifications_stream_id):
             new_notifications_stream = None
             if notifications_stream_id >= 0:
-                (new_notifications_stream, recipient, sub) = access_stream_by_id(
-                    user_profile, notifications_stream_id,
-                )
+                (new_notifications_stream, recipient, sub) = access_stream_by_id(user_profile, notifications_stream_id)
             do_set_realm_notifications_stream(realm, new_notifications_stream, notifications_stream_id)
             data["notifications_stream_id"] = notifications_stream_id
 
