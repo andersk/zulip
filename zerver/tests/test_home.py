@@ -475,8 +475,7 @@ class HomeTest(ZulipTestCase):
         result = self._get_home_page()
         page_params = self._get_page_params(result)
         self.assertEqual(
-            page_params["realm_notifications_stream_id"],
-            get_stream("Denmark", realm).id,
+            page_params["realm_notifications_stream_id"], get_stream("Denmark", realm).id,
         )
 
     def create_bot(
@@ -822,10 +821,7 @@ class HomeTest(ZulipTestCase):
         )
 
         do_change_logo_source(
-            user_profile.realm,
-            Realm.LOGO_UPLOADED,
-            night=True,
-            acting_user=user_profile,
+            user_profile.realm, Realm.LOGO_UPLOADED, night=True, acting_user=user_profile,
         )
         page_params = {"color_scheme": user_profile.COLOR_SCHEME_NIGHT}
         add_realm_logo_fields(page_params, user_profile.realm)
@@ -844,10 +840,7 @@ class HomeTest(ZulipTestCase):
         # This configuration isn't super supported in the UI and is a
         # weird choice, but we have a test for it anyway.
         do_change_logo_source(
-            user_profile.realm,
-            Realm.LOGO_DEFAULT,
-            night=False,
-            acting_user=user_profile,
+            user_profile.realm, Realm.LOGO_DEFAULT, night=False, acting_user=user_profile,
         )
         page_params = {"color_scheme": user_profile.COLOR_SCHEME_NIGHT}
         add_realm_logo_fields(page_params, user_profile.realm)

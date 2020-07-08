@@ -159,9 +159,7 @@ def repo_push_branch_data(
     return {"subject": subject, "body": body}
 
 
-def repo_push_tag_data(
-    payload: Dict[str, Any], change: Dict[str, Any],
-) -> Dict[str, str]:
+def repo_push_tag_data(payload: Dict[str, Any], change: Dict[str, Any]) -> Dict[str, str]:
     event_type = change["type"]
     repo_name = payload["repository"]["name"]
     tag_name = change["ref"]["displayId"]
@@ -194,9 +192,7 @@ def repo_push_handler(
         elif event_target_type == "TAG":
             data.append(repo_push_tag_data(payload, change))
         else:
-            message = "{}.{}".format(
-                payload["eventKey"], event_target_type,
-            )  # nocoverage
+            message = "{}.{}".format(payload["eventKey"], event_target_type)  # nocoverage
             raise UnexpectedWebhookEventType("BitBucket Server", message)
     return data
 
@@ -281,9 +277,7 @@ def get_pr_opened_or_modified_body(
     )
 
 
-def get_pr_needs_work_body(
-    payload: Dict[str, Any], include_title: Optional[bool],
-) -> str:
+def get_pr_needs_work_body(payload: Dict[str, Any], include_title: Optional[bool]) -> str:
     pr = payload["pullRequest"]
     if not include_title:
         return PULL_REQUEST_MARKED_AS_NEEDS_WORK_TEMPLATE.format(
@@ -299,9 +293,7 @@ def get_pr_needs_work_body(
     )
 
 
-def get_pr_reassigned_body(
-    payload: Dict[str, Any], include_title: Optional[bool],
-) -> str:
+def get_pr_reassigned_body(payload: Dict[str, Any], include_title: Optional[bool]) -> str:
     pr = payload["pullRequest"]
     assignees_string = get_assignees_string(pr)
     if not assignees_string:
@@ -381,9 +373,7 @@ EVENT_HANDLER_MAP = {
     "diagnostics:ping": ping_handler,
     "repo:comment:added": partial(repo_comment_handler, action="commented"),
     "repo:comment:edited": partial(repo_comment_handler, action="edited their comment"),
-    "repo:comment:deleted": partial(
-        repo_comment_handler, action="deleted their comment",
-    ),
+    "repo:comment:deleted": partial(repo_comment_handler, action="deleted their comment"),
     "repo:forked": repo_forked_handler,
     "repo:modified": repo_modified_handler,
     "repo:refs_changed": repo_push_handler,

@@ -367,8 +367,7 @@ def write_emoticon_data(
         flat_data = [dict(path=d["path"], name=d["shortcut"]) for d in data["Emoticons"]]
     else:
         flat_data = [
-            dict(path=d["Emoticon"]["path"], name=d["Emoticon"]["shortcut"])
-            for d in data
+            dict(path=d["Emoticon"]["path"], name=d["Emoticon"]["shortcut"]) for d in data
         ]
 
     emoji_folder = os.path.join(output_dir, "emoji")
@@ -439,9 +438,7 @@ def write_message_data(
     }
 
     user_id_to_recipient_id = {
-        d["type_id"]: d["id"]
-        for d in zerver_recipient
-        if d["type"] == Recipient.PERSONAL
+        d["type_id"]: d["id"] for d in zerver_recipient if d["type"] == Recipient.PERSONAL
     }
 
     def get_stream_recipient_id(raw_message: ZerverFieldsT) -> int:
@@ -461,9 +458,7 @@ def write_message_data(
         is_pm_data = False
         dir_glob = os.path.join(data_dir, "rooms", "*", "history.json")
         get_recipient_id = get_stream_recipient_id
-        get_files_dir = lambda fn_id: os.path.join(
-            data_dir, "rooms", str(fn_id), "files",
-        )
+        get_files_dir = lambda fn_id: os.path.join(data_dir, "rooms", str(fn_id), "files")
 
     elif message_key == "PrivateUserMessage":
         is_pm_data = True
@@ -810,9 +805,7 @@ def do_convert_data(
             get_users=subscriber_handler.get_users,
             zerver_recipient=zerver_recipient,
             zerver_stream=[
-                stream_dict
-                for stream_dict in zerver_stream
-                if stream_dict["invite_only"]
+                stream_dict for stream_dict in zerver_stream if stream_dict["invite_only"]
             ],
         )
         stream_subscriptions = public_stream_subscriptions + private_stream_subscriptions

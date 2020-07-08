@@ -72,9 +72,7 @@ def generate_integration_bots_avatars(check_missing: bool = False) -> None:
             if not os.path.isfile(bot_avatar_path):
                 missing.add(webhook.name)
         else:
-            create_integration_bot_avatar(
-                static_path(webhook.logo_path), bot_avatar_path,
-            )
+            create_integration_bot_avatar(static_path(webhook.logo_path), bot_avatar_path)
 
     if missing:
         print(

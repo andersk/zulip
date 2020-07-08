@@ -199,8 +199,7 @@ def resize_emoji(image_data: bytes, size: int = DEFAULT_EMOJI_SIZE) -> bytes:
                 (
                     im.size[0] != im.size[1],  # not square
                     im.size[0] > MAX_EMOJI_GIF_SIZE,  # dimensions too large
-                    len(image_data)
-                    > MAX_EMOJI_GIF_FILE_SIZE_BYTES,  # filesize too large
+                    len(image_data) > MAX_EMOJI_GIF_FILE_SIZE_BYTES,  # filesize too large
                 ),
             )
             return resize_gif(im, size) if should_resize else image_data
@@ -260,9 +259,7 @@ class ZulipUploadBackend:
     def ensure_basic_avatar_image(self, user_profile: UserProfile) -> None:
         raise NotImplementedError()
 
-    def upload_realm_icon_image(
-        self, icon_file: File, user_profile: UserProfile,
-    ) -> None:
+    def upload_realm_icon_image(self, icon_file: File, user_profile: UserProfile) -> None:
         raise NotImplementedError()
 
     def get_realm_icon_url(self, realm_id: int, version: int) -> str:
@@ -527,9 +524,7 @@ class S3UploadBackend(ZulipUploadBackend):
     def realm_avatar_and_logo_path(self, realm: Realm) -> str:
         return os.path.join(str(realm.id), "realm")
 
-    def upload_realm_icon_image(
-        self, icon_file: File, user_profile: UserProfile,
-    ) -> None:
+    def upload_realm_icon_image(self, icon_file: File, user_profile: UserProfile) -> None:
         content_type = guess_type(icon_file.name)[0]
         s3_file_name = os.path.join(
             self.realm_avatar_and_logo_path(user_profile.realm), "icon",
@@ -824,9 +819,7 @@ class LocalUploadBackend(ZulipUploadBackend):
     def realm_avatar_and_logo_path(self, realm: Realm) -> str:
         return os.path.join("avatars", str(realm.id), "realm")
 
-    def upload_realm_icon_image(
-        self, icon_file: File, user_profile: UserProfile,
-    ) -> None:
+    def upload_realm_icon_image(self, icon_file: File, user_profile: UserProfile) -> None:
         upload_path = self.realm_avatar_and_logo_path(user_profile.realm)
         image_data = icon_file.read()
         write_local_file(upload_path, "icon.original", image_data)

@@ -189,8 +189,7 @@ class TestGetChartData(ZulipTestCase):
             ["public_stream", "private_stream"],
         )
         result = self.client_get(
-            "/json/analytics/chart_data",
-            {"chart_name": "messages_sent_by_message_type"},
+            "/json/analytics/chart_data", {"chart_name": "messages_sent_by_message_type"},
         )
         self.assert_json_success(result)
         data = result.json()
@@ -285,9 +284,7 @@ class TestGetChartData(ZulipTestCase):
         )
         self.assert_json_success(result)
         data = result.json()
-        self.assertEqual(
-            data["everyone"], {"_1day": [0], "_15day": [0], "all_time": [0]},
-        )
+        self.assertEqual(data["everyone"], {"_1day": [0], "_15day": [0], "all_time": [0]})
         self.assertFalse("user" in data)
 
         FillState.objects.create(
@@ -309,8 +306,7 @@ class TestGetChartData(ZulipTestCase):
             state=FillState.DONE,
         )
         result = self.client_get(
-            "/json/analytics/chart_data",
-            {"chart_name": "messages_sent_by_message_type"},
+            "/json/analytics/chart_data", {"chart_name": "messages_sent_by_message_type"},
         )
         self.assert_json_success(result)
         data = result.json()
@@ -474,9 +470,7 @@ class TestGetChartData(ZulipTestCase):
 
         end_time = timezone_now() - timedelta(days=5)
         fill_state = FillState.objects.create(
-            property="messages_sent:is_bot:hour",
-            end_time=end_time,
-            state=FillState.DONE,
+            property="messages_sent:is_bot:hour", end_time=end_time, state=FillState.DONE,
         )
 
         realm.date_created = timezone_now() - timedelta(days=3)
@@ -551,8 +545,7 @@ class TestGetChartData(ZulipTestCase):
         self.login_user(user)
 
         result = self.client_get(
-            "/json/analytics/chart_data/installation",
-            {"chart_name": "number_of_humans"},
+            "/json/analytics/chart_data/installation", {"chart_name": "number_of_humans"},
         )
         self.assert_json_error(result, "Must be an server administrator", 400)
 
@@ -563,8 +556,7 @@ class TestGetChartData(ZulipTestCase):
         self.insert_data(stat, [None], [])
 
         result = self.client_get(
-            "/json/analytics/chart_data/installation",
-            {"chart_name": "number_of_humans"},
+            "/json/analytics/chart_data/installation", {"chart_name": "number_of_humans"},
         )
         self.assert_json_success(result)
 
@@ -869,8 +861,7 @@ class TestSupportEndpoint(ZulipTestCase):
 
         with mock.patch("analytics.views.do_send_realm_reactivation_email") as m:
             result = self.client_post(
-                "/activity/support",
-                {"realm_id": f"{lear_realm.id}", "status": "active"},
+                "/activity/support", {"realm_id": f"{lear_realm.id}", "status": "active"},
             )
             m.assert_called_once_with(lear_realm)
             self.assert_in_success_response(

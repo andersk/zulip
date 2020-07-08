@@ -55,9 +55,7 @@ class TestZulipBaseCommand(ZulipTestCase):
         self.assertEqual(self.command.get_client().name, "ZulipServer")
 
     def test_get_realm(self) -> None:
-        self.assertEqual(
-            self.command.get_realm(dict(realm_id="zulip")), self.zulip_realm,
-        )
+        self.assertEqual(self.command.get_realm(dict(realm_id="zulip")), self.zulip_realm)
         self.assertEqual(self.command.get_realm(dict(realm_id=None)), None)
         self.assertEqual(
             self.command.get_realm(dict(realm_id=str(self.zulip_realm.id))),
@@ -289,10 +287,7 @@ class TestSendWebhookFixtureMessage(ZulipTestCase):
         self.assertTrue(ujson_mock.load.called)
         self.assertTrue(open_mock.called)
         client.post.assert_called_once_with(
-            self.url,
-            "{}",
-            content_type="application/json",
-            HTTP_HOST="zulip.testserver",
+            self.url, "{}", content_type="application/json", HTTP_HOST="zulip.testserver",
         )
 
 
@@ -497,11 +492,7 @@ class TestExport(ZulipTestCase):
         )
         message = Message.objects.last()
         do_add_reaction(
-            self.example_user("iago"),
-            message,
-            "outbox",
-            "1f4e4",
-            Reaction.UNICODE_EMOJI,
+            self.example_user("iago"), message, "outbox", "1f4e4", Reaction.UNICODE_EMOJI,
         )
         do_add_reaction(
             self.example_user("hamlet"),
@@ -538,11 +529,7 @@ class TestExport(ZulipTestCase):
         message.last_edit_time = None
         message.save()
         do_add_reaction(
-            self.mit_user("sipbtest"),
-            message,
-            "outbox",
-            "1f4e4",
-            Reaction.UNICODE_EMOJI,
+            self.mit_user("sipbtest"), message, "outbox", "1f4e4", Reaction.UNICODE_EMOJI,
         )
         with self.assertRaisesRegex(
             CommandError, "Users from a different realm reacted to message. Aborting...",

@@ -1166,10 +1166,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     "26cf": {"canonical_name": "mine", "aliases": ["pick"]},
     # screw is somewhat inappropriate, but not openly so, so leaving it in
     "1f529": {"canonical_name": "nut_and_bolt", "aliases": ["screw"]},
-    "2699": {
-        "canonical_name": "gear",
-        "aliases": ["settings", "mechanical", "engineer"],
-    },
+    "2699": {"canonical_name": "gear", "aliases": ["settings", "mechanical", "engineer"]},
     "26d3": {"canonical_name": "chains", "aliases": []},
     "1f52b": {"canonical_name": "gun", "aliases": []},
     "1f4a3": {"canonical_name": "bomb", "aliases": []},

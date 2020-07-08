@@ -150,9 +150,7 @@ def fetch_initial_state_data(
         # fit into that framework.
         state["realm_authentication_methods"] = realm.authentication_methods_dict()
         state["realm_allow_message_editing"] = realm.allow_message_editing
-        state[
-            "realm_allow_community_topic_editing"
-        ] = realm.allow_community_topic_editing
+        state["realm_allow_community_topic_editing"] = realm.allow_community_topic_editing
         state["realm_allow_message_deleting"] = realm.allow_message_deleting
         state[
             "realm_message_content_edit_limit_seconds"
@@ -206,9 +204,7 @@ def fetch_initial_state_data(
 
         signup_notifications_stream = realm.get_signup_notifications_stream()
         if signup_notifications_stream:
-            state[
-                "realm_signup_notifications_stream_id"
-            ] = signup_notifications_stream.id
+            state["realm_signup_notifications_stream_id"] = signup_notifications_stream.id
         else:
             state["realm_signup_notifications_stream_id"] = -1
 
@@ -613,9 +609,7 @@ def apply_event(
                     if prop in stream:
                         stream[prop] = event["value"]
                         if prop == "description":
-                            stream["rendered_description"] = event[
-                                "rendered_description"
-                            ]
+                            stream["rendered_description"] = event["rendered_description"]
         elif event["op"] == "occupy":
             state["streams"] += event["streams"]
         elif event["op"] == "vacate":
@@ -663,9 +657,7 @@ def apply_event(
                 # update the state for whether password authentication
                 # is enabled on this server.
                 if key == "authentication_methods":
-                    state["realm_password_auth_enabled"] = (
-                        value["Email"] or value["LDAP"]
-                    )
+                    state["realm_password_auth_enabled"] = value["Email"] or value["LDAP"]
                     state["realm_email_auth_enabled"] = value["Email"]
     elif event["type"] == "subscription":
         if not include_subscribers and event["op"] in ["peer_add", "peer_remove"]:
@@ -689,9 +681,7 @@ def apply_event(
             state["subscriptions"] += event["subscriptions"]
 
             # remove them from unsubscribed if they had been there
-            state["unsubscribed"] = [
-                s for s in state["unsubscribed"] if not was_added(s)
-            ]
+            state["unsubscribed"] = [s for s in state["unsubscribed"] if not was_added(s)]
 
             # remove them from never_subscribed if they had been there
             state["never_subscribed"] = [

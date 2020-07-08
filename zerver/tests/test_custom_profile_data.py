@@ -232,9 +232,7 @@ class CreateCustomProfileFieldTest(CustomProfileFieldTestCase):
         result = self.client_post("/json/realm/profile_fields", info=data)
         self.assert_json_error(result, 'field_data["url_pattern"] is not a string')
 
-        data["field_data"] = ujson.dumps(
-            {"subtype": "custom", "url_pattern": "invalid"},
-        )
+        data["field_data"] = ujson.dumps({"subtype": "custom", "url_pattern": "invalid"})
         result = self.client_post("/json/realm/profile_fields", info=data)
         self.assert_json_error(result, "Malformed URL pattern.")
 
@@ -551,9 +549,7 @@ class UpdateCustomProfileFieldTest(CustomProfileFieldTestCase):
 
         iago = self.example_user("iago")
         expected_value = {f["id"]: f["value"] for f in data}
-        expected_rendered_value: Dict[
-            Union[int, float, str, None], Union[str, None],
-        ] = {}
+        expected_rendered_value: Dict[Union[int, float, str, None], Union[str, None]] = {}
         for f in data:
             if f["field"].is_renderable():
                 expected_rendered_value[f["id"]] = markdown_convert(f["value"])

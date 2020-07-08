@@ -83,11 +83,7 @@ def build_email(
             assert len(set([to_user.realm_id for to_user in to_users])) == 1
             realm = to_users[0].realm
         to_emails = [
-            str(
-                Address(
-                    display_name=to_user.full_name, addr_spec=to_user.delivery_email,
-                ),
-            )
+            str(Address(display_name=to_user.full_name, addr_spec=to_user.delivery_email))
             for to_user in to_users
         ]
 
@@ -186,7 +182,9 @@ class DoubledEmailArgumentException(CommandError):
 
 class NoEmailArgumentException(CommandError):
     def __init__(self, argument_name: str) -> None:
-        msg = f"Argument '{argument_name}' is required in either options or email template."
+        msg = (
+            f"Argument '{argument_name}' is required in either options or email template."
+        )
         super().__init__(msg)
 
 
@@ -311,9 +309,7 @@ def clear_scheduled_invitation_emails(email: str) -> None:
     items.delete()
 
 
-def clear_scheduled_emails(
-    user_ids: List[int], email_type: Optional[int] = None,
-) -> None:
+def clear_scheduled_emails(user_ids: List[int], email_type: Optional[int] = None) -> None:
     items = ScheduledEmail.objects.filter(users__in=user_ids).distinct()
     if email_type is not None:
         items = items.filter(type=email_type)

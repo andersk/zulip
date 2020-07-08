@@ -70,9 +70,7 @@ than max_api_calls! (trying to trim) %s %s",
 
         lists = client.keys(wildcard_list)
         for list_name in lists:
-            self._check_within_range(
-                list_name, lambda: client.llen(list_name), trim_func,
-            )
+            self._check_within_range(list_name, lambda: client.llen(list_name), trim_func)
 
         zsets = client.keys(wildcard_zset)
         for zset in zsets:

@@ -215,9 +215,7 @@ def _reload():
     # is about to change on re-exec.  Add the current directory to $PYTHONPATH
     # to ensure that the new process sees the same path we did.
     path_prefix = "." + os.pathsep
-    if sys.path[0] == "" and not os.environ.get("PYTHONPATH", "").startswith(
-        path_prefix,
-    ):
+    if sys.path[0] == "" and not os.environ.get("PYTHONPATH", "").startswith(path_prefix):
         os.environ["PYTHONPATH"] = path_prefix + os.environ.get("PYTHONPATH", "")
     if not _has_execv:
         subprocess.Popen([sys.executable] + sys.argv)

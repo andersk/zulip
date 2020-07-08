@@ -26,12 +26,7 @@ class TypesPrintTest(ZulipTestCase):
         pass
 
     def check_signature(
-        self,
-        signature: str,
-        retval: T,
-        func: Callable[..., T],
-        *args: Any,
-        **kwargs: Any,
+        self, signature: str, retval: T, func: Callable[..., T], *args: Any, **kwargs: Any
     ) -> None:
         """
         Checks if print_types outputs `signature` when func is called with *args and **kwargs.
@@ -88,9 +83,7 @@ class TypesPrintTest(ZulipTestCase):
         self.check_signature(
             "add((int,), (str,)) -> (int, str)", (1, "one"), add, (1,), ("one",),
         )
-        self.check_signature(
-            "add(((),), ((),)) -> ((), ())", ((), ()), add, ((),), ((),),
-        )
+        self.check_signature("add(((),), ((),)) -> ((), ())", ((), ()), add, ((),), ((),))
 
     def test_class(self) -> None:
         class A:

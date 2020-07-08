@@ -18,10 +18,7 @@ class PivotalV3HookTests(WebhookTestCase):
         expected_message = 'Leo Franchi added comment: "FIX THIS NOW" \
 [(view)](https://www.pivotaltracker.com/s/projects/807213/stories/48276573).'
         self.send_and_test_stream_message(
-            "commented",
-            expected_topic,
-            expected_message,
-            content_type="application/xml",
+            "commented", expected_topic, expected_message, content_type="application/xml",
         )
 
     def test_created(self) -> None:
@@ -38,10 +35,7 @@ class PivotalV3HookTests(WebhookTestCase):
         expected_message = 'Leo Franchi delivered "Another new story" \
 [(view)](https://www.pivotaltracker.com/s/projects/807213/stories/48278289).'
         self.send_and_test_stream_message(
-            "delivered",
-            expected_topic,
-            expected_message,
-            content_type="application/xml",
+            "delivered", expected_topic, expected_message, content_type="application/xml",
         )
 
     def test_finished(self) -> None:
@@ -122,10 +116,7 @@ class PivotalV5HookTests(WebhookTestCase):
 A comment on the story
 ~~~"""
         self.send_and_test_stream_message(
-            "commented",
-            expected_topic,
-            expected_message,
-            content_type="application/xml",
+            "commented", expected_topic, expected_message, content_type="application/xml",
         )
 
     def test_created(self) -> None:
@@ -144,10 +135,7 @@ A comment on the story
         expected_message = """Leo Franchi updated [Hard Code](https://www.pivotaltracker.com/s/projects/807213): [Story of the Year](http://www.pivotaltracker.com/story/show/63486316):
 * state changed from **accepted** to **delivered**"""
         self.send_and_test_stream_message(
-            "delivered",
-            expected_topic,
-            expected_message,
-            content_type="application/xml",
+            "delivered", expected_topic, expected_message, content_type="application/xml",
         )
 
     def test_finished(self) -> None:

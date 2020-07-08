@@ -22,9 +22,7 @@ class PagerDutyHookTests(WebhookTestCase):
 
     def test_unacknowledge(self) -> None:
         expected_message = "Incident [3](https://zulip-test.pagerduty.com/incidents/P140S4Y) unacknowledged by [Test service](https://zulip-test.pagerduty.com/services/PIL5CUQ) (assigned to [armooo](https://zulip-test.pagerduty.com/users/POBCFRJ)):\n\n``` quote\nfoo\n```"
-        self.send_and_test_stream_message(
-            "unacknowledge", "Incident 3", expected_message,
-        )
+        self.send_and_test_stream_message("unacknowledge", "Incident 3", expected_message)
 
     def test_resolved(self) -> None:
         expected_message = "Incident [1](https://zulip-test.pagerduty.com/incidents/PO1XIJ5) resolved by [armooo](https://zulip-test.pagerduty.com/users/POBCFRJ):\n\n``` quote\nIt is on fire\n```"
@@ -36,9 +34,7 @@ class PagerDutyHookTests(WebhookTestCase):
 
     def test_auto_resolved(self) -> None:
         expected_message = "Incident [2](https://zulip-test.pagerduty.com/incidents/PX7K9J2) resolved:\n\n``` quote\nnew\n```"
-        self.send_and_test_stream_message(
-            "auto_resolved", "Incident 2", expected_message,
-        )
+        self.send_and_test_stream_message("auto_resolved", "Incident 2", expected_message)
 
     def test_acknowledge(self) -> None:
         expected_message = "Incident [1](https://zulip-test.pagerduty.com/incidents/PO1XIJ5) acknowledged by [armooo](https://zulip-test.pagerduty.com/users/POBCFRJ):\n\n``` quote\nIt is on fire\n```"

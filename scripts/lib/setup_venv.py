@@ -131,9 +131,7 @@ def get_package_names(requirements_file: str) -> List[str]:
         if package.startswith("git+https://") and "#egg=" in package:
             split_package = package.split("#egg=")
             if len(split_package) != 2:
-                raise Exception(
-                    "Unexpected duplicate #egg in package {}".format(package),
-                )
+                raise Exception("Unexpected duplicate #egg in package {}".format(package))
             # Extract the package name from Git requirements entries
             package = split_package[1]
 
@@ -241,10 +239,7 @@ def try_to_copy_venv(venv_path: str, new_packages: Set[str]) -> bool:
         source_log = get_logfile_name(source_venv_path)
         copy_parent_log(source_log, target_log)
         create_log_entry(
-            target_log,
-            source_venv_path,
-            copied_packages,
-            new_packages - copied_packages,
+            target_log, source_venv_path, copied_packages, new_packages - copied_packages,
         )
         return True
 

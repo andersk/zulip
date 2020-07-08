@@ -184,9 +184,7 @@ def create_user(
         user_profile.email = get_display_email_address(user_profile, realm)
         user_profile.save(update_fields=["email"])
 
-    recipient = Recipient.objects.create(
-        type_id=user_profile.id, type=Recipient.PERSONAL,
-    )
+    recipient = Recipient.objects.create(type_id=user_profile.id, type=Recipient.PERSONAL)
     user_profile.recipient = recipient
     user_profile.save(update_fields=["recipient"])
 

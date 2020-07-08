@@ -44,9 +44,7 @@ class TestHotspots(ZulipTestCase):
         user = self.example_user("hamlet")
         do_mark_hotspot_as_read(user, "intro_compose")
         self.assertEqual(
-            list(
-                UserHotspot.objects.filter(user=user).values_list("hotspot", flat=True),
-            ),
+            list(UserHotspot.objects.filter(user=user).values_list("hotspot", flat=True)),
             ["intro_compose"],
         )
 
@@ -58,9 +56,7 @@ class TestHotspots(ZulipTestCase):
         )
         self.assert_json_success(result)
         self.assertEqual(
-            list(
-                UserHotspot.objects.filter(user=user).values_list("hotspot", flat=True),
-            ),
+            list(UserHotspot.objects.filter(user=user).values_list("hotspot", flat=True)),
             ["intro_reply"],
         )
 
@@ -69,8 +65,6 @@ class TestHotspots(ZulipTestCase):
         )
         self.assert_json_error(result, "Unknown hotspot: invalid")
         self.assertEqual(
-            list(
-                UserHotspot.objects.filter(user=user).values_list("hotspot", flat=True),
-            ),
+            list(UserHotspot.objects.filter(user=user).values_list("hotspot", flat=True)),
             ["intro_reply"],
         )

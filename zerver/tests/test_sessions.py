@@ -137,18 +137,14 @@ class TestExpirableSessionVars(ZulipTestCase):
 
     def test_set_and_get_with_delete(self) -> None:
         set_expirable_session_var(
-            self.session,
-            "test_set_and_get_with_delete",
-            "some_value",
-            expiry_seconds=10,
+            self.session, "test_set_and_get_with_delete", "some_value", expiry_seconds=10,
         )
         value = get_expirable_session_var(
             self.session, "test_set_and_get_with_delete", delete=True,
         )
         self.assertEqual(value, "some_value")
         self.assertEqual(
-            get_expirable_session_var(self.session, "test_set_and_get_with_delete"),
-            None,
+            get_expirable_session_var(self.session, "test_set_and_get_with_delete"), None,
         )
 
     def test_get_var_not_set(self) -> None:

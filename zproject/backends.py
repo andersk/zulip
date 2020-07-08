@@ -300,9 +300,7 @@ def rate_limit_auth(
 
     request = args[1]
     username = kwargs["username"]
-    if not hasattr(request, "client") or not client_is_exempt_from_rate_limiting(
-        request,
-    ):
+    if not hasattr(request, "client") or not client_is_exempt_from_rate_limiting(request):
         # Django cycles through enabled authentication backends until one succeeds,
         # or all of them fail. If multiple backends are tried like this, we only want
         # to execute rate_limit_authentication_* once, on the first attempt:
@@ -678,8 +676,7 @@ class ZulipLDAPAuthBackendBase(ZulipAuthMixin, LDAPBackend):
             full_name_attr = settings.AUTH_LDAP_USER_ATTR_MAP["full_name"]
             short_name = full_name = ldap_user.attrs[full_name_attr][0]
         elif all(
-            key in settings.AUTH_LDAP_USER_ATTR_MAP
-            for key in {"first_name", "last_name"}
+            key in settings.AUTH_LDAP_USER_ATTR_MAP for key in {"first_name", "last_name"}
         ):
             first_name_attr = settings.AUTH_LDAP_USER_ATTR_MAP["first_name"]
             last_name_attr = settings.AUTH_LDAP_USER_ATTR_MAP["last_name"]
@@ -793,9 +790,7 @@ class ZulipLDAPAuthBackend(ZulipLDAPAuthBackendBase):
         # against the LDAP database, and assuming those are correct,
         # end up calling `self.get_or_build_user` with the
         # authenticated user's data from LDAP.
-        return super().authenticate(
-            request=request, username=username, password=password,
-        )
+        return super().authenticate(request=request, username=username, password=password)
 
     def get_or_build_user(
         self, username: str, ldap_user: _LDAPUser,
@@ -1027,8 +1022,7 @@ def sync_user_from_ldap(user_profile: UserProfile, logger: logging.Logger) -> bo
 def query_ldap(email: str) -> List[str]:
     values = []
     backend = next(
-        (backend for backend in get_backends() if isinstance(backend, LDAPBackend)),
-        None,
+        (backend for backend in get_backends() if isinstance(backend, LDAPBackend)), None,
     )
     if backend is not None:
         try:
@@ -1198,9 +1192,7 @@ class ExternalAuthResult:
         token = key.split(self.LOGIN_KEY_PREFIX, 1)[1]  # remove the prefix
         return token
 
-    def instantiate_with_token(
-        self, token: str, delete_stored_data: bool = True,
-    ) -> None:
+    def instantiate_with_token(self, token: str, delete_stored_data: bool = True) -> None:
         key = self.LOGIN_KEY_FORMAT.format(token=token)
         data = get_dict_from_redis(redis_client, self.LOGIN_KEY_FORMAT, key)
         if data is None or None in [data.get("email"), data.get("subdomain")]:
@@ -1700,9 +1692,7 @@ class GitHubAuthBackend(SocialAuthMixin, GithubOAuth2):
 
         return verified_emails
 
-    def get_usable_email_objects(
-        self, *args: Any, **kwargs: Any
-    ) -> List[Dict[str, Any]]:
+    def get_usable_email_objects(self, *args: Any, **kwargs: Any) -> List[Dict[str, Any]]:
         # We disallow the
         # @noreply.github.com/@users.noreply.github.com email
         # addresses, because structurally, we only want to allow email
@@ -2144,9 +2134,7 @@ class SAMLAuthBackend(SocialAuthMixin, SAMLAuth):
             return
 
         subdomain = self.strategy.session_get("subdomain")
-        entitlements: Union[str, List[str]] = attributes.get(
-            org_membership_attribute, [],
-        )
+        entitlements: Union[str, List[str]] = attributes.get(org_membership_attribute, [])
         if subdomain in entitlements:
             return
 

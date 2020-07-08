@@ -63,9 +63,7 @@ def redact_email_address(error_message: str) -> str:
                 annotated_address = (
                     f"{email_address} <Address to stream id: {target_stream_id}>"
                 )
-                redacted_message = error_message.replace(
-                    email_address, annotated_address,
-                )
+                redacted_message = error_message.replace(email_address, annotated_address)
             except ZulipEmailForwardError:
                 redacted_message = error_message.replace(
                     email_address, f"{email_address} <Invalid address>",
@@ -249,17 +247,13 @@ def extract_body(
         )
         raise ZulipEmailForwardUserError("Unable to find plaintext or HTML message body")
     if not plaintext_content and not html_content:
-        raise ZulipEmailForwardUserError(
-            "Email has no nonempty body sections; ignoring.",
-        )
+        raise ZulipEmailForwardUserError("Email has no nonempty body sections; ignoring.")
 
     if prefer_text:
         if plaintext_content:
             return plaintext_content
         else:
-            assert (
-                html_content  # Needed for mypy. Ensured by the validating block above.
-            )
+            assert html_content  # Needed for mypy. Ensured by the validating block above.
             return html_content
     else:
         if html_content:
@@ -468,9 +462,7 @@ def process_missed_message(to: str, message: EmailMessage) -> None:
         raise AssertionError("Invalid recipient type!")
 
     logger.info(
-        "Successfully processed email from user %s to %s",
-        user_profile.id,
-        recipient_str,
+        "Successfully processed email from user %s to %s", user_profile.id, recipient_str,
     )
 
 

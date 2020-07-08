@@ -57,9 +57,7 @@ class SubsNotificationSettingsTestCase(MigrationsTestCase):  # nocoverage
         )
         denmark_sub.desktop_notifications = False
         denmark_sub.audible_notifications = False
-        denmark_sub.save(
-            update_fields=["desktop_notifications", "audible_notifications"],
-        )
+        denmark_sub.save(update_fields=["desktop_notifications", "audible_notifications"])
 
         iago_recipient = Recipient.objects.get(
             type=self.RECIPIENT_PERSONAL, type_id=iago.id,

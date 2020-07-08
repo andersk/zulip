@@ -65,9 +65,7 @@ def confirm_email_change(request: HttpRequest, confirmation_key: str) -> HttpRes
     user_profile = email_change_object.user_profile
 
     if user_profile.realm.email_changes_disabled and not user_profile.is_realm_admin:
-        raise JsonableError(
-            _("Email address changes are disabled in this organization."),
-        )
+        raise JsonableError(_("Email address changes are disabled in this organization."))
 
     do_change_user_delivery_email(user_profile, new_email)
 
@@ -208,9 +206,7 @@ def update_display_settings_backend(
     demote_inactive_streams: Optional[int] = REQ(
         validator=check_int_in(UserProfile.DEMOTE_STREAMS_CHOICES), default=None,
     ),
-    timezone: Optional[str] = REQ(
-        validator=check_string_in(all_timezones), default=None,
-    ),
+    timezone: Optional[str] = REQ(validator=check_string_in(all_timezones), default=None),
 ) -> HttpResponse:
 
     # We can't use REQ for this widget because
@@ -275,9 +271,7 @@ def json_change_notify_settings(
         validator=check_bool, default=None,
     ),
     desktop_icon_count_display: Optional[int] = REQ(validator=check_int, default=None),
-    realm_name_in_notifications: Optional[bool] = REQ(
-        validator=check_bool, default=None,
-    ),
+    realm_name_in_notifications: Optional[bool] = REQ(validator=check_bool, default=None),
     presence_enabled: Optional[bool] = REQ(validator=check_bool, default=None),
 ) -> HttpResponse:
     result = {}

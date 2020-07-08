@@ -270,9 +270,7 @@ class ClientDescriptor:
         # invariant that event queues are idle when passed to
         # `do_gc_event_queues` is preserved.
         self.finish_current_handler()
-        do_gc_event_queues(
-            {self.event_queue.id}, {self.user_profile_id}, {self.realm_id},
-        )
+        do_gc_event_queues({self.event_queue.id}, {self.user_profile_id}, {self.realm_id})
 
 
 def compute_full_event_type(event: Mapping[str, Any]) -> str:
@@ -431,9 +429,7 @@ def get_client_descriptors_for_user(user_profile_id: int) -> List[ClientDescript
     return user_clients.get(user_profile_id, [])
 
 
-def get_client_descriptors_for_realm_all_streams(
-    realm_id: int,
-) -> List[ClientDescriptor]:
+def get_client_descriptors_for_realm_all_streams(realm_id: int) -> List[ClientDescriptor]:
     return realm_clients_all_streams.get(realm_id, [])
 
 
@@ -540,8 +536,7 @@ def dump_event_queues(port: int) -> None:
 
     with open(persistent_queue_filename(port), "w") as stored_queues:
         ujson.dump(
-            [(qid, client.to_dict()) for (qid, client) in clients.items()],
-            stored_queues,
+            [(qid, client.to_dict()) for (qid, client) in clients.items()], stored_queues,
         )
 
     logging.info(
@@ -681,9 +676,7 @@ def fetch_events(query: Mapping[str, Any]) -> Dict[str, Any]:
                 extra_log_data = "[{}/{}]".format(queue_id, len(response["events"]))
             if was_connected:
                 extra_log_data += " [was connected]"
-            return dict(
-                type="response", response=response, extra_log_data=extra_log_data,
-            )
+            return dict(type="response", response=response, extra_log_data=extra_log_data)
 
         # After this point, dont_block=False, the queue is empty, and we
         # have a pre-existing queue, so we wait for new events.
@@ -738,9 +731,7 @@ def request_event_queue(
             req["event_types"] = ujson.dumps(event_types)
 
         try:
-            resp = requests_client.post(
-                tornado_uri + "/api/v1/events/internal", data=req,
-            )
+            resp = requests_client.post(tornado_uri + "/api/v1/events/internal", data=req)
         except requests.adapters.ConnectionError:
             logging.error(
                 "Tornado server does not seem to be running, check %s "
@@ -1016,9 +1007,7 @@ def process_message_event(
     sending_client: str = wide_dict["client"]
 
     @cachify
-    def get_client_payload(
-        apply_markdown: bool, client_gravatar: bool,
-    ) -> Dict[str, Any]:
+    def get_client_payload(apply_markdown: bool, client_gravatar: bool) -> Dict[str, Any]:
         return MessageDict.finalize_payload(
             wide_dict, apply_markdown=apply_markdown, client_gravatar=client_gravatar,
         )
@@ -1331,9 +1320,7 @@ def process_notification(notice: Mapping[str, Any]) -> None:
     )
 
 
-def get_wrapped_process_notification(
-    queue_name: str,
-) -> Callable[[Dict[str, Any]], None]:
+def get_wrapped_process_notification(queue_name: str) -> Callable[[Dict[str, Any]], None]:
     def failure_processor(notice: Dict[str, Any]) -> None:
         logging.error(
             "Maximum retries exceeded for Tornado notice:%s\nStack trace:\n%s\n",

@@ -100,9 +100,7 @@ def get_extend_event_body(payload: Dict[str, Any]) -> str:
 def get_unassign_event_body(payload: Dict[str, Any]) -> str:
     return GCI_MESSAGE_TEMPLATE.format(
         actor=payload["author"],
-        action="unassigned **{student}** from".format(
-            student=payload["task_claimed_by"],
-        ),
+        action="unassigned **{student}** from".format(student=payload["task_claimed_by"]),
         task_name=payload["task_definition_name"],
         task_url=build_instance_url(payload["task_instance"]),
     )

@@ -84,9 +84,7 @@ class MessageDictTest(ZulipTestCase):
             wide_dict = MessageDict.wide_dict(msg)
 
             narrow_dict = MessageDict.finalize_payload(
-                wide_dict,
-                apply_markdown=apply_markdown,
-                client_gravatar=client_gravatar,
+                wide_dict, apply_markdown=apply_markdown, client_gravatar=client_gravatar,
             )
             return narrow_dict
 
@@ -136,14 +134,10 @@ class MessageDictTest(ZulipTestCase):
     def test_bulk_message_fetching(self) -> None:
         sender = self.example_user("othello")
         receiver = self.example_user("hamlet")
-        pm_recipient = Recipient.objects.get(
-            type_id=receiver.id, type=Recipient.PERSONAL,
-        )
+        pm_recipient = Recipient.objects.get(type_id=receiver.id, type=Recipient.PERSONAL)
         stream_name = "Çiğdem"
         stream = self.make_stream(stream_name)
-        stream_recipient = Recipient.objects.get(
-            type_id=stream.id, type=Recipient.STREAM,
-        )
+        stream_recipient = Recipient.objects.get(type_id=stream.id, type=Recipient.STREAM)
         sending_client = make_client(name="test suite")
 
         ids = []
@@ -626,14 +620,10 @@ class SewMessageAndReactionTest(ZulipTestCase):
     def test_sew_messages_and_reaction(self) -> None:
         sender = self.example_user("othello")
         receiver = self.example_user("hamlet")
-        pm_recipient = Recipient.objects.get(
-            type_id=receiver.id, type=Recipient.PERSONAL,
-        )
+        pm_recipient = Recipient.objects.get(type_id=receiver.id, type=Recipient.PERSONAL)
         stream_name = "Çiğdem"
         stream = self.make_stream(stream_name)
-        stream_recipient = Recipient.objects.get(
-            type_id=stream.id, type=Recipient.STREAM,
-        )
+        stream_recipient = Recipient.objects.get(type_id=stream.id, type=Recipient.STREAM)
         sending_client = make_client(name="test suite")
 
         needed_ids = []

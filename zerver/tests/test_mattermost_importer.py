@@ -54,9 +54,7 @@ class MatterMostImporter(ZulipTestCase):
         self.assertEqual(len(mattermost_data["user"][1]["teams"]), 1)
 
         self.assertEqual(len(mattermost_data["post"]["channel_post"]), 20)
-        self.assertEqual(
-            mattermost_data["post"]["channel_post"][0]["team"], "gryffindor",
-        )
+        self.assertEqual(mattermost_data["post"]["channel_post"][0]["team"], "gryffindor")
         self.assertEqual(
             mattermost_data["post"]["channel_post"][0]["channel"], "dumbledores-army",
         )
@@ -72,9 +70,7 @@ class MatterMostImporter(ZulipTestCase):
         mattermost_data = mattermost_data_file_to_dict(fixture_file_name)
 
         self.assertEqual(len(mattermost_data["post"]["channel_post"]), 4)
-        self.assertEqual(
-            mattermost_data["post"]["channel_post"][0]["team"], "gryffindor",
-        )
+        self.assertEqual(mattermost_data["post"]["channel_post"][0]["team"], "gryffindor")
         self.assertEqual(
             mattermost_data["post"]["channel_post"][0]["channel"],
             "gryffindor-common-room",
@@ -244,8 +240,7 @@ class MatterMostImporter(ZulipTestCase):
         self.assertEqual(zerver_stream[2]["name"], "Dumbledores army")
         self.assertEqual(zerver_stream[2]["invite_only"], True)
         self.assertEqual(
-            zerver_stream[2]["description"],
-            "A place for talking about Dumbledores army",
+            zerver_stream[2]["description"], "A place for talking about Dumbledores army",
         )
         self.assertEqual(zerver_stream[2]["rendered_description"], "")
         self.assertEqual(zerver_stream[2]["realm"], 3)
@@ -630,8 +625,7 @@ class MatterMostImporter(ZulipTestCase):
 
         exported_user_emails = self.get_set(realm["zerver_userprofile"], "email")
         self.assertEqual(
-            {"harry@zulip.com", "ron@zulip.com", "snape@zulip.com"},
-            exported_user_emails,
+            {"harry@zulip.com", "ron@zulip.com", "snape@zulip.com"}, exported_user_emails,
         )
 
         self.assertEqual(len(realm["zerver_stream"]), 3)

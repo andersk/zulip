@@ -34,9 +34,7 @@ class TestDigestEmailMessages(ZulipTestCase):
     @mock.patch("zerver.lib.digest.enough_traffic")
     @mock.patch("zerver.lib.digest.send_future_email")
     def test_multiple_stream_senders(
-        self,
-        mock_send_future_email: mock.MagicMock,
-        mock_enough_traffic: mock.MagicMock,
+        self, mock_send_future_email: mock.MagicMock, mock_enough_traffic: mock.MagicMock,
     ) -> None:
 
         othello = self.example_user("othello")
@@ -82,9 +80,7 @@ class TestDigestEmailMessages(ZulipTestCase):
     @mock.patch("zerver.lib.digest.enough_traffic")
     @mock.patch("zerver.lib.digest.send_future_email")
     def test_soft_deactivated_user_multiple_stream_senders(
-        self,
-        mock_send_future_email: mock.MagicMock,
-        mock_enough_traffic: mock.MagicMock,
+        self, mock_send_future_email: mock.MagicMock, mock_enough_traffic: mock.MagicMock,
     ) -> None:
 
         one_day_ago = timezone_now() - datetime.timedelta(days=1)

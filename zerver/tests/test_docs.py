@@ -259,9 +259,7 @@ class DocPageTest(ZulipTestCase):
         result = self.client_get(
             "/accounts/password/reset/", HTTP_USER_AGENT="ZulipElectron/1.0.0",
         )
-        self.assertTrue(
-            'data-platform="ZulipElectron"' in result.content.decode("utf-8"),
-        )
+        self.assertTrue('data-platform="ZulipElectron"' in result.content.decode("utf-8"))
 
 
 class HelpTest(ZulipTestCase):
@@ -310,9 +308,7 @@ class IntegrationTest(ZulipTestCase):
     def test_check_if_every_integration_has_logo_that_exists(self) -> None:
         for integration in INTEGRATIONS.values():
             path = urlsplit(integration.logo_url).path
-            self.assertTrue(
-                os.path.isfile(settings.DEPLOY_ROOT + path), integration.name,
-            )
+            self.assertTrue(os.path.isfile(settings.DEPLOY_ROOT + path), integration.name)
 
     def test_api_url_view_subdomains_base(self) -> None:
         context: Dict[str, Any] = dict()
@@ -335,9 +331,7 @@ class IntegrationTest(ZulipTestCase):
         context: Dict[str, Any] = dict()
         request = HostRequestMock(host="mysubdomain.testserver")
         add_api_uri_context(context, request)
-        self.assertEqual(
-            context["api_url_scheme_relative"], "mysubdomain.testserver/api",
-        )
+        self.assertEqual(context["api_url_scheme_relative"], "mysubdomain.testserver/api")
         self.assertEqual(context["api_url"], "http://mysubdomain.testserver/api")
         self.assertTrue(context["html_settings_links"])
 

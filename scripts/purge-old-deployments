@@ -27,8 +27,7 @@ def parse_args() -> argparse.Namespace:
         default=14,
         nargs="?",
         metavar="<days>",
-        help="Deployments older than "
-        "threshold days will be deleted. (defaults to 14)",
+        help="Deployments older than " "threshold days will be deleted. (defaults to 14)",
     )
     parser.add_argument(
         "--dry-run",

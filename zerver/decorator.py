@@ -66,9 +66,7 @@ webhook_logger = logging.getLogger("zulip.zerver.webhooks")
 log_to_file(webhook_logger, settings.API_KEY_ONLY_WEBHOOK_LOG_PATH)
 
 webhook_unexpected_events_logger = logging.getLogger("zulip.zerver.lib.webhooks.common")
-log_to_file(
-    webhook_unexpected_events_logger, settings.WEBHOOK_UNEXPECTED_EVENTS_LOG_PATH,
-)
+log_to_file(webhook_unexpected_events_logger, settings.WEBHOOK_UNEXPECTED_EVENTS_LOG_PATH)
 
 FuncT = TypeVar("FuncT", bound=Callable[..., object])
 
@@ -408,10 +406,7 @@ def api_key_only_webhook_view(
             try:
                 return view_func(request, user_profile, *args, **kwargs)
             except Exception as err:
-                if (
-                    isinstance(err, InvalidJSONError)
-                    and notify_bot_owner_on_invalid_json
-                ):
+                if isinstance(err, InvalidJSONError) and notify_bot_owner_on_invalid_json:
                     # NOTE: importing this at the top of file leads to a
                     # cyclic import; correct fix is probably to move
                     # notify_bot_owner_about_invalid_json to a smaller file.
@@ -419,9 +414,7 @@ def api_key_only_webhook_view(
                         notify_bot_owner_about_invalid_json,
                     )
 
-                    notify_bot_owner_about_invalid_json(
-                        user_profile, webhook_client_name,
-                    )
+                    notify_bot_owner_about_invalid_json(user_profile, webhook_client_name)
                 else:
                     log_exception_to_webhook_logger(
                         request=request,
@@ -576,9 +569,9 @@ def zulip_login_required(
         login_url=login_url,
         redirect_field_name=redirect_field_name,
     )(
-        zulip_otp_required(
-            redirect_field_name=redirect_field_name, login_url=login_url,
-        )(add_logging_data(function)),
+        zulip_otp_required(redirect_field_name=redirect_field_name, login_url=login_url)(
+            add_logging_data(function),
+        ),
     )
 
     if function:
@@ -724,13 +717,9 @@ def authenticated_rest_api_view(
                     )
                 role, api_key = base64.b64decode(credentials).decode("utf-8").split(":")
             except ValueError:
-                return json_unauthorized(
-                    _("Invalid authorization header for basic auth"),
-                )
+                return json_unauthorized(_("Invalid authorization header for basic auth"))
             except KeyError:
-                return json_unauthorized(
-                    _("Missing authorization header for basic auth"),
-                )
+                return json_unauthorized(_("Missing authorization header for basic auth"))
 
             # Now we try to do authentication or die
             try:
@@ -995,9 +984,7 @@ def rate_limit(domain: str = "api_by_user") -> Callable[[ViewFuncT], ViewFuncT]:
 
             return func(request, *args, **kwargs)
 
-        return cast(
-            ViewFuncT, wrapped_func,
-        )  # https://github.com/python/mypy/issues/1927
+        return cast(ViewFuncT, wrapped_func)  # https://github.com/python/mypy/issues/1927
 
     return wrapper
 
@@ -1040,9 +1027,7 @@ def zulip_otp_required(
         if not if_configured:
             return True
 
-        return user.is_verified() or (
-            user.is_authenticated and not user_has_device(user)
-        )
+        return user.is_verified() or (user.is_authenticated and not user_has_device(user))
 
     decorator = django_user_passes_test(
         test, login_url=login_url, redirect_field_name=redirect_field_name,

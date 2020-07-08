@@ -85,10 +85,7 @@ class DoRestCallTests(ZulipTestCase):
             do_rest_call("", None, self.mock_event, self.service_handler)
             self.assertTrue(mock_send.called)
 
-        for service_class in [
-            GenericOutgoingWebhookService,
-            SlackOutgoingWebhookService,
-        ]:
+        for service_class in [GenericOutgoingWebhookService, SlackOutgoingWebhookService]:
             handler = service_class("token", self.bot_user, "service")
             with mock.patch("requests.request", return_value=response):
                 do_rest_call("", None, self.mock_event, handler)

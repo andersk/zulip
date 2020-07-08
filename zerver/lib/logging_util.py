@@ -76,10 +76,7 @@ class _RateLimitFilter:
             )  # seconds
 
             if rate > 0:
-                (
-                    use_cache,
-                    should_reset_handling_exception,
-                ) = self.can_use_remote_cache()
+                (use_cache, should_reset_handling_exception) = self.can_use_remote_cache()
                 if use_cache:
                     if record.exc_info is not None:
                         tb = "\n".join(traceback.format_exception(*record.exc_info))

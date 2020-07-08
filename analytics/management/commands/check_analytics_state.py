@@ -43,10 +43,7 @@ class Command(BaseCommand):
 
     def get_fill_state(self) -> Dict[str, Any]:
         if not Realm.objects.exists():
-            return {
-                "status": 0,
-                "message": "No realms exist, so not checking FillState.",
-            }
+            return {"status": 0, "message": "No realms exist, so not checking FillState."}
 
         warning_unfilled_properties = []
         critical_unfilled_properties = []

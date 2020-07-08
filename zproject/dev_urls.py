@@ -97,9 +97,7 @@ urls = [
 # Serve static assets via the Django server
 if use_prod_static:
     urls += [
-        re_path(
-            r"^static/(?P<path>.*)$", serve, {"document_root": settings.STATIC_ROOT},
-        ),
+        re_path(r"^static/(?P<path>.*)$", serve, {"document_root": settings.STATIC_ROOT}),
     ]
 else:
 

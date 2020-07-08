@@ -144,10 +144,7 @@ class NarrowBuilderTest(ZulipTestCase):
 
         # Add new streams
         stream_dicts: List[Mapping[str, Any]] = [
-            {
-                "name": "publicstream",
-                "description": "Public stream with public history",
-            },
+            {"name": "publicstream", "description": "Public stream with public history"},
             {
                 "name": "privatestream",
                 "description": "Private stream with non-public history",
@@ -182,10 +179,7 @@ class NarrowBuilderTest(ZulipTestCase):
 
         # Add new streams
         stream_dicts: List[Mapping[str, Any]] = [
-            {
-                "name": "publicstream",
-                "description": "Public stream with public history",
-            },
+            {"name": "publicstream", "description": "Public stream with public history"},
             {
                 "name": "privatestream",
                 "description": "Private stream with non-public history",
@@ -442,9 +436,7 @@ class NarrowBuilderTest(ZulipTestCase):
         )
 
     @override_settings(USING_PGROONGA=True)
-    def test_add_term_using_search_operator_and_negated_pgroonga(
-        self,
-    ) -> None:  # NEGATED
+    def test_add_term_using_search_operator_and_negated_pgroonga(self) -> None:  # NEGATED
         term = dict(operator="search", operand='"french fries"', negated=True)
         self._do_add_term_test(
             term, "WHERE NOT (search_pgroonga &@~ escape_html(%(escape_html_1)s))",
@@ -566,9 +558,7 @@ class NarrowLibraryTest(ZulipTestCase):
         self.assertTrue(
             is_web_public_compatible([{"operator": "search", "operand": "magic"}]),
         )
-        self.assertTrue(
-            is_web_public_compatible([{"operator": "near", "operand": "15"}]),
-        )
+        self.assertTrue(is_web_public_compatible([{"operator": "near", "operand": "15"}]))
         self.assertTrue(
             is_web_public_compatible(
                 [
@@ -1823,9 +1813,7 @@ class GetOldMessagesTest(ZulipTestCase):
         )
         self.send_stream_message(mit_user_profile, "Scotland", topic_name=".d.d.d")
         self.send_stream_message(mit_user_profile, "Scotland", topic_name="personal.d")
-        self.send_stream_message(
-            mit_user_profile, "Scotland", topic_name='(instance "")',
-        )
+        self.send_stream_message(mit_user_profile, "Scotland", topic_name='(instance "")')
         self.send_stream_message(mit_user_profile, "Scotland", topic_name=".d.d.d.d")
 
         narrow = [dict(operator="topic", operand="personal.d.d")]
@@ -2641,10 +2629,7 @@ class GetOldMessagesTest(ZulipTestCase):
         """
         self.login("hamlet")
 
-        required_args: Tuple[Tuple[str, int], ...] = (
-            ("num_before", 1),
-            ("num_after", 1),
-        )
+        required_args: Tuple[Tuple[str, int], ...] = (("num_before", 1), ("num_after", 1))
 
         for i in range(len(required_args)):
             post_params = dict(required_args[:i] + required_args[i + 1 :])
@@ -2729,9 +2714,7 @@ class GetOldMessagesTest(ZulipTestCase):
         self.login("hamlet")
         for operator in ["", "foo", "stream:verona", "__init__"]:
             narrow = [dict(operator=operator, operand="")]
-            params = dict(
-                anchor=0, num_before=0, num_after=0, narrow=ujson.dumps(narrow),
-            )
+            params = dict(anchor=0, num_before=0, num_after=0, narrow=ujson.dumps(narrow))
             result = self.client_get("/json/messages", params)
             self.assert_json_error_contains(
                 result, "Invalid narrow operator: unknown operator",
@@ -2781,9 +2764,7 @@ class GetOldMessagesTest(ZulipTestCase):
 
         for operand in operands:
             narrow = [dict(operator=operator, operand=operand)]
-            params = dict(
-                anchor=0, num_before=0, num_after=0, narrow=ujson.dumps(narrow),
-            )
+            params = dict(anchor=0, num_before=0, num_after=0, narrow=ujson.dumps(narrow))
             result = self.client_get("/json/messages", params)
             self.assert_json_error_contains(result, error_msg)
 
@@ -2832,9 +2813,7 @@ class GetOldMessagesTest(ZulipTestCase):
 
         non_existing_stream_id = 1232891381239
         self.exercise_bad_narrow_operand_using_dict_api(
-            "stream",
-            [non_existing_stream_id],
-            "Invalid narrow operator: unknown stream",
+            "stream", [non_existing_stream_id], "Invalid narrow operator: unknown stream",
         )
 
     def test_bad_narrow_nonexistent_email(self) -> None:
@@ -3091,9 +3070,7 @@ class GetOldMessagesTest(ZulipTestCase):
         # Do some tests on the main query, to verify the muting logic
         # runs on this code path.
         queries = [
-            q
-            for q in all_queries
-            if str(q["sql"]).startswith("SELECT message_id, flags")
+            q for q in all_queries if str(q["sql"]).startswith("SELECT message_id, flags")
         ]
         self.assertEqual(len(queries), 1)
 
@@ -3165,8 +3142,7 @@ WHERE NOT (recipient_id = %(recipient_id_1)s AND upper(subject) = upper(%(param_
         params = get_sqlalchemy_query_params(query)
 
         self.assertEqual(
-            params["recipient_id_1"],
-            get_recipient_id_for_stream_name(realm, "Scotland"),
+            params["recipient_id_1"], get_recipient_id_for_stream_name(realm, "Scotland"),
         )
         self.assertEqual(params["param_1"], "golf")
 
@@ -3196,8 +3172,7 @@ recipient_id = %(recipient_id_3)s AND upper(subject) = upper(%(param_2)s))\
             params["recipient_id_1"], get_recipient_id_for_stream_name(realm, "Verona"),
         )
         self.assertEqual(
-            params["recipient_id_2"],
-            get_recipient_id_for_stream_name(realm, "Scotland"),
+            params["recipient_id_2"], get_recipient_id_for_stream_name(realm, "Scotland"),
         )
         self.assertEqual(params["param_1"], "golf")
         self.assertEqual(
@@ -3542,9 +3517,7 @@ class MessageHasKeywordsTest(ZulipTestCase):
     def test_claim_attachment(self) -> None:
         user_profile = self.example_user("hamlet")
         dummy_path_ids = self.setup_dummy_attachments(user_profile)
-        dummy_urls = [
-            f"http://zulip.testserver/user_uploads/{x}" for x in dummy_path_ids
-        ]
+        dummy_urls = [f"http://zulip.testserver/user_uploads/{x}" for x in dummy_path_ids]
 
         # Send message referring the attachment
         self.subscribe(user_profile, "Denmark")
@@ -3669,9 +3642,7 @@ class MessageHasKeywordsTest(ZulipTestCase):
     def test_has_attachment(self) -> None:
         hamlet = self.example_user("hamlet")
         dummy_path_ids = self.setup_dummy_attachments(hamlet)
-        dummy_urls = [
-            f"http://zulip.testserver/user_uploads/{x}" for x in dummy_path_ids
-        ]
+        dummy_urls = [f"http://zulip.testserver/user_uploads/{x}" for x in dummy_path_ids]
         self.subscribe(hamlet, "Denmark")
 
         body = ("Files ...[zulip.txt]({}) {} {}").format(
@@ -3692,16 +3663,12 @@ class MessageHasKeywordsTest(ZulipTestCase):
         self.assertTrue(msg.has_attachment)
 
         # Additional test to check has_attachment is being set is due to the correct attachment.
-        self.update_message(
-            msg, f"Outside: {dummy_urls[0]}. In code: `{dummy_urls[1]}`.",
-        )
+        self.update_message(msg, f"Outside: {dummy_urls[0]}. In code: `{dummy_urls[1]}`.")
         self.assertTrue(msg.has_attachment)
         self.assertTrue(msg.attachment_set.filter(path_id=dummy_path_ids[0]))
         self.assertEqual(msg.attachment_set.count(), 1)
 
-        self.update_message(
-            msg, f"Outside: {dummy_urls[1]}. In code: `{dummy_urls[0]}`.",
-        )
+        self.update_message(msg, f"Outside: {dummy_urls[1]}. In code: `{dummy_urls[0]}`.")
         self.assertTrue(msg.has_attachment)
         self.assertTrue(msg.attachment_set.filter(path_id=dummy_path_ids[1]))
         self.assertEqual(msg.attachment_set.count(), 1)
@@ -3822,6 +3789,4 @@ class PersonalMessagesNearTest(ZulipTestCase):
             type="personal", id=555, display_recipient=[dict(id=77), dict(id=80)],
         )
         url = near_message_url(realm=realm, message=message)
-        self.assertEqual(
-            url, "http://zulip.testserver/#narrow/pm-with/77,80-pm/near/555",
-        )
+        self.assertEqual(url, "http://zulip.testserver/#narrow/pm-with/77,80-pm/near/555")

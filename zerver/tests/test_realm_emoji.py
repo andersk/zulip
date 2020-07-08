@@ -202,9 +202,7 @@ class RealmEmojiTest(ZulipTestCase):
 
     def test_multiple_upload(self) -> None:
         self.login("iago")
-        with get_test_image_file("img.png") as fp1, get_test_image_file(
-            "img.png",
-        ) as fp2:
+        with get_test_image_file("img.png") as fp1, get_test_image_file("img.png") as fp2:
             result = self.client_post(
                 "/json/realm/emoji/my_emoji", {"f1": fp1, "f2": fp2},
             )

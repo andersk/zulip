@@ -267,12 +267,8 @@ EVENT_TO_FUNCTION_MAPPER = {
     "contact.tag.created": get_contact_tag_created_message,
     "contact.tag.deleted": get_contact_tag_deleted_message,
     "conversation.admin.assigned": get_conversation_admin_assigned_message,
-    "conversation.admin.closed": partial(
-        get_conversation_admin_message, action="closed",
-    ),
-    "conversation.admin.opened": partial(
-        get_conversation_admin_message, action="opened",
-    ),
+    "conversation.admin.closed": partial(get_conversation_admin_message, action="closed"),
+    "conversation.admin.opened": partial(get_conversation_admin_message, action="opened"),
     "conversation.admin.snoozed": partial(
         get_conversation_admin_message, action="snoozed",
     ),

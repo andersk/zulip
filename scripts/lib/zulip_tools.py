@@ -543,9 +543,7 @@ def assert_not_running_as_root() -> None:
             "user before rerunning this, or use \n  su {user} -c '{name} ...'\n"
             "to switch users and run this as a single command."
         ).format(
-            name=script_name,
-            shortname=os.path.basename(script_name),
-            user=pwent.pw_name,
+            name=script_name, shortname=os.path.basename(script_name), user=pwent.pw_name,
         )
         print(msg)
         sys.exit(1)

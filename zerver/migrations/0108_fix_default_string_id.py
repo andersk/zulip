@@ -11,9 +11,7 @@ def fix_realm_string_ids(apps: StateApps, schema_editor: DatabaseSchemaEditor) -
 
     zulip_realm = Realm.objects.get(string_id="zulip")
     try:
-        user_realm = Realm.objects.filter(deactivated=False).exclude(id=zulip_realm.id)[
-            0
-        ]
+        user_realm = Realm.objects.filter(deactivated=False).exclude(id=zulip_realm.id)[0]
     except Realm.DoesNotExist:
         return
 

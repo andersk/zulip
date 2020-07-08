@@ -33,9 +33,7 @@ class TestIntegrationsDevPanel(ZulipTestCase):
         expected_response = {"result": "error", "msg": "Internal server error"}
         self.assertEqual(ujson.loads(response.content), expected_response)
 
-    def test_check_send_webhook_fixture_message_for_success_without_headers(
-        self,
-    ) -> None:
+    def test_check_send_webhook_fixture_message_for_success_without_headers(self) -> None:
         bot = get_user("webhook-bot@zulip.com", self.zulip_realm)
         url = f"/api/v1/external/airbrake?api_key={bot.api_key}&stream=Denmark&topic=Airbrake Notifications"
         target_url = "/devtools/integrations/check_send_webhook_fixture_message"
@@ -212,9 +210,7 @@ class TestIntegrationsDevPanel(ZulipTestCase):
             # a difference since equality is commutative.
             self.assertTrue(msg.content in expected_messages)
             expected_messages.remove(msg.content)
-            self.assertEqual(
-                Stream.objects.get(id=msg.recipient.type_id).name, "Denmark",
-            )
+            self.assertEqual(Stream.objects.get(id=msg.recipient.type_id).name, "Denmark")
             self.assertEqual(msg.topic_name(), "Appfollow Bulk Notifications")
 
     def test_send_all_webhook_fixture_messages_for_success_with_non_json_fixtures(

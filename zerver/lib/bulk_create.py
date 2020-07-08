@@ -120,9 +120,7 @@ def bulk_set_users_or_streams_recipient_fields(
 
     if recipients is None:
         object_ids = [obj.id for obj in objects]
-        recipients = Recipient.objects.filter(
-            type=recipient_type, type_id__in=object_ids,
-        )
+        recipients = Recipient.objects.filter(type=recipient_type, type_id__in=object_ids)
 
     objects_dict = {obj.id: obj for obj in objects}
 
@@ -150,8 +148,7 @@ def bulk_create_streams(
     for name, options in stream_dict.items():
         if "history_public_to_subscribers" not in options:
             options["history_public_to_subscribers"] = (
-                not options.get("invite_only", False)
-                and not realm.is_zephyr_mirror_realm
+                not options.get("invite_only", False) and not realm.is_zephyr_mirror_realm
             )
         if name.lower() not in existing_streams:
             streams_to_create.append(

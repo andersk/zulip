@@ -123,9 +123,7 @@ def api_beanstalk_webhook(
         (short_commit_msg, _, _) = payload["message"].partition("\n")
 
         subject = f"svn r{revision}"
-        content = (
-            f"{author} pushed [revision {revision}]({url}):\n\n> {short_commit_msg}"
-        )
+        content = f"{author} pushed [revision {revision}]({url}):\n\n> {short_commit_msg}"
 
     check_send_webhook_message(request, user_profile, subject, content)
     return json_success()

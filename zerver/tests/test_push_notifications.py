@@ -298,9 +298,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
             result = self.uuid_post(self.server_uuid, endpoint, payload)
             self.assert_json_error(result, "Invalid APNS token")
 
-    @override_settings(
-        PUSH_NOTIFICATION_BOUNCER_URL="https://push.zulip.org.example.com",
-    )
+    @override_settings(PUSH_NOTIFICATION_BOUNCER_URL="https://push.zulip.org.example.com")
     @mock.patch("zerver.lib.remote_server.requests.request")
     def test_push_bouncer_api(self, mock_request: Any) -> None:
         """This is a variant of the below test_push_api, but using the full
@@ -435,9 +433,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
 class AnalyticsBouncerTest(BouncerTestCase):
     TIME_ZERO = datetime.datetime(1988, 3, 14, tzinfo=datetime.timezone.utc)
 
-    @override_settings(
-        PUSH_NOTIFICATION_BOUNCER_URL="https://push.zulip.org.example.com",
-    )
+    @override_settings(PUSH_NOTIFICATION_BOUNCER_URL="https://push.zulip.org.example.com")
     @mock.patch("zerver.lib.remote_server.requests.request")
     def test_analytics_api(self, mock_request: Any) -> None:
         """This is a variant of the below test_push_api, but using the full
@@ -511,9 +507,7 @@ class AnalyticsBouncerTest(BouncerTestCase):
         )
         self.assertEqual(RealmCount.objects.count(), 1)
         self.assertEqual(InstallationCount.objects.count(), 1)
-        self.assertEqual(
-            RealmAuditLog.objects.filter(id__gt=audit_log_max_id).count(), 2,
-        )
+        self.assertEqual(RealmAuditLog.objects.filter(id__gt=audit_log_max_id).count(), 2)
 
         send_analytics_to_remote_server()
         check_counts(4, 1, 1, 1)
@@ -607,9 +601,7 @@ class AnalyticsBouncerTest(BouncerTestCase):
                 )
             self.assert_json_error(result, "Invalid data.")
 
-    @override_settings(
-        PUSH_NOTIFICATION_BOUNCER_URL="https://push.zulip.org.example.com",
-    )
+    @override_settings(PUSH_NOTIFICATION_BOUNCER_URL="https://push.zulip.org.example.com")
     @mock.patch("zerver.lib.remote_server.requests.request")
     def test_analytics_api_invalid(self, mock_request: Any) -> None:
         """This is a variant of the below test_push_api, but using the full
@@ -634,9 +626,7 @@ class AnalyticsBouncerTest(BouncerTestCase):
 
     # Servers on Zulip 2.0.6 and earlier only send realm_counts and installation_counts data,
     # and don't send realmauditlog_rows. Make sure that continues to work.
-    @override_settings(
-        PUSH_NOTIFICATION_BOUNCER_URL="https://push.zulip.org.example.com",
-    )
+    @override_settings(PUSH_NOTIFICATION_BOUNCER_URL="https://push.zulip.org.example.com")
     @mock.patch("zerver.lib.remote_server.requests.request")
     def test_old_two_table_format(self, mock_request: Any) -> None:
         mock_request.side_effect = self.bounce_request
@@ -656,9 +646,7 @@ class AnalyticsBouncerTest(BouncerTestCase):
         self.assertEqual(RemoteRealmAuditLog.objects.count(), 0)
 
     # Make sure we aren't sending data we don't mean to, even if we don't store it.
-    @override_settings(
-        PUSH_NOTIFICATION_BOUNCER_URL="https://push.zulip.org.example.com",
-    )
+    @override_settings(PUSH_NOTIFICATION_BOUNCER_URL="https://push.zulip.org.example.com")
     @mock.patch("zerver.lib.remote_server.requests.request")
     def test_only_sending_intended_realmauditlog_data(self, mock_request: Any) -> None:
         mock_request.side_effect = self.bounce_request
@@ -690,9 +678,7 @@ class AnalyticsBouncerTest(BouncerTestCase):
                 first_call = False
             else:
                 # Test that we're respecting SYNCED_BILLING_EVENTS
-                self.assertIn(
-                    f'"event_type":{RealmAuditLog.USER_REACTIVATED}', str(args),
-                )
+                self.assertIn(f'"event_type":{RealmAuditLog.USER_REACTIVATED}', str(args))
                 self.assertNotIn(
                     f'"event_type":{RealmAuditLog.REALM_LOGO_CHANGED}', str(args),
                 )
@@ -707,9 +693,7 @@ class AnalyticsBouncerTest(BouncerTestCase):
         ):
             send_analytics_to_remote_server()
 
-    @override_settings(
-        PUSH_NOTIFICATION_BOUNCER_URL="https://push.zulip.org.example.com",
-    )
+    @override_settings(PUSH_NOTIFICATION_BOUNCER_URL="https://push.zulip.org.example.com")
     @mock.patch("zerver.lib.remote_server.requests.request")
     def test_realmauditlog_data_mapping(self, mock_request: Any) -> None:
         mock_request.side_effect = self.bounce_request
@@ -876,9 +860,7 @@ class HandlePushNotificationTest(PushNotificationTest):
             handle_push_notification(self.user_profile.id, missed_message)
             for _, _, token in apns_devices:
                 mock_info.assert_any_call(
-                    "APNs: Removing invalid/expired token %s (%s)",
-                    token,
-                    "Unregistered",
+                    "APNs: Removing invalid/expired token %s (%s)", token, "Unregistered",
                 )
             self.assertEqual(
                 RemotePushDeviceToken.objects.filter(kind=PushDeviceToken.APNS).count(),
@@ -901,9 +883,7 @@ class HandlePushNotificationTest(PushNotificationTest):
         }
         with self.settings(PUSH_NOTIFICATION_BOUNCER_URL=""), mock.patch(
             "zerver.lib.remote_server.requests.request", side_effect=self.bounce_request,
-        ), mock.patch(
-            "zerver.lib.push_notifications.gcm_client",
-        ) as mock_gcm, mock.patch(
+        ), mock.patch("zerver.lib.push_notifications.gcm_client") as mock_gcm, mock.patch(
             "zerver.lib.remote_server.requests.request",
             side_effect=requests.ConnectionError,
         ):
@@ -969,8 +949,7 @@ class HandlePushNotificationTest(PushNotificationTest):
         with mock.patch(
             "zerver.lib.push_notifications.uses_notification_bouncer",
         ) as mock_check, mock.patch("logging.error") as mock_logging_error, mock.patch(
-            "zerver.lib.push_notifications.push_notifications_enabled",
-            return_value=True,
+            "zerver.lib.push_notifications.push_notifications_enabled", return_value=True,
         ) as mock_push_notifications:
             handle_push_notification(user_profile.id, missed_message)
             mock_push_notifications.assert_called_once()
@@ -996,8 +975,7 @@ class HandlePushNotificationTest(PushNotificationTest):
         with mock.patch(
             "zerver.lib.push_notifications.uses_notification_bouncer",
         ) as mock_check, mock.patch("logging.error") as mock_logging_error, mock.patch(
-            "zerver.lib.push_notifications.push_notifications_enabled",
-            return_value=True,
+            "zerver.lib.push_notifications.push_notifications_enabled", return_value=True,
         ) as mock_push_notifications:
             handle_push_notification(user_profile.id, missed_message)
             mock_push_notifications.assert_called_once()
@@ -1065,8 +1043,7 @@ class HandlePushNotificationTest(PushNotificationTest):
         ) as mock_send_apple, mock.patch(
             "zerver.lib.push_notifications" ".send_android_push_notification",
         ) as mock_send_android, mock.patch(
-            "zerver.lib.push_notifications.push_notifications_enabled",
-            return_value=True,
+            "zerver.lib.push_notifications.push_notifications_enabled", return_value=True,
         ) as mock_push_notifications:
 
             handle_push_notification(self.user_profile.id, missed_message)
@@ -1194,8 +1171,7 @@ class HandlePushNotificationTest(PushNotificationTest):
         with mock.patch(
             "zerver.lib.push_notifications.logger.error",
         ) as mock_logger, mock.patch(
-            "zerver.lib.push_notifications.push_notifications_enabled",
-            return_value=True,
+            "zerver.lib.push_notifications.push_notifications_enabled", return_value=True,
         ) as mock_push_notifications:
             handle_push_notification(self.user_profile.id, missed_message)
             mock_logger.assert_called_with(
@@ -1247,8 +1223,7 @@ class HandlePushNotificationTest(PushNotificationTest):
         ) as mock_send_android, mock.patch(
             "zerver.lib.push_notifications.logger.error",
         ) as mock_logger, mock.patch(
-            "zerver.lib.push_notifications.push_notifications_enabled",
-            return_value=True,
+            "zerver.lib.push_notifications.push_notifications_enabled", return_value=True,
         ) as mock_push_notifications:
             handle_push_notification(self.user_profile.id, missed_message)
             mock_logger.assert_not_called()
@@ -1299,9 +1274,7 @@ class TestAPNs(PushNotificationTest):
     def test_not_configured(self) -> None:
         with mock.patch(
             "zerver.lib.push_notifications.get_apns_client",
-        ) as mock_get, mock.patch(
-            "zerver.lib.push_notifications.logger",
-        ) as mock_logging:
+        ) as mock_get, mock.patch("zerver.lib.push_notifications.logger") as mock_logging:
             mock_get.return_value = None
             self.send()
             mock_logging.debug.assert_called_once_with(
@@ -1340,8 +1313,7 @@ class TestAPNs(PushNotificationTest):
             "zerver.lib.push_notifications.logger",
         ) as mock_logging:
             mock_apns.get_notification_result.side_effect = itertools.chain(
-                [hyper.http20.exceptions.StreamResetError()],
-                itertools.repeat("Success"),
+                [hyper.http20.exceptions.StreamResetError()], itertools.repeat("Success"),
             )
             self.send()
             mock_logging.warning.assert_called_once_with(

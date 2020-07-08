@@ -144,9 +144,7 @@ def update_realm(
     if video_chat_provider is not None and video_chat_provider not in {
         p["id"] for p in Realm.VIDEO_CHAT_PROVIDERS.values()
     }:
-        return json_error(
-            _("Invalid video_chat_provider {}").format(video_chat_provider),
-        )
+        return json_error(_("Invalid video_chat_provider {}").format(video_chat_provider))
 
     message_retention_days: Optional[int] = None
     if message_retention_days_raw is not None:

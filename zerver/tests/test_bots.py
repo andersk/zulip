@@ -228,8 +228,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
             # Make sure that avatar image that we've uploaded is same with avatar image in the server
             self.assertTrue(
                 filecmp.cmp(
-                    fp.name,
-                    os.path.splitext(avatar_disk_path(profile))[0] + ".original",
+                    fp.name, os.path.splitext(avatar_disk_path(profile))[0] + ".original",
                 ),
             )
         self.assert_num_bots_equal(1)
@@ -240,9 +239,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
     def test_add_bot_with_too_many_files(self) -> None:
         self.login("hamlet")
         self.assert_num_bots_equal(0)
-        with get_test_image_file("img.png") as fp1, get_test_image_file(
-            "img.gif",
-        ) as fp2:
+        with get_test_image_file("img.png") as fp1, get_test_image_file("img.gif") as fp2:
             bot_info = dict(
                 full_name="whatever", short_name="whatever", file1=fp1, file2=fp2,
             )
@@ -281,9 +278,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
         # email_address_visiblity limited to admins
         user = self.example_user("hamlet")
         do_set_realm_property(
-            user.realm,
-            "email_address_visibility",
-            Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS,
+            user.realm, "email_address_visibility", Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS,
         )
         user.refresh_from_db()
 
@@ -558,9 +553,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
         result = self.client_post("/json/bots", bot_info)
         self.assert_json_success(result)
 
-        all_bots = UserProfile.objects.filter(
-            is_bot=True, bot_owner=user, is_active=True,
-        )
+        all_bots = UserProfile.objects.filter(is_bot=True, bot_owner=user, is_active=True)
         bots = [bot for bot in all_bots]
         self.assertEqual(len(bots), 2)
 
@@ -570,9 +563,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
         self.assertFalse(user.is_active)
 
         self.login("iago")
-        all_bots = UserProfile.objects.filter(
-            is_bot=True, bot_owner=user, is_active=True,
-        )
+        all_bots = UserProfile.objects.filter(is_bot=True, bot_owner=user, is_active=True)
         bots = [bot for bot in all_bots]
         self.assertEqual(len(bots), 0)
 
@@ -1014,9 +1005,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
 
         email = "hambot-bot@zulip.testserver"
         # Try error case first (too many files):
-        with get_test_image_file("img.png") as fp1, get_test_image_file(
-            "img.gif",
-        ) as fp2:
+        with get_test_image_file("img.png") as fp1, get_test_image_file("img.gif") as fp2:
             result = self.client_patch_multipart(
                 f"/json/bots/{self.get_bot_user(email).id}", dict(file1=fp1, file2=fp2),
             )
@@ -1035,8 +1024,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
             # Make sure that avatar image that we've uploaded is same with avatar image in the server
             self.assertTrue(
                 filecmp.cmp(
-                    fp.name,
-                    os.path.splitext(avatar_disk_path(profile))[0] + ".original",
+                    fp.name, os.path.splitext(avatar_disk_path(profile))[0] + ".original",
                 ),
             )
         self.assert_json_success(result)
@@ -1492,9 +1480,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
         result = self.client_post("/json/bots", bot_info)
         self.assert_json_success(result)
 
-    def test_create_embedded_bot_with_disabled_embedded_bots(
-        self, **extras: Any
-    ) -> None:
+    def test_create_embedded_bot_with_disabled_embedded_bots(self, **extras: Any) -> None:
         with self.settings(EMBEDDED_BOTS_ENABLED=False):
             self.fail_to_create_test_bot(
                 short_name="embeddedservicebot",
@@ -1527,9 +1513,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
         self.assertEqual(service.name, "followup")
         self.assertEqual(service.user_profile, bot)
 
-    def test_create_embedded_bot_with_incorrect_service_name(
-        self, **extras: Any
-    ) -> None:
+    def test_create_embedded_bot_with_incorrect_service_name(self, **extras: Any) -> None:
         self.fail_to_create_test_bot(
             short_name="embeddedservicebot",
             user_profile=self.example_user("hamlet"),
@@ -1589,8 +1573,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
         new_bot = UserProfile.objects.get(full_name="My Stripe Bot")
         config_data = get_bot_config(new_bot)
         self.assertEqual(
-            config_data,
-            {"integration_id": "stripe", "stripe_api_key": "sample-api-key"},
+            config_data, {"integration_id": "stripe", "stripe_api_key": "sample-api-key"},
         )
 
     @patch("zerver.lib.integrations.WEBHOOK_INTEGRATIONS", stripe_sample_config_options)

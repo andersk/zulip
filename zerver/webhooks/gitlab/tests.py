@@ -248,9 +248,7 @@ class GitlabHookTests(WebhookTestCase):
         expected_message = "Joe Bloggs reopened [Issue #1](https://gitlab.example.co.uk/joe.bloggs/testing/issues/1)."
 
         self.send_and_test_stream_message(
-            "issue_hook__confidential_issue_reopened",
-            expected_subject,
-            expected_message,
+            "issue_hook__confidential_issue_reopened", expected_subject, expected_message,
         )
 
     def test_note_commit_event_message(self) -> None:
@@ -391,9 +389,7 @@ class GitlabHookTests(WebhookTestCase):
         expected_topic = "my-awesome-project / MR #3 New Merge Request"
         expected_message = "Tomasz Kolek updated [MR #3](https://gitlab.com/tomaszkolek0/my-awesome-project/merge_requests/3) (assigned to Tomasz Kolek) from `tomek` to `master`:\n\n~~~ quote\nupdated desc\n~~~"
         self.send_and_test_stream_message(
-            "merge_request_hook__merge_request_updated",
-            expected_topic,
-            expected_message,
+            "merge_request_hook__merge_request_updated", expected_topic, expected_message,
         )
 
     def test_merge_request_added_commit_event_message(self) -> None:

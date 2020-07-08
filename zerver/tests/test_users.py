@@ -22,11 +22,7 @@ from zerver.lib.avatar import avatar_url, get_gravatar_url
 from zerver.lib.create_user import copy_user_settings
 from zerver.lib.events import do_events_register
 from zerver.lib.exceptions import JsonableError
-from zerver.lib.send_email import (
-    clear_scheduled_emails,
-    deliver_email,
-    send_future_email,
-)
+from zerver.lib.send_email import clear_scheduled_emails, deliver_email, send_future_email
 from zerver.lib.stream_topic import StreamTopicTarget
 from zerver.lib.test_classes import ZulipTestCase
 from zerver.lib.test_helpers import (
@@ -275,9 +271,7 @@ class PermissionTest(ZulipTestCase):
         # Now, switch email address visibility, check client_gravatar
         # is automatically disabled for the user.
         do_set_realm_property(
-            user.realm,
-            "email_address_visibility",
-            Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS,
+            user.realm, "email_address_visibility", Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS,
         )
         result = self.client_get("/json/users?client_gravatar=true")
         self.assert_json_success(result)
@@ -634,8 +628,7 @@ class PermissionTest(ZulipTestCase):
             new_profile_data.append({"id": field.id, "value": fields[field_name]})
 
         result = self.client_patch(
-            f"/json/users/{cordelia.id}",
-            {"profile_data": ujson.dumps(new_profile_data)},
+            f"/json/users/{cordelia.id}", {"profile_data": ujson.dumps(new_profile_data)},
         )
         self.assert_json_success(result)
 
@@ -720,15 +713,12 @@ class PermissionTest(ZulipTestCase):
                 value = new_fields[field_name]
             new_profile_data.append({"id": field.id, "value": value})
         result = self.client_patch(
-            f"/json/users/{cordelia.id}",
-            {"profile_data": ujson.dumps(new_profile_data)},
+            f"/json/users/{cordelia.id}", {"profile_data": ujson.dumps(new_profile_data)},
         )
         self.assert_json_success(result)
         for field_dict in cordelia.profile_data:
             with self.subTest(field_name=field_dict["name"]):
-                self.assertEqual(
-                    field_dict["value"], new_fields[str(field_dict["name"])],
-                )
+                self.assertEqual(field_dict["value"], new_fields[str(field_dict["name"])])
 
     def test_non_admin_user_cannot_change_profile_data(self) -> None:
         self.login("cordelia")
@@ -1316,8 +1306,7 @@ class ActivateTest(ZulipTestCase):
             delay=datetime.timedelta(hours=1),
         )
         self.assertEqual(
-            ScheduledEmail.objects.filter(users__in=[hamlet, iago]).distinct().count(),
-            1,
+            ScheduledEmail.objects.filter(users__in=[hamlet, iago]).distinct().count(), 1,
         )
         email = ScheduledEmail.objects.all().first()
         self.assertEqual(email.users.count(), 2)

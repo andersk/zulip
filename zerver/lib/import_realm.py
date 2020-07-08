@@ -165,9 +165,9 @@ def fix_upload_links(data: TableData, message_table: TableName) -> None:
                 if key in message["content"]:
                     message["content"] = message["content"].replace(key, value)
                     if message["rendered_content"]:
-                        message["rendered_content"] = message[
-                            "rendered_content"
-                        ].replace(key, value)
+                        message["rendered_content"] = message["rendered_content"].replace(
+                            key, value,
+                        )
 
 
 def create_subscription_events(data: TableData, realm_id: int) -> None:
@@ -1019,9 +1019,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
     UserProfile.objects.bulk_create(user_profiles)
 
     re_map_foreign_keys(data, "zerver_defaultstream", "stream", related_table="stream")
-    re_map_foreign_keys(
-        data, "zerver_realmemoji", "author", related_table="user_profile",
-    )
+    re_map_foreign_keys(data, "zerver_realmemoji", "author", related_table="user_profile")
     for (table, model, related_table) in realm_tables:
         re_map_foreign_keys(data, table, "realm", related_table="realm")
         update_model_ids(model, data, related_table)
@@ -1060,9 +1058,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
     )
     update_model_ids(Recipient, data, "recipient")
     bulk_import_model(data, Recipient)
-    bulk_set_users_or_streams_recipient_fields(
-        Stream, Stream.objects.filter(realm=realm),
-    )
+    bulk_set_users_or_streams_recipient_fields(Stream, Stream.objects.filter(realm=realm))
     bulk_set_users_or_streams_recipient_fields(
         UserProfile, UserProfile.objects.filter(realm=realm),
     )
@@ -1187,17 +1183,12 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
 
     fix_datetime_fields(data, "zerver_useractivityinterval")
     re_map_foreign_keys(
-        data,
-        "zerver_useractivityinterval",
-        "user_profile",
-        related_table="user_profile",
+        data, "zerver_useractivityinterval", "user_profile", related_table="user_profile",
     )
     update_model_ids(UserActivityInterval, data, "useractivityinterval")
     bulk_import_model(data, UserActivityInterval)
 
-    re_map_foreign_keys(
-        data, "zerver_customprofilefield", "realm", related_table="realm",
-    )
+    re_map_foreign_keys(data, "zerver_customprofilefield", "realm", related_table="realm")
     update_model_ids(CustomProfileField, data, related_table="customprofilefield")
     bulk_import_model(data, CustomProfileField)
 
@@ -1543,9 +1534,7 @@ def import_analytics_data(realm: Realm, import_dir: Path) -> None:
 
     fix_datetime_fields(data, "analytics_usercount")
     re_map_foreign_keys(data, "analytics_usercount", "realm", related_table="realm")
-    re_map_foreign_keys(
-        data, "analytics_usercount", "user", related_table="user_profile",
-    )
+    re_map_foreign_keys(data, "analytics_usercount", "user", related_table="user_profile")
     update_model_ids(UserCount, data, "analytics_usercount")
     bulk_import_model(data, UserCount)
 

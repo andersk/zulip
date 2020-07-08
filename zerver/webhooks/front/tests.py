@@ -190,9 +190,7 @@ class FrontHookTests(WebhookTestCase):
 
     def test_comment(self) -> None:
         expected_topic = "cnv_keocka"
-        expected_message = (
-            "**Bender Rodriguez** left a comment:\n" "```quote\nSure.\n```"
-        )
+        expected_message = "**Bender Rodriguez** left a comment:\n" "```quote\nSure.\n```"
 
         self.send_and_test_stream_message(
             "comment",

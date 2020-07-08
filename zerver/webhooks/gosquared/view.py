@@ -11,9 +11,7 @@ from zerver.lib.webhooks.common import (
 )
 from zerver.models import UserProfile
 
-TRAFFIC_SPIKE_TEMPLATE = (
-    "[{website_name}]({website_url}) has {user_num} visitors online."
-)
+TRAFFIC_SPIKE_TEMPLATE = "[{website_name}]({website_url}) has {user_num} visitors online."
 CHAT_MESSAGE_TEMPLATE = """
 The {status} **{name}** messaged:
 

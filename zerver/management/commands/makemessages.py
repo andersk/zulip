@@ -243,10 +243,7 @@ class Command(makemessages.Command):
             yield os.path.join(path, self.get_namespace())
 
     def get_new_strings(
-        self,
-        old_strings: Mapping[str, str],
-        translation_strings: List[str],
-        locale: str,
+        self, old_strings: Mapping[str, str], translation_strings: List[str], locale: str,
     ) -> Dict[str, str]:
         """
         Missing strings are removed, new strings are added and already

@@ -107,9 +107,7 @@ class TestServiceBotBasics(ZulipTestCase):
         )
 
         expected = dict(
-            outgoing_webhooks=[
-                dict(trigger="mention", user_profile_id=outgoing_bot.id),
-            ],
+            outgoing_webhooks=[dict(trigger="mention", user_profile_id=outgoing_bot.id)],
         )
 
         self.assertEqual(event_dict, expected)
@@ -452,9 +450,7 @@ class TestServiceBotEventTriggers(ZulipTestCase):
             ) -> None:
                 self.assertEqual(queue_name, expected_queue_name)
                 self.assertEqual(trigger_event["message"]["content"], content)
-                self.assertEqual(
-                    trigger_event["message"]["display_recipient"], recipient,
-                )
+                self.assertEqual(trigger_event["message"]["display_recipient"], recipient)
                 self.assertEqual(
                     trigger_event["message"]["sender_email"], self.user_profile.email,
                 )

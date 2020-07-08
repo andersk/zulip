@@ -112,9 +112,7 @@ class Command(ZulipBaseCommand):
             print(
                 "- Restart the server, using /home/zulip/deployments/current/scripts/restart-server",
             )
-            print(
-                "- Return to the documentation to learn how to test push notifications",
-            )
+            print("- Return to the documentation to learn how to test push notifications")
         else:
             if options["rotate_key"]:
                 print(f"Success! Updating {SECRETS_FILENAME} with the new key...")

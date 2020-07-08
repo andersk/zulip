@@ -290,9 +290,7 @@ v1_api_and_json_patterns = [
         {"POST": "zerver.views.message_flags.mark_topic_as_read"},
     ),
     path(
-        "zcommand",
-        rest_dispatch,
-        {"POST": "zerver.views.message_send.zcommand_backend"},
+        "zcommand", rest_dispatch, {"POST": "zerver.views.message_send.zcommand_backend"},
     ),
     # messages -> zerver.views.message*
     # GET returns messages, possibly filtered, POST sends a message
@@ -948,9 +946,7 @@ i18n_urls = [
     ),
     path("plans/", zerver.views.portico.plans_view, name="plans"),
     re_path(
-        r"apps/(.*)$",
-        zerver.views.portico.apps_view,
-        name="zerver.views.home.apps_view",
+        r"apps/(.*)$", zerver.views.portico.apps_view, name="zerver.views.home.apps_view",
     ),
     path("team/", zerver.views.portico.team_view),
     path(
@@ -1167,9 +1163,7 @@ urls += [
     # Since these views don't use rest_dispatch, they cannot have
     # asynchronous Tornado behavior.
     path(
-        "notify_tornado",
-        zerver.tornado.views.notify,
-        name="zerver.tornado.views.notify",
+        "notify_tornado", zerver.tornado.views.notify, name="zerver.tornado.views.notify",
     ),
     path("api/v1/events/internal", zerver.tornado.views.get_events_internal),
 ]

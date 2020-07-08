@@ -69,9 +69,9 @@ class Command(ZulipBaseCommand):
             )
         mids = [
             m.id
-            for m in UserMessage.objects.filter(
-                filt, user_profile=user_profile,
-            ).order_by("-id")
+            for m in UserMessage.objects.filter(filt, user_profile=user_profile).order_by(
+                "-id",
+            )
         ]
 
         if options["for_real"]:

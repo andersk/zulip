@@ -343,8 +343,7 @@ def finish_desktop_flow(
     context = {
         "desktop_data": desktop_data,
         "browser_url": reverse(
-            "zerver.views.auth.login_page",
-            kwargs={"template_name": "zerver/login.html"},
+            "zerver.views.auth.login_page", kwargs={"template_name": "zerver/login.html"},
         ),
         "realm_icon_url": realm_icon_url(user_profile.realm),
     }
@@ -628,11 +627,7 @@ def start_social_signup(
             return redirect_to_config_error("saml")
         extra_url_params = {"idp": extra_arg}
     return oauth_redirect_to_root(
-        request,
-        backend_url,
-        "social",
-        is_signup=True,
-        extra_url_params=extra_url_params,
+        request, backend_url, "social", is_signup=True, extra_url_params=extra_url_params,
     )
 
 
@@ -656,9 +651,7 @@ def log_into_subdomain(request: HttpRequest, token: str) -> HttpResponse:
         result = ExternalAuthResult(login_token=token)
     except ExternalAuthResult.InvalidTokenError:
         logging.warning("log_into_subdomain: Invalid token given: %s", token)
-        return render(
-            request, "zerver/log_into_subdomain_token_invalid.html", status=400,
-        )
+        return render(request, "zerver/log_into_subdomain_token_invalid.html", status=400)
 
     subdomain = get_subdomain(request)
     if result.data_dict["subdomain"] != subdomain:
@@ -900,9 +893,7 @@ def start_two_factor_auth(
 
 @csrf_exempt
 @has_request_variables
-def dev_direct_login(
-    request: HttpRequest, next: str = REQ(default="/"),
-) -> HttpResponse:
+def dev_direct_login(request: HttpRequest, next: str = REQ(default="/")) -> HttpResponse:
     # This function allows logging in without a password and should only be called
     # in development environments.  It may be called if the DevAuthBackend is included
     # in settings.AUTHENTICATION_BACKENDS

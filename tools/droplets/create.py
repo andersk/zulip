@@ -117,9 +117,7 @@ def set_user_data(username: str, userkey_dicts: List[Dict[str, Any]]) -> str:
     ssh_keys = "\n".join(userkeys)
 
     setup_root_ssh_keys = f"printf '{ssh_keys}' > /root/.ssh/authorized_keys"
-    setup_zulipdev_ssh_keys = (
-        f"printf '{ssh_keys}' > /home/zulipdev/.ssh/authorized_keys"
-    )
+    setup_zulipdev_ssh_keys = f"printf '{ssh_keys}' > /home/zulipdev/.ssh/authorized_keys"
 
     # We pass the hostname as username.zulipdev.org to the DigitalOcean API.
     # But some droplets (eg on 18.04) are created with with hostname set to just username.
@@ -187,9 +185,7 @@ def create_droplet(
     return droplet.ip_address
 
 
-def delete_existing_records(
-    records: List[digitalocean.Record], record_name: str,
-) -> None:
+def delete_existing_records(records: List[digitalocean.Record], record_name: str) -> None:
     count = 0
     for record in records:
         if (

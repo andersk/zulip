@@ -126,9 +126,7 @@ class RegistrationForm(forms.Form):
     full_name = forms.CharField(max_length=UserProfile.MAX_NAME_LENGTH)
     # The required-ness of the password field gets overridden if it isn't
     # actually required for a realm
-    password = forms.CharField(
-        widget=forms.PasswordInput, max_length=MAX_PASSWORD_LENGTH,
-    )
+    password = forms.CharField(widget=forms.PasswordInput, max_length=MAX_PASSWORD_LENGTH)
     realm_subdomain = forms.CharField(
         max_length=Realm.MAX_REALM_SUBDOMAIN_LENGTH, required=False,
     )
@@ -513,9 +511,7 @@ class MultiEmailField(forms.Field):
 
 
 class FindMyTeamForm(forms.Form):
-    emails = MultiEmailField(
-        help_text=_("Add up to 10 comma-separated email addresses."),
-    )
+    emails = MultiEmailField(help_text=_("Add up to 10 comma-separated email addresses."))
 
     def clean_emails(self) -> List[str]:
         emails = self.cleaned_data["emails"]

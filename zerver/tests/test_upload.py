@@ -387,9 +387,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         self.subscribe(self.example_user("hamlet"), "Denmark")
         host = self.example_user("hamlet").realm.host
         body = (
-            f"First message ...[zulip.txt](http://{host}/user_uploads/"
-            + d1_path_id
-            + ")"
+            f"First message ...[zulip.txt](http://{host}/user_uploads/" + d1_path_id + ")"
         )
         self.send_stream_message(self.example_user("hamlet"), "Denmark", body, "test")
         body = (
@@ -416,9 +414,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
 
         # First, send the message to the new private stream.
         body = (
-            f"First message ...[zulip.txt](http://{host}/user_uploads/"
-            + d1_path_id
-            + ")"
+            f"First message ...[zulip.txt](http://{host}/user_uploads/" + d1_path_id + ")"
         )
         self.send_stream_message(
             self.example_user("hamlet"), "private_stream", body, "test",
@@ -450,9 +446,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
 
         # Then, have that new recipient user publish it.
         body = (
-            f"Third message ...[zulip.txt](http://{host}/user_uploads/"
-            + d1_path_id
-            + ")"
+            f"Third message ...[zulip.txt](http://{host}/user_uploads/" + d1_path_id + ")"
         )
         self.send_stream_message(self.example_user("othello"), "Denmark", body, "test")
         self.assertEqual(Attachment.objects.get(path_id=d1_path_id).messages.count(), 3)
@@ -600,9 +594,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         uri = result.json()["uri"]
         fp_path_id = re.sub("/user_uploads/", "", uri)
         body = (
-            f"First message ...[zulip.txt](http://{host}/user_uploads/"
-            + fp_path_id
-            + ")"
+            f"First message ...[zulip.txt](http://{host}/user_uploads/" + fp_path_id + ")"
         )
         with self.settings(CROSS_REALM_BOT_EMAILS={user_2.email, user_3.email}):
             internal_send_private_message(
@@ -630,10 +622,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         cordelia = self.example_user("cordelia")
         realm = hamlet.realm
         subscribed_users = [hamlet, cordelia]
-        unsubscribed_users = [
-            self.example_user("othello"),
-            self.example_user("prospero"),
-        ]
+        unsubscribed_users = [self.example_user("othello"), self.example_user("prospero")]
         stream_name = "test-subscribe"
         self.make_stream(
             stream_name,
@@ -682,9 +671,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         def assert_cannot_access_file(user: UserProfile) -> None:
             response = self.api_get(user, uri)
             self.assertEqual(response.status_code, 403)
-            self.assert_in_response(
-                "You are not authorized to view this file.", response,
-            )
+            self.assert_in_response("You are not authorized to view this file.", response)
 
         late_subscribed_user = self.example_user("aaron")
         self.subscribe(late_subscribed_user, stream_name)
@@ -698,10 +685,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         user = self.example_user("hamlet")
         polonius = self.example_user("polonius")
         subscribed_users = [user, polonius]
-        unsubscribed_users = [
-            self.example_user("othello"),
-            self.example_user("prospero"),
-        ]
+        unsubscribed_users = [self.example_user("othello"), self.example_user("prospero")]
         stream_name = "test-subscribe"
         self.make_stream(
             stream_name,
@@ -770,9 +754,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
             self.assertEqual(response.status_code, 403)
             # It takes a few extra queries to verify lack of access with shared history.
             self.assertEqual(len(queries), 8)
-            self.assert_in_response(
-                "You are not authorized to view this file.", response,
-            )
+            self.assert_in_response("You are not authorized to view this file.", response)
             self.logout()
 
         # Unsubscribed user should not be able to view file
@@ -813,9 +795,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         with queries_captured() as queries:
             response = self.client_get(uri)
             self.assertEqual(response.status_code, 403)
-            self.assert_in_response(
-                "You are not authorized to view this file.", response,
-            )
+            self.assert_in_response("You are not authorized to view this file.", response)
         self.assertEqual(len(queries), 8)
 
         self.subscribe(user, "test-subscribe 1")
@@ -837,10 +817,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
 
     def test_file_download_authorization_public(self) -> None:
         subscribed_users = [self.example_user("hamlet"), self.example_user("iago")]
-        unsubscribed_users = [
-            self.example_user("othello"),
-            self.example_user("prospero"),
-        ]
+        unsubscribed_users = [self.example_user("othello"), self.example_user("prospero")]
         realm = get_realm("zulip")
         for subscribed_user in subscribed_users:
             self.subscribe(subscribed_user, "test-subscribe")
@@ -1012,9 +989,7 @@ class AvatarTest(UploadSerializeMixin, ZulipTestCase):
         Attempting to upload two files should fail.
         """
         self.login("hamlet")
-        with get_test_image_file("img.png") as fp1, get_test_image_file(
-            "img.png",
-        ) as fp2:
+        with get_test_image_file("img.png") as fp1, get_test_image_file("img.png") as fp2:
             result = self.client_post("/json/users/me/avatar", {"f1": fp1, "f2": fp2})
         self.assert_json_error(result, "You must upload exactly one avatar.")
 
@@ -1067,9 +1042,7 @@ class AvatarTest(UploadSerializeMixin, ZulipTestCase):
         with self.settings(ENABLE_GRAVATAR=False):
             response = self.client_get("/avatar/cordelia@zulip.com?foo=bar")
             redirect_url = response["Location"]
-            self.assertTrue(
-                redirect_url.endswith(str(avatar_url(cordelia)) + "&foo=bar"),
-            )
+            self.assertTrue(redirect_url.endswith(str(avatar_url(cordelia)) + "&foo=bar"))
 
     def test_get_user_avatar(self) -> None:
         hamlet = self.example_user("hamlet")
@@ -1341,9 +1314,7 @@ class EmojiTest(UploadSerializeMixin, ZulipTestCase):
     # with a corresponding increase in the duration of the previous frame.
     def test_resize_emoji(self) -> None:
         # Test unequal width and height of animated GIF image
-        animated_unequal_img_data = get_test_image_file(
-            "animated_unequal_img.gif",
-        ).read()
+        animated_unequal_img_data = get_test_image_file("animated_unequal_img.gif").read()
         resized_img_data = resize_emoji(animated_unequal_img_data, size=50)
         im = Image.open(io.BytesIO(resized_img_data))
         self.assertEqual((50, 50), im.size)
@@ -1355,27 +1326,21 @@ class EmojiTest(UploadSerializeMixin, ZulipTestCase):
 
         # Test an image larger than max is resized
         with patch("zerver.lib.upload.MAX_EMOJI_GIF_SIZE", 128):
-            animated_large_img_data = get_test_image_file(
-                "animated_large_img.gif",
-            ).read()
+            animated_large_img_data = get_test_image_file("animated_large_img.gif").read()
             resized_img_data = resize_emoji(animated_large_img_data, size=50)
             im = Image.open(io.BytesIO(resized_img_data))
             self.assertEqual((50, 50), im.size)
 
         # Test an image file larger than max is resized
         with patch("zerver.lib.upload.MAX_EMOJI_GIF_FILE_SIZE_BYTES", 3 * 1024 * 1024):
-            animated_large_img_data = get_test_image_file(
-                "animated_large_img.gif",
-            ).read()
+            animated_large_img_data = get_test_image_file("animated_large_img.gif").read()
             resized_img_data = resize_emoji(animated_large_img_data, size=50)
             im = Image.open(io.BytesIO(resized_img_data))
             self.assertEqual((50, 50), im.size)
 
         # Test an image smaller than max and smaller than file size max is not resized
         with patch("zerver.lib.upload.MAX_EMOJI_GIF_SIZE", 512):
-            animated_large_img_data = get_test_image_file(
-                "animated_large_img.gif",
-            ).read()
+            animated_large_img_data = get_test_image_file("animated_large_img.gif").read()
             resized_img_data = resize_emoji(animated_large_img_data, size=50)
             im = Image.open(io.BytesIO(resized_img_data))
             self.assertEqual((256, 256), im.size)
@@ -1392,9 +1357,7 @@ class RealmIconTest(UploadSerializeMixin, ZulipTestCase):
         """
         # Log in as admin
         self.login("iago")
-        with get_test_image_file("img.png") as fp1, get_test_image_file(
-            "img.png",
-        ) as fp2:
+        with get_test_image_file("img.png") as fp1, get_test_image_file("img.png") as fp2:
             result = self.client_post("/json/realm/icon", {"f1": fp1, "f2": fp2})
         self.assert_json_error(result, "You must upload exactly one icon.")
 
@@ -1531,9 +1494,7 @@ class RealmLogoTest(UploadSerializeMixin, ZulipTestCase):
         """
         # Log in as admin
         self.login("iago")
-        with get_test_image_file("img.png") as fp1, get_test_image_file(
-            "img.png",
-        ) as fp2:
+        with get_test_image_file("img.png") as fp1, get_test_image_file("img.png") as fp2:
             result = self.client_post(
                 "/json/realm/logo",
                 {"f1": fp1, "f2": fp2, "night": ujson.dumps(self.night)},
@@ -1583,9 +1544,7 @@ class RealmLogoTest(UploadSerializeMixin, ZulipTestCase):
         do_change_logo_source(
             realm, Realm.LOGO_DEFAULT, self.night, acting_user=user_profile,
         )
-        response = self.client_get(
-            "/json/realm/logo", {"night": ujson.dumps(self.night)},
-        )
+        response = self.client_get("/json/realm/logo", {"night": ujson.dumps(self.night)})
         redirect_url = response["Location"]
         is_night_str = str(self.night).lower()
         self.assertEqual(
@@ -1600,9 +1559,7 @@ class RealmLogoTest(UploadSerializeMixin, ZulipTestCase):
         do_change_logo_source(
             realm, Realm.LOGO_UPLOADED, self.night, acting_user=user_profile,
         )
-        response = self.client_get(
-            "/json/realm/logo", {"night": ujson.dumps(self.night)},
-        )
+        response = self.client_get("/json/realm/logo", {"night": ujson.dumps(self.night)})
         redirect_url = response["Location"]
         self.assertTrue(
             redirect_url.endswith(
@@ -1627,9 +1584,7 @@ class RealmLogoTest(UploadSerializeMixin, ZulipTestCase):
             self.assertEqual(realm.night_logo_source, Realm.LOGO_UPLOADED)
         else:
             self.assertEqual(realm.logo_source, Realm.LOGO_UPLOADED)
-        response = self.client_get(
-            "/json/realm/logo", {"night": ujson.dumps(self.night)},
-        )
+        response = self.client_get("/json/realm/logo", {"night": ujson.dumps(self.night)})
         redirect_url = response["Location"]
         self.assertEqual(
             redirect_url,
@@ -2039,9 +1994,7 @@ class S3Test(ZulipTestCase):
 
         user_profile = self.example_user("hamlet")
         image_file = get_test_image_file("img.png")
-        zerver.lib.upload.upload_backend.upload_realm_icon_image(
-            image_file, user_profile,
-        )
+        zerver.lib.upload.upload_backend.upload_realm_icon_image(image_file, user_profile)
 
         original_path_id = os.path.join(
             str(user_profile.realm.id), "realm", "icon.original",
@@ -2182,9 +2135,7 @@ class UploadSpaceTests(UploadSerializeMixin, ZulipTestCase):
         )
 
         data = b"zulip!"
-        upload_message_file(
-            "dummy.txt", len(data), "text/plain", data, self.user_profile,
-        )
+        upload_message_file("dummy.txt", len(data), "text/plain", data, self.user_profile)
         # notify_attachment_update function calls currently_used_upload_space_bytes which
         # updates the cache.
         self.assertEqual(

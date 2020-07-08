@@ -324,9 +324,7 @@ def build_customprofile_field(
                 # Processing is done in the function 'process_customprofilefields'
             )
 
-            customprofilefield_dict = model_to_dict(
-                customprofilefield, exclude=["realm"],
-            )
+            customprofilefield_dict = model_to_dict(customprofilefield, exclude=["realm"])
             customprofilefield_dict["realm"] = realm_id
 
             slack_custom_field_name_to_zulip_custom_field_id[
@@ -512,9 +510,7 @@ def channels_to_zerver_stream(
 
             slack_default_channels = ["general", "random"]
             if channel["name"] in slack_default_channels and not stream["deactivated"]:
-                defaultstream = build_defaultstream(
-                    realm_id, stream_id, defaultstream_id,
-                )
+                defaultstream = build_defaultstream(realm_id, stream_id, defaultstream_id)
                 realm["zerver_defaultstream"].append(defaultstream)
                 defaultstream_id += 1
 
@@ -595,13 +591,9 @@ def channels_to_zerver_stream(
     process_mpims(mpims)
 
     for slack_user_id, zulip_user_id in slack_user_id_to_zulip_user_id.items():
-        recipient = build_recipient(
-            zulip_user_id, recipient_id_count, Recipient.PERSONAL,
-        )
+        recipient = build_recipient(zulip_user_id, recipient_id_count, Recipient.PERSONAL)
         slack_recipient_name_to_zulip_recipient_id[slack_user_id] = recipient_id_count
-        sub = build_subscription(
-            recipient_id_count, zulip_user_id, subscription_id_count,
-        )
+        sub = build_subscription(recipient_id_count, zulip_user_id, subscription_id_count)
         realm["zerver_recipient"].append(recipient)
         realm["zerver_subscription"].append(sub)
         recipient_id_count += 1

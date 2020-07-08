@@ -102,9 +102,7 @@ class TranslationTestCase(ZulipTestCase):
         ]
 
         for lang, word in languages:
-            response = self.fetch(
-                "get", "/integrations/", 200, HTTP_ACCEPT_LANGUAGE=lang,
-            )
+            response = self.fetch("get", "/integrations/", 200, HTTP_ACCEPT_LANGUAGE=lang)
             self.assert_in_response(word, response)
 
     def test_cookie(self) -> None:
@@ -118,9 +116,7 @@ class TranslationTestCase(ZulipTestCase):
         for lang, word in languages:
             # Applying str function to LANGUAGE_COOKIE_NAME to convert unicode
             # into an ascii otherwise SimpleCookie will raise an exception
-            self.client.cookies = SimpleCookie(
-                {str(settings.LANGUAGE_COOKIE_NAME): lang},
-            )
+            self.client.cookies = SimpleCookie({str(settings.LANGUAGE_COOKIE_NAME): lang})
 
             response = self.fetch("get", "/integrations/", 200)
             self.assert_in_response(word, response)

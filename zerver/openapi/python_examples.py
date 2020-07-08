@@ -296,9 +296,7 @@ def remove_realm_filter(client: Client) -> None:
     result = client.remove_realm_filter(1)
     # {code_example|end}
 
-    validate_against_openapi_schema(
-        result, "/realm/filters/{filter_id}", "delete", "200",
-    )
+    validate_against_openapi_schema(result, "/realm/filters/{filter_id}", "delete", "200")
 
 
 @openapi_test_function("/users/me:get")
@@ -399,9 +397,9 @@ def get_user_groups(client: Client) -> int:
     ][0]
     assert hamlet_user_group["description"] == "Characters of Hamlet"
 
-    marketing_user_group = [
-        u for u in result["user_groups"] if u["name"] == "marketing"
-    ][0]
+    marketing_user_group = [u for u in result["user_groups"] if u["name"] == "marketing"][
+        0
+    ]
     return marketing_user_group["id"]
 
 
@@ -454,9 +452,7 @@ def remove_subscriptions(client: Client) -> None:
 
     # {code_example|start}
     # Unsubscribe another user from the stream "new stream"
-    result = client.remove_subscriptions(
-        ["new stream"], principals=["newbie@zulip.com"],
-    )
+    result = client.remove_subscriptions(["new stream"], principals=["newbie@zulip.com"])
     # {code_example|end}
 
     validate_against_openapi_schema(result, "/users/me/subscriptions", "delete", "200")
@@ -954,9 +950,7 @@ def upload_file(client: Client) -> None:
             "type": "stream",
             "to": "Denmark",
             "topic": "Castle",
-            "content": "Check out [this picture]({}) of my castle!".format(
-                result["uri"],
-            ),
+            "content": "Check out [this picture]({}) of my castle!".format(result["uri"]),
         },
     )
     # {code_example|end}

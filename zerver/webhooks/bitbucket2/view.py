@@ -31,9 +31,7 @@ from zerver.models import UserProfile
 BITBUCKET_TOPIC_TEMPLATE = "{repository_name}"
 USER_PART = "User {display_name}(login: {username})"
 
-BITBUCKET_FORK_BODY = (
-    USER_PART + " forked the repository into [{fork_name}]({fork_url})."
-)
+BITBUCKET_FORK_BODY = USER_PART + " forked the repository into [{fork_name}]({fork_url})."
 BITBUCKET_COMMIT_STATUS_CHANGED_BODY = (
     "[System {key}]({system_url}) changed status of" " {commit_info} to {status}."
 )
@@ -291,9 +289,7 @@ def get_commit_status_changed_body(payload: Dict[str, Any]) -> str:
     )
 
 
-def get_issue_commented_body(
-    payload: Dict[str, Any], include_title: bool = False,
-) -> str:
+def get_issue_commented_body(payload: Dict[str, Any], include_title: bool = False) -> str:
     action = "[commented]({}) on".format(payload["comment"]["links"]["html"]["href"])
     return get_issue_action_body(payload, action, include_title)
 
@@ -491,9 +487,7 @@ GET_SINGLE_MESSAGE_BODY_DEPENDING_ON_TYPE_MAPPER = {
         get_pull_request_created_or_updated_body, action="updated",
     ),
     "pull_request_approved": partial(get_pull_request_action_body, action="approved"),
-    "pull_request_unapproved": partial(
-        get_pull_request_action_body, action="unapproved",
-    ),
+    "pull_request_unapproved": partial(get_pull_request_action_body, action="unapproved"),
     "pull_request_fulfilled": partial(get_pull_request_action_body, action="merged"),
     "pull_request_rejected": partial(get_pull_request_action_body, action="rejected"),
     "pull_request_comment_created": get_pull_request_comment_created_action_body,

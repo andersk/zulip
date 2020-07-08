@@ -53,11 +53,7 @@ link_mapping = {
         "User groups",
         "/#organization/user-groups-admin",
     ],
-    "user-list-admin": [
-        "Manage organization",
-        "Users",
-        "/#organization/user-list-admin",
-    ],
+    "user-list-admin": ["Manage organization", "Users", "/#organization/user-list-admin"],
     "deactivated-users-admin": [
         "Manage organization",
         "Deactivated users",

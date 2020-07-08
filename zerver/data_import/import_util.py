@@ -703,9 +703,7 @@ def process_uploads(
     return upload_list
 
 
-def build_realm_emoji(
-    realm_id: int, name: str, id: int, file_name: str,
-) -> ZerverFieldsT:
+def build_realm_emoji(realm_id: int, name: str, id: int, file_name: str) -> ZerverFieldsT:
     return model_to_dict(
         RealmEmoji(realm_id=realm_id, name=name, id=id, file_name=file_name),
     )

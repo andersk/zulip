@@ -248,9 +248,7 @@ class GithubWebhookTest(WebhookTestCase):
     def test_pull_request_synchronized_msg(self) -> None:
         expected_message = "baxterthehacker updated [PR #1](https://github.com/baxterthehacker/public-repo/pull/1) from `changes` to `master`."
         self.send_and_test_stream_message(
-            "pull_request__synchronized",
-            self.EXPECTED_TOPIC_PR_EVENTS,
-            expected_message,
+            "pull_request__synchronized", self.EXPECTED_TOPIC_PR_EVENTS, expected_message,
         )
 
     def test_pull_request_closed_msg(self) -> None:

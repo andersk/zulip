@@ -23,11 +23,7 @@ from zerver.lib.export import do_export_realm, do_export_user, export_usermessag
 from zerver.lib.import_realm import do_import_realm, get_incoming_message_ids
 from zerver.lib.streams import create_stream_if_needed
 from zerver.lib.test_classes import ZulipTestCase
-from zerver.lib.test_helpers import (
-    create_s3_buckets,
-    get_test_image_file,
-    use_s3_backend,
-)
+from zerver.lib.test_helpers import create_s3_buckets, get_test_image_file, use_s3_backend
 from zerver.lib.topic_mutes import add_topic_mute
 from zerver.lib.upload import (
     claim_attachment,
@@ -95,9 +91,7 @@ class QueryUtilTest(ZulipTestCase):
         queries = get_queries()
 
         all_msg_ids: Set[int] = set()
-        chunker = query_chunker(
-            queries=queries, id_collector=all_msg_ids, chunk_size=20,
-        )
+        chunker = query_chunker(queries=queries, id_collector=all_msg_ids, chunk_size=20)
 
         all_row_ids = []
         for chunk in chunker:
@@ -246,9 +240,7 @@ class ImportExportTest(ZulipTestCase):
         except FileNotFoundError:
             pass
         result["uploads_dir"] = os.path.join(output_dir, "uploads")
-        result["uploads_dir_records"] = read_file(
-            os.path.join("uploads", "records.json"),
-        )
+        result["uploads_dir_records"] = read_file(os.path.join("uploads", "records.json"))
         result["emoji_dir"] = os.path.join(output_dir, "emoji")
         result["emoji_dir_records"] = read_file(os.path.join("emoji", "records.json"))
         result["avatar_dir"] = os.path.join(output_dir, "avatars")
@@ -566,9 +558,7 @@ class ImportExportTest(ZulipTestCase):
         create_stream_if_needed(realm, "Private A", invite_only=True)
         self.subscribe(self.example_user("iago"), "Private A")
         self.subscribe(self.example_user("othello"), "Private A")
-        self.send_stream_message(
-            self.example_user("iago"), "Private A", "Hello Stream A",
-        )
+        self.send_stream_message(self.example_user("iago"), "Private A", "Hello Stream A")
 
         create_stream_if_needed(realm, "Private B", invite_only=True)
         self.subscribe(self.example_user("prospero"), "Private B")
@@ -633,11 +623,7 @@ class ImportExportTest(ZulipTestCase):
         message = Message.objects.last()
         consented_user_ids = [self.example_user(user).id for user in ["iago", "hamlet"]]
         do_add_reaction(
-            self.example_user("iago"),
-            message,
-            "outbox",
-            "1f4e4",
-            Reaction.UNICODE_EMOJI,
+            self.example_user("iago"), message, "outbox", "1f4e4", Reaction.UNICODE_EMOJI,
         )
         do_add_reaction(
             self.example_user("hamlet"),
@@ -1021,9 +1007,7 @@ class ImportExportTest(ZulipTestCase):
             usergroup_membership = UserGroupMembership.objects.filter(
                 user_group=usergroup,
             )
-            users = {
-                membership.user_profile.email for membership in usergroup_membership
-            }
+            users = {membership.user_profile.email for membership in usergroup_membership}
             return users
 
         assert_realm_values(get_user_membership)
@@ -1154,9 +1138,7 @@ class ImportExportTest(ZulipTestCase):
             # Huddles don't have a realm column, so we just test all Huddles for simplicity.
             self.assertEqual(
                 huddle_object.recipient_id,
-                Recipient.objects.get(
-                    type=Recipient.HUDDLE, type_id=huddle_object.id,
-                ).id,
+                Recipient.objects.get(type=Recipient.HUDDLE, type_id=huddle_object.id).id,
             )
 
     def test_import_files_from_local(self) -> None:
@@ -1302,9 +1284,7 @@ class ImportExportTest(ZulipTestCase):
 
         self.assertEqual(message_ids, [888, 999, 555])
 
-        message_ids = get_incoming_message_ids(
-            import_dir=import_dir, sort_by_date=False,
-        )
+        message_ids = get_incoming_message_ids(import_dir=import_dir, sort_by_date=False)
 
         self.assertEqual(message_ids, [555, 888, 999])
 
@@ -1318,8 +1298,7 @@ class ImportExportTest(ZulipTestCase):
         with patch("logging.info"):
             with self.settings(BILLING_ENABLED=True):
                 realm = do_import_realm(
-                    os.path.join(settings.TEST_WORKER_DIR, "test-export"),
-                    "test-zulip-1",
+                    os.path.join(settings.TEST_WORKER_DIR, "test-export"), "test-zulip-1",
                 )
                 self.assertEqual(realm.plan_type, Realm.LIMITED)
                 self.assertEqual(realm.max_invites, 100)
@@ -1332,8 +1311,7 @@ class ImportExportTest(ZulipTestCase):
                 )
             with self.settings(BILLING_ENABLED=False):
                 realm = do_import_realm(
-                    os.path.join(settings.TEST_WORKER_DIR, "test-export"),
-                    "test-zulip-2",
+                    os.path.join(settings.TEST_WORKER_DIR, "test-export"), "test-zulip-2",
                 )
                 self.assertEqual(realm.plan_type, Realm.SELF_HOSTED)
                 self.assertEqual(realm.max_invites, 100)

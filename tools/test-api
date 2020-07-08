@@ -41,9 +41,7 @@ with test_server_running(force=options.force, external_host="zulipdev.com:9981")
     from zerver.models import get_realm, get_user
     from zerver.openapi.javascript_examples import test_js_bindings
     from zerver.openapi.python_examples import test_invalid_api_key, test_the_api
-    from zerver.openapi.test_curl_examples import (
-        test_generated_curl_examples_for_success,
-    )
+    from zerver.openapi.test_curl_examples import test_generated_curl_examples_for_success
 
     print("Running API tests...")
 

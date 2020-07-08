@@ -17,8 +17,7 @@ from zerver.logging_handlers import AdminNotifyHandler, HasRequest
 captured_request: Optional[HttpRequest] = None
 captured_exc_info: Optional[
     Union[
-        Tuple[Type[BaseException], BaseException, TracebackType],
-        Tuple[None, None, None],
+        Tuple[Type[BaseException], BaseException, TracebackType], Tuple[None, None, None],
     ]
 ] = None
 
@@ -38,9 +37,7 @@ def capture_and_throw(domain: Optional[str] = None) -> Callable[[ViewFuncT], Vie
                 captured_exc_info = sys.exc_info()
                 raise e
 
-        return cast(
-            ViewFuncT, wrapped_view,
-        )  # https://github.com/python/mypy/issues/1927
+        return cast(ViewFuncT, wrapped_view)  # https://github.com/python/mypy/issues/1927
 
     return wrapper
 
@@ -66,9 +63,7 @@ class AdminNotifyHandlerTest(ZulipTestCase):
 
     def get_admin_zulip_handler(self) -> AdminNotifyHandler:
         return [
-            h
-            for h in logging.getLogger("").handlers
-            if isinstance(h, AdminNotifyHandler)
+            h for h in logging.getLogger("").handlers if isinstance(h, AdminNotifyHandler)
         ][0]
 
     @patch("zerver.logging_handlers.try_git_describe")

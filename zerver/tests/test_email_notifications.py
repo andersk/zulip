@@ -75,10 +75,7 @@ class TestCustomEmails(ZulipTestCase):
             NoEmailArgumentException,
             send_custom_email,
             [hamlet],
-            {
-                "markdown_template_path": markdown_template_path,
-                "subject": email_subject,
-            },
+            {"markdown_template_path": markdown_template_path, "subject": email_subject},
         )
 
     def test_send_custom_email_doubled_arguments(self) -> None:
@@ -93,10 +90,7 @@ class TestCustomEmails(ZulipTestCase):
             DoubledEmailArgumentException,
             send_custom_email,
             [hamlet],
-            {
-                "markdown_template_path": markdown_template_path,
-                "subject": email_subject,
-            },
+            {"markdown_template_path": markdown_template_path, "subject": email_subject},
         )
 
         self.assertRaises(
@@ -226,9 +220,7 @@ class TestFollowupEmails(ZulipTestCase):
             self.assertEqual(len(scheduled_emails), 2)
             email_data = ujson.loads(scheduled_emails[0].data)
             self.assertEqual(email_data["context"]["ldap"], True)
-            self.assertEqual(
-                email_data["context"]["ldap_username"], "newuser_with_email",
-            )
+            self.assertEqual(email_data["context"]["ldap_username"], "newuser_with_email")
 
     def test_followup_emails_count(self) -> None:
         hamlet = self.example_user("hamlet")
@@ -467,11 +459,7 @@ class TestMissedMessages(ZulipTestCase):
         ]
         email_subject = "#Denmark > test"
         self._test_cases(
-            msg_id,
-            verify_body_include,
-            email_subject,
-            send_as_user,
-            trigger="mentioned",
+            msg_id, verify_body_include, email_subject, send_as_user, trigger="mentioned",
         )
 
     def _extra_context_in_personal_missed_stream_messages(

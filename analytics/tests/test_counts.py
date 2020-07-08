@@ -184,10 +184,7 @@ class AnalyticsTestCase(ZulipTestCase):
         self.assertEqual(queryset.values_list("value", flat=True)[0], value)
 
     def assertTableState(
-        self,
-        table: Type[BaseCount],
-        arg_keys: List[str],
-        arg_values: List[List[object]],
+        self, table: Type[BaseCount], arg_keys: List[str], arg_values: List[List[object]],
     ) -> None:
         """Assert that the state of a *Count table is what it should be.
 
@@ -329,9 +326,7 @@ class TestProcessCountStat(AnalyticsTestCase):
         # Normal run of process_count_stat
         for stat in [user_stat, stream_stat, realm_stat]:
             process_count_stat(stat, end_time)
-        self.assertTableState(
-            UserCount, ["property", "value"], [[user_stat.property, 5]],
-        )
+        self.assertTableState(UserCount, ["property", "value"], [[user_stat.property, 5]])
         self.assertTableState(
             StreamCount, ["property", "value"], [[stream_stat.property, 5]],
         )
@@ -363,9 +358,7 @@ class TestProcessCountStat(AnalyticsTestCase):
         # Check that the change propagated (and the collected data wasn't deleted)
         for stat in [user_stat, stream_stat, realm_stat]:
             process_count_stat(stat, end_time)
-        self.assertTableState(
-            UserCount, ["property", "value"], [[user_stat.property, 6]],
-        )
+        self.assertTableState(UserCount, ["property", "value"], [[user_stat.property, 6]])
         self.assertTableState(
             StreamCount, ["property", "value"], [[stream_stat.property, 6]],
         )
@@ -693,15 +686,9 @@ class TestCountStats(AnalyticsTestCase):
         self.create_message(user2, recipient_huddle2)
 
         # private messages
-        recipient_user1 = Recipient.objects.get(
-            type_id=user1.id, type=Recipient.PERSONAL,
-        )
-        recipient_user2 = Recipient.objects.get(
-            type_id=user2.id, type=Recipient.PERSONAL,
-        )
-        recipient_user3 = Recipient.objects.get(
-            type_id=user3.id, type=Recipient.PERSONAL,
-        )
+        recipient_user1 = Recipient.objects.get(type_id=user1.id, type=Recipient.PERSONAL)
+        recipient_user2 = Recipient.objects.get(type_id=user2.id, type=Recipient.PERSONAL)
+        recipient_user3 = Recipient.objects.get(type_id=user3.id, type=Recipient.PERSONAL)
         self.create_message(user1, recipient_user2)
         self.create_message(user2, recipient_user1)
         self.create_message(user3, recipient_user3)
@@ -824,9 +811,7 @@ class TestCountStats(AnalyticsTestCase):
 
         user1 = self.create_user(is_bot=True)
         user2 = self.create_user()
-        recipient_user2 = Recipient.objects.get(
-            type_id=user2.id, type=Recipient.PERSONAL,
-        )
+        recipient_user2 = Recipient.objects.get(type_id=user2.id, type=Recipient.PERSONAL)
 
         recipient_stream = self.create_stream_with_recipient()[1]
         recipient_huddle = self.create_huddle_with_recipient()[1]
@@ -881,9 +866,7 @@ class TestCountStats(AnalyticsTestCase):
 
         user1 = self.create_user(is_bot=True)
         user2 = self.create_user()
-        recipient_user2 = Recipient.objects.get(
-            type_id=user2.id, type=Recipient.PERSONAL,
-        )
+        recipient_user2 = Recipient.objects.get(type_id=user2.id, type=Recipient.PERSONAL)
 
         client2 = Client.objects.create(name="client2")
 
@@ -1768,9 +1751,7 @@ class TestActiveUsersAudit(AnalyticsTestCase):
                     value=1,
                 ).exists(),
             )
-        self.assertFalse(
-            UserCount.objects.filter(user=user2, end_time=end_time).exists(),
-        )
+        self.assertFalse(UserCount.objects.filter(user=user2, end_time=end_time).exists())
 
 
 class TestRealmActiveHumans(AnalyticsTestCase):

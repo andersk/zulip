@@ -17,13 +17,9 @@ class GitterImporter(ZulipTestCase):
     logger.setLevel(logging.WARNING)
 
     @mock.patch("zerver.data_import.gitter.process_avatars", return_value=[])
-    def test_gitter_import_data_conversion(
-        self, mock_process_avatars: mock.Mock,
-    ) -> None:
+    def test_gitter_import_data_conversion(self, mock_process_avatars: mock.Mock) -> None:
         output_dir = self.make_import_output_dir("gitter")
-        gitter_file = os.path.join(
-            os.path.dirname(__file__), "fixtures/gitter_data.json",
-        )
+        gitter_file = os.path.join(os.path.dirname(__file__), "fixtures/gitter_data.json")
         do_convert_data(gitter_file, output_dir)
 
         def read_file(output_file: str) -> Any:
@@ -41,8 +37,7 @@ class GitterImporter(ZulipTestCase):
 
         # test realm
         self.assertEqual(
-            "Organization imported from Gitter!",
-            realm["zerver_realm"][0]["description"],
+            "Organization imported from Gitter!", realm["zerver_realm"][0]["description"],
         )
 
         # test users
@@ -78,9 +73,7 @@ class GitterImporter(ZulipTestCase):
             realm["zerver_subscription"], "recipient",
         )
         self.assertEqual(len(exported_subscription_recipient), 3)
-        self.assertIn(
-            realm["zerver_subscription"][1]["recipient"], exported_recipient_id,
-        )
+        self.assertIn(realm["zerver_subscription"][1]["recipient"], exported_recipient_id)
 
         messages = read_file("messages-000001.json")
 
@@ -105,9 +98,7 @@ class GitterImporter(ZulipTestCase):
         self, mock_process_avatars: mock.Mock,
     ) -> None:
         output_dir = self.make_import_output_dir("gitter")
-        gitter_file = os.path.join(
-            os.path.dirname(__file__), "fixtures/gitter_data.json",
-        )
+        gitter_file = os.path.join(os.path.dirname(__file__), "fixtures/gitter_data.json")
         do_convert_data(gitter_file, output_dir)
 
         do_import_realm(output_dir, "test-gitter-import")
@@ -151,8 +142,7 @@ class GitterImporter(ZulipTestCase):
         )
         self.assertEqual(messages[0]["text"], "hi @**user name**")
         self.assertEqual(
-            get_usermentions(messages[1], user_map, user_short_name_to_full_name),
-            [5, 8],
+            get_usermentions(messages[1], user_map, user_short_name_to_full_name), [5, 8],
         )
         self.assertEqual(messages[1]["text"], "hi @**user2** @**user name 3**")
         self.assertEqual(

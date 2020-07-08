@@ -14,8 +14,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="userprofile",
             name="zoom_token",
-            field=django.contrib.postgres.fields.jsonb.JSONField(
-                default=None, null=True,
-            ),
+            field=django.contrib.postgres.fields.jsonb.JSONField(default=None, null=True),
         ),
     ]

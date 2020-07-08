@@ -322,9 +322,7 @@ if not args.skip_puppet:
 
 if migrations_needed:
     logging.info("Applying database migrations...")
-    subprocess.check_call(
-        ["./manage.py", "migrate", "--noinput"], preexec_fn=su_to_zulip,
-    )
+    subprocess.check_call(["./manage.py", "migrate", "--noinput"], preexec_fn=su_to_zulip)
 
 subprocess.check_call(
     ["./manage.py", "create_realm_internal_bots"], preexec_fn=su_to_zulip,

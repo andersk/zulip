@@ -166,9 +166,7 @@ class AlertWordTests(ZulipTestCase):
         # Alerts at the end of messages work.
         self.assertTrue(self.message_does_alert(user_profile_hamlet, "Normal alert one"))
         # Alerts at the beginning of messages work.
-        self.assertTrue(
-            self.message_does_alert(user_profile_hamlet, "two normal alerts"),
-        )
+        self.assertTrue(self.message_does_alert(user_profile_hamlet, "two normal alerts"))
         # Alerts with surrounding punctuation work.
         self.assertTrue(
             self.message_does_alert(user_profile_hamlet, "This one? should alert"),

@@ -894,7 +894,9 @@ def user_activity_intervals() -> Tuple[mark_safe, Dict[str, float]]:
         realm_minutes[string_id] = realm_duration.total_seconds() / 60
 
     output += f"\nTotal Duration:                      {total_duration}\n"
-    output += f"\nTotal Duration in minutes:           {total_duration.total_seconds() / 60.}\n"
+    output += (
+        f"\nTotal Duration in minutes:           {total_duration.total_seconds() / 60.}\n"
+    )
     output += f"Total Duration amortized to a month: {total_duration.total_seconds() * 30. / 60.}"
     content = mark_safe("<pre>" + output + "</pre>")
     return content, realm_minutes

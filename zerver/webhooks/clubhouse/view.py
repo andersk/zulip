@@ -65,8 +65,7 @@ STORY_UPDATE_TYPE_TEMPLATE = (
 DELETE_TEMPLATE = "The {entity_type} **{name}** was deleted."
 STORY_UPDATE_OWNER_TEMPLATE = "New owner added to the story {name_template}."
 STORY_GITHUB_PR_TEMPLATE = (
-    "New GitHub PR [#{name}]({url}) opened for story"
-    " {name_template} ({old} -> {new})."
+    "New GitHub PR [#{name}]({url}) opened for story" " {name_template} ({old} -> {new})."
 )
 STORY_GITHUB_BRANCH_TEMPLATE = (
     "New GitHub branch [{name}]({url})"
@@ -318,14 +317,10 @@ def get_story_update_epic_body(payload: Dict[str, Any]) -> str:
 
     for ref in payload["references"]:
         if ref["id"] == new_id:
-            kwargs["new_epic_name_template"] = EPIC_NAME_TEMPLATE.format(
-                name=ref["name"],
-            )
+            kwargs["new_epic_name_template"] = EPIC_NAME_TEMPLATE.format(name=ref["name"])
 
         if ref["id"] == old_id:
-            kwargs["old_epic_name_template"] = EPIC_NAME_TEMPLATE.format(
-                name=ref["name"],
-            )
+            kwargs["old_epic_name_template"] = EPIC_NAME_TEMPLATE.format(name=ref["name"])
 
     if new_id and old_id:
         return STORY_EPIC_CHANGED_TEMPLATE.format(**kwargs)

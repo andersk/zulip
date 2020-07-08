@@ -1263,8 +1263,7 @@ def compute_jabber_user_fullname(email: str) -> str:
 
 
 @cache_with_key(
-    lambda realm, email, f: user_profile_by_email_cache_key(email),
-    timeout=3600 * 24 * 7,
+    lambda realm, email, f: user_profile_by_email_cache_key(email), timeout=3600 * 24 * 7,
 )
 def create_mirror_user_if_needed(
     realm: Realm, email: str, email_to_fullname: Callable[[str], str],
@@ -1835,9 +1834,7 @@ def do_send_messages(
                 always_push_notify=(user_id in message["push_notify_user_ids"]),
                 stream_push_notify=(user_id in message["stream_push_user_ids"]),
                 stream_email_notify=(user_id in message["stream_email_user_ids"]),
-                wildcard_mention_notify=(
-                    user_id in message["wildcard_mention_user_ids"]
-                ),
+                wildcard_mention_notify=(user_id in message["wildcard_mention_user_ids"]),
             )
             for user_id in user_ids
         ]
@@ -2074,9 +2071,7 @@ def notify_reaction_update(
 def do_add_reaction_legacy(
     user_profile: UserProfile, message: Message, emoji_name: str,
 ) -> None:
-    (emoji_code, reaction_type) = emoji_name_to_emoji_code(
-        user_profile.realm, emoji_name,
-    )
+    (emoji_code, reaction_type) = emoji_name_to_emoji_code(user_profile.realm, emoji_name)
     reaction = Reaction(
         user_profile=user_profile,
         message=message,
@@ -2294,9 +2289,7 @@ def validate_recipient_user_profiles(
             and not allow_deactivated
         ) or user_profile.realm.deactivated:
             raise ValidationError(
-                _("'{email}' is no longer using Zulip.").format(
-                    email=user_profile.email,
-                ),
+                _("'{email}' is no longer using Zulip.").format(email=user_profile.email),
             )
         recipient_profiles_map[user_profile.id] = user_profile
         if not is_cross_realm_bot_email(user_profile.email):
@@ -2567,9 +2560,7 @@ def send_rate_limited_pm_notification_to_bot_owner(
     # PMs on a misconfigured integration, re-using the
     # UserProfile.last_reminder field, which is not used for bots.
     last_reminder = sender.last_reminder
-    waitperiod = datetime.timedelta(
-        minutes=UserProfile.BOT_OWNER_STREAM_ALERT_WAITPERIOD,
-    )
+    waitperiod = datetime.timedelta(minutes=UserProfile.BOT_OWNER_STREAM_ALERT_WAITPERIOD)
     if last_reminder and timezone_now() - last_reminder <= waitperiod:
         return
 
@@ -2709,9 +2700,7 @@ def check_message(
         stream_id = addressee.stream_id()
 
         if stream_name is not None:
-            stream = validate_stream_name_with_pm_notification(
-                stream_name, realm, sender,
-            )
+            stream = validate_stream_name_with_pm_notification(stream_name, realm, sender)
         elif stream_id is not None:
             stream = validate_stream_id_with_pm_notification(stream_id, realm, sender)
         else:
@@ -3450,9 +3439,7 @@ def notify_subscriptions_removed(
     send_event(user_profile.realm, event, [user_profile.id])
 
 
-SubAndRemovedT = Tuple[
-    List[Tuple[UserProfile, Stream]], List[Tuple[UserProfile, Stream]],
-]
+SubAndRemovedT = Tuple[List[Tuple[UserProfile, Stream]], List[Tuple[UserProfile, Stream]]]
 
 
 def bulk_remove_subscriptions(
@@ -4949,9 +4936,7 @@ def do_update_message_flags(
         raise JsonableError(_("Flag not editable: '{}'").format(flag))
     flagattr = getattr(UserMessage.flags, flag)
 
-    msgs = UserMessage.objects.filter(
-        user_profile=user_profile, message__id__in=messages,
-    )
+    msgs = UserMessage.objects.filter(user_profile=user_profile, message__id__in=messages)
     # This next block allows you to star any message, even those you
     # didn't receive (e.g. because you're looking at a public stream
     # you're not subscribed to, etc.).  The problem is that starring
@@ -5360,9 +5345,7 @@ def do_update_message(
             sub for sub in subs_losing_usermessages if sub.user_profile.is_guest
         ]
         ums = ums.exclude(
-            user_profile_id__in=[
-                sub.user_profile_id for sub in subs_losing_usermessages
-            ],
+            user_profile_id__in=[sub.user_profile_id for sub in subs_losing_usermessages],
         )
 
     if topic_name is not None:
@@ -6236,10 +6219,7 @@ def do_resend_user_invite_email(prereg_user: PreregistrationUser) -> int:
     prereg_user.save()
 
     do_increment_logging_stat(
-        prereg_user.realm,
-        COUNT_STATS["invites_sent::day"],
-        None,
-        prereg_user.invited_at,
+        prereg_user.realm, COUNT_STATS["invites_sent::day"], None, prereg_user.invited_at,
     )
 
     clear_scheduled_invitation_emails(prereg_user.email)
@@ -6640,9 +6620,7 @@ def try_add_realm_custom_profile_field(
     return field
 
 
-def do_remove_realm_custom_profile_field(
-    realm: Realm, field: CustomProfileField,
-) -> None:
+def do_remove_realm_custom_profile_field(realm: Realm, field: CustomProfileField) -> None:
     """
     Deleting a field will also delete the user profile data
     associated with it in CustomProfileFieldValue model.

@@ -1254,9 +1254,7 @@ class InviteUserTest(InviteUserBase):
         self.assertFalse(secret_msg_id in invitee_msg_ids)
         self.assertFalse(invitee_profile.is_realm_admin)
         # Test that exactly 2 new Zulip messages were sent, both notifications.
-        last_3_messages = list(
-            reversed(list(Message.objects.all().order_by("-id")[0:3])),
-        )
+        last_3_messages = list(reversed(list(Message.objects.all().order_by("-id")[0:3])))
         first_msg = last_3_messages[0]
         self.assertEqual(first_msg.id, secret_msg_id)
 
@@ -1720,9 +1718,7 @@ so we didn't send them an invitation. We did send invitations to everyone else!"
         # Mainly a test of get_object_from_key, rather than of the invitation pathway
         with self.assertRaises(ConfirmationKeyException) as cm:
             get_object_from_key(registration_key, Confirmation.INVITATION)
-        self.assertEqual(
-            cm.exception.error_type, ConfirmationKeyException.DOES_NOT_EXIST,
-        )
+        self.assertEqual(cm.exception.error_type, ConfirmationKeyException.DOES_NOT_EXIST)
 
         # Verify that using the wrong type doesn't work in the main confirm code path
         email_change_url = create_confirmation_link(
@@ -1732,8 +1728,7 @@ so we didn't send them an invitation. We did send invitations to everyone else!"
         url = "/accounts/do_confirm/" + email_change_key
         result = self.client_get(url)
         self.assert_in_success_response(
-            ["Whoops. We couldn't find your " "confirmation link in the system."],
-            result,
+            ["Whoops. We couldn't find your " "confirmation link in the system."], result,
         )
 
     def test_confirmation_expired(self) -> None:
@@ -1753,8 +1748,7 @@ so we didn't send them an invitation. We did send invitations to everyone else!"
         target_url = "/" + url.split("/", 3)[3]
         result = self.client_get(target_url)
         self.assert_in_success_response(
-            ["Whoops. The confirmation link has expired " "or been deactivated."],
-            result,
+            ["Whoops. The confirmation link has expired " "or been deactivated."], result,
         )
 
     def test_send_more_than_one_invite_to_same_user(self) -> None:
@@ -2319,9 +2313,7 @@ class InviteeEmailsParserTests(ZulipTestCase):
         self.email2 = "email2@zulip.com"
         self.email3 = "email3@zulip.com"
 
-    def test_if_emails_separated_by_commas_are_parsed_and_striped_correctly(
-        self,
-    ) -> None:
+    def test_if_emails_separated_by_commas_are_parsed_and_striped_correctly(self) -> None:
         emails_raw = f"{self.email1} ,{self.email2}, {self.email3}"
         expected_set = {self.email1, self.email2, self.email3}
         self.assertEqual(get_invitee_emails_set(emails_raw), expected_set)
@@ -2664,9 +2656,7 @@ class RealmCreationTest(ZulipTestCase):
         result = self.client_get(confirmation_url)
         self.assertEqual(result.status_code, 200)
 
-        result = self.submit_reg_form_for_user(
-            email, password, realm_subdomain=string_id,
-        )
+        result = self.submit_reg_form_for_user(email, password, realm_subdomain=string_id)
         self.assertEqual(result.status_code, 302)
         self.assertTrue(
             result["Location"].startswith(
@@ -3178,16 +3168,10 @@ class UserSignUpTest(InviteUserBase):
         result = self.client_get(confirmation_url)
         self.assertEqual(result.status_code, 200)
 
-        with patch(
-            "zerver.views.registration.password_auth_enabled", return_value=False,
-        ):
+        with patch("zerver.views.registration.password_auth_enabled", return_value=False):
             result = self.client_post(
                 "/accounts/register/",
-                {
-                    "full_name": "New User",
-                    "key": find_key_by_email(email),
-                    "terms": True,
-                },
+                {"full_name": "New User", "key": find_key_by_email(email), "terms": True},
             )
 
         # User should now be logged in.
@@ -4660,9 +4644,7 @@ class TestLoginPage(ZulipTestCase):
             self.assertEqual(result.url, "/accounts/go/?next=%2Fupgrade%2F")
 
     @patch("django.http.HttpRequest.get_host")
-    def test_login_page_redirects_for_root_domain(
-        self, mock_get_host: MagicMock,
-    ) -> None:
+    def test_login_page_redirects_for_root_domain(self, mock_get_host: MagicMock) -> None:
         mock_get_host.return_value = "testserver"
         with self.settings(ROOT_DOMAIN_LANDING_PAGE=True):
             result = self.client_get("/en/login/")
@@ -4874,32 +4856,28 @@ class FollowupEmailTest(ZulipTestCase):
             2018, 1, 7, 1, 0, 0, 0, tzinfo=datetime.timezone.utc,
         )
         self.assertEqual(
-            followup_day2_email_delay(user_profile),
-            datetime.timedelta(days=2, hours=-1),
+            followup_day2_email_delay(user_profile), datetime.timedelta(days=2, hours=-1),
         )
         # Test date_joined == Tuesday
         user_profile.date_joined = datetime.datetime(
             2018, 1, 2, 1, 0, 0, 0, tzinfo=datetime.timezone.utc,
         )
         self.assertEqual(
-            followup_day2_email_delay(user_profile),
-            datetime.timedelta(days=2, hours=-1),
+            followup_day2_email_delay(user_profile), datetime.timedelta(days=2, hours=-1),
         )
         # Test date_joined == Thursday
         user_profile.date_joined = datetime.datetime(
             2018, 1, 4, 1, 0, 0, 0, tzinfo=datetime.timezone.utc,
         )
         self.assertEqual(
-            followup_day2_email_delay(user_profile),
-            datetime.timedelta(days=1, hours=-1),
+            followup_day2_email_delay(user_profile), datetime.timedelta(days=1, hours=-1),
         )
         # Test date_joined == Friday
         user_profile.date_joined = datetime.datetime(
             2018, 1, 5, 1, 0, 0, 0, tzinfo=datetime.timezone.utc,
         )
         self.assertEqual(
-            followup_day2_email_delay(user_profile),
-            datetime.timedelta(days=3, hours=-1),
+            followup_day2_email_delay(user_profile), datetime.timedelta(days=3, hours=-1),
         )
 
         # Time offset of America/Phoenix is -07:00
@@ -4909,8 +4887,7 @@ class FollowupEmailTest(ZulipTestCase):
             2018, 1, 5, 1, 0, 0, 0, tzinfo=datetime.timezone.utc,
         )
         self.assertEqual(
-            followup_day2_email_delay(user_profile),
-            datetime.timedelta(days=1, hours=-1),
+            followup_day2_email_delay(user_profile), datetime.timedelta(days=1, hours=-1),
         )
 
 

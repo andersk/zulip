@@ -103,9 +103,7 @@ class BitbucketHookTests(WebhookTestCase):
     ) -> None:
         fixture_name = "push"
         payload = self.get_body(fixture_name)
-        self.url = self.build_webhook_url(
-            payload=payload, branches="changes,development",
-        )
+        self.url = self.build_webhook_url(payload=payload, branches="changes,development")
         result = self.api_post(
             self.test_user, self.url, payload, content_type="application/json,",
         )
@@ -118,9 +116,7 @@ class BitbucketHookTests(WebhookTestCase):
     ) -> None:
         fixture_name = "push_commits_above_limit"
         payload = self.get_body(fixture_name)
-        self.url = self.build_webhook_url(
-            payload=payload, branches="changes,development",
-        )
+        self.url = self.build_webhook_url(payload=payload, branches="changes,development")
         result = self.api_post(
             self.test_user, self.url, payload, content_type="application/json,",
         )

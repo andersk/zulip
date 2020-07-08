@@ -1455,14 +1455,11 @@ class StripeTest(StripeTestCase):
                 response, f"at least {min_licenses_in_response} users",
             )
             self.assertEqual(
-                ujson.loads(response.content)["error_description"],
-                "not enough licenses",
+                ujson.loads(response.content)["error_description"], "not enough licenses",
             )
 
         def check_max_licenses_error(licenses: int) -> None:
-            response = self.upgrade(
-                invoice=True, talk_to_stripe=False, licenses=licenses,
-            )
+            response = self.upgrade(invoice=True, talk_to_stripe=False, licenses=licenses)
             self.assert_json_error_contains(
                 response, f"with more than {MAX_INVOICED_LICENSES} licenses",
             )
@@ -1491,10 +1488,7 @@ class StripeTest(StripeTestCase):
         self.login_user(hamlet)
         # Autopay with licenses < seat count
         check_min_licenses_error(
-            False,
-            self.seat_count - 1,
-            self.seat_count,
-            {"license_management": "manual"},
+            False, self.seat_count - 1, self.seat_count, {"license_management": "manual"},
         )
         # Autopay with not setting licenses
         check_min_licenses_error(
@@ -1626,9 +1620,7 @@ class StripeTest(StripeTestCase):
         self.assertEqual(response.status_code, 200)
 
         # Customer, but no CustomerPlan;
-        customer = Customer.objects.create(
-            realm=user.realm, stripe_customer_id="cus_123",
-        )
+        customer = Customer.objects.create(realm=user.realm, stripe_customer_id="cus_123")
         response = self.client_get("/upgrade/")
         self.assertEqual(response.status_code, 200)
 
@@ -1801,9 +1793,7 @@ class StripeTest(StripeTestCase):
                 )
         mock_billing_logger.assert_called()
         mock_invoice_list.assert_not_called()
-        self.assertEqual(
-            ujson.loads(response.content)["error_description"], "card error",
-        )
+        self.assertEqual(ujson.loads(response.content)["error_description"], "card error")
         self.assert_json_error_contains(response, "Your card was declined")
         for stripe_source in stripe_get_customer(stripe_customer_id).sources:
             assert isinstance(stripe_source, stripe.Card)
@@ -1822,16 +1812,13 @@ class StripeTest(StripeTestCase):
                 {"stripe_token": ujson.dumps(stripe_token)},
             )
         mock_billing_logger.assert_called()
-        self.assertEqual(
-            ujson.loads(response.content)["error_description"], "card error",
-        )
+        self.assertEqual(ujson.loads(response.content)["error_description"], "card error")
         self.assert_json_error_contains(response, "Your card was declined")
         for stripe_source in stripe_get_customer(stripe_customer_id).sources:
             assert isinstance(stripe_source, stripe.Card)
             self.assertEqual(stripe_source.last4, "0341")
         self.assertEqual(
-            len(list(stripe.Invoice.list(customer=stripe_customer_id, status="open"))),
-            1,
+            len(list(stripe.Invoice.list(customer=stripe_customer_id, status="open"))), 1,
         )
         self.assertEqual(
             1,
@@ -2608,10 +2595,7 @@ class BillingHelpersTest(ZulipTestCase):
             # test all possibilities, since there aren't that many
             ((True, CustomerPlan.ANNUAL, None), (anchor, month_later, year_later, 8000)),
             ((True, CustomerPlan.ANNUAL, 85), (anchor, month_later, year_later, 1200)),
-            (
-                (True, CustomerPlan.MONTHLY, None),
-                (anchor, month_later, month_later, 800),
-            ),
+            ((True, CustomerPlan.MONTHLY, None), (anchor, month_later, month_later, 800)),
             ((True, CustomerPlan.MONTHLY, 85), (anchor, month_later, month_later, 120)),
             ((False, CustomerPlan.ANNUAL, None), (anchor, year_later, year_later, 8000)),
             ((False, CustomerPlan.ANNUAL, 85), (anchor, year_later, year_later, 1200)),
@@ -2741,9 +2725,7 @@ class LicenseLedgerTest(StripeTestCase):
         self.assertEqual(LicenseLedger.objects.count(), 1)
         # Plan needs to renew
         # TODO: do_deactivate_user for a user, so that licenses_at_next_renewal != licenses
-        new_plan, ledger_entry = make_end_of_cycle_updates_if_needed(
-            plan, self.next_year,
-        )
+        new_plan, ledger_entry = make_end_of_cycle_updates_if_needed(plan, self.next_year)
         self.assertIsNone(new_plan)
         self.assertEqual(LicenseLedger.objects.count(), 2)
         ledger_params = {

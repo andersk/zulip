@@ -197,9 +197,7 @@ def get_events() -> Dict[str, object]:
     profile = helpers.example_user("iago")
     helpers.subscribe(profile, "Verona")
     client = Client.objects.create(name="curl-test-client-1")
-    response = do_events_register(
-        profile, client, event_types=["message", "realm_emoji"],
-    )
+    response = do_events_register(profile, client, event_types=["message", "realm_emoji"])
     helpers.send_stream_message(helpers.example_user("hamlet"), "Verona")
     return {
         "queue_id": response["queue_id"],
@@ -247,9 +245,7 @@ def create_user_group_data() -> Dict[str, object]:
     ["/user_groups/{group_id}:patch", "/user_groups/{group_id}:delete"],
 )
 def get_temp_user_group_id() -> Dict[str, object]:
-    user_group, _ = UserGroup.objects.get_or_create(
-        name="temp", realm=get_realm("zulip"),
-    )
+    user_group, _ = UserGroup.objects.get_or_create(name="temp", realm=get_realm("zulip"))
     return {
         "group_id": user_group.id,
     }

@@ -14,11 +14,7 @@ def get_topic_mutes(user_profile: UserProfile) -> List[Tuple[str, str, float]]:
         "stream__name", "topic_name", "date_muted",
     )
     return [
-        (
-            row["stream__name"],
-            row["topic_name"],
-            datetime_to_timestamp(row["date_muted"]),
-        )
+        (row["stream__name"], row["topic_name"], datetime_to_timestamp(row["date_muted"]))
         for row in rows
     ]
 
@@ -67,9 +63,7 @@ def add_topic_mute(
     )
 
 
-def remove_topic_mute(
-    user_profile: UserProfile, stream_id: int, topic_name: str,
-) -> None:
+def remove_topic_mute(user_profile: UserProfile, stream_id: int, topic_name: str) -> None:
     row = MutedTopic.objects.get(
         user_profile=user_profile, stream_id=stream_id, topic_name__iexact=topic_name,
     )

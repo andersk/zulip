@@ -53,9 +53,7 @@ def update_user_status_backend(
     request: HttpRequest,
     user_profile: UserProfile,
     away: Optional[bool] = REQ(validator=check_bool, default=None),
-    status_text: Optional[str] = REQ(
-        str_validator=check_capped_string(60), default=None,
-    ),
+    status_text: Optional[str] = REQ(str_validator=check_capped_string(60), default=None),
 ) -> HttpResponse:
 
     if status_text is not None:

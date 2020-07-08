@@ -290,9 +290,7 @@ class NarrowBuilder:
         if operand == "public":
             # Get all both subscribed and non subscribed public streams
             # but exclude any private subscribed streams.
-            public_streams_queryset = get_public_streams_queryset(
-                self.user_profile.realm,
-            )
+            public_streams_queryset = get_public_streams_queryset(self.user_profile.realm)
             recipient_ids = (
                 Recipient.objects.filter(
                     type=Recipient.STREAM, type_id__in=public_streams_queryset,
@@ -656,9 +654,7 @@ def narrow_parameter(json: str) -> OptionalNarrowListT:
     return list(map(convert_term, data))
 
 
-def ok_to_include_history(
-    narrow: OptionalNarrowListT, user_profile: UserProfile,
-) -> bool:
+def ok_to_include_history(narrow: OptionalNarrowListT, user_profile: UserProfile) -> bool:
     # There are occasions where we need to find Message rows that
     # have no corresponding UserMessage row, because the user is
     # reading a public stream that might include messages that
@@ -901,9 +897,7 @@ def get_messages_backend(
     anchor_val: Optional[str] = REQ("anchor", str_validator=check_string, default=None),
     num_before: int = REQ(converter=to_non_negative_int),
     num_after: int = REQ(converter=to_non_negative_int),
-    narrow: OptionalNarrowListT = REQ(
-        "narrow", converter=narrow_parameter, default=None,
-    ),
+    narrow: OptionalNarrowListT = REQ("narrow", converter=narrow_parameter, default=None),
     use_first_unread_anchor_val: bool = REQ(
         "use_first_unread_anchor", validator=check_bool, default=False,
     ),
@@ -913,9 +907,7 @@ def get_messages_backend(
     anchor = parse_anchor_value(anchor_val, use_first_unread_anchor_val)
     if num_before + num_after > MAX_MESSAGES_PER_FETCH:
         return json_error(
-            _("Too many messages requested (maximum {}).").format(
-                MAX_MESSAGES_PER_FETCH,
-            ),
+            _("Too many messages requested (maximum {}).").format(MAX_MESSAGES_PER_FETCH),
         )
 
     if (

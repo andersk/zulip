@@ -28,8 +28,7 @@ def migrate_existing_attachment_data(
                 if message.recipient.type == Recipient.STREAM:
                     stream = Stream.objects.get(id=message.recipient.type_id)
                     is_realm_public = (
-                        not stream.realm.is_zephyr_mirror_realm
-                        and not stream.invite_only
+                        not stream.realm.is_zephyr_mirror_realm and not stream.invite_only
                     )
                     entry.is_realm_public = entry.is_realm_public or is_realm_public
 
@@ -126,10 +125,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ("enable_stream_sounds", models.BooleanField(default=True)),
                 ("enable_desktop_notifications", models.BooleanField(default=True)),
                 ("enable_sounds", models.BooleanField(default=True)),
-                (
-                    "enable_offline_email_notifications",
-                    models.BooleanField(default=True),
-                ),
+                ("enable_offline_email_notifications", models.BooleanField(default=True)),
                 ("enable_offline_push_notifications", models.BooleanField(default=True)),
                 ("enable_digest_emails", models.BooleanField(default=True)),
                 ("default_desktop_notifications", models.BooleanField(default=True)),
@@ -322,10 +318,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ("mandatory_topics", models.BooleanField(default=False)),
                 ("show_digest_email", models.BooleanField(default=True)),
                 ("name_changes_disabled", models.BooleanField(default=False)),
-                (
-                    "date_created",
-                    models.DateTimeField(default=django.utils.timezone.now),
-                ),
+                ("date_created", models.DateTimeField(default=django.utils.timezone.now)),
                 ("deactivated", models.BooleanField(default=False)),
             ],
             options={"permissions": (("administer", "Administer a realm"),)},
@@ -476,10 +469,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                     ),
                 ),
                 ("description", models.CharField(default="", max_length=1024)),
-                (
-                    "date_created",
-                    models.DateTimeField(default=django.utils.timezone.now),
-                ),
+                ("date_created", models.DateTimeField(default=django.utils.timezone.now)),
                 ("deactivated", models.BooleanField(default=False)),
                 (
                     "realm",
@@ -565,10 +555,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                         verbose_name="ID",
                     ),
                 ),
-                (
-                    "start",
-                    models.DateTimeField(db_index=True, verbose_name="start time"),
-                ),
+                ("start", models.DateTimeField(db_index=True, verbose_name="start time")),
                 ("end", models.DateTimeField(db_index=True, verbose_name="end time")),
                 (
                     "user_profile",
@@ -694,9 +681,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
             model_name="preregistrationuser",
             name="realm",
             field=models.ForeignKey(
-                null=True,
-                on_delete=django.db.models.deletion.CASCADE,
-                to="zerver.Realm",
+                null=True, on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm",
             ),
         ),
         migrations.AddField(

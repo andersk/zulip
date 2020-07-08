@@ -811,9 +811,7 @@ class NormalActionsTest(BaseAction):
         for stream_name in ["Denmark", "Scotland"]:
             streams.append(get_stream(stream_name, self.user_profile.realm))
         events = self.verify_action(
-            lambda: do_invite_users(
-                self.user_profile, ["foo@zulip.com"], streams, False,
-            ),
+            lambda: do_invite_users(self.user_profile, ["foo@zulip.com"], streams, False),
             state_change_expected=False,
         )
         schema_checker("events[0]", events[0])
@@ -1682,13 +1680,7 @@ class NormalActionsTest(BaseAction):
         # Test transitions; any new backends should be tested with T/T/T/F/T
         for auth_method_dict in (
             {"Google": True, "Email": True, "GitHub": True, "LDAP": False, "Dev": False},
-            {
-                "Google": True,
-                "Email": True,
-                "GitHub": False,
-                "LDAP": False,
-                "Dev": False,
-            },
+            {"Google": True, "Email": True, "GitHub": False, "LDAP": False, "Dev": False},
             {
                 "Google": True,
                 "Email": False,
@@ -1696,13 +1688,7 @@ class NormalActionsTest(BaseAction):
                 "LDAP": False,
                 "Dev": False,
             },
-            {
-                "Google": True,
-                "Email": False,
-                "GitHub": True,
-                "LDAP": False,
-                "Dev": False,
-            },
+            {"Google": True, "Email": False, "GitHub": True, "LDAP": False, "Dev": False},
             {
                 "Google": False,
                 "Email": False,
@@ -1710,13 +1696,7 @@ class NormalActionsTest(BaseAction):
                 "LDAP": False,
                 "Dev": True,
             },
-            {
-                "Google": False,
-                "Email": False,
-                "GitHub": True,
-                "LDAP": False,
-                "Dev": True,
-            },
+            {"Google": False, "Email": False, "GitHub": True, "LDAP": False, "Dev": True},
             {"Google": False, "Email": True, "GitHub": True, "LDAP": True, "Dev": False},
         ):
             with fake_backends():
@@ -1994,10 +1974,7 @@ class NormalActionsTest(BaseAction):
             for setting_value in [True, False]:
                 events = self.verify_action(
                     lambda: do_change_notification_settings(
-                        self.user_profile,
-                        notification_setting,
-                        setting_value,
-                        log=False,
+                        self.user_profile, notification_setting, setting_value, log=False,
                     ),
                 )
                 schema_checker("events[0]", events[0])
@@ -2005,10 +1982,7 @@ class NormalActionsTest(BaseAction):
                 # Also test with notification_settings_null=True
                 events = self.verify_action(
                     lambda: do_change_notification_settings(
-                        self.user_profile,
-                        notification_setting,
-                        setting_value,
-                        log=False,
+                        self.user_profile, notification_setting, setting_value, log=False,
                     ),
                     notification_settings_null=True,
                     state_change_expected=False,

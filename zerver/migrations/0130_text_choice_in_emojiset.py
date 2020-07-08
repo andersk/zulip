@@ -11,9 +11,7 @@ def change_emojiset(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> Non
         user.save(update_fields=["emojiset"])
 
 
-def reverse_change_emojiset(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def reverse_change_emojiset(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     UserProfile = apps.get_model("zerver", "UserProfile")
     for user in UserProfile.objects.filter(emojiset="text"):
         # Resetting `emojiset` to "google" (the default) doesn't make an

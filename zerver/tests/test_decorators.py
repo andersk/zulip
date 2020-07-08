@@ -1046,9 +1046,7 @@ class ValidatorTestCase(ZulipTestCase):
         # This is an example.
         def check_person(val: object) -> Dict[str, object]:
             try:
-                return check_dict([("name", check_string), ("age", check_int)])(
-                    "_", val,
-                )
+                return check_dict([("name", check_string), ("age", check_int)])("_", val)
             except ValidationError:
                 raise ValidationError("This is not a valid person")
 
@@ -1256,9 +1254,7 @@ class FetchAPIKeyTest(ZulipTestCase):
     def test_fetch_api_key_email_address_visibility(self) -> None:
         user = self.example_user("cordelia")
         do_set_realm_property(
-            user.realm,
-            "email_address_visibility",
-            Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS,
+            user.realm, "email_address_visibility", Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS,
         )
 
         self.login_user(user)
@@ -1309,9 +1305,7 @@ class InactiveUserTest(ZulipTestCase):
                 "to": self.example_email("othello"),
             },
         )
-        self.assert_json_error_contains(
-            result, "Account is deactivated", status_code=400,
-        )
+        self.assert_json_error_contains(result, "Account is deactivated", status_code=400)
 
         result = self.api_post(
             self.example_user("hamlet"),
@@ -1323,9 +1317,7 @@ class InactiveUserTest(ZulipTestCase):
                 "to": self.example_email("othello"),
             },
         )
-        self.assert_json_error_contains(
-            result, "Account is deactivated", status_code=401,
-        )
+        self.assert_json_error_contains(result, "Account is deactivated", status_code=401)
 
     def test_fetch_api_key_deactivated_user(self) -> None:
         """
@@ -1342,9 +1334,7 @@ class InactiveUserTest(ZulipTestCase):
         user_profile.is_active = False
         user_profile.save()
         result = self.client_post("/json/fetch_api_key", {"password": test_password})
-        self.assert_json_error_contains(
-            result, "Account is deactivated", status_code=400,
-        )
+        self.assert_json_error_contains(result, "Account is deactivated", status_code=400)
 
     def test_login_deactivated_user(self) -> None:
         """
@@ -1413,9 +1403,7 @@ class InactiveUserTest(ZulipTestCase):
         url = f"/api/v1/external/jira?api_key={api_key}&stream=jira_custom"
         data = self.webhook_fixture_data("jira", "created_v2")
         result = self.client_post(url, data, content_type="application/json")
-        self.assert_json_error_contains(
-            result, "Account is deactivated", status_code=400,
-        )
+        self.assert_json_error_contains(result, "Account is deactivated", status_code=400)
 
 
 class TestIncomingWebhookBot(ZulipTestCase):
@@ -1423,10 +1411,7 @@ class TestIncomingWebhookBot(ZulipTestCase):
         webhook_bot = self.example_user("webhook_bot")
         othello = self.example_user("othello")
         payload = dict(
-            type="private",
-            content="Test message",
-            client="test suite",
-            to=othello.email,
+            type="private", content="Test message", client="test suite", to=othello.email,
         )
 
         result = self.api_post(webhook_bot, "/api/v1/messages", payload)

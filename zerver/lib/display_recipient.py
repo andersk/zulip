@@ -26,9 +26,7 @@ class TinyStreamResult(TypedDict):
     name: str
 
 
-@cache_with_key(
-    lambda *args: display_recipient_cache_key(args[0]), timeout=3600 * 24 * 7,
-)
+@cache_with_key(lambda *args: display_recipient_cache_key(args[0]), timeout=3600 * 24 * 7)
 def get_display_recipient_remote_cache(
     recipient_id: int, recipient_type: int, recipient_type_id: Optional[int],
 ) -> DisplayRecipientT:
@@ -143,19 +141,13 @@ def bulk_fetch_display_recipients(
         user_ids_to_fetch: Set[int] = set()
         huddle_user_ids: Dict[int, List[int]] = {}
         huddle_user_ids = bulk_get_huddle_user_ids(
-            [
-                recipient
-                for recipient in recipients
-                if recipient.type == Recipient.HUDDLE
-            ],
+            [recipient for recipient in recipients if recipient.type == Recipient.HUDDLE],
         )
         for recipient in recipients:
             if recipient.type == Recipient.PERSONAL:
                 user_ids_to_fetch.add(recipient.type_id)
             else:
-                user_ids_to_fetch = user_ids_to_fetch.union(
-                    huddle_user_ids[recipient.id],
-                )
+                user_ids_to_fetch = user_ids_to_fetch.union(huddle_user_ids[recipient.id])
 
         # Fetch the needed UserProfiles:
         user_profiles: Dict[int, UserDisplayRecipient] = bulk_get_user_profile_by_id(

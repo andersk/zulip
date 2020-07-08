@@ -96,9 +96,7 @@ class SlackMessageConversion(ZulipTestCase):
         text, mentioned_users, has_link = convert_to_zulip_markdown(
             message, users, channel_map, slack_user_map,
         )
-        self.assertEqual(
-            text, "Hi @**John Doe**: How are you?@**aaron.anzalone** asked.",
-        )
+        self.assertEqual(text, "Hi @**John Doe**: How are you?@**aaron.anzalone** asked.")
         self.assertEqual(mentioned_users, [540, 554])
 
         # Check wrong mentioning

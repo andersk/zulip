@@ -433,9 +433,7 @@ def compute_plan_parameters(
         raise AssertionError(f"Unknown billing_schedule: {billing_schedule}")
     if discount is not None:
         # There are no fractional cents in Stripe, so round down to nearest integer.
-        price_per_license = int(
-            float(price_per_license * (1 - discount / 100)) + 0.00001,
-        )
+        price_per_license = int(float(price_per_license * (1 - discount / 100)) + 0.00001)
     next_invoice_date = period_end
     if automanage_licenses:
         next_invoice_date = add_months(billing_cycle_anchor, 1)

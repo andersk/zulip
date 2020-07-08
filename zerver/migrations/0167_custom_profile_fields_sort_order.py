@@ -6,9 +6,7 @@ from django.db.migrations.state import StateApps
 from django.db.models import F
 
 
-def migrate_set_order_value(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def migrate_set_order_value(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     CustomProfileField = apps.get_model("zerver", "CustomProfileField")
     CustomProfileField.objects.all().update(order=F("id"))
 

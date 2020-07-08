@@ -99,10 +99,7 @@ class WorkerTest(ZulipTestCase):
         # worker handles it correctly. That compatibility code can
         # be deleted in a later release, and this test should then be cleaned up.
         data_old_format = dict(
-            user_profile_id=user.id,
-            client="ios",
-            time=time.time(),
-            query="send_message",
+            user_profile_id=user.id, client="ios", time=time.time(), query="send_message",
         )
         fake_client.queue.append(("user_activity", data_old_format))
 
@@ -214,9 +211,7 @@ class WorkerTest(ZulipTestCase):
         self.assertEqual(tm.call_args[0][0], 5)  # should sleep 5 seconds
 
         args = [c[0] for c in sm.call_args_list]
-        arg_dict = {
-            arg[0].id: dict(missed_messages=arg[1], count=arg[2]) for arg in args
-        }
+        arg_dict = {arg[0].id: dict(missed_messages=arg[1], count=arg[2]) for arg in args}
 
         hamlet_info = arg_dict[hamlet.id]
         self.assertEqual(hamlet_info["count"], 3)
@@ -529,9 +524,7 @@ class WorkerTest(ZulipTestCase):
             # Nonexistent prereg_id, as if the invitation was deleted
             dict(prereg_id=-1, referrer_id=inviter.id, email_body=None),
             # Form with `email` is from versions up to Zulip 1.7.1
-            dict(
-                email=self.nonreg_email("bob"), referrer_id=inviter.id, email_body=None,
-            ),
+            dict(email=self.nonreg_email("bob"), referrer_id=inviter.id, email_body=None),
         ]
         for element in data:
             fake_client.queue.append(("invites", element))

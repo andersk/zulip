@@ -92,9 +92,7 @@ def get_events_backend(
         default=False, validator=check_bool, intentionally_undocumented=True,
     ),
     event_types: Optional[Sequence[str]] = REQ(
-        default=None,
-        validator=check_list(check_string),
-        intentionally_undocumented=True,
+        default=None, validator=check_list(check_string), intentionally_undocumented=True,
     ),
     dont_block: bool = REQ(default=False, validator=check_bool),
     narrow: Iterable[Sequence[str]] = REQ(

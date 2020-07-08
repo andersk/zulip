@@ -18,9 +18,7 @@ class Command(ZulipBaseCommand):
             required=True,
             help="the hostname, for human identification",
         )
-        group.add_argument(
-            "--email", "-e", required=True, help="a contact email address",
-        )
+        group.add_argument("--email", "-e", required=True, help="a contact email address")
 
     def handle(
         self, uuid: str, key: str, hostname: str, email: str, **options: Any

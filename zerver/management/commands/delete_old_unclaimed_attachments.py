@@ -38,9 +38,7 @@ class Command(BaseCommand):
         # print the list of files that are going to be removed
         old_attachments = get_old_unclaimed_attachments(delta_weeks)
         for old_attachment in old_attachments:
-            print(
-                f"* {old_attachment.file_name} created at {old_attachment.create_time}",
-            )
+            print(f"* {old_attachment.file_name} created at {old_attachment.create_time}")
 
         print("")
         if not options["for_real"]:

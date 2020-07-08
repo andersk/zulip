@@ -221,9 +221,7 @@ New user created:
 
     def test_user_unsubscribed(self) -> None:
         self.send_and_test_stream_message(
-            "user_unsubscribed",
-            "Contact: Eeshan Garg",
-            "User unsubscribed from emails.",
+            "user_unsubscribed", "Contact: Eeshan Garg", "User unsubscribed from emails.",
         )
 
     def get_body(self, fixture_name: str) -> str:

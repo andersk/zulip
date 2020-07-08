@@ -13,10 +13,7 @@ class Migration(migrations.Migration):
             model_name="realm",
             name="icon_source",
             field=models.CharField(
-                choices=[
-                    ("G", "Hosted by Gravatar"),
-                    ("U", "Uploaded by administrator"),
-                ],
+                choices=[("G", "Hosted by Gravatar"), ("U", "Uploaded by administrator")],
                 default="G",
                 max_length=1,
             ),

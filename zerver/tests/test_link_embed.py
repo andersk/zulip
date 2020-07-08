@@ -12,10 +12,7 @@ from zerver.lib.test_classes import ZulipTestCase
 from zerver.lib.test_helpers import MockPythonResponse
 from zerver.lib.url_preview.oembed import get_oembed_data, strip_cdata
 from zerver.lib.url_preview.parsers import GenericParser, OpenGraphParser
-from zerver.lib.url_preview.preview import (
-    get_link_embed_data,
-    link_embed_data_from_cache,
-)
+from zerver.lib.url_preview.preview import get_link_embed_data, link_embed_data_from_cache
 from zerver.models import Message, Realm, UserProfile
 from zerver.worker.queue_processors import FetchLinksEmbedData
 
@@ -564,9 +561,7 @@ class PreviewTestCase(ZulipTestCase):
         html = "\n".join(
             line for line in self.open_graph_html.splitlines() if "og:image" not in line
         )
-        mocked_response = mock.Mock(
-            side_effect=self.create_mock_response(url, html=html),
-        )
+        mocked_response = mock.Mock(side_effect=self.create_mock_response(url, html=html))
         with self.settings(TEST_SUITE=False, CACHES=TEST_CACHES):
             with mock.patch("requests.get", mocked_response):
                 FetchLinksEmbedData().consume(event)
@@ -576,10 +571,7 @@ class PreviewTestCase(ZulipTestCase):
         self.assertNotIn("image", cached_data)
         msg = Message.objects.select_related("sender").get(id=msg_id)
         self.assertEqual(
-            (
-                '<p><a href="http://test.org/foo.html">'
-                "http://test.org/foo.html</a></p>"
-            ),
+            ('<p><a href="http://test.org/foo.html">' "http://test.org/foo.html</a></p>"),
             msg.rendered_content,
         )
 
@@ -602,9 +594,7 @@ class PreviewTestCase(ZulipTestCase):
             line if "og:image" not in line else '<meta property="og:image"/>'
             for line in self.open_graph_html.splitlines()
         )
-        mocked_response = mock.Mock(
-            side_effect=self.create_mock_response(url, html=html),
-        )
+        mocked_response = mock.Mock(side_effect=self.create_mock_response(url, html=html))
         with self.settings(TEST_SUITE=False, CACHES=TEST_CACHES):
             with mock.patch("requests.get", mocked_response):
                 FetchLinksEmbedData().consume(event)
@@ -614,10 +604,7 @@ class PreviewTestCase(ZulipTestCase):
         self.assertNotIn("image", cached_data)
         msg = Message.objects.select_related("sender").get(id=msg_id)
         self.assertEqual(
-            (
-                '<p><a href="http://test.org/foo.html">'
-                "http://test.org/foo.html</a></p>"
-            ),
+            ('<p><a href="http://test.org/foo.html">' "http://test.org/foo.html</a></p>"),
             msg.rendered_content,
         )
 

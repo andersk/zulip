@@ -417,9 +417,7 @@ class MarkdownTest(ZulipTestCase):
                 if test.get("translate_emoticons", False):
                     # Create a userprofile and send message with it.
                     user_profile = self.example_user("othello")
-                    do_set_user_display_setting(
-                        user_profile, "translate_emoticons", True,
-                    )
+                    do_set_user_display_setting(user_profile, "translate_emoticons", True)
                     msg = Message(sender=user_profile, sending_client=get_client("test"))
                     converted = render_markdown(msg, test["input"])
                 else:
@@ -1274,10 +1272,7 @@ class MarkdownTest(ZulipTestCase):
         converted_topic = topic_links(realm.id, "hello#123 #234")
         self.assertEqual(
             converted_topic,
-            [
-                "https://trac.example.com/ticket/234",
-                "https://trac.example.com/hello/123",
-            ],
+            ["https://trac.example.com/ticket/234", "https://trac.example.com/hello/123"],
         )
 
     def test_maybe_update_markdown_engines(self) -> None:
@@ -1567,7 +1562,9 @@ class MarkdownTest(ZulipTestCase):
                 msg, content, realm_alert_words_automaton=realm_alert_words_automaton,
             )
 
-        content = """This is to test a empty alert words i.e. no user has any alert-words set"""
+        content = (
+            """This is to test a empty alert words i.e. no user has any alert-words set"""
+        )
         render(msg, content)
         expected_user_ids: Set[int] = set()
         self.assertEqual(msg.user_ids_with_alert_words, expected_user_ids)
@@ -2437,8 +2434,7 @@ class MarkdownApiTests(ZulipTestCase):
         )
         self.assert_json_success(result)
         self.assertEqual(
-            result.json()["rendered"],
-            "<p>That is a <strong>bold</strong> statement</p>",
+            result.json()["rendered"], "<p>That is a <strong>bold</strong> statement</p>",
         )
 
     def test_render_mention_stream_api(self) -> None:
@@ -2471,9 +2467,7 @@ class MarkdownErrorTests(ZulipTestCase):
             # We don't use assertRaisesRegex because it seems to not
             # handle i18n properly here on some systems.
             with self.assertRaises(JsonableError):
-                self.send_stream_message(
-                    self.example_user("othello"), "Denmark", message,
-                )
+                self.send_stream_message(self.example_user("othello"), "Denmark", message)
 
     def test_ultra_long_rendering(self) -> None:
         """A rendered message with an ultra-long lenght (> 10 * MAX_MESSAGE_LENGTH)

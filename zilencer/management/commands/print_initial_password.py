@@ -7,9 +7,7 @@ from zerver.lib.users import get_api_key
 
 
 class Command(ZulipBaseCommand):
-    help = (
-        "Print the initial password and API key for accounts as created by populate_db"
-    )
+    help = "Print the initial password and API key for accounts as created by populate_db"
 
     fmt = "%-30s %-16s  %-32s"
 

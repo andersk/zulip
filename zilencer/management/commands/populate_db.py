@@ -418,9 +418,7 @@ class Command(BaseCommand):
             iago.save(update_fields=["is_staff"])
 
             desdemona = get_user_by_delivery_email("desdemona@zulip.com", zulip_realm)
-            do_change_user_role(
-                desdemona, UserProfile.ROLE_REALM_OWNER, acting_user=None,
-            )
+            do_change_user_role(desdemona, UserProfile.ROLE_REALM_OWNER, acting_user=None)
 
             guest_user = get_user_by_delivery_email("polonius@zulip.com", zulip_realm)
             guest_user.role = UserProfile.ROLE_GUEST
@@ -500,11 +498,9 @@ class Command(BaseCommand):
             # across platforms.
 
             subscriptions_list: List[Tuple[UserProfile, Recipient]] = []
-            profiles: Sequence[
-                UserProfile
-            ] = UserProfile.objects.select_related().filter(is_bot=False).order_by(
-                "email",
-            )
+            profiles: Sequence[UserProfile] = UserProfile.objects.select_related().filter(
+                is_bot=False,
+            ).order_by("email")
 
             if options["test_suite"]:
                 subscriptions_map = {
@@ -646,8 +642,7 @@ class Command(BaseCommand):
         else:
             zulip_realm = get_realm("zulip")
             recipient_streams = [
-                klass.type_id
-                for klass in Recipient.objects.filter(type=Recipient.STREAM)
+                klass.type_id for klass in Recipient.objects.filter(type=Recipient.STREAM)
             ]
 
         # Extract a list of all users
@@ -897,8 +892,7 @@ def generate_and_send_messages(
         randkey = random.randint(1, random_max)
         if (
             num_messages > 0
-            and random.randint(1, random_max) * 100.0 / random_max
-            < options["stickyness"]
+            and random.randint(1, random_max) * 100.0 / random_max < options["stickyness"]
         ):
             # Use an old recipient
             message_type, recipient_id, saved_data = recipients[num_messages - 1]

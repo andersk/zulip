@@ -21,8 +21,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RunPython(
-            fix_bot_email_property,
-            reverse_code=migrations.RunPython.noop,
-            elidable=True,
+            fix_bot_email_property, reverse_code=migrations.RunPython.noop, elidable=True,
         ),
     ]

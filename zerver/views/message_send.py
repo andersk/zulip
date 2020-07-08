@@ -188,9 +188,7 @@ def send_message_backend(
     topic_name: Optional[str] = REQ_topic(),
     message_content: str = REQ("content"),
     widget_content: Optional[str] = REQ(default=None, documentation_pending=True),
-    realm_str: Optional[str] = REQ(
-        "realm_str", default=None, documentation_pending=True,
-    ),
+    realm_str: Optional[str] = REQ("realm_str", default=None, documentation_pending=True),
     local_id: Optional[str] = REQ(default=None),
     queue_id: Optional[str] = REQ(default=None),
     delivery_type: str = REQ(

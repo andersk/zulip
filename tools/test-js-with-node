@@ -331,9 +331,7 @@ def enforce_proper_coverage(coverage_json: Any) -> bool:
         if relative_path in EXEMPT_FILES:
             line_coverage = coverage_json[path]["s"]
             line_mapping = coverage_json[path]["statementMap"]
-            if check_line_coverage(
-                relative_path, line_coverage, line_mapping, log=False,
-            ):
+            if check_line_coverage(relative_path, line_coverage, line_mapping, log=False):
                 coverage_not_enforced = True
                 print_error(f"{relative_path} unexpectedly has 100% line coverage.")
 

@@ -144,8 +144,7 @@ class ArchiveMessagesTestingBase(RetentionTestingBase):
         sender = self.mit_user("espuser")
         recipient = self.mit_user("starnine")
         msg_ids = [
-            self.send_personal_message(sender, recipient)
-            for i in range(message_quantity)
+            self.send_personal_message(sender, recipient) for i in range(message_quantity)
         ]
 
         self._change_messages_date_sent(msg_ids, date_sent)
@@ -378,8 +377,7 @@ class TestArchiveMessagesGeneral(ArchiveMessagesTestingBase):
         expired_crossrealm_msg_id = self._send_cross_realm_personal_message()
         # Make the message expired in the recipient's realm:
         self._change_messages_date_sent(
-            [expired_crossrealm_msg_id],
-            timezone_now() - timedelta(ZULIP_REALM_DAYS + 1),
+            [expired_crossrealm_msg_id], timezone_now() - timedelta(ZULIP_REALM_DAYS + 1),
         )
 
         expired_msg_ids = (
@@ -583,9 +581,7 @@ class TestArchivingReactions(ArchiveMessagesTestingBase, EmojiReactionBase):
         restore_all_data_from_archive()
         self.assertEqual(
             set(
-                Reaction.objects.filter(id__in=reaction_ids).values_list(
-                    "id", flat=True,
-                ),
+                Reaction.objects.filter(id__in=reaction_ids).values_list("id", flat=True),
             ),
             set(reaction_ids),
         )
@@ -925,9 +921,7 @@ class MoveMessageToArchiveWithReactions(MoveMessageToArchiveBase, EmojiReactionB
         restore_all_data_from_archive()
         self.assertEqual(
             set(
-                Reaction.objects.filter(id__in=reaction_ids).values_list(
-                    "id", flat=True,
-                ),
+                Reaction.objects.filter(id__in=reaction_ids).values_list("id", flat=True),
             ),
             set(reaction_ids),
         )
@@ -967,9 +961,7 @@ class TestCleaningArchive(ArchiveMessagesTestingBase):
         )
 
         for message in ArchivedMessage.objects.all():
-            self.assertEqual(
-                message.archive_transaction_id, remaining_transactions[0].id,
-            )
+            self.assertEqual(message.archive_transaction_id, remaining_transactions[0].id)
 
 
 class TestGetRealmAndStreamsForArchiving(ZulipTestCase):

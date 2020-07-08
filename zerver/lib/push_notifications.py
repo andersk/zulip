@@ -494,9 +494,7 @@ def remove_push_device_token(
     user_profile: UserProfile, token_str: str, kind: int,
 ) -> None:
     try:
-        token = PushDeviceToken.objects.get(
-            token=token_str, kind=kind, user=user_profile,
-        )
+        token = PushDeviceToken.objects.get(token=token_str, kind=kind, user=user_profile)
         token.delete()
     except PushDeviceToken.DoesNotExist:
         # If we are using bouncer, don't raise the exception. It will
@@ -820,10 +818,7 @@ def get_remove_payload_apns(
 ) -> Dict[str, Any]:
     zulip_data = get_base_payload(user_profile)
     zulip_data.update(
-        {
-            "event": "remove",
-            "zulip_message_ids": ",".join(str(id) for id in message_ids),
-        },
+        {"event": "remove", "zulip_message_ids": ",".join(str(id) for id in message_ids)},
     )
     apns_data = {
         "badge": get_apns_badge_count(user_profile, message_ids),
@@ -832,9 +827,7 @@ def get_remove_payload_apns(
     return apns_data
 
 
-def handle_remove_push_notification(
-    user_profile_id: int, message_ids: List[int],
-) -> None:
+def handle_remove_push_notification(user_profile_id: int, message_ids: List[int]) -> None:
     """This should be called when a message that previously had a
     mobile push notification executed is read.  This triggers a push to the
     mobile app, when the message is read on the server, to remove the

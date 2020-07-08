@@ -29,9 +29,7 @@ class SubdomainsTest(ZulipTestCase):
             ):
                 self.assertEqual(get_subdomain(request_mock(host)), expected)
                 if plusport and ":" not in host:
-                    self.assertEqual(
-                        get_subdomain(request_mock(host + ":443")), expected,
-                    )
+                    self.assertEqual(get_subdomain(request_mock(host + ":443")), expected)
 
         ROOT = Realm.SUBDOMAIN_FOR_ROOT_DOMAIN
 

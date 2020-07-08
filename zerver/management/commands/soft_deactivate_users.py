@@ -86,9 +86,7 @@ class Command(ZulipBaseCommand):
 
         if activate:
             if not user_emails:
-                print(
-                    "You need to specify at least one user to use the activate option.",
-                )
+                print("You need to specify at least one user to use the activate option.")
                 self.print_help("./manage.py", "soft_deactivate_users")
                 raise CommandError
 

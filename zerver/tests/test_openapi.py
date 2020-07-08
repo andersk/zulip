@@ -157,9 +157,9 @@ class OpenAPIToolsTest(ZulipTestCase):
         try:
             validate_against_openapi_schema(
                 (
-                    test_dict["test1"]["responses"]["200"]["content"][
-                        "application/json"
-                    ]["example"]
+                    test_dict["test1"]["responses"]["200"]["content"]["application/json"][
+                        "example"
+                    ]
                 ),
                 "testing",
                 "test1",
@@ -689,10 +689,7 @@ so maybe we shouldn't include it in pending_endpoints.
 
                 if len(accepted_arguments - openapi_parameter_names) > 0:  # nocoverage
                     print(
-                        "Undocumented parameters for",
-                        url_pattern,
-                        method,
-                        function_name,
+                        "Undocumented parameters for", url_pattern, method, function_name,
                     )
                     print(" +", openapi_parameter_names)
                     print(" -", accepted_arguments)
@@ -1097,10 +1094,7 @@ class OpenAPIAttributesTest(ZulipTestCase):
                         for entry in response_schema["oneOf"]:
                             validate_schema(entry)
                             assert validate_against_openapi_schema(
-                                entry["example"],
-                                path,
-                                method,
-                                response + "_" + str(cnt),
+                                entry["example"], path, method, response + "_" + str(cnt),
                             )
                             cnt += 1
                         continue

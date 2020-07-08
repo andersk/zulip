@@ -13,9 +13,7 @@ INC_SYNTAX = re.compile(r"\{!\s*(.+?)\s*!\}")
 class MarkdownIncludeCustom(MarkdownInclude):
     def extendMarkdown(self, md: markdown.Markdown, md_globals: Dict[str, Any]) -> None:
         md.preprocessors.add(
-            "include_wrapper",
-            IncludeCustomPreprocessor(md, self.getConfigs()),
-            "_begin",
+            "include_wrapper", IncludeCustomPreprocessor(md, self.getConfigs()), "_begin",
         )
 
 

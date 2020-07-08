@@ -134,10 +134,7 @@ class GiteaHookTests(WebhookTestCase):
         self.url = self.build_webhook_url(branches="changes,development")
         payload = self.get_body("push__5_commits")
         result = self.client_post(
-            self.url,
-            payload,
-            HTTP_X_GITEA_EVENT="push",
-            content_type="application/json",
+            self.url, payload, HTTP_X_GITEA_EVENT="push", content_type="application/json",
         )
         self.assertFalse(check_send_webhook_message_mock.called)
         self.assert_json_success(result)

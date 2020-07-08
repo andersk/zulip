@@ -100,9 +100,7 @@ class Bitbucket3HookTests(WebhookTestCase):
         self.send_and_test_stream_message("repo_push_update_multiple_branches")
 
         msg = self.get_last_message()
-        self.do_test_topic(
-            msg, self.EXPECTED_TOPIC_BRANCH_EVENTS.format(branch="master"),
-        )
+        self.do_test_topic(msg, self.EXPECTED_TOPIC_BRANCH_EVENTS.format(branch="master"))
         self.do_test_message(msg, expected_message_second)
 
         msg = self.get_second_to_last_message()

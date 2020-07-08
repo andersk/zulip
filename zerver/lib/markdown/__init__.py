@@ -687,9 +687,7 @@ class InlineInterestingLinkProcessor(markdown.treeprocessors.Treeprocessor):
 
         return False
 
-    def add_embed(
-        self, root: Element, link: str, extracted_data: Dict[str, Any],
-    ) -> None:
+    def add_embed(self, root: Element, link: str, extracted_data: Dict[str, Any]) -> None:
         oembed = extracted_data.get("oembed", False)
         if oembed and self.add_oembed_data(root, link, extracted_data):
             return
@@ -734,9 +732,7 @@ class InlineInterestingLinkProcessor(markdown.treeprocessors.Treeprocessor):
         # Add specific per-site cases to convert image-preview urls to image urls.
         # See https://github.com/zulip/zulip/issues/4658 for more information
         parsed_url = urllib.parse.urlparse(url)
-        if parsed_url.netloc == "github.com" or parsed_url.netloc.endswith(
-            ".github.com",
-        ):
+        if parsed_url.netloc == "github.com" or parsed_url.netloc.endswith(".github.com"):
             # https://github.com/zulip/zulip/blob/master/static/images/logo/zulip-icon-128x128.png ->
             # https://raw.githubusercontent.com/zulip/zulip/master/static/images/logo/zulip-icon-128x128.png
             split_path = parsed_url.path.split("/")
@@ -2012,9 +2008,7 @@ class Markdown(markdown.Markdown):
         self.config = {
             "realm_filters": [
                 kwargs["realm_filters"],
-                "Realm-specific filters for realm_filters_key {}".format(
-                    kwargs["realm"],
-                ),
+                "Realm-specific filters for realm_filters_key {}".format(kwargs["realm"]),
             ],
             "realm": [kwargs["realm"], "Realm id"],
             "code_block_processor_disabled": [
@@ -2125,9 +2119,7 @@ class Markdown(markdown.Markdown):
         # space for us to add our own.
         reg = markdown.util.Registry()
         reg.register(
-            BacktickInlineProcessor(markdown.inlinepatterns.BACKTICK_RE),
-            "backtick",
-            105,
+            BacktickInlineProcessor(markdown.inlinepatterns.BACKTICK_RE), "backtick", 105,
         )
         reg.register(
             markdown.inlinepatterns.DoubleTagPattern(STRONG_EM_RE, "strong,em"),
@@ -2139,9 +2131,7 @@ class Markdown(markdown.Markdown):
             Tex(r"\B(?<!\$)\$\$(?P<body>[^\n_$](\\\$|[^$\n])*)\$\$(?!\$)\B"), "tex", 90,
         )
         reg.register(
-            StreamTopicPattern(get_compiled_stream_topic_link_regex(), self),
-            "topic",
-            87,
+            StreamTopicPattern(get_compiled_stream_topic_link_regex(), self), "topic", 87,
         )
         reg.register(StreamPattern(get_compiled_stream_link_regex(), self), "stream", 85)
         reg.register(Timestamp(r"<time:(?P<time>[^>]*?)>"), "timestamp", 75)
@@ -2174,9 +2164,7 @@ class Markdown(markdown.Markdown):
             20,
         )
         reg.register(Emoji(EMOJI_REGEX, self), "emoji", 15)
-        reg.register(
-            EmoticonTranslation(emoticon_regex, self), "translate_emoticons", 10,
-        )
+        reg.register(EmoticonTranslation(emoticon_regex, self), "translate_emoticons", 10)
         # We get priority 5 from 'nl2br' extension
         reg.register(UnicodeEmoji(unicode_emoji_regex), "unicodeemoji", 0)
         return reg
@@ -2459,9 +2447,7 @@ def get_user_group_name_info(
     return dct
 
 
-def get_stream_name_info(
-    realm: Realm, stream_names: Set[str],
-) -> Dict[str, FullNameInfo]:
+def get_stream_name_info(realm: Realm, stream_names: Set[str]) -> Dict[str, FullNameInfo]:
     if not stream_names:
         return dict()
 

@@ -91,9 +91,7 @@ def create_stream_if_needed(
         stream.save(update_fields=["recipient", "rendered_description"])
 
         if stream.is_public():
-            send_stream_creation_event(
-                stream, active_non_guest_user_ids(stream.realm_id),
-            )
+            send_stream_creation_event(stream, active_non_guest_user_ids(stream.realm_id))
         else:
             realm_admin_ids = [
                 user.id for user in stream.realm.get_admin_users_and_bots()
@@ -211,8 +209,7 @@ def access_stream_for_send_message(
         return
 
     if sender.is_bot and (
-        sender.bot_owner is not None
-        and subscribed_to_stream(sender.bot_owner, stream.id)
+        sender.bot_owner is not None and subscribed_to_stream(sender.bot_owner, stream.id)
     ):
         # Bots can send to any stream their owner can.
         return

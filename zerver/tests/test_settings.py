@@ -190,9 +190,7 @@ class ChangeSettingsTest(ZulipTestCase):
     def test_toggling_boolean_user_display_settings(self) -> None:
         """Test updating each boolean setting in UserProfile property_types"""
         boolean_settings = (
-            s
-            for s in UserProfile.property_types
-            if UserProfile.property_types[s] is bool
+            s for s in UserProfile.property_types if UserProfile.property_types[s] is bool
         )
         for display_setting in boolean_settings:
             self.check_for_toggle_param_patch("/json/settings/display", display_setting)

@@ -60,20 +60,14 @@ from zerver.lib.bot_lib import (
 from zerver.lib.context_managers import lockfile
 from zerver.lib.db import reset_queries
 from zerver.lib.digest import handle_digest_email
-from zerver.lib.email_mirror import (
-    decode_stream_email_address,
-    is_missed_message_address,
-)
+from zerver.lib.email_mirror import decode_stream_email_address, is_missed_message_address
 from zerver.lib.email_mirror import process_message as mirror_email
 from zerver.lib.email_mirror import rate_limit_mirror_by_realm
 from zerver.lib.email_notifications import handle_missedmessage_emails
 from zerver.lib.error_notify import do_report_error
 from zerver.lib.exceptions import RateLimited
 from zerver.lib.export import export_realm_wrapper
-from zerver.lib.outgoing_webhook import (
-    do_rest_call,
-    get_outgoing_webhook_service_handler,
-)
+from zerver.lib.outgoing_webhook import do_rest_call, get_outgoing_webhook_service_handler
 from zerver.lib.push_notifications import (
     clear_push_device_tokens,
     handle_push_notification,
@@ -418,9 +412,7 @@ class ConfirmationEmailWorker(QueueProcessingWorker):
                 from_address=FromAddress.tokenized_no_reply_placeholder,
                 language=referrer.realm.default_language,
                 context=context,
-                delay=datetime.timedelta(
-                    days=settings.INVITATION_LINK_VALIDITY_DAYS - 2,
-                ),
+                delay=datetime.timedelta(days=settings.INVITATION_LINK_VALIDITY_DAYS - 2),
             )
 
 

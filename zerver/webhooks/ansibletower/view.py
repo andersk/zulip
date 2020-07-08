@@ -8,9 +8,7 @@ from zerver.lib.response import json_success
 from zerver.lib.webhooks.common import check_send_webhook_message
 from zerver.models import UserProfile
 
-ANSIBLETOWER_DEFAULT_MESSAGE_TEMPLATE = (
-    "{friendly_name}: [#{id} {name}]({url}) {status}."
-)
+ANSIBLETOWER_DEFAULT_MESSAGE_TEMPLATE = "{friendly_name}: [#{id} {name}]({url}) {status}."
 
 
 ANSIBLETOWER_JOB_MESSAGE_TEMPLATE = """

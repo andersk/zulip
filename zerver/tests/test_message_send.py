@@ -192,9 +192,7 @@ class MessagePOSTTest(ZulipTestCase):
             "Only organization administrators can send to this stream.",
         )
         non_admin_owned_bot = self.create_test_bot(
-            short_name="whatever2",
-            full_name="whatever2",
-            user_profile=non_admin_profile,
+            short_name="whatever2", full_name="whatever2", user_profile=non_admin_profile,
         )
         self._send_and_verify_message(
             non_admin_owned_bot,
@@ -271,9 +269,7 @@ class MessagePOSTTest(ZulipTestCase):
             non_admin_profile, stream_name, "New members cannot send to this stream.",
         )
         non_admin_owned_bot = self.create_test_bot(
-            short_name="whatever2",
-            full_name="whatever2",
-            user_profile=non_admin_profile,
+            short_name="whatever2", full_name="whatever2", user_profile=non_admin_profile,
         )
         self._send_and_verify_message(
             non_admin_owned_bot, stream_name, "New members cannot send to this stream.",
@@ -1151,9 +1147,7 @@ class MessagePOSTTest(ZulipTestCase):
 
         # Guest user can't send message to unsubscribed public streams
         result = self.api_post(sender, "/api/v1/messages", payload)
-        self.assert_json_error(
-            result, "Not authorized to send to stream 'public stream'",
-        )
+        self.assert_json_error(result, "Not authorized to send to stream 'public stream'")
 
         self.subscribe(sender, stream_name)
         # Guest user can send message to subscribed public streams
@@ -1302,9 +1296,7 @@ class ScheduledMessageTest(ZulipTestCase):
         content = "Test message"
         defer_until = "Missed the timestamp"
 
-        result = self.do_schedule_message(
-            "stream", "Verona", content + " 1", defer_until,
-        )
+        result = self.do_schedule_message("stream", "Verona", content + " 1", defer_until)
         self.assert_json_error(result, "Invalid time format")
 
     def test_missing_deliver_at(self) -> None:
@@ -1816,8 +1808,7 @@ class ExtractTest(ZulipTestCase):
             extract_stream_indicator("commas,are,fine"), "commas,are,fine",
         )
         self.assertEqual(
-            extract_stream_indicator('"Who hasn\'t done this?"'),
-            "Who hasn't done this?",
+            extract_stream_indicator('"Who hasn\'t done this?"'), "Who hasn't done this?",
         )
         self.assertEqual(
             extract_stream_indicator("999"), 999,
@@ -2052,9 +2043,7 @@ class TestCrossRealmPMs(ZulipTestCase):
         r2 = self.make_realm("2.example.com")
         self.make_realm("3.example.com")
 
-        def assert_message_received(
-            to_user: UserProfile, from_user: UserProfile,
-        ) -> None:
+        def assert_message_received(to_user: UserProfile, from_user: UserProfile) -> None:
             messages = get_user_messages(to_user)
             self.assertEqual(messages[-1].sender.id, from_user.id)
 

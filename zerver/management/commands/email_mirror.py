@@ -42,9 +42,7 @@ logger.addHandler(file_handler)
 
 
 def get_imap_messages() -> Generator[EmailMessage, None, None]:
-    mbox = IMAP4_SSL(
-        settings.EMAIL_GATEWAY_IMAP_SERVER, settings.EMAIL_GATEWAY_IMAP_PORT,
-    )
+    mbox = IMAP4_SSL(settings.EMAIL_GATEWAY_IMAP_SERVER, settings.EMAIL_GATEWAY_IMAP_PORT)
     mbox.login(settings.EMAIL_GATEWAY_LOGIN, settings.EMAIL_GATEWAY_PASSWORD)
     try:
         mbox.select(settings.EMAIL_GATEWAY_IMAP_FOLDER)

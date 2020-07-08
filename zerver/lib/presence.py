@@ -7,13 +7,7 @@ from typing import Any, Dict, List, Set
 from django.utils.timezone import now as timezone_now
 
 from zerver.lib.timestamp import datetime_to_timestamp
-from zerver.models import (
-    PushDeviceToken,
-    Realm,
-    UserPresence,
-    UserProfile,
-    query_for_ids,
-)
+from zerver.models import PushDeviceToken, Realm, UserPresence, UserProfile, query_for_ids
 
 
 def get_status_dicts_for_rows(

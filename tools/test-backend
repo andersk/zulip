@@ -418,9 +418,7 @@ def main() -> None:
         import coverage
 
         cov = coverage.Coverage(
-            data_suffix="",
-            config_file="tools/coveragerc",
-            concurrency="multiprocessing",
+            data_suffix="", config_file="tools/coveragerc", concurrency="multiprocessing",
         )
         # Do not clean .coverage file in CircleCi job so that coverage data can be uploaded.
         if not options.no_cov_cleanup:

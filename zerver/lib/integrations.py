@@ -416,9 +416,7 @@ WEBHOOK_INTEGRATIONS: List[WebhookIntegration] = [
     WebhookIntegration("pagerduty", ["monitoring"], display_name="PagerDuty"),
     WebhookIntegration("papertrail", ["monitoring"]),
     WebhookIntegration("pingdom", ["monitoring"]),
-    WebhookIntegration(
-        "pivotal", ["project-management"], display_name="Pivotal Tracker",
-    ),
+    WebhookIntegration("pivotal", ["project-management"], display_name="Pivotal Tracker"),
     WebhookIntegration("raygun", ["monitoring"], display_name="Raygun"),
     WebhookIntegration("reviewboard", ["version-control"], display_name="ReviewBoard"),
     WebhookIntegration("semaphore", ["continuous-integration", "deployment"]),
@@ -451,9 +449,7 @@ WEBHOOK_INTEGRATIONS: List[WebhookIntegration] = [
     WebhookIntegration("zapier", ["meta-integration"]),
     WebhookIntegration("zendesk", ["customer-support"]),
     WebhookIntegration("zabbix", ["monitoring"], display_name="Zabbix"),
-    WebhookIntegration(
-        "gci", ["misc"], display_name="Google Code-in", stream_name="gci",
-    ),
+    WebhookIntegration("gci", ["misc"], display_name="Google Code-in", stream_name="gci"),
 ]
 
 INTEGRATIONS: Dict[str, Integration] = {
@@ -749,9 +745,7 @@ DOC_SCREENSHOT_CONFIG: Dict[str, List[ScreenshotConfig]] = {
     "gogs": [ScreenshotConfig("pull_request__opened.json")],
     "gosquared": [ScreenshotConfig("traffic_spike.json", image_name="000.png")],
     "grafana": [ScreenshotConfig("alert.json")],
-    "greenhouse": [
-        ScreenshotConfig("candidate_stage_change.json", image_name="000.png"),
-    ],
+    "greenhouse": [ScreenshotConfig("candidate_stage_change.json", image_name="000.png")],
     "groove": [ScreenshotConfig("ticket_started.json")],
     "harbor": [ScreenshotConfig("scanning_completed.json")],
     "hellosign": [

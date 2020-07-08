@@ -103,9 +103,7 @@ class TestRealmAuditLog(ZulipTestCase):
         do_change_user_role(
             user_profile, UserProfile.ROLE_MEMBER, acting_user=acting_user,
         )
-        do_change_user_role(
-            user_profile, UserProfile.ROLE_GUEST, acting_user=acting_user,
-        )
+        do_change_user_role(user_profile, UserProfile.ROLE_GUEST, acting_user=acting_user)
         do_change_user_role(
             user_profile, UserProfile.ROLE_MEMBER, acting_user=acting_user,
         )

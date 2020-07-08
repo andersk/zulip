@@ -164,9 +164,7 @@ def is_administrator_role(role: int) -> bool:
 
 
 def bulk_get_users(
-    emails: List[str],
-    realm: Optional[Realm],
-    base_query: "QuerySet[UserProfile]" = None,
+    emails: List[str], realm: Optional[Realm], base_query: "QuerySet[UserProfile]" = None,
 ) -> Dict[str, UserProfile]:
     if base_query is None:
         assert realm is not None
@@ -191,9 +189,7 @@ def bulk_get_users(
         # But chaining __in and __iexact doesn't work with Django's
         # ORM, so we have the following hack to construct the relevant where clause
         where_clause = "upper(zerver_userprofile.email::text) IN (SELECT upper(email) FROM unnest(%s) AS email)"
-        return query.select_related("realm").extra(
-            where=[where_clause], params=(emails,),
-        )
+        return query.select_related("realm").extra(where=[where_clause], params=(emails,))
 
     def user_to_email(user_profile: UserProfile) -> str:
         return user_profile.email.lower()
@@ -467,9 +463,7 @@ def get_cross_realm_dicts() -> List[Dict[str, Any]]:
     users = bulk_get_users(
         list(settings.CROSS_REALM_BOT_EMAILS),
         None,
-        base_query=UserProfile.objects.filter(
-            realm__string_id=settings.SYSTEM_BOT_REALM,
-        ),
+        base_query=UserProfile.objects.filter(realm__string_id=settings.SYSTEM_BOT_REALM),
     ).values()
     result = []
     for user in users:
@@ -545,9 +539,7 @@ def get_raw_user_data(
             custom_profile_field_values = base_query.filter(user_profile=target_user)
         else:
             custom_profile_field_values = base_query.filter(field__realm_id=realm.id)
-        profiles_by_user_id = get_custom_profile_field_values(
-            custom_profile_field_values,
-        )
+        profiles_by_user_id = get_custom_profile_field_values(custom_profile_field_values)
 
     result = {}
     for row in user_dicts:

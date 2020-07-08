@@ -273,11 +273,7 @@ def get_push_tag_event_message(
 
 
 def get_commits_comment_action_message(
-    user_name: str,
-    action: str,
-    commit_url: str,
-    sha: str,
-    message: Optional[str] = None,
+    user_name: str, action: str, commit_url: str, sha: str, message: Optional[str] = None,
 ) -> str:
     content = COMMITS_COMMENT_MESSAGE_TEMPLATE.format(
         user_name=user_name, action=action, sha=get_short_sha(sha), url=commit_url,

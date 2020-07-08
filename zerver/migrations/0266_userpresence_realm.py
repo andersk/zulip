@@ -14,9 +14,7 @@ class Migration(migrations.Migration):
             model_name="userpresence",
             name="realm",
             field=models.ForeignKey(
-                null=True,
-                on_delete=django.db.models.deletion.CASCADE,
-                to="zerver.Realm",
+                null=True, on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm",
             ),
         ),
     ]

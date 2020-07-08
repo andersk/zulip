@@ -33,9 +33,7 @@ class TaigaHookTests(WebhookTestCase):
 
     def test_taiga_userstory_changed_status(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) changed status of user story **UserStory** from Ready to In progress."
-        self.send_and_test_stream_message(
-            "userstory_changed_status", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("userstory_changed_status", self.TOPIC, message)
 
     def test_taiga_userstory_changed_reassigned(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) reassigned user story **UserStory** from TomaszKolek to HanSolo."
@@ -51,9 +49,7 @@ class TaigaHookTests(WebhookTestCase):
 
     def test_taiga_userstory_changed_points(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) changed estimation of user story **UserStory**."
-        self.send_and_test_stream_message(
-            "userstory_changed_points", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("userstory_changed_points", self.TOPIC, message)
 
     def test_taiga_userstory_changed_new_sprint(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) added user story **UserStory** to sprint Sprint1."
@@ -63,9 +59,7 @@ class TaigaHookTests(WebhookTestCase):
 
     def test_taiga_userstory_changed_sprint(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) changed sprint of user story **UserStory** from Sprint1 to Sprint2."
-        self.send_and_test_stream_message(
-            "userstory_changed_sprint", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("userstory_changed_sprint", self.TOPIC, message)
 
     def test_taiga_userstory_changed_remove_sprint(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) removed user story **UserStory** from sprint Sprint2."
@@ -81,9 +75,7 @@ class TaigaHookTests(WebhookTestCase):
 
     def test_taiga_userstory_changed_closed(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) changed status of user story **UserStory** from New to Done.\n[TomaszKolek](https://tree.taiga.io/profile/kolaszek) closed user story **UserStory**."
-        self.send_and_test_stream_message(
-            "userstory_changed_closed", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("userstory_changed_closed", self.TOPIC, message)
 
     def test_taiga_userstory_changed_reopened(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) changed status of user story **UserStory** from Done to Ready.\n[TomaszKolek](https://tree.taiga.io/profile/kolaszek) reopened user story **UserStory**."
@@ -166,9 +158,7 @@ class TaigaHookTests(WebhookTestCase):
 
     def test_taiga_task_changed_description(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) updated description of task **New Task**."
-        self.send_and_test_stream_message(
-            "task_changed_description", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("task_changed_description", self.TOPIC, message)
 
     def test_taiga_task_deleted(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) deleted task **New Task**."
@@ -227,9 +217,7 @@ class TaigaHookTests(WebhookTestCase):
 
     def test_taiga_issue_changed_reassigned(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) reassigned issue **New issue** from TomaszKolek to HanSolo."
-        self.send_and_test_stream_message(
-            "issue_changed_reassigned", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("issue_changed_reassigned", self.TOPIC, message)
 
     def test_taiga_issue_changed_subject(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) renamed issue New issue to **New issueNewSubject**."
@@ -286,9 +274,7 @@ class TaigaHookTests(WebhookTestCase):
 
     def test_taiga_issue_changed_new_sprint(self) -> None:
         message = "[Aditya Verma](https://tree.taiga.io/profile/orientor) added issue [Nice Issue](https://tree.taiga.io/project/orientor-sd/issue/53) to sprint eres."
-        self.send_and_test_stream_message(
-            "issue_changed_new_sprint", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("issue_changed_new_sprint", self.TOPIC, message)
 
     def test_taiga_issue_changed_remove_sprint(self) -> None:
         message = "[Aditya Verma](https://tree.taiga.io/profile/orientor) detached issue [Nice Issue](https://tree.taiga.io/project/orientor-sd/issue/53) from sprint eres."
@@ -330,9 +316,7 @@ class TaigaHookTests(WebhookTestCase):
 
     def test_taiga_epic_changed_description(self) -> None:
         message = "[Eeshan Garg](https://tree.taiga.io/profile/eeshangarg) updated description of epic **Zulip is great!**."
-        self.send_and_test_stream_message(
-            "epic_changed_description", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("epic_changed_description", self.TOPIC, message)
 
     def test_taiga_epic_changed_commented(self) -> None:
         message = "[Eeshan Garg](https://tree.taiga.io/profile/eeshangarg) commented on epic **Zulip is great!**."
@@ -344,9 +328,7 @@ class TaigaHookTests(WebhookTestCase):
 
     def test_taiga_relateduserstory_created(self) -> None:
         message = "[Eeshan Garg](https://tree.taiga.io/profile/eeshangarg) added a related user story **A related user story** to the epic **This is Epic!**."
-        self.send_and_test_stream_message(
-            "relateduserstory_created", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("relateduserstory_created", self.TOPIC, message)
 
     def test_taiga_relateduserstory_created_link(self) -> None:
         message = (
@@ -359,9 +341,7 @@ class TaigaHookTests(WebhookTestCase):
 
     def test_taiga_relateduserstory_deleted(self) -> None:
         message = "[Eeshan Garg](https://tree.taiga.io/profile/eeshangarg) removed a related user story **A related user story, which is epic** from the epic **This is Epic!**."
-        self.send_and_test_stream_message(
-            "relateduserstory_deleted", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("relateduserstory_deleted", self.TOPIC, message)
 
     def test_taiga_webhook_test(self) -> None:
         message = "[Jan](https://tree.taiga.io/profile/kostek) triggered a test of the Taiga integration."

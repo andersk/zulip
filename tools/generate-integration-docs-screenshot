@@ -207,9 +207,7 @@ def generate_screenshot_from_config(
     integration_name: str, screenshot_config: ScreenshotConfig,
 ) -> None:
     integration = get_integration(integration_name)
-    fixture_path, image_path = get_fixture_and_image_paths(
-        integration, screenshot_config,
-    )
+    fixture_path, image_path = get_fixture_and_image_paths(integration, screenshot_config)
     bot = create_integration_bot(integration, screenshot_config.bot_name)
     create_integration_stream(integration, bot)
     message_sent = send_bot_payload_message(

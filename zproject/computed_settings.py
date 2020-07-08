@@ -927,9 +927,7 @@ LOGGING: Dict[str, Any] = {
 }
 
 if DEVELOPMENT:
-    CONTRIBUTOR_DATA_FILE_PATH = os.path.join(
-        DEPLOY_ROOT, "var/github-contributors.json",
-    )
+    CONTRIBUTOR_DATA_FILE_PATH = os.path.join(DEPLOY_ROOT, "var/github-contributors.json")
 else:
     CONTRIBUTOR_DATA_FILE_PATH = "/var/lib/zulip/github-contributors.json"
 

@@ -12,9 +12,7 @@ class ZcommandTest(ZulipTestCase):
 
         payload = dict(command="boil-ocean")
         result = self.client_post("/json/zcommand", payload)
-        self.assert_json_error(
-            result, "There should be a leading slash in the zcommand.",
-        )
+        self.assert_json_error(result, "There should be a leading slash in the zcommand.")
 
     def test_ping_zcommand(self) -> None:
         self.login("hamlet")

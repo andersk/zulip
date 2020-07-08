@@ -29,10 +29,7 @@ from zerver.lib.actions import (
 from zerver.lib.avatar import avatar_url, get_gravatar_url
 from zerver.lib.bot_config import set_bot_config
 from zerver.lib.email_validation import email_allowed_for_realm
-from zerver.lib.exceptions import (
-    CannotDeactivateLastUserError,
-    OrganizationOwnerRequired,
-)
+from zerver.lib.exceptions import CannotDeactivateLastUserError, OrganizationOwnerRequired
 from zerver.lib.integrations import EMBEDDED_BOTS
 from zerver.lib.request import REQ, has_request_variables
 from zerver.lib.response import json_error, json_success
@@ -180,9 +177,7 @@ def update_user_backend(
     )
 
     if role is not None and target.role != role:
-        if target.role == UserProfile.ROLE_REALM_OWNER and check_last_owner(
-            user_profile,
-        ):
+        if target.role == UserProfile.ROLE_REALM_OWNER and check_last_owner(user_profile):
             return json_error(
                 _(
                     "The owner permission cannot be removed from the only organization owner.",

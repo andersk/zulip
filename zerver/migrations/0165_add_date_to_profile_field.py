@@ -14,12 +14,7 @@ class Migration(migrations.Migration):
             model_name="customprofilefield",
             name="field_type",
             field=models.PositiveSmallIntegerField(
-                choices=[
-                    (1, "Short text"),
-                    (2, "Long text"),
-                    (4, "Date"),
-                    (3, "Choice"),
-                ],
+                choices=[(1, "Short text"), (2, "Long text"), (4, "Date"), (3, "Choice")],
                 default=1,
             ),
         ),

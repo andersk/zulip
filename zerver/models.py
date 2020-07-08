@@ -421,9 +421,7 @@ class Realm(models.Model):
         default=VIDEO_CHAT_PROVIDERS["jitsi_meet"]["id"],
     )
 
-    default_code_block_language: Optional[str] = models.TextField(
-        null=True, default=None,
-    )
+    default_code_block_language: Optional[str] = models.TextField(null=True, default=None)
 
     # Define the types of the various automatically managed properties
     property_types: Dict[str, Union[type, Tuple[type, ...]]] = dict(
@@ -531,10 +529,7 @@ class Realm(models.Model):
         return UserProfile.objects.filter(
             realm=self,
             is_active=True,
-            role__in=[
-                UserProfile.ROLE_REALM_ADMINISTRATOR,
-                UserProfile.ROLE_REALM_OWNER,
-            ],
+            role__in=[UserProfile.ROLE_REALM_ADMINISTRATOR, UserProfile.ROLE_REALM_OWNER],
         )
 
     def get_human_admin_users(self) -> QuerySet:
@@ -547,10 +542,7 @@ class Realm(models.Model):
             realm=self,
             is_bot=False,
             is_active=True,
-            role__in=[
-                UserProfile.ROLE_REALM_ADMINISTRATOR,
-                UserProfile.ROLE_REALM_OWNER,
-            ],
+            role__in=[UserProfile.ROLE_REALM_ADMINISTRATOR, UserProfile.ROLE_REALM_OWNER],
         )
 
     def get_active_users(self) -> Sequence["UserProfile"]:
@@ -1364,8 +1356,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
         allowed_bot_types = []
         if (
             self.is_realm_admin
-            or not self.realm.bot_creation_policy
-            == Realm.BOT_CREATION_LIMIT_GENERIC_BOTS
+            or not self.realm.bot_creation_policy == Realm.BOT_CREATION_LIMIT_GENERIC_BOTS
         ):
             allowed_bot_types.append(UserProfile.DEFAULT_BOT)
         allowed_bot_types += [
@@ -1389,10 +1380,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
         return {row["id"]: row["email"] for row in rows}
 
     def email_address_is_realm_public(self) -> bool:
-        if (
-            self.realm.email_address_visibility
-            == Realm.EMAIL_ADDRESS_VISIBILITY_EVERYONE
-        ):
+        if self.realm.email_address_visibility == Realm.EMAIL_ADDRESS_VISIBILITY_EVERYONE:
             return True
         if self.is_bot:
             return True
@@ -2731,9 +2719,7 @@ def get_huddle_backend(huddle_hash: str, id_list: List[int]) -> Huddle:
     with transaction.atomic():
         (huddle, created) = Huddle.objects.get_or_create(huddle_hash=huddle_hash)
         if created:
-            recipient = Recipient.objects.create(
-                type_id=huddle.id, type=Recipient.HUDDLE,
-            )
+            recipient = Recipient.objects.create(type_id=huddle.id, type=Recipient.HUDDLE)
             huddle.recipient = recipient
             huddle.save(update_fields=["recipient"])
             subs_to_create = [
@@ -3121,7 +3107,9 @@ class RealmAuditLog(AbstractRealmAuditLog):
             return f"<RealmAuditLog: {self.modified_user} {self.event_type} {self.event_time} {self.id}>"
         if self.modified_stream is not None:
             return f"<RealmAuditLog: {self.modified_stream} {self.event_type} {self.event_time} {self.id}>"
-        return f"<RealmAuditLog: {self.realm} {self.event_type} {self.event_time} {self.id}>"
+        return (
+            f"<RealmAuditLog: {self.realm} {self.event_type} {self.event_time} {self.id}>"
+        )
 
 
 class UserHotspot(models.Model):
@@ -3287,9 +3275,7 @@ class CustomProfileFieldValue(models.Model):
         unique_together = ("user_profile", "field")
 
     def __str__(self) -> str:
-        return (
-            f"<CustomProfileFieldValue: {self.user_profile} {self.field} {self.value}>"
-        )
+        return f"<CustomProfileFieldValue: {self.user_profile} {self.field} {self.value}>"
 
 
 # Interfaces for services

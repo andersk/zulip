@@ -54,9 +54,7 @@ def ticket_assigned_body(payload: Dict[str, Any]) -> Optional[str]:
 
     if assignee or assigned_group:
         if assignee and assigned_group:
-            kwargs["assignee_info"] = "{assignee} from {assigned_group}".format(
-                **payload,
-            )
+            kwargs["assignee_info"] = "{assignee} from {assigned_group}".format(**payload)
         elif assignee:
             kwargs["assignee_info"] = "{assignee}".format(**payload)
         elif assigned_group:

@@ -189,8 +189,7 @@ def initial_upgrade(request: HttpRequest) -> HttpResponse:
 
     customer = get_customer_by_realm(user.realm)
     if customer is not None and (
-        get_current_plan_by_customer(customer) is not None
-        or customer.sponsorship_pending
+        get_current_plan_by_customer(customer) is not None or customer.sponsorship_pending
     ):
         billing_page_url = reverse("corporate.views.billing_home")
         if request.GET.get("onboarding") is not None:

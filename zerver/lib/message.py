@@ -973,9 +973,7 @@ def get_raw_unread_data(user_profile: UserProfile) -> RawUnreadMessagesResult:
 
         # TODO: Add support for alert words here as well.
         is_mentioned = (row["flags"] & UserMessage.flags.mentioned) != 0
-        is_wildcard_mentioned = (
-            row["flags"] & UserMessage.flags.wildcard_mentioned
-        ) != 0
+        is_wildcard_mentioned = (row["flags"] & UserMessage.flags.wildcard_mentioned) != 0
         if is_mentioned:
             mentions.add(message_id)
         if is_wildcard_mentioned:

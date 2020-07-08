@@ -57,9 +57,7 @@ def invite_users_backend(
     if not invitee_emails_raw:
         return json_error(_("You must specify at least one email address."))
     if not stream_ids:
-        return json_error(
-            _("You must specify at least one stream for invitees to join."),
-        )
+        return json_error(_("You must specify at least one stream for invitees to join."))
 
     invitee_emails = get_invitee_emails_set(invitee_emails_raw)
 

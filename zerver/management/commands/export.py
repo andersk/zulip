@@ -154,9 +154,7 @@ class Command(ZulipBaseCommand):
             raise CommandError("You must have at least one thread.")
 
         if public_only and consent_message_id is not None:
-            raise CommandError(
-                "Please pass either --public-only or --consent-message-id",
-            )
+            raise CommandError("Please pass either --public-only or --consent-message-id")
 
         if consent_message_id is not None:
             try:

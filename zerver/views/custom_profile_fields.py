@@ -31,11 +31,7 @@ from zerver.lib.validator import (
     check_union,
     validate_choice_field_data,
 )
-from zerver.models import (
-    CustomProfileField,
-    UserProfile,
-    custom_profile_fields_for_realm,
-)
+from zerver.models import CustomProfileField, UserProfile, custom_profile_fields_for_realm
 
 
 def list_realm_custom_profile_fields(

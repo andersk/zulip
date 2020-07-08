@@ -62,9 +62,7 @@ def api_opsgenie_webhook(
             key="Message", value=payload["alert"]["message"],
         )
     if info["tags"]:
-        info["additional_info"] += bullet_template.format(
-            key="Tags", value=info["tags"],
-        )
+        info["additional_info"] += bullet_template.format(key="Tags", value=info["tags"])
 
     body_template = """
 [OpsGenie Alert for {integration_name}](https://app.opsgenie.com/alert/V2#/show/{alert_id}):

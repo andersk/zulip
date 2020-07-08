@@ -64,9 +64,7 @@ class Command(BaseCommand):
                 print(
                     "{:10}".format(
                         len(
-                            Subscription.objects.filter(
-                                recipient=recipient, active=True,
-                            ),
+                            Subscription.objects.filter(recipient=recipient, active=True),
                         ),
                     ),
                     end=" ",

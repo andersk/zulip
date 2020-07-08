@@ -151,9 +151,7 @@ class Command(BaseCommand):
         }
         insert_fixture_data(stat, realm_data, RealmCount)
         installation_data: Mapping[Optional[str], List[int]] = {
-            None: self.generate_fixture_data(
-                stat, 0.8, 0.2, 4, 0.3, 6, partial_sum=True,
-            ),
+            None: self.generate_fixture_data(stat, 0.8, 0.2, 4, 0.3, 6, partial_sum=True),
         }
         insert_fixture_data(stat, installation_data, InstallationCount)
         FillState.objects.create(

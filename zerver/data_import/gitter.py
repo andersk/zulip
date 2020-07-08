@@ -337,9 +337,7 @@ def do_convert_data(gitter_data_file: str, output_dir: str, threads: int = 6) ->
     # For user mentions
     user_short_name_to_full_name = {}
     for userprofile in realm["zerver_userprofile"]:
-        user_short_name_to_full_name[userprofile["short_name"]] = userprofile[
-            "full_name"
-        ]
+        user_short_name_to_full_name[userprofile["short_name"]] = userprofile["full_name"]
 
     convert_gitter_workspace_messages(
         gitter_data,

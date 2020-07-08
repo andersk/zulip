@@ -172,10 +172,7 @@ def accounts_register(request: HttpRequest) -> HttpResponse:
             return render(
                 request,
                 "zerver/invalid_email.html",
-                context={
-                    "realm_name": realm.name,
-                    "disposable_emails_not_allowed": True,
-                },
+                context={"realm_name": realm.name, "disposable_emails_not_allowed": True},
             )
         except EmailContainsPlusError:
             return render(
@@ -297,9 +294,7 @@ def accounts_register(request: HttpRequest) -> HttpResponse:
             # verified name from you on file, use that. Otherwise, fall
             # back to the full name in the request.
             try:
-                postdata.update(
-                    {"full_name": request.session["authenticated_full_name"]},
-                )
+                postdata.update({"full_name": request.session["authenticated_full_name"]})
                 name_validated = True
             except KeyError:
                 pass
@@ -334,10 +329,7 @@ def accounts_register(request: HttpRequest) -> HttpResponse:
         )
 
         timezone = ""
-        if (
-            "timezone" in request.POST
-            and request.POST["timezone"] in get_all_timezones()
-        ):
+        if "timezone" in request.POST and request.POST["timezone"] in get_all_timezones():
             timezone = request.POST["timezone"]
 
         if "source_realm" in request.POST and request.POST["source_realm"] != "on":
@@ -347,9 +339,9 @@ def accounts_register(request: HttpRequest) -> HttpResponse:
 
         if not realm_creation:
             try:
-                existing_user_profile: Optional[
-                    UserProfile
-                ] = get_user_by_delivery_email(email, realm)
+                existing_user_profile: Optional[UserProfile] = get_user_by_delivery_email(
+                    email, realm,
+                )
             except UserProfile.DoesNotExist:
                 existing_user_profile = None
         else:
@@ -391,10 +383,7 @@ def accounts_register(request: HttpRequest) -> HttpResponse:
                     can_use_different_backend = can_use_different_backend and (
                         not email_belongs_to_ldap(realm, email)
                     )
-                if (
-                    return_data.get("no_matching_ldap_user")
-                    and can_use_different_backend
-                ):
+                if return_data.get("no_matching_ldap_user") and can_use_different_backend:
                     # If both the LDAP and Email or Social auth backends are
                     # enabled, and there's no matching user in the LDAP
                     # directory then the intent is to create a user in the
@@ -508,9 +497,7 @@ def accounts_register(request: HttpRequest) -> HttpResponse:
     )
 
 
-def login_and_go_to_home(
-    request: HttpRequest, user_profile: UserProfile,
-) -> HttpResponse:
+def login_and_go_to_home(request: HttpRequest, user_profile: UserProfile) -> HttpResponse:
     mobile_flow_otp = get_expirable_session_var(
         request.session, "registration_mobile_flow_otp", delete=True,
     )

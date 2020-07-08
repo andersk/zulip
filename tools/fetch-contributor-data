@@ -30,9 +30,7 @@ import json
 import requests
 from django.conf import settings
 
-duplicate_commits_file = os.path.join(
-    os.path.dirname(__file__), "duplicate_commits.json",
-)
+duplicate_commits_file = os.path.join(os.path.dirname(__file__), "duplicate_commits.json")
 
 parser = argparse.ArgumentParser()
 parser.add_argument(

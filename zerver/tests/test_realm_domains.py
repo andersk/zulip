@@ -84,9 +84,7 @@ class RealmDomainTest(ZulipTestCase):
     def test_patch_realm_domain(self) -> None:
         self.login("iago")
         realm = get_realm("zulip")
-        RealmDomain.objects.create(
-            realm=realm, domain="acme.com", allow_subdomains=False,
-        )
+        RealmDomain.objects.create(realm=realm, domain="acme.com", allow_subdomains=False)
         data = {
             "allow_subdomains": ujson.dumps(True),
         }

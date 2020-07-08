@@ -37,7 +37,9 @@ class TrelloHookTests(WebhookTestCase):
         )
 
     def test_trello_webhook_when_member_was_added_to_card(self) -> None:
-        expected_message = "TomaszKolek added TomaszKolek to [Card name](https://trello.com/c/9BduUcVQ)."
+        expected_message = (
+            "TomaszKolek added TomaszKolek to [Card name](https://trello.com/c/9BduUcVQ)."
+        )
         self.send_and_test_stream_message(
             "adding_member_to_card", "Welcome Board", expected_message,
         )

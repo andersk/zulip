@@ -324,10 +324,7 @@ python_rules = RuleList(
             "include_only": {"scripts/"},
             "exclude": {"scripts/lib/setup_venv.py"},
             "exclude_line": {
-                (
-                    "scripts/lib/zulip_tools.py",
-                    "sudo_args = kwargs.pop('sudo_args', [])",
-                ),
+                ("scripts/lib/zulip_tools.py", "sudo_args = kwargs.pop('sudo_args', [])"),
                 (
                     "scripts/lib/zulip_tools.py",
                     "args = ['sudo'] + sudo_args + ['--'] + args",
@@ -993,9 +990,7 @@ help_markdown_rules = RuleList(
     length_exclude=markdown_docs_length_exclude,
 )
 
-txt_rules = RuleList(
-    langs=["txt", "text", "yaml", "rst", "yml"], rules=whitespace_rules,
-)
+txt_rules = RuleList(langs=["txt", "text", "yaml", "rst", "yml"], rules=whitespace_rules)
 non_py_rules = [
     handlebars_rules,
     jinja2_rules,

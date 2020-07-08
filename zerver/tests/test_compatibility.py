@@ -1,11 +1,7 @@
 from unittest import mock
 
 from zerver.lib.test_classes import ZulipTestCase
-from zerver.views.compatibility import (
-    find_mobile_os,
-    is_outdated_desktop_app,
-    version_lt,
-)
+from zerver.views.compatibility import find_mobile_os, is_outdated_desktop_app, version_lt
 
 
 class VersionTest(ZulipTestCase):

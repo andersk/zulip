@@ -288,9 +288,7 @@ def sanity_check_output(data: TableData) -> None:
         + list(apps.get_app_config("django_otp").get_models(include_auto_created=True))
         + list(apps.get_app_config("otp_static").get_models(include_auto_created=True))
         + list(apps.get_app_config("otp_totp").get_models(include_auto_created=True))
-        + list(
-            apps.get_app_config("social_django").get_models(include_auto_created=True),
-        )
+        + list(apps.get_app_config("social_django").get_models(include_auto_created=True))
         + list(apps.get_app_config("two_factor").get_models(include_auto_created=True))
         + list(apps.get_app_config("zerver").get_models(include_auto_created=True))
     )
@@ -774,11 +772,7 @@ def get_realm_config() -> Config:
     Config(
         table="zerver_recipient",
         virtual_parent=user_profile_config,
-        concat_and_destroy=[
-            "_user_recipient",
-            "_stream_recipient",
-            "_huddle_recipient",
-        ],
+        concat_and_destroy=["_user_recipient", "_stream_recipient", "_huddle_recipient"],
     )
 
     Config(
@@ -1273,9 +1267,7 @@ def _check_key_metadata(
                 f"Missing user_profile_id in key metadata: {key.metadata}",
             )
         if int(key.metadata["user_profile_id"]) not in user_ids:
-            raise AssertionError(
-                f"Wrong user_profile_id in key metadata: {key.metadata}",
-            )
+            raise AssertionError(f"Wrong user_profile_id in key metadata: {key.metadata}")
     elif "realm_id" not in key.metadata:
         raise AssertionError(f"Missing realm_id in key metadata: {key.metadata}")
 
@@ -1504,9 +1496,7 @@ def export_avatars_from_local(realm: Realm, local_dir: Path, output_dir: Path) -
 
 def export_realm_icons(realm: Realm, local_dir: Path, output_dir: Path) -> None:
     records = []
-    dir_relative_path = zerver.lib.upload.upload_backend.realm_avatar_and_logo_path(
-        realm,
-    )
+    dir_relative_path = zerver.lib.upload.upload_backend.realm_avatar_and_logo_path(realm)
     icons_wildcard = os.path.join(local_dir, dir_relative_path, "*")
     for icon_absolute_path in glob.glob(icons_wildcard):
         icon_file_name = os.path.basename(icon_absolute_path)
@@ -1693,9 +1683,7 @@ def export_attachment_table(
 def create_soft_link(source: Path, in_progress: bool = True) -> None:
     is_done = not in_progress
     if settings.DEVELOPMENT:
-        in_progress_link = os.path.join(
-            settings.DEPLOY_ROOT, "var", "export-in-progress",
-        )
+        in_progress_link = os.path.join(settings.DEPLOY_ROOT, "var", "export-in-progress")
         done_link = os.path.join(settings.DEPLOY_ROOT, "var", "export-most-recent")
     else:
         in_progress_link = "/home/zulip/export-in-progress"
@@ -1718,9 +1706,7 @@ def create_soft_link(source: Path, in_progress: bool = True) -> None:
 def launch_user_message_subprocesses(
     threads: int, output_dir: Path, consent_message_id: Optional[int] = None,
 ) -> None:
-    logging.info(
-        "Launching %d PARALLEL subprocesses to export UserMessage rows", threads,
-    )
+    logging.info("Launching %d PARALLEL subprocesses to export UserMessage rows", threads)
     pids = {}
 
     for shard_id in range(threads):

@@ -525,9 +525,7 @@ def move_messages_to_archive(
     archived_attachments = ArchivedAttachment.objects.filter(
         messages__id__in=message_ids,
     ).distinct()
-    Attachment.objects.filter(
-        messages__isnull=True, id__in=archived_attachments,
-    ).delete()
+    Attachment.objects.filter(messages__isnull=True, id__in=archived_attachments).delete()
 
 
 def restore_messages_from_archive(archive_transaction_id: int) -> List[int]:

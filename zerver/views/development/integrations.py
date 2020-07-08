@@ -48,11 +48,7 @@ def send_webhook_fixture_message(
     else:
         content_type = standardized_headers.pop("HTTP_CONTENT_TYPE", "text/plain")
     return client.post(
-        url,
-        body,
-        content_type=content_type,
-        HTTP_HOST=http_host,
-        **standardized_headers,
+        url, body, content_type=content_type, HTTP_HOST=http_host, **standardized_headers,
     )
 
 

@@ -123,9 +123,7 @@ def check_date(var_name: str, val: object) -> str:
 
 def check_int(var_name: str, val: object) -> int:
     if not isinstance(val, int):
-        raise ValidationError(
-            _("{var_name} is not an integer").format(var_name=var_name),
-        )
+        raise ValidationError(_("{var_name} is not an integer").format(var_name=var_name))
     return val
 
 
@@ -177,9 +175,7 @@ def check_list(
 ) -> Validator[List[ResultT]]:
     def f(var_name: str, val: object) -> List[ResultT]:
         if not isinstance(val, list):
-            raise ValidationError(
-                _("{var_name} is not a list").format(var_name=var_name),
-            )
+            raise ValidationError(_("{var_name} is not a list").format(var_name=var_name))
 
         if length is not None and length != len(val):
             raise ValidationError(
@@ -253,9 +249,7 @@ def check_dict(
 ) -> Validator[Dict[str, ResultT]]:
     def f(var_name: str, val: object) -> Dict[str, ResultT]:
         if not isinstance(val, dict):
-            raise ValidationError(
-                _("{var_name} is not a dict").format(var_name=var_name),
-            )
+            raise ValidationError(_("{var_name} is not a dict").format(var_name=var_name))
 
         for k in val:
             check_string(f"{var_name} key", k)
@@ -370,9 +364,7 @@ def check_external_account_url_pattern(var_name: str, val: object) -> str:
     return s
 
 
-def validate_choice_field_data(
-    field_data: ProfileFieldData,
-) -> Dict[str, Dict[str, str]]:
+def validate_choice_field_data(field_data: ProfileFieldData) -> Dict[str, Dict[str, str]]:
     """
     This function is used to validate the data sent to the server while
     creating/editing choices of the choice field in Organization settings.

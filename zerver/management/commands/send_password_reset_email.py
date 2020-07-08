@@ -62,8 +62,6 @@ class Command(ZulipBaseCommand):
                 "zerver/emails/password_reset",
                 to_user_ids=[user_profile.id],
                 from_address=FromAddress.tokenized_no_reply_address(),
-                from_name=FromAddress.security_email_from_name(
-                    user_profile=user_profile,
-                ),
+                from_name=FromAddress.security_email_from_name(user_profile=user_profile),
                 context=context,
             )

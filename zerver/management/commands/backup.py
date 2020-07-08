@@ -25,9 +25,7 @@ class Command(ZulipBaseCommand):
         parser.add_argument(
             "--output", default=None, nargs="?", help="Filename of output tarball",
         )
-        parser.add_argument(
-            "--skip-db", action="store_true", help="Skip database backup",
-        )
+        parser.add_argument("--skip-db", action="store_true", help="Skip database backup")
         parser.add_argument(
             "--skip-uploads", action="store_true", help="Skip uploads backup",
         )

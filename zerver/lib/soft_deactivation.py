@@ -183,9 +183,7 @@ def add_missing_messages(user_profile: UserProfile) -> None:
 
     recipient_ids = []
     for sub in all_stream_subs:
-        stream_subscription_logs = all_stream_subscription_logs[
-            sub["recipient__type_id"]
-        ]
+        stream_subscription_logs = all_stream_subscription_logs[sub["recipient__type_id"]]
         if (
             stream_subscription_logs[-1].event_type
             == RealmAuditLog.SUBSCRIPTION_DEACTIVATED

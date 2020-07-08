@@ -271,9 +271,7 @@ def generate_curl_example(
     for param in operation_params:
         if param["in"] != "path":
             continue
-        example_value = get_openapi_param_example_value_as_string(
-            endpoint, method, param,
-        )
+        example_value = get_openapi_param_example_value_as_string(endpoint, method, param)
         format_dict[param["name"]] = example_value
     example_endpoint = endpoint.format_map(format_dict)
 

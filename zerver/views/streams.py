@@ -417,8 +417,7 @@ def remove_subscriptions_backend(
 
     if principals:
         people_to_unsub = {
-            principal_to_user_profile(user_profile, principal)
-            for principal in principals
+            principal_to_user_profile(user_profile, principal) for principal in principals
         }
     else:
         people_to_unsub = {user_profile}
@@ -535,9 +534,7 @@ def add_subscriptions_backend(
             stream.invite_only for stream in streams
         ):
             return json_error(
-                _(
-                    "You can only invite other Zephyr mirroring users to private streams.",
-                ),
+                _("You can only invite other Zephyr mirroring users to private streams."),
             )
         if not user_profile.can_subscribe_other_users():
             if user_profile.realm.invite_to_stream_policy == Realm.POLICY_ADMINS_ONLY:
@@ -554,8 +551,7 @@ def add_subscriptions_backend(
                 _("Your account is too new to modify other users' subscriptions."),
             )
         subscribers = {
-            principal_to_user_profile(user_profile, principal)
-            for principal in principals
+            principal_to_user_profile(user_profile, principal) for principal in principals
         }
     else:
         subscribers = {user_profile}

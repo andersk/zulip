@@ -192,10 +192,7 @@ class Bitbucket2HookTests(WebhookTestCase):
             "HTTP_X_EVENT_KEY": "pullrequest:created",
         }
         self.send_and_test_stream_message(
-            "pull_request_created_or_updated",
-            expected_topic,
-            expected_message,
-            **kwargs,
+            "pull_request_created_or_updated", expected_topic, expected_message, **kwargs,
         )
 
     def test_bitbucket2_on_pull_request_updated_event(self) -> None:

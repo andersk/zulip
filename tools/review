@@ -52,9 +52,7 @@ def create_pull_branch(pull_id: int) -> None:
     print()
     print(f"PR: {pull_id}")
     print(
-        subprocess.check_output(
-            ["git", "log", "HEAD~..", "--pretty=format:Author: %an"],
-        ),
+        subprocess.check_output(["git", "log", "HEAD~..", "--pretty=format:Author: %an"]),
     )
 
 

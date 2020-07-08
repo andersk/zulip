@@ -266,9 +266,7 @@ class RealmTest(ZulipTestCase):
         self.assertIn("Reactivate your Zulip organization", outbox[0].subject)
         self.assertIn("Dear former administrators", outbox[0].body)
         admins = realm.get_human_admin_users()
-        confirmation_url = self.get_confirmation_url_from_outbox(
-            admins[0].delivery_email,
-        )
+        confirmation_url = self.get_confirmation_url_from_outbox(admins[0].delivery_email)
         response = self.client_get(confirmation_url)
         self.assert_in_success_response(
             ["Your organization has been successfully reactivated"], response,
@@ -280,8 +278,7 @@ class RealmTest(ZulipTestCase):
         random_link = "/reactivate/5e89081eb13984e0f3b130bf7a4121d153f1614b"
         response = self.client_get(random_link)
         self.assert_in_success_response(
-            ["The organization reactivation link has expired or is not valid."],
-            response,
+            ["The organization reactivation link has expired or is not valid."], response,
         )
 
     def test_change_notifications_stream(self) -> None:
@@ -425,9 +422,7 @@ class RealmTest(ZulipTestCase):
     def test_change_bot_creation_policy(self) -> None:
         # We need an admin user.
         self.login("iago")
-        req = dict(
-            bot_creation_policy=ujson.dumps(Realm.BOT_CREATION_LIMIT_GENERIC_BOTS),
-        )
+        req = dict(bot_creation_policy=ujson.dumps(Realm.BOT_CREATION_LIMIT_GENERIC_BOTS))
         result = self.client_patch("/json/realm", req)
         self.assert_json_success(result)
 
@@ -665,12 +660,9 @@ class RealmTest(ZulipTestCase):
 
     def test_initial_plan_type(self) -> None:
         with self.settings(BILLING_ENABLED=True):
+            self.assertEqual(do_create_realm("hosted", "hosted").plan_type, Realm.LIMITED)
             self.assertEqual(
-                do_create_realm("hosted", "hosted").plan_type, Realm.LIMITED,
-            )
-            self.assertEqual(
-                get_realm("hosted").max_invites,
-                settings.INVITES_DEFAULT_REALM_DAILY_MAX,
+                get_realm("hosted").max_invites, settings.INVITES_DEFAULT_REALM_DAILY_MAX,
             )
             self.assertEqual(
                 get_realm("hosted").message_visibility_limit,
@@ -709,9 +701,7 @@ class RealmTest(ZulipTestCase):
         realm = get_realm("zulip")
         self.assertEqual(realm.plan_type, Realm.LIMITED)
         self.assertEqual(realm.max_invites, settings.INVITES_DEFAULT_REALM_DAILY_MAX)
-        self.assertEqual(
-            realm.message_visibility_limit, Realm.MESSAGE_VISIBILITY_LIMITED,
-        )
+        self.assertEqual(realm.message_visibility_limit, Realm.MESSAGE_VISIBILITY_LIMITED)
         self.assertEqual(realm.upload_quota_gb, Realm.UPLOAD_QUOTA_LIMITED)
 
         do_change_plan_type(realm, Realm.STANDARD_FREE)

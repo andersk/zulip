@@ -341,10 +341,7 @@ class EditMessageTest(ZulipTestCase):
 
         self.assertEqual(
             message_history_2[0]["rendered_content"],
-            (
-                "<p>content before edit, line 1</p>\n"
-                "<p>content before edit, line 3</p>"
-            ),
+            ("<p>content before edit, line 1</p>\n" "<p>content before edit, line 3</p>"),
         )
         self.assertEqual(
             message_history_2[1]["rendered_content"],
@@ -364,10 +361,7 @@ class EditMessageTest(ZulipTestCase):
         )
         self.assertEqual(
             message_history_2[1]["prev_rendered_content"],
-            (
-                "<p>content before edit, line 1</p>\n"
-                "<p>content before edit, line 3</p>"
-            ),
+            ("<p>content before edit, line 1</p>\n" "<p>content before edit, line 3</p>"),
         )
 
     def test_edit_link(self) -> None:
@@ -1432,14 +1426,10 @@ class DeleteMessageTest(ZulipTestCase):
         msg_id = self.send_stream_message(hamlet, "Scotland")
 
         result = test_delete_message_by_owner(msg_id=msg_id)
-        self.assert_json_error(
-            result, "You don't have permission to delete this message",
-        )
+        self.assert_json_error(result, "You don't have permission to delete this message")
 
         result = test_delete_message_by_other_user(msg_id=msg_id)
-        self.assert_json_error(
-            result, "You don't have permission to delete this message",
-        )
+        self.assert_json_error(result, "You don't have permission to delete this message")
 
         result = test_delete_message_by_admin(msg_id=msg_id)
         self.assert_json_success(result)
@@ -1453,9 +1443,7 @@ class DeleteMessageTest(ZulipTestCase):
         message.save()
 
         result = test_delete_message_by_other_user(msg_id=msg_id)
-        self.assert_json_error(
-            result, "You don't have permission to delete this message",
-        )
+        self.assert_json_error(result, "You don't have permission to delete this message")
 
         result = test_delete_message_by_owner(msg_id=msg_id)
         self.assert_json_success(result)
@@ -1473,9 +1461,7 @@ class DeleteMessageTest(ZulipTestCase):
         message.save()
 
         result = test_delete_message_by_other_user(msg_id=msg_id_1)
-        self.assert_json_error(
-            result, "You don't have permission to delete this message",
-        )
+        self.assert_json_error(result, "You don't have permission to delete this message")
 
         result = test_delete_message_by_owner(msg_id=msg_id_1)
         self.assert_json_success(result)

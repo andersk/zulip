@@ -221,9 +221,7 @@ def get_topic_history_for_stream(
     return generate_topic_history_from_db_rows(rows)
 
 
-def get_topic_history_for_web_public_stream(
-    recipient: Recipient,
-) -> List[Dict[str, Any]]:
+def get_topic_history_for_web_public_stream(recipient: Recipient) -> List[Dict[str, Any]]:
     cursor = connection.cursor()
     query = """
     SELECT

@@ -40,13 +40,7 @@ if pwd.getpwuid(os.getuid()).pw_name != "zulip":
 
 # Send a statsd event on restarting the server
 subprocess.check_call(
-    [
-        "./manage.py",
-        "send_stats",
-        "incr",
-        "events.server_restart",
-        str(int(time.time())),
-    ],
+    ["./manage.py", "send_stats", "incr", "events.server_restart", str(int(time.time()))],
 )
 
 if args.fill_cache:

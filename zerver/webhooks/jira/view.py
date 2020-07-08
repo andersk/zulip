@@ -26,9 +26,7 @@ IGNORED_EVENTS = [
 ]
 
 
-def guess_zulip_user_from_jira(
-    jira_username: str, realm: Realm,
-) -> Optional[UserProfile]:
+def guess_zulip_user_from_jira(jira_username: str, realm: Realm) -> Optional[UserProfile]:
     try:
         # Try to find a matching user in Zulip
         # We search a user's full name, short name,
@@ -197,9 +195,7 @@ def add_change_info(content: str, field: str, from_field: str, to_field: str) ->
     return content
 
 
-def handle_updated_issue_event(
-    payload: Dict[str, Any], user_profile: UserProfile,
-) -> str:
+def handle_updated_issue_event(payload: Dict[str, Any], user_profile: UserProfile) -> str:
     # Reassigned, commented, reopened, and resolved events are all bundled
     # into this one 'updated' event type, so we try to extract the meaningful
     # event that happened
@@ -270,9 +266,7 @@ def handle_updated_issue_event(
     return content
 
 
-def handle_created_issue_event(
-    payload: Dict[str, Any], user_profile: UserProfile,
-) -> str:
+def handle_created_issue_event(payload: Dict[str, Any], user_profile: UserProfile) -> str:
     template = """
 {author} created {issue_string}:
 
@@ -290,9 +284,7 @@ def handle_created_issue_event(
     )
 
 
-def handle_deleted_issue_event(
-    payload: Dict[str, Any], user_profile: UserProfile,
-) -> str:
+def handle_deleted_issue_event(payload: Dict[str, Any], user_profile: UserProfile) -> str:
     template = "{author} deleted {issue_string}{punctuation}"
     title = get_issue_title(payload)
     punctuation = "." if title[-1] not in string.punctuation else ""

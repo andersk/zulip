@@ -76,9 +76,7 @@ def user_cache_items(
 def stream_cache_items(
     items_for_remote_cache: Dict[str, Tuple[Stream]], stream: Stream,
 ) -> None:
-    items_for_remote_cache[get_stream_cache_key(stream.name, stream.realm_id)] = (
-        stream,
-    )
+    items_for_remote_cache[get_stream_cache_key(stream.name, stream.realm_id)] = (stream,)
 
 
 def client_cache_items(
@@ -93,9 +91,7 @@ def huddle_cache_items(
     items_for_remote_cache[huddle_hash_cache_key(huddle.huddle_hash)] = (huddle,)
 
 
-def session_cache_items(
-    items_for_remote_cache: Dict[str, str], session: Session,
-) -> None:
+def session_cache_items(items_for_remote_cache: Dict[str, str], session: Session) -> None:
     if settings.SESSION_ENGINE != "django.contrib.sessions.backends.cached_db":
         # If we're not using the cached_db session engine, we there
         # will be no store.cache_key attribute, and in any case we
@@ -168,12 +164,7 @@ cache_fillers: Dict[
         3600 * 24 * 7,
         10000,
     ),
-    "session": (
-        lambda: Session.objects.all(),
-        session_cache_items,
-        3600 * 24 * 7,
-        10000,
-    ),
+    "session": (lambda: Session.objects.all(), session_cache_items, 3600 * 24 * 7, 10000),
 }
 
 

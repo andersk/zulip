@@ -321,9 +321,7 @@ def setup_old_emoji_farm(
 
     for name, codepoint in emoji_map.items():
         mapped_codepoint = REMAPPED_EMOJIS.get(codepoint, codepoint)
-        image_file_path = os.path.join(
-            google_emoji_cache_path, f"{mapped_codepoint}.png",
-        )
+        image_file_path = os.path.join(google_emoji_cache_path, f"{mapped_codepoint}.png")
         symlink_path = os.path.join(emoji_cache_path, f"{name}.png")
         os.symlink(image_file_path, symlink_path)
         try:

@@ -299,10 +299,7 @@ def home_real(request: HttpRequest) -> HttpResponse:
         recipient = narrow_stream.recipient
         try:
             max_message_id = (
-                Message.objects.filter(recipient=recipient)
-                .order_by("id")
-                .reverse()[0]
-                .id
+                Message.objects.filter(recipient=recipient).order_by("id").reverse()[0].id
             )
         except IndexError:
             max_message_id = -1

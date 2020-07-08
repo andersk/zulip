@@ -210,9 +210,7 @@ def semaphore_2(payload: Dict[str, Any]) -> Tuple[str, str, Optional[str]]:
     elif payload["revision"]["reference_type"] == "tag":
         branch_name = ""
         tag_name = payload["revision"]["tag"]["name"]
-        tag_url = GITHUB_URL_TEMPLATES["tag"].format(
-            repo_url=repo_url, tag_name=tag_name,
-        )
+        tag_url = GITHUB_URL_TEMPLATES["tag"].format(repo_url=repo_url, tag_name=tag_name)
         context.update(
             tag_name=tag_name, tag_url=tag_url,
         )

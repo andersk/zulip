@@ -113,9 +113,7 @@ class TestVideoCall(ZulipTestCase):
     @responses.activate
     def test_create_video_request_error(self) -> None:
         responses.add(
-            responses.POST,
-            "https://zoom.us/oauth/token",
-            json={"access_token": "token"},
+            responses.POST, "https://zoom.us/oauth/token", json={"access_token": "token"},
         )
 
         responses.add(

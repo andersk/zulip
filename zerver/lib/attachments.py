@@ -32,8 +32,6 @@ def remove_attachment(user_profile: UserProfile, attachment: Attachment) -> None
         delete_message_image(attachment.path_id)
     except Exception:
         raise JsonableError(
-            _(
-                "An error occurred while deleting the attachment. Please try again later.",
-            ),
+            _("An error occurred while deleting the attachment. Please try again later."),
         )
     attachment.delete()

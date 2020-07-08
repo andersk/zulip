@@ -91,9 +91,7 @@ class TestQueueImplementation(ZulipTestCase):
 
         self.counter = 0
 
-        def throw_connection_error_once(
-            self_obj: Any, *args: Any, **kwargs: Any
-        ) -> None:
+        def throw_connection_error_once(self_obj: Any, *args: Any, **kwargs: Any) -> None:
             self.counter += 1
             if self.counter <= 1:
                 raise AMQPConnectionError("test")

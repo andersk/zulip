@@ -195,9 +195,7 @@ def queries_captured(
     def cursor_execute(
         self: TimeTrackingCursor, sql: Query, params: Optional[Params] = None,
     ) -> None:
-        return wrapper_execute(
-            self, super(TimeTrackingCursor, self).execute, sql, params,
-        )
+        return wrapper_execute(self, super(TimeTrackingCursor, self).execute, sql, params)
 
     def cursor_executemany(
         self: TimeTrackingCursor, sql: Query, params: Iterable[Params],

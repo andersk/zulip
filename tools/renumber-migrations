@@ -31,9 +31,7 @@ def renumber_migration(
                 "zerver/migrations/" + conflicts[i - 1], inplace=True,
             )
             for line in file:
-                print(
-                    re.sub(r"[\d]+(_[a-z0-9]+)+", last_correct_migration, line), end="",
-                )
+                print(re.sub(r"[\d]+(_[a-z0-9]+)+", last_correct_migration, line), end="")
 
             # Rename the migration indexing at the end
             new_name = conflicts[i - 1].replace(

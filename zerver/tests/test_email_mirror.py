@@ -699,9 +699,7 @@ class TestStreamEmailMessagesEmptyBody(ZulipTestCase):
 
         with mock.patch("zerver.lib.email_mirror.logging.warning") as mock_warn:
             process_message(incoming_valid_message)
-            mock_warn.assert_called_with(
-                "Email has no nonempty body sections; ignoring.",
-            )
+            mock_warn.assert_called_with("Email has no nonempty body sections; ignoring.")
 
     def test_receive_stream_email_messages_no_textual_body(self) -> None:
         user_profile = self.example_user("hamlet")
@@ -826,9 +824,7 @@ class TestMissedMessageEmailMessages(ZulipTestCase):
         incoming_valid_message = EmailMessage()
         incoming_valid_message.set_content("TestMissedHuddleMessageEmailMessages Body")
 
-        incoming_valid_message[
-            "Subject"
-        ] = "TestMissedHuddleMessageEmailMessages Subject"
+        incoming_valid_message["Subject"] = "TestMissedHuddleMessageEmailMessages Subject"
         incoming_valid_message["From"] = self.example_email("cordelia")
         incoming_valid_message["To"] = mm_address
         incoming_valid_message["Reply-to"] = self.example_email("cordelia")
@@ -1285,9 +1281,7 @@ class TestEmailMirrorTornadoView(ZulipTestCase):
     def test_success_stream(self) -> None:
         stream = get_stream("Denmark", get_realm("zulip"))
         stream_to_address = encode_email_address(stream)
-        result = self.send_offline_message(
-            stream_to_address, self.example_user("hamlet"),
-        )
+        result = self.send_offline_message(stream_to_address, self.example_user("hamlet"))
         self.assert_json_success(result)
 
     def test_error_to_stream_with_wrong_address(self) -> None:
@@ -1297,9 +1291,7 @@ class TestEmailMirrorTornadoView(ZulipTestCase):
         token = decode_email_address(stream_to_address)[0]
         stream_to_address = stream_to_address.replace(token, "Wrong_token")
 
-        result = self.send_offline_message(
-            stream_to_address, self.example_user("hamlet"),
-        )
+        result = self.send_offline_message(stream_to_address, self.example_user("hamlet"))
         self.assert_json_error(
             result,
             "5.1.1 Bad destination mailbox address: "
@@ -1311,9 +1303,7 @@ class TestEmailMirrorTornadoView(ZulipTestCase):
         stream_to_address = encode_email_address(stream)
         stream_to_address = stream_to_address.replace("denmark", "Wrong_name")
 
-        result = self.send_offline_message(
-            stream_to_address, self.example_user("hamlet"),
-        )
+        result = self.send_offline_message(stream_to_address, self.example_user("hamlet"))
         self.assert_json_success(result)
 
     def test_success_to_private(self) -> None:
@@ -1550,9 +1540,7 @@ class TestEmailMirrorLogAndReport(ZulipTestCase):
             error_message = "test message {}"
             error_message = error_message.format(stream_to_address)
             expected_message = "test message {} <Address to stream id: {}>"
-            expected_message = expected_message.format(
-                scrubbed_stream_address, stream.id,
-            )
+            expected_message = expected_message.format(scrubbed_stream_address, stream.id)
 
             redacted_message = redact_email_address(error_message)
             self.assertEqual(redacted_message, expected_message)

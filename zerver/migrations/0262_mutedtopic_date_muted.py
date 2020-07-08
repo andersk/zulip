@@ -15,9 +15,7 @@ class Migration(migrations.Migration):
             model_name="mutedtopic",
             name="date_muted",
             field=models.DateTimeField(
-                default=datetime.datetime(
-                    2020, 1, 1, 0, 0, tzinfo=datetime.timezone.utc,
-                ),
+                default=datetime.datetime(2020, 1, 1, 0, 0, tzinfo=datetime.timezone.utc),
             ),
         ),
     ]

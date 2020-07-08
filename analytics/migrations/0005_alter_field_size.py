@@ -39,9 +39,7 @@ class Migration(migrations.Migration):
             field=models.CharField(max_length=32),
         ),
         migrations.AlterField(
-            model_name="usercount",
-            name="interval",
-            field=models.CharField(max_length=8),
+            model_name="usercount", name="interval", field=models.CharField(max_length=8),
         ),
         migrations.AlterField(
             model_name="usercount",

@@ -19,9 +19,7 @@ from zerver.models import UserProfile
 def update_storage(
     request: HttpRequest,
     user_profile: UserProfile,
-    storage: Dict[str, str] = REQ(
-        validator=check_dict([], value_validator=check_string),
-    ),
+    storage: Dict[str, str] = REQ(validator=check_dict([], value_validator=check_string)),
 ) -> HttpResponse:
     try:
         set_bot_storage(user_profile, list(storage.items()))

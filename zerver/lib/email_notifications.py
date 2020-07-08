@@ -288,9 +288,7 @@ def get_narrow_url(
         other_user_ids = [
             r["id"] for r in display_recipient if r["id"] != user_profile.id
         ]
-        return huddle_narrow_url(
-            realm=user_profile.realm, other_user_ids=other_user_ids,
-        )
+        return huddle_narrow_url(realm=user_profile.realm, other_user_ids=other_user_ids)
     else:
         assert display_recipient is None
         if stream is None:
@@ -384,9 +382,7 @@ def do_send_missedmessage_events_reply_in_zulip(
 
     senders = list({m["message"].sender for m in missed_messages})
     if missed_messages[0]["message"].recipient.type == Recipient.HUDDLE:
-        display_recipient = get_display_recipient(
-            missed_messages[0]["message"].recipient,
-        )
+        display_recipient = get_display_recipient(missed_messages[0]["message"].recipient)
         # Make sure that this is a list of strings, not a string.
         assert not isinstance(display_recipient, str)
         other_recipients = [
@@ -397,7 +393,9 @@ def do_send_missedmessage_events_reply_in_zulip(
             huddle_display_name = " and ".join(other_recipients)
             context.update({"huddle_display_name": huddle_display_name})
         elif len(other_recipients) == 3:
-            huddle_display_name = f"{other_recipients[0]}, {other_recipients[1]}, and {other_recipients[2]}"
+            huddle_display_name = (
+                f"{other_recipients[0]}, {other_recipients[1]}, and {other_recipients[2]}"
+            )
             context.update({"huddle_display_name": huddle_display_name})
         else:
             huddle_display_name = "{}, and {} others".format(
@@ -413,8 +411,7 @@ def do_send_missedmessage_events_reply_in_zulip(
                 {
                     m["message"].sender
                     for m in missed_messages
-                    if m["trigger"] == "mentioned"
-                    or m["trigger"] == "wildcard_mentioned"
+                    if m["trigger"] == "mentioned" or m["trigger"] == "wildcard_mentioned"
                 },
             )
         message = missed_messages[0]["message"]

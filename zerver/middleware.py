@@ -192,8 +192,7 @@ def write_log_line(
 
         if not suppress_statsd:
             statsd.timing(
-                f"{statsd_path}.remote_cache.time",
-                timedelta_ms(remote_cache_time_delta),
+                f"{statsd_path}.remote_cache.time", timedelta_ms(remote_cache_time_delta),
             )
             statsd.incr(
                 f"{statsd_path}.remote_cache.querycount", remote_cache_count_delta,

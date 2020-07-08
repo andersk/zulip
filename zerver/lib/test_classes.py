@@ -450,9 +450,7 @@ class ZulipTestCase(TestCase):
         email = user_profile.delivery_email
         realm = user_profile.realm
         password = initial_password(email)
-        self.assertTrue(
-            self.client.login(username=email, password=password, realm=realm),
-        )
+        self.assertTrue(self.client.login(username=email, password=password, realm=realm))
 
     def login_2fa(self, user_profile: UserProfile) -> None:
         """
@@ -744,9 +742,7 @@ class ZulipTestCase(TestCase):
     def assert_json_error_contains(
         self, result: HttpResponse, msg_substring: str, status_code: int = 400,
     ) -> None:
-        self.assertIn(
-            msg_substring, self.get_json_error(result, status_code=status_code),
-        )
+        self.assertIn(msg_substring, self.get_json_error(result, status_code=status_code))
 
     def assert_in_response(self, substring: str, response: HttpResponse) -> None:
         self.assertIn(substring, response.content.decode("utf-8"))

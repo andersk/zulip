@@ -23,10 +23,7 @@ class TestBasics(ZulipTestCase):
         self.assertEqual(rows, [])
 
         sm1 = SubMessage.objects.create(
-            msg_type="whatever",
-            content="stuff1",
-            message_id=message_id,
-            sender=cordelia,
+            msg_type="whatever", content="stuff1", message_id=message_id, sender=cordelia,
         )
 
         sm2 = SubMessage.objects.create(
