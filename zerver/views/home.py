@@ -263,9 +263,7 @@ def home_real(request: HttpRequest) -> HttpResponse:
         # Misc. extra data.
         initial_servertime=time.time(),  # Used for calculating relative presence age
         default_language_name=get_language_name(register_ret["default_language"]),
-        language_list_dbl_col=get_language_list_for_templates(
-            register_ret["default_language"],
-        ),
+        language_list_dbl_col=get_language_list_for_templates(register_ret["default_language"]),
         language_list=get_language_list(),
         needs_tutorial=needs_tutorial,
         first_in_realm=first_in_realm,

@@ -74,8 +74,7 @@ def register_remote_server(
     ),
     contact_email: str = REQ(str_validator=check_string),
     new_org_key: Optional[str] = REQ(
-        str_validator=check_string_fixed_length(RemoteZulipServer.API_KEY_LENGTH),
-        default=None,
+        str_validator=check_string_fixed_length(RemoteZulipServer.API_KEY_LENGTH), default=None,
     ),
 ) -> HttpResponse:
     # REQ validated the the field lengths, but we still need to
@@ -301,9 +300,7 @@ def remote_server_post_analytics(
             realm_id=row["realm"],
             remote_id=row["id"],
             server=server,
-            end_time=datetime.datetime.fromtimestamp(
-                row["end_time"], tz=datetime.timezone.utc,
-            ),
+            end_time=datetime.datetime.fromtimestamp(row["end_time"], tz=datetime.timezone.utc),
             subgroup=row["subgroup"],
             value=row["value"],
         )
@@ -316,9 +313,7 @@ def remote_server_post_analytics(
             property=row["property"],
             remote_id=row["id"],
             server=server,
-            end_time=datetime.datetime.fromtimestamp(
-                row["end_time"], tz=datetime.timezone.utc,
-            ),
+            end_time=datetime.datetime.fromtimestamp(row["end_time"], tz=datetime.timezone.utc),
             subgroup=row["subgroup"],
             value=row["value"],
         )

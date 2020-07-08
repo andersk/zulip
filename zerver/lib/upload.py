@@ -505,9 +505,7 @@ class S3UploadBackend(ZulipUploadBackend):
 
     def upload_realm_icon_image(self, icon_file: File, user_profile: UserProfile) -> None:
         content_type = guess_type(icon_file.name)[0]
-        s3_file_name = os.path.join(
-            self.realm_avatar_and_logo_path(user_profile.realm), "icon",
-        )
+        s3_file_name = os.path.join(self.realm_avatar_and_logo_path(user_profile.realm), "icon")
 
         image_data = icon_file.read()
         upload_image_to_s3(

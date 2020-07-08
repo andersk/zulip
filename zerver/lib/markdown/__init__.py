@@ -241,9 +241,7 @@ def rewrite_local_links_to_relative(db_data: Optional[DbData], link: str) -> str
 
 
 def url_embed_preview_enabled(
-    message: Optional[Message] = None,
-    realm: Optional[Realm] = None,
-    no_previews: bool = False,
+    message: Optional[Message] = None, realm: Optional[Realm] = None, no_previews: bool = False,
 ) -> bool:
     if not settings.INLINE_URL_EMBED_PREVIEW:
         return False
@@ -265,9 +263,7 @@ def url_embed_preview_enabled(
 
 
 def image_preview_enabled(
-    message: Optional[Message] = None,
-    realm: Optional[Realm] = None,
-    no_previews: bool = False,
+    message: Optional[Message] = None, realm: Optional[Realm] = None, no_previews: bool = False,
 ) -> bool:
     if not settings.INLINE_IMAGE_PREVIEW:
         return False
@@ -304,9 +300,7 @@ def list_of_tlds() -> List[str]:
 
 
 def walk_tree(
-    root: Element,
-    processor: Callable[[Element], Optional[_T]],
-    stop_after_first: bool = False,
+    root: Element, processor: Callable[[Element], Optional[_T]], stop_after_first: bool = False,
 ) -> List[_T]:
     results = []
     queue = deque([root])
@@ -442,9 +436,7 @@ def fetch_tweet_data(tweet_id: str) -> Optional[Dict[str, Any]]:
                 # None so that we will cache the error
                 return None
             elif (
-                len(t) == 1
-                and ("code" in t[0])
-                and (t[0]["code"] == 88 or t[0]["code"] == 130)
+                len(t) == 1 and ("code" in t[0]) and (t[0]["code"] == 88 or t[0]["code"] == 130)
             ):
                 # Code 88 means that we were rate-limited and 130
                 # means Twitter is having capacity issues; either way
@@ -647,9 +639,7 @@ class InlineInterestingLinkProcessor(markdown.treeprocessors.Treeprocessor):
             desc_div = SubElement(summary_div, "desc")
             desc_div.set("class", "message_inline_image_desc")
 
-    def add_oembed_data(
-        self, root: Element, link: str, extracted_data: Dict[str, Any],
-    ) -> bool:
+    def add_oembed_data(self, root: Element, link: str, extracted_data: Dict[str, Any]) -> bool:
         oembed_resource_type = extracted_data.get("type", "")
         title = extracted_data.get("title")
 
@@ -1099,9 +1089,7 @@ class InlineInterestingLinkProcessor(markdown.treeprocessors.Treeprocessor):
 
             if parent_index is not None:
                 ins_index = self.find_proper_insertion_index(grandparent, parent, parent_index)
-                self.add_a(
-                    grandparent, actual_url, url, title=title, insertion_index=ins_index,
-                )
+                self.add_a(grandparent, actual_url, url, title=title, insertion_index=ins_index)
 
             else:
                 # We're not inserting after parent, since parent not found.
@@ -1301,9 +1289,7 @@ class Timestamp(markdown.inlinepatterns.Pattern):
         time_input_string = match.group("time")
         timestamp = None
         try:
-            timestamp = dateutil.parser.parse(
-                time_input_string, tzinfos=get_common_timezones(),
-            )
+            timestamp = dateutil.parser.parse(time_input_string, tzinfos=get_common_timezones())
         except ValueError:
             try:
                 timestamp = datetime.datetime.fromtimestamp(float(time_input_string))
@@ -2107,9 +2093,7 @@ class Markdown(markdown.Markdown):
         reg.register(AutoLink(get_web_link_regex(), self), "autolink", 55)
         # Reserve priority 45-54 for Realm Filters
         reg = self.register_realm_filters(reg)
-        reg.register(
-            markdown.inlinepatterns.HtmlInlineProcessor(ENTITY_RE, self), "entity", 40,
-        )
+        reg.register(markdown.inlinepatterns.HtmlInlineProcessor(ENTITY_RE, self), "entity", 40)
         reg.register(
             markdown.inlinepatterns.SimpleTagPattern(r"(\*\*)([^\n]+?)\2", "strong"),
             "strong",
@@ -2163,9 +2147,7 @@ class Markdown(markdown.Markdown):
         postprocessors.register(
             markdown.postprocessors.AndSubstitutePostprocessor(), "amp_substitute", 15,
         )
-        postprocessors.register(
-            markdown.postprocessors.UnescapePostprocessor(), "unescape", 10,
-        )
+        postprocessors.register(markdown.postprocessors.UnescapePostprocessor(), "unescape", 10)
         return postprocessors
 
     def getConfig(self, key: str, default: str = "") -> Any:
@@ -2387,9 +2369,7 @@ class MentionData:
         return self.user_group_members.get(user_group_id, [])
 
 
-def get_user_group_name_info(
-    realm_id: int, user_group_names: Set[str],
-) -> Dict[str, UserGroup]:
+def get_user_group_name_info(realm_id: int, user_group_names: Set[str]) -> Dict[str, UserGroup]:
     if not user_group_names:
         return dict()
 

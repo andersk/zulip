@@ -696,8 +696,7 @@ class StreamAdminTest(ZulipTestCase):
         with tornado_redirected_to_list(events):
             stream_id = get_stream("stream_private_name1", realm).id
             result = self.client_patch(
-                f"/json/streams/{stream_id}",
-                {"new_name": ujson.dumps("stream_private_name2")},
+                f"/json/streams/{stream_id}", {"new_name": ujson.dumps("stream_private_name2")},
             )
         self.assert_json_success(result)
         notified_user_ids = set(events[1]["users"])
@@ -1544,9 +1543,7 @@ class StreamAdminTest(ZulipTestCase):
             {"subscriptions": ujson.dumps([stream_name]), "principals": ujson.dumps([99])},
         )
         self.assert_json_error(
-            result,
-            "User not authorized to execute queries on behalf of '99'",
-            status_code=403,
+            result, "User not authorized to execute queries on behalf of '99'", status_code=403,
         )
 
 
@@ -1795,9 +1792,7 @@ class DefaultStreamGroupTest(ZulipTestCase):
         default_stream_groups = get_default_stream_groups(realm)
         self.assert_length(default_stream_groups, 1)
         self.assertEqual(default_stream_groups[0].name, group_name)
-        self.assertEqual(
-            list(default_stream_groups[0].streams.all().order_by("name")), streams,
-        )
+        self.assertEqual(list(default_stream_groups[0].streams.all().order_by("name")), streams)
 
         result = self.client_patch(
             f"/json/default_stream_groups/{group_id}/streams",
@@ -1829,9 +1824,7 @@ class DefaultStreamGroupTest(ZulipTestCase):
         default_stream_groups = get_default_stream_groups(realm)
         self.assert_length(default_stream_groups, 1)
         self.assertEqual(default_stream_groups[0].name, group_name)
-        self.assertEqual(
-            list(default_stream_groups[0].streams.all().order_by("name")), streams,
-        )
+        self.assertEqual(list(default_stream_groups[0].streams.all().order_by("name")), streams)
 
         result = self.client_patch(
             f"/json/default_stream_groups/{group_id}/streams",
@@ -1962,9 +1955,7 @@ class DefaultStreamGroupTest(ZulipTestCase):
         # error if we pass it a bad name.  This function is used
         # during registration, but it's a bit heavy to do a full
         # test of that.
-        with self.assertRaisesRegex(
-            JsonableError, "Invalid default stream group invalid-name",
-        ):
+        with self.assertRaisesRegex(JsonableError, "Invalid default stream group invalid-name"):
             lookup_default_stream_groups(["invalid-name"], realm)
 
 
@@ -3712,9 +3703,7 @@ class SubscriptionAPITest(ZulipTestCase):
         """
         # currently, the only invalid stream name is the empty string
         invalid_stream_name = ""
-        result = self.client_post(
-            "/json/subscriptions/exists", {"stream": invalid_stream_name},
-        )
+        result = self.client_post("/json/subscriptions/exists", {"stream": invalid_stream_name})
         self.assert_json_error(result, "Invalid stream name ''")
 
     def test_existing_subscriptions_autosubscription(self) -> None:

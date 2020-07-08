@@ -333,9 +333,7 @@ class PreviewTestCase(ZulipTestCase):
 
         # Verify the initial message doesn't have the embedded links rendered
         msg = Message.objects.select_related("sender").get(id=msg_id)
-        self.assertNotIn(
-            f'<a href="{url}" title="The Rock">The Rock</a>', msg.rendered_content,
-        )
+        self.assertNotIn(f'<a href="{url}" title="The Rock">The Rock</a>', msg.rendered_content)
 
         # Mock the network request result so the test can be fast without Internet
         mocked_response = mock.Mock(
@@ -382,8 +380,7 @@ class PreviewTestCase(ZulipTestCase):
             # The content of the message has changed since the event for original_url has been created,
             # it should not be rendered. Another, up-to-date event will have been sent (edited_url).
             self.assertNotIn(
-                f'<a href="{original_url}" title="The Rock">The Rock</a>',
-                msg.rendered_content,
+                f'<a href="{original_url}" title="The Rock">The Rock</a>', msg.rendered_content,
             )
             mocked_response_edited.assert_not_called()
 
@@ -471,9 +468,7 @@ class PreviewTestCase(ZulipTestCase):
             "message_realm_id": msg.sender.realm_id,
             "message_content": url,
         }
-        with self.settings(
-            INLINE_URL_EMBED_PREVIEW=True, TEST_SUITE=False, CACHES=TEST_CACHES,
-        ):
+        with self.settings(INLINE_URL_EMBED_PREVIEW=True, TEST_SUITE=False, CACHES=TEST_CACHES):
             with mock.patch("requests.get", mock.Mock(side_effect=ConnectionError())):
                 FetchLinksEmbedData().consume(event)
         msg = Message.objects.get(id=msg_id)
@@ -482,9 +477,7 @@ class PreviewTestCase(ZulipTestCase):
         )
 
     def test_invalid_link(self) -> None:
-        with self.settings(
-            INLINE_URL_EMBED_PREVIEW=True, TEST_SUITE=False, CACHES=TEST_CACHES,
-        ):
+        with self.settings(INLINE_URL_EMBED_PREVIEW=True, TEST_SUITE=False, CACHES=TEST_CACHES):
             self.assertIsNone(get_link_embed_data("com.notvalidlink"))
             self.assertIsNone(get_link_embed_data("μένει.com.notvalidlink"))
 
@@ -513,9 +506,7 @@ class PreviewTestCase(ZulipTestCase):
             event = patched.call_args[0][1]
 
         headers = {"content-type": "application/octet-stream"}
-        mocked_response = mock.Mock(
-            side_effect=self.create_mock_response(url, headers=headers),
-        )
+        mocked_response = mock.Mock(side_effect=self.create_mock_response(url, headers=headers))
 
         with self.settings(TEST_SUITE=False, CACHES=TEST_CACHES):
             with mock.patch("requests.get", mocked_response):
@@ -604,9 +595,7 @@ class PreviewTestCase(ZulipTestCase):
             event = patched.call_args[0][1]
 
         headers = {"content-type": ""}  # No content type header
-        mocked_response = mock.Mock(
-            side_effect=self.create_mock_response(url, headers=headers),
-        )
+        mocked_response = mock.Mock(side_effect=self.create_mock_response(url, headers=headers))
         with self.settings(TEST_SUITE=False, CACHES=TEST_CACHES):
             with mock.patch("requests.get", mocked_response):
                 FetchLinksEmbedData().consume(event)
@@ -639,8 +628,7 @@ class PreviewTestCase(ZulipTestCase):
             side_effect=lambda *args, **kwargs: None,
         ):
             with mock.patch(
-                "zerver.lib.url_preview.preview.valid_content_type",
-                side_effect=lambda k: True,
+                "zerver.lib.url_preview.preview.valid_content_type", side_effect=lambda k: True,
             ):
                 with self.settings(TEST_SUITE=False, CACHES=TEST_CACHES):
                     with mock.patch("requests.get", mock.Mock(side_effect=ConnectionError())):

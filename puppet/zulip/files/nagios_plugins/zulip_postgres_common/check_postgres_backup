@@ -20,15 +20,7 @@ def report(state: str, msg: str) -> None:
 
 if (
     subprocess.check_output(
-        [
-            "psql",
-            "-v",
-            "ON_ERROR_STOP=1",
-            "postgres",
-            "-t",
-            "-c",
-            "SELECT pg_is_in_recovery()",
-        ],
+        ["psql", "-v", "ON_ERROR_STOP=1", "postgres", "-t", "-c", "SELECT pg_is_in_recovery()"],
     ).strip()
     != b"f"
 ):

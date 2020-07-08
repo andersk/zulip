@@ -72,9 +72,7 @@ class OpenGraphTest(ZulipTestCase):
         open_graph_title = bs.select_one('meta[property="og:title"]').get("content")
         self.assertEqual(open_graph_title, title)
 
-        open_graph_description = bs.select_one('meta[property="og:description"]').get(
-            "content",
-        )
+        open_graph_description = bs.select_one('meta[property="og:description"]').get("content")
         for substring in in_description:
             self.assertIn(substring, open_graph_description)
         for substring in not_in_description:

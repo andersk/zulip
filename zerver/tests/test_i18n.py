@@ -76,9 +76,7 @@ class TranslationTestCase(ZulipTestCase):
         super().tearDown()
 
     # e.g. self.client_post(url) if method is "post"
-    def fetch(
-        self, method: str, url: str, expected_status: int, **kwargs: Any
-    ) -> HttpResponse:
+    def fetch(self, method: str, url: str, expected_status: int, **kwargs: Any) -> HttpResponse:
         response = getattr(self.client, method)(url, **kwargs)
         self.assertEqual(
             response.status_code,

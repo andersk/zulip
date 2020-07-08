@@ -358,8 +358,7 @@ def get_chart_data(
                 start = realm.date_created
         if end is None:
             end = max(
-                last_successful_fill(stat.property)
-                or datetime.min.replace(tzinfo=timezone.utc)
+                last_successful_fill(stat.property) or datetime.min.replace(tzinfo=timezone.utc)
                 for stat in stats
             )
 
@@ -489,9 +488,7 @@ def rewrite_client_arrays(value_arrays: Dict[str, List[int]]) -> Dict[str, List[
             for i in range(0, len(array)):
                 mapped_arrays[mapped_label][i] += value_arrays[label][i]
         else:
-            mapped_arrays[mapped_label] = [
-                value_arrays[label][i] for i in range(0, len(array))
-            ]
+            mapped_arrays[mapped_label] = [value_arrays[label][i] for i in range(0, len(array))]
     return mapped_arrays
 
 
@@ -834,9 +831,7 @@ def user_activity_intervals() -> Tuple[mark_safe, Dict[str, float]]:
     all_intervals = (
         UserActivityInterval.objects.filter(end__gte=day_start, start__lte=day_end)
         .select_related("user_profile", "user_profile__realm")
-        .only(
-            "start", "end", "user_profile__delivery_email", "user_profile__realm__string_id",
-        )
+        .only("start", "end", "user_profile__delivery_email", "user_profile__realm__string_id")
         .order_by("user_profile__realm__string_id", "user_profile__delivery_email")
     )
 
@@ -862,9 +857,7 @@ def user_activity_intervals() -> Tuple[mark_safe, Dict[str, float]]:
         realm_minutes[string_id] = realm_duration.total_seconds() / 60
 
     output += f"\nTotal Duration:                      {total_duration}\n"
-    output += (
-        f"\nTotal Duration in minutes:           {total_duration.total_seconds() / 60.}\n"
-    )
+    output += f"\nTotal Duration in minutes:           {total_duration.total_seconds() / 60.}\n"
     output += (
         f"Total Duration amortized to a month: {total_duration.total_seconds() * 30. / 60.}"
     )
@@ -1262,17 +1255,13 @@ def support(request: HttpRequest) -> HttpResponse:
             new_discount = Decimal(request.POST.get("discount"))
             current_discount = get_discount_for_realm(realm)
             attach_discount_to_realm(realm, new_discount)
-            msg = (
-                f"Discount of {realm.name} changed to {new_discount} from {current_discount} "
-            )
+            msg = f"Discount of {realm.name} changed to {new_discount} from {current_discount} "
             context["message"] = msg
         elif request.POST.get("status", None) is not None:
             status = request.POST.get("status")
             if status == "active":
                 do_send_realm_reactivation_email(realm)
-                context[
-                    "message"
-                ] = f"Realm reactivation email sent to admins of {realm.name}."
+                context["message"] = f"Realm reactivation email sent to admins of {realm.name}."
             elif status == "deactivated":
                 do_deactivate_realm(realm, request.user)
                 context["message"] = f"{realm.name} deactivated."

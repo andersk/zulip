@@ -357,9 +357,7 @@ class TestServiceBotConfigHandler(ZulipTestCase):
 
     @override_settings(BOT_CONFIG_SIZE_LIMIT=100)
     def test_config_entry_limit(self) -> None:
-        set_bot_config(
-            self.bot_profile, "some key", "x" * (settings.BOT_CONFIG_SIZE_LIMIT - 8),
-        )
+        set_bot_config(self.bot_profile, "some key", "x" * (settings.BOT_CONFIG_SIZE_LIMIT - 8))
         self.assertRaisesMessage(
             ConfigError,
             "Cannot store configuration. Request would require 101 characters. "

@@ -48,9 +48,7 @@ class RealmTest(ZulipTestCase):
 
     def test_realm_creation_ensures_internal_realms(self) -> None:
         with mock.patch("zerver.lib.actions.server_initialized", return_value=False):
-            with mock.patch(
-                "zerver.lib.actions.create_internal_realm",
-            ) as mock_create_internal:
+            with mock.patch("zerver.lib.actions.create_internal_realm") as mock_create_internal:
                 do_create_realm("testrealm", "Test Realm")
                 mock_create_internal.assert_called_once()
 
@@ -315,9 +313,7 @@ class RealmTest(ZulipTestCase):
 
         disabled_signup_notifications_stream_id = -1
         req = dict(
-            signup_notifications_stream_id=ujson.dumps(
-                disabled_signup_notifications_stream_id,
-            ),
+            signup_notifications_stream_id=ujson.dumps(disabled_signup_notifications_stream_id),
         )
         result = self.client_patch("/json/realm", req)
         self.assert_json_success(result)
@@ -577,9 +573,7 @@ class RealmTest(ZulipTestCase):
             ("Invalid video_chat_provider {}").format(invalid_video_chat_provider_value),
         )
 
-        req = {
-            "video_chat_provider": ujson.dumps(Realm.VIDEO_CHAT_PROVIDERS["disabled"]["id"]),
-        }
+        req = {"video_chat_provider": ujson.dumps(Realm.VIDEO_CHAT_PROVIDERS["disabled"]["id"])}
         result = self.client_patch("/json/realm", req)
         self.assert_json_success(result)
         self.assertEqual(
@@ -875,14 +869,10 @@ class ScrubRealmTest(ZulipTestCase):
 
         Attachment.objects.filter(realm=zulip).delete()
         Attachment.objects.create(realm=zulip, owner=iago, path_id="a/b/temp1.txt", size=512)
-        Attachment.objects.create(
-            realm=zulip, owner=othello, path_id="a/b/temp2.txt", size=512,
-        )
+        Attachment.objects.create(realm=zulip, owner=othello, path_id="a/b/temp2.txt", size=512)
 
         Attachment.objects.filter(realm=lear).delete()
-        Attachment.objects.create(
-            realm=lear, owner=cordelia, path_id="c/d/temp1.txt", size=512,
-        )
+        Attachment.objects.create(realm=lear, owner=cordelia, path_id="c/d/temp1.txt", size=512)
         Attachment.objects.create(realm=lear, owner=king, path_id="c/d/temp2.txt", size=512)
 
         CustomProfileField.objects.create(realm=lear)

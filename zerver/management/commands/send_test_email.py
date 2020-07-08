@@ -25,9 +25,7 @@ class Command(sendtestemail.Command):
         print()
         print("  https://zulip.readthedocs.io/en/latest/production/email.html#troubleshooting")
         print()
-        print(
-            "The most common error is not setting `ADD_TOKENS_TO_NOREPLY_ADDRESS=False` when",
-        )
+        print("The most common error is not setting `ADD_TOKENS_TO_NOREPLY_ADDRESS=False` when")
         print("using an email provider that doesn't support that feature.")
         print()
         print("Sending 2 test emails from:")

@@ -222,9 +222,7 @@ class TestVideoCall(ZulipTestCase):
         response = self.client_get(
             "/calls/bigbluebutton/join?meeting_id=%22zulip-1%22&password=%22a%22&checksum=%22check%22",
         )
-        self.assert_json_error(
-            response, "Big Blue Button server returned an unexpected error.",
-        )
+        self.assert_json_error(response, "Big Blue Button server returned an unexpected error.")
 
     def test_join_bigbluebutton_redirect_not_configured(self) -> None:
         with self.settings(BIG_BLUE_BUTTON_SECRET=None, BIG_BLUE_BUTTON_URL=None):

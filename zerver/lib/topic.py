@@ -87,9 +87,7 @@ def filter_by_topic_name_via_message(query: QuerySet, topic_name: str) -> QueryS
 
 
 def messages_for_topic(stream_recipient_id: int, topic_name: str) -> QuerySet:
-    return Message.objects.filter(
-        recipient_id=stream_recipient_id, subject__iexact=topic_name,
-    )
+    return Message.objects.filter(recipient_id=stream_recipient_id, subject__iexact=topic_name)
 
 
 def save_message_for_edit_use_case(message: Message) -> None:

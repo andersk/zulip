@@ -220,9 +220,7 @@ class ZulipTestCase(TestCase):
         return django_client.put(url, encoded, **kwargs)
 
     @instrument_url
-    def client_delete(
-        self, url: str, info: Dict[str, Any] = {}, **kwargs: Any
-    ) -> HttpResponse:
+    def client_delete(self, url: str, info: Dict[str, Any] = {}, **kwargs: Any) -> HttpResponse:
         encoded = urllib.parse.urlencode(info)
         django_client = self.client  # see WRAPPER_COMMENT
         self.set_http_headers(kwargs)
@@ -566,9 +564,7 @@ class ZulipTestCase(TestCase):
         Helper function to get the stream names for a user
         """
         subs = get_stream_subscriptions_for_user(user_profile).filter(active=True)
-        return [
-            check_string("recipient", get_display_recipient(sub.recipient)) for sub in subs
-        ]
+        return [check_string("recipient", get_display_recipient(sub.recipient)) for sub in subs]
 
     def send_personal_message(
         self,
@@ -687,9 +683,7 @@ class ZulipTestCase(TestCase):
         self.assertEqual(json.get("result"), "error")
         return json["msg"]
 
-    def assert_json_error(
-        self, result: HttpResponse, msg: str, status_code: int = 400,
-    ) -> None:
+    def assert_json_error(self, result: HttpResponse, msg: str, status_code: int = 400) -> None:
         """
         Invalid POSTs return an error status code and JSON of the form
         {"result": "error", "msg": "reason"}.
@@ -713,9 +707,7 @@ class ZulipTestCase(TestCase):
     def assert_in_response(self, substring: str, response: HttpResponse) -> None:
         self.assertIn(substring, response.content.decode("utf-8"))
 
-    def assert_in_success_response(
-        self, substrings: List[str], response: HttpResponse,
-    ) -> None:
+    def assert_in_success_response(self, substrings: List[str], response: HttpResponse) -> None:
         self.assertEqual(response.status_code, 200)
         decoded = response.content.decode("utf-8")
         for substring in substrings:
@@ -743,9 +735,7 @@ class ZulipTestCase(TestCase):
         return open(fn).read()
 
     def fixture_file_name(self, file_name: str, type: str = "") -> str:
-        return os.path.join(
-            os.path.dirname(__file__), f"../tests/fixtures/{type}/{file_name}",
-        )
+        return os.path.join(os.path.dirname(__file__), f"../tests/fixtures/{type}/{file_name}")
 
     def fixture_data(self, file_name: str, type: str = "") -> str:
         fn = self.fixture_file_name(file_name, type)

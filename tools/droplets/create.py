@@ -64,9 +64,7 @@ def get_keys(username: str) -> List[Dict[str, Any]]:
         response = urllib.request.urlopen(apiurl_keys)
         userkeys = json.load(response)
         if not userkeys:
-            print(
-                f"No keys found. Has user {username} added ssh keys to their github account?",
-            )
+            print(f"No keys found. Has user {username} added ssh keys to their github account?")
             sys.exit(1)
         print("...public keys found!")
         return userkeys

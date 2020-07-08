@@ -128,8 +128,7 @@ class AlertWordTests(ZulipTestCase):
         self.login("hamlet")
 
         result = self.client_post(
-            "/json/users/me/alert_words",
-            {"alert_words": ujson.dumps(["one", "two", "three"])},
+            "/json/users/me/alert_words", {"alert_words": ujson.dumps(["one", "two", "three"])},
         )
         self.assert_json_success(result)
         self.assertEqual(set(result.json()["alert_words"]), {"one", "two", "three"})
@@ -151,8 +150,7 @@ class AlertWordTests(ZulipTestCase):
         user_profile_hamlet = self.example_user("hamlet")
 
         result = self.client_post(
-            "/json/users/me/alert_words",
-            {"alert_words": ujson.dumps(["one", "two", "three"])},
+            "/json/users/me/alert_words", {"alert_words": ujson.dumps(["one", "two", "three"])},
         )
         self.assert_json_success(result)
         self.assertEqual(set(result.json()["alert_words"]), {"one", "two", "three"})
@@ -183,9 +181,7 @@ class AlertWordTests(ZulipTestCase):
             ),
         )
         self.assertFalse(
-            self.message_does_alert(
-                user_profile_hamlet, "Don't alert on http://t.co/one urls",
-            ),
+            self.message_does_alert(user_profile_hamlet, "Don't alert on http://t.co/one urls"),
         )
 
     def test_update_alert_words(self) -> None:

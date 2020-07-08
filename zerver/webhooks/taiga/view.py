@@ -324,9 +324,7 @@ def get_owner_link(message: Mapping[str, Any]) -> str:
 def get_subject(message: Mapping[str, Any]) -> str:
     data = message["data"]
     if "permalink" in data:
-        return (
-            "[" + data.get("subject", data.get("name")) + "]" + "(" + data["permalink"] + ")"
-        )
+        return "[" + data.get("subject", data.get("name")) + "]" + "(" + data["permalink"] + ")"
     return "**" + data.get("subject", data.get("name")) + "**"
 
 

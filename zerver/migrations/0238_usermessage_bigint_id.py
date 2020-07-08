@@ -16,8 +16,6 @@ class Migration(migrations.Migration):
             field=models.BigIntegerField(null=True),
         ),
         migrations.AddField(
-            model_name="usermessage",
-            name="bigint_id",
-            field=models.BigIntegerField(null=True),
+            model_name="usermessage", name="bigint_id", field=models.BigIntegerField(null=True),
         ),
     ]

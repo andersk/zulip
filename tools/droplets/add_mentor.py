@@ -21,10 +21,7 @@ import requests
 parser = ArgumentParser(description="Give a mentor ssh access to this machine.")
 parser.add_argument("username", help="Github username of the mentor.")
 parser.add_argument(
-    "--remove",
-    help="Remove his/her key from the machine.",
-    action="store_true",
-    default=False,
+    "--remove", help="Remove his/her key from the machine.", action="store_true", default=False,
 )
 
 # Wrap keys with line comments for easier key removal.

@@ -208,9 +208,7 @@ def get_assignees_string(pr: Dict[str, Any]) -> Optional[str]:
 
 
 def get_pr_subject(repo: str, type: str, id: str, title: str) -> str:
-    return TOPIC_WITH_PR_OR_ISSUE_INFO_TEMPLATE.format(
-        repo=repo, type=type, id=id, title=title,
-    )
+    return TOPIC_WITH_PR_OR_ISSUE_INFO_TEMPLATE.format(repo=repo, type=type, id=id, title=title)
 
 
 def get_simple_pr_body(

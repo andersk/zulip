@@ -251,9 +251,9 @@ class SoftDeactivationMessageTest(ZulipTestCase):
         topic_name = "foo"
 
         def last_realm_audit_log_entry(event_type: int) -> RealmAuditLog:
-            return RealmAuditLog.objects.filter(event_type=event_type).order_by(
-                "-event_time",
-            )[0]
+            return RealmAuditLog.objects.filter(event_type=event_type).order_by("-event_time")[
+                0
+            ]
 
         long_term_idle_user = self.example_user("hamlet")
         # We are sending this message to ensure that long_term_idle_user has

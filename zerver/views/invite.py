@@ -62,9 +62,7 @@ def invite_users_backend(
             (stream, recipient, sub) = access_stream_by_id(user_profile, stream_id)
         except JsonableError:
             return json_error(
-                _("Stream does not exist with id: {}. No invites were sent.").format(
-                    stream_id,
-                ),
+                _("Stream does not exist with id: {}. No invites were sent.").format(stream_id),
             )
         streams.append(stream)
 

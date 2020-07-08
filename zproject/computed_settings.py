@@ -679,9 +679,7 @@ DIGEST_LOG_PATH = zulip_path("/var/log/zulip/digest.log")
 ANALYTICS_LOG_PATH = zulip_path("/var/log/zulip/analytics.log")
 ANALYTICS_LOCK_DIR = zulip_path("/home/zulip/deployments/analytics-lock-dir")
 API_KEY_ONLY_WEBHOOK_LOG_PATH = zulip_path("/var/log/zulip/webhooks_errors.log")
-WEBHOOK_UNEXPECTED_EVENTS_LOG_PATH = zulip_path(
-    "/var/log/zulip/webhooks_unexpected_events.log",
-)
+WEBHOOK_UNEXPECTED_EVENTS_LOG_PATH = zulip_path("/var/log/zulip/webhooks_unexpected_events.log")
 SOFT_DEACTIVATION_LOG_PATH = zulip_path("/var/log/zulip/soft_deactivation.log")
 TRACEMALLOC_DUMP_DIR = zulip_path("/var/log/zulip/tracemalloc")
 SCHEDULED_MESSAGE_DELIVERER_LOG_PATH = zulip_path(
@@ -999,9 +997,7 @@ SOCIAL_AUTH_LOGIN_ERROR_URL = "/login/"
 # and our own custom backend code.
 SOCIAL_AUTH_APPLE_CLIENT = SOCIAL_AUTH_APPLE_SERVICES_ID
 if PRODUCTION:
-    SOCIAL_AUTH_APPLE_SECRET = get_from_file_if_exists(
-        "/etc/zulip/apple/zulip-private-key.key",
-    )
+    SOCIAL_AUTH_APPLE_SECRET = get_from_file_if_exists("/etc/zulip/apple/zulip-private-key.key")
 else:
     SOCIAL_AUTH_APPLE_SECRET = get_from_file_if_exists("zproject/dev_apple.key")
 

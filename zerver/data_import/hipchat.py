@@ -236,9 +236,7 @@ def convert_room_data(
 
         if invite_only:
             users: Set[int] = {
-                user_id_mapper.get(key)
-                for key in in_dict["members"]
-                if user_id_mapper.has(key)
+                user_id_mapper.get(key) for key in in_dict["members"] if user_id_mapper.has(key)
             }
 
             if user_id_mapper.has(in_dict["owner"]):

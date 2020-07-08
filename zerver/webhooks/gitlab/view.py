@@ -194,14 +194,10 @@ def get_commented_merge_request_event_body(
     )
 
 
-def get_commented_issue_event_body(
-    payload: Dict[str, Any], include_title: bool = False,
-) -> str:
+def get_commented_issue_event_body(payload: Dict[str, Any], include_title: bool = False) -> str:
     comment = payload["object_attributes"]
     action = "[commented]({}) on".format(comment["url"])
-    url = "{}/issues/{}".format(
-        payload["project"].get("web_url"), payload["issue"].get("iid"),
-    )
+    url = "{}/issues/{}".format(payload["project"].get("web_url"), payload["issue"].get("iid"))
 
     return get_pull_request_event_message(
         get_issue_user_name(payload),
@@ -346,9 +342,7 @@ EVENT_FUNCTION_MAPPER = {
     "Confidential Note Hook Issue": get_commented_issue_event_body,
     "Note Hook Snippet": get_commented_snippet_event_body,
     "Merge Request Hook approved": partial(get_merge_request_event_body, action="approved"),
-    "Merge Request Hook unapproved": partial(
-        get_merge_request_event_body, action="unapproved",
-    ),
+    "Merge Request Hook unapproved": partial(get_merge_request_event_body, action="unapproved"),
     "Merge Request Hook open": partial(
         get_merge_request_open_or_updated_body, action="created",
     ),
@@ -377,9 +371,7 @@ def api_gitlab_webhook(
     if event is not None:
         event_body_function = get_body_based_on_event(event)
         if "include_title" in signature(event_body_function).parameters:
-            body = event_body_function(
-                payload, include_title=user_specified_topic is not None,
-            )
+            body = event_body_function(payload, include_title=user_specified_topic is not None)
         else:
             body = event_body_function(payload)
 

@@ -165,9 +165,7 @@ def semaphore_2(payload: Dict[str, Any]) -> Tuple[str, str, Optional[str]]:
     workflow_id = payload["workflow"]["id"]
     context = dict(
         author_name=author_name,
-        author_url=GITHUB_URL_TEMPLATES["user"].format(
-            repo_url=repo_url, username=author_name,
-        ),
+        author_url=GITHUB_URL_TEMPLATES["user"].format(repo_url=repo_url, username=author_name),
         pipeline_name=payload["pipeline"]["name"],
         pipeline_result=payload["pipeline"]["result"],
         workflow_url=f"https://{organization_name}.semaphoreci.com/workflows/{workflow_id}",

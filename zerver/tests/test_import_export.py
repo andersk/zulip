@@ -749,9 +749,7 @@ class ImportExportTest(ZulipTestCase):
         self.assertIn(list(exported_stream_id)[0], exported_recipient_type_id)
 
         exported_recipient_id = self.get_set(user["zerver_recipient"], "id")
-        exported_subscription_recipient = self.get_set(
-            user["zerver_subscription"], "recipient",
-        )
+        exported_subscription_recipient = self.get_set(user["zerver_subscription"], "recipient")
         self.assertEqual(exported_recipient_id, exported_subscription_recipient)
 
         exported_messages_recipient = self.get_set(messages["zerver_message"], "recipient")
@@ -1057,9 +1055,7 @@ class ImportExportTest(ZulipTestCase):
         def get_userpresence_timestamp(r: Realm) -> Set[Any]:
             # It should be sufficient to compare UserPresence timestamps to verify
             # they got exported/imported correctly.
-            return set(
-                UserPresence.objects.filter(realm=r).values_list("timestamp", flat=True),
-            )
+            return set(UserPresence.objects.filter(realm=r).values_list("timestamp", flat=True))
 
         assert_realm_values(get_userpresence_timestamp)
 

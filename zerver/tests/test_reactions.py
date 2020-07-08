@@ -160,9 +160,7 @@ class ReactionEmojiTest(ZulipTestCase):
         self.assert_json_success(result)
 
         # Fetch the now-created UserMessage object to confirm it exists and is historical
-        user_message = UserMessage.objects.get(
-            user_profile=user_profile, message_id=message_id,
-        )
+        user_message = UserMessage.objects.get(user_profile=user_profile, message_id=message_id)
         self.assertTrue(user_message.flags.historical)
         self.assertTrue(user_message.flags.read)
         self.assertFalse(user_message.flags.starred)
@@ -759,9 +757,7 @@ class DefaultEmojiReactionTests(EmojiReactionBase):
         self.assert_json_success(result)
 
         # Fetch the now-created UserMessage object to confirm it exists and is historical
-        user_message = UserMessage.objects.get(
-            user_profile=user_profile, message_id=message_id,
-        )
+        user_message = UserMessage.objects.get(user_profile=user_profile, message_id=message_id)
         self.assertTrue(user_message.flags.historical)
         self.assertTrue(user_message.flags.read)
         self.assertFalse(user_message.flags.starred)

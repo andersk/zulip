@@ -438,9 +438,7 @@ class AnalyticsBouncerTest(BouncerTestCase):
         ) -> None:
             self.assertEqual(mock_request.call_count, mock_request_call_count)
             self.assertEqual(RemoteRealmCount.objects.count(), remote_realm_count)
-            self.assertEqual(
-                RemoteInstallationCount.objects.count(), remote_installation_count,
-            )
+            self.assertEqual(RemoteInstallationCount.objects.count(), remote_installation_count)
             self.assertEqual(
                 RemoteRealmAuditLog.objects.count(),
                 remote_audit_log_count + remote_realm_audit_log,
@@ -1692,9 +1690,7 @@ class TestSendNotificationsToBouncer(ZulipTestCase):
 
 
 class Result:
-    def __init__(
-        self, status: int = 200, content: str = ujson.dumps({"msg": "error"}),
-    ) -> None:
+    def __init__(self, status: int = 200, content: str = ujson.dumps({"msg": "error"})) -> None:
         self.status_code = status
         self.content = content
 
@@ -1745,8 +1741,7 @@ class TestSendToPushBouncer(ZulipTestCase):
         with self.assertRaises(PushNotificationBouncerException) as exc:
             send_to_push_bouncer("register", "register", {"msg": "true"})
         self.assertEqual(
-            str(exc.exception),
-            "Push notification bouncer returned unexpected status code 300",
+            str(exc.exception), "Push notification bouncer returned unexpected status code 300",
         )
 
 
@@ -1943,10 +1938,7 @@ class GCMSendTest(PushNotificationTest):
     @mock.patch("zerver.lib.push_notifications.logger.warning")
     @mock.patch("zerver.lib.push_notifications.logger.info")
     def test_success(
-        self,
-        mock_info: mock.MagicMock,
-        mock_warning: mock.MagicMock,
-        mock_gcm: mock.MagicMock,
+        self, mock_info: mock.MagicMock, mock_warning: mock.MagicMock, mock_gcm: mock.MagicMock,
     ) -> None:
         res = {}
         res["success"] = {token: ind for ind, token in enumerate(self.gcm_tokens)}
@@ -1986,9 +1978,7 @@ class GCMSendTest(PushNotificationTest):
 
         def get_count(hex_token: str) -> int:
             token = hex_to_b64(hex_token)
-            return PushDeviceToken.objects.filter(
-                token=token, kind=PushDeviceToken.GCM,
-            ).count()
+            return PushDeviceToken.objects.filter(token=token, kind=PushDeviceToken.GCM).count()
 
         self.assertEqual(get_count("1111"), 1)
         self.assertEqual(get_count("3333"), 0)
@@ -2015,9 +2005,7 @@ class GCMSendTest(PushNotificationTest):
 
         def get_count(hex_token: str) -> int:
             token = hex_to_b64(hex_token)
-            return PushDeviceToken.objects.filter(
-                token=token, kind=PushDeviceToken.GCM,
-            ).count()
+            return PushDeviceToken.objects.filter(token=token, kind=PushDeviceToken.GCM).count()
 
         self.assertEqual(get_count("1111"), 1)
         self.assertEqual(get_count("2222"), 1)
@@ -2040,9 +2028,7 @@ class GCMSendTest(PushNotificationTest):
 
         def get_count(hex_token: str) -> int:
             token = hex_to_b64(hex_token)
-            return PushDeviceToken.objects.filter(
-                token=token, kind=PushDeviceToken.GCM,
-            ).count()
+            return PushDeviceToken.objects.filter(token=token, kind=PushDeviceToken.GCM).count()
 
         self.assertEqual(get_count("1111"), 1)
 

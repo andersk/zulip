@@ -156,9 +156,7 @@ def remove_ratelimit_rule(
     range_seconds: int, num_requests: int, domain: str = "api_by_user",
 ) -> None:
     global rules
-    rules[domain] = [
-        x for x in rules[domain] if x[0] != range_seconds and x[1] != num_requests
-    ]
+    rules[domain] = [x for x in rules[domain] if x[0] != range_seconds and x[1] != num_requests]
 
 
 class RateLimiterBackend(ABC):

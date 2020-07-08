@@ -259,9 +259,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         url_only_url = data["url"]
 
         self.assertTrue(url_only_url.endswith("zulip.txt"))
-        url_only_url_changed_filename = (
-            url_only_url.split("zulip.txt")[0] + "differentname.exe"
-        )
+        url_only_url_changed_filename = url_only_url.split("zulip.txt")[0] + "differentname.exe"
         result = self.client_get(url_only_url_changed_filename)
         self.assert_json_error(result, "Invalid filename")
 
@@ -612,9 +610,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         uri = result.json()["uri"]
         fp_path_id = re.sub("/user_uploads/", "", uri)
         body = (
-            f"First message ...[zulip.txt](http://{realm.host}/user_uploads/"
-            + fp_path_id
-            + ")"
+            f"First message ...[zulip.txt](http://{realm.host}/user_uploads/" + fp_path_id + ")"
         )
         self.send_stream_message(hamlet, stream_name, body, "test")
         self.logout()
@@ -659,10 +655,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         unsubscribed_users = [self.example_user("othello"), self.example_user("prospero")]
         stream_name = "test-subscribe"
         self.make_stream(
-            stream_name,
-            realm=user.realm,
-            invite_only=True,
-            history_public_to_subscribers=True,
+            stream_name, realm=user.realm, invite_only=True, history_public_to_subscribers=True,
         )
 
         for subscribed_user in subscribed_users:
@@ -800,9 +793,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         uri = result.json()["uri"]
         fp_path_id = re.sub("/user_uploads/", "", uri)
         body = (
-            f"First message ...[zulip.txt](http://{realm.host}/user_uploads/"
-            + fp_path_id
-            + ")"
+            f"First message ...[zulip.txt](http://{realm.host}/user_uploads/" + fp_path_id + ")"
         )
         self.send_stream_message(self.example_user("hamlet"), "test-subscribe", body, "test")
         self.logout()
@@ -1224,9 +1215,7 @@ class AvatarTest(UploadSerializeMixin, ZulipTestCase):
 
         do_set_realm_property(cordelia.realm, "avatar_changes_disabled", True)
         result = self.client_delete("/json/users/me/avatar")
-        self.assert_json_error(
-            result, "Avatar changes are disabled in this organization.", 400,
-        )
+        self.assert_json_error(result, "Avatar changes are disabled in this organization.", 400)
 
         do_set_realm_property(cordelia.realm, "avatar_changes_disabled", False)
         result = self.client_delete("/json/users/me/avatar")
@@ -1595,9 +1584,7 @@ class RealmLogoTest(UploadSerializeMixin, ZulipTestCase):
             version = realm.logo_version
         self.assertEqual(version, 1)
         with get_test_image_file(self.correct_files[0][0]) as fp:
-            self.client_post(
-                "/json/realm/logo", {"file": fp, "night": ujson.dumps(self.night)},
-            )
+            self.client_post("/json/realm/logo", {"file": fp, "night": ujson.dumps(self.night)})
         realm = get_realm("zulip")
         if self.night:
             self.assertEqual(realm.night_logo_version, version + 1)
@@ -1988,9 +1975,7 @@ class S3Test(ZulipTestCase):
         emoji_name = "emoji.png"
         realm_id = 1
         bucket = settings.S3_AVATAR_BUCKET
-        path = RealmEmoji.PATH_ID_TEMPLATE.format(
-            realm_id=realm_id, emoji_file_name=emoji_name,
-        )
+        path = RealmEmoji.PATH_ID_TEMPLATE.format(realm_id=realm_id, emoji_file_name=emoji_name)
 
         url = zerver.lib.upload.upload_backend.get_emoji_url("emoji.png", realm_id)
 
@@ -2064,9 +2049,7 @@ class UploadSpaceTests(UploadSerializeMixin, ZulipTestCase):
             len(data) + len(data2),
             cache_get(get_realm_used_upload_space_cache_key(self.realm))[0],
         )
-        self.assertEqual(
-            len(data) + len(data2), self.realm.currently_used_upload_space_bytes(),
-        )
+        self.assertEqual(len(data) + len(data2), self.realm.currently_used_upload_space_bytes())
 
         attachment = Attachment.objects.get(file_name="dummy.txt")
         attachment.file_name = "dummy1.txt"
@@ -2075,9 +2058,7 @@ class UploadSpaceTests(UploadSerializeMixin, ZulipTestCase):
             len(data) + len(data2),
             cache_get(get_realm_used_upload_space_cache_key(self.realm))[0],
         )
-        self.assertEqual(
-            len(data) + len(data2), self.realm.currently_used_upload_space_bytes(),
-        )
+        self.assertEqual(len(data) + len(data2), self.realm.currently_used_upload_space_bytes())
 
         attachment.delete()
         self.assertEqual(None, cache_get(get_realm_used_upload_space_cache_key(self.realm)))

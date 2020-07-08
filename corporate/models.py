@@ -37,9 +37,7 @@ class CustomerPlan(models.Model):
     fixed_price: Optional[int] = models.IntegerField(null=True)
 
     # Discount that was applied. For display purposes only.
-    discount: Optional[Decimal] = models.DecimalField(
-        decimal_places=4, max_digits=6, null=True,
-    )
+    discount: Optional[Decimal] = models.DecimalField(decimal_places=4, max_digits=6, null=True)
 
     billing_cycle_anchor: datetime.datetime = models.DateTimeField()
     ANNUAL = 1

@@ -17,10 +17,7 @@ class Migration(migrations.Migration):
                 (
                     "id",
                     models.AutoField(
-                        verbose_name="ID",
-                        serialize=False,
-                        auto_created=True,
-                        primary_key=True,
+                        verbose_name="ID", serialize=False, auto_created=True, primary_key=True,
                     ),
                 ),
                 ("info", models.CharField(max_length=1000)),
@@ -33,10 +30,7 @@ class Migration(migrations.Migration):
                 (
                     "id",
                     models.AutoField(
-                        verbose_name="ID",
-                        serialize=False,
-                        auto_created=True,
-                        primary_key=True,
+                        verbose_name="ID", serialize=False, auto_created=True, primary_key=True,
                     ),
                 ),
                 (
@@ -73,10 +67,7 @@ class Migration(migrations.Migration):
                 (
                     "id",
                     models.AutoField(
-                        verbose_name="ID",
-                        serialize=False,
-                        auto_created=True,
-                        primary_key=True,
+                        verbose_name="ID", serialize=False, auto_created=True, primary_key=True,
                     ),
                 ),
                 ("property", models.CharField(max_length=40)),
@@ -100,10 +91,7 @@ class Migration(migrations.Migration):
                 (
                     "id",
                     models.AutoField(
-                        verbose_name="ID",
-                        serialize=False,
-                        auto_created=True,
-                        primary_key=True,
+                        verbose_name="ID", serialize=False, auto_created=True, primary_key=True,
                     ),
                 ),
                 (
@@ -133,10 +121,7 @@ class Migration(migrations.Migration):
                 (
                     "id",
                     models.AutoField(
-                        verbose_name="ID",
-                        serialize=False,
-                        auto_created=True,
-                        primary_key=True,
+                        verbose_name="ID", serialize=False, auto_created=True, primary_key=True,
                     ),
                 ),
                 (
@@ -172,10 +157,7 @@ class Migration(migrations.Migration):
                 (
                     "id",
                     models.AutoField(
-                        verbose_name="ID",
-                        serialize=False,
-                        auto_created=True,
-                        primary_key=True,
+                        verbose_name="ID", serialize=False, auto_created=True, primary_key=True,
                     ),
                 ),
                 (

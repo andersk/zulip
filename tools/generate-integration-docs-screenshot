@@ -225,10 +225,7 @@ parser.add_argument(
 )
 parser.add_argument("--bot-name", type=str, help="Name to use for the bot")
 parser.add_argument(
-    "-A",
-    "--use-basic-auth",
-    action="store_true",
-    help="Add basic auth headers to the request",
+    "-A", "--use-basic-auth", action="store_true", help="Add basic auth headers to the request",
 )
 parser.add_argument(
     "-Q",

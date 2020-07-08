@@ -123,7 +123,9 @@ class TrelloHookTests(WebhookTestCase):
         )
 
     def test_trello_webhook_when_list_was_added_to_board(self) -> None:
-        expected_message = "TomaszKolek added New list list to [Welcome Board](https://trello.com/b/iqXXzYEj)."
+        expected_message = (
+            "TomaszKolek added New list list to [Welcome Board](https://trello.com/b/iqXXzYEj)."
+        )
         self.send_and_test_stream_message(
             "adding_new_list_to_board", "Welcome Board", expected_message,
         )

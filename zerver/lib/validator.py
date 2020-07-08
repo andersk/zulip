@@ -98,9 +98,9 @@ def check_string_fixed_length(length: int) -> Validator[str]:
         s = check_string(var_name, val)
         if len(s) != length:
             raise ValidationError(
-                _(
-                    "{var_name} has incorrect length {length}; should be {target_length}",
-                ).format(var_name=var_name, target_length=length, length=len(s)),
+                _("{var_name} has incorrect length {length}; should be {target_length}").format(
+                    var_name=var_name, target_length=length, length=len(s),
+                ),
             )
         return s
 

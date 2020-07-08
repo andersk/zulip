@@ -601,9 +601,7 @@ def delete_user_profile_caches(user_profiles: Iterable["UserProfile"]) -> None:
 
 
 def delete_display_recipient_cache(user_profile: "UserProfile") -> None:
-    from zerver.models import (
-        Subscription,
-    )  # We need to import here to avoid cyclic dependency.
+    from zerver.models import Subscription  # We need to import here to avoid cyclic dependency.
 
     recipient_ids = Subscription.objects.filter(user_profile=user_profile)
     recipient_ids = recipient_ids.values_list("recipient_id", flat=True)

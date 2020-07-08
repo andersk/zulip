@@ -28,9 +28,7 @@ class Command(BaseCommand):
         )
 
         parser.add_argument(
-            "--output",
-            action="store",
-            help="Path to store the status to (default to stdout).",
+            "--output", action="store", help="Path to store the status to (default to stdout).",
         )
 
     def handle(self, *args: Any, **options: Any) -> None:

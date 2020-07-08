@@ -11,9 +11,7 @@ class TestRealmInternalBotCreation(ZulipTestCase):
 
         def check_test_bot_exists() -> bool:
             all_realms_count = Realm.objects.count()
-            all_test_bot_count = UserProfile.objects.filter(
-                email="test-bot@zulip.com",
-            ).count()
+            all_test_bot_count = UserProfile.objects.filter(email="test-bot@zulip.com").count()
             return all_realms_count == all_test_bot_count
 
         self.assertFalse(check_test_bot_exists())

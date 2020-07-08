@@ -407,9 +407,7 @@ class TestGetChartData(ZulipTestCase):
         )
 
     def test_non_existent_chart(self) -> None:
-        result = self.client_get(
-            "/json/analytics/chart_data", {"chart_name": "does_not_exist"},
-        )
+        result = self.client_get("/json/analytics/chart_data", {"chart_name": "does_not_exist"})
         self.assert_json_error_contains(result, "Unknown chart name")
 
     def test_analytics_not_running(self) -> None:
@@ -708,9 +706,7 @@ class TestSupportEndpoint(ZulipTestCase):
             },
         )
         result = self.client_get("/activity/support", {"q": self.nonreg_email("test1")})
-        check_preregistration_user_query_result(
-            result, self.nonreg_email("test1"), invite=True,
-        )
+        check_preregistration_user_query_result(result, self.nonreg_email("test1"), invite=True)
         check_zulip_realm_query_result(result)
 
         email = self.nonreg_email("alice")
@@ -864,9 +860,7 @@ class TestSupportEndpoint(ZulipTestCase):
 
         with mock.patch("analytics.views.do_scrub_realm") as m:
             with self.assertRaises(AssertionError):
-                result = self.client_post(
-                    "/activity/support", {"realm_id": f"{lear_realm.id}"},
-                )
+                result = self.client_post("/activity/support", {"realm_id": f"{lear_realm.id}"})
             m.assert_not_called()
 
 

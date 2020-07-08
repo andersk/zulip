@@ -158,9 +158,7 @@ class TopicDeleteTest(ZulipTestCase):
         # Send message
         stream = get_stream(stream_name, user_profile.realm)
         self.send_stream_message(user_profile, stream_name, topic_name=topic_name)
-        last_msg_id = self.send_stream_message(
-            user_profile, stream_name, topic_name=topic_name,
-        )
+        last_msg_id = self.send_stream_message(user_profile, stream_name, topic_name=topic_name)
 
         # Deleting the topic
         self.login_user(user_profile)

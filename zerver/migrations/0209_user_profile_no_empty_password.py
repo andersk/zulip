@@ -96,8 +96,7 @@ def ensure_no_empty_passwords(apps: StateApps, schema_editor: DatabaseSchemaEdit
 
         # We check if the user changed their API key since their first password change.
         query = RealmAuditLog.objects.filter(
-            modified_user=user_id,
-            event_type__in=[USER_PASSWORD_CHANGED, USER_API_KEY_CHANGED],
+            modified_user=user_id, event_type__in=[USER_PASSWORD_CHANGED, USER_API_KEY_CHANGED],
         ).order_by("event_time")
 
         earliest_password_change = query.filter(event_type=USER_PASSWORD_CHANGED).first()

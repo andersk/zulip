@@ -39,8 +39,7 @@ Usage examples:
                 if realm.deactivated:
                     print(
                         self.style.ERROR(
-                            outer_format
-                            % (realm.id, display_string_id, realm.name, realm.uri),
+                            outer_format % (realm.id, display_string_id, realm.name, realm.uri),
                         ),
                     )
                     deactivated = True

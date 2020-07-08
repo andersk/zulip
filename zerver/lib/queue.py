@@ -401,9 +401,7 @@ def queue_json_publish(
 
 
 def retry_event(
-    queue_name: str,
-    event: Dict[str, Any],
-    failure_processor: Callable[[Dict[str, Any]], None],
+    queue_name: str, event: Dict[str, Any], failure_processor: Callable[[Dict[str, Any]], None],
 ) -> None:
     if "failed_tries" not in event:
         event["failed_tries"] = 0

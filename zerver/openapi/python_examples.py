@@ -386,9 +386,7 @@ def get_user_groups(client: Client) -> int:
     # {code_example|end}
 
     validate_against_openapi_schema(result, "/user_groups", "get", "200")
-    hamlet_user_group = [u for u in result["user_groups"] if u["name"] == "hamletcharacters"][
-        0
-    ]
+    hamlet_user_group = [u for u in result["user_groups"] if u["name"] == "hamletcharacters"][0]
     assert hamlet_user_group["description"] == "Characters of Hamlet"
 
     marketing_user_group = [u for u in result["user_groups"] if u["name"] == "marketing"][0]
@@ -542,9 +540,7 @@ def update_subscription_settings(client: Client) -> None:
     result = client.update_subscription_settings(request)
     # {code_example|end}
 
-    validate_against_openapi_schema(
-        result, "/users/me/subscriptions/properties", "POST", "200",
-    )
+    validate_against_openapi_schema(result, "/users/me/subscriptions/properties", "POST", "200")
 
 
 @openapi_test_function("/messages/render:post")
@@ -604,9 +600,7 @@ def check_messages_match_narrow(client: Client) -> None:
         "narrow": [{"operator": "has", "operand": "link"}],
     }
 
-    result = client.call_endpoint(
-        url="messages/matches_narrow", method="GET", request=request,
-    )
+    result = client.call_endpoint(url="messages/matches_narrow", method="GET", request=request)
     # {code_example|end}
 
     validate_against_openapi_schema(result, "/messages/matches_narrow", "get", "200")
@@ -710,9 +704,7 @@ def remove_reaction(client: Client, message_id: int) -> None:
 
     result = client.remove_reaction(request)
     # {code_example|end}
-    validate_against_openapi_schema(
-        result, "/messages/{message_id}/reactions", "delete", "200",
-    )
+    validate_against_openapi_schema(result, "/messages/{message_id}/reactions", "delete", "200")
 
 
 def test_nonexistent_stream_error(client: Client) -> None:

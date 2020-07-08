@@ -11,9 +11,7 @@ def access_user_group_by_id(user_group_id: int, user_profile: UserProfile) -> Us
     try:
         user_group = UserGroup.objects.get(id=user_group_id, realm=user_profile.realm)
         group_member_ids = get_user_group_members(user_group)
-        msg = _(
-            "Only group members and organization administrators can administer this group.",
-        )
+        msg = _("Only group members and organization administrators can administer this group.")
         if not user_profile.is_realm_admin and user_profile.id not in group_member_ids:
             raise JsonableError(msg)
     except UserGroup.DoesNotExist:
@@ -71,9 +69,7 @@ def remove_user_from_user_group(user_profile: UserProfile, user_group: UserGroup
     return num_deleted
 
 
-def check_remove_user_from_user_group(
-    user_profile: UserProfile, user_group: UserGroup,
-) -> bool:
+def check_remove_user_from_user_group(user_profile: UserProfile, user_group: UserGroup) -> bool:
     try:
         num_deleted = remove_user_from_user_group(user_profile, user_group)
         return bool(num_deleted)

@@ -282,9 +282,7 @@ def send_message_backend(
     if (delivery_type == "send_later" or delivery_type == "remind") and defer_until is None:
         return json_error(_("Missing deliver_at in a request for delayed message delivery"))
 
-    if (
-        delivery_type == "send_later" or delivery_type == "remind"
-    ) and defer_until is not None:
+    if (delivery_type == "send_later" or delivery_type == "remind") and defer_until is not None:
         return handle_deferred_message(
             sender,
             client,

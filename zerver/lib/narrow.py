@@ -48,9 +48,7 @@ def is_web_public_compatible(narrow: Iterable[Dict[str, str]]) -> bool:
     return True
 
 
-def build_narrow_filter(
-    narrow: Iterable[Sequence[str]],
-) -> Callable[[Mapping[str, Any]], bool]:
+def build_narrow_filter(narrow: Iterable[Sequence[str]]) -> Callable[[Mapping[str, Any]], bool]:
     """Changes to this function should come with corresponding changes to
     BuildNarrowFilterTest."""
     check_supported_events_narrow_filter(narrow)

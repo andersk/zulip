@@ -858,9 +858,7 @@ class MarkdownTest(ZulipTestCase):
 
         emoji_in_tweet_html = """Zulip is <span aria-label=\"100\" class="emoji emoji-1f4af" role=\"img\" title="100">:100:</span>% open-source!"""
 
-        def make_inline_twitter_preview(
-            url: str, tweet_html: str, image_html: str = "",
-        ) -> str:
+        def make_inline_twitter_preview(url: str, tweet_html: str, image_html: str = "") -> str:
             ## As of right now, all previews are mocked to be the exact same tweet
             return (
                 '<div class="inline-preview-twitter">'
@@ -1468,10 +1466,7 @@ class MarkdownTest(ZulipTestCase):
         et j'espère qu'il n'y n' réglementaire a pas de mots d'alerte dans ce texte français
         """
         render(msg, content)
-        expected_user_ids: Set[int] = {
-            user_profiles["hamlet"].id,
-            user_profiles["cordelia"].id,
-        }
+        expected_user_ids: Set[int] = {user_profiles["hamlet"].id, user_profiles["cordelia"].id}
         # Only hamlet and cordelia have their alert-words appear in the message content
         self.assertEqual(msg.user_ids_with_alert_words, expected_user_ids)
 
@@ -1532,9 +1527,7 @@ class MarkdownTest(ZulipTestCase):
                 msg, content, realm_alert_words_automaton=realm_alert_words_automaton,
             )
 
-        content = (
-            """This is to test a empty alert words i.e. no user has any alert-words set"""
-        )
+        content = """This is to test a empty alert words i.e. no user has any alert-words set"""
         render(msg, content)
         expected_user_ids: Set[int] = set()
         self.assertEqual(msg.user_ids_with_alert_words, expected_user_ids)
@@ -1729,9 +1722,7 @@ class MarkdownTest(ZulipTestCase):
         self.assertEqual(msg.mentions_user_ids, set())
 
     def test_possible_mentions(self) -> None:
-        def assert_mentions(
-            content: str, names: Set[str], has_wildcards: bool = False,
-        ) -> None:
+        def assert_mentions(content: str, names: Set[str], has_wildcards: bool = False) -> None:
             self.assertEqual(possible_mentions(content), (names, has_wildcards))
 
         assert_mentions("", set())

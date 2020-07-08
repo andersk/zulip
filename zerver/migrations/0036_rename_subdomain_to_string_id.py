@@ -8,7 +8,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RenameField(
-            model_name="realm", old_name="subdomain", new_name="string_id",
-        ),
+        migrations.RenameField(model_name="realm", old_name="subdomain", new_name="string_id"),
     ]

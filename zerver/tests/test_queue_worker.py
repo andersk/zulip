@@ -260,9 +260,7 @@ class WorkerTest(ZulipTestCase):
                 fake_client.queue.append(("missedmessage_mobile_notifications", event_remove))
 
                 worker.start()
-                mock_handle_new.assert_called_once_with(
-                    event_new["user_profile_id"], event_new,
-                )
+                mock_handle_new.assert_called_once_with(event_new["user_profile_id"], event_new)
                 mock_handle_remove.assert_called_once_with(
                     event_remove["user_profile_id"], event_remove["message_ids"],
                 )
@@ -398,8 +396,7 @@ class WorkerTest(ZulipTestCase):
             worker = queue_processors.EmailSendingWorker()
             worker.setup()
             with patch(
-                "zerver.lib.send_email.build_email",
-                side_effect=smtplib.SMTPServerDisconnected,
+                "zerver.lib.send_email.build_email", side_effect=smtplib.SMTPServerDisconnected,
             ), patch("zerver.lib.queue.queue_json_publish", side_effect=fake_publish), patch(
                 "logging.exception",
             ):

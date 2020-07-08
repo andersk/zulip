@@ -695,9 +695,7 @@ class Command(BaseCommand):
                     ("King Lear", "king@lear.org"),
                     ("Cordelia Lear", "cordelia@zulip.com"),
                 ]
-                create_users(
-                    lear_realm, testsuite_lear_users, tos_version=settings.TOS_VERSION,
-                )
+                create_users(lear_realm, testsuite_lear_users, tos_version=settings.TOS_VERSION)
 
             if not options["test_suite"]:
                 # To keep the messages.json fixtures file for the test

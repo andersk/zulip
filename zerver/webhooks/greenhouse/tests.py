@@ -19,10 +19,7 @@ Hire Candidate Johnny Smith (ID: 19), applying for:
 """.strip()
 
         self.send_and_test_stream_message(
-            "candidate_hired",
-            expected_topic,
-            expected_message,
-            content_type=self.CONTENT_TYPE,
+            "candidate_hired", expected_topic, expected_message, content_type=self.CONTENT_TYPE,
         )
 
     def test_message_candidate_rejected(self) -> None:

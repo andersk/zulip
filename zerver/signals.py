@@ -30,16 +30,12 @@ def get_device_browser(user_agent: str) -> Optional[str]:
     elif ("chrome" in user_agent or "crios" in user_agent) and "chromium" not in user_agent:
         return "Chrome"
     elif (
-        "firefox" in user_agent
-        and "seamonkey" not in user_agent
-        and "chrome" not in user_agent
+        "firefox" in user_agent and "seamonkey" not in user_agent and "chrome" not in user_agent
     ):
         return "Firefox"
     elif "chromium" in user_agent:
         return "Chromium"
-    elif (
-        "safari" in user_agent and "chrome" not in user_agent and "chromium" not in user_agent
-    ):
+    elif "safari" in user_agent and "chrome" not in user_agent and "chromium" not in user_agent:
         return "Safari"
     elif "msie" in user_agent or "trident" in user_agent:
         return "Internet Explorer"

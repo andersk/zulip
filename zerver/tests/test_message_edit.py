@@ -277,16 +277,12 @@ class EditMessageTest(ZulipTestCase):
         )
         self.assert_json_success(result_1)
 
-        message_edit_history_1 = self.client_get(
-            "/json/messages/" + str(msg_id_1) + "/history",
-        )
+        message_edit_history_1 = self.client_get("/json/messages/" + str(msg_id_1) + "/history")
         json_response_1 = ujson.loads(message_edit_history_1.content.decode("utf-8"))
         message_history_1 = json_response_1["message_history"]
 
         # Check content of message after edit.
-        self.assertEqual(
-            message_history_1[0]["rendered_content"], "<p>content before edit</p>",
-        )
+        self.assertEqual(message_history_1[0]["rendered_content"], "<p>content before edit</p>")
         self.assertEqual(message_history_1[1]["rendered_content"], "<p>content after edit</p>")
         self.assertEqual(
             message_history_1[1]["content_html_diff"],
@@ -320,9 +316,7 @@ class EditMessageTest(ZulipTestCase):
         )
         self.assert_json_success(result_2)
 
-        message_edit_history_2 = self.client_get(
-            "/json/messages/" + str(msg_id_2) + "/history",
-        )
+        message_edit_history_2 = self.client_get("/json/messages/" + str(msg_id_2) + "/history")
         json_response_2 = ujson.loads(message_edit_history_2.content.decode("utf-8"))
         message_history_2 = json_response_2["message_history"]
 
@@ -367,9 +361,7 @@ class EditMessageTest(ZulipTestCase):
         )
         self.assert_json_success(result_1)
 
-        message_edit_history_1 = self.client_get(
-            "/json/messages/" + str(msg_id_1) + "/history",
-        )
+        message_edit_history_1 = self.client_get("/json/messages/" + str(msg_id_1) + "/history")
         json_response_1 = ujson.loads(message_edit_history_1.content.decode("utf-8"))
         message_history_1 = json_response_1["message_history"]
 
@@ -561,9 +553,7 @@ class EditMessageTest(ZulipTestCase):
                 {
                     "allow_message_editing": ujson.dumps(allow_message_editing),
                     "message_content_edit_limit_seconds": message_content_edit_limit_seconds,
-                    "allow_community_topic_editing": ujson.dumps(
-                        allow_community_topic_editing,
-                    ),
+                    "allow_community_topic_editing": ujson.dumps(allow_community_topic_editing),
                 },
             )
             self.assert_json_success(result)
@@ -652,9 +642,7 @@ class EditMessageTest(ZulipTestCase):
                 {
                     "allow_message_editing": ujson.dumps(allow_message_editing),
                     "message_content_edit_limit_seconds": message_content_edit_limit_seconds,
-                    "allow_community_topic_editing": ujson.dumps(
-                        allow_community_topic_editing,
-                    ),
+                    "allow_community_topic_editing": ujson.dumps(allow_community_topic_editing),
                 },
             )
             self.assert_json_success(result)
@@ -699,9 +687,7 @@ class EditMessageTest(ZulipTestCase):
         set_message_editing_params(True, 0, False)
         do_edit_message_assert_success(id_, "B")
         self.login("cordelia")
-        do_edit_message_assert_error(
-            id_, "C", "You don't have permission to edit this message",
-        )
+        do_edit_message_assert_error(id_, "C", "You don't have permission to edit this message")
 
         # users cannot edit topics if allow_message_editing is False
         self.login("iago")
@@ -952,8 +938,7 @@ class EditMessageTest(ZulipTestCase):
         self.check_topic(id1, topic_name="topic1")
 
         result = self.client_patch(
-            "/json/messages/" + str(id1),
-            {"content": "edited", "propagate_mode": "change_all"},
+            "/json/messages/" + str(id1), {"content": "edited", "propagate_mode": "change_all"},
         )
         self.assert_json_error(result, "Invalid propagate_mode without topic edit")
         self.check_topic(id1, topic_name="topic1")
@@ -985,11 +970,7 @@ class EditMessageTest(ZulipTestCase):
 
         result = self.client_patch(
             "/json/messages/" + str(msg_id),
-            {
-                "message_id": msg_id,
-                "stream_id": new_stream.id,
-                "propagate_mode": "change_all",
-            },
+            {"message_id": msg_id, "stream_id": new_stream.id, "propagate_mode": "change_all"},
         )
 
         self.assert_json_success(result)
@@ -1009,13 +990,9 @@ class EditMessageTest(ZulipTestCase):
         )
 
     def test_move_message_to_stream_change_later(self) -> None:
-        (
-            user_profile,
-            old_stream,
-            new_stream,
-            msg_id,
-            msg_id_later,
-        ) = self.prepare_move_topics("iago", "test move stream", "new stream", "test")
+        (user_profile, old_stream, new_stream, msg_id, msg_id_later) = self.prepare_move_topics(
+            "iago", "test move stream", "new stream", "test",
+        )
 
         result = self.client_patch(
             "/json/messages/" + str(msg_id_later),
@@ -1044,21 +1021,13 @@ class EditMessageTest(ZulipTestCase):
         )
 
     def test_move_message_to_stream_no_allowed(self) -> None:
-        (
-            user_profile,
-            old_stream,
-            new_stream,
-            msg_id,
-            msg_id_later,
-        ) = self.prepare_move_topics("aaron", "test move stream", "new stream", "test")
+        (user_profile, old_stream, new_stream, msg_id, msg_id_later) = self.prepare_move_topics(
+            "aaron", "test move stream", "new stream", "test",
+        )
 
         result = self.client_patch(
             "/json/messages/" + str(msg_id),
-            {
-                "message_id": msg_id,
-                "stream_id": new_stream.id,
-                "propagate_mode": "change_all",
-            },
+            {"message_id": msg_id, "stream_id": new_stream.id, "propagate_mode": "change_all"},
         )
         self.assert_json_error(result, "You don't have permission to move this message")
 
@@ -1069,13 +1038,9 @@ class EditMessageTest(ZulipTestCase):
         self.assertEqual(len(messages), 0)
 
     def test_move_message_to_stream_with_content(self) -> None:
-        (
-            user_profile,
-            old_stream,
-            new_stream,
-            msg_id,
-            msg_id_later,
-        ) = self.prepare_move_topics("iago", "test move stream", "new stream", "test")
+        (user_profile, old_stream, new_stream, msg_id, msg_id_later) = self.prepare_move_topics(
+            "iago", "test move stream", "new stream", "test",
+        )
 
         result = self.client_patch(
             "/json/messages/" + str(msg_id),
@@ -1095,13 +1060,9 @@ class EditMessageTest(ZulipTestCase):
         self.assertEqual(len(messages), 0)
 
     def test_move_message_to_stream_and_topic(self) -> None:
-        (
-            user_profile,
-            old_stream,
-            new_stream,
-            msg_id,
-            msg_id_later,
-        ) = self.prepare_move_topics("iago", "test move stream", "new stream", "test")
+        (user_profile, old_stream, new_stream, msg_id, msg_id_later) = self.prepare_move_topics(
+            "iago", "test move stream", "new stream", "test",
+        )
 
         with queries_captured() as queries:
             result = self.client_patch(
@@ -1146,9 +1107,7 @@ class EditMessageTest(ZulipTestCase):
         )
 
         self.assertEqual(
-            has_message_access(
-                guest_user, Message.objects.get(id=msg_id_to_test_acesss), None,
-            ),
+            has_message_access(guest_user, Message.objects.get(id=msg_id_to_test_acesss), None),
             True,
         )
         self.assertEqual(
@@ -1170,9 +1129,7 @@ class EditMessageTest(ZulipTestCase):
         self.assert_json_success(result)
 
         self.assertEqual(
-            has_message_access(
-                guest_user, Message.objects.get(id=msg_id_to_test_acesss), None,
-            ),
+            has_message_access(guest_user, Message.objects.get(id=msg_id_to_test_acesss), None),
             False,
         )
         self.assertEqual(
@@ -1284,17 +1241,11 @@ class EditMessageTest(ZulipTestCase):
         msg_id = self.send_stream_message(
             user_profile, stream.name, topic_name="test", content="First",
         )
-        self.send_stream_message(
-            user_profile, stream.name, topic_name="test", content="Second",
-        )
+        self.send_stream_message(user_profile, stream.name, topic_name="test", content="Second")
 
         result = self.client_patch(
             "/json/messages/" + str(msg_id),
-            {
-                "message_id": msg_id,
-                "stream_id": new_stream.id,
-                "propagate_mode": "change_all",
-            },
+            {"message_id": msg_id, "stream_id": new_stream.id, "propagate_mode": "change_all"},
         )
 
         self.assert_json_error(result, "Streams must be public")

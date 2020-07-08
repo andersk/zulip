@@ -487,9 +487,7 @@ def get_realms_and_streams_for_archiving() -> List[Tuple[Realm, List[Stream]]]:
 
 
 def move_messages_to_archive(
-    message_ids: List[int],
-    realm: Optional[Realm] = None,
-    chunk_size: int = MESSAGE_BATCH_SIZE,
+    message_ids: List[int], realm: Optional[Realm] = None, chunk_size: int = MESSAGE_BATCH_SIZE,
 ) -> None:
     query = SQL(
         """

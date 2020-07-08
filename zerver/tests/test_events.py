@@ -951,10 +951,7 @@ class NormalActionsTest(BaseAction):
                             (
                                 "custom_profile_field",
                                 check_dict_only(
-                                    [
-                                        ("id", check_int),
-                                        ("value", check_none_or(check_string)),
-                                    ],
+                                    [("id", check_int), ("value", check_none_or(check_string))],
                                 ),
                             ),
                         ],
@@ -1227,10 +1224,7 @@ class NormalActionsTest(BaseAction):
 
         events = self.verify_action(
             lambda: do_update_user_status(
-                user_profile=self.user_profile,
-                away=False,
-                status_text="",
-                client_id=client.id,
+                user_profile=self.user_profile, away=False, status_text="", client_id=client.id,
             ),
         )
 
@@ -1318,11 +1312,7 @@ class NormalActionsTest(BaseAction):
 
         # Test delete event
         user_group_remove_checker = check_events_dict(
-            [
-                ("type", equals("user_group")),
-                ("op", equals("remove")),
-                ("group_id", check_int),
-            ],
+            [("type", equals("user_group")), ("op", equals("remove")), ("group_id", check_int)],
         )
         events = self.verify_action(lambda: check_delete_user_group(backend.id, othello))
         user_group_remove_checker("events[0]", events[0])
@@ -1434,9 +1424,7 @@ class NormalActionsTest(BaseAction):
             lambda: do_add_default_stream(stream), state_change_expected=False, num_events=0,
         )
         self.verify_action(
-            lambda: do_remove_default_stream(stream),
-            state_change_expected=False,
-            num_events=0,
+            lambda: do_remove_default_stream(stream), state_change_expected=False, num_events=0,
         )
 
     def test_muted_topics_events(self) -> None:
@@ -1464,9 +1452,7 @@ class NormalActionsTest(BaseAction):
         )
         muted_topics_checker("events[0]", events[0])
 
-        events = self.verify_action(
-            lambda: do_unmute_topic(self.user_profile, stream, "topic"),
-        )
+        events = self.verify_action(lambda: do_unmute_topic(self.user_profile, stream, "topic"))
         muted_topics_checker("events[0]", events[0])
 
     def test_change_avatar_fields(self) -> None:
@@ -1578,9 +1564,7 @@ class NormalActionsTest(BaseAction):
         # we don't have a stale UserProfile object with an old value
         # for email being passed into this next function.
         self.user_profile.refresh_from_db()
-        action = lambda: do_change_user_delivery_email(
-            self.user_profile, "newhamlet@zulip.com",
-        )
+        action = lambda: do_change_user_delivery_email(self.user_profile, "newhamlet@zulip.com")
         events = self.verify_action(action, num_events=2, client_gravatar=False)
         schema_checker("events[0]", events[0])
         avatar_schema_checker("events[1]", events[1])
@@ -2077,9 +2061,7 @@ class NormalActionsTest(BaseAction):
                 ),
             ],
         )
-        test_domain = RealmDomain.objects.get(
-            realm=self.user_profile.realm, domain="zulip.org",
-        )
+        test_domain = RealmDomain.objects.get(realm=self.user_profile.realm, domain="zulip.org")
         events = self.verify_action(lambda: do_change_realm_domain(test_domain, True))
         schema_checker("events[0]", events[0])
 
@@ -2140,10 +2122,7 @@ class NormalActionsTest(BaseAction):
                                 ("is_active", check_bool),
                                 ("api_key", check_string),
                                 ("default_sending_stream", check_none_or(check_string)),
-                                (
-                                    "default_events_register_stream",
-                                    check_none_or(check_string),
-                                ),
+                                ("default_events_register_stream", check_none_or(check_string)),
                                 ("default_all_public_streams", check_bool),
                                 ("avatar_url", check_string),
                                 ("owner_id", check_int),
@@ -2252,10 +2231,7 @@ class NormalActionsTest(BaseAction):
                 (
                     "data",
                     check_dict_only(
-                        [
-                            ("night_logo_url", check_string),
-                            ("night_logo_source", check_string),
-                        ],
+                        [("night_logo_url", check_string), ("night_logo_source", check_string)],
                     ),
                 ),
             ],
@@ -2693,11 +2669,7 @@ class NormalActionsTest(BaseAction):
             state_change_expected=True,
         )
         result = fetch_initial_state_data(
-            user_profile,
-            None,
-            "",
-            client_gravatar=False,
-            user_avatar_url_field_optional=False,
+            user_profile, None, "", client_gravatar=False, user_avatar_url_field_optional=False,
         )
         self.assertEqual(result["max_message_id"], -1)
 

@@ -194,9 +194,7 @@ def send_apple_push_notification(
             # different format, as a tuple of the pair ("Unregistered", 12345132131).
             result = result[0]
         if result == "Success":
-            logger.info(
-                "APNs: Success sending for user %d to device %s", user_id, device.token,
-            )
+            logger.info("APNs: Success sending for user %d to device %s", user_id, device.token)
         elif result in ["Unregistered", "BadDeviceToken", "DeviceTokenNotForTopic"]:
             logger.info("APNs: Removing invalid/expired token %s (%s)", device.token, result)
             # We remove all entries for this token (There
@@ -279,9 +277,7 @@ def parse_gcm_options(options: Dict[str, Any], data: Dict[str, Any]) -> str:
         else:  # `'event': 'remove'`, presumably
             priority = "normal"
     if priority not in ("normal", "high"):
-        raise JsonableError(
-            _("Invalid GCM option to bouncer: priority {!r}").format(priority),
-        )
+        raise JsonableError(_("Invalid GCM option to bouncer: priority {!r}").format(priority))
 
     if options:
         # We're strict about the API; there is no use case for a newer Zulip
@@ -363,9 +359,9 @@ def send_android_push_notification(
                     new_reg_id,
                     reg_id,
                 )
-                DeviceTokenClass.objects.filter(
-                    token=reg_id, kind=DeviceTokenClass.GCM,
-                ).update(token=new_reg_id)
+                DeviceTokenClass.objects.filter(token=reg_id, kind=DeviceTokenClass.GCM).update(
+                    token=new_reg_id,
+                )
             else:
                 # Since we know the new ID is registered in our system we can just drop the old one.
                 logger.info("GCM: Got canonical ref %s, dropping %s", new_reg_id, reg_id)

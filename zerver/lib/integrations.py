@@ -647,9 +647,7 @@ DOC_SCREENSHOT_CONFIG: Dict[str, List[ScreenshotConfig]] = {
     "appveyor": [ScreenshotConfig("appveyor_build_success.json")],
     "basecamp": [ScreenshotConfig("doc_active.json")],
     "beanstalk": [
-        ScreenshotConfig(
-            "git_multiple.json", use_basic_auth=True, payload_as_query_param=True,
-        ),
+        ScreenshotConfig("git_multiple.json", use_basic_auth=True, payload_as_query_param=True),
     ],
     # 'beeminder': [ScreenshotConfig('derail_worried.json')],
     "bitbucket": [
@@ -684,9 +682,7 @@ DOC_SCREENSHOT_CONFIG: Dict[str, List[ScreenshotConfig]] = {
     "codeship": [ScreenshotConfig("error_build.json")],
     "crashlytics": [ScreenshotConfig("issue_message.json")],
     "delighted": [ScreenshotConfig("survey_response_updated_promoter.json")],
-    "deskdotcom": [
-        ScreenshotConfig("static_text.txt", "009.png", "desk", use_basic_auth=True),
-    ],
+    "deskdotcom": [ScreenshotConfig("static_text.txt", "009.png", "desk", use_basic_auth=True)],
     "dialogflow": [
         ScreenshotConfig("weather_app.json", extra_params={"email": "iago@zulip.com"}),
     ],

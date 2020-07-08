@@ -25,9 +25,7 @@ EXCLUDED_FILES = [
 ]
 
 
-def check_our_files(
-    modified_only: bool, all_dups: bool, fix: bool, targets: List[str],
-) -> None:
+def check_our_files(modified_only: bool, all_dups: bool, fix: bool, targets: List[str]) -> None:
     by_lang = lister.list_files(
         targets=targets,
         modified_only=args.modified,

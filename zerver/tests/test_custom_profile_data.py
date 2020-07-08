@@ -96,10 +96,7 @@ class CreateCustomProfileFieldTest(CustomProfileFieldTestCase):
         self.assert_json_error(result, "order key is missing from field_data")
 
         data["field_data"] = ujson.dumps(
-            {
-                "python": {"text": "Python", "order": ""},
-                "java": {"text": "Java", "order": "2"},
-            },
+            {"python": {"text": "Python", "order": ""}, "java": {"text": "Java", "order": "2"}},
         )
         result = self.client_post("/json/realm/profile_fields", info=data)
         self.assert_json_error(result, 'field_data["order"] cannot be blank.')
@@ -483,9 +480,7 @@ class UpdateCustomProfileFieldTest(CustomProfileFieldTestCase):
         self.assert_error_update_invalid_value(
             field_name, "a-b-c", f"{field_name} is not a date",
         )
-        self.assert_error_update_invalid_value(
-            field_name, 123, f"{field_name} is not a string",
-        )
+        self.assert_error_update_invalid_value(field_name, 123, f"{field_name} is not a string")
 
     def test_update_invalid_url(self) -> None:
         field_name = "Favorite website"

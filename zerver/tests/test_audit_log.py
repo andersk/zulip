@@ -103,9 +103,7 @@ class TestRealmAuditLog(ZulipTestCase):
         do_change_user_role(user_profile, UserProfile.ROLE_MEMBER, acting_user=acting_user)
         do_change_user_role(user_profile, UserProfile.ROLE_GUEST, acting_user=acting_user)
         do_change_user_role(user_profile, UserProfile.ROLE_MEMBER, acting_user=acting_user)
-        do_change_user_role(
-            user_profile, UserProfile.ROLE_REALM_OWNER, acting_user=acting_user,
-        )
+        do_change_user_role(user_profile, UserProfile.ROLE_REALM_OWNER, acting_user=acting_user)
         do_change_user_role(user_profile, UserProfile.ROLE_MEMBER, acting_user=acting_user)
         old_values_seen = set()
         new_values_seen = set()
@@ -191,9 +189,7 @@ class TestRealmAuditLog(ZulipTestCase):
         new_name = "George Hamletovich"
         self.login("iago")
         req = dict(full_name=ujson.dumps(new_name))
-        result = self.client_patch(
-            "/json/users/{}".format(self.example_user("hamlet").id), req,
-        )
+        result = self.client_patch("/json/users/{}".format(self.example_user("hamlet").id), req)
         self.assertTrue(result.status_code == 200)
         query = RealmAuditLog.objects.filter(
             event_type=RealmAuditLog.USER_FULL_NAME_CHANGED, event_time__gte=start,

@@ -727,9 +727,7 @@ class MessagePOSTTest(ZulipTestCase):
             )
             self.assert_json_success(result2)
 
-        self.assertEqual(
-            ujson.loads(result1.content)["id"], ujson.loads(result2.content)["id"],
-        )
+        self.assertEqual(ujson.loads(result1.content)["id"], ujson.loads(result2.content)["id"])
 
     def test_message_with_null_bytes(self) -> None:
         """
@@ -1610,9 +1608,7 @@ class StreamMessagesTest(ZulipTestCase):
         )[0:3]:
             self.subscribe(user_profile, stream.name)
 
-        self.assert_stream_message(
-            non_ascii_stream_name, topic_name="hümbüǵ", content="hümbüǵ",
-        )
+        self.assert_stream_message(non_ascii_stream_name, topic_name="hümbüǵ", content="hümbüǵ")
 
     def test_get_raw_unread_data_for_huddle_messages(self) -> None:
         users = [
@@ -1719,9 +1715,7 @@ class PersonalMessageSendTest(ZulipTestCase):
         user_profile = self.example_user("hamlet")
         self.login_user(user_profile)
         do_set_realm_property(
-            user_profile.realm,
-            "private_message_policy",
-            Realm.PRIVATE_MESSAGE_POLICY_DISABLED,
+            user_profile.realm, "private_message_policy", Realm.PRIVATE_MESSAGE_POLICY_DISABLED,
         )
         with self.assertRaises(JsonableError):
             self.send_personal_message(user_profile, self.example_user("cordelia"))

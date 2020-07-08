@@ -37,9 +37,7 @@ def get_oembed_data(
 
     # Otherwise, start with just the embed type.
     return dict(
-        type=oembed_resource_type,
-        title=data.get("title"),
-        description=data.get("description"),
+        type=oembed_resource_type, title=data.get("title"), description=data.get("description"),
     )
 
 

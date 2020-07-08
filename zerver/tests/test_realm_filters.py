@@ -9,9 +9,7 @@ class RealmFilterTest(ZulipTestCase):
     def test_list(self) -> None:
         self.login("iago")
         realm = get_realm("zulip")
-        do_add_realm_filter(
-            realm, "#(?P<id>[123])", "https://realm.com/my_realm_filter/%(id)s",
-        )
+        do_add_realm_filter(realm, "#(?P<id>[123])", "https://realm.com/my_realm_filter/%(id)s")
         result = self.client_get("/json/realm/filters")
         self.assert_json_success(result)
         self.assertEqual(200, result.status_code)

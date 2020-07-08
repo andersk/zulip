@@ -460,9 +460,7 @@ def process_initial_upgrade(
         billing_logger.warning(
             "Customer %s trying to upgrade, but has an active subscription", customer,
         )
-        raise BillingError(
-            "subscribing with existing subscription", BillingError.TRY_RELOADING,
-        )
+        raise BillingError("subscribing with existing subscription", BillingError.TRY_RELOADING)
 
     (
         billing_cycle_anchor,

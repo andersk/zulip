@@ -79,9 +79,7 @@ parser.add_argument(
     help="Export the results of the test suite to an XUnit XML file,",
 )
 parser.add_argument(
-    "tests",
-    nargs=argparse.REMAINDER,
-    help="Specific tests to run; by default, runs all tests",
+    "tests", nargs=argparse.REMAINDER, help="Specific tests to run; by default, runs all tests",
 )
 options = parser.parse_args()
 

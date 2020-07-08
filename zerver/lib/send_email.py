@@ -154,12 +154,7 @@ def build_email(
         reply_to = [FromAddress.NOREPLY]
 
     mail = EmailMultiAlternatives(
-        email_subject,
-        message,
-        from_email,
-        to_emails,
-        reply_to=reply_to,
-        headers=extra_headers,
+        email_subject, message, from_email, to_emails, reply_to=reply_to, headers=extra_headers,
     )
     if html_message is not None:
         mail.attach_alternative(html_message, "text/html")
@@ -387,9 +382,7 @@ def send_custom_email(users: List[UserProfile], options: Dict[str, Any]) -> None
 
     with open(subject_path, "w") as f:
         f.write(
-            get_header(
-                options.get("subject"), parsed_email_template.get("subject"), "subject",
-            ),
+            get_header(options.get("subject"), parsed_email_template.get("subject"), "subject"),
         )
 
     inline_template(email_filename)

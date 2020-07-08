@@ -5,9 +5,7 @@ from zerver.lib.management import ZulipBaseCommand
 
 
 class Command(ZulipBaseCommand):
-    help = (
-        """Turn off digests for a subdomain/string_id or specified set of email addresses."""
-    )
+    help = """Turn off digests for a subdomain/string_id or specified set of email addresses."""
 
     def add_arguments(self, parser: CommandParser) -> None:
         self.add_realm_args(parser)

@@ -112,10 +112,7 @@ v1_api_and_json_patterns = [
         rest_dispatch,
         {
             "POST": "zerver.views.realm_emoji.upload_emoji",
-            "DELETE": (
-                "zerver.views.realm_emoji.delete_emoji",
-                {"intentionally_undocumented"},
-            ),
+            "DELETE": ("zerver.views.realm_emoji.delete_emoji", {"intentionally_undocumented"}),
         },
     ),
     # this endpoint throws a status code 400 JsonableError when it should be a 404.
@@ -488,9 +485,7 @@ v1_api_and_json_patterns = [
     ),
     # settings -> zerver.views.user_settings
     path(
-        "settings",
-        rest_dispatch,
-        {"PATCH": "zerver.views.user_settings.json_change_settings"},
+        "settings", rest_dispatch, {"PATCH": "zerver.views.user_settings.json_change_settings"},
     ),
     path(
         "settings/display",
@@ -638,12 +633,7 @@ v1_api_and_json_patterns = [
     path(
         "report/unnarrow_times",
         rest_dispatch,
-        {
-            "POST": (
-                "zerver.views.report.report_unnarrow_times",
-                {"intentionally_undocumented"},
-            ),
-        },
+        {"POST": ("zerver.views.report.report_unnarrow_times", {"intentionally_undocumented"})},
     ),
     # Used to generate a Zoom video call URL
     path(
@@ -691,9 +681,7 @@ i18n_urls = [
     # background.  We can remove this once older versions of the
     # mobile app are no longer present in the wild.
     re_path(
-        r"accounts/login/(google)/$",
-        zerver.views.auth.start_social_login,
-        name="login-social",
+        r"accounts/login/(google)/$", zerver.views.auth.start_social_login, name="login-social",
     ),
     path(
         "accounts/login/start/sso/",
@@ -905,9 +893,7 @@ i18n_urls = [
     re_path(r"apps/(.*)$", zerver.views.portico.apps_view, name="zerver.views.home.apps_view"),
     path("team/", zerver.views.portico.team_view),
     path(
-        "history/",
-        zerver.views.portico.landing_view,
-        {"template_name": "zerver/history.html"},
+        "history/", zerver.views.portico.landing_view, {"template_name": "zerver/history.html"},
     ),
     path(
         "why-zulip/",
@@ -1043,9 +1029,7 @@ for incoming_webhook in WEBHOOK_INTEGRATIONS:
 
 # Desktop-specific authentication URLs
 urls += [
-    path(
-        "json/fetch_api_key", rest_dispatch, {"POST": "zerver.views.auth.json_fetch_api_key"},
-    ),
+    path("json/fetch_api_key", rest_dispatch, {"POST": "zerver.views.auth.json_fetch_api_key"}),
 ]
 
 # Mobile-specific authentication URLs

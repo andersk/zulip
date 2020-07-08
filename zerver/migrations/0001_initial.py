@@ -86,10 +86,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "id",
                     models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID",
                     ),
                 ),
                 ("password", models.CharField(max_length=128, verbose_name="password")),
@@ -177,10 +174,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "id",
                     models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID",
                     ),
                 ),
                 ("name", models.CharField(db_index=True, max_length=30, unique=True)),
@@ -192,10 +186,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "id",
                     models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID",
                     ),
                 ),
             ],
@@ -206,10 +197,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "id",
                     models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID",
                     ),
                 ),
                 ("huddle_hash", models.CharField(db_index=True, max_length=40, unique=True)),
@@ -221,10 +209,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "id",
                     models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID",
                     ),
                 ),
                 ("subject", models.CharField(db_index=True, max_length=60)),
@@ -248,10 +233,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "id",
                     models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID",
                     ),
                 ),
                 ("email", models.EmailField(max_length=75)),
@@ -265,10 +247,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "id",
                     models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID",
                     ),
                 ),
                 ("kind", models.PositiveSmallIntegerField(choices=[(1, "apns"), (2, "gcm")])),
@@ -293,10 +272,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "id",
                     models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID",
                     ),
                 ),
                 ("domain", models.CharField(db_index=True, max_length=40, unique=True)),
@@ -318,10 +294,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "id",
                     models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID",
                     ),
                 ),
                 ("domain", models.CharField(db_index=True, max_length=80, unique=True)),
@@ -341,10 +314,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "id",
                     models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID",
                     ),
                 ),
                 ("name", models.TextField()),
@@ -363,10 +333,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "id",
                     models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID",
                     ),
                 ),
                 ("pattern", models.TextField()),
@@ -385,10 +352,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "id",
                     models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID",
                     ),
                 ),
                 ("type_id", models.IntegerField(db_index=True)),
@@ -401,10 +365,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "id",
                     models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID",
                     ),
                 ),
                 ("email", models.EmailField(max_length=75)),
@@ -424,10 +385,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "id",
                     models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID",
                     ),
                 ),
                 ("scheduled_timestamp", models.DateTimeField()),
@@ -443,10 +401,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "id",
                     models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID",
                     ),
                 ),
                 ("name", models.CharField(db_index=True, max_length=60)),
@@ -472,10 +427,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "id",
                     models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID",
                     ),
                 ),
                 ("active", models.BooleanField(default=True)),
@@ -505,10 +457,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "id",
                     models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID",
                     ),
                 ),
                 ("query", models.CharField(db_index=True, max_length=50)),
@@ -535,10 +484,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "id",
                     models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID",
                     ),
                 ),
                 ("start", models.DateTimeField(db_index=True, verbose_name="start time")),
@@ -558,10 +504,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "id",
                     models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID",
                     ),
                 ),
                 (
@@ -605,10 +548,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "id",
                     models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID",
                     ),
                 ),
                 ("timestamp", models.DateTimeField(verbose_name="presence changed")),
@@ -647,9 +587,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
         migrations.AlterUniqueTogether(
             name="realmfilter", unique_together={("realm", "pattern")},
         ),
-        migrations.AlterUniqueTogether(
-            name="realmemoji", unique_together={("realm", "name")},
-        ),
+        migrations.AlterUniqueTogether(name="realmemoji", unique_together={("realm", "name")}),
         migrations.AddField(
             model_name="realm",
             name="notifications_stream",
@@ -888,10 +826,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "id",
                     models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID",
                     ),
                 ),
                 ("file_name", models.CharField(db_index=True, max_length=100)),

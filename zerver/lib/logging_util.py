@@ -71,9 +71,7 @@ class _RateLimitFilter:
         try:
             # Track duplicate errors
             duplicate = False
-            rate = getattr(
-                settings, f"{self.__class__.__name__.upper()}_LIMIT", 600,
-            )  # seconds
+            rate = getattr(settings, f"{self.__class__.__name__.upper()}_LIMIT", 600)  # seconds
 
             if rate > 0:
                 (use_cache, should_reset_handling_exception) = self.can_use_remote_cache()

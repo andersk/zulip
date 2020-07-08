@@ -192,11 +192,7 @@ class UnreadCountTests(ZulipTestCase):
 
         result = self.client_post(
             "/json/messages/flags",
-            {
-                "messages": ujson.dumps([self.unread_msg_ids[1]]),
-                "op": "remove",
-                "flag": "read",
-            },
+            {"messages": ujson.dumps([self.unread_msg_ids[1]]), "op": "remove", "flag": "read"},
         )
         self.assert_json_success(result)
 
@@ -452,13 +448,7 @@ class PushNotificationMarkReadFlowsTest(ZulipTestCase):
             "/api/v1/users/me/subscriptions/properties",
             {
                 "subscription_data": ujson.dumps(
-                    [
-                        {
-                            "property": property_name,
-                            "value": True,
-                            "stream_id": second_stream.id,
-                        },
-                    ],
+                    [{"property": property_name, "value": True, "stream_id": second_stream.id}],
                 ),
             },
         )
@@ -515,9 +505,7 @@ class PushNotificationMarkReadFlowsTest(ZulipTestCase):
 class GetUnreadMsgsTest(ZulipTestCase):
     def mute_stream(self, user_profile: UserProfile, stream: Stream) -> None:
         recipient = Recipient.objects.get(type_id=stream.id, type=Recipient.STREAM)
-        subscription = Subscription.objects.get(
-            user_profile=user_profile, recipient=recipient,
-        )
+        subscription = Subscription.objects.get(user_profile=user_profile, recipient=recipient)
         subscription.is_muted = True
         subscription.save()
 
@@ -630,9 +618,7 @@ class GetUnreadMsgsTest(ZulipTestCase):
             self.send_personal_message(cordelia, hamlet) for i in range(3)
         ]
 
-        othello_pm_message_ids = [
-            self.send_personal_message(othello, hamlet) for i in range(3)
-        ]
+        othello_pm_message_ids = [self.send_personal_message(othello, hamlet) for i in range(3)]
 
         raw_unread_data = get_raw_unread_data(user_profile=hamlet)
 
@@ -754,9 +740,7 @@ class GetUnreadMsgsTest(ZulipTestCase):
             sender, "Denmark", topic_name="muted-topic", content="hello",
         )
 
-        huddle_message_id = self.send_huddle_message(
-            sender, [user_profile, othello], "hello3",
-        )
+        huddle_message_id = self.send_huddle_message(sender, [user_profile, othello], "hello3")
 
         def get_unread_data() -> UnreadMessagesResult:
             raw_unread_data = get_raw_unread_data(user_profile)
@@ -918,9 +902,7 @@ class MessageAccessTests(ZulipTestCase):
         )
         self.assert_json_error(result, "Flag not editable: 'mentioned'")
 
-    def change_star(
-        self, messages: List[int], add: bool = True, **kwargs: Any
-    ) -> HttpResponse:
+    def change_star(self, messages: List[int], add: bool = True, **kwargs: Any) -> HttpResponse:
         return self.client_post(
             "/json/messages/flags",
             {

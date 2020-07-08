@@ -308,9 +308,7 @@ class PermissionTest(ZulipTestCase):
     def test_user_cannot_promote_to_admin(self) -> None:
         self.login("hamlet")
         req = dict(role=ujson.dumps(UserProfile.ROLE_REALM_ADMINISTRATOR))
-        result = self.client_patch(
-            "/json/users/{}".format(self.example_user("hamlet").id), req,
-        )
+        result = self.client_patch("/json/users/{}".format(self.example_user("hamlet").id), req)
         self.assert_json_error(result, "Insufficient permission")
 
     def test_admin_user_can_change_full_name(self) -> None:
@@ -335,18 +333,14 @@ class PermissionTest(ZulipTestCase):
         new_name = "a" * (UserProfile.MAX_NAME_LENGTH + 1)
         self.login("iago")
         req = dict(full_name=ujson.dumps(new_name))
-        result = self.client_patch(
-            "/json/users/{}".format(self.example_user("hamlet").id), req,
-        )
+        result = self.client_patch("/json/users/{}".format(self.example_user("hamlet").id), req)
         self.assert_json_error(result, "Name too long!")
 
     def test_admin_cannot_set_short_full_name(self) -> None:
         new_name = "a"
         self.login("iago")
         req = dict(full_name=ujson.dumps(new_name))
-        result = self.client_patch(
-            "/json/users/{}".format(self.example_user("hamlet").id), req,
-        )
+        result = self.client_patch("/json/users/{}".format(self.example_user("hamlet").id), req)
         self.assert_json_error(result, "Name too short!")
 
     def test_not_allowed_format(self) -> None:
@@ -354,9 +348,7 @@ class PermissionTest(ZulipTestCase):
         new_name = "iago|72"
         self.login("iago")
         req = dict(full_name=ujson.dumps(new_name))
-        result = self.client_patch(
-            "/json/users/{}".format(self.example_user("hamlet").id), req,
-        )
+        result = self.client_patch("/json/users/{}".format(self.example_user("hamlet").id), req)
         self.assert_json_error(result, "Invalid format!")
 
     def test_allowed_format_complex(self) -> None:
@@ -364,27 +356,21 @@ class PermissionTest(ZulipTestCase):
         new_name = "Hello- 12iago|72k"
         self.login("iago")
         req = dict(full_name=ujson.dumps(new_name))
-        result = self.client_patch(
-            "/json/users/{}".format(self.example_user("hamlet").id), req,
-        )
+        result = self.client_patch("/json/users/{}".format(self.example_user("hamlet").id), req)
         self.assert_json_success(result)
 
     def test_not_allowed_format_complex(self) -> None:
         new_name = "Hello- 12iago|72"
         self.login("iago")
         req = dict(full_name=ujson.dumps(new_name))
-        result = self.client_patch(
-            "/json/users/{}".format(self.example_user("hamlet").id), req,
-        )
+        result = self.client_patch("/json/users/{}".format(self.example_user("hamlet").id), req)
         self.assert_json_error(result, "Invalid format!")
 
     def test_admin_cannot_set_full_name_with_invalid_characters(self) -> None:
         new_name = "Opheli*"
         self.login("iago")
         req = dict(full_name=ujson.dumps(new_name))
-        result = self.client_patch(
-            "/json/users/{}".format(self.example_user("hamlet").id), req,
-        )
+        result = self.client_patch("/json/users/{}".format(self.example_user("hamlet").id), req)
         self.assert_json_error(result, "Invalid characters in name!")
 
     def test_access_user_by_id(self) -> None:
@@ -802,10 +788,7 @@ class AdminCreateUserTest(ZulipTestCase):
         result = self.client_post(
             "/json/users",
             dict(
-                email="broken",
-                password="xxxx",
-                full_name="Romeo Montague",
-                short_name="Romeo",
+                email="broken", password="xxxx", full_name="Romeo Montague", short_name="Romeo",
             ),
         )
         self.assert_json_error(result, "Bad name or username")
@@ -1119,9 +1102,7 @@ class UserProfileTest(ZulipTestCase):
         self.assertEqual(cordelia.enter_sends, False)
         self.assertEqual(hamlet.enter_sends, True)
 
-        hotspots = list(
-            UserHotspot.objects.filter(user=iago).values_list("hotspot", flat=True),
-        )
+        hotspots = list(UserHotspot.objects.filter(user=iago).values_list("hotspot", flat=True))
         self.assertEqual(hotspots, hotspots_completed)
 
     def test_get_user_by_id_in_realm_including_cross_realm(self) -> None:
@@ -1340,9 +1321,7 @@ class ActivateTest(ZulipTestCase):
                 set(message.to),
                 {
                     str(
-                        Address(
-                            display_name=hamlet.full_name, addr_spec=hamlet.delivery_email,
-                        ),
+                        Address(display_name=hamlet.full_name, addr_spec=hamlet.delivery_email),
                     ),
                     str(Address(display_name=iago.full_name, addr_spec=iago.delivery_email)),
                 },

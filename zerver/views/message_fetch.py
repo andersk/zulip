@@ -274,9 +274,7 @@ class NarrowBuilder:
         cond = column("recipient_id") == recipient.id
         return query.where(maybe_negate(cond))
 
-    def by_streams(
-        self, query: Query, operand: str, maybe_negate: ConditionTransform,
-    ) -> Query:
+    def by_streams(self, query: Query, operand: str, maybe_negate: ConditionTransform) -> Query:
         if operand == "public":
             # Get all both subscribed and non subscribed public streams
             # but exclude any private subscribed streams.
@@ -344,9 +342,7 @@ class NarrowBuilder:
             if isinstance(operand, str):
                 sender = get_user_including_cross_realm(operand, self.user_realm)
             else:
-                sender = get_user_by_id_in_realm_including_cross_realm(
-                    operand, self.user_realm,
-                )
+                sender = get_user_by_id_in_realm_including_cross_realm(operand, self.user_realm)
         except UserProfile.DoesNotExist:
             raise BadNarrowOperator("unknown user " + str(operand))
 
@@ -428,8 +424,7 @@ class NarrowBuilder:
 
         # PM with self
         cond = and_(
-            column("sender_id") == self.user_profile.id,
-            column("recipient_id") == recipient.id,
+            column("sender_id") == self.user_profile.id, column("recipient_id") == recipient.id,
         )
         return query.where(maybe_negate(cond))
 

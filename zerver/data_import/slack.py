@@ -782,9 +782,7 @@ def get_messages_iterator(
        not read all the messages into memory at once, because for
        large imports that can OOM kill."""
 
-    dir_names = (
-        list(added_channels.keys()) + list(added_mpims.keys()) + list(dm_members.keys())
-    )
+    dir_names = list(added_channels.keys()) + list(added_mpims.keys()) + list(dm_members.keys())
     all_json_names: Dict[str, List[str]] = defaultdict(list)
     for dir_name in dir_names:
         dir_path = os.path.join(slack_data_dir, dir_name)
@@ -1267,9 +1265,7 @@ def fetch_team_icons(
     return records
 
 
-def do_convert_data(
-    slack_zip_file: str, output_dir: str, token: str, threads: int = 6,
-) -> None:
+def do_convert_data(slack_zip_file: str, output_dir: str, token: str, threads: int = 6) -> None:
     # Subdomain is set by the user while running the import command
     realm_subdomain = ""
     realm_id = 0

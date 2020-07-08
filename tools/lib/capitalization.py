@@ -165,8 +165,7 @@ IGNORED_PHRASES.sort(key=lambda regex: len(regex), reverse=True)
 # text using BeautifulSoup and then removes extra whitespaces from
 # it. This step enables us to add HTML in our regexes directly.
 COMPILED_IGNORED_PHRASES = [
-    re.compile(" ".join(BeautifulSoup(regex, "lxml").text.split()))
-    for regex in IGNORED_PHRASES
+    re.compile(" ".join(BeautifulSoup(regex, "lxml").text.split())) for regex in IGNORED_PHRASES
 ]
 
 SPLIT_BOUNDARY = "?.!"  # Used to split string into sentences.

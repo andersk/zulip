@@ -345,9 +345,7 @@ class MissedMessageNotificationsTest(ZulipTestCase):
             properties: Dict[str, bool],
         ) -> None:
             for property_name, value in properties.items():
-                do_change_subscription_property(
-                    user_profile, sub, stream, property_name, value,
-                )
+                do_change_subscription_property(user_profile, sub, stream, property_name, value)
 
         def allocate_event_queue() -> ClientDescriptor:
             result = self.tornado_call(
@@ -1047,14 +1045,7 @@ class EventQueueTest(ZulipTestCase):
         # Verify the server_generation event is stored as a virtual event
         self.assertEqual(
             queue.virtual_events,
-            {
-                "restart": {
-                    "id": 0,
-                    "type": "restart",
-                    "server_generation": 1,
-                    "timestamp": "1",
-                },
-            },
+            {"restart": {"id": 0, "type": "restart", "server_generation": 1, "timestamp": "1"}},
         )
         # And we can reconstruct newest_pruned_id etc.
         self.verify_to_dict_end_to_end(client)
@@ -1063,14 +1054,7 @@ class EventQueueTest(ZulipTestCase):
         self.assertEqual(list(queue.queue), [{"id": 1, "type": "unknown", "timestamp": "1"}])
         self.assertEqual(
             queue.virtual_events,
-            {
-                "restart": {
-                    "id": 0,
-                    "type": "restart",
-                    "server_generation": 1,
-                    "timestamp": "1",
-                },
-            },
+            {"restart": {"id": 0, "type": "restart", "server_generation": 1, "timestamp": "1"}},
         )
         # And we can still reconstruct newest_pruned_id etc. correctly
         self.verify_to_dict_end_to_end(client)

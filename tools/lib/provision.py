@@ -66,8 +66,7 @@ try:
     if os.path.exists(os.path.join(VAR_DIR_PATH, "zulip-test-symlink")):
         os.remove(os.path.join(VAR_DIR_PATH, "zulip-test-symlink"))
     os.symlink(
-        os.path.join(ZULIP_PATH, "README.md"),
-        os.path.join(VAR_DIR_PATH, "zulip-test-symlink"),
+        os.path.join(ZULIP_PATH, "README.md"), os.path.join(VAR_DIR_PATH, "zulip-test-symlink"),
     )
     os.remove(os.path.join(VAR_DIR_PATH, "zulip-test-symlink"))
 except OSError:

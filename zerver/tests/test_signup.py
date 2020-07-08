@@ -220,9 +220,7 @@ class AddNewUserHistoryTest(ZulipTestCase):
 
         # Overwrite ONBOARDING_UNREAD_MESSAGES to 2
         ONBOARDING_UNREAD_MESSAGES = 2
-        with patch(
-            "zerver.lib.actions.ONBOARDING_UNREAD_MESSAGES", ONBOARDING_UNREAD_MESSAGES,
-        ):
+        with patch("zerver.lib.actions.ONBOARDING_UNREAD_MESSAGES", ONBOARDING_UNREAD_MESSAGES):
             add_new_user_history(user_profile, streams)
 
         # Our first message is in the user's history
@@ -371,8 +369,7 @@ class PasswordResetTest(ZulipTestCase):
             self.assert_in_response("The password is too weak.", result)
 
             result = self.client_post(
-                final_reset_url,
-                {"new_password1": "f657gdGGk9", "new_password2": "f657gdGGk9"},
+                final_reset_url, {"new_password1": "f657gdGGk9", "new_password2": "f657gdGGk9"},
             )
             # password reset succeeded
             self.assertEqual(result.status_code, 302)
@@ -1336,9 +1333,7 @@ earl-test@zulip.com""",
         """
         self.login("polonius")
         invitee = "alice-test@zulip.com"
-        self.assert_json_error(
-            self.invite(invitee, ["Denmark"]), "Not allowed for guest users",
-        )
+        self.assert_json_error(self.invite(invitee, ["Denmark"]), "Not allowed for guest users")
         self.assertEqual(find_key_by_email(invitee), None)
         self.check_sent_emails([])
 
@@ -1835,9 +1830,7 @@ class InvitationsTestCase(InviteUserBase):
             email="TestTwo@zulip.com", referred_by=user_profile,
         )
         prereg_user_two.save()
-        prereg_user_three = PreregistrationUser(
-            email="TestThree@zulip.com", referred_by=hamlet,
-        )
+        prereg_user_three = PreregistrationUser(email="TestThree@zulip.com", referred_by=hamlet)
         prereg_user_three.save()
         prereg_user_four = PreregistrationUser(email="TestFour@zulip.com", referred_by=othello)
         prereg_user_four.save()
@@ -2069,9 +2062,7 @@ class InvitationsTestCase(InviteUserBase):
             address__iexact=invitee, type=ScheduledEmail.INVITATION_REMINDER,
         )
         self.assertEqual(scheduledemail_filter.count(), 1)
-        original_timestamp = scheduledemail_filter.values_list(
-            "scheduled_timestamp", flat=True,
-        )
+        original_timestamp = scheduledemail_filter.values_list("scheduled_timestamp", flat=True)
 
         # Resend invite
         result = self.client_post("/json/invites/" + str(prereg_user.id) + "/resend")
@@ -2120,9 +2111,7 @@ class InvitationsTestCase(InviteUserBase):
             address__iexact=invitee, type=ScheduledEmail.INVITATION_REMINDER,
         )
         self.assertEqual(scheduledemail_filter.count(), 1)
-        original_timestamp = scheduledemail_filter.values_list(
-            "scheduled_timestamp", flat=True,
-        )
+        original_timestamp = scheduledemail_filter.values_list("scheduled_timestamp", flat=True)
 
         # Resend invite
         result = self.client_post("/json/invites/" + str(prereg_user.id) + "/resend")
@@ -2169,9 +2158,7 @@ class InvitationsTestCase(InviteUserBase):
             address__iexact=invitee, type=ScheduledEmail.INVITATION_REMINDER,
         )
         self.assertEqual(scheduledemail_filter.count(), 1)
-        original_timestamp = scheduledemail_filter.values_list(
-            "scheduled_timestamp", flat=True,
-        )
+        original_timestamp = scheduledemail_filter.values_list("scheduled_timestamp", flat=True)
 
         # Test only organization owners can resend owner invitation.
         self.login("iago")
@@ -2367,9 +2354,7 @@ class MultiuseInviteTest(ZulipTestCase):
         email = self.nonreg_email("newuser")
         invite_link = "/join/invalid_key/"
 
-        with patch(
-            "zerver.views.registration.get_realm_from_request", return_value=self.realm,
-        ):
+        with patch("zerver.views.registration.get_realm_from_request", return_value=self.realm):
             with patch("zerver.views.registration.get_realm", return_value=self.realm):
                 self.check_user_able_to_register(email, invite_link)
 

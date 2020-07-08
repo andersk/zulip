@@ -34,9 +34,7 @@ class MITNameTest(ZulipTestCase):
             )
         with mock.patch(
             "DNS.dnslookup",
-            return_value=[
-                ["sipbexch:*:87824:101:Exch Sipb,,,:/mit/sipbexch:/bin/athena/bash"],
-            ],
+            return_value=[["sipbexch:*:87824:101:Exch Sipb,,,:/mit/sipbexch:/bin/athena/bash"]],
         ):
             self.assertEqual(compute_mit_user_fullname("sipbexch@mit.edu"), "Exch Sipb")
 
@@ -69,9 +67,7 @@ class MITNameTest(ZulipTestCase):
             )
 
     def test_notmailinglist(self) -> None:
-        with mock.patch(
-            "DNS.dnslookup", return_value=[["POP IMAP.EXCHANGE.MIT.EDU starnine"]],
-        ):
+        with mock.patch("DNS.dnslookup", return_value=[["POP IMAP.EXCHANGE.MIT.EDU starnine"]]):
             email_is_not_mit_mailing_list("sipbexch@mit.edu")
 
 

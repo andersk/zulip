@@ -109,9 +109,7 @@ def get_active_realm_ids() -> List[int]:
     """
     date = timezone_now() - datetime.timedelta(days=2)
     return (
-        RealmCount.objects.filter(
-            end_time__gte=date, property="1day_actives::day", value__gt=0,
-        )
+        RealmCount.objects.filter(end_time__gte=date, property="1day_actives::day", value__gt=0)
         .distinct("realm_id")
         .values_list("realm_id", flat=True)
     )

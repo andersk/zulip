@@ -797,8 +797,7 @@ def sanity_check_stream_data(response: TableData, config: Config, context: Conte
         return
 
     actual_streams = {
-        stream.name
-        for stream in Stream.objects.filter(realm=response["zerver_realm"][0]["id"])
+        stream.name for stream in Stream.objects.filter(realm=response["zerver_realm"][0]["id"])
     }
     streams_in_response = {stream["name"] for stream in response["zerver_stream"]}
 

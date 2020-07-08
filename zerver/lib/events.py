@@ -601,9 +601,7 @@ def apply_event(
             state["streams"] += event["streams"]
         elif event["op"] == "vacate":
             stream_ids = [s["stream_id"] for s in event["streams"]]
-            state["streams"] = [
-                s for s in state["streams"] if s["stream_id"] not in stream_ids
-            ]
+            state["streams"] = [s for s in state["streams"] if s["stream_id"] not in stream_ids]
     elif event["type"] == "default_streams":
         state["realm_default_streams"] = event["default_streams"]
     elif event["type"] == "default_stream_groups":
@@ -827,9 +825,7 @@ def apply_event(
         elif event["op"] == "change":
             for realm_domain in state["realm_domains"]:
                 if realm_domain["domain"] == event["realm_domain"]["domain"]:
-                    realm_domain["allow_subdomains"] = event["realm_domain"][
-                        "allow_subdomains"
-                    ]
+                    realm_domain["allow_subdomains"] = event["realm_domain"]["allow_subdomains"]
         elif event["op"] == "remove":
             state["realm_domains"] = [
                 realm_domain

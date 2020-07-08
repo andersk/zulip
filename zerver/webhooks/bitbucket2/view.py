@@ -87,9 +87,7 @@ def api_bitbucket2_webhook(
         )
     else:
         for b, s in zip(body, subject):
-            check_send_webhook_message(
-                request, user_profile, s, b, unquote_url_parameters=True,
-            )
+            check_send_webhook_message(request, user_profile, s, b, unquote_url_parameters=True)
 
     return json_success()
 
@@ -330,9 +328,7 @@ def get_pull_request_created_or_updated_body(
         # Certain payloads may not contain a username, so we
         # return the user's display name or nickname instead.
         assignee = (
-            assignee.get("username")
-            or assignee.get("display_name")
-            or assignee.get("nickname")
+            assignee.get("username") or assignee.get("display_name") or assignee.get("nickname")
         )
 
     return get_pull_request_event_message(
@@ -469,12 +465,8 @@ GET_SINGLE_MESSAGE_BODY_DEPENDING_ON_TYPE_MAPPER = {
     "issue_updated": partial(get_issue_action_body, action="updated"),
     "issue_created": partial(get_issue_action_body, action="created"),
     "issue_commented": get_issue_commented_body,
-    "pull_request_created": partial(
-        get_pull_request_created_or_updated_body, action="created",
-    ),
-    "pull_request_updated": partial(
-        get_pull_request_created_or_updated_body, action="updated",
-    ),
+    "pull_request_created": partial(get_pull_request_created_or_updated_body, action="created"),
+    "pull_request_updated": partial(get_pull_request_created_or_updated_body, action="updated"),
     "pull_request_approved": partial(get_pull_request_action_body, action="approved"),
     "pull_request_unapproved": partial(get_pull_request_action_body, action="unapproved"),
     "pull_request_fulfilled": partial(get_pull_request_action_body, action="merged"),

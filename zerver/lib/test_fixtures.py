@@ -103,11 +103,7 @@ class Database:
 
         run(
             env_prelude
-            + [
-                "./manage.py",
-                "get_migration_status",
-                "--output=" + self.migration_status_file,
-            ],
+            + ["./manage.py", "get_migration_status", "--output=" + self.migration_status_file],
         )
 
     def what_to_do_with_migrations(self) -> str:
@@ -170,9 +166,7 @@ class Database:
             # Return True to force a one-time rebuild.
             return True
 
-        return is_digest_obsolete(
-            self.digest_name, IMPORTANT_FILES, self.important_settings(),
-        )
+        return is_digest_obsolete(self.digest_name, IMPORTANT_FILES, self.important_settings())
 
     def template_status(self) -> str:
         # This function returns a status string specifying the type of

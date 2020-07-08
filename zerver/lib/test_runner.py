@@ -288,9 +288,7 @@ class Runner(DiscoverRunner):
     def get_resultclass(self) -> Type[TestResult]:
         return TextTestResult
 
-    def on_template_rendered(
-        self, sender: Any, context: Dict[str, Any], **kwargs: Any
-    ) -> None:
+    def on_template_rendered(self, sender: Any, context: Dict[str, Any], **kwargs: Any) -> None:
         if hasattr(sender, "template"):
             template_name = sender.template.name
             if template_name not in self.templates_rendered:

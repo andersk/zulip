@@ -18,9 +18,7 @@ class TimeoutExpired(Exception):
 ResultT = TypeVar("ResultT")
 
 
-def timeout(
-    timeout: float, func: Callable[..., ResultT], *args: Any, **kwargs: Any
-) -> ResultT:
+def timeout(timeout: float, func: Callable[..., ResultT], *args: Any, **kwargs: Any) -> ResultT:
     """Call the function in a separate thread.
        Return its return value, or raise an exception,
        within approximately 'timeout' seconds.
@@ -41,9 +39,7 @@ def timeout(
             threading.Thread.__init__(self)
             self.result: Optional[ResultT] = None
             self.exc_info: Tuple[
-                Optional[Type[BaseException]],
-                Optional[BaseException],
-                Optional[TracebackType],
+                Optional[Type[BaseException]], Optional[BaseException], Optional[TracebackType],
             ] = (None, None, None)
 
             # Don't block the whole program from exiting

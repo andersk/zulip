@@ -14,8 +14,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="userprofile",
             name="desktop_icon_count_display",
-            field=models.PositiveSmallIntegerField(
-                default=DESKTOP_ICON_COUNT_DISPLAY_MESSAGES,
-            ),
+            field=models.PositiveSmallIntegerField(default=DESKTOP_ICON_COUNT_DISPLAY_MESSAGES),
         ),
     ]

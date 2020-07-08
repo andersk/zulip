@@ -42,9 +42,7 @@ def timeout_error(http_method: Any, final_url: Any, data: Any, **request_kwargs:
     raise requests.exceptions.Timeout("Time is up!")
 
 
-def connection_error(
-    http_method: Any, final_url: Any, data: Any, **request_kwargs: Any
-) -> Any:
+def connection_error(http_method: Any, final_url: Any, data: Any, **request_kwargs: Any) -> Any:
     raise requests.exceptions.ConnectionError()
 
 

@@ -10,7 +10,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name="userprofile", name="default_desktop_notifications",
-        ),
+        migrations.RemoveField(model_name="userprofile", name="default_desktop_notifications"),
     ]

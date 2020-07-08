@@ -42,9 +42,7 @@ parser.add_argument(
     help="Run tests despite possible problems.",
 )
 parser.add_argument(
-    "tests",
-    nargs=argparse.REMAINDER,
-    help="Specific tests to run; by default, runs all tests",
+    "tests", nargs=argparse.REMAINDER, help="Specific tests to run; by default, runs all tests",
 )
 
 options = parser.parse_args()
@@ -99,9 +97,7 @@ def run_tests(files: Iterable[str], external_host: str) -> None:
             while response != "q" and failed_test_num != -1:
                 ret, failed_test_num = run_tests(failed_test_num)
                 if ret != 0:
-                    response = input(
-                        'Tests failed. Press Enter to re-run tests, "q" to quit: ',
-                    )
+                    response = input('Tests failed. Press Enter to re-run tests, "q" to quit: ')
         else:
             ret = 1
             ret = run_tests()[0]

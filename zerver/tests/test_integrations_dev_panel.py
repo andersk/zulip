@@ -195,9 +195,7 @@ class TestIntegrationsDevPanel(ZulipTestCase):
             self.assertEqual(Stream.objects.get(id=msg.recipient.type_id).name, "Denmark")
             self.assertEqual(msg.topic_name(), "Appfollow Bulk Notifications")
 
-    def test_send_all_webhook_fixture_messages_for_success_with_non_json_fixtures(
-        self,
-    ) -> None:
+    def test_send_all_webhook_fixture_messages_for_success_with_non_json_fixtures(self) -> None:
         bot = get_user("webhook-bot@zulip.com", self.zulip_realm)
         url = f"/api/v1/external/wordpress?api_key={bot.api_key}&stream=Denmark&topic=Wordpress Bulk Notifications"
         target_url = "/devtools/integrations/send_all_webhook_fixture_messages"

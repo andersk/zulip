@@ -257,9 +257,7 @@ class Realm(models.Model):
     create_stream_policy: int = models.PositiveSmallIntegerField(default=POLICY_MEMBERS_ONLY)
 
     # Who in the organization is allowed to invite other users to streams.
-    invite_to_stream_policy: int = models.PositiveSmallIntegerField(
-        default=POLICY_MEMBERS_ONLY,
-    )
+    invite_to_stream_policy: int = models.PositiveSmallIntegerField(default=POLICY_MEMBERS_ONLY)
 
     USER_GROUP_EDIT_POLICY_MEMBERS = 1
     USER_GROUP_EDIT_POLICY_ADMINS = 2
@@ -400,10 +398,7 @@ class Realm(models.Model):
             "id": 3,
         }
 
-    if (
-        settings.BIG_BLUE_BUTTON_SECRET is not None
-        and settings.BIG_BLUE_BUTTON_URL is not None
-    ):
+    if settings.BIG_BLUE_BUTTON_SECRET is not None and settings.BIG_BLUE_BUTTON_URL is not None:
         VIDEO_CHAT_PROVIDERS["big_blue_button"] = {
             "name": "Big Blue Button",
             "id": 4,
@@ -822,9 +817,7 @@ class RealmFilter(models.Model):
         unique_together = ("realm", "pattern")
 
     def __str__(self) -> str:
-        return (
-            f"<RealmFilter({self.realm.string_id}): {self.pattern} {self.url_format_string}>"
-        )
+        return f"<RealmFilter({self.realm.string_id}): {self.pattern} {self.url_format_string}>"
 
 
 def get_realm_filters_cache_key(realm_id: int) -> str:
@@ -1350,8 +1343,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     @staticmethod
     def emojiset_choices() -> List[Dict[str, str]]:
         return [
-            dict(key=emojiset[0], text=emojiset[1])
-            for emojiset in UserProfile.EMOJISET_CHOICES
+            dict(key=emojiset[0], text=emojiset[1]) for emojiset in UserProfile.EMOJISET_CHOICES
         ]
 
     @staticmethod
@@ -1916,7 +1908,9 @@ class AbstractMessage(models.Model):
 
     def __str__(self) -> str:
         display_recipient = get_display_recipient(self.recipient)
-        return f"<{self.__class__.__name__}: {display_recipient} / {self.subject} / {self.sender}>"
+        return (
+            f"<{self.__class__.__name__}: {display_recipient} / {self.subject} / {self.sender}>"
+        )
 
 
 class ArchiveTransaction(models.Model):
@@ -3161,9 +3155,7 @@ class CustomProfileField(models.Model):
     FIELD_CONVERTERS: Dict[int, Callable[[Any], Any]] = {
         item[0]: item[3] for item in ALL_FIELD_TYPES
     }
-    FIELD_TYPE_CHOICES: List[Tuple[int, str]] = [
-        (item[0], item[1]) for item in ALL_FIELD_TYPES
-    ]
+    FIELD_TYPE_CHOICES: List[Tuple[int, str]] = [(item[0], item[1]) for item in ALL_FIELD_TYPES]
     FIELD_TYPE_CHOICES_DICT: Dict[str, Dict[str, Union[str, int]]] = {
         item[4]: {"id": item[0], "name": item[1]} for item in ALL_FIELD_TYPES
     }

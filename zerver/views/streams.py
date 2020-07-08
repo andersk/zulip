@@ -310,9 +310,7 @@ def list_subscriptions_backend(
     user_profile: UserProfile,
     include_subscribers: bool = REQ(validator=check_bool, default=False),
 ) -> HttpResponse:
-    subscribed, _ = gather_subscriptions(
-        user_profile, include_subscribers=include_subscribers,
-    )
+    subscribed, _ = gather_subscriptions(user_profile, include_subscribers=include_subscribers)
     return json_success({"subscriptions": subscribed})
 
 

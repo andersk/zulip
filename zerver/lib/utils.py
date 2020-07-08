@@ -34,9 +34,7 @@ class StatsDWrapper:
     # Backported support for gauge deltas
     # as our statsd server supports them but supporting
     # pystatsd is not released yet
-    def _our_gauge(
-        self, stat: str, value: float, rate: float = 1, delta: bool = False,
-    ) -> None:
+    def _our_gauge(self, stat: str, value: float, rate: float = 1, delta: bool = False) -> None:
         """Set a gauge value."""
         from django_statsd.clients import statsd
 

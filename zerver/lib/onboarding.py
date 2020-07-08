@@ -66,9 +66,7 @@ def send_initial_pms(user: UserProfile) -> None:
         help_url = user.realm.uri + "/help/getting-your-organization-started-with-zulip"
         organization_setup_text = (
             "* "
-            + _(
-                "[Read the guide]({help_url}) for getting your organization started with Zulip",
-            )
+            + _("[Read the guide]({help_url}) for getting your organization started with Zulip")
             + "\n"
         ).format(help_url=help_url)
 
@@ -136,9 +134,7 @@ def send_initial_realm_messages(realm: Realm) -> None:
     content2_of_topic_demonstration_topic = (
         _("Topics are a lightweight tool to keep conversations organized.")
         + " "
-        + _(
-            "You can learn more about topics at [Streams and topics]({about_topics_help_url}).",
-        )
+        + _("You can learn more about topics at [Streams and topics]({about_topics_help_url}).")
     ).format(about_topics_help_url="/help/about-streams-and-topics")
 
     content_of_swimming_turtles_topic = (

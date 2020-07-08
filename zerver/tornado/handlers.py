@@ -56,9 +56,7 @@ def finish_handler(
         if len(contents) != 1:
             request._log_data["extra"] = f"[{event_queue_id}/1]"
         else:
-            request._log_data["extra"] = "[{}/1/{}]".format(
-                event_queue_id, contents[0]["type"],
-            )
+            request._log_data["extra"] = "[{}/1/{}]".format(event_queue_id, contents[0]["type"])
 
         handler.zulip_finish(
             dict(result="success", msg="", events=contents, queue_id=event_queue_id),

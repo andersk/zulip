@@ -11,9 +11,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name="realm",
-            name="invite_required",
-            field=models.BooleanField(default=True),
+            model_name="realm", name="invite_required", field=models.BooleanField(default=True),
         ),
         migrations.AlterField(
             model_name="realm",

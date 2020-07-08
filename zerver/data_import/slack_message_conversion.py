@@ -119,9 +119,7 @@ def convert_to_zulip_markdown(
 
 
 def get_user_mentions(
-    token: str,
-    users: List[ZerverFieldsT],
-    slack_user_id_to_zulip_user_id: SlackToZulipUserIDT,
+    token: str, users: List[ZerverFieldsT], slack_user_id_to_zulip_user_id: SlackToZulipUserIDT,
 ) -> Tuple[str, Optional[int]]:
     slack_usermention_match = re.search(SLACK_USERMENTION_REGEX, token, re.VERBOSE)
     assert slack_usermention_match is not None

@@ -243,13 +243,7 @@ def sponsorship(
     support_url = urljoin(
         support_realm_uri,
         urlunsplit(
-            (
-                "",
-                "",
-                reverse("analytics.views.support"),
-                urlencode({"q": realm.string_id}),
-                "",
-            ),
+            ("", "", reverse("analytics.views.support"), urlencode({"q": realm.string_id}), ""),
         ),
     )
 

@@ -174,9 +174,7 @@ def get_client_name(request: HttpRequest) -> str:
     if "client" in request.POST:
         return request.POST["client"]
     if "HTTP_USER_AGENT" in request.META:
-        user_agent: Optional[Dict[str, str]] = parse_user_agent(
-            request.META["HTTP_USER_AGENT"],
-        )
+        user_agent: Optional[Dict[str, str]] = parse_user_agent(request.META["HTTP_USER_AGENT"])
     else:
         user_agent = None
     if user_agent is not None:
@@ -913,9 +911,7 @@ def rate_limit(domain: str = "api_by_user") -> Callable[[ViewFuncT], ViewFuncT]:
 
     def wrapper(func: ViewFuncT) -> ViewFuncT:
         @wraps(func)
-        def wrapped_func(
-            request: HttpRequest, *args: object, **kwargs: object
-        ) -> HttpResponse:
+        def wrapped_func(request: HttpRequest, *args: object, **kwargs: object) -> HttpResponse:
 
             # It is really tempting to not even wrap our original function
             # when settings.RATE_LIMITING is False, but it would make

@@ -12,12 +12,7 @@ from django.contrib.auth.views import LoginView as DjangoLoginView
 from django.contrib.auth.views import PasswordResetView as DjangoPasswordResetView
 from django.contrib.auth.views import logout_then_login as django_logout_then_login
 from django.forms import Form
-from django.http import (
-    HttpRequest,
-    HttpResponse,
-    HttpResponseRedirect,
-    HttpResponseServerError,
-)
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, HttpResponseServerError
 from django.shortcuts import redirect, render
 from django.template.response import SimpleTemplateResponse
 from django.urls import reverse
@@ -536,9 +531,7 @@ def oauth_redirect_to_root(
 def handle_desktop_flow(func: ViewFuncT) -> ViewFuncT:
     @wraps(func)
     def wrapper(request: HttpRequest, *args: object, **kwargs: object) -> HttpResponse:
-        user_agent = parse_user_agent(
-            request.META.get("HTTP_USER_AGENT", "Missing User-Agent"),
-        )
+        user_agent = parse_user_agent(request.META.get("HTTP_USER_AGENT", "Missing User-Agent"))
         if user_agent["name"] == "ZulipElectron":
             return render(request, "zerver/desktop_login.html")
 
@@ -685,9 +678,7 @@ def show_deactivation_notice(request: HttpRequest) -> HttpResponse:
     realm = get_realm_from_request(request)
     if realm and realm.deactivated:
         return render(
-            request,
-            "zerver/deactivated.html",
-            context={"deactivated_domain_name": realm.name},
+            request, "zerver/deactivated.html", context={"deactivated_domain_name": realm.name},
         )
 
     return HttpResponseRedirect(reverse("zerver.views.auth.login_page"))

@@ -58,9 +58,9 @@ class AdminNotifyHandlerTest(ZulipTestCase):
         super().tearDown()
 
     def get_admin_zulip_handler(self) -> AdminNotifyHandler:
-        return [
-            h for h in logging.getLogger("").handlers if isinstance(h, AdminNotifyHandler)
-        ][0]
+        return [h for h in logging.getLogger("").handlers if isinstance(h, AdminNotifyHandler)][
+            0
+        ]
 
     @patch("zerver.logging_handlers.try_git_describe")
     def test_basic(self, mock_function: MagicMock) -> None:
@@ -173,8 +173,7 @@ class AdminNotifyHandlerTest(ZulipTestCase):
 
         # Test the catch-all exception handler doesn't throw
         with patch(
-            "zerver.lib.error_notify.notify_server_error",
-            side_effect=Exception("queue error"),
+            "zerver.lib.error_notify.notify_server_error", side_effect=Exception("queue error"),
         ):
             self.handler.emit(record)
         with self.settings(STAGING_ERROR_NOTIFICATIONS=False):

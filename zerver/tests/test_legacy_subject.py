@@ -5,9 +5,7 @@ class LegacySubjectTest(ZulipTestCase):
     def test_legacy_subject(self) -> None:
         self.login("hamlet")
 
-        payload = dict(
-            type="stream", to="Verona", client="test suite", content="Test message",
-        )
+        payload = dict(type="stream", to="Verona", client="test suite", content="Test message")
 
         payload["subject"] = "whatever"
         result = self.client_post("/json/messages", payload)

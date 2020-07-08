@@ -608,9 +608,7 @@ class SlackImporter(ZulipTestCase):
         zerver_recipient = realm["zerver_recipient"]
         zerver_stream = realm["zerver_stream"]
 
-        self.assertEqual(
-            self.get_set(zerver_subscription, "recipient"), {i for i in range(11)},
-        )
+        self.assertEqual(self.get_set(zerver_subscription, "recipient"), {i for i in range(11)})
         self.assertEqual(self.get_set(zerver_subscription, "user_profile"), {1, 5, 7, 8})
 
         self.assertEqual(
@@ -681,8 +679,7 @@ class SlackImporter(ZulipTestCase):
         zerver_realmdomain = passed_realm["zerver_realmdomain"]
         self.assertListEqual(zerver_realmdomain, test_zerver_realmdomain)
         self.assertEqual(
-            passed_realm["zerver_realm"][0]["description"],
-            "Organization imported from Slack!",
+            passed_realm["zerver_realm"][0]["description"], "Organization imported from Slack!",
         )
         self.assertEqual(passed_realm["zerver_userpresence"], [])
         self.assertEqual(len(passed_realm.keys()), 14)
@@ -748,9 +745,7 @@ class SlackImporter(ZulipTestCase):
         self.assertEqual(zerver_usermessage[3]["message"], message_id)
 
     @mock.patch("zerver.data_import.slack.build_usermessages", return_value=(2, 4))
-    def test_channel_message_to_zerver_message(
-        self, mock_build_usermessage: mock.Mock,
-    ) -> None:
+    def test_channel_message_to_zerver_message(self, mock_build_usermessage: mock.Mock) -> None:
 
         user_data = [
             {"id": "U066MTL5U", "name": "john doe", "deleted": False, "real_name": "John"},
@@ -868,10 +863,7 @@ class SlackImporter(ZulipTestCase):
 
         zerver_usermessage: List[Dict[str, Any]] = []
         subscriber_map: Dict[int, Set[int]] = dict()
-        added_channels: Dict[str, Tuple[str, int]] = {
-            "random": ("c5", 1),
-            "general": ("c6", 2),
-        }
+        added_channels: Dict[str, Tuple[str, int]] = {"random": ("c5", 1), "general": ("c6", 2)}
 
         (
             zerver_message,
@@ -967,10 +959,7 @@ class SlackImporter(ZulipTestCase):
         output_dir = os.path.join(settings.TEST_WORKER_DIR, "test-slack-import")
         os.makedirs(output_dir, exist_ok=True)
 
-        added_channels: Dict[str, Tuple[str, int]] = {
-            "random": ("c5", 1),
-            "general": ("c6", 2),
-        }
+        added_channels: Dict[str, Tuple[str, int]] = {"random": ("c5", 1), "general": ("c6", 2)}
 
         time = float(timezone_now().timestamp())
         zerver_message = [{"id": 1, "ts": time}, {"id": 5, "ts": time}]

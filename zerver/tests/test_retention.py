@@ -52,9 +52,7 @@ MIT_REALM_DAYS = 100
 class RetentionTestingBase(ZulipTestCase):
     def _get_usermessage_ids(self, message_ids: List[int]) -> List[int]:
         return list(
-            UserMessage.objects.filter(message_id__in=message_ids).values_list(
-                "id", flat=True,
-            ),
+            UserMessage.objects.filter(message_id__in=message_ids).values_list("id", flat=True),
         )
 
     def _verify_archive_data(
@@ -72,9 +70,7 @@ class RetentionTestingBase(ZulipTestCase):
 
         # Archived Messages and UserMessages should have been removed from the normal tables:
         self.assertEqual(Message.objects.filter(id__in=expected_message_ids).count(), 0)
-        self.assertEqual(
-            UserMessage.objects.filter(id__in=expected_usermessage_ids).count(), 0,
-        )
+        self.assertEqual(UserMessage.objects.filter(id__in=expected_usermessage_ids).count(), 0)
 
     def _verify_restored_data(
         self, expected_message_ids: List[int], expected_usermessage_ids: List[int],
@@ -338,9 +334,7 @@ class TestArchiveMessagesGeneral(ArchiveMessagesTestingBase):
 
             self.assertEqual(
                 set(
-                    Message.objects.filter(id__in=expired_msg_ids).values_list(
-                        "id", flat=True,
-                    ),
+                    Message.objects.filter(id__in=expired_msg_ids).values_list("id", flat=True),
                 ),
                 set(expired_msg_ids),
             )
@@ -605,9 +599,7 @@ class MoveMessageToArchiveBase(RetentionTestingBase):
 
 class MoveMessageToArchiveGeneral(MoveMessageToArchiveBase):
     def test_personal_messages_archiving(self) -> None:
-        msg_ids = [
-            self.send_personal_message(self.sender, self.recipient) for i in range(0, 3)
-        ]
+        msg_ids = [self.send_personal_message(self.sender, self.recipient) for i in range(0, 3)]
         usermsg_ids = self._get_usermessage_ids(msg_ids)
 
         self._assert_archive_empty()
@@ -619,9 +611,7 @@ class MoveMessageToArchiveGeneral(MoveMessageToArchiveBase):
 
     def test_move_messages_to_archive_with_realm_argument(self) -> None:
         realm = get_realm("zulip")
-        msg_ids = [
-            self.send_personal_message(self.sender, self.recipient) for i in range(0, 3)
-        ]
+        msg_ids = [self.send_personal_message(self.sender, self.recipient) for i in range(0, 3)]
         usermsg_ids = self._get_usermessage_ids(msg_ids)
 
         self._assert_archive_empty()
@@ -876,9 +866,7 @@ class MoveMessageToArchiveWithReactions(MoveMessageToArchiveBase, EmojiReactionB
 
         self.assertEqual(
             set(
-                ArchivedReaction.objects.filter(message_id=msg_id).values_list(
-                    "id", flat=True,
-                ),
+                ArchivedReaction.objects.filter(message_id=msg_id).values_list("id", flat=True),
             ),
             set(reaction_ids),
         )
@@ -981,9 +969,7 @@ class TestGetRealmAndStreamsForArchiving(ZulipTestCase):
         archiving_blocked_zephyr_stream.message_retention_days = -1
         archiving_blocked_zephyr_stream.save()
 
-        archiving_enabled_zephyr_stream = self.make_stream(
-            "with archiving", realm=zephyr_realm,
-        )
+        archiving_enabled_zephyr_stream = self.make_stream("with archiving", realm=zephyr_realm)
         archiving_enabled_zephyr_stream.message_retention_days = 1
         archiving_enabled_zephyr_stream.save()
 
@@ -1000,10 +986,7 @@ class TestGetRealmAndStreamsForArchiving(ZulipTestCase):
         # if python had a true "unordered list" data structure. Set doesn't do the job, because it requires
         # elements to be hashable.
         expected_result = [
-            (
-                zulip_realm,
-                list(Stream.objects.filter(realm=zulip_realm).exclude(id=verona.id)),
-            ),
+            (zulip_realm, list(Stream.objects.filter(realm=zulip_realm).exclude(id=verona.id))),
             (zephyr_realm, [archiving_enabled_zephyr_stream]),
             (empty_realm_with_archiving, []),
         ]

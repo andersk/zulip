@@ -79,9 +79,7 @@ def catch_network_errors(func: Callable[..., Any]) -> Callable[..., Any]:
 
 
 @catch_network_errors
-@cache_with_key(
-    preview_url_cache_key, cache_name=CACHE_NAME, with_statsd_key="urlpreview_data",
-)
+@cache_with_key(preview_url_cache_key, cache_name=CACHE_NAME, with_statsd_key="urlpreview_data")
 def get_link_embed_data(
     url: str, maxwidth: int = 640, maxheight: int = 480,
 ) -> Optional[Dict[str, Any]]:

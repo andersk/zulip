@@ -119,8 +119,7 @@ class JsonableError(Exception):
     @property
     def msg(self) -> str:
         format_data = dict(
-            ((f, getattr(self, f)) for f in self.data_fields),
-            _msg=getattr(self, "_msg", None),
+            ((f, getattr(self, f)) for f in self.data_fields), _msg=getattr(self, "_msg", None),
         )
         return self.msg_format().format(**format_data)
 

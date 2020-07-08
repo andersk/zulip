@@ -336,9 +336,7 @@ class ThumbnailTest(ZulipTestCase):
         self.assertEqual(result.status_code, 302, result)
         base = "http://test-thumborhost.com/"
         self.assertEqual(base, result.url[: len(base)])
-        expected_part_url = (
-            "/smart/filters:no_upscale()/" + hex_uri + "/source_type/local_file"
-        )
+        expected_part_url = "/smart/filters:no_upscale()/" + hex_uri + "/source_type/local_file"
         self.assertIn(expected_part_url, result.url)
 
     def test_with_different_sizes(self) -> None:

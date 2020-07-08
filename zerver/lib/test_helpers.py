@@ -129,9 +129,7 @@ def capture_event(event_info: EventInfo) -> Iterator[None]:
 
 
 @contextmanager
-def simulated_empty_cache() -> Iterator[
-    List[Tuple[str, Union[str, List[str]], Optional[str]]]
-]:
+def simulated_empty_cache() -> Iterator[List[Tuple[str, Union[str, List[str]], Optional[str]]]]:
     cache_queries: List[Tuple[str, Union[str, List[str]], Optional[str]]] = []
 
     def my_cache_get(key: str, cache_name: Optional[str] = None) -> Optional[Dict[str, Any]]:

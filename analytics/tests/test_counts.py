@@ -801,9 +801,7 @@ class TestCountStats(AnalyticsTestCase):
             ],
         )
         self.assertTableState(
-            InstallationCount,
-            ["value", "subgroup"],
-            [[4, website_client_id], [3, client2_id]],
+            InstallationCount, ["value", "subgroup"], [[4, website_client_id], [3, client2_id]],
         )
         self.assertTableState(StreamCount, [], [])
 
@@ -1446,9 +1444,7 @@ class TestDeleteStats(AnalyticsTestCase):
         StreamCount.objects.create(stream=stream, realm=stream.realm, **count_args)
         RealmCount.objects.create(realm=user.realm, **count_args)
         InstallationCount.objects.create(**count_args)
-        FillState.objects.create(
-            property="test", end_time=self.TIME_ZERO, state=FillState.DONE,
-        )
+        FillState.objects.create(property="test", end_time=self.TIME_ZERO, state=FillState.DONE)
 
         analytics = apps.get_app_config("analytics")
         for table in list(analytics.models.values()):
@@ -1682,9 +1678,7 @@ class TestRealmActiveHumans(AnalyticsTestCase):
         self.stat = COUNT_STATS["realm_active_humans::day"]
         self.current_property = self.stat.property
 
-    def mark_audit_active(
-        self, user: UserProfile, end_time: Optional[datetime] = None,
-    ) -> None:
+    def mark_audit_active(self, user: UserProfile, end_time: Optional[datetime] = None) -> None:
         if end_time is None:
             end_time = self.TIME_ZERO
         UserCount.objects.create(
@@ -1696,9 +1690,7 @@ class TestRealmActiveHumans(AnalyticsTestCase):
             value=1,
         )
 
-    def mark_15day_active(
-        self, user: UserProfile, end_time: Optional[datetime] = None,
-    ) -> None:
+    def mark_15day_active(self, user: UserProfile, end_time: Optional[datetime] = None) -> None:
         if end_time is None:
             end_time = self.TIME_ZERO
         UserCount.objects.create(

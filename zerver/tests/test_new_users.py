@@ -40,7 +40,9 @@ class SendLoginEmailTest(ZulipTestCase):
             user.save()
             password = initial_password(user.delivery_email)
             login_info = dict(username=user.delivery_email, password=password)
-            firefox_windows = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0"
+            firefox_windows = (
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0"
+            )
             user_tz = get_timezone(user.timezone)
             mock_time = datetime.datetime(year=2018, month=1, day=1, tzinfo=utc)
             reference_time = mock_time.astimezone(user_tz).strftime(
@@ -67,9 +69,7 @@ class SendLoginEmailTest(ZulipTestCase):
                     "/accounts/login/", info=login_info, HTTP_USER_AGENT=firefox_windows,
                 )
 
-            reference_time = mock_time.astimezone(user_tz).strftime(
-                "%A, %B %d, %Y at %H:%M %Z",
-            )
+            reference_time = mock_time.astimezone(user_tz).strftime("%A, %B %d, %Y at %H:%M %Z")
             self.assertIn(reference_time, mail.outbox[1].body)
 
     def test_dont_send_login_emails_if_send_login_emails_is_false(self) -> None:
@@ -138,8 +138,7 @@ class TestBrowserAndOsUserAgentStrings(ZulipTestCase):
                 "Windows",
             ),
             (
-                "mozilla/5.0 (windows nt 6.1; wow64; rv:51.0) "
-                + "gecko/20100101 firefox/51.0",
+                "mozilla/5.0 (windows nt 6.1; wow64; rv:51.0) " + "gecko/20100101 firefox/51.0",
                 "Firefox",
                 "Windows",
             ),

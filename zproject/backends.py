@@ -42,11 +42,7 @@ from requests import HTTPError
 from social_core.backends.apple import AppleIdAuth
 from social_core.backends.azuread import AzureADOAuth2
 from social_core.backends.base import BaseAuth
-from social_core.backends.github import (
-    GithubOAuth2,
-    GithubOrganizationOAuth2,
-    GithubTeamOAuth2,
-)
+from social_core.backends.github import GithubOAuth2, GithubOrganizationOAuth2, GithubTeamOAuth2
 from social_core.backends.gitlab import GitLabOAuth2
 from social_core.backends.google import GoogleOAuth2
 from social_core.backends.saml import SAMLAuth, SAMLIdentityProvider
@@ -172,8 +168,7 @@ def any_social_backend_enabled(realm: Optional[Realm] = None) -> bool:
     """Used by the login page process to determine whether to show the
     'OR' for login with Google"""
     social_backend_names = [
-        social_auth_subclass.auth_backend_name
-        for social_auth_subclass in EXTERNAL_AUTH_METHODS
+        social_auth_subclass.auth_backend_name for social_auth_subclass in EXTERNAL_AUTH_METHODS
     ]
     return auth_enabled_helper(social_backend_names, realm)
 
@@ -654,9 +649,7 @@ class ZulipLDAPAuthBackendBase(ZulipAuthMixin, LDAPBackend):
 
         return full_name, short_name
 
-    def sync_full_name_from_ldap(
-        self, user_profile: UserProfile, ldap_user: _LDAPUser,
-    ) -> None:
+    def sync_full_name_from_ldap(self, user_profile: UserProfile, ldap_user: _LDAPUser) -> None:
         from zerver.lib.actions import do_change_full_name
 
         full_name, _ = self.get_mapped_name(ldap_user)
@@ -1417,10 +1410,7 @@ def social_auth_finish(
     comments below as well as login_or_register_remote_user in
     `zerver/views/auth.py` for the details on how that dispatch works.
     """
-    from zerver.views.auth import (
-        login_or_register_remote_user,
-        redirect_and_log_into_subdomain,
-    )
+    from zerver.views.auth import login_or_register_remote_user, redirect_and_log_into_subdomain
 
     user_profile = kwargs["user_profile"]
     return_data = kwargs["return_data"]
@@ -1626,9 +1616,7 @@ class GitHubAuthBackend(SocialAuthMixin, GithubOAuth2):
         # to demonstrate that they control the target email address.
         verified_emails: List[str] = []
         for email_obj in [
-            obj
-            for obj in self.get_usable_email_objects(*args, **kwargs)
-            if obj.get("verified")
+            obj for obj in self.get_usable_email_objects(*args, **kwargs) if obj.get("verified")
         ]:
             # social_associate_user_helper assumes that the first email in
             # verified_emails is primary.
@@ -1835,9 +1823,7 @@ class AppleAuthBackend(SocialAuthMixin, AppleIdAuth):
         try:
             kid = jwt.get_unverified_header(id_token).get("kid")
             public_key = RSAAlgorithm.from_jwk(self.get_apple_jwk(kid))
-            decoded = jwt.decode(
-                id_token, key=public_key, audience=audience, algorithm="RS256",
-            )
+            decoded = jwt.decode(id_token, key=public_key, audience=audience, algorithm="RS256")
         except PyJWTError:
             # Changed from upstream python-social-auth to raise
             # AuthFailed, which is more appropriate than upstream's

@@ -181,11 +181,7 @@ def get_commit_comment_body(payload: Dict[str, Any]) -> str:
     commit_url = comment_url.split("#", 1)[0]
     action = f"[commented]({comment_url})"
     return get_commits_comment_action_message(
-        get_sender_name(payload),
-        action,
-        commit_url,
-        comment.get("commit_id"),
-        comment["body"],
+        get_sender_name(payload), action, commit_url, comment.get("commit_id"), comment["body"],
     )
 
 
@@ -264,9 +260,7 @@ def get_team_body(payload: Dict[str, Any]) -> str:
     if "description" in changes:
         actor = payload["sender"]["login"]
         new_description = payload["team"]["description"]
-        return (
-            f"**{actor}** changed the team description to:\n```quote\n{new_description}\n```"
-        )
+        return f"**{actor}** changed the team description to:\n```quote\n{new_description}\n```"
     if "name" in changes:
         original_name = changes["name"]["from"]
         new_name = payload["team"]["name"]

@@ -15,36 +15,28 @@ class Migration(migrations.Migration):
             model_name="installationcount",
             name="anomaly",
             field=models.ForeignKey(
-                null=True,
-                on_delete=django.db.models.deletion.SET_NULL,
-                to="analytics.Anomaly",
+                null=True, on_delete=django.db.models.deletion.SET_NULL, to="analytics.Anomaly",
             ),
         ),
         migrations.AlterField(
             model_name="realmcount",
             name="anomaly",
             field=models.ForeignKey(
-                null=True,
-                on_delete=django.db.models.deletion.SET_NULL,
-                to="analytics.Anomaly",
+                null=True, on_delete=django.db.models.deletion.SET_NULL, to="analytics.Anomaly",
             ),
         ),
         migrations.AlterField(
             model_name="streamcount",
             name="anomaly",
             field=models.ForeignKey(
-                null=True,
-                on_delete=django.db.models.deletion.SET_NULL,
-                to="analytics.Anomaly",
+                null=True, on_delete=django.db.models.deletion.SET_NULL, to="analytics.Anomaly",
             ),
         ),
         migrations.AlterField(
             model_name="usercount",
             name="anomaly",
             field=models.ForeignKey(
-                null=True,
-                on_delete=django.db.models.deletion.SET_NULL,
-                to="analytics.Anomaly",
+                null=True, on_delete=django.db.models.deletion.SET_NULL, to="analytics.Anomaly",
             ),
         ),
     ]

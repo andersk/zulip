@@ -275,12 +275,8 @@ class TestMissedMessages(ZulipTestCase):
         othello = self.example_user("othello")
         hamlet = self.example_user("hamlet")
         tokens = self._get_tokens()
-        with patch(
-            "zerver.lib.email_mirror.generate_missed_message_token", side_effect=tokens,
-        ):
-            handle_missedmessage_emails(
-                hamlet.id, [{"message_id": msg_id, "trigger": trigger}],
-            )
+        with patch("zerver.lib.email_mirror.generate_missed_message_token", side_effect=tokens):
+            handle_missedmessage_emails(hamlet.id, [{"message_id": msg_id, "trigger": trigger}])
         if settings.EMAIL_GATEWAY_PATTERN != "":
             reply_to_addresses = [settings.EMAIL_GATEWAY_PATTERN % (t,) for t in tokens]
             reply_to_emails = [
@@ -417,9 +413,7 @@ class TestMissedMessages(ZulipTestCase):
             trigger="wildcard_mentioned",
         )
 
-    def _extra_context_in_missed_stream_messages_email_notify(
-        self, send_as_user: bool,
-    ) -> None:
+    def _extra_context_in_missed_stream_messages_email_notify(self, send_as_user: bool) -> None:
         for i in range(0, 11):
             self.send_stream_message(self.example_user("othello"), "Denmark", content=str(i))
         self.send_stream_message(
@@ -666,9 +660,7 @@ class TestMissedMessages(ZulipTestCase):
         do_change_notification_settings(
             self.example_user("hamlet"), "message_content_in_email_notifications", False,
         )
-        self._extra_context_in_missed_stream_messages_mention(
-            False, show_message_content=False,
-        )
+        self._extra_context_in_missed_stream_messages_mention(False, show_message_content=False)
         mail.outbox = []
         self._extra_context_in_missed_stream_messages_wildcard_mention(
             False, show_message_content=False,
@@ -777,9 +769,7 @@ class TestMissedMessages(ZulipTestCase):
         # Emails have missed message content when message content is enabled by the user
         do_change_notification_settings(user, "message_content_in_email_notifications", True)
         mail.outbox = []
-        self._extra_context_in_personal_missed_stream_messages(
-            False, show_message_content=True,
-        )
+        self._extra_context_in_personal_missed_stream_messages(False, show_message_content=True)
 
         # Emails don't have missed message content when message content is disabled by the user
         do_change_notification_settings(user, "message_content_in_email_notifications", False)
@@ -818,7 +808,9 @@ class TestMissedMessages(ZulipTestCase):
             "Extremely personal message with a realm emoji :green_tick:!",
         )
         realm_emoji_id = realm.get_active_emoji()["green_tick"]["id"]
-        realm_emoji_url = f"http://zulip.testserver/user_avatars/{realm.id}/emoji/images/{realm_emoji_id}.png"
+        realm_emoji_url = (
+            f"http://zulip.testserver/user_avatars/{realm.id}/emoji/images/{realm_emoji_id}.png"
+        )
         verify_body_include = [
             f'<img alt=":green_tick:" src="{realm_emoji_url}" title="green tick" style="height: 20px;">',
         ]
@@ -860,9 +852,7 @@ class TestMissedMessages(ZulipTestCase):
         )
         stream_id = get_stream("Verona", get_realm("zulip")).id
         href = f"http://zulip.testserver/#narrow/stream/{stream_id}-Verona"
-        verify_body_include = [
-            f'<a class="stream" data-stream-id="5" href="{href}">#Verona</a',
-        ]
+        verify_body_include = [f'<a class="stream" data-stream-id="5" href="{href}">#Verona</a']
         email_subject = "PMs with Othello, the Moor of Venice"
         self._test_cases(
             msg_id,
@@ -929,9 +919,7 @@ class TestMissedMessages(ZulipTestCase):
 
     def test_multiple_stream_messages(self) -> None:
         hamlet = self.example_user("hamlet")
-        msg_id_1 = self.send_stream_message(
-            self.example_user("othello"), "Denmark", "Message1",
-        )
+        msg_id_1 = self.send_stream_message(self.example_user("othello"), "Denmark", "Message1")
         msg_id_2 = self.send_stream_message(self.example_user("iago"), "Denmark", "Message2")
 
         handle_missedmessage_emails(
@@ -1022,9 +1010,7 @@ class TestMissedMessages(ZulipTestCase):
     def test_multiple_stream_messages_different_topics(self) -> None:
         """Should receive separate emails for each topic within a stream."""
         hamlet = self.example_user("hamlet")
-        msg_id_1 = self.send_stream_message(
-            self.example_user("othello"), "Denmark", "Message1",
-        )
+        msg_id_1 = self.send_stream_message(self.example_user("othello"), "Denmark", "Message1")
         msg_id_2 = self.send_stream_message(
             self.example_user("iago"), "Denmark", "Message2", topic_name="test2",
         )

@@ -28,9 +28,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="realmcreationkey",
             name="creation_key",
-            field=models.CharField(
-                db_index=True, max_length=40, verbose_name="activation key",
-            ),
+            field=models.CharField(db_index=True, max_length=40, verbose_name="activation key"),
         ),
         migrations.AlterUniqueTogether(
             name="confirmation", unique_together={("type", "confirmation_key")},

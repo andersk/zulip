@@ -44,10 +44,7 @@ class FlockHookTests(WebhookTestCase):
         expected_topic = "Flock notifications"
         expected_message = "This is a reply to Reminder."
         self.send_and_test_stream_message(
-            "reply_reminder",
-            expected_topic,
-            expected_message,
-            content_type="application/json",
+            "reply_reminder", expected_topic, expected_message, content_type="application/json",
         )
 
     def test_flock_reply_todo(self) -> None:

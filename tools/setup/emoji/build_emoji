@@ -273,9 +273,7 @@ def setup_emoji_farms(cache_path: str, emoji_data: List[Dict[str, Any]]) -> None
         # Copy zulip.png to the emoji farm.
         zulip_image = os.path.join(ZULIP_PATH, "static", "assets", "zulip-emoji")
         for f in os.listdir(zulip_image):
-            shutil.copy2(
-                os.path.join(zulip_image, f), target_emoji_farm, follow_symlinks=False,
-            )
+            shutil.copy2(os.path.join(zulip_image, f), target_emoji_farm, follow_symlinks=False)
 
         # We hardcode octopus emoji image to Google emojiset's old
         # "cute octopus" image. Copy it to the emoji farms.

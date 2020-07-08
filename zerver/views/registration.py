@@ -269,8 +269,7 @@ def accounts_register(request: HttpRequest) -> HttpResponse:
                 )
             else:
                 form = RegistrationForm(
-                    initial={"full_name": prereg_user.full_name},
-                    realm_creation=realm_creation,
+                    initial={"full_name": prereg_user.full_name}, realm_creation=realm_creation,
                 )
         elif "full_name" in request.POST:
             form = RegistrationForm(
@@ -650,9 +649,7 @@ def accounts_home(
                 logging.error("Error in accounts_home: %s", str(e))
                 return HttpResponseRedirect("/config-error/smtp")
 
-            return HttpResponseRedirect(
-                reverse("signup_send_confirm", kwargs={"email": email}),
-            )
+            return HttpResponseRedirect(reverse("signup_send_confirm", kwargs={"email": email}))
 
         email = request.POST["email"]
         try:

@@ -213,9 +213,7 @@ def fail_with_message(event: Dict[str, Any], failure_message: str) -> None:
     message_info = event["message"]
     content = "Failure! " + failure_message
     response_data = dict(content=content)
-    send_response_message(
-        bot_id=bot_id, message_info=message_info, response_data=response_data,
-    )
+    send_response_message(bot_id=bot_id, message_info=message_info, response_data=response_data)
 
 
 def get_message_url(event: Dict[str, Any]) -> str:
@@ -247,8 +245,7 @@ def notify_bot_owner(
         )
     if response_content:
         notification_message += (
-            "\nThe response contains the following payload:\n"
-            f"```\n{response_content!r}\n```"
+            "\nThe response contains the following payload:\n" f"```\n{response_content!r}\n```"
         )
     if exception:
         notification_message += (
@@ -258,9 +255,7 @@ def notify_bot_owner(
 
     message_info = dict(type="private", display_recipient=[dict(email=bot_owner.email)])
     response_data = dict(content=notification_message)
-    send_response_message(
-        bot_id=bot_id, message_info=message_info, response_data=response_data,
-    )
+    send_response_message(bot_id=bot_id, message_info=message_info, response_data=response_data)
 
 
 def request_retry(event: Dict[str, Any], failure_message: Optional[str] = None) -> None:
@@ -305,9 +300,7 @@ def process_success_response(
     bot_id = event["user_profile_id"]
     message_info = event["message"]
     response_data = dict(content=content, widget_content=widget_content)
-    send_response_message(
-        bot_id=bot_id, message_info=message_info, response_data=response_data,
-    )
+    send_response_message(bot_id=bot_id, message_info=message_info, response_data=response_data)
 
 
 def do_rest_call(

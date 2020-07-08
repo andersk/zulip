@@ -79,8 +79,7 @@ Example:
         self._prepare_message(message, realm, stream)
 
         mirror_email_message(
-            message["To"].addresses[0].addr_spec,
-            base64.b64encode(message.as_bytes()).decode(),
+            message["To"].addresses[0].addr_spec, base64.b64encode(message.as_bytes()).decode(),
         )
 
     def _does_fixture_path_exist(self, fixture_path: str) -> bool:

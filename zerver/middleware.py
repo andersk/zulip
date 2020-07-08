@@ -218,9 +218,7 @@ def write_log_line(
             )
 
             if not suppress_statsd:
-                statsd.timing(
-                    f"{statsd_path}.markdown.time", timedelta_ms(markdown_time_delta),
-                )
+                statsd.timing(f"{statsd_path}.markdown.time", timedelta_ms(markdown_time_delta))
                 statsd.incr(f"{statsd_path}.markdown.count", markdown_count_delta)
 
     # Get the amount of time spent doing database queries

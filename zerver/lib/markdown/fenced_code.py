@@ -390,9 +390,7 @@ class FencedBlockPreprocessor(markdown.preprocessors.Preprocessor):
             default_language = self.md.zulip_realm.default_code_block_language
         except AttributeError:
             pass
-        handler = OuterHandler(
-            processor, output, self.run_content_validators, default_language,
-        )
+        handler = OuterHandler(processor, output, self.run_content_validators, default_language)
         self.push(handler)
 
         for line in lines:

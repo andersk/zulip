@@ -386,9 +386,7 @@ class TestRealmReactivationEmail(ZulipTestCase):
 
     def test_if_realm_not_deactivated(self) -> None:
         realm = get_realm("zulip")
-        with self.assertRaisesRegex(
-            CommandError, f"The realm {realm.name} is already active.",
-        ):
+        with self.assertRaisesRegex(CommandError, f"The realm {realm.name} is already active."):
             call_command(self.COMMAND_NAME, "--realm=zulip")
 
 

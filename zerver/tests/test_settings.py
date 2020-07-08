@@ -210,13 +210,11 @@ class ChangeSettingsTest(ZulipTestCase):
             start_time = time.time()
             with mock.patch("time.time", return_value=start_time):
                 result = self.client_patch(
-                    "/json/settings",
-                    dict(old_password="bad_password", new_password="ignored"),
+                    "/json/settings", dict(old_password="bad_password", new_password="ignored"),
                 )
                 self.assert_json_error(result, "Wrong password!")
                 result = self.client_patch(
-                    "/json/settings",
-                    dict(old_password="bad_password", new_password="ignored"),
+                    "/json/settings", dict(old_password="bad_password", new_password="ignored"),
                 )
                 self.assert_json_error(result, "Wrong password!")
 
@@ -291,9 +289,7 @@ class ChangeSettingsTest(ZulipTestCase):
             )
             self.assert_json_success(result)
 
-        with self.settings(
-            LDAP_APPEND_DOMAIN=None, AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map,
-        ):
+        with self.settings(LDAP_APPEND_DOMAIN=None, AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map):
             result = self.client_patch(
                 "/json/settings",
                 dict(

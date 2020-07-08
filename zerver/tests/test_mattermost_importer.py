@@ -209,8 +209,7 @@ class MatterMostImporter(ZulipTestCase):
         self.assertEqual(zerver_stream[0]["name"], "Gryffindor common room")
         self.assertEqual(zerver_stream[0]["invite_only"], False)
         self.assertEqual(
-            zerver_stream[0]["description"],
-            "A place for talking about Gryffindor common room",
+            zerver_stream[0]["description"], "A place for talking about Gryffindor common room",
         )
         self.assertEqual(zerver_stream[0]["rendered_description"], "")
         self.assertEqual(zerver_stream[0]["realm"], 3)
@@ -638,9 +637,7 @@ class MatterMostImporter(ZulipTestCase):
         exported_messages_id = self.get_set(messages["zerver_message"], "id")
         self.assertIn(messages["zerver_message"][0]["sender"], exported_user_ids)
         self.assertIn(messages["zerver_message"][0]["recipient"], exported_recipient_ids)
-        self.assertIn(
-            messages["zerver_message"][0]["content"], "harry joined the channel.\n\n",
-        )
+        self.assertIn(messages["zerver_message"][0]["content"], "harry joined the channel.\n\n")
 
         exported_usermessage_userprofiles = self.get_set(
             messages["zerver_usermessage"], "user_profile",
@@ -793,9 +790,7 @@ class MatterMostImporter(ZulipTestCase):
         harry_team_output_dir = self.team_output_dir(output_dir, "gryffindor")
         messages = self.read_file(harry_team_output_dir, "messages-000001.json")
 
-        self.assertIn(
-            messages["zerver_message"][0]["content"], "xxxxx xxxxxx xxx xxxxxxx.\n\n",
-        )
+        self.assertIn(messages["zerver_message"][0]["content"], "xxxxx xxxxxx xxx xxxxxxx.\n\n")
 
     def test_import_data_to_existing_database(self) -> None:
         mattermost_data_dir = self.fixture_file_name("", "mattermost_fixtures")

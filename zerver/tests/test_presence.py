@@ -449,9 +449,7 @@ class SingleUserPresenceTests(ZulipTestCase):
         self.login_user(user)
         result = self.client_post("/json/users/me/presence", {"status": "active"})
         result = self.client_post(
-            "/json/users/me/presence",
-            {"status": "active"},
-            HTTP_USER_AGENT="ZulipDesktop/1.0",
+            "/json/users/me/presence", {"status": "active"}, HTTP_USER_AGENT="ZulipDesktop/1.0",
         )
         result = self.api_post(
             user,

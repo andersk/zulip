@@ -54,11 +54,7 @@ from zerver.tornado.handlers import (
     get_handler_by_id,
     handler_stats_string,
 )
-from zerver.tornado.sharding import (
-    get_tornado_port,
-    get_tornado_uri,
-    notify_tornado_queue_name,
-)
+from zerver.tornado.sharding import get_tornado_port, get_tornado_uri, notify_tornado_queue_name
 
 requests_client = requests.Session()
 for host in ["127.0.0.1", "localhost"]:
@@ -1242,9 +1238,7 @@ def maybe_enqueue_notifications_for_message_update(
 
     always_push_notify = user_profile_id in push_notify_user_ids
 
-    idle = (user_profile_id in presence_idle_user_ids) or receiver_is_off_zulip(
-        user_profile_id,
-    )
+    idle = (user_profile_id in presence_idle_user_ids) or receiver_is_off_zulip(user_profile_id)
 
     maybe_enqueue_notifications(
         user_profile_id=user_profile_id,

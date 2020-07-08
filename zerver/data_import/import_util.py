@@ -46,10 +46,7 @@ class SubscriberHandler:
         self.huddle_info: Dict[int, Set[int]] = dict()
 
     def set_info(
-        self,
-        users: Set[int],
-        stream_id: Optional[int] = None,
-        huddle_id: Optional[int] = None,
+        self, users: Set[int], stream_id: Optional[int] = None, huddle_id: Optional[int] = None,
     ) -> None:
         if stream_id is not None:
             self.stream_info[stream_id] = users
@@ -298,9 +295,7 @@ def build_personal_subscriptions(zerver_recipient: List[ZerverFieldsT]) -> List[
         recipient_id = recipient["id"]
         user_id = recipient["type_id"]
         subscription = build_subscription(
-            recipient_id=recipient_id,
-            user_id=user_id,
-            subscription_id=NEXT_ID("subscription"),
+            recipient_id=recipient_id, user_id=user_id, subscription_id=NEXT_ID("subscription"),
         )
         subscriptions.append(subscription)
 

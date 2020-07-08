@@ -29,9 +29,7 @@ def update_notification_settings(apps: StateApps, schema_editor: DatabaseSchemaE
             ).update(**update_kwargs)
 
 
-def reverse_notification_settings(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def reverse_notification_settings(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     Subscription = apps.get_model("zerver", "Subscription")
     UserProfile = apps.get_model("zerver", "UserProfile")
 

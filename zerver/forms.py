@@ -40,11 +40,7 @@ from zerver.models import (
     get_realm,
     get_user_by_delivery_email,
 )
-from zproject.backends import (
-    check_password_strength,
-    email_auth_enabled,
-    email_belongs_to_ldap,
-)
+from zproject.backends import check_password_strength, email_auth_enabled, email_belongs_to_ldap
 
 MIT_VALIDATION_ERROR = (
     "That user does not exist at MIT or is a "
@@ -302,8 +298,7 @@ class ZulipPasswordResetForm(PasswordResetForm):
 
         if not email_auth_enabled(realm):
             logging.info(
-                "Password reset attempted for %s even though password auth is disabled.",
-                email,
+                "Password reset attempted for %s even though password auth is disabled.", email,
             )
             return
         if email_belongs_to_ldap(realm, email):
@@ -423,9 +418,7 @@ class OurAuthenticationForm(AuthenticationForm):
                 raise ValidationError(AUTHENTICATION_RATE_LIMITED_ERROR % (secs_to_freedom,))
 
             if return_data.get("inactive_realm"):
-                raise AssertionError(
-                    "Programming error: inactive realm in authentication form",
-                )
+                raise AssertionError("Programming error: inactive realm in authentication form")
 
             if return_data.get("inactive_user") and not return_data.get("is_mirror_dummy"):
                 # We exclude mirror dummy accounts here. They should be treated as the

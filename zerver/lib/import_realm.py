@@ -22,10 +22,7 @@ from zerver.lib.actions import (
     do_change_plan_type,
 )
 from zerver.lib.avatar_hash import user_avatar_path_from_ids
-from zerver.lib.bulk_create import (
-    bulk_create_users,
-    bulk_set_users_or_streams_recipient_fields,
-)
+from zerver.lib.bulk_create import bulk_create_users, bulk_set_users_or_streams_recipient_fields
 from zerver.lib.export import DATE_FIELDS, Field, Path, Record, TableData, TableName
 from zerver.lib.markdown import markdown_convert
 from zerver.lib.markdown import version as markdown_version
@@ -190,9 +187,7 @@ def create_subscription_events(data: TableData, realm_id: int) -> None:
     event_time = timezone_now()
 
     recipient_id_to_stream_id = {
-        d["id"]: d["type_id"]
-        for d in data["zerver_recipient"]
-        if d["type"] == Recipient.STREAM
+        d["id"]: d["type_id"] for d in data["zerver_recipient"] if d["type"] == Recipient.STREAM
     }
 
     for sub in data["zerver_subscription"]:
@@ -810,9 +805,7 @@ def import_uploads(
             if record["s3_path"].endswith(".original"):
                 user_profile = get_user_profile_by_id(record["user_profile_id"])
                 if settings.LOCAL_UPLOADS_DIR is not None:
-                    avatar_path = user_avatar_path_from_ids(
-                        user_profile.id, record["realm_id"],
-                    )
+                    avatar_path = user_avatar_path_from_ids(user_profile.id, record["realm_id"])
                     medium_file_path = (
                         os.path.join(settings.LOCAL_UPLOADS_DIR, "avatars", avatar_path)
                         + "-medium.png"

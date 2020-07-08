@@ -71,9 +71,7 @@ class APIReturnValuesTablePreprocessor(Preprocessor):
                 assert return_values[return_value]["deprecated"]
             ans.append(self.render_desc(description, spacing, return_value))
             if "properties" in return_values[return_value]:
-                ans += self.render_table(
-                    return_values[return_value]["properties"], spacing + 4,
-                )
+                ans += self.render_table(return_values[return_value]["properties"], spacing + 4)
             if return_values[return_value].get("additionalProperties", False):
                 ans.append(
                     self.render_desc(

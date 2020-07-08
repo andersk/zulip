@@ -227,9 +227,7 @@ def json_change_notify_settings(
     enable_stream_desktop_notifications: Optional[bool] = REQ(
         validator=check_bool, default=None,
     ),
-    enable_stream_email_notifications: Optional[bool] = REQ(
-        validator=check_bool, default=None,
-    ),
+    enable_stream_email_notifications: Optional[bool] = REQ(validator=check_bool, default=None),
     enable_stream_push_notifications: Optional[bool] = REQ(validator=check_bool, default=None),
     enable_stream_audible_notifications: Optional[bool] = REQ(
         validator=check_bool, default=None,
@@ -241,9 +239,7 @@ def json_change_notify_settings(
     enable_offline_email_notifications: Optional[bool] = REQ(
         validator=check_bool, default=None,
     ),
-    enable_offline_push_notifications: Optional[bool] = REQ(
-        validator=check_bool, default=None,
-    ),
+    enable_offline_push_notifications: Optional[bool] = REQ(validator=check_bool, default=None),
     enable_online_push_notifications: Optional[bool] = REQ(validator=check_bool, default=None),
     enable_digest_emails: Optional[bool] = REQ(validator=check_bool, default=None),
     enable_login_emails: Optional[bool] = REQ(validator=check_bool, default=None),

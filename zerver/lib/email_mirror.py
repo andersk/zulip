@@ -71,9 +71,7 @@ def redact_email_address(error_message: str) -> str:
 
         # Scrub the address from the message, to the form XXXXX@example.com:
         string_to_scrub = address_match.groups()[0]
-        redacted_message = redacted_message.replace(
-            string_to_scrub, "X" * len(string_to_scrub),
-        )
+        redacted_message = redacted_message.replace(string_to_scrub, "X" * len(string_to_scrub))
         return redacted_message
 
     return error_message
@@ -161,9 +159,7 @@ def create_missed_message_address(user_profile: UserProfile, message: Message) -
         return FromAddress.NOREPLY
 
     mm_address = MissedMessageEmailAddress.objects.create(
-        message=message,
-        user_profile=user_profile,
-        email_token=generate_missed_message_token(),
+        message=message, user_profile=user_profile, email_token=generate_missed_message_token(),
     )
     return str(mm_address)
 

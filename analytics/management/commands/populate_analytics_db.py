@@ -163,9 +163,7 @@ class Command(BaseCommand):
 
         stat = COUNT_STATS["active_users_audit:is_bot:day"]
         realm_data = {
-            "false": self.generate_fixture_data(
-                stat, 0.1, 0.03, 3.5, 0.8, 2, partial_sum=True,
-            ),
+            "false": self.generate_fixture_data(stat, 0.1, 0.03, 3.5, 0.8, 2, partial_sum=True),
         }
         insert_fixture_data(stat, realm_data, RealmCount)
         installation_data = {

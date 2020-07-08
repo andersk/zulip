@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="realm",
-            name="seat_limit",
-            field=models.PositiveIntegerField(null=True),
+            model_name="realm", name="seat_limit", field=models.PositiveIntegerField(null=True),
         ),
     ]

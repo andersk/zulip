@@ -72,8 +72,6 @@ class Command(ZulipBaseCommand):
             print(f"Applying operation to User ID: {user.id}: {operation}")
 
             if operation == "block":
-                RateLimitedUser(user, domain=options["domain"]).block_access(
-                    options["seconds"],
-                )
+                RateLimitedUser(user, domain=options["domain"]).block_access(options["seconds"])
             elif operation == "unblock":
                 RateLimitedUser(user, domain=options["domain"]).unblock_access()

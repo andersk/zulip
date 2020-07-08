@@ -88,9 +88,7 @@ def check_valid_bot_config(
 
         missing_keys = set(config_options.keys()) - set(config_data.keys())
         if missing_keys:
-            raise JsonableError(
-                _("Missing configuration parameters: {}").format(missing_keys),
-            )
+            raise JsonableError(_("Missing configuration parameters: {}").format(missing_keys))
 
         for key, validator in config_options.items():
             value = config_data[key]

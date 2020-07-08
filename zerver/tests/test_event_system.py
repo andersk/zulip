@@ -271,12 +271,8 @@ class GetEventsTest(ZulipTestCase):
         self.assertEqual(events[0]["type"], "message")
         self.assertEqual(events[0]["message"]["sender_email"], email)
         self.assertEqual(events[0]["local_message_id"], local_id)
-        self.assertEqual(
-            events[0]["message"]["display_recipient"][0]["is_mirror_dummy"], False,
-        )
-        self.assertEqual(
-            events[0]["message"]["display_recipient"][1]["is_mirror_dummy"], False,
-        )
+        self.assertEqual(events[0]["message"]["display_recipient"][0]["is_mirror_dummy"], False)
+        self.assertEqual(events[0]["message"]["display_recipient"][1]["is_mirror_dummy"], False)
 
         last_event_id = events[0]["id"]
         local_id = "10.02"
@@ -412,11 +408,7 @@ class FetchInitialStateDataTest(ZulipTestCase):
         user_profile = self.example_user("cordelia")
         self.assertFalse(user_profile.is_realm_admin)
         result = fetch_initial_state_data(
-            user_profile,
-            None,
-            "",
-            client_gravatar=False,
-            user_avatar_url_field_optional=False,
+            user_profile, None, "", client_gravatar=False, user_avatar_url_field_optional=False,
         )
         self.assert_length(result["realm_bots"], 0)
 
@@ -430,11 +422,7 @@ class FetchInitialStateDataTest(ZulipTestCase):
         do_change_user_role(user_profile, UserProfile.ROLE_REALM_ADMINISTRATOR)
         self.assertTrue(user_profile.is_realm_admin)
         result = fetch_initial_state_data(
-            user_profile,
-            None,
-            "",
-            client_gravatar=False,
-            user_avatar_url_field_optional=False,
+            user_profile, None, "", client_gravatar=False, user_avatar_url_field_optional=False,
         )
         self.assertTrue(len(result["realm_bots"]) > 2)
 
@@ -443,11 +431,7 @@ class FetchInitialStateDataTest(ZulipTestCase):
         # Delete all historical messages for this user
         UserMessage.objects.filter(user_profile=user_profile).delete()
         result = fetch_initial_state_data(
-            user_profile,
-            None,
-            "",
-            client_gravatar=False,
-            user_avatar_url_field_optional=False,
+            user_profile, None, "", client_gravatar=False, user_avatar_url_field_optional=False,
         )
         self.assertEqual(result["max_message_id"], -1)
 
@@ -461,11 +445,7 @@ class FetchInitialStateDataTest(ZulipTestCase):
             Realm.EMAIL_ADDRESS_VISIBILITY_EVERYONE,
         )
         result = fetch_initial_state_data(
-            user_profile,
-            None,
-            "",
-            client_gravatar=False,
-            user_avatar_url_field_optional=False,
+            user_profile, None, "", client_gravatar=False, user_avatar_url_field_optional=False,
         )
         for key, value in result["raw_users"].items():
             self.assertNotIn("delivery_email", value)
@@ -476,11 +456,7 @@ class FetchInitialStateDataTest(ZulipTestCase):
             Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS,
         )
         result = fetch_initial_state_data(
-            user_profile,
-            None,
-            "",
-            client_gravatar=False,
-            user_avatar_url_field_optional=False,
+            user_profile, None, "", client_gravatar=False, user_avatar_url_field_optional=False,
         )
         for key, value in result["raw_users"].items():
             self.assertNotIn("delivery_email", value)
@@ -495,11 +471,7 @@ class FetchInitialStateDataTest(ZulipTestCase):
             Realm.EMAIL_ADDRESS_VISIBILITY_EVERYONE,
         )
         result = fetch_initial_state_data(
-            user_profile,
-            None,
-            "",
-            client_gravatar=False,
-            user_avatar_url_field_optional=False,
+            user_profile, None, "", client_gravatar=False, user_avatar_url_field_optional=False,
         )
         for key, value in result["raw_users"].items():
             self.assertNotIn("delivery_email", value)
@@ -510,11 +482,7 @@ class FetchInitialStateDataTest(ZulipTestCase):
             Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS,
         )
         result = fetch_initial_state_data(
-            user_profile,
-            None,
-            "",
-            client_gravatar=False,
-            user_avatar_url_field_optional=False,
+            user_profile, None, "", client_gravatar=False, user_avatar_url_field_optional=False,
         )
         for key, value in result["raw_users"].items():
             self.assertIn("delivery_email", value)

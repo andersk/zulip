@@ -1042,10 +1042,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     "1f301": {"canonical_name": "foggy", "aliases": []},
     "231a": {"canonical_name": "watch", "aliases": []},
     # unicode/gemoji is mobile_phone. The rest seem like good additions
-    "1f4f1": {
-        "canonical_name": "mobile_phone",
-        "aliases": ["smartphone", "iphone", "android"],
-    },
+    "1f4f1": {"canonical_name": "mobile_phone", "aliases": ["smartphone", "iphone", "android"]},
     "1f4f2": {"canonical_name": "calling", "aliases": []},
     # gemoji has laptop, even though the google emoji for this does not look
     # like a laptop
@@ -1129,10 +1126,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     # fixing, at_work, and working_on_it seem like useful concepts for
     # workplace chat
     "1f527": {"canonical_name": "fixing", "aliases": ["wrench"]},
-    "1f528": {
-        "canonical_name": "hammer",
-        "aliases": ["maintenance", "handyman", "handywoman"],
-    },
+    "1f528": {"canonical_name": "hammer", "aliases": ["maintenance", "handyman", "handywoman"]},
     "2692": {"canonical_name": "at_work", "aliases": ["hammer_and_pick"]},
     # something that might be useful for chat.zulip.org, even
     "1f6e0": {"canonical_name": "working_on_it", "aliases": ["hammer_and_wrench", "tools"]},
@@ -1235,10 +1229,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     "1f4d1": {"canonical_name": "place_holder", "aliases": []},
     "1f4ca": {"canonical_name": "bar_chart", "aliases": []},
     # seems like the best chart
-    "1f4c8": {
-        "canonical_name": "chart",
-        "aliases": ["upwards_trend", "growing", "increasing"],
-    },
+    "1f4c8": {"canonical_name": "chart", "aliases": ["upwards_trend", "growing", "increasing"]},
     "1f4c9": {"canonical_name": "downwards_trend", "aliases": ["shrinking", "decreasing"]},
     "1f5d2": {"canonical_name": "spiral_notepad", "aliases": []},
     # '1f5d3': {'canonical_name': 'X', 'aliases': ['spiral_calendar_pad']},

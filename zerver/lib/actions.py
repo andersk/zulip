@@ -383,8 +383,7 @@ def notify_new_user(user_profile: UserProfile) -> None:
     if signup_notifications_stream is not None and user_count > 1:
         with override_language(user_profile.realm.default_language):
             message = _("{user} just signed up for Zulip. (total: {user_count})").format(
-                user=f"@_**{user_profile.full_name}|{user_profile.id}**",
-                user_count=user_count,
+                user=f"@_**{user_profile.full_name}|{user_profile.id}**", user_count=user_count,
             )
             internal_send_stream_message(
                 user_profile.realm, sender, signup_notifications_stream, _("signups"), message,
@@ -1021,9 +1020,7 @@ def do_scrub_realm(realm: Realm, acting_user: Optional[UserProfile] = None) -> N
 
 
 def do_deactivate_user(
-    user_profile: UserProfile,
-    acting_user: Optional[UserProfile] = None,
-    _cascade: bool = True,
+    user_profile: UserProfile, acting_user: Optional[UserProfile] = None, _cascade: bool = True,
 ) -> None:
     if not user_profile.is_active:
         return
@@ -1529,10 +1526,7 @@ def get_service_bot_events(
         # So even though this is implied by the logic below, we filter
         # these not-actually-mentioned users here, to help keep this
         # function future-proof.
-        if (
-            user_profile_id not in mentioned_user_ids
-            and user_profile_id not in active_user_ids
-        ):
+        if user_profile_id not in mentioned_user_ids and user_profile_id not in active_user_ids:
             return
 
         # Mention triggers, for stream messages
@@ -1544,9 +1538,7 @@ def get_service_bot_events(
         else:
             return
 
-        event_dict[queue_name].append(
-            {"trigger": trigger, "user_profile_id": user_profile_id},
-        )
+        event_dict[queue_name].append({"trigger": trigger, "user_profile_id": user_profile_id})
 
     for user_profile_id, bot_type in service_bot_tuples:
         maybe_add_event(
@@ -3481,9 +3473,7 @@ def bulk_remove_subscriptions(
     new_vacant_streams = [
         stream for stream in set(occupied_streams_before) - set(occupied_streams_after)
     ]
-    new_vacant_private_streams = [
-        stream for stream in new_vacant_streams if stream.invite_only
-    ]
+    new_vacant_private_streams = [stream for stream in new_vacant_streams if stream.invite_only]
     new_vacant_public_streams = [
         stream for stream in new_vacant_streams if not stream.invite_only
     ]
@@ -3803,11 +3793,7 @@ def do_change_icon_source(realm: Realm, icon_source: str, log: bool = True) -> N
 
     if log:
         log_event(
-            {
-                "type": "realm_change_icon",
-                "realm": realm.string_id,
-                "icon_source": icon_source,
-            },
+            {"type": "realm_change_icon", "realm": realm.string_id, "icon_source": icon_source},
         )
 
     send_event(
@@ -4630,10 +4616,7 @@ def update_user_presence(
 
 
 def do_update_user_status(
-    user_profile: UserProfile,
-    away: Optional[bool],
-    status_text: Optional[str],
-    client_id: int,
+    user_profile: UserProfile, away: Optional[bool], status_text: Optional[str], client_id: int,
 ) -> None:
     if away:
         status = UserStatus.AWAY
@@ -4704,10 +4687,7 @@ def do_mark_all_as_read(user_profile: UserProfile, client: Client) -> int:
 
 
 def do_mark_stream_messages_as_read(
-    user_profile: UserProfile,
-    client: Client,
-    stream: Stream,
-    topic_name: Optional[str] = None,
+    user_profile: UserProfile, client: Client, stream: Stream, topic_name: Optional[str] = None,
 ) -> int:
     log_statsd_event("mark_stream_as_read")
 
@@ -4861,11 +4841,7 @@ def do_update_message_flags(
         do_clear_mobile_push_notifications_for_ids([user_profile.id], messages)
 
         do_increment_logging_stat(
-            user_profile,
-            COUNT_STATS["messages_read::hour"],
-            None,
-            event_time,
-            increment=count,
+            user_profile, COUNT_STATS["messages_read::hour"], None, event_time, increment=count,
         )
         do_increment_logging_stat(
             user_profile,
@@ -5157,9 +5133,7 @@ def do_update_message(
         event["stream_email_user_ids"] = list(info["stream_email_user_ids"])
         event["prior_mention_user_ids"] = list(prior_mention_user_ids)
         event["mention_user_ids"] = list(mention_user_ids)
-        event["presence_idle_user_ids"] = filter_presence_idle_user_ids(
-            info["active_user_ids"],
-        )
+        event["presence_idle_user_ids"] = filter_presence_idle_user_ids(info["active_user_ids"])
         if message.mentions_wildcard:
             event["wildcard_mention_user_ids"] = list(info["wildcard_mention_user_ids"])
         else:
@@ -5353,11 +5327,7 @@ def do_update_message(
 
     send_event(user_profile.realm, event, users_to_be_notified)
 
-    if (
-        len(changed_messages) > 0
-        and new_stream is not None
-        and stream_being_edited is not None
-    ):
+    if len(changed_messages) > 0 and new_stream is not None and stream_being_edited is not None:
         # Notify users that the topic was moved.
         notify_topic_moved_streams(
             user_profile,
@@ -6660,9 +6630,7 @@ def do_update_bot_config_data(bot_profile: UserProfile, config_data: Dict[str, s
         dict(
             type="realm_bot",
             op="update",
-            bot=dict(
-                user_id=bot_profile.id, services=[dict(config_data=updated_config_data)],
-            ),
+            bot=dict(user_id=bot_profile.id, services=[dict(config_data=updated_config_data)]),
         ),
         bot_owner_user_ids(bot_profile),
     )
@@ -6684,10 +6652,7 @@ def get_service_dicts_for_bot(user_profile_id: int) -> List[Dict[str, Any]]:
     elif user_profile.bot_type == UserProfile.EMBEDDED_BOT:
         try:
             service_dicts = [
-                {
-                    "config_data": get_bot_config(user_profile),
-                    "service_name": services[0].name,
-                },
+                {"config_data": get_bot_config(user_profile), "service_name": services[0].name},
             ]
         # A ConfigError just means that there are no config entries for user_profile.
         except ConfigError:
@@ -6728,9 +6693,7 @@ def get_service_dicts_for_bots(
         elif bot_type == UserProfile.EMBEDDED_BOT:
             if bot_profile_id in embedded_bot_configs.keys():
                 bot_config = embedded_bot_configs[bot_profile_id]
-                service_dicts = [
-                    {"config_data": bot_config, "service_name": services[0].name},
-                ]
+                service_dicts = [{"config_data": bot_config, "service_name": services[0].name}]
         service_dicts_by_uid[bot_profile_id] = service_dicts
     return service_dicts_by_uid
 

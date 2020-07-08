@@ -15,10 +15,7 @@ class Migration(migrations.Migration):
                 (
                     "id",
                     models.AutoField(
-                        serialize=False,
-                        auto_created=True,
-                        verbose_name="ID",
-                        primary_key=True,
+                        serialize=False, auto_created=True, verbose_name="ID", primary_key=True,
                     ),
                 ),
                 ("user_id", models.BigIntegerField()),
@@ -34,10 +31,7 @@ class Migration(migrations.Migration):
                 (
                     "id",
                     models.AutoField(
-                        serialize=False,
-                        auto_created=True,
-                        verbose_name="ID",
-                        primary_key=True,
+                        serialize=False, auto_created=True, verbose_name="ID", primary_key=True,
                     ),
                 ),
                 ("uuid", models.CharField(unique=True, max_length=36)),

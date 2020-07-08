@@ -129,8 +129,7 @@ def run() -> None:
     linter_config.external_linter(
         "gitlint",
         ["tools/commit-message-lint"],
-        description="Checks commit messages for common formatting errors."
-        "(config: .gitlint)",
+        description="Checks commit messages for common formatting errors." "(config: .gitlint)",
     )
     linter_config.external_linter(
         "isort",

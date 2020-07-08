@@ -155,9 +155,7 @@ Leo Franchi edited a comment on [BUG-15: New bug with hook](http://lfranchi.com:
 Adding a comment. Oh, what a comment it is!
 ```
 """.strip()
-        self.send_and_test_stream_message(
-            "comment_edited_v2", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("comment_edited_v2", expected_topic, expected_message)
 
     def test_comment_deleted(self) -> None:
         expected_topic = "TOM-1: New Issue"

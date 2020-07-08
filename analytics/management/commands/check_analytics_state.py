@@ -89,7 +89,6 @@ class Command(BaseCommand):
         return {
             "status": 2,
             "message": "Missed filling {} once. Missed filling {} at least twice.".format(
-                ", ".join(warning_unfilled_properties),
-                ", ".join(critical_unfilled_properties),
+                ", ".join(warning_unfilled_properties), ", ".join(critical_unfilled_properties),
             ),
         }

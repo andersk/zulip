@@ -29,9 +29,7 @@ class ProfileDataElement(ProfileDataElementBase):
 
 ProfileData = List[ProfileDataElement]
 
-FieldElement = Tuple[
-    int, str, Validator[Union[int, str, List[int]]], Callable[[Any], Any], str,
-]
+FieldElement = Tuple[int, str, Validator[Union[int, str, List[int]]], Callable[[Any], Any], str]
 ExtendedFieldElement = Tuple[int, str, ExtendedValidator, Callable[[Any], Any], str]
 UserFieldElement = Tuple[int, str, RealmUserValidator, Callable[[Any], Any], str]
 

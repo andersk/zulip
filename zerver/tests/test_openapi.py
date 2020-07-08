@@ -686,10 +686,7 @@ so maybe we shouldn't include it in pending_endpoints.
                     assert url_pattern in self.buggy_documentation_endpoints
                 elif len(openapi_parameter_names - accepted_arguments) > 0:  # nocoverage
                     print(
-                        "Documented invalid parameters for",
-                        url_pattern,
-                        method,
-                        function_name,
+                        "Documented invalid parameters for", url_pattern, method, function_name,
                     )
                     print(" -", openapi_parameter_names)
                     print(" +", accepted_arguments)
@@ -927,9 +924,7 @@ class TestCurlExampleGeneration(ZulipTestCase):
         self.assertEqual(generated_curl_example, expected_curl_example)
 
     @patch("zerver.openapi.openapi.OpenAPISpec.spec")
-    def test_generate_and_render_curl_with_default_examples(
-        self, spec_mock: MagicMock,
-    ) -> None:
+    def test_generate_and_render_curl_with_default_examples(self, spec_mock: MagicMock) -> None:
         spec_mock.return_value = self.spec_mock_without_examples
         generated_curl_example = self.curl_example("/mark_stream_as_read", "POST")
         expected_curl_example = [

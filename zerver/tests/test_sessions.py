@@ -20,11 +20,7 @@ from zerver.models import Realm, UserProfile, get_realm
 
 class TestSessions(ZulipTestCase):
     def do_test_session(
-        self,
-        user: UserProfile,
-        action: Callable[[], Any],
-        realm: Realm,
-        expected_result: bool,
+        self, user: UserProfile, action: Callable[[], Any], realm: Realm, expected_result: bool,
     ) -> None:
         self.login_user(user)
         self.assertIn("_auth_user_id", self.client.session)
@@ -126,8 +122,7 @@ class TestExpirableSessionVars(ZulipTestCase):
             value = get_expirable_session_var(self.session, "test_set_and_get_basic")
             self.assertEqual(value, "some_value")
         with mock.patch(
-            "zerver.lib.sessions.timezone_now",
-            return_value=start_time + timedelta(seconds=11),
+            "zerver.lib.sessions.timezone_now", return_value=start_time + timedelta(seconds=11),
         ):
             value = get_expirable_session_var(self.session, "test_set_and_get_basic")
             self.assertEqual(value, None)

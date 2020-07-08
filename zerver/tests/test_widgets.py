@@ -76,9 +76,7 @@ class WidgetContentTestCase(ZulipTestCase):
         bogus_data = dict(color="red", foo="bar", x=2)
         payload["widget_content"] = ujson.dumps(bogus_data)
         result = self.api_post(sender, "/api/v1/messages", payload)
-        self.assert_json_error_contains(
-            result, "Widgets: widget_type is not in widget_content",
-        )
+        self.assert_json_error_contains(result, "Widgets: widget_type is not in widget_content")
 
     def test_get_widget_data_for_non_widget_messages(self) -> None:
         # This is a pretty important test, despite testing the

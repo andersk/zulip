@@ -134,9 +134,7 @@ class APIArgumentsTablePreprocessor(Preprocessor):
                 required_string = "required in path"
 
             if argument.get("required", False):
-                required_block = (
-                    f'<span class="api-argument-required">{required_string}</span>'
-                )
+                required_block = f'<span class="api-argument-required">{required_string}</span>'
             else:
                 required_block = '<span class="api-argument-optional">optional</span>'
 

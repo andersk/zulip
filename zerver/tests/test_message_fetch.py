@@ -211,9 +211,7 @@ class NarrowBuilderTest(ZulipTestCase):
         term = dict(operator="is", operand="unread")
         self._do_add_term_test(term, "WHERE (flags & %(flags_1)s) = %(param_1)s")
 
-    def test_add_term_using_is_operator_and_unread_operand_and_negated(
-        self,
-    ) -> None:  # NEGATED
+    def test_add_term_using_is_operator_and_unread_operand_and_negated(self) -> None:  # NEGATED
         term = dict(operator="is", operand="unread", negated=True)
         self._do_add_term_test(term, "WHERE (flags & %(flags_1)s) != %(param_1)s")
 
@@ -412,9 +410,7 @@ class NarrowBuilderTest(ZulipTestCase):
     @override_settings(USING_PGROONGA=True)
     def test_add_term_using_search_operator_pgroonga(self) -> None:
         term = dict(operator="search", operand='"french fries"')
-        self._do_add_term_test(
-            term, "WHERE search_pgroonga &@~ escape_html(%(escape_html_1)s)",
-        )
+        self._do_add_term_test(term, "WHERE search_pgroonga &@~ escape_html(%(escape_html_1)s)")
 
     @override_settings(USING_PGROONGA=True)
     def test_add_term_using_search_operator_and_negated_pgroonga(self) -> None:  # NEGATED
@@ -449,9 +445,7 @@ class NarrowBuilderTest(ZulipTestCase):
         term = dict(operator="has", operand="link", negated=True)
         self._do_add_term_test(term, "WHERE NOT has_link")
 
-    def test_add_term_using_has_operator_non_supported_operand_should_raise_error(
-        self,
-    ) -> None:
+    def test_add_term_using_has_operator_non_supported_operand_should_raise_error(self) -> None:
         term = dict(operator="has", operand="non_supported")
         self.assertRaises(BadNarrowOperator, self._build_query, term)
 
@@ -1290,11 +1284,7 @@ class GetOldMessagesTest(ZulipTestCase):
     def get_and_check_messages(
         self, modified_params: Dict[str, Union[str, int]], **kwargs: Any
     ) -> Dict[str, Any]:
-        post_params: Dict[str, Union[str, int]] = {
-            "anchor": 1,
-            "num_before": 1,
-            "num_after": 1,
-        }
+        post_params: Dict[str, Union[str, int]] = {"anchor": 1, "num_before": 1, "num_after": 1}
         post_params.update(modified_params)
         payload = self.client_get("/json/messages", dict(post_params), **kwargs)
         self.assert_json_success(payload)
@@ -2026,10 +2016,7 @@ class GetOldMessagesTest(ZulipTestCase):
         ]
         stream_search_result: Dict[str, Any] = self.get_and_check_messages(
             dict(
-                narrow=ujson.dumps(stream_search_narrow),
-                anchor=0,
-                num_after=10,
-                num_before=10,
+                narrow=ujson.dumps(stream_search_narrow), anchor=0, num_after=10, num_before=10,
             ),
         )
         self.assertEqual(len(stream_search_result["messages"]), 1)
@@ -2528,13 +2515,9 @@ class GetOldMessagesTest(ZulipTestCase):
             "/json/messages", dict(anchor=1, num_before=3000, num_after=3000),
         )
         self.assert_json_error(result, "Too many messages requested (maximum 5000).")
-        result = self.client_get(
-            "/json/messages", dict(anchor=1, num_before=6000, num_after=0),
-        )
+        result = self.client_get("/json/messages", dict(anchor=1, num_before=6000, num_after=0))
         self.assert_json_error(result, "Too many messages requested (maximum 5000).")
-        result = self.client_get(
-            "/json/messages", dict(anchor=1, num_before=0, num_after=6000),
-        )
+        result = self.client_get("/json/messages", dict(anchor=1, num_before=0, num_after=6000))
         self.assert_json_error(result, "Too many messages requested (maximum 5000).")
 
     def test_bad_int_params(self) -> None:
@@ -2598,9 +2581,7 @@ class GetOldMessagesTest(ZulipTestCase):
             narrow = [dict(operator=operator, operand="")]
             params = dict(anchor=0, num_before=0, num_after=0, narrow=ujson.dumps(narrow))
             result = self.client_get("/json/messages", params)
-            self.assert_json_error_contains(
-                result, "Invalid narrow operator: unknown operator",
-            )
+            self.assert_json_error_contains(result, "Invalid narrow operator: unknown operator")
 
     def test_invalid_narrow_operand_in_dict(self) -> None:
         self.login("hamlet")
@@ -2666,9 +2647,7 @@ class GetOldMessagesTest(ZulipTestCase):
         """
         self.login("hamlet")
         bad_stream_content: Tuple[int, List[None], List[str]] = (0, [], ["x", "y"])
-        self.exercise_bad_narrow_operand(
-            "stream", bad_stream_content, "Bad value for 'narrow'",
-        )
+        self.exercise_bad_narrow_operand("stream", bad_stream_content, "Bad value for 'narrow'")
 
     def test_bad_narrow_one_on_one_email_content(self) -> None:
         """
@@ -2695,9 +2674,7 @@ class GetOldMessagesTest(ZulipTestCase):
     def test_bad_narrow_nonexistent_email(self) -> None:
         self.login("hamlet")
         self.exercise_bad_narrow_operand(
-            "pm-with",
-            ["non-existent-user@zulip.com"],
-            "Invalid narrow operator: unknown user",
+            "pm-with", ["non-existent-user@zulip.com"], "Invalid narrow operator: unknown user",
         )
 
     def test_bad_narrow_pm_with_id_list(self) -> None:
@@ -2915,10 +2892,7 @@ class GetOldMessagesTest(ZulipTestCase):
         set_topic_mutes(user_profile, muted_topics)
 
         query_params = dict(
-            anchor="first_unread",
-            num_before=0,
-            num_after=0,
-            narrow='[["stream", "Scotland"]]',
+            anchor="first_unread", num_before=0, num_after=0, narrow='[["stream", "Scotland"]]',
         )
         request = POSTRequestMock(query_params, user_profile)
 
@@ -3150,12 +3124,7 @@ recipient_id = %(recipient_id_3)s AND upper(subject) = upper(%(param_2)s))\
         sql_template = "SELECT anon_1.message_id \nFROM (SELECT id AS message_id \nFROM zerver_message \nWHERE recipient_id IN ({public_streams_recipents}) ORDER BY zerver_message.id ASC \n LIMIT 10) AS anon_1 ORDER BY message_id ASC"
         sql = sql_template.format(**query_ids)
         self.common_check_get_messages_query(
-            {
-                "anchor": 0,
-                "num_before": 0,
-                "num_after": 9,
-                "narrow": '[["streams", "public"]]',
-            },
+            {"anchor": 0, "num_before": 0, "num_after": 9, "narrow": '[["streams", "public"]]'},
             sql,
         )
 
@@ -3232,12 +3201,7 @@ WHERE user_profile_id = {hamlet_id} AND (search_tsvector @@ plainto_tsquery('zul
 """
         sql = sql_template.format(**query_ids)
         self.common_check_get_messages_query(
-            {
-                "anchor": 0,
-                "num_before": 0,
-                "num_after": 9,
-                "narrow": '[["search", "jumping"]]',
-            },
+            {"anchor": 0, "num_before": 0, "num_after": 9, "narrow": '[["search", "jumping"]]'},
             sql,
         )
 

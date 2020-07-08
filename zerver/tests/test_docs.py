@@ -208,9 +208,7 @@ class DocPageTest(ZulipTestCase):
 
         # Test category pages
         url = "/integrations/communication"
-        title = (
-            '<meta property="og:title" content="Connect your Communication tools to Zulip">'
-        )
+        title = '<meta property="og:title" content="Connect your Communication tools to Zulip">'
         description = '<meta property="og:description" content="Zulip comes with over'
         self._test(url, title, doc_html_str=True)
         self._test(url, description, doc_html_str=True)

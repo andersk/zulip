@@ -261,9 +261,7 @@ EVENT_TO_FUNCTION_MAPPER = {
     "conversation.admin.closed": partial(get_conversation_admin_message, action="closed"),
     "conversation.admin.opened": partial(get_conversation_admin_message, action="opened"),
     "conversation.admin.snoozed": partial(get_conversation_admin_message, action="snoozed"),
-    "conversation.admin.unsnoozed": partial(
-        get_conversation_admin_message, action="unsnoozed",
-    ),
+    "conversation.admin.unsnoozed": partial(get_conversation_admin_message, action="unsnoozed"),
     "conversation.admin.replied": partial(
         get_conversation_admin_reply_message, action="replied to",
     ),

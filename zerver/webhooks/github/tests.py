@@ -440,9 +440,7 @@ A temporary team so that I can get some webhook fixtures!
     def test_team_edited_name(self) -> None:
         expected_topic = "team Testing Team"
         expected_message = """Team `Testing` was renamed to `Testing Team`."""
-        self.send_and_test_stream_message(
-            "team__edited_name", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("team__edited_name", expected_topic, expected_message)
 
     def test_team_edited_privacy(self) -> None:
         expected_topic = "team Testing Team"
@@ -457,10 +455,7 @@ A temporary team so that I can get some webhook fixtures!
     ) -> None:
         payload = self.get_body("check_run__in_progress")
         result = self.client_post(
-            self.url,
-            payload,
-            HTTP_X_GITHUB_EVENT="check_run",
-            content_type="application/json",
+            self.url, payload, HTTP_X_GITHUB_EVENT="check_run", content_type="application/json",
         )
         self.assertFalse(check_send_webhook_message_mock.called)
         self.assert_json_success(result)

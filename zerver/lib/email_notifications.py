@@ -155,9 +155,7 @@ def build_message_list(
             message_soup.insert(0, sender_name_soup)
         return message_plain, str(message_soup)
 
-    def build_message_payload(
-        message: Message, sender: Optional[str] = None,
-    ) -> Dict[str, str]:
+    def build_message_payload(message: Message, sender: Optional[str] = None) -> Dict[str, str]:
         plain = message.content
         plain = fix_plaintext_image_urls(plain)
         # There's a small chance of colliding with non-Zulip URLs containing
@@ -346,8 +344,7 @@ def do_send_missedmessage_events_reply_in_zulip(
             "mention": "mentioned" in unique_triggers
             or "wildcard_mentioned" in unique_triggers,
             "stream_email_notify": "stream_email_notify" in unique_triggers,
-            "mention_count": triggers.count("mentioned")
-            + triggers.count("wildcard_mentioned"),
+            "mention_count": triggers.count("mentioned") + triggers.count("wildcard_mentioned"),
         },
     )
 

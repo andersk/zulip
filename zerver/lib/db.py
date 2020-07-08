@@ -23,10 +23,7 @@ ParamsT = TypeVar("ParamsT")
 # Similar to the tracking done in Django's CursorDebugWrapper, but done at the
 # psycopg2 cursor level so it works with SQLAlchemy.
 def wrapper_execute(
-    self: CursorObj,
-    action: Callable[[Query, ParamsT], CursorObj],
-    sql: Query,
-    params: ParamsT,
+    self: CursorObj, action: Callable[[Query, ParamsT], CursorObj], sql: Query, params: ParamsT,
 ) -> CursorObj:
     start = time.time()
     try:

@@ -40,9 +40,7 @@ def set_realm_admins_as_realm_owners(
             .annotate(Count("role")),
         ):
             human_counts[value_dict["role"]] = value_dict["role__count"]
-        bot_count = UserProfile.objects.filter(
-            realm=realm, is_bot=True, is_active=True,
-        ).count()
+        bot_count = UserProfile.objects.filter(realm=realm, is_bot=True, is_active=True).count()
         return {
             RealmAuditLog.ROLE_COUNT_HUMANS: human_counts,
             RealmAuditLog.ROLE_COUNT_BOTS: bot_count,

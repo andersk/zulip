@@ -304,11 +304,7 @@ def get_release_event_message(
     user_name: str, action: str, tagname: str, release_name: str, url: str,
 ) -> str:
     content = RELEASE_MESSAGE_TEMPLATE.format(
-        user_name=user_name,
-        action=action,
-        tagname=tagname,
-        release_name=release_name,
-        url=url,
+        user_name=user_name, action=action, tagname=tagname, release_name=release_name, url=url,
     )
 
     return content
