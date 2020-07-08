@@ -211,9 +211,7 @@ class TestSendWebhookFixtureMessage(ZulipTestCase):
         print_help_mock.assert_any_call("./manage.py", self.COMMAND_NAME)
 
     @patch("zerver.management.commands.send_webhook_fixture_message.os.path.exists")
-    def test_check_if_command_exits_when_fixture_path_does_not_exist(
-        self, os_path_exists_mock: MagicMock,
-    ) -> None:
+    def test_check_if_command_exits_when_fixture_path_does_not_exist(self, os_path_exists_mock: MagicMock) -> None:
         os_path_exists_mock.return_value = False
 
         with self.assertRaises(CommandError):
@@ -310,7 +308,9 @@ class TestCalculateFirstVisibleMessageID(ZulipTestCase):
     COMMAND_NAME = "calculate_first_visible_message_id"
 
     def test_check_if_command_calls_maybe_update_first_visible_message_id(self) -> None:
-        func_name = "zilencer.management.commands.calculate_first_visible_message_id.maybe_update_first_visible_message_id"
+        func_name = (
+            "zilencer.management.commands.calculate_first_visible_message_id.maybe_update_first_visible_message_id"
+        )
         with patch(func_name) as m:
             call_command(self.COMMAND_NAME, "--realm=zulip", "--lookback-hours=30")
         m.assert_called_with(get_realm("zulip"), 30)

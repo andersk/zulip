@@ -122,9 +122,7 @@ def get_bot_types(user_profile: Optional[UserProfile]) -> List[Dict[str, object]
         return bot_types
 
     for type_id, name in UserProfile.BOT_TYPES.items():
-        bot_types.append(
-            {"type_id": type_id, "name": name, "allowed": type_id in user_profile.allowed_bot_types},
-        )
+        bot_types.append({"type_id": type_id, "name": name, "allowed": type_id in user_profile.allowed_bot_types})
     return bot_types
 
 

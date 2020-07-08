@@ -74,8 +74,7 @@ def add_subscriptions(client: Client) -> None:
 
 def test_add_subscriptions_already_subscribed(client: Client) -> None:
     result = client.add_subscriptions(
-        streams=[{"name": "new stream", "description": "New stream for testing"}],
-        principals=["newbie@zulip.com"],
+        streams=[{"name": "new stream", "description": "New stream for testing"}], principals=["newbie@zulip.com"],
     )
 
     validate_against_openapi_schema(result, "/users/me/subscriptions", "post", "200_1")

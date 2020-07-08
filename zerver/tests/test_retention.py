@@ -928,8 +928,7 @@ class TestRestoreStreamMessages(ArchiveMessagesTestingBase):
         # Verify that we restore the stream messages that were archived due to retention policy,
         # but not the ones manually deleted.
         self.assert_length(
-            Message.objects.filter(id__in=message_ids_to_archive_by_policy),
-            len(message_ids_to_archive_by_policy),
+            Message.objects.filter(id__in=message_ids_to_archive_by_policy), len(message_ids_to_archive_by_policy),
         )
         self.assertFalse(Message.objects.filter(id__in=message_ids_to_archive_manually))
 

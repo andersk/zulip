@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="realm",
-            name="create_generic_bot_by_admins_only",
-            field=models.BooleanField(default=False),
+            model_name="realm", name="create_generic_bot_by_admins_only", field=models.BooleanField(default=False),
         ),
     ]

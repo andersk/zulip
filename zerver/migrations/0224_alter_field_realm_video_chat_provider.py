@@ -62,8 +62,6 @@ class Migration(migrations.Migration):
             name="video_chat_provider",
             field=models.PositiveSmallIntegerField(default=VIDEO_CHAT_PROVIDERS["jitsi_meet"]["id"]),
         ),
-        migrations.RunPython(
-            update_existing_video_chat_provider_values, reverse_code=reverse_code, elidable=True,
-        ),
+        migrations.RunPython(update_existing_video_chat_provider_values, reverse_code=reverse_code, elidable=True),
         migrations.RemoveField(model_name="realm", name="video_chat_provider_old"),
     ]

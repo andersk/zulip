@@ -147,9 +147,7 @@ def check_rabbitmq_queues() -> None:
     if "USER" in os.environ and not os.environ["USER"] in ["root", "rabbitmq"]:
         print("This script must be run as the root or rabbitmq user")
 
-    list_queues_output = subprocess.check_output(
-        ["/usr/sbin/rabbitmqctl", "list_queues"], universal_newlines=True,
-    )
+    list_queues_output = subprocess.check_output(["/usr/sbin/rabbitmqctl", "list_queues"], universal_newlines=True)
     list_consumers_output = subprocess.check_output(
         ["/usr/sbin/rabbitmqctl", "list_consumers"], universal_newlines=True,
     )

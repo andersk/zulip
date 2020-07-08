@@ -781,9 +781,7 @@ class TestMissedMessages(ZulipTestCase):
 
         self.assertIn("Iago: * 1\n *2\n\n--\nYou are receiving", mail.outbox[1].body)
         # If message content does not starts with <p> tag sender name is appended before the <p> tag
-        self.assertIn(
-            "       <b>Iago</b>: <ul>\n<li>1<br/>\n *2</li>\n</ul>\n", mail.outbox[1].alternatives[0][0],
-        )
+        self.assertIn("       <b>Iago</b>: <ul>\n<li>1<br/>\n *2</li>\n</ul>\n", mail.outbox[1].alternatives[0][0])
 
         self.assertEqual("Hello\n\n--\n\nReply", mail.outbox[2].body[:16])
         # Sender name is not appended to message for PM missed messages

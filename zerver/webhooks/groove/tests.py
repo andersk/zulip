@@ -97,10 +97,7 @@ Hello agent, thanks for getting back. This is how a reply from customer looks li
 """.strip()
 
         self.send_and_test_stream_message(
-            "customer_replied",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "customer_replied", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     # This simulates the condition when an agent left a note.

@@ -339,22 +339,16 @@ class NormalActionsTest(BaseAction):
 
         for i in range(3):
             content = "mentioning... @**" + user.full_name + "** hello " + str(i)
-            self.verify_action(
-                lambda: self.send_stream_message(self.example_user("cordelia"), "Verona", content),
-            )
+            self.verify_action(lambda: self.send_stream_message(self.example_user("cordelia"), "Verona", content))
 
     def test_wildcard_mentioned_send_message_events(self) -> None:
         for i in range(3):
             content = "mentioning... @**all** hello " + str(i)
-            self.verify_action(
-                lambda: self.send_stream_message(self.example_user("cordelia"), "Verona", content),
-            )
+            self.verify_action(lambda: self.send_stream_message(self.example_user("cordelia"), "Verona", content))
 
     def test_pm_send_message_events(self) -> None:
         self.verify_action(
-            lambda: self.send_personal_message(
-                self.example_user("cordelia"), self.example_user("hamlet"), "hola",
-            ),
+            lambda: self.send_personal_message(self.example_user("cordelia"), self.example_user("hamlet"), "hola"),
         )
 
     def test_huddle_send_message_events(self) -> None:
@@ -409,8 +403,7 @@ class NormalActionsTest(BaseAction):
         schema_checker("events[0]", events[0])
 
         events = self.verify_action(
-            lambda: self.send_stream_message(self.example_user("hamlet"), "Verona", "hello"),
-            client_gravatar=True,
+            lambda: self.send_stream_message(self.example_user("hamlet"), "Verona", "hello"), client_gravatar=True,
         )
         schema_checker = get_checker(check_gravatar=equals(None))
         schema_checker("events[0]", events[0])
@@ -830,9 +823,7 @@ class NormalActionsTest(BaseAction):
         )
 
         events = self.verify_action(
-            lambda: check_send_typing_notification(
-                self.user_profile, [self.example_user("cordelia").id], "start",
-            ),
+            lambda: check_send_typing_notification(self.user_profile, [self.example_user("cordelia").id], "start"),
             state_change_expected=False,
         )
         schema_checker("events[0]", events[0])
@@ -1022,10 +1013,7 @@ class NormalActionsTest(BaseAction):
         )
 
         self.api_post(
-            self.user_profile,
-            "/api/v1/users/me/presence",
-            {"status": "idle"},
-            HTTP_USER_AGENT="ZulipAndroid/1.0",
+            self.user_profile, "/api/v1/users/me/presence", {"status": "idle"}, HTTP_USER_AGENT="ZulipAndroid/1.0",
         )
         self.verify_action(
             lambda: do_update_user_presence(
@@ -1900,16 +1888,12 @@ class NormalActionsTest(BaseAction):
                 check_services: Validator[List[object]] = equals([])
             elif bot_type == "OUTGOING_WEBHOOK_BOT":
                 check_services = check_list(
-                    check_dict_only(
-                        [("base_url", check_url), ("interface", check_int), ("token", check_string)],
-                    ),
+                    check_dict_only([("base_url", check_url), ("interface", check_int), ("token", check_string)]),
                     length=1,
                 )
             elif bot_type == "EMBEDDED_BOT":
                 check_services = check_list(
-                    check_dict_only(
-                        [("service_name", check_string), ("config_data", ad_hoc_config_data_schema)],
-                    ),
+                    check_dict_only([("service_name", check_string), ("config_data", ad_hoc_config_data_schema)]),
                     length=1,
                 )
             return check_events_dict(
@@ -2531,9 +2515,7 @@ class NormalActionsTest(BaseAction):
         )
 
         events = self.verify_action(
-            lambda: self.client_delete(f"/json/attachments/{entry.id}"),
-            num_events=1,
-            state_change_expected=False,
+            lambda: self.client_delete(f"/json/attachments/{entry.id}"), num_events=1, state_change_expected=False,
         )
         schema_checker("events[0]", events[0])
 
@@ -2585,9 +2567,7 @@ class NormalActionsTest(BaseAction):
         do_change_user_role(self.user_profile, UserProfile.ROLE_REALM_ADMINISTRATOR)
         self.login_user(self.user_profile)
 
-        with mock.patch(
-            "zerver.lib.export.do_export_realm", return_value=create_dummy_file("test-export.tar.gz"),
-        ):
+        with mock.patch("zerver.lib.export.do_export_realm", return_value=create_dummy_file("test-export.tar.gz")):
             with stdout_suppressed():
                 events = self.verify_action(
                     lambda: self.client_post("/json/export/realm"), state_change_expected=True, num_events=3,
@@ -2823,8 +2803,7 @@ class UserDisplayActionTest(BaseAction):
 
         for value in values:
             events = self.verify_action(
-                lambda: do_set_user_display_setting(self.user_profile, setting_name, value),
-                num_events=num_events,
+                lambda: do_set_user_display_setting(self.user_profile, setting_name, value), num_events=num_events,
             )
 
             schema_checker = check_events_dict(
@@ -2995,9 +2974,7 @@ class SubscribeActionTest(BaseAction):
         stream = get_stream("test_stream", self.user_profile.realm)
 
         # Now remove the first user, to test the normal unsubscribe flow
-        action = lambda: bulk_remove_subscriptions(
-            [self.example_user("othello")], [stream], get_client("website"),
-        )
+        action = lambda: bulk_remove_subscriptions([self.example_user("othello")], [stream], get_client("website"))
         events = self.verify_action(
             action, include_subscribers=include_subscribers, state_change_expected=include_subscribers,
         )

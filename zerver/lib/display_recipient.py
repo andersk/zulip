@@ -74,13 +74,9 @@ def bulk_fetch_display_recipients(recipient_tuples: Set[Tuple[int, int, int]]) -
     """
 
     # Build dict mapping recipient id to (type, type_id) of the corresponding recipient:
-    recipient_id_to_type_pair_dict = {
-        recipient[0]: (recipient[1], recipient[2]) for recipient in recipient_tuples
-    }
+    recipient_id_to_type_pair_dict = {recipient[0]: (recipient[1], recipient[2]) for recipient in recipient_tuples}
     # And the inverse mapping:
-    type_pair_to_recipient_id_dict = {
-        (recipient[1], recipient[2]): recipient[0] for recipient in recipient_tuples
-    }
+    type_pair_to_recipient_id_dict = {(recipient[1], recipient[2]): recipient[0] for recipient in recipient_tuples}
 
     stream_recipients = {recipient for recipient in recipient_tuples if recipient[1] == Recipient.STREAM}
     personal_and_huddle_recipients = recipient_tuples - stream_recipients

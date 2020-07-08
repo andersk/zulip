@@ -103,9 +103,7 @@ def render_markdown_path(
                 run_content_validators=context.get("run_content_validators", False),
             ),
             zerver.lib.markdown.api_arguments_table_generator.makeExtension(base_path="templates/zerver/api/"),
-            zerver.lib.markdown.api_return_values_table_generator.makeExtension(
-                base_path="templates/zerver/api/",
-            ),
+            zerver.lib.markdown.api_return_values_table_generator.makeExtension(base_path="templates/zerver/api/"),
             zerver.lib.markdown.nested_code_blocks.makeExtension(),
             zerver.lib.markdown.tabbed_sections.makeExtension(),
             zerver.lib.markdown.help_settings_links.makeExtension(),

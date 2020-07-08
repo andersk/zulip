@@ -221,9 +221,7 @@ class EditMessageTest(ZulipTestCase):
 
         # Now verify that if we fetch the message directly, there's no
         # edit history data attached.
-        messages_result = self.client_get(
-            "/json/messages", {"anchor": msg_id_1, "num_before": 0, "num_after": 10},
-        )
+        messages_result = self.client_get("/json/messages", {"anchor": msg_id_1, "num_before": 0, "num_after": 10})
         self.assert_json_success(messages_result)
         json_messages = ujson.loads(messages_result.content.decode("utf-8"))
         for msg in json_messages["messages"]:
@@ -769,8 +767,7 @@ class EditMessageTest(ZulipTestCase):
         id5 = self.send_stream_message(self.example_user("iago"), "Scotland", topic_name="topic1")
 
         result = self.client_patch(
-            "/json/messages/" + str(id1),
-            {"message_id": id1, "topic": "edited", "propagate_mode": "change_later"},
+            "/json/messages/" + str(id1), {"message_id": id1, "topic": "edited", "propagate_mode": "change_later"},
         )
         self.assert_json_success(result)
 
@@ -822,9 +819,7 @@ class EditMessageTest(ZulipTestCase):
         self.login("hamlet")
         id1 = self.send_stream_message(self.example_user("hamlet"), "Scotland", topic_name="topic1")
 
-        result = self.client_patch(
-            "/json/messages/" + str(id1), {"topic": "edited", "propagate_mode": "invalid"},
-        )
+        result = self.client_patch("/json/messages/" + str(id1), {"topic": "edited", "propagate_mode": "invalid"})
         self.assert_json_error(result, "Invalid propagate_mode")
         self.check_topic(id1, topic_name="topic1")
 
@@ -987,9 +982,7 @@ class EditMessageTest(ZulipTestCase):
             user_profile, old_stream.name, topic_name="test", content="fourth",
         )
 
-        self.assertEqual(
-            has_message_access(guest_user, Message.objects.get(id=msg_id_to_test_acesss), None), True,
-        )
+        self.assertEqual(has_message_access(guest_user, Message.objects.get(id=msg_id_to_test_acesss), None), True)
         self.assertEqual(
             has_message_access(non_guest_user, Message.objects.get(id=msg_id_to_test_acesss), None), True,
         )

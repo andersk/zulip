@@ -257,9 +257,7 @@ v1_api_and_json_patterns = [
         {"GET": "zerver.views.message_edit.get_message_edit_history"},
     ),
     path(
-        "messages/matches_narrow",
-        rest_dispatch,
-        {"GET": "zerver.views.message_fetch.messages_in_narrow_backend"},
+        "messages/matches_narrow", rest_dispatch, {"GET": "zerver.views.message_fetch.messages_in_narrow_backend"},
     ),
     path(
         "users/me/subscriptions/properties",
@@ -399,9 +397,7 @@ v1_api_and_json_patterns = [
     # settings -> zerver.views.user_settings
     path("settings", rest_dispatch, {"PATCH": "zerver.views.user_settings.json_change_settings"}),
     path(
-        "settings/display",
-        rest_dispatch,
-        {"PATCH": "zerver.views.user_settings.update_display_settings_backend"},
+        "settings/display", rest_dispatch, {"PATCH": "zerver.views.user_settings.update_display_settings_backend"},
     ),
     path(
         "settings/notifications",
@@ -505,12 +501,7 @@ v1_api_and_json_patterns = [
         "report/error",
         rest_dispatch,
         # Logged-out browsers can hit this endpoint, for portico page JS exceptions.
-        {
-            "POST": (
-                "zerver.views.report.report_error",
-                {"allow_anonymous_user_web", "intentionally_undocumented"},
-            ),
-        },
+        {"POST": ("zerver.views.report.report_error", {"allow_anonymous_user_web", "intentionally_undocumented"})},
     ),
     path(
         "report/send_times",
@@ -675,9 +666,7 @@ i18n_urls = [
     # Realm Creation
     path("new/", zerver.views.registration.create_realm, name="zerver.views.create_realm"),
     re_path(
-        r"^new/(?P<creation_key>[\w]+)$",
-        zerver.views.registration.create_realm,
-        name="zerver.views.create_realm",
+        r"^new/(?P<creation_key>[\w]+)$", zerver.views.registration.create_realm, name="zerver.views.create_realm",
     ),
     # Realm Reactivation
     re_path(

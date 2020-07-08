@@ -30,9 +30,7 @@ class Command(BaseCommand):
     help = """Convert the Hipchat data into Zulip data format."""
 
     def add_arguments(self, parser: CommandParser) -> None:
-        parser.add_argument(
-            "hipchat_tar", nargs="+", metavar="<hipchat data tarfile>", help="tar of Hipchat data",
-        )
+        parser.add_argument("hipchat_tar", nargs="+", metavar="<hipchat data tarfile>", help="tar of Hipchat data")
 
         parser.add_argument(
             "--output", dest="output_dir", action="store", help="Directory to write exported data to.",

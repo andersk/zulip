@@ -49,10 +49,7 @@ The panel has no data.
 
         # use fixture named helloworld_hello
         self.send_and_test_stream_message(
-            "no_message_alert",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "no_message_alert", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def get_body(self, fixture_name: str) -> str:

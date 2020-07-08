@@ -85,10 +85,7 @@ class Command(makemessages.Command):
             help="Name of the Handlebars template directory",
         )
         parser.add_argument(
-            "--frontend-output",
-            type=str,
-            default="locale",
-            help="Name of the frontend messages output directory",
+            "--frontend-output", type=str, default="locale", help="Name of the frontend messages output directory",
         )
         parser.add_argument(
             "--frontend-namespace",
@@ -262,8 +259,6 @@ class Command(makemessages.Command):
             except (OSError, ValueError):
                 old_strings = {}
 
-            new_strings = {
-                k: v for k, v in self.get_new_strings(old_strings, translation_strings, locale).items()
-            }
+            new_strings = {k: v for k, v in self.get_new_strings(old_strings, translation_strings, locale).items()}
             with open(output_path, "w") as writer:
                 json.dump(new_strings, writer, indent=2, sort_keys=True)

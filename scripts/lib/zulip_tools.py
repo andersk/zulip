@@ -525,9 +525,7 @@ def assert_running_as_root(strip_lib_from_paths: bool = False) -> None:
         sys.exit(1)
 
 
-def get_config(
-    config_file: configparser.RawConfigParser, section: str, key: str, default_value: str = "",
-) -> str:
+def get_config(config_file: configparser.RawConfigParser, section: str, key: str, default_value: str = "") -> str:
     if config_file.has_option(section, key):
         return config_file.get(section, key)
     return default_value

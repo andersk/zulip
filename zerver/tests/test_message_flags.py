@@ -69,9 +69,7 @@ class FirstUnreadAnchorTests(ZulipTestCase):
         old_message_id = messages[0]["id"]
 
         # Verify the message is marked as read
-        user_message = UserMessage.objects.get(
-            message_id=old_message_id, user_profile=self.example_user("hamlet"),
-        )
+        user_message = UserMessage.objects.get(message_id=old_message_id, user_profile=self.example_user("hamlet"))
         self.assertTrue(user_message.flags.read)
 
         # Let's set this old message to be unread
@@ -80,9 +78,7 @@ class FirstUnreadAnchorTests(ZulipTestCase):
         )
 
         # Verify it's now marked as unread
-        user_message = UserMessage.objects.get(
-            message_id=old_message_id, user_profile=self.example_user("hamlet"),
-        )
+        user_message = UserMessage.objects.get(message_id=old_message_id, user_profile=self.example_user("hamlet"))
         self.assert_json_success(result)
         self.assertFalse(user_message.flags.read)
 
@@ -407,8 +403,7 @@ class PushNotificationMarkReadFlowsTest(ZulipTestCase):
         )
 
         self.assertEqual(
-            self.get_mobile_push_notification_ids(user_profile),
-            [message_id, second_message_id, third_message_id],
+            self.get_mobile_push_notification_ids(user_profile), [message_id, second_message_id, third_message_id],
         )
 
         result = self.client_post(

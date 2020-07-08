@@ -21,9 +21,7 @@ class Command(ZulipBaseCommand):
             # first check if the db has been initialized
             Realm.objects.first()
         except ProgrammingError:
-            raise CommandError(
-                "The Zulip database does not appear to exist. " "Have you run initialize-database?",
-            )
+            raise CommandError("The Zulip database does not appear to exist. " "Have you run initialize-database?")
 
         url = generate_realm_creation_url(by_admin=True)
         self.stdout.write(

@@ -151,9 +151,7 @@ class EventsEndpointTest(ZulipTestCase):
         # This test is mostly intended to get minimal coverage on
         # the /notify_tornado endpoint, so we can have 100% URL coverage,
         # but it does exercise a little bit of the codepath.
-        post_data = dict(
-            data=ujson.dumps(dict(event=dict(type="other"), users=[self.example_user("hamlet").id])),
-        )
+        post_data = dict(data=ujson.dumps(dict(event=dict(type="other"), users=[self.example_user("hamlet").id])))
         req = POSTRequestMock(post_data, user_profile=None)
         req.META["REMOTE_ADDR"] = "127.0.0.1"
         result = self.client_post_request("/notify_tornado", req)

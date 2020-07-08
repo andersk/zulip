@@ -1015,9 +1015,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     DESKTOP_ICON_COUNT_DISPLAY_MESSAGES = 1
     DESKTOP_ICON_COUNT_DISPLAY_NOTIFIABLE = 2
     DESKTOP_ICON_COUNT_DISPLAY_NONE = 3
-    desktop_icon_count_display: int = models.PositiveSmallIntegerField(
-        default=DESKTOP_ICON_COUNT_DISPLAY_MESSAGES,
-    )
+    desktop_icon_count_display: int = models.PositiveSmallIntegerField(default=DESKTOP_ICON_COUNT_DISPLAY_MESSAGES)
 
     enable_digest_emails: bool = models.BooleanField(default=True)
     enable_login_emails: bool = models.BooleanField(default=True)
@@ -1728,9 +1726,7 @@ def bulk_get_streams(realm: Realm, stream_names: STREAM_NAMES) -> Dict[str, Any]
         # But chaining __in and __iexact doesn't work with Django's
         # ORM, so we have the following hack to construct the relevant where clause
         where_clause = "upper(zerver_stream.name::text) IN (SELECT upper(name) FROM unnest(%s) AS name)"
-        return (
-            get_active_streams(realm).select_related().extra(where=[where_clause], params=(list(stream_names),))
-        )
+        return get_active_streams(realm).select_related().extra(where=[where_clause], params=(list(stream_names),))
 
     def stream_name_to_cache_key(stream_name: str) -> str:
         return get_stream_cache_key(stream_name, realm.id)
@@ -2755,9 +2751,7 @@ class ScheduledEmail(AbstractScheduledJob):
     type: int = models.PositiveSmallIntegerField()
 
     def __str__(self) -> str:
-        return (
-            f"<ScheduledEmail: {self.type} {self.address or list(self.users.all())} {self.scheduled_timestamp}>"
-        )
+        return f"<ScheduledEmail: {self.type} {self.address or list(self.users.all())} {self.scheduled_timestamp}>"
 
 
 class MissedMessageEmailAddress(models.Model):

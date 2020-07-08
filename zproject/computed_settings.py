@@ -831,11 +831,7 @@ LOGGING: Dict[str, Any] = {
         "zerver.management.commands.enqueue_digest_emails": {"level": "DEBUG"},
         "zerver.management.commands.deliver_scheduled_messages": {"level": "DEBUG"},
         "zulip.auth": {"level": "DEBUG", "handlers": DEFAULT_ZULIP_HANDLERS + ["auth_file"], "propagate": False},
-        "zulip.ldap": {
-            "level": "DEBUG",
-            "handlers": ["console", "ldap_file", "errors_file"],
-            "propagate": False,
-        },
+        "zulip.ldap": {"level": "DEBUG", "handlers": ["console", "ldap_file", "errors_file"], "propagate": False},
         "zulip.management": {"handlers": ["file", "errors_file"], "propagate": False},
         "zulip.queue": {"level": "WARNING"},
         "zulip.retention": {"handlers": ["file", "errors_file"], "propagate": False},
@@ -917,9 +913,7 @@ if REGISTER_LINK_DISABLED is None:
     # The default for REGISTER_LINK_DISABLED is a bit more
     # complicated: we want it to be disabled by default for people
     # using the LDAP backend that auto-creates users on login.
-    if len(AUTHENTICATION_BACKENDS) == 2 and (
-        "zproject.backends.ZulipLDAPAuthBackend" in AUTHENTICATION_BACKENDS
-    ):
+    if len(AUTHENTICATION_BACKENDS) == 2 and ("zproject.backends.ZulipLDAPAuthBackend" in AUTHENTICATION_BACKENDS):
         REGISTER_LINK_DISABLED = True
     else:
         REGISTER_LINK_DISABLED = False

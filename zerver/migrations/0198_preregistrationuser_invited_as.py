@@ -33,9 +33,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="preregistrationuser",
-            name="invited_as",
-            field=models.PositiveSmallIntegerField(default=1),
+            model_name="preregistrationuser", name="invited_as", field=models.PositiveSmallIntegerField(default=1),
         ),
         migrations.RunPython(set_initial_value_for_invited_as, reverse_code=reverse_code, elidable=True),
     ]

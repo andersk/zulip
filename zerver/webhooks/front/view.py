@@ -66,9 +66,7 @@ def get_conversation_assigned_body(payload: Dict[str, Any]) -> str:
     if source_name == target_name:
         return "**{source_name}** assigned themselves.".format(source_name=source_name)
 
-    return "**{source_name}** assigned **{target_name}**.".format(
-        source_name=source_name, target_name=target_name,
-    )
+    return "**{source_name}** assigned **{target_name}**.".format(source_name=source_name, target_name=target_name)
 
 
 def get_conversation_unassigned_body(payload: Dict[str, Any]) -> str:

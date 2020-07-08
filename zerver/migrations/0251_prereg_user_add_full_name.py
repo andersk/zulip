@@ -14,8 +14,6 @@ class Migration(migrations.Migration):
             model_name="preregistrationuser", name="full_name", field=models.CharField(max_length=100, null=True),
         ),
         migrations.AddField(
-            model_name="preregistrationuser",
-            name="full_name_validated",
-            field=models.BooleanField(default=False),
+            model_name="preregistrationuser", name="full_name_validated", field=models.BooleanField(default=False),
         ),
     ]

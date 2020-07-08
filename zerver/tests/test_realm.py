@@ -693,10 +693,7 @@ class RealmAPITest(ZulipTestCase):
                 Realm.POLICY_FULL_MEMBERS_ONLY,
             ],
             user_group_edit_policy=[Realm.USER_GROUP_EDIT_POLICY_ADMINS, Realm.USER_GROUP_EDIT_POLICY_MEMBERS],
-            private_message_policy=[
-                Realm.PRIVATE_MESSAGE_POLICY_UNLIMITED,
-                Realm.PRIVATE_MESSAGE_POLICY_DISABLED,
-            ],
+            private_message_policy=[Realm.PRIVATE_MESSAGE_POLICY_UNLIMITED, Realm.PRIVATE_MESSAGE_POLICY_DISABLED],
             invite_to_stream_policy=[
                 Realm.POLICY_ADMINS_ONLY,
                 Realm.POLICY_MEMBERS_ONLY,

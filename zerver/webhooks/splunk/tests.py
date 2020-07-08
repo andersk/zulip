@@ -60,10 +60,7 @@ Splunk alert from saved search:
 """.strip()
 
         self.send_and_test_stream_message(
-            "long_search_name",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "long_search_name", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_splunk_missing_results_link(self) -> None:

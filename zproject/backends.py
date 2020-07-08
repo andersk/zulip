@@ -547,9 +547,7 @@ class ZulipLDAPAuthBackendBase(ZulipAuthMixin, LDAPBackend):
         if settings.LDAP_EMAIL_ATTR is not None:
             # Get email from ldap attributes.
             if settings.LDAP_EMAIL_ATTR not in ldap_user.attrs:
-                raise ZulipLDAPException(
-                    f"LDAP user doesn't have the needed {settings.LDAP_EMAIL_ATTR} attribute",
-                )
+                raise ZulipLDAPException(f"LDAP user doesn't have the needed {settings.LDAP_EMAIL_ATTR} attribute")
             else:
                 return ldap_user.attrs[settings.LDAP_EMAIL_ATTR][0]
 
@@ -801,9 +799,7 @@ class ZulipLDAPAuthBackend(ZulipLDAPAuthBackendBase):
             # the LDAP flow.
             opts["default_stream_groups"] = []
 
-        user_profile = do_create_user(
-            username, None, self._realm, full_name, short_name, acting_user=None, **opts,
-        )
+        user_profile = do_create_user(username, None, self._realm, full_name, short_name, acting_user=None, **opts)
         self.sync_avatar_from_ldap(user_profile, ldap_user)
         self.sync_custom_profile_fields_from_ldap(user_profile, ldap_user)
 

@@ -13,9 +13,7 @@ from zerver.models import Realm
 def apps_view(request: HttpRequest, _: str) -> HttpResponse:
     if settings.ZILENCER_ENABLED:
         return TemplateResponse(
-            request,
-            "zerver/apps.html",
-            context={"page_params": {"electron_app_version": LATEST_DESKTOP_VERSION}},
+            request, "zerver/apps.html", context={"page_params": {"electron_app_version": LATEST_DESKTOP_VERSION}},
         )
     return HttpResponseRedirect("https://zulip.com/apps/", status=301)
 
@@ -90,6 +88,4 @@ def terms_view(request: HttpRequest) -> HttpResponse:
 
 @add_google_analytics
 def privacy_view(request: HttpRequest) -> HttpResponse:
-    return TemplateResponse(
-        request, "zerver/privacy.html", context={"isolated_page": get_isolated_page(request)},
-    )
+    return TemplateResponse(request, "zerver/privacy.html", context={"isolated_page": get_isolated_page(request)})

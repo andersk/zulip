@@ -13,10 +13,7 @@ class StatuspageHookTests(WebhookTestCase):
 * Description: We just encountered that database queries are timing out resulting in inconvenience to our end users...we'll do quick fix latest by tomorrow !!!
 """.strip()
         self.send_and_test_stream_message(
-            "incident_created",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "incident_created", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_statuspage_incident_update(self) -> None:

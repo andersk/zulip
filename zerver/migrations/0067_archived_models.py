@@ -112,7 +112,5 @@ class Migration(migrations.Migration):
                 blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm",
             ),
         ),
-        migrations.AlterUniqueTogether(
-            name="archivedusermessage", unique_together={("user_profile", "message")},
-        ),
+        migrations.AlterUniqueTogether(name="archivedusermessage", unique_together={("user_profile", "message")}),
     ]

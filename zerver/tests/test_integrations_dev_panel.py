@@ -139,9 +139,7 @@ class TestIntegrationsDevPanel(ZulipTestCase):
 
     def test_send_all_webhook_fixture_messages_for_success(self) -> None:
         bot = get_user("webhook-bot@zulip.com", self.zulip_realm)
-        url = (
-            f"/api/v1/external/appfollow?api_key={bot.api_key}&stream=Denmark&topic=Appfollow Bulk Notifications"
-        )
+        url = f"/api/v1/external/appfollow?api_key={bot.api_key}&stream=Denmark&topic=Appfollow Bulk Notifications"
         target_url = "/devtools/integrations/send_all_webhook_fixture_messages"
 
         data = {
@@ -180,9 +178,7 @@ class TestIntegrationsDevPanel(ZulipTestCase):
 
     def test_send_all_webhook_fixture_messages_for_success_with_non_json_fixtures(self) -> None:
         bot = get_user("webhook-bot@zulip.com", self.zulip_realm)
-        url = (
-            f"/api/v1/external/wordpress?api_key={bot.api_key}&stream=Denmark&topic=Wordpress Bulk Notifications"
-        )
+        url = f"/api/v1/external/wordpress?api_key={bot.api_key}&stream=Denmark&topic=Wordpress Bulk Notifications"
         target_url = "/devtools/integrations/send_all_webhook_fixture_messages"
 
         data = {
@@ -252,9 +248,7 @@ class TestIntegrationsDevPanel(ZulipTestCase):
     def test_send_all_webhook_fixture_messages_for_missing_fixtures(self, os_path_exists_mock: MagicMock) -> None:
         os_path_exists_mock.return_value = False
         bot = get_user("webhook-bot@zulip.com", self.zulip_realm)
-        url = (
-            f"/api/v1/external/appfollow?api_key={bot.api_key}&stream=Denmark&topic=Appfollow Bulk Notifications"
-        )
+        url = f"/api/v1/external/appfollow?api_key={bot.api_key}&stream=Denmark&topic=Appfollow Bulk Notifications"
         data = {
             "url": url,
             "custom_headers": "{}",

@@ -241,9 +241,7 @@ def update_stream_backend(
     description: Optional[str] = REQ(validator=check_capped_string(Stream.MAX_DESCRIPTION_LENGTH), default=None),
     is_private: Optional[bool] = REQ(validator=check_bool, default=None),
     is_announcement_only: Optional[bool] = REQ(validator=check_bool, default=None),
-    stream_post_policy: Optional[int] = REQ(
-        validator=check_int_in(Stream.STREAM_POST_POLICY_TYPES), default=None,
-    ),
+    stream_post_policy: Optional[int] = REQ(validator=check_int_in(Stream.STREAM_POST_POLICY_TYPES), default=None),
     history_public_to_subscribers: Optional[bool] = REQ(validator=check_bool, default=None),
     new_name: Optional[str] = REQ(validator=check_string, default=None),
     message_retention_days: Optional[Union[int, str]] = REQ(validator=check_string_or_int, default=None),
@@ -599,9 +597,7 @@ def add_subscriptions_backend(
 
 @has_request_variables
 def get_subscribers_backend(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    stream_id: int = REQ("stream", converter=to_non_negative_int),
+    request: HttpRequest, user_profile: UserProfile, stream_id: int = REQ("stream", converter=to_non_negative_int),
 ) -> HttpResponse:
     (stream, recipient, sub) = access_stream_by_id(user_profile, stream_id, allow_realm_admin=True)
     subscribers = get_subscriber_emails(stream, user_profile)

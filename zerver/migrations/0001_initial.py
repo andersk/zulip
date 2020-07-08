@@ -81,10 +81,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
             fields=[
                 ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
                 ("password", models.CharField(max_length=128, verbose_name="password")),
-                (
-                    "last_login",
-                    models.DateTimeField(default=django.utils.timezone.now, verbose_name="last login"),
-                ),
+                ("last_login", models.DateTimeField(default=django.utils.timezone.now, verbose_name="last login")),
                 (
                     "is_superuser",
                     models.BooleanField(
@@ -133,9 +130,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "tutorial_status",
                     models.CharField(
-                        choices=[("W", "Waiting"), ("S", "Started"), ("F", "Finished")],
-                        default="W",
-                        max_length=1,
+                        choices=[("W", "Waiting"), ("S", "Started"), ("F", "Finished")], default="W", max_length=1,
                     ),
                 ),
                 ("onboarding_steps", models.TextField(default="[]")),
@@ -636,9 +631,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
             model_name="subscription", name="pin_to_top", field=models.BooleanField(default=False),
         ),
         migrations.AddField(
-            model_name="userprofile",
-            name="default_language",
-            field=models.CharField(default="en", max_length=50),
+            model_name="userprofile", name="default_language", field=models.CharField(default="en", max_length=50),
         ),
         migrations.AddField(
             model_name="realm", name="allow_message_editing", field=models.BooleanField(default=True),

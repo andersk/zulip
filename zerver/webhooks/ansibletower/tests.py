@@ -24,8 +24,7 @@ class AnsibletowerHookTests(WebhookTestCase):
         """
         expected_topic = "AWX - Project Update"
         expected_message = (
-            "Project Update: [#2678 AWX - Project Update]"
-            "(http://awx.example.co.uk/#/jobs/project/2678) failed."
+            "Project Update: [#2678 AWX - Project Update]" "(http://awx.example.co.uk/#/jobs/project/2678) failed."
         )
 
         self.send_and_test_stream_message("project_update_failed", expected_topic, expected_message)

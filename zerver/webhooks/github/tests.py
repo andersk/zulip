@@ -206,9 +206,7 @@ class GithubWebhookTest(WebhookTestCase):
         self.send_and_test_stream_message("pull_request__closed", expected_topic, expected_message)
 
     def test_pull_request_merged_msg(self) -> None:
-        expected_message = (
-            "baxterthehacker merged [PR #1](https://github.com/baxterthehacker/public-repo/pull/1)."
-        )
+        expected_message = "baxterthehacker merged [PR #1](https://github.com/baxterthehacker/public-repo/pull/1)."
         self.send_and_test_stream_message("pull_request__merged", self.EXPECTED_TOPIC_PR_EVENTS, expected_message)
 
     def test_public_msg(self) -> None:
@@ -410,9 +408,7 @@ A temporary team so that I can get some webhook fixtures!
         self.assert_json_success(result)
 
     @patch("zerver.webhooks.github.view.check_send_webhook_message")
-    def test_push_50_commits_filtered_by_branches_ignore(
-        self, check_send_webhook_message_mock: MagicMock,
-    ) -> None:
+    def test_push_50_commits_filtered_by_branches_ignore(self, check_send_webhook_message_mock: MagicMock) -> None:
         self.url = self.build_webhook_url(branches="master,development")
         payload = self.get_body("push__50_commits")
         result = self.client_post(self.url, payload, content_type="application/json", HTTP_X_GITHUB_EVENT="push")

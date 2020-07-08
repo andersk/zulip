@@ -616,9 +616,7 @@ class StreamAdminTest(ZulipTestCase):
         # *NOTE: Here Encoding is needed when Unicode string is passed as an argument*
         with tornado_redirected_to_list(events):
             stream_id = stream_name2_exists.id
-            result = self.client_patch(
-                f"/json/streams/{stream_id}", {"new_name": ujson.dumps("नया नाम".encode())},
-            )
+            result = self.client_patch(f"/json/streams/{stream_id}", {"new_name": ujson.dumps("नया नाम".encode())})
         self.assert_json_success(result)
         # While querying, system can handle unicode strings.
         stream_name_uni_exists = get_stream("नया नाम", realm)
@@ -1400,9 +1398,7 @@ class StreamAdminTest(ZulipTestCase):
         do_set_realm_property(hamlet_user.realm, "waiting_period_threshold", 0)
 
         # Attempt and succeed to invite Cordelia to the stream..
-        self.common_subscribe_to_streams(
-            hamlet_user, stream_name, {"principals": ujson.dumps([cordelia_user_id])},
-        )
+        self.common_subscribe_to_streams(hamlet_user, stream_name, {"principals": ujson.dumps([cordelia_user_id])})
 
         # Set threshold to 20 days..
         do_set_realm_property(hamlet_user.realm, "waiting_period_threshold", 20)
@@ -1413,9 +1409,7 @@ class StreamAdminTest(ZulipTestCase):
         self.unsubscribe(cordelia_user, stream_name[0])
 
         # Attempt and succeed to invite Aaron to the stream..
-        self.common_subscribe_to_streams(
-            hamlet_user, stream_name, {"principals": ujson.dumps([cordelia_user_id])},
-        )
+        self.common_subscribe_to_streams(hamlet_user, stream_name, {"principals": ujson.dumps([cordelia_user_id])})
 
     def test_remove_already_not_subbed(self) -> None:
         """
@@ -1449,9 +1443,7 @@ class StreamAdminTest(ZulipTestCase):
             "/json/users/me/subscriptions",
             {"subscriptions": ujson.dumps([stream_name]), "principals": ujson.dumps([99])},
         )
-        self.assert_json_error(
-            result, "User not authorized to execute queries on behalf of '99'", status_code=403,
-        )
+        self.assert_json_error(result, "User not authorized to execute queries on behalf of '99'", status_code=403)
 
 
 class DefaultStreamTest(ZulipTestCase):
@@ -1729,8 +1721,7 @@ class DefaultStreamGroupTest(ZulipTestCase):
         self.assert_json_error(result, 'You must pass "new_description" or "new_group_name".')
 
         result = self.client_patch(
-            "/json/default_stream_groups/12345",
-            {"op": "change", "new_description": ujson.dumps(new_description)},
+            "/json/default_stream_groups/12345", {"op": "change", "new_description": ujson.dumps(new_description)},
         )
         self.assert_json_error(result, "Default stream group with id '12345' does not exist.")
 
@@ -1755,8 +1746,7 @@ class DefaultStreamGroupTest(ZulipTestCase):
         do_remove_default_stream_group(realm, new_group)
 
         result = self.client_patch(
-            f"/json/default_stream_groups/{group_id}",
-            {"op": "change", "new_group_name": ujson.dumps(group_name)},
+            f"/json/default_stream_groups/{group_id}", {"op": "change", "new_group_name": ujson.dumps(group_name)},
         )
         self.assert_json_error(result, "This default stream group is already named 'group1'")
 
@@ -1804,9 +1794,7 @@ class DefaultStreamGroupTest(ZulipTestCase):
         )
         self.assert_json_error(
             result,
-            "Default stream group name too long (limit: {} characters)".format(
-                DefaultStreamGroup.MAX_NAME_LENGTH,
-            ),
+            "Default stream group name too long (limit: {} characters)".format(DefaultStreamGroup.MAX_NAME_LENGTH),
         )
 
         result = self.client_post(
@@ -2166,11 +2154,7 @@ class SubscriptionPropertiesTest(ZulipTestCase):
         result = self.api_post(
             test_user,
             "/api/v1/users/me/subscriptions/properties",
-            {
-                "subscription_data": ujson.dumps(
-                    [{"property": "is_muted", "stream_id": stream_id, "value": False}],
-                ),
-            },
+            {"subscription_data": ujson.dumps([{"property": "is_muted", "stream_id": stream_id, "value": False}])},
         )
         self.assert_json_error(result, "Invalid stream id")
 
@@ -3195,9 +3179,7 @@ class SubscriptionAPITest(ZulipTestCase):
         invitee = self.example_user("iago")
         current_streams = self.get_streams(invitee)
         invite_streams = self.make_random_stream_names(current_streams)
-        self.assert_adding_subscriptions_for_principal(
-            invitee.id, invitee.realm, invite_streams, invite_only=True,
-        )
+        self.assert_adding_subscriptions_for_principal(invitee.id, invitee.realm, invite_streams, invite_only=True)
 
     def test_non_ascii_subscription_for_principal(self) -> None:
         """
@@ -3624,8 +3606,7 @@ class GetStreamsTest(ZulipTestCase):
         # bot's subs
         self.subscribe(test_bot, "Scotland")
         result = self.api_get(
-            test_bot,
-            "/api/v1/streams?include_owner_subscribed=true&include_public=false&include_subscribed=true",
+            test_bot, "/api/v1/streams?include_owner_subscribed=true&include_public=false&include_subscribed=true",
         )
 
         self.assert_json_success(result)
@@ -3644,8 +3625,7 @@ class GetStreamsTest(ZulipTestCase):
         self.make_stream("private_stream", realm=realm, invite_only=True)
         self.subscribe(test_bot, "private_stream")
         result = self.api_get(
-            test_bot,
-            "/api/v1/streams?include_owner_subscribed=true&include_public=true&include_subscribed=false",
+            test_bot, "/api/v1/streams?include_owner_subscribed=true&include_public=true&include_subscribed=false",
         )
 
         self.assert_json_success(result)
@@ -4337,9 +4317,7 @@ class AccessStreamTest(ZulipTestCase):
 class StreamTrafficTest(ZulipTestCase):
     def test_average_weekly_stream_traffic_calculation(self) -> None:
         # No traffic data for the stream
-        self.assertEqual(
-            get_average_weekly_stream_traffic(42, timezone_now() - timedelta(days=300), {1: 4003}), 0,
-        )
+        self.assertEqual(get_average_weekly_stream_traffic(42, timezone_now() - timedelta(days=300), {1: 4003}), 0)
 
         # using high numbers here to make it more likely to catch small errors in the denominators
         # of the calculations. That being said we don't want to go over 100, since then the 2

@@ -161,18 +161,14 @@ class Command(BaseCommand):
                 .annotate(count=Count("user_profile"))
             )
             print(
-                "{} users have starred {} messages".format(
-                    len(starrers), sum([elt["count"] for elt in starrers]),
-                ),
+                "{} users have starred {} messages".format(len(starrers), sum([elt["count"] for elt in starrers])),
             )
 
             active_user_subs = Subscription.objects.filter(user_profile__in=user_profiles, active=True)
 
             # Streams not in home view
             non_home_view = (
-                active_user_subs.filter(is_muted=True)
-                .values("user_profile")
-                .annotate(count=Count("user_profile"))
+                active_user_subs.filter(is_muted=True).values("user_profile").annotate(count=Count("user_profile"))
             )
             print(
                 "{} users have {} streams not in home view".format(

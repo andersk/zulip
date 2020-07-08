@@ -294,10 +294,7 @@ class DecoratorTestCase(ZulipTestCase):
                 api_result = my_webhook(request)
 
             mock_warning.assert_called_with(
-                "User %s (%s) attempted to access API on wrong subdomain (%s)",
-                webhook_bot_email,
-                "zulip",
-                "acme",
+                "User %s (%s) attempted to access API on wrong subdomain (%s)", webhook_bot_email, "zulip", "acme",
             )
 
         request.host = "zulip.testserver"
@@ -1387,9 +1384,7 @@ class TestValidateApiKey(ZulipTestCase):
             api_key = get_api_key(self.default_bot)
             with mock.patch("logging.warning") as mock_warning:
                 with self.assertRaisesRegex(JsonableError, "Account is not associated with this subdomain"):
-                    validate_api_key(
-                        HostRequestMock(host=settings.EXTERNAL_HOST), self.default_bot.email, api_key,
-                    )
+                    validate_api_key(HostRequestMock(host=settings.EXTERNAL_HOST), self.default_bot.email, api_key)
 
                 mock_warning.assert_called_with(
                     "User %s (%s) attempted to access API on wrong subdomain (%s)",

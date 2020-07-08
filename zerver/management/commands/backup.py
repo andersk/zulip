@@ -92,9 +92,7 @@ class Command(ZulipBaseCommand):
 
             assert not any("|" in name or "|" in path for name, path in paths)
             transform_args = [
-                r"--transform=s|^{}(/.*)?$|zulip-backup/{}\1|x".format(
-                    re.escape(path), name.replace("\\", r"\\"),
-                )
+                r"--transform=s|^{}(/.*)?$|zulip-backup/{}\1|x".format(re.escape(path), name.replace("\\", r"\\"))
                 for name, path in paths
             ]
 

@@ -374,11 +374,7 @@ def api_key_only_webhook_view(
             request: HttpRequest, api_key: str = REQ(), *args: object, **kwargs: object
         ) -> HttpResponse:
             user_profile = validate_api_key(
-                request,
-                None,
-                api_key,
-                is_webhook=True,
-                client_name=full_webhook_client_name(webhook_client_name),
+                request, None, api_key, is_webhook=True, client_name=full_webhook_client_name(webhook_client_name),
             )
 
             if settings.RATE_LIMITING:

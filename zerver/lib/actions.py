@@ -289,9 +289,7 @@ def log_event(event: MutableMapping[str, Any]) -> None:
     if not os.path.exists(settings.EVENT_LOG_DIR):
         os.mkdir(settings.EVENT_LOG_DIR)
 
-    template = os.path.join(
-        settings.EVENT_LOG_DIR, "%s." + platform.node() + timezone_now().strftime(".%Y-%m-%d"),
-    )
+    template = os.path.join(settings.EVENT_LOG_DIR, "%s." + platform.node() + timezone_now().strftime(".%Y-%m-%d"))
 
     with lockfile(template % ("lock",)):
         with open(template % ("events",), "a") as log:
@@ -750,9 +748,7 @@ def do_set_realm_property(realm: Realm, name: str, value: Any, acting_user: Opti
        value to update and and the user who initiated the update.
     """
     property_type = Realm.property_types[name]
-    assert isinstance(
-        value, property_type,
-    ), f"Cannot update {name}: {value} is not an instance of {property_type}"
+    assert isinstance(value, property_type), f"Cannot update {name}: {value} is not an instance of {property_type}"
 
     old_value = getattr(realm, name)
     setattr(realm, name, value)
@@ -1141,9 +1137,7 @@ def compute_jabber_user_fullname(email: str) -> str:
 
 
 @cache_with_key(lambda realm, email, f: user_profile_by_email_cache_key(email), timeout=3600 * 24 * 7)
-def create_mirror_user_if_needed(
-    realm: Realm, email: str, email_to_fullname: Callable[[str], str],
-) -> UserProfile:
+def create_mirror_user_if_needed(realm: Realm, email: str, email_to_fullname: Callable[[str], str]) -> UserProfile:
     try:
         return get_user_by_delivery_email(email, realm)
     except UserProfile.DoesNotExist:
@@ -1298,9 +1292,7 @@ def get_recipient_info(
             # treated as a mention (and follow the user's mention
             # notification preferences) or a normal message.
             wildcard_mention_user_ids = {
-                row["user_profile_id"]
-                for row in subscription_rows
-                if should_send("wildcard_mentions_notify", row)
+                row["user_profile_id"] for row in subscription_rows if should_send("wildcard_mentions_notify", row)
             }
 
     elif recipient.type == Recipient.HUDDLE:
@@ -2213,9 +2205,7 @@ def check_send_stream_message(
     return do_send_messages([message])[0]
 
 
-def check_send_private_message(
-    sender: UserProfile, client: Client, receiving_user: UserProfile, body: str,
-) -> int:
+def check_send_private_message(sender: UserProfile, client: Client, receiving_user: UserProfile, body: str) -> int:
     addressee = Addressee.for_user_profile(receiving_user)
     message = check_message(sender, client, addressee, body)
 
@@ -2473,12 +2463,7 @@ def check_message(
 
     elif addressee.is_private():
         user_profiles = addressee.user_profiles()
-        mirror_message = client and client.name in [
-            "zephyr_mirror",
-            "irc_mirror",
-            "jabber_mirror",
-            "JabberMirror",
-        ]
+        mirror_message = client and client.name in ["zephyr_mirror", "irc_mirror", "jabber_mirror", "JabberMirror"]
 
         check_private_message_policy(realm, sender, user_profiles)
 
@@ -3057,9 +3042,7 @@ def bulk_add_subscriptions(
             # Realm admins already have all created private streams.
             realm_admin_ids = [user.id for user in realm.get_admin_users_and_bots()]
             new_users_ids = [
-                user.id
-                for user in users
-                if (user.id, stream.id) in new_streams and user.id not in realm_admin_ids
+                user.id for user in users if (user.id, stream.id) in new_streams and user.id not in realm_admin_ids
             ]
             send_stream_creation_event(stream, new_users_ids)
 
@@ -3347,9 +3330,7 @@ def do_change_full_name(user_profile: UserProfile, full_name: str, acting_user: 
     )
     if user_profile.is_bot:
         send_event(
-            user_profile.realm,
-            dict(type="realm_bot", op="update", bot=payload),
-            bot_owner_user_ids(user_profile),
+            user_profile.realm, dict(type="realm_bot", op="update", bot=payload), bot_owner_user_ids(user_profile),
         )
 
 
@@ -3784,9 +3765,7 @@ def do_change_stream_post_policy(stream: Stream, stream_post_policy: int) -> Non
     send_event(stream.realm, event, can_access_stream_user_ids(stream))
 
 
-def do_rename_stream(
-    stream: Stream, new_name: str, user_profile: UserProfile, log: bool = True,
-) -> Dict[str, str]:
+def do_rename_stream(stream: Stream, new_name: str, user_profile: UserProfile, log: bool = True) -> Dict[str, str]:
     old_name = stream.name
     stream.name = new_name
     stream.save(update_fields=["name"])
@@ -4053,9 +4032,7 @@ def do_remove_default_stream(stream: Stream) -> None:
     notify_default_streams(stream.realm)
 
 
-def do_create_default_stream_group(
-    realm: Realm, group_name: str, description: str, streams: List[Stream],
-) -> None:
+def do_create_default_stream_group(realm: Realm, group_name: str, description: str, streams: List[Stream]) -> None:
     default_streams = get_default_streams_for_realm(realm.id)
     for stream in streams:
         if stream in default_streams:
@@ -4070,17 +4047,13 @@ def do_create_default_stream_group(
         name=group_name, realm=realm, description=description,
     )
     if not created:
-        raise JsonableError(
-            _("Default stream group '{group_name}' already exists").format(group_name=group_name),
-        )
+        raise JsonableError(_("Default stream group '{group_name}' already exists").format(group_name=group_name))
 
     group.streams.set(streams)
     notify_default_stream_groups(realm)
 
 
-def do_add_streams_to_default_stream_group(
-    realm: Realm, group: DefaultStreamGroup, streams: List[Stream],
-) -> None:
+def do_add_streams_to_default_stream_group(realm: Realm, group: DefaultStreamGroup, streams: List[Stream]) -> None:
     default_streams = get_default_streams_for_realm(realm.id)
     for stream in streams:
         if stream in default_streams:

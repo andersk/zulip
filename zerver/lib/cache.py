@@ -135,9 +135,7 @@ def get_cache_backend(cache_name: Optional[str]) -> BaseCache:
     return caches[cache_name]
 
 
-def get_cache_with_key(
-    keyfunc: Callable[..., str], cache_name: Optional[str] = None,
-) -> Callable[[FuncT], FuncT]:
+def get_cache_with_key(keyfunc: Callable[..., str], cache_name: Optional[str] = None) -> Callable[[FuncT], FuncT]:
     """
     The main goal of this function getting value from the cache like in the "cache_with_key".
     A cache value can contain any data including the "None", so
@@ -293,9 +291,7 @@ def safe_cache_get_many(keys: List[str], cache_name: Optional[str] = None) -> Di
         return cache_get_many(good_keys, cache_name)
 
 
-def cache_set_many(
-    items: Dict[str, Any], cache_name: Optional[str] = None, timeout: Optional[int] = None,
-) -> None:
+def cache_set_many(items: Dict[str, Any], cache_name: Optional[str] = None, timeout: Optional[int] = None) -> None:
     new_items = {}
     for key in items:
         new_key = KEY_PREFIX + key

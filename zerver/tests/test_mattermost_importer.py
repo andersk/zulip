@@ -507,8 +507,7 @@ class MatterMostImporter(ZulipTestCase):
         )
         self.assertEqual(self.get_set(total_reactions, "emoji_name"), {"tick", "smile", "world_map"})
         self.assertEqual(
-            self.get_set(total_reactions, "emoji_code"),
-            {tick_emoji_code, smile_emoji_code, world_map_emoji_code},
+            self.get_set(total_reactions, "emoji_code"), {tick_emoji_code, smile_emoji_code, world_map_emoji_code},
         )
         self.assertEqual(self.get_set(total_reactions, "user_profile"), {harry_id, ron_id})
         self.assertEqual(len(self.get_set(total_reactions, "id")), 4)

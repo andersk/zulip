@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="userprofile",
-            name="realm_name_in_notifications",
-            field=models.BooleanField(default=False),
+            model_name="userprofile", name="realm_name_in_notifications", field=models.BooleanField(default=False),
         ),
     ]

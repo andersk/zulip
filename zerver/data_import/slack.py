@@ -135,9 +135,7 @@ def slack_workspace_to_realm(
     )
 
 
-def build_realmemoji(
-    custom_emoji_list: ZerverFieldsT, realm_id: int,
-) -> Tuple[List[ZerverFieldsT], ZerverFieldsT]:
+def build_realmemoji(custom_emoji_list: ZerverFieldsT, realm_id: int) -> Tuple[List[ZerverFieldsT], ZerverFieldsT]:
     zerver_realmemoji = []
     emoji_url_map = {}
     emoji_id = 0
@@ -851,11 +849,7 @@ def channel_message_to_zerver_message(
 
         if "reactions" in message.keys():
             build_reactions(
-                reaction_list,
-                message["reactions"],
-                slack_user_id_to_zulip_user_id,
-                message_id,
-                zerver_realmemoji,
+                reaction_list, message["reactions"], slack_user_id_to_zulip_user_id, message_id, zerver_realmemoji,
             )
 
         # Process different subtypes of slack messages

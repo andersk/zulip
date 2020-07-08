@@ -894,9 +894,7 @@ class TestCountStats(AnalyticsTestCase):
 
         do_fill_count_stat_at_hour(stat, self.TIME_ZERO)
         self.assertTableState(
-            UserCount,
-            ["value", "user"],
-            [[1, user2], [1, user3], [1, user4], [1, user5], [1, user6], [1, user7]],
+            UserCount, ["value", "user"], [[1, user2], [1, user3], [1, user4], [1, user5], [1, user6], [1, user7]],
         )
         self.assertTableState(RealmCount, ["value", "realm"], [[5, self.default_realm], [1, self.second_realm]])
         self.assertTableState(InstallationCount, ["value"], [[6]])
@@ -965,9 +963,7 @@ class TestCountStats(AnalyticsTestCase):
 
         do_fill_count_stat_at_hour(stat, self.TIME_ZERO)
         self.assertTableState(
-            UserCount,
-            ["value", "user"],
-            [[1, user2], [1, user3], [1, user4], [1, user5], [1, user6], [1, user7]],
+            UserCount, ["value", "user"], [[1, user2], [1, user3], [1, user4], [1, user5], [1, user6], [1, user7]],
         )
         self.assertTableState(RealmCount, ["value", "realm"], [[5, self.default_realm], [1, self.second_realm]])
         self.assertTableState(InstallationCount, ["value"], [[6]])
@@ -1450,9 +1446,7 @@ class TestActiveUsersAudit(AnalyticsTestCase):
         self.add_event(RealmAuditLog.USER_CREATED, 2)
         process_count_stat(self.stat, self.TIME_ZERO)
         self.assertTableState(
-            UserCount,
-            ["subgroup", "end_time"],
-            [["false", self.TIME_ZERO], ["false", self.TIME_ZERO - self.DAY]],
+            UserCount, ["subgroup", "end_time"], [["false", self.TIME_ZERO], ["false", self.TIME_ZERO - self.DAY]],
         )
 
     # User with no relevant activity could happen e.g. for a system bot that

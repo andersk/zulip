@@ -645,8 +645,7 @@ class MessagePOSTTest(ZulipTestCase):
             self.assert_json_success(result1)
 
         with mock.patch(
-            "DNS.dnslookup",
-            return_value=[["espuser:*:95494:101:Esp Classroom,,,:/mit/espuser:/bin/athena/bash"]],
+            "DNS.dnslookup", return_value=[["espuser:*:95494:101:Esp Classroom,,,:/mit/espuser:/bin/athena/bash"]],
         ):
             result2 = self.api_post(self.mit_user("espuser"), "/api/v1/messages", msg, subdomain="zephyr")
             self.assert_json_success(result2)
@@ -1307,9 +1306,7 @@ class StreamMessagesTest(ZulipTestCase):
     def test_stream_message_dict(self) -> None:
         user_profile = self.example_user("iago")
         self.subscribe(user_profile, "Denmark")
-        self.send_stream_message(
-            self.example_user("hamlet"), "Denmark", content="whatever", topic_name="my topic",
-        )
+        self.send_stream_message(self.example_user("hamlet"), "Denmark", content="whatever", topic_name="my topic")
         message = most_recent_message(user_profile)
         row = MessageDict.get_raw_db_rows([message.id])[0]
         dct = MessageDict.build_dict_from_raw_db_row(row)

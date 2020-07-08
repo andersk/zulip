@@ -694,9 +694,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         hamlet = self.example_user("hamlet")
         for i in range(0, 5):
             stream_name = f"test-subscribe {i}"
-            self.make_stream(
-                stream_name, realm=hamlet.realm, invite_only=True, history_public_to_subscribers=True,
-            )
+            self.make_stream(stream_name, realm=hamlet.realm, invite_only=True, history_public_to_subscribers=True)
             self.subscribe(hamlet, stream_name)
 
         self.login_user(hamlet)
@@ -827,8 +825,7 @@ class AvatarTest(UploadSerializeMixin, ZulipTestCase):
         )
 
         self.assertEqual(
-            url,
-            "https://secure.gravatar.com/avatar/b48def645758b95537d4424c84d1a9ff?d=identicon&s=500&version=2",
+            url, "https://secure.gravatar.com/avatar/b48def645758b95537d4424c84d1a9ff?d=identicon&s=500&version=2",
         )
 
         url = get_avatar_field(
@@ -1345,9 +1342,7 @@ class RealmLogoTest(UploadSerializeMixin, ZulipTestCase):
         # Log in as admin
         self.login("iago")
         with get_test_image_file("img.png") as fp1, get_test_image_file("img.png") as fp2:
-            result = self.client_post(
-                "/json/realm/logo", {"f1": fp1, "f2": fp2, "night": ujson.dumps(self.night)},
-            )
+            result = self.client_post("/json/realm/logo", {"f1": fp1, "f2": fp2, "night": ujson.dumps(self.night)})
         self.assert_json_error(result, "You must upload exactly one logo.")
 
     def test_no_file_upload_failure(self) -> None:
@@ -1535,9 +1530,7 @@ class LocalStorageTest(UploadSerializeMixin, ZulipTestCase):
 
         upload_emoji_image(image_file, file_name, user_profile)
 
-        emoji_path = RealmEmoji.PATH_ID_TEMPLATE.format(
-            realm_id=user_profile.realm_id, emoji_file_name=file_name,
-        )
+        emoji_path = RealmEmoji.PATH_ID_TEMPLATE.format(realm_id=user_profile.realm_id, emoji_file_name=file_name)
 
         file_path = os.path.join(settings.LOCAL_UPLOADS_DIR, "avatars", emoji_path)
         with get_test_image_file("img.png") as image_file, open(file_path + ".original", "rb") as original_file:
@@ -1555,9 +1548,7 @@ class LocalStorageTest(UploadSerializeMixin, ZulipTestCase):
         upload_emoji_image(image_file, file_name, user_profile)
         url = zerver.lib.upload.upload_backend.get_emoji_url(file_name, user_profile.realm_id)
 
-        emoji_path = RealmEmoji.PATH_ID_TEMPLATE.format(
-            realm_id=user_profile.realm_id, emoji_file_name=file_name,
-        )
+        emoji_path = RealmEmoji.PATH_ID_TEMPLATE.format(realm_id=user_profile.realm_id, emoji_file_name=file_name)
         expected_url = f"/user_avatars/{emoji_path}"
         self.assertEqual(expected_url, url)
 

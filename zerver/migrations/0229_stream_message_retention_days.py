@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="stream",
-            name="message_retention_days",
-            field=models.IntegerField(default=None, null=True),
+            model_name="stream", name="message_retention_days", field=models.IntegerField(default=None, null=True),
         ),
     ]

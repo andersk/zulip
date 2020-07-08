@@ -200,9 +200,7 @@ def check_for_new_fence(
         header = m.group("header")
         if not lang and default_language:
             lang = default_language
-        handler = generic_handler(
-            processor, output, fence, lang, header, run_content_validators, default_language,
-        )
+        handler = generic_handler(processor, output, fence, lang, header, run_content_validators, default_language)
         processor.push(handler)
     else:
         output.append(line)

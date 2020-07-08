@@ -197,9 +197,7 @@ class Command(BaseCommand):
             help="The number of personal pairs to create.",
         )
 
-        parser.add_argument(
-            "--threads", dest="threads", type=int, default=1, help="The number of threads to use.",
-        )
+        parser.add_argument("--threads", dest="threads", type=int, default=1, help="The number of threads to use.")
 
         parser.add_argument(
             "--percent-huddles",
@@ -420,9 +418,7 @@ class Command(BaseCommand):
             # If a stream is not supplied in the webhook URL, the webhook
             # will (in some cases) send the notification as a PM to the
             # owner of the webhook bot, so bot_owner can't be None
-            create_users(
-                zulip_realm, zulip_webhook_bots, bot_type=UserProfile.INCOMING_WEBHOOK_BOT, bot_owner=zoe,
-            )
+            create_users(zulip_realm, zulip_webhook_bots, bot_type=UserProfile.INCOMING_WEBHOOK_BOT, bot_owner=zoe)
             aaron = get_user_by_delivery_email("AARON@zulip.com", zulip_realm)
 
             zulip_outgoing_bots = [

@@ -21,9 +21,7 @@ class Migration(migrations.Migration):
                 ("client", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Client")),
                 (
                     "user_profile",
-                    models.OneToOneField(
-                        on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL,
-                    ),
+                    models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
                 ),
             ],
         ),

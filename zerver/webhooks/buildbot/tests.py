@@ -13,12 +13,16 @@ class BuildbotHookTests(WebhookTestCase):
 
     def test_build_success(self) -> None:
         expected_topic = "buildbot-hello"
-        expected_message = "Build [#33](http://exampleurl.com/#builders/1/builds/33) (result: success) for **runtests** finished."
+        expected_message = (
+            "Build [#33](http://exampleurl.com/#builders/1/builds/33) (result: success) for **runtests** finished."
+        )
         self.send_and_test_stream_message("finished_success", expected_topic, expected_message)
 
     def test_build_failure(self) -> None:
         expected_topic = "general"  # project key is empty
-        expected_message = "Build [#34](http://exampleurl.com/#builders/1/builds/34) (result: failure) for **runtests** finished."
+        expected_message = (
+            "Build [#34](http://exampleurl.com/#builders/1/builds/34) (result: failure) for **runtests** finished."
+        )
         self.send_and_test_stream_message("finished_failure", expected_topic, expected_message)
 
     def test_build_cancelled(self) -> None:

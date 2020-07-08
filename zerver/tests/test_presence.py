@@ -32,11 +32,7 @@ class ActivityTest(ZulipTestCase):
         count = 150
         for activity_user_profile in UserProfile.objects.all():
             UserActivity.objects.get_or_create(
-                user_profile=activity_user_profile,
-                client=client,
-                query=query,
-                count=count,
-                last_visit=last_visit,
+                user_profile=activity_user_profile, client=client, query=query, count=count, last_visit=last_visit,
             )
 
         # Fails when not staff
@@ -517,10 +513,7 @@ class UserPresenceAggregationTests(ZulipTestCase):
         result_dict = self._send_presence_for_aggregated_tests(user, "idle", validate_time)
         self.assertDictEqual(
             result_dict["presence"]["aggregated"],
-            {
-                "status": "idle",
-                "timestamp": datetime_to_timestamp(validate_time - datetime.timedelta(seconds=2)),
-            },
+            {"status": "idle", "timestamp": datetime_to_timestamp(validate_time - datetime.timedelta(seconds=2))},
         )
 
     def test_aggregated_presense_mixed(self) -> None:
@@ -536,10 +529,7 @@ class UserPresenceAggregationTests(ZulipTestCase):
         result_dict = self._send_presence_for_aggregated_tests(user, "idle", validate_time)
         self.assertDictEqual(
             result_dict["presence"]["aggregated"],
-            {
-                "status": "idle",
-                "timestamp": datetime_to_timestamp(validate_time - datetime.timedelta(seconds=2)),
-            },
+            {"status": "idle", "timestamp": datetime_to_timestamp(validate_time - datetime.timedelta(seconds=2))},
         )
 
     def test_aggregated_presense_offline(self) -> None:

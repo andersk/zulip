@@ -690,9 +690,7 @@ def get_message_payload_apns(user_profile: UserProfile, message: Message) -> Dic
     return apns_data
 
 
-def get_message_payload_gcm(
-    user_profile: UserProfile, message: Message,
-) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+def get_message_payload_gcm(user_profile: UserProfile, message: Message) -> Tuple[Dict[str, Any], Dict[str, Any]]:
     """A `message` payload + options, for Android via GCM/FCM."""
     data = get_message_payload(user_profile, message)
     assert message.rendered_content is not None

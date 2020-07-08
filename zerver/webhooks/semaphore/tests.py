@@ -96,9 +96,7 @@ class SemaphoreHookTests(WebhookTestCase):
 * **Tag**: [v1.0.1](https://github.com/renderedtext/notifications/tree/v1.0.1)
 * **Author**: [radwo](https://github.com/radwo)
 """.strip()
-        self.send_and_test_stream_message(
-            "tag", expected_topic, expected_message, content_type="application/json",
-        )
+        self.send_and_test_stream_message("tag", expected_topic, expected_message, content_type="application/json")
 
     def test_semaphore_tag_non_gh_repo(self) -> None:
         expected_topic = "notifications"

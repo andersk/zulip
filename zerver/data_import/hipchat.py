@@ -759,9 +759,7 @@ def do_convert_data(
         stream_subscriptions = public_stream_subscriptions + private_stream_subscriptions
     else:
         stream_subscriptions = build_stream_subscriptions(
-            get_users=subscriber_handler.get_users,
-            zerver_recipient=zerver_recipient,
-            zerver_stream=zerver_stream,
+            get_users=subscriber_handler.get_users, zerver_recipient=zerver_recipient, zerver_stream=zerver_stream,
         )
 
     personal_subscriptions = build_personal_subscriptions(zerver_recipient=zerver_recipient)

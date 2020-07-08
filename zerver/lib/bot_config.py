@@ -59,9 +59,7 @@ def set_bot_config(bot_profile: UserProfile, key: str, value: str) -> None:
             "Cannot store configuration. Request would require {} characters. "
             "The current configuration size limit is {} characters.".format(new_config_size, config_size_limit),
         )
-    obj, created = BotConfigData.objects.get_or_create(
-        bot_profile=bot_profile, key=key, defaults={"value": value},
-    )
+    obj, created = BotConfigData.objects.get_or_create(bot_profile=bot_profile, key=key, defaults={"value": value})
     if not created:
         obj.value = value
         obj.save()

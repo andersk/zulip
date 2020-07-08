@@ -180,9 +180,7 @@ def write_log_line(
             )
 
         if remote_cache_time_delta > 0.005:
-            remote_cache_output = (
-                f" (mem: {format_timedelta(remote_cache_time_delta)}/{remote_cache_count_delta})"
-            )
+            remote_cache_output = f" (mem: {format_timedelta(remote_cache_time_delta)}/{remote_cache_count_delta})"
 
         if not suppress_statsd:
             statsd.timing(f"{statsd_path}.remote_cache.time", timedelta_ms(remote_cache_time_delta))
@@ -199,9 +197,7 @@ def write_log_line(
         if "markdown_requests_stopped" in log_data:
             # (now - restarted) + (stopped - start) = (now - start) + (stopped - restarted)
             markdown_time_delta += log_data["markdown_time_stopped"] - log_data["markdown_time_restarted"]
-            markdown_count_delta += (
-                log_data["markdown_requests_stopped"] - log_data["markdown_requests_restarted"]
-            )
+            markdown_count_delta += log_data["markdown_requests_stopped"] - log_data["markdown_requests_restarted"]
 
         if markdown_time_delta > 0.005:
             markdown_output = f" (md: {format_timedelta(markdown_time_delta)}/{markdown_count_delta})"

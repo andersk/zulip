@@ -1217,9 +1217,7 @@ class PostProcessTest(ZulipTestCase):
 
 
 class GetOldMessagesTest(ZulipTestCase):
-    def get_and_check_messages(
-        self, modified_params: Dict[str, Union[str, int]], **kwargs: Any
-    ) -> Dict[str, Any]:
+    def get_and_check_messages(self, modified_params: Dict[str, Union[str, int]], **kwargs: Any) -> Dict[str, Any]:
         post_params: Dict[str, Union[str, int]] = {"anchor": 1, "num_before": 1, "num_after": 1}
         post_params.update(modified_params)
         payload = self.client_get("/json/messages", dict(post_params), **kwargs)
@@ -1861,9 +1859,7 @@ class GetOldMessagesTest(ZulipTestCase):
         message_ids = []
         for topic, content in messages_to_search:
             message_ids.append(
-                self.send_stream_message(
-                    self.example_user("iago"), "Scotland", topic_name=topic, content=content,
-                ),
+                self.send_stream_message(self.example_user("iago"), "Scotland", topic_name=topic, content=content),
             )
         self._update_tsvector_index()
         narrow = [dict(operator="search", operand="Hogwart's")]
@@ -2005,8 +2001,7 @@ class GetOldMessagesTest(ZulipTestCase):
         )
         self.assertEqual(len(special_search_result["messages"]), 1)
         self.assertEqual(
-            special_search_result["messages"][0][MATCH_TOPIC],
-            'bread &amp; <span class="highlight">butter</span>',
+            special_search_result["messages"][0][MATCH_TOPIC], 'bread &amp; <span class="highlight">butter</span>',
         )
 
         special_search_narrow = [
@@ -2017,8 +2012,7 @@ class GetOldMessagesTest(ZulipTestCase):
         )
         self.assertEqual(len(special_search_result["messages"]), 1)
         self.assertEqual(
-            special_search_result["messages"][0][MATCH_TOPIC],
-            'bread <span class="highlight">&amp;</span> butter',
+            special_search_result["messages"][0][MATCH_TOPIC], 'bread <span class="highlight">&amp;</span> butter',
         )
         self.assertEqual(
             special_search_result["messages"][0]["match_content"],
@@ -2973,8 +2967,7 @@ WHERE user_profile_id = {hamlet_id} AND (content ILIKE '%jumping%' OR subject IL
 """
         sql = sql_template.format(**query_ids)
         self.common_check_get_messages_query(
-            {"anchor": 0, "num_before": 0, "num_after": 9, "narrow": '[["search", "\\"jumping\\" quickly"]]'},
-            sql,
+            {"anchor": 0, "num_before": 0, "num_after": 9, "narrow": '[["search", "\\"jumping\\" quickly"]]'}, sql,
         )
 
     @override_settings(USING_PGROONGA=False)

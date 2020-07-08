@@ -812,9 +812,7 @@ def apply_event(
                     user_group["members"] = list(members - set(event["user_ids"]))
                     user_group["members"].sort()
         elif event["op"] == "remove":
-            state["realm_user_groups"] = [
-                ug for ug in state["realm_user_groups"] if ug["id"] != event["group_id"]
-            ]
+            state["realm_user_groups"] = [ug for ug in state["realm_user_groups"] if ug["id"] != event["group_id"]]
     elif event["type"] == "user_status":
         user_id = event["user_id"]
         user_status = state["user_status"]

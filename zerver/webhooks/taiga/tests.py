@@ -40,7 +40,9 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("userstory_changed_unassigned", self.TOPIC, message)
 
     def test_taiga_userstory_changed_points(self) -> None:
-        message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) changed estimation of user story **UserStory**."
+        message = (
+            "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) changed estimation of user story **UserStory**."
+        )
         self.send_and_test_stream_message("userstory_changed_points", self.TOPIC, message)
 
     def test_taiga_userstory_changed_new_sprint(self) -> None:
@@ -131,9 +133,7 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("task_changed_subject", self.TOPIC, message)
 
     def test_taiga_task_changed_description(self) -> None:
-        message = (
-            "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) updated description of task **New Task**."
-        )
+        message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) updated description of task **New Task**."
         self.send_and_test_stream_message("task_changed_description", self.TOPIC, message)
 
     def test_taiga_task_deleted(self) -> None:
@@ -168,7 +168,9 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("sprint_changed_time", self.TOPIC, message)
 
     def test_taiga_sprint_changed_name(self) -> None:
-        message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) renamed sprint from New sprint to **New name**."
+        message = (
+            "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) renamed sprint from New sprint to **New name**."
+        )
         self.send_and_test_stream_message("sprint_changed_name", self.TOPIC, message)
 
     def test_taiga_issue_created(self) -> None:

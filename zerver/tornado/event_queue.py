@@ -192,10 +192,7 @@ class ClientDescriptor:
             err_msg = f"Got error finishing handler for queue {self.event_queue.id}"
             try:
                 finish_handler(
-                    self.current_handler_id,
-                    self.event_queue.id,
-                    self.event_queue.contents(),
-                    self.apply_markdown,
+                    self.current_handler_id, self.event_queue.id, self.event_queue.contents(), self.apply_markdown,
                 )
             except Exception:
                 logging.exception(err_msg)

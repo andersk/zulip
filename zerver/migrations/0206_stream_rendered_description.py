@@ -20,9 +20,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name="stream", name="rendered_description", field=models.TextField(default=""),
-        ),
+        migrations.AddField(model_name="stream", name="rendered_description", field=models.TextField(default="")),
         migrations.RunPython(
             render_all_stream_descriptions, reverse_code=migrations.RunPython.noop, elidable=True,
         ),

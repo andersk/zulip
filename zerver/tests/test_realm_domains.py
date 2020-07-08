@@ -28,10 +28,7 @@ class RealmDomainTest(ZulipTestCase):
         self.assert_json_success(result)
         received = ujson.dumps(result.json()["domains"], sort_keys=True)
         expected = ujson.dumps(
-            [
-                {"domain": "zulip.com", "allow_subdomains": False},
-                {"domain": "acme.com", "allow_subdomains": True},
-            ],
+            [{"domain": "zulip.com", "allow_subdomains": False}, {"domain": "acme.com", "allow_subdomains": True}],
             sort_keys=True,
         )
         self.assertEqual(received, expected)
@@ -55,9 +52,7 @@ class RealmDomainTest(ZulipTestCase):
         result = self.client_post("/json/realm/domains", info=data)
         self.assert_json_success(result)
         realm = get_realm("zulip")
-        self.assertTrue(
-            RealmDomain.objects.filter(realm=realm, domain="acme.com", allow_subdomains=True).exists(),
-        )
+        self.assertTrue(RealmDomain.objects.filter(realm=realm, domain="acme.com", allow_subdomains=True).exists())
 
         result = self.client_post("/json/realm/domains", info=data)
         self.assert_json_error(result, "The domain acme.com is already a part of your organization.")
@@ -80,9 +75,7 @@ class RealmDomainTest(ZulipTestCase):
         url = "/json/realm/domains/acme.com"
         result = self.client_patch(url, data)
         self.assert_json_success(result)
-        self.assertTrue(
-            RealmDomain.objects.filter(realm=realm, domain="acme.com", allow_subdomains=True).exists(),
-        )
+        self.assertTrue(RealmDomain.objects.filter(realm=realm, domain="acme.com", allow_subdomains=True).exists())
 
         url = "/json/realm/domains/non-existent.com"
         result = self.client_patch(url, data)

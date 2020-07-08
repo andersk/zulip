@@ -47,9 +47,7 @@ def export_realm(request: HttpRequest, user: UserProfile) -> HttpResponse:
             _("Please request a manual export from {email}.").format(email=settings.ZULIP_ADMINISTRATOR),
         )
 
-    row = RealmAuditLog.objects.create(
-        realm=realm, event_type=event_type, event_time=event_time, acting_user=user,
-    )
+    row = RealmAuditLog.objects.create(realm=realm, event_type=event_type, event_time=event_time, acting_user=user)
 
     # Allow for UI updates on a pending export
     notify_realm_export(user)

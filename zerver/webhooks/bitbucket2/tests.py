@@ -175,7 +175,9 @@ class Bitbucket2HookTests(WebhookTestCase):
     def test_bitbucket2_on_pull_request_approved_with_custom_topic_in_url(self) -> None:
         self.url = self.build_webhook_url(topic="notifications")
         expected_topic = "notifications"
-        expected_message = "kolaszek approved [PR #1 new commit](https://bitbucket.org/kolaszek/repository-name/pull-requests/1)."
+        expected_message = (
+            "kolaszek approved [PR #1 new commit](https://bitbucket.org/kolaszek/repository-name/pull-requests/1)."
+        )
         kwargs = {
             "HTTP_X_EVENT_KEY": "pullrequest:approved",
         }
@@ -272,9 +274,7 @@ class Bitbucket2HookTests(WebhookTestCase):
         self.send_and_test_stream_message("repo_updated", expected_topic, expected_message, **kwargs)
 
     def test_bitbucket2_on_push_one_tag_event(self) -> None:
-        expected_message = (
-            "kolaszek pushed tag [a](https://bitbucket.org/kolaszek/repository-name/commits/tag/a)."
-        )
+        expected_message = "kolaszek pushed tag [a](https://bitbucket.org/kolaszek/repository-name/commits/tag/a)."
         kwargs = {
             "HTTP_X_EVENT_KEY": "pullrequest:push",
         }
@@ -344,9 +344,7 @@ class Bitbucket2HookTests(WebhookTestCase):
         kwargs = {
             "HTTP_X_EVENT_KEY": "pullrequest:push",
         }
-        expected_message = (
-            "kolaszek pushed tag [a](https://bitbucket.org/kolaszek/repository-name/commits/tag/a)."
-        )
+        expected_message = "kolaszek pushed tag [a](https://bitbucket.org/kolaszek/repository-name/commits/tag/a)."
         self.send_and_test_stream_message(
             "more_than_one_push_event", self.EXPECTED_TOPIC, expected_message, **kwargs,
         )

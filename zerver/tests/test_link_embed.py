@@ -384,9 +384,7 @@ class PreviewTestCase(ZulipTestCase):
         self.assertIn(embedded_link, msg.rendered_content)
 
         # We don't want embedded content for bots.
-        msg = self._send_message_with_test_org_url(
-            sender=self.example_user("webhook_bot"), queue_should_run=False,
-        )
+        msg = self._send_message_with_test_org_url(sender=self.example_user("webhook_bot"), queue_should_run=False)
         self.assertNotIn(embedded_link, msg.rendered_content)
 
         # Try another human to make sure bot failure was due to the

@@ -20,7 +20,6 @@ def check_venv(filename: str) -> None:
             print("If you are using Vagrant, you can `vagrant ssh` to enter the Vagrant guest.")
         else:
             print(
-                "You can `source /srv/zulip-py3-venv/bin/activate` "
-                "to enter the Zulip development environment.",
+                "You can `source /srv/zulip-py3-venv/bin/activate` " "to enter the Zulip development environment.",
             )
         sys.exit(1)

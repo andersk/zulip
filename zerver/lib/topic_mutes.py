@@ -10,9 +10,7 @@ from zerver.models import MutedTopic, UserProfile, get_stream
 
 
 def get_topic_mutes(user_profile: UserProfile) -> List[Tuple[str, str, float]]:
-    rows = MutedTopic.objects.filter(user_profile=user_profile).values(
-        "stream__name", "topic_name", "date_muted",
-    )
+    rows = MutedTopic.objects.filter(user_profile=user_profile).values("stream__name", "topic_name", "date_muted")
     return [(row["stream__name"], row["topic_name"], datetime_to_timestamp(row["date_muted"])) for row in rows]
 
 

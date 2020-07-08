@@ -323,9 +323,7 @@ class TestGetChartData(ZulipTestCase):
         stat = COUNT_STATS["active_users_audit:is_bot:day"]
         self.insert_data(stat, ["false"], [])
         # test min_length is too short to change anything
-        result = self.client_get(
-            "/json/analytics/chart_data", {"chart_name": "number_of_humans", "min_length": 2},
-        )
+        result = self.client_get("/json/analytics/chart_data", {"chart_name": "number_of_humans", "min_length": 2})
         self.assert_json_success(result)
         data = result.json()
         self.assertEqual(data["end_times"], [datetime_to_timestamp(dt) for dt in self.end_times_day])
@@ -333,9 +331,7 @@ class TestGetChartData(ZulipTestCase):
             data["everyone"], {"_1day": self.data(100), "_15day": self.data(100), "all_time": self.data(100)},
         )
         # test min_length larger than filled data
-        result = self.client_get(
-            "/json/analytics/chart_data", {"chart_name": "number_of_humans", "min_length": 5},
-        )
+        result = self.client_get("/json/analytics/chart_data", {"chart_name": "number_of_humans", "min_length": 5})
         self.assert_json_success(result)
         data = result.json()
         end_times = [ceiling_to_day(self.realm.date_created) + timedelta(days=i) for i in range(-1, 4)]
@@ -559,9 +555,7 @@ class TestSupportEndpoint(ZulipTestCase):
         self.login("iago")
 
         result = self.client_get("/activity/support")
-        self.assert_in_success_response(
-            ['<input type="text" name="q" class="input-xxlarge search-query"'], result,
-        )
+        self.assert_in_success_response(['<input type="text" name="q" class="input-xxlarge search-query"'], result)
 
         result = self.client_get("/activity/support", {"q": "hamlet@zulip.com"})
         check_hamlet_user_query_result(result)
@@ -637,9 +631,7 @@ class TestSupportEndpoint(ZulipTestCase):
         with mock.patch("analytics.views.do_change_plan_type") as m:
             result = self.client_post("/activity/support", {"realm_id": f"{iago.realm_id}", "plan_type": "2"})
             m.assert_called_once_with(get_realm("zulip"), 2)
-            self.assert_in_success_response(
-                ["Plan type of Zulip Dev changed from self hosted to limited"], result,
-            )
+            self.assert_in_success_response(["Plan type of Zulip Dev changed from self hosted to limited"], result)
 
     def test_attach_discount(self) -> None:
         cordelia = self.example_user("cordelia")
@@ -781,9 +773,7 @@ class TestTimeRange(ZulipTestCase):
         self.assertEqual(
             time_range(floor_hour, floor_hour + HOUR, CountStat.HOUR, None), [floor_hour, floor_hour + HOUR],
         )
-        self.assertEqual(
-            time_range(floor_day, floor_day + DAY, CountStat.DAY, None), [floor_day, floor_day + DAY],
-        )
+        self.assertEqual(time_range(floor_day, floor_day + DAY, CountStat.DAY, None), [floor_day, floor_day + DAY])
         # test min_length
         self.assertEqual(
             time_range(floor_hour, floor_hour + HOUR, CountStat.HOUR, 4),

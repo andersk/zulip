@@ -290,9 +290,7 @@ def do_convert_data(gitter_data_file: str, output_dir: str, threads: int = 6) ->
     with open(gitter_data_file) as fp:
         gitter_data = ujson.load(fp)
 
-    realm, avatar_list, user_map, stream_map = gitter_workspace_to_realm(
-        domain_name, gitter_data, realm_subdomain,
-    )
+    realm, avatar_list, user_map, stream_map = gitter_workspace_to_realm(domain_name, gitter_data, realm_subdomain)
 
     subscriber_map = make_subscriber_map(zerver_subscription=realm["zerver_subscription"])
 

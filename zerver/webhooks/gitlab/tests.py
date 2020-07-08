@@ -257,9 +257,7 @@ class GitlabHookTests(WebhookTestCase):
         expected_subject = "Test / Issue #3 Test"
         expected_message = "Joe Bloggs [commented](https://gitlab.com/joebloggs/test/issues/3#note_101638770) on [Issue #3](https://gitlab.com/joebloggs/test/issues/3):\n\n~~~ quote\nTest\n~~~"
 
-        self.send_and_test_stream_message(
-            "note_hook__confidential_issue_note", expected_subject, expected_message,
-        )
+        self.send_and_test_stream_message("note_hook__confidential_issue_note", expected_subject, expected_message)
 
     def test_note_issue_with_custom_topic_in_url(self) -> None:
         self.url = self.build_webhook_url(topic="notifications")

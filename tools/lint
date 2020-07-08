@@ -17,9 +17,7 @@ from linter_lib.custom_check import non_py_rules, python_rules
 
 def run() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--force", default=False, action="store_true", help="Run tests despite possible problems.",
-    )
+    parser.add_argument("--force", default=False, action="store_true", help="Run tests despite possible problems.")
     parser.add_argument("--full", action="store_true", help="Check some things we typically ignore")
     add_default_linter_arguments(parser)
     args = parser.parse_args()
@@ -91,10 +89,7 @@ def run() -> None:
         description="Validates our OpenAPI/Swagger API documentation" "(zerver/openapi/zulip.yaml) ",
     )
     linter_config.external_linter(
-        "shellcheck",
-        ["shellcheck", "-x", "-P", "SCRIPTDIR"],
-        ["sh"],
-        description="Standard shell script linter.",
+        "shellcheck", ["shellcheck", "-x", "-P", "SCRIPTDIR"], ["sh"], description="Standard shell script linter.",
     )
     command = ["tools/run-mypy", "--quiet"]
     if args.force:

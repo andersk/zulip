@@ -214,9 +214,7 @@ class AddNewUserHistoryTest(ZulipTestCase):
         # Our first message is in the user's history
         self.assertTrue(UserMessage.objects.filter(user_profile=user_profile, message_id=message_id).exists())
         # The race message is in the user's history and marked unread.
-        self.assertTrue(
-            UserMessage.objects.filter(user_profile=user_profile, message_id=race_message_id).exists(),
-        )
+        self.assertTrue(UserMessage.objects.filter(user_profile=user_profile, message_id=race_message_id).exists())
         self.assertFalse(
             UserMessage.objects.get(user_profile=user_profile, message_id=race_message_id).flags.read.is_set,
         )
@@ -1831,9 +1829,7 @@ class InvitationsTestCase(InviteUserBase):
         self.login("iago")
 
         zulip_realm = get_realm("zulip")
-        multiuse_invite = MultiuseInvite.objects.create(
-            referred_by=self.example_user("hamlet"), realm=zulip_realm,
-        )
+        multiuse_invite = MultiuseInvite.objects.create(referred_by=self.example_user("hamlet"), realm=zulip_realm)
         create_confirmation_link(multiuse_invite, Confirmation.MULTIUSE_INVITE)
         result = self.client_delete("/json/invites/multiuse/" + str(multiuse_invite.id))
         self.assertEqual(result.status_code, 200)
@@ -2503,11 +2499,7 @@ class RealmCreationTest(ZulipTestCase):
         self.assertEqual(result.status_code, 200)
 
         result = self.submit_reg_form_for_user(
-            email,
-            password,
-            realm_subdomain=string_id,
-            realm_name=realm_name,
-            HTTP_HOST=string_id + ".testserver",
+            email, password, realm_subdomain=string_id, realm_name=realm_name, HTTP_HOST=string_id + ".testserver",
         )
         self.assertEqual(result.status_code, 302)
 

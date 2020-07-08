@@ -584,8 +584,7 @@ class SlackImporter(ZulipTestCase):
 
     @mock.patch("zerver.data_import.slack.users_to_zerver_userprofile", return_value=[[], [], {}, [], []])
     @mock.patch(
-        "zerver.data_import.slack.channels_to_zerver_stream",
-        return_value=[{"zerver_stream": []}, {}, {}, {}, {}],
+        "zerver.data_import.slack.channels_to_zerver_stream", return_value=[{"zerver_stream": []}, {}, {}, {}, {}],
     )
     def test_slack_workspace_to_realm(
         self, mock_channels_to_zerver_stream: mock.Mock, mock_users_to_zerver_userprofile: mock.Mock,

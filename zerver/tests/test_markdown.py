@@ -511,9 +511,7 @@ class MarkdownTest(ZulipTestCase):
         msg = "https://vimeo.com/246979354"
         converted = markdown_convert_wrapper(msg)
 
-        self.assertEqual(
-            converted, '<p><a href="https://vimeo.com/246979354">https://vimeo.com/246979354</a></p>',
-        )
+        self.assertEqual(converted, '<p><a href="https://vimeo.com/246979354">https://vimeo.com/246979354</a></p>')
 
     @override_settings(INLINE_IMAGE_PREVIEW=True)
     def test_inline_image_thumbnail_url(self) -> None:
@@ -1026,9 +1024,7 @@ class MarkdownTest(ZulipTestCase):
         msg = Message(sender=self.example_user("hamlet"))
         converted = markdown_convert(":green_tick:", message_realm=realm, message=msg)
         realm_emoji = RealmEmoji.objects.filter(realm=realm, name="green_tick", deactivated=False).get()
-        self.assertEqual(
-            converted, "<p>{}</p>".format(emoji_img(":green_tick:", realm_emoji.file_name, realm.id)),
-        )
+        self.assertEqual(converted, "<p>{}</p>".format(emoji_img(":green_tick:", realm_emoji.file_name, realm.id)))
 
         # Deactivate realm emoji.
         do_remove_realm_emoji(realm, "green_tick")

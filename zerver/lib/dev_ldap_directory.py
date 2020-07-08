@@ -23,9 +23,7 @@ def generate_dev_ldap_dir(mode: str, num_users: int = 8) -> Dict[str, Dict[str, 
         birthdate = f"19{i:02}-{i:02}-{i:02}"
         ldap_data.append((name, email, phone_number, birthdate))
 
-    profile_images = [
-        open(path, "rb").read() for path in glob.glob(os.path.join(static_path("images/team"), "*"))
-    ]
+    profile_images = [open(path, "rb").read() for path in glob.glob(os.path.join(static_path("images/team"), "*"))]
     ldap_dir = {}
     for i, user_data in enumerate(ldap_data):
         email = user_data[1].lower()
@@ -78,6 +76,4 @@ def init_fakeldap(directory: Optional[Dict[str, Dict[str, List[str]]]] = None) -
     mock_ldap = MockLDAP()
     mock_initialize.return_value = mock_ldap
 
-    mock_ldap.directory = directory or generate_dev_ldap_dir(
-        settings.FAKE_LDAP_MODE, settings.FAKE_LDAP_NUM_USERS,
-    )
+    mock_ldap.directory = directory or generate_dev_ldap_dir(settings.FAKE_LDAP_MODE, settings.FAKE_LDAP_NUM_USERS)

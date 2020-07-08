@@ -667,9 +667,7 @@ class ZulipTestCase(TestCase):
             print(f"\nexpected length: {count}\nactual length: {actual_count}")
             raise AssertionError("List is unexpected size!")
 
-    def assert_json_error_contains(
-        self, result: HttpResponse, msg_substring: str, status_code: int = 400,
-    ) -> None:
+    def assert_json_error_contains(self, result: HttpResponse, msg_substring: str, status_code: int = 400) -> None:
         self.assertIn(msg_substring, self.get_json_error(result, status_code=status_code))
 
     def assert_in_response(self, substring: str, response: HttpResponse) -> None:

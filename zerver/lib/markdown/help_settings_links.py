@@ -23,11 +23,7 @@ link_mapping = {
     "alert-words": ["Settings", "Alert words", "/#settings/alert-words"],
     "uploaded-files": ["Settings", "Uploaded files", "/#settings/uploaded-files"],
     "muted-topics": ["Settings", "Muted topics", "/#settings/muted-topics"],
-    "organization-profile": [
-        "Manage organization",
-        "Organization profile",
-        "/#organization/organization-profile",
-    ],
+    "organization-profile": ["Manage organization", "Organization profile", "/#organization/organization-profile"],
     "organization-settings": [
         "Manage organization",
         "Organization settings",

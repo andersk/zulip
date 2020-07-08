@@ -500,9 +500,7 @@ class ImportExportTest(ZulipTestCase):
         create_stream_if_needed(realm, "Private C", invite_only=True)
         self.subscribe(self.example_user("othello"), "Private C")
         self.subscribe(self.example_user("prospero"), "Private C")
-        stream_c_message_id = self.send_stream_message(
-            self.example_user("othello"), "Private C", "Hello Stream C",
-        )
+        stream_c_message_id = self.send_stream_message(self.example_user("othello"), "Private C", "Hello Stream C")
 
         # Create huddles
         self.send_huddle_message(
@@ -582,9 +580,7 @@ class ImportExportTest(ZulipTestCase):
         private_stream_ids = Stream.objects.filter(name__in=["Private A", "Private B"]).values_list(
             "id", flat=True,
         )
-        private_stream_recipients = Recipient.objects.filter(
-            type_id__in=private_stream_ids, type=Recipient.STREAM,
-        )
+        private_stream_recipients = Recipient.objects.filter(type_id__in=private_stream_ids, type=Recipient.STREAM)
         private_stream_message_ids = Message.objects.filter(recipient__in=private_stream_recipients).values_list(
             "id", flat=True,
         )
@@ -596,9 +592,7 @@ class ImportExportTest(ZulipTestCase):
         )
 
         # Third huddle is not exported since none of the members gave consent
-        huddle_recipients = Recipient.objects.filter(
-            type_id__in=[huddle_a.id, huddle_b.id], type=Recipient.HUDDLE,
-        )
+        huddle_recipients = Recipient.objects.filter(type_id__in=[huddle_a.id, huddle_b.id], type=Recipient.HUDDLE)
         pm_query = Q(recipient__in=huddle_recipients) | Q(sender__in=consented_user_ids)
         exported_huddle_ids = (
             Message.objects.filter(pm_query).values_list("id", flat=True).values_list("id", flat=True)

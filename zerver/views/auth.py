@@ -763,9 +763,7 @@ def login_page(request: HttpRequest, next: str = REQ(default="/"), **kwargs: Any
     return template_response
 
 
-def start_two_factor_auth(
-    request: HttpRequest, extra_context: ExtraContext = None, **kwargs: Any
-) -> HttpResponse:
+def start_two_factor_auth(request: HttpRequest, extra_context: ExtraContext = None, **kwargs: Any) -> HttpResponse:
     two_fa_form_field = "two_factor_login_view-current_step"
     if two_fa_form_field not in request.POST:
         # Here we inject the 2FA step in the request context if it's missing to
@@ -858,9 +856,7 @@ def api_dev_list_users(request: HttpRequest) -> HttpResponse:
     users = get_dev_users()
     return json_success(
         dict(
-            direct_admins=[
-                dict(email=u.delivery_email, realm_uri=u.realm.uri) for u in users if u.is_realm_admin
-            ],
+            direct_admins=[dict(email=u.delivery_email, realm_uri=u.realm.uri) for u in users if u.is_realm_admin],
             direct_users=[
                 dict(email=u.delivery_email, realm_uri=u.realm.uri) for u in users if not u.is_realm_admin
             ],
@@ -983,9 +979,7 @@ def json_fetch_api_key(
     subdomain = get_subdomain(request)
     realm = get_realm(subdomain)
     if password_auth_enabled(user_profile.realm):
-        if not authenticate(
-            request=request, username=user_profile.delivery_email, password=password, realm=realm,
-        ):
+        if not authenticate(request=request, username=user_profile.delivery_email, password=password, realm=realm):
             return json_error(_("Your username or password is incorrect."))
 
     api_key = get_api_key(user_profile)

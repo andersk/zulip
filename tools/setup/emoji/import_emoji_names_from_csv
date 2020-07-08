@@ -22,15 +22,11 @@ ACTIVE_ENTRY = (
 )
 
 INACTIVE_ENTRY = (
-    "%(explanation)s"
-    "\n    # '%(emoji_code)s': {'canonical_name': '%(canonical_name)s', 'aliases': %(aliases)s},"
+    "%(explanation)s" "\n    # '%(emoji_code)s': {'canonical_name': '%(canonical_name)s', 'aliases': %(aliases)s},"
 )
 
 FILE_TEMPLATE = (
-    "from typing import Any, Dict\n\n"
-    "EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {"
-    "%(emoji_entries)s\n"
-    "}\n"
+    "from typing import Any, Dict\n\n" "EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {" "%(emoji_entries)s\n" "}\n"
 )
 
 emoji_names: Set[str] = set()

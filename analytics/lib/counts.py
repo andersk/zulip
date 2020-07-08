@@ -48,11 +48,7 @@ class CountStat:
     FREQUENCIES = frozenset([HOUR, DAY])
 
     def __init__(
-        self,
-        property: str,
-        data_collector: "DataCollector",
-        frequency: str,
-        interval: Optional[timedelta] = None,
+        self, property: str, data_collector: "DataCollector", frequency: str, interval: Optional[timedelta] = None,
     ) -> None:
         self.property = property
         self.data_collector = data_collector

@@ -38,9 +38,7 @@ def fix_messages(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
         return
 
     def get_bot_by_delivery_email(email: str) -> Any:
-        return UserProfile.objects.select_related().get(
-            delivery_email__iexact=email.strip(), realm=internal_realm,
-        )
+        return UserProfile.objects.select_related().get(delivery_email__iexact=email.strip(), realm=internal_realm)
 
     notification_bot = get_bot_by_delivery_email(settings.NOTIFICATION_BOT)
 

@@ -103,9 +103,7 @@ def ts_locs_array(config: ColumnElement, text: ColumnElement, tsquery: ColumnEle
     part_len = func.length(part) - len(TS_STOP)
     match_pos = func.sum(part_len).over(rows=(None, -1)) + len(TS_STOP)
     match_len = func.strpos(part, TS_STOP) - 1
-    return func.array(
-        select([postgresql.array([match_pos, match_len])]).select_from(parts).offset(1).as_scalar(),
-    )
+    return func.array(select([postgresql.array([match_pos, match_len])]).select_from(parts).offset(1).as_scalar())
 
 
 # When you add a new operator to this, also update zerver/lib/narrow.py
@@ -1146,8 +1144,6 @@ def messages_in_narrow_backend(
             topic_matches = row["topic_matches"]
         else:
             content_matches = topic_matches = []
-        search_fields[message_id] = get_search_fields(
-            rendered_content, topic_name, content_matches, topic_matches,
-        )
+        search_fields[message_id] = get_search_fields(rendered_content, topic_name, content_matches, topic_matches)
 
     return json_success({"messages": search_fields})

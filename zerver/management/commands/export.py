@@ -108,9 +108,7 @@ class Command(ZulipBaseCommand):
             help="ID of the message advertising users to react with thumbs up",
         )
         parser.add_argument(
-            "--upload",
-            action="store_true",
-            help="Whether to upload resulting tarball to s3 or LOCAL_UPLOADS_DIR",
+            "--upload", action="store_true", help="Whether to upload resulting tarball to s3 or LOCAL_UPLOADS_DIR",
         )
         parser.add_argument(
             "--delete-after-upload",

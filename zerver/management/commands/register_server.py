@@ -48,8 +48,7 @@ class Command(ZulipBaseCommand):
                 settings.PUSH_NOTIFICATION_BOUNCER_URL = settings.EXTERNAL_URI_SCHEME + settings.EXTERNAL_HOST
             else:
                 raise CommandError(
-                    "Please uncomment PUSH_NOTIFICATION_BOUNCER_URL "
-                    "in /etc/zulip/settings.py (remove the '#')",
+                    "Please uncomment PUSH_NOTIFICATION_BOUNCER_URL " "in /etc/zulip/settings.py (remove the '#')",
                 )
 
         request = {

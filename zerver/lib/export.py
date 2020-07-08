@@ -1003,9 +1003,9 @@ def export_partial_message_files(
 
     if public_only:
         recipient_streams = Stream.objects.filter(realm=realm, invite_only=False)
-        recipient_ids = Recipient.objects.filter(
-            type=Recipient.STREAM, type_id__in=recipient_streams,
-        ).values_list("id", flat=True)
+        recipient_ids = Recipient.objects.filter(type=Recipient.STREAM, type_id__in=recipient_streams).values_list(
+            "id", flat=True,
+        )
         recipient_ids_for_us = get_ids(response["zerver_recipient"]) & set(recipient_ids)
     elif consent_message_id is not None:
         public_streams = Stream.objects.filter(realm=realm, invite_only=False)
@@ -1013,9 +1013,9 @@ def export_partial_message_files(
             type=Recipient.STREAM, type_id__in=public_streams,
         ).values_list("id", flat=True)
 
-        consented_recipient_ids = Subscription.objects.filter(
-            user_profile__id__in=consented_user_ids,
-        ).values_list("recipient_id", flat=True)
+        consented_recipient_ids = Subscription.objects.filter(user_profile__id__in=consented_user_ids).values_list(
+            "recipient_id", flat=True,
+        )
 
         recipient_ids = set(public_stream_recipient_ids) | set(consented_recipient_ids)
         recipient_ids_for_us = get_ids(response["zerver_recipient"]) & recipient_ids
@@ -1554,9 +1554,7 @@ def do_export_realm(
     export_attachment_table(realm=realm, output_dir=output_dir, message_ids=message_ids)
 
     # Start parallel jobs to export the UserMessage objects.
-    launch_user_message_subprocesses(
-        threads=threads, output_dir=output_dir, consent_message_id=consent_message_id,
-    )
+    launch_user_message_subprocesses(threads=threads, output_dir=output_dir, consent_message_id=consent_message_id)
 
     logging.info("Finished exporting %s", realm.string_id)
     create_soft_link(source=output_dir, in_progress=False)

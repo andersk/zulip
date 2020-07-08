@@ -775,15 +775,11 @@ def do_convert_data(mattermost_data_dir: str, output_dir: str, masking_content: 
         realm["zerver_recipient"] = zerver_recipient
 
         stream_subscriptions = build_stream_subscriptions(
-            get_users=subscriber_handler.get_users,
-            zerver_recipient=zerver_recipient,
-            zerver_stream=zerver_stream,
+            get_users=subscriber_handler.get_users, zerver_recipient=zerver_recipient, zerver_stream=zerver_stream,
         )
 
         huddle_subscriptions = build_huddle_subscriptions(
-            get_users=subscriber_handler.get_users,
-            zerver_recipient=zerver_recipient,
-            zerver_huddle=zerver_huddle,
+            get_users=subscriber_handler.get_users, zerver_recipient=zerver_recipient, zerver_huddle=zerver_huddle,
         )
 
         personal_subscriptions = build_personal_subscriptions(zerver_recipient=zerver_recipient)

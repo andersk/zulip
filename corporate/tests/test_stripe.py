@@ -1246,9 +1246,7 @@ class StripeTest(StripeTestCase):
                 del_args = []
                 upgrade_params["licenses"] = licenses
             with patch("corporate.views.process_initial_upgrade"):
-                response = self.upgrade(
-                    invoice=invoice, talk_to_stripe=False, del_args=del_args, **upgrade_params,
-                )
+                response = self.upgrade(invoice=invoice, talk_to_stripe=False, del_args=del_args, **upgrade_params)
             self.assert_json_success(response)
 
         hamlet = self.example_user("hamlet")
@@ -2114,9 +2112,7 @@ class RequiresBillingAccessTest(ZulipTestCase):
         # Make sure that we are testing all the JSON endpoints
         # Quite a hack, but probably fine for now
         string_with_all_endpoints = str(get_resolver("corporate.urls").reverse_dict)
-        json_endpoints = {
-            word.strip("\"'()[],$") for word in string_with_all_endpoints.split() if "json/" in word
-        }
+        json_endpoints = {word.strip("\"'()[],$") for word in string_with_all_endpoints.split() if "json/" in word}
         # No need to test upgrade and sponsorship endpoints as they only require user to be logged in.
         json_endpoints.remove("json/billing/upgrade")
         json_endpoints.remove("json/billing/sponsorship")
@@ -2378,9 +2374,7 @@ class LicenseLedgerTest(StripeTestCase):
         # Not a proper use of do_activate_user, but fine for this test
         do_activate_user(user)
         ledger_entries = list(
-            LicenseLedger.objects.values_list("is_renewal", "licenses", "licenses_at_next_renewal").order_by(
-                "id",
-            ),
+            LicenseLedger.objects.values_list("is_renewal", "licenses", "licenses_at_next_renewal").order_by("id"),
         )
         self.assertEqual(
             ledger_entries,

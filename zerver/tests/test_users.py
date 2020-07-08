@@ -604,11 +604,7 @@ class PermissionTest(ZulipTestCase):
 
         # Test admin user cannot set invalid profile data
         invalid_fields = [
-            (
-                "Favorite editor",
-                "invalid choice",
-                "'invalid choice' is not a valid choice for 'Favorite editor'.",
-            ),
+            ("Favorite editor", "invalid choice", "'invalid choice' is not a valid choice for 'Favorite editor'."),
             ("Birthday", "1909-34-55", "Birthday is not a date"),
             ("Favorite website", "not url", "Favorite website is not a URL"),
             ("Mentor", "not list of user ids", "User IDs is not a list"),
@@ -646,9 +642,7 @@ class PermissionTest(ZulipTestCase):
             if field.field_type == CustomProfileField.USER:
                 value = []
             empty_profile_data.append({"id": field.id, "value": value})
-        result = self.client_patch(
-            f"/json/users/{cordelia.id}", {"profile_data": ujson.dumps(empty_profile_data)},
-        )
+        result = self.client_patch(f"/json/users/{cordelia.id}", {"profile_data": ujson.dumps(empty_profile_data)})
         self.assert_json_success(result)
         for field_dict in cordelia.profile_data:
             with self.subTest(field_name=field_dict["name"]):
@@ -925,9 +919,7 @@ class UserProfileTest(ZulipTestCase):
     def test_get_accounts_for_email(self) -> None:
         reset_emails_in_zulip_realm()
 
-        def check_account_present_in_accounts(
-            user: UserProfile, accounts: List[Dict[str, Optional[str]]],
-        ) -> None:
+        def check_account_present_in_accounts(user: UserProfile, accounts: List[Dict[str, Optional[str]]]) -> None:
             for account in accounts:
                 realm = user.realm
                 if (

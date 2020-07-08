@@ -1234,8 +1234,7 @@ class TestEmailMirrorTornadoView(ZulipTestCase):
         result = self.send_offline_message(stream_to_address, self.example_user("hamlet"))
         self.assert_json_error(
             result,
-            "5.1.1 Bad destination mailbox address: "
-            "Bad stream token from email recipient " + stream_to_address,
+            "5.1.1 Bad destination mailbox address: " "Bad stream token from email recipient " + stream_to_address,
         )
 
     def test_success_to_stream_with_good_token_wrong_stream_name(self) -> None:

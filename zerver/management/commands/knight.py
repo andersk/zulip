@@ -24,11 +24,7 @@ ONLY perform this on customer request from an authorized person.
             help="Acknowledgement that this is done according to policy.",
         )
         parser.add_argument(
-            "--revoke",
-            dest="grant",
-            action="store_false",
-            default=True,
-            help="Remove an administrator's rights.",
+            "--revoke", dest="grant", action="store_false", default=True, help="Remove an administrator's rights.",
         )
         parser.add_argument(
             "--permission",

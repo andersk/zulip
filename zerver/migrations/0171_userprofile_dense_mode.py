@@ -10,7 +10,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name="userprofile", name="dense_mode", field=models.BooleanField(default=True),
-        ),
+        migrations.AddField(model_name="userprofile", name="dense_mode", field=models.BooleanField(default=True)),
     ]

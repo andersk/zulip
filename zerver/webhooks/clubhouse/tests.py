@@ -77,9 +77,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
         expected_message = (
             "Description for the story [Add cool feature!](https://app.clubhouse.io/zulip/story/11) was removed."
         )
-        self.send_and_test_stream_message(
-            "story_update_remove_description", "Add cool feature!", expected_message,
-        )
+        self.send_and_test_stream_message("story_update_remove_description", "Add cool feature!", expected_message)
 
     def test_story_update_change_description(self) -> None:
         expected_message = "Description for the story [Add cool feature!](https://app.clubhouse.io/zulip/story/11) was changed from:\n``` quote\nWe should probably add this cool feature!\n```\nto\n``` quote\nWe should probably add this cool feature! Just edited this. :)\n```"
@@ -99,9 +97,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
 
     def test_story_update_change_name(self) -> None:
         expected_message = "The name of the story [Add super cool feature!](https://app.clubhouse.io/zulip/story/11) was changed from:\n``` quote\nAdd cool feature!\n```\nto\n``` quote\nAdd super cool feature!\n```"
-        self.send_and_test_stream_message(
-            "story_update_change_title", "Add super cool feature!", expected_message,
-        )
+        self.send_and_test_stream_message("story_update_change_title", "Add super cool feature!", expected_message)
 
     def test_story_update_add_owner(self) -> None:
         expected_message = (

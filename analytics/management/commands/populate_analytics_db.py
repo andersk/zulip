@@ -114,9 +114,7 @@ class Command(BaseCommand):
             for subgroup, values in fixture_data.items():
                 table.objects.bulk_create(
                     [
-                        table(
-                            property=stat.property, subgroup=subgroup, end_time=end_time, value=value, **id_args,
-                        )
+                        table(property=stat.property, subgroup=subgroup, end_time=end_time, value=value, **id_args)
                         for end_time, value in zip(end_times, values)
                         if value != 0
                     ],

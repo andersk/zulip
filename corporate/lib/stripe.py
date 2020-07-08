@@ -194,8 +194,7 @@ def catch_stripe_errors(func: CallableT) -> CallableT:
                 raise StripeCardError("card error", err.get("message"))
             if isinstance(e, (stripe.error.RateLimitError, stripe.error.APIConnectionError)):  # nocoverage TODO
                 raise StripeConnectionError(
-                    "stripe connection error",
-                    _("Something went wrong. Please wait a few seconds and try again."),
+                    "stripe connection error", _("Something went wrong. Please wait a few seconds and try again."),
                 )
             raise BillingError("other stripe error", BillingError.CONTACT_SUPPORT)
 
@@ -244,9 +243,7 @@ def do_create_stripe_customer(user: UserProfile, stripe_token: Optional[str] = N
 
 
 @catch_stripe_errors
-def do_replace_payment_source(
-    user: UserProfile, stripe_token: str, pay_invoices: bool = False,
-) -> stripe.Customer:
+def do_replace_payment_source(user: UserProfile, stripe_token: str, pay_invoices: bool = False) -> stripe.Customer:
     customer = get_customer_by_realm(user.realm)
     assert customer is not None  # for mypy
 

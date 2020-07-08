@@ -32,9 +32,7 @@ class Migration(migrations.Migration):
                 ("value", models.TextField()),
                 (
                     "field",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="zerver.CustomProfileField",
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.CustomProfileField"),
                 ),
                 (
                     "user_profile",

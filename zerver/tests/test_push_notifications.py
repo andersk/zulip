@@ -88,10 +88,7 @@ class BouncerTestCase(ZulipTestCase):
     def setUp(self) -> None:
         self.server_uuid = "1234-abcd"
         server = RemoteZulipServer(
-            uuid=self.server_uuid,
-            api_key="magic_secret_api_key",
-            hostname="demo.example.com",
-            last_updated=now(),
+            uuid=self.server_uuid, api_key="magic_secret_api_key", hostname="demo.example.com", last_updated=now(),
         )
         server.save()
         super().setUp()
@@ -161,9 +158,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
         self.assert_json_error(result, "Missing 'token_kind' argument")
         result = self.uuid_post(self.server_uuid, endpoint, {"token": token, "token_kind": token_kind})
         self.assert_json_error(result, "Missing 'user_id' argument")
-        result = self.uuid_post(
-            self.server_uuid, endpoint, {"user_id": user_id, "token": token, "token_kind": 17},
-        )
+        result = self.uuid_post(self.server_uuid, endpoint, {"user_id": user_id, "token": token, "token_kind": 17})
         self.assert_json_error(result, "Invalid token type")
 
         hamlet = self.example_user("hamlet")

@@ -32,10 +32,7 @@ class FrontHookTests(WebhookTestCase):
         )
 
         self.send_and_test_stream_message(
-            "outbound_message",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "outbound_message", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_conversation_archived(self) -> None:

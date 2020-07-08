@@ -45,9 +45,7 @@ class SubscriberHandler:
         self.stream_info: Dict[int, Set[int]] = dict()
         self.huddle_info: Dict[int, Set[int]] = dict()
 
-    def set_info(
-        self, users: Set[int], stream_id: Optional[int] = None, huddle_id: Optional[int] = None,
-    ) -> None:
+    def set_info(self, users: Set[int], stream_id: Optional[int] = None, huddle_id: Optional[int] = None) -> None:
         if stream_id is not None:
             self.stream_info[stream_id] = users
         elif huddle_id is not None:
@@ -334,9 +332,7 @@ def build_realm(zerver_realm: List[ZerverFieldsT], realm_id: int, domain_name: s
         zerver_customprofilefieldvalue=[],
         zerver_userpresence=[],  # shows last logged in data, which is not available
         zerver_userprofile_mirrordummy=[],
-        zerver_realmdomain=[
-            {"realm": realm_id, "allow_subdomains": False, "domain": domain_name, "id": realm_id},
-        ],
+        zerver_realmdomain=[{"realm": realm_id, "allow_subdomains": False, "domain": domain_name, "id": realm_id}],
         zerver_useractivity=[],
         zerver_realm=zerver_realm,
         zerver_huddle=[],
