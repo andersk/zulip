@@ -21,12 +21,7 @@ Create default stream groups which the users can choose during sign up.
         )
 
         parser.add_argument(
-            "-d",
-            "--description",
-            dest="description",
-            type=str,
-            required=True,
-            help="Description of the group.",
+            "-d", "--description", dest="description", type=str, required=True, help="Description of the group.",
         )
 
         parser.add_argument(

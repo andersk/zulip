@@ -1301,9 +1301,7 @@ class StripeTest(StripeTestCase):
         self.assert_json_error_contains(
             response, "Something went wrong. Please contact desdemona+admin@zulip.com.",
         )
-        self.assertEqual(
-            ujson.loads(response.content)["error_description"], "uncaught exception during upgrade",
-        )
+        self.assertEqual(ujson.loads(response.content)["error_description"], "uncaught exception during upgrade")
 
     def test_request_sponsorship(self) -> None:
         user = self.example_user("hamlet")
@@ -1750,10 +1748,7 @@ class StripeTest(StripeTestCase):
             "quantity": 14,
             "subscription": None,
             "discountable": False,
-            "period": {
-                "start": datetime_to_timestamp(self.now),
-                "end": datetime_to_timestamp(self.next_month),
-            },
+            "period": {"start": datetime_to_timestamp(self.now), "end": datetime_to_timestamp(self.next_month)},
         }
         for key, value in monthly_plan_invoice_item_params.items():
             self.assertEqual(monthly_plan_invoice_items[0][key], value)
@@ -2445,9 +2440,7 @@ class InvoiceTest(StripeTestCase):
         plan = CustomerPlan.objects.first()
         invoice_plan(plan, self.now + timedelta(days=400))
 
-        stripe_invoices = [
-            invoice for invoice in stripe.Invoice.list(customer=plan.customer.stripe_customer_id)
-        ]
+        stripe_invoices = [invoice for invoice in stripe.Invoice.list(customer=plan.customer.stripe_customer_id)]
         self.assertEqual(len(stripe_invoices), 2)
         self.assertIsNotNone(stripe_invoices[0].status_transitions.finalized_at)
         stripe_line_items = [item for item in stripe_invoices[0].lines]
@@ -2501,9 +2494,7 @@ class InvoiceTest(StripeTestCase):
         plan.price_per_license = 0
         plan.save(update_fields=["fixed_price", "price_per_license"])
         invoice_plan(plan, self.next_year)
-        stripe_invoices = [
-            invoice for invoice in stripe.Invoice.list(customer=plan.customer.stripe_customer_id)
-        ]
+        stripe_invoices = [invoice for invoice in stripe.Invoice.list(customer=plan.customer.stripe_customer_id)]
         self.assertEqual(len(stripe_invoices), 2)
         self.assertEqual(stripe_invoices[0].billing, "send_invoice")
         stripe_line_items = [item for item in stripe_invoices[0].lines]

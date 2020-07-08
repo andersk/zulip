@@ -28,8 +28,7 @@ class MITNameTest(ZulipTestCase):
                 compute_mit_user_fullname(self.mit_email("starnine")), "Athena Consulting Exchange User",
             )
         with mock.patch(
-            "DNS.dnslookup",
-            return_value=[["sipbexch:*:87824:101:Exch Sipb,,,:/mit/sipbexch:/bin/athena/bash"]],
+            "DNS.dnslookup", return_value=[["sipbexch:*:87824:101:Exch Sipb,,,:/mit/sipbexch:/bin/athena/bash"]],
         ):
             self.assertEqual(compute_mit_user_fullname("sipbexch@mit.edu"), "Exch Sipb")
 

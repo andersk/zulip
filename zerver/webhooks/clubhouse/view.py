@@ -35,17 +35,13 @@ STORY_EPIC_CHANGED_TEMPLATE = (
 STORY_ESTIMATE_TEMPLATE = "The estimate for the story {story_name_template} was set to {estimate}."
 FILE_ATTACHMENT_TEMPLATE = "A {type} attachment `{file_name}` was added to the story {name_template}."
 STORY_LABEL_TEMPLATE = "The label **{label_name}** was added to the story {name_template}."
-STORY_UPDATE_PROJECT_TEMPLATE = (
-    "The story {name_template} was moved from" " the **{old}** project to **{new}**."
-)
+STORY_UPDATE_PROJECT_TEMPLATE = "The story {name_template} was moved from" " the **{old}** project to **{new}**."
 STORY_UPDATE_TYPE_TEMPLATE = (
     "The type of the story {name_template} was changed" " from **{old_type}** to **{new_type}**."
 )
 DELETE_TEMPLATE = "The {entity_type} **{name}** was deleted."
 STORY_UPDATE_OWNER_TEMPLATE = "New owner added to the story {name_template}."
-STORY_GITHUB_PR_TEMPLATE = (
-    "New GitHub PR [#{name}]({url}) opened for story" " {name_template} ({old} -> {new})."
-)
+STORY_GITHUB_PR_TEMPLATE = "New GitHub PR [#{name}]({url}) opened for story" " {name_template} ({old} -> {new})."
 STORY_GITHUB_BRANCH_TEMPLATE = (
     "New GitHub branch [{name}]({url})" " associated with story {name_template} ({old} -> {new})."
 )
@@ -142,9 +138,7 @@ def get_comment_added_body(payload: Dict[str, Any], entity: str) -> str:
         if action["id"] == payload["primary_id"]:
             kwargs["text"] = action["text"]
         elif action["entity_type"] == entity:
-            name_template = get_name_template(entity).format(
-                name=action["name"], app_url=action.get("app_url"),
-            )
+            name_template = get_name_template(entity).format(name=action["name"], app_url=action.get("app_url"))
             kwargs["name_template"] = name_template
 
     return COMMENT_ADDED_TEMPLATE.format(**kwargs)

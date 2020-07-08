@@ -335,11 +335,7 @@ def build_recipients(
 
 def build_realm(zerver_realm: List[ZerverFieldsT], realm_id: int, domain_name: str) -> ZerverFieldsT:
     realm = dict(
-        zerver_client=[
-            {"name": "populate_db", "id": 1},
-            {"name": "website", "id": 2},
-            {"name": "API", "id": 3},
-        ],
+        zerver_client=[{"name": "populate_db", "id": 1}, {"name": "website", "id": 2}, {"name": "API", "id": 3}],
         zerver_customprofilefield=[],
         zerver_customprofilefieldvalue=[],
         zerver_userpresence=[],  # shows last logged in data, which is not available

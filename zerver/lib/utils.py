@@ -191,9 +191,7 @@ def query_chunker(
         yield [row for row_id, i, row in tup_chunk]
 
 
-def process_list_in_batches(
-    lst: List[Any], chunk_size: int, process_batch: Callable[[List[Any]], None],
-) -> None:
+def process_list_in_batches(lst: List[Any], chunk_size: int, process_batch: Callable[[List[Any]], None]) -> None:
     offset = 0
 
     while True:

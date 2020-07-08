@@ -159,9 +159,7 @@ class GithubWebhookTest(WebhookTestCase):
         self.send_and_test_stream_message("issues", expected_topic, expected_message)
 
     def test_membership_msg(self) -> None:
-        expected_message = (
-            "baxterthehacker added [kdaigle](https://github.com/kdaigle) to the Contractors team."
-        )
+        expected_message = "baxterthehacker added [kdaigle](https://github.com/kdaigle) to the Contractors team."
         self.send_and_test_stream_message(
             "membership", self.EXPECTED_TOPIC_ORGANIZATION_EVENTS, expected_message,
         )
@@ -235,9 +233,7 @@ class GithubWebhookTest(WebhookTestCase):
 
     def test_watch_msg(self) -> None:
         expected_message = "baxterthehacker starred the repository [baxterthehacker/public-repo](https://github.com/baxterthehacker/public-repo)."
-        self.send_and_test_stream_message(
-            "watch__repository", self.EXPECTED_TOPIC_REPO_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("watch__repository", self.EXPECTED_TOPIC_REPO_EVENTS, expected_message)
 
     def test_repository_msg(self) -> None:
         expected_message = "baxterthehacker created the repository [baxterandthehackers/public-repo](https://github.com/baxterandthehackers/public-repo)."
@@ -267,9 +263,7 @@ class GithubWebhookTest(WebhookTestCase):
 
     def test_pull_request_review_msg(self) -> None:
         expected_message = "baxterthehacker submitted [PR Review](https://github.com/baxterthehacker/public-repo/pull/1#pullrequestreview-2626884)."
-        self.send_and_test_stream_message(
-            "pull_request_review", self.EXPECTED_TOPIC_PR_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request_review", self.EXPECTED_TOPIC_PR_EVENTS, expected_message)
 
     def test_pull_request_review_msg_with_custom_topic_in_url(self) -> None:
         self.url = self.build_webhook_url(topic="notifications")
@@ -413,9 +407,7 @@ A temporary team so that I can get some webhook fixtures!
         self.assert_json_success(result)
 
     @patch("zerver.webhooks.github.view.check_send_webhook_message")
-    def test_pull_request_request_review_remove_ignore(
-        self, check_send_webhook_message_mock: MagicMock,
-    ) -> None:
+    def test_pull_request_request_review_remove_ignore(self, check_send_webhook_message_mock: MagicMock) -> None:
         payload = self.get_body("pull_request__request_review_removed")
         result = self.client_post(
             self.url, payload, HTTP_X_GITHUB_EVENT="pull_request", content_type="application/json",
@@ -424,14 +416,10 @@ A temporary team so that I can get some webhook fixtures!
         self.assert_json_success(result)
 
     @patch("zerver.webhooks.github.view.check_send_webhook_message")
-    def test_push_1_commit_filtered_by_branches_ignore(
-        self, check_send_webhook_message_mock: MagicMock,
-    ) -> None:
+    def test_push_1_commit_filtered_by_branches_ignore(self, check_send_webhook_message_mock: MagicMock) -> None:
         self.url = self.build_webhook_url(branches="master,development")
         payload = self.get_body("push__1_commit")
-        result = self.client_post(
-            self.url, payload, content_type="application/json", HTTP_X_GITHUB_EVENT="push",
-        )
+        result = self.client_post(self.url, payload, content_type="application/json", HTTP_X_GITHUB_EVENT="push")
         self.assertFalse(check_send_webhook_message_mock.called)
         self.assert_json_success(result)
 
@@ -441,9 +429,7 @@ A temporary team so that I can get some webhook fixtures!
     ) -> None:
         self.url = self.build_webhook_url(branches="master,development")
         payload = self.get_body("push__50_commits")
-        result = self.client_post(
-            self.url, payload, content_type="application/json", HTTP_X_GITHUB_EVENT="push",
-        )
+        result = self.client_post(self.url, payload, content_type="application/json", HTTP_X_GITHUB_EVENT="push")
         self.assertFalse(check_send_webhook_message_mock.called)
         self.assert_json_success(result)
 
@@ -453,9 +439,7 @@ A temporary team so that I can get some webhook fixtures!
     ) -> None:
         self.url = self.build_webhook_url(branches="master,development")
         payload = self.get_body("push__multiple_committers")
-        result = self.client_post(
-            self.url, payload, content_type="application/json", HTTP_X_GITHUB_EVENT="push",
-        )
+        result = self.client_post(self.url, payload, content_type="application/json", HTTP_X_GITHUB_EVENT="push")
         self.assertFalse(check_send_webhook_message_mock.called)
         self.assert_json_success(result)
 
@@ -465,9 +449,7 @@ A temporary team so that I can get some webhook fixtures!
     ) -> None:
         self.url = self.build_webhook_url(branches="master,development")
         payload = self.get_body("push__multiple_committers_with_others")
-        result = self.client_post(
-            self.url, payload, content_type="application/json", HTTP_X_GITHUB_EVENT="push",
-        )
+        result = self.client_post(self.url, payload, content_type="application/json", HTTP_X_GITHUB_EVENT="push")
         self.assertFalse(check_send_webhook_message_mock.called)
         self.assert_json_success(result)
 

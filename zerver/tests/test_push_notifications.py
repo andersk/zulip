@@ -207,9 +207,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
             {"user_id": user_id, "token_kind": token_kind, "token": token},
             HTTP_AUTHORIZATION=api_auth,
         )
-        self.assert_json_error(
-            result, "Zulip server auth failure: 5678-efgh is not registered", status_code=401,
-        )
+        self.assert_json_error(result, "Zulip server auth failure: 5678-efgh is not registered", status_code=401)
 
     def test_remote_push_user_endpoints(self) -> None:
         endpoints = [
@@ -286,9 +284,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
             result = self.client_post(endpoint, {"token": broken_token, "token_kind": kind}, subdomain="zulip")
             self.assert_json_error(result, "Empty or invalid length token")
 
-            result = self.client_delete(
-                endpoint, {"token": broken_token, "token_kind": kind}, subdomain="zulip",
-            )
+            result = self.client_delete(endpoint, {"token": broken_token, "token_kind": kind}, subdomain="zulip")
             self.assert_json_error(result, "Empty or invalid length token")
 
             # Try to remove a non-existent token...
@@ -696,9 +692,7 @@ class HandlePushNotificationTest(PushNotificationTest):
         # args[0] is method, args[1] is URL.
         local_url = args[1].replace(settings.PUSH_NOTIFICATION_BOUNCER_URL, "")
         if args[0] == "POST":
-            result = self.uuid_post(
-                self.server_uuid, local_url, kwargs["data"], content_type="application/json",
-            )
+            result = self.uuid_post(self.server_uuid, local_url, kwargs["data"], content_type="application/json")
         else:
             raise AssertionError("Unsupported method for bounce_request")
         return result
@@ -1021,9 +1015,7 @@ class HandlePushNotificationTest(PushNotificationTest):
         ) as mock_push_notifications:
             handle_push_notification(self.user_profile.id, missed_message)
             mock_logger.assert_called_with(
-                "Could not find UserMessage with message_id %s and user_id %s",
-                message_id,
-                self.user_profile.id,
+                "Could not find UserMessage with message_id %s and user_id %s", message_id, self.user_profile.id,
             )
             mock_push_notifications.assert_called_once()
 

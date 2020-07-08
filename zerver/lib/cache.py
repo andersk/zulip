@@ -464,11 +464,7 @@ def bulk_cached_fetch(
     id_fetcher: Callable[[ItemT], ObjKT],
 ) -> Dict[ObjKT, ItemT]:
     return transformed_bulk_cached_fetch(
-        cache_key_function,
-        query_function,
-        object_ids,
-        id_fetcher=id_fetcher,
-        cache_transformer=lambda obj: obj,
+        cache_key_function, query_function, object_ids, id_fetcher=id_fetcher, cache_transformer=lambda obj: obj,
     )
 
 

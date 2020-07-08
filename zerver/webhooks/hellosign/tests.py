@@ -11,8 +11,7 @@ class HelloSignHookTests(WebhookTestCase):
     def test_signatures_message(self) -> None:
         expected_topic = "NDA with Acme Co."
         expected_message = (
-            "The `NDA with Acme Co.` document is awaiting the signature of "
-            "Jack, and was just signed by Jill."
+            "The `NDA with Acme Co.` document is awaiting the signature of " "Jack, and was just signed by Jill."
         )
         self.send_and_test_stream_message("signatures", expected_topic, expected_message, content_type=None)
 
@@ -37,8 +36,7 @@ class HelloSignHookTests(WebhookTestCase):
         expected_topic = "Our own subject."
         self.url = self.build_webhook_url(topic=expected_topic)
         expected_message = (
-            "The `NDA with Acme Co.` document is awaiting the signature of "
-            "Jack, and was just signed by Jill."
+            "The `NDA with Acme Co.` document is awaiting the signature of " "Jack, and was just signed by Jill."
         )
         self.send_and_test_stream_message(
             "signatures_with_own_subject",

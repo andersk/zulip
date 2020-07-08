@@ -52,8 +52,7 @@ templates = {
     },
     "relateduserstory": {
         "create": (
-            "[{user}]({user_link}) added a related user story "
-            "{userstory_subject} to the epic {epic_subject}."
+            "[{user}]({user_link}) added a related user story " "{userstory_subject} to the epic {epic_subject}."
         ),
         "delete": (
             "[{user}]({user_link}) removed a related user story "
@@ -72,8 +71,7 @@ templates = {
         "unset_milestone": "[{user}]({user_link}) removed user story {subject} from sprint {old}.",
         "changed_milestone": "[{user}]({user_link}) changed sprint of user story {subject} from {old}"
         " to {new}.",
-        "changed_status": "[{user}]({user_link}) changed status of user story {subject}"
-        " from {old} to {new}.",
+        "changed_status": "[{user}]({user_link}) changed status of user story {subject}" " from {old} to {new}.",
         "closed": "[{user}]({user_link}) closed user story {subject}.",
         "reopened": "[{user}]({user_link}) reopened user story {subject}.",
         "renamed": "[{user}]({user_link}) renamed user story from {old} to **{new}**.",

@@ -130,10 +130,7 @@ def stats_for_realm(request: HttpRequest, realm_str: str) -> HttpResponse:
         return HttpResponseNotFound(f"Realm {realm_str} does not exist")
 
     return render_stats(
-        request,
-        f"/realm/{realm_str}",
-        realm.name or realm.string_id,
-        analytics_ready=is_analytics_ready(realm),
+        request, f"/realm/{realm_str}", realm.name or realm.string_id, analytics_ready=is_analytics_ready(realm),
     )
 
 
@@ -896,9 +893,7 @@ def ad_hoc_queries() -> List[Dict[str, str]]:
         rows = list(map(list, rows))
         cursor.close()
 
-        def fix_rows(
-            i: int, fixup_func: Union[Callable[[Realm], mark_safe], Callable[[datetime], str]],
-        ) -> None:
+        def fix_rows(i: int, fixup_func: Union[Callable[[Realm], mark_safe], Callable[[datetime], str]]) -> None:
             for row in rows:
                 row[i] = fixup_func(row[i])
 

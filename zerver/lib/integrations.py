@@ -450,9 +450,7 @@ INTEGRATIONS: Dict[str, Integration] = {
         "discourse", "discourse", ["communication"], doc="zerver/integrations/discourse.md",
     ),
     "email": Integration("email", "email", ["communication"], doc="zerver/integrations/email.md"),
-    "errbot": Integration(
-        "errbot", "errbot", ["meta-integration", "bots"], doc="zerver/integrations/errbot.md",
-    ),
+    "errbot": Integration("errbot", "errbot", ["meta-integration", "bots"], doc="zerver/integrations/errbot.md"),
     "git": Integration(
         "git", "git", ["version-control"], stream_name="commits", doc="zerver/integrations/git.md",
     ),

@@ -16,9 +16,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser: argparse.ArgumentParser) -> None:
         parser.add_argument("--api-key", dest="api_key", type=str, help="MailChimp API key.")
-        parser.add_argument(
-            "--list-id", dest="list_id", type=str, help="List ID of the MailChimp mailing list.",
-        )
+        parser.add_argument("--list-id", dest="list_id", type=str, help="List ID of the MailChimp mailing list.")
         parser.add_argument(
             "--optin-time",
             dest="optin_time",

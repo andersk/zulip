@@ -238,9 +238,7 @@ def update_stream_backend(
     request: HttpRequest,
     user_profile: UserProfile,
     stream_id: int,
-    description: Optional[str] = REQ(
-        validator=check_capped_string(Stream.MAX_DESCRIPTION_LENGTH), default=None,
-    ),
+    description: Optional[str] = REQ(validator=check_capped_string(Stream.MAX_DESCRIPTION_LENGTH), default=None),
     is_private: Optional[bool] = REQ(validator=check_bool, default=None),
     is_announcement_only: Optional[bool] = REQ(validator=check_bool, default=None),
     stream_post_policy: Optional[int] = REQ(
@@ -442,9 +440,7 @@ def add_subscriptions_backend(
     history_public_to_subscribers: Optional[bool] = REQ(validator=check_bool, default=None),
     message_retention_days: Union[str, int] = REQ(validator=check_string_or_int, default=RETENTION_DEFAULT),
     announce: bool = REQ(validator=check_bool, default=False),
-    principals: Union[Sequence[str], Sequence[int]] = REQ(
-        validator=check_principals, default=EMPTY_PRINCIPALS,
-    ),
+    principals: Union[Sequence[str], Sequence[int]] = REQ(validator=check_principals, default=EMPTY_PRINCIPALS),
     authorization_errors_fatal: bool = REQ(validator=check_bool, default=True),
 ) -> HttpResponse:
     stream_dicts = []
@@ -646,9 +642,7 @@ def get_topics_backend(
     (stream, recipient, sub) = access_stream_by_id(user_profile, stream_id)
 
     result = get_topic_history_for_stream(
-        user_profile=user_profile,
-        recipient=recipient,
-        public_history=stream.is_history_public_to_subscribers(),
+        user_profile=user_profile, recipient=recipient, public_history=stream.is_history_public_to_subscribers(),
     )
 
     return json_success(dict(topics=result))

@@ -332,9 +332,7 @@ def send_android_push_notification(
                     new_reg_id,
                     reg_id,
                 )
-                DeviceTokenClass.objects.filter(token=reg_id, kind=DeviceTokenClass.GCM).update(
-                    token=new_reg_id,
-                )
+                DeviceTokenClass.objects.filter(token=reg_id, kind=DeviceTokenClass.GCM).update(token=new_reg_id)
             else:
                 # Since we know the new ID is registered in our system we can just drop the old one.
                 logger.info("GCM: Got canonical ref %s, dropping %s", new_reg_id, reg_id)
@@ -367,10 +365,7 @@ def uses_notification_bouncer() -> bool:
 
 
 def send_notifications_to_bouncer(
-    user_profile_id: int,
-    apns_payload: Dict[str, Any],
-    gcm_payload: Dict[str, Any],
-    gcm_options: Dict[str, Any],
+    user_profile_id: int, apns_payload: Dict[str, Any], gcm_payload: Dict[str, Any], gcm_options: Dict[str, Any],
 ) -> None:
     post_data = {
         "user_id": user_profile_id,

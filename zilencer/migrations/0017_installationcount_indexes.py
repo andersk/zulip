@@ -10,9 +10,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AlterIndexTogether(
-            name="remoteinstallationcount", index_together={("server", "remote_id")},
-        ),
+        migrations.AlterIndexTogether(name="remoteinstallationcount", index_together={("server", "remote_id")}),
         migrations.AlterIndexTogether(
             name="remoterealmcount", index_together={("property", "end_time"), ("server", "remote_id")},
         ),

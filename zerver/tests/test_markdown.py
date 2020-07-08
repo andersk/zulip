@@ -223,12 +223,8 @@ class MarkdownMiscTest(ZulipTestCase):
         self.assertEqual(set_of_names, {"fred flintstone", "cordelia lear"})
 
         by_id = {row["id"]: row for row in lst}
-        self.assertEqual(
-            by_id.get(fred2.id), dict(email=fred2.email, full_name="Fred Flintstone", id=fred2.id),
-        )
-        self.assertEqual(
-            by_id.get(fred4.id), dict(email=fred4.email, full_name="Fred Flintstone", id=fred4.id),
-        )
+        self.assertEqual(by_id.get(fred2.id), dict(email=fred2.email, full_name="Fred Flintstone", id=fred2.id))
+        self.assertEqual(by_id.get(fred4.id), dict(email=fred4.email, full_name="Fred Flintstone", id=fred4.id))
 
     def test_mention_data(self) -> None:
         realm = get_realm("zulip")
@@ -273,9 +269,7 @@ class MarkdownListPreprocessorTest(ZulipTestCase):
 
     def test_list_after_quotes(self) -> None:
         preprocessor = MarkdownListPreprocessor()
-        original, expected = self.split_message(
-            "```quote\nSomething\n```\n\nList without a gap\n<>* One\n* Two",
-        )
+        original, expected = self.split_message("```quote\nSomething\n```\n\nList without a gap\n<>* One\n* Two")
         self.assertEqual(preprocessor.run(original), expected)
 
     def test_list_in_code(self) -> None:
@@ -445,9 +439,7 @@ class MarkdownTest(ZulipTestCase):
             realm = Realm.objects.create(string_id="file_links_test")
             maybe_update_markdown_engines(realm.id, False)
             converted = markdown_convert(msg, message_realm=realm)
-            self.assertEqual(
-                converted, "<p>Check out this file file:///Volumes/myserver/Users/Shared/pi.py</p>",
-            )
+            self.assertEqual(converted, "<p>Check out this file file:///Volumes/myserver/Users/Shared/pi.py</p>")
 
     def test_inline_bitcoin(self) -> None:
         msg = "To bitcoin:1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa or not to bitcoin"
@@ -864,8 +856,7 @@ class MarkdownTest(ZulipTestCase):
         msg = "http://www.twitter.com/wdaher/status/2879779692873154569"
         converted = markdown_convert_wrapper(msg)
         self.assertEqual(
-            converted,
-            "<p>{}</p>".format(make_link("http://www.twitter.com/wdaher/status/2879779692873154569")),
+            converted, "<p>{}</p>".format(make_link("http://www.twitter.com/wdaher/status/2879779692873154569")),
         )
 
         # id too large (i.e. tweet doesn't exist)
@@ -1109,9 +1100,7 @@ class MarkdownTest(ZulipTestCase):
 
         msg.set_topic_name("Try out http://ftp.debian.org, https://google.com/ and https://google.in/.")
         converted_topic = topic_links(realm.id, msg.topic_name())
-        self.assertEqual(
-            converted_topic, ["http://ftp.debian.org", "https://google.com/", "https://google.in/"],
-        )
+        self.assertEqual(converted_topic, ["http://ftp.debian.org", "https://google.com/", "https://google.in/"])
 
     def test_realm_patterns(self) -> None:
         realm = get_realm("zulip")
@@ -1151,9 +1140,7 @@ class MarkdownTest(ZulipTestCase):
         ).save()
         msg = Message(sender=self.example_user("hamlet"))
 
-        content = (
-            "#ZUL-123 was fixed and code was deployed to production, also #zul-321 was deployed to staging"
-        )
+        content = "#ZUL-123 was fixed and code was deployed to production, also #zul-321 was deployed to staging"
         converted = markdown_convert(content, message_realm=realm, message=msg)
 
         self.assertEqual(
@@ -1217,8 +1204,7 @@ class MarkdownTest(ZulipTestCase):
         zulip_filters = all_filters[realm.id]
         self.assertEqual(len(zulip_filters), 1)
         self.assertEqual(
-            zulip_filters[0],
-            ("#(?P<id>[0-9]{2,8})", "https://trac.example.com/ticket/%(id)s", realm_filter.id),
+            zulip_filters[0], ("#(?P<id>[0-9]{2,8})", "https://trac.example.com/ticket/%(id)s", realm_filter.id),
         )
 
     def test_flush_realm_filter(self) -> None:
@@ -1688,7 +1674,9 @@ class MarkdownTest(ZulipTestCase):
         cordelia = self.example_user("cordelia")
         msg = Message(sender=othello, sending_client=get_client("test"))
 
-        content = "> @**King Hamlet** and @**Othello, the Moor of Venice**\n\n @**King Hamlet** and @**Cordelia Lear**"
+        content = (
+            "> @**King Hamlet** and @**Othello, the Moor of Venice**\n\n @**King Hamlet** and @**Cordelia Lear**"
+        )
         self.assertEqual(
             render_markdown(msg, content),
             "<blockquote>\n<p>"

@@ -271,9 +271,7 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("epic_changed_blocked", self.TOPIC, message)
 
     def test_taiga_epic_changed_unblocked(self) -> None:
-        message = (
-            "[Eeshan Garg](https://tree.taiga.io/profile/eeshangarg) unblocked epic **Zulip is awesome!**."
-        )
+        message = "[Eeshan Garg](https://tree.taiga.io/profile/eeshangarg) unblocked epic **Zulip is awesome!**."
         self.send_and_test_stream_message("epic_changed_unblocked", self.TOPIC, message)
 
     def test_taiga_epic_changed_status(self) -> None:

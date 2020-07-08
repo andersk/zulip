@@ -792,11 +792,7 @@ LOGGING: Dict[str, Any] = {
             "level": "ERROR",
         },
         "django.security.DisallowedHost": {"handlers": ["file"], "propagate": False},
-        "django.server": {
-            "filters": ["skip_200_and_304"],
-            "handlers": ["console", "file"],
-            "propagate": False,
-        },
+        "django.server": {"filters": ["skip_200_and_304"], "handlers": ["console", "file"], "propagate": False},
         "django.utils.autoreload": {
             # We don't want logging spam from the autoreloaders in development.
             "level": "WARNING",

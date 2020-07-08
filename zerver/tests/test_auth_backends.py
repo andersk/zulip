@@ -642,10 +642,7 @@ class RateLimitAuthenticationTests(ZulipTestCase):
         )
 
     @override_settings(
-        AUTHENTICATION_BACKENDS=(
-            "zproject.backends.EmailAuthBackend",
-            "zproject.backends.ZulipLDAPAuthBackend",
-        ),
+        AUTHENTICATION_BACKENDS=("zproject.backends.EmailAuthBackend", "zproject.backends.ZulipLDAPAuthBackend"),
         LDAP_EMAIL_ATTR="mail",
     )
     def test_email_and_ldap_backends_user_based_rate_limiting(self) -> None:
@@ -984,9 +981,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
         # because there won't be an existing user account we can
         # auto-select for the user.
         with self.assertLogs(self.logger_string, level="INFO") as m:
-            result = self.social_auth_test(
-                account_data_dict, expect_choose_email_screen=True, subdomain="zulip",
-            )
+            result = self.social_auth_test(account_data_dict, expect_choose_email_screen=True, subdomain="zulip")
             self.assertEqual(result.status_code, 302)
             self.assertEqual(result.url, "/login/?is_deactivated=true")
         self.assertEqual(
@@ -1100,9 +1095,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
         mobile_flow_otp = "1234abcd" * 8
 
         def initiate_auth(mobile_flow_otp: Optional[str] = None) -> None:
-            url, headers = self.prepare_login_url_and_headers(
-                subdomain="zulip", mobile_flow_otp=mobile_flow_otp,
-            )
+            url, headers = self.prepare_login_url_and_headers(subdomain="zulip", mobile_flow_otp=mobile_flow_otp)
             result = self.client_get(url, **headers)
             self.assertEqual(result.status_code, 302)
 
@@ -1716,9 +1709,9 @@ class SAMLAuthBackendTest(SocialAuthBase):
 
     def test_social_auth_complete(self) -> None:
         with mock.patch.object(OneLogin_Saml2_Response, "is_valid", return_value=True):
-            with mock.patch.object(
-                OneLogin_Saml2_Auth, "is_authenticated", return_value=False,
-            ), self.assertLogs(self.logger_string, level="INFO") as m:
+            with mock.patch.object(OneLogin_Saml2_Auth, "is_authenticated", return_value=False), self.assertLogs(
+                self.logger_string, level="INFO",
+            ) as m:
                 # This mock causes AuthFailed to be raised.
                 saml_response = self.generate_saml_response(self.email, self.name)
                 relay_state = ujson.dumps(
@@ -2315,8 +2308,7 @@ class AppleIdAuthBackendTest(AppleAuthMixin, SocialAuthBase):
         self.assertEqual(result.status_code, 302)
         self.assertEqual(result.url, "/login/")
         self.assertEqual(
-            m.output,
-            [self.logger_output("AuthFailed: Authentication failed: Token validation failed", "info")],
+            m.output, [self.logger_output("AuthFailed: Authentication failed: Token validation failed", "info")],
         )
 
     def test_validate_state(self) -> None:
@@ -2657,8 +2649,7 @@ class GitHubAuthBackendTest(SocialAuthBase):
             self.assertEqual(result.status_code, 302)
             self.assertEqual(result.url, "/login/")
         self.assertEqual(
-            mock_info.output,
-            [self.logger_output("GitHub user is not member of required organization", "info")],
+            mock_info.output, [self.logger_output("GitHub user is not member of required organization", "info")],
         )
 
     @override_settings(SOCIAL_AUTH_GITHUB_ORG_NAME="Zulip")
@@ -3811,8 +3802,7 @@ class TestZulipRemoteUserBackend(DesktopFlowTestingLib, ZulipTestCase):
         username = "hamlet"
         user_profile = self.example_user("hamlet")
         with self.settings(
-            AUTHENTICATION_BACKENDS=("zproject.backends.ZulipRemoteUserBackend",),
-            SSO_APPEND_DOMAIN="zulip.com",
+            AUTHENTICATION_BACKENDS=("zproject.backends.ZulipRemoteUserBackend",), SSO_APPEND_DOMAIN="zulip.com",
         ):
             result = self.client_get("/accounts/login/sso/", REMOTE_USER=username)
             self.assertEqual(result.status_code, 302)
@@ -4215,9 +4205,7 @@ class DjangoToLDAPUsernameTests(ZulipTestCase):
         with mock.patch("zproject.backends.logging.warning") as mock_warn:
             with self.assertRaises(ZulipLDAPExceptionNoMatchingLDAPUser):
                 self.backend.django_to_ldap_username("shared_email@zulip.com")
-            mock_warn.assert_called_with(
-                "Multiple users with email %s found in LDAP.", "shared_email@zulip.com",
-            )
+            mock_warn.assert_called_with("Multiple users with email %s found in LDAP.", "shared_email@zulip.com")
 
         # Test on a weird case of a user whose uid is an email and his actual "mail"
         # attribute is a different email address:
@@ -4227,12 +4215,10 @@ class DjangoToLDAPUsernameTests(ZulipTestCase):
             "mail": ["some_user@contactaddress.com"],
         }
         self.assertEqual(
-            self.backend.django_to_ldap_username("some_user@contactaddress.com"),
-            "some_user@organization_a.com",
+            self.backend.django_to_ldap_username("some_user@contactaddress.com"), "some_user@organization_a.com",
         )
         self.assertEqual(
-            self.backend.django_to_ldap_username("some_user@organization_a.com"),
-            "some_user@organization_a.com",
+            self.backend.django_to_ldap_username("some_user@organization_a.com"), "some_user@organization_a.com",
         )
 
         # Configure email search for emails in the uid attribute:
@@ -4254,10 +4240,7 @@ class DjangoToLDAPUsernameTests(ZulipTestCase):
             self.assertEqual(username, '"hamlet@test"@zulip.com')
 
     @override_settings(
-        AUTHENTICATION_BACKENDS=(
-            "zproject.backends.EmailAuthBackend",
-            "zproject.backends.ZulipLDAPAuthBackend",
-        ),
+        AUTHENTICATION_BACKENDS=("zproject.backends.EmailAuthBackend", "zproject.backends.ZulipLDAPAuthBackend"),
     )
     def test_authenticate_to_ldap_via_email(self) -> None:
         """
@@ -4411,10 +4394,7 @@ class TestLDAP(ZulipLDAPTestCase):
             self.assertEqual(user_profile, self.example_user("aaron"))
 
     @override_settings(
-        AUTHENTICATION_BACKENDS=(
-            "zproject.backends.EmailAuthBackend",
-            "zproject.backends.ZulipLDAPAuthBackend",
-        ),
+        AUTHENTICATION_BACKENDS=("zproject.backends.EmailAuthBackend", "zproject.backends.ZulipLDAPAuthBackend"),
     )
     def test_email_and_ldap_backends_together(self) -> None:
         with self.settings(

@@ -152,9 +152,7 @@ def unregister_remote_push_device(
 
 @has_request_variables
 def unregister_all_remote_push_devices(
-    request: HttpRequest,
-    entity: Union[UserProfile, RemoteZulipServer],
-    user_id: int = REQ(validator=check_int),
+    request: HttpRequest, entity: Union[UserProfile, RemoteZulipServer], user_id: int = REQ(validator=check_int),
 ) -> HttpResponse:
     server = validate_entity(entity)
     RemotePushDeviceToken.objects.filter(user_id=user_id, server=server).delete()

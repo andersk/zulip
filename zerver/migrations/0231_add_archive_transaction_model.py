@@ -24,9 +24,7 @@ class Migration(migrations.Migration):
                 ("type", models.PositiveSmallIntegerField(db_index=True)),
                 (
                     "realm",
-                    models.ForeignKey(
-                        null=True, on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm",
-                    ),
+                    models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm"),
                 ),
             ],
         ),

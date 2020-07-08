@@ -763,9 +763,7 @@ def missedmessage_hook(user_profile_id: int, client: ClientDescriptor, last_for_
         stream_push_notify = event.get("stream_push_notify", False)
         stream_email_notify = event.get("stream_email_notify", False)
         wildcard_mention_notify = (
-            event.get("wildcard_mention_notify", False)
-            and "read" not in flags
-            and "wildcard_mentioned" in flags
+            event.get("wildcard_mention_notify", False) and "read" not in flags and "wildcard_mentioned" in flags
         )
 
         stream_name = None
@@ -1229,9 +1227,7 @@ def process_notification(notice: Mapping[str, Any]) -> None:
 def get_wrapped_process_notification(queue_name: str) -> Callable[[Dict[str, Any]], None]:
     def failure_processor(notice: Dict[str, Any]) -> None:
         logging.error(
-            "Maximum retries exceeded for Tornado notice:%s\nStack trace:\n%s\n",
-            notice,
-            traceback.format_exc(),
+            "Maximum retries exceeded for Tornado notice:%s\nStack trace:\n%s\n", notice, traceback.format_exc(),
         )
 
     def wrapped_process_notification(notice: Dict[str, Any]) -> None:

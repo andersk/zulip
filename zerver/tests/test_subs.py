@@ -721,9 +721,7 @@ class StreamAdminTest(ZulipTestCase):
         self.assert_json_success(result)
 
         stream_id = get_stream("private_stream", iago.realm).id
-        result = self.client_patch(
-            f"/json/streams/{stream_id}", {"new_name": ujson.dumps("new_private_stream")},
-        )
+        result = self.client_patch(f"/json/streams/{stream_id}", {"new_name": ujson.dumps("new_private_stream")})
         self.assert_json_success(result)
 
         result = self.client_patch(
@@ -839,9 +837,7 @@ class StreamAdminTest(ZulipTestCase):
             user_profile.save()
             self.assertEqual(user_profile.is_new_member, is_new)
             stream_id = get_stream("stream_name1", user_profile.realm).id
-            result = self.client_patch(
-                f"/json/streams/{stream_id}", {"stream_post_policy": ujson.dumps(policy)},
-            )
+            result = self.client_patch(f"/json/streams/{stream_id}", {"stream_post_policy": ujson.dumps(policy)})
             self.assert_json_error(result, "Must be an organization administrator")
 
         policies = [Stream.STREAM_POST_POLICY_ADMINS, Stream.STREAM_POST_POLICY_RESTRICT_NEW_MEMBERS]
@@ -854,9 +850,7 @@ class StreamAdminTest(ZulipTestCase):
 
         for policy in policies:
             stream_id = get_stream("stream_name1", user_profile.realm).id
-            result = self.client_patch(
-                f"/json/streams/{stream_id}", {"stream_post_policy": ujson.dumps(policy)},
-            )
+            result = self.client_patch(f"/json/streams/{stream_id}", {"stream_post_policy": ujson.dumps(policy)})
             self.assert_json_success(result)
             stream = get_stream("stream_name1", user_profile.realm)
             self.assertEqual(stream.stream_post_policy, policy)
@@ -1757,8 +1751,7 @@ class DefaultStreamGroupTest(ZulipTestCase):
         new_group_name = "new group1"
         do_create_default_stream_group(realm, "group2", "", [])
         result = self.client_patch(
-            f"/json/default_stream_groups/{group_id}",
-            {"op": "change", "new_group_name": ujson.dumps("group2")},
+            f"/json/default_stream_groups/{group_id}", {"op": "change", "new_group_name": ujson.dumps("group2")},
         )
         self.assert_json_error(result, "Default stream group 'group2' already exists")
         new_group = lookup_default_stream_groups(["group2"], realm)[0]
@@ -2769,11 +2762,7 @@ class SubscriptionAPITest(ZulipTestCase):
         self.assert_json_error(result, f"Invalid stream name '{invalid_stream_name}'")
 
     def assert_adding_subscriptions_for_principal(
-        self,
-        invitee_data: Union[str, int],
-        invitee_realm: Realm,
-        streams: List[str],
-        invite_only: bool = False,
+        self, invitee_data: Union[str, int], invitee_realm: Realm, streams: List[str], invite_only: bool = False,
     ) -> None:
         """
         Calling POST /json/users/me/subscriptions on behalf of another principal (for
@@ -3273,12 +3262,7 @@ class SubscriptionAPITest(ZulipTestCase):
         )
 
     def helper_check_subs_before_and_after_remove(
-        self,
-        subscriptions: List[str],
-        json_dict: Dict[str, Any],
-        email: str,
-        new_subs: List[str],
-        realm: Realm,
+        self, subscriptions: List[str], json_dict: Dict[str, Any], email: str, new_subs: List[str], realm: Realm,
     ) -> None:
         """
         Check result of removing subscriptions.
@@ -3407,9 +3391,7 @@ class SubscriptionAPITest(ZulipTestCase):
         self.assertIn("subscribed", result.json())
         self.assertFalse(result.json()["subscribed"])
 
-        result = self.client_post(
-            "/json/subscriptions/exists", {"stream": stream_name, "autosubscribe": "true"},
-        )
+        result = self.client_post("/json/subscriptions/exists", {"stream": stream_name, "autosubscribe": "true"})
         self.assert_json_success(result)
         self.assertIn("subscribed", result.json())
         self.assertTrue(result.json()["subscribed"])
@@ -3423,9 +3405,7 @@ class SubscriptionAPITest(ZulipTestCase):
         self.common_subscribe_to_streams(cordelia, [stream_name], invite_only=True)
         stream = get_stream(stream_name, self.test_realm)
 
-        result = self.client_post(
-            "/json/subscriptions/exists", {"stream": stream_name, "autosubscribe": "true"},
-        )
+        result = self.client_post("/json/subscriptions/exists", {"stream": stream_name, "autosubscribe": "true"})
         # We can't see invite-only streams here
         self.assert_json_error(result, "Invalid stream name 'Saxony'", status_code=404)
         # Importantly, we are not now subscribed
@@ -4386,9 +4366,7 @@ class StreamTrafficTest(ZulipTestCase):
         )
         # stream between 7 and 27 days old
         self.assertEqual(
-            get_average_weekly_stream_traffic(
-                42, timezone_now() - timedelta(days=10), {42: (98 * 10 + 9) // 7},
-            ),
+            get_average_weekly_stream_traffic(42, timezone_now() - timedelta(days=10), {42: (98 * 10 + 9) // 7}),
             98,
         )
         # stream less than 7 days old
@@ -4397,9 +4375,7 @@ class StreamTrafficTest(ZulipTestCase):
         )
 
         # average traffic between 0 and 1
-        self.assertEqual(
-            get_average_weekly_stream_traffic(42, timezone_now() - timedelta(days=300), {42: 1}), 1,
-        )
+        self.assertEqual(get_average_weekly_stream_traffic(42, timezone_now() - timedelta(days=300), {42: 1}), 1)
 
     def test_round_to_2_significant_digits(self) -> None:
         self.assertEqual(120, round_to_2_significant_digits(116))

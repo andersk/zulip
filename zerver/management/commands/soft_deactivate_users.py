@@ -52,10 +52,7 @@ class Command(ZulipBaseCommand):
             help="Used to activate user/users.",
         )
         parser.add_argument(
-            "--inactive-for",
-            type=int,
-            default=28,
-            help="Number of days of inactivity before soft-deactivation",
+            "--inactive-for", type=int, default=28, help="Number of days of inactivity before soft-deactivation",
         )
         parser.add_argument(
             "users",

@@ -8,9 +8,7 @@ class TestFixtures(ZulipTestCase):
     def test_deterministic_settings(self) -> None:
         # test basic business_hour / non_business_hour calculation
         # test we get an array of the right length with frequency=CountStat.DAY
-        data = generate_time_series_data(
-            days=7, business_hours_base=20, non_business_hours_base=15, spikiness=0,
-        )
+        data = generate_time_series_data(days=7, business_hours_base=20, non_business_hours_base=15, spikiness=0)
         self.assertEqual(data, [400, 400, 400, 400, 400, 360, 360])
 
         data = generate_time_series_data(

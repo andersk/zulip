@@ -23,10 +23,7 @@ class Migration(migrations.Migration):
                 ("email_token", models.CharField(db_index=True, max_length=34, unique=True)),
                 ("timestamp", models.DateTimeField(db_index=True, default=django.utils.timezone.now)),
                 ("times_used", models.PositiveIntegerField(db_index=True, default=0)),
-                (
-                    "message",
-                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Message"),
-                ),
+                ("message", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Message")),
                 (
                     "user_profile",
                     models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),

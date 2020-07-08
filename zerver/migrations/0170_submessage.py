@@ -21,10 +21,7 @@ class Migration(migrations.Migration):
                 ),
                 ("msg_type", models.TextField()),
                 ("content", models.TextField()),
-                (
-                    "message",
-                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Message"),
-                ),
+                ("message", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Message")),
                 (
                     "sender",
                     models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),

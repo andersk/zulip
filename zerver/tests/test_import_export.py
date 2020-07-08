@@ -108,9 +108,7 @@ class QueryUtilTest(ZulipTestCase):
             Message.objects.filter(sender_id=hamlet.id),
         ]
         all_msg_ids = set()
-        chunker = query_chunker(
-            queries=queries, id_collector=all_msg_ids, chunk_size=7,  # use a different size
-        )
+        chunker = query_chunker(queries=queries, id_collector=all_msg_ids, chunk_size=7)  # use a different size
         list(chunker)  # exhaust the iterator
         self.assertEqual(
             len(all_msg_ids), len(Message.objects.filter(sender_id__in=[cordelia.id, hamlet.id])),
@@ -244,10 +242,7 @@ class ImportExportTest(ZulipTestCase):
         url = upload_message_file("dummy.txt", len(b"zulip!"), "text/plain", b"zulip!", user_profile)
         attachment_path_id = url.replace("/user_uploads/", "")
         claim_attachment(
-            user_profile=user_profile,
-            path_id=attachment_path_id,
-            message=message,
-            is_message_realm_public=True,
+            user_profile=user_profile, path_id=attachment_path_id, message=message, is_message_realm_public=True,
         )
         avatar_path_id = user_avatar_path(user_profile)
         original_avatar_path_id = avatar_path_id + ".original"
@@ -578,9 +573,7 @@ class ImportExportTest(ZulipTestCase):
 
         public_stream_names = ["Denmark", "Rome", "Scotland", "Venice", "Verona"]
         public_stream_ids = Stream.objects.filter(name__in=public_stream_names).values_list("id", flat=True)
-        public_stream_recipients = Recipient.objects.filter(
-            type_id__in=public_stream_ids, type=Recipient.STREAM,
-        )
+        public_stream_recipients = Recipient.objects.filter(type_id__in=public_stream_ids, type=Recipient.STREAM)
         public_stream_message_ids = Message.objects.filter(recipient__in=public_stream_recipients).values_list(
             "id", flat=True,
         )
@@ -592,9 +585,9 @@ class ImportExportTest(ZulipTestCase):
         private_stream_recipients = Recipient.objects.filter(
             type_id__in=private_stream_ids, type=Recipient.STREAM,
         )
-        private_stream_message_ids = Message.objects.filter(
-            recipient__in=private_stream_recipients,
-        ).values_list("id", flat=True)
+        private_stream_message_ids = Message.objects.filter(recipient__in=private_stream_recipients).values_list(
+            "id", flat=True,
+        )
 
         pm_recipients = Recipient.objects.filter(type_id__in=consented_user_ids, type=Recipient.PERSONAL)
         pm_query = Q(recipient__in=pm_recipients) | Q(sender__in=consented_user_ids)

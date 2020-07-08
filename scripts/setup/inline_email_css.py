@@ -25,9 +25,7 @@ def configure_cssutils() -> None:
         r"auto|none|visiblePainted|" r"visibleFill|visibleStroke|" r"visible|painted|fill|stroke|all|inherit"
     )
 
-    profile.addProfiles(
-        [(Profiles.CSS_LEVEL_2, properties[Profiles.CSS_LEVEL_2], macros[Profiles.CSS_LEVEL_2])],
-    )
+    profile.addProfiles([(Profiles.CSS_LEVEL_2, properties[Profiles.CSS_LEVEL_2], macros[Profiles.CSS_LEVEL_2])])
 
 
 configure_cssutils()

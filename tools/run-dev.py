@@ -53,9 +53,7 @@ parser.add_argument(
     help="Do not clear memcached",
 )
 parser.add_argument("--streamlined", action="store_true", default=False, help="Avoid thumbor, etc.")
-parser.add_argument(
-    "--force", action="store_true", default=False, help="Run command despite possible problems.",
-)
+parser.add_argument("--force", action="store_true", default=False, help="Run command despite possible problems.")
 parser.add_argument(
     "--enable-tornado-logging",
     action="store_true",
@@ -137,9 +135,7 @@ with open(pid_file_path, "w+") as f:
 def server_processes() -> List[List[str]]:
     main_cmds = [
         ["./manage.py", "runserver"] + manage_args + runserver_args + [f"127.0.0.1:{django_port}"],
-        ["env", "PYTHONUNBUFFERED=1", "./manage.py", "runtornado"]
-        + manage_args
-        + [f"127.0.0.1:{tornado_port}"],
+        ["env", "PYTHONUNBUFFERED=1", "./manage.py", "runtornado"] + manage_args + [f"127.0.0.1:{tornado_port}"],
     ]
 
     if options.streamlined:
@@ -156,13 +152,7 @@ def server_processes() -> List[List[str]]:
             "--quiet",
         ],
         ["./manage.py", "deliver_scheduled_messages"],
-        [
-            "/srv/zulip-thumbor-venv/bin/thumbor",
-            "-c",
-            "./zthumbor/thumbor_settings.py",
-            "-p",
-            f"{thumbor_port}",
-        ],
+        ["/srv/zulip-thumbor-venv/bin/thumbor", "-c", "./zthumbor/thumbor_settings.py", "-p", f"{thumbor_port}"],
     ]
 
     # NORMAL (but slower) operation:

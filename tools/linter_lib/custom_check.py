@@ -686,10 +686,7 @@ html_rules: List["Rule"] = whitespace_rules + prose_style_rules + [
         "the DOM is ready (inside a $(function () {...}) block).",
         "exclude": {"templates/zerver/dev_login.html", "templates/corporate/upgrade.html"},
         "good_lines": ["($('#foo').on('click', function () {}"],
-        "bad_lines": [
-            "<button id='foo' onclick='myFunction()'>Foo</button>",
-            "<input onchange='myFunction()'>",
-        ],
+        "bad_lines": ["<button id='foo' onclick='myFunction()'>Foo</button>", "<input onchange='myFunction()'>"],
     },
     {
         "pattern": "style ?=",

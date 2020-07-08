@@ -33,9 +33,7 @@ class TestReport(ZulipTestCase):
     def test_send_time(self) -> None:
         self.login("hamlet")
 
-        params = dict(
-            time=5, received=6, displayed=7, locally_echoed="true", rendered_content_disparity="true",
-        )
+        params = dict(time=5, received=6, displayed=7, locally_echoed="true", rendered_content_disparity="true")
 
         stats_mock = StatsMock(self.settings)
         with mock.patch("zerver.views.report.statsd", wraps=stats_mock):
@@ -102,9 +100,7 @@ class TestReport(ZulipTestCase):
         )
 
         publish_mock = mock.patch("zerver.views.report.queue_json_publish")
-        subprocess_mock = mock.patch(
-            "zerver.views.report.subprocess.check_output", side_effect=KeyError("foo"),
-        )
+        subprocess_mock = mock.patch("zerver.views.report.subprocess.check_output", side_effect=KeyError("foo"))
         with publish_mock as m, subprocess_mock:
             result = self.client_post("/json/report/error", params)
         self.assert_json_success(result)

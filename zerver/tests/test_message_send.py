@@ -987,9 +987,7 @@ class MessagePOSTTest(ZulipTestCase):
         stream_name = "private_stream"
         self.make_stream(stream_name, invite_only=True)
 
-        payload = dict(
-            type="stream", to=stream_name, client="test suite", topic="whatever", content="whatever",
-        )
+        payload = dict(type="stream", to=stream_name, client="test suite", topic="whatever", content="whatever")
 
         result = self.api_post(bot, "/api/v1/messages", payload)
         self.assert_json_error_contains(result, "Not authorized to send")
@@ -1031,9 +1029,7 @@ class MessagePOSTTest(ZulipTestCase):
 
         stream_name = "public stream"
         self.make_stream(stream_name, invite_only=False)
-        payload = dict(
-            type="stream", to=stream_name, client="test suite", topic="whatever", content="whatever",
-        )
+        payload = dict(type="stream", to=stream_name, client="test suite", topic="whatever", content="whatever")
 
         # Guest user can't send message to unsubscribed public streams
         result = self.api_post(sender, "/api/v1/messages", payload)
@@ -1130,9 +1126,7 @@ class ScheduledMessageTest(ZulipTestCase):
 
         # Scheduling a message while guessing timezone.
         tz_guess = "Asia/Kolkata"
-        result = self.do_schedule_message(
-            "stream", "Verona", content + " 6", defer_until_str, tz_guess=tz_guess,
-        )
+        result = self.do_schedule_message("stream", "Verona", content + " 6", defer_until_str, tz_guess=tz_guess)
         message = self.last_scheduled_message()
         self.assert_json_success(result)
         self.assertEqual(message.content, "Test message 6")

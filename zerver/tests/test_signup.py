@@ -1675,9 +1675,7 @@ so we didn't send them an invitation. We did send invitations to everyone else!"
         self.submit_reg_form_for_user(email, password, key=registration_key)
 
         url = "/accounts/register/"
-        response = self.client_post(
-            url, {"key": registration_key, "from_confirmation": 1, "full_name": "alice"},
-        )
+        response = self.client_post(url, {"key": registration_key, "from_confirmation": 1, "full_name": "alice"})
         self.assertEqual(response.status_code, 302)
         self.assertEqual(
             response.url,
@@ -1776,9 +1774,7 @@ class InvitationsTestCase(InviteUserBase):
 
         self.assertRaises(
             ScheduledEmail.DoesNotExist,
-            lambda: ScheduledEmail.objects.get(
-                address__iexact=invitee, type=ScheduledEmail.INVITATION_REMINDER,
-            ),
+            lambda: ScheduledEmail.objects.get(address__iexact=invitee, type=ScheduledEmail.INVITATION_REMINDER),
         )
 
     def test_successful_member_delete_invitation(self) -> None:
@@ -1812,9 +1808,7 @@ class InvitationsTestCase(InviteUserBase):
 
         self.assertRaises(
             ScheduledEmail.DoesNotExist,
-            lambda: ScheduledEmail.objects.get(
-                address__iexact=invitee, type=ScheduledEmail.INVITATION_REMINDER,
-            ),
+            lambda: ScheduledEmail.objects.get(address__iexact=invitee, type=ScheduledEmail.INVITATION_REMINDER),
         )
 
     def test_delete_owner_invitation(self) -> None:
@@ -1835,9 +1829,7 @@ class InvitationsTestCase(InviteUserBase):
         self.assert_json_error(result, "No such invitation")
         self.assertRaises(
             ScheduledEmail.DoesNotExist,
-            lambda: ScheduledEmail.objects.get(
-                address__iexact=invitee, type=ScheduledEmail.INVITATION_REMINDER,
-            ),
+            lambda: ScheduledEmail.objects.get(address__iexact=invitee, type=ScheduledEmail.INVITATION_REMINDER),
         )
 
     def test_delete_multiuse_invite(self) -> None:
@@ -2024,9 +2016,7 @@ class InvitationsTestCase(InviteUserBase):
 
     def test_accessing_invites_in_another_realm(self) -> None:
         inviter = UserProfile.objects.exclude(realm=get_realm("zulip")).first()
-        prereg_user = PreregistrationUser.objects.create(
-            email="email", referred_by=inviter, realm=inviter.realm,
-        )
+        prereg_user = PreregistrationUser.objects.create(email="email", referred_by=inviter, realm=inviter.realm)
         self.login("iago")
         error_result = self.client_post("/json/invites/" + str(prereg_user.id) + "/resend")
         self.assert_json_error(error_result, "No such invitation")
@@ -2857,8 +2847,7 @@ class UserSignUpTest(InviteUserBase):
 
         with patch("zerver.views.registration.password_auth_enabled", return_value=False):
             result = self.client_post(
-                "/accounts/register/",
-                {"full_name": "New User", "key": find_key_by_email(email), "terms": True},
+                "/accounts/register/", {"full_name": "New User", "key": find_key_by_email(email), "terms": True},
             )
 
         # User should now be logged in.
@@ -3895,9 +3884,7 @@ class UserSignUpTest(InviteUserBase):
         ):
             # Invite user.
             self.login("iago")
-            response = self.invite(
-                invitee_emails="newuser@zulip.com", stream_names=streams, invite_as=invite_as,
-            )
+            response = self.invite(invitee_emails="newuser@zulip.com", stream_names=streams, invite_as=invite_as)
             self.assert_json_success(response)
             self.logout()
 
@@ -3921,10 +3908,7 @@ class UserSignUpTest(InviteUserBase):
             self.assertEqual(result.status_code, 302)
 
     @override_settings(
-        AUTHENTICATION_BACKENDS=(
-            "zproject.backends.ZulipLDAPAuthBackend",
-            "zproject.backends.EmailAuthBackend",
-        ),
+        AUTHENTICATION_BACKENDS=("zproject.backends.ZulipLDAPAuthBackend", "zproject.backends.EmailAuthBackend"),
     )
     def test_ldap_invite_user_as_admin(self) -> None:
         self.ldap_invite_and_signup_as(PreregistrationUser.INVITE_AS["REALM_ADMIN"])
@@ -3932,10 +3916,7 @@ class UserSignUpTest(InviteUserBase):
         self.assertTrue(user_profile.is_realm_admin)
 
     @override_settings(
-        AUTHENTICATION_BACKENDS=(
-            "zproject.backends.ZulipLDAPAuthBackend",
-            "zproject.backends.EmailAuthBackend",
-        ),
+        AUTHENTICATION_BACKENDS=("zproject.backends.ZulipLDAPAuthBackend", "zproject.backends.EmailAuthBackend"),
     )
     def test_ldap_invite_user_as_guest(self) -> None:
         self.ldap_invite_and_signup_as(PreregistrationUser.INVITE_AS["GUEST_USER"])
@@ -3943,10 +3924,7 @@ class UserSignUpTest(InviteUserBase):
         self.assertTrue(user_profile.is_guest)
 
     @override_settings(
-        AUTHENTICATION_BACKENDS=(
-            "zproject.backends.ZulipLDAPAuthBackend",
-            "zproject.backends.EmailAuthBackend",
-        ),
+        AUTHENTICATION_BACKENDS=("zproject.backends.ZulipLDAPAuthBackend", "zproject.backends.EmailAuthBackend"),
     )
     def test_ldap_invite_streams(self) -> None:
         stream_name = "Rome"
@@ -4150,9 +4128,7 @@ class UserSignUpTest(InviteUserBase):
 
         result = self.client_post("/devtools/register_realm/")
         self.assertEqual(result.status_code, 302)
-        self.assertTrue(
-            result["Location"].startswith(f"http://{string_id}.testserver/accounts/login/subdomain"),
-        )
+        self.assertTrue(result["Location"].startswith(f"http://{string_id}.testserver/accounts/login/subdomain"))
         result = self.client_get(result["Location"], subdomain=string_id)
         self.assertEqual(result.status_code, 302)
         self.assertEqual(result["Location"], f"http://{string_id}.testserver")

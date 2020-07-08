@@ -596,9 +596,7 @@ class PermissionTest(ZulipTestCase):
             field = CustomProfileField.objects.get(name=field_name, realm=realm)
             new_profile_data.append({"id": field.id, "value": fields[field_name]})
 
-        result = self.client_patch(
-            f"/json/users/{cordelia.id}", {"profile_data": ujson.dumps(new_profile_data)},
-        )
+        result = self.client_patch(f"/json/users/{cordelia.id}", {"profile_data": ujson.dumps(new_profile_data)})
         self.assert_json_success(result)
 
         cordelia = self.example_user("cordelia")
@@ -677,9 +675,7 @@ class PermissionTest(ZulipTestCase):
             if new_fields[field_name]:
                 value = new_fields[field_name]
             new_profile_data.append({"id": field.id, "value": value})
-        result = self.client_patch(
-            f"/json/users/{cordelia.id}", {"profile_data": ujson.dumps(new_profile_data)},
-        )
+        result = self.client_patch(f"/json/users/{cordelia.id}", {"profile_data": ujson.dumps(new_profile_data)})
         self.assert_json_success(result)
         for field_dict in cordelia.profile_data:
             with self.subTest(field_name=field_dict["name"]):
@@ -771,8 +767,7 @@ class AdminCreateUserTest(ZulipTestCase):
         self.assert_json_error(result, "Missing 'short_name' argument")
 
         result = self.client_post(
-            "/json/users",
-            dict(email="broken", password="xxxx", full_name="Romeo Montague", short_name="Romeo"),
+            "/json/users", dict(email="broken", password="xxxx", full_name="Romeo Montague", short_name="Romeo"),
         )
         self.assert_json_error(result, "Bad name or username")
 
@@ -801,9 +796,7 @@ class AdminCreateUserTest(ZulipTestCase):
         self.assertEqual(new_user.short_name, "Romeo")
 
         # Make sure the recipient field is set correctly.
-        self.assertEqual(
-            new_user.recipient, Recipient.objects.get(type=Recipient.PERSONAL, type_id=new_user.id),
-        )
+        self.assertEqual(new_user.recipient, Recipient.objects.get(type=Recipient.PERSONAL, type_id=new_user.id))
 
         # we can't create the same user twice.
         result = self.client_post("/json/users", valid_params)
@@ -1307,10 +1300,7 @@ class RecipientInfoTest(ZulipTestCase):
         stream_topic = StreamTopicTarget(stream_id=stream.id, topic_name=topic_name)
 
         info = get_recipient_info(
-            recipient=recipient,
-            sender_id=hamlet.id,
-            stream_topic=stream_topic,
-            possible_wildcard_mention=False,
+            recipient=recipient, sender_id=hamlet.id, stream_topic=stream_topic, possible_wildcard_mention=False,
         )
 
         all_user_ids = {hamlet.id, cordelia.id, othello.id}
@@ -1334,10 +1324,7 @@ class RecipientInfoTest(ZulipTestCase):
         hamlet.enable_stream_push_notifications = True
         hamlet.save()
         info = get_recipient_info(
-            recipient=recipient,
-            sender_id=hamlet.id,
-            stream_topic=stream_topic,
-            possible_wildcard_mention=False,
+            recipient=recipient, sender_id=hamlet.id, stream_topic=stream_topic, possible_wildcard_mention=False,
         )
         self.assertEqual(info["stream_push_user_ids"], {hamlet.id})
         self.assertEqual(info["wildcard_mention_user_ids"], set())
@@ -1367,10 +1354,7 @@ class RecipientInfoTest(ZulipTestCase):
         )
 
         info = get_recipient_info(
-            recipient=recipient,
-            sender_id=hamlet.id,
-            stream_topic=stream_topic,
-            possible_wildcard_mention=False,
+            recipient=recipient, sender_id=hamlet.id, stream_topic=stream_topic, possible_wildcard_mention=False,
         )
         self.assertEqual(info["stream_push_user_ids"], set())
         self.assertEqual(info["wildcard_mention_user_ids"], set())

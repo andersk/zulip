@@ -607,9 +607,7 @@ class InlineInterestingLinkProcessor(markdown.treeprocessors.Treeprocessor):
             # consistency in what gets passed to /thumbnail
             url = url.lstrip("/")
             img.set("src", "/thumbnail?url={}&size=thumbnail".format(urllib.parse.quote(url, safe="")))
-            img.set(
-                "data-src-fullsize", "/thumbnail?url={}&size=full".format(urllib.parse.quote(url, safe="")),
-            )
+            img.set("data-src-fullsize", "/thumbnail?url={}&size=full".format(urllib.parse.quote(url, safe="")))
         else:
             img.set("src", url)
 
@@ -2263,9 +2261,7 @@ def get_stream_name_info(realm: Realm, stream_names: Set[str]) -> Dict[str, Full
     q_list = {Q(name=name) for name in stream_names}
 
     rows = (
-        get_active_streams(realm=realm)
-        .filter(functools.reduce(lambda a, b: a | b, q_list))
-        .values("id", "name")
+        get_active_streams(realm=realm).filter(functools.reduce(lambda a, b: a | b, q_list)).values("id", "name")
     )
 
     dct = {row["name"]: row for row in rows}

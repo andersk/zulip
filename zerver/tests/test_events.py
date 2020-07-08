@@ -264,9 +264,7 @@ class BaseAction(ZulipTestCase):
         self.match_states(hybrid_state, normal_state, events)
         return events
 
-    def match_states(
-        self, state1: Dict[str, Any], state2: Dict[str, Any], events: List[Dict[str, Any]],
-    ) -> None:
+    def match_states(self, state1: Dict[str, Any], state2: Dict[str, Any], events: List[Dict[str, Any]]) -> None:
         def normalize(state: Dict[str, Any]) -> None:
             for u in state["never_subscribed"]:
                 if "subscribers" in u:
@@ -490,9 +488,7 @@ class NormalActionsTest(BaseAction):
         )
 
         events = self.verify_action(
-            lambda: do_update_embedded_data(
-                self.user_profile, message, "embed_content", "<p>embed_content</p>",
-            ),
+            lambda: do_update_embedded_data(self.user_profile, message, "embed_content", "<p>embed_content</p>"),
             state_change_expected=False,
         )
         schema_checker("events[0]", events[0])
@@ -579,9 +575,7 @@ class NormalActionsTest(BaseAction):
             ],
         )
         events = self.verify_action(
-            lambda: do_update_message_flags(
-                user_profile, get_client("website"), "remove", "starred", [message],
-            ),
+            lambda: do_update_message_flags(user_profile, get_client("website"), "remove", "starred", [message]),
             state_change_expected=True,
         )
         schema_checker("events[0]", events[0])
@@ -781,9 +775,7 @@ class NormalActionsTest(BaseAction):
             streams.append(get_stream(stream_name, self.user_profile.realm))
         do_invite_users(self.user_profile, ["foo@zulip.com"], streams, False)
         prereg_users = PreregistrationUser.objects.filter(referred_by__realm=self.user_profile.realm)
-        events = self.verify_action(
-            lambda: do_revoke_user_invite(prereg_users[0]), state_change_expected=False,
-        )
+        events = self.verify_action(lambda: do_revoke_user_invite(prereg_users[0]), state_change_expected=False)
         schema_checker("events[0]", events[0])
 
     def test_revoke_multiuse_invite_event(self) -> None:
@@ -1267,9 +1259,7 @@ class NormalActionsTest(BaseAction):
             streams.append(get_stream(stream_name, self.user_profile.realm))
 
         events = self.verify_action(
-            lambda: do_create_default_stream_group(
-                self.user_profile.realm, "group1", "This is group1", streams,
-            ),
+            lambda: do_create_default_stream_group(self.user_profile.realm, "group1", "This is group1", streams),
         )
         default_stream_groups_checker("events[0]", events[0])
 
@@ -1281,9 +1271,7 @@ class NormalActionsTest(BaseAction):
         default_stream_groups_checker("events[0]", events[0])
 
         events = self.verify_action(
-            lambda: do_remove_streams_from_default_stream_group(
-                self.user_profile.realm, group, [venice_stream],
-            ),
+            lambda: do_remove_streams_from_default_stream_group(self.user_profile.realm, group, [venice_stream]),
         )
         default_stream_groups_checker("events[0]", events[0])
 
@@ -1877,10 +1865,7 @@ class NormalActionsTest(BaseAction):
             [
                 ("type", equals("realm_domains")),
                 ("op", equals("add")),
-                (
-                    "realm_domain",
-                    check_dict_only([("domain", check_string), ("allow_subdomains", check_bool)]),
-                ),
+                ("realm_domain", check_dict_only([("domain", check_string), ("allow_subdomains", check_bool)])),
             ],
         )
         events = self.verify_action(lambda: do_add_realm_domain(self.user_profile.realm, "zulip.org", False))
@@ -2537,8 +2522,7 @@ class NormalActionsTest(BaseAction):
         assert uri is not None
         body = f"First message ...[zulip.txt](http://{hamlet.realm.host}" + uri + ")"
         events = self.verify_action(
-            lambda: self.send_stream_message(self.example_user("hamlet"), "Denmark", body, "test"),
-            num_events=2,
+            lambda: self.send_stream_message(self.example_user("hamlet"), "Denmark", body, "test"), num_events=2,
         )
         schema_checker("events[0]", events[0])
 
@@ -2781,9 +2765,7 @@ class RealmPropertyActionTest(BaseAction):
             now = timezone_now()
             state_change_expected = True
             events = self.verify_action(
-                lambda: do_set_realm_property(
-                    self.user_profile.realm, name, val, acting_user=self.user_profile,
-                ),
+                lambda: do_set_realm_property(self.user_profile.realm, name, val, acting_user=self.user_profile),
                 state_change_expected=state_change_expected,
             )
 

@@ -162,11 +162,7 @@ class Command(BaseCommand):
         )
 
         parser.add_argument(
-            "--extra-users",
-            dest="extra_users",
-            type=int,
-            default=0,
-            help="The number of extra users to create",
+            "--extra-users", dest="extra_users", type=int, default=0, help="The number of extra users to create",
         )
 
         parser.add_argument(
@@ -471,9 +467,9 @@ class Command(BaseCommand):
             # across platforms.
 
             subscriptions_list: List[Tuple[UserProfile, Recipient]] = []
-            profiles: Sequence[UserProfile] = UserProfile.objects.select_related().filter(
-                is_bot=False,
-            ).order_by("email")
+            profiles: Sequence[UserProfile] = UserProfile.objects.select_related().filter(is_bot=False).order_by(
+                "email",
+            )
 
             if options["test_suite"]:
                 subscriptions_map = {
@@ -830,9 +826,7 @@ def generate_and_send_messages(
             saved_data["personals_pair"] = personals_pair
         elif message_type == Recipient.STREAM:
             # Pick a random subscriber to the stream
-            message.sender = random.choice(
-                Subscription.objects.filter(recipient=message.recipient),
-            ).user_profile
+            message.sender = random.choice(Subscription.objects.filter(recipient=message.recipient)).user_profile
             message.subject = random.choice(possible_topics[message.recipient.id])
             saved_data["subject"] = message.subject
 

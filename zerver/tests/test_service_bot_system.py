@@ -353,9 +353,7 @@ class TestServiceBotConfigHandler(ZulipTestCase):
             ConfigError,
             "Cannot store configuration. Request would require 101 characters. "
             "The current configuration size limit is 100 characters.",
-            lambda: set_bot_config(
-                self.bot_profile, "some key", "x" * (settings.BOT_CONFIG_SIZE_LIMIT - 8 + 1),
-            ),
+            lambda: set_bot_config(self.bot_profile, "some key", "x" * (settings.BOT_CONFIG_SIZE_LIMIT - 8 + 1)),
         )
         set_bot_config(self.bot_profile, "some key", "x" * (settings.BOT_CONFIG_SIZE_LIMIT - 20))
         set_bot_config(self.bot_profile, "another key", "x")

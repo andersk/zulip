@@ -384,9 +384,7 @@ class Realm(models.Model):
             "id": 4,
         }
 
-    video_chat_provider: int = models.PositiveSmallIntegerField(
-        default=VIDEO_CHAT_PROVIDERS["jitsi_meet"]["id"],
-    )
+    video_chat_provider: int = models.PositiveSmallIntegerField(default=VIDEO_CHAT_PROVIDERS["jitsi_meet"]["id"])
 
     default_code_block_language: Optional[str] = models.TextField(null=True, default=None)
 
@@ -695,9 +693,7 @@ class RealmEmoji(models.Model):
     PATH_ID_TEMPLATE = "{realm_id}/emoji/images/{emoji_file_name}"
 
     def __str__(self) -> str:
-        return (
-            f"<RealmEmoji({self.realm.string_id}): {self.id} {self.name} {self.deactivated} {self.file_name}>"
-        )
+        return f"<RealmEmoji({self.realm.string_id}): {self.id} {self.name} {self.deactivated} {self.file_name}>"
 
 
 def get_realm_emoji_dicts(realm: Realm, only_active_emojis: bool = False) -> Dict[str, Dict[str, Any]]:
@@ -2169,7 +2165,9 @@ class AbstractUserMessage(models.Model):
 
     def __str__(self) -> str:
         display_recipient = get_display_recipient(self.message.recipient)
-        return f"<{self.__class__.__name__}: {display_recipient} / {self.user_profile.email} ({self.flags_list()})>"
+        return (
+            f"<{self.__class__.__name__}: {display_recipient} / {self.user_profile.email} ({self.flags_list()})>"
+        )
 
 
 class UserMessage(AbstractUserMessage):
@@ -2570,8 +2568,7 @@ def get_huddle_backend(huddle_hash: str, id_list: List[int]) -> Huddle:
             huddle.recipient = recipient
             huddle.save(update_fields=["recipient"])
             subs_to_create = [
-                Subscription(recipient=recipient, user_profile_id=user_profile_id)
-                for user_profile_id in id_list
+                Subscription(recipient=recipient, user_profile_id=user_profile_id) for user_profile_id in id_list
             ]
             Subscription.objects.bulk_create(subs_to_create)
         return huddle
@@ -2820,9 +2817,7 @@ class ScheduledMessage(models.Model):
 
     def __str__(self) -> str:
         display_recipient = get_display_recipient(self.recipient)
-        return (
-            f"<ScheduledMessage: {display_recipient} {self.subject} {self.sender} {self.scheduled_timestamp}>"
-        )
+        return f"<ScheduledMessage: {display_recipient} {self.subject} {self.sender} {self.scheduled_timestamp}>"
 
 
 EMAIL_TYPES = {
@@ -3020,9 +3015,7 @@ class CustomProfileField(models.Model):
         (USER, str(_("Person picker")), check_valid_user_ids, ast.literal_eval, "USER"),
     ]
 
-    CHOICE_FIELD_VALIDATORS: Dict[int, ExtendedValidator] = {
-        item[0]: item[2] for item in CHOICE_FIELD_TYPE_DATA
-    }
+    CHOICE_FIELD_VALIDATORS: Dict[int, ExtendedValidator] = {item[0]: item[2] for item in CHOICE_FIELD_TYPE_DATA}
     USER_FIELD_VALIDATORS: Dict[int, RealmUserValidator] = {item[0]: item[2] for item in USER_FIELD_TYPE_DATA}
 
     FIELD_TYPE_DATA: List[FieldElement] = [

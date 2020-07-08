@@ -137,10 +137,7 @@ Splunk alert from saved search:
 """.strip()
 
         self.send_and_test_stream_message(
-            "missing_source",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "missing_source", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_splunk_missing_raw(self) -> None:

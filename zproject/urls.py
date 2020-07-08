@@ -138,9 +138,7 @@ v1_api_and_json_patterns = [
         rest_dispatch,
         {"GET": "zerver.views.realm_filters.list_filters", "POST": "zerver.views.realm_filters.create_filter"},
     ),
-    path(
-        "realm/filters/<int:filter_id>", rest_dispatch, {"DELETE": "zerver.views.realm_filters.delete_filter"},
-    ),
+    path("realm/filters/<int:filter_id>", rest_dispatch, {"DELETE": "zerver.views.realm_filters.delete_filter"}),
     # realm/profile_fields -> zerver.views.custom_profile_fields
     path(
         "realm/profile_fields",
@@ -209,10 +207,7 @@ v1_api_and_json_patterns = [
     path(
         "bots/<int:bot_id>",
         rest_dispatch,
-        {
-            "PATCH": "zerver.views.users.patch_bot_backend",
-            "DELETE": "zerver.views.users.deactivate_bot_backend",
-        },
+        {"PATCH": "zerver.views.users.patch_bot_backend", "DELETE": "zerver.views.users.deactivate_bot_backend"},
     ),
     # invites -> zerver.views.invite
     path(
@@ -547,17 +542,12 @@ v1_api_and_json_patterns = [
     # Used to generate a Zoom video call URL
     path("calls/zoom/create", rest_dispatch, {"POST": "zerver.views.video_calls.make_zoom_video_call"}),
     # Used to generate a Big Blue Button video call URL
-    path(
-        "calls/bigbluebutton/create", rest_dispatch, {"GET": "zerver.views.video_calls.get_bigbluebutton_url"},
-    ),
+    path("calls/bigbluebutton/create", rest_dispatch, {"GET": "zerver.views.video_calls.get_bigbluebutton_url"}),
     # export/realm -> zerver.views.realm_export
     path(
         "export/realm",
         rest_dispatch,
-        {
-            "POST": "zerver.views.realm_export.export_realm",
-            "GET": "zerver.views.realm_export.get_realm_exports",
-        },
+        {"POST": "zerver.views.realm_export.export_realm", "GET": "zerver.views.realm_export.get_realm_exports"},
     ),
     re_path(
         r"^export/realm/(?P<export_id>.*)$",
@@ -604,9 +594,7 @@ i18n_urls = [
         zerver.views.auth.log_into_subdomain,
         name="zerver.views.auth.log_into_subdomain",
     ),
-    path(
-        "accounts/login/local/", zerver.views.auth.dev_direct_login, name="zerver.views.auth.dev_direct_login",
-    ),
+    path("accounts/login/local/", zerver.views.auth.dev_direct_login, name="zerver.views.auth.dev_direct_login"),
     # We have two entries for accounts/login; only the first one is
     # used for URL resolution.  The second here is to allow
     # reverse("django.contrib.auth.views.login") in templates to

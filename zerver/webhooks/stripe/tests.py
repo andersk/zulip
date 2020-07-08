@@ -33,9 +33,7 @@ class StripeHookTests(WebhookTestCase):
 
     def test_charge_failed(self) -> None:
         expected_topic = "charges"
-        expected_message = (
-            "[Charge](https://dashboard.stripe.com/charges/ch_00000000000000) for 1.00 AUD failed"
-        )
+        expected_message = "[Charge](https://dashboard.stripe.com/charges/ch_00000000000000) for 1.00 AUD failed"
         self.send_and_test_stream_message(
             "charge_failed", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )

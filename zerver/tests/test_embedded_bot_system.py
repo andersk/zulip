@@ -60,10 +60,7 @@ class TestEmbeddedBotMessaging(ZulipTestCase):
             "zulip_bots.bots.helloworld.helloworld.HelloWorldHandler.initialize", create=True,
         ) as mock_initialize:
             self.send_stream_message(
-                self.user_profile,
-                "Denmark",
-                content=f"@**{self.bot_profile.full_name}** foo",
-                topic_name="bar",
+                self.user_profile, "Denmark", content=f"@**{self.bot_profile.full_name}** foo", topic_name="bar",
             )
             mock_initialize.assert_called_once()
 

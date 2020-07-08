@@ -8,7 +8,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AlterField(
-            model_name="attachment", name="file_name", field=models.TextField(db_index=True),
-        ),
+        migrations.AlterField(model_name="attachment", name="file_name", field=models.TextField(db_index=True)),
     ]

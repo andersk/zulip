@@ -762,10 +762,7 @@ class TestCurlExampleGeneration(ZulipTestCase):
                             "in": "query",
                             "description": "An object",
                             "content": {
-                                "application/json": {
-                                    "schema": {"type": "object"},
-                                    "example": {"key": "value"},
-                                },
+                                "application/json": {"schema": {"type": "object"}, "example": {"key": "value"}},
                             },
                             "required": True,
                         },
@@ -796,10 +793,7 @@ class TestCurlExampleGeneration(ZulipTestCase):
                             "description": "An object",
                             "required": True,
                             "content": {
-                                "application/json": {
-                                    "schema": {"type": "object"},
-                                    "example": {"key": "value"},
-                                },
+                                "application/json": {"schema": {"type": "object"}, "example": {"key": "value"}},
                             },
                         },
                     ],

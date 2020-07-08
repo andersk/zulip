@@ -223,12 +223,8 @@ class TestFollowupEmails(ZulipTestCase):
         # Hamlet has account only in Zulip realm so both day1 and day2 emails should be sent
         scheduled_emails = ScheduledEmail.objects.filter(users=hamlet).order_by("scheduled_timestamp")
         self.assertEqual(2, len(scheduled_emails))
-        self.assertEqual(
-            ujson.loads(scheduled_emails[1].data)["template_prefix"], "zerver/emails/followup_day2",
-        )
-        self.assertEqual(
-            ujson.loads(scheduled_emails[0].data)["template_prefix"], "zerver/emails/followup_day1",
-        )
+        self.assertEqual(ujson.loads(scheduled_emails[1].data)["template_prefix"], "zerver/emails/followup_day2")
+        self.assertEqual(ujson.loads(scheduled_emails[0].data)["template_prefix"], "zerver/emails/followup_day1")
 
         ScheduledEmail.objects.all().delete()
 
@@ -397,9 +393,7 @@ class TestMissedMessages(ZulipTestCase):
             "You are receiving this because you have email notifications enabled for this stream.",
         ]
         email_subject = "#Denmark > test"
-        self._test_cases(
-            msg_id, verify_body_include, email_subject, send_as_user, trigger="stream_email_notify",
-        )
+        self._test_cases(msg_id, verify_body_include, email_subject, send_as_user, trigger="stream_email_notify")
 
     def _extra_context_in_missed_stream_messages_mention_two_senders(self, send_as_user: bool) -> None:
         for i in range(0, 3):
@@ -804,8 +798,7 @@ class TestMissedMessages(ZulipTestCase):
         self.assertEqual("Hello\n\n--\n\nReply", mail.outbox[2].body[:16])
         # Sender name is not appended to message for PM missed messages
         self.assertIn(
-            ">\n                    \n                        <p>Hello</p>\n",
-            mail.outbox[2].alternatives[0][0],
+            ">\n                    \n                        <p>Hello</p>\n", mail.outbox[2].alternatives[0][0],
         )
 
     def test_multiple_missed_personal_messages(self) -> None:
@@ -904,9 +897,7 @@ class TestMissedMessages(ZulipTestCase):
         """Should receive separate emails for each topic within a stream."""
         hamlet = self.example_user("hamlet")
         msg_id_1 = self.send_stream_message(self.example_user("othello"), "Denmark", "Message1")
-        msg_id_2 = self.send_stream_message(
-            self.example_user("iago"), "Denmark", "Message2", topic_name="test2",
-        )
+        msg_id_2 = self.send_stream_message(self.example_user("iago"), "Denmark", "Message2", topic_name="test2")
 
         handle_missedmessage_emails(
             hamlet.id,

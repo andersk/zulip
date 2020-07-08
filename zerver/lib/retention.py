@@ -217,9 +217,7 @@ def move_expired_personal_and_huddle_messages_to_archive(
     check_date = timezone_now() - timedelta(days=message_retention_days)
 
     # This function will archive appropriate messages and their related objects.
-    cross_realm_bot_ids = [
-        get_user_including_cross_realm(email).id for email in settings.CROSS_REALM_BOT_EMAILS
-    ]
+    cross_realm_bot_ids = [get_user_including_cross_realm(email).id for email in settings.CROSS_REALM_BOT_EMAILS]
     recipient_types = (Recipient.PERSONAL, Recipient.HUDDLE)
 
     # Archive expired personal and huddle Messages in the realm, except cross-realm messages.

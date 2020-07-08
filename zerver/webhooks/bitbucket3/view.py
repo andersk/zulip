@@ -249,10 +249,7 @@ def get_pr_needs_work_body(payload: Dict[str, Any], include_title: Optional[bool
             user_name=get_user_name(payload), number=pr["id"], url=pr["links"]["self"][0]["href"],
         )
     return PULL_REQUEST_MARKED_AS_NEEDS_WORK_TEMPLATE_WITH_TITLE.format(
-        user_name=get_user_name(payload),
-        number=pr["id"],
-        url=pr["links"]["self"][0]["href"],
-        title=pr["title"],
+        user_name=get_user_name(payload), number=pr["id"], url=pr["links"]["self"][0]["href"], title=pr["title"],
     )
 
 

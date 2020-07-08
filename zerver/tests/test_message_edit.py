@@ -792,8 +792,7 @@ class EditMessageTest(ZulipTestCase):
         id6 = self.send_stream_message(self.example_user("iago"), "Scotland", topic_name="topic3")
 
         result = self.client_patch(
-            "/json/messages/" + str(id2),
-            {"message_id": id2, "topic": "edited", "propagate_mode": "change_all"},
+            "/json/messages/" + str(id2), {"message_id": id2, "topic": "edited", "propagate_mode": "change_all"},
         )
         self.assert_json_success(result)
 
@@ -812,8 +811,7 @@ class EditMessageTest(ZulipTestCase):
         id4 = self.send_stream_message(self.example_user("iago"), "Scotland", topic_name="toPic1")
 
         result = self.client_patch(
-            "/json/messages/" + str(id2),
-            {"message_id": id2, "topic": "edited", "propagate_mode": "change_all"},
+            "/json/messages/" + str(id2), {"message_id": id2, "topic": "edited", "propagate_mode": "change_all"},
         )
         self.assert_json_success(result)
 
@@ -869,8 +867,7 @@ class EditMessageTest(ZulipTestCase):
         messages = get_topic_messages(user_profile, old_stream, "test")
         self.assertEqual(len(messages), 1)
         self.assertEqual(
-            messages[0].content,
-            f"This topic was moved by @_**Iago|{user_profile.id}** to #**new stream>test**",
+            messages[0].content, f"This topic was moved by @_**Iago|{user_profile.id}** to #**new stream>test**",
         )
 
         messages = get_topic_messages(user_profile, new_stream, "test")
@@ -895,8 +892,7 @@ class EditMessageTest(ZulipTestCase):
         self.assertEqual(len(messages), 2)
         self.assertEqual(messages[0].id, msg_id)
         self.assertEqual(
-            messages[1].content,
-            f"This topic was moved by @_**Iago|{user_profile.id}** to #**new stream>test**",
+            messages[1].content, f"This topic was moved by @_**Iago|{user_profile.id}** to #**new stream>test**",
         )
 
         messages = get_topic_messages(user_profile, new_stream, "test")
@@ -1101,8 +1097,7 @@ class EditMessageTest(ZulipTestCase):
         messages = get_topic_messages(user_profile, old_stream, "test")
         self.assertEqual(len(messages), 1)
         self.assertEqual(
-            messages[0].content,
-            f"This topic was moved by @_**Iago|{user_profile.id}** to #**new stream>test**",
+            messages[0].content, f"This topic was moved by @_**Iago|{user_profile.id}** to #**new stream>test**",
         )
 
         messages = get_topic_messages(user_profile, new_stream, "test")

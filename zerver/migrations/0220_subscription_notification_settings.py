@@ -11,14 +11,10 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name="subscription",
-            name="audible_notifications",
-            field=models.NullBooleanField(default=None),
+            model_name="subscription", name="audible_notifications", field=models.NullBooleanField(default=None),
         ),
         migrations.AlterField(
-            model_name="subscription",
-            name="desktop_notifications",
-            field=models.NullBooleanField(default=None),
+            model_name="subscription", name="desktop_notifications", field=models.NullBooleanField(default=None),
         ),
         migrations.AlterField(
             model_name="subscription", name="email_notifications", field=models.NullBooleanField(default=None),

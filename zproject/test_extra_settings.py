@@ -202,11 +202,7 @@ SOCIAL_AUTH_SAML_SP_PUBLIC_CERT = get_from_file_if_exists("zerver/tests/fixtures
 SOCIAL_AUTH_SAML_SP_PRIVATE_KEY = get_from_file_if_exists("zerver/tests/fixtures/saml/zulip.key")
 
 SOCIAL_AUTH_SAML_ORG_INFO = {
-    "en-US": {
-        "name": "example",
-        "displayname": "Example Inc.",
-        "url": "{}{}".format("http://", EXTERNAL_HOST),
-    },
+    "en-US": {"name": "example", "displayname": "Example Inc.", "url": "{}{}".format("http://", EXTERNAL_HOST)},
 }
 
 SOCIAL_AUTH_SAML_TECHNICAL_CONTACT = {

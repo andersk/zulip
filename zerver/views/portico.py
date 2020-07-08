@@ -64,9 +64,7 @@ def team_view(request: HttpRequest) -> HttpResponse:
         data = {"contrib": {}, "date": "Never ran."}
 
     return TemplateResponse(
-        request,
-        "zerver/team.html",
-        context={"page_params": {"contrib": data["contrib"]}, "date": data["date"]},
+        request, "zerver/team.html", context={"page_params": {"contrib": data["contrib"]}, "date": data["date"]},
     )
 
 
@@ -87,9 +85,7 @@ def hello_view(request: HttpRequest) -> HttpResponse:
 
 @add_google_analytics
 def terms_view(request: HttpRequest) -> HttpResponse:
-    return TemplateResponse(
-        request, "zerver/terms.html", context={"isolated_page": get_isolated_page(request)},
-    )
+    return TemplateResponse(request, "zerver/terms.html", context={"isolated_page": get_isolated_page(request)})
 
 
 @add_google_analytics

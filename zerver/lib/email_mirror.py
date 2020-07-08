@@ -326,15 +326,7 @@ def find_emailgateway_recipient(message: EmailMessage) -> str:
     # We can't use Delivered-To; if there is a X-Gm-Original-To
     # it is more accurate, so try to find the most-accurate
     # recipient list in descending priority order
-    recipient_headers = [
-        "X-Gm-Original-To",
-        "Delivered-To",
-        "Envelope-To",
-        "Resent-To",
-        "Resent-CC",
-        "To",
-        "CC",
-    ]
+    recipient_headers = ["X-Gm-Original-To", "Delivered-To", "Envelope-To", "Resent-To", "Resent-CC", "To", "CC"]
 
     pattern_parts = [re.escape(part) for part in settings.EMAIL_GATEWAY_PATTERN.split("%s")]
     match_email_re = re.compile(".*?".join(pattern_parts))

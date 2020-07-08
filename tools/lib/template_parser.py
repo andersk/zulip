@@ -161,9 +161,7 @@ def tokenize(text: str) -> List[Token]:
                 advance(1)
                 continue
         except TokenizationException as e:
-            raise FormattedException(
-                f'''{e.message} at Line {state.line} Col {state.col}:"{e.line_content}"''',
-            )
+            raise FormattedException(f'''{e.message} at Line {state.line} Col {state.col}:"{e.line_content}"''')
 
         line_span = len(s.split("\n"))
         token = Token(kind=kind, s=s, tag=tag.strip(), line=state.line, col=state.col, line_span=line_span)

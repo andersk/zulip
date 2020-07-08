@@ -82,8 +82,7 @@ def parse_cache_script_args(description: str) -> argparse.Namespace:
         "--verbose",
         dest="verbose",
         action="store_true",
-        help="If specified then script will print a detailed report "
-        "of what is being will deleted/kept back.",
+        help="If specified then script will print a detailed report " "of what is being will deleted/kept back.",
     )
     parser.add_argument(
         "--no-print-headings",

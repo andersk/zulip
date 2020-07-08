@@ -499,11 +499,7 @@ def re_map_foreign_keys_many_to_many(
 
 
 def re_map_foreign_keys_many_to_many_internal(
-    table: TableName,
-    field_name: Field,
-    related_table: TableName,
-    old_id_list: List[int],
-    verbose: bool = False,
+    table: TableName, field_name: Field, related_table: TableName, old_id_list: List[int], verbose: bool = False,
 ) -> List[int]:
     """
     This is an internal function for tables with ManyToMany fields,

@@ -50,8 +50,6 @@ class Migration(migrations.Migration):
         # The TextField change was originally in the next migration,
         # but because it fixes a problem that causes the RunPython
         # part of this migration to crash, we've copied it here.
-        migrations.AlterField(
-            model_name="attachment", name="file_name", field=models.TextField(db_index=True),
-        ),
+        migrations.AlterField(model_name="attachment", name="file_name", field=models.TextField(db_index=True)),
         migrations.RunPython(check_and_create_attachments, elidable=True),
     ]

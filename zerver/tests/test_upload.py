@@ -441,9 +441,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
             f"[f3.txt](http://{host}/user_uploads/" + f3_path_id + ") "
             "[f2.txt](http://{}/user_uploads/".format(host) + f2_path_id + ")"
         )
-        result = self.client_patch(
-            "/json/messages/" + str(msg_id), {"message_id": msg_id, "content": new_body},
-        )
+        result = self.client_patch("/json/messages/" + str(msg_id), {"message_id": msg_id, "content": new_body})
         self.assert_json_success(result)
 
         message = Message.objects.get(id=msg_id)
@@ -457,9 +455,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
 
         # Delete all the attachments from the message
         new_body = "(deleted)"
-        result = self.client_patch(
-            "/json/messages/" + str(msg_id), {"message_id": msg_id, "content": new_body},
-        )
+        result = self.client_patch("/json/messages/" + str(msg_id), {"message_id": msg_id, "content": new_body})
         self.assert_json_success(result)
 
         message = Message.objects.get(id=msg_id)
@@ -865,8 +861,7 @@ class AvatarTest(UploadSerializeMixin, ZulipTestCase):
                 backend.get_avatar_url("hash", True), "https://bucket.s3.amazonaws.com/hash-medium.png?x=x",
             )
             self.assertEqual(
-                backend.get_realm_icon_url(15, 1),
-                "https://bucket.s3.amazonaws.com/15/realm/icon.png?version=1",
+                backend.get_realm_icon_url(15, 1), "https://bucket.s3.amazonaws.com/15/realm/icon.png?version=1",
             )
             self.assertEqual(
                 backend.get_realm_logo_url(15, 1, False),
@@ -1921,17 +1916,13 @@ class UploadSpaceTests(UploadSerializeMixin, ZulipTestCase):
 
         data2 = b"more-data!"
         upload_message_file("dummy2.txt", len(data2), "text/plain", data2, self.user_profile)
-        self.assertEqual(
-            len(data) + len(data2), cache_get(get_realm_used_upload_space_cache_key(self.realm))[0],
-        )
+        self.assertEqual(len(data) + len(data2), cache_get(get_realm_used_upload_space_cache_key(self.realm))[0])
         self.assertEqual(len(data) + len(data2), self.realm.currently_used_upload_space_bytes())
 
         attachment = Attachment.objects.get(file_name="dummy.txt")
         attachment.file_name = "dummy1.txt"
         attachment.save(update_fields=["file_name"])
-        self.assertEqual(
-            len(data) + len(data2), cache_get(get_realm_used_upload_space_cache_key(self.realm))[0],
-        )
+        self.assertEqual(len(data) + len(data2), cache_get(get_realm_used_upload_space_cache_key(self.realm))[0])
         self.assertEqual(len(data) + len(data2), self.realm.currently_used_upload_space_bytes())
 
         attachment.delete()

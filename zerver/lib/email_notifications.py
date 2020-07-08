@@ -188,7 +188,9 @@ def build_message_list(user_profile: UserProfile, messages: List[Message]) -> Li
             narrow_link = get_narrow_url(user_profile, message, stream=stream)
             header = f"{stream.name} > {message.topic_name()}"
             stream_link = stream_narrow_url(user_profile.realm, stream)
-            header_html = f"<a href='{stream_link}'>{stream.name}</a> > <a href='{narrow_link}'>{message.topic_name()}</a>"
+            header_html = (
+                f"<a href='{stream_link}'>{stream.name}</a> > <a href='{narrow_link}'>{message.topic_name()}</a>"
+            )
         return {
             "plain": header,
             "html": header_html,

@@ -462,9 +462,7 @@ class ZulipTestCase(TestCase):
             payload["realm_in_root_domain"] = realm_in_root_domain
         return self.client_post("/accounts/register/", payload, **kwargs)
 
-    def get_confirmation_url_from_outbox(
-        self, email_address: str, *, url_pattern: Optional[str] = None,
-    ) -> str:
+    def get_confirmation_url_from_outbox(self, email_address: str, *, url_pattern: Optional[str] = None) -> str:
         from django.core.mail import outbox
 
         if url_pattern is None:

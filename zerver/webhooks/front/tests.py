@@ -153,10 +153,7 @@ class FrontHookTests(WebhookTestCase):
         )
 
         self.send_and_test_stream_message(
-            "outbound_reply",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "outbound_reply", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_conversation_untagged(self) -> None:

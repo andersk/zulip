@@ -335,8 +335,7 @@ class TestStreamEmailMessagesSuccess(ZulipTestCase):
         message = most_recent_message(user_profile)
 
         self.assertEqual(
-            message.content,
-            "From: {}\n{}".format(self.example_email("hamlet"), "TestStreamEmailMessages Body"),
+            message.content, "From: {}\n{}".format(self.example_email("hamlet"), "TestStreamEmailMessages Body"),
         )
         self.assertEqual(get_display_recipient(message.recipient), stream.name)
         self.assertEqual(message.topic_name(), incoming_valid_message["Subject"])

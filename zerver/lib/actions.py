@@ -307,9 +307,7 @@ def can_access_stream_user_ids(stream: Stream) -> Set[int]:
         return public_stream_user_ids(stream)
     else:
         # for a private stream, it's subscribers plus realm admins.
-        return private_stream_user_ids(stream.id) | {
-            user.id for user in stream.realm.get_admin_users_and_bots()
-        }
+        return private_stream_user_ids(stream.id) | {user.id for user in stream.realm.get_admin_users_and_bots()}
 
 
 def private_stream_user_ids(stream_id: int) -> Set[int]:
@@ -951,10 +949,7 @@ def do_scrub_realm(realm: Realm, acting_user: Optional[UserProfile] = None) -> N
     Attachment.objects.filter(realm=realm).delete()
 
     RealmAuditLog.objects.create(
-        realm=realm,
-        event_time=timezone_now(),
-        acting_user=acting_user,
-        event_type=RealmAuditLog.REALM_SCRUBBED,
+        realm=realm, event_time=timezone_now(), acting_user=acting_user, event_type=RealmAuditLog.REALM_SCRUBBED,
     )
 
 
@@ -1947,9 +1942,7 @@ def do_add_reaction(
     notify_reaction_update(user_profile, message, reaction, "add")
 
 
-def do_remove_reaction(
-    user_profile: UserProfile, message: Message, emoji_code: str, reaction_type: str,
-) -> None:
+def do_remove_reaction(user_profile: UserProfile, message: Message, emoji_code: str, reaction_type: str) -> None:
     reaction = Reaction.objects.filter(
         user_profile=user_profile, message=message, emoji_code=emoji_code, reaction_type=reaction_type,
     ).get()
@@ -2984,9 +2977,7 @@ def bulk_add_subscriptions(
         else:
             color = pick_color(user_profile, subs_by_user[user_profile.id])
 
-        sub_to_add = Subscription(
-            user_profile=user_profile, active=True, color=color, recipient_id=recipient_id,
-        )
+        sub_to_add = Subscription(user_profile=user_profile, active=True, color=color, recipient_id=recipient_id)
         subs_by_user[user_profile.id].append(sub_to_add)
         subs_to_add.append((sub_to_add, stream))
 
@@ -3032,9 +3023,7 @@ def bulk_add_subscriptions(
     RealmAuditLog.objects.bulk_create(all_subscription_logs)
 
     new_occupied_streams = [
-        stream
-        for stream in set(occupied_streams_after) - set(occupied_streams_before)
-        if not stream.invite_only
+        stream for stream in set(occupied_streams_after) - set(occupied_streams_before) if not stream.invite_only
     ]
     if new_occupied_streams and not from_stream_creation:
         event: Dict[str, object] = dict(
@@ -3260,9 +3249,7 @@ def bulk_remove_subscriptions(
 
         if peer_user_ids:
             for removed_user in altered_users:
-                event = dict(
-                    type="subscription", op="peer_remove", stream_id=stream.id, user_id=removed_user.id,
-                )
+                event = dict(type="subscription", op="peer_remove", stream_id=stream.id, user_id=removed_user.id)
                 send_event(our_realm, event, peer_user_ids)
 
     for stream in streams:
@@ -3436,9 +3423,7 @@ def do_change_bot_owner(user_profile: UserProfile, bot_owner: UserProfile, actin
     send_event(
         user_profile.realm,
         dict(
-            type="realm_bot",
-            op="update",
-            bot=dict(user_id=user_profile.id, owner_id=user_profile.bot_owner.id),
+            type="realm_bot", op="update", bot=dict(user_id=user_profile.id, owner_id=user_profile.bot_owner.id),
         ),
         update_users,
     )
@@ -4052,8 +4037,7 @@ def lookup_default_stream_groups(
 
 def notify_default_streams(realm: Realm) -> None:
     event = dict(
-        type="default_streams",
-        default_streams=streams_to_dicts_sorted(get_default_streams_for_realm(realm.id)),
+        type="default_streams", default_streams=streams_to_dicts_sorted(get_default_streams_for_realm(realm.id)),
     )
     send_event(realm, event, active_non_guest_user_ids(realm.id))
 
@@ -4382,11 +4366,7 @@ def do_mark_all_as_read(user_profile: UserProfile, client: Client) -> int:
         user_profile, COUNT_STATS["messages_read::hour"], None, event_time, increment=count,
     )
     do_increment_logging_stat(
-        user_profile,
-        COUNT_STATS["messages_read_interactions::hour"],
-        None,
-        event_time,
-        increment=min(1, count),
+        user_profile, COUNT_STATS["messages_read_interactions::hour"], None, event_time, increment=min(1, count),
     )
 
     return count
@@ -4421,11 +4401,7 @@ def do_mark_stream_messages_as_read(
         user_profile, COUNT_STATS["messages_read::hour"], None, event_time, increment=count,
     )
     do_increment_logging_stat(
-        user_profile,
-        COUNT_STATS["messages_read_interactions::hour"],
-        None,
-        event_time,
-        increment=min(1, count),
+        user_profile, COUNT_STATS["messages_read_interactions::hour"], None, event_time, increment=min(1, count),
     )
     return count
 
@@ -5320,11 +5296,7 @@ def gather_subscriptions(
 
 
 def get_active_presence_idle_user_ids(
-    realm: Realm,
-    sender_id: int,
-    message_type: str,
-    active_user_ids: Set[int],
-    user_flags: Dict[int, List[str]],
+    realm: Realm, sender_id: int, message_type: str, active_user_ids: Set[int], user_flags: Dict[int, List[str]],
 ) -> List[int]:
     """
     Given a list of active_user_ids, we build up a subset
@@ -6229,9 +6201,7 @@ def get_service_dicts_for_bot(user_profile_id: int) -> List[Dict[str, Any]]:
     return service_dicts
 
 
-def get_service_dicts_for_bots(
-    bot_dicts: List[Dict[str, Any]], realm: Realm,
-) -> Dict[int, List[Dict[str, Any]]]:
+def get_service_dicts_for_bots(bot_dicts: List[Dict[str, Any]], realm: Realm) -> Dict[int, List[Dict[str, Any]]]:
     bot_profile_ids = [bot_dict["id"] for bot_dict in bot_dicts]
     bot_services_by_uid: Dict[int, List[Service]] = defaultdict(list)
     for service in Service.objects.filter(user_profile_id__in=bot_profile_ids):
@@ -6290,9 +6260,7 @@ def get_owned_bot_dicts(
     ]
 
 
-def do_send_user_group_members_update_event(
-    event_name: str, user_group: UserGroup, user_ids: List[int],
-) -> None:
+def do_send_user_group_members_update_event(event_name: str, user_group: UserGroup, user_ids: List[int]) -> None:
     event = dict(type="user_group", op=event_name, group_id=user_group.id, user_ids=user_ids)
     send_event(user_group.realm, event, active_user_ids(user_group.realm_id))
 
@@ -6373,7 +6341,7 @@ def do_delete_realm_export(user_profile: UserProfile, export: RealmAuditLog) -> 
 
 
 def get_topic_messages(user_profile: UserProfile, stream: Stream, topic_name: str) -> List[Message]:
-    query = UserMessage.objects.filter(
-        user_profile=user_profile, message__recipient=stream.recipient,
-    ).order_by("id")
+    query = UserMessage.objects.filter(user_profile=user_profile, message__recipient=stream.recipient).order_by(
+        "id",
+    )
     return [um.message for um in filter_by_topic_name_via_message(query, topic_name)]

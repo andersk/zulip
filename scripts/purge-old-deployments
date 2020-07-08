@@ -13,8 +13,7 @@ from scripts.lib.zulip_tools import DEPLOYMENTS_DIR, get_recent_deployments, may
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="This script can be used for cleaning old unused deployments.",
-        epilog="Orphaned/unused caches older than threshold days will be automatically "
-        "examined and removed.",
+        epilog="Orphaned/unused caches older than threshold days will be automatically " "examined and removed.",
     )
     parser.add_argument(
         "--threshold",

@@ -81,16 +81,12 @@ class Bitbucket3HookTests(WebhookTestCase):
         self.url = self.build_webhook_url(branches="master")
         expected_message = """[hypro999](http://139.59.64.214:7990/users/hypro999) pushed to branch master. Head is now fc43d13cff1abb28631196944ba4fc4ad06a2cf2."""
         expected_topic = self.EXPECTED_TOPIC_BRANCH_EVENTS.format(branch="master")
-        self.send_and_test_stream_message(
-            "repo_push_update_multiple_branches", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("repo_push_update_multiple_branches", expected_topic, expected_message)
 
         self.url = self.build_webhook_url(branches="branch1")
         expected_message = """[hypro999](http://139.59.64.214:7990/users/hypro999) pushed to branch branch1. Head is now 3980c2be32a7e23c795741d5dc1a2eecb9b85d6d."""
         expected_topic = self.EXPECTED_TOPIC_BRANCH_EVENTS.format(branch="branch1")
-        self.send_and_test_stream_message(
-            "repo_push_update_multiple_branches", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("repo_push_update_multiple_branches", expected_topic, expected_message)
 
     # Core PR Events:
     def test_pr_opened_without_reviewers(self) -> None:

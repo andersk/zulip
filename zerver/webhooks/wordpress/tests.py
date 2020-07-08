@@ -52,9 +52,7 @@ class WordPressHookTests(WebhookTestCase):
     def test_user_register(self) -> None:
 
         expected_topic = "New Blog Users"
-        expected_message = (
-            "New blog user registered:\n* **Name**: test_user\n* **Email**: test_user@example.com"
-        )
+        expected_message = "New blog user registered:\n* **Name**: test_user\n* **Email**: test_user@example.com"
 
         self.send_and_test_stream_message(
             "user_register", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",

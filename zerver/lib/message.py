@@ -283,9 +283,7 @@ class MessageDict:
         return encoded_messages
 
     @staticmethod
-    def to_dict_uncached_helper(
-        messages: List[Message], realm_id: Optional[int] = None,
-    ) -> List[Dict[str, Any]]:
+    def to_dict_uncached_helper(messages: List[Message], realm_id: Optional[int] = None) -> List[Dict[str, Any]]:
         # Near duplicate of the build_message_dict + get_raw_db_rows
         # code path that accepts already fetched Message objects
         # rather than message IDs.
@@ -604,9 +602,7 @@ def access_message(user_profile: UserProfile, message_id: int) -> Tuple[Message,
     raise JsonableError(_("Invalid message(s)"))
 
 
-def has_message_access(
-    user_profile: UserProfile, message: Message, user_message: Optional[UserMessage],
-) -> bool:
+def has_message_access(user_profile: UserProfile, message: Message, user_message: Optional[UserMessage]) -> bool:
     if user_message is None:
         if message.recipient.type != Recipient.STREAM:
             # You can't access private messages you didn't receive

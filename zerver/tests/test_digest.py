@@ -285,9 +285,7 @@ class TestDigestEmailMessages(ZulipTestCase):
         cordelia = self.example_user("cordelia")
         stream_id = create_stream_if_needed(cordelia.realm, "New stream")[0].id
         new_stream = gather_new_streams(cordelia, cutoff)[1]
-        expected_html = (
-            f"<a href='http://zulip.testserver/#narrow/stream/{stream_id}-New-stream'>New stream</a>"
-        )
+        expected_html = f"<a href='http://zulip.testserver/#narrow/stream/{stream_id}-New-stream'>New stream</a>"
         self.assertIn(expected_html, new_stream["html"])
 
     def simulate_stream_conversation(self, stream: str, senders: List[str]) -> List[int]:

@@ -278,9 +278,7 @@ class TestProcessCountStat(AnalyticsTestCase):
         user = self.create_user()
         stream = self.create_stream_with_recipient()[0]
         realm = self.default_realm
-        UserCount.objects.create(
-            user=user, realm=realm, property=user_stat.property, end_time=end_time, value=5,
-        )
+        UserCount.objects.create(user=user, realm=realm, property=user_stat.property, end_time=end_time, value=5)
         StreamCount.objects.create(
             stream=stream, realm=realm, property=stream_stat.property, end_time=end_time, value=5,
         )
@@ -393,10 +391,7 @@ class TestProcessCountStat(AnalyticsTestCase):
         """,
         ).format(default_realm_id=Literal(self.default_realm.id), property=Literal("stat4"))
         stat4 = DependentCountStat(
-            "stat4",
-            sql_data_collector(RealmCount, query, None),
-            CountStat.DAY,
-            dependencies=["stat1", "stat2"],
+            "stat4", sql_data_collector(RealmCount, query, None), CountStat.DAY, dependencies=["stat1", "stat2"],
         )
         hour24 = installation_epoch() + 24 * self.HOUR
         hour25 = installation_epoch() + 25 * self.HOUR
@@ -419,9 +414,7 @@ class TestCountStats(AnalyticsTestCase):
         for minutes_ago in [0, 1, 61, 60 * 24 + 1]:
             creation_time = self.TIME_ZERO - minutes_ago * self.MINUTE
             user = self.create_user(
-                email=f"user-{minutes_ago}@second.analytics",
-                realm=self.second_realm,
-                date_joined=creation_time,
+                email=f"user-{minutes_ago}@second.analytics", realm=self.second_realm, date_joined=creation_time,
             )
             recipient = self.create_stream_with_recipient(
                 name=f"stream {minutes_ago}", realm=self.second_realm, date_created=creation_time,

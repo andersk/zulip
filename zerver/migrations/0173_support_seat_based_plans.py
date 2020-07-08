@@ -14,8 +14,6 @@ class Migration(migrations.Migration):
             model_name="realm", name="has_seat_based_plan", field=models.BooleanField(default=False),
         ),
         migrations.AddField(
-            model_name="realmauditlog",
-            name="requires_billing_update",
-            field=models.BooleanField(default=False),
+            model_name="realmauditlog", name="requires_billing_update", field=models.BooleanField(default=False),
         ),
     ]

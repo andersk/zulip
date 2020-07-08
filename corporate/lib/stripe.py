@@ -471,9 +471,7 @@ def process_initial_upgrade(
         }
         if free_trial:
             plan_params["status"] = CustomerPlan.FREE_TRIAL
-        plan = CustomerPlan.objects.create(
-            customer=customer, next_invoice_date=next_invoice_date, **plan_params,
-        )
+        plan = CustomerPlan.objects.create(customer=customer, next_invoice_date=next_invoice_date, **plan_params)
         ledger_entry = LicenseLedger.objects.create(
             plan=plan,
             is_renewal=True,
@@ -577,9 +575,7 @@ def invoice_plan(plan: CustomerPlan, event_time: datetime) -> None:
         elif licenses_base is not None and ledger_entry.licenses != licenses_base:
             assert plan.price_per_license
             last_renewal = (
-                LicenseLedger.objects.filter(
-                    plan=plan, is_renewal=True, event_time__lte=ledger_entry.event_time,
-                )
+                LicenseLedger.objects.filter(plan=plan, is_renewal=True, event_time__lte=ledger_entry.event_time)
                 .order_by("-id")
                 .first()
                 .event_time

@@ -61,9 +61,7 @@ class WidgetContentTestCase(ZulipTestCase):
         sender = self.example_user("cordelia")
         stream_name = "Verona"
 
-        payload = dict(
-            type="stream", to=stream_name, client="test suite", topic="whatever", content="whatever",
-        )
+        payload = dict(type="stream", to=stream_name, client="test suite", topic="whatever", content="whatever")
 
         payload["widget_content"] = "{{{{{{"  # unparsable
         result = self.api_post(sender, "/api/v1/messages", payload)

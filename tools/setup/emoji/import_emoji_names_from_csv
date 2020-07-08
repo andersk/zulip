@@ -18,8 +18,7 @@ from typing import Any, Dict, List, Set
 EMOJI_DIR_PATH = os.path.dirname(os.path.abspath(__file__))
 
 ACTIVE_ENTRY = (
-    "%(explanation)s"
-    "\n    '%(emoji_code)s': {'canonical_name': '%(canonical_name)s', 'aliases': %(aliases)s},"
+    "%(explanation)s" "\n    '%(emoji_code)s': {'canonical_name': '%(canonical_name)s', 'aliases': %(aliases)s},"
 )
 
 INACTIVE_ENTRY = (

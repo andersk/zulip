@@ -17,9 +17,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(model_name="realmcount", name="interval", field=models.CharField(max_length=8)),
         migrations.AlterField(model_name="realmcount", name="property", field=models.CharField(max_length=32)),
         migrations.AlterField(model_name="streamcount", name="interval", field=models.CharField(max_length=8)),
-        migrations.AlterField(
-            model_name="streamcount", name="property", field=models.CharField(max_length=32),
-        ),
+        migrations.AlterField(model_name="streamcount", name="property", field=models.CharField(max_length=32)),
         migrations.AlterField(model_name="usercount", name="interval", field=models.CharField(max_length=8)),
         migrations.AlterField(model_name="usercount", name="property", field=models.CharField(max_length=32)),
     ]

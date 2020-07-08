@@ -55,11 +55,7 @@ def send_to_push_bouncer(
         res = requests.request(
             method, url, data=post_data, auth=api_auth, timeout=30, verify=True, headers=headers,
         )
-    except (
-        requests.exceptions.Timeout,
-        requests.exceptions.SSLError,
-        requests.exceptions.ConnectionError,
-    ) as e:
+    except (requests.exceptions.Timeout, requests.exceptions.SSLError, requests.exceptions.ConnectionError) as e:
         raise PushNotificationBouncerRetryLaterError(
             f"{e.__class__.__name__} while trying to connect to push notification bouncer",
         )

@@ -44,9 +44,7 @@ class ZulipBaseCommand(BaseCommand):
         parser.formatter_class = RawTextHelpFormatter
         return parser
 
-    def add_realm_args(
-        self, parser: ArgumentParser, required: bool = False, help: Optional[str] = None,
-    ) -> None:
+    def add_realm_args(self, parser: ArgumentParser, required: bool = False, help: Optional[str] = None) -> None:
         if help is None:
             help = """The numeric or string ID (subdomain) of the Zulip organization to modify.
 You can use the command list_realms to find ID of the realms in this server."""

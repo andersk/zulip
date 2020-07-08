@@ -114,9 +114,7 @@ class NarrowBuilderTest(ZulipTestCase):
         term = dict(operator="stream", operand="Scotland", negated=True)
         self._do_add_term_test(term, "WHERE recipient_id != %(recipient_id_1)s")
 
-    def test_add_term_using_stream_operator_and_non_existing_operand_should_raise_error(
-        self,
-    ) -> None:  # NEGATED
+    def test_add_term_using_stream_operator_and_non_existing_operand_should_raise_error(self) -> None:  # NEGATED
         term = dict(operator="stream", operand="NonExistingStream")
         self.assertRaises(BadNarrowOperator, self._build_query, term)
 
@@ -223,9 +221,7 @@ class NarrowBuilderTest(ZulipTestCase):
         self._do_add_term_test(term, where_clause, params)
 
         term = dict(operator="is", operand="mentioned", negated=True)
-        where_clause = (
-            "WHERE NOT ((flags & %(flags_1)s) != %(param_1)s OR (flags & %(flags_2)s) != %(param_2)s)"
-        )
+        where_clause = "WHERE NOT ((flags & %(flags_1)s) != %(param_1)s OR (flags & %(flags_2)s) != %(param_2)s)"
         params = dict(
             flags_1=UserMessage.flags.mentioned.mask,
             param_1=0,
@@ -1369,9 +1365,7 @@ class GetOldMessagesTest(ZulipTestCase):
         # clients around, which might include third party home-grown bots.
         self.get_and_check_messages(dict(narrow=ujson.dumps([["pm-with", othello_email]])))
 
-        self.get_and_check_messages(
-            dict(narrow=ujson.dumps([dict(operator="pm-with", operand=othello_email)])),
-        )
+        self.get_and_check_messages(dict(narrow=ujson.dumps([dict(operator="pm-with", operand=othello_email)])))
 
     def test_client_avatar(self) -> None:
         """
@@ -1531,9 +1525,7 @@ class GetOldMessagesTest(ZulipTestCase):
             dict(operator="stream", operand=stream_name),
         ]
 
-        req = dict(
-            narrow=ujson.dumps(narrow), anchor=LARGER_THAN_MAX_MESSAGE_ID, num_before=100, num_after=100,
-        )
+        req = dict(narrow=ujson.dumps(narrow), anchor=LARGER_THAN_MAX_MESSAGE_ID, num_before=100, num_after=100)
 
         payload = self.client_get("/json/messages", req)
         self.assert_json_success(payload)
@@ -1637,9 +1629,7 @@ class GetOldMessagesTest(ZulipTestCase):
         self.send_stream_message(mit_user_profile, "Scotland", topic_name="\u03bb-topic.d.d.d.d")
 
         narrow = [dict(operator="topic", operand="\u03bb-topic")]
-        result = self.get_and_check_messages(
-            dict(num_after=100, narrow=ujson.dumps(narrow)), subdomain="zephyr",
-        )
+        result = self.get_and_check_messages(dict(num_after=100, narrow=ujson.dumps(narrow)), subdomain="zephyr")
 
         messages = get_user_messages(mit_user_profile)
         stream_messages = [msg for msg in messages if msg.is_stream_message()]
@@ -2709,9 +2699,7 @@ class GetOldMessagesTest(ZulipTestCase):
         ]
         set_topic_mutes(user_profile, muted_topics)
 
-        query_params = dict(
-            anchor="first_unread", num_before=0, num_after=0, narrow='[["stream", "Scotland"]]',
-        )
+        query_params = dict(anchor="first_unread", num_before=0, num_after=0, narrow='[["stream", "Scotland"]]')
         request = POSTRequestMock(query_params, user_profile)
 
         with queries_captured() as all_queries:
@@ -3106,9 +3094,7 @@ class MessageHasKeywordsTest(ZulipTestCase):
         msg_ids = []
         msg_contents = ["foo.org", "[bar](baz.gov)", "http://quux.ca"]
         for msg_content in msg_contents:
-            msg_ids.append(
-                self.send_stream_message(self.example_user("hamlet"), "Denmark", content=msg_content),
-            )
+            msg_ids.append(self.send_stream_message(self.example_user("hamlet"), "Denmark", content=msg_content))
         msgs = [Message.objects.get(id=id) for id in msg_ids]
         self.assertTrue(all([msg.has_link for msg in msgs]))
 
@@ -3116,9 +3102,7 @@ class MessageHasKeywordsTest(ZulipTestCase):
         msg_ids = []
         msg_contents = ["`example.org`", "``example.org```", "$$https://example.org$$", "foo"]
         for msg_content in msg_contents:
-            msg_ids.append(
-                self.send_stream_message(self.example_user("hamlet"), "Denmark", content=msg_content),
-            )
+            msg_ids.append(self.send_stream_message(self.example_user("hamlet"), "Denmark", content=msg_content))
         msgs = [Message.objects.get(id=id) for id in msg_ids]
         self.assertFalse(all([msg.has_link for msg in msgs]))
 
@@ -3167,9 +3151,7 @@ class MessageHasKeywordsTest(ZulipTestCase):
             "[Google Link](https://www.google.com/images/srpr/logo4w.png)",
         ]
         for msg_content in msg_contents:
-            msg_ids.append(
-                self.send_stream_message(self.example_user("hamlet"), "Denmark", content=msg_content),
-            )
+            msg_ids.append(self.send_stream_message(self.example_user("hamlet"), "Denmark", content=msg_content))
         msgs = [Message.objects.get(id=id) for id in msg_ids]
         self.assertEqual([False, True, False, True], [msg.has_image for msg in msgs])
 

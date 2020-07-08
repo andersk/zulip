@@ -32,15 +32,11 @@ def api_opsgenie_webhook(
     if "recipient" in payload["alert"]:
         info["additional_info"] += bullet_template.format(key="Recipient", value=payload["alert"]["recipient"])
     if "addedTags" in payload["alert"]:
-        info["additional_info"] += bullet_template.format(
-            key="Tags added", value=payload["alert"]["addedTags"],
-        )
+        info["additional_info"] += bullet_template.format(key="Tags added", value=payload["alert"]["addedTags"])
     if "team" in payload["alert"]:
         info["additional_info"] += bullet_template.format(key="Team added", value=payload["alert"]["team"])
     if "owner" in payload["alert"]:
-        info["additional_info"] += bullet_template.format(
-            key="Assigned owner", value=payload["alert"]["owner"],
-        )
+        info["additional_info"] += bullet_template.format(key="Assigned owner", value=payload["alert"]["owner"])
     if "escalationName" in payload:
         info["additional_info"] += bullet_template.format(key="Escalation", value=payload["escalationName"])
     if "removedTags" in payload["alert"]:

@@ -55,9 +55,7 @@ def add_subscriptions(client: Client) -> None:
 
     # {code_example|start}
     # Subscribe to the stream "new stream"
-    result = client.add_subscriptions(
-        streams=[{"name": "new stream", "description": "New stream for testing"}],
-    )
+    result = client.add_subscriptions(streams=[{"name": "new stream", "description": "New stream for testing"}])
     # {code_example|end}
 
     validate_against_openapi_schema(result, "/users/me/subscriptions", "post", "200_0")

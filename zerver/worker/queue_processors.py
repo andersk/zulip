@@ -337,9 +337,7 @@ class SignupWorker(QueueProcessingWorker):
             params["status"] = "subscribed"
             r = requests.post(endpoint, auth=("apikey", settings.MAILCHIMP_API_KEY), json=params, timeout=10)
             if r.status_code == 400 and ujson.loads(r.text)["title"] == "Member Exists":
-                logging.warning(
-                    "Attempted to sign up already existing email to list: %s", data["email_address"],
-                )
+                logging.warning("Attempted to sign up already existing email to list: %s", data["email_address"])
             elif r.status_code == 400:
                 retry_event(self.queue_name, data, lambda e: r.raise_for_status())
             else:
@@ -693,9 +691,7 @@ class EmbeddedBotWorker(QueueProcessingWorker):
             bot_handler = get_bot_handler(str(service.name))
             if bot_handler is None:
                 logging.error(
-                    "Error: User %s has bot with invalid embedded bot service %s",
-                    user_profile_id,
-                    service.name,
+                    "Error: User %s has bot with invalid embedded bot service %s", user_profile_id, service.name,
                 )
                 continue
             try:

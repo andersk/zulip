@@ -68,9 +68,7 @@ def topic_and_body(payload: Dict[str, Any]) -> Tuple[str, str]:
         )
 
     def default_body(update_blacklist: Sequence[str] = []) -> str:
-        body = "{resource} {verbed}".format(
-            resource=linkified_id(object_["id"]), verbed=event.replace("_", " "),
-        )
+        body = "{resource} {verbed}".format(resource=linkified_id(object_["id"]), verbed=event.replace("_", " "))
         if event == "updated":
             return body + update_string(blacklist=update_blacklist)
         return body

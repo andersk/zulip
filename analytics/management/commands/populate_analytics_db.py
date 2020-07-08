@@ -115,11 +115,7 @@ class Command(BaseCommand):
                 table.objects.bulk_create(
                     [
                         table(
-                            property=stat.property,
-                            subgroup=subgroup,
-                            end_time=end_time,
-                            value=value,
-                            **id_args,
+                            property=stat.property, subgroup=subgroup, end_time=end_time, value=value, **id_args,
                         )
                         for end_time, value in zip(end_times, values)
                         if value != 0

@@ -24,9 +24,7 @@ You can use "-" to represent stdin.
 """
 
     def add_arguments(self, parser: ArgumentParser) -> None:
-        parser.add_argument(
-            "queue_name", metavar="<queue>", type=str, help="name of worker queue to enqueue to",
-        )
+        parser.add_argument("queue_name", metavar="<queue>", type=str, help="name of worker queue to enqueue to")
         parser.add_argument("file_name", metavar="<file>", type=str, help="name of file containing JSON lines")
 
     def handle(self, *args: Any, **options: str) -> None:

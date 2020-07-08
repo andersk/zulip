@@ -406,9 +406,7 @@ class OurAuthenticationForm(AuthenticationForm):
                 raise ValidationError(mark_safe(DEACTIVATED_ACCOUNT_ERROR))
 
             if return_data.get("invalid_subdomain"):
-                logging.warning(
-                    "User %s attempted to password login to wrong subdomain %s", username, subdomain,
-                )
+                logging.warning("User %s attempted to password login to wrong subdomain %s", username, subdomain)
                 raise ValidationError(mark_safe(WRONG_SUBDOMAIN_ERROR))
 
             if self.user_cache is None:

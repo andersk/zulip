@@ -937,9 +937,7 @@ def do_events_register(
     return ret
 
 
-def post_process_state(
-    user_profile: UserProfile, ret: Dict[str, Any], notification_settings_null: bool,
-) -> None:
+def post_process_state(user_profile: UserProfile, ret: Dict[str, Any], notification_settings_null: bool) -> None:
     """
     NOTE:
 

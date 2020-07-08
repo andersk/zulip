@@ -59,9 +59,7 @@ files_dict = lister.list_files(
     extless_only=args.scripts_only,
 )
 pyi_files = list(files_dict["pyi"])
-python_files = [
-    fpath for fpath in files_dict["py"] if not fpath.endswith(".py") or fpath + "i" not in pyi_files
-]
+python_files = [fpath for fpath in files_dict["py"] if not fpath.endswith(".py") or fpath + "i" not in pyi_files]
 if not python_files and not pyi_files:
     print("There are no files to run mypy on.")
     sys.exit(0)

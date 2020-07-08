@@ -262,9 +262,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ("domain", models.CharField(db_index=True, max_length=80, unique=True)),
                 (
                     "realm",
-                    models.ForeignKey(
-                        null=True, on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm",
-                    ),
+                    models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm"),
                 ),
             ],
         ),
@@ -430,10 +428,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                         default=0,
                     ),
                 ),
-                (
-                    "message",
-                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Message"),
-                ),
+                ("message", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Message")),
                 (
                     "user_profile",
                     models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),

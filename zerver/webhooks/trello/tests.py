@@ -31,7 +31,9 @@ class TrelloHookTests(WebhookTestCase):
         self.send_and_test_stream_message("adding_label_to_card", "Welcome Board", expected_message)
 
     def test_trello_webhook_when_label_was_removing_from_card(self) -> None:
-        expected_message = 'TomaszKolek removed a green label with "text value" from [New Card](https://trello.com/c/r33ylX2Z).'
+        expected_message = (
+            'TomaszKolek removed a green label with "text value" from [New Card](https://trello.com/c/r33ylX2Z).'
+        )
         self.send_and_test_stream_message("removing_label_from_card", "Welcome Board", expected_message)
 
     def test_trello_webhook_when_member_was_added_to_card(self) -> None:
@@ -43,7 +45,9 @@ class TrelloHookTests(WebhookTestCase):
         self.send_and_test_stream_message("removing_member_from_card", "Welcome Board", expected_message)
 
     def test_trello_webhook_when_due_date_was_set(self) -> None:
-        expected_message = "TomaszKolek set due date for [Card name](https://trello.com/c/9BduUcVQ) to 2016-05-11 10:00:00 UTC."
+        expected_message = (
+            "TomaszKolek set due date for [Card name](https://trello.com/c/9BduUcVQ) to 2016-05-11 10:00:00 UTC."
+        )
         self.send_and_test_stream_message("setting_due_date_to_card", "Welcome Board", expected_message)
 
     def test_trello_webhook_when_due_date_was_changed(self) -> None:

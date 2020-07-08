@@ -153,9 +153,7 @@ class TestRealmAuditLog(ZulipTestCase):
         self.assertEqual(new_email, user.delivery_email)
 
         # Test the RealmAuditLog stringification
-        audit_entry = RealmAuditLog.objects.get(
-            event_type=RealmAuditLog.USER_EMAIL_CHANGED, event_time__gte=now,
-        )
+        audit_entry = RealmAuditLog.objects.get(event_type=RealmAuditLog.USER_EMAIL_CHANGED, event_time__gte=now)
         self.assertTrue(
             str(audit_entry).startswith(
                 f"<RealmAuditLog: <UserProfile: {user.email} {user.realm}> {RealmAuditLog.USER_EMAIL_CHANGED} ",
@@ -331,10 +329,7 @@ class TestRealmAuditLog(ZulipTestCase):
         now = timezone_now()
         realm = get_realm("zulip")
         user = self.example_user("hamlet")
-        expected_old_value = {
-            "property": "authentication_methods",
-            "value": realm.authentication_methods_dict(),
-        }
+        expected_old_value = {"property": "authentication_methods", "value": realm.authentication_methods_dict()}
         auth_method_dict = {
             "Google": False,
             "Email": False,

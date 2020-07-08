@@ -873,12 +873,7 @@ def upload_message_file(
     target_realm: Optional[Realm] = None,
 ) -> str:
     return upload_backend.upload_message_file(
-        uploaded_file_name,
-        uploaded_file_size,
-        content_type,
-        file_data,
-        user_profile,
-        target_realm=target_realm,
+        uploaded_file_name, uploaded_file_size, content_type, file_data, user_profile, target_realm=target_realm,
     )
 
 

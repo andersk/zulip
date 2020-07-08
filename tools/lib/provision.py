@@ -52,9 +52,7 @@ with open("/proc/meminfo") as meminfo:
     ram_size = meminfo.readlines()[0].strip().split(" ")[-2]
 ram_gb = float(ram_size) / 1024.0 / 1024.0
 if ram_gb < 1.5:
-    print(
-        "You have insufficient RAM ({} GB) to run the Zulip development environment.".format(round(ram_gb, 2)),
-    )
+    print("You have insufficient RAM ({} GB) to run the Zulip development environment.".format(round(ram_gb, 2)))
     print("We recommend at least 2 GB of RAM, and require at least 1.5 GB.")
     sys.exit(1)
 
@@ -397,9 +395,7 @@ def main(options: argparse.Namespace) -> "NoReturn":
         try:
             setup_node_modules()
         except subprocess.CalledProcessError:
-            print(
-                FAIL + "`yarn install` is failing; check your network connection (and proxy settings)." + ENDC,
-            )
+            print(FAIL + "`yarn install` is failing; check your network connection (and proxy settings)." + ENDC)
             sys.exit(1)
 
     # Install shellcheck.

@@ -107,8 +107,7 @@ def send_initial_realm_messages(realm: Realm) -> None:
             "and click on `{initial_private_stream_name}`.",
         )
     ).format(
-        stream_settings_url="#streams/subscribed",
-        initial_private_stream_name=Realm.INITIAL_PRIVATE_STREAM_NAME,
+        stream_settings_url="#streams/subscribed", initial_private_stream_name=Realm.INITIAL_PRIVATE_STREAM_NAME,
     )
 
     content1_of_topic_demonstration_topic = (

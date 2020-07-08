@@ -210,11 +210,7 @@ class TestGetChartData(ZulipTestCase):
                 "msg": "",
                 "end_times": [datetime_to_timestamp(dt) for dt in self.end_times_day],
                 "frequency": CountStat.DAY,
-                "everyone": {
-                    "client 4": self.data(100),
-                    "client 3": self.data(101),
-                    "client 2": self.data(102),
-                },
+                "everyone": {"client 4": self.data(100), "client 3": self.data(101), "client 2": self.data(102)},
                 "user": {"client 3": self.data(200), "client 1": self.data(201)},
                 "display_order": ["client 1", "client 2", "client 3", "client 4"],
                 "result": "success",
@@ -698,9 +694,7 @@ class TestSupportEndpoint(ZulipTestCase):
         lear_realm = get_realm("lear")
         self.login_user(cordelia)
 
-        result = self.client_post(
-            "/activity/support", {"realm_id": f"{lear_realm.id}", "status": "deactivated"},
-        )
+        result = self.client_post("/activity/support", {"realm_id": f"{lear_realm.id}", "status": "deactivated"})
         self.assertEqual(result.status_code, 302)
         self.assertEqual(result["Location"], "/login/")
 

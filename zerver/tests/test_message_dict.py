@@ -77,9 +77,7 @@ class MessageDictTest(ZulipTestCase):
             msg = Message.objects.get(id=msg_id)
             return msg
 
-        def get_send_message_payload(
-            msg_id: int, apply_markdown: bool, client_gravatar: bool,
-        ) -> Dict[str, Any]:
+        def get_send_message_payload(msg_id: int, apply_markdown: bool, client_gravatar: bool) -> Dict[str, Any]:
             msg = reload_message(msg_id)
             wide_dict = MessageDict.wide_dict(msg)
 
@@ -462,9 +460,7 @@ class MessageHydrationTest(ZulipTestCase):
 
 class TestMessageForIdsDisplayRecipientFetching(ZulipTestCase):
     def _verify_display_recipient(
-        self,
-        display_recipient: DisplayRecipientT,
-        expected_recipient_objects: Union[Stream, List[UserProfile]],
+        self, display_recipient: DisplayRecipientT, expected_recipient_objects: Union[Stream, List[UserProfile]],
     ) -> None:
         if isinstance(expected_recipient_objects, Stream):
             self.assertEqual(display_recipient, expected_recipient_objects.name)

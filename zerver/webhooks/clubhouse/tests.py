@@ -74,7 +74,9 @@ class ClubhouseWebhookTest(WebhookTestCase):
         self.send_and_test_stream_message("story_update_add_description", "Story 2", expected_message)
 
     def test_story_update_remove_description(self) -> None:
-        expected_message = "Description for the story [Add cool feature!](https://app.clubhouse.io/zulip/story/11) was removed."
+        expected_message = (
+            "Description for the story [Add cool feature!](https://app.clubhouse.io/zulip/story/11) was removed."
+        )
         self.send_and_test_stream_message(
             "story_update_remove_description", "Add cool feature!", expected_message,
         )

@@ -657,10 +657,7 @@ def check_user_in_team(user: Dict[str, Any], team_name: str) -> bool:
 
 
 def label_mirror_dummy_users(
-    num_teams: int,
-    team_name: str,
-    mattermost_data: Dict[str, Any],
-    username_to_user: Dict[str, Dict[str, Any]],
+    num_teams: int, team_name: str, mattermost_data: Dict[str, Any], username_to_user: Dict[str, Dict[str, Any]],
 ) -> None:
     # This function might looks like a great place to label admin users. But
     # that won't be fully correct since we are iterating only though posts and

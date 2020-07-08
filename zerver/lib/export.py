@@ -577,10 +577,7 @@ def get_realm_config() -> Config:
     realm_config = Config(table="zerver_realm", is_seeded=True)
 
     Config(
-        table="zerver_defaultstream",
-        model=DefaultStream,
-        normal_parent=realm_config,
-        parent_key="realm_id__in",
+        table="zerver_defaultstream", model=DefaultStream, normal_parent=realm_config, parent_key="realm_id__in",
     )
 
     Config(

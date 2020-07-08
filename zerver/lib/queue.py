@@ -114,10 +114,7 @@ class SimpleQueueClient:
     def publish(self, queue_name: str, body: bytes) -> None:
         def do_publish(channel: BlockingChannel) -> None:
             channel.basic_publish(
-                exchange="",
-                routing_key=queue_name,
-                properties=pika.BasicProperties(delivery_mode=2),
-                body=body,
+                exchange="", routing_key=queue_name, properties=pika.BasicProperties(delivery_mode=2), body=body,
             )
 
             statsd.incr(f"rabbitmq.publish.{queue_name}")

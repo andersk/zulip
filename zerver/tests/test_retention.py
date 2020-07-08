@@ -49,9 +49,7 @@ class RetentionTestingBase(ZulipTestCase):
     def _get_usermessage_ids(self, message_ids: List[int]) -> List[int]:
         return list(UserMessage.objects.filter(message_id__in=message_ids).values_list("id", flat=True))
 
-    def _verify_archive_data(
-        self, expected_message_ids: List[int], expected_usermessage_ids: List[int],
-    ) -> None:
+    def _verify_archive_data(self, expected_message_ids: List[int], expected_usermessage_ids: List[int]) -> None:
         self.assertEqual(
             set(ArchivedMessage.objects.values_list("id", flat=True)), set(expected_message_ids),
         )

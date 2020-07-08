@@ -153,7 +153,5 @@ class ErrorPageTest(ZulipTestCase):
         # there to get us down just the right path for Django to blow up
         # when presented with an HTTP_HOST that's not a valid DNS name.
         client = Client(enforce_csrf_checks=True)
-        result = client.post(
-            "/json/users", secure=True, HTTP_REFERER="https://somewhere", HTTP_HOST="$nonsense",
-        )
+        result = client.post("/json/users", secure=True, HTTP_REFERER="https://somewhere", HTTP_HOST="$nonsense")
         self.assertEqual(result.status_code, 400)

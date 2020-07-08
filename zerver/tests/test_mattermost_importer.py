@@ -229,8 +229,7 @@ class MatterMostImporter(ZulipTestCase):
             {ron_id, harry_id},
         )
         self.assertEqual(
-            subscriber_handler.get_users(stream_id=stream_id_mapper.get("dumbledores-army")),
-            {ron_id, harry_id},
+            subscriber_handler.get_users(stream_id=stream_id_mapper.get("dumbledores-army")), {ron_id, harry_id},
         )
 
         # Converting channel data when a user's `teams` value is `null`.
@@ -343,16 +342,12 @@ class MatterMostImporter(ZulipTestCase):
 
         self.assertEqual(records_json[0]["file_name"], "peerdium")
         self.assertEqual(records_json[0]["realm_id"], 3)
-        exported_emoji_path = self.fixture_file_name(
-            mattermost_data["emoji"][0]["image"], "mattermost_fixtures",
-        )
+        exported_emoji_path = self.fixture_file_name(mattermost_data["emoji"][0]["image"], "mattermost_fixtures")
         self.assertTrue(filecmp.cmp(records_json[0]["path"], exported_emoji_path))
 
         self.assertEqual(records_json[1]["file_name"], "tick")
         self.assertEqual(records_json[1]["realm_id"], 3)
-        exported_emoji_path = self.fixture_file_name(
-            mattermost_data["emoji"][1]["image"], "mattermost_fixtures",
-        )
+        exported_emoji_path = self.fixture_file_name(mattermost_data["emoji"][1]["image"], "mattermost_fixtures")
         self.assertTrue(filecmp.cmp(records_json[1]["path"], exported_emoji_path))
 
     def test_get_mentioned_user_ids(self) -> None:
@@ -624,8 +619,7 @@ class MatterMostImporter(ZulipTestCase):
 
         exported_user_emails = self.get_set(realm["zerver_userprofile"], "email")
         self.assertEqual(
-            {"harry@zulip.com", "ron@zulip.com", "ginny@zulip.com", "voldemort@zulip.com"},
-            exported_user_emails,
+            {"harry@zulip.com", "ron@zulip.com", "ginny@zulip.com", "voldemort@zulip.com"}, exported_user_emails,
         )
 
         self.assertEqual(len(realm["zerver_stream"]), 3)

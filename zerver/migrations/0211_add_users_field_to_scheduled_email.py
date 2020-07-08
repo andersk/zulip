@@ -22,9 +22,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="scheduledemail",
-            name="users",
-            field=models.ManyToManyField(to=settings.AUTH_USER_MODEL),
+            model_name="scheduledemail", name="users", field=models.ManyToManyField(to=settings.AUTH_USER_MODEL),
         ),
         migrations.RunPython(
             set_users_for_existing_scheduledemails, reverse_code=migrations.RunPython.noop, elidable=True,

@@ -18,10 +18,7 @@ The content of the body goes here.
 """.strip()
 
         self.send_and_test_stream_message(
-            "ticket_started",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "ticket_started", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     # This simulates the condition when a ticket

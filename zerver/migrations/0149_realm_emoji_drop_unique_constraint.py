@@ -20,12 +20,8 @@ class Uploader:
 
     def ensure_emoji_images(self, realm_id: int, old_filename: str, new_filename: str) -> None:
         # Copy original image file.
-        old_file_path = self.old_orig_image_path_template.format(
-            realm_id=realm_id, emoji_file_name=old_filename,
-        )
-        new_file_path = self.new_orig_image_path_template.format(
-            realm_id=realm_id, emoji_file_name=new_filename,
-        )
+        old_file_path = self.old_orig_image_path_template.format(realm_id=realm_id, emoji_file_name=old_filename)
+        new_file_path = self.new_orig_image_path_template.format(realm_id=realm_id, emoji_file_name=new_filename)
         self.copy_files(old_file_path, new_file_path)
 
         # Copy resized image file.

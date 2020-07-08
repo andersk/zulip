@@ -88,9 +88,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="realmauditlog",
-            name="event_type_int",
-            field=models.PositiveSmallIntegerField(null=True),
+            model_name="realmauditlog", name="event_type_int", field=models.PositiveSmallIntegerField(null=True),
         ),
         migrations.AlterField(
             model_name="realmauditlog", name="event_type", field=models.CharField(max_length=40, null=True),
