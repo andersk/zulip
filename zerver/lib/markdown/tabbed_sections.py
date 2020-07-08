@@ -105,9 +105,7 @@ class TabbedSectionsPreprocessor(Preprocessor):
             tab_section = self.parse_tabs(lines)
         return lines
 
-    def generate_content_blocks(
-        self, tab_section: Dict[str, Any], lines: List[str],
-    ) -> str:
+    def generate_content_blocks(self, tab_section: Dict[str, Any], lines: List[str]) -> str:
         tab_content_blocks = []
         for index, tab in enumerate(tab_section["tabs"]):
             start_index = tab["start"] + 1

@@ -4,9 +4,7 @@ from django.db.backends.postgresql.schema import DatabaseSchemaEditor
 from django.db.migrations.state import StateApps
 
 
-def delete_old_scheduled_jobs(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def delete_old_scheduled_jobs(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     """Delete any old scheduled jobs, to handle changes in the format of
     that table.  Ideally, we'd translate the jobs, but it's not really
     worth the development effort to save a few invitation reminders

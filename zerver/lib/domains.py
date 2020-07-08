@@ -20,6 +20,4 @@ def validate_domain(domain: Optional[str]) -> None:
         if subdomain[0] == "-" or subdomain[-1] == "-":
             raise ValidationError(_("Subdomains cannot start or end with a '-'."))
         if not re.match("^[a-z0-9-]*$", subdomain):
-            raise ValidationError(
-                _("Domain can only have letters, numbers, '.' and '-'s."),
-            )
+            raise ValidationError(_("Domain can only have letters, numbers, '.' and '-'s."))

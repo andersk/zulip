@@ -71,9 +71,7 @@ class Database:
         self.settings = settings
         self.digest_name = "db_files_hash_for_" + platform
         self.migration_status_file = "migration_status_" + platform
-        self.migration_status_path = os.path.join(
-            UUID_VAR_DIR, self.migration_status_file,
-        )
+        self.migration_status_path = os.path.join(UUID_VAR_DIR, self.migration_status_file)
         self.migration_digest_file = "migrations_hash_" + database_name
 
     def important_settings(self) -> List[str]:
@@ -240,9 +238,7 @@ DEV_DATABASE = Database(
 )
 
 TEST_DATABASE = Database(
-    platform="test",
-    database_name="zulip_test_template",
-    settings="zproject.test_settings",
+    platform="test", database_name="zulip_test_template", settings="zproject.test_settings",
 )
 
 

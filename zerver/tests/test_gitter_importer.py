@@ -49,9 +49,7 @@ class GitterImporter(ZulipTestCase):
         self.assertEqual(len(realm["zerver_stream"]), 1)
         self.assertEqual(realm["zerver_stream"][0]["name"], "from gitter")
         self.assertEqual(realm["zerver_stream"][0]["deactivated"], False)
-        self.assertEqual(
-            realm["zerver_stream"][0]["realm"], realm["zerver_realm"][0]["id"],
-        )
+        self.assertEqual(realm["zerver_stream"][0]["realm"], realm["zerver_realm"][0]["id"])
 
         self.assertEqual(
             realm["zerver_defaultstream"][0]["stream"], realm["zerver_stream"][0]["id"],
@@ -117,10 +115,7 @@ class GitterImporter(ZulipTestCase):
             "user4": "user 4",
         }
         messages = [
-            {
-                "text": "hi @user",
-                "mentions": [{"screenName": "user", "userId": "57124a4"}],
-            },
+            {"text": "hi @user", "mentions": [{"screenName": "user", "userId": "57124a4"}]},
             {
                 "text": "hi @user2 @user3",
                 "mentions": [

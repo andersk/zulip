@@ -25,9 +25,7 @@ def get_not_found_result() -> LoaderResult:
 
 async def load(context: Context, url: str) -> LoaderResult:
     source_type, encoded_url = separate_url_and_source_type(url)
-    actual_url = base64.urlsafe_b64decode(urllib.parse.unquote(encoded_url)).decode(
-        "utf-8",
-    )
+    actual_url = base64.urlsafe_b64decode(urllib.parse.unquote(encoded_url)).decode("utf-8")
 
     if source_type == THUMBOR_S3_TYPE:
         if actual_url.startswith("/user_uploads/"):

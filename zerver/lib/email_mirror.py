@@ -257,7 +257,9 @@ def extract_body(
         if html_content:
             return html_content
         else:
-            assert plaintext_content  # Needed for mypy. Ensured by the validating block above.
+            assert (
+                plaintext_content  # Needed for mypy. Ensured by the validating block above.
+            )
             return plaintext_content
 
 
@@ -284,9 +286,7 @@ def extract_plaintext_body(
         return None
 
 
-def extract_html_body(
-    message: EmailMessage, include_quotes: bool = False,
-) -> Optional[str]:
+def extract_html_body(message: EmailMessage, include_quotes: bool = False) -> Optional[str]:
     import talon
 
     global talon_initialized
@@ -372,9 +372,7 @@ def find_emailgateway_recipient(message: EmailMessage) -> str:
         "CC",
     ]
 
-    pattern_parts = [
-        re.escape(part) for part in settings.EMAIL_GATEWAY_PATTERN.split("%s")
-    ]
+    pattern_parts = [re.escape(part) for part in settings.EMAIL_GATEWAY_PATTERN.split("%s")]
     match_email_re = re.compile(".*?".join(pattern_parts))
 
     for header_name in recipient_headers:

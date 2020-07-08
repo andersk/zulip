@@ -825,9 +825,7 @@ class HandlePushNotificationTest(PushNotificationTest):
             ]
             gcm_devices = [
                 (b64_to_hex(device.token), device.ios_app_id, device.token)
-                for device in RemotePushDeviceToken.objects.filter(
-                    kind=PushDeviceToken.GCM,
-                )
+                for device in RemotePushDeviceToken.objects.filter(kind=PushDeviceToken.GCM)
             ]
             mock_gcm.json_request.return_value = {
                 "success": {gcm_devices[0][2]: message.id},
@@ -878,9 +876,7 @@ class HandlePushNotificationTest(PushNotificationTest):
         ):
             gcm_devices = [
                 (b64_to_hex(device.token), device.ios_app_id, device.token)
-                for device in RemotePushDeviceToken.objects.filter(
-                    kind=PushDeviceToken.GCM,
-                )
+                for device in RemotePushDeviceToken.objects.filter(kind=PushDeviceToken.GCM)
             ]
             mock_gcm.json_request.return_value = {
                 "success": {gcm_devices[0][2]: message.id},
@@ -1841,9 +1837,7 @@ class TestPushApi(BouncerTestCase):
             self.assert_json_error(result, "Empty or invalid length token")
 
             if label == "apple-tokenaz":
-                result = self.client_post(
-                    endpoint, {"token": "xyz has non-hex characters"},
-                )
+                result = self.client_post(endpoint, {"token": "xyz has non-hex characters"})
                 self.assert_json_error(result, "Invalid APNS token")
 
             result = self.client_delete(endpoint, {"token": broken_token})

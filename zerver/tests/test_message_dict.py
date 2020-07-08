@@ -517,9 +517,7 @@ class TestMessageForIdsDisplayRecipientFetching(ZulipTestCase):
             allow_edit_history=False,
         )
 
-        self._verify_display_recipient(
-            messages[0]["display_recipient"], [hamlet, cordelia],
-        )
+        self._verify_display_recipient(messages[0]["display_recipient"], [hamlet, cordelia])
         self._verify_display_recipient(
             messages[1]["display_recipient"], [cordelia, othello],
         )
@@ -602,9 +600,7 @@ class TestMessageForIdsDisplayRecipientFetching(ZulipTestCase):
         self._verify_display_recipient(
             messages[1]["display_recipient"], get_stream("Verona", hamlet.realm),
         )
-        self._verify_display_recipient(
-            messages[2]["display_recipient"], [hamlet, cordelia],
-        )
+        self._verify_display_recipient(messages[2]["display_recipient"], [hamlet, cordelia])
         self._verify_display_recipient(
             messages[3]["display_recipient"], get_stream("Denmark", hamlet.realm),
         )

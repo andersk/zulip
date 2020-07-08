@@ -422,9 +422,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
 
         # Then, try having a user who didn't receive the message try to publish it, and fail
         body = (
-            f"Illegal message ...[zulip.txt](http://{host}/user_uploads/"
-            + d1_path_id
-            + ")"
+            f"Illegal message ...[zulip.txt](http://{host}/user_uploads/" + d1_path_id + ")"
         )
         self.send_stream_message(self.example_user("cordelia"), "Denmark", body, "test")
         self.assertEqual(Attachment.objects.get(path_id=d1_path_id).messages.count(), 1)
@@ -621,10 +619,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         unsubscribed_users = [self.example_user("othello"), self.example_user("prospero")]
         stream_name = "test-subscribe"
         self.make_stream(
-            stream_name,
-            realm=realm,
-            invite_only=True,
-            history_public_to_subscribers=False,
+            stream_name, realm=realm, invite_only=True, history_public_to_subscribers=False,
         )
 
         for subscribed_user in subscribed_users:
@@ -1102,30 +1097,22 @@ class AvatarTest(UploadSerializeMixin, ZulipTestCase):
         cordelia.save()
         response = self.client_get("/avatar/cordelia@zulip.com/medium?foo=bar")
         redirect_url = response["Location"]
-        self.assertTrue(
-            redirect_url.endswith(str(avatar_url(cordelia, True)) + "&foo=bar"),
-        )
+        self.assertTrue(redirect_url.endswith(str(avatar_url(cordelia, True)) + "&foo=bar"))
 
         response = self.client_get(f"/avatar/{cordelia.id}/medium?foo=bar")
         redirect_url = response["Location"]
-        self.assertTrue(
-            redirect_url.endswith(str(avatar_url(cordelia, True)) + "&foo=bar"),
-        )
+        self.assertTrue(redirect_url.endswith(str(avatar_url(cordelia, True)) + "&foo=bar"))
 
         self.logout()
 
         # Test /avatar/<email_or_id>/medium endpoint with HTTP basic auth.
         response = self.api_get(hamlet, "/avatar/cordelia@zulip.com/medium?foo=bar")
         redirect_url = response["Location"]
-        self.assertTrue(
-            redirect_url.endswith(str(avatar_url(cordelia, True)) + "&foo=bar"),
-        )
+        self.assertTrue(redirect_url.endswith(str(avatar_url(cordelia, True)) + "&foo=bar"))
 
         response = self.api_get(hamlet, f"/avatar/{cordelia.id}/medium?foo=bar")
         redirect_url = response["Location"]
-        self.assertTrue(
-            redirect_url.endswith(str(avatar_url(cordelia, True)) + "&foo=bar"),
-        )
+        self.assertTrue(redirect_url.endswith(str(avatar_url(cordelia, True)) + "&foo=bar"))
 
         response = self.client_get("/avatar/cordelia@zulip.com/medium?foo=bar")
         self.assert_json_error(
@@ -1554,8 +1541,7 @@ class RealmLogoTest(UploadSerializeMixin, ZulipTestCase):
         redirect_url = response["Location"]
         self.assertTrue(
             redirect_url.endswith(
-                get_realm_logo_url(realm, self.night)
-                + f"&night={str(self.night).lower()}",
+                get_realm_logo_url(realm, self.night) + f"&night={str(self.night).lower()}",
             ),
         )
 
@@ -2109,13 +2095,9 @@ class UploadSpaceTests(UploadSerializeMixin, ZulipTestCase):
         self.user_profile = self.example_user("hamlet")
 
     def test_currently_used_upload_space(self) -> None:
-        self.assertEqual(
-            None, cache_get(get_realm_used_upload_space_cache_key(self.realm)),
-        )
+        self.assertEqual(None, cache_get(get_realm_used_upload_space_cache_key(self.realm)))
         self.assertEqual(0, self.realm.currently_used_upload_space_bytes())
-        self.assertEqual(
-            0, cache_get(get_realm_used_upload_space_cache_key(self.realm))[0],
-        )
+        self.assertEqual(0, cache_get(get_realm_used_upload_space_cache_key(self.realm))[0])
 
         data = b"zulip!"
         upload_message_file("dummy.txt", len(data), "text/plain", data, self.user_profile)
@@ -2150,9 +2132,7 @@ class UploadSpaceTests(UploadSerializeMixin, ZulipTestCase):
         )
 
         attachment.delete()
-        self.assertEqual(
-            None, cache_get(get_realm_used_upload_space_cache_key(self.realm)),
-        )
+        self.assertEqual(None, cache_get(get_realm_used_upload_space_cache_key(self.realm)))
         self.assertEqual(len(data2), self.realm.currently_used_upload_space_bytes())
 
 

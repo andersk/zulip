@@ -78,11 +78,7 @@ if settings.BILLING_ENABLED:
     )
 
 if settings.ZILENCER_ENABLED:
-    from zilencer.models import (
-        RemoteInstallationCount,
-        RemoteRealmCount,
-        RemoteZulipServer,
-    )
+    from zilencer.models import RemoteInstallationCount, RemoteRealmCount, RemoteZulipServer
 else:
     from unittest.mock import Mock
 
@@ -176,9 +172,7 @@ def get_chart_data_for_realm(
     except Realm.DoesNotExist:
         raise JsonableError(_("Invalid organization"))
 
-    return get_chart_data(
-        request=request, user_profile=user_profile, realm=realm, **kwargs,
-    )
+    return get_chart_data(request=request, user_profile=user_profile, realm=realm, **kwargs)
 
 
 @require_server_admin_api
@@ -357,9 +351,7 @@ def get_chart_data(
         assert server is not None
         if not aggregate_table.objects.filter(server=server).exists():
             raise JsonableError(
-                _(
-                    "No analytics data available. Please contact your server administrator.",
-                ),
+                _("No analytics data available. Please contact your server administrator."),
             )
         if start is None:
             start = aggregate_table.objects.filter(server=server).first().end_time
@@ -393,9 +385,7 @@ def get_chart_data(
                 end,
             )
             raise JsonableError(
-                _(
-                    "No analytics data available. Please contact your server administrator.",
-                ),
+                _("No analytics data available. Please contact your server administrator."),
             )
 
     assert len({stat.frequency for stat in stats}) == 1
@@ -461,8 +451,7 @@ def sort_client_labels(data: Dict[str, Dict[str, List[int]]]) -> List[str]:
     for i, label in enumerate(user_order):
         label_sort_values[label] = min(i - 0.1, label_sort_values.get(label, i))
     return [
-        label
-        for label, sort_value in sorted(label_sort_values.items(), key=lambda x: x[1])
+        label for label, sort_value in sorted(label_sort_values.items(), key=lambda x: x[1])
     ]
 
 
@@ -894,7 +883,9 @@ def user_activity_intervals() -> Tuple[mark_safe, Dict[str, float]]:
     output += (
         f"\nTotal Duration in minutes:           {total_duration.total_seconds() / 60.}\n"
     )
-    output += f"Total Duration amortized to a month: {total_duration.total_seconds() * 30. / 60.}"
+    output += (
+        f"Total Duration amortized to a month: {total_duration.total_seconds() * 30. / 60.}"
+    )
     content = mark_safe("<pre>" + output + "</pre>")
     return content, realm_minutes
 
@@ -1002,9 +993,7 @@ def ad_hoc_queries() -> List[Dict[str, str]]:
                 if i == 0:
                     total_row.append("Total")
                 elif i in totals_columns:
-                    total_row.append(
-                        str(sum(row[i] for row in rows if row[i] is not None)),
-                    )
+                    total_row.append(str(sum(row[i] for row in rows if row[i] is not None)))
                 else:
                     total_row.append("")
         if len(totals_columns) > 0:
@@ -1364,9 +1353,7 @@ def support(request: HttpRequest) -> HttpResponse:
         )
 
         multiuse_invites = MultiuseInvite.objects.filter(realm__in=realms)
-        confirmations += get_confirmations(
-            [Confirmation.MULTIUSE_INVITE], multiuse_invites,
-        )
+        confirmations += get_confirmations([Confirmation.MULTIUSE_INVITE], multiuse_invites)
 
         confirmations += get_confirmations(
             [Confirmation.REALM_REACTIVATION], [realm.id for realm in realms],
@@ -1721,6 +1708,4 @@ def get_user_activity(request: HttpRequest, email: str) -> HttpResponse:
     data += [("Info", content)]
 
     title = email
-    return render(
-        request, "analytics/activity.html", context=dict(data=data, title=title),
-    )
+    return render(request, "analytics/activity.html", context=dict(data=data, title=title))

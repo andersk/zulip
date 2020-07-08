@@ -44,9 +44,7 @@ class Migration(migrations.Migration):
         migrations.RemoveField(model_name="archivedmessage", name="archive_timestamp"),
         migrations.RemoveField(model_name="archivedreaction", name="archive_timestamp"),
         migrations.RemoveField(model_name="archivedsubmessage", name="archive_timestamp"),
-        migrations.RemoveField(
-            model_name="archivedusermessage", name="archive_timestamp",
-        ),
+        migrations.RemoveField(model_name="archivedusermessage", name="archive_timestamp"),
         migrations.AddField(
             model_name="archivedmessage",
             name="archive_transaction",

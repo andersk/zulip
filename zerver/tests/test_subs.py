@@ -251,16 +251,12 @@ class TestCreateStreams(ZulipTestCase):
     def test_history_public_to_subscribers_zephyr_realm(self) -> None:
         realm = get_realm("zephyr")
 
-        stream, created = create_stream_if_needed(
-            realm, "private_stream", invite_only=True,
-        )
+        stream, created = create_stream_if_needed(realm, "private_stream", invite_only=True)
         self.assertTrue(created)
         self.assertTrue(stream.invite_only)
         self.assertFalse(stream.history_public_to_subscribers)
 
-        stream, created = create_stream_if_needed(
-            realm, "public_stream", invite_only=False,
-        )
+        stream, created = create_stream_if_needed(realm, "public_stream", invite_only=False)
         self.assertTrue(created)
         self.assertFalse(stream.invite_only)
         self.assertFalse(stream.history_public_to_subscribers)
@@ -423,9 +419,7 @@ class StreamAdminTest(ZulipTestCase):
             "is_private": ujson.dumps(False),
         }
         stream_id = get_stream("target_stream", realm).id
-        result = self.client_patch(
-            f"/json/streams/{stream_id}", params, subdomain="zephyr",
-        )
+        result = self.client_patch(f"/json/streams/{stream_id}", params, subdomain="zephyr")
         self.assert_json_success(result)
         stream = get_stream("target_stream", realm)
         self.assertFalse(stream.invite_only)
@@ -660,8 +654,7 @@ class StreamAdminTest(ZulipTestCase):
         with tornado_redirected_to_list(events):
             stream_id = stream_name2_exists.id
             result = self.client_patch(
-                f"/json/streams/{stream_id}",
-                {"new_name": ujson.dumps("नया नाम".encode())},
+                f"/json/streams/{stream_id}", {"new_name": ujson.dumps("नया नाम".encode())},
             )
         self.assert_json_success(result)
         # While querying, system can handle unicode strings.
@@ -790,10 +783,7 @@ class StreamAdminTest(ZulipTestCase):
         # But cannot change stream type.
         result = self.client_patch(
             f"/json/streams/{stream_id}",
-            {
-                "stream_name": ujson.dumps("private_stream"),
-                "is_private": ujson.dumps(True),
-            },
+            {"stream_name": ujson.dumps("private_stream"), "is_private": ujson.dumps(True)},
         )
         self.assert_json_error(result, "Invalid stream id")
 
@@ -2061,13 +2051,7 @@ class SubscriptionPropertiesTest(ZulipTestCase):
             "/api/v1/users/me/subscriptions/properties",
             {
                 "subscription_data": ujson.dumps(
-                    [
-                        {
-                            "property": "color",
-                            "stream_id": stream_id,
-                            "value": invalid_color,
-                        },
-                    ],
+                    [{"property": "color", "stream_id": stream_id, "value": invalid_color}],
                 ),
             },
         )
@@ -2082,15 +2066,9 @@ class SubscriptionPropertiesTest(ZulipTestCase):
         result = self.api_post(
             test_user,
             "/api/v1/users/me/subscriptions/properties",
-            {
-                "subscription_data": ujson.dumps(
-                    [{"property": "color", "value": "#ffffff"}],
-                ),
-            },
+            {"subscription_data": ujson.dumps([{"property": "color", "value": "#ffffff"}])},
         )
-        self.assert_json_error(
-            result, "stream_id key is missing from subscription_data[0]",
-        )
+        self.assert_json_error(result, "stream_id key is missing from subscription_data[0]")
 
     def test_set_color_unsubscribed_stream_id(self) -> None:
         """
@@ -2994,9 +2972,7 @@ class SubscriptionAPITest(ZulipTestCase):
         )
 
     def test_user_settings_for_adding_streams(self) -> None:
-        with mock.patch(
-            "zerver.models.UserProfile.can_create_streams", return_value=False,
-        ):
+        with mock.patch("zerver.models.UserProfile.can_create_streams", return_value=False):
             result = self.common_subscribe_to_streams(
                 self.test_user, ["stream1"], allow_fail=True,
             )
@@ -3006,9 +2982,7 @@ class SubscriptionAPITest(ZulipTestCase):
             self.common_subscribe_to_streams(self.test_user, ["stream2"])
 
         # User should still be able to subscribe to an existing stream
-        with mock.patch(
-            "zerver.models.UserProfile.can_create_streams", return_value=False,
-        ):
+        with mock.patch("zerver.models.UserProfile.can_create_streams", return_value=False):
             self.common_subscribe_to_streams(self.test_user, ["stream2"])
 
     def test_can_create_streams(self) -> None:
@@ -3353,9 +3327,7 @@ class SubscriptionAPITest(ZulipTestCase):
         self.assertTrue(new_member.is_new_member)
 
         stream = self.make_stream("stream1")
-        do_change_stream_post_policy(
-            stream, Stream.STREAM_POST_POLICY_RESTRICT_NEW_MEMBERS,
-        )
+        do_change_stream_post_policy(stream, Stream.STREAM_POST_POLICY_RESTRICT_NEW_MEMBERS)
         result = self.common_subscribe_to_streams(new_member, ["stream1"])
         self.assert_json_success(result)
 
@@ -3810,8 +3782,7 @@ class SubscriptionAPITest(ZulipTestCase):
         cordelia = self.example_user("cordelia")
         self.common_subscribe_to_streams(cordelia, [stream_name], invite_only=False)
         result = self.client_post(
-            "/json/subscriptions/exists",
-            {"stream": stream_name, "autosubscribe": "false"},
+            "/json/subscriptions/exists", {"stream": stream_name, "autosubscribe": "false"},
         )
         self.assert_json_success(result)
         self.assertIn("subscribed", result.json())
@@ -3844,16 +3815,13 @@ class SubscriptionAPITest(ZulipTestCase):
         # A user who is subscribed still sees the stream exists
         self.login("cordelia")
         result = self.client_post(
-            "/json/subscriptions/exists",
-            {"stream": stream_name, "autosubscribe": "false"},
+            "/json/subscriptions/exists", {"stream": stream_name, "autosubscribe": "false"},
         )
         self.assert_json_success(result)
         self.assertIn("subscribed", result.json())
         self.assertTrue(result.json()["subscribed"])
 
-    def get_subscription(
-        self, user_profile: UserProfile, stream_name: str,
-    ) -> Subscription:
+    def get_subscription(self, user_profile: UserProfile, stream_name: str) -> Subscription:
         stream = get_stream(stream_name, self.test_realm)
         return Subscription.objects.get(
             user_profile=user_profile,
@@ -4656,9 +4624,7 @@ class GetSubscribersTest(ZulipTestCase):
         A subscriber to a private stream can query that stream's membership.
         """
         stream_name = "Saxony"
-        self.common_subscribe_to_streams(
-            self.user_profile, [stream_name], invite_only=True,
-        )
+        self.common_subscribe_to_streams(self.user_profile, [stream_name], invite_only=True)
         self.make_successful_subscriber_request(stream_name)
 
         stream_id = get_stream(stream_name, self.user_profile.realm).id
@@ -4708,9 +4674,7 @@ class GetSubscribersTest(ZulipTestCase):
         """
         # Create a private stream for which Hamlet is the only subscriber.
         stream_name = "NewStream"
-        self.common_subscribe_to_streams(
-            self.user_profile, [stream_name], invite_only=True,
-        )
+        self.common_subscribe_to_streams(self.user_profile, [stream_name], invite_only=True)
         user_profile = self.example_user("othello")
 
         # Try to fetch the subscriber list as a non-member & non-realm-admin-user.

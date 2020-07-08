@@ -683,8 +683,7 @@ class PermissionTest(ZulipTestCase):
                 value = []
             empty_profile_data.append({"id": field.id, "value": value})
         result = self.client_patch(
-            f"/json/users/{cordelia.id}",
-            {"profile_data": ujson.dumps(empty_profile_data)},
+            f"/json/users/{cordelia.id}", {"profile_data": ujson.dumps(empty_profile_data)},
         )
         self.assert_json_success(result)
         for field_dict in cordelia.profile_data:
@@ -804,9 +803,7 @@ class AdminCreateUserTest(ZulipTestCase):
 
         result = self.client_post(
             "/json/users",
-            dict(
-                email="romeo@not-zulip.com", password="xxxx", full_name="Romeo Montague",
-            ),
+            dict(email="romeo@not-zulip.com", password="xxxx", full_name="Romeo Montague"),
         )
         self.assert_json_error(result, "Missing 'short_name' argument")
 
@@ -1184,9 +1181,7 @@ class UserProfileTest(ZulipTestCase):
         self.subscribe(iago, stream.name)
         with queries_captured() as queries:
             result = ujson.loads(
-                self.client_get(
-                    f"/json/users/{iago.id}/subscriptions/{stream.id}",
-                ).content,
+                self.client_get(f"/json/users/{iago.id}/subscriptions/{stream.id}").content,
             )
 
         self.assert_length(queries, 7)
@@ -1269,9 +1264,7 @@ class ActivateTest(ZulipTestCase):
         self.login("othello")
 
         # Cannot deactivate a user with the users api
-        result = self.client_delete(
-            "/json/users/{}".format(self.example_user("hamlet").id),
-        )
+        result = self.client_delete("/json/users/{}".format(self.example_user("hamlet").id))
         self.assert_json_error(result, "Insufficient permission")
 
         # Cannot reactivate a user
@@ -1360,9 +1353,7 @@ class ActivateTest(ZulipTestCase):
                         ),
                     ),
                     str(
-                        Address(
-                            display_name=iago.full_name, addr_spec=iago.delivery_email,
-                        ),
+                        Address(display_name=iago.full_name, addr_spec=iago.delivery_email),
                     ),
                 },
             )
@@ -1565,9 +1556,7 @@ class RecipientInfoTest(ZulipTestCase):
         with self.assertRaisesRegex(ValueError, "Bad recipient type"):
             invalid_recipient = Recipient(type=999)  # 999 is not a valid type
             get_recipient_info(
-                recipient=invalid_recipient,
-                sender_id=hamlet.id,
-                stream_topic=stream_topic,
+                recipient=invalid_recipient, sender_id=hamlet.id, stream_topic=stream_topic,
             )
 
 

@@ -11,9 +11,7 @@ from zerver.tornado.event_queue import maybe_enqueue_notifications
 
 
 class EditMessageSideEffectsTest(ZulipTestCase):
-    def _assert_update_does_not_notify_anybody(
-        self, message_id: int, content: str,
-    ) -> None:
+    def _assert_update_does_not_notify_anybody(self, message_id: int, content: str) -> None:
         url = "/json/messages/" + str(message_id)
 
         request = dict(message_id=message_id, content=content)
@@ -470,10 +468,7 @@ class EditMessageSideEffectsTest(ZulipTestCase):
         original_content = "no mention"
         updated_content = "now we mention @**Cordelia Lear**"
         notification_message_data = self._send_and_update_message(
-            original_content,
-            updated_content,
-            connected_to_zulip=True,
-            present_on_web=True,
+            original_content, updated_content, connected_to_zulip=True, present_on_web=True,
         )
 
         message_id = notification_message_data["message_id"]

@@ -21,9 +21,7 @@ def configure_cssutils() -> None:
     properties[Profiles.CSS_LEVEL_2]["-ms-text-size-adjust"] = r"none|auto|{percentage}"
     properties[Profiles.CSS_LEVEL_2]["mso-table-lspace"] = r"0|{num}(pt)"
     properties[Profiles.CSS_LEVEL_2]["mso-table-rspace"] = r"0|{num}(pt)"
-    properties[Profiles.CSS_LEVEL_2][
-        "-webkit-text-size-adjust"
-    ] = r"none|auto|{percentage}"
+    properties[Profiles.CSS_LEVEL_2]["-webkit-text-size-adjust"] = r"none|auto|{percentage}"
     properties[Profiles.CSS_LEVEL_2]["mso-hide"] = "all"
     properties[Profiles.CSS_LEVEL_2]["pointer-events"] = (
         r"auto|none|visiblePainted|"

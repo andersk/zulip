@@ -148,9 +148,7 @@ def der_encode_ticket(tkt: Dict[str, Any]) -> bytes:
                             if "kvno" in tkt["encPart"]
                             else None
                         ),
-                        der_encode_octet_string(
-                            base64.b64decode(tkt["encPart"]["cipher"]),
-                        ),
+                        der_encode_octet_string(base64.b64decode(tkt["encPart"]["cipher"])),
                     ],
                 ),
             ],

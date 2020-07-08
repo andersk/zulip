@@ -293,9 +293,7 @@ class MessageDict:
         messages: List[Message], realm_id: Optional[int] = None,
     ) -> Dict[int, bytes]:
         messages_dict = MessageDict.to_dict_uncached_helper(messages, realm_id)
-        encoded_messages = {
-            msg["id"]: stringify_message_dict(msg) for msg in messages_dict
-        }
+        encoded_messages = {msg["id"]: stringify_message_dict(msg) for msg in messages_dict}
         return encoded_messages
 
     @staticmethod
@@ -563,9 +561,7 @@ class MessageDict:
         display_recipients = bulk_fetch_display_recipients(recipient_tuples)
 
         for obj in objs:
-            MessageDict.hydrate_recipient_info(
-                obj, display_recipients[obj["recipient_id"]],
-            )
+            MessageDict.hydrate_recipient_info(obj, display_recipients[obj["recipient_id"]])
 
     @staticmethod
     def set_sender_avatar(obj: Dict[str, Any], client_gravatar: bool) -> None:

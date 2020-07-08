@@ -15,9 +15,7 @@ Build [#5](https://circleci.com/bb/Hypro999/circleci-test/5) of `build`/`workflo
 - **Author:** Hemanth V. Alluri
 """.strip()
         self.send_and_test_stream_message(
-            "bitbucket_private_repo_pull_request_failure",
-            expected_topic,
-            expected_message,
+            "bitbucket_private_repo_pull_request_failure", expected_topic, expected_message,
         )
 
     def test_for_failed_build_off_github(self) -> None:

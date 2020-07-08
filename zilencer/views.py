@@ -293,9 +293,7 @@ def remote_server_post_analytics(
     server = validate_entity(entity)
 
     validate_incoming_table_data(server, RemoteRealmCount, realm_counts, True)
-    validate_incoming_table_data(
-        server, RemoteInstallationCount, installation_counts, True,
-    )
+    validate_incoming_table_data(server, RemoteInstallationCount, installation_counts, True)
     if realmauditlog_rows is not None:
         validate_incoming_table_data(server, RemoteRealmAuditLog, realmauditlog_rows)
 

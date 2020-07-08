@@ -419,9 +419,7 @@ def generic_bulk_cached_fetch(
     for (key, val) in cached_objects_compressed.items():
         cached_objects[key] = extractor(cached_objects_compressed[key][0])
     needed_ids = [
-        object_id
-        for object_id in object_ids
-        if cache_keys[object_id] not in cached_objects
+        object_id for object_id in object_ids if cache_keys[object_id] not in cached_objects
     ]
 
     # Only call query_function if there are some ids to fetch from the database:

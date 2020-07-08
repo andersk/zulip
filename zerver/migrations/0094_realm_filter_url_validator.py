@@ -16,10 +16,7 @@ class Migration(migrations.Migration):
             model_name="realmfilter",
             name="url_format_string",
             field=models.TextField(
-                validators=[
-                    django.core.validators.URLValidator(),
-                    filter_format_validator,
-                ],
+                validators=[django.core.validators.URLValidator(), filter_format_validator],
             ),
         ),
     ]

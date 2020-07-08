@@ -86,9 +86,7 @@ def build_for_dev_server(
                 webpack_process = subprocess.Popen(webpack_args)
 
         watch_manager = pyinotify.WatchManager()
-        event_notifier = pyinotify.Notifier(
-            watch_manager, WebpackConfigFileChangeHandler(),
-        )
+        event_notifier = pyinotify.Notifier(watch_manager, WebpackConfigFileChangeHandler())
         for file in ["webpack.config.ts", "webpack-helpers.ts", "webpack.assets.json"]:
             filepath = os.path.join(os.path.dirname(__file__), file)
             watch_manager.add_watch(filepath, pyinotify.IN_MODIFY)

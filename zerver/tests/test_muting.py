@@ -24,9 +24,7 @@ class MutedTopicsTests(ZulipTestCase):
         recipient = stream.recipient
         topic_name = "teST topic"
 
-        stream_topic_target = StreamTopicTarget(
-            stream_id=stream.id, topic_name=topic_name,
-        )
+        stream_topic_target = StreamTopicTarget(stream_id=stream.id, topic_name=topic_name)
 
         user_ids = stream_topic_target.user_ids_muting_topic()
         self.assertEqual(user_ids, set())
@@ -49,9 +47,7 @@ class MutedTopicsTests(ZulipTestCase):
         mute_user(cordelia)
         user_ids = stream_topic_target.user_ids_muting_topic()
         self.assertEqual(user_ids, {hamlet.id, cordelia.id})
-        cordelia_date_muted = MutedTopic.objects.filter(user_profile=cordelia)[
-            0
-        ].date_muted
+        cordelia_date_muted = MutedTopic.objects.filter(user_profile=cordelia)[0].date_muted
         self.assertTrue(timezone_now() - cordelia_date_muted <= timedelta(seconds=100))
 
     def test_add_muted_topic(self) -> None:

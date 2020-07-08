@@ -353,9 +353,7 @@ class FixUnreadTests(ZulipTestCase):
         def mute_stream(stream_name: str) -> None:
             stream = get_stream(stream_name, realm)
             recipient = stream.recipient
-            subscription = Subscription.objects.get(
-                user_profile=user, recipient=recipient,
-            )
+            subscription = Subscription.objects.get(user_profile=user, recipient=recipient)
             subscription.is_muted = True
             subscription.save()
 
@@ -649,8 +647,7 @@ class GetUnreadMsgsTest(ZulipTestCase):
         pm_dict = raw_unread_data["pm_dict"]
 
         self.assertEqual(
-            set(pm_dict.keys()),
-            set(cordelia_pm_message_ids) | set(othello_pm_message_ids),
+            set(pm_dict.keys()), set(cordelia_pm_message_ids) | set(othello_pm_message_ids),
         )
 
         self.assertEqual(
@@ -993,9 +990,7 @@ class MessageAccessTests(ZulipTestCase):
         ]
         received_message_ids = [
             self.send_personal_message(
-                self.example_user("hamlet"),
-                self.example_user("cordelia"),
-                "test_received",
+                self.example_user("hamlet"), self.example_user("cordelia"), "test_received",
             ),
         ]
 

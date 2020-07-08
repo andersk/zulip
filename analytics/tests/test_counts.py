@@ -306,11 +306,7 @@ class TestProcessCountStat(AnalyticsTestCase):
         stream = self.create_stream_with_recipient()[0]
         realm = self.default_realm
         UserCount.objects.create(
-            user=user,
-            realm=realm,
-            property=user_stat.property,
-            end_time=end_time,
-            value=5,
+            user=user, realm=realm, property=user_stat.property, end_time=end_time, value=5,
         )
         StreamCount.objects.create(
             stream=stream,
@@ -557,9 +553,7 @@ class TestCountStats(AnalyticsTestCase):
         bot = self.create_user(is_bot=True)
         human1 = self.create_user()
         human2 = self.create_user()
-        recipient_human1 = Recipient.objects.get(
-            type_id=human1.id, type=Recipient.PERSONAL,
-        )
+        recipient_human1 = Recipient.objects.get(type_id=human1.id, type=Recipient.PERSONAL)
 
         recipient_stream = self.create_stream_with_recipient()[1]
         recipient_huddle = self.create_huddle_with_recipient()[1]
@@ -602,9 +596,7 @@ class TestCountStats(AnalyticsTestCase):
         bot = self.create_user(is_bot=True)
         human1 = self.create_user()
         human2 = self.create_user()
-        recipient_human1 = Recipient.objects.get(
-            type_id=human1.id, type=Recipient.PERSONAL,
-        )
+        recipient_human1 = Recipient.objects.get(type_id=human1.id, type=Recipient.PERSONAL)
 
         recipient_stream = self.create_stream_with_recipient()[1]
         recipient_huddle = self.create_huddle_with_recipient()[1]
@@ -811,9 +803,7 @@ class TestCountStats(AnalyticsTestCase):
         do_fill_count_stat_at_hour(stat, self.TIME_ZERO)
 
         client2_id = str(client2.id)
-        website_client_id = str(
-            get_client("website").id,
-        )  # default for self.create_message
+        website_client_id = str(get_client("website").id)  # default for self.create_message
         self.assertTableState(
             UserCount,
             ["value", "subgroup", "user"],
@@ -867,17 +857,11 @@ class TestCountStats(AnalyticsTestCase):
         do_fill_count_stat_at_hour(stat, self.TIME_ZERO, self.default_realm)
 
         client2_id = str(client2.id)
-        website_client_id = str(
-            get_client("website").id,
-        )  # default for self.create_message
+        website_client_id = str(get_client("website").id)  # default for self.create_message
         self.assertTableState(
             UserCount,
             ["value", "subgroup", "user"],
-            [
-                [1, client2_id, user1],
-                [1, client2_id, user2],
-                [1, website_client_id, user2],
-            ],
+            [[1, client2_id, user1], [1, client2_id, user2], [1, website_client_id, user2]],
         )
         self.assertTableState(
             RealmCount, ["value", "subgroup"], [[1, website_client_id], [2, client2_id]],
@@ -893,9 +877,7 @@ class TestCountStats(AnalyticsTestCase):
         bot = self.create_user(is_bot=True)
         human1 = self.create_user()
         human2 = self.create_user()
-        recipient_human1 = Recipient.objects.get(
-            type_id=human1.id, type=Recipient.PERSONAL,
-        )
+        recipient_human1 = Recipient.objects.get(type_id=human1.id, type=Recipient.PERSONAL)
 
         stream1, recipient_stream1 = self.create_stream_with_recipient()
         stream2, recipient_stream2 = self.create_stream_with_recipient()
@@ -1235,9 +1217,7 @@ class TestDoIncrementLoggingStat(AnalyticsTestCase):
         stat = LoggingCountStat("test", RealmCount, CountStat.DAY)
         do_increment_logging_stat(self.default_realm, stat, None, self.TIME_ZERO)
         do_increment_logging_stat(second_realm, stat, None, self.TIME_ZERO)
-        self.assertTableState(
-            RealmCount, ["realm"], [[self.default_realm], [second_realm]],
-        )
+        self.assertTableState(RealmCount, ["realm"], [[self.default_realm], [second_realm]])
 
         user1 = self.create_user()
         user2 = self.create_user()
@@ -1863,9 +1843,7 @@ class TestRealmActiveHumans(AnalyticsTestCase):
             process_count_stat(COUNT_STATS[property], time_zero + self.DAY)
         self.assertEqual(
             RealmCount.objects.filter(
-                property="realm_active_humans::day",
-                end_time=time_zero + self.DAY,
-                value=1,
+                property="realm_active_humans::day", end_time=time_zero + self.DAY, value=1,
             ).count(),
             1,
         )

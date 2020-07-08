@@ -19,9 +19,9 @@ COPYRIGHT_FILENAME = "docs/THIRDPARTY"
 os.chdir(os.path.join(os.path.dirname(__file__), ".."))
 status = 0
 
-*files, empty = subprocess.check_output(
-    ["git", "ls-files", "-z"], encoding="utf-8",
-).split("\0")
+*files, empty = subprocess.check_output(["git", "ls-files", "-z"], encoding="utf-8").split(
+    "\0",
+)
 assert empty == ""
 files += [
     "static/generated/emoji/images/emoji/unicode/ignore-this-path",

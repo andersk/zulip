@@ -271,16 +271,11 @@ def send_message_backend(
         message_to = cast(Sequence[str], message_to)
 
         try:
-            mirror_sender = create_mirrored_message_users(
-                request, user_profile, message_to,
-            )
+            mirror_sender = create_mirrored_message_users(request, user_profile, message_to)
         except InvalidMirrorInput:
             return json_error(_("Invalid mirrored message"))
 
-        if (
-            client.name == "zephyr_mirror"
-            and not user_profile.realm.is_zephyr_mirror_realm
-        ):
+        if client.name == "zephyr_mirror" and not user_profile.realm.is_zephyr_mirror_realm:
             return json_error(_("Zephyr mirroring is not allowed in this organization"))
         sender = mirror_sender
     else:
@@ -288,12 +283,8 @@ def send_message_backend(
             return json_error(_("Invalid mirrored message"))
         sender = user_profile
 
-    if (
-        delivery_type == "send_later" or delivery_type == "remind"
-    ) and defer_until is None:
-        return json_error(
-            _("Missing deliver_at in a request for delayed message delivery"),
-        )
+    if (delivery_type == "send_later" or delivery_type == "remind") and defer_until is None:
+        return json_error(_("Missing deliver_at in a request for delayed message delivery"))
 
     if (
         delivery_type == "send_later" or delivery_type == "remind"

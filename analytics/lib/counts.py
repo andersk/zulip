@@ -198,18 +198,14 @@ def do_fill_count_stat_at_hour(
 
 def do_delete_counts_at_hour(stat: CountStat, end_time: datetime) -> None:
     if isinstance(stat, LoggingCountStat):
-        InstallationCount.objects.filter(
-            property=stat.property, end_time=end_time,
-        ).delete()
+        InstallationCount.objects.filter(property=stat.property, end_time=end_time).delete()
         if stat.data_collector.output_table in [UserCount, StreamCount]:
             RealmCount.objects.filter(property=stat.property, end_time=end_time).delete()
     else:
         UserCount.objects.filter(property=stat.property, end_time=end_time).delete()
         StreamCount.objects.filter(property=stat.property, end_time=end_time).delete()
         RealmCount.objects.filter(property=stat.property, end_time=end_time).delete()
-        InstallationCount.objects.filter(
-            property=stat.property, end_time=end_time,
-        ).delete()
+        InstallationCount.objects.filter(property=stat.property, end_time=end_time).delete()
 
 
 def do_aggregate_to_summary_table(
@@ -243,13 +239,10 @@ def do_aggregate_to_summary_table(
             GROUP BY zerver_realm.id, {output_table}.subgroup
         """,
         ).format(
-            output_table=Identifier(output_table._meta.db_table),
-            realm_clause=realm_clause,
+            output_table=Identifier(output_table._meta.db_table), realm_clause=realm_clause,
         )
         start = time.time()
-        cursor.execute(
-            realmcount_query, {"property": stat.property, "end_time": end_time},
-        )
+        cursor.execute(realmcount_query, {"property": stat.property, "end_time": end_time})
         end = time.time()
         logger.info(
             "%s RealmCount aggregation (%dms/%sr)",
@@ -436,9 +429,7 @@ def count_message_by_user_query(realm: Optional[Realm]) -> QueryFn:
     if realm is None:
         realm_clause = SQL("")
     else:
-        realm_clause = SQL("zerver_userprofile.realm_id = {} AND").format(
-            Literal(realm.id),
-        )
+        realm_clause = SQL("zerver_userprofile.realm_id = {} AND").format(Literal(realm.id))
     return lambda kwargs: SQL(
         """
     INSERT INTO analytics_usercount
@@ -465,9 +456,7 @@ def count_message_type_by_user_query(realm: Optional[Realm]) -> QueryFn:
     if realm is None:
         realm_clause = SQL("")
     else:
-        realm_clause = SQL("zerver_userprofile.realm_id = {} AND").format(
-            Literal(realm.id),
-        )
+        realm_clause = SQL("zerver_userprofile.realm_id = {} AND").format(Literal(realm.id))
     return lambda kwargs: SQL(
         """
     INSERT INTO analytics_usercount
@@ -550,9 +539,7 @@ def count_user_by_realm_query(realm: Optional[Realm]) -> QueryFn:
     if realm is None:
         realm_clause = SQL("")
     else:
-        realm_clause = SQL("zerver_userprofile.realm_id = {} AND").format(
-            Literal(realm.id),
-        )
+        realm_clause = SQL("zerver_userprofile.realm_id = {} AND").format(Literal(realm.id))
     return lambda kwargs: SQL(
         """
     INSERT INTO analytics_realmcount
@@ -622,9 +609,7 @@ def check_useractivityinterval_by_user_query(realm: Optional[Realm]) -> QueryFn:
     if realm is None:
         realm_clause = SQL("")
     else:
-        realm_clause = SQL("zerver_userprofile.realm_id = {} AND").format(
-            Literal(realm.id),
-        )
+        realm_clause = SQL("zerver_userprofile.realm_id = {} AND").format(Literal(realm.id))
     return lambda kwargs: SQL(
         """
     INSERT INTO analytics_usercount

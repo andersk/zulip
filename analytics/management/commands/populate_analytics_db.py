@@ -87,9 +87,7 @@ class Command(BaseCommand):
                 short_name="shylock",
                 role=UserProfile.ROLE_REALM_ADMINISTRATOR,
             )
-        do_change_user_role(
-            shylock, UserProfile.ROLE_REALM_ADMINISTRATOR, acting_user=None,
-        )
+        do_change_user_role(shylock, UserProfile.ROLE_REALM_ADMINISTRATOR, acting_user=None)
         stream = Stream.objects.create(
             name="all", realm=realm, date_created=installation_time,
         )
@@ -145,9 +143,7 @@ class Command(BaseCommand):
 
         stat = COUNT_STATS["1day_actives::day"]
         realm_data: Mapping[Optional[str], List[int]] = {
-            None: self.generate_fixture_data(
-                stat, 0.08, 0.02, 3, 0.3, 6, partial_sum=True,
-            ),
+            None: self.generate_fixture_data(stat, 0.08, 0.02, 3, 0.3, 6, partial_sum=True),
         }
         insert_fixture_data(stat, realm_data, RealmCount)
         installation_data: Mapping[Optional[str], List[int]] = {

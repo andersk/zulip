@@ -243,9 +243,7 @@ class MessagePOSTTest(ZulipTestCase):
 
         stream_name = "Verona"
         stream = get_stream(stream_name, admin_profile.realm)
-        do_change_stream_post_policy(
-            stream, Stream.STREAM_POST_POLICY_RESTRICT_NEW_MEMBERS,
-        )
+        do_change_stream_post_policy(stream, Stream.STREAM_POST_POLICY_RESTRICT_NEW_MEMBERS)
 
         # Admins and their owned bots can send to STREAM_POST_POLICY_RESTRICT_NEW_MEMBERS streams,
         # even if the admin is a new user
@@ -798,8 +796,7 @@ class MessagePOSTTest(ZulipTestCase):
 
         sent_message = self.get_last_message()
         self.assertEqual(
-            sent_message.content,
-            "A" * (MAX_MESSAGE_LENGTH - 20) + "\n[message truncated]",
+            sent_message.content, "A" * (MAX_MESSAGE_LENGTH - 20) + "\n[message truncated]",
         )
 
     def test_long_topic(self) -> None:

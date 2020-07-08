@@ -95,9 +95,7 @@ class SendLoginEmailTest(ZulipTestCase):
             self.submit_reg_form_for_user("orange@zulip.com", "orange", PATH_INFO="")
 
             for email in mail.outbox:
-                subject = (
-                    "New login from an unknown browser on an unknown operating system"
-                )
+                subject = "New login from an unknown browser on an unknown operating system"
                 self.assertNotEqual(email.subject, subject)
 
     @override_settings(SEND_LOGIN_EMAILS=True)
@@ -148,8 +146,7 @@ class TestBrowserAndOsUserAgentStrings(ZulipTestCase):
                 "Windows",
             ),
             (
-                "mozilla/5.0 (windows nt 6.1; wow64; trident/7.0; rv:11.0) "
-                + "like gecko",
+                "mozilla/5.0 (windows nt 6.1; wow64; trident/7.0; rv:11.0) " + "like gecko",
                 "Internet Explorer",
                 "Windows",
             ),
@@ -258,6 +255,5 @@ class TestNotifyNewUser(ZulipTestCase):
         actual_stream = Stream.objects.get(id=message.recipient.type_id)
         self.assertEqual(actual_stream.name, Realm.INITIAL_PRIVATE_STREAM_NAME)
         self.assertIn(
-            f"@_**Cordelia Lear|{new_user.id}** just signed up for Zulip.",
-            message.content,
+            f"@_**Cordelia Lear|{new_user.id}** just signed up for Zulip.", message.content,
         )

@@ -235,9 +235,7 @@ class Realm(models.Model):
     digest_weekday: int = models.SmallIntegerField(default=1)
 
     send_welcome_emails: bool = models.BooleanField(default=True)
-    message_content_allowed_in_email_notifications: bool = models.BooleanField(
-        default=True,
-    )
+    message_content_allowed_in_email_notifications: bool = models.BooleanField(default=True)
 
     mandatory_topics: bool = models.BooleanField(default=False)
     add_emoji_by_admins_only: bool = models.BooleanField(default=False)
@@ -1941,17 +1939,13 @@ class AbstractMessage(models.Model):
 
 class ArchiveTransaction(models.Model):
     id: int = models.AutoField(auto_created=True, primary_key=True, verbose_name="ID")
-    timestamp: datetime.datetime = models.DateTimeField(
-        default=timezone_now, db_index=True,
-    )
+    timestamp: datetime.datetime = models.DateTimeField(default=timezone_now, db_index=True)
     # Marks if the data archived in this transaction has been restored:
     restored: bool = models.BooleanField(default=False, db_index=True)
 
     type: int = models.PositiveSmallIntegerField(db_index=True)
     # Valid types:
-    RETENTION_POLICY_BASED = (
-        1  # Archiving was executed due to automated retention policies
-    )
+    RETENTION_POLICY_BASED = 1  # Archiving was executed due to automated retention policies
     MANUAL = 2  # Archiving was run manually, via move_messages_to_archive function
 
     # ForeignKey to the realm with which objects archived in this transaction are associated.
@@ -2376,10 +2370,7 @@ class Attachment(AbstractAttachment):
             # advantage of client timezones.
             "create_time": int(time.mktime(self.create_time.timetuple()) * 1000),
             "messages": [
-                {
-                    "id": m.id,
-                    "date_sent": int(time.mktime(m.date_sent.timetuple()) * 1000),
-                }
+                {"id": m.id, "date_sent": int(time.mktime(m.date_sent.timetuple()) * 1000)}
                 for m in self.messages.all()
             ],
         }
@@ -2407,9 +2398,7 @@ def validate_attachment_request(user_profile: UserProfile, path_id: str) -> Opti
         return True
 
     messages = attachment.messages.all()
-    if UserMessage.objects.filter(
-        user_profile=user_profile, message__in=messages,
-    ).exists():
+    if UserMessage.objects.filter(user_profile=user_profile, message__in=messages).exists():
         # If it was sent in a private message or private stream
         # message, then anyone who received that message can access it.
         return True
@@ -2814,9 +2803,7 @@ class UserPresence(models.Model):
         )
 
     def to_dict(self) -> Dict[str, Any]:
-        return UserPresence.to_presence_dict(
-            self.client.name, self.status, self.timestamp,
-        )
+        return UserPresence.to_presence_dict(self.client.name, self.status, self.timestamp)
 
     @staticmethod
     def status_from_string(status: str) -> Optional[int]:
@@ -2922,9 +2909,7 @@ class MissedMessageEmailAddress(models.Model):
 
     # Timestamp of when the missed message address generated.
     # The address is valid until timestamp + EXPIRY_SECONDS.
-    timestamp: datetime.datetime = models.DateTimeField(
-        db_index=True, default=timezone_now,
-    )
+    timestamp: datetime.datetime = models.DateTimeField(db_index=True, default=timezone_now)
     times_used: int = models.PositiveIntegerField(default=0, db_index=True)
 
     def __str__(self) -> str:
@@ -3244,15 +3229,14 @@ class CustomProfileField(models.Model):
         }
 
     def is_renderable(self) -> bool:
-        if self.field_type in [
-            CustomProfileField.SHORT_TEXT,
-            CustomProfileField.LONG_TEXT,
-        ]:
+        if self.field_type in [CustomProfileField.SHORT_TEXT, CustomProfileField.LONG_TEXT]:
             return True
         return False
 
     def __str__(self) -> str:
-        return f"<CustomProfileField: {self.realm} {self.name} {self.field_type} {self.order}>"
+        return (
+            f"<CustomProfileField: {self.realm} {self.name} {self.field_type} {self.order}>"
+        )
 
 
 def custom_profile_fields_for_realm(realm_id: int) -> List[CustomProfileField]:
@@ -3361,9 +3345,7 @@ def get_fake_email_domain() -> str:
         # Check that the fake email domain can be used to form valid email addresses.
         validate_email("bot@" + settings.FAKE_EMAIL_DOMAIN)
     except ValidationError:
-        raise InvalidFakeEmailDomain(
-            settings.FAKE_EMAIL_DOMAIN + " is not a valid domain.",
-        )
+        raise InvalidFakeEmailDomain(settings.FAKE_EMAIL_DOMAIN + " is not a valid domain.")
 
     return settings.FAKE_EMAIL_DOMAIN
 

@@ -43,11 +43,7 @@ from zerver.lib.topic import TOPIC_NAME
 from zerver.lib.topic_mutes import get_topic_mutes
 from zerver.lib.user_groups import user_groups_in_realm_serialized
 from zerver.lib.user_status import get_user_info_dict
-from zerver.lib.users import (
-    get_cross_realm_dicts,
-    get_raw_user_data,
-    is_administrator_role,
-)
+from zerver.lib.users import get_cross_realm_dicts, get_raw_user_data, is_administrator_role
 from zerver.models import (
     Client,
     CustomProfileField,
@@ -234,9 +230,7 @@ def fetch_initial_state_data(
         state["avatar_url_medium"] = avatar_url(
             user_profile, medium=True, client_gravatar=False,
         )
-        state["avatar_url"] = avatar_url(
-            user_profile, medium=False, client_gravatar=False,
-        )
+        state["avatar_url"] = avatar_url(user_profile, medium=False, client_gravatar=False)
 
         state["can_create_streams"] = user_profile.can_create_streams()
         state["can_subscribe_other_users"] = user_profile.can_subscribe_other_users()
@@ -373,12 +367,7 @@ def apply_events(
             # `fetch_event_types`.
             continue
         apply_event(
-            state,
-            event,
-            user_profile,
-            client_gravatar,
-            slim_presence,
-            include_subscribers,
+            state, event, user_profile, client_gravatar, slim_presence, include_subscribers,
         )
 
 
@@ -1065,9 +1054,7 @@ def post_process_state(
         ret["recent_private_conversations"] = sorted(
             [
                 dict(**value)
-                for (recipient_id, value) in ret[
-                    "raw_recent_private_conversations"
-                ].items()
+                for (recipient_id, value) in ret["raw_recent_private_conversations"].items()
             ],
             key=lambda x: -x["max_message_id"],
         )

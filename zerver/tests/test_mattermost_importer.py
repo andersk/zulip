@@ -72,8 +72,7 @@ class MatterMostImporter(ZulipTestCase):
         self.assertEqual(len(mattermost_data["post"]["channel_post"]), 4)
         self.assertEqual(mattermost_data["post"]["channel_post"][0]["team"], "gryffindor")
         self.assertEqual(
-            mattermost_data["post"]["channel_post"][0]["channel"],
-            "gryffindor-common-room",
+            mattermost_data["post"]["channel_post"][0]["channel"], "gryffindor-common-room",
         )
         self.assertEqual(mattermost_data["post"]["channel_post"][0]["user"], "ron")
         self.assertEqual(mattermost_data["post"]["channel_post"][0]["replies"], None)
@@ -150,8 +149,7 @@ class MatterMostImporter(ZulipTestCase):
         self.assertTrue(user_id_mapper.has("harry"))
         self.assertTrue(user_id_mapper.has("ron"))
         self.assertEqual(
-            user_handler.get_user(user_id_mapper.get("harry"))["full_name"],
-            "Harry Potter",
+            user_handler.get_user(user_id_mapper.get("harry"))["full_name"], "Harry Potter",
         )
         self.assertEqual(
             user_handler.get_user(user_id_mapper.get("ron"))["full_name"], "Ron Weasley",
@@ -598,9 +596,7 @@ class MatterMostImporter(ZulipTestCase):
         self.assertEqual(
             os.path.exists(os.path.join(harry_team_output_dir, "avatars")), True,
         )
-        self.assertEqual(
-            os.path.exists(os.path.join(harry_team_output_dir, "emoji")), True,
-        )
+        self.assertEqual(os.path.exists(os.path.join(harry_team_output_dir, "emoji")), True)
         self.assertEqual(
             os.path.exists(os.path.join(harry_team_output_dir, "attachment.json")), True,
         )
@@ -630,8 +626,7 @@ class MatterMostImporter(ZulipTestCase):
             {"Gryffindor common room", "Gryffindor quidditch team", "Dumbledores army"},
         )
         self.assertEqual(
-            self.get_set(realm["zerver_stream"], "realm"),
-            {realm["zerver_realm"][0]["id"]},
+            self.get_set(realm["zerver_stream"], "realm"), {realm["zerver_realm"][0]["id"]},
         )
         self.assertEqual(self.get_set(realm["zerver_stream"], "deactivated"), {False})
 
@@ -700,9 +695,7 @@ class MatterMostImporter(ZulipTestCase):
         self.assertEqual(
             os.path.exists(os.path.join(harry_team_output_dir, "avatars")), True,
         )
-        self.assertEqual(
-            os.path.exists(os.path.join(harry_team_output_dir, "emoji")), True,
-        )
+        self.assertEqual(os.path.exists(os.path.join(harry_team_output_dir, "emoji")), True)
         self.assertEqual(
             os.path.exists(os.path.join(harry_team_output_dir, "attachment.json")), True,
         )
@@ -734,8 +727,7 @@ class MatterMostImporter(ZulipTestCase):
             {"Gryffindor common room", "Gryffindor quidditch team", "Dumbledores army"},
         )
         self.assertEqual(
-            self.get_set(realm["zerver_stream"], "realm"),
-            {realm["zerver_realm"][0]["id"]},
+            self.get_set(realm["zerver_stream"], "realm"), {realm["zerver_realm"][0]["id"]},
         )
         self.assertEqual(self.get_set(realm["zerver_stream"], "deactivated"), {False})
 

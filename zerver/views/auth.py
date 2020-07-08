@@ -241,9 +241,7 @@ def maybe_send_to_registration(
             "continue_link": confirmation_link,
             "full_name": full_name,
         }
-        return render(
-            request, "zerver/confirm_continue_registration.html", context=context,
-        )
+        return render(request, "zerver/confirm_continue_registration.html", context=context)
 
     # This email address it not allowed to join this organization, so
     # just send the user back to the registration page.
@@ -1062,9 +1060,7 @@ def get_auth_backends_data(request: HttpRequest) -> Dict[str, Any]:
 
 
 def check_server_incompatibility(request: HttpRequest) -> bool:
-    user_agent = parse_user_agent(
-        request.META.get("HTTP_USER_AGENT", "Missing User-Agent"),
-    )
+    user_agent = parse_user_agent(request.META.get("HTTP_USER_AGENT", "Missing User-Agent"))
     return user_agent["name"] == "ZulipInvalid"
 
 

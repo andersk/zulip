@@ -463,9 +463,7 @@ def do_gc_event_queues(
         if key not in client_dict:
             return
 
-        new_client_list = [
-            c for c in client_dict[key] if c.event_queue.id not in to_remove
-        ]
+        new_client_list = [c for c in client_dict[key] if c.event_queue.id not in to_remove]
         if len(new_client_list) == 0:
             del client_dict[key]
         else:
@@ -763,9 +761,7 @@ def get_user_events(
             "secret": settings.SHARED_SECRET,
             "client": "internal",
         }
-        resp = requests_client.post(
-            tornado_uri + "/api/v1/events/internal", data=post_data,
-        )
+        resp = requests_client.post(tornado_uri + "/api/v1/events/internal", data=post_data)
         resp.raise_for_status()
 
         return resp.json()["events"]
@@ -1084,9 +1080,7 @@ def process_message_event(
             message_dict = message_dict.copy()
             message_dict["invite_only_stream"] = True
 
-        user_event: Dict[str, Any] = dict(
-            type="message", message=message_dict, flags=flags,
-        )
+        user_event: Dict[str, Any] = dict(type="message", message=message_dict, flags=flags)
         if extra_data is not None:
             user_event.update(extra_data)
 

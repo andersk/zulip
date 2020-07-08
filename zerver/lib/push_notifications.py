@@ -156,10 +156,7 @@ def send_apple_push_notification(
             assert client is not None
             try:
                 stream_id = client.send_notification_async(
-                    device.token,
-                    payload,
-                    topic=settings.APNS_TOPIC,
-                    expiration=expiration,
+                    device.token, payload, topic=settings.APNS_TOPIC, expiration=expiration,
                 )
                 return client.get_notification_result(stream_id)
             except HTTP20Error as e:
@@ -738,9 +735,7 @@ def get_apns_badge_count(
     )
 
 
-def get_message_payload_apns(
-    user_profile: UserProfile, message: Message,
-) -> Dict[str, Any]:
+def get_message_payload_apns(user_profile: UserProfile, message: Message) -> Dict[str, Any]:
     """A `message` payload for iOS, via APNs."""
     zulip_data = get_message_payload(user_profile, message)
     zulip_data.update({"message_ids": [message.id]})
@@ -766,9 +761,7 @@ def get_message_payload_gcm(
     """A `message` payload + options, for Android via GCM/FCM."""
     data = get_message_payload(user_profile, message)
     assert message.rendered_content is not None
-    content, truncated = truncate_content(
-        get_mobile_push_content(message.rendered_content),
-    )
+    content, truncated = truncate_content(get_mobile_push_content(message.rendered_content))
     data.update(
         {
             "event": "message",
@@ -865,9 +858,7 @@ def handle_push_notification(user_profile_id: int, missed_message: Dict[str, Any
         return
 
     try:
-        (message, user_message) = access_message(
-            user_profile, missed_message["message_id"],
-        )
+        (message, user_message) = access_message(user_profile, missed_message["message_id"])
     except JsonableError:
         if ArchivedMessage.objects.filter(id=missed_message["message_id"]).exists():
             # If the cause is a race with the message being deleted,
@@ -910,9 +901,7 @@ def handle_push_notification(user_profile_id: int, missed_message: Dict[str, Any
 
     apns_payload = get_message_payload_apns(user_profile, message)
     gcm_payload, gcm_options = get_message_payload_gcm(user_profile, message)
-    logger.info(
-        "Sending push notifications to mobile clients for user %s", user_profile_id,
-    )
+    logger.info("Sending push notifications to mobile clients for user %s", user_profile_id)
 
     if uses_notification_bouncer():
         send_notifications_to_bouncer(

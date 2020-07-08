@@ -811,9 +811,7 @@ def import_uploads(
                     settings.LOCAL_UPLOADS_DIR, "avatars", relative_path,
                 )
             else:
-                file_path = os.path.join(
-                    settings.LOCAL_UPLOADS_DIR, "files", relative_path,
-                )
+                file_path = os.path.join(settings.LOCAL_UPLOADS_DIR, "files", relative_path)
             orig_file_path = os.path.join(import_dir, record["path"])
             os.makedirs(os.path.dirname(file_path), exist_ok=True)
             shutil.copy(orig_file_path, file_path)
@@ -1064,9 +1062,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
         data, "zerver_subscription", "user_profile", related_table="user_profile",
     )
     get_huddles_from_subscription(data, "zerver_subscription")
-    re_map_foreign_keys(
-        data, "zerver_subscription", "recipient", related_table="recipient",
-    )
+    re_map_foreign_keys(data, "zerver_subscription", "recipient", related_table="recipient")
     update_model_ids(Subscription, data, "subscription")
     bulk_import_model(data, Subscription)
 
@@ -1196,15 +1192,10 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
         related_table="user_profile",
     )
     re_map_foreign_keys(
-        data,
-        "zerver_customprofilefieldvalue",
-        "field",
-        related_table="customprofilefield",
+        data, "zerver_customprofilefieldvalue", "field", related_table="customprofilefield",
     )
     fix_customprofilefield(data)
-    update_model_ids(
-        CustomProfileFieldValue, data, related_table="customprofilefieldvalue",
-    )
+    update_model_ids(CustomProfileFieldValue, data, related_table="customprofilefieldvalue")
     bulk_import_model(data, CustomProfileFieldValue)
 
     # Import uploaded files and avatars

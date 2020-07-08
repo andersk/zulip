@@ -261,7 +261,9 @@ def get_build_hook_event_body(payload: Dict[str, Any]) -> str:
 
 
 def get_test_event_body(payload: Dict[str, Any]) -> str:
-    return f"Webhook for **{get_repo_name(payload)}** has been configured successfully! :tada:"
+    return (
+        f"Webhook for **{get_repo_name(payload)}** has been configured successfully! :tada:"
+    )
 
 
 def get_pipeline_event_body(payload: Dict[str, Any]) -> str:
@@ -349,9 +351,7 @@ EVENT_FUNCTION_MAPPER = {
     "Note Hook Issue": get_commented_issue_event_body,
     "Confidential Note Hook Issue": get_commented_issue_event_body,
     "Note Hook Snippet": get_commented_snippet_event_body,
-    "Merge Request Hook approved": partial(
-        get_merge_request_event_body, action="approved",
-    ),
+    "Merge Request Hook approved": partial(get_merge_request_event_body, action="approved"),
     "Merge Request Hook unapproved": partial(
         get_merge_request_event_body, action="unapproved",
     ),
@@ -407,9 +407,7 @@ def get_subject_based_on_event(event: str, payload: Dict[str, Any]) -> str:
     if event == "Push Hook":
         return f"{get_repo_name(payload)} / {get_branch_name(payload)}"
     elif event == "Job Hook" or event == "Build Hook":
-        return "{} / {}".format(
-            payload["repository"].get("name"), get_branch_name(payload),
-        )
+        return "{} / {}".format(payload["repository"].get("name"), get_branch_name(payload))
     elif event == "Pipeline Hook":
         return "{} / {}".format(
             get_repo_name(payload),

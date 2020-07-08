@@ -20,9 +20,7 @@ def api_slack_incoming_webhook(
     request: HttpRequest,
     user_profile: UserProfile,
     user_specified_topic: Optional[str] = REQ("topic", default=None),
-    payload: Optional[Dict[str, Any]] = REQ(
-        "payload", converter=ujson.loads, default=None,
-    ),
+    payload: Optional[Dict[str, Any]] = REQ("payload", converter=ujson.loads, default=None),
 ) -> HttpResponse:
 
     # Slack accepts webhook payloads as payload="encoded json" as

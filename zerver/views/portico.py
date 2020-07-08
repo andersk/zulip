@@ -88,9 +88,7 @@ def hello_view(request: HttpRequest) -> HttpResponse:
 @add_google_analytics
 def terms_view(request: HttpRequest) -> HttpResponse:
     return TemplateResponse(
-        request,
-        "zerver/terms.html",
-        context={"isolated_page": get_isolated_page(request)},
+        request, "zerver/terms.html", context={"isolated_page": get_isolated_page(request)},
     )
 
 

@@ -837,17 +837,13 @@ def get_recipient_by_id(rid: int) -> Recipient:
 # - multiple messages per subject
 # - both single and multi-line content
 def generate_and_send_messages(
-    data: Tuple[
-        int, Sequence[Sequence[int]], Mapping[str, Any], Callable[[str], Any], int,
-    ],
+    data: Tuple[int, Sequence[Sequence[int]], Mapping[str, Any], Callable[[str], Any], int],
 ) -> int:
     (tot_messages, personals_pairs, options, output, random_seed) = data
     random.seed(random_seed)
 
     with open(
-        os.path.join(
-            get_or_create_dev_uuid_var_path("test-backend"), "test_messages.json",
-        ),
+        os.path.join(get_or_create_dev_uuid_var_path("test-backend"), "test_messages.json"),
     ) as infile:
         dialog = ujson.load(infile)
     random.shuffle(dialog)
@@ -931,9 +927,7 @@ def generate_and_send_messages(
             message.subject = random.choice(possible_topics[message.recipient.id])
             saved_data["subject"] = message.subject
 
-        message.date_sent = choose_date_sent(
-            num_messages, tot_messages, options["threads"],
-        )
+        message.date_sent = choose_date_sent(num_messages, tot_messages, options["threads"])
         messages.append(message)
 
         recipients[num_messages] = (message_type, message.recipient.id, saved_data)

@@ -28,9 +28,7 @@ class Command(ZulipBaseCommand):
         recipients = Recipient.objects.filter(
             type=Recipient.STREAM, type_id__in=[stream.id for stream in streams],
         )
-        cutoff = datetime.datetime.fromtimestamp(
-            options["since"], tz=datetime.timezone.utc,
-        )
+        cutoff = datetime.datetime.fromtimestamp(options["since"], tz=datetime.timezone.utc)
         messages = Message.objects.filter(date_sent__gt=cutoff, recipient__in=recipients)
 
         for message in messages:

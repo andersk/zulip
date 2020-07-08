@@ -388,7 +388,9 @@ body:
         with mock.patch(
             "zerver.decorator.webhook_unexpected_events_logger.exception",
         ) as mock_exception:
-            exception_msg = "The 'test_event' event isn't currently supported by the helloworld webhook"
+            exception_msg = (
+                "The 'test_event' event isn't currently supported by the helloworld webhook"
+            )
             with self.assertRaisesRegex(UnexpectedWebhookEventType, exception_msg):
                 request.body = "invalidjson"
                 request.content_type = "application/json"
@@ -459,9 +461,7 @@ class SkipRateLimitingTest(ZulipTestCase):
             return json_success()
 
         request = HostRequestMock(host="zulip.testserver")
-        request.META["HTTP_AUTHORIZATION"] = self.encode_email(
-            self.example_email("hamlet"),
-        )
+        request.META["HTTP_AUTHORIZATION"] = self.encode_email(self.example_email("hamlet"))
         request.method = "POST"
 
         with mock.patch("zerver.decorator.rate_limit") as rate_limit_mock:
@@ -589,7 +589,9 @@ body:
         with mock.patch(
             "zerver.decorator.webhook_unexpected_events_logger.exception",
         ) as mock_exception:
-            exception_msg = "The 'test_event' event isn't currently supported by the helloworld webhook"
+            exception_msg = (
+                "The 'test_event' event isn't currently supported by the helloworld webhook"
+            )
             with self.assertRaisesRegex(UnexpectedWebhookEventType, exception_msg):
                 my_webhook_raises_exception(request)
 
@@ -642,9 +644,7 @@ body:
         user_profile = self.example_user("hamlet")
         api_key = get_api_key(user_profile)
         credentials = f"{user_profile.email}:{api_key}"
-        api_auth = "Digest " + base64.b64encode(credentials.encode("utf-8")).decode(
-            "utf-8",
-        )
+        api_auth = "Digest " + base64.b64encode(credentials.encode("utf-8")).decode("utf-8")
         result = self.client_post(
             "/api/v1/external/zendesk", {}, HTTP_AUTHORIZATION=api_auth,
         )
@@ -891,15 +891,7 @@ class ValidatorTestCase(ZulipTestCase):
             check_float("x", x)
 
     def test_check_color(self) -> None:
-        x = [
-            "#000099",
-            "#80ffaa",
-            "#80FFAA",
-            "#abcd12",
-            "#ffff00",
-            "#ff0",
-            "#f00",
-        ]  # valid
+        x = ["#000099", "#80ffaa", "#80FFAA", "#abcd12", "#ffff00", "#ff0", "#f00"]  # valid
         y = ["000099", "#80f_aa", "#80fraa", "#abcd1234", "blue"]  # invalid
         z = 5  # invalid
 
@@ -1360,9 +1352,7 @@ class InactiveUserTest(ZulipTestCase):
 
         # Test a mirror-dummy active user.
         form = OurAuthenticationForm(request, payload)
-        with self.settings(
-            AUTHENTICATION_BACKENDS=("zproject.backends.EmailAuthBackend",),
-        ):
+        with self.settings(AUTHENTICATION_BACKENDS=("zproject.backends.EmailAuthBackend",)):
             self.assertTrue(form.is_valid())
 
         # Test a mirror-dummy deactivated user.
@@ -1370,9 +1360,7 @@ class InactiveUserTest(ZulipTestCase):
         user_profile.save()
 
         form = OurAuthenticationForm(request, payload)
-        with self.settings(
-            AUTHENTICATION_BACKENDS=("zproject.backends.EmailAuthBackend",),
-        ):
+        with self.settings(AUTHENTICATION_BACKENDS=("zproject.backends.EmailAuthBackend",)):
             self.assertFalse(form.is_valid())
             self.assertIn("Please enter a correct email", str(form.errors))
 
@@ -1381,9 +1369,7 @@ class InactiveUserTest(ZulipTestCase):
         user_profile.save()
 
         form = OurAuthenticationForm(request, payload)
-        with self.settings(
-            AUTHENTICATION_BACKENDS=("zproject.backends.EmailAuthBackend",),
-        ):
+        with self.settings(AUTHENTICATION_BACKENDS=("zproject.backends.EmailAuthBackend",)):
             self.assertFalse(form.is_valid())
             self.assertIn("Your account is no longer active", str(form.errors))
 

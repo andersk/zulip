@@ -110,8 +110,7 @@ class APIArgumentsTablePreprocessor(Preprocessor):
         for argument in arguments:
             description = argument["description"]
             oneof = [
-                "`" + str(item) + "`"
-                for item in argument.get("schema", {}).get("enum", [])
+                "`" + str(item) + "`" for item in argument.get("schema", {}).get("enum", [])
             ]
             if oneof:
                 description += "\nMust be one of: {}.".format(", ".join(oneof))
@@ -145,9 +144,7 @@ class APIArgumentsTablePreprocessor(Preprocessor):
             if likely_deprecated_parameter(description):
                 assert argument["deprecated"]
             if argument.get("deprecated", False):
-                deprecated_block = (
-                    '<span class="api-argument-deprecated">Deprecated</span>'
-                )
+                deprecated_block = '<span class="api-argument-deprecated">Deprecated</span>'
             else:
                 deprecated_block = ""
 

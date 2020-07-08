@@ -299,9 +299,7 @@ DATABASES: Dict[str, Dict[str, Any]] = {
 
 if DEVELOPMENT:
     LOCAL_DATABASE_PASSWORD = get_secret("local_database_password")
-    DATABASES["default"].update(
-        {"PASSWORD": LOCAL_DATABASE_PASSWORD, "HOST": "localhost"},
-    )
+    DATABASES["default"].update({"PASSWORD": LOCAL_DATABASE_PASSWORD, "HOST": "localhost"})
 elif REMOTE_POSTGRES_HOST != "":
     DATABASES["default"].update(
         {"HOST": REMOTE_POSTGRES_HOST, "PORT": REMOTE_POSTGRES_PORT},
@@ -313,9 +311,7 @@ elif REMOTE_POSTGRES_HOST != "":
     else:
         DATABASES["default"]["OPTIONS"]["sslmode"] = "verify-full"
 
-POSTGRES_MISSING_DICTIONARIES = bool(
-    get_config("postgresql", "missing_dictionaries", None),
-)
+POSTGRES_MISSING_DICTIONARIES = bool(get_config("postgresql", "missing_dictionaries", None))
 
 ########################################################################
 # RABBITMQ CONFIGURATION
@@ -743,9 +739,7 @@ LOGGING: Dict[str, Any] = {
         "require_debug_true": {"()": "django.utils.log.RequireDebugTrue"},
         "nop": {"()": "zerver.lib.logging_util.ReturnTrue"},
         "require_logging_enabled": {"()": "zerver.lib.logging_util.ReturnEnabled"},
-        "require_really_deployed": {
-            "()": "zerver.lib.logging_util.RequireReallyDeployed",
-        },
+        "require_really_deployed": {"()": "zerver.lib.logging_util.RequireReallyDeployed"},
         "skip_200_and_304": {
             "()": "django.utils.log.CallbackFilter",
             "callback": zerver.lib.logging_util.skip_200_and_304,

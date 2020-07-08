@@ -24,9 +24,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="realm",
             name="invite_to_stream_policy",
-            field=models.PositiveSmallIntegerField(
-                default=INVITE_TO_STREAM_POLICY_MEMBERS,
-            ),
+            field=models.PositiveSmallIntegerField(default=INVITE_TO_STREAM_POLICY_MEMBERS),
         ),
         migrations.RunPython(
             handle_waiting_period, reverse_code=migrations.RunPython.noop, elidable=True,

@@ -788,9 +788,7 @@ def get_realm_config() -> Config:
     return realm_config
 
 
-def sanity_check_stream_data(
-    response: TableData, config: Config, context: Context,
-) -> None:
+def sanity_check_stream_data(response: TableData, config: Config, context: Context) -> None:
 
     if context["exportable_user_ids"] is not None:
         # If we restrict which user ids are exportable,
@@ -1263,9 +1261,7 @@ def _check_key_metadata(
         print(f"File uploaded by email gateway bot: {key.key} / {key.metadata}")
     elif processing_avatars:
         if "user_profile_id" not in key.metadata:
-            raise AssertionError(
-                f"Missing user_profile_id in key metadata: {key.metadata}",
-            )
+            raise AssertionError(f"Missing user_profile_id in key metadata: {key.metadata}")
         if int(key.metadata["user_profile_id"]) not in user_ids:
             raise AssertionError(f"Wrong user_profile_id in key metadata: {key.metadata}")
     elif "realm_id" not in key.metadata:
@@ -1796,9 +1792,7 @@ def get_single_user_config() -> Config:
 
 
 def export_messages_single_user(
-    user_profile: UserProfile,
-    output_dir: Path,
-    chunk_size: int = MESSAGE_BATCH_CHUNK_SIZE,
+    user_profile: UserProfile, output_dir: Path, chunk_size: int = MESSAGE_BATCH_CHUNK_SIZE,
 ) -> None:
     user_message_query = UserMessage.objects.filter(user_profile=user_profile).order_by(
         "id",
@@ -1918,9 +1912,7 @@ def export_realm_wrapper(
     # without additional configuration.  We'll likely want to change
     # that in the future.
     print("Uploading export tarball...")
-    public_url = zerver.lib.upload.upload_backend.upload_export_tarball(
-        realm, tarball_path,
-    )
+    public_url = zerver.lib.upload.upload_backend.upload_export_tarball(realm, tarball_path)
     print()
     print(f"Uploaded to {public_url}")
 

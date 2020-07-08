@@ -315,11 +315,7 @@ class QuoteHandler(BaseHandler):
 
 class SpoilerHandler(BaseHandler):
     def __init__(
-        self,
-        processor: Any,
-        output: MutableSequence[str],
-        fence: str,
-        spoiler_header: str,
+        self, processor: Any, output: MutableSequence[str], fence: str, spoiler_header: str,
     ) -> None:
         self.processor = processor
         self.output = output
@@ -374,9 +370,7 @@ class TexHandler(BaseHandler):
 
 
 class FencedBlockPreprocessor(markdown.preprocessors.Preprocessor):
-    def __init__(
-        self, md: markdown.Markdown, run_content_validators: bool = False,
-    ) -> None:
+    def __init__(self, md: markdown.Markdown, run_content_validators: bool = False) -> None:
         markdown.preprocessors.Preprocessor.__init__(self, md)
 
         self.checked_for_codehilite = False
@@ -460,9 +454,7 @@ class FencedBlockPreprocessor(markdown.preprocessors.Preprocessor):
         quoted_paragraphs = []
         for paragraph in paragraphs:
             lines = paragraph.split("\n")
-            quoted_paragraphs.append(
-                "\n".join("> " + line for line in lines if line != ""),
-            )
+            quoted_paragraphs.append("\n".join("> " + line for line in lines if line != ""))
         return "\n\n".join(quoted_paragraphs)
 
     def format_spoiler(self, header: str, text: str) -> str:

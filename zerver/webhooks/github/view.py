@@ -167,9 +167,7 @@ def get_deployment_body(payload: Dict[str, Any]) -> str:
 
 
 def get_change_deployment_status_body(payload: Dict[str, Any]) -> str:
-    return "Deployment changed status to {}.".format(
-        payload["deployment_status"]["state"],
-    )
+    return "Deployment changed status to {}.".format(payload["deployment_status"]["state"])
 
 
 def get_create_or_delete_body(payload: Dict[str, Any], action: str) -> str:

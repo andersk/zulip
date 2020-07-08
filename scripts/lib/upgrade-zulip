@@ -57,9 +57,7 @@ try:
     subprocess.check_output(["chown", "-R", "zulip:zulip", TARBALL_ARCHIVE_PATH])
 
     logging.info("Unpacking the tarball")
-    unpack_zulip = os.path.realpath(
-        os.path.join(os.path.dirname(__file__), "unpack-zulip"),
-    )
+    unpack_zulip = os.path.realpath(os.path.join(os.path.dirname(__file__), "unpack-zulip"))
     deploy_path = subprocess.check_output(
         [unpack_zulip, archived_tarball_path],
         preexec_fn=su_to_zulip,

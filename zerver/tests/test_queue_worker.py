@@ -293,14 +293,10 @@ class WorkerTest(ZulipTestCase):
                     ("missedmessage_mobile_notifications", event_remove),
                 )
 
-                with patch(
-                    "zerver.lib.queue.queue_json_publish", side_effect=fake_publish,
-                ):
+                with patch("zerver.lib.queue.queue_json_publish", side_effect=fake_publish):
                     worker.start()
                     self.assertEqual(mock_handle_new.call_count, 1 + MAX_REQUEST_RETRIES)
-                    self.assertEqual(
-                        mock_handle_remove.call_count, 1 + MAX_REQUEST_RETRIES,
-                    )
+                    self.assertEqual(mock_handle_remove.call_count, 1 + MAX_REQUEST_RETRIES)
 
     @patch("zerver.worker.queue_processors.mirror_email")
     def test_mirror_worker(self, mock_mirror_email: MagicMock) -> None:

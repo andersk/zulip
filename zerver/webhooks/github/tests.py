@@ -9,9 +9,7 @@ class GithubWebhookTest(WebhookTestCase):
     URL_TEMPLATE = "/api/v1/external/github?stream={stream}&api_key={api_key}"
     FIXTURE_DIR_NAME = "github"
     EXPECTED_TOPIC_REPO_EVENTS = "public-repo"
-    EXPECTED_TOPIC_ISSUE_EVENTS = (
-        "public-repo / Issue #2 Spelling error in the README file"
-    )
+    EXPECTED_TOPIC_ISSUE_EVENTS = "public-repo / Issue #2 Spelling error in the README file"
     EXPECTED_TOPIC_PR_EVENTS = "public-repo / PR #1 Update the README with new information"
     EXPECTED_TOPIC_DEPLOYMENT_EVENTS = "public-repo / Deployment on production"
     EXPECTED_TOPIC_ORGANIZATION_EVENTS = "baxterandthehackers organization"
@@ -19,9 +17,7 @@ class GithubWebhookTest(WebhookTestCase):
     EXPECTED_TOPIC_WIKI_EVENTS = "public-repo / Wiki Pages"
 
     def test_ping_event(self) -> None:
-        expected_message = (
-            "GitHub webhook has been successfully configured by TomaszKolek."
-        )
+        expected_message = "GitHub webhook has been successfully configured by TomaszKolek."
         self.send_and_test_stream_message(
             "ping", self.EXPECTED_TOPIC_REPO_EVENTS, expected_message,
         )
@@ -46,9 +42,7 @@ class GithubWebhookTest(WebhookTestCase):
     def test_push_local_branch_without_commits(self) -> None:
         expected_message = "eeshangarg [pushed](https://github.com/eeshangarg/public-repo/compare/feature) the branch feature."
         self.send_and_test_stream_message(
-            "push__local_branch_without_commits",
-            "public-repo / feature",
-            expected_message,
+            "push__local_branch_without_commits", "public-repo / feature", expected_message,
         )
 
     def test_push_1_commit(self) -> None:
@@ -182,9 +176,7 @@ class GithubWebhookTest(WebhookTestCase):
         self.url = self.build_webhook_url(topic="notifications")
         expected_topic = "notifications"
         expected_message = "baxterthehacker [commented](https://github.com/baxterthehacker/public-repo/issues/2#issuecomment-99262140) on [Issue #2 Spelling error in the README file](https://github.com/baxterthehacker/public-repo/issues/2):\n\n~~~ quote\nYou are totally right! I'll get this fixed right away.\n~~~"
-        self.send_and_test_stream_message(
-            "issue_comment", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("issue_comment", expected_topic, expected_message)
 
     def test_issue_msg(self) -> None:
         expected_message = "baxterthehacker opened [Issue #2](https://github.com/baxterthehacker/public-repo/issues/2):\n\n~~~ quote\nIt looks like you accidentally spelled 'commit' with two 't's.\n~~~"

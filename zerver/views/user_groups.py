@@ -106,10 +106,7 @@ def update_user_group_backend(
 
 
 def add_members_to_group_backend(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    user_group_id: int,
-    members: List[int],
+    request: HttpRequest, user_profile: UserProfile, user_group_id: int, members: List[int],
 ) -> HttpResponse:
     if not members:
         return json_success()
@@ -131,10 +128,7 @@ def add_members_to_group_backend(
 
 
 def remove_members_from_group_backend(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    user_group_id: int,
-    members: List[int],
+    request: HttpRequest, user_profile: UserProfile, user_group_id: int, members: List[int],
 ) -> HttpResponse:
     if not members:
         return json_success()

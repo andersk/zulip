@@ -35,9 +35,7 @@ def format_push_event(payload: Dict[str, Any]) -> str:
 
     for commit in payload["commits"]:
         commit["sha"] = commit["id"]
-        commit["name"] = (
-            commit["author"]["username"] or commit["author"]["name"].split()[0]
-        )
+        commit["name"] = commit["author"]["username"] or commit["author"]["name"].split()[0]
 
     data = {
         "user_name": payload["sender"]["username"],
@@ -95,9 +93,7 @@ def format_issues_event(payload: Dict[str, Any], include_title: bool = False) ->
     )
 
 
-def format_issue_comment_event(
-    payload: Dict[str, Any], include_title: bool = False,
-) -> str:
+def format_issue_comment_event(payload: Dict[str, Any], include_title: bool = False) -> str:
     action = payload["action"]
     comment = payload["comment"]
     issue = payload["issue"]
@@ -185,9 +181,7 @@ def gogs_webhook_main(
             title=payload["pull_request"]["title"],
         )
     elif event == "issues":
-        body = format_issues_event(
-            payload, include_title=user_specified_topic is not None,
-        )
+        body = format_issues_event(payload, include_title=user_specified_topic is not None)
         topic = TOPIC_WITH_PR_OR_ISSUE_INFO_TEMPLATE.format(
             repo=repo,
             type="Issue",
@@ -209,9 +203,7 @@ def gogs_webhook_main(
             payload, include_title=user_specified_topic is not None,
         )
         topic = TOPIC_WITH_RELEASE_TEMPLATE.format(
-            repo=repo,
-            tag=payload["release"]["tag_name"],
-            title=payload["release"]["name"],
+            repo=repo, tag=payload["release"]["tag_name"], title=payload["release"]["name"],
         )
 
     else:

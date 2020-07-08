@@ -202,9 +202,7 @@ class UserPresenceTests(ZulipTestCase):
         result = self.client_post("/json/users/me/presence", params)
         self.assert_json_success(result)
 
-        self.assertEqual(
-            result.json()["presences"][hamlet.email][client]["status"], "idle",
-        )
+        self.assertEqual(result.json()["presences"][hamlet.email][client]["status"], "idle")
 
         self.login("othello")
         params = dict(status="idle")
@@ -267,9 +265,7 @@ class UserPresenceTests(ZulipTestCase):
         )
         interval = UserActivityInterval.objects.get(user_profile=user_profile)
         self.assertEqual(interval.start, time_zero)
-        self.assertEqual(
-            interval.end, time_zero + UserActivityInterval.MIN_INTERVAL_LENGTH,
-        )
+        self.assertEqual(interval.end, time_zero + UserActivityInterval.MIN_INTERVAL_LENGTH)
 
         second_time = time_zero + timedelta(seconds=600)
         # Extent the interval

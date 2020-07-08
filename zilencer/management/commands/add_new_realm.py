@@ -7,7 +7,9 @@ from zerver.models import Realm, UserProfile
 
 
 class Command(ZulipBaseCommand):
-    help = """Add a new realm and initial user for manual testing of the onboarding process."""
+    help = (
+        """Add a new realm and initial user for manual testing of the onboarding process."""
+    )
 
     def handle(self, **options: Any) -> None:
         string_id = "realm{:02}".format(

@@ -10,7 +10,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name="realmauditlog", name="requires_billing_update",
-        ),
+        migrations.RemoveField(model_name="realmauditlog", name="requires_billing_update"),
     ]

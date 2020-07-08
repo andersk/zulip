@@ -205,9 +205,7 @@ def write_log_line(
     markdown_output = ""
     if "markdown_time_start" in log_data:
         markdown_time_delta = get_markdown_time() - log_data["markdown_time_start"]
-        markdown_count_delta = (
-            get_markdown_requests() - log_data["markdown_requests_start"]
-        )
+        markdown_count_delta = get_markdown_requests() - log_data["markdown_requests_start"]
         if "markdown_requests_stopped" in log_data:
             # (now - restarted) + (stopped - start) = (now - start) + (stopped - restarted)
             markdown_time_delta += (

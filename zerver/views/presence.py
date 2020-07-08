@@ -101,9 +101,7 @@ def update_active_status_backend(
         # (running as their user) has been active.
         try:
             activity = UserActivity.objects.get(
-                user_profile=user_profile,
-                query="get_events",
-                client__name="zephyr_mirror",
+                user_profile=user_profile, query="get_events", client__name="zephyr_mirror",
             )
 
             ret[
@@ -115,9 +113,7 @@ def update_active_status_backend(
     return json_success(ret)
 
 
-def get_statuses_for_realm(
-    request: HttpRequest, user_profile: UserProfile,
-) -> HttpResponse:
+def get_statuses_for_realm(request: HttpRequest, user_profile: UserProfile) -> HttpResponse:
     # This isn't used by the webapp; it's available for API use by
     # bots and other clients.  We may want to add slim_presence
     # support for it (or just migrate its API wholesale) later.

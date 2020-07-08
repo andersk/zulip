@@ -16,18 +16,14 @@ from zerver.logging_handlers import AdminNotifyHandler, HasRequest
 
 captured_request: Optional[HttpRequest] = None
 captured_exc_info: Optional[
-    Union[
-        Tuple[Type[BaseException], BaseException, TracebackType], Tuple[None, None, None],
-    ]
+    Union[Tuple[Type[BaseException], BaseException, TracebackType], Tuple[None, None, None]]
 ] = None
 
 
 def capture_and_throw(domain: Optional[str] = None) -> Callable[[ViewFuncT], ViewFuncT]:
     def wrapper(view_func: ViewFuncT) -> ViewFuncT:
         @wraps(view_func)
-        def wrapped_view(
-            request: HttpRequest, *args: object, **kwargs: object
-        ) -> NoReturn:
+        def wrapped_view(request: HttpRequest, *args: object, **kwargs: object) -> NoReturn:
             global captured_request
             captured_request = request
             try:
@@ -250,8 +246,6 @@ class RateLimitFilterTest(ZulipTestCase):
             raise Exception
 
         with patch("zerver.lib.logging_util.cache.get", side_effect=mocked_cache_get) as m:
-            logging.error(
-                "Log an error to trigger initial _RateLimitFilter.filter() call.",
-            )
+            logging.error("Log an error to trigger initial _RateLimitFilter.filter() call.")
             # cache.get should have only been called once, by the original filter() call:
             m.assert_called_once()

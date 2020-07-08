@@ -24,9 +24,7 @@ class Command(ZulipBaseCommand):
         for user_profile in user_profiles:
             already_disabled_prefix = ""
             if user_profile.enable_digest_emails:
-                do_change_notification_settings(
-                    user_profile, "enable_digest_emails", False,
-                )
+                do_change_notification_settings(user_profile, "enable_digest_emails", False)
             else:
                 already_disabled_prefix = "(already off) "
             print(

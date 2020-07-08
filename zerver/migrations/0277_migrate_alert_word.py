@@ -24,9 +24,7 @@ def move_to_seperate_table(apps: StateApps, schema_editor: DatabaseSchemaEditor)
         )
 
 
-def move_back_to_user_profile(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def move_back_to_user_profile(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     AlertWord = apps.get_model("zerver", "AlertWord")
     UserProfile = apps.get_model("zerver", "UserProfile")
 

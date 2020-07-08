@@ -196,19 +196,13 @@ class SlackImporter(ZulipTestCase):
 
         api_calls = [
             call(
-                "https://slack.com/api/users.info",
-                "user",
-                token="token",
-                user="U061A3E0G",
+                "https://slack.com/api/users.info", "user", token="token", user="U061A3E0G",
             ),
             call(
                 "https://slack.com/api/team.info", "team", token="token", team="T6LARQE2Z",
             ),
             call(
-                "https://slack.com/api/users.info",
-                "user",
-                token="token",
-                user="U061A8H1G",
+                "https://slack.com/api/users.info", "user", token="token", user="U061A8H1G",
             ),
             call(
                 "https://slack.com/api/team.info", "team", token="token", team="T7KJRQE8Y",
@@ -452,9 +446,7 @@ class SlackImporter(ZulipTestCase):
         self.assertEqual(zerver_userprofile[3]["role"], UserProfile.ROLE_MEMBER)
         self.assertEqual(zerver_userprofile[3]["is_staff"], False)
         self.assertEqual(zerver_userprofile[3]["is_active"], False)
-        self.assertEqual(
-            zerver_userprofile[3]["email"], "matt.perry@foreignteam.slack.com",
-        )
+        self.assertEqual(zerver_userprofile[3]["email"], "matt.perry@foreignteam.slack.com")
         self.assertEqual(zerver_userprofile[3]["realm"], 1)
         self.assertEqual(zerver_userprofile[3]["full_name"], "Matt Perry")
         self.assertEqual(zerver_userprofile[3]["short_name"], "matt.perry")

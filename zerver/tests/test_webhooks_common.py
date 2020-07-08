@@ -44,9 +44,7 @@ class WebhooksCommonTestCase(ZulipTestCase):
 
         exception_msg = "Missing the HTTP event header 'X_CUSTOM_HEADER'"
         with self.assertRaisesRegex(MissingHTTPEventHeader, exception_msg):
-            validate_extract_webhook_http_header(
-                request, "X_CUSTOM_HEADER", "test_webhook",
-            )
+            validate_extract_webhook_http_header(request, "X_CUSTOM_HEADER", "test_webhook")
 
         msg = self.get_last_message()
         expected_message = MISSING_EVENT_HEADER_MESSAGE.format(

@@ -94,6 +94,4 @@ class RemoteRealmCount(BaseCount):
         ]
 
     def __str__(self) -> str:
-        return (
-            f"{self.server} {self.realm_id} {self.property} {self.subgroup} {self.value}"
-        )
+        return f"{self.server} {self.realm_id} {self.property} {self.subgroup} {self.value}"

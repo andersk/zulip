@@ -52,11 +52,7 @@ from zerver.lib.actions import (
     notify_realm_export,
     render_incoming_message,
 )
-from zerver.lib.bot_lib import (
-    EmbeddedBotHandler,
-    EmbeddedBotQuitException,
-    get_bot_handler,
-)
+from zerver.lib.bot_lib import EmbeddedBotHandler, EmbeddedBotQuitException, get_bot_handler
 from zerver.lib.context_managers import lockfile
 from zerver.lib.db import reset_queries
 from zerver.lib.digest import handle_digest_email

@@ -179,6 +179,4 @@ class AdminNotifyHandler(logging.Handler):
         except Exception:
             # If this breaks, complain loudly but don't pass the traceback up the stream
             # However, we *don't* want to use logging.exception since that could trigger a loop.
-            logging.warning(
-                "Reporting an exception triggered an exception!", exc_info=True,
-            )
+            logging.warning("Reporting an exception triggered an exception!", exc_info=True)

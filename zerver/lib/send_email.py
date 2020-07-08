@@ -104,9 +104,7 @@ def build_email(
     def render_templates() -> Tuple[str, str, str]:
         email_subject = (
             loader.render_to_string(
-                template_prefix + ".subject.txt",
-                context=context,
-                using="Jinja2_plaintext",
+                template_prefix + ".subject.txt", context=context, using="Jinja2_plaintext",
             )
             .strip()
             .replace("\n", "")
@@ -182,9 +180,7 @@ class DoubledEmailArgumentException(CommandError):
 
 class NoEmailArgumentException(CommandError):
     def __init__(self, argument_name: str) -> None:
-        msg = (
-            f"Argument '{argument_name}' is required in either options or email template."
-        )
+        msg = f"Argument '{argument_name}' is required in either options or email template."
         super().__init__(msg)
 
 
@@ -368,9 +364,7 @@ def send_custom_email(users: List[UserProfile], options: Dict[str, Any]) -> None
 
     email_filename = f"custom/custom_email_{email_template_hash}.source.html"
     email_id = f"zerver/emails/custom/custom_email_{email_template_hash}"
-    markdown_email_base_template_path = (
-        "templates/zerver/emails/custom_email_base.pre.html"
-    )
+    markdown_email_base_template_path = "templates/zerver/emails/custom_email_base.pre.html"
     html_source_template_path = f"templates/{email_id}.source.html"
     plain_text_template_path = f"templates/{email_id}.txt"
     subject_path = f"templates/{email_id}.subject.txt"

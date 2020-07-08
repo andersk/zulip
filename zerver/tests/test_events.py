@@ -375,9 +375,7 @@ class NormalActionsTest(BaseAction):
             self.example_user("othello"),
         ]
         self.verify_action(
-            lambda: self.send_huddle_message(
-                self.example_user("cordelia"), huddle, "hola",
-            ),
+            lambda: self.send_huddle_message(self.example_user("cordelia"), huddle, "hola"),
         )
 
     def test_stream_send_message_events(self) -> None:
@@ -1574,16 +1572,12 @@ class NormalActionsTest(BaseAction):
                 ("op", equals("update")),
                 (
                     "person",
-                    check_dict_only(
-                        [("full_name", check_string), ("user_id", check_int)],
-                    ),
+                    check_dict_only([("full_name", check_string), ("user_id", check_int)]),
                 ),
             ],
         )
         events = self.verify_action(
-            lambda: do_change_full_name(
-                self.user_profile, "Sir Hamlet", self.user_profile,
-            ),
+            lambda: do_change_full_name(self.user_profile, "Sir Hamlet", self.user_profile),
         )
         schema_checker("events[0]", events[0])
 
@@ -1705,9 +1699,7 @@ class NormalActionsTest(BaseAction):
         )
         stream = get_stream("Denmark", self.user_profile.realm)
         sub = get_subscription(stream.name, self.user_profile)
-        do_change_subscription_property(
-            self.user_profile, sub, stream, "pin_to_top", False,
-        )
+        do_change_subscription_property(self.user_profile, sub, stream, "pin_to_top", False)
         for pinned in (True, False):
             events = self.verify_action(
                 lambda: do_change_subscription_property(
@@ -1929,14 +1921,8 @@ class NormalActionsTest(BaseAction):
             schema_checker("events[0]", events[0])
 
     def test_change_notification_settings(self) -> None:
-        for (
-            notification_setting,
-            v,
-        ) in self.user_profile.notification_setting_types.items():
-            if notification_setting in [
-                "notification_sound",
-                "desktop_icon_count_display",
-            ]:
+        for notification_setting, v in self.user_profile.notification_setting_types.items():
+            if notification_setting in ["notification_sound", "desktop_icon_count_display"]:
                 # These settings are tested in their own tests.
                 continue
 
@@ -2271,9 +2257,7 @@ class NormalActionsTest(BaseAction):
         self.assertEqual(events[1]["type"], "realm_user")
 
     def test_change_realm_icon_source(self) -> None:
-        action = lambda: do_change_icon_source(
-            self.user_profile.realm, Realm.ICON_UPLOADED,
-        )
+        action = lambda: do_change_icon_source(self.user_profile.realm, Realm.ICON_UPLOADED)
         events = self.verify_action(action, state_change_expected=True)
         schema_checker = check_events_dict(
             [
@@ -2386,9 +2370,7 @@ class NormalActionsTest(BaseAction):
                 ("op", equals("update")),
                 (
                     "person",
-                    check_dict_only(
-                        [("user_id", check_int), ("bot_owner_id", check_int)],
-                    ),
+                    check_dict_only([("user_id", check_int), ("bot_owner_id", check_int)]),
                 ),
             ],
         )
@@ -2441,10 +2423,7 @@ class NormalActionsTest(BaseAction):
                             ("is_active", check_bool),
                             ("api_key", check_string),
                             ("default_sending_stream", check_none_or(check_string)),
-                            (
-                                "default_events_register_stream",
-                                check_none_or(check_string),
-                            ),
+                            ("default_events_register_stream", check_none_or(check_string)),
                             ("default_all_public_streams", check_bool),
                             ("avatar_url", check_string),
                             ("owner_id", check_int),
@@ -2511,9 +2490,7 @@ class NormalActionsTest(BaseAction):
                 ("op", equals("remove")),
                 (
                     "bot",
-                    check_dict_only(
-                        [("full_name", check_string), ("user_id", check_int)],
-                    ),
+                    check_dict_only([("full_name", check_string), ("user_id", check_int)]),
                 ),
             ],
         )
@@ -2538,10 +2515,7 @@ class NormalActionsTest(BaseAction):
                             ("is_active", check_bool),
                             ("api_key", check_string),
                             ("default_sending_stream", check_none_or(check_string)),
-                            (
-                                "default_events_register_stream",
-                                check_none_or(check_string),
-                            ),
+                            ("default_events_register_stream", check_none_or(check_string)),
                             ("default_all_public_streams", check_bool),
                             ("avatar_url", check_string),
                             ("owner_id", check_none_or(check_int)),
@@ -2549,10 +2523,7 @@ class NormalActionsTest(BaseAction):
                                 "services",
                                 check_list(
                                     check_dict_only(
-                                        [
-                                            ("base_url", check_url),
-                                            ("interface", check_int),
-                                        ],
+                                        [("base_url", check_url), ("interface", check_int)],
                                     ),
                                 ),
                             ),
@@ -3057,9 +3028,7 @@ class NormalActionsTest(BaseAction):
         do_change_user_role(self.user_profile, UserProfile.ROLE_REALM_ADMINISTRATOR)
         self.login_user(self.user_profile)
 
-        with mock.patch(
-            "zerver.lib.export.do_export_realm", side_effect=Exception("test"),
-        ):
+        with mock.patch("zerver.lib.export.do_export_realm", side_effect=Exception("test")):
             with stdout_suppressed():
                 events = self.verify_action(
                     lambda: self.client_post("/json/export/realm"),
@@ -3165,10 +3134,7 @@ class RealmPropertyActionTest(BaseAction):
                     acting_user=self.user_profile,
                     extra_data=ujson.dumps(
                         {
-                            RealmAuditLog.OLD_VALUE: {
-                                "property": name,
-                                "value": old_value,
-                            },
+                            RealmAuditLog.OLD_VALUE: {"property": name, "value": old_value},
                             RealmAuditLog.NEW_VALUE: {"property": name, "value": val},
                         },
                     ),
@@ -3219,9 +3185,7 @@ class UserDisplayActionTest(BaseAction):
 
         for value in values:
             events = self.verify_action(
-                lambda: do_set_user_display_setting(
-                    self.user_profile, setting_name, value,
-                ),
+                lambda: do_set_user_display_setting(self.user_profile, setting_name, value),
                 num_events=num_events,
             )
 

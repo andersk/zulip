@@ -170,9 +170,7 @@ Traceback:
     def test_issue_ignored(self) -> None:
         expected_topic = "Exception: program has entered an invalid state."
         expected_message = """\nIssue **Exception: program has entered an invalid state.** was ignored by **Hemanth V. Alluri**."""
-        self.send_and_test_stream_message(
-            "issue_ignored", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("issue_ignored", expected_topic, expected_message)
 
     def test_issue_resolved(self) -> None:
         expected_topic = "Exception: program has entered an invalid state."

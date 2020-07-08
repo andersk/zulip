@@ -227,9 +227,7 @@ def check_for_exactly_one_stream_arg(
         raise JsonableError(_("Please choose one: 'stream' or 'stream_id'."))
 
 
-def access_stream_for_delete_or_update(
-    user_profile: UserProfile, stream_id: int,
-) -> Stream:
+def access_stream_for_delete_or_update(user_profile: UserProfile, stream_id: int) -> Stream:
     # We should only ever use this for realm admins, who are allowed
     # to delete or update all streams on their realm, even private streams
     # to which they are not subscribed.  We do an assert here, because

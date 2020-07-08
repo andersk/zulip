@@ -47,8 +47,7 @@ def fill_edit_history_entries(
     if len(message_history) > 0:
         assert message.last_edit_time is not None
         assert (
-            datetime_to_timestamp(message.last_edit_time)
-            == message_history[0]["timestamp"]
+            datetime_to_timestamp(message.last_edit_time) == message_history[0]["timestamp"]
         )
 
     for entry in message_history:

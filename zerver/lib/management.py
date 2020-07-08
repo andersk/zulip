@@ -28,9 +28,7 @@ def check_config() -> None:
         except AttributeError:
             pass
 
-        raise CommandError(
-            f"Error: You must set {setting_name} in /etc/zulip/settings.py.",
-        )
+        raise CommandError(f"Error: You must set {setting_name} in /etc/zulip/settings.py.")
 
 
 def sleep_forever() -> None:

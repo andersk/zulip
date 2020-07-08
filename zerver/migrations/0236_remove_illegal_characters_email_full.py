@@ -9,9 +9,7 @@ from django.db.migrations.state import StateApps
 NAME_INVALID_CHARS = ["*", "`", "\\", ">", '"', "@"]
 
 
-def remove_name_illegal_chars(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def remove_name_illegal_chars(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     UserProfile = apps.get_model("zerver", "UserProfile")
     for user in UserProfile.objects.all():
         stripped = []

@@ -290,9 +290,7 @@ class TestDigestEmailMessages(ZulipTestCase):
     @mock.patch("zerver.lib.digest.timezone_now")
     @override_settings(SEND_DIGEST_EMAILS=True)
     def test_new_stream_link(self, mock_django_timezone: mock.MagicMock) -> None:
-        cutoff = datetime.datetime(
-            year=2017, month=11, day=1, tzinfo=datetime.timezone.utc,
-        )
+        cutoff = datetime.datetime(year=2017, month=11, day=1, tzinfo=datetime.timezone.utc)
         mock_django_timezone.return_value = datetime.datetime(
             year=2017, month=11, day=5, tzinfo=datetime.timezone.utc,
         )

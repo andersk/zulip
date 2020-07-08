@@ -467,10 +467,7 @@ INTEGRATIONS: Dict[str, Integration] = {
         "codebase", "codebase", ["version-control"], doc="zerver/integrations/codebase.md",
     ),
     "discourse": Integration(
-        "discourse",
-        "discourse",
-        ["communication"],
-        doc="zerver/integrations/discourse.md",
+        "discourse", "discourse", ["communication"], doc="zerver/integrations/discourse.md",
     ),
     "email": Integration(
         "email", "email", ["communication"], doc="zerver/integrations/email.md",
@@ -567,9 +564,7 @@ INTEGRATIONS: Dict[str, Integration] = {
         display_name="RSS",
         doc="zerver/integrations/rss.md",
     ),
-    "svn": Integration(
-        "svn", "svn", ["version-control"], doc="zerver/integrations/svn.md",
-    ),
+    "svn": Integration("svn", "svn", ["version-control"], doc="zerver/integrations/svn.md"),
     "trac": Integration(
         "trac", "trac", ["project-management"], doc="zerver/integrations/trac.md",
     ),
@@ -625,9 +620,7 @@ HUBOT_INTEGRATIONS: List[HubotIntegration] = [
         # _ needed to get around adblock plus
         logo="images/integrations/logos/instagra_m.svg",
     ),
-    HubotIntegration(
-        "mailchimp", ["communication", "marketing"], display_name="MailChimp",
-    ),
+    HubotIntegration("mailchimp", ["communication", "marketing"], display_name="MailChimp"),
     HubotIntegration(
         "google-translate",
         ["misc"],

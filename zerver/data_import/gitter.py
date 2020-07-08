@@ -135,9 +135,7 @@ def build_stream_map(
 
     # Default stream when no "room" field is present
     stream.append(
-        build_stream(
-            timestamp, realm_id, "from gitter", "Imported from gitter", stream_id,
-        ),
+        build_stream(timestamp, realm_id, "from gitter", "Imported from gitter", stream_id),
     )
     defaultstream = build_defaultstream(
         realm_id=realm_id, stream_id=stream_id, defaultstream_id=0,

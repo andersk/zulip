@@ -60,9 +60,7 @@ def make_user_stats_chunk(error_dict: Dict[str, Any]) -> str:
     total_occurrences = error_dict["totalOccurrences"]
 
     # One line is subjectively better than two lines for this.
-    return (
-        f"* {users_affected} users affected with {total_occurrences} total occurrences\n"
-    )
+    return f"* {users_affected} users affected with {total_occurrences} total occurrences\n"
 
 
 def make_time_chunk(error_dict: Dict[str, Any]) -> str:

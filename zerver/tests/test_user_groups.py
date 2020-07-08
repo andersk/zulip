@@ -313,18 +313,14 @@ class UserGroupAPITestCase(ZulipTestCase):
         othello = self.example_user("othello")
         add = [othello.id]
         params = {"add": ujson.dumps(add)}
-        result = self.client_post(
-            f"/json/user_groups/{user_group.id}/members", info=params,
-        )
+        result = self.client_post(f"/json/user_groups/{user_group.id}/members", info=params)
         self.assert_json_success(result)
         self.assertEqual(UserGroupMembership.objects.count(), 4)
         members = get_memberships_of_users(user_group, [hamlet, othello])
         self.assertEqual(len(members), 2)
 
         # Test adding a member already there.
-        result = self.client_post(
-            f"/json/user_groups/{user_group.id}/members", info=params,
-        )
+        result = self.client_post(f"/json/user_groups/{user_group.id}/members", info=params)
         self.assert_json_error(
             result, f"User {othello.id} is already a member of this group",
         )
@@ -338,9 +334,7 @@ class UserGroupAPITestCase(ZulipTestCase):
         self.login_user(cordelia)
         add = [cordelia.id]
         params = {"add": ujson.dumps(add)}
-        result = self.client_post(
-            f"/json/user_groups/{user_group.id}/members", info=params,
-        )
+        result = self.client_post(f"/json/user_groups/{user_group.id}/members", info=params)
         self.assert_json_error(
             result,
             "Only group members and organization administrators can administer this group.",
@@ -354,9 +348,7 @@ class UserGroupAPITestCase(ZulipTestCase):
         aaron = self.example_user("aaron")
         add = [aaron.id]
         params = {"add": ujson.dumps(add)}
-        result = self.client_post(
-            f"/json/user_groups/{user_group.id}/members", info=params,
-        )
+        result = self.client_post(f"/json/user_groups/{user_group.id}/members", info=params)
         self.assert_json_success(result)
         self.assertEqual(UserGroupMembership.objects.count(), 5)
         members = get_memberships_of_users(user_group, [hamlet, othello, aaron])
@@ -367,9 +359,7 @@ class UserGroupAPITestCase(ZulipTestCase):
         self.login_user(hamlet)
         # Test remove members
         params = {"delete": ujson.dumps([othello.id])}
-        result = self.client_post(
-            f"/json/user_groups/{user_group.id}/members", info=params,
-        )
+        result = self.client_post(f"/json/user_groups/{user_group.id}/members", info=params)
         self.assert_json_success(result)
         self.assertEqual(UserGroupMembership.objects.count(), 4)
         members = get_memberships_of_users(user_group, [hamlet, othello, aaron])
@@ -377,9 +367,7 @@ class UserGroupAPITestCase(ZulipTestCase):
 
         # Test remove a member that's already removed
         params = {"delete": ujson.dumps([othello.id])}
-        result = self.client_post(
-            f"/json/user_groups/{user_group.id}/members", info=params,
-        )
+        result = self.client_post(f"/json/user_groups/{user_group.id}/members", info=params)
         self.assert_json_error(
             result, f"There is no member '{othello.id}' in this user group",
         )
@@ -396,9 +384,7 @@ class UserGroupAPITestCase(ZulipTestCase):
         self.logout()
         self.login_user(cordelia)
         params = {"delete": ujson.dumps([hamlet.id])}
-        result = self.client_post(
-            f"/json/user_groups/{user_group.id}/members", info=params,
-        )
+        result = self.client_post(f"/json/user_groups/{user_group.id}/members", info=params)
         self.assert_json_error(
             result,
             "Only group members and organization administrators can administer this group.",
@@ -409,9 +395,7 @@ class UserGroupAPITestCase(ZulipTestCase):
         # Test when organization admin tries to remove members from group
         iago = self.example_user("iago")
         self.login_user(iago)
-        result = self.client_post(
-            f"/json/user_groups/{user_group.id}/members", info=params,
-        )
+        result = self.client_post(f"/json/user_groups/{user_group.id}/members", info=params)
         self.assert_json_success(result)
         self.assertEqual(UserGroupMembership.objects.count(), 3)
         members = get_memberships_of_users(user_group, [hamlet, othello, aaron])
@@ -486,16 +470,12 @@ class UserGroupAPITestCase(ZulipTestCase):
 
         # Test add member
         params = {"add": ujson.dumps([cordelia.id])}
-        result = self.client_post(
-            f"/json/user_groups/{user_group.id}/members", info=params,
-        )
+        result = self.client_post(f"/json/user_groups/{user_group.id}/members", info=params)
         self.assert_json_success(result)
 
         # Test remove member
         params = {"delete": ujson.dumps([cordelia.id])}
-        result = self.client_post(
-            f"/json/user_groups/{user_group.id}/members", info=params,
-        )
+        result = self.client_post(f"/json/user_groups/{user_group.id}/members", info=params)
         self.assert_json_success(result)
 
         # Test changing groups name
@@ -529,9 +509,7 @@ class UserGroupAPITestCase(ZulipTestCase):
 
         # Test add member
         params = {"add": ujson.dumps([cordelia.id])}
-        result = self.client_post(
-            f"/json/user_groups/{user_group.id}/members", info=params,
-        )
+        result = self.client_post(f"/json/user_groups/{user_group.id}/members", info=params)
         self.assert_json_error(result, "Must be an organization administrator")
 
         # Test delete a group

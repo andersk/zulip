@@ -12,9 +12,7 @@ from django.db.models import F
 def reset_is_private_flag(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     UserMessage = apps.get_model("zerver", "UserMessage")
     UserProfile = apps.get_model("zerver", "UserProfile")
-    user_profile_ids = (
-        UserProfile.objects.all().order_by("id").values_list("id", flat=True)
-    )
+    user_profile_ids = UserProfile.objects.all().order_by("id").values_list("id", flat=True)
     # We only need to do this because previous migration
     # zerver/migrations/0100_usermessage_remove_is_me_message.py
     # didn't clean the field after removing it.

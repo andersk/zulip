@@ -114,9 +114,7 @@ class Command(ZulipBaseCommand):
             try:
                 if options["output"] is None:
                     tarball_path = tempfile.NamedTemporaryFile(
-                        prefix=f"zulip-backup-{timestamp}-",
-                        suffix=".tar.gz",
-                        delete=False,
+                        prefix=f"zulip-backup-{timestamp}-", suffix=".tar.gz", delete=False,
                     ).name
                 else:
                     tarball_path = options["output"]

@@ -780,9 +780,7 @@ class InlineInterestingLinkProcessor(markdown.treeprocessors.Treeprocessor):
     def dropbox_image(self, url: str) -> Optional[Dict[str, Any]]:
         # TODO: The returned Dict could possibly be a TypedDict in future.
         parsed_url = urllib.parse.urlparse(url)
-        if parsed_url.netloc == "dropbox.com" or parsed_url.netloc.endswith(
-            ".dropbox.com",
-        ):
+        if parsed_url.netloc == "dropbox.com" or parsed_url.netloc.endswith(".dropbox.com"):
             is_album = parsed_url.path.startswith("/sc/") or parsed_url.path.startswith(
                 "/photos/",
             )
@@ -2138,9 +2136,7 @@ class Markdown(markdown.Markdown):
             "usergroupmention",
             65,
         )
-        reg.register(
-            LinkInlineProcessor(markdown.inlinepatterns.LINK_RE, self), "link", 60,
-        )
+        reg.register(LinkInlineProcessor(markdown.inlinepatterns.LINK_RE, self), "link", 60)
         reg.register(AutoLink(get_web_link_regex(), self), "autolink", 55)
         # Reserve priority 45-54 for Realm Filters
         reg = self.register_realm_filters(reg)
@@ -2182,9 +2178,7 @@ class Markdown(markdown.Markdown):
         # Here we build all the processors from upstream, plus a few of our own.
         treeprocessors = markdown.util.Registry()
         # We get priority 30 from 'hilite' extension
-        treeprocessors.register(
-            markdown.treeprocessors.InlineProcessor(self), "inline", 25,
-        )
+        treeprocessors.register(markdown.treeprocessors.InlineProcessor(self), "inline", 25)
         treeprocessors.register(
             markdown.treeprocessors.PrettifyTreeprocessor(self), "prettify", 20,
         )

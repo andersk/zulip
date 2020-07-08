@@ -47,9 +47,7 @@ def json_response(
     content = {"result": res_type, "msg": msg}
     content.update(data)
     return HttpResponse(
-        content=ujson.dumps(content) + "\n",
-        content_type="application/json",
-        status=status,
+        content=ujson.dumps(content) + "\n", content_type="application/json", status=status,
     )
 
 

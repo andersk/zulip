@@ -101,10 +101,7 @@ approach shown above.
             )
         else:
             result = client.post(
-                options["url"],
-                json,
-                content_type="application/json",
-                HTTP_HOST=realm.host,
+                options["url"], json, content_type="application/json", HTTP_HOST=realm.host,
             )
         if result.status_code != 200:
             raise CommandError(f"Error status {result.status_code}: {result.content}")

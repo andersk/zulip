@@ -5,9 +5,7 @@ from django.db.migrations.state import StateApps
 from django.db.models import Count
 
 
-def fix_duplicate_attachments(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def fix_duplicate_attachments(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     """Migration 0041 had a bug, where if multiple messages referenced the
     same attachment, rather than creating a single attachment object
     for all of them, we would incorrectly create one for each message.

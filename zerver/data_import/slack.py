@@ -114,11 +114,7 @@ def slack_workspace_to_realm(
         dm_members,
         slack_recipient_name_to_zulip_recipient_id,
     ) = channels_to_zerver_stream(
-        slack_data_dir,
-        realm_id,
-        realm,
-        slack_user_id_to_zulip_user_id,
-        zerver_userprofile,
+        slack_data_dir, realm_id, realm, slack_user_id_to_zulip_user_id, zerver_userprofile,
     )
 
     zerver_realmemoji, emoji_url_map = build_realmemoji(custom_emoji_list, realm_id)
@@ -285,9 +281,7 @@ def users_to_zerver_userprofile(
 
         logging.info("%s -> %s", user["name"], userprofile_dict["email"])
 
-    process_customprofilefields(
-        zerver_customprofilefield, zerver_customprofilefield_values,
-    )
+    process_customprofilefields(zerver_customprofilefield, zerver_customprofilefield_values)
     logging.info("######### IMPORTING USERS FINISHED #########\n")
     return (
         zerver_userprofile,
@@ -366,9 +360,9 @@ def build_customprofilefields_values(
             custom_field_value, exclude=["user_profile", "field"],
         )
         custom_field_value_dict["user_profile"] = user_id
-        custom_field_value_dict[
-            "field"
-        ] = slack_custom_field_name_to_zulip_custom_field_id[field]
+        custom_field_value_dict["field"] = slack_custom_field_name_to_zulip_custom_field_id[
+            field
+        ]
 
         custom_field_values.append(custom_field_value_dict)
         custom_field_id += 1
@@ -478,9 +472,7 @@ def channels_to_zerver_stream(
     stream_id_count = defaultstream_id = 0
     huddle_id_count = 0
 
-    def process_channels(
-        channels: List[Dict[str, Any]], invite_only: bool = False,
-    ) -> None:
+    def process_channels(channels: List[Dict[str, Any]], invite_only: bool = False) -> None:
         nonlocal stream_id_count
         nonlocal recipient_id_count
         nonlocal defaultstream_id
@@ -916,14 +908,10 @@ def channel_message_to_zerver_message(
             members = dm_members[message["pm_name"]]
             if sender == members[0]:
                 recipient_id = slack_recipient_name_to_zulip_recipient_id[members[1]]
-                sender_recipient_id = slack_recipient_name_to_zulip_recipient_id[
-                    members[0]
-                ]
+                sender_recipient_id = slack_recipient_name_to_zulip_recipient_id[members[0]]
             else:
                 recipient_id = slack_recipient_name_to_zulip_recipient_id[members[0]]
-                sender_recipient_id = slack_recipient_name_to_zulip_recipient_id[
-                    members[1]
-                ]
+                sender_recipient_id = slack_recipient_name_to_zulip_recipient_id[members[1]]
 
         message_id = NEXT_ID("message")
 
@@ -1401,9 +1389,7 @@ def do_convert_data(
     create_converted_data_files(avatar_records, output_dir, "/avatars/records.json")
     create_converted_data_files(uploads_records, output_dir, "/uploads/records.json")
     create_converted_data_files(attachment, output_dir, "/attachment.json")
-    create_converted_data_files(
-        realm_icon_records, output_dir, "/realm_icons/records.json",
-    )
+    create_converted_data_files(realm_icon_records, output_dir, "/realm_icons/records.json")
 
     rm_tree(slack_data_dir)
     subprocess.check_call(["tar", "-czf", output_dir + ".tar.gz", output_dir, "-P"])

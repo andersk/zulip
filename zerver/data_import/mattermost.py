@@ -556,9 +556,7 @@ def write_message_data(
         if d["type"] == Recipient.PERSONAL:
             user_id_to_recipient_id[d["type_id"]] = d["id"]
 
-    def get_recipient_id_from_receiver_name(
-        receiver_name: str, recipient_type: int,
-    ) -> int:
+    def get_recipient_id_from_receiver_name(receiver_name: str, recipient_type: int) -> int:
         if recipient_type == Recipient.STREAM:
             receiver_id = stream_id_mapper.get(receiver_name)
             recipient_id = stream_id_to_recipient_id[receiver_id]

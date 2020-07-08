@@ -174,9 +174,7 @@ class NarrowBuilder:
 
         return method(query, operand, maybe_negate)
 
-    def by_has(
-        self, query: Query, operand: str, maybe_negate: ConditionTransform,
-    ) -> Query:
+    def by_has(self, query: Query, operand: str, maybe_negate: ConditionTransform) -> Query:
         if operand not in ["attachment", "image", "link"]:
             raise BadNarrowOperator("unknown 'has' operand " + operand)
         col_name = "has_" + operand
@@ -378,9 +376,7 @@ class NarrowBuilder:
         try:
             if isinstance(operand, str):
                 email_list = operand.split(",")
-                user_profiles = get_user_profiles(
-                    emails=email_list, realm=self.user_realm,
-                )
+                user_profiles = get_user_profiles(emails=email_list, realm=self.user_realm)
             else:
                 """
                 This is where we handle passing a list of user IDs for the narrow, which is the
@@ -502,9 +498,7 @@ class NarrowBuilder:
     def _by_search_tsearch(
         self, query: Query, operand: str, maybe_negate: ConditionTransform,
     ) -> Query:
-        tsquery = func.plainto_tsquery(
-            literal("zulip.english_us_search"), literal(operand),
-        )
+        tsquery = func.plainto_tsquery(literal("zulip.english_us_search"), literal(operand))
         query = query.column(
             ts_locs_array(
                 literal("zulip.english_us_search"), column("rendered_content"), tsquery,
@@ -620,10 +614,7 @@ def narrow_parameter(json: str) -> OptionalNarrowListT:
                 operand_validator = check_string
 
             validator = check_dict(
-                required_keys=[
-                    ("operator", check_string),
-                    ("operand", operand_validator),
-                ],
+                required_keys=[("operator", check_string), ("operand", operand_validator)],
                 optional_keys=[("negated", check_bool)],
             )
 
@@ -665,9 +656,7 @@ def ok_to_include_history(narrow: OptionalNarrowListT, user_profile: UserProfile
                         user_profile, operand,
                     )
                 else:
-                    include_history = can_access_stream_history_by_id(
-                        user_profile, operand,
-                    )
+                    include_history = can_access_stream_history_by_id(user_profile, operand)
             elif (
                 term["operator"] == "streams"
                 and term["operand"] == "public"
@@ -691,9 +680,7 @@ def get_stream_from_narrow_access_unchecked(
     if narrow is not None:
         for term in narrow:
             if term["operator"] == "stream":
-                return get_stream_by_narrow_operand_access_unchecked(
-                    term["operand"], realm,
-                )
+                return get_stream_by_narrow_operand_access_unchecked(term["operand"], realm)
     return None
 
 

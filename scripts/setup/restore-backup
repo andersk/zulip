@@ -134,9 +134,7 @@ def restore_backup(tarball_file: IO[bytes]) -> None:
             rabbitmq_host = (
                 subprocess.check_output(
                     [
-                        os.path.join(
-                            settings.DEPLOY_ROOT, "scripts", "get-django-setting",
-                        ),
+                        os.path.join(settings.DEPLOY_ROOT, "scripts", "get-django-setting"),
                         "RABBITMQ_HOST",
                     ],
                 )

@@ -104,9 +104,7 @@ def render_markdown_path(
             markdown.extensions.extra.makeExtension(),
             markdown.extensions.toc.makeExtension(),
             markdown.extensions.admonition.makeExtension(),
-            markdown.extensions.codehilite.makeExtension(
-                linenums=False, guess_lang=False,
-            ),
+            markdown.extensions.codehilite.makeExtension(linenums=False, guess_lang=False),
             zerver.lib.markdown.fenced_code.makeExtension(
                 run_content_validators=context.get("run_content_validators", False),
             ),

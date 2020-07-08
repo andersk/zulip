@@ -7,11 +7,7 @@ from moto import mock_s3
 from zerver.lib.actions import check_add_realm_emoji
 from zerver.lib.avatar_hash import user_avatar_path
 from zerver.lib.test_classes import ZulipTestCase
-from zerver.lib.test_helpers import (
-    avatar_disk_path,
-    create_s3_buckets,
-    get_test_image_file,
-)
+from zerver.lib.test_helpers import avatar_disk_path, create_s3_buckets, get_test_image_file
 from zerver.lib.transfer import (
     transfer_avatars_to_s3,
     transfer_emoji_to_s3,
@@ -72,9 +68,7 @@ class TransferUploadsToS3Test(ZulipTestCase):
         hamlet = self.example_user("hamlet")
         othello = self.example_user("othello")
 
-        upload_message_file(
-            "dummy1.txt", len(b"zulip1!"), "text/plain", b"zulip1!", hamlet,
-        )
+        upload_message_file("dummy1.txt", len(b"zulip1!"), "text/plain", b"zulip1!", hamlet)
         upload_message_file(
             "dummy2.txt", len(b"zulip2!"), "text/plain", b"zulip2!", othello,
         )

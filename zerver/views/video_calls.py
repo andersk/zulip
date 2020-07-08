@@ -26,10 +26,7 @@ from zerver.lib.exceptions import ErrorCode, JsonableError
 from zerver.lib.pysa import mark_sanitized
 from zerver.lib.response import json_error, json_success
 from zerver.lib.subdomains import get_subdomain
-from zerver.lib.url_encoding import (
-    add_query_arg_to_redirect_url,
-    add_query_to_redirect_url,
-)
+from zerver.lib.url_encoding import add_query_arg_to_redirect_url, add_query_to_redirect_url
 from zerver.lib.validator import check_dict, check_string
 from zerver.models import UserProfile, get_realm
 

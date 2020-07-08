@@ -82,9 +82,7 @@ class EditMessageTest(ZulipTestCase):
         message_ids.append(self.send_stream_message(user_2, stream_name, "Message two"))
         self.subscribe(self.notification_bot(), stream_name)
         message_ids.append(
-            self.send_stream_message(
-                self.notification_bot(), stream_name, "Message three",
-            ),
+            self.send_stream_message(self.notification_bot(), stream_name, "Message three"),
         )
         messages = [
             Message.objects.select_related().get(id=message_id)
@@ -203,9 +201,7 @@ class EditMessageTest(ZulipTestCase):
             topic_name="editing",
             content="before edit",
         )
-        result = self.client_patch(
-            "/json/messages/" + str(msg_id), {"message_id": msg_id},
-        )
+        result = self.client_patch("/json/messages/" + str(msg_id), {"message_id": msg_id})
         self.assert_json_error(result, "Nothing to change")
 
     def test_edit_message_no_topic(self) -> None:
@@ -453,8 +449,7 @@ class EditMessageTest(ZulipTestCase):
             content="content 1",
         )
         result = self.client_patch(
-            "/json/messages/" + str(msg_id),
-            {"message_id": msg_id, "content": "content 2"},
+            "/json/messages/" + str(msg_id), {"message_id": msg_id, "content": "content 2"},
         )
         self.assert_json_success(result)
         history = ujson.loads(Message.objects.get(id=msg_id).edit_history)
@@ -504,8 +499,7 @@ class EditMessageTest(ZulipTestCase):
         )
 
         result = self.client_patch(
-            "/json/messages/" + str(msg_id),
-            {"message_id": msg_id, "content": "content 4"},
+            "/json/messages/" + str(msg_id), {"message_id": msg_id, "content": "content 4"},
         )
         self.assert_json_success(result)
         history = ujson.loads(Message.objects.get(id=msg_id).edit_history)
@@ -531,9 +525,7 @@ class EditMessageTest(ZulipTestCase):
 
         # Now, we verify that the edit history data sent back has the
         # correct filled-out fields
-        message_edit_history = self.client_get(
-            "/json/messages/" + str(msg_id) + "/history",
-        )
+        message_edit_history = self.client_get("/json/messages/" + str(msg_id) + "/history")
 
         json_response = ujson.loads(message_edit_history.content.decode("utf-8"))
 

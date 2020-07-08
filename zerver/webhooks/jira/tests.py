@@ -188,12 +188,8 @@ Adding a comment. Oh, what a comment it is!
         expected_message = """Leo Franchi updated [BUG-15: New bug with hook](http://lfranchi.com:8080/browse/BUG-15) (assigned to **Othello, the Moor of Venice**):
 
 * Changed assignee to **Othello, the Moor of Venice**"""
-        self.send_and_test_stream_message(
-            "reassigned_v1", expected_topic, expected_message,
-        )
-        self.send_and_test_stream_message(
-            "reassigned_v2", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("reassigned_v1", expected_topic, expected_message)
+        self.send_and_test_stream_message("reassigned_v2", expected_topic, expected_message)
 
     def test_priority_updated(self) -> None:
         expected_topic = "TEST-1: Fix That"

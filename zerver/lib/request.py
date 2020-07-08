@@ -390,6 +390,4 @@ def has_request_variables(view_func: ViewFuncT) -> ViewFuncT:
 
         return view_func(request, *args, **kwargs)
 
-    return cast(
-        ViewFuncT, _wrapped_view_func,
-    )  # https://github.com/python/mypy/issues/1927
+    return cast(ViewFuncT, _wrapped_view_func)  # https://github.com/python/mypy/issues/1927

@@ -648,9 +648,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
         migrations.AlterUniqueTogether(
             name="subscription", unique_together={("user_profile", "recipient")},
         ),
-        migrations.AlterUniqueTogether(
-            name="stream", unique_together={("name", "realm")},
-        ),
+        migrations.AlterUniqueTogether(name="stream", unique_together={("name", "realm")}),
         migrations.AlterUniqueTogether(
             name="recipient", unique_together={("type", "type_id")},
         ),
@@ -890,9 +888,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
             ),
         ),
         migrations.AlterField(
-            model_name="realmemoji",
-            name="img_url",
-            field=models.URLField(max_length=1000),
+            model_name="realmemoji", name="img_url", field=models.URLField(max_length=1000),
         ),
         migrations.CreateModel(
             name="Attachment",

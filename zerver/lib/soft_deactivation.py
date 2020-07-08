@@ -85,9 +85,7 @@ def filter_by_subscription_history(
                     if stream_messages[-1]["id"] <= log_entry.event_last_message_id:
                         stream_messages = []
             else:
-                raise AssertionError(
-                    f"{log_entry.event_type} is not a Subscription Event.",
-                )
+                raise AssertionError(f"{log_entry.event_type} is not a Subscription Event.")
 
         if len(stream_messages) > 0:
             # We do this check for last event since if the last subscription

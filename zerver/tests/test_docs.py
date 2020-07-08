@@ -114,9 +114,7 @@ class DocPageTest(ZulipTestCase):
 
         def _filter_func(fp: str) -> bool:
             ignored_files = ["sidebar_index.md", "index.md", "missing.md"]
-            return (
-                fp.endswith(".md") and not fp.startswith(".") and fp not in ignored_files
-            )
+            return fp.endswith(".md") and not fp.startswith(".") and fp not in ignored_files
 
         files = list(filter(_filter_func, files))
 
@@ -214,7 +212,9 @@ class DocPageTest(ZulipTestCase):
 
         # Test category pages
         url = "/integrations/communication"
-        title = '<meta property="og:title" content="Connect your Communication tools to Zulip">'
+        title = (
+            '<meta property="og:title" content="Connect your Communication tools to Zulip">'
+        )
         description = '<meta property="og:description" content="Zulip comes with over'
         self._test(url, title, doc_html_str=True)
         self._test(url, description, doc_html_str=True)
@@ -362,9 +362,7 @@ class IntegrationTest(ZulipTestCase):
 
 class AboutPageTest(ZulipTestCase):
     def test_endpoint(self) -> None:
-        with self.settings(
-            CONTRIBUTOR_DATA_FILE_PATH="zerver/tests/fixtures/authors.json",
-        ):
+        with self.settings(CONTRIBUTOR_DATA_FILE_PATH="zerver/tests/fixtures/authors.json"):
             result = self.client_get("/team/")
         self.assert_in_success_response(["Our amazing community"], result)
         self.assert_in_success_response(["2017-11-20"], result)
@@ -480,9 +478,7 @@ class PlansPageTest(ZulipTestCase):
         realm.plan_type = Realm.LIMITED
         realm.save()
         Customer.objects.create(
-            realm=get_realm("zulip"),
-            stripe_customer_id="cus_id",
-            sponsorship_pending=True,
+            realm=get_realm("zulip"), stripe_customer_id="cus_id", sponsorship_pending=True,
         )
         result = self.client_get("/plans/", subdomain="zulip")
         self.assert_in_success_response([current_plan], result)

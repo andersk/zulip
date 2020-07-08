@@ -941,10 +941,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     # more useful than airplane_departure. Arguably departure should be the
     # primary, since arrival is probably more useful than landing in Places/42,
     # but going with this for now.
-    "1f6eb": {
-        "canonical_name": "take_off",
-        "aliases": ["departure", "airplane_departure"],
-    },
+    "1f6eb": {"canonical_name": "take_off", "aliases": ["departure", "airplane_departure"]},
     # parallel to Places/41
     "1f6ec": {"canonical_name": "landing", "aliases": ["arrival", "airplane_arrival"]},
     "1f680": {"canonical_name": "rocket", "aliases": []},
@@ -1156,10 +1153,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     },
     "2692": {"canonical_name": "at_work", "aliases": ["hammer_and_pick"]},
     # something that might be useful for chat.zulip.org, even
-    "1f6e0": {
-        "canonical_name": "working_on_it",
-        "aliases": ["hammer_and_wrench", "tools"],
-    },
+    "1f6e0": {"canonical_name": "working_on_it", "aliases": ["hammer_and_wrench", "tools"]},
     "26cf": {"canonical_name": "mine", "aliases": ["pick"]},
     # screw is somewhat inappropriate, but not openly so, so leaving it in
     "1f529": {"canonical_name": "nut_and_bolt", "aliases": ["screw"]},

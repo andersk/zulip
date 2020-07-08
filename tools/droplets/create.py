@@ -34,9 +34,7 @@ parser.add_argument(
     "username", help="Github username for whom you want to create a Zulip dev droplet",
 )
 parser.add_argument("--tags", nargs="+", default=[])
-parser.add_argument(
-    "-f", "--recreate", dest="recreate", action="store_true", default=False,
-)
+parser.add_argument("-f", "--recreate", dest="recreate", action="store_true", default=False)
 
 
 def get_config() -> configparser.ConfigParser:
@@ -208,9 +206,7 @@ def create_dns_record(my_token: str, username: str, ip_address: str) -> None:
     wildcard_name = "*." + username
     delete_existing_records(records, wildcard_name)
 
-    print(
-        f"Creating new A record for {username}.zulipdev.org that points to {ip_address}.",
-    )
+    print(f"Creating new A record for {username}.zulipdev.org that points to {ip_address}.")
     domain.create_new_domain_record(type="A", name=username, data=ip_address)
     print(
         f"Creating new A record for *.{username}.zulipdev.org that points to {ip_address}.",

@@ -159,10 +159,7 @@ class UserStatusTest(ZulipTestCase):
         self.assertEqual(
             event_info.payload,
             dict(
-                type="user_status",
-                user_id=hamlet.id,
-                away=True,
-                status_text="on vacation",
+                type="user_status", user_id=hamlet.id, away=True, status_text="on vacation",
             ),
         )
 
@@ -212,8 +209,7 @@ class UserStatusTest(ZulipTestCase):
         self.assert_json_success(result)
 
         self.assertEqual(
-            event_info.payload,
-            dict(type="user_status", user_id=hamlet.id, status_text=""),
+            event_info.payload, dict(type="user_status", user_id=hamlet.id, status_text=""),
         )
 
         self.assertEqual(

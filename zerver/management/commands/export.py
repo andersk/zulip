@@ -184,9 +184,7 @@ class Command(ZulipBaseCommand):
 
             print(f"\n\033[94mMessage content:\033[0m\n{message.content}\n")
 
-            print(
-                f"\033[94mNumber of users that reacted outbox:\033[0m {len(reactions)}\n",
-            )
+            print(f"\033[94mNumber of users that reacted outbox:\033[0m {len(reactions)}\n")
 
         # Allows us to trigger exports separately from command line argument parsing
         export_realm_wrapper(

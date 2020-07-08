@@ -77,9 +77,7 @@ class TaigaHookTests(WebhookTestCase):
 
     def test_taiga_userstory_changed_reopened(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) changed status of user story **UserStory** from Done to Ready.\n[TomaszKolek](https://tree.taiga.io/profile/kolaszek) reopened user story **UserStory**."
-        self.send_and_test_stream_message(
-            "userstory_changed_reopened", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("userstory_changed_reopened", self.TOPIC, message)
 
     def test_taiga_userstory_changed_blocked(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) blocked user story **UserStory**."
@@ -87,9 +85,7 @@ class TaigaHookTests(WebhookTestCase):
 
     def test_taiga_userstory_changed_assigned(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) assigned user story **UserStory** to TomaszKolek."
-        self.send_and_test_stream_message(
-            "userstory_changed_assigned", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("userstory_changed_assigned", self.TOPIC, message)
 
     def test_taiga_userstory_comment_added(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) commented on user story **UserStory**."
@@ -102,9 +98,7 @@ class TaigaHookTests(WebhookTestCase):
             "[Aditya Verma](https://tree.taiga.io/profile/orientor) changed due date of user story "
             + "[Nice Issue](https://tree.taiga.io/project/orientor-sd/us/54) from 2020-02-15 to 2020-02-22."
         )
-        self.send_and_test_stream_message(
-            "userstory_changed_due_date", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("userstory_changed_due_date", self.TOPIC, message)
 
     def test_taiga_userstory_changed_new_due_date(self) -> None:
         message = "[Aditya Verma](https://tree.taiga.io/profile/orientor) set due date of user story [random](https://tree.taiga.io/project/orientor-sd/us/58) to 2020-02-15."
@@ -158,9 +152,7 @@ class TaigaHookTests(WebhookTestCase):
 
     def test_taiga_task_changed_comment_added(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) commented on task **New Task**."
-        self.send_and_test_stream_message(
-            "task_changed_comment_added", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("task_changed_comment_added", self.TOPIC, message)
 
     def test_taiga_task_changed_due_date(self) -> None:
         message = (
@@ -256,9 +248,7 @@ class TaigaHookTests(WebhookTestCase):
 
     def test_taiga_issue_changed_new_due_date(self) -> None:
         message = "[Aditya Verma](https://tree.taiga.io/profile/orientor) set due date of issue [Nice Issue](https://tree.taiga.io/project/orientor-sd/issue/53) to 2020-02-22."
-        self.send_and_test_stream_message(
-            "issue_changed_new_due_date", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("issue_changed_new_due_date", self.TOPIC, message)
 
     def test_taiga_issue_changed_new_sprint(self) -> None:
         message = "[Aditya Verma](https://tree.taiga.io/profile/orientor) added issue [Nice Issue](https://tree.taiga.io/project/orientor-sd/issue/53) to sprint eres."

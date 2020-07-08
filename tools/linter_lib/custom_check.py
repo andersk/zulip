@@ -138,14 +138,8 @@ js_rules = RuleList(
             "exclude": {"static/js/templates.js"},
             "description": "Do not pass a variable into i18n.t; it will not be exported to Transifex for translation.",
         },
-        {
-            "pattern": r"i18n\.t\(.+\).*\+",
-            "description": "Do not concatenate i18n strings",
-        },
-        {
-            "pattern": r"\+.*i18n\.t\(.+\)",
-            "description": "Do not concatenate i18n strings",
-        },
+        {"pattern": r"i18n\.t\(.+\).*\+", "description": "Do not concatenate i18n strings"},
+        {"pattern": r"\+.*i18n\.t\(.+\)", "description": "Do not concatenate i18n strings"},
         {
             "pattern": "[.]html[(]",
             "exclude_pattern": r"""\.html\(("|'|render_|html|message\.content|util\.clean_user_content_links|i18n\.t|rendered_|$|\)|error_text|widget_elem|\$error|\$\("<p>"\))""",
@@ -358,10 +352,7 @@ python_rules = RuleList(
             "exclude": {"zerver/tests", "zerver/views/development/"},
             "description": "Argument to json_error should be a literal string enclosed by _()",
             "good_lines": ['return json_error(_("string"))'],
-            "bad_lines": [
-                "return json_error(_variable)",
-                "return json_error(_(variable))",
-            ],
+            "bad_lines": ["return json_error(_variable)", "return json_error(_(variable))"],
         },
         {
             "pattern": r"""\Wjson_error\(['"].+[),]$""",

@@ -37,9 +37,7 @@ class IncludeCustomPreprocessor(IncludePreprocessor):
                     filename = m.group(1)
                     filename = os.path.expanduser(filename)
                     if not os.path.isabs(filename):
-                        filename = os.path.normpath(
-                            os.path.join(self.base_path, filename),
-                        )
+                        filename = os.path.normpath(os.path.join(self.base_path, filename))
                     try:
                         with open(filename, encoding=self.encoding) as r:
                             text = r.readlines()

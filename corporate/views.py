@@ -129,10 +129,7 @@ def upgrade(
 ) -> HttpResponse:
     try:
         seat_count = unsign_seat_count(signed_seat_count, salt)
-        if (
-            billing_modality == "charge_automatically"
-            and license_management == "automatic"
-        ):
+        if billing_modality == "charge_automatically" and license_management == "automatic":
             licenses = seat_count
         if billing_modality == "send_invoice":
             schedule = "annual"
@@ -148,10 +145,9 @@ def upgrade(
         assert licenses is not None
         automanage_licenses = license_management == "automatic"
 
-        billing_schedule = {
-            "annual": CustomerPlan.ANNUAL,
-            "monthly": CustomerPlan.MONTHLY,
-        }[schedule]
+        billing_schedule = {"annual": CustomerPlan.ANNUAL, "monthly": CustomerPlan.MONTHLY}[
+            schedule
+        ]
         process_initial_upgrade(
             user, licenses, automanage_licenses, billing_schedule, stripe_token,
         )

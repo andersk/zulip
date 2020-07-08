@@ -12,16 +12,14 @@ def update_invite_as_dict_values(
     MultiuseInvite = apps.get_model("zerver", "MultiuseInvite")
 
     OLD_INVITE_AS_DICT = dict(MEMBER=1, REALM_ADMIN=2, GUEST_USER=3, REALM_OWNER=4)
-    NEW_INVITE_AS_DICT = dict(
-        REALM_OWNER=100, REALM_ADMIN=200, MEMBER=400, GUEST_USER=600,
-    )
+    NEW_INVITE_AS_DICT = dict(REALM_OWNER=100, REALM_ADMIN=200, MEMBER=400, GUEST_USER=600)
 
-    PreregistrationUser.objects.filter(
-        invited_as=OLD_INVITE_AS_DICT["REALM_OWNER"],
-    ).update(invited_as=NEW_INVITE_AS_DICT["REALM_OWNER"])
-    PreregistrationUser.objects.filter(
-        invited_as=OLD_INVITE_AS_DICT["REALM_ADMIN"],
-    ).update(invited_as=NEW_INVITE_AS_DICT["REALM_ADMIN"])
+    PreregistrationUser.objects.filter(invited_as=OLD_INVITE_AS_DICT["REALM_OWNER"]).update(
+        invited_as=NEW_INVITE_AS_DICT["REALM_OWNER"],
+    )
+    PreregistrationUser.objects.filter(invited_as=OLD_INVITE_AS_DICT["REALM_ADMIN"]).update(
+        invited_as=NEW_INVITE_AS_DICT["REALM_ADMIN"],
+    )
     PreregistrationUser.objects.filter(invited_as=OLD_INVITE_AS_DICT["MEMBER"]).update(
         invited_as=NEW_INVITE_AS_DICT["MEMBER"],
     )

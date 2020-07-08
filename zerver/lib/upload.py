@@ -248,9 +248,7 @@ class ZulipUploadBackend:
     def get_avatar_url(self, hash_key: str, medium: bool = False) -> str:
         raise NotImplementedError()
 
-    def copy_avatar(
-        self, source_profile: UserProfile, target_profile: UserProfile,
-    ) -> None:
+    def copy_avatar(self, source_profile: UserProfile, target_profile: UserProfile) -> None:
         raise NotImplementedError()
 
     def ensure_medium_avatar_image(self, user_profile: UserProfile) -> None:
@@ -495,9 +493,7 @@ class S3UploadBackend(ZulipUploadBackend):
         key = self.avatar_bucket.Object(file_name)
         return key
 
-    def copy_avatar(
-        self, source_profile: UserProfile, target_profile: UserProfile,
-    ) -> None:
+    def copy_avatar(self, source_profile: UserProfile, target_profile: UserProfile) -> None:
         s3_source_file_name = user_avatar_path(source_profile)
         s3_target_file_name = user_avatar_path(target_profile)
 
@@ -798,9 +794,7 @@ class LocalUploadBackend(ZulipUploadBackend):
         medium_suffix = "-medium" if medium else ""
         return f"/user_avatars/{hash_key}{medium_suffix}.png?x=x"
 
-    def copy_avatar(
-        self, source_profile: UserProfile, target_profile: UserProfile,
-    ) -> None:
+    def copy_avatar(self, source_profile: UserProfile, target_profile: UserProfile) -> None:
         source_file_path = user_avatar_path(source_profile)
         target_file_path = user_avatar_path(target_profile)
 
@@ -1017,9 +1011,7 @@ def create_attachment(
 def upload_message_image_from_request(
     request: HttpRequest, user_file: File, user_profile: UserProfile,
 ) -> str:
-    uploaded_file_name, uploaded_file_size, content_type = get_file_info(
-        request, user_file,
-    )
+    uploaded_file_name, uploaded_file_size, content_type = get_file_info(request, user_file)
     return upload_message_file(
         uploaded_file_name,
         uploaded_file_size,

@@ -29,9 +29,7 @@ def transfer_avatars_to_s3(processes: int) -> None:
         try:
             with open(file_path, "rb") as f:
                 s3backend.upload_avatar_image(f, user, user)
-                logging.info(
-                    "Uploaded avatar for %s in realm %s", user.id, user.realm.name,
-                )
+                logging.info("Uploaded avatar for %s in realm %s", user.id, user.realm.name)
         except FileNotFoundError:
             pass
         return 0

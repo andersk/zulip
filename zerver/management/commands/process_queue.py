@@ -89,9 +89,7 @@ class Command(BaseCommand):
             worker.setup()
 
             def signal_handler(signal: int, frame: FrameType) -> None:
-                logger.info(
-                    "Worker %d disconnecting from queue %s", worker_num, queue_name,
-                )
+                logger.info("Worker %d disconnecting from queue %s", worker_num, queue_name)
                 worker.stop()
                 sys.exit(0)
 

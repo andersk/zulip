@@ -451,9 +451,7 @@ class HomeTest(ZulipTestCase):
         with patch("logging.warning") as mock:
             result = self._get_home_page(stream="Invalid Stream")
         mock.assert_called_once()
-        self.assertEqual(
-            mock.call_args_list[0][0][0], "Invalid narrow requested, ignoring",
-        )
+        self.assertEqual(mock.call_args_list[0][0][0], "Invalid narrow requested, ignoring")
         self._sanity_check(result)
 
     def test_topic_narrow(self) -> None:

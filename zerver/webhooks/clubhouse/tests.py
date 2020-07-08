@@ -29,9 +29,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
 
     def test_epic_delete(self) -> None:
         expected_message = "The epic **Clubhouse Fork** was deleted."
-        self.send_and_test_stream_message(
-            "epic_delete", "Clubhouse Fork", expected_message,
-        )
+        self.send_and_test_stream_message("epic_delete", "Clubhouse Fork", expected_message)
 
     def test_story_archive(self) -> None:
         expected_message = (

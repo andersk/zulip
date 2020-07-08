@@ -180,9 +180,7 @@ def get_openapi_return_values(
     endpoint: str, method: str, include_url_parameters: bool = True,
 ) -> List[Dict[str, Any]]:
     openapi_endpoint = openapi_spec.spec()["paths"][endpoint][method.lower()]
-    response = openapi_endpoint["responses"]["200"]["content"]["application/json"][
-        "schema"
-    ]
+    response = openapi_endpoint["responses"]["200"]["content"]["application/json"]["schema"]
     # In cases where we have used oneOf, the schemas only differ in examples
     # So we can choose any.
     if "oneOf" in response:
@@ -225,9 +223,7 @@ def validate_against_openapi_schema(
     if endpoint + ":" + method in EXCLUDE_DOCUMENTED_ENDPOINTS:
         return True
     # Check if the response matches its code
-    if response.startswith("2") and (
-        content.get("result", "success").lower() != "success"
-    ):
+    if response.startswith("2") and (content.get("result", "success").lower() != "success"):
         raise SchemaError("Response is not 200 but is validating against 200 schema")
     # Code is not declared but appears in various 400 responses. If
     # common, it can be added to 400 response schema

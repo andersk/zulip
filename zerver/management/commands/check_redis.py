@@ -54,9 +54,7 @@ than max_api_calls! (trying to trim) %s %s",
 
     def handle(self, *args: Any, **options: Any) -> None:
         if not settings.RATE_LIMITING:
-            raise CommandError(
-                "This machine is not using redis or rate limiting, aborting",
-            )
+            raise CommandError("This machine is not using redis or rate limiting, aborting")
 
         # Find all keys, and make sure they're all within size constraints
         wildcard_list = "ratelimit:*:*:list"

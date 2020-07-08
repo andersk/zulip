@@ -254,10 +254,7 @@ def build_message_list(
                 sender_block.append(build_sender_payload(message))
         else:
             # New recipient and sender block
-            recipient_block = {
-                "header": header,
-                "senders": [build_sender_payload(message)],
-            }
+            recipient_block = {"header": header, "senders": [build_sender_payload(message)]}
 
             messages_to_render.append(recipient_block)
 
@@ -523,9 +520,7 @@ def handle_missedmessage_emails(
         msg = min(msg_list, key=lambda msg: msg.date_sent)
         if msg.is_stream_message():
             context_messages = get_context_for_message(msg)
-            filtered_context_messages = bulk_access_messages(
-                user_profile, context_messages,
-            )
+            filtered_context_messages = bulk_access_messages(user_profile, context_messages)
             msg_list.extend(filtered_context_messages)
 
     # Sort emails by least recently-active discussion.

@@ -117,9 +117,7 @@ class TestIntegrationsDevPanel(ZulipTestCase):
         self.assertEqual(response.status_code, 200)
 
         latest_msg = Message.objects.latest("id")
-        expected_message = (
-            "New post published:\n* [New WordPress Post](WordPress Post URL)"
-        )
+        expected_message = "New post published:\n* [New WordPress Post](WordPress Post URL)"
         self.assertEqual(latest_msg.content, expected_message)
         self.assertEqual(
             Stream.objects.get(id=latest_msg.recipient.type_id).name, "Denmark",

@@ -85,9 +85,7 @@ class RealmTest(ZulipTestCase):
         event = events[0]["event"]
         self.assertEqual(
             event,
-            dict(
-                type="realm", op="update", property="description", value=new_description,
-            ),
+            dict(type="realm", op="update", property="description", value=new_description),
         )
 
     def test_update_realm_description(self) -> None:
@@ -104,9 +102,7 @@ class RealmTest(ZulipTestCase):
         event = events[0]["event"]
         self.assertEqual(
             event,
-            dict(
-                type="realm", op="update", property="description", value=new_description,
-            ),
+            dict(type="realm", op="update", property="description", value=new_description),
         )
 
     def test_realm_description_length(self) -> None:
@@ -466,9 +462,7 @@ class RealmTest(ZulipTestCase):
         self.assertEqual(
             result.json()["user"]["email"], f"user{hamlet.id}@zulip.testserver",
         )
-        self.assertEqual(
-            result.json()["user"].get("delivery_email"), hamlet.delivery_email,
-        )
+        self.assertEqual(result.json()["user"].get("delivery_email"), hamlet.delivery_email)
 
         req = dict(
             email_address_visibility=ujson.dumps(Realm.EMAIL_ADDRESS_VISIBILITY_NOBODY),
@@ -641,9 +635,7 @@ class RealmTest(ZulipTestCase):
             Realm.VIDEO_CHAT_PROVIDERS["big_blue_button"]["id"],
         )
 
-        req = {
-            "video_chat_provider": ujson.dumps(Realm.VIDEO_CHAT_PROVIDERS["zoom"]["id"]),
-        }
+        req = {"video_chat_provider": ujson.dumps(Realm.VIDEO_CHAT_PROVIDERS["zoom"]["id"])}
         result = self.client_patch("/json/realm", req)
         self.assert_json_success(result)
 
@@ -923,9 +915,7 @@ class ScrubRealmTest(ZulipTestCase):
         Attachment.objects.create(
             realm=lear, owner=cordelia, path_id="c/d/temp1.txt", size=512,
         )
-        Attachment.objects.create(
-            realm=lear, owner=king, path_id="c/d/temp2.txt", size=512,
-        )
+        Attachment.objects.create(realm=lear, owner=king, path_id="c/d/temp2.txt", size=512)
 
         CustomProfileField.objects.create(realm=lear)
 

@@ -37,9 +37,7 @@ parser.add_argument(
     help="check all files, bypassing the default exclude list",
 )
 parser.add_argument(
-    "--force",
-    action="store_true",
-    help="run tests despite possible provisioning problems",
+    "--force", action="store_true", help="run tests despite possible provisioning problems",
 )
 parser.add_argument("--quiet", action="store_true", help="suppress mypy summary output")
 args = parser.parse_args()

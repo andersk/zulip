@@ -535,10 +535,7 @@ class PreviewTestCase(ZulipTestCase):
         self.assertIsNone(cached_data)
         msg = Message.objects.select_related("sender").get(id=msg_id)
         self.assertEqual(
-            (
-                '<p><a href="http://test.org/audio.mp3">'
-                "http://test.org/audio.mp3</a></p>"
-            ),
+            ('<p><a href="http://test.org/audio.mp3">' "http://test.org/audio.mp3</a></p>"),
             msg.rendered_content,
         )
 
@@ -758,9 +755,7 @@ class PreviewTestCase(ZulipTestCase):
             "message_content": url,
         }
 
-        mocked_data = {
-            "title": "Clearer Code at Scale - Static Types at Zulip and Dropbox",
-        }
+        mocked_data = {"title": "Clearer Code at Scale - Static Types at Zulip and Dropbox"}
         mocked_response = mock.Mock(side_effect=self.create_mock_response(url))
         with self.settings(TEST_SUITE=False, CACHES=TEST_CACHES):
             with mock.patch("requests.get", mocked_response):

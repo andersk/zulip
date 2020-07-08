@@ -96,9 +96,7 @@ def check_valid_bot_config(
             value = config_data[key]
             error = validator(key, value)
             if error:
-                raise JsonableError(
-                    _("Invalid {} value {} ({})").format(key, value, error),
-                )
+                raise JsonableError(_("Invalid {} value {} ({})").format(key, value, error))
 
     elif bot_type == UserProfile.EMBEDDED_BOT:
         try:

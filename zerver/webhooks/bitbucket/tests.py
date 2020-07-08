@@ -61,9 +61,7 @@ class BitbucketHookTests(WebhookTestCase):
             expected_message,
         )
 
-    def test_bitbucket_on_push_commits_above_limit_event_filtered_by_branches(
-        self,
-    ) -> None:
+    def test_bitbucket_on_push_commits_above_limit_event_filtered_by_branches(self) -> None:
         fixture_name = "push_commits_above_limit"
         self.url = self.build_webhook_url(
             payload=self.get_body(fixture_name), branches="master,development",

@@ -537,9 +537,7 @@ do not match the types declared in the implementation of {function.__name__}.\n"
                 # excepts to be passed to make validation here
                 # possible.
 
-                vtype = self.get_standardized_argument_type(
-                    function.__annotations__[pname],
-                )
+                vtype = self.get_standardized_argument_type(function.__annotations__[pname])
                 vname = defval.post_var_name
                 assert vname is not None
                 if vname in json_params:
@@ -688,9 +686,7 @@ so maybe we shouldn't include it in pending_endpoints.
                 }
 
                 if len(accepted_arguments - openapi_parameter_names) > 0:  # nocoverage
-                    print(
-                        "Undocumented parameters for", url_pattern, method, function_name,
-                    )
+                    print("Undocumented parameters for", url_pattern, method, function_name)
                     print(" +", openapi_parameter_names)
                     print(" -", accepted_arguments)
                     assert url_pattern in self.buggy_documentation_endpoints

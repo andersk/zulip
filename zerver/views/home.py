@@ -251,9 +251,7 @@ def home_real(request: HttpRequest) -> HttpResponse:
     # something reasonable will happen in logged-in portico pages.
     request.session[translation.LANGUAGE_SESSION_KEY] = translation.get_language()
 
-    two_fa_enabled = (
-        settings.TWO_FACTOR_AUTHENTICATION_ENABLED and user_profile is not None
-    )
+    two_fa_enabled = settings.TWO_FACTOR_AUTHENTICATION_ENABLED and user_profile is not None
 
     # Pass parameters to the client-side JavaScript code.
     # These end up in a global JavaScript Object named 'page_params'.
@@ -306,9 +304,7 @@ def home_real(request: HttpRequest) -> HttpResponse:
         page_params["narrow_stream"] = narrow_stream.name
         if narrow_topic is not None:
             page_params["narrow_topic"] = narrow_topic
-        page_params["narrow"] = [
-            dict(operator=term[0], operand=term[1]) for term in narrow
-        ]
+        page_params["narrow"] = [dict(operator=term[0], operand=term[1]) for term in narrow]
         page_params["max_message_id"] = max_message_id
         page_params["enable_desktop_notifications"] = False
 

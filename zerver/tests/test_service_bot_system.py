@@ -223,9 +223,7 @@ class TestServiceBotStateHandler(ZulipTestCase):
             storage.put("too much data", "a few bits too long")
 
         second_storage = StateHandler(self.second_bot_profile)
-        second_storage.put(
-            "another big entry", "x" * (settings.USER_STATE_SIZE_LIMIT - 40),
-        )
+        second_storage.put("another big entry", "x" * (settings.USER_STATE_SIZE_LIMIT - 40))
         second_storage.put("normal entry", "abcd")
 
     def test_entry_removal(self) -> None:
@@ -256,9 +254,7 @@ class TestServiceBotStateHandler(ZulipTestCase):
         }
         result = self.client_get("/json/bot_storage", params)
         self.assert_json_success(result)
-        self.assertEqual(
-            result.json()["storage"], {"key 3": "value 3", "key 1": "value 1"},
-        )
+        self.assertEqual(result.json()["storage"], {"key 3": "value 3", "key 1": "value 1"})
 
         # Assert the stored data for all keys.
         result = self.client_get("/json/bot_storage")

@@ -6,11 +6,7 @@ import DNS
 from django import forms
 from django.conf import settings
 from django.contrib.auth import authenticate, password_validation
-from django.contrib.auth.forms import (
-    AuthenticationForm,
-    PasswordResetForm,
-    SetPasswordForm,
-)
+from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm, SetPasswordForm
 from django.contrib.auth.tokens import PasswordResetTokenGenerator, default_token_generator
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
@@ -93,9 +89,7 @@ def check_subdomain_available(
     error_strings = {
         "too short": _("Subdomain needs to have length 3 or greater."),
         "extremal dash": _("Subdomain cannot start or end with a '-'."),
-        "bad character": _(
-            "Subdomain can only have lowercase letters, numbers, and '-'s.",
-        ),
+        "bad character": _("Subdomain can only have lowercase letters, numbers, and '-'s."),
         "unavailable": _("Subdomain unavailable. Please choose a different one."),
     }
 
@@ -367,9 +361,7 @@ class ZulipPasswordResetForm(PasswordResetForm):
                 delivery_email__iexact=email, is_active=True,
             )
             if active_accounts_in_other_realms:
-                context[
-                    "active_accounts_in_other_realms"
-                ] = active_accounts_in_other_realms
+                context["active_accounts_in_other_realms"] = active_accounts_in_other_realms
             language = request.LANGUAGE_CODE
             send_email(
                 "zerver/emails/password_reset",

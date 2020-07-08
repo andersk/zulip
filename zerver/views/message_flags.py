@@ -21,9 +21,7 @@ def get_latest_update_message_flag_activity(
     user_profile: UserProfile,
 ) -> Optional[UserActivity]:
     return (
-        UserActivity.objects.filter(
-            user_profile=user_profile, query="update_message_flags",
-        )
+        UserActivity.objects.filter(user_profile=user_profile, query="update_message_flags")
         .order_by("last_visit")
         .last()
     )
@@ -40,9 +38,7 @@ def update_message_flags(
     flag: str = REQ(),
 ) -> HttpResponse:
 
-    count = do_update_message_flags(
-        user_profile, request.client, operation, flag, messages,
-    )
+    count = do_update_message_flags(user_profile, request.client, operation, flag, messages)
 
     target_count_str = str(len(messages))
     log_data_str = f"[{operation} {flag}/{target_count_str}] actually {count}"

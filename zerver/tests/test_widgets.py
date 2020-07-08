@@ -24,9 +24,7 @@ class WidgetContentTestCase(ZulipTestCase):
 
         assert_error(dict(widget_type="zform", extra_data=4), "extra_data is not a dict")
 
-        assert_error(
-            dict(widget_type="bogus", extra_data={}), "unknown widget type: bogus",
-        )
+        assert_error(dict(widget_type="bogus", extra_data={}), "unknown widget type: bogus")
 
         extra_data: Dict[str, Any] = dict()
         obj = dict(widget_type="zform", extra_data=extra_data)
@@ -73,9 +71,7 @@ class WidgetContentTestCase(ZulipTestCase):
 
         payload["widget_content"] = "{{{{{{"  # unparsable
         result = self.api_post(sender, "/api/v1/messages", payload)
-        self.assert_json_error_contains(
-            result, "Widgets: API programmer sent invalid JSON",
-        )
+        self.assert_json_error_contains(result, "Widgets: API programmer sent invalid JSON")
 
         bogus_data = dict(color="red", foo="bar", x=2)
         payload["widget_content"] = ujson.dumps(bogus_data)
@@ -170,9 +166,7 @@ class WidgetContentTestCase(ZulipTestCase):
         stream_name = "Verona"
         # We test for both trailing and leading spaces, along with blank lines
         # for the poll options.
-        content = (
-            "/poll What is your favorite color?\n\nRed\nGreen  \n\n   Blue\n - Yellow"
-        )
+        content = "/poll What is your favorite color?\n\nRed\nGreen  \n\n   Blue\n - Yellow"
 
         payload = dict(
             type="stream",

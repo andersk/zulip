@@ -5,9 +5,7 @@ from django.db.backends.postgresql.schema import DatabaseSchemaEditor
 from django.db.migrations.state import StateApps
 
 
-def backfill_first_message_id(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def backfill_first_message_id(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     Stream = apps.get_model("zerver", "Stream")
     Message = apps.get_model("zerver", "Message")
     for stream in Stream.objects.all():

@@ -180,11 +180,7 @@ class ArchiveMessagesTestingBase(RetentionTestingBase):
         host = user_profile.realm.host
         realm_id = get_realm("zulip").id
         dummy_files = [
-            (
-                "zulip.txt",
-                f"{realm_id}/31/4CBjtTLYZhk66pZrF8hnYGwc/zulip.txt",
-                sample_size,
-            ),
+            ("zulip.txt", f"{realm_id}/31/4CBjtTLYZhk66pZrF8hnYGwc/zulip.txt", sample_size),
             (
                 "temp_file.py",
                 f"{realm_id}/31/4CBjtTLYZhk66pZrF8hnYGwc/temp_file.py",
@@ -593,22 +589,14 @@ class MoveMessageToArchiveBase(RetentionTestingBase):
         sample_size = 10
         realm_id = get_realm("zulip").id
         dummy_files = [
-            (
-                "zulip.txt",
-                f"{realm_id}/31/4CBjtTLYZhk66pZrF8hnYGwc/zulip.txt",
-                sample_size,
-            ),
+            ("zulip.txt", f"{realm_id}/31/4CBjtTLYZhk66pZrF8hnYGwc/zulip.txt", sample_size),
             (
                 "temp_file.py",
                 f"{realm_id}/31/4CBjtTLYZhk66pZrF8hnYGwc/temp_file.py",
                 sample_size,
             ),
             ("abc.py", f"{realm_id}/31/4CBjtTLYZhk66pZrF8hnYGwc/abc.py", sample_size),
-            (
-                "hello.txt",
-                f"{realm_id}/31/4CBjtTLYZhk66pZrF8hnYGwc/hello.txt",
-                sample_size,
-            ),
+            ("hello.txt", f"{realm_id}/31/4CBjtTLYZhk66pZrF8hnYGwc/hello.txt", sample_size),
             ("new.py", f"{realm_id}/31/4CBjtTLYZhk66pZrF8hnYGwc/new.py", sample_size),
         ]
         user_profile = self.example_user("hamlet")
@@ -833,9 +821,7 @@ class MoveMessageToArchiveGeneral(MoveMessageToArchiveBase):
         restore_all_data_from_archive()
         self.assertEqual(
             set(
-                Attachment.objects.filter(messages__id=msg_id).values_list(
-                    "id", flat=True,
-                ),
+                Attachment.objects.filter(messages__id=msg_id).values_list("id", flat=True),
             ),
             set(attachment_ids),
         )

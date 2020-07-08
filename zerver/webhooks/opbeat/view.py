@@ -73,9 +73,7 @@ def format_object(obj: Dict[str, Any], subject_type: str, message: str) -> str:
                 else:
                     message += f"\n>{key}: {value}"
             if key == "subject":
-                message = format_object(
-                    obj["subject"], obj["subject_type"], message + "\n",
-                )
+                message = format_object(obj["subject"], obj["subject_type"], message + "\n")
             if ":" in key:
                 value, value_type = key.split(":")
                 message = format_object(obj[value], value_type, message + "\n")

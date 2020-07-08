@@ -146,9 +146,7 @@ def json_change_settings(
     new_email = email.strip()
     if user_profile.delivery_email != new_email and new_email != "":
         if user_profile.realm.email_changes_disabled and not user_profile.is_realm_admin:
-            return json_error(
-                _("Email address changes are disabled in this organization."),
-            )
+            return json_error(_("Email address changes are disabled in this organization."))
 
         error = validate_email_is_valid(
             new_email, get_realm_email_validator(user_profile.realm),
@@ -280,9 +278,7 @@ def json_change_notify_settings(
         notification_sound is not None
         and notification_sound not in get_available_notification_sounds()
     ):
-        raise JsonableError(
-            _("Invalid notification sound '{}'").format(notification_sound),
-        )
+        raise JsonableError(_("Invalid notification sound '{}'").format(notification_sound))
 
     req_vars = {
         k: v

@@ -485,9 +485,7 @@ def get_story_update_owner_body(payload: Dict[str, Any]) -> str:
     return STORY_UPDATE_OWNER_TEMPLATE.format(**kwargs)
 
 
-def get_entity_name(
-    payload: Dict[str, Any], entity: Optional[str] = None,
-) -> Optional[str]:
+def get_entity_name(payload: Dict[str, Any], entity: Optional[str] = None) -> Optional[str]:
     action = get_action_with_primary_id(payload)
     name = action.get("name")
 

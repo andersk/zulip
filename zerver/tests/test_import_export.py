@@ -109,9 +109,7 @@ class QueryUtilTest(ZulipTestCase):
         ]
         all_msg_ids = set()
         chunker = query_chunker(
-            queries=queries,
-            id_collector=all_msg_ids,
-            chunk_size=7,  # use a different size
+            queries=queries, id_collector=all_msg_ids, chunk_size=7,  # use a different size
         )
         list(chunker)  # exhaust the iterator
         self.assertEqual(
@@ -311,12 +309,9 @@ class ImportExportTest(ZulipTestCase):
 
     def test_export_files_from_local(self) -> None:
         realm = Realm.objects.get(string_id="zulip")
-        (
-            path_id,
-            emoji_path,
-            original_avatar_path_id,
-            test_image,
-        ) = self._setup_export_files(realm)
+        path_id, emoji_path, original_avatar_path_id, test_image = self._setup_export_files(
+            realm,
+        )
         full_data = self._export_realm(realm)
 
         data = full_data["attachment"]
@@ -624,11 +619,7 @@ class ImportExportTest(ZulipTestCase):
             self.example_user("iago"), message, "outbox", "1f4e4", Reaction.UNICODE_EMOJI,
         )
         do_add_reaction(
-            self.example_user("hamlet"),
-            message,
-            "outbox",
-            "1f4e4",
-            Reaction.UNICODE_EMOJI,
+            self.example_user("hamlet"), message, "outbox", "1f4e4", Reaction.UNICODE_EMOJI,
         )
 
         realm_emoji = RealmEmoji.objects.get(realm=realm)
@@ -677,9 +668,9 @@ class ImportExportTest(ZulipTestCase):
         self.assertEqual(exported_message["content"], um.message.content)
 
         public_stream_names = ["Denmark", "Rome", "Scotland", "Venice", "Verona"]
-        public_stream_ids = Stream.objects.filter(
-            name__in=public_stream_names,
-        ).values_list("id", flat=True)
+        public_stream_ids = Stream.objects.filter(name__in=public_stream_names).values_list(
+            "id", flat=True,
+        )
         public_stream_recipients = Recipient.objects.filter(
             type_id__in=public_stream_ids, type=Recipient.STREAM,
         )
@@ -955,8 +946,7 @@ class ImportExportTest(ZulipTestCase):
         def get_huddle_hashes(r: str) -> str:
             short_names = ["cordelia", "hamlet", "othello"]
             user_id_list = [
-                UserProfile.objects.get(realm=r, short_name=name).id
-                for name in short_names
+                UserProfile.objects.get(realm=r, short_name=name).id for name in short_names
             ]
             huddle_hash = get_huddle_hash(user_id_list)
             return huddle_hash

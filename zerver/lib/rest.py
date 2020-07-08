@@ -38,9 +38,7 @@ def default_never_cache_responses(view_func: ViewFuncT) -> ViewFuncT:
         add_never_cache_headers(response)
         return response
 
-    return cast(
-        ViewFuncT, _wrapped_view_func,
-    )  # https://github.com/python/mypy/issues/1927
+    return cast(ViewFuncT, _wrapped_view_func)  # https://github.com/python/mypy/issues/1927
 
 
 @default_never_cache_responses

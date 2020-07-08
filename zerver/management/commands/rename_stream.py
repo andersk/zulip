@@ -11,10 +11,7 @@ class Command(ZulipBaseCommand):
 
     def add_arguments(self, parser: ArgumentParser) -> None:
         parser.add_argument(
-            "old_name",
-            metavar="<old name>",
-            type=str,
-            help="name of stream to be renamed",
+            "old_name", metavar="<old name>", type=str, help="name of stream to be renamed",
         )
         parser.add_argument(
             "new_name",

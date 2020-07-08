@@ -143,9 +143,7 @@ def accounts_register(request: HttpRequest) -> HttpResponse:
     try:
         validators.validate_email(email)
     except ValidationError:
-        return render(
-            request, "zerver/invalid_email.html", context={"invalid_email": True},
-        )
+        return render(request, "zerver/invalid_email.html", context={"invalid_email": True})
 
     if realm_creation:
         # For creating a new realm, there is no existing realm or domain

@@ -183,9 +183,7 @@ class TestGetChartData(ZulipTestCase):
     def test_messages_sent_by_message_type(self) -> None:
         stat = COUNT_STATS["messages_sent:message_type:day"]
         self.insert_data(
-            stat,
-            ["public_stream", "private_message"],
-            ["public_stream", "private_stream"],
+            stat, ["public_stream", "private_message"], ["public_stream", "private_stream"],
         )
         result = self.client_get(
             "/json/analytics/chart_data", {"chart_name": "messages_sent_by_message_type"},
@@ -363,8 +361,7 @@ class TestGetChartData(ZulipTestCase):
         data = result.json()
         self.assertEqual(data["end_times"], end_time_timestamps[1:3])
         self.assertEqual(
-            data["everyone"],
-            {"_1day": [0, 100], "_15day": [0, 100], "all_time": [0, 100]},
+            data["everyone"], {"_1day": [0, 100], "_15day": [0, 100], "all_time": [0, 100]},
         )
 
         # start later then end
@@ -397,11 +394,7 @@ class TestGetChartData(ZulipTestCase):
         )
         self.assertEqual(
             data["everyone"],
-            {
-                "_1day": self.data(100),
-                "_15day": self.data(100),
-                "all_time": self.data(100),
-            },
+            {"_1day": self.data(100), "_15day": self.data(100), "all_time": self.data(100)},
         )
         # test min_length larger than filled data
         result = self.client_get(
@@ -414,9 +407,7 @@ class TestGetChartData(ZulipTestCase):
             ceiling_to_day(self.realm.date_created) + timedelta(days=i)
             for i in range(-1, 4)
         ]
-        self.assertEqual(
-            data["end_times"], [datetime_to_timestamp(dt) for dt in end_times],
-        )
+        self.assertEqual(data["end_times"], [datetime_to_timestamp(dt) for dt in end_times])
         self.assertEqual(
             data["everyone"],
             {
@@ -920,9 +911,7 @@ class TestGetChartDataHelpers(ZulipTestCase):
             "everyone": {"a": [16], "c": [15], "b": [14], "e": [13], "d": [12], "h": [11]},
             "user": {"a": [6], "b": [5], "d": [4], "e": [3], "f": [2], "g": [1]},
         }
-        self.assertEqual(
-            sort_client_labels(data), ["a", "b", "c", "d", "e", "f", "g", "h"],
-        )
+        self.assertEqual(sort_client_labels(data), ["a", "b", "c", "d", "e", "f", "g", "h"])
 
 
 class TestTimeRange(ZulipTestCase):

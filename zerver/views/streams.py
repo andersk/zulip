@@ -260,9 +260,7 @@ def update_stream_backend(
     stream_post_policy: Optional[int] = REQ(
         validator=check_int_in(Stream.STREAM_POST_POLICY_TYPES), default=None,
     ),
-    history_public_to_subscribers: Optional[bool] = REQ(
-        validator=check_bool, default=None,
-    ),
+    history_public_to_subscribers: Optional[bool] = REQ(validator=check_bool, default=None),
     new_name: Optional[str] = REQ(validator=check_string, default=None),
     message_retention_days: Optional[Union[int, str]] = REQ(
         validator=check_string_or_int, default=None,
@@ -439,9 +437,7 @@ def you_were_just_subscribed_message(
     subscriptions = sorted(list(stream_names))
     if len(subscriptions) == 1:
         with override_language(recipient_user.default_language):
-            return _(
-                "{user_full_name} subscribed you to the stream {stream_name}.",
-            ).format(
+            return _("{user_full_name} subscribed you to the stream {stream_name}.").format(
                 user_full_name=f"@**{acting_user.full_name}**",
                 stream_name=f"#**{subscriptions[0]}**",
             )
@@ -473,9 +469,7 @@ def add_subscriptions_backend(
         validator=check_int_in(Stream.STREAM_POST_POLICY_TYPES),
         default=Stream.STREAM_POST_POLICY_EVERYONE,
     ),
-    history_public_to_subscribers: Optional[bool] = REQ(
-        validator=check_bool, default=None,
-    ),
+    history_public_to_subscribers: Optional[bool] = REQ(validator=check_bool, default=None),
     message_retention_days: Union[str, int] = REQ(
         validator=check_string_or_int, default=RETENTION_DEFAULT,
     ),
@@ -542,8 +536,7 @@ def add_subscriptions_backend(
             # Realm.POLICY_MEMBERS_ONLY only fails if the
             # user is a guest, which happens in the decorator above.
             assert (
-                user_profile.realm.invite_to_stream_policy
-                == Realm.POLICY_FULL_MEMBERS_ONLY
+                user_profile.realm.invite_to_stream_policy == Realm.POLICY_FULL_MEMBERS_ONLY
             )
             return json_error(
                 _("Your account is too new to modify other users' subscriptions."),
@@ -853,8 +846,6 @@ def update_subscription_properties_backend(
 
         do_change_subscription_property(user_profile, sub, stream, property, value)
 
-        response_data.append(
-            {"stream_id": stream_id, "property": property, "value": value},
-        )
+        response_data.append({"stream_id": stream_id, "property": property, "value": value})
 
     return json_success({"subscription_data": response_data})

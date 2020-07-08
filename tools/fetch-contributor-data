@@ -123,9 +123,7 @@ def update_contributor_data_file() -> None:
             else:
                 retry_attempts += 1
                 if retry_attempts > args.max_retries:
-                    logger.warning(
-                        "Failed retries fetching contributors data from Github.",
-                    )
+                    logger.warning("Failed retries fetching contributors data from Github.")
                     sys.exit(1)
 
                 sleep_time = randrange(0, min(64, 2 ** retry_attempts))

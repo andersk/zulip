@@ -221,9 +221,7 @@ class ZulipTestCase(TestCase):
         encoded = encode_multipart(BOUNDARY, info)
         django_client = self.client  # see WRAPPER_COMMENT
         self.set_http_headers(kwargs)
-        result = django_client.patch(
-            url, encoded, content_type=MULTIPART_CONTENT, **kwargs,
-        )
+        result = django_client.patch(url, encoded, content_type=MULTIPART_CONTENT, **kwargs)
         self.validate_api_response_openapi(url, "patch", result)
         return result
 
@@ -317,9 +315,7 @@ class ZulipTestCase(TestCase):
     )
 
     mit_user_map = dict(
-        sipbtest="sipbtest@mit.edu",
-        starnine="starnine@mit.edu",
-        espuser="espuser@mit.edu",
+        sipbtest="sipbtest@mit.edu", starnine="starnine@mit.edu", espuser="espuser@mit.edu",
     )
 
     lear_user_map = dict(cordelia="cordelia@zulip.com", king="king@lear.org")
@@ -440,9 +436,7 @@ class ZulipTestCase(TestCase):
 
     def assert_login_failure(self, email: str, password: str) -> None:
         realm = get_realm("zulip")
-        self.assertFalse(
-            self.client.login(username=email, password=password, realm=realm),
-        )
+        self.assertFalse(self.client.login(username=email, password=password, realm=realm))
 
     def login_user(self, user_profile: UserProfile) -> None:
         email = user_profile.delivery_email

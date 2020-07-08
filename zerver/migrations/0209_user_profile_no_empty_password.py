@@ -15,9 +15,7 @@ from zerver.lib.queue import queue_json_publish
 from zerver.lib.utils import generate_api_key
 
 
-def ensure_no_empty_passwords(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def ensure_no_empty_passwords(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     """With CVE-2019-18933, it was possible for certain users created
     using social login (e.g. Google/GitHub auth) to have the empty
     string as their password in the Zulip database, rather than

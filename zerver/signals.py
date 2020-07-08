@@ -27,9 +27,7 @@ def get_device_browser(user_agent: str) -> Optional[str]:
         return "Edge"
     elif "opera" in user_agent or "opr/" in user_agent:
         return "Opera"
-    elif (
-        "chrome" in user_agent or "crios" in user_agent
-    ) and "chromium" not in user_agent:
+    elif ("chrome" in user_agent or "crios" in user_agent) and "chromium" not in user_agent:
         return "Chrome"
     elif (
         "firefox" in user_agent
@@ -72,9 +70,7 @@ def get_device_os(user_agent: str) -> Optional[str]:
 
 
 @receiver(user_logged_in, dispatch_uid="only_on_login")
-def email_on_new_login(
-    sender: Any, user: UserProfile, request: Any, **kwargs: Any
-) -> None:
+def email_on_new_login(sender: Any, user: UserProfile, request: Any, **kwargs: Any) -> None:
     if not user.enable_login_emails:
         return
     # We import here to minimize the dependencies of this module,
@@ -103,9 +99,7 @@ def email_on_new_login(
             hhmm_string = local_time.strftime("%I:%M%p")
         context["login_time"] = local_time.strftime(f"%A, %B %d, %Y at {hhmm_string} %Z")
         context["device_ip"] = request.META.get("REMOTE_ADDR") or _("Unknown IP address")
-        context["device_os"] = get_device_os(user_agent) or _(
-            "an unknown operating system",
-        )
+        context["device_os"] = get_device_os(user_agent) or _("an unknown operating system")
         context["device_browser"] = get_device_browser(user_agent) or _(
             "An unknown browser",
         )

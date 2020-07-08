@@ -42,8 +42,7 @@ except OSError:
 
 if datetime.now(tz=timezone.utc) - last_backup > timedelta(hours=25):
     report(
-        "CRITICAL",
-        f"last Postgres backup completed more than 25 hours ago: {last_backup}",
+        "CRITICAL", f"last Postgres backup completed more than 25 hours ago: {last_backup}",
     )
 
 report("OK", f"last Postgres backup completed less than 25 hours ago: {last_backup}")

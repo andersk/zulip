@@ -39,9 +39,7 @@ class TestCheckConfig(ZulipTestCase):
 
     @override_settings(WARN_NO_EMAIL=True)
     def test_check_send_email(self) -> None:
-        with self.assertRaisesRegex(
-            CommandError, "Outgoing email not yet configured, see",
-        ):
+        with self.assertRaisesRegex(CommandError, "Outgoing email not yet configured, see"):
             call_command("send_test_email", "test@example.com")
 
 
@@ -122,9 +120,7 @@ class TestZulipBaseCommand(ZulipTestCase):
         user_emails = ",".join(u.delivery_email for u in expected_user_profiles)
         user_profiles = self.get_users_sorted(dict(users=user_emails), None)
         self.assertEqual(user_profiles, expected_user_profiles)
-        error_message = (
-            f"The realm '{self.zulip_realm}' does not contain a user with email"
-        )
+        error_message = f"The realm '{self.zulip_realm}' does not contain a user with email"
         with self.assertRaisesRegex(CommandError, error_message):
             self.command.get_users(dict(users=user_emails), self.zulip_realm)
 
@@ -495,11 +491,7 @@ class TestExport(ZulipTestCase):
             self.example_user("iago"), message, "outbox", "1f4e4", Reaction.UNICODE_EMOJI,
         )
         do_add_reaction(
-            self.example_user("hamlet"),
-            message,
-            "outbox",
-            "1f4e4",
-            Reaction.UNICODE_EMOJI,
+            self.example_user("hamlet"), message, "outbox", "1f4e4", Reaction.UNICODE_EMOJI,
         )
 
         with patch("zerver.management.commands.export.export_realm_wrapper") as m:

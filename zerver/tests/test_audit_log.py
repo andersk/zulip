@@ -287,9 +287,7 @@ class TestRealmAuditLog(ZulipTestCase):
             modified_stream=stream[0],
         )
         self.assertEqual(subscription_deactivation_logs.count(), 1)
-        self.assertEqual(
-            subscription_deactivation_logs[0].modified_stream.id, stream[0].id,
-        )
+        self.assertEqual(subscription_deactivation_logs[0].modified_stream.id, stream[0].id)
         self.assertEqual(subscription_deactivation_logs[0].modified_user, user[0])
 
     def test_realm_activation(self) -> None:

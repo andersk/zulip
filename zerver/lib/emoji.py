@@ -40,9 +40,7 @@ def translate_emoticons(text: str) -> str:
     translated = text
 
     for emoticon in EMOTICON_CONVERSIONS:
-        translated = re.sub(
-            re.escape(emoticon), EMOTICON_CONVERSIONS[emoticon], translated,
-        )
+        translated = re.sub(re.escape(emoticon), EMOTICON_CONVERSIONS[emoticon], translated)
 
     return translated
 

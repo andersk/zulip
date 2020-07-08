@@ -75,9 +75,7 @@ def print_types_to(file_obj: IO[str]) -> Callable[[FuncT], FuncT]:
         @functools.wraps(func)
         def wrapper(*args: object, **kwargs: object) -> object:
             arg_types = [get_type_str(arg) for arg in args]
-            kwarg_types = [
-                key + "=" + get_type_str(value) for key, value in kwargs.items()
-            ]
+            kwarg_types = [key + "=" + get_type_str(value) for key, value in kwargs.items()]
             ret_val = func(*args, **kwargs)
             output = "{}({}) -> {}".format(
                 func.__name__, ", ".join(arg_types + kwarg_types), get_type_str(ret_val),

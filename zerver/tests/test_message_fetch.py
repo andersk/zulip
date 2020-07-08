@@ -282,9 +282,7 @@ class NarrowBuilderTest(ZulipTestCase):
         term = dict(operator="sender", operand="non-existing@zulip.com")
         self.assertRaises(BadNarrowOperator, self._build_query, term)
 
-    def test_add_term_using_pm_with_operator_and_not_the_same_user_as_operand(
-        self,
-    ) -> None:
+    def test_add_term_using_pm_with_operator_and_not_the_same_user_as_operand(self) -> None:
         term = dict(operator="pm-with", operand=self.othello_email)
         self._do_add_term_test(
             term,
@@ -303,8 +301,7 @@ class NarrowBuilderTest(ZulipTestCase):
     def test_add_term_using_pm_with_operator_the_same_user_as_operand(self) -> None:
         term = dict(operator="pm-with", operand=self.hamlet_email)
         self._do_add_term_test(
-            term,
-            "WHERE sender_id = %(sender_id_1)s AND recipient_id = %(recipient_id_1)s",
+            term, "WHERE sender_id = %(sender_id_1)s AND recipient_id = %(recipient_id_1)s",
         )
 
     def test_add_term_using_pm_with_operator_the_same_user_as_operand_and_negated(
@@ -453,9 +450,7 @@ class NarrowBuilderTest(ZulipTestCase):
         term = dict(operator="has", operand="image")
         self._do_add_term_test(term, "WHERE has_image")
 
-    def test_add_term_using_has_operator_image_operand_and_negated(
-        self,
-    ) -> None:  # NEGATED
+    def test_add_term_using_has_operator_image_operand_and_negated(self) -> None:  # NEGATED
         term = dict(operator="has", operand="image", negated=True)
         self._do_add_term_test(term, "WHERE NOT has_image")
 
@@ -547,9 +542,7 @@ class NarrowLibraryTest(ZulipTestCase):
         self.assertTrue(
             is_web_public_compatible([{"operator": "has", "operand": "attachment"}]),
         )
-        self.assertTrue(
-            is_web_public_compatible([{"operator": "has", "operand": "image"}]),
-        )
+        self.assertTrue(is_web_public_compatible([{"operator": "has", "operand": "image"}]))
         self.assertTrue(
             is_web_public_compatible([{"operator": "search", "operand": "magic"}]),
         )
@@ -1472,9 +1465,7 @@ class GetOldMessagesTest(ZulipTestCase):
 
         # We have to support the legacy tuple style while there are old
         # clients around, which might include third party home-grown bots.
-        self.get_and_check_messages(
-            dict(narrow=ujson.dumps([["pm-with", othello_email]])),
-        )
+        self.get_and_check_messages(dict(narrow=ujson.dumps([["pm-with", othello_email]])))
 
         self.get_and_check_messages(
             dict(narrow=ujson.dumps([dict(operator="pm-with", operand=othello_email)])),
@@ -1505,9 +1496,7 @@ class GetOldMessagesTest(ZulipTestCase):
 
         # Now verify client_gravatar doesn't run with EMAIL_ADDRESS_VISIBILITY_ADMINS
         do_set_realm_property(
-            hamlet.realm,
-            "email_address_visibility",
-            Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS,
+            hamlet.realm, "email_address_visibility", Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS,
         )
         result = self.get_and_check_messages(dict(client_gravatar=ujson.dumps(True)))
         message = result["messages"][0]
@@ -1799,9 +1788,7 @@ class GetOldMessagesTest(ZulipTestCase):
 
         self.send_stream_message(mit_user_profile, "Scotland", topic_name=".d.d")
         self.send_stream_message(mit_user_profile, "Scotland", topic_name="PERSONAL")
-        self.send_stream_message(
-            mit_user_profile, "Scotland", topic_name='(instance "").d',
-        )
+        self.send_stream_message(mit_user_profile, "Scotland", topic_name='(instance "").d')
         self.send_stream_message(mit_user_profile, "Scotland", topic_name=".d.d.d")
         self.send_stream_message(mit_user_profile, "Scotland", topic_name="personal.d")
         self.send_stream_message(mit_user_profile, "Scotland", topic_name='(instance "")')
@@ -2002,9 +1989,7 @@ class GetOldMessagesTest(ZulipTestCase):
         messages = result["messages"]
 
         japanese_message = [m for m in messages if m[TOPIC_NAME] == "日本"][-1]
-        self.assertEqual(
-            japanese_message[MATCH_TOPIC], '<span class="highlight">日本</span>',
-        )
+        self.assertEqual(japanese_message[MATCH_TOPIC], '<span class="highlight">日本</span>')
         self.assertEqual(
             japanese_message["match_content"],
             '<p>昨日、<span class="highlight">日本</span>' + " のお菓子を送りました。</p>",
@@ -2277,10 +2262,7 @@ class GetOldMessagesTest(ZulipTestCase):
 
         def send(content: str) -> int:
             msg_id = self.send_stream_message(
-                sender=user,
-                stream_name="Verona",
-                topic_name="test_topic",
-                content=content,
+                sender=user, stream_name="Verona", topic_name="test_topic", content=content,
             )
             return msg_id
 
@@ -2860,9 +2842,7 @@ class GetOldMessagesTest(ZulipTestCase):
         set_topic_mutes(hamlet, muted_topics)
 
         # send a muted message
-        muted_message_id = self.send_stream_message(
-            cordelia, "England", topic_name="muted",
-        )
+        muted_message_id = self.send_stream_message(cordelia, "England", topic_name="muted")
 
         # finally send Hamlet a "normal" message
         first_message_id = self.send_stream_message(cordelia, "England")
@@ -3057,9 +3037,7 @@ class GetOldMessagesTest(ZulipTestCase):
 
         stream = get_stream("Scotland", realm)
         recipient_id = stream.recipient.id
-        cond = (
-            f"AND NOT (recipient_id = {recipient_id} AND upper(subject) = upper('golf'))"
-        )
+        cond = f"AND NOT (recipient_id = {recipient_id} AND upper(subject) = upper('golf'))"
         self.assertIn(cond, queries[0]["sql"])
 
         # Next, verify the use_first_unread_anchor setting invokes
@@ -3244,12 +3222,7 @@ recipient_id = %(recipient_id_3)s AND upper(subject) = upper(%(param_2)s))\
         sql_template = "SELECT anon_1.message_id, anon_1.flags \nFROM (SELECT message_id, flags \nFROM zerver_usermessage JOIN zerver_message ON zerver_usermessage.message_id = zerver_message.id \nWHERE user_profile_id = {hamlet_id} AND (flags & 2) != 0 ORDER BY message_id ASC \n LIMIT 10) AS anon_1 ORDER BY message_id ASC"
         sql = sql_template.format(**query_ids)
         self.common_check_get_messages_query(
-            {
-                "anchor": 0,
-                "num_before": 0,
-                "num_after": 9,
-                "narrow": '[["is", "starred"]]',
-            },
+            {"anchor": 0, "num_before": 0, "num_after": 9, "narrow": '[["is", "starred"]]'},
             sql,
         )
 
@@ -3304,12 +3277,7 @@ recipient_id = %(recipient_id_3)s AND upper(subject) = upper(%(param_2)s))\
         sql_template = "SELECT anon_1.message_id, anon_1.flags \nFROM (SELECT message_id, flags \nFROM zerver_usermessage JOIN zerver_message ON zerver_usermessage.message_id = zerver_message.id \nWHERE user_profile_id = {hamlet_id} AND upper(subject) = upper('blah') ORDER BY message_id ASC \n LIMIT 10) AS anon_1 ORDER BY message_id ASC"
         sql = sql_template.format(**query_ids)
         self.common_check_get_messages_query(
-            {
-                "anchor": 0,
-                "num_before": 0,
-                "num_after": 9,
-                "narrow": '[["topic", "blah"]]',
-            },
+            {"anchor": 0, "num_before": 0, "num_after": 9, "narrow": '[["topic", "blah"]]'},
             sql,
         )
 
@@ -3475,11 +3443,7 @@ class MessageHasKeywordsTest(ZulipTestCase):
         sample_size = 10
         realm_id = user_profile.realm_id
         dummy_files = [
-            (
-                "zulip.txt",
-                f"{realm_id}/31/4CBjtTLYZhk66pZrF8hnYGwc/zulip.txt",
-                sample_size,
-            ),
+            ("zulip.txt", f"{realm_id}/31/4CBjtTLYZhk66pZrF8hnYGwc/zulip.txt", sample_size),
             (
                 "temp_file.py",
                 f"{realm_id}/31/4CBjtTLYZhk66pZrF8hnYGwc/temp_file.py",
@@ -3670,8 +3634,7 @@ class MessageHasKeywordsTest(ZulipTestCase):
             "zerver.lib.actions.do_claim_attachments", wraps=do_claim_attachments,
         ) as m:
             self.update_message(
-                msg,
-                f"[link](http://{hamlet.realm.host}/user_uploads/{dummy_path_ids[0]})",
+                msg, f"[link](http://{hamlet.realm.host}/user_uploads/{dummy_path_ids[0]})",
             )
             self.assertTrue(m.called)
             m.reset_mock()

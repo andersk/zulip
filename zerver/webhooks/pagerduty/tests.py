@@ -48,9 +48,7 @@ class PagerDutyHookTests(WebhookTestCase):
 
     def test_acknowledge_v2(self) -> None:
         expected_message = "Incident [33](https://webdemo.pagerduty.com/incidents/PRORDTY) acknowledged by [Laura Haley](https://webdemo.pagerduty.com/users/P553OPV):\n\n``` quote\nMy new incident\n```"
-        self.send_and_test_stream_message(
-            "acknowledge_v2", "Incident 33", expected_message,
-        )
+        self.send_and_test_stream_message("acknowledge_v2", "Incident 33", expected_message)
 
     def test_incident_assigned_v2(self) -> None:
         expected_message = "Incident [33](https://webdemo.pagerduty.com/incidents/PRORDTY) assigned to [Wiley Jacobson](https://webdemo.pagerduty.com/users/PFBSJ2Z):\n\n``` quote\nMy new incident\n```"

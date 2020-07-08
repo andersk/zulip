@@ -369,9 +369,7 @@ def realm_user_count_by_role(realm: Realm) -> Dict[str, Any]:
         .annotate(Count("role")),
     ):
         human_counts[value_dict["role"]] = value_dict["role__count"]
-    bot_count = UserProfile.objects.filter(
-        realm=realm, is_bot=True, is_active=True,
-    ).count()
+    bot_count = UserProfile.objects.filter(realm=realm, is_bot=True, is_active=True).count()
     return {
         RealmAuditLog.ROLE_COUNT_HUMANS: human_counts,
         RealmAuditLog.ROLE_COUNT_BOTS: bot_count,
@@ -449,9 +447,7 @@ def add_new_user_history(user_profile: UserProfile, streams: Iterable[Stream]) -
         recipient_id__in=recipient_ids, date_sent__gt=one_week_ago,
     ).order_by("-id")
     message_ids_to_use = list(
-        reversed(
-            recent_messages.values_list("id", flat=True)[0:ONBOARDING_TOTAL_MESSAGES],
-        ),
+        reversed(recent_messages.values_list("id", flat=True)[0:ONBOARDING_TOTAL_MESSAGES]),
     )
     if len(message_ids_to_use) == 0:
         return
@@ -1149,9 +1145,7 @@ def do_deactivate_stream(
 
     # If this is a default stream, remove it, properly sending a
     # notification to browser clients.
-    if DefaultStream.objects.filter(
-        realm_id=stream.realm_id, stream_id=stream.id,
-    ).exists():
+    if DefaultStream.objects.filter(realm_id=stream.realm_id, stream_id=stream.id).exists():
         do_remove_default_stream(stream)
 
     default_stream_groups_for_stream = DefaultStreamGroup.objects.filter(
@@ -2524,9 +2518,9 @@ def check_default_stream_group_name(group_name: str) -> None:
     for i in group_name:
         if ord(i) == 0:
             raise JsonableError(
-                _(
-                    "Default stream group name '{}' contains NULL (0x00) characters.",
-                ).format(group_name),
+                _("Default stream group name '{}' contains NULL (0x00) characters.").format(
+                    group_name,
+                ),
             )
 
 
@@ -2707,9 +2701,7 @@ def check_message(
 
         if sender.bot_type != sender.OUTGOING_WEBHOOK_BOT:
             access_stream_for_send_message(
-                sender=sender,
-                stream=stream,
-                forwarder_user_profile=forwarder_user_profile,
+                sender=sender, stream=stream, forwarder_user_profile=forwarder_user_profile,
             )
 
     elif addressee.is_private():
@@ -3000,9 +2992,7 @@ def bulk_get_subscriber_user_ids(
         )
         try:
             validate_user_access_to_subscribers_helper(
-                user_profile,
-                stream_dict,
-                lambda user_profile: sub_dict[stream_dict["id"]],
+                user_profile, stream_dict, lambda user_profile: sub_dict[stream_dict["id"]],
             )
         except JsonableError:
             continue
@@ -3863,9 +3853,7 @@ def do_change_avatar_fields(
 def do_delete_avatar_image(
     user: UserProfile, acting_user: Optional[UserProfile] = None,
 ) -> None:
-    do_change_avatar_fields(
-        user, UserProfile.AVATAR_FROM_GRAVATAR, acting_user=acting_user,
-    )
+    do_change_avatar_fields(user, UserProfile.AVATAR_FROM_GRAVATAR, acting_user=acting_user)
     delete_avatar_image(user)
 
 
@@ -4092,9 +4080,7 @@ def do_change_is_api_super_user(user_profile: UserProfile, value: bool) -> None:
 
 
 def do_change_stream_invite_only(
-    stream: Stream,
-    invite_only: bool,
-    history_public_to_subscribers: Optional[bool] = None,
+    stream: Stream, invite_only: bool, history_public_to_subscribers: Optional[bool] = None,
 ) -> None:
     history_public_to_subscribers = get_default_value_for_history_public_to_subscribers(
         stream.realm, invite_only, history_public_to_subscribers,
@@ -4779,11 +4765,7 @@ def do_mark_all_as_read(user_profile: UserProfile, client: Client) -> int:
     send_event(user_profile.realm, event, [user_profile.id])
 
     do_increment_logging_stat(
-        user_profile,
-        COUNT_STATS["messages_read::hour"],
-        None,
-        event_time,
-        increment=count,
+        user_profile, COUNT_STATS["messages_read::hour"], None, event_time, increment=count,
     )
     do_increment_logging_stat(
         user_profile,
@@ -4831,11 +4813,7 @@ def do_mark_stream_messages_as_read(
     do_clear_mobile_push_notifications_for_ids([user_profile.id], message_ids)
 
     do_increment_logging_stat(
-        user_profile,
-        COUNT_STATS["messages_read::hour"],
-        None,
-        event_time,
-        increment=count,
+        user_profile, COUNT_STATS["messages_read::hour"], None, event_time, increment=count,
     )
     do_increment_logging_stat(
         user_profile,
@@ -5594,9 +5572,7 @@ def get_web_public_subs(realm: Realm) -> SubHelperT:
         return color
 
     subscribed = []
-    for stream in Stream.objects.filter(
-        realm=realm, is_web_public=True, deactivated=False,
-    ):
+    for stream in Stream.objects.filter(realm=realm, is_web_public=True, deactivated=False):
         stream_dict = stream.to_dict()
 
         # Add versions of the Subscription fields based on a simulated
@@ -5874,9 +5850,7 @@ def filter_presence_idle_user_ids(user_ids: Set[int]) -> List[int]:
     recent = timezone_now() - datetime.timedelta(seconds=OFFLINE_THRESHOLD_SECS)
     rows = (
         UserPresence.objects.filter(
-            user_profile_id__in=user_ids,
-            status=UserPresence.ACTIVE,
-            timestamp__gte=recent,
+            user_profile_id__in=user_ids, status=UserPresence.ACTIVE, timestamp__gte=recent,
         )
         .exclude(client__name="ZulipMobile")
         .distinct("user_profile_id")
@@ -6327,9 +6301,7 @@ def get_emails_from_user_ids(user_ids: Sequence[int]) -> Dict[int, str]:
     return UserProfile.emails_from_ids(user_ids)
 
 
-def do_add_realm_domain(
-    realm: Realm, domain: str, allow_subdomains: bool,
-) -> (RealmDomain):
+def do_add_realm_domain(realm: Realm, domain: str, allow_subdomains: bool) -> (RealmDomain):
     realm_domain = RealmDomain.objects.create(
         realm=realm, domain=domain, allow_subdomains=allow_subdomains,
     )

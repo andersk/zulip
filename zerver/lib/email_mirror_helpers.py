@@ -7,9 +7,7 @@ from django.utils.text import slugify
 from zerver.models import Stream
 
 
-def default_option_handler_factory(
-    address_option: str,
-) -> Callable[[Dict[str, Any]], None]:
+def default_option_handler_factory(address_option: str) -> Callable[[Dict[str, Any]], None]:
     def option_setter(options_dict: Dict[str, Any]) -> None:
         options_dict[address_option.replace("-", "_")] = True
 
@@ -30,9 +28,7 @@ class ZulipEmailForwardError(Exception):
 
 
 def get_email_gateway_message_string_from_address(address: str) -> str:
-    pattern_parts = [
-        re.escape(part) for part in settings.EMAIL_GATEWAY_PATTERN.split("%s")
-    ]
+    pattern_parts = [re.escape(part) for part in settings.EMAIL_GATEWAY_PATTERN.split("%s")]
     if settings.EMAIL_GATEWAY_EXTRA_PATTERN_HACK:
         # Accept mails delivered to any Zulip server
         pattern_parts[-1] = settings.EMAIL_GATEWAY_EXTRA_PATTERN_HACK

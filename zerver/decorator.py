@@ -270,9 +270,7 @@ def validate_api_key(
     return user_profile
 
 
-def validate_account_and_subdomain(
-    request: HttpRequest, user_profile: UserProfile,
-) -> None:
+def validate_account_and_subdomain(request: HttpRequest, user_profile: UserProfile) -> None:
     if user_profile.realm.deactivated:
         raise JsonableError(_("This organization has been deactivated"))
     if not user_profile.is_active:
@@ -522,9 +520,7 @@ def log_view_func(view_func: ViewFuncT) -> ViewFuncT:
         request._query = view_func.__name__
         return view_func(request, *args, **kwargs)
 
-    return cast(
-        ViewFuncT, _wrapped_view_func,
-    )  # https://github.com/python/mypy/issues/1927
+    return cast(ViewFuncT, _wrapped_view_func)  # https://github.com/python/mypy/issues/1927
 
 
 def add_logging_data(view_func: ViewFuncT) -> ViewFuncT:
@@ -537,9 +533,7 @@ def add_logging_data(view_func: ViewFuncT) -> ViewFuncT:
         )
         return rate_limit()(view_func)(request, *args, **kwargs)
 
-    return cast(
-        ViewFuncT, _wrapped_view_func,
-    )  # https://github.com/python/mypy/issues/1927
+    return cast(ViewFuncT, _wrapped_view_func)  # https://github.com/python/mypy/issues/1927
 
 
 def human_users_only(view_func: ViewFuncT) -> ViewFuncT:
@@ -551,9 +545,7 @@ def human_users_only(view_func: ViewFuncT) -> ViewFuncT:
             return json_error(_("This endpoint does not accept bot requests."))
         return view_func(request, *args, **kwargs)
 
-    return cast(
-        ViewFuncT, _wrapped_view_func,
-    )  # https://github.com/python/mypy/issues/1927
+    return cast(ViewFuncT, _wrapped_view_func)  # https://github.com/python/mypy/issues/1927
 
 
 # Based on Django 1.8's @login_required
@@ -586,9 +578,7 @@ def require_server_admin(view_func: ViewFuncT) -> ViewFuncT:
 
         return add_logging_data(view_func)(request, *args, **kwargs)
 
-    return cast(
-        ViewFuncT, _wrapped_view_func,
-    )  # https://github.com/python/mypy/issues/1927
+    return cast(ViewFuncT, _wrapped_view_func)  # https://github.com/python/mypy/issues/1927
 
 
 def require_server_admin_api(view_func: ViewFuncT) -> ViewFuncT:
@@ -601,9 +591,7 @@ def require_server_admin_api(view_func: ViewFuncT) -> ViewFuncT:
             raise JsonableError(_("Must be an server administrator"))
         return view_func(request, user_profile, *args, **kwargs)
 
-    return cast(
-        ViewFuncT, _wrapped_view_func,
-    )  # https://github.com/python/mypy/issues/1927
+    return cast(ViewFuncT, _wrapped_view_func)  # https://github.com/python/mypy/issues/1927
 
 
 def require_non_guest_user(view_func: ViewFuncT) -> ViewFuncT:
@@ -615,9 +603,7 @@ def require_non_guest_user(view_func: ViewFuncT) -> ViewFuncT:
             raise JsonableError(_("Not allowed for guest users"))
         return view_func(request, user_profile, *args, **kwargs)
 
-    return cast(
-        ViewFuncT, _wrapped_view_func,
-    )  # https://github.com/python/mypy/issues/1927
+    return cast(ViewFuncT, _wrapped_view_func)  # https://github.com/python/mypy/issues/1927
 
 
 def require_member_or_admin(view_func: ViewFuncT) -> ViewFuncT:
@@ -631,9 +617,7 @@ def require_member_or_admin(view_func: ViewFuncT) -> ViewFuncT:
             return json_error(_("This endpoint does not accept bot requests."))
         return view_func(request, user_profile, *args, **kwargs)
 
-    return cast(
-        ViewFuncT, _wrapped_view_func,
-    )  # https://github.com/python/mypy/issues/1927
+    return cast(ViewFuncT, _wrapped_view_func)  # https://github.com/python/mypy/issues/1927
 
 
 def require_user_group_edit_permission(view_func: ViewFuncT) -> ViewFuncT:
@@ -650,9 +634,7 @@ def require_user_group_edit_permission(view_func: ViewFuncT) -> ViewFuncT:
             raise OrganizationAdministratorRequired()
         return view_func(request, user_profile, *args, **kwargs)
 
-    return cast(
-        ViewFuncT, _wrapped_view_func,
-    )  # https://github.com/python/mypy/issues/1927
+    return cast(ViewFuncT, _wrapped_view_func)  # https://github.com/python/mypy/issues/1927
 
 
 # This API endpoint is used only for the mobile apps.  It is part of a
@@ -784,9 +766,7 @@ def process_as_post(view_func: ViewFuncT) -> ViewFuncT:
 
         return view_func(request, *args, **kwargs)
 
-    return cast(
-        ViewFuncT, _wrapped_view_func,
-    )  # https://github.com/python/mypy/issues/1927
+    return cast(ViewFuncT, _wrapped_view_func)  # https://github.com/python/mypy/issues/1927
 
 
 def authenticate_log_and_execute_json(
@@ -994,9 +974,7 @@ def return_success_on_head_request(view_func: ViewFuncT) -> ViewFuncT:
             return json_success()
         return view_func(request, *args, **kwargs)
 
-    return cast(
-        ViewFuncT, _wrapped_view_func,
-    )  # https://github.com/python/mypy/issues/1927
+    return cast(ViewFuncT, _wrapped_view_func)  # https://github.com/python/mypy/issues/1927
 
 
 def zulip_otp_required(
@@ -1053,6 +1031,4 @@ def add_google_analytics(view_func: ViewFuncT) -> ViewFuncT:
             raise TypeError("add_google_analytics requires a TemplateResponse")
         return response
 
-    return cast(
-        ViewFuncT, _wrapped_view_func,
-    )  # https://github.com/python/mypy/issues/1927
+    return cast(ViewFuncT, _wrapped_view_func)  # https://github.com/python/mypy/issues/1927

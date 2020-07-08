@@ -47,9 +47,7 @@ class EmailLogBackEnd(BaseEmailBackend):
         # Here, we replace the email addresses used in development
         # with chat.zulip.org, so that web email providers like Gmail
         # will be able to fetch the illustrations used in the emails.
-        localhost_email_images_base_uri = (
-            settings.ROOT_DOMAIN_URI + "/static/images/emails"
-        )
+        localhost_email_images_base_uri = settings.ROOT_DOMAIN_URI + "/static/images/emails"
         czo_email_images_base_uri = "https://chat.zulip.org/static/images/emails"
         html = html.replace(localhost_email_images_base_uri, czo_email_images_base_uri)
 

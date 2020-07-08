@@ -301,9 +301,7 @@ def normalize_comment(comment: str) -> str:
     return normalized_comment
 
 
-def handle_comment_created_event(
-    payload: Dict[str, Any], user_profile: UserProfile,
-) -> str:
+def handle_comment_created_event(payload: Dict[str, Any], user_profile: UserProfile) -> str:
     title = get_issue_title(payload)
     return '{author} commented on issue: *"{title}"\
 *\n``` quote\n{comment}\n```\n'.format(
@@ -313,9 +311,7 @@ def handle_comment_created_event(
     )
 
 
-def handle_comment_updated_event(
-    payload: Dict[str, Any], user_profile: UserProfile,
-) -> str:
+def handle_comment_updated_event(payload: Dict[str, Any], user_profile: UserProfile) -> str:
     title = get_issue_title(payload)
     return '{author} updated their comment on issue: *"{title}"\
 *\n``` quote\n{comment}\n```\n'.format(
@@ -325,9 +321,7 @@ def handle_comment_updated_event(
     )
 
 
-def handle_comment_deleted_event(
-    payload: Dict[str, Any], user_profile: UserProfile,
-) -> str:
+def handle_comment_deleted_event(payload: Dict[str, Any], user_profile: UserProfile) -> str:
     title = get_issue_title(payload)
     return '{author} deleted their comment on issue: *"{title}"\
 *\n``` quote\n~~{comment}~~\n```\n'.format(

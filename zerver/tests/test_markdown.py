@@ -194,7 +194,9 @@ def markdown_convert_wrapper(content: str) -> str:
 class MarkdownMiscTest(ZulipTestCase):
     def test_diffs_work_as_expected(self) -> None:
         str1 = "<p>The quick brown fox jumps over the lazy dog.  Animal stories are fun, yeah</p>"
-        str2 = "<p>The fast fox jumps over the lazy dogs and cats.  Animal stories are fun</p>"
+        str2 = (
+            "<p>The fast fox jumps over the lazy dogs and cats.  Animal stories are fun</p>"
+        )
         expected_diff = "\u001b[34m-\u001b[0m <p>The \u001b[33mquick brown\u001b[0m fox jumps over the lazy dog.  Animal stories are fun\u001b[31m, yeah\u001b[0m</p>\n\u001b[34m+\u001b[0m <p>The \u001b[33mfast\u001b[0m fox jumps over the lazy dog\u001b[32ms and cats\u001b[0m.  Animal stories are fun</p>\n"
         self.assertEqual(diff_strings(str1, str2), expected_diff)
 
@@ -829,9 +831,7 @@ class MarkdownTest(ZulipTestCase):
             get_tweet_id("https://twitter.com/wdaher/status/1017581858/"), "1017581858",
         )
         self.assertEqual(
-            get_tweet_id(
-                "https://twitter.com/windyoona/status/410766290349879296/photo/1",
-            ),
+            get_tweet_id("https://twitter.com/windyoona/status/410766290349879296/photo/1"),
             "410766290349879296",
         )
         self.assertEqual(
@@ -886,9 +886,7 @@ class MarkdownTest(ZulipTestCase):
 
         msg = "http://www.twitter.com"
         converted = markdown_convert_wrapper(msg)
-        self.assertEqual(
-            converted, "<p>{}</p>".format(make_link("http://www.twitter.com")),
-        )
+        self.assertEqual(converted, "<p>{}</p>".format(make_link("http://www.twitter.com")))
 
         msg = "http://www.twitter.com/wdaher/"
         converted = markdown_convert_wrapper(msg)
@@ -1646,21 +1644,15 @@ class MarkdownTest(ZulipTestCase):
         )
 
         # Test checking inside nested quotes
-        nested_text = "````quote\n\n{}\n\n{}````".format(
-            text.format("js"), text.format(""),
-        )
+        nested_text = "````quote\n\n{}\n\n{}````".format(text.format("js"), text.format(""))
         do_set_realm_property(realm, "default_code_block_language", "javascript")
         rendered = markdown_convert_wrapper(nested_text)
-        with_language, without_language = re.findall(
-            r"<pre>(.*?)$", rendered, re.MULTILINE,
-        )
+        with_language, without_language = re.findall(r"<pre>(.*?)$", rendered, re.MULTILINE)
         self.assertTrue(with_language == without_language)
 
         do_set_realm_property(realm, "default_code_block_language", None)
         rendered = markdown_convert_wrapper(nested_text)
-        with_language, without_language = re.findall(
-            r"<pre>(.*?)$", rendered, re.MULTILINE,
-        )
+        with_language, without_language = re.findall(r"<pre>(.*?)$", rendered, re.MULTILINE)
         self.assertFalse(with_language == without_language)
 
     def test_mention_wildcard(self) -> None:
@@ -2040,8 +2032,7 @@ class MarkdownTest(ZulipTestCase):
 
         def update_message_and_check_flag(content: str, mentioned: bool) -> None:
             result = self.client_patch(
-                "/json/messages/" + str(msg_id),
-                {"message_id": msg_id, "content": content},
+                "/json/messages/" + str(msg_id), {"message_id": msg_id, "content": content},
             )
             self.assert_json_success(result)
             um = UserMessage.objects.get(
@@ -2121,9 +2112,7 @@ class MarkdownTest(ZulipTestCase):
         sender_user_profile = self.example_user("othello")
         msg = Message(sender=sender_user_profile, sending_client=get_client("test"))
         content = "#**casesens**"
-        self.assertEqual(
-            render_markdown(msg, content), "<p>#<strong>casesens</strong></p>",
-        )
+        self.assertEqual(render_markdown(msg, content), "<p>#<strong>casesens</strong></p>")
 
     def test_topic_single(self) -> None:
         denmark = get_stream("Denmark", get_realm("zulip"))
@@ -2191,8 +2180,7 @@ class MarkdownTest(ZulipTestCase):
             #**garçon** #**천국** @**Ignore Person**
         """
         self.assertEqual(
-            possible_linked_stream_names(content),
-            {"test here", "Denmark", "garçon", "천국"},
+            possible_linked_stream_names(content), {"test here", "Denmark", "garçon", "천국"},
         )
 
     def test_stream_unicode(self) -> None:

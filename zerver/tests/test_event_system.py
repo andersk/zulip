@@ -69,9 +69,7 @@ class EventsEndpointTest(ZulipTestCase):
         # This test is intended to get minimal coverage on the
         # events_register code paths
         user = self.example_user("hamlet")
-        with mock.patch(
-            "zerver.views.events_register.do_events_register", return_value={},
-        ):
+        with mock.patch("zerver.views.events_register.do_events_register", return_value={}):
             result = self.api_post(user, "/json/register")
         self.assert_json_success(result)
 

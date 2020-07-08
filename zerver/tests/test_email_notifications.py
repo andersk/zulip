@@ -129,9 +129,7 @@ class TestFollowupEmails(ZulipTestCase):
         email_data = ujson.loads(scheduled_emails[0].data)
         self.assertEqual(email_data["context"]["email"], self.example_email("hamlet"))
         self.assertEqual(email_data["context"]["is_realm_admin"], False)
-        self.assertEqual(
-            email_data["context"]["getting_started_link"], "https://zulip.com",
-        )
+        self.assertEqual(email_data["context"]["getting_started_link"], "https://zulip.com")
         self.assertNotIn("ldap_username", email_data["context"])
 
         ScheduledEmail.objects.all().delete()
@@ -527,9 +525,7 @@ class TestMissedMessages(ZulipTestCase):
         email_subject = "PMs with Othello, the Moor of Venice"
         self._test_cases(msg_id, verify_body_include, email_subject, send_as_user)
 
-    def _reply_warning_in_personal_missed_stream_messages(
-        self, send_as_user: bool,
-    ) -> None:
+    def _reply_warning_in_personal_missed_stream_messages(self, send_as_user: bool) -> None:
         msg_id = self.send_personal_message(
             self.example_user("othello"),
             self.example_user("hamlet"),
@@ -651,9 +647,7 @@ class TestMissedMessages(ZulipTestCase):
         handle_missedmessage_emails(hamlet.id, [{"message_id": msg_id}])
         self.assertEqual(len(mail.outbox), 0)
 
-    def _deleted_message_in_huddle_missed_stream_messages(
-        self, send_as_user: bool,
-    ) -> None:
+    def _deleted_message_in_huddle_missed_stream_messages(self, send_as_user: bool) -> None:
         msg_id = self.send_huddle_message(
             self.example_user("othello"),
             [self.example_user("hamlet"), self.example_user("iago")],
@@ -915,9 +909,7 @@ class TestMissedMessages(ZulipTestCase):
         msg_id_1 = self.send_stream_message(
             self.example_user("iago"), "Denmark", "@**King Hamlet**",
         )
-        msg_id_2 = self.send_stream_message(
-            self.example_user("iago"), "Verona", "* 1\n *2",
-        )
+        msg_id_2 = self.send_stream_message(self.example_user("iago"), "Verona", "* 1\n *2")
         msg_id_3 = self.send_personal_message(self.example_user("iago"), hamlet, "Hello")
 
         handle_missedmessage_emails(
@@ -932,8 +924,7 @@ class TestMissedMessages(ZulipTestCase):
         self.assertIn("Iago: @**King Hamlet**\n\n--\nYou are", mail.outbox[0].body)
         # If message content starts with <p> tag the sender name is appended inside the <p> tag.
         self.assertIn(
-            '<p><b>Iago</b>: <span class="user-mention"',
-            mail.outbox[0].alternatives[0][0],
+            '<p><b>Iago</b>: <span class="user-mention"', mail.outbox[0].alternatives[0][0],
         )
 
         self.assertIn("Iago: * 1\n *2\n\n--\nYou are receiving", mail.outbox[1].body)
@@ -1013,9 +1004,7 @@ class TestMissedMessages(ZulipTestCase):
         # Messages sent to a protected history-private stream shouldn't be
         # accessible/available in emails before subscribing
         stream_name = "private_stream"
-        self.make_stream(
-            stream_name, invite_only=True, history_public_to_subscribers=False,
-        )
+        self.make_stream(stream_name, invite_only=True, history_public_to_subscribers=False)
         user = self.example_user("iago")
         self.subscribe(user, stream_name)
         late_subscribed_user = self.example_user("hamlet")

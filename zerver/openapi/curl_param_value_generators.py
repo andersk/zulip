@@ -43,9 +43,7 @@ def openapi_param_value_generator(
 
 
 def patch_openapi_example_values(
-    entry: str,
-    params: List[Dict[str, Any]],
-    request_body: Optional[Dict[str, Any]] = None,
+    entry: str, params: List[Dict[str, Any]], request_body: Optional[Dict[str, Any]] = None,
 ) -> Tuple[List[Dict[str, object]], Optional[Dict[str, object]]]:
     if entry not in GENERATOR_FUNCTIONS:
         return params, request_body

@@ -239,9 +239,7 @@ def main(options: argparse.Namespace) -> int:
             destroy_leaked_test_databases,
         )
 
-        if options.is_force or need_to_run_configure_rabbitmq(
-            [settings.RABBITMQ_PASSWORD],
-        ):
+        if options.is_force or need_to_run_configure_rabbitmq([settings.RABBITMQ_PASSWORD]):
             run(["scripts/setup/configure-rabbitmq"])
             write_new_digest(
                 "last_configure_rabbitmq_hash",

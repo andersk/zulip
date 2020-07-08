@@ -62,9 +62,7 @@ def load_generators(config: Dict[str, Any]) -> Dict[str, Any]:
     return results
 
 
-def parse_file(
-    config: Dict[str, Any], gens: Dict[str, Any], corpus_file: str,
-) -> List[str]:
+def parse_file(config: Dict[str, Any], gens: Dict[str, Any], corpus_file: str) -> List[str]:
 
     # First, load the entire file into a dictionary,
     # then apply our custom filters to it as needed.
@@ -206,9 +204,7 @@ def create_test_data() -> None:
 
     write_file(
         paragraphs,
-        os.path.join(
-            get_or_create_dev_uuid_var_path("test-backend"), "test_messages.json",
-        ),
+        os.path.join(get_or_create_dev_uuid_var_path("test-backend"), "test_messages.json"),
     )
 
 

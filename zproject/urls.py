@@ -287,9 +287,7 @@ v1_api_and_json_patterns = [
         rest_dispatch,
         {"POST": "zerver.views.message_flags.mark_topic_as_read"},
     ),
-    path(
-        "zcommand", rest_dispatch, {"POST": "zerver.views.message_send.zcommand_backend"},
-    ),
+    path("zcommand", rest_dispatch, {"POST": "zerver.views.message_send.zcommand_backend"}),
     # messages -> zerver.views.message*
     # GET returns messages, possibly filtered, POST sends a message
     path(
@@ -343,9 +341,7 @@ v1_api_and_json_patterns = [
         {"PATCH": "zerver.views.streams.update_subscriptions_property"},
     ),
     path(
-        "submessage",
-        rest_dispatch,
-        {"POST": "zerver.views.submessage.process_submessage"},
+        "submessage", rest_dispatch, {"POST": "zerver.views.submessage.process_submessage"},
     ),
     # New endpoint for handling reactions.
     # reactions -> zerver.view.reactions
@@ -647,12 +643,7 @@ v1_api_and_json_patterns = [
     path(
         "report/send_times",
         rest_dispatch,
-        {
-            "POST": (
-                "zerver.views.report.report_send_times",
-                {"intentionally_undocumented"},
-            ),
-        },
+        {"POST": ("zerver.views.report.report_send_times", {"intentionally_undocumented"})},
     ),
     path(
         "report/narrow_times",
@@ -1150,9 +1141,7 @@ urls += [
     #
     # Since these views don't use rest_dispatch, they cannot have
     # asynchronous Tornado behavior.
-    path(
-        "notify_tornado", zerver.tornado.views.notify, name="zerver.tornado.views.notify",
-    ),
+    path("notify_tornado", zerver.tornado.views.notify, name="zerver.tornado.views.notify"),
     path("api/v1/events/internal", zerver.tornado.views.get_events_internal),
 ]
 

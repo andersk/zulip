@@ -61,9 +61,7 @@ def update_realm(
         converter=to_non_negative_int, default=None,
     ),
     allow_message_editing: Optional[bool] = REQ(validator=check_bool, default=None),
-    allow_community_topic_editing: Optional[bool] = REQ(
-        validator=check_bool, default=None,
-    ),
+    allow_community_topic_editing: Optional[bool] = REQ(validator=check_bool, default=None),
     mandatory_topics: Optional[bool] = REQ(validator=check_bool, default=None),
     message_content_edit_limit_seconds: Optional[int] = REQ(
         converter=to_non_negative_int, default=None,
@@ -104,9 +102,7 @@ def update_realm(
     email_address_visibility: Optional[int] = REQ(
         validator=check_int_in(Realm.EMAIL_ADDRESS_VISIBILITY_TYPES), default=None,
     ),
-    default_twenty_four_hour_time: Optional[bool] = REQ(
-        validator=check_bool, default=None,
-    ),
+    default_twenty_four_hour_time: Optional[bool] = REQ(validator=check_bool, default=None),
     video_chat_provider: Optional[int] = REQ(validator=check_int, default=None),
     default_code_block_language: Optional[str] = REQ(validator=check_string, default=None),
     digest_weekday: Optional[int] = REQ(

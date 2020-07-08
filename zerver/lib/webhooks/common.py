@@ -163,9 +163,7 @@ def get_fixture_http_headers(
     return fixture_to_headers(fixture_name)
 
 
-def get_http_headers_from_filename(
-    http_header_key: str,
-) -> Callable[[str], Dict[str, str]]:
+def get_http_headers_from_filename(http_header_key: str) -> Callable[[str], Dict[str, str]]:
     """If an integration requires an event type kind of HTTP header which can
     be easily (statically) determined, then name the fixtures in the format
     of "header_value__other_details" or even "header_value" and the use this

@@ -33,10 +33,7 @@ def get_user_info_dict(realm_id: int) -> Dict[int, Dict[str, Any]]:
 
 
 def update_user_status(
-    user_profile_id: int,
-    status: Optional[int],
-    status_text: Optional[str],
-    client_id: int,
+    user_profile_id: int, status: Optional[int], status_text: Optional[str], client_id: int,
 ) -> None:
 
     timestamp = timezone_now()

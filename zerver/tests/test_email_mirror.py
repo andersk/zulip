@@ -55,9 +55,7 @@ class TestEncodeDecode(ZulipTestCase):
         include_quotes: bool = False,
         prefer_text: bool = True,
     ) -> None:
-        self.assertEqual(
-            show_sender, ("show_sender" in options) and options["show_sender"],
-        )
+        self.assertEqual(show_sender, ("show_sender" in options) and options["show_sender"])
         self.assertEqual(
             include_footer, ("include_footer" in options) and options["include_footer"],
         )
@@ -535,9 +533,7 @@ class TestEmailMirrorMessagesWithAttachments(ZulipTestCase):
             )
 
         message = most_recent_message(user_profile)
-        self.assertEqual(
-            message.content, f"Test body\n[{utf8_filename}](https://test_url)",
-        )
+        self.assertEqual(message.content, f"Test body\n[{utf8_filename}](https://test_url)")
 
     def test_message_with_valid_nested_attachment(self) -> None:
         user_profile = self.example_user("hamlet")

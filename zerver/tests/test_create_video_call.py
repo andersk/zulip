@@ -32,8 +32,7 @@ class TestVideoCall(ZulipTestCase):
         )
 
         response = self.client_get(
-            "/calls/zoom/complete",
-            {"code": "code", "state": '{"realm":"zulip","sid":""}'},
+            "/calls/zoom/complete", {"code": "code", "state": '{"realm":"zulip","sid":""}'},
         )
         self.assertEqual(response.status_code, 200)
 
@@ -86,8 +85,7 @@ class TestVideoCall(ZulipTestCase):
         responses.add(responses.POST, "https://zoom.us/oauth/token", status=400)
 
         response = self.client_get(
-            "/calls/zoom/complete",
-            {"code": "code", "state": '{"realm":"zulip","sid":""}'},
+            "/calls/zoom/complete", {"code": "code", "state": '{"realm":"zulip","sid":""}'},
         )
         self.assert_json_error(response, "Invalid Zoom credentials")
 
@@ -100,8 +98,7 @@ class TestVideoCall(ZulipTestCase):
         )
 
         response = self.client_get(
-            "/calls/zoom/complete",
-            {"code": "code", "state": '{"realm":"zulip","sid":""}'},
+            "/calls/zoom/complete", {"code": "code", "state": '{"realm":"zulip","sid":""}'},
         )
         self.assertEqual(response.status_code, 200)
 
@@ -121,8 +118,7 @@ class TestVideoCall(ZulipTestCase):
         )
 
         response = self.client_get(
-            "/calls/zoom/complete",
-            {"code": "code", "state": '{"realm":"zulip","sid":""}'},
+            "/calls/zoom/complete", {"code": "code", "state": '{"realm":"zulip","sid":""}'},
         )
         self.assertEqual(response.status_code, 200)
 

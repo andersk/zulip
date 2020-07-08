@@ -52,9 +52,7 @@ class Bitbucket3HookTests(WebhookTestCase):
     def test_bitbucket3_repo_modified(self) -> None:
         expected_message = """[hypro999](http://139.59.64.214:7990/users/hypro999) changed the name of the **sandbox** repo from **sandbox** to **sandbox v2**."""
         expected_topic = "sandbox v2"
-        self.send_and_test_stream_message(
-            "repo_modified", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("repo_modified", expected_topic, expected_message)
 
     # Repo Push Events:
     def test_push_add_branch(self) -> None:
@@ -80,7 +78,9 @@ class Bitbucket3HookTests(WebhookTestCase):
         )
 
     def test_push_delete_tag(self) -> None:
-        expected_message = """[hypro999](http://139.59.64.214:7990/users/hypro999) removed tag test-tag."""
+        expected_message = (
+            """[hypro999](http://139.59.64.214:7990/users/hypro999) removed tag test-tag."""
+        )
         self.send_and_test_stream_message(
             "repo_push_delete_tag", self.EXPECTED_TOPIC, expected_message,
         )
@@ -155,9 +155,7 @@ class Bitbucket3HookTests(WebhookTestCase):
         expected_topic = "sandbox / PR #6 sample_file: Add sample_file.txt."
         expected_message = """[hypro999](http://139.59.64.214:7990/users/hypro999) opened [PR #6](http://139.59.64.214:7990/projects/SBOX/repos/sandbox/pull-requests/6) from `master` to `master` (assigned to [sougo](http://139.59.64.214:7990/users/sougo), [zura](http://139.59.64.214:7990/users/zura) and [shimura](http://139.59.64.214:7990/users/shimura) for review):\n\n~~~ quote\nAdd a simple text file for further testing purposes.\n~~~"""
         self.send_and_test_stream_message(
-            "pull_request_opened_with_multiple_reviewers",
-            expected_topic,
-            expected_message,
+            "pull_request_opened_with_multiple_reviewers", expected_topic, expected_message,
         )
 
     def test_pr_modified(self) -> None:

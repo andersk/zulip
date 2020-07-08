@@ -144,9 +144,7 @@ def auth_enabled_helper(backends_to_check: List[str], realm: Optional[Realm]) ->
     for supported_backend in supported_auth_backends():
         for backend_name in backends_to_check:
             backend = AUTH_BACKEND_NAME_MAP[backend_name]
-            if enabled_method_dict[backend_name] and isinstance(
-                supported_backend, backend,
-            ):
+            if enabled_method_dict[backend_name] and isinstance(supported_backend, backend):
                 return True
     return False
 
@@ -527,9 +525,7 @@ class ZulipLDAPAuthBackendBase(ZulipAuthMixin, LDAPBackend):
     ) -> bool:
         return False
 
-    def get_all_permissions(
-        self, user: Optional[UserProfile], obj: Any = None,
-    ) -> Set[Any]:
+    def get_all_permissions(self, user: Optional[UserProfile], obj: Any = None) -> Set[Any]:
         return set()
 
     def get_group_permissions(
@@ -564,9 +560,7 @@ class ZulipLDAPAuthBackendBase(ZulipAuthMixin, LDAPBackend):
                     # This is possible, but strange, so worth logging a warning about.
                     # We can't translate the email to a unique username,
                     # so we don't do anything else here.
-                    logging.warning(
-                        "Multiple users with email %s found in LDAP.", username,
-                    )
+                    logging.warning("Multiple users with email %s found in LDAP.", username)
                     result = username
 
         if _LDAPUser(self, result).attrs is None:
@@ -1034,9 +1028,7 @@ def query_ldap(email: str) -> List[str]:
                     value = "(An avatar image file)"
             values.append(f"{django_field}: {value}")
         if settings.LDAP_EMAIL_ATTR is not None:
-            values.append(
-                "{}: {}".format("email", ldap_attrs[settings.LDAP_EMAIL_ATTR][0]),
-            )
+            values.append("{}: {}".format("email", ldap_attrs[settings.LDAP_EMAIL_ATTR][0]))
     else:
         values.append("LDAP backend not configured on this server.")
     return values
@@ -1227,7 +1219,9 @@ class ZulipRemoteUserBackend(RemoteUserBackend, ExternalAuthMethod):
     auth_backend_name = "RemoteUser"
     name = "remoteuser"
     display_icon = None
-    sort_order = 9000  # If configured, this backend should have its button near the top of the list.
+    sort_order = (
+        9000  # If configured, this backend should have its button near the top of the list.
+    )
 
     create_unknown_user = False
 
@@ -1443,11 +1437,7 @@ def social_auth_associate_user(
 
 
 def social_auth_finish(
-    backend: Any,
-    details: Dict[str, Any],
-    response: HttpResponse,
-    *args: Any,
-    **kwargs: Any,
+    backend: Any, details: Dict[str, Any], response: HttpResponse, *args: Any, **kwargs: Any
 ) -> Optional[HttpResponse]:
     """Given the determination in social_auth_associate_user for whether
     the user should be authenticated, this takes care of actually
@@ -1488,12 +1478,7 @@ def social_auth_finish(
         )
         return redirect_deactivated_user_to_login()
 
-    if (
-        auth_backend_disabled
-        or inactive_realm
-        or no_verified_email
-        or email_not_associated
-    ):
+    if auth_backend_disabled or inactive_realm or no_verified_email or email_not_associated:
         # Redirect to login page. We can't send to registration
         # workflow with these errors. We will redirect to login page.
         return None
@@ -1709,9 +1694,7 @@ class GitHubAuthBackend(SocialAuthMixin, GithubOAuth2):
             try:
                 return backend.user_data(access_token, *args, **kwargs)
             except AuthFailed:
-                return dict(
-                    auth_failed_reason="GitHub user is not member of required team",
-                )
+                return dict(auth_failed_reason="GitHub user is not member of required team")
         elif org_name is not None:
             backend = GithubOrganizationOAuth2(self.strategy, self.redirect_uri)
             try:
@@ -1946,11 +1929,7 @@ class AppleAuthBackend(SocialAuthMixin, AppleIdAuth):
 class SAMLAuthBackend(SocialAuthMixin, SAMLAuth):
     auth_backend_name = "SAML"
     REDIS_EXPIRATION_SECONDS = 60 * 15
-    SAMLRESPONSE_PARSING_EXCEPTIONS = (
-        OneLogin_Saml2_Error,
-        binascii.Error,
-        XMLSyntaxError,
-    )
+    SAMLRESPONSE_PARSING_EXCEPTIONS = (OneLogin_Saml2_Error, binascii.Error, XMLSyntaxError)
     name = "saml"
     # Organization which go through the trouble of setting up SAML are most likely
     # to have it as their main authentication method, so it seems appropriate to have
@@ -2177,9 +2156,7 @@ class SAMLAuthBackend(SocialAuthMixin, SAMLAuth):
 
         idp_name = self.get_issuing_idp(SAMLResponse)
         if idp_name is None:
-            self.logger.info(
-                "/complete/saml/: No valid IdP as issuer of the SAMLResponse.",
-            )
+            self.logger.info("/complete/saml/: No valid IdP as issuer of the SAMLResponse.")
             return None
 
         idp_valid = self.validate_idp_for_subdomain(idp_name, subdomain)

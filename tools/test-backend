@@ -500,9 +500,7 @@ def main() -> None:
                 print()
                 failures = True
         if failures:
-            print(
-                "It looks like your changes lost 100% test coverage in one or more files",
-            )
+            print("It looks like your changes lost 100% test coverage in one or more files")
             print("Usually, the right fix for this is to add some tests.")
             print("But also check out the include/exclude lists in tools/test-backend.")
             print(
