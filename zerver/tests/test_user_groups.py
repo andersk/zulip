@@ -364,9 +364,7 @@ class UserGroupAPITestCase(ZulipTestCase):
         # Test remove a member that's already removed
         params = {"delete": ujson.dumps([othello.id])}
         result = self.client_post(f"/json/user_groups/{user_group.id}/members", info=params)
-        self.assert_json_error(
-            result, f"There is no member '{othello.id}' in this user group",
-        )
+        self.assert_json_error(result, f"There is no member '{othello.id}' in this user group")
         self.assertEqual(UserGroupMembership.objects.count(), 4)
         members = get_memberships_of_users(user_group, [hamlet, othello, aaron])
         self.assertEqual(len(members), 2)

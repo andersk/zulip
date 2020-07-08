@@ -134,9 +134,7 @@ class GitlabHookTests(WebhookTestCase):
         expected_message = "Adam Birds created [Issue #2](https://gitlab.com/adambirds/zulip-gitlab-test/issues/2) (assigned to adambirds and eeshangarg):\n\n~~~ quote\nZulip Test Issue 2\n~~~"
 
         self.send_and_test_stream_message(
-            "issue_hook__issue_created_with_two_assignees",
-            expected_subject,
-            expected_message,
+            "issue_hook__issue_created_with_two_assignees", expected_subject, expected_message,
         )
 
     def test_create_issue_with_three_assignees_event_message(self) -> None:
@@ -183,9 +181,7 @@ class GitlabHookTests(WebhookTestCase):
         expected_topic = "my-awesome-project / Issue #7 Issue without description"
         expected_message = "Eeshan Garg created [Issue #7](https://gitlab.com/eeshangarg/my-awesome-project/issues/7)."
         self.send_and_test_stream_message(
-            "issue_hook__issue_opened_with_null_description",
-            expected_topic,
-            expected_message,
+            "issue_hook__issue_opened_with_null_description", expected_topic, expected_message,
         )
 
     def test_update_issue_event_message(self) -> None:
@@ -386,9 +382,7 @@ class GitlabHookTests(WebhookTestCase):
         expected_topic = "my-awesome-project / MR #3 New Merge Request"
         expected_message = "Tomasz Kolek added commit(s) to [MR #3](https://gitlab.com/tomaszkolek0/my-awesome-project/merge_requests/3)."
         self.send_and_test_stream_message(
-            "merge_request_hook__merge_request_added_commit",
-            expected_topic,
-            expected_message,
+            "merge_request_hook__merge_request_added_commit", expected_topic, expected_message,
         )
 
     def test_merge_request_merged_event_message(self) -> None:

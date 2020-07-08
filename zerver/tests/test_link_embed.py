@@ -280,9 +280,7 @@ class PreviewTestCase(ZulipTestCase):
         if relative_url is True:
             html = html.replace("http://ia.media-imdb.com", "")
         response = MockPythonResponse(html, 200, headers)
-        return lambda k, **kwargs: {url: response}.get(
-            k, MockPythonResponse("", 404, headers),
-        )
+        return lambda k, **kwargs: {url: response}.get(k, MockPythonResponse("", 404, headers))
 
     @override_settings(INLINE_URL_EMBED_PREVIEW=True)
     def test_edit_message_history(self) -> None:
@@ -404,8 +402,7 @@ class PreviewTestCase(ZulipTestCase):
             "zerver.views.message_edit.queue_json_publish", wraps=wrapped_queue_json_publish,
         ) as patched:
             result = self.client_patch(
-                "/json/messages/" + str(msg_id),
-                {"message_id": msg_id, "content": edited_url},
+                "/json/messages/" + str(msg_id), {"message_id": msg_id, "content": edited_url},
             )
             self.assert_json_success(result)
 

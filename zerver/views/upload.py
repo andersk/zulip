@@ -101,9 +101,7 @@ def serve_file(
     return serve_s3(request, path_id, url_only)
 
 
-def serve_local_file_unauthed(
-    request: HttpRequest, token: str, filename: str,
-) -> HttpResponse:
+def serve_local_file_unauthed(request: HttpRequest, token: str, filename: str) -> HttpResponse:
     path_id = get_local_file_path_id_from_token(token)
     if path_id is None:
         return json_error(_("Invalid token"))

@@ -91,9 +91,7 @@ class Command(ZulipBaseCommand):
                     os.path.join(settings.DEPLOY_ROOT, settings.LOCAL_UPLOADS_DIR),
                 )
             ):
-                members.append(
-                    os.path.join(settings.DEPLOY_ROOT, settings.LOCAL_UPLOADS_DIR),
-                )
+                members.append(os.path.join(settings.DEPLOY_ROOT, settings.LOCAL_UPLOADS_DIR))
                 paths.append(
                     (
                         "uploads",

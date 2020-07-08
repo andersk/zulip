@@ -151,10 +151,7 @@ def convert_user_data(
 
 
 def convert_avatar_data(
-    avatar_folder: str,
-    raw_data: List[ZerverFieldsT],
-    user_id_mapper: IdMapper,
-    realm_id: int,
+    avatar_folder: str, raw_data: List[ZerverFieldsT], user_id_mapper: IdMapper, realm_id: int,
 ) -> List[ZerverFieldsT]:
     """
     This code is pretty specific to how Hipchat sends us data.

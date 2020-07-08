@@ -214,8 +214,7 @@ class Migration(migrations.Migration):
             unique_together={("stream", "property", "end_time", "interval")},
         ),
         migrations.AlterUniqueTogether(
-            name="realmcount",
-            unique_together={("realm", "property", "end_time", "interval")},
+            name="realmcount", unique_together={("realm", "property", "end_time", "interval")},
         ),
         migrations.AlterUniqueTogether(
             name="installationcount", unique_together={("property", "end_time", "interval")},

@@ -59,9 +59,7 @@ def mark_all_as_read(request: HttpRequest, user_profile: UserProfile) -> HttpRes
 
 @has_request_variables
 def mark_stream_as_read(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    stream_id: int = REQ(validator=check_int),
+    request: HttpRequest, user_profile: UserProfile, stream_id: int = REQ(validator=check_int),
 ) -> HttpResponse:
     stream, recipient, sub = access_stream_by_id(user_profile, stream_id)
     count = do_mark_stream_messages_as_read(user_profile, request.client, stream)

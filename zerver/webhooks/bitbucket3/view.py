@@ -251,9 +251,7 @@ def get_pr_opened_or_modified_body(
                 **parameters,
             )
         else:
-            body = PULL_REQUEST_OPENED_OR_MODIFIED_TEMPLATE_WITH_REVIEWERS.format(
-                **parameters,
-            )
+            body = PULL_REQUEST_OPENED_OR_MODIFIED_TEMPLATE_WITH_REVIEWERS.format(**parameters)
         punctuation = ":" if description else "."
         body = f"{body}{punctuation}"
         if description:

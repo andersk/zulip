@@ -1240,9 +1240,7 @@ class TestEmailMirrorTornadoView(ZulipTestCase):
         self, to_address: str, sender: UserProfile, mock_queue_json_publish: mock.Mock,
     ) -> HttpResponse:
         mail_template = self.fixture_data("simple.txt", type="email")
-        mail = mail_template.format(
-            stream_to_address=to_address, sender=sender.delivery_email,
-        )
+        mail = mail_template.format(stream_to_address=to_address, sender=sender.delivery_email)
         msg_base64 = base64.b64encode(mail.encode()).decode()
 
         def check_queue_json_publish(

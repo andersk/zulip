@@ -53,9 +53,7 @@ class TestEmbeddedBotMessaging(ZulipTestCase):
         self.assertEqual(display_recipient, "Denmark")
 
     def test_stream_message_not_to_embedded_bot(self) -> None:
-        self.send_stream_message(
-            self.user_profile, "Denmark", content="foo", topic_name="bar",
-        )
+        self.send_stream_message(self.user_profile, "Denmark", content="foo", topic_name="bar")
         last_message = self.get_last_message()
         self.assertEqual(last_message.content, "foo")
 

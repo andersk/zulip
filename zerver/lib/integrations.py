@@ -577,9 +577,7 @@ INTEGRATIONS: Dict[str, Integration] = {
 }
 
 BOT_INTEGRATIONS: List[BotIntegration] = [
-    BotIntegration(
-        "github_detail", ["version-control", "bots"], display_name="GitHub Detail",
-    ),
+    BotIntegration("github_detail", ["version-control", "bots"], display_name="GitHub Detail"),
     BotIntegration(
         "xkcd",
         ["bots", "misc"],

@@ -35,9 +35,7 @@ class Bitbucket2HookTests(WebhookTestCase):
             expected_message,
         )
 
-    def test_bitbucket2_on_push_commits_multiple_committers_filtered_by_branches(
-        self,
-    ) -> None:
+    def test_bitbucket2_on_push_commits_multiple_committers_filtered_by_branches(self) -> None:
         self.url = self.build_webhook_url(branches="master,development")
         commit_info = "* first commit ([84b96ad](https://bitbucket.org/kolaszek/repository-name/commits/84b96adc644a30fd6465b3d196369d880762afed))\n"
         expected_message = f"""kolaszek [pushed](https://bitbucket.org/kolaszek/repository-name/branch/master) 3 commits to branch master. Commits by zbenjamin (2) and kolaszek (1).\n\n{commit_info*2}* first commit ([84b96ad](https://bitbucket.org/kolaszek/repository-name/commits/84b96adc644a30fd6465b3d196369d880762afed))"""
@@ -264,9 +262,7 @@ class Bitbucket2HookTests(WebhookTestCase):
             **kwargs,
         )
 
-    def test_bitbucket2_on_pull_request_comment_created_with_custom_topic_in_url(
-        self,
-    ) -> None:
+    def test_bitbucket2_on_pull_request_comment_created_with_custom_topic_in_url(self) -> None:
         self.url = self.build_webhook_url(topic="notifications")
         expected_topic = "notifications"
         expected_message = "kolaszek [commented](https://bitbucket.org/kolaszek/repository-name/pull-requests/3/_/diff#comment-20576503) on [PR #1 new commit](https://bitbucket.org/kolaszek/repository-name/pull-requests/3):\n\n~~~ quote\nComment1\n~~~"
@@ -289,9 +285,7 @@ class Bitbucket2HookTests(WebhookTestCase):
             **kwargs,
         )
 
-    def test_bitbucket2_on_pull_request_comment_updated_with_custom_topic_in_url(
-        self,
-    ) -> None:
+    def test_bitbucket2_on_pull_request_comment_updated_with_custom_topic_in_url(self) -> None:
         self.url = self.build_webhook_url(topic="notifications")
         expected_topic = "notifications"
         expected_message = "kolaszek updated a [comment](https://bitbucket.org/kolaszek/repository-name/pull-requests/3/_/diff#comment-20576503) on [PR #1 new commit](https://bitbucket.org/kolaszek/repository-name/pull-requests/3):\n\n~~~ quote\nComment1\n~~~"

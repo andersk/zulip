@@ -29,12 +29,7 @@ class LibratoWebhookParser:
     def parse_alert(self) -> Tuple[int, str, str, str]:
         alert = self.payload["alert"]
         alert_id = alert["id"]
-        return (
-            alert_id,
-            alert["name"],
-            self.generate_alert_url(alert_id),
-            alert["runbook_url"],
-        )
+        return alert_id, alert["name"], self.generate_alert_url(alert_id), alert["runbook_url"]
 
     def parse_condition(self, condition: Dict[str, Any]) -> Tuple[str, str, str, str]:
         summary_function = condition["summary_function"]
@@ -148,9 +143,7 @@ class LibratoWebhookHandler(LibratoWebhookParser):
     def generate_violated_metric_condition(
         self, violation: Dict[str, Any], condition: Dict[str, Any],
     ) -> str:
-        summary_function, threshold, condition_type, duration = self.parse_condition(
-            condition,
-        )
+        summary_function, threshold, condition_type, duration = self.parse_condition(condition)
         metric_name, recorded_at = self.parse_violation(violation)
         metric_condition_template = (
             "\n * Metric `{metric_name}`, {summary_function} "

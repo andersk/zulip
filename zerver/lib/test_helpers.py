@@ -264,9 +264,7 @@ def find_key_by_email(address: str) -> Optional[str]:
 
 def message_stream_count(user_profile: UserProfile) -> int:
     return (
-        UserMessage.objects.select_related("message")
-        .filter(user_profile=user_profile)
-        .count()
+        UserMessage.objects.select_related("message").filter(user_profile=user_profile).count()
     )
 
 
@@ -309,9 +307,7 @@ class DummyHandler(AsyncDjangoHandler):
 class POSTRequestMock:
     method = "POST"
 
-    def __init__(
-        self, post_data: Dict[str, Any], user_profile: Optional[UserProfile],
-    ) -> None:
+    def __init__(self, post_data: Dict[str, Any], user_profile: Optional[UserProfile]) -> None:
         self.GET: Dict[str, Any] = {}
 
         # Convert any integer parameters passed into strings, even

@@ -23,9 +23,7 @@ class Command(sendtestemail.Command):
 
         print("If you run into any trouble, read:")
         print()
-        print(
-            "  https://zulip.readthedocs.io/en/latest/production/email.html#troubleshooting",
-        )
+        print("  https://zulip.readthedocs.io/en/latest/production/email.html#troubleshooting")
         print()
         print(
             "The most common error is not setting `ADD_TOKENS_TO_NOREPLY_ADDRESS=False` when",

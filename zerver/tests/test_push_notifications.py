@@ -171,9 +171,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
         )
         self.assert_json_error(result, "Missing 'user_id' argument")
         result = self.uuid_post(
-            self.server_uuid,
-            endpoint,
-            {"user_id": user_id, "token": token, "token_kind": 17},
+            self.server_uuid, endpoint, {"user_id": user_id, "token": token, "token_kind": 17},
         )
         self.assert_json_error(result, "Invalid token type")
 
@@ -394,9 +392,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
             mock_retry.assert_called()
 
             # We didn't manage to communicate with the bouncer, to the tokens are still there:
-            tokens = list(
-                RemotePushDeviceToken.objects.filter(user_id=user.id, server=server),
-            )
+            tokens = list(RemotePushDeviceToken.objects.filter(user_id=user.id, server=server))
             self.assertEqual(len(tokens), 2)
 
         # Now we successfully remove them:
@@ -537,11 +533,7 @@ class AnalyticsBouncerTest(BouncerTestCase):
         send_analytics_to_remote_server()
         check_counts(12, 3, 2, 2)
 
-        (
-            realm_count_data,
-            installation_count_data,
-            realmauditlog_data,
-        ) = build_analytics_data(
+        (realm_count_data, installation_count_data, realmauditlog_data) = build_analytics_data(
             RealmCount.objects.all(),
             InstallationCount.objects.all(),
             RealmAuditLog.objects.all(),
@@ -653,9 +645,7 @@ class AnalyticsBouncerTest(BouncerTestCase):
             else:
                 # Test that we're respecting SYNCED_BILLING_EVENTS
                 self.assertIn(f'"event_type":{RealmAuditLog.USER_REACTIVATED}', str(args))
-                self.assertNotIn(
-                    f'"event_type":{RealmAuditLog.REALM_LOGO_CHANGED}', str(args),
-                )
+                self.assertNotIn(f'"event_type":{RealmAuditLog.REALM_LOGO_CHANGED}', str(args))
                 # Test that we're respecting REALMAUDITLOG_PUSHED_FIELDS
                 self.assertIn("backfilled", str(args))
                 self.assertNotIn("modified_user", str(args))
@@ -2006,9 +1996,7 @@ class GCMSendTest(PushNotificationTest):
         data = self.get_gcm_data()
         send_android_push_notification_to_user(self.user_profile, data, {})
         msg = (
-            "GCM: Got canonical ref %s "
-            "replacing %s but new ID not "
-            "registered! Updating."
+            "GCM: Got canonical ref %s " "replacing %s but new ID not " "registered! Updating."
         )
         mock_warning.assert_called_once_with(msg, t2, t1)
 
@@ -2044,9 +2032,7 @@ class GCMSendTest(PushNotificationTest):
         self.assertEqual(get_count("2222"), 1)
 
     @mock.patch("zerver.lib.push_notifications.logger.info")
-    def test_not_registered(
-        self, mock_info: mock.MagicMock, mock_gcm: mock.MagicMock,
-    ) -> None:
+    def test_not_registered(self, mock_info: mock.MagicMock, mock_gcm: mock.MagicMock) -> None:
         res = {}
         token = hex_to_b64("1111")
         res["errors"] = {"NotRegistered": [token]}

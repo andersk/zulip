@@ -19,10 +19,7 @@ class RealmFilterTest(ZulipTestCase):
 
     def test_create(self) -> None:
         self.login("iago")
-        data = {
-            "pattern": "",
-            "url_format_string": "https://realm.com/my_realm_filter/%(id)s",
-        }
+        data = {"pattern": "", "url_format_string": "https://realm.com/my_realm_filter/%(id)s"}
         result = self.client_post("/json/realm/filters", info=data)
         self.assert_json_error(result, "This field cannot be blank.")
 

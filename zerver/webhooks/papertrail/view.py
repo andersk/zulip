@@ -54,9 +54,7 @@ def api_papertrail_webhook(
         message.append(event_text)
 
         if i >= 3:
-            message.append(
-                "[See more]({})".format(payload["saved_search"]["html_search_url"]),
-            )
+            message.append("[See more]({})".format(payload["saved_search"]["html_search_url"]))
             break
 
     post = "\n".join(message)

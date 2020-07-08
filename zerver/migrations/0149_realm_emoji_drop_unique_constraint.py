@@ -20,9 +20,7 @@ class Uploader:
     def copy_files(self, src_path: str, dst_path: str) -> None:
         raise NotImplementedError()
 
-    def ensure_emoji_images(
-        self, realm_id: int, old_filename: str, new_filename: str,
-    ) -> None:
+    def ensure_emoji_images(self, realm_id: int, old_filename: str, new_filename: str) -> None:
         # Copy original image file.
         old_file_path = self.old_orig_image_path_template.format(
             realm_id=realm_id, emoji_file_name=old_filename,

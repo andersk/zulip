@@ -33,9 +33,7 @@ def api_gocd_webhook(
     elif result == "Failed":
         emoji = ":thumbs_down:"
 
-    build_details_file = os.path.join(
-        os.path.dirname(__file__), "fixtures/build_details.json",
-    )
+    build_details_file = os.path.join(os.path.dirname(__file__), "fixtures/build_details.json")
 
     with open(build_details_file) as f:
         contents = json.load(f)

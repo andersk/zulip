@@ -182,9 +182,7 @@ class ZulipTestCase(TestCase):
         )
 
     @instrument_url
-    def client_patch(
-        self, url: str, info: Dict[str, Any] = {}, **kwargs: Any
-    ) -> HttpResponse:
+    def client_patch(self, url: str, info: Dict[str, Any] = {}, **kwargs: Any) -> HttpResponse:
         """
         We need to urlencode, since Django's function won't do it for us.
         """
@@ -1023,9 +1021,7 @@ class WebhookTestCase(ZulipTestCase):
         super().setUp()
         self.url = self.build_webhook_url()
 
-    def api_stream_message(
-        self, user: UserProfile, *args: Any, **kwargs: Any
-    ) -> HttpResponse:
+    def api_stream_message(self, user: UserProfile, *args: Any, **kwargs: Any) -> HttpResponse:
         kwargs["HTTP_AUTHORIZATION"] = self.encode_user(user)
         return self.send_and_test_stream_message(*args, **kwargs)
 

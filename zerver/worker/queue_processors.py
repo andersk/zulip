@@ -347,10 +347,7 @@ class SignupWorker(QueueProcessingWorker):
             params["list_id"] = settings.ZULIP_FRIENDS_LIST_ID
             params["status"] = "subscribed"
             r = requests.post(
-                endpoint,
-                auth=("apikey", settings.MAILCHIMP_API_KEY),
-                json=params,
-                timeout=10,
+                endpoint, auth=("apikey", settings.MAILCHIMP_API_KEY), json=params, timeout=10,
             )
             if r.status_code == 400 and ujson.loads(r.text)["title"] == "Member Exists":
                 logging.warning(
@@ -610,9 +607,7 @@ class PushNotificationsWorker(QueueProcessingWorker):  # nocoverage
 class ErrorReporter(QueueProcessingWorker):
     def consume(self, event: Mapping[str, Any]) -> None:
         logging.info(
-            "Processing traceback with type %s for %s",
-            event["type"],
-            event.get("user_email"),
+            "Processing traceback with type %s for %s", event["type"], event.get("user_email"),
         )
         if settings.ERROR_REPORTING:
             do_report_error(event["report"]["host"], event["type"], event["report"])
@@ -693,9 +688,7 @@ class FetchLinksEmbedData(QueueProcessingWorker):
             rendered_content = render_incoming_message(
                 message, message.content, message_user_ids, realm,
             )
-            do_update_embedded_data(
-                message.sender, message, message.content, rendered_content,
-            )
+            do_update_embedded_data(message.sender, message, message.content, rendered_content)
 
 
 @assign_queue("outgoing_webhooks")
@@ -741,9 +734,7 @@ class EmbeddedBotWorker(QueueProcessingWorker):
                 if event["trigger"] == "mention":
                     message["content"] = extract_query_without_mention(
                         message=message,
-                        client=cast(
-                            ExternalBotHandler, self.get_bot_api_client(user_profile),
-                        ),
+                        client=cast(ExternalBotHandler, self.get_bot_api_client(user_profile)),
                     )
                     assert message["content"] is not None
                 bot_handler.handle_message(

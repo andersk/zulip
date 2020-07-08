@@ -180,9 +180,7 @@ class EditMessageSideEffectsTest(ZulipTestCase):
 
         self.assertEqual(len(queue_messages), 2)
 
-        self.assertEqual(
-            queue_messages[0]["queue_name"], "missedmessage_mobile_notifications",
-        )
+        self.assertEqual(queue_messages[0]["queue_name"], "missedmessage_mobile_notifications")
         mobile_event = queue_messages[0]["event"]
 
         self.assertEqual(mobile_event["user_profile_id"], cordelia.id)

@@ -193,10 +193,10 @@ def markdown_convert_wrapper(content: str) -> str:
 
 class MarkdownMiscTest(ZulipTestCase):
     def test_diffs_work_as_expected(self) -> None:
-        str1 = "<p>The quick brown fox jumps over the lazy dog.  Animal stories are fun, yeah</p>"
-        str2 = (
-            "<p>The fast fox jumps over the lazy dogs and cats.  Animal stories are fun</p>"
+        str1 = (
+            "<p>The quick brown fox jumps over the lazy dog.  Animal stories are fun, yeah</p>"
         )
+        str2 = "<p>The fast fox jumps over the lazy dogs and cats.  Animal stories are fun</p>"
         expected_diff = "\u001b[34m-\u001b[0m <p>The \u001b[33mquick brown\u001b[0m fox jumps over the lazy dog.  Animal stories are fun\u001b[31m, yeah\u001b[0m</p>\n\u001b[34m+\u001b[0m <p>The \u001b[33mfast\u001b[0m fox jumps over the lazy dog\u001b[32ms and cats\u001b[0m.  Animal stories are fun</p>\n"
         self.assertEqual(diff_strings(str1, str2), expected_diff)
 
@@ -726,9 +726,7 @@ class MarkdownTest(ZulipTestCase):
             "desc": "Shared with Dropbox",
             "title": "IMG_0923.JPG",
         }
-        with mock.patch(
-            "zerver.lib.markdown.fetch_open_graph_image", return_value=image_info,
-        ):
+        with mock.patch("zerver.lib.markdown.fetch_open_graph_image", return_value=image_info):
             converted = markdown_convert_wrapper(msg)
 
         self.assertEqual(
@@ -742,9 +740,7 @@ class MarkdownTest(ZulipTestCase):
             "desc": "Shared with Dropbox",
             "title": "Saves",
         }
-        with mock.patch(
-            "zerver.lib.markdown.fetch_open_graph_image", return_value=image_info,
-        ):
+        with mock.patch("zerver.lib.markdown.fetch_open_graph_image", return_value=image_info):
             converted = markdown_convert_wrapper(msg)
 
         self.assertEqual(
@@ -760,9 +756,7 @@ class MarkdownTest(ZulipTestCase):
             "desc": "Shared with Dropbox",
             "title": "1 photo",
         }
-        with mock.patch(
-            "zerver.lib.markdown.fetch_open_graph_image", return_value=image_info,
-        ):
+        with mock.patch("zerver.lib.markdown.fetch_open_graph_image", return_value=image_info):
             converted = markdown_convert_wrapper(msg)
 
         self.assertEqual(
@@ -772,7 +766,9 @@ class MarkdownTest(ZulipTestCase):
 
     def test_inline_dropbox_negative(self) -> None:
         # Make sure we're not overzealous in our conversion:
-        msg = "Look at the new dropbox logo: https://www.dropbox.com/static/images/home_logo.png"
+        msg = (
+            "Look at the new dropbox logo: https://www.dropbox.com/static/images/home_logo.png"
+        )
         with mock.patch("zerver.lib.markdown.fetch_open_graph_image", return_value=None):
             converted = markdown_convert_wrapper(msg)
 
@@ -895,8 +891,7 @@ class MarkdownTest(ZulipTestCase):
         msg = "http://www.twitter.com/wdaher/status/3"
         converted = markdown_convert_wrapper(msg)
         self.assertEqual(
-            converted,
-            "<p>{}</p>".format(make_link("http://www.twitter.com/wdaher/status/3")),
+            converted, "<p>{}</p>".format(make_link("http://www.twitter.com/wdaher/status/3")),
         )
 
         # id too long
@@ -1052,8 +1047,7 @@ class MarkdownTest(ZulipTestCase):
             "<p>{}</p>\n{}".format(
                 make_link("http://twitter.com/wdaher/status/287977969287315460"),
                 make_inline_twitter_preview(
-                    "http://twitter.com/wdaher/status/287977969287315460",
-                    emoji_in_tweet_html,
+                    "http://twitter.com/wdaher/status/287977969287315460", emoji_in_tweet_html,
                 ),
             ),
         )
@@ -1274,11 +1268,7 @@ class MarkdownTest(ZulipTestCase):
         self.assertEqual(len(zulip_filters), 1)
         self.assertEqual(
             zulip_filters[0],
-            (
-                "#(?P<id>[0-9]{2,8})",
-                "https://trac.example.com/ticket/%(id)s",
-                realm_filter.id,
-            ),
+            ("#(?P<id>[0-9]{2,8})", "https://trac.example.com/ticket/%(id)s", realm_filter.id),
         )
 
     def test_flush_realm_filter(self) -> None:
@@ -1833,7 +1823,9 @@ class MarkdownTest(ZulipTestCase):
         cordelia = self.example_user("cordelia")
         msg = Message(sender=sender_user_profile, sending_client=get_client("test"))
 
-        content = f"@**Mark Twin|{twin1.id}**, @**Mark Twin|{twin2.id}** and @**Cordelia Lear**, hi."
+        content = (
+            f"@**Mark Twin|{twin1.id}**, @**Mark Twin|{twin2.id}** and @**Cordelia Lear**, hi."
+        )
 
         self.assertEqual(
             render_markdown(msg, content),

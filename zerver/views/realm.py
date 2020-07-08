@@ -68,9 +68,7 @@ def update_realm(
     ),
     allow_edit_history: Optional[bool] = REQ(validator=check_bool, default=None),
     default_language: Optional[str] = REQ(validator=check_string, default=None),
-    waiting_period_threshold: Optional[int] = REQ(
-        converter=to_non_negative_int, default=None,
-    ),
+    waiting_period_threshold: Optional[int] = REQ(converter=to_non_negative_int, default=None),
     authentication_methods: Optional[Dict[str, Any]] = REQ(
         validator=check_dict([]), default=None,
     ),
@@ -113,10 +111,7 @@ def update_realm(
 
     # Additional validation/error checking beyond types go here, so
     # the entire request can succeed or fail atomically.
-    if (
-        default_language is not None
-        and default_language not in get_available_language_codes()
-    ):
+    if default_language is not None and default_language not in get_available_language_codes():
         raise JsonableError(_("Invalid language '{}'").format(default_language))
     if description is not None and len(description) > 1000:
         return json_error(_("Organization description is too long."))

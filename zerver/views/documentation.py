@@ -121,9 +121,7 @@ class MarkdownDirectoryView(ApiURLView):
             self.request.placeholder_open_graph_description = (
                 f"REPLACMENT_OPEN_GRAPH_DESCRIPTION_{int(2**24 * random.random())}"
             )
-            context[
-                "OPEN_GRAPH_DESCRIPTION"
-            ] = self.request.placeholder_open_graph_description
+            context["OPEN_GRAPH_DESCRIPTION"] = self.request.placeholder_open_graph_description
 
         context["sidebar_index"] = sidebar_index
         context["sidebar_class"] = sidebar_class
@@ -157,9 +155,7 @@ def add_integrations_context(context: Dict[str, Any]) -> None:
     context["integrations_count_display"] = integrations_count_display
 
 
-def add_integrations_open_graph_context(
-    context: Dict[str, Any], request: HttpRequest,
-) -> None:
+def add_integrations_open_graph_context(context: Dict[str, Any], request: HttpRequest) -> None:
     path_name = request.path.rstrip("/").split("/")[-1]
     description = (
         "Zulip comes with over a hundred native integrations out of the box, "

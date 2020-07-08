@@ -147,9 +147,7 @@ def get_create_branch_event_message(
 
 
 def get_remove_branch_event_message(user_name: str, branch_name: str) -> str:
-    return REMOVE_BRANCH_MESSAGE_TEMPLATE.format(
-        user_name=user_name, branch_name=branch_name,
-    )
+    return REMOVE_BRANCH_MESSAGE_TEMPLATE.format(user_name=user_name, branch_name=branch_name)
 
 
 def get_pull_request_event_message(
@@ -282,9 +280,7 @@ def get_commits_comment_action_message(
     return content
 
 
-def get_commits_content(
-    commits_data: List[Dict[str, Any]], is_truncated: bool = False,
-) -> str:
+def get_commits_content(commits_data: List[Dict[str, Any]], is_truncated: bool = False) -> str:
     commits_content = ""
     for commit in commits_data[:COMMITS_LIMIT]:
         commits_content += COMMIT_ROW_TEMPLATE.format(
@@ -298,9 +294,9 @@ def get_commits_content(
             commits_number=len(commits_data) - COMMITS_LIMIT,
         )
     elif is_truncated:
-        commits_content += COMMITS_MORE_THAN_LIMIT_TEMPLATE.format(
-            commits_number="",
-        ).replace("  ", " ")
+        commits_content += COMMITS_MORE_THAN_LIMIT_TEMPLATE.format(commits_number="").replace(
+            "  ", " ",
+        )
     return commits_content.rstrip()
 
 

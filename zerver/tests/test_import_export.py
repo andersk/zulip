@@ -778,9 +778,7 @@ class ImportExportTest(ZulipTestCase):
         self.send_stream_message(self.example_user("iago"), "Verona", user_mention_message)
 
         stream_mention_message = "Subscribe to #**Denmark**"
-        self.send_stream_message(
-            self.example_user("hamlet"), "Verona", stream_mention_message,
-        )
+        self.send_stream_message(self.example_user("hamlet"), "Verona", stream_mention_message)
 
         user_group_mention_message = "Hello @*hamletcharacters*"
         self.send_stream_message(

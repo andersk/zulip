@@ -17,9 +17,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
 
     def test_story_delete(self) -> None:
         expected_message = "The story **New random story** was deleted."
-        self.send_and_test_stream_message(
-            "story_delete", "New random story", expected_message,
-        )
+        self.send_and_test_stream_message("story_delete", "New random story", expected_message)
 
     def test_epic_story_create(self) -> None:
         expected_message = "New story [An epic story!](https://app.clubhouse.io/zulip/story/23) was created and added to the epic **New Cool Epic!**."

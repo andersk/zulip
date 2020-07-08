@@ -27,9 +27,7 @@ class MissedMessageNotificationsTest(ZulipTestCase):
     def check_will_notify(self, *args: Any, **kwargs: Any) -> Tuple[str, str]:
         email_notice = None
         mobile_notice = None
-        with mock.patch(
-            "zerver.tornado.event_queue.queue_json_publish",
-        ) as mock_queue_publish:
+        with mock.patch("zerver.tornado.event_queue.queue_json_publish") as mock_queue_publish:
             notified = maybe_enqueue_notifications(*args, **kwargs)
             for entry in mock_queue_publish.call_args_list:
                 args = entry[0]
@@ -645,9 +643,7 @@ class MissedMessageNotificationsTest(ZulipTestCase):
         sub.save()
 
         # Test the hook with a stream message with stream_push_notify
-        change_subscription_properties(
-            user_profile, stream, sub, {"push_notifications": True},
-        )
+        change_subscription_properties(user_profile, stream, sub, {"push_notifications": True})
         client_descriptor = allocate_event_queue()
         self.assertTrue(client_descriptor.event_queue.empty())
         msg_id = self.send_stream_message(

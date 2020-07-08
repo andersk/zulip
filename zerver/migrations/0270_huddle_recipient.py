@@ -14,9 +14,7 @@ class Migration(migrations.Migration):
             model_name="huddle",
             name="recipient",
             field=models.ForeignKey(
-                null=True,
-                on_delete=django.db.models.deletion.SET_NULL,
-                to="zerver.Recipient",
+                null=True, on_delete=django.db.models.deletion.SET_NULL, to="zerver.Recipient",
             ),
         ),
     ]

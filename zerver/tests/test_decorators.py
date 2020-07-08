@@ -228,8 +228,7 @@ class DecoratorTestCase(ZulipTestCase):
     def test_REQ_str_validator(self) -> None:
         @has_request_variables
         def get_middle_characters(
-            request: HttpRequest,
-            value: str = REQ(str_validator=check_string_fixed_length(5)),
+            request: HttpRequest, value: str = REQ(str_validator=check_string_fixed_length(5)),
         ) -> str:
             return value[1:-1]
 
@@ -774,15 +773,11 @@ class ValidatorTestCase(ZulipTestCase):
             check_string_fixed_length(5)("x", x)
 
         x = "helloz"
-        with self.assertRaisesRegex(
-            ValidationError, r"x has incorrect length 6; should be 5",
-        ):
+        with self.assertRaisesRegex(ValidationError, r"x has incorrect length 6; should be 5"):
             check_string_fixed_length(5)("x", x)
 
         x = "hi"
-        with self.assertRaisesRegex(
-            ValidationError, r"x has incorrect length 2; should be 5",
-        ):
+        with self.assertRaisesRegex(ValidationError, r"x has incorrect length 2; should be 5"):
             check_string_fixed_length(5)("x", x)
 
     def test_check_capped_string(self) -> None:
@@ -794,9 +789,7 @@ class ValidatorTestCase(ZulipTestCase):
             check_capped_string(5)("x", x)
 
         x = "helloz"
-        with self.assertRaisesRegex(
-            ValidationError, r"x is too long \(limit: 5 characters\)",
-        ):
+        with self.assertRaisesRegex(ValidationError, r"x is too long \(limit: 5 characters\)"):
             check_capped_string(5)("x", x)
 
         x = "hi"

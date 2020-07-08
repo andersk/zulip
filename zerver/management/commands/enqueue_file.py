@@ -31,10 +31,7 @@ You can use "-" to represent stdin.
             help="name of worker queue to enqueue to",
         )
         parser.add_argument(
-            "file_name",
-            metavar="<file>",
-            type=str,
-            help="name of file containing JSON lines",
+            "file_name", metavar="<file>", type=str, help="name of file containing JSON lines",
         )
 
     def handle(self, *args: Any, **options: str) -> None:

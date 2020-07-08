@@ -521,9 +521,7 @@ class GetUnreadMsgsTest(ZulipTestCase):
         subscription.is_muted = True
         subscription.save()
 
-    def mute_topic(
-        self, user_profile: UserProfile, stream_name: str, topic_name: str,
-    ) -> None:
+    def mute_topic(self, user_profile: UserProfile, stream_name: str, topic_name: str) -> None:
         realm = user_profile.realm
         stream = get_stream(stream_name, realm)
         recipient = stream.recipient
@@ -589,9 +587,7 @@ class GetUnreadMsgsTest(ZulipTestCase):
         self.assertEqual(
             stream_dict[message_ids["lunch"][0]],
             dict(
-                sender_id=cordelia.id,
-                stream_id=get_stream("social", realm).id,
-                topic="lunch",
+                sender_id=cordelia.id, stream_id=get_stream("social", realm).id, topic="lunch",
             ),
         )
 

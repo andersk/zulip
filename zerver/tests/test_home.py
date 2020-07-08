@@ -649,9 +649,7 @@ class HomeTest(ZulipTestCase):
         result = self._get_home_page(stream=stream_name)
         page_params = self._get_page_params(result)
         self.assertEqual(page_params["narrow_stream"], stream_name)
-        self.assertEqual(
-            page_params["narrow"], [dict(operator="stream", operand=stream_name)],
-        )
+        self.assertEqual(page_params["narrow"], [dict(operator="stream", operand=stream_name)])
         self.assertEqual(page_params["max_message_id"], -1)
 
     def test_invites_by_admins_only(self) -> None:

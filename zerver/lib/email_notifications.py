@@ -98,9 +98,7 @@ def fix_emojis(content: str, base_url: str, emojiset: str) -> str:
         emoji_code = match.group("emoji_code")
         emoji_name = emoji_span_elem.get("title")
         alt_code = emoji_span_elem.text
-        image_url = (
-            base_url + f"/static/generated/emoji/images-{emojiset}-64/{emoji_code}.png"
-        )
+        image_url = base_url + f"/static/generated/emoji/images-{emojiset}-64/{emoji_code}.png"
         img_elem = lxml.html.fromstring(
             f'<img alt="{alt_code}" src="{image_url}" title="{emoji_name}">',
         )
@@ -463,9 +461,7 @@ def do_send_missedmessage_events_reply_in_zulip(
         "to_user_ids": [user_profile.id],
         "from_name": from_name,
         "from_address": from_address,
-        "reply_to_email": str(
-            Address(display_name=reply_to_name, addr_spec=reply_to_address),
-        ),
+        "reply_to_email": str(Address(display_name=reply_to_name, addr_spec=reply_to_address)),
         "context": context,
     }
     queue_json_publish("email_senders", email_dict)
@@ -614,9 +610,7 @@ def enqueue_welcome_emails(user: UserProfile, realm_creation: bool = False) -> N
             # we exclude ZulipLDAPUserPopulator here, since that
             # isn't used for authentication.
             if isinstance(backend, ZulipLDAPAuthBackend):
-                context["ldap_username"] = backend.django_to_ldap_username(
-                    user.delivery_email,
-                )
+                context["ldap_username"] = backend.django_to_ldap_username(user.delivery_email)
                 break
 
     send_future_email(

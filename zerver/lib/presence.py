@@ -85,9 +85,7 @@ def get_legacy_user_info(
         has_push_devices = row["user_profile__id"] in mobile_user_ids
         pushable = push_enabled and has_push_devices
 
-        info = dict(
-            client=client_name, status=status, timestamp=timestamp, pushable=pushable,
-        )
+        info = dict(client=client_name, status=status, timestamp=timestamp, pushable=pushable)
 
         info_rows.append(info)
 

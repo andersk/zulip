@@ -91,9 +91,7 @@ class TestIntegrationsDevPanel(ZulipTestCase):
         bot = get_user("webhook-bot@zulip.com", self.zulip_realm)
         url = f"/api/v1/external/wordpress?api_key={bot.api_key}&stream=Denmark&topic=Wordpress Notifications"
         target_url = "/devtools/integrations/check_send_webhook_fixture_message"
-        with open(
-            "zerver/webhooks/wordpress/fixtures/publish_post_no_data_provided.txt",
-        ) as f:
+        with open("zerver/webhooks/wordpress/fixtures/publish_post_no_data_provided.txt") as f:
             body = f.read()
 
         data = {

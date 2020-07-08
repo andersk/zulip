@@ -240,9 +240,7 @@ def run(args: Sequence[str], **kwargs: Any) -> None:
             )
             + ENDC,
         )
-        print(
-            WHITEONRED + "Actual error output for the subcommand is just above this." + ENDC,
-        )
+        print(WHITEONRED + "Actual error output for the subcommand is just above this." + ENDC)
         print()
         raise
 
@@ -529,9 +527,7 @@ def assert_not_running_as_root() -> None:
             "{shortname} should not be run as root. Use `su {user}` to switch to the 'zulip'\n"
             "user before rerunning this, or use \n  su {user} -c '{name} ...'\n"
             "to switch users and run this as a single command."
-        ).format(
-            name=script_name, shortname=os.path.basename(script_name), user=pwent.pw_name,
-        )
+        ).format(name=script_name, shortname=os.path.basename(script_name), user=pwent.pw_name)
         print(msg)
         sys.exit(1)
 
@@ -549,10 +545,7 @@ def assert_running_as_root(strip_lib_from_paths: bool = False) -> None:
 
 
 def get_config(
-    config_file: configparser.RawConfigParser,
-    section: str,
-    key: str,
-    default_value: str = "",
+    config_file: configparser.RawConfigParser, section: str, key: str, default_value: str = "",
 ) -> str:
     if config_file.has_option(section, key):
         return config_file.get(section, key)

@@ -249,9 +249,7 @@ def gcm_enabled() -> bool:  # nocoverage
 def send_android_push_notification_to_user(
     user_profile: UserProfile, data: Dict[str, Any], options: Dict[str, Any],
 ) -> None:
-    devices = list(
-        PushDeviceToken.objects.filter(user=user_profile, kind=PushDeviceToken.GCM),
-    )
+    devices = list(PushDeviceToken.objects.filter(user=user_profile, kind=PushDeviceToken.GCM))
     send_android_push_notification(devices, data, options)
 
 
@@ -564,9 +562,7 @@ def get_gcm_alert(message: Message) -> str:
     sender_str = message.sender.full_name
     if message.recipient.type == Recipient.HUDDLE and message.trigger == "private_message":
         return f"New private group message from {sender_str}"
-    elif (
-        message.recipient.type == Recipient.PERSONAL and message.trigger == "private_message"
-    ):
+    elif message.recipient.type == Recipient.PERSONAL and message.trigger == "private_message":
         return f"New private message from {sender_str}"
     elif message.is_stream_message() and (
         message.trigger == "mentioned" or message.trigger == "wildcard_mentioned"

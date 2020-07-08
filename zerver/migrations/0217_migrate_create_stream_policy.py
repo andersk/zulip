@@ -5,9 +5,7 @@ from django.db.backends.postgresql.schema import DatabaseSchemaEditor
 from django.db.migrations.state import StateApps
 
 
-def upgrade_create_stream_policy(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def upgrade_create_stream_policy(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     Realm = apps.get_model("zerver", "Realm")
     Realm.CREATE_STREAM_POLICY_MEMBERS = 1
     Realm.CREATE_STREAM_POLICY_ADMINS = 2

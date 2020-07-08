@@ -163,9 +163,7 @@ def topic_and_body(payload: Dict[str, Any]) -> Tuple[str, str]:
                 if object_["quantity"]:
                     body += "\nQuantity: {}".format(object_["quantity"])
                 if "billing" in object_:  # nocoverage
-                    body += "\nBilling method: {}".format(
-                        object_["billing"].replace("_", " "),
-                    )
+                    body += "\nBilling method: {}".format(object_["billing"].replace("_", " "))
     if category == "file":  # nocoverage
         topic = "files"
         body = default_body() + " ({purpose}). \nTitle: {title}".format(

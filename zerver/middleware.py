@@ -170,17 +170,14 @@ def write_log_line(
         optional_orig_delta = f" (lp: {format_timedelta(orig_time_delta)})"
     remote_cache_output = ""
     if "remote_cache_time_start" in log_data:
-        remote_cache_time_delta = (
-            get_remote_cache_time() - log_data["remote_cache_time_start"]
-        )
+        remote_cache_time_delta = get_remote_cache_time() - log_data["remote_cache_time_start"]
         remote_cache_count_delta = (
             get_remote_cache_requests() - log_data["remote_cache_requests_start"]
         )
         if "remote_cache_requests_stopped" in log_data:
             # (now - restarted) + (stopped - start) = (now - start) + (stopped - restarted)
             remote_cache_time_delta += (
-                log_data["remote_cache_time_stopped"]
-                - log_data["remote_cache_time_restarted"]
+                log_data["remote_cache_time_stopped"] - log_data["remote_cache_time_restarted"]
             )
             remote_cache_count_delta += (
                 log_data["remote_cache_requests_stopped"]
@@ -212,8 +209,7 @@ def write_log_line(
                 log_data["markdown_time_stopped"] - log_data["markdown_time_restarted"]
             )
             markdown_count_delta += (
-                log_data["markdown_requests_stopped"]
-                - log_data["markdown_requests_restarted"]
+                log_data["markdown_requests_stopped"] - log_data["markdown_requests_restarted"]
             )
 
         if markdown_time_delta > 0.005:
@@ -274,9 +270,7 @@ def write_log_line(
             error_data = repr(b"".join(error_content_list))
         if len(error_data) > 200:
             error_data = "[content more than 200 characters]"
-        logger.info(
-            "status=%3d, data=%s, uid=%s", status_code, error_data, requestor_for_logs,
-        )
+        logger.info("status=%3d, data=%s, uid=%s", status_code, error_data, requestor_for_logs)
 
 
 class LogRequests(MiddlewareMixin):
@@ -337,9 +331,7 @@ class LogRequests(MiddlewareMixin):
         try:
             requestor_for_logs = request._requestor_for_logs
         except Exception:
-            if hasattr(request, "user") and hasattr(
-                request.user, "format_requestor_for_logs",
-            ):
+            if hasattr(request, "user") and hasattr(request.user, "format_requestor_for_logs"):
                 requestor_for_logs = request.user.format_requestor_for_logs()
             else:
                 requestor_for_logs = "unauth@{}".format(get_subdomain(request) or "root")

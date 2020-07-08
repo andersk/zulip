@@ -130,9 +130,7 @@ class DocPageTest(ZulipTestCase):
         self._test("/api/render-message", "**foo**")
         self._test("/api/get-streams", "include_public")
         self._test("/api/get-stream-id", "The name of the stream to access.")
-        self._test(
-            "/api/get-subscriptions", "Get all streams that the user is subscribed to.",
-        )
+        self._test("/api/get-subscriptions", "Get all streams that the user is subscribed to.")
         self._test("/api/get-users", "client_gravatar")
         self._test("/api/register-queue", "apply_markdown")
         self._test("/api/get-events", "dont_block")
@@ -240,9 +238,7 @@ class DocPageTest(ZulipTestCase):
             result = self.client_get(url, subdomain="zephyr", follow=True)
             self.assertEqual(result.status_code, 404)
 
-        result = self.client_get(
-            "/integrations/doc-html/nonexistent_integration", follow=True,
-        )
+        result = self.client_get("/integrations/doc-html/nonexistent_integration", follow=True)
         self.assertEqual(result.status_code, 404)
 
     def test_electron_detection(self) -> None:

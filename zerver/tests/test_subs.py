@@ -152,9 +152,7 @@ class TestCreateStreams(ZulipTestCase):
                     "stream_post_policy": Stream.STREAM_POST_POLICY_ADMINS,
                     "message_retention_days": -1,
                 }
-                for (stream_name, stream_description) in zip(
-                    stream_names, stream_descriptions,
-                )
+                for (stream_name, stream_description) in zip(stream_names, stream_descriptions)
             ],
         )
 
@@ -174,9 +172,7 @@ class TestCreateStreams(ZulipTestCase):
             realm,
             [
                 {"name": stream_name, "description": stream_description, "invite_only": True}
-                for (stream_name, stream_description) in zip(
-                    stream_names, stream_descriptions,
-                )
+                for (stream_name, stream_description) in zip(stream_names, stream_descriptions)
             ],
         )
 
@@ -314,9 +310,7 @@ class TestCreateStreams(ZulipTestCase):
         self.assertEqual(final_message_count - initial_message_count, 2)
         # 4 UserMessages per subscriber: One for each of the subscribers, plus 1 for
         # each user in the notifications stream.
-        announce_stream_subs = Subscription.objects.filter(
-            recipient=announce_stream.recipient,
-        )
+        announce_stream_subs = Subscription.objects.filter(recipient=announce_stream.recipient)
         self.assertEqual(
             final_usermessage_count - initial_usermessage_count,
             4 + announce_stream_subs.count(),
@@ -550,8 +544,7 @@ class StreamAdminTest(ZulipTestCase):
         with tornado_redirected_to_list(events):
             stream_id = get_stream("private_stream", user_profile.realm).id
             result = self.client_patch(
-                f"/json/streams/{stream_id}",
-                {"description": ujson.dumps("Test description")},
+                f"/json/streams/{stream_id}", {"description": ujson.dumps("Test description")},
             )
         self.assert_json_success(result)
         # Should be just a description change event
@@ -791,8 +784,7 @@ class StreamAdminTest(ZulipTestCase):
         with tornado_redirected_to_list(events):
             stream_id = get_stream("stream_name1", realm).id
             result = self.client_patch(
-                f"/json/streams/{stream_id}",
-                {"description": ujson.dumps("Test description")},
+                f"/json/streams/{stream_id}", {"description": ujson.dumps("Test description")},
             )
         self.assert_json_success(result)
 
@@ -1155,9 +1147,7 @@ class StreamAdminTest(ZulipTestCase):
             "/json/users/me/subscriptions",
             {"subscriptions": ujson.dumps([{"name": deactivated_stream_name}])},
         )
-        self.assert_json_error(
-            result, f"Unable to access stream ({deactivated_stream_name}).",
-        )
+        self.assert_json_error(result, f"Unable to access stream ({deactivated_stream_name}).")
 
     def test_you_must_be_realm_admin(self) -> None:
         """
@@ -1703,8 +1693,7 @@ class DefaultStreamGroupTest(ZulipTestCase):
         # Test creating a default stream group which contains a default stream
         do_add_default_stream(remaining_streams[0])
         with self.assertRaisesRegex(
-            JsonableError,
-            "'stream1' is a default stream and cannot be added to 'new group1'",
+            JsonableError, "'stream1' is a default stream and cannot be added to 'new group1'",
         ):
             do_create_default_stream_group(
                 realm, new_group_name, "This is group1", remaining_streams,
@@ -2725,9 +2714,7 @@ class SubscriptionAPITest(ZulipTestCase):
         )
         json = result.json()
         self.assertEqual(sorted(subscribed), sorted(json["subscribed"][email]))
-        self.assertEqual(
-            sorted(already_subscribed), sorted(json["already_subscribed"][email]),
-        )
+        self.assertEqual(sorted(already_subscribed), sorted(json["already_subscribed"][email]))
         user = get_user(email, realm)
         new_streams = self.get_streams(user)
         self.assertEqual(sorted(new_streams), sorted(new_subs))
@@ -2861,10 +2848,7 @@ class SubscriptionAPITest(ZulipTestCase):
         cache.cache_delete(cache.user_profile_by_email_cache_key(user.email))
 
         self.common_subscribe_to_streams(
-            user,
-            invite_streams,
-            extra_post_data=dict(announce="true"),
-            subdomain="testrealm",
+            user, invite_streams, extra_post_data=dict(announce="true"), subdomain="testrealm",
         )
 
         msg = self.get_second_to_last_message()
@@ -3009,9 +2993,7 @@ class SubscriptionAPITest(ZulipTestCase):
         )
         self.unsubscribe(user_profile, "stream2")
 
-        do_set_realm_property(
-            realm, "invite_to_stream_policy", Realm.POLICY_FULL_MEMBERS_ONLY,
-        )
+        do_set_realm_property(realm, "invite_to_stream_policy", Realm.POLICY_FULL_MEMBERS_ONLY)
         do_set_realm_property(realm, "waiting_period_threshold", 100000)
         result = self.common_subscribe_to_streams(
             self.test_user,
@@ -3542,9 +3524,7 @@ class SubscriptionAPITest(ZulipTestCase):
         non-ASCII characters.
         """
         iago = self.example_user("iago")
-        self.assert_adding_subscriptions_for_principal(
-            iago.id, get_realm("zulip"), ["hümbüǵ"],
-        )
+        self.assert_adding_subscriptions_for_principal(iago.id, get_realm("zulip"), ["hümbüǵ"])
 
     def test_subscription_add_invalid_principal_legacy_emails(self) -> None:
         """
@@ -4681,9 +4661,7 @@ class AccessStreamTest(ZulipTestCase):
         # Othello cannot access the private stream
         with self.assertRaisesRegex(JsonableError, "Invalid stream id"):
             access_stream_by_id(othello, stream.id)
-        with self.assertRaisesRegex(
-            JsonableError, "Invalid stream name 'new_private_stream'",
-        ):
+        with self.assertRaisesRegex(JsonableError, "Invalid stream name 'new_private_stream'"):
             access_stream_by_name(othello, stream.name)
 
         # Both Othello and Hamlet can access a public stream that only
@@ -4706,9 +4684,7 @@ class AccessStreamTest(ZulipTestCase):
             access_stream_by_name(hamlet, mit_stream.name)
         with self.assertRaisesRegex(JsonableError, "Invalid stream id"):
             access_stream_by_id(sipbtest, stream.id)
-        with self.assertRaisesRegex(
-            JsonableError, "Invalid stream name 'new_private_stream'",
-        ):
+        with self.assertRaisesRegex(JsonableError, "Invalid stream name 'new_private_stream'"):
             access_stream_by_name(sipbtest, stream.name)
 
         # MIT realm users cannot access even public streams in their realm

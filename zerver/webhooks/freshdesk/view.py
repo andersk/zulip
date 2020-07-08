@@ -111,9 +111,7 @@ def format_freshdesk_note_message(ticket: TicketDict, event_info: List[str]) -> 
     return content
 
 
-def format_freshdesk_property_change_message(
-    ticket: TicketDict, event_info: List[str],
-) -> str:
+def format_freshdesk_property_change_message(ticket: TicketDict, event_info: List[str]) -> str:
     """Freshdesk will only tell us the first event to match our webhook
     configuration, so if we change multiple properties, we only get the before
     and after data for the first one.

@@ -426,9 +426,7 @@ def api_key_only_webhook_view(
 
 # From Django 1.8, modified to leave off ?next=/
 def redirect_to_login(
-    next: str,
-    login_url: Optional[str] = None,
-    redirect_field_name: str = REDIRECT_FIELD_NAME,
+    next: str, login_url: Optional[str] = None, redirect_field_name: str = REDIRECT_FIELD_NAME,
 ) -> HttpResponseRedirect:
     """
     Redirects the user to the login page, passing the given 'next' page

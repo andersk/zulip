@@ -70,9 +70,7 @@ def transfer_message_files_to_s3(processes: int) -> None:
     else:  # nocoverage
         output = []
         connection.close()
-        for status, job in run_parallel(
-            _transfer_message_files_to_s3, attachments, processes,
-        ):
+        for status, job in run_parallel(_transfer_message_files_to_s3, attachments, processes):
             output.append(job)
 
 

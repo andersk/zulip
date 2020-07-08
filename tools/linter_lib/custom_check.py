@@ -617,10 +617,7 @@ prose_style_rules: List["Rule"] = [
         "pattern": "!!! warning",
         "description": "!!! warning is invalid; it's spelled '!!! warn'",
     },
-    {
-        "pattern": "Terms of service",
-        "description": "The S in Terms of Service is capitalized",
-    },
+    {"pattern": "Terms of service", "description": "The S in Terms of Service is capitalized"},
     {
         "pattern": "[^-_p]botserver(?!rc)|bot server",
         "description": "Use Botserver instead of botserver or bot server.",

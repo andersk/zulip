@@ -50,8 +50,7 @@ def parse_args() -> argparse.Namespace:
 
 def get_deployments_to_be_purged(recent_deployments: Set[str]) -> Set[str]:
     all_deployments = {
-        os.path.join(DEPLOYMENTS_DIR, deployment)
-        for deployment in os.listdir(DEPLOYMENTS_DIR)
+        os.path.join(DEPLOYMENTS_DIR, deployment) for deployment in os.listdir(DEPLOYMENTS_DIR)
     }
     deployments_to_purge = set()
     for deployment in all_deployments:

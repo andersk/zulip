@@ -119,9 +119,7 @@ def build_email(
             emails_dir = os.path.dirname(template_prefix)
             template = os.path.basename(template_prefix)
             compiled_template_prefix = os.path.join(emails_dir, "compiled", template)
-            html_message = loader.render_to_string(
-                compiled_template_prefix + ".html", context,
-            )
+            html_message = loader.render_to_string(compiled_template_prefix + ".html", context)
         return (html_message, message, email_subject)
 
     if not language and to_user_ids is not None:

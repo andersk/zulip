@@ -684,9 +684,7 @@ i18n_urls = [
     # to not log in in the future. We don't want to require a new
     # desktop app build for everyone in that case
     path(
-        "desktop_home/",
-        zerver.views.home.desktop_home,
-        name="zerver.views.home.desktop_home",
+        "desktop_home/", zerver.views.home.desktop_home, name="zerver.views.home.desktop_home",
     ),
     # Backwards-compatibility (legacy) Google auth URL for the mobile
     # apps; see https://github.com/zulip/zulip/issues/13081 for
@@ -904,9 +902,7 @@ i18n_urls = [
         {"template_name": "zerver/features.html"},
     ),
     path("plans/", zerver.views.portico.plans_view, name="plans"),
-    re_path(
-        r"apps/(.*)$", zerver.views.portico.apps_view, name="zerver.views.home.apps_view",
-    ),
+    re_path(r"apps/(.*)$", zerver.views.portico.apps_view, name="zerver.views.home.apps_view"),
     path("team/", zerver.views.portico.team_view),
     path(
         "history/",
@@ -1133,8 +1129,7 @@ urls += [
     re_path(
         r"^help/(?P<article>.*)$",
         MarkdownDirectoryView.as_view(
-            template_name="zerver/documentation_main.html",
-            path_template="/zerver/help/%s.md",
+            template_name="zerver/documentation_main.html", path_template="/zerver/help/%s.md",
         ),
     ),
 ]

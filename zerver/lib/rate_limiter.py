@@ -315,9 +315,7 @@ class TornadoInMemoryRateLimiterBackend(RateLimiterBackend):
 
         assert rules
         for time_window, max_count in rules:
-            ratelimited, time_till_free = cls.need_to_limit(
-                entity_key, time_window, max_count,
-            )
+            ratelimited, time_till_free = cls.need_to_limit(entity_key, time_window, max_count)
 
             if ratelimited:
                 statsd.incr(f"ratelimiter.limited.{entity_key}")
@@ -410,9 +408,7 @@ class RedisRateLimiterBackend(RateLimiterBackend):
 
         if key_blocked is not None:
             # We are manually blocked. Report for how much longer we will be
-            if (
-                blocking_ttl_b is None
-            ):  # nocoverage # defensive code, this should never happen
+            if blocking_ttl_b is None:  # nocoverage # defensive code, this should never happen
                 blocking_ttl = 0.5
             else:
                 blocking_ttl = int(blocking_ttl_b)

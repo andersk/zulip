@@ -36,9 +36,7 @@ def get_presence_backend(
     # For initial version, we just include the status and timestamp keys
     result = dict(presence=presence_dict[target.email])
     aggregated_info = result["presence"]["aggregated"]
-    aggr_status_duration = (
-        datetime_to_timestamp(timezone_now()) - aggregated_info["timestamp"]
-    )
+    aggr_status_duration = datetime_to_timestamp(timezone_now()) - aggregated_info["timestamp"]
     if aggr_status_duration > settings.OFFLINE_THRESHOLD_SECS:
         aggregated_info["status"] = "offline"
     for val in result["presence"].values():

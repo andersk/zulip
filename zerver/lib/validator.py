@@ -312,9 +312,7 @@ def check_union(allowed_type_funcs: Iterable[Validator[ResultT]]) -> Validator[R
                 return func(var_name, val)
             except ValidationError:
                 pass
-        raise ValidationError(
-            _("{var_name} is not an allowed_type").format(var_name=var_name),
-        )
+        raise ValidationError(_("{var_name} is not an allowed_type").format(var_name=var_name))
 
     return enumerated_type_check
 
@@ -483,6 +481,4 @@ def check_string_or_int(var_name: str, val: object) -> Union[str, int]:
     if isinstance(val, (str, int)):
         return val
 
-    raise ValidationError(
-        _("{var_name} is not a string or integer").format(var_name=var_name),
-    )
+    raise ValidationError(_("{var_name} is not a string or integer").format(var_name=var_name))

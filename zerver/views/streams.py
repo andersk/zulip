@@ -148,9 +148,7 @@ def deactivate_stream_backend(
 @require_realm_admin
 @has_request_variables
 def add_default_stream(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    stream_id: int = REQ(validator=check_int),
+    request: HttpRequest, user_profile: UserProfile, stream_id: int = REQ(validator=check_int),
 ) -> HttpResponse:
     (stream, recipient, sub) = access_stream_by_id(user_profile, stream_id)
     do_add_default_stream(stream)
@@ -231,9 +229,7 @@ def remove_default_stream_group(
 @require_realm_admin
 @has_request_variables
 def remove_default_stream(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    stream_id: int = REQ(validator=check_int),
+    request: HttpRequest, user_profile: UserProfile, stream_id: int = REQ(validator=check_int),
 ) -> HttpResponse:
     (stream, recipient, sub) = access_stream_by_id(
         user_profile, stream_id, allow_realm_admin=True,
@@ -353,9 +349,7 @@ def update_subscriptions_backend(
 
 
 def compose_views(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    method_kwarg_pairs: "List[FuncKwargPair]",
+    request: HttpRequest, user_profile: UserProfile, method_kwarg_pairs: "List[FuncKwargPair]",
 ) -> HttpResponse:
     """
     This takes a series of view methods from method_kwarg_pairs and calls
@@ -529,9 +523,7 @@ def add_subscriptions_backend(
                 )
             # Realm.POLICY_MEMBERS_ONLY only fails if the
             # user is a guest, which happens in the decorator above.
-            assert (
-                user_profile.realm.invite_to_stream_policy == Realm.POLICY_FULL_MEMBERS_ONLY
-            )
+            assert user_profile.realm.invite_to_stream_policy == Realm.POLICY_FULL_MEMBERS_ONLY
             return json_error(
                 _("Your account is too new to modify other users' subscriptions."),
             )

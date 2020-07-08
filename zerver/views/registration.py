@@ -91,9 +91,7 @@ from zproject.backends import (
 )
 
 
-def check_prereg_key_and_redirect(
-    request: HttpRequest, confirmation_key: str,
-) -> HttpResponse:
+def check_prereg_key_and_redirect(request: HttpRequest, confirmation_key: str) -> HttpResponse:
     confirmation = Confirmation.objects.filter(confirmation_key=confirmation_key).first()
     if confirmation is None or confirmation.type not in [
         Confirmation.USER_REGISTRATION,
@@ -318,9 +316,7 @@ def accounts_register(request: HttpRequest) -> HttpResponse:
         full_name = form.cleaned_data["full_name"]
         short_name = email_to_username(email)
         default_stream_group_names = request.POST.getlist("default_stream_group")
-        default_stream_groups = lookup_default_stream_groups(
-            default_stream_group_names, realm,
-        )
+        default_stream_groups = lookup_default_stream_groups(default_stream_group_names, realm)
 
         timezone = ""
         if "timezone" in request.POST and request.POST["timezone"] in get_all_timezones():
@@ -479,9 +475,7 @@ def accounts_register(request: HttpRequest) -> HttpResponse:
             "require_ldap_password": require_ldap_password,
             "password_auth_enabled": password_auth_enabled(realm),
             "root_domain_available": is_root_domain_available(),
-            "default_stream_groups": []
-            if realm is None
-            else get_default_stream_groups(realm),
+            "default_stream_groups": [] if realm is None else get_default_stream_groups(realm),
             "accounts": get_accounts_for_email(email),
             "MAX_REALM_NAME_LENGTH": str(Realm.MAX_REALM_NAME_LENGTH),
             "MAX_NAME_LENGTH": str(UserProfile.MAX_NAME_LENGTH),
@@ -571,9 +565,7 @@ def create_realm(request: HttpRequest, creation_key: Optional[str] = None) -> Ht
             request,
             "zerver/realm_creation_failed.html",
             context={
-                "message": _(
-                    "The organization creation link has expired" " or is not valid.",
-                ),
+                "message": _("The organization creation link has expired" " or is not valid."),
             },
         )
     if not settings.OPEN_REALM_CREATION:

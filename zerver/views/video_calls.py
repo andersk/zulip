@@ -168,8 +168,7 @@ def get_bigbluebutton_url(request: HttpRequest, user_profile: UserProfile) -> Ht
     # https://docs.bigbluebutton.org/dev/api.html#usage for reference for checksum
     id = "zulip-" + str(random.randint(100000000000, 999999999999))
     password = "".join(
-        random.SystemRandom().choice(string.ascii_uppercase + string.digits)
-        for _ in range(10)
+        random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(10)
     )
     checksum = hashlib.sha1(
         (

@@ -330,9 +330,7 @@ class GenericBulkCachedFetchTest(ZulipTestCase):
 
         def query_function(
             emails: List[str],
-        ) -> List[
-            UserProfile
-        ]:  # nocoverage -- this is just here to make sure it's not called
+        ) -> List[UserProfile]:  # nocoverage -- this is just here to make sure it's not called
             raise CustomException("The query function was called")
 
         # query_function and cache_key_function shouldn't be called, because

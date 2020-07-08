@@ -56,9 +56,7 @@ Example:
             "the message. Default: Denmark",
         )
 
-        self.add_realm_args(
-            parser, help="Specify which realm to connect to; default is zulip",
-        )
+        self.add_realm_args(parser, help="Specify which realm to connect to; default is zulip")
 
     def handle(self, **options: Optional[str]) -> None:
         if options["fixture"] is None:

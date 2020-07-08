@@ -394,9 +394,7 @@ def has_blockquote_ancestor(element_pair: Optional[ElementPair]) -> bool:
         return has_blockquote_ancestor(element_pair.parent)
 
 
-@cache_with_key(
-    lambda tweet_id: tweet_id, cache_name="database", with_statsd_key="tweet_data",
-)
+@cache_with_key(lambda tweet_id: tweet_id, cache_name="database", with_statsd_key="tweet_data")
 def fetch_tweet_data(tweet_id: str) -> Optional[Dict[str, Any]]:
     if settings.TEST_SUITE:
         from . import testing_mocks
@@ -1100,9 +1098,7 @@ class InlineInterestingLinkProcessor(markdown.treeprocessors.Treeprocessor):
                     break
 
             if parent_index is not None:
-                ins_index = self.find_proper_insertion_index(
-                    grandparent, parent, parent_index,
-                )
+                ins_index = self.find_proper_insertion_index(grandparent, parent, parent_index)
                 self.add_a(
                     grandparent, actual_url, url, title=title, insertion_index=ins_index,
                 )
@@ -2044,9 +2040,7 @@ class Markdown(markdown.Markdown):
             )
         parser.blockprocessors.register(HashHeaderProcessor(parser), "hashheader", 80)
         # We get priority 75 from 'table' extension
-        parser.blockprocessors.register(
-            markdown.blockprocessors.HRProcessor(parser), "hr", 70,
-        )
+        parser.blockprocessors.register(markdown.blockprocessors.HRProcessor(parser), "hr", 70)
         parser.blockprocessors.register(OListProcessor(parser), "olist", 65)
         parser.blockprocessors.register(UListProcessor(parser), "ulist", 60)
         parser.blockprocessors.register(BlockQuoteProcessor(parser), "quote", 55)
@@ -2107,9 +2101,7 @@ class Markdown(markdown.Markdown):
         reg.register(StreamPattern(get_compiled_stream_link_regex(), self), "stream", 85)
         reg.register(Timestamp(r"<time:(?P<time>[^>]*?)>"), "timestamp", 75)
         reg.register(
-            UserGroupMentionPattern(mention.user_group_mentions, self),
-            "usergroupmention",
-            65,
+            UserGroupMentionPattern(mention.user_group_mentions, self), "usergroupmention", 65,
         )
         reg.register(LinkInlineProcessor(markdown.inlinepatterns.LINK_RE, self), "link", 60)
         reg.register(AutoLink(get_web_link_regex(), self), "autolink", 55)
@@ -2128,9 +2120,7 @@ class Markdown(markdown.Markdown):
         )
         reg.register(markdown.inlinepatterns.SimpleTagPattern(DEL_RE, "del"), "del", 25)
         reg.register(
-            markdown.inlinepatterns.SimpleTextInlineProcessor(NOT_STRONG_RE),
-            "not_strong",
-            20,
+            markdown.inlinepatterns.SimpleTextInlineProcessor(NOT_STRONG_RE), "not_strong", 20,
         )
         reg.register(Emoji(EMOJI_REGEX, self), "emoji", 15)
         reg.register(EmoticonTranslation(emoticon_regex, self), "translate_emoticons", 10)
@@ -2347,9 +2337,7 @@ class MentionData:
     def __init__(self, realm_id: int, content: str) -> None:
         mention_texts, has_wildcards = possible_mentions(content)
         possible_mentions_info = get_possible_mentions_info(realm_id, mention_texts)
-        self.full_name_info = {
-            row["full_name"].lower(): row for row in possible_mentions_info
-        }
+        self.full_name_info = {row["full_name"].lower(): row for row in possible_mentions_info}
         self.user_id_info = {row["id"]: row for row in possible_mentions_info}
         self.init_user_group_data(realm_id=realm_id, content=content)
         self.has_wildcards = has_wildcards

@@ -81,9 +81,7 @@ def send_initial_pms(user: UserProfile) -> None:
         + "\n"
         "* " + _("Download our [Desktop and mobile apps]({apps_url})") + "\n"
         "* "
-        + _(
-            "Customize your account and notifications on your [Settings page]({settings_url})",
-        )
+        + _("Customize your account and notifications on your [Settings page]({settings_url})")
         + "\n"
         "* " + _("Type `?` to check out Zulip's keyboard shortcuts") + "\n"
         "{organization_setup_text}"

@@ -68,9 +68,7 @@ def ticket_assigned_body(payload: Dict[str, Any]) -> Optional[str]:
 def replied_body(payload: Dict[str, Any], actor: str, action: str) -> str:
     actor_url = "http://api.groovehq.com/v1/{}/".format(actor + "s")
     actor = payload["links"]["author"]["href"].split(actor_url)[1]
-    number = payload["links"]["ticket"]["href"].split("http://api.groovehq.com/v1/tickets/")[
-        1
-    ]
+    number = payload["links"]["ticket"]["href"].split("http://api.groovehq.com/v1/tickets/")[1]
 
     body = AGENT_REPLIED_TEMPLATE.format(
         actor=actor,

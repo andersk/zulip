@@ -84,16 +84,12 @@ class GiteaHookTests(WebhookTestCase):
     def test_issues_assigned(self) -> None:
         expected_topic = "test / Issue #3 Test issue"
         expected_message = """kostekIV assigned [Issue #3](https://try.gitea.io/kostekIV/test/issues/3) (assigned to kostekIV):\n\n~~~ quote\nTest body\n~~~"""
-        self.send_and_test_stream_message(
-            "issues__assigned", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("issues__assigned", expected_topic, expected_message)
 
     def test_issues_reopened(self) -> None:
         expected_topic = "test / Issue #3 Test issue 2"
         expected_message = """kostekIV reopened [Issue #3](https://try.gitea.io/kostekIV/test/issues/3) (assigned to kostekIV):\n\n~~~ quote\nTest body\n~~~"""
-        self.send_and_test_stream_message(
-            "issues__reopened", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("issues__reopened", expected_topic, expected_message)
 
     def test_issue_comment_new(self) -> None:
         expected_topic = "test / Issue #3 Test issue"

@@ -169,9 +169,7 @@ def json_change_settings(
             pass
         else:
             # Note that check_change_full_name strips the passed name automatically
-            result["full_name"] = check_change_full_name(
-                user_profile, full_name, user_profile,
-            )
+            result["full_name"] = check_change_full_name(user_profile, full_name, user_profile)
 
     return json_success(result)
 
@@ -206,10 +204,7 @@ def update_display_settings_backend(
     # We can't use REQ for this widget because
     # get_available_language_codes requires provisioning to be
     # complete.
-    if (
-        default_language is not None
-        and default_language not in get_available_language_codes()
-    ):
+    if default_language is not None and default_language not in get_available_language_codes():
         raise JsonableError(_("Invalid default_language"))
 
     request_settings = {
@@ -235,9 +230,7 @@ def json_change_notify_settings(
     enable_stream_email_notifications: Optional[bool] = REQ(
         validator=check_bool, default=None,
     ),
-    enable_stream_push_notifications: Optional[bool] = REQ(
-        validator=check_bool, default=None,
-    ),
+    enable_stream_push_notifications: Optional[bool] = REQ(validator=check_bool, default=None),
     enable_stream_audible_notifications: Optional[bool] = REQ(
         validator=check_bool, default=None,
     ),
@@ -251,9 +244,7 @@ def json_change_notify_settings(
     enable_offline_push_notifications: Optional[bool] = REQ(
         validator=check_bool, default=None,
     ),
-    enable_online_push_notifications: Optional[bool] = REQ(
-        validator=check_bool, default=None,
-    ),
+    enable_online_push_notifications: Optional[bool] = REQ(validator=check_bool, default=None),
     enable_digest_emails: Optional[bool] = REQ(validator=check_bool, default=None),
     enable_login_emails: Optional[bool] = REQ(validator=check_bool, default=None),
     message_content_in_email_notifications: Optional[bool] = REQ(
@@ -277,9 +268,7 @@ def json_change_notify_settings(
         raise JsonableError(_("Invalid notification sound '{}'").format(notification_sound))
 
     req_vars = {
-        k: v
-        for k, v in list(locals().items())
-        if k in user_profile.notification_setting_types
+        k: v for k, v in list(locals().items()) if k in user_profile.notification_setting_types
     }
 
     for k, v in list(req_vars.items()):

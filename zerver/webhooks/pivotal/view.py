@@ -14,9 +14,7 @@ from zerver.lib.webhooks.common import UnexpectedWebhookEventType, check_send_we
 from zerver.models import UserProfile
 
 
-def api_pivotal_webhook_v3(
-    request: HttpRequest, user_profile: UserProfile,
-) -> Tuple[str, str]:
+def api_pivotal_webhook_v3(request: HttpRequest, user_profile: UserProfile) -> Tuple[str, str]:
     payload = xml_fromstring(request.body)
 
     def get_text(attrs: List[str]) -> str:
@@ -76,9 +74,7 @@ UNSUPPORTED_EVENT_TYPES = [
 ]
 
 
-def api_pivotal_webhook_v5(
-    request: HttpRequest, user_profile: UserProfile,
-) -> Tuple[str, str]:
+def api_pivotal_webhook_v5(request: HttpRequest, user_profile: UserProfile) -> Tuple[str, str]:
     payload = ujson.loads(request.body)
 
     event_type = payload["kind"]

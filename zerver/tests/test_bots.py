@@ -240,9 +240,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
         self.login("hamlet")
         self.assert_num_bots_equal(0)
         with get_test_image_file("img.png") as fp1, get_test_image_file("img.gif") as fp2:
-            bot_info = dict(
-                full_name="whatever", short_name="whatever", file1=fp1, file2=fp2,
-            )
+            bot_info = dict(full_name="whatever", short_name="whatever", file1=fp1, file2=fp2)
             result = self.client_post("/json/bots", bot_info)
         self.assert_json_error(result, "You may only upload one file at a time")
         self.assert_num_bots_equal(0)

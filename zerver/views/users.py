@@ -33,11 +33,7 @@ from zerver.lib.exceptions import CannotDeactivateLastUserError, OrganizationOwn
 from zerver.lib.integrations import EMBEDDED_BOTS
 from zerver.lib.request import REQ, has_request_variables
 from zerver.lib.response import json_error, json_success
-from zerver.lib.streams import (
-    access_stream_by_id,
-    access_stream_by_name,
-    subscribed_to_stream,
-)
+from zerver.lib.streams import access_stream_by_id, access_stream_by_name, subscribed_to_stream
 from zerver.lib.types import Validator
 from zerver.lib.upload import upload_avatar_image
 from zerver.lib.url_encoding import add_query_arg_to_redirect_url
@@ -581,9 +577,7 @@ def create_user_backend(
             _("Email '{email}' not allowed in this organization").format(email=email),
         )
     except DisposableEmailError:
-        return json_error(
-            _("Disposable email addresses are not allowed in this organization"),
-        )
+        return json_error(_("Disposable email addresses are not allowed in this organization"))
     except EmailContainsPlusError:
         return json_error(_("Email addresses containing + are not allowed."))
 

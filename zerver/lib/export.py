@@ -939,9 +939,7 @@ def fetch_huddle_objects(response: TableData, config: Config, context: Context) 
     # exporting the users from this realm), at the cost of losing
     # some of these cross-realm messages.
     huddle_subs = [
-        sub
-        for sub in realm_huddle_subs
-        if sub.recipient_id not in unsafe_huddle_recipient_ids
+        sub for sub in realm_huddle_subs if sub.recipient_id not in unsafe_huddle_recipient_ids
     ]
     huddle_recipient_ids = {sub.recipient_id for sub in huddle_subs}
     huddle_ids = {sub.recipient.type_id for sub in huddle_subs}

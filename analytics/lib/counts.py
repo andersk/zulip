@@ -376,10 +376,7 @@ def sql_data_collector(
     group_by: Optional[Tuple[models.Model, str]],
 ) -> DataCollector:
     def pull_function(
-        property: str,
-        start_time: datetime,
-        end_time: datetime,
-        realm: Optional[Realm] = None,
+        property: str, start_time: datetime, end_time: datetime, realm: Optional[Realm] = None,
     ) -> int:
         # The pull function type needs to accept a Realm argument
         # because the 'minutes_active::day' CountStat uses

@@ -83,8 +83,7 @@ class _RateLimitFilter:
                     else:
                         tb = str(record)
                     key = (
-                        self.__class__.__name__.upper()
-                        + hashlib.sha1(tb.encode()).hexdigest()
+                        self.__class__.__name__.upper() + hashlib.sha1(tb.encode()).hexdigest()
                     )
                     duplicate = cache.get(key) == 1
                     if not duplicate:
@@ -232,9 +231,7 @@ class ZulipFormatter(logging.Formatter):
 
 
 def log_to_file(
-    logger: Logger,
-    filename: str,
-    log_format: str = "%(asctime)s %(levelname)-8s %(message)s",
+    logger: Logger, filename: str, log_format: str = "%(asctime)s %(levelname)-8s %(message)s",
 ) -> None:
     """Note: `filename` should be declared in zproject/settings.py with zulip_path."""
     formatter = logging.Formatter(log_format)

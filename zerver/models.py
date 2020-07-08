@@ -550,10 +550,7 @@ class Realm(models.Model):
         return get_fake_email_domain()
 
     def get_notifications_stream(self) -> Optional["Stream"]:
-        if (
-            self.notifications_stream is not None
-            and not self.notifications_stream.deactivated
-        ):
+        if self.notifications_stream is not None and not self.notifications_stream.deactivated:
             return self.notifications_stream
         return None
 
@@ -788,9 +785,7 @@ post_delete.connect(flush_realm_emoji, sender=RealmEmoji)
 
 def filter_pattern_validator(value: str) -> None:
     regex = re.compile(r"^(?:(?:[\w\-#_= /:]*|[+]|[!])(\(\?P<\w+>.+\)))+$")
-    error_msg = _("Invalid filter pattern.  Valid characters are %s.") % (
-        "[ a-zA-Z_#=/:+!-]",
-    )
+    error_msg = _("Invalid filter pattern.  Valid characters are %s.") % ("[ a-zA-Z_#=/:+!-]",)
 
     if not regex.match(str(value)):
         raise ValidationError(error_msg)
@@ -856,9 +851,7 @@ def realm_filters_for_realm(realm_id: int) -> List[Tuple[str, str, int]]:
 def realm_filters_for_realm_remote_cache(realm_id: int) -> List[Tuple[str, str, int]]:
     filters = []
     for realm_filter in RealmFilter.objects.filter(realm_id=realm_id):
-        filters.append(
-            (realm_filter.pattern, realm_filter.url_format_string, realm_filter.id),
-        )
+        filters.append((realm_filter.pattern, realm_filter.url_format_string, realm_filter.id))
 
     return filters
 
@@ -1786,9 +1779,7 @@ def get_realm_stream(stream_name: str, realm_id: int) -> Stream:
 
 
 def stream_name_in_use(stream_name: str, realm_id: int) -> bool:
-    return Stream.objects.filter(
-        name__iexact=stream_name.strip(), realm_id=realm_id,
-    ).exists()
+    return Stream.objects.filter(name__iexact=stream_name.strip(), realm_id=realm_id).exists()
 
 
 def get_active_streams(realm: Optional[Realm]) -> QuerySet:
@@ -2310,9 +2301,7 @@ class AbstractAttachment(models.Model):
     # then its path_id will be a/b/abc/temp_file.py.
     path_id: str = models.TextField(db_index=True, unique=True)
     owner: UserProfile = models.ForeignKey(UserProfile, on_delete=CASCADE)
-    realm: Optional[Realm] = models.ForeignKey(
-        Realm, blank=True, null=True, on_delete=CASCADE,
-    )
+    realm: Optional[Realm] = models.ForeignKey(Realm, blank=True, null=True, on_delete=CASCADE)
 
     create_time: datetime.datetime = models.DateTimeField(
         default=timezone_now, db_index=True,
@@ -2417,9 +2406,7 @@ def validate_attachment_request(user_profile: UserProfile, path_id: str) -> Opti
 def get_old_unclaimed_attachments(weeks_ago: int) -> Sequence[Attachment]:
     # TODO: Change return type to QuerySet[Attachment]
     delta_weeks_ago = timezone_now() - datetime.timedelta(weeks=weeks_ago)
-    old_attachments = Attachment.objects.filter(
-        messages=None, create_time__lt=delta_weeks_ago,
-    )
+    old_attachments = Attachment.objects.filter(messages=None, create_time__lt=delta_weeks_ago)
     return old_attachments
 
 
@@ -2903,9 +2890,7 @@ class MissedMessageEmailAddress(models.Model):
         return settings.EMAIL_GATEWAY_PATTERN % (self.email_token,)
 
     def is_usable(self) -> bool:
-        not_expired = timezone_now() <= self.timestamp + timedelta(
-            seconds=self.EXPIRY_SECONDS,
-        )
+        not_expired = timezone_now() <= self.timestamp + timedelta(seconds=self.EXPIRY_SECONDS)
         has_uses_left = self.times_used < self.ALLOWED_USES
         return has_uses_left and not_expired
 
@@ -3217,9 +3202,7 @@ class CustomProfileField(models.Model):
         return False
 
     def __str__(self) -> str:
-        return (
-            f"<CustomProfileField: {self.realm} {self.name} {self.field_type} {self.order}>"
-        )
+        return f"<CustomProfileField: {self.realm} {self.name} {self.field_type} {self.order}>"
 
 
 def custom_profile_fields_for_realm(realm_id: int) -> List[CustomProfileField]:

@@ -512,9 +512,7 @@ class EmojiReactionBase(ZulipTestCase):
         )
         return result
 
-    def post_zulip_reaction(
-        self, message_id: int = 1, sender: str = "hamlet",
-    ) -> HttpResponse:
+    def post_zulip_reaction(self, message_id: int = 1, sender: str = "hamlet") -> HttpResponse:
         reaction_info = {
             "emoji_name": "zulip",
             "emoji_code": "zulip",

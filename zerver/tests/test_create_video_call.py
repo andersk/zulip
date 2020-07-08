@@ -75,8 +75,7 @@ class TestVideoCall(ZulipTestCase):
 
     def test_create_video_sid_error(self) -> None:
         response = self.client_get(
-            "/calls/zoom/complete",
-            {"code": "code", "state": '{"realm":"zulip","sid":"bad"}'},
+            "/calls/zoom/complete", {"code": "code", "state": '{"realm":"zulip","sid":"bad"}'},
         )
         self.assert_json_error(response, "Invalid Zoom session identifier")
 
@@ -158,9 +157,7 @@ class TestVideoCall(ZulipTestCase):
     def test_create_bigbluebutton_link(self) -> None:
         with mock.patch(
             "zerver.views.video_calls.random.randint", return_value="1",
-        ), mock.patch(
-            "zerver.views.video_calls.random.SystemRandom.choice", return_value="A",
-        ):
+        ), mock.patch("zerver.views.video_calls.random.SystemRandom.choice", return_value="A"):
             response = self.client_get("/json/calls/bigbluebutton/create")
             self.assert_json_success(response)
             self.assertEqual(
@@ -198,9 +195,7 @@ class TestVideoCall(ZulipTestCase):
         response = self.client_get(
             "/calls/bigbluebutton/join?meeting_id=%22zulip-1%22&password=%22a%22&checksum=%22check%22",
         )
-        self.assert_json_error(
-            response, "Error authenticating to the Big Blue Button server.",
-        )
+        self.assert_json_error(response, "Error authenticating to the Big Blue Button server.")
 
     @responses.activate
     def test_join_bigbluebutton_redirect_server_error(self) -> None:

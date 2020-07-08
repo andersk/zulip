@@ -90,9 +90,7 @@ def get_expirable_session_var(
     try:
         value, expire_at = (session[var_name]["value"], session[var_name]["expire_at"])
     except (KeyError, TypeError):
-        logging.warning(
-            "get_expirable_session_var: error getting %s", var_name, exc_info=True,
-        )
+        logging.warning("get_expirable_session_var: error getting %s", var_name, exc_info=True)
         return default_value
 
     if timestamp_to_datetime(expire_at) < timezone_now():

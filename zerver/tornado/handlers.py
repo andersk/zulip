@@ -43,10 +43,7 @@ def handler_stats_string() -> str:
 
 
 def finish_handler(
-    handler_id: int,
-    event_queue_id: str,
-    contents: List[Dict[str, Any]],
-    apply_markdown: bool,
+    handler_id: int, event_queue_id: str, contents: List[Dict[str, Any]], apply_markdown: bool,
 ) -> None:
     err_msg = f"Got error finishing handler for queue {event_queue_id}"
     try:
@@ -202,11 +199,7 @@ class AsyncDjangoHandler(tornado.web.RequestHandler, base.BaseHandler):
         # get_events request and return a response to the client.
 
         # Marshall the response data from result_dict.
-        if (
-            result_dict["result"] == "success"
-            and "messages" in result_dict
-            and apply_markdown
-        ):
+        if result_dict["result"] == "success" and "messages" in result_dict and apply_markdown:
             for msg in result_dict["messages"]:
                 if msg["content_type"] != "text/html":
                     self.set_status(500)

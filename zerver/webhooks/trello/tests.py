@@ -63,7 +63,9 @@ class TrelloHookTests(WebhookTestCase):
         )
 
     def test_trello_webhook_when_due_date_was_removed(self) -> None:
-        expected_message = "TomaszKolek removed the due date from [Card name](https://trello.com/c/9BduUcVQ)."
+        expected_message = (
+            "TomaszKolek removed the due date from [Card name](https://trello.com/c/9BduUcVQ)."
+        )
         self.send_and_test_stream_message(
             "removing_due_date_from_card", "Welcome Board", expected_message,
         )

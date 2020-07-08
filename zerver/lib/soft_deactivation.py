@@ -287,9 +287,7 @@ def do_auto_soft_deactivate_users(
     users_deactivated = do_soft_deactivate_users(users_to_deactivate)
 
     if not settings.AUTO_CATCH_UP_SOFT_DEACTIVATED_USERS:
-        logging.info(
-            "Not catching up users since AUTO_CATCH_UP_SOFT_DEACTIVATED_USERS if off",
-        )
+        logging.info("Not catching up users since AUTO_CATCH_UP_SOFT_DEACTIVATED_USERS if off")
         return users_deactivated
 
     if realm is not None:
@@ -299,9 +297,7 @@ def do_auto_soft_deactivate_users(
     return users_deactivated
 
 
-def reactivate_user_if_soft_deactivated(
-    user_profile: UserProfile,
-) -> Union[UserProfile, None]:
+def reactivate_user_if_soft_deactivated(user_profile: UserProfile) -> Union[UserProfile, None]:
     if user_profile.long_term_idle:
         add_missing_messages(user_profile)
         user_profile.long_term_idle = False

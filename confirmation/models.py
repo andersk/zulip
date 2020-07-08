@@ -49,9 +49,7 @@ def render_confirmation_key_error(
 def generate_key() -> str:
     generator = SystemRandom()
     # 24 characters * 5 bits of entropy/character = 120 bits of entropy
-    return "".join(
-        generator.choice(string.ascii_lowercase + string.digits) for _ in range(24)
-    )
+    return "".join(generator.choice(string.ascii_lowercase + string.digits) for _ in range(24))
 
 
 ConfirmationObjT = Union[MultiuseInvite, PreregistrationUser, EmailChangeStatus]
@@ -171,9 +169,7 @@ _properties = {
         validity_in_days=settings.INVITATION_LINK_VALIDITY_DAYS,
     ),
     Confirmation.REALM_CREATION: ConfirmationType("check_prereg_key_and_redirect"),
-    Confirmation.REALM_REACTIVATION: ConfirmationType(
-        "zerver.views.realm.realm_reactivation",
-    ),
+    Confirmation.REALM_REACTIVATION: ConfirmationType("zerver.views.realm.realm_reactivation"),
 }
 
 

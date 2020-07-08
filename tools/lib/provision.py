@@ -119,9 +119,7 @@ else:
         )
         if os.path.exists("/home/vagrant"):
             print("To upgrade, run `vagrant destroy`, and then recreate the Vagrant guest.\n")
-            print(
-                "See: https://zulip.readthedocs.io/en/latest/development/setup-vagrant.html",
-            )
+            print("See: https://zulip.readthedocs.io/en/latest/development/setup-vagrant.html")
     sys.exit(1)
 
 VENV_DEPENDENCIES = get_venv_dependencies(vendor, os_version)

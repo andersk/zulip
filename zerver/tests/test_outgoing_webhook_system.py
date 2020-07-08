@@ -71,9 +71,7 @@ class DoRestCallTests(ZulipTestCase):
         }
 
         self.bot_user = self.example_user("outgoing_webhook_bot")
-        self.service_handler = GenericOutgoingWebhookService(
-            "token", self.bot_user, "service",
-        )
+        self.service_handler = GenericOutgoingWebhookService("token", self.bot_user, "service")
         logging.disable(logging.WARNING)
 
     @mock.patch("zerver.lib.outgoing_webhook.send_response_message")

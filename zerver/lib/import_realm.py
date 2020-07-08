@@ -492,11 +492,7 @@ def re_map_foreign_keys_internal(
             new_id = lookup_table[old_id]
             if verbose:
                 logging.info(
-                    "Remapping %s %s from %s to %s",
-                    table,
-                    field_name + "_id",
-                    old_id,
-                    new_id,
+                    "Remapping %s %s from %s to %s", table, field_name + "_id", old_id, new_id,
                 )
         else:
             new_id = old_id
@@ -553,11 +549,7 @@ def re_map_foreign_keys_many_to_many_internal(
             new_id = lookup_table[old_id]
             if verbose:
                 logging.info(
-                    "Remapping %s %s from %s to %s",
-                    table,
-                    field_name + "_id",
-                    old_id,
-                    new_id,
+                    "Remapping %s %s from %s to %s", table, field_name + "_id", old_id, new_id,
                 )
         else:
             new_id = old_id
@@ -576,9 +568,7 @@ def fix_realm_authentication_bitfield(
 ) -> None:
     """Used to fixup the authentication_methods bitfield to be a string"""
     for item in data[table]:
-        values_as_bitstring = "".join(
-            ["1" if field[1] else "0" for field in item[field_name]],
-        )
+        values_as_bitstring = "".join(["1" if field[1] else "0" for field in item[field_name]])
         values_as_int = int(values_as_bitstring, 2)
         item[field_name] = values_as_int
 
@@ -652,9 +642,7 @@ def bulk_import_user_message_data(data: TableData, dump_file_id: int) -> None:
     logging.info("Successfully imported %s from %s[%s].", model, table, dump_file_id)
 
 
-def bulk_import_model(
-    data: TableData, model: Any, dump_file_id: Optional[str] = None,
-) -> None:
+def bulk_import_model(data: TableData, model: Any, dump_file_id: Optional[str] = None) -> None:
     table = get_db_table(model)
     # TODO, deprecate dump_file_id
     model.objects.bulk_create(model(**item) for item in data[table])
@@ -706,11 +694,7 @@ def import_uploads(
     )
     if not processing_emojis and not processing_realm_icons:
         re_map_foreign_keys_internal(
-            records,
-            "records",
-            "user_profile_id",
-            related_table="user_profile",
-            id_field=True,
+            records, "records", "user_profile_id", related_table="user_profile", id_field=True,
         )
 
     s3_uploads = settings.LOCAL_UPLOADS_DIR is None
@@ -1344,9 +1328,7 @@ def get_incoming_message_ids(import_dir: Path, sort_by_date: bool) -> List[int]:
     return message_ids
 
 
-def import_message_data(
-    realm: Realm, sender_map: Dict[int, Record], import_dir: Path,
-) -> None:
+def import_message_data(realm: Realm, sender_map: Dict[int, Record], import_dir: Path) -> None:
     dump_file_id = 1
     while True:
         message_filename = os.path.join(import_dir, f"messages-{dump_file_id:06}.json")

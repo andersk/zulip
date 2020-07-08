@@ -93,9 +93,7 @@ class WebhooksCommonTestCase(ZulipTestCase):
         self.assertEqual(msg.content, expected_msg.strip())
 
     @patch("zerver.lib.webhooks.common.importlib.import_module")
-    def test_get_fixture_http_headers_for_success(
-        self, import_module_mock: MagicMock,
-    ) -> None:
+    def test_get_fixture_http_headers_for_success(self, import_module_mock: MagicMock) -> None:
         def fixture_to_headers(fixture_name: str) -> Dict[str, str]:
             # A sample function which would normally perform some
             # extra operations before returning a dictionary

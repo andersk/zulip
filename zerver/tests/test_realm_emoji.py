@@ -191,9 +191,7 @@ class RealmEmojiTest(ZulipTestCase):
         self.create_test_emoji("my_emoji_3", emoji_author)
         self.login("cordelia")
         result = self.client_delete("/json/realm/emoji/my_emoji_3")
-        self.assert_json_error(
-            result, "Must be an organization administrator or emoji author",
-        )
+        self.assert_json_error(result, "Must be an organization administrator or emoji author")
 
     def test_delete_exception(self) -> None:
         self.login("iago")

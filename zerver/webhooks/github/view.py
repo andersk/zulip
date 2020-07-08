@@ -200,9 +200,7 @@ def get_push_tags_body(payload: Dict[str, Any]) -> str:
 def get_push_commits_body(payload: Dict[str, Any]) -> str:
     commits_data = [
         {
-            "name": (
-                commit.get("author").get("username") or commit.get("author").get("name")
-            ),
+            "name": (commit.get("author").get("username") or commit.get("author").get("name")),
             "sha": commit["id"],
             "url": commit["url"],
             "message": commit["message"],
@@ -382,9 +380,7 @@ def get_pull_request_review_requested_body(
     sender = get_sender_name(payload)
     pr_number = payload["pull_request"]["number"]
     pr_url = payload["pull_request"]["html_url"]
-    message = (
-        "**{sender}** requested {reviewers} for a review on [PR #{pr_number}]({pr_url})."
-    )
+    message = "**{sender}** requested {reviewers} for a review on [PR #{pr_number}]({pr_url})."
     message_with_title = (
         "**{sender}** requested {reviewers} for a review on "
         "[PR #{pr_number} {title}]({pr_url})."
@@ -500,8 +496,7 @@ def get_subject_based_on_type(payload: Dict[str, Any], event: str) -> str:
         return "team {}".format(payload["team"]["name"])
     elif event == "push_commits":
         return TOPIC_WITH_BRANCH_TEMPLATE.format(
-            repo=get_repository_name(payload),
-            branch=get_branch_name_from_ref(payload["ref"]),
+            repo=get_repository_name(payload), branch=get_branch_name_from_ref(payload["ref"]),
         )
     elif event == "gollum":
         return TOPIC_WITH_BRANCH_TEMPLATE.format(

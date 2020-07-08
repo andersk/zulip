@@ -82,9 +82,7 @@ class TopicHistoryTest(ZulipTestCase):
         # the prior fixture data may be unreliable.
         history = history[:3]
 
-        self.assertEqual(
-            [topic["name"] for topic in history], ["topic0", "topic1", "topic2"],
-        )
+        self.assertEqual([topic["name"] for topic in history], ["topic0", "topic1", "topic2"])
 
         self.assertEqual(
             [topic["max_id"] for topic in history],
@@ -103,9 +101,7 @@ class TopicHistoryTest(ZulipTestCase):
         # the prior fixture data may be unreliable.
         history = history[:3]
 
-        self.assertEqual(
-            [topic["name"] for topic in history], ["topic0", "topic1", "topic2"],
-        )
+        self.assertEqual([topic["name"] for topic in history], ["topic0", "topic1", "topic2"])
         self.assertIn("topic0", [topic["name"] for topic in history])
 
         self.assertEqual(

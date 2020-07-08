@@ -352,9 +352,7 @@ class NarrowBuilderTest(ZulipTestCase):
     def test_add_term_using_pm_with_operator_with_existing_and_non_existing_user_as_operand(
         self,
     ) -> None:
-        term = dict(
-            operator="pm-with", operand=self.othello_email + ",non-existing@zulip.com",
-        )
+        term = dict(operator="pm-with", operand=self.othello_email + ",non-existing@zulip.com")
         self.assertRaises(BadNarrowOperator, self._build_query, term)
 
     def test_add_term_using_id_operator(self) -> None:
@@ -491,10 +489,7 @@ class NarrowBuilderTest(ZulipTestCase):
         self.assertEqual(get_sqlalchemy_sql(query), "SELECT id \nFROM zerver_message")
 
     def _do_add_term_test(
-        self,
-        term: Dict[str, Any],
-        where_clause: str,
-        params: Optional[Dict[str, Any]] = None,
+        self, term: Dict[str, Any], where_clause: str, params: Optional[Dict[str, Any]] = None,
     ) -> None:
         query = self._build_query(term)
         if params is not None:
@@ -532,9 +527,7 @@ class NarrowLibraryTest(ZulipTestCase):
             is_web_public_compatible([{"operator": "has", "operand": "attachment"}]),
         )
         self.assertTrue(is_web_public_compatible([{"operator": "has", "operand": "image"}]))
-        self.assertTrue(
-            is_web_public_compatible([{"operator": "search", "operand": "magic"}]),
-        )
+        self.assertTrue(is_web_public_compatible([{"operator": "search", "operand": "magic"}]))
         self.assertTrue(is_web_public_compatible([{"operator": "near", "operand": "15"}]))
         self.assertTrue(
             is_web_public_compatible(
@@ -548,9 +541,7 @@ class NarrowLibraryTest(ZulipTestCase):
             is_web_public_compatible([{"operator": "sender", "operand": "hamlet@zulip.com"}]),
         )
         self.assertFalse(
-            is_web_public_compatible(
-                [{"operator": "pm-with", "operand": "hamlet@zulip.com"}],
-            ),
+            is_web_public_compatible([{"operator": "pm-with", "operand": "hamlet@zulip.com"}]),
         )
         self.assertFalse(
             is_web_public_compatible(
@@ -1672,9 +1663,7 @@ class GetOldMessagesTest(ZulipTestCase):
 
         message_ids = []
         for i in range(5):
-            message_ids.append(
-                self.send_stream_message(self.example_user("iago"), "Scotland"),
-            )
+            message_ids.append(self.send_stream_message(self.example_user("iago"), "Scotland"))
 
         narrow = [dict(operator="stream", operand="Scotland")]
         self.message_visibility_test(narrow, message_ids, 2)
@@ -1727,9 +1716,7 @@ class GetOldMessagesTest(ZulipTestCase):
         self.send_stream_message(mit_user_profile, "Scotland", topic_name="\u03bb-topic")
         self.send_stream_message(mit_user_profile, "Scotland", topic_name="\u03bb-topic.d")
         self.send_stream_message(mit_user_profile, "Scotland", topic_name="\u03bb-topic.d.d")
-        self.send_stream_message(
-            mit_user_profile, "Scotland", topic_name="\u03bb-topic.d.d.d",
-        )
+        self.send_stream_message(mit_user_profile, "Scotland", topic_name="\u03bb-topic.d.d.d")
         self.send_stream_message(
             mit_user_profile, "Scotland", topic_name="\u03bb-topic.d.d.d.d",
         )
@@ -1888,10 +1875,7 @@ class GetOldMessagesTest(ZulipTestCase):
         ]
         result: Dict[str, Any] = self.get_and_check_messages(
             dict(
-                narrow=ujson.dumps(narrow),
-                anchor=next_message_id,
-                num_before=0,
-                num_after=10,
+                narrow=ujson.dumps(narrow), anchor=next_message_id, num_before=0, num_after=10,
             ),
         )
         self.assertEqual(len(result["messages"]), 2)
@@ -1900,10 +1884,7 @@ class GetOldMessagesTest(ZulipTestCase):
         narrow = [dict(operator="search", operand="https://google.com")]
         link_search_result: Dict[str, Any] = self.get_and_check_messages(
             dict(
-                narrow=ujson.dumps(narrow),
-                anchor=next_message_id,
-                num_before=0,
-                num_after=10,
+                narrow=ujson.dumps(narrow), anchor=next_message_id, num_before=0, num_after=10,
             ),
         )
         self.assertEqual(len(link_search_result["messages"]), 1)
@@ -1951,10 +1932,7 @@ class GetOldMessagesTest(ZulipTestCase):
         ]
         result = self.get_and_check_messages(
             dict(
-                narrow=ujson.dumps(narrow),
-                anchor=next_message_id,
-                num_after=10,
-                num_before=0,
+                narrow=ujson.dumps(narrow), anchor=next_message_id, num_after=10, num_before=0,
             ),
         )
         self.assertEqual(len(result["messages"]), 4)
@@ -2101,10 +2079,7 @@ class GetOldMessagesTest(ZulipTestCase):
         ]
         result: Dict[str, Any] = self.get_and_check_messages(
             dict(
-                narrow=ujson.dumps(narrow),
-                anchor=next_message_id,
-                num_after=10,
-                num_before=0,
+                narrow=ujson.dumps(narrow), anchor=next_message_id, num_after=10, num_before=0,
             ),
         )
         self.assertEqual(len(result["messages"]), 4)
@@ -2172,10 +2147,7 @@ class GetOldMessagesTest(ZulipTestCase):
         narrow = [dict(operator="search", operand="https://google.com")]
         link_search_result: Dict[str, Any] = self.get_and_check_messages(
             dict(
-                narrow=ujson.dumps(narrow),
-                anchor=next_message_id,
-                num_after=10,
-                num_before=0,
+                narrow=ujson.dumps(narrow), anchor=next_message_id, num_after=10, num_before=0,
             ),
         )
         self.assertEqual(len(link_search_result["messages"]), 1)
@@ -2304,9 +2276,7 @@ class GetOldMessagesTest(ZulipTestCase):
         messages_matches_ids(messages, message_ids)
 
         with first_visible_id_as(message_ids[5]):
-            data = self.get_messages_response(
-                anchor=message_ids[9], num_before=9, num_after=0,
-            )
+            data = self.get_messages_response(anchor=message_ids[9], num_before=9, num_after=0)
 
         messages = data["messages"]
         self.assertEqual(data["found_anchor"], True)
@@ -2316,9 +2286,7 @@ class GetOldMessagesTest(ZulipTestCase):
         messages_matches_ids(messages, message_ids[5:])
 
         with first_visible_id_as(message_ids[2]):
-            data = self.get_messages_response(
-                anchor=message_ids[6], num_before=9, num_after=0,
-            )
+            data = self.get_messages_response(anchor=message_ids[6], num_before=9, num_after=0)
 
         messages = data["messages"]
         self.assertEqual(data["found_anchor"], True)
@@ -2328,9 +2296,7 @@ class GetOldMessagesTest(ZulipTestCase):
         messages_matches_ids(messages, message_ids[2:7])
 
         with first_visible_id_as(message_ids[9] + 1):
-            data = self.get_messages_response(
-                anchor=message_ids[9], num_before=9, num_after=0,
-            )
+            data = self.get_messages_response(anchor=message_ids[9], num_before=9, num_after=0)
 
         messages = data["messages"]
         self.assert_length(messages, 0)
@@ -2349,9 +2315,7 @@ class GetOldMessagesTest(ZulipTestCase):
         messages_matches_ids(messages, message_ids[5:])
 
         with first_visible_id_as(message_ids[7]):
-            data = self.get_messages_response(
-                anchor=message_ids[5], num_before=0, num_after=5,
-            )
+            data = self.get_messages_response(anchor=message_ids[5], num_before=0, num_after=5)
 
         messages = data["messages"]
         self.assertEqual(data["found_anchor"], False)
@@ -2361,9 +2325,7 @@ class GetOldMessagesTest(ZulipTestCase):
         messages_matches_ids(messages, message_ids[7:])
 
         with first_visible_id_as(message_ids[2]):
-            data = self.get_messages_response(
-                anchor=message_ids[0], num_before=0, num_after=5,
-            )
+            data = self.get_messages_response(anchor=message_ids[0], num_before=0, num_after=5)
 
         messages = data["messages"]
         self.assertEqual(data["found_anchor"], False)
@@ -2373,9 +2335,7 @@ class GetOldMessagesTest(ZulipTestCase):
         messages_matches_ids(messages, message_ids[2:7])
 
         with first_visible_id_as(message_ids[9] + 1):
-            data = self.get_messages_response(
-                anchor=message_ids[0], num_before=0, num_after=5,
-            )
+            data = self.get_messages_response(anchor=message_ids[0], num_before=0, num_after=5)
 
         messages = data["messages"]
         self.assertEqual(data["found_anchor"], False)
@@ -2436,9 +2396,7 @@ class GetOldMessagesTest(ZulipTestCase):
         messages_matches_ids(messages, message_ids)
 
         with first_visible_id_as(message_ids[5]):
-            data = self.get_messages_response(
-                anchor=message_ids[5], num_before=5, num_after=4,
-            )
+            data = self.get_messages_response(anchor=message_ids[5], num_before=5, num_after=4)
 
         messages = data["messages"]
         self.assertEqual(data["found_anchor"], True)
@@ -2448,9 +2406,7 @@ class GetOldMessagesTest(ZulipTestCase):
         messages_matches_ids(messages, message_ids[5:])
 
         with first_visible_id_as(message_ids[5]):
-            data = self.get_messages_response(
-                anchor=message_ids[2], num_before=5, num_after=3,
-            )
+            data = self.get_messages_response(anchor=message_ids[2], num_before=5, num_after=3)
 
         messages = data["messages"]
         self.assertEqual(data["found_anchor"], False)
@@ -2471,9 +2427,7 @@ class GetOldMessagesTest(ZulipTestCase):
         messages_matches_ids(messages, message_ids[5:])
 
         with first_visible_id_as(message_ids[9] + 1):
-            data = self.get_messages_response(
-                anchor=message_ids[5], num_before=5, num_after=4,
-            )
+            data = self.get_messages_response(anchor=message_ids[5], num_before=5, num_after=4)
 
         messages = data["messages"]
         self.assertEqual(data["found_anchor"], False)
@@ -2483,9 +2437,7 @@ class GetOldMessagesTest(ZulipTestCase):
         self.assert_length(messages, 0)
 
         with first_visible_id_as(message_ids[5]):
-            data = self.get_messages_response(
-                anchor=message_ids[5], num_before=0, num_after=0,
-            )
+            data = self.get_messages_response(anchor=message_ids[5], num_before=0, num_after=0)
 
         messages = data["messages"]
         self.assertEqual(data["found_anchor"], True)
@@ -2495,9 +2447,7 @@ class GetOldMessagesTest(ZulipTestCase):
         messages_matches_ids(messages, message_ids[5:6])
 
         with first_visible_id_as(message_ids[5]):
-            data = self.get_messages_response(
-                anchor=message_ids[2], num_before=0, num_after=0,
-            )
+            data = self.get_messages_response(anchor=message_ids[2], num_before=0, num_after=0)
 
         messages = data["messages"]
         self.assertEqual(data["found_anchor"], False)
@@ -2666,15 +2616,11 @@ class GetOldMessagesTest(ZulipTestCase):
         # str or int list is required for pm-with operator
         invalid_operands = [None]
         error_msg = 'elem["operand"] is not a string or an integer list'
-        self.exercise_bad_narrow_operand_using_dict_api(
-            "pm-with", invalid_operands, error_msg,
-        )
+        self.exercise_bad_narrow_operand_using_dict_api("pm-with", invalid_operands, error_msg)
 
         invalid_operands = [["2"]]
         error_msg = 'elem["operand"][0] is not an integer'
-        self.exercise_bad_narrow_operand_using_dict_api(
-            "pm-with", invalid_operands, error_msg,
-        )
+        self.exercise_bad_narrow_operand_using_dict_api("pm-with", invalid_operands, error_msg)
 
         # For others only str is acceptable
         invalid_operands = [2, None, [1]]
@@ -2709,9 +2655,7 @@ class GetOldMessagesTest(ZulipTestCase):
             ("num_after", 0),
         ]
         for operand in operands:
-            post_params = dict(
-                other_params + [("narrow", ujson.dumps([[operator, operand]]))],
-            )
+            post_params = dict(other_params + [("narrow", ujson.dumps([[operator, operand]]))])
             result = self.client_get("/json/messages", post_params)
             self.assert_json_error_contains(result, error_msg)
 
@@ -2860,9 +2804,7 @@ class GetOldMessagesTest(ZulipTestCase):
 
         # Add a few messages that help us test that our query doesn't
         # look at messages that are irrelevant to Hamlet.
-        self.send_personal_message(
-            self.example_user("othello"), self.example_user("cordelia"),
-        )
+        self.send_personal_message(self.example_user("othello"), self.example_user("cordelia"))
         self.send_personal_message(self.example_user("othello"), self.example_user("iago"))
 
         query_params = dict(anchor="first_unread", num_before=10, num_after=10, narrow="[]")
@@ -2901,9 +2843,7 @@ class GetOldMessagesTest(ZulipTestCase):
 
         # Add a few messages that help us test that our query doesn't
         # look at messages that are irrelevant to Hamlet.
-        self.send_personal_message(
-            self.example_user("othello"), self.example_user("cordelia"),
-        )
+        self.send_personal_message(self.example_user("othello"), self.example_user("cordelia"))
         self.send_personal_message(self.example_user("othello"), self.example_user("iago"))
 
         query_params = dict(anchor="first_unread", num_before=10, num_after=10, narrow="[]")

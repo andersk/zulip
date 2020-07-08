@@ -1080,9 +1080,7 @@ def apply_unread_message_event(
             state["mentions"].add(message_id)
 
 
-def remove_message_id_from_unread_mgs(
-    state: RawUnreadMessagesResult, message_id: int,
-) -> None:
+def remove_message_id_from_unread_mgs(state: RawUnreadMessagesResult, message_id: int) -> None:
     # The opposite of apply_unread_message_event; removes a read or
     # deleted message from a raw_unread_msgs data structure.
     state["pm_dict"].pop(message_id, None)

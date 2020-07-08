@@ -361,9 +361,7 @@ def remote_server_check_analytics(
 
     result = {
         "last_realm_count_id": get_last_id_from_server(server, RemoteRealmCount),
-        "last_installation_count_id": get_last_id_from_server(
-            server, RemoteInstallationCount,
-        ),
+        "last_installation_count_id": get_last_id_from_server(server, RemoteInstallationCount),
         "last_realmauditlog_id": get_last_id_from_server(server, RemoteRealmAuditLog),
     }
     return json_success(result)

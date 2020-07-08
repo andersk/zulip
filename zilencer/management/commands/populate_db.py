@@ -743,8 +743,7 @@ class Command(BaseCommand):
                 # Add a few default streams
                 for default_stream_name in ["design", "devel", "social", "support"]:
                     DefaultStream.objects.create(
-                        realm=zulip_realm,
-                        stream=get_stream(default_stream_name, zulip_realm),
+                        realm=zulip_realm, stream=get_stream(default_stream_name, zulip_realm),
                     )
 
                 # Now subscribe everyone to these streams
@@ -771,9 +770,7 @@ class Command(BaseCommand):
                 call_command("populate_analytics_db")
 
         threads = options["threads"]
-        jobs: List[
-            Tuple[int, List[List[int]], Dict[str, Any], Callable[[str], int], int]
-        ] = []
+        jobs: List[Tuple[int, List[List[int]], Dict[str, Any], Callable[[str], int], int]] = []
         for i in range(threads):
             count = options["num_messages"] // threads
             if i < options["num_messages"] % threads:
@@ -802,9 +799,7 @@ class Command(BaseCommand):
                     ("Zulip Nagios Bot", "nagios-bot@zulip.com"),
                 ]
                 create_users(
-                    zulip_realm,
-                    internal_zulip_users_nosubs,
-                    bot_type=UserProfile.DEFAULT_BOT,
+                    zulip_realm, internal_zulip_users_nosubs, bot_type=UserProfile.DEFAULT_BOT,
                 )
 
             # Mark all messages as read
@@ -891,9 +886,7 @@ def generate_and_send_messages(
             message.recipient = get_recipient_by_id(random.choice(recipient_huddles))
         elif (
             randkey
-            <= random_max
-            * (options["percent_huddles"] + options["percent_personals"])
-            / 100.0
+            <= random_max * (options["percent_huddles"] + options["percent_personals"]) / 100.0
         ):
             message_type = Recipient.PERSONAL
             personals_pair = random.choice(personals_pairs)

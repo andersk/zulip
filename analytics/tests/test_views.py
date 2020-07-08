@@ -11,10 +11,7 @@ from analytics.lib.time_utils import time_range
 from analytics.models import FillState, RealmCount, UserCount, last_successful_fill
 from analytics.views import rewrite_client_arrays, sort_by_totals, sort_client_labels
 from corporate.models import get_customer_by_realm
-from zerver.lib.actions import (
-    do_create_multiuse_invite_link,
-    do_send_realm_reactivation_email,
-)
+from zerver.lib.actions import do_create_multiuse_invite_link, do_send_realm_reactivation_email
 from zerver.lib.test_classes import ZulipTestCase
 from zerver.lib.test_helpers import reset_emails_in_zulip_realm
 from zerver.lib.timestamp import ceiling_to_day, ceiling_to_hour, datetime_to_timestamp
@@ -90,10 +87,7 @@ class TestGetChartData(ZulipTestCase):
         return [0, 0, i, 0]
 
     def insert_data(
-        self,
-        stat: CountStat,
-        realm_subgroups: List[Optional[str]],
-        user_subgroups: List[str],
+        self, stat: CountStat, realm_subgroups: List[Optional[str]], user_subgroups: List[str],
     ) -> None:
         if stat.frequency == CountStat.HOUR:
             insert_time = self.end_times_hour[2]
@@ -692,9 +686,7 @@ class TestSupportEndpoint(ZulipTestCase):
         check_zulip_realm_query_result(result)
         check_lear_realm_query_result(result)
 
-        result = self.client_get(
-            "/activity/support", {"q": "lear, Hamlet <hamlet@zulip.com>"},
-        )
+        result = self.client_get("/activity/support", {"q": "lear, Hamlet <hamlet@zulip.com>"})
         check_hamlet_user_query_result(result)
         check_zulip_realm_query_result(result)
         check_lear_realm_query_result(result)
@@ -835,8 +827,7 @@ class TestSupportEndpoint(ZulipTestCase):
 
         with mock.patch("analytics.views.do_deactivate_realm") as m:
             result = self.client_post(
-                "/activity/support",
-                {"realm_id": f"{lear_realm.id}", "status": "deactivated"},
+                "/activity/support", {"realm_id": f"{lear_realm.id}", "status": "deactivated"},
             )
             m.assert_called_once_with(lear_realm, self.example_user("iago"))
             self.assert_in_success_response(["Lear &amp; Co. deactivated"], result)

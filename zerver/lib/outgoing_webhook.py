@@ -81,10 +81,7 @@ class GenericOutgoingWebhookService(OutgoingWebhookServiceInterface):
         return response
 
     def process_success(self, response_json: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        if (
-            "response_not_required" in response_json
-            and response_json["response_not_required"]
-        ):
+        if "response_not_required" in response_json and response_json["response_not_required"]:
             return None
 
         if "response_string" in response_json:

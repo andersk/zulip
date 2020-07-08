@@ -103,12 +103,7 @@ class Command(compilemessages.Command):
         for locale in locales:
             if locale == "en":
                 data["languages"].append(
-                    {
-                        "name": "English",
-                        "name_local": "English",
-                        "code": "en",
-                        "locale": "en",
-                    },
+                    {"name": "English", "name_local": "English", "code": "en", "locale": "en"},
                 )
                 continue
 

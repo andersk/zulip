@@ -99,9 +99,7 @@ def get_subject_for_branch_specified_events(
 ) -> str:
     return TOPIC_WITH_BRANCH_TEMPLATE.format(
         repo=get_repository_name(payload["repository"]),
-        branch=get_branch_name_for_push_event(payload)
-        if branch_name is None
-        else branch_name,
+        branch=get_branch_name_for_push_event(payload) if branch_name is None else branch_name,
     )
 
 

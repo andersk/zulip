@@ -315,16 +315,7 @@ def add_cert_to_pipconf() -> None:
     conffile = os.path.expanduser("~/.pip/pip.conf")
     confdir = os.path.expanduser("~/.pip/")
     os.makedirs(confdir, exist_ok=True)
-    run(
-        [
-            "crudini",
-            "--set",
-            conffile,
-            "global",
-            "cert",
-            os.environ["CUSTOM_CA_CERTIFICATES"],
-        ],
-    )
+    run(["crudini", "--set", conffile, "global", "cert", os.environ["CUSTOM_CA_CERTIFICATES"]])
 
 
 def do_setup_virtualenv(venv_path: str, requirements_file: str) -> None:

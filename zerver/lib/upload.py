@@ -336,9 +336,7 @@ def check_upload_within_quota(realm: Realm, uploaded_file_size: int) -> None:
         return
     used_space = realm.currently_used_upload_space_bytes()
     if (used_space + uploaded_file_size) > upload_quota:
-        raise RealmUploadQuotaError(
-            _("Upload would exceed your organization's upload quota."),
-        )
+        raise RealmUploadQuotaError(_("Upload would exceed your organization's upload quota."))
 
 
 def get_file_info(request: HttpRequest, user_file: File) -> Tuple[str, int, Optional[str]]:
@@ -491,9 +489,7 @@ class S3UploadBackend(ZulipUploadBackend):
         image_data = key.get()["Body"].read()
         content_type = key.content_type
 
-        self.write_avatar_images(
-            s3_target_file_name, target_profile, image_data, content_type,
-        )
+        self.write_avatar_images(s3_target_file_name, target_profile, image_data, content_type)
 
     def get_avatar_url(self, hash_key: str, medium: bool = False) -> str:
         medium_suffix = "-medium.png" if medium else ""
@@ -524,11 +520,7 @@ class S3UploadBackend(ZulipUploadBackend):
 
         resized_data = resize_avatar(image_data)
         upload_image_to_s3(
-            self.avatar_bucket,
-            s3_file_name + ".png",
-            "image/png",
-            user_profile,
-            resized_data,
+            self.avatar_bucket, s3_file_name + ".png", "image/png", user_profile, resized_data,
         )
         # See avatar_url in avatar.py for URL.  (That code also handles the case
         # that users use gravatar.)
@@ -560,11 +552,7 @@ class S3UploadBackend(ZulipUploadBackend):
 
         resized_data = resize_logo(image_data)
         upload_image_to_s3(
-            self.avatar_bucket,
-            s3_file_name + ".png",
-            "image/png",
-            user_profile,
-            resized_data,
+            self.avatar_bucket, s3_file_name + ".png", "image/png", user_profile, resized_data,
         )
         # See avatar_url in avatar.py for URL.  (That code also handles the case
         # that users use gravatar.)
@@ -641,9 +629,7 @@ class S3UploadBackend(ZulipUploadBackend):
 
         # We use the avatar bucket, because it's world-readable.
         key = self.avatar_bucket.Object(
-            os.path.join(
-                "exports", generate_random_token(32), os.path.basename(tarball_path),
-            ),
+            os.path.join("exports", generate_random_token(32), os.path.basename(tarball_path)),
         )
 
         key.upload_file(tarball_path, Callback=percent_callback)
@@ -688,9 +674,7 @@ def delete_local_file(type: str, path: str) -> bool:
         os.remove(file_path)
         return True
     file_name = path.split("/")[-1]
-    logging.warning(
-        "%s does not exist. Its entry in the database will be removed.", file_name,
-    )
+    logging.warning("%s does not exist. Its entry in the database will be removed.", file_name)
     return False
 
 

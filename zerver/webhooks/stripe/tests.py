@@ -175,7 +175,9 @@ Billing method: send invoice"""
 
     def test_invoice_payment_failed(self) -> None:
         expected_topic = "cus_00000000000000"
-        expected_message = "[Invoice](https://dashboard.stripe.com/invoices/in_00000000000000) payment failed"
+        expected_message = (
+            "[Invoice](https://dashboard.stripe.com/invoices/in_00000000000000) payment failed"
+        )
         self.send_and_test_stream_message(
             "invoice_payment_failed",
             expected_topic,

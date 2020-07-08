@@ -353,9 +353,7 @@ class UserPresenceTests(ZulipTestCase):
 
         # Active presence from the mobile app doesn't count
         self.client_post(
-            "/json/users/me/presence",
-            {"status": "active"},
-            HTTP_USER_AGENT="ZulipMobile/1.0",
+            "/json/users/me/presence", {"status": "active"}, HTTP_USER_AGENT="ZulipMobile/1.0",
         )
         self.assertEqual(filter_presence_idle_user_ids({user_profile.id}), [user_profile.id])
 
@@ -628,9 +626,7 @@ class UserPresenceAggregationTests(ZulipTestCase):
         self.login_user(user)
         validate_time = timezone_now()
         with self.settings(OFFLINE_THRESHOLD_SECS=1):
-            result_dict = self._send_presence_for_aggregated_tests(
-                user, "idle", validate_time,
-            )
+            result_dict = self._send_presence_for_aggregated_tests(user, "idle", validate_time)
         self.assertDictEqual(
             result_dict["presence"]["aggregated"],
             {

@@ -411,9 +411,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         self.assertEqual(Attachment.objects.get(path_id=d1_path_id).messages.count(), 1)
 
         # Then, try having a user who didn't receive the message try to publish it, and fail
-        body = (
-            f"Illegal message ...[zulip.txt](http://{host}/user_uploads/" + d1_path_id + ")"
-        )
+        body = f"Illegal message ...[zulip.txt](http://{host}/user_uploads/" + d1_path_id + ")"
         self.send_stream_message(self.example_user("cordelia"), "Denmark", body, "test")
         self.assertEqual(Attachment.objects.get(path_id=d1_path_id).messages.count(), 1)
         self.assertFalse(Attachment.objects.get(path_id=d1_path_id).is_realm_public)
@@ -537,9 +535,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         d3 = StringIO("zulip!")
         d3.name = "dummy_3.txt"
         result = self.client_post("/json/user_uploads", {"file": d3})
-        self.assert_json_error(
-            result, "Upload would exceed your organization's upload quota.",
-        )
+        self.assert_json_error(result, "Upload would exceed your organization's upload quota.")
 
         realm.upload_quota_gb = None
         realm.save(update_fields=["upload_quota_gb"])
@@ -1175,8 +1171,7 @@ class AvatarTest(UploadSerializeMixin, ZulipTestCase):
         source_medium_path_id = avatar_disk_path(source_user_profile, medium=True)
         target_medium_path_id = avatar_disk_path(target_user_profile, medium=True)
         self.assertEqual(
-            open(source_medium_path_id, "rb").read(),
-            open(target_medium_path_id, "rb").read(),
+            open(source_medium_path_id, "rb").read(), open(target_medium_path_id, "rb").read(),
         )
 
     def test_delete_avatar_image(self) -> None:
@@ -1503,9 +1498,7 @@ class RealmLogoTest(UploadSerializeMixin, ZulipTestCase):
         user_profile = self.example_user("hamlet")
         self.login_user(user_profile)
         realm = user_profile.realm
-        do_change_logo_source(
-            realm, Realm.LOGO_UPLOADED, self.night, acting_user=user_profile,
-        )
+        do_change_logo_source(realm, Realm.LOGO_UPLOADED, self.night, acting_user=user_profile)
         response = self.client_get("/json/realm/logo", {"night": ujson.dumps(self.night)})
         redirect_url = response["Location"]
         self.assertTrue(
@@ -1584,9 +1577,7 @@ class RealmLogoTest(UploadSerializeMixin, ZulipTestCase):
         user_profile = self.example_user("iago")
         self.login_user(user_profile)
         realm = user_profile.realm
-        do_change_logo_source(
-            realm, Realm.LOGO_UPLOADED, self.night, acting_user=user_profile,
-        )
+        do_change_logo_source(realm, Realm.LOGO_UPLOADED, self.night, acting_user=user_profile)
         result = self.client_delete("/json/realm/logo", {"night": ujson.dumps(self.night)})
         self.assert_json_success(result)
         realm = get_realm("zulip")
@@ -1961,9 +1952,7 @@ class S3Test(ZulipTestCase):
         image_file.seek(0)
         self.assertEqual(image_file.read(), original_key.get()["Body"].read())
 
-        resized_path_id = os.path.join(
-            str(user_profile.realm.id), "realm", f"{file_name}.png",
-        )
+        resized_path_id = os.path.join(str(user_profile.realm.id), "realm", f"{file_name}.png")
         resized_data = bucket.Object(resized_path_id).get()["Body"].read()
         resized_image = Image.open(io.BytesIO(resized_data)).size
         self.assertEqual(resized_image, (DEFAULT_AVATAR_SIZE, DEFAULT_AVATAR_SIZE))

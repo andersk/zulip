@@ -577,9 +577,7 @@ class TestMissedMessages(ZulipTestCase):
             "Group personal message!",
         )
 
-        verify_body_include = [
-            "Othello, the Moor of Venice: Group personal message! -- Reply",
-        ]
+        verify_body_include = ["Othello, the Moor of Venice: Group personal message! -- Reply"]
         email_subject = "Group PMs with Cordelia Lear, Iago, and Othello, the Moor of Venice"
         self._test_cases(msg_id, verify_body_include, email_subject, send_as_user)
 
@@ -597,9 +595,7 @@ class TestMissedMessages(ZulipTestCase):
             "Group personal message!",
         )
 
-        verify_body_include = [
-            "Othello, the Moor of Venice: Group personal message! -- Reply",
-        ]
+        verify_body_include = ["Othello, the Moor of Venice: Group personal message! -- Reply"]
         email_subject = "Group PMs with Cordelia Lear, Iago, and 2 others"
         self._test_cases(msg_id, verify_body_include, email_subject, send_as_user)
 
@@ -736,9 +732,7 @@ class TestMissedMessages(ZulipTestCase):
         self._extra_context_in_huddle_missed_stream_messages_two_others(False)
 
     @override_settings(SEND_MISSED_MESSAGE_EMAILS_AS_USER=True)
-    def test_extra_context_in_huddle_missed_stream_messages_three_others_as_user(
-        self,
-    ) -> None:
+    def test_extra_context_in_huddle_missed_stream_messages_three_others_as_user(self) -> None:
         self._extra_context_in_huddle_missed_stream_messages_three_others(True)
 
     def test_extra_context_in_huddle_missed_stream_messages_three_others(self) -> None:

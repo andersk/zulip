@@ -21,9 +21,7 @@ def format_email_subject(email_subject: str) -> str:
 
 
 def logger_repr(report: Dict[str, Any]) -> str:
-    return "Logger {logger_name}, from module {log_module} line {log_lineno}:".format(
-        **report,
-    )
+    return "Logger {logger_name}, from module {log_module} line {log_lineno}:".format(**report)
 
 
 def user_info_str(report: Dict[str, Any]) -> str:

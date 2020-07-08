@@ -57,9 +57,7 @@ try:
     logging.info("Unpacking the tarball")
     unpack_zulip = os.path.realpath(os.path.join(os.path.dirname(__file__), "unpack-zulip"))
     deploy_path = subprocess.check_output(
-        [unpack_zulip, archived_tarball_path],
-        preexec_fn=su_to_zulip,
-        universal_newlines=True,
+        [unpack_zulip, archived_tarball_path], preexec_fn=su_to_zulip, universal_newlines=True,
     )
 
     # Chdir to deploy_path and then run upgrade-zulip-stage-2 from the
@@ -68,8 +66,7 @@ try:
     deploy_path = deploy_path.strip()
     os.chdir(deploy_path)
     subprocess.check_call(
-        [os.path.abspath("./scripts/lib/upgrade-zulip-stage-2"), deploy_path]
-        + deploy_options,
+        [os.path.abspath("./scripts/lib/upgrade-zulip-stage-2"), deploy_path] + deploy_options,
     )
 finally:
     release_deployment_lock()

@@ -532,9 +532,7 @@ class TestArchivingSubMessages(ArchiveMessagesTestingBase):
 
         restore_all_data_from_archive()
         self.assertEqual(
-            set(
-                SubMessage.objects.filter(id__in=submessage_ids).values_list("id", flat=True),
-            ),
+            set(SubMessage.objects.filter(id__in=submessage_ids).values_list("id", flat=True)),
             set(submessage_ids),
         )
 
@@ -857,9 +855,7 @@ class MoveMessageToArchiveWithSubMessages(MoveMessageToArchiveBase):
 
         restore_all_data_from_archive()
         self.assertEqual(
-            set(
-                SubMessage.objects.filter(id__in=submessage_ids).values_list("id", flat=True),
-            ),
+            set(SubMessage.objects.filter(id__in=submessage_ids).values_list("id", flat=True)),
             set(submessage_ids),
         )
 
@@ -951,9 +947,7 @@ class TestGetRealmAndStreamsForArchiving(ZulipTestCase):
         result = []
         for realm in Realm.objects.all():
             if realm.message_retention_days != -1:
-                streams = Stream.objects.filter(realm=realm).exclude(
-                    message_retention_days=-1,
-                )
+                streams = Stream.objects.filter(realm=realm).exclude(message_retention_days=-1)
                 result.append((realm, list(streams)))
             else:
                 streams = (

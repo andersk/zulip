@@ -257,9 +257,7 @@ def get_build_hook_event_body(payload: Dict[str, Any]) -> str:
 
 
 def get_test_event_body(payload: Dict[str, Any]) -> str:
-    return (
-        f"Webhook for **{get_repo_name(payload)}** has been configured successfully! :tada:"
-    )
+    return f"Webhook for **{get_repo_name(payload)}** has been configured successfully! :tada:"
 
 
 def get_pipeline_event_body(payload: Dict[str, Any]) -> str:

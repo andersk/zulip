@@ -43,9 +43,7 @@ parser = argparse.ArgumentParser(
 )
 
 parser.add_argument("--test", action="store_true", help="Use the testing database and ports")
-parser.add_argument(
-    "--minify", action="store_true", help="Minifies assets for testing in dev",
-)
+parser.add_argument("--minify", action="store_true", help="Minifies assets for testing in dev")
 parser.add_argument(
     "--interface",
     action="store",
@@ -226,11 +224,7 @@ def fetch_request(
 ) -> "Generator[Callable[..., Any], Any, None]":
     # use large timeouts to handle polling requests
     req = httpclient.HTTPRequest(
-        url,
-        connect_timeout=240.0,
-        request_timeout=240.0,
-        decompress_response=False,
-        **kwargs,
+        url, connect_timeout=240.0, request_timeout=240.0, decompress_response=False, **kwargs,
     )
     client = httpclient.AsyncHTTPClient()
     # wait for response

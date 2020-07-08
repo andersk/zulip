@@ -463,9 +463,7 @@ class NarrowBuilder:
         cond = column("recipient_id").in_(recipient_ids)
         return query.where(maybe_negate(cond))
 
-    def by_search(
-        self, query: Query, operand: str, maybe_negate: ConditionTransform,
-    ) -> Query:
+    def by_search(self, query: Query, operand: str, maybe_negate: ConditionTransform) -> Query:
         if settings.USING_PGROONGA:
             return self._by_search_pgroonga(query, operand, maybe_negate)
         else:

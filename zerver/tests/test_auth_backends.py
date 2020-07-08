@@ -380,14 +380,10 @@ class AuthBackendTest(ZulipTestCase):
 
         # testing to avoid false error messages.
         result = self.client_get("/login/")
-        self.assert_not_in_success_response(
-            ["No authentication backends are enabled"], result,
-        )
+        self.assert_not_in_success_response(["No authentication backends are enabled"], result)
 
         result = self.client_get("/register/")
-        self.assert_not_in_success_response(
-            ["No authentication backends are enabled"], result,
-        )
+        self.assert_not_in_success_response(["No authentication backends are enabled"], result)
 
     @override_settings(
         AUTHENTICATION_BACKENDS=("zproject.backends.ZulipLDAPAuthBackend",),
@@ -770,9 +766,7 @@ class DesktopFlowTestingLib(ZulipTestCase):
         browser_url = soup.find("a", href=True)["href"]
 
         self.assertEqual(browser_url, "/login/")
-        decrypted_key = self.verify_desktop_data_and_return_key(
-            desktop_data, desktop_flow_otp,
-        )
+        decrypted_key = self.verify_desktop_data_and_return_key(desktop_data, desktop_flow_otp)
 
         result = self.client_get(
             f"http://zulip.testserver/accounts/login/subdomain/{decrypted_key}",
@@ -1171,9 +1165,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
         self.assertEqual(query_params["email"], [self.example_email("hamlet")])
         encrypted_api_key = query_params["otp_encrypted_api_key"][0]
         hamlet_api_keys = get_all_api_keys(self.example_user("hamlet"))
-        self.assertIn(
-            otp_decrypt_api_key(encrypted_api_key, mobile_flow_otp), hamlet_api_keys,
-        )
+        self.assertIn(otp_decrypt_api_key(encrypted_api_key, mobile_flow_otp), hamlet_api_keys)
         self.assertEqual(len(mail.outbox), 1)
         self.assertIn("Zulip on Android", mail.outbox[0].body)
 
@@ -2055,8 +2047,7 @@ class SAMLAuthBackendTest(SocialAuthBase):
                 m.output,
                 [
                     self.logger_output(
-                        "/complete/saml/: No valid IdP as issuer of the SAMLResponse.",
-                        "info",
+                        "/complete/saml/: No valid IdP as issuer of the SAMLResponse.", "info",
                     ),
                 ],
             )
@@ -2457,9 +2448,9 @@ class AppleAuthMixin:
         headers = {"kid": "SOMEKID"}
         private_key = settings.APPLE_ID_TOKEN_GENERATION_KEY
 
-        id_token = jwt.encode(
-            payload, private_key, algorithm="RS256", headers=headers,
-        ).decode("utf-8")
+        id_token = jwt.encode(payload, private_key, algorithm="RS256", headers=headers).decode(
+            "utf-8",
+        )
 
         return id_token
 
@@ -3054,9 +3045,7 @@ class GitHubAuthBackendTest(SocialAuthBase):
         # are associated with existing accounts, we expect the choose
         # email screen to select which account to use.
         hamlet = self.example_user("hamlet")
-        account_data_dict = self.get_account_data_dict(
-            email="hamlet@zulip.com", name="Hamlet",
-        )
+        account_data_dict = self.get_account_data_dict(email="hamlet@zulip.com", name="Hamlet")
         email_data = [
             dict(email=account_data_dict["email"], verified=True),
             dict(email="hamlet@zulip.com", verified=True, primary=True),
@@ -3353,9 +3342,7 @@ class GoogleAuthBackendTest(SocialAuthBase):
         self.assertEqual(query_params["email"], [self.example_email("hamlet")])
         encrypted_api_key = query_params["otp_encrypted_api_key"][0]
         hamlet_api_keys = get_all_api_keys(self.example_user("hamlet"))
-        self.assertIn(
-            otp_decrypt_api_key(encrypted_api_key, mobile_flow_otp), hamlet_api_keys,
-        )
+        self.assertIn(otp_decrypt_api_key(encrypted_api_key, mobile_flow_otp), hamlet_api_keys)
 
     def test_social_auth_mobile_success_legacy_url(self) -> None:
         mobile_flow_otp = "1234abcd" * 8
@@ -3400,9 +3387,7 @@ class GoogleAuthBackendTest(SocialAuthBase):
         self.assertEqual(query_params["email"], [self.example_email("hamlet")])
         encrypted_api_key = query_params["otp_encrypted_api_key"][0]
         hamlet_api_keys = get_all_api_keys(self.example_user("hamlet"))
-        self.assertIn(
-            otp_decrypt_api_key(encrypted_api_key, mobile_flow_otp), hamlet_api_keys,
-        )
+        self.assertIn(otp_decrypt_api_key(encrypted_api_key, mobile_flow_otp), hamlet_api_keys)
         self.assertEqual(len(mail.outbox), 1)
         self.assertIn("Zulip on Android", mail.outbox[0].body)
 
@@ -3540,9 +3525,7 @@ class GoogleAuthBackendTest(SocialAuthBase):
         self.assertEqual(result.status_code, 200)
         self.assert_in_response("No account found for", result)
         self.assert_in_response("new@zulip.com.", result)
-        self.assert_in_response(
-            'action="http://zulip.testserver/accounts/do_confirm/', result,
-        )
+        self.assert_in_response('action="http://zulip.testserver/accounts/do_confirm/', result)
 
         url = re.findall(
             'action="(http://zulip.testserver/accounts/do_confirm[^"]*)"',
@@ -4149,9 +4132,7 @@ class TestDevAuthBackend(ZulipTestCase):
                 "zerver.views.auth.get_realm_from_request", return_value=get_realm("zulip"),
             ):
                 result = self.client_get("http://zulip.testserver/devlogin/")
-                self.assert_in_success_response(
-                    ["iago@zulip.com", "hamlet@zulip.com"], result,
-                )
+                self.assert_in_success_response(["iago@zulip.com", "hamlet@zulip.com"], result)
                 self.assert_not_in_success_response(
                     ["starnine@mit.edu", "espuser@mit.edu"], result,
                 )
@@ -4357,9 +4338,7 @@ class TestZulipRemoteUserBackend(DesktopFlowTestingLib, ZulipTestCase):
         self.assertEqual(query_params["email"], [self.example_email("hamlet")])
         encrypted_api_key = query_params["otp_encrypted_api_key"][0]
         hamlet_api_keys = get_all_api_keys(self.example_user("hamlet"))
-        self.assertIn(
-            otp_decrypt_api_key(encrypted_api_key, mobile_flow_otp), hamlet_api_keys,
-        )
+        self.assertIn(otp_decrypt_api_key(encrypted_api_key, mobile_flow_otp), hamlet_api_keys)
         self.assertEqual(len(mail.outbox), 1)
         self.assertIn("Zulip on Android", mail.outbox[0].body)
 
@@ -4408,9 +4387,7 @@ class TestZulipRemoteUserBackend(DesktopFlowTestingLib, ZulipTestCase):
         self.assertEqual(query_params["email"], [self.example_email("hamlet")])
         encrypted_api_key = query_params["otp_encrypted_api_key"][0]
         hamlet_api_keys = get_all_api_keys(self.example_user("hamlet"))
-        self.assertIn(
-            otp_decrypt_api_key(encrypted_api_key, mobile_flow_otp), hamlet_api_keys,
-        )
+        self.assertIn(otp_decrypt_api_key(encrypted_api_key, mobile_flow_otp), hamlet_api_keys)
         self.assertEqual(len(mail.outbox), 1)
         self.assertIn("Zulip on Android", mail.outbox[0].body)
 
@@ -4442,9 +4419,7 @@ class TestZulipRemoteUserBackend(DesktopFlowTestingLib, ZulipTestCase):
         self.assert_json_error_contains(result, "Invalid OTP", 400)
 
         result = self.client_get(
-            "/accounts/login/sso/",
-            dict(desktop_flow_otp=desktop_flow_otp),
-            REMOTE_USER=email,
+            "/accounts/login/sso/", dict(desktop_flow_otp=desktop_flow_otp), REMOTE_USER=email,
         )
         self.verify_desktop_flow_end_page(result, email, desktop_flow_otp)
 
@@ -4570,16 +4545,12 @@ class TestJWTLogin(ZulipTestCase):
     def test_login_failure_when_key_is_missing(self) -> None:
         with self.settings(JWT_AUTH_KEYS={"zulip": {"key": "key", "algorithms": ["HS256"]}}):
             result = self.client_post("/accounts/login/jwt/")
-            self.assert_json_error_contains(
-                result, "No JSON web token passed in request", 400,
-            )
+            self.assert_json_error_contains(result, "No JSON web token passed in request", 400)
 
     def test_login_failure_when_bad_token_is_passed(self) -> None:
         with self.settings(JWT_AUTH_KEYS={"zulip": {"key": "key", "algorithms": ["HS256"]}}):
             result = self.client_post("/accounts/login/jwt/")
-            self.assert_json_error_contains(
-                result, "No JSON web token passed in request", 400,
-            )
+            self.assert_json_error_contains(result, "No JSON web token passed in request", 400)
             data = {"json_web_token": "bad token"}
             result = self.client_post("/accounts/login/jwt/", data)
             self.assert_json_error_contains(result, "Bad JSON web token", 400)
@@ -5158,9 +5129,7 @@ class TestLDAP(ZulipLDAPTestCase):
             self.assertEqual(result.status_code, 200)
 
     @override_settings(AUTHENTICATION_BACKENDS=("zproject.backends.ZulipLDAPAuthBackend",))
-    def test_login_success_when_user_does_not_exist_with_split_full_name_mapping(
-        self,
-    ) -> None:
+    def test_login_success_when_user_does_not_exist_with_split_full_name_mapping(self) -> None:
         with self.settings(
             LDAP_APPEND_DOMAIN="zulip.com",
             AUTH_LDAP_USER_ATTR_MAP={"first_name": "sn", "last_name": "cn"},
@@ -5380,9 +5349,7 @@ class TestZulipLDAPUserPopulator(ZulipLDAPTestCase):
         with open(test_image_file, "rb") as f:
             test_image_data = f.read()
         self.change_ldap_user_attr("hamlet", "jpegPhoto", test_image_data)
-        with self.settings(
-            AUTH_LDAP_USER_ATTR_MAP={"full_name": "cn", "avatar": "jpegPhoto"},
-        ):
+        with self.settings(AUTH_LDAP_USER_ATTR_MAP={"full_name": "cn", "avatar": "jpegPhoto"}):
             self.perform_ldap_sync(self.example_user("hamlet"))
 
         hamlet = self.example_user("hamlet")
@@ -5402,9 +5369,7 @@ class TestZulipLDAPUserPopulator(ZulipLDAPTestCase):
 
         # Try to use invalid data as the image:
         self.change_ldap_user_attr("hamlet", "jpegPhoto", b"00" + test_image_data)
-        with self.settings(
-            AUTH_LDAP_USER_ATTR_MAP={"full_name": "cn", "avatar": "jpegPhoto"},
-        ):
+        with self.settings(AUTH_LDAP_USER_ATTR_MAP={"full_name": "cn", "avatar": "jpegPhoto"}):
             with mock.patch("logging.warning") as mock_warning:
                 self.perform_ldap_sync(self.example_user("hamlet"))
                 mock_warning.assert_called_once_with(
@@ -5466,9 +5431,7 @@ class TestZulipLDAPUserPopulator(ZulipLDAPTestCase):
                 "custom_profile_field__birthday": "birthDate",
             },
         ):
-            with self.assertRaisesRegex(
-                ZulipLDAPException, "Invalid data for birthday field",
-            ):
+            with self.assertRaisesRegex(ZulipLDAPException, "Invalid data for birthday field"):
                 self.perform_ldap_sync(self.example_user("hamlet"))
 
     def test_update_custom_profile_field_no_mapping(self) -> None:
@@ -5633,9 +5596,7 @@ class TestRequireEmailFormatUsernames(ZulipTestCase):
             realm = Realm.objects.get(string_id="zulip")
             self.assertFalse(require_email_format_usernames(realm))
 
-    def test_require_email_format_usernames_for_email_and_ldap_with_append_email(
-        self,
-    ) -> None:
+    def test_require_email_format_usernames_for_email_and_ldap_with_append_email(self) -> None:
         with self.settings(
             AUTHENTICATION_BACKENDS=(
                 "zproject.backends.EmailAuthBackend",

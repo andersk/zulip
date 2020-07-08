@@ -290,8 +290,7 @@ def log_event(event: MutableMapping[str, Any]) -> None:
         os.mkdir(settings.EVENT_LOG_DIR)
 
     template = os.path.join(
-        settings.EVENT_LOG_DIR,
-        "%s." + platform.node() + timezone_now().strftime(".%Y-%m-%d"),
+        settings.EVENT_LOG_DIR, "%s." + platform.node() + timezone_now().strftime(".%Y-%m-%d"),
     )
 
     with lockfile(template % ("lock",)):
@@ -388,11 +387,7 @@ def notify_new_user(user_profile: UserProfile) -> None:
                 user_count=user_count,
             )
             internal_send_stream_message(
-                user_profile.realm,
-                sender,
-                signup_notifications_stream,
-                _("signups"),
-                message,
+                user_profile.realm, sender, signup_notifications_stream, _("signups"), message,
             )
 
     # We also send a notification to the Zulip administrative realm
@@ -1127,9 +1122,7 @@ def do_deactivate_stream(
     if DefaultStream.objects.filter(realm_id=stream.realm_id, stream_id=stream.id).exists():
         do_remove_default_stream(stream)
 
-    default_stream_groups_for_stream = DefaultStreamGroup.objects.filter(
-        streams__id=stream.id,
-    )
+    default_stream_groups_for_stream = DefaultStreamGroup.objects.filter(streams__id=stream.id)
     for group in default_stream_groups_for_stream:
         do_remove_streams_from_default_stream_group(stream.realm, group, [stream])
 
@@ -1262,10 +1255,7 @@ def create_mirror_user_if_needed(
 def send_welcome_bot_response(message: MutableMapping[str, Any]) -> None:
     welcome_bot = get_system_bot(settings.WELCOME_BOT)
     human_recipient_id = message["message"].sender.recipient_id
-    if (
-        Message.objects.filter(sender=welcome_bot, recipient_id=human_recipient_id).count()
-        < 2
-    ):
+    if Message.objects.filter(sender=welcome_bot, recipient_id=human_recipient_id).count() < 2:
         content = (
             _("Congratulations on your first reply!") + " "
             ":tada:"
@@ -1723,9 +1713,7 @@ def do_send_messages(
             )
 
             for um in user_messages:
-                user_message_flags[message["message"].id][
-                    um.user_profile_id
-                ] = um.flags_list()
+                user_message_flags[message["message"].id][um.user_profile_id] = um.flags_list()
 
             ums.extend(user_messages)
 
@@ -2154,9 +2142,7 @@ def check_send_typing_notification(
             # We include cross-bot realms as possible recipients,
             # so that clients can know which huddle conversation
             # is relevant here.
-            user_profile = get_user_by_id_in_realm_including_cross_realm(
-                user_id, sender.realm,
-            )
+            user_profile = get_user_by_id_in_realm_including_cross_realm(user_id, sender.realm)
         except UserProfile.DoesNotExist:
             raise JsonableError(_("Invalid user ID {}").format(user_id))
         user_profiles.append(user_profile)
@@ -2225,9 +2211,7 @@ def get_recipient_from_user_profiles(
 
 
 def validate_recipient_user_profiles(
-    user_profiles: Sequence[UserProfile],
-    sender: UserProfile,
-    allow_deactivated: bool = False,
+    user_profiles: Sequence[UserProfile], sender: UserProfile, allow_deactivated: bool = False,
 ) -> Sequence[UserProfile]:
     recipient_profiles_map: Dict[int, UserProfile] = {}
 
@@ -2840,9 +2824,7 @@ def internal_send_stream_message(
 def internal_send_stream_message_by_name(
     realm: Realm, sender: UserProfile, stream_name: str, topic: str, content: str,
 ) -> Optional[int]:
-    message = internal_prep_stream_message_by_name(
-        realm, sender, stream_name, topic, content,
-    )
+    message = internal_prep_stream_message_by_name(realm, sender, stream_name, topic, content)
 
     if message is None:
         return None
@@ -3965,9 +3947,7 @@ def do_change_default_events_register_stream(
             dict(
                 type="realm_bot",
                 op="update",
-                bot=dict(
-                    user_id=user_profile.id, default_events_register_stream=stream_name,
-                ),
+                bot=dict(user_id=user_profile.id, default_events_register_stream=stream_name),
             ),
             bot_owner_user_ids(user_profile),
         )
@@ -4339,9 +4319,7 @@ def lookup_default_stream_groups(
     default_stream_groups = []
     for group_name in default_stream_group_names:
         try:
-            default_stream_group = DefaultStreamGroup.objects.get(
-                name=group_name, realm=realm,
-            )
+            default_stream_group = DefaultStreamGroup.objects.get(name=group_name, realm=realm)
         except DefaultStreamGroup.DoesNotExist:
             raise JsonableError(_("Invalid default stream group {}").format(group_name))
         default_stream_groups.append(default_stream_group)
@@ -4510,9 +4488,9 @@ def do_update_user_activity_interval(
     # up creating two overlapping intervals, but that shouldn't happen
     # often, and can be corrected for in post-processing
     try:
-        last = UserActivityInterval.objects.filter(user_profile=user_profile).order_by(
-            "-end",
-        )[0]
+        last = UserActivityInterval.objects.filter(user_profile=user_profile).order_by("-end")[
+            0
+        ]
         # There are two ways our intervals could overlap:
         # (1) The start of the new interval could be inside the old interval
         # (2) The end of the new interval could be inside the old interval
@@ -4828,9 +4806,7 @@ def do_clear_mobile_push_notifications_for_ids(
 def do_update_message_flags(
     user_profile: UserProfile, client: Client, operation: str, flag: str, messages: List[int],
 ) -> int:
-    valid_flags = [
-        item for item in UserMessage.flags if item not in UserMessage.NON_API_FLAGS
-    ]
+    valid_flags = [item for item in UserMessage.flags if item not in UserMessage.NON_API_FLAGS]
     if flag not in valid_flags:
         raise JsonableError(_("Invalid flag: '{}'").format(flag))
     if flag in UserMessage.NON_EDITABLE_FLAGS:
@@ -6602,9 +6578,7 @@ def check_remove_custom_profile_field_value(user_profile: UserProfile, field_id:
         pass
 
 
-def do_send_create_user_group_event(
-    user_group: UserGroup, members: List[UserProfile],
-) -> None:
+def do_send_create_user_group_event(user_group: UserGroup, members: List[UserProfile]) -> None:
     event = dict(
         type="user_group",
         op="add",

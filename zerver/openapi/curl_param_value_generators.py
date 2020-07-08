@@ -105,9 +105,7 @@ def update_flags_message_ids() -> Dict[str, object]:
 
     messages = []
     for _ in range(3):
-        messages.append(
-            helpers.send_stream_message(helpers.example_user("iago"), stream_name),
-        )
+        messages.append(helpers.send_stream_message(helpers.example_user("iago"), stream_name))
     return {
         "messages": messages,
     }

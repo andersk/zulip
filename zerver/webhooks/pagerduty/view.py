@@ -80,8 +80,7 @@ def build_pagerduty_formatdict(message: Dict[str, Any]) -> Dict[str, Any]:
     if message["data"]["incident"].get("assigned_to_user", None):
         assigned_to_user = message["data"]["incident"]["assigned_to_user"]
         format_dict["assignee_info"] = ASSIGNEE_TEMPLATE.format(
-            username=assigned_to_user["email"].split("@")[0],
-            url=assigned_to_user["html_url"],
+            username=assigned_to_user["email"].split("@")[0], url=assigned_to_user["html_url"],
         )
     else:
         format_dict["assignee_info"] = "nobody"
@@ -89,8 +88,7 @@ def build_pagerduty_formatdict(message: Dict[str, Any]) -> Dict[str, Any]:
     if message["data"]["incident"].get("resolved_by_user", None):
         resolved_by_user = message["data"]["incident"]["resolved_by_user"]
         format_dict["resolving_agent_info"] = ASSIGNEE_TEMPLATE.format(
-            username=resolved_by_user["email"].split("@")[0],
-            url=resolved_by_user["html_url"],
+            username=resolved_by_user["email"].split("@")[0], url=resolved_by_user["html_url"],
         )
 
     trigger_message = []

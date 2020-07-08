@@ -481,11 +481,7 @@ def remote_user_jwt(request: HttpRequest) -> HttpResponse:
     user_profile = authenticate(username=email, realm=realm, use_dummy_backend=True)
     if user_profile is None:
         result = ExternalAuthResult(
-            data_dict={
-                "email": email,
-                "full_name": remote_user,
-                "subdomain": realm.subdomain,
-            },
+            data_dict={"email": email, "full_name": remote_user, "subdomain": realm.subdomain},
         )
     else:
         result = ExternalAuthResult(user_profile=user_profile)
@@ -668,9 +664,7 @@ def get_dev_users(
             is_bot=False, is_active=True, realm=realm,
         )
     else:
-        users_query = UserProfile.objects.select_related().filter(
-            is_bot=False, is_active=True,
-        )
+        users_query = UserProfile.objects.select_related().filter(is_bot=False, is_active=True)
 
     shakespearian_users = users_query.exclude(email__startswith="extrauser").order_by("email")
     extra_users = users_query.filter(email__startswith="extrauser").order_by("email")

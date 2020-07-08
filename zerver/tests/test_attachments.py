@@ -30,8 +30,7 @@ class AttachmentsTests(ZulipTestCase):
         ):
             result = self.client_delete(f"/json/attachments/{self.attachment.id}")
         self.assert_json_error(
-            result,
-            "An error occurred while deleting the attachment. Please try again later.",
+            result, "An error occurred while deleting the attachment. Please try again later.",
         )
 
     @mock.patch("zerver.lib.attachments.delete_message_image")

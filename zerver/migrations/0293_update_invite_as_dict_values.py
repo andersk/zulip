@@ -5,9 +5,7 @@ from django.db.backends.postgresql.schema import DatabaseSchemaEditor
 from django.db.migrations.state import StateApps
 
 
-def update_invite_as_dict_values(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def update_invite_as_dict_values(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     PreregistrationUser = apps.get_model("zerver", "PreregistrationUser")
     MultiuseInvite = apps.get_model("zerver", "MultiuseInvite")
 

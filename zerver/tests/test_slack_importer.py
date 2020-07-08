@@ -374,9 +374,7 @@ class SlackImporter(ZulipTestCase):
             slack_user_id_to_zulip_user_id,
             customprofilefield,
             customprofilefield_value,
-        ) = users_to_zerver_userprofile(
-            slack_data_dir, user_data, 1, timestamp, "test_domain",
-        )
+        ) = users_to_zerver_userprofile(slack_data_dir, user_data, 1, timestamp, "test_domain")
 
         # Test custom profile fields
         self.assertEqual(customprofilefield[0]["field_type"], 1)
@@ -678,9 +676,7 @@ class SlackImporter(ZulipTestCase):
         self.assertEqual(slack_recipient_name_to_zulip_recipient_id, {})
         self.assertEqual(avatar_list, [])
 
-        mock_channels_to_zerver_stream.assert_called_once_with(
-            "./random_path", 1, ANY, {}, [],
-        )
+        mock_channels_to_zerver_stream.assert_called_once_with("./random_path", 1, ANY, {}, [])
         passed_realm = mock_channels_to_zerver_stream.call_args_list[0][0][2]
         zerver_realmdomain = passed_realm["zerver_realmdomain"]
         self.assertListEqual(zerver_realmdomain, test_zerver_realmdomain)
@@ -1099,14 +1095,10 @@ class SlackImporter(ZulipTestCase):
             records = ujson.load(f)
             self.assertEqual(len(records), 2)
             self.assertEqual(records[0]["path"], "0/icon.original")
-            self.assertTrue(
-                os.path.exists(os.path.join(realm_icons_path, records[0]["path"])),
-            )
+            self.assertTrue(os.path.exists(os.path.join(realm_icons_path, records[0]["path"])))
 
             self.assertEqual(records[1]["path"], "0/icon.png")
-            self.assertTrue(
-                os.path.exists(os.path.join(realm_icons_path, records[1]["path"])),
-            )
+            self.assertTrue(os.path.exists(os.path.join(realm_icons_path, records[1]["path"])))
 
         # test import of the converted slack data into an existing database
         with self.settings(BILLING_ENABLED=False):

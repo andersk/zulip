@@ -134,8 +134,7 @@ def build_analytics_data(
     MAX_CLIENT_BATCH_SIZE = 10000
     data = {}
     data["analytics_realmcount"] = [
-        model_to_dict(row)
-        for row in realm_count_query.order_by("id")[0:MAX_CLIENT_BATCH_SIZE]
+        model_to_dict(row) for row in realm_count_query.order_by("id")[0:MAX_CLIENT_BATCH_SIZE]
     ]
     data["analytics_installationcount"] = [
         model_to_dict(row)

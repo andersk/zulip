@@ -130,16 +130,16 @@ def get_schema(endpoint: str, method: str, response: str) -> Dict[str, Any]:
         # differ in example so either can be used.
         response += "_0"
     if len(response) == 3:
-        schema = openapi_spec.spec()["paths"][endpoint][method.lower()]["responses"][
-            response
-        ]["content"]["application/json"]["schema"]
+        schema = openapi_spec.spec()["paths"][endpoint][method.lower()]["responses"][response][
+            "content"
+        ]["application/json"]["schema"]
         return schema
     else:
         resp_code = int(response[4])
         response = response[0:3]
-        schema = openapi_spec.spec()["paths"][endpoint][method.lower()]["responses"][
-            response
-        ]["content"]["application/json"]["schema"]["oneOf"][resp_code]
+        schema = openapi_spec.spec()["paths"][endpoint][method.lower()]["responses"][response][
+            "content"
+        ]["application/json"]["schema"]["oneOf"][resp_code]
         return schema
 
 

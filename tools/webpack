@@ -26,9 +26,7 @@ def build_for_prod_or_casper(quiet: bool) -> NoReturn:
     os.execvp(webpack_args[0], webpack_args)
 
 
-def build_for_dev_server(
-    host: str, port: str, minify: bool, disable_host_check: bool,
-) -> None:
+def build_for_dev_server(host: str, port: str, minify: bool, disable_host_check: bool) -> None:
     """watches and rebuilds on changes, serving files from memory via webpack-dev-server"""
 
     # This is our most dynamic configuration, which we use for our

@@ -506,9 +506,7 @@ EVENT_BODY_FUNCTION_MAPPER = {
     "story_update_archived": partial(get_update_archived_body, entity="story"),
     "epic_update_archived": partial(get_update_archived_body, entity="epic"),
     "story_create": get_story_create_body,
-    "pull-request_create": partial(
-        get_story_create_github_entity_body, entity="pull-request",
-    ),
+    "pull-request_create": partial(get_story_create_github_entity_body, entity="pull-request"),
     "branch_create": partial(get_story_create_github_entity_body, entity="branch"),
     "story_delete": get_delete_body,
     "epic_delete": get_delete_body,

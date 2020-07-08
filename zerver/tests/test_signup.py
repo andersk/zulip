@@ -316,8 +316,7 @@ class PasswordResetTest(ZulipTestCase):
 
         [message] = outbox
         self.assertRegex(
-            message.from_email,
-            fr"^Zulip Account Security <{self.TOKENIZED_NOREPLY_REGEX}>\Z",
+            message.from_email, fr"^Zulip Account Security <{self.TOKENIZED_NOREPLY_REGEX}>\Z",
         )
         self.assertIn(f"{subdomain}.testserver", message.extra_headers["List-Id"])
 
@@ -515,8 +514,7 @@ class PasswordResetTest(ZulipTestCase):
         self.assertIn("Somebody (possibly you) requested a new password", body)
         self.assertIn("You do not have an account", body)
         self.assertIn(
-            "active accounts in the following organization(s).\nhttp://zulip.testserver",
-            body,
+            "active accounts in the following organization(s).\nhttp://zulip.testserver", body,
         )
         self.assertIn("safely ignore", body)
         self.assertNotIn("reset your password", body)
@@ -1298,9 +1296,7 @@ earl-test@zulip.com""",
         self.login("iago")
         invitee_emails = "1@zulip.com, 2@zulip.com"
         self.invite(invitee_emails, ["Denmark"])
-        invitee_emails = ", ".join(
-            [str(i) for i in range(get_realm("zulip").max_invites - 1)],
-        )
+        invitee_emails = ", ".join([str(i) for i in range(get_realm("zulip").max_invites - 1)])
         self.assert_json_error(
             self.invite(invitee_emails, ["Denmark"]),
             "You do not have enough remaining invites. "
@@ -1843,9 +1839,7 @@ class InvitationsTestCase(InviteUserBase):
             email="TestThree@zulip.com", referred_by=hamlet,
         )
         prereg_user_three.save()
-        prereg_user_four = PreregistrationUser(
-            email="TestFour@zulip.com", referred_by=othello,
-        )
+        prereg_user_four = PreregistrationUser(email="TestFour@zulip.com", referred_by=othello)
         prereg_user_four.save()
         prereg_user_other_realm = PreregistrationUser(
             email="TestOne@zulip.com", referred_by=self.mit_user("sipbtest"),
@@ -3214,9 +3208,7 @@ class UserSignUpTest(InviteUserBase):
                     "from_confirmation": "1",
                 },
             )
-            self.assert_in_success_response(
-                ["We just need you to do one last thing."], result,
-            )
+            self.assert_in_success_response(["We just need you to do one last thing."], result)
 
             result = self.submit_reg_form_for_user(email, "easy", full_name="New Guy")
             self.assert_in_success_response(["The password is too weak."], result)
@@ -3249,9 +3241,7 @@ class UserSignUpTest(InviteUserBase):
         for stream_name in ["scotland", "denmark"]:
             stream = get_stream(stream_name, realm)
             group1_streams.append(stream)
-        do_create_default_stream_group(
-            realm, "group 1", "group 1 description", group1_streams,
-        )
+        do_create_default_stream_group(realm, "group 1", "group 1 description", group1_streams)
 
         result = self.submit_reg_form_for_user(
             email, password, default_stream_groups=["group 1"],
@@ -3331,17 +3321,13 @@ class UserSignUpTest(InviteUserBase):
         for stream_name in ["scotland", "denmark"]:
             stream = get_stream(stream_name, realm)
             group1_streams.append(stream)
-        do_create_default_stream_group(
-            realm, "group 1", "group 1 description", group1_streams,
-        )
+        do_create_default_stream_group(realm, "group 1", "group 1 description", group1_streams)
 
         group2_streams = []
         for stream_name in ["scotland", "rome"]:
             stream = get_stream(stream_name, realm)
             group2_streams.append(stream)
-        do_create_default_stream_group(
-            realm, "group 2", "group 2 description", group2_streams,
-        )
+        do_create_default_stream_group(realm, "group 2", "group 2 description", group2_streams)
 
         result = self.submit_reg_form_for_user(
             email, password, default_stream_groups=["group 1", "group 2"],
@@ -4161,8 +4147,7 @@ class UserSignUpTest(InviteUserBase):
                 )
                 self.assertEqual(result.status_code, 200)
                 mock_warning.assert_called_once_with(
-                    "New account email %s could not be found in LDAP",
-                    "nonexistent@zulip.com",
+                    "New account email %s could not be found in LDAP", "nonexistent@zulip.com",
                 )
 
             result = self.submit_reg_form_for_user(

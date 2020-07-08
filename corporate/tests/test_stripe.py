@@ -6,18 +6,7 @@ import sys
 from datetime import datetime, timedelta, timezone
 from decimal import Decimal
 from functools import wraps
-from typing import (
-    Any,
-    Callable,
-    Dict,
-    List,
-    Mapping,
-    Optional,
-    Sequence,
-    Tuple,
-    TypeVar,
-    cast,
-)
+from typing import Any, Callable, Dict, List, Mapping, Optional, Sequence, Tuple, TypeVar, cast
 from unittest.mock import Mock, patch
 
 import responses
@@ -450,9 +439,7 @@ class StripeTestCase(ZulipTestCase):
             return process_initial_upgrade(self.example_user("hamlet"), *args[:4])
 
         for mocked_function_name in MOCKED_STRIPE_FUNCTION_NAMES:
-            upgrade_func = patch(mocked_function_name, return_value=StripeMock())(
-                upgrade_func,
-            )
+            upgrade_func = patch(mocked_function_name, return_value=StripeMock())(upgrade_func)
         upgrade_func(*args)
 
 
@@ -518,9 +505,7 @@ class StripeTest(StripeTestCase):
             raise AssertionError("realm_id is not a number")
 
         # Check Charges in Stripe
-        stripe_charges = [
-            charge for charge in stripe.Charge.list(customer=stripe_customer.id)
-        ]
+        stripe_charges = [charge for charge in stripe.Charge.list(customer=stripe_customer.id)]
         self.assertEqual(len(stripe_charges), 1)
         self.assertEqual(stripe_charges[0].amount, 8000 * self.seat_count)
         # TODO: fix Decimal
@@ -803,9 +788,7 @@ class StripeTest(StripeTestCase):
             response = self.client_get("/upgrade/")
             free_trial_end_date = self.now + timedelta(days=60)
 
-            self.assert_in_success_response(
-                ["Pay annually", "Free Trial", "60 day"], response,
-            )
+            self.assert_in_success_response(["Pay annually", "Free Trial", "60 day"], response)
             self.assertNotEqual(user.realm.plan_type, Realm.STANDARD)
             self.assertFalse(Customer.objects.filter(realm=user.realm).exists())
 
@@ -1040,9 +1023,7 @@ class StripeTest(StripeTestCase):
         with self.settings(FREE_TRIAL_DAYS=60):
             response = self.client_get("/upgrade/")
 
-            self.assert_in_success_response(
-                ["Pay annually", "Free Trial", "60 day"], response,
-            )
+            self.assert_in_success_response(["Pay annually", "Free Trial", "60 day"], response)
             self.assertNotEqual(user.realm.plan_type, Realm.STANDARD)
             self.assertFalse(Customer.objects.filter(realm=user.realm).exists())
 
@@ -1277,9 +1258,7 @@ class StripeTest(StripeTestCase):
         self.assertFalse(CustomerPlan.objects.exists())
         # Check that we created a Customer in stripe, a failed Charge, and no Invoices or Invoice Items
         self.assertTrue(stripe_get_customer(stripe_customer_id))
-        stripe_charges = [
-            charge for charge in stripe.Charge.list(customer=stripe_customer_id)
-        ]
+        stripe_charges = [charge for charge in stripe.Charge.list(customer=stripe_customer_id)]
         self.assertEqual(len(stripe_charges), 1)
         self.assertEqual(stripe_charges[0].failure_code, "card_declined")
         # TODO: figure out what these actually are
@@ -1433,10 +1412,7 @@ class StripeTest(StripeTestCase):
                 upgrade_params["licenses"] = licenses
             with patch("corporate.views.process_initial_upgrade"):
                 response = self.upgrade(
-                    invoice=invoice,
-                    talk_to_stripe=False,
-                    del_args=del_args,
-                    **upgrade_params,
+                    invoice=invoice, talk_to_stripe=False, del_args=del_args, **upgrade_params,
                 )
             self.assert_json_success(response)
 
@@ -1761,9 +1737,7 @@ class StripeTest(StripeTestCase):
         )
         self.assertEqual(
             1,
-            RealmAuditLog.objects.filter(
-                event_type=RealmAuditLog.STRIPE_CARD_CHANGED,
-            ).count(),
+            RealmAuditLog.objects.filter(event_type=RealmAuditLog.STRIPE_CARD_CHANGED).count(),
         )
 
         # Replace with a valid card
@@ -1784,9 +1758,7 @@ class StripeTest(StripeTestCase):
             self.assertEqual(stripe_invoice.status, "paid")
         self.assertEqual(
             2,
-            RealmAuditLog.objects.filter(
-                event_type=RealmAuditLog.STRIPE_CARD_CHANGED,
-            ).count(),
+            RealmAuditLog.objects.filter(event_type=RealmAuditLog.STRIPE_CARD_CHANGED).count(),
         )
 
     @patch("corporate.lib.stripe.billing_logger.info")
@@ -1913,9 +1885,7 @@ class StripeTest(StripeTestCase):
         assert annual_plan is not None
         self.assertEqual(annual_plan.status, CustomerPlan.ACTIVE)
         self.assertEqual(annual_plan.billing_schedule, CustomerPlan.ANNUAL)
-        self.assertEqual(
-            annual_plan.invoicing_status, CustomerPlan.INITIAL_INVOICE_TO_BE_SENT,
-        )
+        self.assertEqual(annual_plan.invoicing_status, CustomerPlan.INITIAL_INVOICE_TO_BE_SENT)
         self.assertEqual(annual_plan.billing_cycle_anchor, self.next_month)
         self.assertEqual(annual_plan.next_invoice_date, self.next_month)
         self.assertEqual(annual_plan.invoiced_through, None)
@@ -1935,9 +1905,7 @@ class StripeTest(StripeTestCase):
             event_type=RealmAuditLog.CUSTOMER_SWITCHED_FROM_MONTHLY_TO_ANNUAL_PLAN,
         )
         self.assertEqual(audit_log.realm, user.realm)
-        self.assertEqual(
-            ujson.loads(audit_log.extra_data)["monthly_plan_id"], monthly_plan.id,
-        )
+        self.assertEqual(ujson.loads(audit_log.extra_data)["monthly_plan_id"], monthly_plan.id)
         self.assertEqual(ujson.loads(audit_log.extra_data)["annual_plan_id"], annual_plan.id)
 
         invoice_plans_as_needed(self.next_month)
@@ -1957,9 +1925,7 @@ class StripeTest(StripeTestCase):
         ]
         self.assertEqual(len(invoices), 3)
 
-        annual_plan_invoice_items = [
-            invoice_item for invoice_item in invoices[0].get("lines")
-        ]
+        annual_plan_invoice_items = [invoice_item for invoice_item in invoices[0].get("lines")]
         self.assertEqual(len(annual_plan_invoice_items), 2)
         annual_plan_invoice_item_params = {
             "amount": 5 * 80 * 100,
@@ -2044,9 +2010,7 @@ class StripeTest(StripeTestCase):
         ]
         self.assertEqual(len(invoices), 5)
 
-        annual_plan_invoice_items = [
-            invoice_item for invoice_item in invoices[0].get("lines")
-        ]
+        annual_plan_invoice_items = [invoice_item for invoice_item in invoices[0].get("lines")]
         self.assertEqual(len(annual_plan_invoice_items), 1)
         annual_plan_invoice_item_params = {
             "amount": 30 * 80 * 100,
@@ -2108,9 +2072,7 @@ class StripeTest(StripeTestCase):
         assert annual_plan is not None
         self.assertEqual(annual_plan.status, CustomerPlan.ACTIVE)
         self.assertEqual(annual_plan.billing_schedule, CustomerPlan.ANNUAL)
-        self.assertEqual(
-            annual_plan.invoicing_status, CustomerPlan.INITIAL_INVOICE_TO_BE_SENT,
-        )
+        self.assertEqual(annual_plan.invoicing_status, CustomerPlan.INITIAL_INVOICE_TO_BE_SENT)
         self.assertEqual(annual_plan.billing_cycle_anchor, self.next_month)
         self.assertEqual(annual_plan.next_invoice_date, self.next_month)
         annual_ledger_entries = LicenseLedger.objects.filter(plan=annual_plan).order_by("id")
@@ -2136,9 +2098,7 @@ class StripeTest(StripeTestCase):
         ]
         self.assertEqual(len(invoices), 2)
 
-        annual_plan_invoice_items = [
-            invoice_item for invoice_item in invoices[0].get("lines")
-        ]
+        annual_plan_invoice_items = [invoice_item for invoice_item in invoices[0].get("lines")]
         self.assertEqual(len(annual_plan_invoice_items), 1)
         annual_plan_invoice_item_params = {
             "amount": num_licenses * 80 * 100,
@@ -2166,9 +2126,7 @@ class StripeTest(StripeTestCase):
         ]
         self.assertEqual(len(invoices), 3)
 
-        annual_plan_invoice_items = [
-            invoice_item for invoice_item in invoices[0].get("lines")
-        ]
+        annual_plan_invoice_items = [invoice_item for invoice_item in invoices[0].get("lines")]
         self.assertEqual(len(annual_plan_invoice_items), 1)
         annual_plan_invoice_item_params = {
             "amount": num_licenses * 80 * 100,
@@ -2749,37 +2707,25 @@ class InvoiceTest(StripeTestCase):
         with patch(
             "corporate.lib.stripe.get_latest_seat_count", return_value=self.seat_count + 3,
         ):
-            update_license_ledger_if_needed(
-                get_realm("zulip"), self.now + timedelta(days=100),
-            )
+            update_license_ledger_if_needed(get_realm("zulip"), self.now + timedelta(days=100))
         # Decrease
-        with patch(
-            "corporate.lib.stripe.get_latest_seat_count", return_value=self.seat_count,
-        ):
-            update_license_ledger_if_needed(
-                get_realm("zulip"), self.now + timedelta(days=200),
-            )
+        with patch("corporate.lib.stripe.get_latest_seat_count", return_value=self.seat_count):
+            update_license_ledger_if_needed(get_realm("zulip"), self.now + timedelta(days=200))
         # Increase, but not past high watermark
         with patch(
             "corporate.lib.stripe.get_latest_seat_count", return_value=self.seat_count + 1,
         ):
-            update_license_ledger_if_needed(
-                get_realm("zulip"), self.now + timedelta(days=300),
-            )
+            update_license_ledger_if_needed(get_realm("zulip"), self.now + timedelta(days=300))
         # Increase, but after renewal date, and below last year's high watermark
         with patch(
             "corporate.lib.stripe.get_latest_seat_count", return_value=self.seat_count + 2,
         ):
-            update_license_ledger_if_needed(
-                get_realm("zulip"), self.now + timedelta(days=400),
-            )
+            update_license_ledger_if_needed(get_realm("zulip"), self.now + timedelta(days=400))
         # Increase, but after event_time
         with patch(
             "corporate.lib.stripe.get_latest_seat_count", return_value=self.seat_count + 3,
         ):
-            update_license_ledger_if_needed(
-                get_realm("zulip"), self.now + timedelta(days=500),
-            )
+            update_license_ledger_if_needed(get_realm("zulip"), self.now + timedelta(days=500))
         plan = CustomerPlan.objects.first()
         invoice_plan(plan, self.now + timedelta(days=400))
 

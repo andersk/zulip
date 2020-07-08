@@ -27,9 +27,7 @@ from zerver.lib.validator import check_bool, check_string_in, to_non_negative_in
 from zerver.models import Message, Realm, UserMessage, UserProfile
 
 
-def fill_edit_history_entries(
-    message_history: List[Dict[str, Any]], message: Message,
-) -> None:
+def fill_edit_history_entries(message_history: List[Dict[str, Any]], message: Message) -> None:
     """This fills out the message edit history entries from the database,
     which are designed to have the minimum data possible, to instead
     have the current topic + content as of that time, plus data on
@@ -46,9 +44,7 @@ def fill_edit_history_entries(
     # message's last edit time
     if len(message_history) > 0:
         assert message.last_edit_time is not None
-        assert (
-            datetime_to_timestamp(message.last_edit_time) == message_history[0]["timestamp"]
-        )
+        assert datetime_to_timestamp(message.last_edit_time) == message_history[0]["timestamp"]
 
     for entry in message_history:
         entry["topic"] = prev_topic
@@ -153,9 +149,7 @@ def update_message_backend(
         deadline_seconds = (
             user_profile.realm.message_content_edit_limit_seconds + edit_limit_buffer
         )
-        if (timezone_now() - message.date_sent) > datetime.timedelta(
-            seconds=deadline_seconds,
-        ):
+        if (timezone_now() - message.date_sent) > datetime.timedelta(seconds=deadline_seconds):
             raise JsonableError(_("The time limit for editing this message has passed"))
 
     # If there is a change to the topic, check that the user is allowed to
@@ -171,9 +165,7 @@ def update_message_backend(
         deadline_seconds = (
             Realm.DEFAULT_COMMUNITY_TOPIC_EDITING_LIMIT_SECONDS + edit_limit_buffer
         )
-        if (timezone_now() - message.date_sent) > datetime.timedelta(
-            seconds=deadline_seconds,
-        ):
+        if (timezone_now() - message.date_sent) > datetime.timedelta(seconds=deadline_seconds):
             raise JsonableError(_("The time limit for editing this message has passed"))
 
     if topic_name is None and content is None and stream_id is None:

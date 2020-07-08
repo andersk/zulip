@@ -140,12 +140,7 @@ class MutedTopicsTests(ZulipTestCase):
         result = self.api_patch(user, url, data)
         self.assert_json_error(result, "Please supply 'stream'.")
 
-        data = {
-            "stream": stream.name,
-            "stream_id": stream.id,
-            "topic": "Verona3",
-            "op": "add",
-        }
+        data = {"stream": stream.name, "stream_id": stream.id, "topic": "Verona3", "op": "add"}
         result = self.api_patch(user, url, data)
         self.assert_json_error(result, "Please choose one: 'stream' or 'stream_id'.")
 

@@ -95,9 +95,7 @@ def check_upgrade_parameters(
 
 # Should only be called if the customer is being charged automatically
 def payment_method_string(stripe_customer: stripe.Customer) -> str:
-    stripe_source: Optional[
-        Union[stripe.Card, stripe.Source]
-    ] = stripe_customer.default_source
+    stripe_source: Optional[Union[stripe.Card, stripe.Source]] = stripe_customer.default_source
     # In case of e.g. an expired card
     if stripe_source is None:  # nocoverage
         return _("No payment method on file")

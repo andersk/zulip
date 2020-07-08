@@ -56,9 +56,7 @@ def test_generated_curl_examples_for_success(client: Client) -> None:
             try:
                 # We split this across two lines so if curl fails and
                 # returns non-JSON output, we'll still print it.
-                response_json = subprocess.check_output(generated_curl_command).decode(
-                    "utf-8",
-                )
+                response_json = subprocess.check_output(generated_curl_command).decode("utf-8")
                 response = json.loads(response_json)
                 assert response["result"] == "success"
             except (AssertionError, Exception):

@@ -104,9 +104,7 @@ def slack_workspace_to_realm(
         slack_user_id_to_zulip_user_id,
         zerver_customprofilefield,
         zerver_customprofilefield_value,
-    ) = users_to_zerver_userprofile(
-        slack_data_dir, user_list, realm_id, int(NOW), domain_name,
-    )
+    ) = users_to_zerver_userprofile(slack_data_dir, user_list, realm_id, int(NOW), domain_name)
     (
         realm,
         added_channels,
@@ -1039,9 +1037,7 @@ def process_message_files(
             has_image = True if "image" in fileinfo["mimetype"] else False
 
             file_user = [
-                iterate_user
-                for iterate_user in users
-                if message["user"] == iterate_user["id"]
+                iterate_user for iterate_user in users if message["user"] == iterate_user["id"]
             ]
             file_user_email = get_user_email(file_user[0], domain_name)
 
@@ -1078,16 +1074,11 @@ def process_message_files(
     content = "\n".join(markdown_links)
 
     return dict(
-        content=content,
-        has_attachment=has_attachment,
-        has_image=has_image,
-        has_link=has_link,
+        content=content, has_attachment=has_attachment, has_image=has_image, has_link=has_link,
     )
 
 
-def get_attachment_path_and_content(
-    fileinfo: ZerverFieldsT, realm_id: int,
-) -> Tuple[str, str]:
+def get_attachment_path_and_content(fileinfo: ZerverFieldsT, realm_id: int) -> Tuple[str, str]:
     # Should be kept in sync with its equivalent in zerver/lib/uploads in the function
     # 'upload_message_file'
     s3_path = "/".join(
@@ -1355,9 +1346,7 @@ def do_convert_data(
     uploads_records = process_uploads(uploads_list, uploads_folder, threads)
     attachment = {"zerver_attachment": zerver_attachment}
 
-    team_info_dict = get_slack_api_data(
-        "https://slack.com/api/team.info", "team", token=token,
-    )
+    team_info_dict = get_slack_api_data("https://slack.com/api/team.info", "team", token=token)
     realm_icons_folder = os.path.join(output_dir, "realm_icons")
     realm_icon_records = fetch_team_icons(
         realm["zerver_realm"][0], team_info_dict, realm_icons_folder,

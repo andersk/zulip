@@ -102,10 +102,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     # didn't seem to know what to make of the dissapointed_relieved name, and I
     # got the sense it wasn't an emotion that was often used. Hence replaced it
     # with exhausted.
-    "1f625": {
-        "canonical_name": "exhausted",
-        "aliases": ["disappointed_relieved", "stressed"],
-    },
+    "1f625": {"canonical_name": "exhausted", "aliases": ["disappointed_relieved", "stressed"]},
     "1f924": {"canonical_name": "drooling", "aliases": []},
     "1f62d": {"canonical_name": "sob", "aliases": []},
     "1f613": {"canonical_name": "sweat", "aliases": []},
@@ -293,10 +290,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     "1f647": {"canonical_name": "bow", "aliases": []},
     # mostly used sassily. person_tipping_hand from
     # https://emojipedia.org/information-desk-person/
-    "1f481": {
-        "canonical_name": "information_desk_person",
-        "aliases": ["person_tipping_hand"],
-    },
+    "1f481": {"canonical_name": "information_desk_person", "aliases": ["person_tipping_hand"]},
     # no_signal to parallel People/207. Nope seems like a reasonable addition
     "1f645": {"canonical_name": "no_signal", "aliases": ["nope"]},
     "1f646": {"canonical_name": "ok_signal", "aliases": []},

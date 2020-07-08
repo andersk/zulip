@@ -214,9 +214,7 @@ class GithubWebhookTest(WebhookTestCase):
         expected_topic = "Scheduler / PR #4 Improve README"
         expected_message = "eeshangarg opened [PR #4](https://github.com/eeshangarg/Scheduler/pull/4) (assigned to eeshangarg) from `improve-readme-2` to `master`."
         self.send_and_test_stream_message(
-            "pull_request__opened_with_preassigned_assignee",
-            expected_topic,
-            expected_message,
+            "pull_request__opened_with_preassigned_assignee", expected_topic, expected_message,
         )
 
     def test_pull_request_opened_msg_with_custom_topic_in_url(self) -> None:

@@ -97,10 +97,7 @@ def update_user_group_backend(
 
     method_kwarg_pairs: List[FuncKwargPair] = [
         (add_members_to_group_backend, dict(user_group_id=user_group_id, members=add)),
-        (
-            remove_members_from_group_backend,
-            dict(user_group_id=user_group_id, members=delete),
-        ),
+        (remove_members_from_group_backend, dict(user_group_id=user_group_id, members=delete)),
     ]
     return compose_views(request, user_profile, method_kwarg_pairs)
 
@@ -138,9 +135,7 @@ def remove_members_from_group_backend(
     group_member_ids = get_user_group_members(user_group)
     for member in members:
         if member not in group_member_ids:
-            raise JsonableError(
-                _("There is no member '{}' in this user group").format(member),
-            )
+            raise JsonableError(_("There is no member '{}' in this user group").format(member))
 
     remove_members_from_user_group(user_group, user_profiles)
     return json_success()

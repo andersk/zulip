@@ -183,8 +183,7 @@ class PermissionTest(ZulipTestCase):
         with tornado_redirected_to_list([]):
             result = self.client_patch(f"/json/users/{desdemona.id}", req)
         self.assert_json_error(
-            result,
-            "The owner permission cannot be removed from the only organization owner.",
+            result, "The owner permission cannot be removed from the only organization owner.",
         )
 
         do_change_user_role(iago, UserProfile.ROLE_REALM_ADMINISTRATOR)

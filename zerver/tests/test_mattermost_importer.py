@@ -646,9 +646,7 @@ class MatterMostImporter(ZulipTestCase):
             messages["zerver_usermessage"], "user_profile",
         )
         self.assertEqual(len(exported_usermessage_userprofiles), 3)
-        exported_usermessage_messages = self.get_set(
-            messages["zerver_usermessage"], "message",
-        )
+        exported_usermessage_messages = self.get_set(messages["zerver_usermessage"], "message")
         self.assertEqual(exported_usermessage_messages, exported_messages_id)
 
         do_import_realm(
@@ -740,9 +738,7 @@ class MatterMostImporter(ZulipTestCase):
             messages["zerver_usermessage"], "user_profile",
         )
         self.assertEqual(len(exported_usermessage_userprofiles), 3)
-        exported_usermessage_messages = self.get_set(
-            messages["zerver_usermessage"], "message",
-        )
+        exported_usermessage_messages = self.get_set(messages["zerver_usermessage"], "message")
         self.assertEqual(exported_usermessage_messages, exported_messages_id)
 
         do_import_realm(

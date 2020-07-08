@@ -70,9 +70,7 @@ def parse_language_and_options(input_str: Optional[str]) -> Tuple[str, Dict[str,
         r"(?P<language>\w+)(,\s*(?P<options>[\"\'\w\d\[\],= ]+))?", input_str,
     )
     assert language_and_options is not None
-    kwargs_pattern = re.compile(
-        r"(?P<key>\w+)\s*=\s*(?P<value>[\'\"\w\d]+|\[[\'\",\w\d ]+\])",
-    )
+    kwargs_pattern = re.compile(r"(?P<key>\w+)\s*=\s*(?P<value>[\'\"\w\d]+|\[[\'\",\w\d ]+\])")
     language = language_and_options.group("language")
     assert language is not None
     if language_and_options.group("options"):
@@ -269,9 +267,7 @@ def generate_curl_example(
         format_dict[param["name"]] = example_value
     example_endpoint = endpoint.format_map(format_dict)
 
-    curl_first_line_parts = ["curl"] + curl_method_arguments(
-        example_endpoint, method, api_url,
-    )
+    curl_first_line_parts = ["curl"] + curl_method_arguments(example_endpoint, method, api_url)
     lines.append(" ".join(curl_first_line_parts))
 
     insecure_operations = ["/dev_fetch_api_key:post"]
@@ -417,9 +413,7 @@ class APICodeExamplesPreprocessor(Preprocessor):
                                 function, admin_config=True,
                             )
                         else:
-                            text = SUPPORTED_LANGUAGES[language]["render"](
-                                function, **options,
-                            )
+                            text = SUPPORTED_LANGUAGES[language]["render"](function, **options)
 
                     # The line that contains the directive to include the macro
                     # may be preceded or followed by text or tags, in that case

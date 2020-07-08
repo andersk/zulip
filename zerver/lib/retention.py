@@ -641,9 +641,7 @@ def restore_data_from_archive_by_realm(realm: Realm) -> None:
     logger.info("Restoring %s transactions from realm %s", len(transactions), realm.string_id)
     message_count = restore_data_from_archive_by_transactions(transactions)
 
-    logger.info(
-        "Finished. Restored %s messages from realm %s", message_count, realm.string_id,
-    )
+    logger.info("Finished. Restored %s messages from realm %s", message_count, realm.string_id)
 
 
 def restore_all_data_from_archive(restore_manual_transactions: bool = True) -> None:

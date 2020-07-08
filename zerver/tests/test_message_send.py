@@ -1320,9 +1320,7 @@ class StreamMessagesTest(ZulipTestCase):
             new_non_subscriber_messages.append(message_stream_count(non_subscriber))
 
         self.assertEqual(old_non_subscriber_messages, new_non_subscriber_messages)
-        self.assertEqual(
-            new_subscriber_messages, [elt + 1 for elt in old_subscriber_messages],
-        )
+        self.assertEqual(new_subscriber_messages, [elt + 1 for elt in old_subscriber_messages])
 
     def test_performance(self) -> None:
         """
@@ -1683,9 +1681,7 @@ class PersonalMessageSendTest(ZulipTestCase):
         sender_messages = message_stream_count(sender)
         receiver_messages = message_stream_count(receiver)
 
-        other_user_profiles = UserProfile.objects.filter(
-            ~Q(id=sender.id) & ~Q(id=receiver.id),
-        )
+        other_user_profiles = UserProfile.objects.filter(~Q(id=sender.id) & ~Q(id=receiver.id))
         old_other_messages = []
         for user_profile in other_user_profiles:
             old_other_messages.append(message_stream_count(user_profile))

@@ -39,9 +39,7 @@ class ReviewBoardHookTests(WebhookTestCase):
     def test_review_published(self) -> None:
         expected_topic = "Scheduler"
         expected_message = "**eeshangarg** [reviewed](https://rbcommons.com/s/zulip/r/1/#review651728) [#1: Initial commit (first iteration)](https://rbcommons.com/s/zulip/r/1/):\n\n**Review**:\n``` quote\nLeft some minor comments, thanks!\n```"
-        self.send_and_test_stream_message(
-            "review_published", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("review_published", expected_topic, expected_message)
 
     def test_reply_published(self) -> None:
         expected_topic = "Scheduler"

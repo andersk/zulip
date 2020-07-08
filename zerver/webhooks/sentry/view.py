@@ -124,9 +124,7 @@ def handle_event_payload(event: Dict[str, Any]) -> Tuple[str, str]:
                     break
 
             if exception_frame:
-                pre_context = convert_lines_to_traceback_string(
-                    exception_frame["pre_context"],
-                )
+                pre_context = convert_lines_to_traceback_string(exception_frame["pre_context"])
 
                 context_line = exception_frame["context_line"] + "\n"
                 if not context_line:
@@ -219,9 +217,7 @@ def handle_issue_payload(
 def handle_deprecated_payload(payload: Dict[str, Any]) -> Tuple[str, str]:
     subject = "{}".format(payload.get("project_name"))
     body = DEPRECATED_EXCEPTION_MESSAGE_TEMPLATE.format(
-        level=payload["level"].upper(),
-        url=payload.get("url"),
-        message=payload.get("message"),
+        level=payload["level"].upper(), url=payload.get("url"), message=payload.get("message"),
     )
     return (subject, body)
 

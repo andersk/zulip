@@ -88,9 +88,7 @@ class GitterImporter(ZulipTestCase):
         self.assertEqual(exported_usermessage_message, exported_messages_id)
 
     @mock.patch("zerver.data_import.gitter.process_avatars", return_value=[])
-    def test_gitter_import_to_existing_database(
-        self, mock_process_avatars: mock.Mock,
-    ) -> None:
+    def test_gitter_import_to_existing_database(self, mock_process_avatars: mock.Mock) -> None:
         output_dir = self.make_import_output_dir("gitter")
         gitter_file = os.path.join(os.path.dirname(__file__), "fixtures/gitter_data.json")
         do_convert_data(gitter_file, output_dir)

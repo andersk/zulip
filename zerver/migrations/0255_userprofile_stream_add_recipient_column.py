@@ -15,18 +15,14 @@ class Migration(migrations.Migration):
             model_name="userprofile",
             name="recipient",
             field=models.ForeignKey(
-                null=True,
-                on_delete=django.db.models.deletion.SET_NULL,
-                to="zerver.Recipient",
+                null=True, on_delete=django.db.models.deletion.SET_NULL, to="zerver.Recipient",
             ),
         ),
         migrations.AddField(
             model_name="stream",
             name="recipient",
             field=models.ForeignKey(
-                null=True,
-                on_delete=django.db.models.deletion.SET_NULL,
-                to="zerver.Recipient",
+                null=True, on_delete=django.db.models.deletion.SET_NULL, to="zerver.Recipient",
             ),
         ),
     ]

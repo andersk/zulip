@@ -14,9 +14,7 @@ def attachment_url_to_path_id(attachment_url: str) -> str:
     return re.sub("[.]+$", "", path_id_raw, re.M)
 
 
-def check_and_create_attachments(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def check_and_create_attachments(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     STREAM = 2
     Message = apps.get_model("zerver", "Message")
     Attachment = apps.get_model("zerver", "Attachment")

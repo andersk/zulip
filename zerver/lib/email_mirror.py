@@ -89,9 +89,7 @@ def report_to_zulip(error_message: str) -> None:
     )
 
 
-def log_and_report(
-    email_message: EmailMessage, error_message: str, to: Optional[str],
-) -> None:
+def log_and_report(email_message: EmailMessage, error_message: str, to: Optional[str]) -> None:
     recipient = to or "No recipient found"
     error_message = "Sender: {}\nTo: {}\n{}".format(
         email_message.get("From"), recipient, error_message,
@@ -257,9 +255,7 @@ def extract_body(
         if html_content:
             return html_content
         else:
-            assert (
-                plaintext_content  # Needed for mypy. Ensured by the validating block above.
-            )
+            assert plaintext_content  # Needed for mypy. Ensured by the validating block above.
             return plaintext_content
 
 

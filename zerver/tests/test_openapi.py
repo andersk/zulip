@@ -121,9 +121,7 @@ class OpenAPIToolsTest(ZulipTestCase):
                 bad_content, TEST_ENDPOINT, TEST_METHOD, TEST_RESPONSE_SUCCESS,
             )
 
-        with self.assertRaises(
-            ValidationError, msg='Expected to find the "msg" required key',
-        ):
+        with self.assertRaises(ValidationError, msg='Expected to find the "msg" required key'):
             bad_content = {
                 "result": "success",
             }
@@ -373,9 +371,7 @@ so maybe we shouldn't mark it as intentionally undocumented in the urls.
         try:
             self.assertEqual(len(undocumented_paths), 0)
         except AssertionError:  # nocoverage
-            msg = (
-                "The following endpoints have been documented but can't be found in urls.py:"
-            )
+            msg = "The following endpoints have been documented but can't be found in urls.py:"
             for undocumented_path in undocumented_paths:
                 msg += f"\n + {undocumented_path}"
             raise AssertionError(msg)
@@ -564,9 +560,7 @@ do not match the types declared in the implementation of {function.__name__}.\n"
         assert len(json_params) == 0
         diff = openapi_params - function_params
         if diff:  # nocoverage
-            self.render_openapi_type_exception(
-                function, openapi_params, function_params, diff,
-            )
+            self.render_openapi_type_exception(function, openapi_params, function_params, diff)
 
     def test_openapi_arguments(self) -> None:
         """This end-to-end API documentation test compares the arguments
@@ -900,9 +894,7 @@ class TestCurlExampleGeneration(ZulipTestCase):
         },
     }
 
-    def curl_example(
-        self, endpoint: str, method: str, *args: Any, **kwargs: Any
-    ) -> List[str]:
+    def curl_example(self, endpoint: str, method: str, *args: Any, **kwargs: Any) -> List[str]:
         return generate_curl_example(
             endpoint, method, "http://localhost:9991/api", *args, **kwargs,
         )

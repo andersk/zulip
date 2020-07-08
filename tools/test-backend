@@ -528,9 +528,7 @@ def main() -> None:
         with tempfile.NamedTemporaryFile(prefix="profile.data.", delete=False) as stats_file:
             prof.dump_stats(stats_file.name)
             print(f"Profile data saved to {stats_file.name}")
-            print(
-                f"You can visualize it using e.g. `snakeviz {shlex.quote(stats_file.name)}`",
-            )
+            print(f"You can visualize it using e.g. `snakeviz {shlex.quote(stats_file.name)}`")
             print(
                 "Note: If you are using vagrant for development environment you will need to do:",
             )

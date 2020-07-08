@@ -38,11 +38,7 @@ link_mapping = {
         "Organization permissions",
         "/#organization/organization-permissions",
     ],
-    "emoji-settings": [
-        "Manage organization",
-        "Custom emoji",
-        "/#organization/emoji-settings",
-    ],
+    "emoji-settings": ["Manage organization", "Custom emoji", "/#organization/emoji-settings"],
     "auth-methods": [
         "Manage organization",
         "Authentication methods",
@@ -65,11 +61,7 @@ link_mapping = {
         "Default streams",
         "/#organization/default-streams-list",
     ],
-    "filter-settings": [
-        "Manage organization",
-        "Linkifiers",
-        "/#organization/filter-settings",
-    ],
+    "filter-settings": ["Manage organization", "Linkifiers", "/#organization/filter-settings"],
     "profile-field-settings": [
         "Manage organization",
         "Custom profile fields",

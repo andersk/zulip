@@ -879,10 +879,7 @@ class NormalActionsTest(BaseAction):
             [
                 ("type", equals("typing")),
                 ("op", equals("start")),
-                (
-                    "sender",
-                    check_dict_only([("email", check_string), ("user_id", check_int)]),
-                ),
+                ("sender", check_dict_only([("email", check_string), ("user_id", check_int)])),
                 (
                     "recipients",
                     check_list(
@@ -1189,9 +1186,7 @@ class NormalActionsTest(BaseAction):
         new_user_profile = get_user_by_delivery_email(
             "test1@zulip.com", self.user_profile.realm,
         )
-        self.assertEqual(
-            new_user_profile.email, f"user{new_user_profile.id}@zulip.testserver",
-        )
+        self.assertEqual(new_user_profile.email, f"user{new_user_profile.id}@zulip.testserver")
 
     def test_alert_words_events(self) -> None:
         alert_words_checker = check_events_dict(
@@ -1495,9 +1490,7 @@ class NormalActionsTest(BaseAction):
         )
         events = self.verify_action(
             lambda: do_change_avatar_fields(
-                self.user_profile,
-                UserProfile.AVATAR_FROM_USER,
-                acting_user=self.user_profile,
+                self.user_profile, UserProfile.AVATAR_FROM_USER, acting_user=self.user_profile,
             ),
         )
         schema_checker("events[0]", events[0])
@@ -1755,10 +1748,7 @@ class NormalActionsTest(BaseAction):
 
         stream = get_stream("Rome", self.user_profile.realm)
 
-        for notifications_stream, notifications_stream_id in (
-            (stream, stream.id),
-            (None, -1),
-        ):
+        for notifications_stream, notifications_stream_id in ((stream, stream.id), (None, -1)):
             events = self.verify_action(
                 lambda: do_set_realm_notifications_stream(
                     self.user_profile.realm, notifications_stream, notifications_stream_id,
@@ -2231,10 +2221,7 @@ class NormalActionsTest(BaseAction):
 
     def test_change_realm_day_mode_logo_source(self) -> None:
         action = lambda: do_change_logo_source(
-            self.user_profile.realm,
-            Realm.LOGO_UPLOADED,
-            False,
-            acting_user=self.user_profile,
+            self.user_profile.realm, Realm.LOGO_UPLOADED, False, acting_user=self.user_profile,
         )
         events = self.verify_action(action, state_change_expected=True)
         schema_checker = check_events_dict(
@@ -2279,9 +2266,7 @@ class NormalActionsTest(BaseAction):
         bot = self.create_bot("test")
         action = lambda: do_change_default_all_public_streams(bot, True)
         events = self.verify_action(action)
-        self.realm_bot_schema("default_all_public_streams", check_bool)(
-            "events[0]", events[0],
-        )
+        self.realm_bot_schema("default_all_public_streams", check_bool)("events[0]", events[0])
 
     def test_change_bot_default_sending_stream(self) -> None:
         bot = self.create_bot("test")
@@ -3354,9 +3339,7 @@ class SubscribeActionTest(BaseAction):
         stream_update_invite_only_schema_checker("events[0]", events[0])
 
         # Update stream stream_post_policy property
-        action = lambda: do_change_stream_post_policy(
-            stream, Stream.STREAM_POST_POLICY_ADMINS,
-        )
+        action = lambda: do_change_stream_post_policy(stream, Stream.STREAM_POST_POLICY_ADMINS)
         events = self.verify_action(
             action, include_subscribers=include_subscribers, num_events=2,
         )

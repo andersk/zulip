@@ -14,9 +14,7 @@ INCIDENT_TEMPLATE = """
 * Description: {content}
 """.strip()
 
-COMPONENT_TEMPLATE = (
-    "**{name}** has changed status from **{old_status}** to **{new_status}**."
-)
+COMPONENT_TEMPLATE = "**{name}** has changed status from **{old_status}** to **{new_status}**."
 
 TOPIC_TEMPLATE = "{name}: {description}"
 

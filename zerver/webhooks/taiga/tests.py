@@ -59,9 +59,7 @@ class TaigaHookTests(WebhookTestCase):
 
     def test_taiga_userstory_changed_description(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) updated description of user story **UserStory**."
-        self.send_and_test_stream_message(
-            "userstory_changed_description", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("userstory_changed_description", self.TOPIC, message)
 
     def test_taiga_userstory_changed_closed(self) -> None:
         message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) changed status of user story **UserStory** from New to Done.\n[TomaszKolek](https://tree.taiga.io/profile/kolaszek) closed user story **UserStory**."
@@ -307,9 +305,7 @@ class TaigaHookTests(WebhookTestCase):
             "[Aditya Verma](https://tree.taiga.io/profile/orientor) added a related user story [Nice Issue](https://tree.taiga.io/project/orientor-sd/us/54) "
             + "to the epic [ASAS](https://tree.taiga.io/project/orientor-sd/epic/42)."
         )
-        self.send_and_test_stream_message(
-            "relateduserstory_created_link", self.TOPIC, message,
-        )
+        self.send_and_test_stream_message("relateduserstory_created_link", self.TOPIC, message)
 
     def test_taiga_relateduserstory_deleted(self) -> None:
         message = "[Eeshan Garg](https://tree.taiga.io/profile/eeshangarg) removed a related user story **A related user story, which is epic** from the epic **This is Epic!**."

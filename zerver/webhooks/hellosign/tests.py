@@ -57,6 +57,4 @@ class HelloSignHookTests(WebhookTestCase):
         )
 
     def get_body(self, fixture_name: str) -> Dict[str, str]:
-        return {
-            "json": self.webhook_fixture_data("hellosign", fixture_name, file_type="json"),
-        }
+        return {"json": self.webhook_fixture_data("hellosign", fixture_name, file_type="json")}

@@ -33,9 +33,7 @@ def process_board_action(
     return None
 
 
-def get_proper_action(
-    payload: Mapping[str, Any], action_type: Optional[str],
-) -> Optional[str]:
+def get_proper_action(payload: Mapping[str, Any], action_type: Optional[str]) -> Optional[str]:
     if action_type == "updateBoard":
         data = get_action_data(payload)
         # we don't support events for when a board's background

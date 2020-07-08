@@ -32,12 +32,7 @@ from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils.translation import ugettext as _
-from django_auth_ldap.backend import (
-    LDAPBackend,
-    LDAPReverseEmailSearch,
-    _LDAPUser,
-    ldap_error,
-)
+from django_auth_ldap.backend import LDAPBackend, LDAPReverseEmailSearch, _LDAPUser, ldap_error
 from jwt.algorithms import RSAAlgorithm
 from jwt.exceptions import PyJWTError
 from lxml.etree import XMLSyntaxError
@@ -551,9 +546,7 @@ class ZulipLDAPAuthBackendBase(ZulipAuthMixin, LDAPBackend):
             error_message = (
                 "No ldap user matching django_to_ldap_username result: {}. Input username: {}"
             )
-            raise ZulipLDAPExceptionNoMatchingLDAPUser(
-                error_message.format(result, username),
-            )
+            raise ZulipLDAPExceptionNoMatchingLDAPUser(error_message.format(result, username))
 
         return result
 
@@ -715,9 +708,7 @@ class ZulipLDAPAuthBackendBase(ZulipAuthMixin, LDAPBackend):
             try:
                 validate_user_custom_profile_field(user_profile.realm.id, field, value)
             except ValidationError as error:
-                raise ZulipLDAPException(
-                    f"Invalid data for {var_name} field: {error.message}",
-                )
+                raise ZulipLDAPException(f"Invalid data for {var_name} field: {error.message}")
             profile_data.append({"id": field.id, "value": value})
         do_update_user_custom_profile_data_if_changed(user_profile, profile_data)
 
@@ -1784,9 +1775,7 @@ class AppleAuthBackend(SocialAuthMixin, AppleIdAuth):
         """
         request_data = self.strategy.request_data().dict()
         data_to_store = {
-            key: request_data[key]
-            for key in self.standard_relay_params
-            if key in request_data
+            key: request_data[key] for key in self.standard_relay_params if key in request_data
         }
 
         # Generate a random string of 32 alphanumeric characters.
@@ -2239,9 +2228,7 @@ def validate_otp_params(
             raise JsonableError(_("Invalid OTP"))
 
     if mobile_flow_otp and desktop_flow_otp:
-        raise JsonableError(
-            _("Can't use both mobile_flow_otp and desktop_flow_otp together."),
-        )
+        raise JsonableError(_("Can't use both mobile_flow_otp and desktop_flow_otp together."))
 
 
 def get_external_method_dicts(realm: Optional[Realm] = None) -> List[ExternalAuthMethodDictT]:
@@ -2268,9 +2255,7 @@ AUTH_BACKEND_NAME_MAP: Dict[str, Any] = {
 for external_method in EXTERNAL_AUTH_METHODS:
     AUTH_BACKEND_NAME_MAP[external_method.auth_backend_name] = external_method
 
-EXTERNAL_AUTH_METHODS = sorted(
-    EXTERNAL_AUTH_METHODS, key=lambda x: x.sort_order, reverse=True,
-)
+EXTERNAL_AUTH_METHODS = sorted(EXTERNAL_AUTH_METHODS, key=lambda x: x.sort_order, reverse=True)
 
 # Provide this alternative name for backwards compatibility with
 # installations that had the old backend enabled.

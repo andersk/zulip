@@ -36,9 +36,7 @@ def openapi_test_function(endpoint: str) -> Callable[[FuncT], FuncT]:
         REGISTERED_TEST_FUNCTIONS.add(test_func.__name__)
         TEST_FUNCTIONS[endpoint] = _record_calls_wrapper
 
-        return cast(
-            FuncT, _record_calls_wrapper,
-        )  # https://github.com/python/mypy/issues/1927
+        return cast(FuncT, _record_calls_wrapper)  # https://github.com/python/mypy/issues/1927
 
     return wrapper
 
@@ -765,9 +763,7 @@ def update_message(client: Client, message_id: int) -> None:
     assert result["raw_content"] == request["content"]
 
 
-def test_update_message_edit_permission_error(
-    client: Client, nonadmin_client: Client,
-) -> None:
+def test_update_message_edit_permission_error(client: Client, nonadmin_client: Client) -> None:
     request = {
         "type": "stream",
         "to": "Denmark",
@@ -796,9 +792,7 @@ def delete_message(client: Client, message_id: int) -> None:
     validate_against_openapi_schema(result, "/messages/{message_id}", "delete", "200")
 
 
-def test_delete_message_edit_permission_error(
-    client: Client, nonadmin_client: Client,
-) -> None:
+def test_delete_message_edit_permission_error(client: Client, nonadmin_client: Client) -> None:
     request = {
         "type": "stream",
         "to": "Denmark",

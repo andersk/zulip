@@ -47,10 +47,7 @@ class TestSessions(ZulipTestCase):
     def test_delete_user_sessions(self) -> None:
         user_profile = self.example_user("hamlet")
         self.do_test_session(
-            user_profile,
-            lambda: delete_user_sessions(user_profile),
-            get_realm("zulip"),
-            True,
+            user_profile, lambda: delete_user_sessions(user_profile), get_realm("zulip"), True,
         )
         self.do_test_session(
             self.example_user("othello"),

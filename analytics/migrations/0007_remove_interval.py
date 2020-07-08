@@ -14,8 +14,7 @@ class Migration(migrations.Migration):
         ),
         migrations.RemoveField(model_name="installationcount", name="interval"),
         migrations.AlterUniqueTogether(
-            name="realmcount",
-            unique_together={("realm", "property", "subgroup", "end_time")},
+            name="realmcount", unique_together={("realm", "property", "subgroup", "end_time")},
         ),
         migrations.RemoveField(model_name="realmcount", name="interval"),
         migrations.AlterUniqueTogether(

@@ -98,9 +98,7 @@ def get_link_embed_data(
     if data.get("oembed"):
         return data
 
-    response = requests.get(
-        mark_sanitized(url), stream=True, headers=HEADERS, timeout=TIMEOUT,
-    )
+    response = requests.get(mark_sanitized(url), stream=True, headers=HEADERS, timeout=TIMEOUT)
     if response.ok:
         og_data = OpenGraphParser(response.text).extract_data()
         for key in ["title", "description", "image"]:

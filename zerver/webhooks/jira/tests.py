@@ -208,12 +208,8 @@ Adding a comment. Oh, what a comment it is!
         expected_message = """Leonardo Franchi [Administrator] updated [TEST-1: Fix That](https://zulipp.atlassian.net/browse/TEST-1):
 
 * Changed status from **To Do** to **In Progress**"""
-        self.send_and_test_stream_message(
-            "change_status_v1", expected_topic, expected_message,
-        )
-        self.send_and_test_stream_message(
-            "change_status_v2", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("change_status_v1", expected_topic, expected_message)
+        self.send_and_test_stream_message("change_status_v2", expected_topic, expected_message)
 
     def get_body(self, fixture_name: str) -> str:
         return self.webhook_fixture_data("jira", fixture_name)

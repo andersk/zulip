@@ -638,9 +638,7 @@ def fetch_events(query: Mapping[str, Any]) -> Dict[str, Any]:
                 and last_event_id != client.event_queue.newest_pruned_id
             ):
                 raise JsonableError(
-                    _("Event {event_id} was not in this queue").format(
-                        event_id=last_event_id,
-                    ),
+                    _("Event {event_id} was not in this queue").format(event_id=last_event_id),
                 )
             was_connected = client.finish_current_handler()
 
@@ -1280,9 +1278,7 @@ def process_notification(notice: Mapping[str, Any]) -> None:
             # queue at the time of upgrade.
             #
             # TODO: Remove this block in release >= 4.0.
-            user_ids: List[int] = [
-                user["id"] for user in cast(List[Mapping[str, int]], users)
-            ]
+            user_ids: List[int] = [user["id"] for user in cast(List[Mapping[str, int]], users)]
         else:
             user_ids = cast(List[int], users)
         process_deletion_event(event, user_ids)

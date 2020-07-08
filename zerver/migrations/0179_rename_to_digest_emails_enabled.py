@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RenameField(
-            model_name="realm",
-            old_name="show_digest_email",
-            new_name="digest_emails_enabled",
+            model_name="realm", old_name="show_digest_email", new_name="digest_emails_enabled",
         ),
     ]

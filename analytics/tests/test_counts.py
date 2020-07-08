@@ -237,9 +237,7 @@ class TestProcessCountStat(AnalyticsTestCase):
             VALUES ({default_realm_id}, 1, {property}, %(time_end)s)
         """,
         ).format(default_realm_id=Literal(self.default_realm.id), property=Literal(property))
-        return CountStat(
-            property, sql_data_collector(RealmCount, query, None), CountStat.HOUR,
-        )
+        return CountStat(property, sql_data_collector(RealmCount, query, None), CountStat.HOUR)
 
     def assertFillStateEquals(
         self, stat: CountStat, end_time: datetime, state: int = FillState.DONE,
@@ -1260,9 +1258,7 @@ class TestDoIncrementLoggingStat(AnalyticsTestCase):
     def test_increment(self) -> None:
         stat = LoggingCountStat("test", RealmCount, CountStat.DAY)
         self.current_property = "test"
-        do_increment_logging_stat(
-            self.default_realm, stat, None, self.TIME_ZERO, increment=-1,
-        )
+        do_increment_logging_stat(self.default_realm, stat, None, self.TIME_ZERO, increment=-1)
         self.assertTableState(RealmCount, ["value"], [[-1]])
         do_increment_logging_stat(self.default_realm, stat, None, self.TIME_ZERO, increment=3)
         self.assertTableState(RealmCount, ["value"], [[2]])

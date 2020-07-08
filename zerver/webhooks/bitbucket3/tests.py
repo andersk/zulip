@@ -45,9 +45,7 @@ class Bitbucket3HookTests(WebhookTestCase):
 
     def test_bitbucket3_repo_forked(self) -> None:
         expected_message = """User Hemanth V. Alluri(login: [hypro999](http://139.59.64.214:7990/users/hypro999)) forked the repository into [sandbox fork](http://139.59.64.214:7990/users/hypro999/repos/sandbox-fork/browse)."""
-        self.send_and_test_stream_message(
-            "repo_forked", self.EXPECTED_TOPIC, expected_message,
-        )
+        self.send_and_test_stream_message("repo_forked", self.EXPECTED_TOPIC, expected_message)
 
     def test_bitbucket3_repo_modified(self) -> None:
         expected_message = """[hypro999](http://139.59.64.214:7990/users/hypro999) changed the name of the **sandbox** repo from **sandbox** to **sandbox v2**."""

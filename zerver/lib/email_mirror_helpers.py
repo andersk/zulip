@@ -46,9 +46,7 @@ def encode_email_address(stream: Stream, show_sender: bool = False) -> str:
     return encode_email_address_helper(stream.name, stream.email_token, show_sender)
 
 
-def encode_email_address_helper(
-    name: str, email_token: str, show_sender: bool = False,
-) -> str:
+def encode_email_address_helper(name: str, email_token: str, show_sender: bool = False) -> str:
     # Some deployments may not use the email gateway
     if settings.EMAIL_GATEWAY_PATTERN == "":
         return ""

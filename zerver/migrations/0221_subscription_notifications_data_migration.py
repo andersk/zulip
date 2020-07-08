@@ -13,9 +13,7 @@ SETTINGS_MAP = {
 }
 
 
-def update_notification_settings(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def update_notification_settings(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     Subscription = apps.get_model("zerver", "Subscription")
     UserProfile = apps.get_model("zerver", "UserProfile")
 

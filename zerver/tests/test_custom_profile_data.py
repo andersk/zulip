@@ -111,10 +111,7 @@ class CreateCustomProfileFieldTest(CustomProfileFieldTestCase):
         self.assert_json_error(result, "'value' cannot be blank.")
 
         data["field_data"] = ujson.dumps(
-            {
-                "python": {"text": "Python", "order": 1},
-                "java": {"text": "Java", "order": "2"},
-            },
+            {"python": {"text": "Python", "order": 1}, "java": {"text": "Java", "order": "2"}},
         )
         result = self.client_post("/json/realm/profile_fields", info=data)
         self.assert_json_error(result, 'field_data["order"] is not a string')
@@ -259,9 +256,7 @@ class CreateCustomProfileFieldTest(CustomProfileFieldTestCase):
         self.assertEqual(custom_field.name, "Reddit")
         field_data = ujson.loads(custom_field.field_data)
         self.assertEqual(field_data["subtype"], "custom")
-        self.assertEqual(
-            field_data["url_pattern"], "https://www.reddit.com/user/%(username)s",
-        )
+        self.assertEqual(field_data["url_pattern"], "https://www.reddit.com/user/%(username)s")
 
         result = self.client_post("/json/realm/profile_fields", info=data)
         self.assert_json_error(result, "A field with that label already exists.")
@@ -338,9 +333,7 @@ class DeleteCustomProfileFieldTest(CustomProfileFieldTestCase):
         do_update_user_custom_profile_data_if_changed(user_profile, data)
 
         self.assertTrue(self.custom_field_exists_in_realm(field.id))
-        self.assertEqual(
-            user_profile.customprofilefieldvalue_set.count(), self.original_count,
-        )
+        self.assertEqual(user_profile.customprofilefieldvalue_set.count(), self.original_count)
 
         do_remove_realm_custom_profile_field(realm, field)
 
@@ -476,9 +469,7 @@ class UpdateCustomProfileFieldTest(CustomProfileFieldTestCase):
     def test_update_invalid_field(self) -> None:
         self.login("iago")
         data = [{"id": 1234, "value": "12"}]
-        result = self.client_patch(
-            "/json/users/me/profile_data", {"data": ujson.dumps(data)},
-        )
+        result = self.client_patch("/json/users/me/profile_data", {"data": ujson.dumps(data)})
         self.assert_json_error(result, "Field id 1234 not found.")
 
     def test_update_invalid_short_text(self) -> None:
@@ -653,8 +644,7 @@ class ListCustomProfileFieldTest(CustomProfileFieldTestCase):
         result = self.client_get("/json/realm/profile_fields")
         content = result.json()
         self.assertListEqual(
-            content["custom_fields"],
-            sorted(content["custom_fields"], key=lambda x: -x["id"]),
+            content["custom_fields"], sorted(content["custom_fields"], key=lambda x: -x["id"]),
         )
 
     def test_get_custom_profile_fields_from_api(self) -> None:

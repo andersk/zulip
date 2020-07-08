@@ -24,8 +24,7 @@ class Command(BaseCommand):
             action="store",
             dest="database",
             default=DEFAULT_DB_ALIAS,
-            help="Nominates a database to synchronize. "
-            'Defaults to the "default" database.',
+            help="Nominates a database to synchronize. " 'Defaults to the "default" database.',
         )
 
         parser.add_argument(

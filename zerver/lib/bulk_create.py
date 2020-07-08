@@ -171,11 +171,7 @@ def bulk_create_streams(
     recipients_to_create: List[Recipient] = []
     for stream in Stream.objects.filter(realm=realm).values("id", "name"):
         if stream["name"].lower() not in existing_streams:
-            recipients_to_create.append(
-                Recipient(type_id=stream["id"], type=Recipient.STREAM),
-            )
+            recipients_to_create.append(Recipient(type_id=stream["id"], type=Recipient.STREAM))
     Recipient.objects.bulk_create(recipients_to_create)
 
-    bulk_set_users_or_streams_recipient_fields(
-        Stream, streams_to_create, recipients_to_create,
-    )
+    bulk_set_users_or_streams_recipient_fields(Stream, streams_to_create, recipients_to_create)

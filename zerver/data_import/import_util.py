@@ -184,9 +184,7 @@ def make_user_messages(
     return zerver_usermessage
 
 
-def build_subscription(
-    recipient_id: int, user_id: int, subscription_id: int,
-) -> ZerverFieldsT:
+def build_subscription(recipient_id: int, user_id: int, subscription_id: int) -> ZerverFieldsT:
     subscription = Subscription(color=random.choice(stream_colors), id=subscription_id)
     subscription_dict = model_to_dict(subscription, exclude=["user_profile", "recipient_id"])
     subscription_dict["user_profile"] = user_id
@@ -208,9 +206,7 @@ def build_public_stream_subscriptions(
     """
     subscriptions: List[ZerverFieldsT] = []
 
-    public_stream_ids = {
-        stream["id"] for stream in zerver_stream if not stream["invite_only"]
-    }
+    public_stream_ids = {stream["id"] for stream in zerver_stream if not stream["invite_only"]}
 
     public_stream_recipient_ids = {
         recipient["id"]
@@ -290,9 +286,7 @@ def build_huddle_subscriptions(
     return subscriptions
 
 
-def build_personal_subscriptions(
-    zerver_recipient: List[ZerverFieldsT],
-) -> List[ZerverFieldsT]:
+def build_personal_subscriptions(zerver_recipient: List[ZerverFieldsT]) -> List[ZerverFieldsT]:
 
     subscriptions: List[ZerverFieldsT] = []
 
@@ -433,15 +427,11 @@ def build_user_message(
 
     id = NEXT_ID("user_message")
 
-    usermessage = dict(
-        id=id, user_profile=user_id, message=message_id, flags_mask=flags_mask,
-    )
+    usermessage = dict(id=id, user_profile=user_id, message=message_id, flags_mask=flags_mask)
     return usermessage
 
 
-def build_defaultstream(
-    realm_id: int, stream_id: int, defaultstream_id: int,
-) -> ZerverFieldsT:
+def build_defaultstream(realm_id: int, stream_id: int, defaultstream_id: int) -> ZerverFieldsT:
     defaultstream = dict(stream=stream_id, realm=realm_id, id=defaultstream_id)
     return defaultstream
 
@@ -594,9 +584,7 @@ def process_avatars(
 
     # Run downloads in parallel
     output = []
-    for (status, job) in run_parallel_wrapper(
-        get_avatar, avatar_upload_list, threads=threads,
-    ):
+    for (status, job) in run_parallel_wrapper(get_avatar, avatar_upload_list, threads=threads):
         output.append(job)
 
     logging.info("######### GETTING AVATARS FINISHED #########\n")
@@ -697,9 +685,7 @@ def process_uploads(
 
 
 def build_realm_emoji(realm_id: int, name: str, id: int, file_name: str) -> ZerverFieldsT:
-    return model_to_dict(
-        RealmEmoji(realm_id=realm_id, name=name, id=id, file_name=file_name),
-    )
+    return model_to_dict(RealmEmoji(realm_id=realm_id, name=name, id=id, file_name=file_name))
 
 
 def process_emojis(

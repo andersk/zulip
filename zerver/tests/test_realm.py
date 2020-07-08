@@ -339,9 +339,7 @@ class RealmTest(ZulipTestCase):
 
         invalid_signup_notifications_stream_id = 1234
         req = dict(
-            signup_notifications_stream_id=ujson.dumps(
-                invalid_signup_notifications_stream_id,
-            ),
+            signup_notifications_stream_id=ujson.dumps(invalid_signup_notifications_stream_id),
         )
         result = self.client_patch("/json/realm", req)
         self.assert_json_error(result, "Invalid stream id")
@@ -433,15 +431,11 @@ class RealmTest(ZulipTestCase):
         reset_emails_in_zulip_realm()
         realm = get_realm("zulip")
 
-        req = dict(
-            email_address_visibility=ujson.dumps(Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS),
-        )
+        req = dict(email_address_visibility=ujson.dumps(Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS))
         result = self.client_patch("/json/realm", req)
         self.assert_json_success(result)
         realm = get_realm("zulip")
-        self.assertEqual(
-            realm.email_address_visibility, Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS,
-        )
+        self.assertEqual(realm.email_address_visibility, Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS)
 
         edited_user_profile = get_user_profile_by_id(user_profile.id)
         self.assertEqual(
@@ -460,16 +454,12 @@ class RealmTest(ZulipTestCase):
         self.assertEqual(result.json()["user"]["email"], f"user{hamlet.id}@zulip.testserver")
         self.assertEqual(result.json()["user"].get("delivery_email"), hamlet.delivery_email)
 
-        req = dict(
-            email_address_visibility=ujson.dumps(Realm.EMAIL_ADDRESS_VISIBILITY_NOBODY),
-        )
+        req = dict(email_address_visibility=ujson.dumps(Realm.EMAIL_ADDRESS_VISIBILITY_NOBODY))
         result = self.client_patch("/json/realm", req)
         self.assert_json_success(result)
 
         realm = get_realm("zulip")
-        self.assertEqual(
-            realm.email_address_visibility, Realm.EMAIL_ADDRESS_VISIBILITY_NOBODY,
-        )
+        self.assertEqual(realm.email_address_visibility, Realm.EMAIL_ADDRESS_VISIBILITY_NOBODY)
         edited_user_profile = get_user_profile_by_id(user_profile.id)
         self.assertEqual(
             edited_user_profile.email, f"user{edited_user_profile.id}@zulip.testserver",
@@ -558,9 +548,7 @@ class RealmTest(ZulipTestCase):
 
             self.do_test_invalid_integer_attribute_value(name, invalid_value)
 
-    def do_test_invalid_integer_attribute_value(
-        self, val_name: str, invalid_val: int,
-    ) -> None:
+    def do_test_invalid_integer_attribute_value(self, val_name: str, invalid_val: int) -> None:
 
         possible_messages = {
             f"Invalid {val_name}",
@@ -600,9 +588,7 @@ class RealmTest(ZulipTestCase):
         )
 
         req = {
-            "video_chat_provider": ujson.dumps(
-                Realm.VIDEO_CHAT_PROVIDERS["jitsi_meet"]["id"],
-            ),
+            "video_chat_provider": ujson.dumps(Realm.VIDEO_CHAT_PROVIDERS["jitsi_meet"]["id"]),
         }
         result = self.client_patch("/json/realm", req)
         self.assert_json_success(result)
@@ -634,8 +620,7 @@ class RealmTest(ZulipTestCase):
                 get_realm("hosted").max_invites, settings.INVITES_DEFAULT_REALM_DAILY_MAX,
             )
             self.assertEqual(
-                get_realm("hosted").message_visibility_limit,
-                Realm.MESSAGE_VISIBILITY_LIMITED,
+                get_realm("hosted").message_visibility_limit, Realm.MESSAGE_VISIBILITY_LIMITED,
             )
             self.assertEqual(get_realm("hosted").upload_quota_gb, Realm.UPLOAD_QUOTA_LIMITED)
 

@@ -180,10 +180,7 @@ class EditMessageTest(ZulipTestCase):
     def test_edit_message_no_permission(self) -> None:
         self.login("hamlet")
         msg_id = self.send_stream_message(
-            self.example_user("iago"),
-            "Scotland",
-            topic_name="editing",
-            content="before edit",
+            self.example_user("iago"), "Scotland", topic_name="editing", content="before edit",
         )
         result = self.client_patch(
             "/json/messages/" + str(msg_id),
@@ -251,9 +248,7 @@ class EditMessageTest(ZulipTestCase):
         self.assert_json_success(result_1)
 
         result = self.client_get("/json/messages/" + str(msg_id_1) + "/history")
-        self.assert_json_error(
-            result, "Message edit history is disabled in this organization",
-        )
+        self.assert_json_error(result, "Message edit history is disabled in this organization")
 
         # Now verify that if we fetch the message directly, there's no
         # edit history data attached.
@@ -292,9 +287,7 @@ class EditMessageTest(ZulipTestCase):
         self.assertEqual(
             message_history_1[0]["rendered_content"], "<p>content before edit</p>",
         )
-        self.assertEqual(
-            message_history_1[1]["rendered_content"], "<p>content after edit</p>",
-        )
+        self.assertEqual(message_history_1[1]["rendered_content"], "<p>content after edit</p>")
         self.assertEqual(
             message_history_1[1]["content_html_diff"],
             (
@@ -441,10 +434,7 @@ class EditMessageTest(ZulipTestCase):
         self.login("hamlet")
         hamlet = self.example_user("hamlet")
         msg_id = self.send_stream_message(
-            self.example_user("hamlet"),
-            "Scotland",
-            topic_name="topic 1",
-            content="content 1",
+            self.example_user("hamlet"), "Scotland", topic_name="topic 1", content="content 1",
         )
         result = self.client_patch(
             "/json/messages/" + str(msg_id), {"message_id": msg_id, "content": "content 2"},
@@ -529,13 +519,7 @@ class EditMessageTest(ZulipTestCase):
         message_history = list(reversed(json_response["message_history"]))
         i = 0
         for entry in message_history:
-            expected_entries = {
-                "content",
-                "rendered_content",
-                "topic",
-                "timestamp",
-                "user_id",
-            }
+            expected_entries = {"content", "rendered_content", "topic", "timestamp", "user_id"}
             if i in {0, 2, 3}:
                 expected_entries.add("prev_topic")
             if i in {1, 2, 4}:
@@ -1205,9 +1189,7 @@ class EditMessageTest(ZulipTestCase):
         )
         self.assertEqual(
             has_message_access(
-                self.example_user("iago"),
-                Message.objects.get(id=msg_id_to_test_acesss),
-                None,
+                self.example_user("iago"), Message.objects.get(id=msg_id_to_test_acesss), None,
             ),
             True,
         )

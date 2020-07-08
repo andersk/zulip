@@ -36,10 +36,7 @@ class NetlifyHookTests(WebhookTestCase):
         )
 
         self.send_and_test_stream_message(
-            "deploy_failed",
-            expected_topic,
-            expected_message,
-            content_type="application/json",
+            "deploy_failed", expected_topic, expected_message, content_type="application/json",
         )
 
     def test_locked_message(self) -> None:
@@ -50,10 +47,7 @@ class NetlifyHookTests(WebhookTestCase):
         )
 
         self.send_and_test_stream_message(
-            "deploy_locked",
-            expected_topic,
-            expected_message,
-            content_type="application/json",
+            "deploy_locked", expected_topic, expected_message, content_type="application/json",
         )
 
     def test_unlocked_message(self) -> None:

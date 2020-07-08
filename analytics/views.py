@@ -196,9 +196,7 @@ def stats_for_installation(request: HttpRequest) -> HttpResponse:
 
 
 @require_server_admin
-def stats_for_remote_installation(
-    request: HttpRequest, remote_server_id: int,
-) -> HttpResponse:
+def stats_for_remote_installation(request: HttpRequest, remote_server_id: int) -> HttpResponse:
     server = RemoteZulipServer.objects.get(id=remote_server_id)
     return render_stats(
         request,
@@ -306,9 +304,7 @@ def get_chart_data(
         tables = [aggregate_table, UserCount]
         # Note that the labels are further re-written by client_label_map
         subgroup_to_label = {
-            stats[0]: {
-                str(id): name for id, name in Client.objects.values_list("id", "name")
-            },
+            stats[0]: {str(id): name for id, name in Client.objects.values_list("id", "name")},
         }
         labels_sort_function = sort_client_labels
         include_empty_subgroups = False
@@ -948,10 +944,7 @@ def sent_messages_report(realm: str) -> str:
 
 def ad_hoc_queries() -> List[Dict[str, str]]:
     def get_page(
-        query: Composable,
-        cols: Sequence[str],
-        title: str,
-        totals_columns: Sequence[int] = [],
+        query: Composable, cols: Sequence[str], title: str, totals_columns: Sequence[int] = [],
     ) -> Dict[str, str]:
         cursor = connection.cursor()
         cursor.execute(query)
@@ -960,8 +953,7 @@ def ad_hoc_queries() -> List[Dict[str, str]]:
         cursor.close()
 
         def fix_rows(
-            i: int,
-            fixup_func: Union[Callable[[Realm], mark_safe], Callable[[datetime], str]],
+            i: int, fixup_func: Union[Callable[[Realm], mark_safe], Callable[[datetime], str]],
         ) -> None:
             for row in rows:
                 row[i] = fixup_func(row[i])
@@ -1200,9 +1192,7 @@ def get_activity(request: HttpRequest) -> HttpResponse:
     title = "Activity"
 
     return render(
-        request,
-        "analytics/activity.html",
-        context=dict(data=data, title=title, is_home=True),
+        request, "analytics/activity.html", context=dict(data=data, title=title, is_home=True),
     )
 
 
