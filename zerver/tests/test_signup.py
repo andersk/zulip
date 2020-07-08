@@ -3334,9 +3334,7 @@ class UserSignUpTest(InviteUserBase):
             self.assert_in_success_response(["id_full_name"], result)
             # Verify that user is NOT asked for its LDAP/Active Directory password.
             # LDAP is not configured for authentication in this test.
-            self.assert_not_in_success_response(
-                ["Enter your LDAP/Active Directory password.", "ldap-password"], result,
-            )
+            self.assert_not_in_success_response(["Enter your LDAP/Active Directory password.", "ldap-password"], result)
             # If we were using e.g. the SAML auth backend, there
             # shouldn't be a password prompt, but since it uses the
             # EmailAuthBackend, there should be password field here.

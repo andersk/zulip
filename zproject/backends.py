@@ -1687,9 +1687,7 @@ class AppleAuthBackend(SocialAuthMixin, AppleIdAuth):
 
         # Generate a random string of 32 alphanumeric characters.
         state = self.state_token()
-        put_dict_in_redis(
-            redis_client, "apple_auth_{token}", data_to_store, self.REDIS_EXPIRATION_SECONDS, token=state,
-        )
+        put_dict_in_redis(redis_client, "apple_auth_{token}", data_to_store, self.REDIS_EXPIRATION_SECONDS, token=state)
         return state
 
     def validate_state(self) -> Optional[str]:

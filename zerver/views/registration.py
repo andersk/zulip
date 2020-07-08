@@ -95,9 +95,7 @@ def check_prereg_key_and_redirect(request: HttpRequest, confirmation_key: str) -
         Confirmation.INVITATION,
         Confirmation.REALM_CREATION,
     ]:
-        return render_confirmation_key_error(
-            request, ConfirmationKeyException(ConfirmationKeyException.DOES_NOT_EXIST),
-        )
+        return render_confirmation_key_error(request, ConfirmationKeyException(ConfirmationKeyException.DOES_NOT_EXIST))
 
     prereg_user = confirmation.content_object
     if prereg_user.status == confirmation_settings.STATUS_REVOKED:
@@ -586,9 +584,7 @@ def accounts_home(
         form = HomepageForm(request.POST, realm=realm, from_multiuse_invite=from_multiuse_invite)
         if form.is_valid():
             email = form.cleaned_data["email"]
-            activation_url = prepare_activation_url(
-                email, request, streams=streams_to_subscribe, invited_as=invited_as,
-            )
+            activation_url = prepare_activation_url(email, request, streams=streams_to_subscribe, invited_as=invited_as)
             try:
                 send_confirm_registration_email(email, activation_url, request.LANGUAGE_CODE, realm=realm)
             except smtplib.SMTPException as e:
@@ -648,10 +644,7 @@ def find_account(request: HttpRequest) -> HttpResponse:
                 context = common_context(user)
                 context.update({"email": user.delivery_email})
                 send_email(
-                    "zerver/emails/find_team",
-                    to_user_ids=[user.id],
-                    context=context,
-                    from_address=FromAddress.SUPPORT,
+                    "zerver/emails/find_team", to_user_ids=[user.id], context=context, from_address=FromAddress.SUPPORT,
                 )
 
             # Note: Show all the emails in the result otherwise this

@@ -83,10 +83,7 @@ class ThinkstHookTests(WebhookTestCase):
         )
 
         self.send_and_test_stream_message(
-            "canarytoken_real",
-            "canarytoken alert",
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "canarytoken_real", "canarytoken alert", expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_canarytoken_with_specific_topic(self) -> None:

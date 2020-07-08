@@ -58,9 +58,7 @@ class SemaphoreHookTests(WebhookTestCase):
 * **Author**: radwo
 """.strip()
         with patch("zerver.webhooks.semaphore.view.is_github_repo", return_value=False):
-            self.send_and_test_stream_message(
-                "push", expected_topic, expected_message, content_type="application/json",
-            )
+            self.send_and_test_stream_message("push", expected_topic, expected_message, content_type="application/json")
 
     def test_semaphore_pull_request(self) -> None:
         expected_topic = "notifications/test-notifications"

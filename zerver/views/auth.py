@@ -151,9 +151,7 @@ def maybe_send_to_registration(
     # devices, e.g. just creating an account on the web on their laptop.
     assert not (mobile_flow_otp and desktop_flow_otp)
     if mobile_flow_otp:
-        set_expirable_session_var(
-            request.session, "registration_mobile_flow_otp", mobile_flow_otp, expiry_seconds=3600,
-        )
+        set_expirable_session_var(request.session, "registration_mobile_flow_otp", mobile_flow_otp, expiry_seconds=3600)
     elif desktop_flow_otp:
         set_expirable_session_var(
             request.session, "registration_desktop_flow_otp", desktop_flow_otp, expiry_seconds=3600,

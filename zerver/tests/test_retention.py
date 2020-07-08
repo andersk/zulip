@@ -122,10 +122,7 @@ class ArchiveMessagesTestingBase(RetentionTestingBase):
         get_user_profile_by_email(bot_email)
         zulip_user = self.example_user("hamlet")
         msg_id = internal_send_private_message(
-            realm=self.zulip_realm,
-            sender=get_system_bot(bot_email),
-            recipient_user=zulip_user,
-            content="test message",
+            realm=self.zulip_realm, sender=get_system_bot(bot_email), recipient_user=zulip_user, content="test message",
         )
         assert msg_id is not None
         return msg_id
@@ -719,8 +716,7 @@ class MoveMessageToArchiveWithSubMessages(MoveMessageToArchiveBase):
         move_messages_to_archive(message_ids=[msg_id])
 
         self.assertEqual(
-            set(ArchivedSubMessage.objects.filter(message_id=msg_id).values_list("id", flat=True)),
-            set(submessage_ids),
+            set(ArchivedSubMessage.objects.filter(message_id=msg_id).values_list("id", flat=True)), set(submessage_ids),
         )
         self.assertEqual(SubMessage.objects.filter(id__in=submessage_ids).count(), 0)
 
@@ -880,9 +876,7 @@ class TestRestoreStreamMessages(ArchiveMessagesTestingBase):
         stream_name = "Denmark"
         stream = get_stream(stream_name, realm)
 
-        message_ids_to_archive_manually = [
-            self.send_stream_message(cordelia, stream_name, str(i)) for i in range(0, 2)
-        ]
+        message_ids_to_archive_manually = [self.send_stream_message(cordelia, stream_name, str(i)) for i in range(0, 2)]
         usermessage_ids_to_archive_manually = self._get_usermessage_ids(message_ids_to_archive_manually)
         message_ids_to_archive_by_policy = [self.send_stream_message(hamlet, stream_name, str(i)) for i in range(0, 2)]
         usermessage_ids_to_archive_by_policy = self._get_usermessage_ids(message_ids_to_archive_by_policy)

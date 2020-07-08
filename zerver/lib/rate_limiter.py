@@ -37,9 +37,7 @@ class RateLimitedObject(ABC):
 
     def rate_limit(self) -> Tuple[bool, float]:
         # Returns (ratelimited, secs_to_freedom)
-        return self.backend.rate_limit_entity(
-            self.key(), self.get_rules(), self.max_api_calls(), self.max_api_window(),
-        )
+        return self.backend.rate_limit_entity(self.key(), self.get_rules(), self.max_api_calls(), self.max_api_window())
 
     def rate_limit_request(self, request: HttpRequest) -> None:
         ratelimited, time = self.rate_limit()

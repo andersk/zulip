@@ -380,10 +380,7 @@ WEBHOOK_INTEGRATIONS: List[WebhookIntegration] = [
     WebhookIntegration("heroku", ["deployment"], display_name="Heroku"),
     WebhookIntegration("homeassistant", ["misc"], display_name="Home Assistant"),
     WebhookIntegration(
-        "ifttt",
-        ["meta-integration"],
-        function="zerver.webhooks.ifttt.view.api_iftt_app_webhook",
-        display_name="IFTTT",
+        "ifttt", ["meta-integration"], function="zerver.webhooks.ifttt.view.api_iftt_app_webhook", display_name="IFTTT",
     ),
     WebhookIntegration("insping", ["monitoring"], display_name="Insping"),
     WebhookIntegration("intercom", ["customer-support"], display_name="Intercom"),
@@ -657,9 +654,7 @@ DOC_SCREENSHOT_CONFIG: Dict[str, List[ScreenshotConfig]] = {
     "trello": [ScreenshotConfig("adding_comment_to_card.json")],
     "updown": [ScreenshotConfig("check_multiple_events.json")],
     "wordpress": [ScreenshotConfig("publish_post.txt", "wordpress_post_created.png")],
-    "yo": [
-        ScreenshotConfig("", "002.png", "yo-app", extra_params={"email": "iago@zulip.com", "username": "Cordelia"}),
-    ],
+    "yo": [ScreenshotConfig("", "002.png", "yo-app", extra_params={"email": "iago@zulip.com", "username": "Cordelia"})],
     "zabbix": [ScreenshotConfig("zabbix_alert.json")],
     "zendesk": [
         ScreenshotConfig(

@@ -707,9 +707,7 @@ def get_message_payload_gcm(user_profile: UserProfile, message: Message) -> Tupl
     return data, gcm_options
 
 
-def get_remove_payload_gcm(
-    user_profile: UserProfile, message_ids: List[int],
-) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+def get_remove_payload_gcm(user_profile: UserProfile, message_ids: List[int]) -> Tuple[Dict[str, Any], Dict[str, Any]]:
     """A `remove` payload + options, for Android via GCM/FCM."""
     gcm_payload = get_base_payload(user_profile)
     gcm_payload.update(

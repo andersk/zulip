@@ -45,9 +45,7 @@ class Command(ZulipBaseCommand):
         # were only on the now-deactivated stream.
 
         # Move the messages, and delete the old copies from caches.
-        message_ids_to_clear = list(
-            Message.objects.filter(recipient=recipient_to_destroy).values_list("id", flat=True),
-        )
+        message_ids_to_clear = list(Message.objects.filter(recipient=recipient_to_destroy).values_list("id", flat=True))
         count = Message.objects.filter(recipient=recipient_to_destroy).update(recipient=recipient_to_keep)
         print(f"Moved {count} messages")
         bulk_delete_cache_keys(message_ids_to_clear)

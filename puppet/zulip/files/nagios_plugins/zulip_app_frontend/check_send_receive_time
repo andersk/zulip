@@ -151,9 +151,7 @@ except Exception:
 msg_to_send = str(random.getrandbits(64))
 time_start = time.time()
 
-send_zulip(
-    zulip_sender, {"type": "private", "content": msg_to_send, "subject": "time to send", "to": recipient.email},
-)
+send_zulip(zulip_sender, {"type": "private", "content": msg_to_send, "subject": "time to send", "to": recipient.email})
 
 msg_content: List[str] = []
 

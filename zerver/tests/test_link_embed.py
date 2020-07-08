@@ -260,11 +260,7 @@ class PreviewTestCase(ZulipTestCase):
 
     @classmethod
     def create_mock_response(
-        cls,
-        url: str,
-        relative_url: bool = False,
-        headers: Optional[Dict[str, str]] = None,
-        html: Optional[str] = None,
+        cls, url: str, relative_url: bool = False, headers: Optional[Dict[str, str]] = None, html: Optional[str] = None,
     ) -> Callable[..., MockPythonResponse]:
         if html is None:
             html = cls.open_graph_html

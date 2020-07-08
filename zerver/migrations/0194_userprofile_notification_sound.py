@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="userprofile",
-            name="notification_sound",
-            field=models.CharField(default="zulip", max_length=20),
+            model_name="userprofile", name="notification_sound", field=models.CharField(default="zulip", max_length=20),
         ),
     ]

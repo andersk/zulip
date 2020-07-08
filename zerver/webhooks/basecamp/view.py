@@ -147,8 +147,5 @@ def get_generic_body(event: str, payload: Dict[str, Any], prefix: str, template:
     template = add_punctuation_if_necessary(template, title)
 
     return template.format(
-        user_name=get_event_creator(payload),
-        verb=verb,
-        title=get_subject_title(payload),
-        url=get_subject_url(payload),
+        user_name=get_event_creator(payload), verb=verb, title=get_subject_title(payload), url=get_subject_url(payload),
     )

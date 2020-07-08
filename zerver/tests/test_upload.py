@@ -851,8 +851,7 @@ class AvatarTest(UploadSerializeMixin, ZulipTestCase):
                 backend.get_realm_icon_url(15, 1), "https://bucket.s3.amazonaws.com/15/realm/icon.png?version=1",
             )
             self.assertEqual(
-                backend.get_realm_logo_url(15, 1, False),
-                "https://bucket.s3.amazonaws.com/15/realm/logo.png?version=1",
+                backend.get_realm_logo_url(15, 1, False), "https://bucket.s3.amazonaws.com/15/realm/logo.png?version=1",
             )
             self.assertEqual(
                 backend.get_realm_logo_url(15, 1, True),
@@ -1000,9 +999,7 @@ class AvatarTest(UploadSerializeMixin, ZulipTestCase):
 
         response = self.client_get("/avatar/nonexistent_user@zulip.com?foo=bar")
         redirect_url = response["Location"]
-        actual_url = (
-            "https://secure.gravatar.com/avatar/444258b521f152129eb0c162996e572d?d=identicon&version=1&foo=bar"
-        )
+        actual_url = "https://secure.gravatar.com/avatar/444258b521f152129eb0c162996e572d?d=identicon&version=1&foo=bar"
         self.assertEqual(redirect_url, actual_url)
 
     def test_valid_avatars(self) -> None:

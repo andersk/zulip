@@ -45,11 +45,7 @@ def process_batch(apps: StateApps, id_start: int, id_end: int, last_id: int) -> 
             has_image = True
             break
 
-        if (
-            message.has_link == has_link
-            and message.has_attachment == has_attachment
-            and message.has_image == has_image
-        ):
+        if message.has_link == has_link and message.has_attachment == has_attachment and message.has_image == has_image:
             # No need to spend time with the database if there aren't changes.
             continue
         message.has_image = has_image

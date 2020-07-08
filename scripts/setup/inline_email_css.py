@@ -56,10 +56,7 @@ def inline_template(template_source_name: str) -> None:
     if template_name != "email_base_default":
         output = strip_unnecesary_tags(output)
 
-    if (
-        "zerver/emails/compiled/email_base_default.html" in output
-        or "zerver/emails/email_base_messages.html" in output
-    ):
+    if "zerver/emails/compiled/email_base_default.html" in output or "zerver/emails/email_base_messages.html" in output:
         assert output.count("<html>") == 0
         assert output.count("<body>") == 0
         assert output.count("</html>") == 0

@@ -8,9 +8,7 @@ class FlockHookTests(WebhookTestCase):
     def test_flock_message(self) -> None:
         expected_topic = "Flock notifications"
         expected_message = "This is the welcome message!"
-        self.send_and_test_stream_message(
-            "messages", expected_topic, expected_message, content_type="application/json",
-        )
+        self.send_and_test_stream_message("messages", expected_topic, expected_message, content_type="application/json")
 
     def test_flock_reply(self) -> None:
         expected_topic = "Flock notifications"
@@ -58,9 +56,7 @@ class FlockHookTests(WebhookTestCase):
     def test_flock_reminder(self) -> None:
         expected_topic = "Flock notifications"
         expected_message = "Rishabh rawat wanted me to remind All"
-        self.send_and_test_stream_message(
-            "reminder", expected_topic, expected_message, content_type="application/json",
-        )
+        self.send_and_test_stream_message("reminder", expected_topic, expected_message, content_type="application/json")
 
     def test_flock_todo(self) -> None:
         expected_topic = "Flock notifications"

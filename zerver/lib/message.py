@@ -131,9 +131,7 @@ def messages_for_ids(
     return message_list
 
 
-def sew_messages_and_reactions(
-    messages: List[Dict[str, Any]], reactions: List[Dict[str, Any]],
-) -> List[Dict[str, Any]]:
+def sew_messages_and_reactions(messages: List[Dict[str, Any]], reactions: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     """Given a iterable of messages and reactions stitch reactions
     into messages.
     """

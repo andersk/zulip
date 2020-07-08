@@ -70,10 +70,7 @@ def mark_stream_as_read(
 
 @has_request_variables
 def mark_topic_as_read(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    stream_id: int = REQ(validator=check_int),
-    topic_name: str = REQ(),
+    request: HttpRequest, user_profile: UserProfile, stream_id: int = REQ(validator=check_int), topic_name: str = REQ(),
 ) -> HttpResponse:
     stream, recipient, sub = access_stream_by_id(user_profile, stream_id)
 

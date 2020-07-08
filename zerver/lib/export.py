@@ -1145,9 +1145,7 @@ def export_uploads_and_avatars(realm: Realm, output_dir: Path) -> None:
         export_emoji_from_local(
             realm, local_dir=os.path.join(settings.LOCAL_UPLOADS_DIR, "avatars"), output_dir=emoji_output_dir,
         )
-        export_realm_icons(
-            realm, local_dir=os.path.join(settings.LOCAL_UPLOADS_DIR), output_dir=realm_icons_output_dir,
-        )
+        export_realm_icons(realm, local_dir=os.path.join(settings.LOCAL_UPLOADS_DIR), output_dir=realm_icons_output_dir)
     else:
         # Some bigger installations will have their data stored on S3.
         export_files_from_s3(realm, settings.S3_AVATAR_BUCKET, output_dir=avatars_output_dir, processing_avatars=True)

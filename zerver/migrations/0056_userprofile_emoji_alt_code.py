@@ -9,7 +9,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name="userprofile", name="emoji_alt_code", field=models.BooleanField(default=False),
-        ),
+        migrations.AddField(model_name="userprofile", name="emoji_alt_code", field=models.BooleanField(default=False)),
     ]

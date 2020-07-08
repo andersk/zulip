@@ -228,11 +228,7 @@ def access_stream_for_delete_or_update(user_profile: UserProfile, stream_id: int
 # Only set allow_realm_admin flag to True when you want to allow realm admin to
 # access unsubscribed private stream content.
 def access_stream_common(
-    user_profile: UserProfile,
-    stream: Stream,
-    error: str,
-    require_active: bool = True,
-    allow_realm_admin: bool = False,
+    user_profile: UserProfile, stream: Stream, error: str, require_active: bool = True, allow_realm_admin: bool = False,
 ) -> Tuple[Recipient, Optional[Subscription]]:
     """Common function for backend code where the target use attempts to
     access the target stream, returning all the data fetched along the

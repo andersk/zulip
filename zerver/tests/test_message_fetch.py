@@ -1718,9 +1718,7 @@ class GetOldMessagesTest(ZulipTestCase):
         messages = result.json()["messages"]
         self.assertEqual(len(list(messages.keys())), 1)
         message = messages[str(good_id)]
-        self.assertEqual(
-            message["match_content"], '<p><span class="highlight">KEYWORDMATCH</span> and should work</p>',
-        )
+        self.assertEqual(message["match_content"], '<p><span class="highlight">KEYWORDMATCH</span> and should work</p>')
 
     @override_settings(USING_PGROONGA=False)
     def test_get_messages_with_search(self) -> None:
@@ -2052,9 +2050,7 @@ class GetOldMessagesTest(ZulipTestCase):
         self.assertEqual(len(result["messages"]), 1)
 
         narrow = [dict(operator="is", operand="mentioned")]
-        result = self.get_and_check_messages(
-            dict(narrow=ujson.dumps(narrow), anchor=anchor, num_before=0, num_after=0),
-        )
+        result = self.get_and_check_messages(dict(narrow=ujson.dumps(narrow), anchor=anchor, num_before=0, num_after=0))
         self.assertEqual(len(result["messages"]), 0)
 
     def test_get_visible_messages_with_anchor(self) -> None:
@@ -2548,9 +2544,7 @@ class GetOldMessagesTest(ZulipTestCase):
         # Have Othello send messages to Hamlet that he hasn't read.
         # Here, Hamlet isn't subscribed to the stream Scotland
         self.send_stream_message(self.example_user("othello"), "Scotland")
-        first_unread_message_id = self.send_personal_message(
-            self.example_user("othello"), self.example_user("hamlet"),
-        )
+        first_unread_message_id = self.send_personal_message(self.example_user("othello"), self.example_user("hamlet"))
 
         # Add a few messages that help us test that our query doesn't
         # look at messages that are irrelevant to Hamlet.
@@ -2913,12 +2907,7 @@ WHERE recipient_id = {scotland_recipient} AND (search_tsvector @@ plainto_tsquer
 """
         sql = sql_template.format(**query_ids)
         self.common_check_get_messages_query(
-            {
-                "anchor": 0,
-                "num_before": 0,
-                "num_after": 9,
-                "narrow": '[["stream", "Scotland"], ["search", "jumping"]]',
-            },
+            {"anchor": 0, "num_before": 0, "num_after": 9, "narrow": '[["stream", "Scotland"], ["search", "jumping"]]'},
             sql,
         )
 

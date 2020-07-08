@@ -14,12 +14,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser: ArgumentParser) -> None:
         parser.add_argument(
-            "-w",
-            "--weeks",
-            dest="delta_weeks",
-            default=5,
-            type=int,
-            help="Limiting value of how old the file can be.",
+            "-w", "--weeks", dest="delta_weeks", default=5, type=int, help="Limiting value of how old the file can be.",
         )
 
         parser.add_argument(

@@ -436,9 +436,7 @@ class Command(BaseCommand):
             }
 
             bulk_create_streams(zulip_realm, stream_dict)
-            recipient_streams: List[int] = [
-                Stream.objects.get(name=name, realm=zulip_realm).id for name in stream_list
-            ]
+            recipient_streams: List[int] = [Stream.objects.get(name=name, realm=zulip_realm).id for name in stream_list]
 
             # Create subscriptions to streams.  The following
             # algorithm will give each of the users a different but
@@ -554,10 +552,7 @@ class Command(BaseCommand):
                 hamlet,
                 [
                     {"id": phone_number.id, "value": "+0-11-23-456-7890"},
-                    {
-                        "id": biography.id,
-                        "value": "I am:\n* The prince of Denmark\n* Nephew to the usurping Claudius",
-                    },
+                    {"id": biography.id, "value": "I am:\n* The prince of Denmark\n* Nephew to the usurping Claudius"},
                     {"id": favorite_food.id, "value": "Dark chocolate"},
                     {"id": favorite_editor.id, "value": "vim"},
                     {"id": birthday.id, "value": "1900-1-1"},
@@ -671,9 +666,7 @@ class Command(BaseCommand):
 
                 # Add a few default streams
                 for default_stream_name in ["design", "devel", "social", "support"]:
-                    DefaultStream.objects.create(
-                        realm=zulip_realm, stream=get_stream(default_stream_name, zulip_realm),
-                    )
+                    DefaultStream.objects.create(realm=zulip_realm, stream=get_stream(default_stream_name, zulip_realm))
 
                 # Now subscribe everyone to these streams
                 subscribe_users_to_streams(zulip_realm, zulip_stream_dict)

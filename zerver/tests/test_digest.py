@@ -254,10 +254,7 @@ class TestDigestEmailMessages(ZulipTestCase):
             "some_bot@example.com", "password", get_realm("zulip"), "some_bot", "", bot_type=UserProfile.DEFAULT_BOT,
         )
         UserActivity.objects.create(
-            last_visit=cutoff - datetime.timedelta(days=1),
-            user_profile=bot,
-            count=0,
-            client=get_client("test_client"),
+            last_visit=cutoff - datetime.timedelta(days=1), user_profile=bot, count=0, client=get_client("test_client"),
         )
 
         # Check that bots are not sent emails

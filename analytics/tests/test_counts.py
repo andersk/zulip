@@ -1130,22 +1130,14 @@ class TestDoIncrementLoggingStat(AnalyticsTestCase):
         self.assertTableState(
             RealmCount,
             ["value", "subgroup", "end_time"],
-            [
-                [1, "subgroup1", self.TIME_ZERO],
-                [1, "subgroup2", self.TIME_ZERO],
-                [1, "subgroup1", self.TIME_LAST_HOUR],
-            ],
+            [[1, "subgroup1", self.TIME_ZERO], [1, "subgroup2", self.TIME_ZERO], [1, "subgroup1", self.TIME_LAST_HOUR]],
         )
         # This should trigger the get part of get_or_create
         do_increment_logging_stat(self.default_realm, stat, "subgroup1", self.TIME_ZERO)
         self.assertTableState(
             RealmCount,
             ["value", "subgroup", "end_time"],
-            [
-                [2, "subgroup1", self.TIME_ZERO],
-                [1, "subgroup2", self.TIME_ZERO],
-                [1, "subgroup1", self.TIME_LAST_HOUR],
-            ],
+            [[2, "subgroup1", self.TIME_ZERO], [1, "subgroup2", self.TIME_ZERO], [1, "subgroup1", self.TIME_LAST_HOUR]],
         )
 
     def test_increment(self) -> None:
@@ -1509,9 +1501,7 @@ class TestRealmActiveHumans(AnalyticsTestCase):
     def mark_15day_active(self, user: UserProfile, end_time: Optional[datetime] = None) -> None:
         if end_time is None:
             end_time = self.TIME_ZERO
-        UserCount.objects.create(
-            user=user, realm=user.realm, property="15day_actives::day", end_time=end_time, value=1,
-        )
+        UserCount.objects.create(user=user, realm=user.realm, property="15day_actives::day", end_time=end_time, value=1)
 
     def test_basic_boolean_logic(self) -> None:
         user = self.create_user()

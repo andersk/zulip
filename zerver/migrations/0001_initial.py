@@ -152,9 +152,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
         ),
         migrations.CreateModel(
             name="DefaultStream",
-            fields=[
-                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
-            ],
+            fields=[("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID"))],
         ),
         migrations.CreateModel(
             name="Huddle",
@@ -221,10 +219,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
             fields=[
                 ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
                 ("domain", models.CharField(db_index=True, max_length=80, unique=True)),
-                (
-                    "realm",
-                    models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm"),
-                ),
+                ("realm", models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm")),
             ],
         ),
         migrations.CreateModel(
@@ -485,9 +480,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
         migrations.AlterModelManagers(
             name="userprofile", managers=[("objects", django.contrib.auth.models.UserManager())],
         ),
-        migrations.AlterField(
-            model_name="preregistrationuser", name="email", field=models.EmailField(max_length=254),
-        ),
+        migrations.AlterField(model_name="preregistrationuser", name="email", field=models.EmailField(max_length=254)),
         migrations.AlterField(
             model_name="preregistrationuser", name="streams", field=models.ManyToManyField(to="zerver.Stream"),
         ),
@@ -496,9 +489,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
         ),
         migrations.AlterField(model_name="referral", name="email", field=models.EmailField(max_length=254)),
         migrations.AlterField(
-            model_name="userprofile",
-            name="email",
-            field=models.EmailField(db_index=True, max_length=254, unique=True),
+            model_name="userprofile", name="email", field=models.EmailField(db_index=True, max_length=254, unique=True),
         ),
         migrations.AlterField(
             model_name="userprofile",
@@ -548,9 +539,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
             model_name="userprofile", name="enable_stream_sounds", field=models.BooleanField(default=False),
         ),
         migrations.AddField(
-            model_name="userprofile",
-            name="is_api_super_user",
-            field=models.BooleanField(db_index=True, default=False),
+            model_name="userprofile", name="is_api_super_user", field=models.BooleanField(db_index=True, default=False),
         ),
         migrations.AddField(
             model_name="userprofile", name="is_realm_admin", field=models.BooleanField(db_index=True, default=False),
@@ -583,9 +572,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
             model_name="realm", name="create_stream_by_admins_only", field=models.BooleanField(default=False),
         ),
         migrations.AddField(
-            model_name="userprofile",
-            name="bot_type",
-            field=models.PositiveSmallIntegerField(db_index=True, null=True),
+            model_name="userprofile", name="bot_type", field=models.PositiveSmallIntegerField(db_index=True, null=True),
         ),
         migrations.AlterField(
             model_name="realmemoji",
@@ -614,9 +601,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
         migrations.AddField(
             model_name="userprofile", name="default_language", field=models.CharField(default="en", max_length=50),
         ),
-        migrations.AddField(
-            model_name="realm", name="allow_message_editing", field=models.BooleanField(default=True),
-        ),
+        migrations.AddField(model_name="realm", name="allow_message_editing", field=models.BooleanField(default=True)),
         migrations.AddField(
             model_name="realm", name="message_content_edit_limit_seconds", field=models.IntegerField(default=600),
         ),

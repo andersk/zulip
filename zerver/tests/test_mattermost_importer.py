@@ -496,9 +496,7 @@ class MatterMostImporter(ZulipTestCase):
         world_map_emoji_code = name_to_codepoint["world_map"]
 
         self.assertEqual(len(total_reactions), 4)
-        self.assertEqual(
-            self.get_set(total_reactions, "reaction_type"), {Reaction.REALM_EMOJI, Reaction.UNICODE_EMOJI},
-        )
+        self.assertEqual(self.get_set(total_reactions, "reaction_type"), {Reaction.REALM_EMOJI, Reaction.UNICODE_EMOJI})
         self.assertEqual(self.get_set(total_reactions, "emoji_name"), {"tick", "smile", "world_map"})
         self.assertEqual(
             self.get_set(total_reactions, "emoji_code"), {tick_emoji_code, smile_emoji_code, world_map_emoji_code},

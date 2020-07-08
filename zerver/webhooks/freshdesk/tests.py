@@ -113,11 +113,7 @@ Requester Bob <requester-bob@example.com> added a {} note to \
             note_type,
         )
         self.api_stream_message(
-            self.test_user,
-            fixture,
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            self.test_user, fixture, expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_private_note_change(self) -> None:

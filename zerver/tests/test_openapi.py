@@ -1026,9 +1026,7 @@ class OpenAPIRegexTest(ZulipTestCase):
         assert match_against_openapi_regex("/users/iago/subscriptions/23") is None
         assert match_against_openapi_regex("/messages/matches_narrow") is None
         # Making sure documented endpoints are matched correctly.
-        assert (
-            match_against_openapi_regex("/users/23/subscriptions/21") == "/users/{user_id}/subscriptions/{stream_id}"
-        )
+        assert match_against_openapi_regex("/users/23/subscriptions/21") == "/users/{user_id}/subscriptions/{stream_id}"
         assert match_against_openapi_regex("/users/iago@zulip.com/presence") == "/users/{email}/presence"
         assert match_against_openapi_regex("/messages/23") == "/messages/{message_id}"
         assert match_against_openapi_regex("/realm/emoji/realm_emoji_1") == "/realm/emoji/{emoji_name}"

@@ -115,9 +115,7 @@ def get_push_commits_event_message(
 
 
 def get_force_push_commits_event_message(user_name: str, url: str, branch_name: str, head: str) -> str:
-    return FORCE_PUSH_COMMITS_MESSAGE_TEMPLATE.format(
-        user_name=user_name, url=url, branch_name=branch_name, head=head,
-    )
+    return FORCE_PUSH_COMMITS_MESSAGE_TEMPLATE.format(user_name=user_name, url=url, branch_name=branch_name, head=head)
 
 
 def get_create_branch_event_message(user_name: str, url: Optional[str], branch_name: str) -> str:

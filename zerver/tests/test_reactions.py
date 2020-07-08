@@ -453,9 +453,7 @@ class EmojiReactionBase(ZulipTestCase):
         self.reaction_type = "realm_emoji"
         super().__init__(*args, **kwargs)
 
-    def post_reaction(
-        self, reaction_info: Dict[str, str], message_id: int = 1, sender: str = "hamlet",
-    ) -> HttpResponse:
+    def post_reaction(self, reaction_info: Dict[str, str], message_id: int = 1, sender: str = "hamlet") -> HttpResponse:
         if "reaction_type" not in reaction_info:
             reaction_info["reaction_type"] = self.reaction_type
         sender = self.example_user(sender)

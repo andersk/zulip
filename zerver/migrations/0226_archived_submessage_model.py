@@ -24,10 +24,7 @@ class Migration(migrations.Migration):
                     "message",
                     models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.ArchivedMessage"),
                 ),
-                (
-                    "sender",
-                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
-                ),
+                ("sender", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
             options={"abstract": False},
         ),

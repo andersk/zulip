@@ -50,12 +50,8 @@ class TestHotspots(ZulipTestCase):
         self.login_user(user)
         result = self.client_post("/json/users/me/hotspots", {"hotspot": ujson.dumps("intro_reply")})
         self.assert_json_success(result)
-        self.assertEqual(
-            list(UserHotspot.objects.filter(user=user).values_list("hotspot", flat=True)), ["intro_reply"],
-        )
+        self.assertEqual(list(UserHotspot.objects.filter(user=user).values_list("hotspot", flat=True)), ["intro_reply"])
 
         result = self.client_post("/json/users/me/hotspots", {"hotspot": ujson.dumps("invalid")})
         self.assert_json_error(result, "Unknown hotspot: invalid")
-        self.assertEqual(
-            list(UserHotspot.objects.filter(user=user).values_list("hotspot", flat=True)), ["intro_reply"],
-        )
+        self.assertEqual(list(UserHotspot.objects.filter(user=user).values_list("hotspot", flat=True)), ["intro_reply"])

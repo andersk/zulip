@@ -506,9 +506,7 @@ class AuthBackendTest(ZulipTestCase):
             with responses.RequestsMock(assert_all_requests_are_fired=True) as requests_mock:
                 urls: List[Dict[str, Any]] = backends_to_test[backend_name]["urls"]
                 for details in urls:
-                    requests_mock.add(
-                        details["method"], details["url"], status=details["status"], body=details["body"],
-                    )
+                    requests_mock.add(details["method"], details["url"], status=details["status"], body=details["body"])
                 backend_class = backends_to_test[backend_name]["backend"]
 
                 # We're creating a new class instance here, so the
@@ -1012,10 +1010,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
 
             # Now do it correctly
             result = self.social_auth_test(
-                account_data_dict,
-                subdomain="zulip",
-                expect_choose_email_screen=False,
-                mobile_flow_otp=mobile_flow_otp,
+                account_data_dict, subdomain="zulip", expect_choose_email_screen=False, mobile_flow_otp=mobile_flow_otp,
             )
         self.assertEqual(result.status_code, 302)
         redirect_url = result["Location"]
@@ -3095,9 +3090,9 @@ class GoogleAuthBackendTest(SocialAuthBase):
         self.assert_in_response("new@zulip.com.", result)
         self.assert_in_response('action="http://zulip.testserver/accounts/do_confirm/', result)
 
-        url = re.findall(
-            'action="(http://zulip.testserver/accounts/do_confirm[^"]*)"', result.content.decode("utf-8"),
-        )[0]
+        url = re.findall('action="(http://zulip.testserver/accounts/do_confirm[^"]*)"', result.content.decode("utf-8"))[
+            0
+        ]
         confirmation = Confirmation.objects.all().first()
         confirmation_key = confirmation.confirmation_key
         self.assertIn("do_confirm/" + confirmation_key, url)
@@ -3893,9 +3888,7 @@ class TestZulipRemoteUserBackend(DesktopFlowTestingLib, ZulipTestCase):
         self.assert_logged_in_user_id(None)
         self.assert_json_error_contains(result, "Invalid OTP", 400)
 
-        result = self.client_get(
-            "/accounts/login/sso/", dict(desktop_flow_otp="invalido" * 8), REMOTE_USER=remote_user,
-        )
+        result = self.client_get("/accounts/login/sso/", dict(desktop_flow_otp="invalido" * 8), REMOTE_USER=remote_user)
         self.assert_logged_in_user_id(None)
         self.assert_json_error_contains(result, "Invalid OTP", 400)
 

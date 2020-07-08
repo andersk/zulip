@@ -41,8 +41,7 @@ To restore a specific ArchiveTransaction:
 
         self.add_realm_args(
             parser,
-            help="Restore archived messages from the specified realm. "
-            "(Does not restore manually deleted messages.)",
+            help="Restore archived messages from the specified realm. " "(Does not restore manually deleted messages.)",
         )
 
     def handle(self, **options: Any) -> None:

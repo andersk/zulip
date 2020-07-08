@@ -303,9 +303,7 @@ def cache_set_many(items: Dict[str, Any], cache_name: Optional[str] = None, time
     remote_cache_stats_finish()
 
 
-def safe_cache_set_many(
-    items: Dict[str, Any], cache_name: Optional[str] = None, timeout: Optional[int] = None,
-) -> None:
+def safe_cache_set_many(items: Dict[str, Any], cache_name: Optional[str] = None, timeout: Optional[int] = None) -> None:
     """Variant of cache_set_many that drops saving any keys that fail
     validation, rather than throwing an exception visible to the
     caller."""

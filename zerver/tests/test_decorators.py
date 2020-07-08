@@ -1049,12 +1049,7 @@ class DeactivatedRealmTest(ZulipTestCase):
 
         result = self.client_post(
             "/json/messages",
-            {
-                "type": "private",
-                "content": "Test message",
-                "client": "test suite",
-                "to": self.example_email("othello"),
-            },
+            {"type": "private", "content": "Test message", "client": "test suite", "to": self.example_email("othello")},
         )
         self.assert_json_error_contains(result, "Not logged in", status_code=401)
 
@@ -1067,24 +1062,14 @@ class DeactivatedRealmTest(ZulipTestCase):
 
         result = self.client_post(
             "/json/messages",
-            {
-                "type": "private",
-                "content": "Test message",
-                "client": "test suite",
-                "to": self.example_email("othello"),
-            },
+            {"type": "private", "content": "Test message", "client": "test suite", "to": self.example_email("othello")},
         )
         self.assert_json_error_contains(result, "has been deactivated", status_code=400)
 
         result = self.api_post(
             self.example_user("hamlet"),
             "/api/v1/messages",
-            {
-                "type": "private",
-                "content": "Test message",
-                "client": "test suite",
-                "to": self.example_email("othello"),
-            },
+            {"type": "private", "content": "Test message", "client": "test suite", "to": self.example_email("othello")},
         )
         self.assert_json_error_contains(result, "has been deactivated", status_code=401)
 
@@ -1186,12 +1171,7 @@ class InactiveUserTest(ZulipTestCase):
 
         result = self.client_post(
             "/json/messages",
-            {
-                "type": "private",
-                "content": "Test message",
-                "client": "test suite",
-                "to": self.example_email("othello"),
-            },
+            {"type": "private", "content": "Test message", "client": "test suite", "to": self.example_email("othello")},
         )
         self.assert_json_error_contains(result, "Not logged in", status_code=401)
 
@@ -1203,24 +1183,14 @@ class InactiveUserTest(ZulipTestCase):
 
         result = self.client_post(
             "/json/messages",
-            {
-                "type": "private",
-                "content": "Test message",
-                "client": "test suite",
-                "to": self.example_email("othello"),
-            },
+            {"type": "private", "content": "Test message", "client": "test suite", "to": self.example_email("othello")},
         )
         self.assert_json_error_contains(result, "Account is deactivated", status_code=400)
 
         result = self.api_post(
             self.example_user("hamlet"),
             "/api/v1/messages",
-            {
-                "type": "private",
-                "content": "Test message",
-                "client": "test suite",
-                "to": self.example_email("othello"),
-            },
+            {"type": "private", "content": "Test message", "client": "test suite", "to": self.example_email("othello")},
         )
         self.assert_json_error_contains(result, "Account is deactivated", status_code=401)
 
@@ -1383,10 +1353,7 @@ class TestValidateApiKey(ZulipTestCase):
                     validate_api_key(HostRequestMock(host=settings.EXTERNAL_HOST), self.default_bot.email, api_key)
 
                 mock_warning.assert_called_with(
-                    "User %s (%s) attempted to access API on wrong subdomain (%s)",
-                    self.default_bot.email,
-                    "zulip",
-                    "",
+                    "User %s (%s) attempted to access API on wrong subdomain (%s)", self.default_bot.email, "zulip", "",
                 )
 
             with mock.patch("logging.warning") as mock_warning:
@@ -1517,8 +1484,7 @@ class TestAuthenticatedJsonPostViewDecorator(ZulipTestCase):
             self.assertEqual(result.status_code, 405)
             mock_warning.assert_called_once()  # Check we logged the Mock Not Allowed
             self.assertEqual(
-                mock_warning.call_args_list[0][0],
-                ("Method Not Allowed (%s): %s", "GET", "/json/subscriptions/exists"),
+                mock_warning.call_args_list[0][0], ("Method Not Allowed (%s): %s", "GET", "/json/subscriptions/exists"),
             )
 
     def test_authenticated_json_post_view_if_subdomain_is_invalid(self) -> None:

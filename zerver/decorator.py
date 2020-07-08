@@ -114,10 +114,7 @@ def require_post(func: ViewFuncT) -> ViewFuncT:
         if request.method != "POST":
             err_method = request.method
             logging.warning(
-                "Method Not Allowed (%s): %s",
-                err_method,
-                request.path,
-                extra={"status_code": 405, "request": request},
+                "Method Not Allowed (%s): %s", err_method, request.path, extra={"status_code": 405, "request": request},
             )
             return HttpResponseNotAllowed(["POST"])
         return func(request, *args, **kwargs)
@@ -300,10 +297,7 @@ def access_user_by_api_key(request: HttpRequest, api_key: str, email: Optional[s
 
 
 def log_exception_to_webhook_logger(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    request_body: Optional[str] = None,
-    unexpected_event: bool = False,
+    request: HttpRequest, user_profile: UserProfile, request_body: Optional[str] = None, unexpected_event: bool = False,
 ) -> None:
     if request_body is not None:
         payload = request_body

@@ -180,9 +180,7 @@ def semaphore_2(payload: Dict[str, Any]) -> Tuple[str, str, Optional[str]]:
         branch_name = pull_request["branch_name"]
         pull_request_title = pull_request["name"]
         pull_request_number = pull_request["number"]
-        pull_request_url = GITHUB_URL_TEMPLATES["pull_request"].format(
-            repo_url=repo_url, pr_number=pull_request_number,
-        )
+        pull_request_url = GITHUB_URL_TEMPLATES["pull_request"].format(repo_url=repo_url, pr_number=pull_request_number)
         context.update(
             branch_name=branch_name,
             pull_request_title=pull_request_title,

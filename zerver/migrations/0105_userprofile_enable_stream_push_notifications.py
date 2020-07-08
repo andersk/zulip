@@ -10,8 +10,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="userprofile",
-            name="enable_stream_push_notifications",
-            field=models.BooleanField(default=False),
+            model_name="userprofile", name="enable_stream_push_notifications", field=models.BooleanField(default=False),
         ),
     ]

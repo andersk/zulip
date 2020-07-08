@@ -32,9 +32,8 @@ def get_target_name(payload: Dict[str, Any]) -> str:
 
 def get_inbound_message_body(payload: Dict[str, Any]) -> str:
     link, outbox, inbox, subject = get_message_data(payload)
-    return (
-        "[Inbound message]({link}) from **{outbox}** to **{inbox}**:\n"
-        "```quote\n*Subject*: {subject}\n```".format(link=link, outbox=outbox, inbox=inbox, subject=subject)
+    return "[Inbound message]({link}) from **{outbox}** to **{inbox}**:\n" "```quote\n*Subject*: {subject}\n```".format(
+        link=link, outbox=outbox, inbox=inbox, subject=subject,
     )
 
 

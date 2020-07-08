@@ -147,9 +147,7 @@ class CreateCustomProfileFieldTest(CustomProfileFieldTestCase):
         self.assert_json_success(result)
 
         # Should also work without name or hint and only external field type and subtype data
-        result = self.client_post(
-            "/json/realm/profile_fields", info=dict(field_type=field_type, field_data=field_data),
-        )
+        result = self.client_post("/json/realm/profile_fields", info=dict(field_type=field_type, field_data=field_data))
         self.assert_json_success(result)
 
         # Default external account field data cannot be updated

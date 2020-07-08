@@ -300,9 +300,7 @@ def validate_user_custom_profile_field(
         raise AssertionError("Invalid field type")
 
 
-def validate_user_custom_profile_data(
-    realm_id: int, profile_data: List[Dict[str, Union[int, str, List[int]]]],
-) -> None:
+def validate_user_custom_profile_data(realm_id: int, profile_data: List[Dict[str, Union[int, str, List[int]]]]) -> None:
     # This function validate all custom field values according to their field type.
     for item in profile_data:
         field_id = item["id"]

@@ -873,9 +873,7 @@ class StreamAdminTest(ZulipTestCase):
 
         events = []
         with tornado_redirected_to_list(events):
-            result = self.client_patch(
-                f"/json/streams/{stream.id}", {"message_retention_days": ujson.dumps("forever")},
-            )
+            result = self.client_patch(f"/json/streams/{stream.id}", {"message_retention_days": ujson.dumps("forever")})
         self.assert_json_success(result)
         event = events[0]["event"]
         self.assertEqual(
@@ -1570,9 +1568,7 @@ class DefaultStreamGroupTest(ZulipTestCase):
 
         # Test creating a default stream group which contains a default stream
         do_add_default_stream(remaining_streams[0])
-        with self.assertRaisesRegex(
-            JsonableError, "'stream1' is a default stream and cannot be added to 'new group1'",
-        ):
+        with self.assertRaisesRegex(JsonableError, "'stream1' is a default stream and cannot be added to 'new group1'"):
             do_create_default_stream_group(realm, new_group_name, "This is group1", remaining_streams)
 
     def test_api_calls(self) -> None:
@@ -1834,11 +1830,7 @@ class SubscriptionPropertiesTest(ZulipTestCase):
         result = self.api_post(
             test_user,
             "/api/v1/users/me/subscriptions/properties",
-            {
-                "subscription_data": ujson.dumps(
-                    [{"property": "color", "stream_id": stream_id, "value": invalid_color}],
-                ),
-            },
+            {"subscription_data": ujson.dumps([{"property": "color", "stream_id": stream_id, "value": invalid_color}])},
         )
         self.assert_json_error(result, "color is not a valid hex color code")
 
@@ -3559,8 +3551,7 @@ class GetStreamsTest(ZulipTestCase):
         owner_subs_json = ujson.loads(owner_subs.content)
 
         self.assertEqual(
-            sorted([s["name"] for s in json["streams"]]),
-            sorted([s["name"] for s in owner_subs_json["subscriptions"]]),
+            sorted([s["name"] for s in json["streams"]]), sorted([s["name"] for s in owner_subs_json["subscriptions"]]),
         )
 
         # Check it correctly lists the bot owner's subs and the

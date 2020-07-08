@@ -799,9 +799,7 @@ class EditMessageTest(ZulipTestCase):
         self.assert_json_error(result, "Invalid propagate_mode")
         self.check_topic(id1, topic_name="topic1")
 
-        result = self.client_patch(
-            "/json/messages/" + str(id1), {"content": "edited", "propagate_mode": "change_all"},
-        )
+        result = self.client_patch("/json/messages/" + str(id1), {"content": "edited", "propagate_mode": "change_all"})
         self.assert_json_error(result, "Invalid propagate_mode without topic edit")
         self.check_topic(id1, topic_name="topic1")
 

@@ -139,9 +139,7 @@ def stats_for_realm(request: HttpRequest, realm_str: str) -> HttpResponse:
 def stats_for_remote_realm(request: HttpRequest, remote_server_id: int, remote_realm_id: int) -> HttpResponse:
     server = RemoteZulipServer.objects.get(id=remote_server_id)
     return render_stats(
-        request,
-        f"/remote/{server.id}/realm/{remote_realm_id}",
-        f"Realm {remote_realm_id} on server {server.hostname}",
+        request, f"/remote/{server.id}/realm/{remote_realm_id}", f"Realm {remote_realm_id} on server {server.hostname}",
     )
 
 

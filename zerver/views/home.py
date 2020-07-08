@@ -197,9 +197,7 @@ def home_real(request: HttpRequest) -> HttpResponse:
         first_in_realm = realm_user_count(user_profile.realm) == 1
         # If you are the only person in the realm and you didn't invite
         # anyone, we'll continue to encourage you to do so on the frontend.
-        prompt_for_invites = (
-            first_in_realm and not PreregistrationUser.objects.filter(referred_by=user_profile).count()
-        )
+        prompt_for_invites = first_in_realm and not PreregistrationUser.objects.filter(referred_by=user_profile).count()
         needs_tutorial = user_profile.tutorial_status == UserProfile.TUTORIAL_WAITING
 
     else:  # nocoverage

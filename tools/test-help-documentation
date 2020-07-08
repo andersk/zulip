@@ -61,8 +61,7 @@ with vnu_servlet(), test_server_running(options.force, external_host, log_file=L
         cwd="tools/documentation_crawler",
     )
     ret_api_doc = subprocess.call(
-        ["scrapy", "crawl_with_status"] + extra_args + ["api_documentation_crawler"],
-        cwd="tools/documentation_crawler",
+        ["scrapy", "crawl_with_status"] + extra_args + ["api_documentation_crawler"], cwd="tools/documentation_crawler",
     )
     ret_portico_doc = subprocess.call(
         ["scrapy", "crawl_with_status"] + extra_args + ["portico_documentation_crawler"],

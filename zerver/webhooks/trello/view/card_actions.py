@@ -224,9 +224,7 @@ def get_body_by_action_type_without_data(payload: Mapping[str, Any], action_type
     return fill_appropriate_message_content(payload, action_type)
 
 
-def fill_appropriate_message_content(
-    payload: Mapping[str, Any], action_type: str, data: Mapping[str, Any] = {},
-) -> str:
+def fill_appropriate_message_content(payload: Mapping[str, Any], action_type: str, data: Mapping[str, Any] = {}) -> str:
     data = dict(data)
     if "card_url_template" not in data:
         data["card_url_template"] = get_filled_card_url_template(payload)

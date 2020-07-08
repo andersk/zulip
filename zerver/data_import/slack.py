@@ -211,10 +211,7 @@ def users_to_zerver_userprofile(
         timezone = get_user_timezone(user)
 
         if slack_user_id in slack_user_id_to_custom_profile_fields:
-            (
-                slack_custom_field_name_to_zulip_custom_field_id,
-                custom_profile_field_id_count,
-            ) = build_customprofile_field(
+            slack_custom_field_name_to_zulip_custom_field_id, custom_profile_field_id_count = build_customprofile_field(
                 zerver_customprofilefield,
                 slack_user_id_to_custom_profile_fields[slack_user_id],
                 custom_profile_field_id_count,

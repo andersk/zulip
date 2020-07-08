@@ -15,9 +15,7 @@ class PivotalV3HookTests(WebhookTestCase):
         expected_topic = "Comment added"
         expected_message = 'Leo Franchi added comment: "FIX THIS NOW" \
 [(view)](https://www.pivotaltracker.com/s/projects/807213/stories/48276573).'
-        self.send_and_test_stream_message(
-            "commented", expected_topic, expected_message, content_type="application/xml",
-        )
+        self.send_and_test_stream_message("commented", expected_topic, expected_message, content_type="application/xml")
 
     def test_created(self) -> None:
         expected_topic = "My new Feature story"
@@ -30,9 +28,7 @@ class PivotalV3HookTests(WebhookTestCase):
         expected_topic = "Another new story"
         expected_message = 'Leo Franchi delivered "Another new story" \
 [(view)](https://www.pivotaltracker.com/s/projects/807213/stories/48278289).'
-        self.send_and_test_stream_message(
-            "delivered", expected_topic, expected_message, content_type="application/xml",
-        )
+        self.send_and_test_stream_message("delivered", expected_topic, expected_message, content_type="application/xml")
 
     def test_finished(self) -> None:
         expected_topic = "Another new story"
@@ -95,9 +91,7 @@ class PivotalV5HookTests(WebhookTestCase):
 ~~~quote
 A comment on the story
 ~~~"""
-        self.send_and_test_stream_message(
-            "commented", expected_topic, expected_message, content_type="application/xml",
-        )
+        self.send_and_test_stream_message("commented", expected_topic, expected_message, content_type="application/xml")
 
     def test_created(self) -> None:
         expected_topic = "#63495662: Story that I created"
@@ -112,9 +106,7 @@ A comment on the story
         expected_topic = "#63486316: Story of the Year"
         expected_message = """Leo Franchi updated [Hard Code](https://www.pivotaltracker.com/s/projects/807213): [Story of the Year](http://www.pivotaltracker.com/story/show/63486316):
 * state changed from **accepted** to **delivered**"""
-        self.send_and_test_stream_message(
-            "delivered", expected_topic, expected_message, content_type="application/xml",
-        )
+        self.send_and_test_stream_message("delivered", expected_topic, expected_message, content_type="application/xml")
 
     def test_finished(self) -> None:
         expected_topic = "#63486316: Story of the Year"

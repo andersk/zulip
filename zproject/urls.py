@@ -494,9 +494,7 @@ v1_api_and_json_patterns = [
         {"POST": "zerver.views.realm_export.export_realm", "GET": "zerver.views.realm_export.get_realm_exports"},
     ),
     re_path(
-        r"^export/realm/(?P<export_id>.*)$",
-        rest_dispatch,
-        {"DELETE": "zerver.views.realm_export.delete_realm_export"},
+        r"^export/realm/(?P<export_id>.*)$", rest_dispatch, {"DELETE": "zerver.views.realm_export.delete_realm_export"},
     ),
 ]
 
@@ -548,9 +546,7 @@ i18n_urls = [
         name="zerver.views.auth.login_page",
     ),
     path(
-        "accounts/login/",
-        LoginView.as_view(template_name="zerver/login.html"),
-        name="django.contrib.auth.views.login",
+        "accounts/login/", LoginView.as_view(template_name="zerver/login.html"), name="django.contrib.auth.views.login",
     ),
     path("accounts/logout/", zerver.views.auth.logout_then_login, name="zerver.views.auth.logout_then_login"),
     path(
@@ -624,9 +620,7 @@ i18n_urls = [
     path("accounts/go/", zerver.views.registration.realm_redirect, name="zerver.views.registration.realm_redirect"),
     # Realm Creation
     path("new/", zerver.views.registration.create_realm, name="zerver.views.create_realm"),
-    re_path(
-        r"^new/(?P<creation_key>[\w]+)$", zerver.views.registration.create_realm, name="zerver.views.create_realm",
-    ),
+    re_path(r"^new/(?P<creation_key>[\w]+)$", zerver.views.registration.create_realm, name="zerver.views.create_realm"),
     # Realm Reactivation
     re_path(
         r"^reactivate/(?P<confirmation_key>[\w]+)$",

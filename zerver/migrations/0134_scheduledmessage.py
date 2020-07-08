@@ -22,10 +22,7 @@ class Migration(migrations.Migration):
                 ("delivered", models.BooleanField(default=False)),
                 ("realm", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm")),
                 ("recipient", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Recipient")),
-                (
-                    "sender",
-                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
-                ),
+                ("sender", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
                 ("sending_client", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Client")),
                 (
                     "stream",

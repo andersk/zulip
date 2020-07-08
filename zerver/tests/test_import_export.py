@@ -498,9 +498,7 @@ class ImportExportTest(ZulipTestCase):
         stream_c_message_id = self.send_stream_message(self.example_user("othello"), "Private C", "Hello Stream C")
 
         # Create huddles
-        self.send_huddle_message(
-            self.example_user("iago"), [self.example_user("cordelia"), self.example_user("AARON")],
-        )
+        self.send_huddle_message(self.example_user("iago"), [self.example_user("cordelia"), self.example_user("AARON")])
         huddle_a = Huddle.objects.last()
         self.send_huddle_message(
             self.example_user("ZOE"),
@@ -585,9 +583,7 @@ class ImportExportTest(ZulipTestCase):
         # Third huddle is not exported since none of the members gave consent
         huddle_recipients = Recipient.objects.filter(type_id__in=[huddle_a.id, huddle_b.id], type=Recipient.HUDDLE)
         pm_query = Q(recipient__in=huddle_recipients) | Q(sender__in=consented_user_ids)
-        exported_huddle_ids = (
-            Message.objects.filter(pm_query).values_list("id", flat=True).values_list("id", flat=True)
-        )
+        exported_huddle_ids = Message.objects.filter(pm_query).values_list("id", flat=True).values_list("id", flat=True)
 
         exported_msg_ids = (
             set(public_stream_message_ids)

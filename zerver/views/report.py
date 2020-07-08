@@ -170,9 +170,7 @@ def report_error(
 @csrf_exempt
 @require_POST
 @has_request_variables
-def report_csp_violations(
-    request: HttpRequest, csp_report: Dict[str, Any] = REQ(argument_type="body"),
-) -> HttpResponse:
+def report_csp_violations(request: HttpRequest, csp_report: Dict[str, Any] = REQ(argument_type="body")) -> HttpResponse:
     def get_attr(csp_report_attr: str) -> str:
         return csp_report.get(csp_report_attr, "")
 

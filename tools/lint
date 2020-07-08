@@ -98,11 +98,7 @@ def run() -> None:
         "mypy", command, ["py"], pass_targets=False, description="Static type checker for Python (config: mypy.ini)",
     )
     linter_config.external_linter(
-        "tsc",
-        ["tools/run-tsc"],
-        ["ts"],
-        pass_targets=False,
-        description="TypeScript compiler (config: tsconfig.json)",
+        "tsc", ["tools/run-tsc"], ["ts"], pass_targets=False, description="TypeScript compiler (config: tsconfig.json)",
     )
     linter_config.external_linter(
         "yarn-deduplicate",

@@ -15,10 +15,7 @@ class StripeHookTests(WebhookTestCase):
             "[Dispute](https://dashboard.stripe.com/disputes/dp_00000000000000) closed. Current status: won."
         )
         self.send_and_test_stream_message(
-            "charge_dispute_closed",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "charge_dispute_closed", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_charge_dispute_created(self) -> None:
@@ -202,10 +199,7 @@ Amount due: 0.00 INR
         expected_topic = "cus_FDmrSwQt9Fck5M"
         expected_message = "[Invoice](https://dashboard.stripe.com/invoices/in_1EjLINHuGUuNWDDZjDf2WNqd) is now paid"
         self.send_and_test_stream_message(
-            "invoice_updated__paid",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "invoice_updated__paid", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_refund_event(self) -> None:

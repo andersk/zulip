@@ -28,11 +28,7 @@ if __name__ == "__main__":
         help="Show strings that passed the check because they " "contained ignored phrases.",
     )
     parser.add_argument(
-        "--no-generate",
-        action="store_true",
-        dest="no_generate",
-        default=False,
-        help="Don't run makemessages command.",
+        "--no-generate", action="store_true", dest="no_generate", default=False, help="Don't run makemessages command.",
     )
     args = parser.parse_args()
 

@@ -43,10 +43,7 @@ class Migration(migrations.Migration):
                 ("has_link", models.BooleanField(db_index=True, default=False)),
                 ("archive_timestamp", models.DateTimeField(db_index=True, default=django.utils.timezone.now)),
                 ("recipient", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Recipient")),
-                (
-                    "sender",
-                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
-                ),
+                ("sender", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
                 ("sending_client", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Client")),
             ],
             options={"abstract": False},
@@ -90,9 +87,7 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
         migrations.AddField(
-            model_name="archivedattachment",
-            name="messages",
-            field=models.ManyToManyField(to="zerver.ArchivedMessage"),
+            model_name="archivedattachment", name="messages", field=models.ManyToManyField(to="zerver.ArchivedMessage"),
         ),
         migrations.AddField(
             model_name="archivedattachment",

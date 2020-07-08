@@ -71,10 +71,7 @@ class SimpleQueueClient:
             tcp_options = dict(TCP_KEEPIDLE=60 * 5)
 
         return pika.ConnectionParameters(
-            settings.RABBITMQ_HOST,
-            heartbeat=self.rabbitmq_heartbeat,
-            tcp_options=tcp_options,
-            credentials=credentials,
+            settings.RABBITMQ_HOST, heartbeat=self.rabbitmq_heartbeat, tcp_options=tcp_options, credentials=credentials,
         )
 
     def _generate_ctag(self, queue_name: str) -> str:

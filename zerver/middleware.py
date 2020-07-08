@@ -268,9 +268,7 @@ class LogRequests(MiddlewareMixin):
         request._log_data = dict()
         record_request_start_data(request._log_data)
 
-    def process_view(
-        self, request: HttpRequest, view_func: ViewFuncT, args: List[str], kwargs: Dict[str, Any],
-    ) -> None:
+    def process_view(self, request: HttpRequest, view_func: ViewFuncT, args: List[str], kwargs: Dict[str, Any]) -> None:
         if hasattr(request, "saved_response"):
             # The below logging adjustments are unnecessary (because
             # we've already imported everything) and incorrect
@@ -341,9 +339,7 @@ class JsonErrorHandler(MiddlewareMixin):
 
 
 class TagRequests(MiddlewareMixin):
-    def process_view(
-        self, request: HttpRequest, view_func: ViewFuncT, args: List[str], kwargs: Dict[str, Any],
-    ) -> None:
+    def process_view(self, request: HttpRequest, view_func: ViewFuncT, args: List[str], kwargs: Dict[str, Any]) -> None:
         self.process_request(request)
 
     def process_request(self, request: HttpRequest) -> None:

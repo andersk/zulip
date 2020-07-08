@@ -647,9 +647,7 @@ def import_uploads(
 
     re_map_foreign_keys_internal(records, "records", "realm_id", related_table="realm", id_field=True)
     if not processing_emojis and not processing_realm_icons:
-        re_map_foreign_keys_internal(
-            records, "records", "user_profile_id", related_table="user_profile", id_field=True,
-        )
+        re_map_foreign_keys_internal(records, "records", "user_profile_id", related_table="user_profile", id_field=True)
 
     s3_uploads = settings.LOCAL_UPLOADS_DIR is None
 
@@ -734,8 +732,7 @@ def import_uploads(
                     content_type = "application/octet-stream"
 
             key.upload_file(
-                os.path.join(import_dir, record["path"]),
-                ExtraArgs={"ContentType": content_type, "Metadata": metadata},
+                os.path.join(import_dir, record["path"]), ExtraArgs={"ContentType": content_type, "Metadata": metadata},
             )
         else:
             if processing_avatars or processing_emojis or processing_realm_icons:

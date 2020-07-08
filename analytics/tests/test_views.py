@@ -646,9 +646,7 @@ class TestSupportEndpoint(ZulipTestCase):
         assert customer is not None
         self.assertTrue(customer.sponsorship_pending)
 
-        result = self.client_post(
-            "/activity/support", {"realm_id": f"{lear_realm.id}", "sponsorship_pending": "false"},
-        )
+        result = self.client_post("/activity/support", {"realm_id": f"{lear_realm.id}", "sponsorship_pending": "false"})
         self.assert_in_success_response(["Lear &amp; Co. is no longer pending sponsorship."], result)
         customer = get_customer_by_realm(lear_realm)
         assert customer is not None

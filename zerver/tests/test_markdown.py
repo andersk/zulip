@@ -785,9 +785,7 @@ class MarkdownTest(ZulipTestCase):
         self.assertEqual(
             get_tweet_id("https://twitter.com/windyoona/status/410766290349879296/photo/1"), "410766290349879296",
         )
-        self.assertEqual(
-            get_tweet_id("https://twitter.com/windyoona/status/410766290349879296/"), "410766290349879296",
-        )
+        self.assertEqual(get_tweet_id("https://twitter.com/windyoona/status/410766290349879296/"), "410766290349879296")
 
     def test_inline_interesting_links(self) -> None:
         def make_link(url: str) -> str:
@@ -974,9 +972,7 @@ class MarkdownTest(ZulipTestCase):
             converted,
             "<p>{}</p>\n{}".format(
                 make_link("http://twitter.com/wdaher/status/287977969287315460"),
-                make_inline_twitter_preview(
-                    "http://twitter.com/wdaher/status/287977969287315460", emoji_in_tweet_html,
-                ),
+                make_inline_twitter_preview("http://twitter.com/wdaher/status/287977969287315460", emoji_in_tweet_html),
             ),
         )
 
@@ -1157,9 +1153,7 @@ class MarkdownTest(ZulipTestCase):
             realm=realm, pattern=r"hello#(?P<id>[0-9]+)", url_format_string=r"https://trac.example.com/hello/%(id)s",
         ).save()
         converted_topic = topic_links(realm.id, "hello#123 #234")
-        self.assertEqual(
-            converted_topic, ["https://trac.example.com/ticket/234", "https://trac.example.com/hello/123"],
-        )
+        self.assertEqual(converted_topic, ["https://trac.example.com/ticket/234", "https://trac.example.com/hello/123"])
 
     def test_maybe_update_markdown_engines(self) -> None:
         realm = get_realm("zulip")
@@ -2020,9 +2014,7 @@ class MarkdownTest(ZulipTestCase):
         href = f"/#narrow/stream/{stream.id}-Stream-.231234"
         self.assertEqual(
             render_markdown(msg, content),
-            '<p><a class="stream" data-stream-id="{s.id}" href="{href}">#{s.name}</a></p>'.format(
-                s=stream, href=href,
-            ),
+            '<p><a class="stream" data-stream-id="{s.id}" href="{href}">#{s.name}</a></p>'.format(s=stream, href=href),
         )
 
     def test_stream_invalid(self) -> None:

@@ -1048,12 +1048,7 @@ class InlineInterestingLinkProcessor(markdown.treeprocessors.Treeprocessor):
                 self.add_a(grandparent, actual_url, url, title=title)
 
             # If link is alone in a paragraph, delete paragraph containing it
-            if (
-                len(parent) == 1
-                and (not parent.text or parent.text == "\n")
-                and not ahref_element.tail
-                and url_eq_text
-            ):
+            if len(parent) == 1 and (not parent.text or parent.text == "\n") and not ahref_element.tail and url_eq_text:
                 grandparent.remove(parent)
 
         else:

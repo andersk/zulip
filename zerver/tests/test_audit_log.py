@@ -211,8 +211,7 @@ class TestRealmAuditLog(ZulipTestCase):
         user = self.example_user("hamlet")
         do_regenerate_api_key(user, user)
         self.assertEqual(
-            RealmAuditLog.objects.filter(event_type=RealmAuditLog.USER_API_KEY_CHANGED, event_time__gte=now).count(),
-            1,
+            RealmAuditLog.objects.filter(event_type=RealmAuditLog.USER_API_KEY_CHANGED, event_time__gte=now).count(), 1,
         )
         self.assertTrue(user.api_key)
 

@@ -47,10 +47,7 @@ class Command(BaseCommand):
         )
 
         parser.add_argument(
-            "--token",
-            dest="api_token",
-            action="store",
-            help="API token for the HipChat API for fetching subscribers.",
+            "--token", dest="api_token", action="store", help="API token for the HipChat API for fetching subscribers.",
         )
 
         parser.formatter_class = argparse.RawTextHelpFormatter

@@ -23,8 +23,7 @@ class TestRuleList(TestCase):
             for path in rule.get("exclude", {}):
                 abs_path = os.path.abspath(os.path.join(ROOT_DIR, path))
                 self.assertTrue(
-                    os.path.exists(abs_path),
-                    f"'{path}' is neither an existing file, nor a directory. {CHECK_MESSAGE}",
+                    os.path.exists(abs_path), f"'{path}' is neither an existing file, nor a directory. {CHECK_MESSAGE}",
                 )
 
             for line_tuple in rule.get("exclude_line", {}):

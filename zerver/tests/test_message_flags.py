@@ -156,8 +156,7 @@ class UnreadCountTests(ZulipTestCase):
         self.assertEqual(found, 2)
 
         result = self.client_post(
-            "/json/messages/flags",
-            {"messages": ujson.dumps([self.unread_msg_ids[1]]), "op": "remove", "flag": "read"},
+            "/json/messages/flags", {"messages": ujson.dumps([self.unread_msg_ids[1]]), "op": "remove", "flag": "read"},
         )
         self.assert_json_success(result)
 
@@ -626,9 +625,7 @@ class GetUnreadMsgsTest(ZulipTestCase):
 
         stream_message_id = self.send_stream_message(sender, "Denmark", "hello")
         muted_stream_message_id = self.send_stream_message(sender, "Muted Stream", "hello")
-        muted_topic_message_id = self.send_stream_message(
-            sender, "Denmark", topic_name="muted-topic", content="hello",
-        )
+        muted_topic_message_id = self.send_stream_message(sender, "Denmark", topic_name="muted-topic", content="hello")
 
         huddle_message_id = self.send_huddle_message(sender, [user_profile, othello], "hello3")
 

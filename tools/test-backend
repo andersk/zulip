@@ -422,9 +422,7 @@ def main() -> None:
         test_runner = TestRunner(
             failfast=options.fatal_errors, verbosity=2, parallel=parallel, reverse=options.reverse, keepdb=True,
         )
-        failures, failed_tests = test_runner.run_tests(
-            suites, full_suite=full_suite, include_webhooks=include_webhooks,
-        )
+        failures, failed_tests = test_runner.run_tests(suites, full_suite=full_suite, include_webhooks=include_webhooks)
     write_failed_tests(failed_tests)
 
     templates_not_rendered = test_runner.get_shallow_tested_templates()

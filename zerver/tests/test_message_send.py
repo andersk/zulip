@@ -768,12 +768,7 @@ class MessagePOSTTest(ZulipTestCase):
         result = self.api_post(
             self.mit_user("starnine"),
             "/api/v1/messages",
-            {
-                "type": "private",
-                "content": "Test message",
-                "client": "zephyr_mirror",
-                "to": self.mit_email("starnine"),
-            },
+            {"type": "private", "content": "Test message", "client": "zephyr_mirror", "to": self.mit_email("starnine")},
             subdomain="zephyr",
         )
         self.assert_json_error(result, "Missing sender")

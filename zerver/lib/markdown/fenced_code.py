@@ -228,12 +228,7 @@ class OuterHandler(BaseHandler):
 
 class CodeHandler(BaseHandler):
     def __init__(
-        self,
-        processor: Any,
-        output: MutableSequence[str],
-        fence: str,
-        lang: str,
-        run_content_validators: bool = False,
+        self, processor: Any, output: MutableSequence[str], fence: str, lang: str, run_content_validators: bool = False,
     ) -> None:
         self.processor = processor
         self.output = output

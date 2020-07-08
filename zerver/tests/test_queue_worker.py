@@ -229,9 +229,7 @@ class WorkerTest(ZulipTestCase):
 
                 worker.start()
                 mock_handle_new.assert_called_once_with(event_new["user_profile_id"], event_new)
-                mock_handle_remove.assert_called_once_with(
-                    event_remove["user_profile_id"], event_remove["message_ids"],
-                )
+                mock_handle_remove.assert_called_once_with(event_remove["user_profile_id"], event_remove["message_ids"])
 
             with patch(
                 "zerver.worker.queue_processors.handle_push_notification",

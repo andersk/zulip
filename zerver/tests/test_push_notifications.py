@@ -352,9 +352,7 @@ class AnalyticsBouncerTest(BouncerTestCase):
             "zerver.lib.remote_server.logging.warning",
         ) as mock_warning:
             send_analytics_to_remote_server()
-            mock_warning.assert_called_once_with(
-                "ConnectionError while trying to connect to push notification bouncer",
-            )
+            mock_warning.assert_called_once_with("ConnectionError while trying to connect to push notification bouncer")
 
         # Send any existing data over, so that we can start the test with a "clean" slate
         audit_log_max_id = RealmAuditLog.objects.all().order_by("id").last().id
@@ -707,9 +705,7 @@ class HandlePushNotificationTest(PushNotificationTest):
             mock_apns.get_notification_result.return_value = "Success"
             handle_push_notification(self.user_profile.id, missed_message)
             for _, _, token in apns_devices:
-                mock_info.assert_any_call(
-                    "APNs: Success sending for user %d to device %s", self.user_profile.id, token,
-                )
+                mock_info.assert_any_call("APNs: Success sending for user %d to device %s", self.user_profile.id, token)
             for _, _, token in gcm_devices:
                 mock_info.assert_any_call(
                     "GCM: Sent %s as %s", token, message.id,
@@ -1168,8 +1164,7 @@ class TestAPNs(PushNotificationTest):
         # Similarly, test APNs badge count for stream mention.
         stream = self.subscribe(user_profile, "Denmark")
         message_ids += [
-            self.send_stream_message(self.sender, stream.name, "Hi, @**Othello, the Moor of Venice**")
-            for i in range(2)
+            self.send_stream_message(self.sender, stream.name, "Hi, @**Othello, the Moor of Venice**") for i in range(2)
         ]
         self.assertEqual(get_apns_badge_count(user_profile), 5)
 

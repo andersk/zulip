@@ -291,9 +291,7 @@ class ImperativeMood(LineRule):
     id = "Z1"
     target = CommitMessageTitle
 
-    error_msg = (
-        "The first word in commit title should be in imperative mood " '("{word}" -> "{imperative}"): "{title}"'
-    )
+    error_msg = "The first word in commit title should be in imperative mood " '("{word}" -> "{imperative}"): "{title}"'
 
     def validate(self, line: Text, commit: GitCommit) -> List[RuleViolation]:
         violations = []

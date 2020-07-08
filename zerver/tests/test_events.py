@@ -729,9 +729,7 @@ class NormalActionsTest(BaseAction):
             streams.append(get_stream(stream_name, self.user_profile.realm))
 
         events = self.verify_action(
-            lambda: do_create_multiuse_invite_link(
-                self.user_profile, PreregistrationUser.INVITE_AS["MEMBER"], streams,
-            ),
+            lambda: do_create_multiuse_invite_link(self.user_profile, PreregistrationUser.INVITE_AS["MEMBER"], streams),
             state_change_expected=False,
         )
         schema_checker("events[0]", events[0])
@@ -2772,9 +2770,7 @@ class UserDisplayActionTest(BaseAction):
                     ("op", equals("update")),
                     (
                         "person",
-                        check_dict_only(
-                            [("email", check_string), ("user_id", check_int), ("timezone", check_string)],
-                        ),
+                        check_dict_only([("email", check_string), ("user_id", check_int), ("timezone", check_string)]),
                     ),
                 ],
             )

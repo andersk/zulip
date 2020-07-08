@@ -197,9 +197,7 @@ def normalize_fixture_data(
     # why we're doing something a bit more complicated
     for i, timestamp_field in enumerate(tested_timestamp_fields):
         # Don't use (..) notation, since the matched timestamp can easily appear in other fields
-        pattern_translations[
-            f'"{timestamp_field}": 1[5-9][0-9]{{8}}(?![0-9-])'
-        ] = f'"{timestamp_field}": 1{i+1:02}%07d'
+        pattern_translations[f'"{timestamp_field}": 1[5-9][0-9]{{8}}(?![0-9-])'] = f'"{timestamp_field}": 1{i+1:02}%07d'
 
     normalized_values: Dict[str, Dict[str, str]] = {pattern: {} for pattern in pattern_translations.keys()}
     for fixture_file in fixture_files_for_function(decorated_function):
@@ -1486,9 +1484,7 @@ class StripeTest(StripeTestCase):
         stripe_token = stripe_create_token(card_number="4000000000009987").id
         with patch("corporate.lib.stripe.billing_logger.error") as mock_billing_logger:
             with patch("stripe.Invoice.list") as mock_invoice_list:
-                response = self.client_post(
-                    "/json/billing/sources/change", {"stripe_token": ujson.dumps(stripe_token)},
-                )
+                response = self.client_post("/json/billing/sources/change", {"stripe_token": ujson.dumps(stripe_token)})
         mock_billing_logger.assert_called()
         mock_invoice_list.assert_not_called()
         self.assertEqual(ujson.loads(response.content)["error_description"], "card error")
@@ -1541,8 +1537,7 @@ class StripeTest(StripeTestCase):
         with patch("corporate.lib.stripe.get_latest_seat_count", return_value=20):
             update_license_ledger_if_needed(user.realm, self.now)
         self.assertEqual(
-            LicenseLedger.objects.order_by("-id").values_list("licenses", "licenses_at_next_renewal").first(),
-            (20, 20),
+            LicenseLedger.objects.order_by("-id").values_list("licenses", "licenses_at_next_renewal").first(), (20, 20),
         )
 
         # Verify that we invoice them for the additional users
@@ -1561,16 +1556,14 @@ class StripeTest(StripeTestCase):
         self.assertEqual(get_realm("zulip").plan_type, Realm.LIMITED)
         self.assertEqual(CustomerPlan.objects.first().status, CustomerPlan.ENDED)
         self.assertEqual(
-            LicenseLedger.objects.order_by("-id").values_list("licenses", "licenses_at_next_renewal").first(),
-            (20, 20),
+            LicenseLedger.objects.order_by("-id").values_list("licenses", "licenses_at_next_renewal").first(), (20, 20),
         )
 
         # Verify that we don't write LicenseLedger rows once we've downgraded
         with patch("corporate.lib.stripe.get_latest_seat_count", return_value=40):
             update_license_ledger_if_needed(user.realm, self.next_year)
         self.assertEqual(
-            LicenseLedger.objects.order_by("-id").values_list("licenses", "licenses_at_next_renewal").first(),
-            (20, 20),
+            LicenseLedger.objects.order_by("-id").values_list("licenses", "licenses_at_next_renewal").first(), (20, 20),
         )
 
         # Verify that we call invoice_plan once more after cycle end but
@@ -1619,8 +1612,7 @@ class StripeTest(StripeTestCase):
             update_license_ledger_if_needed(user.realm, self.now)
         self.assertEqual(LicenseLedger.objects.filter(plan=monthly_plan).count(), 2)
         self.assertEqual(
-            LicenseLedger.objects.order_by("-id").values_list("licenses", "licenses_at_next_renewal").first(),
-            (20, 20),
+            LicenseLedger.objects.order_by("-id").values_list("licenses", "licenses_at_next_renewal").first(), (20, 20),
         )
 
         with patch("corporate.lib.stripe.timezone_now", return_value=self.next_month):

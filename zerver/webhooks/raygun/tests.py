@@ -80,10 +80,7 @@ Hourly [follow-up error](http://app.raygun.io/error-url):
 """.strip()
 
         self.send_and_test_stream_message(
-            "hourly_followup_error",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "hourly_followup_error", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_new_error_message(self) -> None:

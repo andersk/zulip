@@ -216,17 +216,11 @@ def do_create_stripe_customer(user: UserProfile, stripe_token: Optional[str] = N
     event_time = timestamp_to_datetime(stripe_customer.created)
     with transaction.atomic():
         RealmAuditLog.objects.create(
-            realm=user.realm,
-            acting_user=user,
-            event_type=RealmAuditLog.STRIPE_CUSTOMER_CREATED,
-            event_time=event_time,
+            realm=user.realm, acting_user=user, event_type=RealmAuditLog.STRIPE_CUSTOMER_CREATED, event_time=event_time,
         )
         if stripe_token is not None:
             RealmAuditLog.objects.create(
-                realm=user.realm,
-                acting_user=user,
-                event_type=RealmAuditLog.STRIPE_CARD_CHANGED,
-                event_time=event_time,
+                realm=user.realm, acting_user=user, event_type=RealmAuditLog.STRIPE_CARD_CHANGED, event_time=event_time,
             )
         customer, created = Customer.objects.update_or_create(
             realm=realm, defaults={"stripe_customer_id": stripe_customer.id},

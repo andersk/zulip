@@ -321,12 +321,7 @@ class GetEventsTest(ZulipTestCase):
             result = self.tornado_call(
                 get_events,
                 user_profile,
-                {
-                    "queue_id": queue_id,
-                    "user_client": "website",
-                    "last_event_id": -1,
-                    "dont_block": ujson.dumps(True),
-                },
+                {"queue_id": queue_id, "user_client": "website", "last_event_id": -1, "dont_block": ujson.dumps(True)},
             )
             events = ujson.loads(result.content)["events"]
             self.assert_json_success(result)
@@ -338,12 +333,7 @@ class GetEventsTest(ZulipTestCase):
             result = self.tornado_call(
                 get_events,
                 user_profile,
-                {
-                    "queue_id": queue_id,
-                    "user_client": "website",
-                    "last_event_id": -1,
-                    "dont_block": ujson.dumps(True),
-                },
+                {"queue_id": queue_id, "user_client": "website", "last_event_id": -1, "dont_block": ujson.dumps(True)},
             )
             events = ujson.loads(result.content)["events"]
             self.assert_json_success(result)

@@ -28,11 +28,7 @@ class TestFixtures(ZulipTestCase):
 
         # test autocorrelation == 1, since that's the easiest value to test
         data = generate_time_series_data(
-            days=1,
-            business_hours_base=2000,
-            non_business_hours_base=2000,
-            autocorrelation=1,
-            frequency=CountStat.HOUR,
+            days=1, business_hours_base=2000, non_business_hours_base=2000, autocorrelation=1, frequency=CountStat.HOUR,
         )
         self.assertEqual(data[0], data[1])
         self.assertEqual(data[0], data[-1])

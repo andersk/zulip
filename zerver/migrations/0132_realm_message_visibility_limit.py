@@ -10,7 +10,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name="realm", name="message_visibility_limit", field=models.IntegerField(null=True),
-        ),
+        migrations.AddField(model_name="realm", name="message_visibility_limit", field=models.IntegerField(null=True)),
     ]

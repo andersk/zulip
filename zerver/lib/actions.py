@@ -416,9 +416,7 @@ def add_new_user_history(user_profile: UserProfile, streams: Iterable[Stream]) -
     one_week_ago = timezone_now() - datetime.timedelta(weeks=1)
 
     recipient_ids = [stream.recipient_id for stream in streams if not stream.invite_only]
-    recent_messages = Message.objects.filter(recipient_id__in=recipient_ids, date_sent__gt=one_week_ago).order_by(
-        "-id",
-    )
+    recent_messages = Message.objects.filter(recipient_id__in=recipient_ids, date_sent__gt=one_week_ago).order_by("-id")
     message_ids_to_use = list(reversed(recent_messages.values_list("id", flat=True)[0:ONBOARDING_TOTAL_MESSAGES]))
     if len(message_ids_to_use) == 0:
         return
@@ -502,9 +500,9 @@ def process_new_human_user(
     # inactive so we can keep track of the PreregistrationUser we
     # actually used for analytics
     if prereg_user is not None:
-        PreregistrationUser.objects.filter(email__iexact=user_profile.delivery_email).exclude(
-            id=prereg_user.id,
-        ).update(status=confirmation_settings.STATUS_REVOKED)
+        PreregistrationUser.objects.filter(email__iexact=user_profile.delivery_email).exclude(id=prereg_user.id).update(
+            status=confirmation_settings.STATUS_REVOKED,
+        )
 
         if prereg_user.referred_by is not None:
             notify_invites_changed(user_profile)
@@ -823,11 +821,7 @@ def do_set_realm_message_editing(
     realm.message_content_edit_limit_seconds = message_content_edit_limit_seconds
     realm.allow_community_topic_editing = allow_community_topic_editing
     realm.save(
-        update_fields=[
-            "allow_message_editing",
-            "allow_community_topic_editing",
-            "message_content_edit_limit_seconds",
-        ],
+        update_fields=["allow_message_editing", "allow_community_topic_editing", "message_content_edit_limit_seconds"],
     )
     event = dict(
         type="realm",
@@ -976,15 +970,11 @@ def do_deactivate_user(
     if settings.BILLING_ENABLED:
         update_license_ledger_if_needed(user_profile.realm, event_time)
 
-    event = dict(
-        type="realm_user", op="remove", person=dict(user_id=user_profile.id, full_name=user_profile.full_name),
-    )
+    event = dict(type="realm_user", op="remove", person=dict(user_id=user_profile.id, full_name=user_profile.full_name))
     send_event(user_profile.realm, event, active_user_ids(user_profile.realm_id))
 
     if user_profile.is_bot:
-        event = dict(
-            type="realm_bot", op="remove", bot=dict(user_id=user_profile.id, full_name=user_profile.full_name),
-        )
+        event = dict(type="realm_bot", op="remove", bot=dict(user_id=user_profile.id, full_name=user_profile.full_name))
         send_event(user_profile.realm, event, bot_owner_user_ids(user_profile))
 
     if _cascade:
@@ -3455,10 +3445,7 @@ def notify_avatar_url_change(user_profile: UserProfile) -> None:
 
 
 def do_change_avatar_fields(
-    user_profile: UserProfile,
-    avatar_source: str,
-    skip_notify: bool = False,
-    acting_user: Optional[UserProfile] = None,
+    user_profile: UserProfile, avatar_source: str, skip_notify: bool = False, acting_user: Optional[UserProfile] = None,
 ) -> None:
     user_profile.avatar_source = avatar_source
     user_profile.avatar_version += 1
@@ -3584,9 +3571,7 @@ def do_change_default_sending_stream(user_profile: UserProfile, stream: Optional
             stream_name = None
         send_event(
             user_profile.realm,
-            dict(
-                type="realm_bot", op="update", bot=dict(user_id=user_profile.id, default_sending_stream=stream_name),
-            ),
+            dict(type="realm_bot", op="update", bot=dict(user_id=user_profile.id, default_sending_stream=stream_name)),
             bot_owner_user_ids(user_profile),
         )
 
@@ -3847,11 +3832,7 @@ def do_create_realm(string_id: str, name: str, emails_restricted_to_domains: Opt
 
     # Log the event
     log_event(
-        {
-            "type": "realm_created",
-            "string_id": string_id,
-            "emails_restricted_to_domains": emails_restricted_to_domains,
-        },
+        {"type": "realm_created", "string_id": string_id, "emails_restricted_to_domains": emails_restricted_to_domains},
     )
 
     sender = get_system_bot(settings.NOTIFICATION_BOT)
@@ -4019,9 +4000,7 @@ def do_add_streams_to_default_stream_group(realm: Realm, group: DefaultStreamGro
     notify_default_stream_groups(realm)
 
 
-def do_remove_streams_from_default_stream_group(
-    realm: Realm, group: DefaultStreamGroup, streams: List[Stream],
-) -> None:
+def do_remove_streams_from_default_stream_group(realm: Realm, group: DefaultStreamGroup, streams: List[Stream]) -> None:
     for stream in streams:
         if stream not in group.streams.all():
             raise JsonableError(
@@ -5675,16 +5654,11 @@ def get_occupied_streams(realm: Realm) -> QuerySet:
     """ Get streams with subscribers """
     exists_expression = Exists(
         Subscription.objects.filter(
-            active=True,
-            user_profile__is_active=True,
-            user_profile__realm=realm,
-            recipient_id=OuterRef("recipient_id"),
+            active=True, user_profile__is_active=True, user_profile__realm=realm, recipient_id=OuterRef("recipient_id"),
         ),
     )
     occupied_streams = (
-        Stream.objects.filter(realm=realm, deactivated=False)
-        .annotate(occupied=exists_expression)
-        .filter(occupied=True)
+        Stream.objects.filter(realm=realm, deactivated=False).annotate(occupied=exists_expression).filter(occupied=True)
     )
     return occupied_streams
 

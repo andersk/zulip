@@ -26,9 +26,7 @@ class Command(ZulipBaseCommand):
         realm = self.get_realm(options)
         user_profile = self.get_user(options["email"], realm)
 
-        print(
-            f"Deactivating {user_profile.full_name} ({user_profile.delivery_email}) - {user_profile.realm.string_id}",
-        )
+        print(f"Deactivating {user_profile.full_name} ({user_profile.delivery_email}) - {user_profile.realm.string_id}")
         print(f"{user_profile.delivery_email} has the following active sessions:")
         for session in user_sessions(user_profile):
             print(session.expire_date, session.get_decoded())

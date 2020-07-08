@@ -40,10 +40,7 @@ class FrontHookTests(WebhookTestCase):
         expected_message = "Archived by **Leela Turanga**."
 
         self.send_and_test_stream_message(
-            "conversation_archived",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "conversation_archived", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_conversation_reopened(self) -> None:
@@ -51,10 +48,7 @@ class FrontHookTests(WebhookTestCase):
         expected_message = "Reopened by **Leela Turanga**."
 
         self.send_and_test_stream_message(
-            "conversation_reopened",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "conversation_reopened", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_conversation_deleted(self) -> None:
@@ -70,10 +64,7 @@ class FrontHookTests(WebhookTestCase):
         expected_message = "Restored by **Leela Turanga**."
 
         self.send_and_test_stream_message(
-            "conversation_restored",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "conversation_restored", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_conversation_unassigned(self) -> None:
@@ -147,10 +138,7 @@ class FrontHookTests(WebhookTestCase):
         expected_message = "**Leela Turanga** removed tag **Urgent**."
 
         self.send_and_test_stream_message(
-            "conversation_untagged",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "conversation_untagged", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_mention(self) -> None:
@@ -175,19 +163,14 @@ class FrontHookTests(WebhookTestCase):
         expected_message = "**Leela Turanga** assigned **Bender Rodriguez**."
 
         self.send_and_test_stream_message(
-            "conversation_assigned",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "conversation_assigned", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_unknown_webhook_request(self) -> None:
         payload = self.get_body("conversation_assigned")
         payload_json = ujson.loads(payload)
         payload_json["type"] = "qwerty"
-        result = self.client_post(
-            self.url, ujson.dumps(payload_json), content_type="application/x-www-form-urlencoded",
-        )
+        result = self.client_post(self.url, ujson.dumps(payload_json), content_type="application/x-www-form-urlencoded")
 
         self.assert_json_error(result, "Unknown webhook request")
 

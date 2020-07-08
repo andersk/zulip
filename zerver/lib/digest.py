@@ -72,9 +72,7 @@ def enqueue_emails(cutoff: datetime.datetime) -> None:
         if not should_process_digest(realm.string_id):
             continue
 
-        user_profiles = UserProfile.objects.filter(
-            realm=realm, is_active=True, is_bot=False, enable_digest_emails=True,
-        )
+        user_profiles = UserProfile.objects.filter(realm=realm, is_active=True, is_bot=False, enable_digest_emails=True)
 
         for user_profile in user_profiles:
             if inactive_since(user_profile, cutoff):
@@ -150,9 +148,7 @@ def gather_hot_conversations(user_profile: UserProfile, messages: List[Message])
 
 def gather_new_streams(user_profile: UserProfile, threshold: datetime.datetime) -> Tuple[int, Dict[str, List[str]]]:
     if user_profile.can_access_public_streams():
-        new_streams = list(
-            get_active_streams(user_profile.realm).filter(invite_only=False, date_created__gt=threshold),
-        )
+        new_streams = list(get_active_streams(user_profile.realm).filter(invite_only=False, date_created__gt=threshold))
     else:
         new_streams = []
 

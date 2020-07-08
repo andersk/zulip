@@ -54,13 +54,7 @@ class DoRestCallTests(ZulipTestCase):
             # Therefore, we need to emulate `retry_event` in the last stage when the maximum
             # retries have been exceeded.
             "failed_tries": 3,
-            "message": {
-                "display_recipient": "Verona",
-                "stream_id": 999,
-                TOPIC_NAME: "Foo",
-                "id": "",
-                "type": "stream",
-            },
+            "message": {"display_recipient": "Verona", "stream_id": 999, TOPIC_NAME: "Foo", "id": "", "type": "stream"},
             "user_profile_id": user_profile.id,
             "command": "",
             "service_name": "",
@@ -215,8 +209,7 @@ class TestOutgoingWebhookMessaging(ZulipTestCase):
         )
 
     @mock.patch(
-        "requests.request",
-        return_value=ResponseMock(200, {"response_string": "Hidley ho, I'm a webhook responding!"}),
+        "requests.request", return_value=ResponseMock(200, {"response_string": "Hidley ho, I'm a webhook responding!"}),
     )
     def test_pm_to_outgoing_webhook_bot(self, mock_requests_request: mock.Mock) -> None:
         bot_owner = self.example_user("othello")
@@ -235,8 +228,7 @@ class TestOutgoingWebhookMessaging(ZulipTestCase):
         )
 
     @mock.patch(
-        "requests.request",
-        return_value=ResponseMock(200, {"response_string": "Hidley ho, I'm a webhook responding!"}),
+        "requests.request", return_value=ResponseMock(200, {"response_string": "Hidley ho, I'm a webhook responding!"}),
     )
     def test_stream_message_to_outgoing_webhook_bot(self, mock_requests_request: mock.Mock) -> None:
         bot_owner = self.example_user("othello")

@@ -77,8 +77,7 @@ class Command(ZulipBaseCommand):
             response = requests.post(registration_url, params=request)
         except Exception:
             raise CommandError(
-                "Network error connecting to push notifications service "
-                f"({settings.PUSH_NOTIFICATION_BOUNCER_URL})",
+                "Network error connecting to push notifications service " f"({settings.PUSH_NOTIFICATION_BOUNCER_URL})",
             )
         try:
             response.raise_for_status()

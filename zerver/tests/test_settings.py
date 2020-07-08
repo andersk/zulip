@@ -195,13 +195,9 @@ class ChangeSettingsTest(ZulipTestCase):
             add_ratelimit_rule(10, 2, domain="authenticate_by_username")
             start_time = time.time()
             with mock.patch("time.time", return_value=start_time):
-                result = self.client_patch(
-                    "/json/settings", dict(old_password="bad_password", new_password="ignored"),
-                )
+                result = self.client_patch("/json/settings", dict(old_password="bad_password", new_password="ignored"))
                 self.assert_json_error(result, "Wrong password!")
-                result = self.client_patch(
-                    "/json/settings", dict(old_password="bad_password", new_password="ignored"),
-                )
+                result = self.client_patch("/json/settings", dict(old_password="bad_password", new_password="ignored"))
                 self.assert_json_error(result, "Wrong password!")
 
                 # We're over the limit, so we'll get blocked even with the correct password.
@@ -274,11 +270,7 @@ class ChangeSettingsTest(ZulipTestCase):
     def do_test_change_user_display_setting(self, setting_name: str) -> None:
 
         test_changes: Dict[str, Any] = dict(
-            default_language="de",
-            emojiset="google",
-            timezone="US/Mountain",
-            demote_inactive_streams=2,
-            color_scheme=2,
+            default_language="de", emojiset="google", timezone="US/Mountain", demote_inactive_streams=2, color_scheme=2,
         )
 
         self.login("hamlet")

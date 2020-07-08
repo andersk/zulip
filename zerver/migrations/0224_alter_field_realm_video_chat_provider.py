@@ -54,9 +54,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RenameField(
-            model_name="realm", old_name="video_chat_provider", new_name="video_chat_provider_old",
-        ),
+        migrations.RenameField(model_name="realm", old_name="video_chat_provider", new_name="video_chat_provider_old"),
         migrations.AddField(
             model_name="realm",
             name="video_chat_provider",

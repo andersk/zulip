@@ -14,9 +14,7 @@ class BeanstalkHookTests(WebhookTestCase):
         expected_message = """Leo Franchi [pushed](http://lfranchi-svn.beanstalkapp.com/work-test) 1 commit to branch master.
 
 * add some stuff ([e50508d](http://lfranchi-svn.beanstalkapp.com/work-test/changesets/e50508df))"""
-        self.api_stream_message(
-            self.test_user, "git_singlecommit", expected_topic, expected_message, content_type=None,
-        )
+        self.api_stream_message(self.test_user, "git_singlecommit", expected_topic, expected_message, content_type=None)
 
     def test_git_single_filtered_by_branches(self) -> None:
         self.url = self.build_webhook_url(branches="master,development")
@@ -24,9 +22,7 @@ class BeanstalkHookTests(WebhookTestCase):
         expected_message = """Leo Franchi [pushed](http://lfranchi-svn.beanstalkapp.com/work-test) 1 commit to branch master.
 
 * add some stuff ([e50508d](http://lfranchi-svn.beanstalkapp.com/work-test/changesets/e50508df))"""
-        self.api_stream_message(
-            self.test_user, "git_singlecommit", expected_topic, expected_message, content_type=None,
-        )
+        self.api_stream_message(self.test_user, "git_singlecommit", expected_topic, expected_message, content_type=None)
 
     def test_git_multiple_committers(self) -> None:
         expected_topic = "work-test / master"

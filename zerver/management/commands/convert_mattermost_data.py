@@ -26,9 +26,7 @@ class Command(BaseCommand):
         dir_help = "Directory containing exported JSON file and exported_emoji (optional) directory."
         parser.add_argument("mattermost_data_dir", metavar="<mattermost data directory>", help=dir_help)
 
-        parser.add_argument(
-            "--output", dest="output_dir", action="store", help="Directory to write converted data to.",
-        )
+        parser.add_argument("--output", dest="output_dir", action="store", help="Directory to write converted data to.")
 
         parser.add_argument(
             "--mask", dest="masking_content", action="store_true", help="Mask the content for privacy during QA.",

@@ -591,10 +591,7 @@ def fetch_events(query: Mapping[str, Any]) -> Dict[str, Any]:
                     _("An event newer than {event_id} has already been pruned!").format(event_id=last_event_id),
                 )
             client.event_queue.prune(last_event_id)
-            if (
-                client.event_queue.newest_pruned_id is not None
-                and last_event_id != client.event_queue.newest_pruned_id
-            ):
+            if client.event_queue.newest_pruned_id is not None and last_event_id != client.event_queue.newest_pruned_id:
                 raise JsonableError(_("Event {event_id} was not in this queue").format(event_id=last_event_id))
             was_connected = client.finish_current_handler()
 
@@ -803,9 +800,7 @@ def maybe_enqueue_notifications(
     more features here."""
     notified: Dict[str, bool] = dict()
 
-    if (idle or always_push_notify) and (
-        private_message or mentioned or wildcard_mention_notify or stream_push_notify
-    ):
+    if (idle or always_push_notify) and (private_message or mentioned or wildcard_mention_notify or stream_push_notify):
         notice = build_offline_notification(user_profile_id, message_id)
         if private_message:
             notice["trigger"] = "private_message"

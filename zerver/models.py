@@ -2223,8 +2223,7 @@ class Attachment(AbstractAttachment):
             # advantage of client timezones.
             "create_time": int(time.mktime(self.create_time.timetuple()) * 1000),
             "messages": [
-                {"id": m.id, "date_sent": int(time.mktime(m.date_sent.timetuple()) * 1000)}
-                for m in self.messages.all()
+                {"id": m.id, "date_sent": int(time.mktime(m.date_sent.timetuple()) * 1000)} for m in self.messages.all()
             ],
         }
 

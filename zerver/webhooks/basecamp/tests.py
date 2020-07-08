@@ -28,11 +28,15 @@ class BasecampHookTests(WebhookTestCase):
         self._send_and_test_message("doc_publicized", expected_message)
 
     def test_basecamp_makes_doc_created(self) -> None:
-        expected_message = "Tomasz created the document [new doc](https://3.basecamp.com/3688623/buckets/2957043/documents/434455988)."
+        expected_message = (
+            "Tomasz created the document [new doc](https://3.basecamp.com/3688623/buckets/2957043/documents/434455988)."
+        )
         self._send_and_test_message("doc_created", expected_message)
 
     def test_basecamp_makes_doc_trashed(self) -> None:
-        expected_message = "Tomasz trashed the document [new doc](https://3.basecamp.com/3688623/buckets/2957043/documents/434455988)."
+        expected_message = (
+            "Tomasz trashed the document [new doc](https://3.basecamp.com/3688623/buckets/2957043/documents/434455988)."
+        )
         self._send_and_test_message("doc_trashed", expected_message)
 
     def test_basecamp_makes_doc_unarchived(self) -> None:
@@ -116,7 +120,9 @@ class BasecampHookTests(WebhookTestCase):
         self._send_and_test_message("todo_assignment_changed", expected_message)
 
     def test_basecamp_makes_todo_completed(self) -> None:
-        expected_message = "Tomasz completed the todo task [New task](https://3.basecamp.com/3688623/buckets/2957043/todos/427055624)."
+        expected_message = (
+            "Tomasz completed the todo task [New task](https://3.basecamp.com/3688623/buckets/2957043/todos/427055624)."
+        )
         self._send_and_test_message("todo_completed", expected_message)
 
     def test_basecamp_makes_todo_uncompleted(self) -> None:

@@ -145,12 +145,8 @@ class Command(BaseCommand):
             self.report_percentage(num_enter_sends, num_active, "active users have enter-sends")
 
             all_message_count = human_messages.filter(sender__realm=realm).count()
-            multi_paragraph_message_count = human_messages.filter(
-                sender__realm=realm, content__contains="\n\n",
-            ).count()
-            self.report_percentage(
-                multi_paragraph_message_count, all_message_count, "all messages are multi-paragraph",
-            )
+            multi_paragraph_message_count = human_messages.filter(sender__realm=realm, content__contains="\n\n").count()
+            self.report_percentage(multi_paragraph_message_count, all_message_count, "all messages are multi-paragraph")
 
             # Starred messages
             starrers = (

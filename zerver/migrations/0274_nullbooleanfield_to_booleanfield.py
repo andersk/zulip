@@ -14,14 +14,10 @@ class Migration(migrations.Migration):
             model_name="stream", name="invite_only", field=models.BooleanField(default=False, null=True),
         ),
         migrations.AlterField(
-            model_name="subscription",
-            name="audible_notifications",
-            field=models.BooleanField(default=None, null=True),
+            model_name="subscription", name="audible_notifications", field=models.BooleanField(default=None, null=True),
         ),
         migrations.AlterField(
-            model_name="subscription",
-            name="desktop_notifications",
-            field=models.BooleanField(default=None, null=True),
+            model_name="subscription", name="desktop_notifications", field=models.BooleanField(default=None, null=True),
         ),
         migrations.AlterField(
             model_name="subscription", name="email_notifications", field=models.BooleanField(default=None, null=True),

@@ -362,9 +362,7 @@ def do_send_missedmessage_events_reply_in_zulip(
             huddle_display_name = f"{other_recipients[0]}, {other_recipients[1]}, and {other_recipients[2]}"
             context.update({"huddle_display_name": huddle_display_name})
         else:
-            huddle_display_name = "{}, and {} others".format(
-                ", ".join(other_recipients[:2]), len(other_recipients) - 2,
-            )
+            huddle_display_name = "{}, and {} others".format(", ".join(other_recipients[:2]), len(other_recipients) - 2)
             context.update({"huddle_display_name": huddle_display_name})
     elif missed_messages[0]["message"].recipient.type == Recipient.PERSONAL:
         context.update({"private_message": True})
