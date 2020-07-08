@@ -20,9 +20,7 @@ Build update (see [build log]({build_log_url})):
 @api_key_only_webhook_view("SolanoLabs")
 @has_request_variables
 def api_solano_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    payload: Dict[str, Any] = REQ(argument_type="body"),
+    request: HttpRequest, user_profile: UserProfile, payload: Dict[str, Any] = REQ(argument_type="body"),
 ) -> HttpResponse:
     event = payload.get("event")
     topic = "build update"

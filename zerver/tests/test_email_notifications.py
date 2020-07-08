@@ -614,9 +614,7 @@ class TestMissedMessages(ZulipTestCase):
         )
         self._extra_context_in_missed_stream_messages_mention(False, show_message_content=False)
         mail.outbox = []
-        self._extra_context_in_missed_stream_messages_wildcard_mention(
-            False, show_message_content=False,
-        )
+        self._extra_context_in_missed_stream_messages_wildcard_mention(False, show_message_content=False)
         mail.outbox = []
         self._extra_context_in_personal_missed_stream_messages(
             False, show_message_content=False, message_content_disabled_by_user=True,
@@ -824,8 +822,7 @@ class TestMissedMessages(ZulipTestCase):
         self.assertIn("Iago: * 1\n *2\n\n--\nYou are receiving", mail.outbox[1].body)
         # If message content does not starts with <p> tag sender name is appended before the <p> tag
         self.assertIn(
-            "       <b>Iago</b>: <ul>\n<li>1<br/>\n *2</li>\n</ul>\n",
-            mail.outbox[1].alternatives[0][0],
+            "       <b>Iago</b>: <ul>\n<li>1<br/>\n *2</li>\n</ul>\n", mail.outbox[1].alternatives[0][0],
         )
 
         self.assertEqual("Hello\n\n--\n\nReply", mail.outbox[2].body[:16])
@@ -837,9 +834,7 @@ class TestMissedMessages(ZulipTestCase):
 
     def test_multiple_missed_personal_messages(self) -> None:
         hamlet = self.example_user("hamlet")
-        msg_id_1 = self.send_personal_message(
-            self.example_user("othello"), hamlet, "Personal Message 1",
-        )
+        msg_id_1 = self.send_personal_message(self.example_user("othello"), hamlet, "Personal Message 1")
         msg_id_2 = self.send_personal_message(self.example_user("iago"), hamlet, "Personal Message 2")
 
         handle_missedmessage_emails(hamlet.id, [{"message_id": msg_id_1}, {"message_id": msg_id_2}])

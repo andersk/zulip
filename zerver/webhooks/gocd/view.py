@@ -17,9 +17,7 @@ MESSAGE_TEMPLATE = "Author: {}\n" "Build status: {} {}\n" "Details: [build log](
 @api_key_only_webhook_view("Gocd")
 @has_request_variables
 def api_gocd_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    payload: Dict[str, Any] = REQ(argument_type="body"),
+    request: HttpRequest, user_profile: UserProfile, payload: Dict[str, Any] = REQ(argument_type="body"),
 ) -> HttpResponse:
 
     modifications = payload["build_cause"]["material_revisions"][0]["modifications"][0]

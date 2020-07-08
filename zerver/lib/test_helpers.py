@@ -184,9 +184,7 @@ def queries_captured(
             self, super(TimeTrackingCursor, self).executemany, sql, params,
         )  # nocoverage -- doesn't actually get used in tests
 
-    with mock.patch.multiple(
-        TimeTrackingCursor, execute=cursor_execute, executemany=cursor_executemany,
-    ):
+    with mock.patch.multiple(TimeTrackingCursor, execute=cursor_execute, executemany=cursor_executemany):
         yield queries
 
 

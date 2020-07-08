@@ -9,8 +9,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterUniqueTogether(
-            name="installationcount",
-            unique_together={("property", "subgroup", "end_time", "interval")},
+            name="installationcount", unique_together={("property", "subgroup", "end_time", "interval")},
         ),
         migrations.AlterUniqueTogether(
             name="realmcount",
@@ -21,7 +20,6 @@ class Migration(migrations.Migration):
             unique_together={("stream", "property", "subgroup", "end_time", "interval")},
         ),
         migrations.AlterUniqueTogether(
-            name="usercount",
-            unique_together={("user", "property", "subgroup", "end_time", "interval")},
+            name="usercount", unique_together={("user", "property", "subgroup", "end_time", "interval")},
         ),
     ]

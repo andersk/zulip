@@ -16,9 +16,7 @@ class PagerDutyHookTests(WebhookTestCase):
 
     def test_trigger_without_assignee_v2(self) -> None:
         expected_message = "Incident [33](https://webdemo.pagerduty.com/incidents/PRORDTY) triggered by [Production XDB Cluster](https://webdemo.pagerduty.com/services/PN49J75) (assigned to nobody):\n\n``` quote\nMy new incident\n```"
-        self.send_and_test_stream_message(
-            "trigger_without_assignee_v2", "Incident 33", expected_message,
-        )
+        self.send_and_test_stream_message("trigger_without_assignee_v2", "Incident 33", expected_message)
 
     def test_unacknowledge(self) -> None:
         expected_message = "Incident [3](https://zulip-test.pagerduty.com/incidents/P140S4Y) unacknowledged by [Test service](https://zulip-test.pagerduty.com/services/PIL5CUQ) (assigned to [armooo](https://zulip-test.pagerduty.com/users/POBCFRJ)):\n\n``` quote\nfoo\n```"

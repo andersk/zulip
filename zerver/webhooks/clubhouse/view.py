@@ -12,17 +12,13 @@ from zerver.models import UserProfile
 EPIC_NAME_TEMPLATE = "**{name}**"
 STORY_NAME_TEMPLATE = "[{name}]({app_url})"
 COMMENT_ADDED_TEMPLATE = "New comment added to the {entity} {name_template}:\n``` quote\n{text}\n```"
-NEW_DESC_ADDED_TEMPLATE = (
-    "New description added to the {entity} {name_template}:\n``` quote\n{new}\n```"
-)
+NEW_DESC_ADDED_TEMPLATE = "New description added to the {entity} {name_template}:\n``` quote\n{new}\n```"
 DESC_CHANGED_TEMPLATE = (
     "Description for the {entity} {name_template} was changed from:\n"
     "``` quote\n{old}\n```\nto\n``` quote\n{new}\n```"
 )
 DESC_REMOVED_TEMPLATE = "Description for the {entity} {name_template} was removed."
-STATE_CHANGED_TEMPLATE = (
-    "State of the {entity} {name_template} was changed from **{old}** to **{new}**."
-)
+STATE_CHANGED_TEMPLATE = "State of the {entity} {name_template} was changed from **{old}** to **{new}**."
 NAME_CHANGED_TEMPLATE = (
     "The name of the {entity} {name_template} was changed from:\n"
     "``` quote\n{old}\n```\nto\n``` quote\n{new}\n```"
@@ -207,9 +203,7 @@ def get_story_update_state_body(payload: Dict[str, Any]) -> str:
         "entity": "story",
         "new": state["new"],
         "old": state["old"],
-        "name_template": STORY_NAME_TEMPLATE.format(
-            name=action["name"], app_url=action.get("app_url"),
-        ),
+        "name_template": STORY_NAME_TEMPLATE.format(name=action["name"], app_url=action.get("app_url")),
     }
 
     return STATE_CHANGED_TEMPLATE.format(**kwargs)

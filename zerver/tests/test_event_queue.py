@@ -689,10 +689,7 @@ class MissedMessageNotificationsTest(ZulipTestCase):
         self.assertTrue(client_descriptor.event_queue.empty())
         do_mute_topic(user_profile, stream, sub.recipient, "mutingtest")
         msg_id = self.send_stream_message(
-            self.example_user("iago"),
-            "Denmark",
-            content="what's up everyone?",
-            topic_name="mutingtest",
+            self.example_user("iago"), "Denmark", content="what's up everyone?", topic_name="mutingtest",
         )
         with mock.patch("zerver.tornado.event_queue.maybe_enqueue_notifications") as mock_enqueue:
             missedmessage_hook(user_profile.id, client_descriptor, True)
@@ -765,8 +762,7 @@ class FileReloadLogicTest(ZulipTestCase):
         ):
             self.assertEqual(persistent_queue_filename(9993), "/home/zulip/tornado/event_queues.json")
             self.assertEqual(
-                persistent_queue_filename(9993, last=True),
-                "/home/zulip/tornado/event_queues.json.last",
+                persistent_queue_filename(9993, last=True), "/home/zulip/tornado/event_queues.json.last",
             )
         with self.settings(
             JSON_PERSISTENT_QUEUE_FILENAME_PATTERN="/home/zulip/tornado/event_queues%s.json",

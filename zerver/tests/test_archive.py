@@ -27,9 +27,7 @@ class GlobalPublicStreamTest(ZulipTestCase):
     def test_non_existant_topic(self) -> None:
         test_stream = self.make_stream("Test Public Archives")
         do_change_stream_web_public(test_stream, True)
-        result = self.client_get(
-            "/archive/streams/" + str(test_stream.id) + "/topics/nonexistenttopic",
-        )
+        result = self.client_get("/archive/streams/" + str(test_stream.id) + "/topics/nonexistenttopic")
         self.assert_in_success_response(["This topic does not exist."], result)
 
     def test_web_public_stream_topic(self) -> None:

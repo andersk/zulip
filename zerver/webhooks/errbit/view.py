@@ -15,9 +15,7 @@ ERRBIT_MESSAGE_TEMPLATE = '[{error_class}]({error_url}): "{error_message}" occur
 @api_key_only_webhook_view("Errbit")
 @has_request_variables
 def api_errbit_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    payload: Dict[str, Any] = REQ(argument_type="body"),
+    request: HttpRequest, user_profile: UserProfile, payload: Dict[str, Any] = REQ(argument_type="body"),
 ) -> HttpResponse:
     subject = get_subject(payload)
     body = get_body(payload)

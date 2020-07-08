@@ -512,9 +512,7 @@ def get_hipchat_sender_id(
     if not user_id_mapper.has(raw_sender_id):
         if slim_mode:
             return None
-        mirror_user = user_handler.get_mirror_user(
-            realm_id=realm_id, name=message_dict["sender"]["id"],
-        )
+        mirror_user = user_handler.get_mirror_user(realm_id=realm_id, name=message_dict["sender"]["id"])
         sender_id = mirror_user["id"]
         return sender_id
 

@@ -12,9 +12,7 @@ from zerver.models import UserProfile
 @api_key_only_webhook_view("HomeAssistant")
 @has_request_variables
 def api_homeassistant_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    payload: Dict[str, str] = REQ(argument_type="body"),
+    request: HttpRequest, user_profile: UserProfile, payload: Dict[str, str] = REQ(argument_type="body"),
 ) -> HttpResponse:
 
     # construct the body of the message

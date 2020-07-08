@@ -90,9 +90,7 @@ def get_event_handler(event: str) -> Callable[..., str]:
 @api_key_only_webhook_view("Groove")
 @has_request_variables
 def api_groove_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    payload: Dict[str, Any] = REQ(argument_type="body"),
+    request: HttpRequest, user_profile: UserProfile, payload: Dict[str, Any] = REQ(argument_type="body"),
 ) -> HttpResponse:
     event = validate_extract_webhook_http_header(request, "X_GROOVE_EVENT", "Groove")
     assert event is not None

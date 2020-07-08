@@ -77,19 +77,13 @@ def repo_comment_handler(payload: Dict[str, Any], action: str) -> List[Dict[str,
     repo_name = payload["repository"]["name"]
     subject = BITBUCKET_TOPIC_TEMPLATE.format(repository_name=repo_name)
     sha = payload["commit"]
-    commit_url = payload["repository"]["links"]["self"][0]["href"][
-        :-6
-    ]  # remove the "browse" at the end
+    commit_url = payload["repository"]["links"]["self"][0]["href"][:-6]  # remove the "browse" at the end
     commit_url += f"commits/{sha}"
     message = payload["comment"]["text"]
     if action == "deleted their comment":
         message = f"~~{message}~~"
     body = get_commits_comment_action_message(
-        user_name=get_user_name(payload),
-        action=action,
-        commit_url=commit_url,
-        sha=sha,
-        message=message,
+        user_name=get_user_name(payload), action=action, commit_url=commit_url, sha=sha, message=message,
     )
     return [{"subject": subject, "body": body}]
 

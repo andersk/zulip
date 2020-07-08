@@ -993,10 +993,7 @@ def post_process_state(
     if "raw_recent_private_conversations" in ret:
         # Reformat recent_private_conversations to be a list of dictionaries, rather than a dict.
         ret["recent_private_conversations"] = sorted(
-            [
-                dict(**value)
-                for (recipient_id, value) in ret["raw_recent_private_conversations"].items()
-            ],
+            [dict(**value) for (recipient_id, value) in ret["raw_recent_private_conversations"].items()],
             key=lambda x: -x["max_message_id"],
         )
         del ret["raw_recent_private_conversations"]

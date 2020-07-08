@@ -375,11 +375,7 @@ class UserPresenceTests(ZulipTestCase):
         client = make_client("zephyr_mirror")
 
         UserActivity.objects.get_or_create(
-            user_profile=user_profile,
-            client=client,
-            query="get_events",
-            count=2,
-            last_visit=last_visit,
+            user_profile=user_profile, client=client, query="get_events", count=2, last_visit=last_visit,
         )
 
     def test_same_realm(self) -> None:
@@ -602,10 +598,7 @@ class GetRealmStatusesTest(ZulipTestCase):
         )
 
         result = self.api_post(
-            hamlet,
-            "/api/v1/users/me/presence",
-            dict(status="idle"),
-            HTTP_USER_AGENT="ZulipDesktop/1.0",
+            hamlet, "/api/v1/users/me/presence", dict(status="idle"), HTTP_USER_AGENT="ZulipDesktop/1.0",
         )
         self.assert_json_success(result)
         json = result.json()
@@ -645,10 +638,7 @@ class GetRealmStatusesTest(ZulipTestCase):
         )
 
         result = self.api_post(
-            hamlet,
-            "/api/v1/users/me/presence",
-            dict(status="idle"),
-            HTTP_USER_AGENT="ZulipDesktop/1.0",
+            hamlet, "/api/v1/users/me/presence", dict(status="idle"), HTTP_USER_AGENT="ZulipDesktop/1.0",
         )
         self.assert_json_success(result)
         json = result.json()

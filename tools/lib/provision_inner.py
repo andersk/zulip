@@ -240,9 +240,7 @@ def main(options: argparse.Namespace) -> int:
         if options.is_force or need_to_run_configure_rabbitmq([settings.RABBITMQ_PASSWORD]):
             run(["scripts/setup/configure-rabbitmq"])
             write_new_digest(
-                "last_configure_rabbitmq_hash",
-                configure_rabbitmq_paths(),
-                [settings.RABBITMQ_PASSWORD],
+                "last_configure_rabbitmq_hash", configure_rabbitmq_paths(), [settings.RABBITMQ_PASSWORD],
             )
         else:
             print("No need to run `scripts/setup/configure-rabbitmq.")

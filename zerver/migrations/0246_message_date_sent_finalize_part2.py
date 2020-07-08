@@ -15,9 +15,7 @@ class Migration(migrations.Migration):
         #  We can now remove it, and rename pub_date to date_sent to have this column
         # set correctly for all existing rows.
         migrations.RemoveField(model_name="archivedmessage", name="date_sent"),
-        migrations.RenameField(
-            model_name="archivedmessage", old_name="pub_date", new_name="date_sent",
-        ),
+        migrations.RenameField(model_name="archivedmessage", old_name="pub_date", new_name="date_sent"),
         # All the below AlterField does is change verbose_name, which doesn't even generate any SQL,
         # it's just a purely-Django attribute.
         migrations.AlterField(

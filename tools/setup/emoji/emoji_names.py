@@ -633,10 +633,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     "1f354": {"canonical_name": "hamburger", "aliases": []},
     "1f35f": {"canonical_name": "fries", "aliases": []},
     # https://emojipedia.org/stuffed-flatbread/
-    "1f959": {
-        "canonical_name": "doner_kebab",
-        "aliases": ["shawarma", "souvlaki", "stuffed_flatbread"],
-    },
+    "1f959": {"canonical_name": "doner_kebab", "aliases": ["shawarma", "souvlaki", "stuffed_flatbread"]},
     "1f32e": {"canonical_name": "taco", "aliases": []},
     "1f32f": {"canonical_name": "burrito", "aliases": []},
     "1f957": {"canonical_name": "salad", "aliases": []},
@@ -1155,10 +1152,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
         "aliases": ["dungeon", "old_key", "encrypted", "clue", "hint"],
     },
     "1f6aa": {"canonical_name": "door", "aliases": []},
-    "1f6cb": {
-        "canonical_name": "living_room",
-        "aliases": ["furniture", "couch_and_lamp", "lifestyles"],
-    },
+    "1f6cb": {"canonical_name": "living_room", "aliases": ["furniture", "couch_and_lamp", "lifestyles"]},
     "1f6cf": {"canonical_name": "bed", "aliases": ["bedroom"]},
     # guestrooms from iemoji, would add hotel but taken by Places/94
     "1f6cc": {"canonical_name": "in_bed", "aliases": ["accommodations", "guestrooms"]},
@@ -1253,10 +1247,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     # '1f50e': {'canonical_name': 'X', 'aliases': ['mag_right']},
     # https://emojipedia.org/lock-with-ink-pen/
     "1f50f": {"canonical_name": "privacy", "aliases": ["key_signing", "digital_security", "protected"]},
-    "1f510": {
-        "canonical_name": "secure",
-        "aliases": ["lock_with_key", "safe", "commitment", "loyalty"],
-    },
+    "1f510": {"canonical_name": "secure", "aliases": ["lock_with_key", "safe", "commitment", "loyalty"]},
     "1f512": {"canonical_name": "locked", "aliases": []},
     "1f513": {"canonical_name": "unlocked", "aliases": []},
     # seems the best glyph for love and love_you

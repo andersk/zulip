@@ -131,10 +131,7 @@ def get_bot_types(user_profile: Optional[UserProfile]) -> List[Dict[str, object]
 
 
 def compute_navbar_logo_url(page_params: Dict[str, Any]) -> str:
-    if (
-        page_params["color_scheme"] == 2
-        and page_params["realm_night_logo_source"] != Realm.LOGO_DEFAULT
-    ):
+    if page_params["color_scheme"] == 2 and page_params["realm_night_logo_source"] != Realm.LOGO_DEFAULT:
         navbar_logo_url = page_params["realm_night_logo_url"]
     else:
         navbar_logo_url = page_params["realm_logo_url"]

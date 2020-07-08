@@ -20,9 +20,7 @@ from zerver.models import UserProfile
 @api_key_only_webhook_view("Taiga")
 @has_request_variables
 def api_taiga_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    message: Dict[str, Any] = REQ(argument_type="body"),
+    request: HttpRequest, user_profile: UserProfile, message: Dict[str, Any] = REQ(argument_type="body"),
 ) -> HttpResponse:
     parsed_events = parse_message(message)
     content_lines = []
@@ -43,8 +41,7 @@ templates = {
         "create": "[{user}]({user_link}) created epic {subject}.",
         "set_assigned_to": "[{user}]({user_link}) assigned epic {subject} to {new}.",
         "unset_assigned_to": "[{user}]({user_link}) unassigned epic {subject}.",
-        "changed_assigned_to": "[{user}]({user_link}) reassigned epic {subject}"
-        " from {old} to {new}.",
+        "changed_assigned_to": "[{user}]({user_link}) reassigned epic {subject}" " from {old} to {new}.",
         "blocked": "[{user}]({user_link}) blocked epic {subject}.",
         "unblocked": "[{user}]({user_link}) unblocked epic {subject}.",
         "changed_status": "[{user}]({user_link}) changed status of epic {subject}"
@@ -106,8 +103,7 @@ templates = {
         "create": "[{user}]({user_link}) created task {subject}.",
         "set_assigned_to": "[{user}]({user_link}) assigned task {subject} to {new}.",
         "unset_assigned_to": "[{user}]({user_link}) unassigned task {subject}.",
-        "changed_assigned_to": "[{user}]({user_link}) reassigned task {subject}"
-        " from {old} to {new}.",
+        "changed_assigned_to": "[{user}]({user_link}) reassigned task {subject}" " from {old} to {new}.",
         "blocked": "[{user}]({user_link}) blocked task {subject}.",
         "unblocked": "[{user}]({user_link}) unblocked task {subject}.",
         "changed_status": "[{user}]({user_link}) changed status of task {subject}"

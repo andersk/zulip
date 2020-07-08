@@ -395,10 +395,7 @@ class AuthBackendTest(ZulipTestCase):
         # Test LDAP auth fails when LDAP server rejects password
         self.assertIsNone(
             backend.authenticate(
-                request=mock.MagicMock(),
-                username=email,
-                password="wrongpass",
-                realm=get_realm("zulip"),
+                request=mock.MagicMock(), username=email, password="wrongpass", realm=get_realm("zulip"),
             ),
         )
 
@@ -411,10 +408,7 @@ class AuthBackendTest(ZulipTestCase):
                 realm=get_realm("zephyr"),
             ),
             good_kwargs=dict(
-                request=mock.MagicMock(),
-                username=username,
-                password=password,
-                realm=get_realm("zulip"),
+                request=mock.MagicMock(), username=username, password=password, realm=get_realm("zulip"),
             ),
         )
         self.verify_backend(
@@ -426,10 +420,7 @@ class AuthBackendTest(ZulipTestCase):
                 realm=get_realm("zephyr"),
             ),
             good_kwargs=dict(
-                request=mock.MagicMock(),
-                username=username,
-                password=password,
-                realm=get_realm("zulip"),
+                request=mock.MagicMock(), username=username, password=password, realm=get_realm("zulip"),
             ),
         )
 
@@ -801,10 +792,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
         return f"{type.upper()}:zulip.auth.{self.backend.name}:{output_string}"
 
     def register_extra_endpoints(
-        self,
-        requests_mock: responses.RequestsMock,
-        account_data_dict: Dict[str, str],
-        **extra_data: Any,
+        self, requests_mock: responses.RequestsMock, account_data_dict: Dict[str, str], **extra_data: Any
     ) -> None:
         pass
 
@@ -2366,10 +2354,7 @@ class AppleIdAuthBackendTest(AppleAuthMixin, SocialAuthBase):
         return result
 
     def register_extra_endpoints(
-        self,
-        requests_mock: responses.RequestsMock,
-        account_data_dict: Dict[str, str],
-        **extra_data: Any,
+        self, requests_mock: responses.RequestsMock, account_data_dict: Dict[str, str], **extra_data: Any
     ) -> None:
         # This is an URL of an endpoint on Apple servers that returns
         # the public keys to be used for verifying the signature
@@ -2454,9 +2439,7 @@ class AppleIdAuthBackendTest(AppleAuthMixin, SocialAuthBase):
         self.assertEqual(
             m.output,
             [
-                self.logger_output(
-                    "Sign in with Apple failed: missing state parameter.", "info",
-                ),  # (1)
+                self.logger_output("Sign in with Apple failed: missing state parameter.", "info"),  # (1)
                 self.logger_output("Missing needed parameter state", "warning"),
                 self.logger_output("Sign in with Apple failed: bad state token.", "info"),  # (2)
                 self.logger_output("Wrong state parameter given.", "warning"),
@@ -2698,10 +2681,7 @@ class GitHubAuthBackendTest(SocialAuthBase):
         return result
 
     def register_extra_endpoints(
-        self,
-        requests_mock: responses.RequestsMock,
-        account_data_dict: Dict[str, str],
-        **extra_data: Any,
+        self, requests_mock: responses.RequestsMock, account_data_dict: Dict[str, str], **extra_data: Any
     ) -> None:
         # Keeping a verified email before the primary email makes sure
         # get_verified_emails puts the primary email at the start of the
@@ -2763,8 +2743,7 @@ class GitHubAuthBackendTest(SocialAuthBase):
             self.assertEqual(result.status_code, 302)
             self.assertEqual(result.url, "/login/")
         self.assertEqual(
-            mock_info.output,
-            [self.logger_output("GitHub user is not member of required team", "info")],
+            mock_info.output, [self.logger_output("GitHub user is not member of required team", "info")],
         )
 
     @override_settings(SOCIAL_AUTH_GITHUB_TEAM_ID="zulip-webapp")
@@ -2935,10 +2914,7 @@ class GitHubAuthBackendTest(SocialAuthBase):
             dict(email="verifiedemail@zulip.com", verified=True),
         ]
         result = self.social_auth_test(
-            account_data_dict,
-            subdomain="zulip",
-            email_data=email_data,
-            expect_choose_email_screen=True,
+            account_data_dict, subdomain="zulip", email_data=email_data, expect_choose_email_screen=True,
         )
         email = account_data_dict["email"]
         name = account_data_dict["name"]
@@ -3477,9 +3453,7 @@ class JSONFetchAPIKeyTest(ZulipTestCase):
             "/json/fetch_api_key",
             dict(user_profile=user, password=initial_password(user.delivery_email)),
         )
-        self.assert_json_error(
-            result, "Not logged in: API authentication or user session required", 401,
-        )
+        self.assert_json_error(result, "Not logged in: API authentication or user session required", 401)
 
     def test_wrong_password(self) -> None:
         user = self.example_user("hamlet")
@@ -3748,9 +3722,7 @@ class FetchAuthBackends(ZulipTestCase):
         check_result(result)
         self.assertEqual(result.json()["external_authentication_methods"], get_external_method_dicts())
 
-        result = self.client_get(
-            "/api/v1/server_settings", subdomain="", HTTP_USER_AGENT="ZulipInvalid",
-        )
+        result = self.client_get("/api/v1/server_settings", subdomain="", HTTP_USER_AGENT="ZulipInvalid")
         self.assertTrue(result.json()["is_incompatible"])
 
         with self.settings(ROOT_DOMAIN_LANDING_PAGE=False):
@@ -3933,9 +3905,7 @@ class TestDevAuthBackend(ZulipTestCase):
 
     def test_choose_realm_with_subdomains_enabled(self) -> None:
         with mock.patch("zerver.views.auth.is_subdomain_root_or_alias", return_value=False):
-            with mock.patch(
-                "zerver.views.auth.get_realm_from_request", return_value=get_realm("zulip"),
-            ):
+            with mock.patch("zerver.views.auth.get_realm_from_request", return_value=get_realm("zulip")):
                 result = self.client_get("http://zulip.testserver/devlogin/")
                 self.assert_in_success_response(["iago@zulip.com", "hamlet@zulip.com"], result)
                 self.assert_not_in_success_response(["starnine@mit.edu", "espuser@mit.edu"], result)
@@ -4043,9 +4013,7 @@ class TestZulipRemoteUserBackend(DesktopFlowTestingLib, ZulipTestCase):
         email = self.example_email("hamlet")
         with self.settings(AUTHENTICATION_BACKENDS=("zproject.backends.ZulipRemoteUserBackend",)):
             with mock.patch("zerver.views.auth.get_subdomain", return_value="acme"):
-                result = self.client_get(
-                    "http://testserver:9080/accounts/login/sso/", REMOTE_USER=email,
-                )
+                result = self.client_get("http://testserver:9080/accounts/login/sso/", REMOTE_USER=email)
                 self.assertEqual(result.status_code, 200)
                 self.assert_logged_in_user_id(None)
                 self.assert_in_response("You need an invitation to join this organization.", result)
@@ -4054,9 +4022,7 @@ class TestZulipRemoteUserBackend(DesktopFlowTestingLib, ZulipTestCase):
         email = self.example_email("hamlet")
         with self.settings(AUTHENTICATION_BACKENDS=("zproject.backends.ZulipRemoteUserBackend",)):
             with mock.patch("zerver.views.auth.get_subdomain", return_value=""):
-                result = self.client_get(
-                    "http://testserver:9080/accounts/login/sso/", REMOTE_USER=email,
-                )
+                result = self.client_get("http://testserver:9080/accounts/login/sso/", REMOTE_USER=email)
                 self.assertEqual(result.status_code, 200)
                 self.assert_logged_in_user_id(None)
                 self.assert_in_response("You need an invitation to join this organization.", result)
@@ -5281,8 +5247,7 @@ class TestRequireEmailFormatUsernames(ZulipTestCase):
 
     def test_require_email_format_usernames_for_ldap_with_email_attr(self) -> None:
         with self.settings(
-            AUTHENTICATION_BACKENDS=("zproject.backends.ZulipLDAPAuthBackend",),
-            LDAP_EMAIL_ATTR="email",
+            AUTHENTICATION_BACKENDS=("zproject.backends.ZulipLDAPAuthBackend",), LDAP_EMAIL_ATTR="email",
         ):
             realm = Realm.objects.get(string_id="zulip")
             self.assertFalse(require_email_format_usernames(realm))

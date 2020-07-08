@@ -9,8 +9,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name="realmalias",
-            name="domain",
-            field=models.CharField(max_length=80, db_index=True),
+            model_name="realmalias", name="domain", field=models.CharField(max_length=80, db_index=True),
         ),
     ]

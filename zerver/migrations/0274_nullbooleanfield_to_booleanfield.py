@@ -11,9 +11,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name="stream",
-            name="invite_only",
-            field=models.BooleanField(default=False, null=True),
+            model_name="stream", name="invite_only", field=models.BooleanField(default=False, null=True),
         ),
         migrations.AlterField(
             model_name="subscription",

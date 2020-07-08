@@ -282,9 +282,7 @@ def get_event_handler(event_type: str) -> Callable[..., Tuple[str, str]]:
 @api_key_only_webhook_view("Intercom")
 @has_request_variables
 def api_intercom_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    payload: Dict[str, Any] = REQ(argument_type="body"),
+    request: HttpRequest, user_profile: UserProfile, payload: Dict[str, Any] = REQ(argument_type="body"),
 ) -> HttpResponse:
     event_type = payload["topic"]
     if event_type == "ping":

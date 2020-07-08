@@ -82,9 +82,7 @@ class APIReturnValuesTablePreprocessor(Preprocessor):
                 "items" in return_values[return_value]
                 and "properties" in return_values[return_value]["items"]
             ):
-                ans += self.render_table(
-                    return_values[return_value]["items"]["properties"], spacing + 4,
-                )
+                ans += self.render_table(return_values[return_value]["items"]["properties"], spacing + 4)
         return ans
 
 

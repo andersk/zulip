@@ -518,9 +518,7 @@ def get_time_series_by_subgroup(
 eastern_tz = pytz.timezone("US/Eastern")
 
 
-def make_table(
-    title: str, cols: Sequence[str], rows: Sequence[Any], has_row_class: bool = False,
-) -> str:
+def make_table(title: str, cols: Sequence[str], rows: Sequence[Any], has_row_class: bool = False) -> str:
 
     if not has_row_class:
 

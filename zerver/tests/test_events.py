@@ -246,9 +246,7 @@ class BaseAction(ZulipTestCase):
             if before == after:  # nocoverage
                 print(ujson.dumps(initial_state, indent=2))
                 print(events)
-                raise AssertionError(
-                    "Test does not exercise enough code -- events do not change state.",
-                )
+                raise AssertionError("Test does not exercise enough code -- events do not change state.")
         else:
             try:
                 self.match_states(initial_state, copy.deepcopy(hybrid_state), events)
@@ -1397,9 +1395,7 @@ class NormalActionsTest(BaseAction):
         )
         stream = get_stream("Denmark", self.user_profile.realm)
         recipient = stream.recipient
-        events = self.verify_action(
-            lambda: do_mute_topic(self.user_profile, stream, recipient, "topic"),
-        )
+        events = self.verify_action(lambda: do_mute_topic(self.user_profile, stream, recipient, "topic"))
         muted_topics_checker("events[0]", events[0])
 
         events = self.verify_action(lambda: do_unmute_topic(self.user_profile, stream, "topic"))
@@ -1474,10 +1470,7 @@ class NormalActionsTest(BaseAction):
             [
                 ("type", equals("realm_user")),
                 ("op", equals("update")),
-                (
-                    "person",
-                    check_dict_only([("delivery_email", check_string), ("user_id", check_int)]),
-                ),
+                ("person", check_dict_only([("delivery_email", check_string), ("user_id", check_int)])),
             ],
         )
         avatar_schema_checker = check_events_dict(
@@ -1699,9 +1692,7 @@ class NormalActionsTest(BaseAction):
         ):
             events = self.verify_action(
                 lambda: do_set_realm_signup_notifications_stream(
-                    self.user_profile.realm,
-                    signup_notifications_stream,
-                    signup_notifications_stream_id,
+                    self.user_profile.realm, signup_notifications_stream, signup_notifications_stream_id,
                 ),
             )
             schema_checker("events[0]", events[0])
@@ -2320,9 +2311,7 @@ class NormalActionsTest(BaseAction):
                             (
                                 "services",
                                 check_list(
-                                    check_dict_only(
-                                        [("base_url", check_url), ("interface", check_int)],
-                                    ),
+                                    check_dict_only([("base_url", check_url), ("interface", check_int)]),
                                 ),
                             ),
                         ],
@@ -3119,9 +3108,7 @@ class SubscribeActionTest(BaseAction):
         )
 
         # Subscribe to a totally new stream, so it's just Hamlet on it
-        action: Callable[[], object] = lambda: self.subscribe(
-            self.example_user("hamlet"), "test_stream",
-        )
+        action: Callable[[], object] = lambda: self.subscribe(self.example_user("hamlet"), "test_stream")
         events = self.verify_action(
             action, event_types=["subscription", "realm_user"], include_subscribers=include_subscribers,
         )

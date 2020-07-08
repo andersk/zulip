@@ -439,8 +439,7 @@ class UpdateCustomProfileFieldTest(CustomProfileFieldTestCase):
 
         # Update value of field
         result = self.client_patch(
-            "/json/users/me/profile_data",
-            {"data": ujson.dumps([{"id": field.id, "value": new_value}])},
+            "/json/users/me/profile_data", {"data": ujson.dumps([{"id": field.id, "value": new_value}])},
         )
         self.assert_json_error(result, error_msg)
 

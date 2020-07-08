@@ -29,9 +29,7 @@ TODO_TEMPLATE = "{user_name} {verb} the todo task [{title}]({url})"
 @api_key_only_webhook_view("Basecamp")
 @has_request_variables
 def api_basecamp_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    payload: Dict[str, Any] = REQ(argument_type="body"),
+    request: HttpRequest, user_profile: UserProfile, payload: Dict[str, Any] = REQ(argument_type="body"),
 ) -> HttpResponse:
     event = get_event_type(payload)
 

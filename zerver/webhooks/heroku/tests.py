@@ -15,10 +15,7 @@ user@example.com deployed version 3eb5f44 of [sample-project](http://sample-proj
 ```
 """.strip()
         self.send_and_test_stream_message(
-            "deploy",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "deploy", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_deployment_multiple_commits(self) -> None:

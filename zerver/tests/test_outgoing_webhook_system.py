@@ -196,11 +196,7 @@ class TestOutgoingWebhookMessaging(ZulipTestCase):
         )
 
         add_service(
-            "qotd",
-            user_profile=bot,
-            interface=Service.GENERIC,
-            base_url="qotd_url",
-            token="qotd_token",
+            "qotd", user_profile=bot, interface=Service.GENERIC, base_url="qotd_url", token="qotd_token",
         )
 
         sender = self.example_user("hamlet")

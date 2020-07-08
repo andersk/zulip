@@ -240,10 +240,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ),
                 ("kind", models.PositiveSmallIntegerField(choices=[(1, "apns"), (2, "gcm")])),
                 ("token", models.CharField(max_length=4096, unique=True)),
-                (
-                    "last_updated",
-                    models.DateTimeField(auto_now=True, default=django.utils.timezone.now),
-                ),
+                ("last_updated", models.DateTimeField(auto_now=True, default=django.utils.timezone.now)),
                 ("ios_app_id", models.TextField(null=True)),
                 (
                     "user",
@@ -671,9 +668,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
             field=models.ManyToManyField(to="zerver.Stream"),
         ),
         migrations.AlterField(
-            model_name="pushdevicetoken",
-            name="last_updated",
-            field=models.DateTimeField(auto_now=True),
+            model_name="pushdevicetoken", name="last_updated", field=models.DateTimeField(auto_now=True),
         ),
         migrations.AlterField(
             model_name="referral", name="email", field=models.EmailField(max_length=254),

@@ -581,9 +581,7 @@ class ClientDescriptorsTest(ZulipTestCase):
             client = allocate_client_descriptor(queue_data)
             message_event = dict(realm_id=realm.id, stream_name="whatever")
 
-            client_info = get_client_info_for_message_event(
-                message_event, users=[dict(id=cordelia.id)],
-            )
+            client_info = get_client_info_for_message_event(message_event, users=[dict(id=cordelia.id)])
 
             self.assertEqual(len(client_info), 0)
 

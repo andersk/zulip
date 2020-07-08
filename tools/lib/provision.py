@@ -83,9 +83,7 @@ if platform.architecture()[0] == "64bit":
 elif platform.architecture()[0] == "32bit":
     arch = "i386"
 else:
-    logging.critical(
-        "Only x86 is supported;" " ask on chat.zulip.org if you want another architecture.",
-    )
+    logging.critical("Only x86 is supported;" " ask on chat.zulip.org if you want another architecture.")
     # Note: It's probably actually not hard to add additional
     # architectures.
     sys.exit(1)
@@ -275,14 +273,7 @@ def install_apt_deps(deps_to_install: List[str]) -> None:
     # trying to download old versions that were already removed from mirrors.
     run_as_root(["apt-get", "update"])
     run_as_root(
-        [
-            "env",
-            "DEBIAN_FRONTEND=noninteractive",
-            "apt-get",
-            "-y",
-            "install",
-            "--no-install-recommends",
-        ]
+        ["env", "DEBIAN_FRONTEND=noninteractive", "apt-get", "-y", "install", "--no-install-recommends"]
         + deps_to_install,
     )
 

@@ -88,9 +88,7 @@ def enqueue_emails(cutoff: datetime.datetime) -> None:
                 )
 
 
-def gather_hot_conversations(
-    user_profile: UserProfile, messages: List[Message],
-) -> List[Dict[str, Any]]:
+def gather_hot_conversations(user_profile: UserProfile, messages: List[Message]) -> List[Dict[str, Any]]:
     # Gather stream conversations of 2 types:
     # 1. long conversations
     # 2. conversations where many different people participated
@@ -159,9 +157,7 @@ def gather_new_streams(
 ) -> Tuple[int, Dict[str, List[str]]]:
     if user_profile.can_access_public_streams():
         new_streams = list(
-            get_active_streams(user_profile.realm).filter(
-                invite_only=False, date_created__gt=threshold,
-            ),
+            get_active_streams(user_profile.realm).filter(invite_only=False, date_created__gt=threshold),
         )
     else:
         new_streams = []

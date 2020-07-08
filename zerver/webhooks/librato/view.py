@@ -54,11 +54,7 @@ class LibratoWebhookParser:
         return violations
 
     def parse_snapshot(self, snapshot: Dict[str, Any]) -> Tuple[str, str, str]:
-        author_name, image_url, title = (
-            snapshot["author_name"],
-            snapshot["image_url"],
-            snapshot["title"],
-        )
+        author_name, image_url, title = snapshot["author_name"], snapshot["image_url"], snapshot["title"]
         return author_name, image_url, title
 
 

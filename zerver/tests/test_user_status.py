@@ -93,10 +93,7 @@ class UserStatusTest(ZulipTestCase):
             user_profile_id=cordelia.id, status=UserStatus.AWAY, status_text=None, client_id=client2.id,
         )
         update_user_status(
-            user_profile_id=king_lear.id,
-            status=UserStatus.AWAY,
-            status_text=None,
-            client_id=client2.id,
+            user_profile_id=king_lear.id, status=UserStatus.AWAY, status_text=None, client_id=client2.id,
         )
 
         away_user_ids = get_away_user_ids(realm_id=realm_id)

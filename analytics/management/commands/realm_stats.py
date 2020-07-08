@@ -140,9 +140,7 @@ class Command(BaseCommand):
 
             num_notifications_enabled = len([x for x in active_users if x.enable_desktop_notifications])
             self.report_percentage(
-                num_notifications_enabled,
-                num_active,
-                "active users have desktop notifications enabled",
+                num_notifications_enabled, num_active, "active users have desktop notifications enabled",
             )
 
             num_enter_sends = len([x for x in active_users if x.enter_sends])

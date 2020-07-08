@@ -488,8 +488,7 @@ class SetRemoteAddrFromForwardedFor(MiddlewareMixin):
 def alter_content(request: HttpRequest, content: bytes) -> bytes:
     first_paragraph_text = get_content_description(content, request)
     return content.replace(
-        request.placeholder_open_graph_description.encode("utf-8"),
-        first_paragraph_text.encode("utf-8"),
+        request.placeholder_open_graph_description.encode("utf-8"), first_paragraph_text.encode("utf-8"),
     )
 
 

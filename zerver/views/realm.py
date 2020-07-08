@@ -61,9 +61,7 @@ def update_realm(
     allow_message_editing: Optional[bool] = REQ(validator=check_bool, default=None),
     allow_community_topic_editing: Optional[bool] = REQ(validator=check_bool, default=None),
     mandatory_topics: Optional[bool] = REQ(validator=check_bool, default=None),
-    message_content_edit_limit_seconds: Optional[int] = REQ(
-        converter=to_non_negative_int, default=None,
-    ),
+    message_content_edit_limit_seconds: Optional[int] = REQ(converter=to_non_negative_int, default=None),
     allow_edit_history: Optional[bool] = REQ(validator=check_bool, default=None),
     default_language: Optional[str] = REQ(validator=check_string, default=None),
     waiting_period_threshold: Optional[int] = REQ(converter=to_non_negative_int, default=None),

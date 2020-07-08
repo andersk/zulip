@@ -342,9 +342,7 @@ def get_event_handler(event: Optional[str]) -> Optional[Callable[..., str]]:
 @api_key_only_webhook_view("JIRA")
 @has_request_variables
 def api_jira_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    payload: Dict[str, Any] = REQ(argument_type="body"),
+    request: HttpRequest, user_profile: UserProfile, payload: Dict[str, Any] = REQ(argument_type="body"),
 ) -> HttpResponse:
 
     event = get_event_type(payload)

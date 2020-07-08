@@ -373,9 +373,7 @@ class S3UploadBackend(ZulipUploadBackend):
         self.session = boto3.Session(settings.S3_KEY, settings.S3_SECRET_KEY)
 
         self.avatar_bucket = get_bucket(self.session, settings.S3_AVATAR_BUCKET)
-        network_location = urllib.parse.urlparse(
-            self.avatar_bucket.meta.client.meta.endpoint_url,
-        ).netloc
+        network_location = urllib.parse.urlparse(self.avatar_bucket.meta.client.meta.endpoint_url).netloc
         self.avatar_bucket_url = f"https://{self.avatar_bucket.name}.{network_location}"
 
         self.uploads_bucket = get_bucket(self.session, settings.S3_AUTH_UPLOADS_BUCKET)

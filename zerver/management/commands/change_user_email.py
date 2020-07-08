@@ -10,9 +10,7 @@ class Command(ZulipBaseCommand):
 
     def add_arguments(self, parser: ArgumentParser) -> None:
         self.add_realm_args(parser)
-        parser.add_argument(
-            "old_email", metavar="<old email>", type=str, help="email address to change",
-        )
+        parser.add_argument("old_email", metavar="<old email>", type=str, help="email address to change")
         parser.add_argument("new_email", metavar="<new email>", type=str, help="new email address")
 
     def handle(self, *args: Any, **options: str) -> None:

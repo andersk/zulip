@@ -11,12 +11,7 @@ class AttachmentHandler:
         self.info_dict: Dict[str, Dict[str, Any]] = dict()
 
     def handle_message_data(
-        self,
-        realm_id: int,
-        message_id: int,
-        sender_id: int,
-        attachment: Dict[str, Any],
-        files_dir: str,
+        self, realm_id: int, message_id: int, sender_id: int, attachment: Dict[str, Any], files_dir: str,
     ) -> Optional[str]:
         if not attachment:
             return None
@@ -77,9 +72,7 @@ class AttachmentHandler:
                 realm_id=realm_id,
                 message_ids=info["message_ids"],
                 user_id=info["sender_id"],
-                fileinfo=dict(
-                    created=info["mtime"], size=info["size"], name=info["name"],  # minor lie
-                ),
+                fileinfo=dict(created=info["mtime"], size=info["size"], name=info["name"]),  # minor lie
                 s3_path=info["target_path"],
                 zerver_attachment=attachments,
             )

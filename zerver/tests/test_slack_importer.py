@@ -482,12 +482,7 @@ class SlackImporter(ZulipTestCase):
 
     def test_build_subscription(self) -> None:
         channel_members = ["U061A1R2R", "U061A3E0G", "U061A5N1G", "U064KUGRJ"]
-        slack_user_id_to_zulip_user_id = {
-            "U061A1R2R": 1,
-            "U061A3E0G": 8,
-            "U061A5N1G": 7,
-            "U064KUGRJ": 5,
-        }
+        slack_user_id_to_zulip_user_id = {"U061A1R2R": 1, "U061A3E0G": 8, "U061A5N1G": 7, "U064KUGRJ": 5}
         subscription_id_count = 0
         recipient_id = 12
         zerver_subscription: List[Dict[str, Any]] = []
@@ -513,12 +508,7 @@ class SlackImporter(ZulipTestCase):
         self.assertEqual(zerver_subscription[1]["pin_to_top"], False)
 
     def test_channels_to_zerver_stream(self) -> None:
-        slack_user_id_to_zulip_user_id = {
-            "U061A1R2R": 1,
-            "U061A3E0G": 8,
-            "U061A5N1G": 7,
-            "U064KUGRJ": 5,
-        }
+        slack_user_id_to_zulip_user_id = {"U061A1R2R": 1, "U061A3E0G": 8, "U061A5N1G": 7, "U064KUGRJ": 5}
         zerver_userprofile = [{"id": 1}, {"id": 8}, {"id": 7}, {"id": 5}]
         realm_id = 3
 

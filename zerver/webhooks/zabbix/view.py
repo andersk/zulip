@@ -30,9 +30,7 @@ ZABBIX_MESSAGE_TEMPLATE = """
 @api_key_only_webhook_view("Zabbix")
 @has_request_variables
 def api_zabbix_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    payload: Dict[str, Any] = REQ(argument_type="body"),
+    request: HttpRequest, user_profile: UserProfile, payload: Dict[str, Any] = REQ(argument_type="body"),
 ) -> HttpResponse:
 
     try:

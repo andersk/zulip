@@ -73,9 +73,7 @@ def get_events_backend(
     apply_markdown: bool = REQ(default=False, validator=check_bool, intentionally_undocumented=True),
     client_gravatar: bool = REQ(default=False, validator=check_bool, intentionally_undocumented=True),
     slim_presence: bool = REQ(default=False, validator=check_bool, intentionally_undocumented=True),
-    all_public_streams: bool = REQ(
-        default=False, validator=check_bool, intentionally_undocumented=True,
-    ),
+    all_public_streams: bool = REQ(default=False, validator=check_bool, intentionally_undocumented=True),
     event_types: Optional[Sequence[str]] = REQ(
         default=None, validator=check_list(check_string), intentionally_undocumented=True,
     ),

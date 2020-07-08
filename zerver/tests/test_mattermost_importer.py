@@ -67,9 +67,7 @@ class MatterMostImporter(ZulipTestCase):
 
         self.assertEqual(len(mattermost_data["post"]["channel_post"]), 4)
         self.assertEqual(mattermost_data["post"]["channel_post"][0]["team"], "gryffindor")
-        self.assertEqual(
-            mattermost_data["post"]["channel_post"][0]["channel"], "gryffindor-common-room",
-        )
+        self.assertEqual(mattermost_data["post"]["channel_post"][0]["channel"], "gryffindor-common-room")
         self.assertEqual(mattermost_data["post"]["channel_post"][0]["user"], "ron")
         self.assertEqual(mattermost_data["post"]["channel_post"][0]["replies"], None)
 
@@ -140,9 +138,7 @@ class MatterMostImporter(ZulipTestCase):
         self.assertEqual(len(user_handler.get_all_users()), 2)
         self.assertTrue(user_id_mapper.has("harry"))
         self.assertTrue(user_id_mapper.has("ron"))
-        self.assertEqual(
-            user_handler.get_user(user_id_mapper.get("harry"))["full_name"], "Harry Potter",
-        )
+        self.assertEqual(user_handler.get_user(user_id_mapper.get("harry"))["full_name"], "Harry Potter")
         self.assertEqual(user_handler.get_user(user_id_mapper.get("ron"))["full_name"], "Ron Weasley")
 
         team_name = "slytherin"
@@ -263,8 +259,7 @@ class MatterMostImporter(ZulipTestCase):
             {harry_id},
         )
         self.assertEqual(
-            subscriber_handler.get_users(stream_id=stream_id_mapper.get("dumbledores-army")),
-            {harry_id},
+            subscriber_handler.get_users(stream_id=stream_id_mapper.get("dumbledores-army")), {harry_id},
         )
 
         team_name = "slytherin"
@@ -573,9 +568,7 @@ class MatterMostImporter(ZulipTestCase):
             exported_stream_names,
             {"Gryffindor common room", "Gryffindor quidditch team", "Dumbledores army"},
         )
-        self.assertEqual(
-            self.get_set(realm["zerver_stream"], "realm"), {realm["zerver_realm"][0]["id"]},
-        )
+        self.assertEqual(self.get_set(realm["zerver_stream"], "realm"), {realm["zerver_realm"][0]["id"]})
         self.assertEqual(self.get_set(realm["zerver_stream"], "deactivated"), {False})
 
         self.assertEqual(len(realm["zerver_defaultstream"]), 0)
@@ -654,9 +647,7 @@ class MatterMostImporter(ZulipTestCase):
             exported_stream_names,
             {"Gryffindor common room", "Gryffindor quidditch team", "Dumbledores army"},
         )
-        self.assertEqual(
-            self.get_set(realm["zerver_stream"], "realm"), {realm["zerver_realm"][0]["id"]},
-        )
+        self.assertEqual(self.get_set(realm["zerver_stream"], "realm"), {realm["zerver_realm"][0]["id"]})
         self.assertEqual(self.get_set(realm["zerver_stream"], "deactivated"), {False})
 
         self.assertEqual(len(realm["zerver_defaultstream"]), 0)

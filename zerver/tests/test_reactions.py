@@ -110,9 +110,7 @@ class ReactionEmojiTest(ZulipTestCase):
             "emoji_name": "zulip",
             "reaction_type": "zulip_extra_emoji",
         }
-        base_query = Reaction.objects.filter(
-            user_profile=sender, emoji_name=reaction_info["emoji_name"],
-        )
+        base_query = Reaction.objects.filter(user_profile=sender, emoji_name=reaction_info["emoji_name"])
 
         result = self.api_post(sender, "/api/v1/messages/1/reactions", reaction_info)
         self.assert_json_success(result)
@@ -403,9 +401,7 @@ class ReactionEventTest(ZulipTestCase):
 
         events: List[Mapping[str, Any]] = []
         with tornado_redirected_to_list(events):
-            result = self.api_post(
-                reaction_sender, f"/api/v1/messages/{pm_id}/reactions", reaction_info,
-            )
+            result = self.api_post(reaction_sender, f"/api/v1/messages/{pm_id}/reactions", reaction_info)
         self.assert_json_success(result)
         self.assertEqual(len(events), 1)
 

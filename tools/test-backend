@@ -227,11 +227,7 @@ def main() -> None:
         help="Continue past test failures to run all tests",
     )
     parser.add_argument(
-        "--coverage",
-        dest="coverage",
-        action="store_true",
-        default=False,
-        help="Compute test coverage.",
+        "--coverage", dest="coverage", action="store_true", default=False, help="Compute test coverage.",
     )
     parser.add_argument(
         "--verbose-coverage",

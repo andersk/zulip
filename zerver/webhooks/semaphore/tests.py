@@ -34,10 +34,7 @@ class SemaphoreHookTests(WebhookTestCase):
 * **Server**: lamancha-271
 """.strip()
         self.send_and_test_stream_message(
-            "deploy",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "deploy", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     # Tests For Semaphore 2.0

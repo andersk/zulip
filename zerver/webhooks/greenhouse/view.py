@@ -34,9 +34,7 @@ def dict_list_to_string(some_list: List[Any]) -> str:
 @api_key_only_webhook_view("Greenhouse")
 @has_request_variables
 def api_greenhouse_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    payload: Dict[str, Any] = REQ(argument_type="body"),
+    request: HttpRequest, user_profile: UserProfile, payload: Dict[str, Any] = REQ(argument_type="body"),
 ) -> HttpResponse:
     if payload["action"] == "ping":
         return json_success()

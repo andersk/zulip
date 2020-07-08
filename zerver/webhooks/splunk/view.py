@@ -21,9 +21,7 @@ Splunk alert from saved search:
 @api_key_only_webhook_view("Splunk")
 @has_request_variables
 def api_splunk_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    payload: Dict[str, Any] = REQ(argument_type="body"),
+    request: HttpRequest, user_profile: UserProfile, payload: Dict[str, Any] = REQ(argument_type="body"),
 ) -> HttpResponse:
 
     # use default values if expected data is not provided

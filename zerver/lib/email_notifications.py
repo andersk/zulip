@@ -99,9 +99,7 @@ def fix_emojis(content: str, base_url: str, emojiset: str) -> str:
         emoji_name = emoji_span_elem.get("title")
         alt_code = emoji_span_elem.text
         image_url = base_url + f"/static/generated/emoji/images-{emojiset}-64/{emoji_code}.png"
-        img_elem = lxml.html.fromstring(
-            f'<img alt="{alt_code}" src="{image_url}" title="{emoji_name}">',
-        )
+        img_elem = lxml.html.fromstring(f'<img alt="{alt_code}" src="{image_url}" title="{emoji_name}">')
         img_elem.set("style", "height: 20px;")
         img_elem.tail = emoji_span_elem.tail
         return img_elem

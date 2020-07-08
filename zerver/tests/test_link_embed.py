@@ -18,10 +18,7 @@ from zerver.worker.queue_processors import FetchLinksEmbedData
 
 TEST_CACHES = {
     "default": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache", "LOCATION": "default"},
-    "database": {
-        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
-        "LOCATION": "url-preview",
-    },
+    "database": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache", "LOCATION": "url-preview"},
     "in-memory": {
         "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
         "LOCATION": "url-preview",

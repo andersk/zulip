@@ -190,9 +190,7 @@ class ZulipTestCase(TestCase):
         return result
 
     @instrument_url
-    def client_patch_multipart(
-        self, url: str, info: Dict[str, Any] = {}, **kwargs: Any
-    ) -> HttpResponse:
+    def client_patch_multipart(self, url: str, info: Dict[str, Any] = {}, **kwargs: Any) -> HttpResponse:
         """
         Use this for patch requests that have file uploads or
         that need some sort of multi-part content.  In the future
@@ -482,9 +480,7 @@ class ZulipTestCase(TestCase):
             # This is a bit of a crude heuristic, but good enough for most tests.
             url_pattern = settings.EXTERNAL_HOST + r"(\S+)>"
         for message in reversed(outbox):
-            if any(
-                addr == email_address or addr.endswith(f" <{email_address}>") for addr in message.to
-            ):
+            if any(addr == email_address or addr.endswith(f" <{email_address}>") for addr in message.to):
                 match = re.search(url_pattern, message.body)
                 assert match is not None
                 [confirmation_url] = match.groups()

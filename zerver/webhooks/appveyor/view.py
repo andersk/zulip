@@ -19,9 +19,7 @@ APPVEYOR_MESSAGE_TEMPLATE = """
 @api_key_only_webhook_view("Appveyor")
 @has_request_variables
 def api_appveyor_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    payload: Dict[str, Any] = REQ(argument_type="body"),
+    request: HttpRequest, user_profile: UserProfile, payload: Dict[str, Any] = REQ(argument_type="body"),
 ) -> HttpResponse:
 
     body = get_body_for_http_request(payload)

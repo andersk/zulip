@@ -109,9 +109,7 @@ def deactivate_user_own_backend(request: HttpRequest, user_profile: UserProfile)
     return json_success()
 
 
-def deactivate_bot_backend(
-    request: HttpRequest, user_profile: UserProfile, bot_id: int,
-) -> HttpResponse:
+def deactivate_bot_backend(request: HttpRequest, user_profile: UserProfile, bot_id: int) -> HttpResponse:
     target = access_bot_by_id(user_profile, bot_id)
     return _deactivate_user_profile_backend(request, user_profile, target)
 
@@ -316,9 +314,7 @@ def patch_bot_backend(
 
 @require_member_or_admin
 @has_request_variables
-def regenerate_bot_api_key(
-    request: HttpRequest, user_profile: UserProfile, bot_id: int,
-) -> HttpResponse:
+def regenerate_bot_api_key(request: HttpRequest, user_profile: UserProfile, bot_id: int) -> HttpResponse:
     bot = access_bot_by_id(user_profile, bot_id)
 
     new_api_key = do_regenerate_api_key(bot, user_profile)

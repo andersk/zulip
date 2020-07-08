@@ -241,9 +241,7 @@ def check_dict(
         for k, sub_validator in required_keys:
             if k not in val:
                 raise ValidationError(
-                    _("{key_name} key is missing from {var_name}").format(
-                        key_name=k, var_name=var_name,
-                    ),
+                    _("{key_name} key is missing from {var_name}").format(key_name=k, var_name=var_name),
                 )
             vname = f'{var_name}["{k}"]'
             sub_validator(vname, val[k])
@@ -398,11 +396,7 @@ def check_widget_content(widget_content: object) -> Dict[str, Any]:
         if extra_data["type"] == "choices":
             check_choices = check_list(
                 check_dict(
-                    [
-                        ("short_name", check_string),
-                        ("long_name", check_string),
-                        ("reply", check_string),
-                    ],
+                    [("short_name", check_string), ("long_name", check_string), ("reply", check_string)],
                 ),
             )
 

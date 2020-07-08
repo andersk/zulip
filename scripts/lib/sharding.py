@@ -42,8 +42,7 @@ with open("/etc/zulip/nginx_sharding.conf.tmp", "w") as nginx_sharding_conf_f, o
     nginx_sharding_conf_f.write("set $tornado_server http://tornado9800;\n")
     shard_map: Dict[str, int] = {}
     external_host = subprocess.check_output(
-        [os.path.join(BASE_DIR, "scripts/get-django-setting"), "EXTERNAL_HOST"],
-        universal_newlines=True,
+        [os.path.join(BASE_DIR, "scripts/get-django-setting"), "EXTERNAL_HOST"], universal_newlines=True,
     ).strip()
     for port in config_file["tornado_sharding"]:
         shards = config_file["tornado_sharding"][port].strip().split(" ")

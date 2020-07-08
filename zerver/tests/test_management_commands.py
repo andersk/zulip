@@ -131,9 +131,7 @@ class TestZulipBaseCommand(ZulipTestCase):
             [self.example_user("hamlet"), self.example_user("iago")],
         )
         user_emails = ",".join(u.delivery_email for u in expected_user_profiles)
-        user_profiles = self.get_users_sorted(
-            dict(users=user_emails, all_users=False), self.zulip_realm,
-        )
+        user_profiles = self.get_users_sorted(dict(users=user_emails, all_users=False), self.zulip_realm)
         self.assertEqual(user_profiles, expected_user_profiles)
         error_message = "You can't use both -u/--users and -a/--all-users."
         with self.assertRaisesRegex(CommandError, error_message):

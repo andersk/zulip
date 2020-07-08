@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="realm",
-            name="avatar_changes_disabled",
-            field=models.BooleanField(default=False),
+            model_name="realm", name="avatar_changes_disabled", field=models.BooleanField(default=False),
         ),
     ]

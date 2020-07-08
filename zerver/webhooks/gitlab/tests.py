@@ -219,9 +219,7 @@ class GitlabHookTests(WebhookTestCase):
         expected_topic = "my-awesome-project / Issue #1 Issue title_new"
         expected_message = "Tomasz Kolek reopened [Issue #1](https://gitlab.com/tomaszkolek0/my-awesome-project/issues/1)."
 
-        self.send_and_test_stream_message(
-            "issue_hook__issue_reopened", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("issue_hook__issue_reopened", expected_topic, expected_message)
 
     def test_reopen_confidential_issue_event_message(self) -> None:
         expected_subject = "testing / Issue #1 Testing Test"

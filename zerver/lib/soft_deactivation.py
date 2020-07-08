@@ -176,10 +176,7 @@ def add_missing_messages(user_profile: UserProfile) -> None:
         stream_subscription_logs = all_stream_subscription_logs[sub["recipient__type_id"]]
         if stream_subscription_logs[-1].event_type == RealmAuditLog.SUBSCRIPTION_DEACTIVATED:
             assert stream_subscription_logs[-1].event_last_message_id is not None
-            if (
-                stream_subscription_logs[-1].event_last_message_id
-                <= user_profile.last_active_message_id
-            ):
+            if stream_subscription_logs[-1].event_last_message_id <= user_profile.last_active_message_id:
                 # We are going to short circuit this iteration as its no use
                 # iterating since user unsubscribed before soft-deactivation
                 continue

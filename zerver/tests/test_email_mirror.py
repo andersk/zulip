@@ -1210,9 +1210,7 @@ class TestEmailMirrorTornadoView(ZulipTestCase):
         msg_base64 = base64.b64encode(mail.encode()).decode()
 
         def check_queue_json_publish(
-            queue_name: str,
-            event: Mapping[str, Any],
-            processor: Optional[Callable[[Any], None]] = None,
+            queue_name: str, event: Mapping[str, Any], processor: Optional[Callable[[Any], None]] = None,
         ) -> None:
             self.assertEqual(queue_name, "email_mirror")
             self.assertEqual(event, {"rcpt_to": to_address, "msg_base64": msg_base64})

@@ -11,10 +11,7 @@ class AppFollowHookTests(WebhookTestCase):
         expected_message = """Webhook integration was successful.
 Test User / Acme (Google Play)"""
         self.send_and_test_stream_message(
-            "sample",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "sample", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_reviews(self) -> None:
@@ -27,10 +24,7 @@ Acme enables me to manage the flow of information quite well. I only wish I coul
 *by* **Mr RESOLUTIONARY** *for v3.9*
 [Permalink](http://appfollow.io/permalink) · [Add tag](http://watch.appfollow.io/add_tag)"""
         self.send_and_test_stream_message(
-            "review",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "review", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_reviews_with_topic(self) -> None:
@@ -48,10 +42,7 @@ Acme enables me to manage the flow of information quite well. I only wish I coul
 *by* **Mr RESOLUTIONARY** *for v3.9*
 [Permalink](http://appfollow.io/permalink) · [Add tag](http://watch.appfollow.io/add_tag)"""
         self.send_and_test_stream_message(
-            "review",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "review", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
         self.URL_TEMPLATE = original_url_template
 

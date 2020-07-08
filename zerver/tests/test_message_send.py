@@ -742,9 +742,7 @@ class MessagePOSTTest(ZulipTestCase):
         self.assert_json_success(result)
 
         sent_message = self.get_last_message()
-        self.assertEqual(
-            sent_message.content, "A" * (MAX_MESSAGE_LENGTH - 20) + "\n[message truncated]",
-        )
+        self.assertEqual(sent_message.content, "A" * (MAX_MESSAGE_LENGTH - 20) + "\n[message truncated]")
 
     def test_long_topic(self) -> None:
         """
@@ -1241,9 +1239,7 @@ class StreamMessagesTest(ZulipTestCase):
             old_subscriber_messages.append(message_stream_count(subscriber))
 
         non_subscribers = [
-            user_profile
-            for user_profile in UserProfile.objects.all()
-            if user_profile not in subscribers
+            user_profile for user_profile in UserProfile.objects.all() if user_profile not in subscribers
         ]
         old_non_subscriber_messages = []
         for non_subscriber in non_subscribers:
@@ -1382,8 +1378,7 @@ class StreamMessagesTest(ZulipTestCase):
         message = most_recent_message(receiving_user_profile)
         self.assertEqual(
             str(message),
-            "<Message: Denmark / my topic / "
-            "<UserProfile: {} {}>>".format(sender.email, sender.realm),
+            "<Message: Denmark / my topic / " "<UserProfile: {} {}>>".format(sender.email, sender.realm),
         )
 
     def test_message_mentions(self) -> None:
@@ -1391,9 +1386,7 @@ class StreamMessagesTest(ZulipTestCase):
         self.subscribe(user_profile, "Denmark")
         self.send_stream_message(self.example_user("hamlet"), "Denmark", content="test @**Iago** rules")
         message = most_recent_message(user_profile)
-        assert UserMessage.objects.get(
-            user_profile=user_profile, message=message,
-        ).flags.mentioned.is_set
+        assert UserMessage.objects.get(user_profile=user_profile, message=message).flags.mentioned.is_set
 
     def test_is_private_flag(self) -> None:
         user_profile = self.example_user("iago")

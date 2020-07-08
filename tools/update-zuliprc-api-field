@@ -20,11 +20,7 @@ from scripts.lib.zulip_tools import is_vagrant_env_host
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument(
-    "path",
-    metavar="FILE",
-    type=str,
-    nargs="+",
-    help="config file of dummy users in development server",
+    "path", metavar="FILE", type=str, nargs="+", help="config file of dummy users in development server",
 )
 args = parser.parse_args()
 

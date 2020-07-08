@@ -921,10 +921,7 @@ if DEVELOPMENT:
 
 POPULATE_PROFILE_VIA_LDAP = bool(AUTH_LDAP_SERVER_URI)
 
-if (
-    POPULATE_PROFILE_VIA_LDAP
-    and "zproject.backends.ZulipLDAPAuthBackend" not in AUTHENTICATION_BACKENDS
-):
+if POPULATE_PROFILE_VIA_LDAP and "zproject.backends.ZulipLDAPAuthBackend" not in AUTHENTICATION_BACKENDS:
     AUTHENTICATION_BACKENDS += ("zproject.backends.ZulipLDAPUserPopulator",)
 else:
     POPULATE_PROFILE_VIA_LDAP = (

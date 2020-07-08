@@ -27,8 +27,7 @@ class MITNameTest(ZulipTestCase):
             ],
         ):
             self.assertEqual(
-                compute_mit_user_fullname(self.mit_email("starnine")),
-                "Athena Consulting Exchange User",
+                compute_mit_user_fullname(self.mit_email("starnine")), "Athena Consulting Exchange User",
             )
         with mock.patch(
             "DNS.dnslookup",

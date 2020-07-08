@@ -326,10 +326,7 @@ class FixUnreadTests(ZulipTestCase):
             recipient = stream.recipient
 
             add_topic_mute(
-                user_profile=user,
-                stream_id=stream.id,
-                recipient_id=recipient.id,
-                topic_name=topic_name,
+                user_profile=user, stream_id=stream.id, recipient_id=recipient.id, topic_name=topic_name,
             )
 
         def force_unsubscribe(stream_name: str) -> None:
@@ -787,9 +784,7 @@ class GetUnreadMsgsTest(ZulipTestCase):
         self.assertEqual(result["mentions"], [])
 
         # Test with a muted topic
-        um = UserMessage.objects.get(
-            user_profile_id=user_profile.id, message_id=muted_topic_message_id,
-        )
+        um = UserMessage.objects.get(user_profile_id=user_profile.id, message_id=muted_topic_message_id)
         um.flags = UserMessage.flags.mentioned
         um.save()
         result = get_unread_data()
@@ -819,8 +814,7 @@ class MessageAccessTests(ZulipTestCase):
 
         self.login("hamlet")
         result = self.client_post(
-            "/json/messages/flags",
-            {"messages": ujson.dumps([message]), "op": "add", "flag": "invalid"},
+            "/json/messages/flags", {"messages": ujson.dumps([message]), "op": "add", "flag": "invalid"},
         )
         self.assert_json_error(result, "Invalid flag: 'invalid'")
 
@@ -832,11 +826,7 @@ class MessageAccessTests(ZulipTestCase):
 
         result = self.client_post(
             "/json/messages/flags",
-            {
-                "messages": ujson.dumps([message]),
-                "op": "add",
-                "flag": "active_mobile_push_notification",
-            },
+            {"messages": ujson.dumps([message]), "op": "add", "flag": "active_mobile_push_notification"},
         )
         self.assert_json_error(result, "Invalid flag: 'active_mobile_push_notification'")
 
@@ -860,9 +850,7 @@ class MessageAccessTests(ZulipTestCase):
         """
         self.login("hamlet")
         message_ids = [
-            self.send_personal_message(
-                self.example_user("hamlet"), self.example_user("hamlet"), "test",
-            ),
+            self.send_personal_message(self.example_user("hamlet"), self.example_user("hamlet"), "test"),
         ]
 
         # Star a message.

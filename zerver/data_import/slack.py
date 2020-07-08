@@ -322,9 +322,7 @@ def process_slack_custom_fields(
     slack_custom_fields = ["phone", "skype"]
     for field in slack_custom_fields:
         if field in user["profile"]:
-            slack_user_id_to_custom_profile_fields[user["id"]][field] = {
-                "value": user["profile"][field],
-            }
+            slack_user_id_to_custom_profile_fields[user["id"]][field] = {"value": user["profile"][field]}
 
 
 def build_customprofilefields_values(
@@ -1003,9 +1001,7 @@ def process_message_files(
             has_link = True
             has_image = True if "image" in fileinfo["mimetype"] else False
 
-            file_user = [
-                iterate_user for iterate_user in users if message["user"] == iterate_user["id"]
-            ]
+            file_user = [iterate_user for iterate_user in users if message["user"] == iterate_user["id"]]
             file_user_email = get_user_email(file_user[0], domain_name)
 
             s3_path, content_for_link = get_attachment_path_and_content(fileinfo, realm_id)

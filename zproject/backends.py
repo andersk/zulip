@@ -1227,8 +1227,7 @@ def social_associate_user_helper(
             # TODO: Provide a nice error message screen to the user
             # for this case, rather than just logging a warning.
             backend.logger.warning(
-                "Social auth (%s) failed because user has no verified emails",
-                backend.auth_backend_name,
+                "Social auth (%s) failed because user has no verified emails", backend.auth_backend_name,
             )
             return_data["email_not_verified"] = True
             return None
@@ -1874,9 +1873,7 @@ class SAMLAuthBackend(SocialAuthMixin, SAMLAuth):
             # If the above raise KeyError, it means invalid or no idp was specified,
             # we should log that and redirect to the login page.
             self.logger.info("/login/saml/ : Bad idp param: KeyError: %s.", str(e))
-            return reverse(
-                "zerver.views.auth.login_page", kwargs={"template_name": "zerver/login.html"},
-            )
+            return reverse("zerver.views.auth.login_page", kwargs={"template_name": "zerver/login.html"})
 
         # This where we change things.  We need to pass some params
         # (`mobile_flow_otp`, `next`, etc.) through RelayState, which

@@ -666,9 +666,7 @@ class FetchLinksEmbedData(QueueProcessingWorker):
             realm = Realm.objects.get(id=event["message_realm_id"])
 
             # If rendering fails, the called code will raise a JsonableError.
-            rendered_content = render_incoming_message(
-                message, message.content, message_user_ids, realm,
-            )
+            rendered_content = render_incoming_message(message, message.content, message_user_ids, realm)
             do_update_embedded_data(message.sender, message, message.content, rendered_content)
 
 
@@ -769,9 +767,7 @@ class DeferredWorker(QueueProcessingWorker):
                     delete_after_upload=True,
                 )
             except Exception:
-                export_event.extra_data = ujson.dumps(
-                    dict(failed_timestamp=timezone_now().timestamp()),
-                )
+                export_event.extra_data = ujson.dumps(dict(failed_timestamp=timezone_now().timestamp()))
                 export_event.save(update_fields=["extra_data"])
                 logging.error(
                     "Data export for %s failed after %s",

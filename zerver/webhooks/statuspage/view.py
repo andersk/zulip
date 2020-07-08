@@ -50,9 +50,7 @@ def get_component_topic(payload: Dict[str, Any]) -> str:
 @api_key_only_webhook_view("Statuspage")
 @has_request_variables
 def api_statuspage_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    payload: Dict[str, Any] = REQ(argument_type="body"),
+    request: HttpRequest, user_profile: UserProfile, payload: Dict[str, Any] = REQ(argument_type="body"),
 ) -> HttpResponse:
 
     status = payload["page"]["status_indicator"]

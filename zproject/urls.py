@@ -237,9 +237,7 @@ v1_api_and_json_patterns = [
             "POST": "zerver.views.invite.invite_users_backend",
         },
     ),
-    path(
-        "invites/<int:prereg_id>", rest_dispatch, {"DELETE": "zerver.views.invite.revoke_user_invite"},
-    ),
+    path("invites/<int:prereg_id>", rest_dispatch, {"DELETE": "zerver.views.invite.revoke_user_invite"}),
     path(
         "invites/<int:prereg_id>/resend",
         rest_dispatch,
@@ -260,13 +258,9 @@ v1_api_and_json_patterns = [
     # mark messages as read (in bulk)
     path("mark_all_as_read", rest_dispatch, {"POST": "zerver.views.message_flags.mark_all_as_read"}),
     path(
-        "mark_stream_as_read",
-        rest_dispatch,
-        {"POST": "zerver.views.message_flags.mark_stream_as_read"},
+        "mark_stream_as_read", rest_dispatch, {"POST": "zerver.views.message_flags.mark_stream_as_read"},
     ),
-    path(
-        "mark_topic_as_read", rest_dispatch, {"POST": "zerver.views.message_flags.mark_topic_as_read"},
-    ),
+    path("mark_topic_as_read", rest_dispatch, {"POST": "zerver.views.message_flags.mark_topic_as_read"}),
     path("zcommand", rest_dispatch, {"POST": "zerver.views.message_send.zcommand_backend"}),
     # messages -> zerver.views.message*
     # GET returns messages, possibly filtered, POST sends a message
@@ -287,9 +281,7 @@ v1_api_and_json_patterns = [
             "DELETE": "zerver.views.message_edit.delete_message_backend",
         },
     ),
-    path(
-        "messages/render", rest_dispatch, {"POST": "zerver.views.message_send.render_message_backend"},
-    ),
+    path("messages/render", rest_dispatch, {"POST": "zerver.views.message_send.render_message_backend"}),
     path("messages/flags", rest_dispatch, {"POST": "zerver.views.message_flags.update_message_flags"}),
     path(
         "messages/<int:message_id>/history",
@@ -363,9 +355,7 @@ v1_api_and_json_patterns = [
         rest_dispatch,
         {"POST": "zerver.views.presence.update_active_status_backend"},
     ),
-    path(
-        "users/me/status", rest_dispatch, {"POST": "zerver.views.presence.update_user_status_backend"},
-    ),
+    path("users/me/status", rest_dispatch, {"POST": "zerver.views.presence.update_user_status_backend"}),
     # Endpoint used by mobile devices to register their push
     # notification credentials
     path(
@@ -561,10 +551,7 @@ v1_api_and_json_patterns = [
     path(
         "events",
         rest_dispatch,
-        {
-            "GET": "zerver.tornado.views.get_events",
-            "DELETE": "zerver.tornado.views.cleanup_event_queue",
-        },
+        {"GET": "zerver.tornado.views.get_events", "DELETE": "zerver.tornado.views.cleanup_event_queue"},
     ),
     # report -> zerver.views.report
     #
@@ -974,9 +961,7 @@ v1_api_mobile_patterns = [
     # This json format view used by the mobile apps accepts a username
     # password/pair and returns an API key.
     path(
-        "fetch_api_key",
-        zerver.views.auth.api_fetch_api_key,
-        name="zerver.views.auth.api_fetch_api_key",
+        "fetch_api_key", zerver.views.auth.api_fetch_api_key, name="zerver.views.auth.api_fetch_api_key",
     ),
     # This is for the signing in through the devAuthBackEnd on mobile apps.
     path(

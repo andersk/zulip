@@ -121,9 +121,7 @@ class TestIntegrationsDevPanel(ZulipTestCase):
         self.assertEqual(ujson.loads(response.content), expected_response)
 
     @patch("zerver.views.development.integrations.os.path.exists")
-    def test_get_fixtures_for_integration_without_fixtures(
-        self, os_path_exists_mock: MagicMock,
-    ) -> None:
+    def test_get_fixtures_for_integration_without_fixtures(self, os_path_exists_mock: MagicMock) -> None:
         os_path_exists_mock.return_value = False
         target_url = "/devtools/integrations/airbrake/fixtures"
         response = self.client_get(target_url)

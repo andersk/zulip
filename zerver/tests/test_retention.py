@@ -57,8 +57,7 @@ class RetentionTestingBase(ZulipTestCase):
         )
 
         self.assertEqual(
-            set(ArchivedUserMessage.objects.values_list("id", flat=True)),
-            set(expected_usermessage_ids),
+            set(ArchivedUserMessage.objects.values_list("id", flat=True)), set(expected_usermessage_ids),
         )
 
         # Archived Messages and UserMessages should have been removed from the normal tables:
@@ -76,9 +75,7 @@ class RetentionTestingBase(ZulipTestCase):
 
         self.assertEqual(
             set(
-                UserMessage.objects.filter(id__in=expected_usermessage_ids).values_list(
-                    "id", flat=True,
-                ),
+                UserMessage.objects.filter(id__in=expected_usermessage_ids).values_list("id", flat=True),
             ),
             set(expected_usermessage_ids),
         )
@@ -89,8 +86,7 @@ class RetentionTestingBase(ZulipTestCase):
         )
 
         self.assertEqual(
-            set(ArchivedUserMessage.objects.values_list("id", flat=True)),
-            set(expected_usermessage_ids),
+            set(ArchivedUserMessage.objects.values_list("id", flat=True)), set(expected_usermessage_ids),
         )
 
 
@@ -317,9 +313,7 @@ class TestArchiveMessagesGeneral(ArchiveMessagesTestingBase):
                 set(expired_msg_ids),
             )
             self.assertEqual(
-                set(
-                    UserMessage.objects.filter(id__in=expired_usermsg_ids).values_list("id", flat=True),
-                ),
+                set(UserMessage.objects.filter(id__in=expired_usermsg_ids).values_list("id", flat=True)),
                 set(expired_usermsg_ids),
             )
 
@@ -768,9 +762,7 @@ class MoveMessageToArchiveWithSubMessages(MoveMessageToArchiveBase):
             content='{"name": "john", "salary": 30}',
         )
 
-        submessage_ids = list(
-            SubMessage.objects.filter(message_id=msg_id).values_list("id", flat=True),
-        )
+        submessage_ids = list(SubMessage.objects.filter(message_id=msg_id).values_list("id", flat=True))
 
         self.assertEqual(SubMessage.objects.filter(id__in=submessage_ids).count(), 2)
         move_messages_to_archive(message_ids=[msg_id])

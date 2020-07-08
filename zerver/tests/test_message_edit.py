@@ -242,10 +242,7 @@ class EditMessageTest(ZulipTestCase):
 
         # Single-line edit
         msg_id_1 = self.send_stream_message(
-            self.example_user("hamlet"),
-            "Scotland",
-            topic_name="editing",
-            content="content before edit",
+            self.example_user("hamlet"), "Scotland", topic_name="editing", content="content before edit",
         )
         new_content_1 = "content after edit"
         result_1 = self.client_patch(

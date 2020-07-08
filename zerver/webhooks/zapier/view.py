@@ -13,9 +13,7 @@ from zerver.models import UserProfile
 @api_key_only_webhook_view("Zapier", notify_bot_owner_on_invalid_json=False)
 @has_request_variables
 def api_zapier_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    payload: Dict[str, Any] = REQ(argument_type="body"),
+    request: HttpRequest, user_profile: UserProfile, payload: Dict[str, Any] = REQ(argument_type="body"),
 ) -> HttpResponse:
     if payload.get("type") == "auth":
         # The bot's details are used by our Zapier app to format a connection

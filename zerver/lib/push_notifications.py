@@ -304,9 +304,7 @@ def send_android_push_notification(
         # See https://firebase.google.com/docs/cloud-messaging/http-server-ref .
         # Two kwargs `retries` and `session` get eaten by `json_request`;
         # the rest pass through to the GCM server.
-        res = gcm_client.json_request(
-            registration_ids=reg_ids, priority=priority, data=data, retries=10,
-        )
+        res = gcm_client.json_request(registration_ids=reg_ids, priority=priority, data=data, retries=10)
     except OSError:
         logger.warning("Error while pushing to GCM", exc_info=True)
         return
@@ -750,9 +748,7 @@ def get_remove_payload_gcm(
 
 def get_remove_payload_apns(user_profile: UserProfile, message_ids: List[int]) -> Dict[str, Any]:
     zulip_data = get_base_payload(user_profile)
-    zulip_data.update(
-        {"event": "remove", "zulip_message_ids": ",".join(str(id) for id in message_ids)},
-    )
+    zulip_data.update({"event": "remove", "zulip_message_ids": ",".join(str(id) for id in message_ids)})
     apns_data = {
         "badge": get_apns_badge_count(user_profile, message_ids),
         "custom": {"zulip": zulip_data},

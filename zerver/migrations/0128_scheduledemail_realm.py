@@ -6,9 +6,7 @@ from django.db.backends.postgresql.schema import DatabaseSchemaEditor
 from django.db.migrations.state import StateApps
 
 
-def set_realm_for_existing_scheduledemails(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def set_realm_for_existing_scheduledemails(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     scheduledemail_model = apps.get_model("zerver", "ScheduledEmail")
     preregistrationuser_model = apps.get_model("zerver", "PreregistrationUser")
     for scheduledemail in scheduledemail_model.objects.all():

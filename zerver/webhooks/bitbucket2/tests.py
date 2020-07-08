@@ -102,9 +102,7 @@ class Bitbucket2HookTests(WebhookTestCase):
 
     def test_bitbucket2_on_commit_status_changed_event(self) -> None:
         expected_message = "[System mybuildtool](https://my-build-tool.com/builds/MY-PROJECT/BUILD-777) changed status of [9fec847](https://bitbucket.org/kolaszek/repository-name/commits/9fec847784abb10b2fa567ee63b85bd238955d0e) to SUCCESSFUL."
-        self.send_and_test_stream_message(
-            "commit_status_changed", self.EXPECTED_TOPIC, expected_message,
-        )
+        self.send_and_test_stream_message("commit_status_changed", self.EXPECTED_TOPIC, expected_message)
 
     def test_bitbucket2_on_issue_created_event(self) -> None:
         expected_message = "kolaszek created [Issue #1](https://bitbucket.org/kolaszek/repository-name/issues/2/bug) (assigned to kolaszek):\n\n~~~ quote\nSuch a bug\n~~~"
@@ -144,10 +142,7 @@ class Bitbucket2HookTests(WebhookTestCase):
             "HTTP_X_EVENT_KEY": "pullrequest:created",
         }
         self.send_and_test_stream_message(
-            "pull_request_created_or_updated",
-            self.EXPECTED_TOPIC_PR_EVENTS,
-            expected_message,
-            **kwargs,
+            "pull_request_created_or_updated", self.EXPECTED_TOPIC_PR_EVENTS, expected_message, **kwargs,
         )
 
     def test_bitbucket2_on_pull_request_created_without_reviewer_username_event(self) -> None:
@@ -179,10 +174,7 @@ class Bitbucket2HookTests(WebhookTestCase):
             "HTTP_X_EVENT_KEY": "pullrequest:updated",
         }
         self.send_and_test_stream_message(
-            "pull_request_created_or_updated",
-            self.EXPECTED_TOPIC_PR_EVENTS,
-            expected_message,
-            **kwargs,
+            "pull_request_created_or_updated", self.EXPECTED_TOPIC_PR_EVENTS, expected_message, **kwargs,
         )
 
     def test_bitbucket2_on_pull_request_approved_event(self) -> None:

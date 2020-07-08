@@ -457,11 +457,7 @@ def do_gc_event_queues(
 
     for id in to_remove:
         for cb in gc_hooks:
-            cb(
-                clients[id].user_profile_id,
-                clients[id],
-                clients[id].user_profile_id not in user_clients,
-            )
+            cb(clients[id].user_profile_id, clients[id], clients[id].user_profile_id not in user_clients)
         del clients[id]
 
 
@@ -638,10 +634,7 @@ def fetch_events(query: Mapping[str, Any]) -> Dict[str, Any]:
         # have a pre-existing queue, so we wait for new events.
         if was_connected:
             logging.info(
-                "Disconnected handler for queue %s (%s/%s)",
-                queue_id,
-                user_profile_id,
-                client_type_name,
+                "Disconnected handler for queue %s (%s/%s)", queue_id, user_profile_id, client_type_name,
             )
     except JsonableError as e:
         return dict(type="error", exception=e)
@@ -927,9 +920,7 @@ def get_client_info_for_message_event(
     return send_to_clients
 
 
-def process_message_event(
-    event_template: Mapping[str, Any], users: Iterable[Mapping[str, Any]],
-) -> None:
+def process_message_event(event_template: Mapping[str, Any], users: Iterable[Mapping[str, Any]]) -> None:
     """See
     https://zulip.readthedocs.io/en/latest/subsystems/sending-messages.html
     for high-level documentation on this subsystem.

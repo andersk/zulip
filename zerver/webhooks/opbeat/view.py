@@ -78,9 +78,7 @@ def format_object(obj: Dict[str, Any], subject_type: str, message: str) -> str:
 @api_key_only_webhook_view("Opbeat")
 @has_request_variables
 def api_opbeat_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    payload: Dict[str, Any] = REQ(argument_type="body"),
+    request: HttpRequest, user_profile: UserProfile, payload: Dict[str, Any] = REQ(argument_type="body"),
 ) -> HttpResponse:
     """
     This uses the subject name from opbeat to make the subject,

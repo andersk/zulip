@@ -104,8 +104,6 @@ def email_on_new_login(sender: Any, user: UserProfile, request: Any, **kwargs: A
 
 
 @receiver(user_logged_out)
-def clear_zoom_token_on_logout(
-    sender: object, *, user: Optional[UserProfile], **kwargs: object
-) -> None:
+def clear_zoom_token_on_logout(sender: object, *, user: Optional[UserProfile], **kwargs: object) -> None:
     if user is not None and user.zoom_token is not None:
         do_set_zoom_token(user, None)

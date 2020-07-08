@@ -31,8 +31,7 @@ class Migration(migrations.Migration):
                 validators=[
                     django.core.validators.MinLengthValidator(1),
                     django.core.validators.RegexValidator(
-                        message="Invalid characters in emoji name",
-                        regex="^[0-9a-z.\\-_]+(?<![.\\-_])$",
+                        message="Invalid characters in emoji name", regex="^[0-9a-z.\\-_]+(?<![.\\-_])$",
                     ),
                 ],
             ),

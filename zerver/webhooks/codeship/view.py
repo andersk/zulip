@@ -23,9 +23,7 @@ CODESHIP_STATUS_MAPPER = {
 @api_key_only_webhook_view("Codeship")
 @has_request_variables
 def api_codeship_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    payload: Dict[str, Any] = REQ(argument_type="body"),
+    request: HttpRequest, user_profile: UserProfile, payload: Dict[str, Any] = REQ(argument_type="body"),
 ) -> HttpResponse:
     payload = payload["build"]
     subject = get_subject_for_http_request(payload)

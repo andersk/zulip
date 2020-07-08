@@ -156,9 +156,7 @@ class DecoratorTestCase(ZulipTestCase):
             return [int(elem) for elem in lst]
 
         @has_request_variables
-        def get_total(
-            request: HttpRequest, numbers: Iterable[int] = REQ(converter=my_converter),
-        ) -> int:
+        def get_total(request: HttpRequest, numbers: Iterable[int] = REQ(converter=my_converter)) -> int:
             return sum(numbers)
 
         class Request:
@@ -366,9 +364,7 @@ body:
             )
 
         # Test when an unexpected webhook event occurs
-        with mock.patch(
-            "zerver.decorator.webhook_unexpected_events_logger.exception",
-        ) as mock_exception:
+        with mock.patch("zerver.decorator.webhook_unexpected_events_logger.exception") as mock_exception:
             exception_msg = "The 'test_event' event isn't currently supported by the helloworld webhook"
             with self.assertRaisesRegex(UnexpectedWebhookEventType, exception_msg):
                 request.body = "invalidjson"
@@ -559,9 +555,7 @@ body:
         request.POST["payload"] = "{}"
         request.content_type = "text/plain"
 
-        with mock.patch(
-            "zerver.decorator.webhook_unexpected_events_logger.exception",
-        ) as mock_exception:
+        with mock.patch("zerver.decorator.webhook_unexpected_events_logger.exception") as mock_exception:
             exception_msg = "The 'test_event' event isn't currently supported by the helloworld webhook"
             with self.assertRaisesRegex(UnexpectedWebhookEventType, exception_msg):
                 my_webhook_raises_exception(request)
@@ -1850,18 +1844,11 @@ class CacheTestCase(ZulipTestCase):
         )
 
         work_log, result_log = test_greetings("goodbye")
-        self.assertEqual(
-            work_log, ["goodbye alice smith", "goodbye bob barker", "goodbye cal johnson"],
-        )
+        self.assertEqual(work_log, ["goodbye alice smith", "goodbye bob barker", "goodbye cal johnson"])
 
         self.assertEqual(
             result_log,
-            [
-                "goodbye alice smith",
-                "goodbye bob barker",
-                "goodbye alice smith",
-                "goodbye cal johnson",
-            ],
+            ["goodbye alice smith", "goodbye bob barker", "goodbye alice smith", "goodbye cal johnson"],
         )
 
 
@@ -1869,9 +1856,7 @@ class TestUserAgentParsing(ZulipTestCase):
     def test_user_agent_parsing(self) -> None:
         """Test for our user agent parsing logic, using a large data set."""
         user_agents_parsed: Dict[str, int] = defaultdict(int)
-        user_agents_path = os.path.join(
-            settings.DEPLOY_ROOT, "zerver/tests/fixtures/user_agents_unique",
-        )
+        user_agents_path = os.path.join(settings.DEPLOY_ROOT, "zerver/tests/fixtures/user_agents_unique")
         for line in open(user_agents_path).readlines():
             line = line.strip()
             match = re.match('^(?P<count>[0-9]+) "(?P<user_agent>.*)"$', line)

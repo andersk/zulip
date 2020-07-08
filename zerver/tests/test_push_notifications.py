@@ -1175,9 +1175,7 @@ class TestAPNs(PushNotificationTest):
             mock_logging.warning.assert_not_called()
             for device in self.devices():
                 mock_logging.info.assert_any_call(
-                    "APNs: Success sending for user %d to device %s",
-                    self.user_profile.id,
-                    device.token,
+                    "APNs: Success sending for user %d to device %s", self.user_profile.id, device.token,
                 )
 
     def test_http_retry(self) -> None:
@@ -1199,9 +1197,7 @@ class TestAPNs(PushNotificationTest):
             )
             for device in self.devices():
                 mock_logging.info.assert_any_call(
-                    "APNs: Success sending for user %d to device %s",
-                    self.user_profile.id,
-                    device.token,
+                    "APNs: Success sending for user %d to device %s", self.user_profile.id, device.token,
                 )
 
     def test_http_retry_pipefail(self) -> None:
@@ -1221,9 +1217,7 @@ class TestAPNs(PushNotificationTest):
             )
             for device in self.devices():
                 mock_logging.info.assert_any_call(
-                    "APNs: Success sending for user %d to device %s",
-                    self.user_profile.id,
-                    device.token,
+                    "APNs: Success sending for user %d to device %s", self.user_profile.id, device.token,
                 )
 
     def test_http_retry_eventually_fails(self) -> None:
@@ -1252,11 +1246,7 @@ class TestAPNs(PushNotificationTest):
             self.assertEqual(mock_logging.info.call_count, 1)
 
     def test_modernize_apns_payload(self) -> None:
-        payload = {
-            "alert": "Message from Hamlet",
-            "badge": 0,
-            "custom": {"zulip": {"message_ids": [3]}},
-        }
+        payload = {"alert": "Message from Hamlet", "badge": 0, "custom": {"zulip": {"message_ids": [3]}}}
         self.assertEqual(
             modernize_apns_payload({"alert": "Message from Hamlet", "message_ids": [3], "badge": 0}),
             payload,
@@ -1268,8 +1258,7 @@ class TestAPNs(PushNotificationTest):
         user_profile = self.example_user("othello")
         # Test APNs badge count for personal messages.
         message_ids = [
-            self.send_personal_message(self.sender, user_profile, "Content of message")
-            for i in range(3)
+            self.send_personal_message(self.sender, user_profile, "Content of message") for i in range(3)
         ]
         self.assertEqual(get_apns_badge_count(user_profile), 3)
         # Similarly, test APNs badge count for stream mention.
@@ -1664,8 +1653,7 @@ class TestSendToPushBouncer(ZulipTestCase):
                 send_to_push_bouncer("register", "register", {"msg": "true"})
         self.assertEqual(
             str(exc.exception),
-            "Push notifications bouncer error: "
-            "Zulip server auth failure: testRole is not registered",
+            "Push notifications bouncer error: " "Zulip server auth failure: testRole is not registered",
         )
 
     @mock.patch("requests.request", return_value=Result(status=400, content="/"))

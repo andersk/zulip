@@ -311,9 +311,7 @@ class NarrowBuilderTest(ZulipTestCase):
         )
 
     def test_add_term_using_pm_with_operator_more_than_one_user_as_operand(self) -> None:
-        two_others = ",".join(
-            [self.example_user("cordelia").email, self.example_user("othello").email],
-        )
+        two_others = ",".join([self.example_user("cordelia").email, self.example_user("othello").email])
         term = dict(operator="pm-with", operand=two_others)
         self._do_add_term_test(term, "WHERE recipient_id = %(recipient_id_1)s")
 
@@ -330,9 +328,7 @@ class NarrowBuilderTest(ZulipTestCase):
         )
 
     def test_add_term_using_pm_with_operator_more_than_one_user_as_operand_and_negated(self) -> None:
-        two_others = ",".join(
-            [self.example_user("cordelia").email, self.example_user("othello").email],
-        )
+        two_others = ",".join([self.example_user("cordelia").email, self.example_user("othello").email])
         term = dict(operator="pm-with", operand=two_others, negated=True)
         self._do_add_term_test(term, "WHERE recipient_id != %(recipient_id_1)s")
 
@@ -1576,10 +1572,7 @@ class GetOldMessagesTest(ZulipTestCase):
         ]
 
         req = dict(
-            narrow=ujson.dumps(narrow),
-            anchor=LARGER_THAN_MAX_MESSAGE_ID,
-            num_before=100,
-            num_after=100,
+            narrow=ujson.dumps(narrow), anchor=LARGER_THAN_MAX_MESSAGE_ID, num_before=100, num_after=100,
         )
 
         payload = self.client_get("/json/messages", req)
@@ -2607,9 +2600,7 @@ class GetOldMessagesTest(ZulipTestCase):
 
     def test_bad_narrow_pm_with_id_list(self) -> None:
         self.login("hamlet")
-        self.exercise_bad_narrow_operand(
-            "pm-with", [-24], "Bad value for 'narrow': [[\"pm-with\",-24]]",
-        )
+        self.exercise_bad_narrow_operand("pm-with", [-24], "Bad value for 'narrow': [[\"pm-with\",-24]]")
 
     def test_message_without_rendered_content(self) -> None:
         """Older messages may not have rendered_content in the database"""
@@ -2617,9 +2608,7 @@ class GetOldMessagesTest(ZulipTestCase):
         m.rendered_content = m.rendered_content_version = None
         m.content = "test content"
         wide_dict = MessageDict.wide_dict(m)
-        final_dict = MessageDict.finalize_payload(
-            wide_dict, apply_markdown=True, client_gravatar=False,
-        )
+        final_dict = MessageDict.finalize_payload(wide_dict, apply_markdown=True, client_gravatar=False)
         self.assertEqual(final_dict["content"], "<p>test content</p>")
 
     def common_check_get_messages_query(self, query_params: Dict[str, object], expected: str) -> None:
@@ -2998,12 +2987,7 @@ recipient_id = %(recipient_id_3)s AND upper(subject) = upper(%(param_2)s))\
         sql_template = "SELECT anon_1.message_id, anon_1.flags \nFROM (SELECT message_id, flags \nFROM zerver_usermessage JOIN zerver_message ON zerver_usermessage.message_id = zerver_message.id \nWHERE user_profile_id = {hamlet_id} AND sender_id = {othello_id} ORDER BY message_id ASC \n LIMIT 10) AS anon_1 ORDER BY message_id ASC"
         sql = sql_template.format(**query_ids)
         self.common_check_get_messages_query(
-            {
-                "anchor": 0,
-                "num_before": 0,
-                "num_after": 9,
-                "narrow": f'[["sender", "{othello_email}"]]',
-            },
+            {"anchor": 0, "num_before": 0, "num_after": 9, "narrow": f'[["sender", "{othello_email}"]]'},
             sql,
         )
 
@@ -3053,12 +3037,7 @@ recipient_id = %(recipient_id_3)s AND upper(subject) = upper(%(param_2)s))\
         sql_template = "SELECT anon_1.message_id, anon_1.flags \nFROM (SELECT message_id, flags \nFROM zerver_usermessage JOIN zerver_message ON zerver_usermessage.message_id = zerver_message.id \nWHERE user_profile_id = {hamlet_id} AND sender_id = {hamlet_id} AND recipient_id = {hamlet_recipient} ORDER BY message_id ASC \n LIMIT 10) AS anon_1 ORDER BY message_id ASC"
         sql = sql_template.format(**query_ids)
         self.common_check_get_messages_query(
-            {
-                "anchor": 0,
-                "num_before": 0,
-                "num_after": 9,
-                "narrow": f'[["pm-with", "{hamlet_email}"]]',
-            },
+            {"anchor": 0, "num_before": 0, "num_after": 9, "narrow": f'[["pm-with", "{hamlet_email}"]]'},
             sql,
         )
 

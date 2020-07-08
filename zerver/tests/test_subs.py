@@ -814,8 +814,7 @@ class StreamAdminTest(ZulipTestCase):
         # Verify that we don't render inline URL previews in this code path.
         with self.settings(INLINE_URL_EMBED_PREVIEW=True):
             result = self.client_patch(
-                f"/json/streams/{stream_id}",
-                {"description": ujson.dumps("See https://zulip.com/team")},
+                f"/json/streams/{stream_id}", {"description": ujson.dumps("See https://zulip.com/team")},
             )
         self.assert_json_success(result)
         stream = get_stream("stream_name1", realm)
@@ -1389,9 +1388,7 @@ class StreamAdminTest(ZulipTestCase):
         self.common_subscribe_to_streams(user_profile, stream_name)
 
         # Allow users older than the waiting period to create streams.
-        do_set_realm_property(
-            user_profile.realm, "create_stream_policy", Realm.POLICY_FULL_MEMBERS_ONLY,
-        )
+        do_set_realm_property(user_profile.realm, "create_stream_policy", Realm.POLICY_FULL_MEMBERS_ONLY)
 
         # Can successfully create stream despite being under waiting period because user is admin.
         stream_name = ["waiting_period_as_admin"]
@@ -1982,13 +1979,7 @@ class SubscriptionPropertiesTest(ZulipTestCase):
             "/api/v1/users/me/subscriptions/properties",
             {
                 "subscription_data": ujson.dumps(
-                    [
-                        {
-                            "property": "color",
-                            "stream_id": not_subbed[0]["stream_id"],
-                            "value": "#ffffff",
-                        },
-                    ],
+                    [{"property": "color", "stream_id": not_subbed[0]["stream_id"], "value": "#ffffff"}],
                 ),
             },
         )
@@ -2826,10 +2817,7 @@ class SubscriptionAPITest(ZulipTestCase):
         do_set_realm_property(realm, "create_stream_policy", Realm.POLICY_MEMBERS_ONLY)
         do_set_realm_property(realm, "invite_to_stream_policy", Realm.POLICY_ADMINS_ONLY)
         result = self.common_subscribe_to_streams(
-            self.test_user,
-            ["stream1"],
-            {"principals": ujson.dumps([invitee_user_id])},
-            allow_fail=True,
+            self.test_user, ["stream1"], {"principals": ujson.dumps([invitee_user_id])}, allow_fail=True,
         )
         self.assert_json_error(result, "Only administrators can modify other users' subscriptions.")
 
@@ -2844,10 +2832,7 @@ class SubscriptionAPITest(ZulipTestCase):
         do_set_realm_property(realm, "invite_to_stream_policy", Realm.POLICY_FULL_MEMBERS_ONLY)
         do_set_realm_property(realm, "waiting_period_threshold", 100000)
         result = self.common_subscribe_to_streams(
-            self.test_user,
-            ["stream2"],
-            {"principals": ujson.dumps([invitee_user_id])},
-            allow_fail=True,
+            self.test_user, ["stream2"], {"principals": ujson.dumps([invitee_user_id])}, allow_fail=True,
         )
         self.assert_json_error(result, "Your account is too new to modify other users' subscriptions.")
 
@@ -2890,9 +2875,7 @@ class SubscriptionAPITest(ZulipTestCase):
         """
         # currently, the only invalid name is the empty string
         invalid_stream_name = ""
-        result = self.common_subscribe_to_streams(
-            self.test_user, [invalid_stream_name], allow_fail=True,
-        )
+        result = self.common_subscribe_to_streams(self.test_user, [invalid_stream_name], allow_fail=True)
         self.assert_json_error(result, f"Invalid stream name '{invalid_stream_name}'")
 
     def assert_adding_subscriptions_for_principal(
@@ -4559,9 +4542,7 @@ class NoRecipientIDsTest(ZulipTestCase):
     def test_no_recipient_ids(self) -> None:
         user_profile = self.example_user("cordelia")
 
-        Subscription.objects.filter(
-            user_profile=user_profile, recipient__type=Recipient.STREAM,
-        ).delete()
+        Subscription.objects.filter(user_profile=user_profile, recipient__type=Recipient.STREAM).delete()
         subs = gather_subscriptions_helper(user_profile)
 
         # Checks that gather_subscriptions_helper will not return anything

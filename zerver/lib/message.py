@@ -449,8 +449,7 @@ class MessageDict:
             obj["rendered_content"] = rendered_content
         else:
             obj["rendered_content"] = (
-                "<p>[Zulip note: Sorry, we could not "
-                + "understand the formatting of your message]</p>"
+                "<p>[Zulip note: Sorry, we could not " + "understand the formatting of your message]</p>"
             )
 
         if rendered_content is not None:
@@ -998,10 +997,7 @@ def aggregate_unread_data(raw_data: RawUnreadMessagesResult) -> UnreadMessagesRe
 
 
 def apply_unread_message_event(
-    user_profile: UserProfile,
-    state: RawUnreadMessagesResult,
-    message: Dict[str, Any],
-    flags: List[str],
+    user_profile: UserProfile, state: RawUnreadMessagesResult, message: Dict[str, Any], flags: List[str],
 ) -> None:
     message_id = message["id"]
     if message["type"] == "stream":

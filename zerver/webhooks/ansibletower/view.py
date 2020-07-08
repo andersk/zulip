@@ -22,9 +22,7 @@ ANSIBLETOWER_JOB_HOST_ROW_TEMPLATE = "* {hostname}: {status}\n"
 @api_key_only_webhook_view("Ansibletower")
 @has_request_variables
 def api_ansibletower_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    payload: Dict[str, Any] = REQ(argument_type="body"),
+    request: HttpRequest, user_profile: UserProfile, payload: Dict[str, Any] = REQ(argument_type="body"),
 ) -> HttpResponse:
 
     body = get_body(payload)

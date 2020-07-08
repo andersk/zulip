@@ -43,15 +43,9 @@ Usage: ./manage.py deliver_scheduled_messages
         if delivery_type == ScheduledMessage.SEND_LATER:
             message.sender = original_sender
         elif delivery_type == ScheduledMessage.REMIND:
-            message.sender = get_user_by_delivery_email(
-                settings.NOTIFICATION_BOT, original_sender.realm,
-            )
+            message.sender = get_user_by_delivery_email(settings.NOTIFICATION_BOT, original_sender.realm)
 
-        return {
-            "message": message,
-            "stream": scheduled_message.stream,
-            "realm": scheduled_message.realm,
-        }
+        return {"message": message, "stream": scheduled_message.stream, "realm": scheduled_message.realm}
 
     def handle(self, *args: Any, **options: Any) -> None:
 

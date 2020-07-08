@@ -22,9 +22,7 @@ logger = logging.getLogger("zulip.fix_unreads")
 logger.setLevel(logging.WARNING)
 
 
-def build_topic_mute_checker(
-    cursor: CursorObj, user_profile: UserProfile,
-) -> Callable[[int, str], bool]:
+def build_topic_mute_checker(cursor: CursorObj, user_profile: UserProfile) -> Callable[[int, str], bool]:
     """
     This function is similar to the function of the same name
     in zerver/lib/topic_mutes.py, but it works without the ORM,

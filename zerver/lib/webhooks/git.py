@@ -272,9 +272,7 @@ def get_commits_content(commits_data: List[Dict[str, Any]], is_truncated: bool =
             commits_number=len(commits_data) - COMMITS_LIMIT,
         )
     elif is_truncated:
-        commits_content += COMMITS_MORE_THAN_LIMIT_TEMPLATE.format(commits_number="").replace(
-            "  ", " ",
-        )
+        commits_content += COMMITS_MORE_THAN_LIMIT_TEMPLATE.format(commits_number="").replace("  ", " ")
     return commits_content.rstrip()
 
 

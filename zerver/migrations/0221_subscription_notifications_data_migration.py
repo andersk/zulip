@@ -59,7 +59,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(
-            update_notification_settings, reverse_notification_settings, elidable=True,
-        ),
+        migrations.RunPython(update_notification_settings, reverse_notification_settings, elidable=True),
     ]

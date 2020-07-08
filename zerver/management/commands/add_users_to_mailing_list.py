@@ -43,9 +43,7 @@ class Command(BaseCommand):
         if options["list_id"] is None:
             try:
                 if settings.ZULIP_FRIENDS_LIST_ID is None:
-                    raise CommandError(
-                        "ZULIP_FRIENDS_LIST_ID is None. Check your server settings file.",
-                    )
+                    raise CommandError("ZULIP_FRIENDS_LIST_ID is None. Check your server settings file.")
                 options["list_id"] = settings.ZULIP_FRIENDS_LIST_ID
             except AttributeError:
                 raise CommandError(

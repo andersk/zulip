@@ -60,11 +60,7 @@ def generate_thumbnail_url(path: str, size: str = "0x0", is_camo_url: bool = Fal
         apply_filters.append("sharpen(0.5,0.2,true)")
 
     encrypted_url = crypto.generate(
-        width=width,
-        height=height,
-        smart=smart_crop_enabled,
-        filters=apply_filters,
-        image_url=image_url,
+        width=width, height=height, smart=smart_crop_enabled, filters=apply_filters, image_url=image_url,
     )
 
     if settings.THUMBOR_URL == "http://127.0.0.1:9995":

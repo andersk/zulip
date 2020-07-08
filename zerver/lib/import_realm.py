@@ -958,12 +958,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
         # TODO: double-check this.
 
     re_map_foreign_keys(
-        data,
-        "zerver_recipient",
-        "type_id",
-        related_table="stream",
-        recipient_field=True,
-        id_field=True,
+        data, "zerver_recipient", "type_id", related_table="stream", recipient_field=True, id_field=True,
     )
     re_map_foreign_keys(
         data,
@@ -974,12 +969,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
         id_field=True,
     )
     re_map_foreign_keys(
-        data,
-        "zerver_recipient",
-        "type_id",
-        related_table="huddle",
-        recipient_field=True,
-        id_field=True,
+        data, "zerver_recipient", "type_id", related_table="huddle", recipient_field=True, id_field=True,
     )
     update_model_ids(Recipient, data, "recipient")
     bulk_import_model(data, Recipient)

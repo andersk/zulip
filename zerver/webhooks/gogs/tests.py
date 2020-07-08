@@ -104,9 +104,7 @@ class GogsHookTests(WebhookTestCase):
     def test_pull_request_synchronized(self) -> None:
         expected_topic = "test / PR #1349 Test"
         expected_message = """kostekIV synchronized [PR #2](https://try.gogs.io/kostekIV/test/pulls/2) from `c` to `master`."""
-        self.send_and_test_stream_message(
-            "pull_request__synchronized", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request__synchronized", expected_topic, expected_message)
 
     def test_issues_opened(self) -> None:
         expected_topic = "test / Issue #3 New test issue"

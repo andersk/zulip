@@ -55,9 +55,7 @@ approach shown above.
             help="The headers you want to provide along with " "your mock request to Zulip.",
         )
 
-        self.add_realm_args(
-            parser, help="Specify which realm/subdomain to connect to; default is zulip",
-        )
+        self.add_realm_args(parser, help="Specify which realm/subdomain to connect to; default is zulip")
 
     def parse_headers(self, custom_headers: Union[None, str]) -> Union[None, Dict[str, str]]:
         if not custom_headers:

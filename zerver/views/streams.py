@@ -250,9 +250,7 @@ def update_stream_backend(
     ),
     history_public_to_subscribers: Optional[bool] = REQ(validator=check_bool, default=None),
     new_name: Optional[str] = REQ(validator=check_string, default=None),
-    message_retention_days: Optional[Union[int, str]] = REQ(
-        validator=check_string_or_int, default=None,
-    ),
+    message_retention_days: Optional[Union[int, str]] = REQ(validator=check_string_or_int, default=None),
 ) -> HttpResponse:
     # We allow realm administrators to to update the stream name and
     # description even for private streams.

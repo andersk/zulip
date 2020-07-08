@@ -746,9 +746,7 @@ class InlineInterestingLinkProcessor(markdown.treeprocessors.Treeprocessor):
         if parsed_url.netloc == "dropbox.com" or parsed_url.netloc.endswith(".dropbox.com"):
             is_album = parsed_url.path.startswith("/sc/") or parsed_url.path.startswith("/photos/")
             # Only allow preview Dropbox shared links
-            if not (
-                parsed_url.path.startswith("/s/") or parsed_url.path.startswith("/sh/") or is_album
-            ):
+            if not (parsed_url.path.startswith("/s/") or parsed_url.path.startswith("/sh/") or is_album):
                 return None
 
             # Try to retrieve open graph protocol info for a preview
@@ -1622,9 +1620,7 @@ class MarkdownListPreprocessor(markdown.preprocessors.Preprocessor):
                 fence_str = m.group("fence")
                 is_code = not m.group("lang") in ("quote", "quoted")
                 has_open_fences = not len(open_fences) == 0
-                matches_last_fence = (
-                    fence_str == open_fences[-1].fence_str if has_open_fences else False
-                )
+                matches_last_fence = fence_str == open_fences[-1].fence_str if has_open_fences else False
                 closes_last_fence = not m.group("lang") and matches_last_fence
 
                 if closes_last_fence:
@@ -2361,9 +2357,7 @@ def do_convert(
     _md_engine.zulip_realm = message_realm
     _md_engine.zulip_db_data = None  # for now
     _md_engine.image_preview_enabled = image_preview_enabled(message, message_realm, no_previews)
-    _md_engine.url_embed_preview_enabled = url_embed_preview_enabled(
-        message, message_realm, no_previews,
-    )
+    _md_engine.url_embed_preview_enabled = url_embed_preview_enabled(message, message_realm, no_previews)
 
     # Pre-fetch data from the DB that is used in the markdown thread
     if message_realm is not None:

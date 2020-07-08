@@ -51,9 +51,7 @@ def main() -> int:
     )
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument("fpath", metavar="FILE", help="Path to requirements file")
-    parser.add_argument(
-        "--print", dest="print_reqs", action="store_true", help="Print all dependencies",
-    )
+    parser.add_argument("--print", dest="print_reqs", action="store_true", help="Print all dependencies")
     args = parser.parse_args()
 
     deps = expand_reqs(args.fpath)

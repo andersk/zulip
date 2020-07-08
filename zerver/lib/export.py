@@ -1184,9 +1184,7 @@ def export_uploads_and_avatars(realm: Realm, output_dir: Path) -> None:
             output_dir=emoji_output_dir,
         )
         export_realm_icons(
-            realm,
-            local_dir=os.path.join(settings.LOCAL_UPLOADS_DIR),
-            output_dir=realm_icons_output_dir,
+            realm, local_dir=os.path.join(settings.LOCAL_UPLOADS_DIR), output_dir=realm_icons_output_dir,
         )
     else:
         # Some bigger installations will have their data stored on S3.
@@ -1870,9 +1868,7 @@ def export_realm_wrapper(
 
 
 def get_realm_exports_serialized(user: UserProfile) -> List[Dict[str, Any]]:
-    all_exports = RealmAuditLog.objects.filter(
-        realm=user.realm, event_type=RealmAuditLog.REALM_EXPORTED,
-    )
+    all_exports = RealmAuditLog.objects.filter(realm=user.realm, event_type=RealmAuditLog.REALM_EXPORTED)
     exports_dict = {}
     for export in all_exports:
         pending = True

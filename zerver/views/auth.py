@@ -866,9 +866,7 @@ def api_dev_fetch_api_key(request: HttpRequest, username: str = REQ()) -> HttpRe
             _("Your account has been disabled."), data={"reason": "user disable"}, status=403,
         )
     if user_profile is None:
-        return json_error(
-            _("This user is not registered."), data={"reason": "unregistered"}, status=403,
-        )
+        return json_error(_("This user is not registered."), data={"reason": "unregistered"}, status=403)
     do_login(request, user_profile)
     api_key = get_api_key(user_profile)
     return json_success({"api_key": api_key, "email": user_profile.delivery_email})
@@ -927,9 +925,7 @@ def api_fetch_api_key(
         )
     if user_profile is None:
         return json_error(
-            _("Your username or password is incorrect."),
-            data={"reason": "incorrect_creds"},
-            status=403,
+            _("Your username or password is incorrect."), data={"reason": "incorrect_creds"}, status=403,
         )
 
     # Maybe sending 'user_logged_in' signal is the better approach:

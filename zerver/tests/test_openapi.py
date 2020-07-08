@@ -432,9 +432,7 @@ so maybe we shouldn't mark it as intentionally undocumented in the urls.
 The types for the request parameters in zerver/openapi/zulip.yaml
 do not match the types declared in the implementation of {function.__name__}.\n"""
         msg += "=" * 65 + "\n"
-        msg += "{:<10s}{:^30s}{:>10s}\n".format(
-            "Parameter", "OpenAPI Type", "Function Declaration Type",
-        )
+        msg += "{:<10s}{:^30s}{:>10s}\n".format("Parameter", "OpenAPI Type", "Function Declaration Type")
         msg += "=" * 65 + "\n"
         opvtype = None
         fdvtype = None
@@ -1057,8 +1055,6 @@ class OpenAPIRegexTest(ZulipTestCase):
             match_against_openapi_regex("/users/23/subscriptions/21")
             == "/users/{user_id}/subscriptions/{stream_id}"
         )
-        assert (
-            match_against_openapi_regex("/users/iago@zulip.com/presence") == "/users/{email}/presence"
-        )
+        assert match_against_openapi_regex("/users/iago@zulip.com/presence") == "/users/{email}/presence"
         assert match_against_openapi_regex("/messages/23") == "/messages/{message_id}"
         assert match_against_openapi_regex("/realm/emoji/realm_emoji_1") == "/realm/emoji/{emoji_name}"

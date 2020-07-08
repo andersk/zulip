@@ -2468,9 +2468,7 @@ def validate_stream_name_with_pm_notification(
     return stream
 
 
-def validate_stream_id_with_pm_notification(
-    stream_id: int, realm: Realm, sender: UserProfile,
-) -> Stream:
+def validate_stream_id_with_pm_notification(stream_id: int, realm: Realm, sender: UserProfile) -> Stream:
     try:
         stream = get_stream_by_id_in_realm(stream_id, realm)
         send_pm_if_empty_stream(stream, realm, sender)
@@ -3584,9 +3582,7 @@ def do_regenerate_api_key(user_profile: UserProfile, acting_user: UserProfile) -
     if user_profile.is_bot:
         send_event(
             user_profile.realm,
-            dict(
-                type="realm_bot", op="update", bot=dict(user_id=user_profile.id, api_key=new_api_key),
-            ),
+            dict(type="realm_bot", op="update", bot=dict(user_id=user_profile.id, api_key=new_api_key)),
             bot_owner_user_ids(user_profile),
         )
 
@@ -4146,9 +4142,7 @@ def do_set_user_display_setting(
 
     # Updates to the timezone display setting are sent to all users
     if setting_name == "timezone":
-        payload = dict(
-            email=user_profile.email, user_id=user_profile.id, timezone=user_profile.timezone,
-        )
+        payload = dict(email=user_profile.email, user_id=user_profile.id, timezone=user_profile.timezone)
         send_event(
             user_profile.realm,
             dict(type="realm_user", op="update", person=payload),
@@ -4795,10 +4789,7 @@ def update_to_dict_cache(changed_messages: List[Message], realm_id: Optional[int
 # We use transaction.atomic to support select_for_update in the attachment codepath.
 @transaction.atomic
 def do_update_embedded_data(
-    user_profile: UserProfile,
-    message: Message,
-    content: Optional[str],
-    rendered_content: Optional[str],
+    user_profile: UserProfile, message: Message, content: Optional[str], rendered_content: Optional[str],
 ) -> None:
     event: Dict[str, Any] = {
         "type": "update_message",
@@ -4960,9 +4951,7 @@ def do_update_message(
         else:
             event["wildcard_mention_user_ids"] = []
 
-        do_update_mobile_push_notification(
-            message, prior_mention_user_ids, info["stream_push_user_ids"],
-        )
+        do_update_mobile_push_notification(message, prior_mention_user_ids, info["stream_push_user_ids"])
 
     if topic_name is not None or new_stream is not None:
         orig_topic_name = message.topic_name()
@@ -5976,9 +5965,7 @@ def do_change_realm_domain(realm_domain: RealmDomain, allow_subdomains: bool) ->
     send_event(realm_domain.realm, event, active_user_ids(realm_domain.realm_id))
 
 
-def do_remove_realm_domain(
-    realm_domain: RealmDomain, acting_user: Optional[UserProfile] = None,
-) -> None:
+def do_remove_realm_domain(realm_domain: RealmDomain, acting_user: Optional[UserProfile] = None) -> None:
     realm = realm_domain.realm
     domain = realm_domain.domain
     realm_domain.delete()

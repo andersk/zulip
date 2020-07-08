@@ -468,9 +468,7 @@ def get_subject_based_on_type(payload: Dict[str, Any], event: str) -> str:
             repo=get_repository_name(payload), branch=get_branch_name_from_ref(payload["ref"]),
         )
     elif event == "gollum":
-        return TOPIC_WITH_BRANCH_TEMPLATE.format(
-            repo=get_repository_name(payload), branch="Wiki Pages",
-        )
+        return TOPIC_WITH_BRANCH_TEMPLATE.format(repo=get_repository_name(payload), branch="Wiki Pages")
     elif event == "ping":
         if payload.get("repository") is None:
             return get_organization_name(payload)

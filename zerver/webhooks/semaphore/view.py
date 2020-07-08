@@ -90,9 +90,7 @@ GITHUB_URL_TEMPLATES = {
 @api_key_only_webhook_view("Semaphore")
 @has_request_variables
 def api_semaphore_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    payload: Dict[str, Any] = REQ(argument_type="body"),
+    request: HttpRequest, user_profile: UserProfile, payload: Dict[str, Any] = REQ(argument_type="body"),
 ) -> HttpResponse:
 
     content, project_name, branch_name = (

@@ -13,9 +13,7 @@ from zerver.models import UserProfile
 @api_key_only_webhook_view("IFTTT")
 @has_request_variables
 def api_iftt_app_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    payload: Dict[str, Any] = REQ(argument_type="body"),
+    request: HttpRequest, user_profile: UserProfile, payload: Dict[str, Any] = REQ(argument_type="body"),
 ) -> HttpResponse:
     topic = payload.get("topic")
     content = payload.get("content")

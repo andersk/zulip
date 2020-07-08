@@ -18,10 +18,7 @@ You are going to derail from goal **gainweight** in **5.6 hours**. You need **+2
 """.strip()
 
         self.send_and_test_stream_message(
-            "derail",
-            expected_topic,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "derail", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     @patch("zerver.webhooks.beeminder.view.time.time")

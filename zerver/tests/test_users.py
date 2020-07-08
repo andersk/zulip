@@ -830,9 +830,7 @@ class AdminCreateUserTest(ZulipTestCase):
 
         valid_params["email"] = "abc@mailnator.com"
         result = self.client_post("/json/users", valid_params)
-        self.assert_json_error(
-            result, "Disposable email addresses are not allowed in this organization",
-        )
+        self.assert_json_error(result, "Disposable email addresses are not allowed in this organization")
 
         # Don't allow creating a user with + in their email address when realm
         # is restricted to a domain.
@@ -1126,9 +1124,7 @@ class UserProfileTest(ZulipTestCase):
         result = self.client_get(f"/json/users/{iago.id}/subscriptions/25")
         self.assert_json_error(result, "Invalid stream id")
 
-        result = ujson.loads(
-            self.client_get(f"/json/users/{iago.id}/subscriptions/{stream.id}").content,
-        )
+        result = ujson.loads(self.client_get(f"/json/users/{iago.id}/subscriptions/{stream.id}").content)
         self.assertFalse(result["is_subscribed"])
 
         # Subscribe to the stream.

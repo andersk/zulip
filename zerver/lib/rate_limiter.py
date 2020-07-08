@@ -302,9 +302,7 @@ class TornadoInMemoryRateLimiterBackend(RateLimiterBackend):
 class RedisRateLimiterBackend(RateLimiterBackend):
     @classmethod
     def get_keys(cls, entity_key: str) -> List[str]:
-        return [
-            f"{KEY_PREFIX}ratelimit:{entity_key}:{keytype}" for keytype in ["list", "zset", "block"]
-        ]
+        return [f"{KEY_PREFIX}ratelimit:{entity_key}:{keytype}" for keytype in ["list", "zset", "block"]]
 
     @classmethod
     def block_access(cls, entity_key: str, seconds: int) -> None:

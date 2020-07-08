@@ -57,9 +57,7 @@ def serve_local(request: HttpRequest, path_id: str, url_only: bool) -> HttpRespo
     mimetype, encoding = guess_type(local_path)
     attachment = mimetype not in INLINE_MIME_TYPES
 
-    response = sendfile(
-        request, local_path, attachment=attachment, mimetype=mimetype, encoding=encoding,
-    )
+    response = sendfile(request, local_path, attachment=attachment, mimetype=mimetype, encoding=encoding)
     patch_cache_control(response, private=True, immutable=True)
     return response
 

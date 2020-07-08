@@ -14,9 +14,7 @@ CHECK_IS_REPLY = "in reply to"
 @api_key_only_webhook_view("Flock")
 @has_request_variables
 def api_flock_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    payload: Dict[str, Any] = REQ(argument_type="body"),
+    request: HttpRequest, user_profile: UserProfile, payload: Dict[str, Any] = REQ(argument_type="body"),
 ) -> HttpResponse:
 
     if len(payload["text"]) != 0:

@@ -852,9 +852,7 @@ def generate_and_send_messages(
         elif randkey <= random_max * options["percent_huddles"] / 100.0:
             message_type = Recipient.HUDDLE
             message.recipient = get_recipient_by_id(random.choice(recipient_huddles))
-        elif (
-            randkey <= random_max * (options["percent_huddles"] + options["percent_personals"]) / 100.0
-        ):
+        elif randkey <= random_max * (options["percent_huddles"] + options["percent_personals"]) / 100.0:
             message_type = Recipient.PERSONAL
             personals_pair = random.choice(personals_pairs)
             random.shuffle(personals_pair)
@@ -866,9 +864,7 @@ def generate_and_send_messages(
             sender_id = random.choice(huddle_members[message.recipient.id])
             message.sender = get_user_profile_by_id(sender_id)
         elif message_type == Recipient.PERSONAL:
-            message.recipient = Recipient.objects.get(
-                type=Recipient.PERSONAL, type_id=personals_pair[0],
-            )
+            message.recipient = Recipient.objects.get(type=Recipient.PERSONAL, type_id=personals_pair[0])
             message.sender = get_user_profile_by_id(personals_pair[1])
             saved_data["personals_pair"] = personals_pair
         elif message_type == Recipient.STREAM:

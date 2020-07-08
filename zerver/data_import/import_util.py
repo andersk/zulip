@@ -169,10 +169,7 @@ def make_user_messages(
         for user_id in user_ids:
             is_mentioned = user_id in mention_user_ids
             user_message = build_user_message(
-                user_id=user_id,
-                message_id=message_id,
-                is_private=is_pm_data,
-                is_mentioned=is_mentioned,
+                user_id=user_id, message_id=message_id, is_private=is_pm_data, is_mentioned=is_mentioned,
             )
             zerver_usermessage.append(user_message)
 
@@ -386,10 +383,7 @@ def build_usermessages(
             user_messages_created += 1
 
             usermessage = build_user_message(
-                user_id=user_id,
-                message_id=message_id,
-                is_private=is_private,
-                is_mentioned=is_mentioned,
+                user_id=user_id, message_id=message_id, is_private=is_private, is_mentioned=is_mentioned,
             )
 
             zerver_usermessage.append(usermessage)

@@ -34,9 +34,7 @@ def get_oembed_data(url: str, maxwidth: int = 640, maxheight: int = 480) -> Opti
         )
 
     # Otherwise, start with just the embed type.
-    return dict(
-        type=oembed_resource_type, title=data.get("title"), description=data.get("description"),
-    )
+    return dict(type=oembed_resource_type, title=data.get("title"), description=data.get("description"))
 
 
 def strip_cdata(html: str) -> str:

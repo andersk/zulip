@@ -284,9 +284,7 @@ def send_email_to_admins(
 def clear_scheduled_invitation_emails(email: str) -> None:
     """Unlike most scheduled emails, invitation emails don't have an
     existing user object to key off of, so we filter by address here."""
-    items = ScheduledEmail.objects.filter(
-        address__iexact=email, type=ScheduledEmail.INVITATION_REMINDER,
-    )
+    items = ScheduledEmail.objects.filter(address__iexact=email, type=ScheduledEmail.INVITATION_REMINDER)
     items.delete()
 
 

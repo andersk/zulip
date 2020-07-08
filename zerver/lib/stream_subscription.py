@@ -32,9 +32,7 @@ def get_stream_subscriptions_for_user(user_profile: UserProfile) -> QuerySet:
 
 def get_stream_subscriptions_for_users(user_profiles: List[UserProfile]) -> QuerySet:
     # TODO: Change return type to QuerySet[Subscription]
-    return Subscription.objects.filter(
-        user_profile__in=user_profiles, recipient__type=Recipient.STREAM,
-    )
+    return Subscription.objects.filter(user_profile__in=user_profiles, recipient__type=Recipient.STREAM)
 
 
 def get_bulk_stream_subscriber_info(
@@ -64,9 +62,7 @@ def get_bulk_stream_subscriber_info(
 
 
 def num_subscribers_for_stream_id(stream_id: int) -> int:
-    return (
-        get_active_subscriptions_for_stream_id(stream_id).filter(user_profile__is_active=True).count()
-    )
+    return get_active_subscriptions_for_stream_id(stream_id).filter(user_profile__is_active=True).count()
 
 
 def handle_stream_notifications_compatibility(

@@ -476,9 +476,7 @@ class PasswordResetTest(ZulipTestCase):
         body = self.get_reset_mail_body("zephyr")
         self.assertIn("Somebody (possibly you) requested a new password", body)
         self.assertIn("You do not have an account", body)
-        self.assertIn(
-            "active accounts in the following organization(s).\nhttp://zulip.testserver", body,
-        )
+        self.assertIn("active accounts in the following organization(s).\nhttp://zulip.testserver", body)
         self.assertIn("safely ignore", body)
         self.assertNotIn("reset your password", body)
         self.assertNotIn("deactivated", body)
@@ -1216,12 +1214,7 @@ earl-test@zulip.com""",
         for user in ("bob", "carol", "dave", "earl"):
             self.assertTrue(find_key_by_email(f"{user}-test@zulip.com"))
         self.check_sent_emails(
-            [
-                "bob-test@zulip.com",
-                "carol-test@zulip.com",
-                "dave-test@zulip.com",
-                "earl-test@zulip.com",
-            ],
+            ["bob-test@zulip.com", "carol-test@zulip.com", "dave-test@zulip.com", "earl-test@zulip.com"],
         )
 
     def test_max_invites_model(self) -> None:
@@ -1702,9 +1695,7 @@ so we didn't send them an invitation. We did send invitations to everyone else!"
             url, {"key": registration_key, "from_confirmation": 1, "full_nme": "alice"},
         )
         self.assertEqual(response.status_code, 200)
-        self.assert_in_success_response(
-            ["The registration link has expired or is not valid."], response,
-        )
+        self.assert_in_success_response(["The registration link has expired or is not valid."], response)
 
         registration_key = confirmation_link.split("/")[-1]
         response = self.client_post(
@@ -3901,9 +3892,7 @@ class UserSignUpTest(InviteUserBase):
         # If the user's email is inside the LDAP directory and we just
         # have a wrong password, then we refuse to create an account
         password = "nonldappassword"
-        email = (
-            "newuser_email@zulip.com"  # belongs to user uid=newuser_with_email in the test directory
-        )
+        email = "newuser_email@zulip.com"  # belongs to user uid=newuser_with_email in the test directory
         subdomain = "zulip"
 
         self.init_default_ldap_database()

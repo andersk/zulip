@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RenameField(
-            model_name="realm",
-            old_name="restricted_to_domain",
-            new_name="emails_restricted_to_domains",
+            model_name="realm", old_name="restricted_to_domain", new_name="emails_restricted_to_domains",
         ),
     ]

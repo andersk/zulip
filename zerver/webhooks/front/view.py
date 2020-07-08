@@ -136,9 +136,7 @@ def get_body_based_on_event(event: str) -> Any:
 @api_key_only_webhook_view("Front")
 @has_request_variables
 def api_front_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    payload: Dict[str, Any] = REQ(argument_type="body"),
+    request: HttpRequest, user_profile: UserProfile, payload: Dict[str, Any] = REQ(argument_type="body"),
 ) -> HttpResponse:
 
     event = payload["type"]

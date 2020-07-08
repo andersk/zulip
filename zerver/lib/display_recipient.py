@@ -86,9 +86,7 @@ def bulk_fetch_display_recipients(
         (recipient[1], recipient[2]): recipient[0] for recipient in recipient_tuples
     }
 
-    stream_recipients = {
-        recipient for recipient in recipient_tuples if recipient[1] == Recipient.STREAM
-    }
+    stream_recipients = {recipient for recipient in recipient_tuples if recipient[1] == Recipient.STREAM}
     personal_and_huddle_recipients = recipient_tuples - stream_recipients
 
     def stream_query_function(recipient_ids: List[int]) -> List[TinyStreamResult]:

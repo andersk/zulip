@@ -1480,9 +1480,7 @@ def filter_to_valid_prereg_users(query: QuerySet) -> QuerySet:
 
 class MultiuseInvite(models.Model):
     id: int = models.AutoField(auto_created=True, primary_key=True, verbose_name="ID")
-    referred_by: UserProfile = models.ForeignKey(
-        UserProfile, on_delete=CASCADE,
-    )  # Optional[UserProfile]
+    referred_by: UserProfile = models.ForeignKey(UserProfile, on_delete=CASCADE)  # Optional[UserProfile]
     streams: Manager = models.ManyToManyField("Stream")
     realm: Realm = models.ForeignKey(Realm, on_delete=CASCADE)
     invited_as: int = models.PositiveSmallIntegerField(default=PreregistrationUser.INVITE_AS["MEMBER"])
@@ -2332,9 +2330,7 @@ def validate_attachment_request(user_profile: UserProfile, path_id: str) -> Opti
     if len(relevant_stream_ids) == 0:
         return False
 
-    return Stream.objects.filter(
-        id__in=relevant_stream_ids, history_public_to_subscribers=True,
-    ).exists()
+    return Stream.objects.filter(id__in=relevant_stream_ids, history_public_to_subscribers=True).exists()
 
 
 def get_old_unclaimed_attachments(weeks_ago: int) -> Sequence[Attachment]:
@@ -2982,9 +2978,7 @@ class RealmAuditLog(AbstractRealmAuditLog):
 
     def __str__(self) -> str:
         if self.modified_user is not None:
-            return (
-                f"<RealmAuditLog: {self.modified_user} {self.event_type} {self.event_time} {self.id}>"
-            )
+            return f"<RealmAuditLog: {self.modified_user} {self.event_type} {self.event_time} {self.id}>"
         if self.modified_stream is not None:
             return (
                 f"<RealmAuditLog: {self.modified_stream} {self.event_type} {self.event_time} {self.id}>"

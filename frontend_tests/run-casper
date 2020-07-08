@@ -37,11 +37,7 @@ usage = """
 parser = argparse.ArgumentParser(usage=usage)
 
 parser.add_argument(
-    "--skip-flaky-tests",
-    dest="skip_flaky",
-    action="store_true",
-    default=False,
-    help="Skip flaky tests",
+    "--skip-flaky-tests", dest="skip_flaky", action="store_true", default=False, help="Skip flaky tests",
 )
 parser.add_argument(
     "--loop", dest="loop", nargs=1, action="store", type=int, default=None, help="Run tests in a loop.",
@@ -199,9 +195,7 @@ The Casper frontend tests failed!  For help debugging, read:
         )
         if os.environ.get("CIRCLECI"):
             print("", file=sys.stderr)
-            print(
-                "In CircleCI, the Artifacts tab contains screenshots of the failure.", file=sys.stderr,
-            )
+            print("In CircleCI, the Artifacts tab contains screenshots of the failure.", file=sys.stderr)
             print("", file=sys.stderr)
 
         sys.exit(ret)

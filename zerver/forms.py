@@ -287,9 +287,7 @@ class ZulipPasswordResetForm(PasswordResetForm):
         realm = get_realm(get_subdomain(request))
 
         if not email_auth_enabled(realm):
-            logging.info(
-                "Password reset attempted for %s even though password auth is disabled.", email,
-            )
+            logging.info("Password reset attempted for %s even though password auth is disabled.", email)
             return
         if email_belongs_to_ldap(realm, email):
             # TODO: Ideally, we'd provide a user-facing error here

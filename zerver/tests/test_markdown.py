@@ -1314,9 +1314,7 @@ class MarkdownTest(ZulipTestCase):
         realm_alert_words_automaton = get_alert_word_automaton(user_profile.realm)
 
         def render(msg: Message, content: str) -> str:
-            return render_markdown(
-                msg, content, realm_alert_words_automaton=realm_alert_words_automaton,
-            )
+            return render_markdown(msg, content, realm_alert_words_automaton=realm_alert_words_automaton)
 
         content = "We have an ALERTWORD day today!"
         self.assertEqual(render(msg, content), "<p>We have an ALERTWORD day today!</p>")
@@ -1346,9 +1344,7 @@ class MarkdownTest(ZulipTestCase):
         realm_alert_words_automaton = get_alert_word_automaton(sender_user_profile.realm)
 
         def render(msg: Message, content: str) -> str:
-            return render_markdown(
-                msg, content, realm_alert_words_automaton=realm_alert_words_automaton,
-            )
+            return render_markdown(msg, content, realm_alert_words_automaton=realm_alert_words_automaton)
 
         content = "hello how is this possible how are you doing today"
         render(msg, content)
@@ -1380,9 +1376,7 @@ class MarkdownTest(ZulipTestCase):
         realm_alert_words_automaton = get_alert_word_automaton(sender_user_profile.realm)
 
         def render(msg: Message, content: str) -> str:
-            return render_markdown(
-                msg, content, realm_alert_words_automaton=realm_alert_words_automaton,
-            )
+            return render_markdown(msg, content, realm_alert_words_automaton=realm_alert_words_automaton)
 
         content = """Hello, everyone. Prod deployment has been completed
         And this is a new line
@@ -1418,9 +1412,7 @@ class MarkdownTest(ZulipTestCase):
         realm_alert_words_automaton = get_alert_word_automaton(sender_user_profile.realm)
 
         def render(msg: Message, content: str) -> str:
-            return render_markdown(
-                msg, content, realm_alert_words_automaton=realm_alert_words_automaton,
-            )
+            return render_markdown(msg, content, realm_alert_words_automaton=realm_alert_words_automaton)
 
         content = """This is to test out alert words work in languages with accented characters too
         bonjour est (énormément) ce a quoi ressemble le français
@@ -1450,9 +1442,7 @@ class MarkdownTest(ZulipTestCase):
         realm_alert_words_automaton = get_alert_word_automaton(sender_user_profile.realm)
 
         def render(msg: Message, content: str) -> str:
-            return render_markdown(
-                msg, content, realm_alert_words_automaton=realm_alert_words_automaton,
-            )
+            return render_markdown(msg, content, realm_alert_words_automaton=realm_alert_words_automaton)
 
         content = """hello how is this possible how are you doing today
         This is to test that the no user_ids who have alrert wourldword is participating
@@ -1484,9 +1474,7 @@ class MarkdownTest(ZulipTestCase):
         realm_alert_words_automaton = get_alert_word_automaton(sender_user_profile.realm)
 
         def render(msg: Message, content: str) -> str:
-            return render_markdown(
-                msg, content, realm_alert_words_automaton=realm_alert_words_automaton,
-            )
+            return render_markdown(msg, content, realm_alert_words_automaton=realm_alert_words_automaton)
 
         content = """This is to test a empty alert words i.e. no user has any alert-words set"""
         render(msg, content)
@@ -1511,9 +1499,7 @@ class MarkdownTest(ZulipTestCase):
         realm_alert_words_automaton = get_alert_word_automaton(sender_user_profile.realm)
 
         def render(msg: Message, content: str) -> str:
-            return render_markdown(
-                msg, content, realm_alert_words_automaton=realm_alert_words_automaton,
-            )
+            return render_markdown(msg, content, realm_alert_words_automaton=realm_alert_words_automaton)
 
         content = """The code above will print 10 random values of numbers between 1 and 100.
         The second line, for x in range(10), determines how many values will be printed (when you use
@@ -1562,9 +1548,7 @@ class MarkdownTest(ZulipTestCase):
         msg_without_language_final = markdown_convert_wrapper(text.format(""))
 
         self.assertTrue(msg_with_js == msg_without_language_default_js)
-        self.assertTrue(
-            msg_with_python == msg_with_python_default_js == msg_without_language_default_py,
-        )
+        self.assertTrue(msg_with_python == msg_with_python_default_js == msg_without_language_default_py)
         self.assertTrue(msg_with_quote == msg_without_language_default_quote)
         self.assertTrue(msg_with_math == msg_without_language_default_math)
         self.assertTrue(msg_without_language == msg_with_none_default_py == msg_without_language_final)
@@ -1819,9 +1803,7 @@ class MarkdownTest(ZulipTestCase):
         content = "@**Atomic #123**"
         self.assertEqual(
             render_markdown(msg, content),
-            '<p><span class="user-mention" '
-            f'data-user-id="{test_user.id}">'
-            "@Atomic #123</span></p>",
+            '<p><span class="user-mention" ' f'data-user-id="{test_user.id}">' "@Atomic #123</span></p>",
         )
         self.assertEqual(msg.mentions_user_ids, {test_user.id})
         content = "@_**Atomic #123**"

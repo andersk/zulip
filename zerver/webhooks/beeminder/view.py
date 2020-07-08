@@ -26,9 +26,7 @@ def get_time(payload: Dict[str, Any]) -> Any:
 @api_key_only_webhook_view("beeminder")
 @has_request_variables
 def api_beeminder_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    payload: Dict[str, Any] = REQ(argument_type="body"),
+    request: HttpRequest, user_profile: UserProfile, payload: Dict[str, Any] = REQ(argument_type="body"),
 ) -> HttpResponse:
 
     goal_name = payload["goal"]["slug"]

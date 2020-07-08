@@ -443,9 +443,7 @@ class NarrowBuilder:
         else:
             return self._by_search_tsearch(query, operand, maybe_negate)
 
-    def _by_search_pgroonga(
-        self, query: Query, operand: str, maybe_negate: ConditionTransform,
-    ) -> Query:
+    def _by_search_pgroonga(self, query: Query, operand: str, maybe_negate: ConditionTransform) -> Query:
         match_positions_character = func.pgroonga_match_positions_character
         query_extract_keywords = func.pgroonga_query_extract_keywords
         operand_escaped = func.escape_html(operand)
@@ -464,9 +462,9 @@ class NarrowBuilder:
     def _by_search_tsearch(self, query: Query, operand: str, maybe_negate: ConditionTransform) -> Query:
         tsquery = func.plainto_tsquery(literal("zulip.english_us_search"), literal(operand))
         query = query.column(
-            ts_locs_array(
-                literal("zulip.english_us_search"), column("rendered_content"), tsquery,
-            ).label("content_matches"),
+            ts_locs_array(literal("zulip.english_us_search"), column("rendered_content"), tsquery).label(
+                "content_matches",
+            ),
         )
         # We HTML-escape the topic in Postgres to avoid doing a server round-trip
         query = query.column(
@@ -830,9 +828,7 @@ def get_messages_backend(
 ) -> HttpResponse:
     anchor = parse_anchor_value(anchor_val, use_first_unread_anchor_val)
     if num_before + num_after > MAX_MESSAGES_PER_FETCH:
-        return json_error(
-            _("Too many messages requested (maximum {}).").format(MAX_MESSAGES_PER_FETCH),
-        )
+        return json_error(_("Too many messages requested (maximum {}).").format(MAX_MESSAGES_PER_FETCH))
 
     if user_profile.realm.email_address_visibility != Realm.EMAIL_ADDRESS_VISIBILITY_EVERYONE:
         # If email addresses are only available to administrators,

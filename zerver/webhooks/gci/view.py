@@ -108,17 +108,14 @@ def get_unassign_event_body(payload: Dict[str, Any]) -> str:
 
 def get_outoftime_event_body(payload: Dict[str, Any]) -> str:
     return "The deadline for the task [{task_name}]({task_url}) has passed.".format(
-        task_name=payload["task_definition_name"],
-        task_url=build_instance_url(payload["task_instance"]),
+        task_name=payload["task_definition_name"], task_url=build_instance_url(payload["task_instance"]),
     )
 
 
 @api_key_only_webhook_view("Google-Code-In")
 @has_request_variables
 def api_gci_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    payload: Dict[str, Any] = REQ(argument_type="body"),
+    request: HttpRequest, user_profile: UserProfile, payload: Dict[str, Any] = REQ(argument_type="body"),
 ) -> HttpResponse:
     event = get_event(payload)
     if event is not None:

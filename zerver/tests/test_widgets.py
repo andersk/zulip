@@ -185,9 +185,7 @@ class WidgetContentTestCase(ZulipTestCase):
         result = self.api_post(sender, "/api/v1/messages", payload)
         self.assert_json_success(result)
 
-        expected_submessage_content = dict(
-            widget_type="poll", extra_data=dict(options=[], question=""),
-        )
+        expected_submessage_content = dict(widget_type="poll", extra_data=dict(options=[], question=""))
 
         message = self.get_last_message()
         self.assertEqual(message.content, content)

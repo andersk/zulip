@@ -31,16 +31,12 @@ class TrelloHookTests(WebhookTestCase):
         self.send_and_test_stream_message("removing_label_from_card", "Welcome Board", expected_message)
 
     def test_trello_webhook_when_member_was_added_to_card(self) -> None:
-        expected_message = (
-            "TomaszKolek added TomaszKolek to [Card name](https://trello.com/c/9BduUcVQ)."
-        )
+        expected_message = "TomaszKolek added TomaszKolek to [Card name](https://trello.com/c/9BduUcVQ)."
         self.send_and_test_stream_message("adding_member_to_card", "Welcome Board", expected_message)
 
     def test_trello_webhook_when_member_was_removed_from_card(self) -> None:
         expected_message = "TomaszKolek removed Trello from [Card name](https://trello.com/c/9BduUcVQ)."
-        self.send_and_test_stream_message(
-            "removing_member_from_card", "Welcome Board", expected_message,
-        )
+        self.send_and_test_stream_message("removing_member_from_card", "Welcome Board", expected_message)
 
     def test_trello_webhook_when_due_date_was_set(self) -> None:
         expected_message = "TomaszKolek set due date for [Card name](https://trello.com/c/9BduUcVQ) to 2016-05-11 10:00:00 UTC."
@@ -48,9 +44,7 @@ class TrelloHookTests(WebhookTestCase):
 
     def test_trello_webhook_when_due_date_was_changed(self) -> None:
         expected_message = "TomaszKolek changed due date for [Card name](https://trello.com/c/9BduUcVQ) from 2016-05-11 10:00:00 UTC to 2016-05-24 10:00:00 UTC."
-        self.send_and_test_stream_message(
-            "changing_due_date_on_card", "Welcome Board", expected_message,
-        )
+        self.send_and_test_stream_message("changing_due_date_on_card", "Welcome Board", expected_message)
 
     def test_trello_webhook_when_due_date_was_removed(self) -> None:
         expected_message = (
@@ -74,9 +68,7 @@ class TrelloHookTests(WebhookTestCase):
 
     def test_trello_webhook_when_attachment_was_added_to_card(self) -> None:
         expected_message = "TomaszKolek added [attachment_name](http://url.com) to [New card](https://trello.com/c/xPKXoSTQ)."
-        self.send_and_test_stream_message(
-            "adding_attachment_to_card", "Welcome Board", expected_message,
-        )
+        self.send_and_test_stream_message("adding_attachment_to_card", "Welcome Board", expected_message)
 
     def test_trello_webhook_when_checklist_was_added_to_card(self) -> None:
         expected_message = (

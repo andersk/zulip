@@ -628,9 +628,7 @@ class ImportExportTest(ZulipTestCase):
             recipient__in=private_stream_recipients,
         ).values_list("id", flat=True)
 
-        pm_recipients = Recipient.objects.filter(
-            type_id__in=consented_user_ids, type=Recipient.PERSONAL,
-        )
+        pm_recipients = Recipient.objects.filter(type_id__in=consented_user_ids, type=Recipient.PERSONAL)
         pm_query = Q(recipient__in=pm_recipients) | Q(sender__in=consented_user_ids)
         exported_pm_ids = (
             Message.objects.filter(pm_query).values_list("id", flat=True).values_list("id", flat=True)
@@ -832,9 +830,7 @@ class ImportExportTest(ZulipTestCase):
                 user_id_list = ujson.loads(field_value.value)
                 return {get_email(user_id) for user_id in user_id_list}
 
-            def custom_profile_field_values_for(
-                fields: List[CustomProfileField],
-            ) -> Set[FrozenSet[str]]:
+            def custom_profile_field_values_for(fields: List[CustomProfileField]) -> Set[FrozenSet[str]]:
                 user_emails: Set[FrozenSet[str]] = set()
                 for field in fields:
                     values = CustomProfileFieldValue.objects.filter(field=field)
@@ -864,9 +860,7 @@ class ImportExportTest(ZulipTestCase):
         # test huddles
         def get_huddle_hashes(r: str) -> str:
             short_names = ["cordelia", "hamlet", "othello"]
-            user_id_list = [
-                UserProfile.objects.get(realm=r, short_name=name).id for name in short_names
-            ]
+            user_id_list = [UserProfile.objects.get(realm=r, short_name=name).id for name in short_names]
             huddle_hash = get_huddle_hash(user_id_list)
             return huddle_hash
 
@@ -1155,9 +1149,7 @@ class ImportExportTest(ZulipTestCase):
         self.assertEqual(imported_realm.night_logo_source, Realm.LOGO_UPLOADED)
 
     def test_get_incoming_message_ids(self) -> None:
-        import_dir = os.path.join(
-            settings.DEPLOY_ROOT, "zerver", "tests", "fixtures", "import_fixtures",
-        )
+        import_dir = os.path.join(settings.DEPLOY_ROOT, "zerver", "tests", "fixtures", "import_fixtures")
         message_ids = get_incoming_message_ids(import_dir=import_dir, sort_by_date=True)
 
         self.assertEqual(message_ids, [888, 999, 555])

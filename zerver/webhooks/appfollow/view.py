@@ -14,9 +14,7 @@ from zerver.models import UserProfile
 @api_key_only_webhook_view("AppFollow")
 @has_request_variables
 def api_appfollow_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    payload: Dict[str, Any] = REQ(argument_type="body"),
+    request: HttpRequest, user_profile: UserProfile, payload: Dict[str, Any] = REQ(argument_type="body"),
 ) -> HttpResponse:
     message = payload["text"]
     app_name_search = re.search(r"\A(.+)", message)

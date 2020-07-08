@@ -84,9 +84,7 @@ def stripe_create_token(card_number: str = "4242424242424242") -> stripe.Token:
     )
 
 
-def stripe_fixture_path(
-    decorated_function_name: str, mocked_function_name: str, call_count: int,
-) -> str:
+def stripe_fixture_path(decorated_function_name: str, mocked_function_name: str, call_count: int) -> str:
     # Make the eventual filename a bit shorter, and also we conventionally
     # use test_* for the python test files
     if decorated_function_name[:5] == "test_":
@@ -288,9 +286,7 @@ def mock_stripe(
                 )  # nocoverage
             else:
                 side_effect = read_stripe_fixture(decorated_function.__name__, mocked_function_name)
-            decorated_function = patch(mocked_function_name, side_effect=side_effect)(
-                decorated_function,
-            )
+            decorated_function = patch(mocked_function_name, side_effect=side_effect)(decorated_function)
 
         @wraps(decorated_function)
         def wrapped(*args: object, **kwargs: object) -> object:
@@ -364,9 +360,7 @@ class StripeTestCase(ZulipTestCase):
         self.next_year = datetime(2013, 1, 2, 3, 4, 5, tzinfo=timezone.utc)
 
     def get_signed_seat_count_from_response(self, response: HttpResponse) -> Optional[str]:
-        match = re.search(
-            r"name=\"signed_seat_count\" value=\"(.+)\"", response.content.decode("utf-8"),
-        )
+        match = re.search(r"name=\"signed_seat_count\" value=\"(.+)\"", response.content.decode("utf-8"))
         return match.group(1) if match else None
 
     def get_salt_from_response(self, response: HttpResponse) -> Optional[str]:
@@ -1298,9 +1292,7 @@ class StripeTest(StripeTestCase):
 
         def check_max_licenses_error(licenses: int) -> None:
             response = self.upgrade(invoice=True, talk_to_stripe=False, licenses=licenses)
-            self.assert_json_error_contains(
-                response, f"with more than {MAX_INVOICED_LICENSES} licenses",
-            )
+            self.assert_json_error_contains(response, f"with more than {MAX_INVOICED_LICENSES} licenses")
             self.assertEqual(ujson.loads(response.content)["error_description"], "too many licenses")
 
         def check_success(
@@ -1334,9 +1326,7 @@ class StripeTest(StripeTestCase):
         check_min_licenses_error(True, None, MIN_INVOICED_LICENSES)
         # Invoice exceeding max licenses
         check_max_licenses_error(MAX_INVOICED_LICENSES + 1)
-        with patch(
-            "corporate.lib.stripe.get_latest_seat_count", return_value=MAX_INVOICED_LICENSES + 5,
-        ):
+        with patch("corporate.lib.stripe.get_latest_seat_count", return_value=MAX_INVOICED_LICENSES + 5):
             check_max_licenses_error(MAX_INVOICED_LICENSES + 5)
 
         # Autopay with automatic license_management
@@ -1998,9 +1988,7 @@ class StripeTest(StripeTestCase):
             self.assertEqual(annual_plan_invoice_items[0][key], value)
 
     @patch("corporate.lib.stripe.billing_logger.info")
-    def test_reupgrade_after_plan_status_changed_to_downgrade_at_end_of_cycle(
-        self, mock_: Mock,
-    ) -> None:
+    def test_reupgrade_after_plan_status_changed_to_downgrade_at_end_of_cycle(self, mock_: Mock) -> None:
         user = self.example_user("hamlet")
         self.login_user(user)
         with patch("corporate.lib.stripe.timezone_now", return_value=self.now):
@@ -2029,9 +2017,7 @@ class StripeTest(StripeTestCase):
         self.login_user(user)
         with patch("corporate.lib.stripe.timezone_now", return_value=self.now):
             self.local_upgrade(self.seat_count, True, CustomerPlan.ANNUAL, "token")
-        self.client_post(
-            "/json/billing/plan/change", {"status": CustomerPlan.DOWNGRADE_AT_END_OF_CYCLE},
-        )
+        self.client_post("/json/billing/plan/change", {"status": CustomerPlan.DOWNGRADE_AT_END_OF_CYCLE})
 
         plan = CustomerPlan.objects.first()
         self.assertIsNotNone(plan.next_invoice_date)
@@ -2095,9 +2081,7 @@ class StripeTest(StripeTestCase):
             self.local_upgrade(self.seat_count, True, CustomerPlan.ANNUAL, "token")
 
         self.login_user(user)
-        self.client_post(
-            "/json/billing/plan/change", {"status": CustomerPlan.DOWNGRADE_AT_END_OF_CYCLE},
-        )
+        self.client_post("/json/billing/plan/change", {"status": CustomerPlan.DOWNGRADE_AT_END_OF_CYCLE})
 
         with self.assertRaises(BillingError) as context:
             with patch("corporate.lib.stripe.timezone_now", return_value=self.now):
@@ -2324,18 +2308,14 @@ class BillingHelpersTest(ZulipTestCase):
     def test_update_or_create_stripe_customer_logic(self) -> None:
         user = self.example_user("hamlet")
         # No existing Customer object
-        with patch(
-            "corporate.lib.stripe.do_create_stripe_customer", return_value="returned",
-        ) as mocked1:
+        with patch("corporate.lib.stripe.do_create_stripe_customer", return_value="returned") as mocked1:
             returned = update_or_create_stripe_customer(user, stripe_token="token")
         mocked1.assert_called()
         self.assertEqual(returned, "returned")
 
         customer = Customer.objects.create(realm=get_realm("zulip"))
         # Customer exists but stripe_customer_id is None
-        with patch(
-            "corporate.lib.stripe.do_create_stripe_customer", return_value="returned",
-        ) as mocked2:
+        with patch("corporate.lib.stripe.do_create_stripe_customer", return_value="returned") as mocked2:
             returned = update_or_create_stripe_customer(user, stripe_token="token")
         mocked2.assert_called()
         self.assertEqual(returned, "returned")

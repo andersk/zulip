@@ -45,9 +45,7 @@ def generate_dev_ldap_dir(mode: str, num_users: int = 8) -> Dict[str, Dict[str, 
             )
         elif mode == "b":
             ldap_dir["uid=" + email_username + ",ou=users,dc=zulip,dc=com"] = dict(
-                uid=[email_username],
-                jpegPhoto=[profile_images[i % len(profile_images)]],
-                **common_data,
+                uid=[email_username], jpegPhoto=[profile_images[i % len(profile_images)]], **common_data,
             )
         elif mode == "c":
             ldap_dir["uid=" + email_username + ",ou=users,dc=zulip,dc=com"] = dict(

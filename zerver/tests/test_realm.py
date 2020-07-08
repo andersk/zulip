@@ -325,9 +325,7 @@ class RealmTest(ZulipTestCase):
         self.assert_json_error(result, "Invalid stream id")
         realm = get_realm("zulip")
         assert realm.signup_notifications_stream is not None
-        self.assertNotEqual(
-            realm.signup_notifications_stream.id, invalid_signup_notifications_stream_id,
-        )
+        self.assertNotEqual(realm.signup_notifications_stream.id, invalid_signup_notifications_stream_id)
 
     def test_get_default_signup_notifications_stream(self) -> None:
         realm = get_realm("zulip")

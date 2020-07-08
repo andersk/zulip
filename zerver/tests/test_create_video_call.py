@@ -43,9 +43,7 @@ class TestVideoCall(ZulipTestCase):
         )
 
         responses.add(
-            responses.POST,
-            "https://api.zoom.us/v2/users/me/meetings",
-            json={"join_url": "example.com"},
+            responses.POST, "https://api.zoom.us/v2/users/me/meetings", json={"join_url": "example.com"},
         )
 
         response = self.client_post("/json/calls/zoom/create")

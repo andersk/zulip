@@ -12,9 +12,7 @@ from zerver.models import UserProfile
 @api_key_only_webhook_view("Buildbot")
 @has_request_variables
 def api_buildbot_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    payload: Dict[str, Any] = REQ(argument_type="body"),
+    request: HttpRequest, user_profile: UserProfile, payload: Dict[str, Any] = REQ(argument_type="body"),
 ) -> HttpResponse:
     topic = payload["project"]
     if not topic:

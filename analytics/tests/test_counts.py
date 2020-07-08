@@ -656,12 +656,7 @@ class TestCountStats(AnalyticsTestCase):
         self.assertTableState(
             InstallationCount,
             ["value", "subgroup"],
-            [
-                [3, "private_stream"],
-                [5, "public_stream"],
-                [3, "private_message"],
-                [2, "huddle_message"],
-            ],
+            [[3, "private_stream"], [5, "public_stream"], [3, "private_message"], [2, "huddle_message"]],
         )
         self.assertTableState(StreamCount, [], [])
 
@@ -705,12 +700,7 @@ class TestCountStats(AnalyticsTestCase):
         self.assertTableState(
             RealmCount,
             ["value", "subgroup"],
-            [
-                [1, "private_message"],
-                [1, "private_stream"],
-                [1, "public_stream"],
-                [1, "huddle_message"],
-            ],
+            [[1, "private_message"], [1, "private_stream"], [1, "public_stream"], [1, "huddle_message"]],
         )
         # No aggregation to InstallationCount with realm constraint
         self.assertTableState(InstallationCount, ["value", "subgroup"], [])
@@ -897,9 +887,7 @@ class TestCountStats(AnalyticsTestCase):
         self.assertTableState(InstallationCount, ["value", "subgroup"], [])
         self.assertTableState(UserCount, [], [])
 
-    def create_interval(
-        self, user: UserProfile, start_offset: timedelta, end_offset: timedelta,
-    ) -> None:
+    def create_interval(self, user: UserProfile, start_offset: timedelta, end_offset: timedelta) -> None:
         UserActivityInterval.objects.create(
             user_profile=user, start=self.TIME_ZERO - start_offset, end=self.TIME_ZERO - end_offset,
         )
@@ -1250,9 +1238,7 @@ class TestLoggingCountStats(AnalyticsTestCase):
             [["realm test", 1], ["user test", 1], ["stream test", 1]],
         )
         self.assertTableState(
-            RealmCount,
-            ["property", "value"],
-            [["realm test", 1], ["user test", 1], ["stream test", 1]],
+            RealmCount, ["property", "value"], [["realm test", 1], ["user test", 1], ["stream test", 1]],
         )
         self.assertTableState(UserCount, ["property", "value"], [["user test", 1]])
         self.assertTableState(StreamCount, ["property", "value"], [["stream test", 1]])
@@ -1353,9 +1339,7 @@ class TestLoggingCountStats(AnalyticsTestCase):
         do_mark_all_as_read(user2, client)
         self.assertEqual(
             1,
-            UserCount.objects.filter(property=read_count_property).aggregate(Sum("value"))[
-                "value__sum"
-            ],
+            UserCount.objects.filter(property=read_count_property).aggregate(Sum("value"))["value__sum"],
         )
         self.assertEqual(
             1,
@@ -1369,9 +1353,7 @@ class TestLoggingCountStats(AnalyticsTestCase):
         do_mark_stream_messages_as_read(user2, client, stream)
         self.assertEqual(
             3,
-            UserCount.objects.filter(property=read_count_property).aggregate(Sum("value"))[
-                "value__sum"
-            ],
+            UserCount.objects.filter(property=read_count_property).aggregate(Sum("value"))["value__sum"],
         )
         self.assertEqual(
             2,
@@ -1384,9 +1366,7 @@ class TestLoggingCountStats(AnalyticsTestCase):
         do_update_message_flags(user1, client, "add", "read", [message])
         self.assertEqual(
             4,
-            UserCount.objects.filter(property=read_count_property).aggregate(Sum("value"))[
-                "value__sum"
-            ],
+            UserCount.objects.filter(property=read_count_property).aggregate(Sum("value"))["value__sum"],
         )
         self.assertEqual(
             3,
@@ -1447,9 +1427,7 @@ class TestActiveUsersAudit(AnalyticsTestCase):
         self.stat = COUNT_STATS["active_users_audit:is_bot:day"]
         self.current_property = self.stat.property
 
-    def add_event(
-        self, event_type: int, days_offset: float, user: Optional[UserProfile] = None,
-    ) -> None:
+    def add_event(self, event_type: int, days_offset: float, user: Optional[UserProfile] = None) -> None:
         hours_offset = int(24 * days_offset)
         if user is None:
             user = self.user

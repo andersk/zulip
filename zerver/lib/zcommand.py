@@ -9,11 +9,8 @@ from zerver.models import UserProfile
 
 def process_zcommands(content: str, user_profile: UserProfile) -> Dict[str, Any]:
     def change_mode_setting(command: str, switch_command: str, setting: str, setting_value: int) -> str:
-        msg = (
-            "Changed to {command} mode! To revert "
-            "{command} mode, type `/{switch_command}`.".format(
-                command=command, switch_command=switch_command,
-            )
+        msg = "Changed to {command} mode! To revert " "{command} mode, type `/{switch_command}`.".format(
+            command=command, switch_command=switch_command,
         )
         do_set_user_display_setting(
             user_profile=user_profile, setting_name=setting, setting_value=setting_value,

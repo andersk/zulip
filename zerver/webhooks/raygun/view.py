@@ -13,9 +13,7 @@ from zerver.models import UserProfile
 @api_key_only_webhook_view("Raygun")
 @has_request_variables
 def api_raygun_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    payload: Dict[str, Any] = REQ(argument_type="body"),
+    request: HttpRequest, user_profile: UserProfile, payload: Dict[str, Any] = REQ(argument_type="body"),
 ) -> HttpResponse:
     # The payload contains 'event' key. This 'event' key has a value of either
     # 'error_notification' or 'error_activity'. 'error_notification' happens

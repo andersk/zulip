@@ -27,9 +27,7 @@ class Command(ZulipBaseCommand):
 
         url = generate_realm_creation_url(by_admin=True)
         self.stdout.write(
-            self.style.SUCCESS(
-                "Please visit the following " "secure single-use link to register your ",
-            ),
+            self.style.SUCCESS("Please visit the following " "secure single-use link to register your "),
         )
         self.stdout.write(self.style.SUCCESS("new Zulip organization:\033[0m"))
         self.stdout.write("")

@@ -152,9 +152,7 @@ class TestGetChartData(ZulipTestCase):
     def test_messages_sent_over_time(self) -> None:
         stat = COUNT_STATS["messages_sent:is_bot:hour"]
         self.insert_data(stat, ["true", "false"], ["false"])
-        result = self.client_get(
-            "/json/analytics/chart_data", {"chart_name": "messages_sent_over_time"},
-        )
+        result = self.client_get("/json/analytics/chart_data", {"chart_name": "messages_sent_over_time"})
         self.assert_json_success(result)
         data = result.json()
         self.assertEqual(
@@ -172,9 +170,7 @@ class TestGetChartData(ZulipTestCase):
 
     def test_messages_sent_by_message_type(self) -> None:
         stat = COUNT_STATS["messages_sent:message_type:day"]
-        self.insert_data(
-            stat, ["public_stream", "private_message"], ["public_stream", "private_stream"],
-        )
+        self.insert_data(stat, ["public_stream", "private_message"], ["public_stream", "private_stream"])
         result = self.client_get(
             "/json/analytics/chart_data", {"chart_name": "messages_sent_by_message_type"},
         )
@@ -215,9 +211,7 @@ class TestGetChartData(ZulipTestCase):
         client3 = Client.objects.create(name="client 3")
         client4 = Client.objects.create(name="client 4")
         self.insert_data(stat, [client4.id, client3.id, client2.id], [client3.id, client1.id])
-        result = self.client_get(
-            "/json/analytics/chart_data", {"chart_name": "messages_sent_by_client"},
-        )
+        result = self.client_get("/json/analytics/chart_data", {"chart_name": "messages_sent_by_client"})
         self.assert_json_success(result)
         data = result.json()
         self.assertEqual(
@@ -240,9 +234,7 @@ class TestGetChartData(ZulipTestCase):
     def test_messages_read_over_time(self) -> None:
         stat = COUNT_STATS["messages_read::hour"]
         self.insert_data(stat, [None], [])
-        result = self.client_get(
-            "/json/analytics/chart_data", {"chart_name": "messages_read_over_time"},
-        )
+        result = self.client_get("/json/analytics/chart_data", {"chart_name": "messages_read_over_time"})
         self.assert_json_success(result)
         data = result.json()
         self.assertEqual(
@@ -271,9 +263,7 @@ class TestGetChartData(ZulipTestCase):
         FillState.objects.create(
             property="messages_sent:is_bot:hour", end_time=self.end_times_hour[0], state=FillState.DONE,
         )
-        result = self.client_get(
-            "/json/analytics/chart_data", {"chart_name": "messages_sent_over_time"},
-        )
+        result = self.client_get("/json/analytics/chart_data", {"chart_name": "messages_sent_over_time"})
         self.assert_json_success(result)
         data = result.json()
         self.assertEqual(data["everyone"], {"human": [0], "bot": [0]})
@@ -311,9 +301,7 @@ class TestGetChartData(ZulipTestCase):
         FillState.objects.create(
             property="messages_sent:client:day", end_time=self.end_times_day[0], state=FillState.DONE,
         )
-        result = self.client_get(
-            "/json/analytics/chart_data", {"chart_name": "messages_sent_by_client"},
-        )
+        result = self.client_get("/json/analytics/chart_data", {"chart_name": "messages_sent_by_client"})
         self.assert_json_success(result)
         data = result.json()
         self.assertEqual(data["everyone"], {})
@@ -340,9 +328,7 @@ class TestGetChartData(ZulipTestCase):
         self.assert_json_success(result)
         data = result.json()
         self.assertEqual(data["end_times"], end_time_timestamps[1:3])
-        self.assertEqual(
-            data["everyone"], {"_1day": [0, 100], "_15day": [0, 100], "all_time": [0, 100]},
-        )
+        self.assertEqual(data["everyone"], {"_1day": [0, 100], "_15day": [0, 100], "all_time": [0, 100]})
 
         # start later then end
         result = self.client_get(
@@ -417,16 +403,12 @@ class TestGetChartData(ZulipTestCase):
 
         realm.date_created = timezone_now() - timedelta(days=1, minutes=10)
         realm.save(update_fields=["date_created"])
-        result = self.client_get(
-            "/json/analytics/chart_data", {"chart_name": "messages_sent_over_time"},
-        )
+        result = self.client_get("/json/analytics/chart_data", {"chart_name": "messages_sent_over_time"})
         self.assert_json_success(result)
 
         realm.date_created = timezone_now() - timedelta(hours=10)
         realm.save(update_fields=["date_created"])
-        result = self.client_get(
-            "/json/analytics/chart_data", {"chart_name": "messages_sent_over_time"},
-        )
+        result = self.client_get("/json/analytics/chart_data", {"chart_name": "messages_sent_over_time"})
         self.assert_json_success(result)
 
         end_time = timezone_now() - timedelta(days=5)
@@ -444,9 +426,7 @@ class TestGetChartData(ZulipTestCase):
 
         realm.date_created = timezone_now() - timedelta(days=1, minutes=10)
         realm.save(update_fields=["date_created"])
-        result = self.client_get(
-            "/json/analytics/chart_data", {"chart_name": "messages_sent_over_time"},
-        )
+        result = self.client_get("/json/analytics/chart_data", {"chart_name": "messages_sent_over_time"})
         self.assert_json_success(result)
 
         end_time = timezone_now() - timedelta(days=2)
@@ -455,9 +435,7 @@ class TestGetChartData(ZulipTestCase):
 
         realm.date_created = timezone_now() - timedelta(days=3)
         realm.save(update_fields=["date_created"])
-        result = self.client_get(
-            "/json/analytics/chart_data", {"chart_name": "messages_sent_over_time"},
-        )
+        result = self.client_get("/json/analytics/chart_data", {"chart_name": "messages_sent_over_time"})
         self.assert_json_success(result)
 
         realm.date_created = timezone_now() - timedelta(days=1, hours=2)
@@ -470,9 +448,7 @@ class TestGetChartData(ZulipTestCase):
 
         realm.date_created = timezone_now() - timedelta(days=1, minutes=10)
         realm.save(update_fields=["date_created"])
-        result = self.client_get(
-            "/json/analytics/chart_data", {"chart_name": "messages_sent_over_time"},
-        )
+        result = self.client_get("/json/analytics/chart_data", {"chart_name": "messages_sent_over_time"})
         self.assert_json_success(result)
 
     def test_get_chart_data_for_realm(self) -> None:

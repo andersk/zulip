@@ -23,10 +23,7 @@ def validate_thumbnail_request(user_profile: UserProfile, path: str) -> Optional
 
 @has_request_variables
 def backend_serve_thumbnail(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    url: str = REQ(),
-    size_requested: str = REQ("size"),
+    request: HttpRequest, user_profile: UserProfile, url: str = REQ(), size_requested: str = REQ("size"),
 ) -> HttpResponse:
     if not validate_thumbnail_request(user_profile, url):
         return HttpResponseForbidden(_("<p>You are not authorized to view this file.</p>"))

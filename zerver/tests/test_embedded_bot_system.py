@@ -104,7 +104,5 @@ class TestEmbeddedBotFailures(ZulipTestCase):
                 user_profile, "Denmark", content=f"@**{bot_profile.full_name}** foo", topic_name="bar",
             )
             logging_error_mock.assert_called_once_with(
-                "Error: User %s has bot with invalid embedded bot service %s",
-                bot_profile.id,
-                "invalid",
+                "Error: User %s has bot with invalid embedded bot service %s", bot_profile.id, "invalid",
             )

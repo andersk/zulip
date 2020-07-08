@@ -289,9 +289,7 @@ class QuoteHandler(BaseHandler):
         if line.rstrip() == self.fence:
             self.done()
         else:
-            check_for_new_fence(
-                self.processor, self.lines, line, default_language=self.default_language,
-            )
+            check_for_new_fence(self.processor, self.lines, line, default_language=self.default_language)
 
     def done(self) -> None:
         text = "\n".join(self.lines)

@@ -575,9 +575,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
         subscribed_users = [hamlet, cordelia]
         unsubscribed_users = [self.example_user("othello"), self.example_user("prospero")]
         stream_name = "test-subscribe"
-        self.make_stream(
-            stream_name, realm=realm, invite_only=True, history_public_to_subscribers=False,
-        )
+        self.make_stream(stream_name, realm=realm, invite_only=True, history_public_to_subscribers=False)
 
         for subscribed_user in subscribed_users:
             self.subscribe(subscribed_user, stream_name)
@@ -1393,9 +1391,7 @@ class RealmLogoTest(UploadSerializeMixin, ZulipTestCase):
     def test_no_admin_user_upload(self) -> None:
         self.login("hamlet")
         with get_test_image_file(self.correct_files[0][0]) as fp:
-            result = self.client_post(
-                "/json/realm/logo", {"file": fp, "night": ujson.dumps(self.night)},
-            )
+            result = self.client_post("/json/realm/logo", {"file": fp, "night": ujson.dumps(self.night)})
         self.assert_json_error(result, "Must be an organization administrator")
 
     def test_upload_limited_plan_type(self) -> None:
@@ -1403,9 +1399,7 @@ class RealmLogoTest(UploadSerializeMixin, ZulipTestCase):
         do_change_plan_type(user_profile.realm, Realm.LIMITED)
         self.login_user(user_profile)
         with get_test_image_file(self.correct_files[0][0]) as fp:
-            result = self.client_post(
-                "/json/realm/logo", {"file": fp, "night": ujson.dumps(self.night)},
-            )
+            result = self.client_post("/json/realm/logo", {"file": fp, "night": ujson.dumps(self.night)})
         self.assert_json_error(result, "Available on Zulip Standard. Upgrade to access.")
 
     def test_get_default_logo(self) -> None:

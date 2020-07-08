@@ -73,9 +73,7 @@ class GithubWebhookTest(WebhookTestCase):
         expected_message = f"""baxterthehacker [pushed](https://github.com/baxterthehacker/public-repo/compare/9049f1265b7d...0d1a26e67d8f) 10 commits to branch changes. Commits by Tomasz (4), Ben (3), James (2) and others (1).\n\n{commits_info * 9}* Update README.md ([0d1a26e](https://github.com/baxterthehacker/public-repo/commit/0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c))"""
 
         self.send_and_test_stream_message(
-            "push__multiple_committers_with_others",
-            self.EXPECTED_TOPIC_BRANCH_EVENTS,
-            expected_message,
+            "push__multiple_committers_with_others", self.EXPECTED_TOPIC_BRANCH_EVENTS, expected_message,
         )
 
     def test_push_multiple_comitters_filtered_by_branches(self) -> None:
@@ -93,9 +91,7 @@ class GithubWebhookTest(WebhookTestCase):
         expected_message = f"""baxterthehacker [pushed](https://github.com/baxterthehacker/public-repo/compare/9049f1265b7d...0d1a26e67d8f) 10 commits to branch changes. Commits by Tomasz (4), Ben (3), James (2) and others (1).\n\n{commits_info * 9}* Update README.md ([0d1a26e](https://github.com/baxterthehacker/public-repo/commit/0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c))"""
 
         self.send_and_test_stream_message(
-            "push__multiple_committers_with_others",
-            self.EXPECTED_TOPIC_BRANCH_EVENTS,
-            expected_message,
+            "push__multiple_committers_with_others", self.EXPECTED_TOPIC_BRANCH_EVENTS, expected_message,
         )
 
     def test_push_50_commits(self) -> None:
@@ -309,9 +305,7 @@ class GithubWebhookTest(WebhookTestCase):
 
     def test_push_tag_msg(self) -> None:
         expected_message = "baxterthehacker pushed tag abc."
-        self.send_and_test_stream_message(
-            "push__tag", self.EXPECTED_TOPIC_REPO_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("push__tag", self.EXPECTED_TOPIC_REPO_EVENTS, expected_message)
 
     def test_pull_request_edited_msg(self) -> None:
         expected_message = "baxterthehacker edited [PR #1](https://github.com/baxterthehacker/public-repo/pull/1) from `changes` to `master`."
@@ -336,9 +330,7 @@ class GithubWebhookTest(WebhookTestCase):
             "eeshangarg unassigned [PR #1](https://github.com/zulip-test-org/helloworld/pull/1)."
         )
         self.send_and_test_stream_message(
-            "pull_request__unassigned",
-            "helloworld / PR #1 Mention that Zulip rocks!",
-            expected_message,
+            "pull_request__unassigned", "helloworld / PR #1 Mention that Zulip rocks!", expected_message,
         )
 
     def test_pull_request_ready_for_review_msg(self) -> None:

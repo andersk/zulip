@@ -53,9 +53,7 @@ def get_teamcity_property_value(property_list: List[Dict[str, str]], name: str) 
 @api_key_only_webhook_view("Teamcity")
 @has_request_variables
 def api_teamcity_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    payload: Dict[str, Any] = REQ(argument_type="body"),
+    request: HttpRequest, user_profile: UserProfile, payload: Dict[str, Any] = REQ(argument_type="body"),
 ) -> HttpResponse:
     message = payload.get("build")
     if message is None:
@@ -125,8 +123,7 @@ def api_teamcity_webhook(
         if teamcity_user is None:
             # We can't figure out who started this build - there's nothing we can do here.
             logging.info(
-                "Teamcity webhook couldn't find a matching Zulip user for "
-                "Teamcity user '%s' or '%s'",
+                "Teamcity webhook couldn't find a matching Zulip user for " "Teamcity user '%s' or '%s'",
                 teamcity_fullname,
                 teamcity_shortname,
             )

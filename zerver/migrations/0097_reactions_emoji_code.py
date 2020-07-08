@@ -53,7 +53,5 @@ class Migration(migrations.Migration):
                 max_length=30,
             ),
         ),
-        migrations.RunPython(
-            populate_new_fields, reverse_code=migrations.RunPython.noop, elidable=True,
-        ),
+        migrations.RunPython(populate_new_fields, reverse_code=migrations.RunPython.noop, elidable=True),
     ]

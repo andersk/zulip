@@ -64,9 +64,7 @@ class Migration(migrations.Migration):
                 ("has_billing_relationship", models.BooleanField(default=False)),
                 (
                     "realm",
-                    models.OneToOneField(
-                        on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm",
-                    ),
+                    models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm"),
                 ),
             ],
         ),

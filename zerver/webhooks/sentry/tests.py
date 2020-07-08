@@ -30,9 +30,7 @@ Traceback:
          defer resp.Body.Close()
 
 ```"""
-        self.send_and_test_stream_message(
-            "event_for_exception_golang", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("event_for_exception_golang", expected_topic, expected_message)
 
     def test_event_for_exception_node(self) -> None:
         expected_topic = "Error: Sample error from node."
@@ -85,9 +83,7 @@ Traceback:
              sentry_sdk.capture_exception(e)
 
 ```"""
-        self.send_and_test_stream_message(
-            "event_for_exception_python", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("event_for_exception_python", expected_topic, expected_message)
 
     def test_event_for_message_golang(self) -> None:
         expected_topic = "A test message event from golang."

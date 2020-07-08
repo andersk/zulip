@@ -479,9 +479,7 @@ class HomeTest(ZulipTestCase):
         return user
 
     def create_non_active_user(self, realm: Realm, email: str, name: str) -> UserProfile:
-        user = do_create_user(
-            email=email, password="123", realm=realm, full_name=name, short_name=name,
-        )
+        user = do_create_user(email=email, password="123", realm=realm, full_name=name, short_name=name)
 
         # Doing a full-stack deactivation would be expensive here,
         # and we really only need to flip the flag to get a valid
@@ -508,9 +506,7 @@ class HomeTest(ZulipTestCase):
 
         bots = {}
         for i in range(3):
-            bots[i] = self.create_bot(
-                owner=hamlet, bot_email=f"bot-{i}@zulip.com", bot_name=f"Bot {i}",
-            )
+            bots[i] = self.create_bot(owner=hamlet, bot_email=f"bot-{i}@zulip.com", bot_name=f"Bot {i}")
 
         for i in range(3):
             defunct_user = self.create_non_active_user(

@@ -221,9 +221,7 @@ def handle_deprecated_payload(payload: Dict[str, Any]) -> Tuple[str, str]:
 @api_key_only_webhook_view("Sentry")
 @has_request_variables
 def api_sentry_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    payload: Dict[str, Any] = REQ(argument_type="body"),
+    request: HttpRequest, user_profile: UserProfile, payload: Dict[str, Any] = REQ(argument_type="body"),
 ) -> HttpResponse:
     data = payload.get("data", None)
 

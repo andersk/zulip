@@ -119,9 +119,7 @@ def create_streams_if_needed(
             realm,
             stream_dict["name"],
             invite_only=stream_dict.get("invite_only", False),
-            stream_post_policy=stream_dict.get(
-                "stream_post_policy", Stream.STREAM_POST_POLICY_EVERYONE,
-            ),
+            stream_post_policy=stream_dict.get("stream_post_policy", Stream.STREAM_POST_POLICY_EVERYONE),
             history_public_to_subscribers=stream_dict.get("history_public_to_subscribers"),
             stream_description=stream_dict.get("description", ""),
             message_retention_days=stream_dict.get("message_retention_days", None),

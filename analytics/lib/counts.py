@@ -232,10 +232,7 @@ def do_aggregate_to_summary_table(
         cursor.execute(realmcount_query, {"property": stat.property, "end_time": end_time})
         end = time.time()
         logger.info(
-            "%s RealmCount aggregation (%dms/%sr)",
-            stat.property,
-            (end - start) * 1000,
-            cursor.rowcount,
+            "%s RealmCount aggregation (%dms/%sr)", stat.property, (end - start) * 1000, cursor.rowcount,
         )
 
     if realm is None:
