@@ -19,12 +19,21 @@ Usage examples:
 ./manage.py client_activity --target user --user hamlet@zulip.com --realm zulip"""
 
     def add_arguments(self, parser: ArgumentParser) -> None:
-        parser.add_argument('--target', dest='target', required=True, type=str,
-                            help="'server' will calculate client activity of the entire server. "
-                                 "'realm' will calculate client activity of realm. "
-                                 "'user' will calculate client activity of the user.")
-        parser.add_argument('--user', dest='user', type=str,
-                            help="The email address of the user you want to calculate activity.")
+        parser.add_argument(
+            "--target",
+            dest="target",
+            required=True,
+            type=str,
+            help="'server' will calculate client activity of the entire server. "
+            "'realm' will calculate client activity of realm. "
+            "'user' will calculate client activity of the user.",
+        )
+        parser.add_argument(
+            "--user",
+            dest="user",
+            type=str,
+            help="The email address of the user you want to calculate activity.",
+        )
         self.add_realm_args(parser)
 
     def compute_activity(self, user_activity_objects: QuerySet) -> None:
@@ -39,9 +48,11 @@ Usage examples:
         # Importantly, this does NOT tell you anything about the relative
         # volumes of requests from clients.
         threshold = timezone_now() - datetime.timedelta(days=7)
-        client_counts = user_activity_objects.filter(
-            last_visit__gt=threshold).values("client__name").annotate(
-            count=Count('client__name'))
+        client_counts = (
+            user_activity_objects.filter(last_visit__gt=threshold)
+            .values("client__name")
+            .annotate(count=Count("client__name"))
+        )
 
         total = 0
         counts = []
@@ -64,11 +75,15 @@ Usage examples:
                 # Report global activity.
                 self.compute_activity(UserActivity.objects.all())
             elif options["target"] == "realm" and realm is not None:
-                self.compute_activity(UserActivity.objects.filter(user_profile__realm=realm))
+                self.compute_activity(
+                    UserActivity.objects.filter(user_profile__realm=realm),
+                )
             else:
                 self.print_help("./manage.py", "client_activity")
         elif options["target"] == "user":
             user_profile = self.get_user(options["user"], realm)
-            self.compute_activity(UserActivity.objects.filter(user_profile=user_profile))
+            self.compute_activity(
+                UserActivity.objects.filter(user_profile=user_profile),
+            )
         else:
             self.print_help("./manage.py", "client_activity")

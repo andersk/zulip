@@ -3,7 +3,9 @@ import argparse
 import os
 import sys
 
-ZULIP_PATH = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+ZULIP_PATH = os.path.dirname(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+)
 if ZULIP_PATH not in sys.path:
     sys.path.append(ZULIP_PATH)
 
@@ -25,10 +27,11 @@ if "debian" in os_families():
 elif "fedora" in os_families():
     run(["yum", "-y", "install"] + YUM_THUMBOR_VENV_DEPENDENCIES)
 else:
-    print("Unsupported platform: {}".format(distro_info['ID']))
+    print("Unsupported platform: {}".format(distro_info["ID"]))
     sys.exit(1)
 
 venv_name = "zulip-thumbor-venv"
 cached_venv_path = setup_virtualenv(
     os.path.join(args.deploy_path, venv_name),
-    os.path.join(ZULIP_PATH, "requirements", "thumbor.txt"))
+    os.path.join(ZULIP_PATH, "requirements", "thumbor.txt"),
+)

@@ -25,14 +25,16 @@ class Command(ZulipBaseCommand):
         parser.add_argument(
             "--output", default=None, nargs="?", help="Filename of output tarball",
         )
-        parser.add_argument("--skip-db", action='store_true', help="Skip database backup")
-        parser.add_argument("--skip-uploads", action='store_true', help="Skip uploads backup")
+        parser.add_argument(
+            "--skip-db", action="store_true", help="Skip database backup",
+        )
+        parser.add_argument(
+            "--skip-uploads", action="store_true", help="Skip uploads backup",
+        )
 
     def handle(self, *args: Any, **options: Any) -> None:
         timestamp = timezone_now().strftime(TIMESTAMP_FORMAT)
-        with tempfile.TemporaryDirectory(
-            prefix=f"zulip-backup-{timestamp}-",
-        ) as tmp:
+        with tempfile.TemporaryDirectory(prefix=f"zulip-backup-{timestamp}-") as tmp:
             os.mkdir(os.path.join(tmp, "zulip-backup"))
             members = []
             paths = []
@@ -46,8 +48,7 @@ class Command(ZulipBaseCommand):
 
             with open(os.path.join(tmp, "zulip-backup", "os-version"), "w") as f:
                 print(
-                    "{ID} {VERSION_ID}".format(**parse_os_release()),
-                    file=f,
+                    "{ID} {VERSION_ID}".format(**parse_os_release()), file=f,
                 )
             members.append("zulip-backup/os-version")
 
@@ -66,27 +67,35 @@ class Command(ZulipBaseCommand):
                 members.append("/etc/zulip")
                 paths.append(("settings", "/etc/zulip"))
 
-            if not options['skip_db']:
+            if not options["skip_db"]:
                 pg_dump_command = [
                     "pg_dump",
                     "--format=directory",
-                    "--file", os.path.join(tmp, "zulip-backup", "database"),
-                    "--host", settings.DATABASES["default"]["HOST"],
-                    "--port", settings.DATABASES["default"]["PORT"],
-                    "--username", settings.DATABASES["default"]["USER"],
-                    "--dbname", settings.DATABASES["default"]["NAME"],
+                    "--file",
+                    os.path.join(tmp, "zulip-backup", "database"),
+                    "--host",
+                    settings.DATABASES["default"]["HOST"],
+                    "--port",
+                    settings.DATABASES["default"]["PORT"],
+                    "--username",
+                    settings.DATABASES["default"]["USER"],
+                    "--dbname",
+                    settings.DATABASES["default"]["NAME"],
                     "--no-password",
                 ]
                 os.environ["PGPASSWORD"] = settings.DATABASES["default"]["PASSWORD"]
 
                 run(
-                    pg_dump_command,
-                    cwd=tmp,
+                    pg_dump_command, cwd=tmp,
                 )
                 members.append("zulip-backup/database")
 
-            if not options['skip_uploads'] and settings.LOCAL_UPLOADS_DIR is not None and os.path.exists(
-                os.path.join(settings.DEPLOY_ROOT, settings.LOCAL_UPLOADS_DIR),
+            if (
+                not options["skip_uploads"]
+                and settings.LOCAL_UPLOADS_DIR is not None
+                and os.path.exists(
+                    os.path.join(settings.DEPLOY_ROOT, settings.LOCAL_UPLOADS_DIR),
+                )
             ):
                 members.append(
                     os.path.join(settings.DEPLOY_ROOT, settings.LOCAL_UPLOADS_DIR),

@@ -7,8 +7,10 @@ import pytz
 def get_all_timezones() -> List[str]:
     return sorted(pytz.all_timezones)
 
+
 def get_timezone(tz: str) -> pytz.BaseTzInfo:
     return pytz.timezone(tz)
+
 
 # This method carefully trims a list of common timezones in the pytz
 # database and handles duplicate abbreviations in favor of the most
@@ -27,10 +29,10 @@ def _calculate_timezones() -> Dict[str, Union[int, Any]]:
         tzdata[tz_name] = offset
         # Handle known duplicates/exceptions.
         # IST: Asia/Kolkata and Europe/Dublin.
-        if tz_name == 'IST':
+        if tz_name == "IST":
             tzdata[tz_name] = 19800  # Asia/Kolkata
         # CDT: America/AlmostAll and America/Havana.
-        if tz_name == 'CDT':
+        if tz_name == "CDT":
             tzdata[tz_name] = -68400  # America/AlmostAll
         # CST America/Belize -64800
         # CST America/Costa_Rica -64800
@@ -43,9 +45,10 @@ def _calculate_timezones() -> Dict[str, Union[int, Any]]:
         # CST Asia/Macau 28800
         # CST Asia/Shanghai 28800
         # CST Asia/Taipei 28800
-        if tz_name == 'CST':
+        if tz_name == "CST":
             tzdata[tz_name] = -64800  # America/All
     return tzdata
+
 
 timezone_data = None
 

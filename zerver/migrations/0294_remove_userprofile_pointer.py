@@ -6,12 +6,9 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('zerver', '0293_update_invite_as_dict_values'),
+        ("zerver", "0293_update_invite_as_dict_values"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='userprofile',
-            name='pointer',
-        ),
+        migrations.RemoveField(model_name="userprofile", name="pointer"),
     ]

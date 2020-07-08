@@ -23,47 +23,51 @@ LEGACY_PREV_TOPIC = "prev_subject"
 # database, but it's the JSON field.
 EXPORT_TOPIC_NAME = "subject"
 
-'''
+"""
 The following functions are for user-facing APIs
 where we'll want to support "subject" for a while.
-'''
+"""
+
 
 def get_topic_from_message_info(message_info: Dict[str, Any]) -> str:
-    '''
+    """
     Use this where you are getting dicts that are based off of messages
     that may come from the outside world, especially from third party
     APIs and bots.
 
     We prefer 'topic' to 'subject' here.  We expect at least one field
     to be present (or the caller must know how to handle KeyError).
-    '''
-    if 'topic' in message_info:
-        return message_info['topic']
+    """
+    if "topic" in message_info:
+        return message_info["topic"]
 
-    return message_info['subject']
+    return message_info["subject"]
+
 
 def REQ_topic() -> Optional[str]:
     # REQ handlers really return a REQ, but we
     # lie to make the rest of the type matching work.
     return REQ(
-        whence='topic',
-        aliases=['subject'],
+        whence="topic",
+        aliases=["subject"],
         converter=lambda x: x.strip(),
         default=None,
     )
 
-'''
+
+"""
 TRY TO KEEP THIS DIVIDING LINE.
 
 Below this line we want to make it so that functions are only
 using "subject" in the DB sense, and nothing customer facing.
 
-'''
+"""
 
 # This is used in low-level message functions in
 # zerver/lib/message.py, and it's not user facing.
 DB_TOPIC_NAME = "subject"
-MESSAGE__TOPIC = 'message__subject'
+MESSAGE__TOPIC = "message__subject"
+
 
 def topic_match_sa(topic_name: str) -> Any:
     # _sa is short for Sql Alchemy, which we use mostly for
@@ -71,48 +75,65 @@ def topic_match_sa(topic_name: str) -> Any:
     topic_cond = func.upper(column("subject")) == func.upper(literal(topic_name))
     return topic_cond
 
+
 def topic_column_sa() -> Any:
     return column("subject")
+
 
 def filter_by_exact_message_topic(query: QuerySet, message: Message) -> QuerySet:
     topic_name = message.topic_name()
     return query.filter(subject=topic_name)
 
+
 def filter_by_topic_name_via_message(query: QuerySet, topic_name: str) -> QuerySet:
     return query.filter(message__subject__iexact=topic_name)
 
+
 def messages_for_topic(stream_recipient_id: int, topic_name: str) -> QuerySet:
     return Message.objects.filter(
-        recipient_id=stream_recipient_id,
-        subject__iexact=topic_name,
+        recipient_id=stream_recipient_id, subject__iexact=topic_name,
     )
 
+
 def save_message_for_edit_use_case(message: Message) -> None:
-    message.save(update_fields=[TOPIC_NAME, "content", "rendered_content",
-                                "rendered_content_version", "last_edit_time",
-                                "edit_history", "has_attachment", "has_image",
-                                "has_link", "recipient_id"])
+    message.save(
+        update_fields=[
+            TOPIC_NAME,
+            "content",
+            "rendered_content",
+            "rendered_content_version",
+            "last_edit_time",
+            "edit_history",
+            "has_attachment",
+            "has_image",
+            "has_link",
+            "recipient_id",
+        ],
+    )
 
 
-def user_message_exists_for_topic(user_profile: UserProfile,
-                                  recipient: Recipient,
-                                  topic_name: str) -> bool:
+def user_message_exists_for_topic(
+    user_profile: UserProfile, recipient: Recipient, topic_name: str,
+) -> bool:
     return UserMessage.objects.filter(
         user_profile=user_profile,
         message__recipient=recipient,
         message__subject__iexact=topic_name,
     ).exists()
 
-def update_messages_for_topic_edit(message: Message,
-                                   propagate_mode: str,
-                                   orig_topic_name: str,
-                                   topic_name: Optional[str],
-                                   new_stream: Optional[Stream]) -> List[Message]:
-    propagate_query = Q(recipient = message.recipient, subject__iexact = orig_topic_name)
-    if propagate_mode == 'change_all':
-        propagate_query = propagate_query & ~Q(id = message.id)
-    if propagate_mode == 'change_later':
-        propagate_query = propagate_query & Q(id__gt = message.id)
+
+def update_messages_for_topic_edit(
+    message: Message,
+    propagate_mode: str,
+    orig_topic_name: str,
+    topic_name: Optional[str],
+    new_stream: Optional[Stream],
+) -> List[Message]:
+    propagate_query = Q(recipient=message.recipient, subject__iexact=orig_topic_name)
+    if propagate_mode == "change_all":
+        propagate_query = propagate_query & ~Q(id=message.id)
+    if propagate_mode == "change_later":
+        propagate_query = propagate_query & Q(id__gt=message.id)
 
     messages = Message.objects.filter(propagate_query).select_related()
 
@@ -138,7 +159,10 @@ def update_messages_for_topic_edit(message: Message,
 
     return messages_list
 
-def generate_topic_history_from_db_rows(rows: List[Tuple[str, int]]) -> List[Dict[str, Any]]:
+
+def generate_topic_history_from_db_rows(
+    rows: List[Tuple[str, int]],
+) -> List[Dict[str, Any]]:
     canonical_topic_names: Dict[str, Tuple[int, str]] = {}
 
     # Sort rows by max_message_id so that if a topic
@@ -152,18 +176,16 @@ def generate_topic_history_from_db_rows(rows: List[Tuple[str, int]]) -> List[Dic
 
     history = []
     for canonical_topic, (max_message_id, topic_name) in canonical_topic_names.items():
-        history.append(dict(
-            name=topic_name,
-            max_id=max_message_id),
-        )
-    return sorted(history, key=lambda x: -x['max_id'])
+        history.append(dict(name=topic_name, max_id=max_message_id))
+    return sorted(history, key=lambda x: -x["max_id"])
 
-def get_topic_history_for_stream(user_profile: UserProfile,
-                                 recipient: Recipient,
-                                 public_history: bool) -> List[Dict[str, Any]]:
+
+def get_topic_history_for_stream(
+    user_profile: UserProfile, recipient: Recipient, public_history: bool,
+) -> List[Dict[str, Any]]:
     cursor = connection.cursor()
     if public_history:
-        query = '''
+        query = """
         SELECT
             "zerver_message"."subject" as topic,
             max("zerver_message".id) as max_message_id
@@ -175,10 +197,10 @@ def get_topic_history_for_stream(user_profile: UserProfile,
             "zerver_message"."subject"
         )
         ORDER BY max("zerver_message".id) DESC
-        '''
+        """
         cursor.execute(query, [recipient.id])
     else:
-        query = '''
+        query = """
         SELECT
             "zerver_message"."subject" as topic,
             max("zerver_message".id) as max_message_id
@@ -194,16 +216,19 @@ def get_topic_history_for_stream(user_profile: UserProfile,
             "zerver_message"."subject"
         )
         ORDER BY max("zerver_message".id) DESC
-        '''
+        """
         cursor.execute(query, [user_profile.id, recipient.id])
     rows = cursor.fetchall()
     cursor.close()
 
     return generate_topic_history_from_db_rows(rows)
 
-def get_topic_history_for_web_public_stream(recipient: Recipient) -> List[Dict[str, Any]]:
+
+def get_topic_history_for_web_public_stream(
+    recipient: Recipient,
+) -> List[Dict[str, Any]]:
     cursor = connection.cursor()
-    query = '''
+    query = """
     SELECT
         "zerver_message"."subject" as topic,
         max("zerver_message".id) as max_message_id
@@ -215,7 +240,7 @@ def get_topic_history_for_web_public_stream(recipient: Recipient) -> List[Dict[s
         "zerver_message"."subject"
     )
     ORDER BY max("zerver_message".id) DESC
-    '''
+    """
     cursor.execute(query, [recipient.id])
     rows = cursor.fetchall()
     cursor.close()

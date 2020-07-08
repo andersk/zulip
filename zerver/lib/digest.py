@@ -35,11 +35,12 @@ DIGEST_CUTOFF = 5
 # 2. Interesting stream traffic, as determined by the longest and most
 #    diversely comment upon topics.
 
+
 def inactive_since(user_profile: UserProfile, cutoff: datetime.datetime) -> bool:
     # Hasn't used the app in the last DIGEST_CUTOFF (5) days.
-    most_recent_visit = [row.last_visit for row in
-                         UserActivity.objects.filter(
-                             user_profile=user_profile)]
+    most_recent_visit = [
+        row.last_visit for row in UserActivity.objects.filter(user_profile=user_profile)
+    ]
 
     if not most_recent_visit:
         # This person has never used the app.
@@ -48,31 +49,38 @@ def inactive_since(user_profile: UserProfile, cutoff: datetime.datetime) -> bool
     last_visit = max(most_recent_visit)
     return last_visit < cutoff
 
+
 def should_process_digest(realm_str: str) -> bool:
     if realm_str in settings.SYSTEM_ONLY_REALMS:
         # Don't try to send emails to system-only realms
         return False
     return True
 
+
 # Changes to this should also be reflected in
 # zerver/worker/queue_processors.py:DigestWorker.consume()
-def queue_digest_recipient(user_profile: UserProfile, cutoff: datetime.datetime) -> None:
+def queue_digest_recipient(
+    user_profile: UserProfile, cutoff: datetime.datetime,
+) -> None:
     # Convert cutoff to epoch seconds for transit.
-    event = {"user_profile_id": user_profile.id,
-             "cutoff": cutoff.strftime('%s')}
+    event = {"user_profile_id": user_profile.id, "cutoff": cutoff.strftime("%s")}
     queue_json_publish("digest_emails", event)
+
 
 def enqueue_emails(cutoff: datetime.datetime) -> None:
     if not settings.SEND_DIGEST_EMAILS:
         return
 
     weekday = timezone_now().weekday()
-    for realm in Realm.objects.filter(deactivated=False, digest_emails_enabled=True, digest_weekday=weekday):
+    for realm in Realm.objects.filter(
+        deactivated=False, digest_emails_enabled=True, digest_weekday=weekday,
+    ):
         if not should_process_digest(realm.string_id):
             continue
 
         user_profiles = UserProfile.objects.filter(
-            realm=realm, is_active=True, is_bot=False, enable_digest_emails=True)
+            realm=realm, is_active=True, is_bot=False, enable_digest_emails=True,
+        )
 
         for user_profile in user_profiles:
             if inactive_since(user_profile, cutoff):
@@ -82,7 +90,10 @@ def enqueue_emails(cutoff: datetime.datetime) -> None:
                     user_profile.id,
                 )
 
-def gather_hot_conversations(user_profile: UserProfile, messages: List[Message]) -> List[Dict[str, Any]]:
+
+def gather_hot_conversations(
+    user_profile: UserProfile, messages: List[Message],
+) -> List[Dict[str, Any]]:
     # Gather stream conversations of 2 types:
     # 1. long conversations
     # 2. conversations where many different people participated
@@ -94,8 +105,7 @@ def gather_hot_conversations(user_profile: UserProfile, messages: List[Message])
     conversation_messages: Dict[Tuple[int, str], List[Message]] = defaultdict(list)
     conversation_diversity: Dict[Tuple[int, str], Set[str]] = defaultdict(set)
     for message in messages:
-        key = (message.recipient.type_id,
-               message.topic_name())
+        key = (message.recipient.type_id, message.topic_name())
 
         conversation_messages[key].append(message)
 
@@ -103,8 +113,7 @@ def gather_hot_conversations(user_profile: UserProfile, messages: List[Message])
             # Don't include automated messages in the count.
             continue
 
-        conversation_diversity[key].add(
-            message.sender.full_name)
+        conversation_diversity[key].add(message.sender.full_name)
         conversation_length[key] += 1
 
     diversity_list = list(conversation_diversity.items())
@@ -138,19 +147,25 @@ def gather_hot_conversations(user_profile: UserProfile, messages: List[Message])
         # We'll display up to 2 messages from the conversation.
         first_few_messages = messages[:2]
 
-        teaser_data = {"participants": users,
-                       "count": count - len(first_few_messages),
-                       "first_few_messages": build_message_list(
-                           user_profile, first_few_messages)}
+        teaser_data = {
+            "participants": users,
+            "count": count - len(first_few_messages),
+            "first_few_messages": build_message_list(user_profile, first_few_messages),
+        }
 
         hot_conversation_render_payloads.append(teaser_data)
     return hot_conversation_render_payloads
 
-def gather_new_streams(user_profile: UserProfile,
-                       threshold: datetime.datetime) -> Tuple[int, Dict[str, List[str]]]:
+
+def gather_new_streams(
+    user_profile: UserProfile, threshold: datetime.datetime,
+) -> Tuple[int, Dict[str, List[str]]]:
     if user_profile.can_access_public_streams():
-        new_streams = list(get_active_streams(user_profile.realm).filter(
-            invite_only=False, date_created__gt=threshold))
+        new_streams = list(
+            get_active_streams(user_profile.realm).filter(
+                invite_only=False, date_created__gt=threshold,
+            ),
+        )
     else:
         new_streams = []
 
@@ -167,11 +182,14 @@ def gather_new_streams(user_profile: UserProfile,
 
     return len(new_streams), {"html": streams_html, "plain": streams_plain}
 
+
 def enough_traffic(hot_conversations: str, new_streams: int) -> bool:
     return bool(hot_conversations or new_streams)
 
-def handle_digest_email(user_profile_id: int, cutoff: float,
-                        render_to_web: bool = False) -> Union[None, Dict[str, Any]]:
+
+def handle_digest_email(
+    user_profile_id: int, cutoff: float, render_to_web: bool = False,
+) -> Union[None, Dict[str, Any]]:
     user_profile = get_user_profile_by_id(user_profile_id)
 
     # Convert from epoch seconds to a datetime object.
@@ -180,34 +198,36 @@ def handle_digest_email(user_profile_id: int, cutoff: float,
     context = common_context(user_profile)
 
     # Start building email template data.
-    context.update({
-        'unsubscribe_link': one_click_unsubscribe_link(user_profile, "digest"),
-    })
+    context.update(
+        {"unsubscribe_link": one_click_unsubscribe_link(user_profile, "digest")},
+    )
 
     home_view_streams = Subscription.objects.filter(
         user_profile=user_profile,
         recipient__type=Recipient.STREAM,
         active=True,
-        is_muted=False).values_list('recipient__type_id', flat=True)
+        is_muted=False,
+    ).values_list("recipient__type_id", flat=True)
 
     if not user_profile.long_term_idle:
         stream_ids = home_view_streams
     else:
-        stream_ids = exclude_subscription_modified_streams(user_profile, home_view_streams, cutoff_date)
+        stream_ids = exclude_subscription_modified_streams(
+            user_profile, home_view_streams, cutoff_date,
+        )
 
     # Fetch list of all messages sent after cutoff_date where the user is subscribed
     messages = Message.objects.filter(
         recipient__type=Recipient.STREAM,
         recipient__type_id__in=stream_ids,
-        date_sent__gt=cutoff_date).select_related('recipient', 'sender', 'sending_client')
+        date_sent__gt=cutoff_date,
+    ).select_related("recipient", "sender", "sending_client")
 
     # Gather hot conversations.
-    context["hot_conversations"] = gather_hot_conversations(
-        user_profile, messages)
+    context["hot_conversations"] = gather_hot_conversations(user_profile, messages)
 
     # Gather new streams.
-    new_streams_count, new_streams = gather_new_streams(
-        user_profile, cutoff_date)
+    new_streams_count, new_streams = gather_new_streams(user_profile, cutoff_date)
     context["new_streams"] = new_streams
     context["new_streams_count"] = new_streams_count
 
@@ -220,14 +240,20 @@ def handle_digest_email(user_profile_id: int, cutoff: float,
     if enough_traffic(context["hot_conversations"], new_streams_count):
         logger.info("Sending digest email for user %s", user_profile.id)
         # Send now, as a ScheduledEmail
-        send_future_email('zerver/emails/digest', user_profile.realm, to_user_ids=[user_profile.id],
-                          from_name="Zulip Digest", from_address=FromAddress.no_reply_placeholder,
-                          context=context)
+        send_future_email(
+            "zerver/emails/digest",
+            user_profile.realm,
+            to_user_ids=[user_profile.id],
+            from_name="Zulip Digest",
+            from_address=FromAddress.no_reply_placeholder,
+            context=context,
+        )
     return None
 
-def exclude_subscription_modified_streams(user_profile: UserProfile,
-                                          stream_ids: List[int],
-                                          cutoff_date: datetime.datetime) -> List[int]:
+
+def exclude_subscription_modified_streams(
+    user_profile: UserProfile, stream_ids: List[int], cutoff_date: datetime.datetime,
+) -> List[int]:
     """Exclude streams from given list where users' subscription was modified."""
 
     events = [
@@ -241,6 +267,7 @@ def exclude_subscription_modified_streams(user_profile: UserProfile,
         realm=user_profile.realm,
         modified_user=user_profile,
         event_time__gt=cutoff_date,
-        event_type__in=events).values_list('modified_stream_id', flat=True)
+        event_type__in=events,
+    ).values_list("modified_stream_id", flat=True)
 
     return list(set(stream_ids) - set(modified_streams))

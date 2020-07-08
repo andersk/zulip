@@ -16,48 +16,57 @@ def is_canarytoken(message: Dict[str, Any]) -> bool:
     a canary or a canarytoken. Unfortunately, there isn't a great way to differentiate other
     than look at the contents.
     """
-    return 'Timestamp' not in message
+    return "Timestamp" not in message
 
 
 def canarytoken_message(message: Dict[str, Any]) -> Tuple[str, str]:
     """
     Construct the message for a canarytoken-type request.
     """
-    topic = 'canarytoken alert'
-    body = (f"**:alert: Canarytoken has been triggered on {message['time']}!**\n\n"
-            f"> {message['memo']} \n\n"
-            f"[Manage this canarytoken]({message['manage_url']})")
+    topic = "canarytoken alert"
+    body = (
+        f"**:alert: Canarytoken has been triggered on {message['time']}!**\n\n"
+        f"> {message['memo']} \n\n"
+        f"[Manage this canarytoken]({message['manage_url']})"
+    )
 
     return (topic, body)
 
 
-def canary_message(message: Dict[str, Any], user_specified_topic: Optional[str]) -> Tuple[str, str]:
+def canary_message(
+    message: Dict[str, Any], user_specified_topic: Optional[str],
+) -> Tuple[str, str]:
     """
     Construct the message for a canary-type request.
     """
     topic = f"canary alert - {message['CanaryName']}"
 
-    reverse_dns = ''
-    if 'ReverseDNS' in message:
+    reverse_dns = ""
+    if "ReverseDNS" in message:
         reverse_dns = f" (`{message['ReverseDNS']}`)"
 
-    name = ''
+    name = ""
     if user_specified_topic:
         name = f" `{message['CanaryName']}`"
 
-    body = (f"**:alert: Canary{name} has been triggered!**\n\n"
-            f"On {message['Timestamp']}, `{message['CanaryName']}` was triggered "
-            f"from `{message['SourceIP']}`{reverse_dns}:\n\n"
-            f"> {message['Intro']}")
+    body = (
+        f"**:alert: Canary{name} has been triggered!**\n\n"
+        f"On {message['Timestamp']}, `{message['CanaryName']}` was triggered "
+        f"from `{message['SourceIP']}`{reverse_dns}:\n\n"
+        f"> {message['Intro']}"
+    )
 
     return (topic, body)
 
 
-@api_key_only_webhook_view('Thinkst')
+@api_key_only_webhook_view("Thinkst")
 @has_request_variables
-def api_thinkst_webhook(request: HttpRequest, user_profile: UserProfile,
-                        message: Dict[str, Any]=REQ(argument_type='body'),
-                        user_specified_topic: Optional[str]=REQ('topic', default=None)) -> HttpResponse:
+def api_thinkst_webhook(
+    request: HttpRequest,
+    user_profile: UserProfile,
+    message: Dict[str, Any] = REQ(argument_type="body"),
+    user_specified_topic: Optional[str] = REQ("topic", default=None),
+) -> HttpResponse:
     """
     Construct a response to a webhook event from a Thinkst canary or canarytoken, see
     linked documentation below for a schema:

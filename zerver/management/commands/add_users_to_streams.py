@@ -11,14 +11,18 @@ class Command(ZulipBaseCommand):
 
     def add_arguments(self, parser: CommandParser) -> None:
         self.add_realm_args(parser, True)
-        self.add_user_list_args(parser, all_users_help="Add all users in realm to these streams.")
+        self.add_user_list_args(
+            parser, all_users_help="Add all users in realm to these streams.",
+        )
 
         parser.add_argument(
-            '-s', '--streams',
-            dest='streams',
+            "-s",
+            "--streams",
+            dest="streams",
             type=str,
             required=True,
-            help='A comma-separated list of stream names.')
+            help="A comma-separated list of stream names.",
+        )
 
     def handle(self, **options: Any) -> None:
         realm = self.get_realm(options)
@@ -30,8 +34,16 @@ class Command(ZulipBaseCommand):
         for stream_name in set(stream_names):
             for user_profile in user_profiles:
                 stream = ensure_stream(realm, stream_name, acting_user=None)
-                _ignore, already_subscribed = bulk_add_subscriptions([stream], [user_profile])
-                was_there_already = user_profile.id in {tup[0].id for tup in already_subscribed}
-                print("{} {} to {}".format(
-                    "Already subscribed" if was_there_already else "Subscribed",
-                    user_profile.delivery_email, stream_name))
+                _ignore, already_subscribed = bulk_add_subscriptions(
+                    [stream], [user_profile],
+                )
+                was_there_already = user_profile.id in {
+                    tup[0].id for tup in already_subscribed
+                }
+                print(
+                    "{} {} to {}".format(
+                        "Already subscribed" if was_there_already else "Subscribed",
+                        user_profile.delivery_email,
+                        stream_name,
+                    ),
+                )

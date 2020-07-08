@@ -5,9 +5,11 @@ from django.db.backends.postgresql.schema import DatabaseSchemaEditor
 from django.db.migrations.state import StateApps
 
 
-def set_subdomain_of_default_realm(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
+def set_subdomain_of_default_realm(
+    apps: StateApps, schema_editor: DatabaseSchemaEditor,
+) -> None:
     if settings.DEVELOPMENT:
-        Realm = apps.get_model('zerver', 'Realm')
+        Realm = apps.get_model("zerver", "Realm")
         try:
             default_realm = Realm.objects.get(domain="zulip.com")
         except ObjectDoesNotExist:
@@ -17,16 +19,17 @@ def set_subdomain_of_default_realm(apps: StateApps, schema_editor: DatabaseSchem
             default_realm.subdomain = "zulip"
             default_realm.save()
 
+
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('zerver', '0001_initial'),
+        ("zerver", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='realm',
-            name='subdomain',
+            model_name="realm",
+            name="subdomain",
             field=models.CharField(max_length=40, unique=True, null=True),
         ),
         migrations.RunPython(set_subdomain_of_default_realm, elidable=True),

@@ -6,12 +6,9 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('zerver', '0264_migrate_is_announcement_only'),
+        ("zerver", "0264_migrate_is_announcement_only"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='stream',
-            name='is_announcement_only',
-        ),
+        migrations.RemoveField(model_name="stream", name="is_announcement_only"),
     ]

@@ -13,13 +13,17 @@ class Customer(models.Model):
     stripe_customer_id: str = models.CharField(max_length=255, null=True, unique=True)
     sponsorship_pending: bool = models.BooleanField(default=False)
     # A percentage, like 85.
-    default_discount: Optional[Decimal] = models.DecimalField(decimal_places=4, max_digits=7, null=True)
+    default_discount: Optional[Decimal] = models.DecimalField(
+        decimal_places=4, max_digits=7, null=True,
+    )
 
     def __str__(self) -> str:
         return f"<Customer {self.realm} {self.stripe_customer_id}>"
 
+
 def get_customer_by_realm(realm: Realm) -> Optional[Customer]:
     return Customer.objects.filter(realm=realm).first()
+
 
 class CustomerPlan(models.Model):
     customer: Customer = models.ForeignKey(Customer, on_delete=CASCADE)
@@ -33,16 +37,21 @@ class CustomerPlan(models.Model):
     fixed_price: Optional[int] = models.IntegerField(null=True)
 
     # Discount that was applied. For display purposes only.
-    discount: Optional[Decimal] = models.DecimalField(decimal_places=4, max_digits=6, null=True)
+    discount: Optional[Decimal] = models.DecimalField(
+        decimal_places=4, max_digits=6, null=True,
+    )
 
     billing_cycle_anchor: datetime.datetime = models.DateTimeField()
     ANNUAL = 1
     MONTHLY = 2
     billing_schedule: int = models.SmallIntegerField()
 
-    next_invoice_date: Optional[datetime.datetime] = models.DateTimeField(db_index=True, null=True)
+    next_invoice_date: Optional[datetime.datetime] = models.DateTimeField(
+        db_index=True, null=True,
+    )
     invoiced_through: Optional["LicenseLedger"] = models.ForeignKey(
-        'LicenseLedger', null=True, on_delete=CASCADE, related_name='+')
+        "LicenseLedger", null=True, on_delete=CASCADE, related_name="+",
+    )
     DONE = 1
     STARTED = 2
     INITIAL_INVOICE_TO_BE_SENT = 3
@@ -66,15 +75,19 @@ class CustomerPlan(models.Model):
 
     # TODO maybe override setattr to ensure billing_cycle_anchor, etc are immutable
 
+
 def get_current_plan_by_customer(customer: Customer) -> Optional[CustomerPlan]:
     return CustomerPlan.objects.filter(
-        customer=customer, status__lt=CustomerPlan.LIVE_STATUS_THRESHOLD).first()
+        customer=customer, status__lt=CustomerPlan.LIVE_STATUS_THRESHOLD,
+    ).first()
+
 
 def get_current_plan_by_realm(realm: Realm) -> Optional[CustomerPlan]:
     customer = get_customer_by_realm(realm)
     if customer is None:
         return None
     return get_current_plan_by_customer(customer)
+
 
 class LicenseLedger(models.Model):
     plan: CustomerPlan = models.ForeignKey(CustomerPlan, on_delete=CASCADE)

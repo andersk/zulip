@@ -7,7 +7,7 @@ from zerver.models import Recipient
 
 
 class StreamRecipientMap:
-    '''
+    """
     This class maps stream_id -> recipient_id and vice versa.
     It is useful for bulk operations.  Call the populate_* methods
     to initialize the data structures.  You should try to avoid
@@ -18,7 +18,7 @@ class StreamRecipientMap:
 
     Note that this class uses raw SQL, because we want to highly
     optimize page loads.
-    '''
+    """
 
     def __init__(self) -> None:
         self.recip_to_stream: Dict[int, int] = dict()
@@ -31,16 +31,20 @@ class StreamRecipientMap:
         self.stream_to_recip[stream_id] = recipient_id
 
     def populate_for_recipient_ids(self, recipient_ids: List[int]) -> None:
-        recipient_ids = sorted([
-            recip_id for recip_id in recipient_ids
-            if recip_id not in self.recip_to_stream
-        ])
+        recipient_ids = sorted(
+            [
+                recip_id
+                for recip_id in recipient_ids
+                if recip_id not in self.recip_to_stream
+            ],
+        )
 
         if not recipient_ids:
             return
 
         # see comment at the top of the class
-        query = SQL('''
+        query = SQL(
+            """
             SELECT
                 zerver_recipient.id as recipient_id,
                 zerver_recipient.type_id as stream_id
@@ -50,13 +54,13 @@ class StreamRecipientMap:
                 zerver_recipient.type = %(STREAM)s
             AND
                 zerver_recipient.id in %(recipient_ids)s
-        ''')
+        """,
+        )
 
         cursor = connection.cursor()
-        cursor.execute(query, {
-            "STREAM": Recipient.STREAM,
-            "recipient_ids": tuple(recipient_ids),
-        })
+        cursor.execute(
+            query, {"STREAM": Recipient.STREAM, "recipient_ids": tuple(recipient_ids)},
+        )
         rows = cursor.fetchall()
         cursor.close()
         for recip_id, stream_id in rows:

@@ -9,7 +9,9 @@ import sys
 
 os.environ["PYTHONUNBUFFERED"] = "y"
 
-ZULIP_PATH = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+ZULIP_PATH = os.path.dirname(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+)
 
 sys.path.append(ZULIP_PATH)
 from typing import TYPE_CHECKING, List
@@ -35,9 +37,9 @@ from tools.setup import setup_venvs
 if TYPE_CHECKING:
     from typing import NoReturn
 
-VAR_DIR_PATH = os.path.join(ZULIP_PATH, 'var')
+VAR_DIR_PATH = os.path.join(ZULIP_PATH, "var")
 
-CONTINUOUS_INTEGRATION = 'GITHUB_ACTIONS' in os.environ or 'CIRCLECI' in os.environ
+CONTINUOUS_INTEGRATION = "GITHUB_ACTIONS" in os.environ or "CIRCLECI" in os.environ
 
 if not os.path.exists(os.path.join(ZULIP_PATH, ".git")):
     print(FAIL + "Error: No Zulip git repository present!" + ENDC)
@@ -52,42 +54,51 @@ with open("/proc/meminfo") as meminfo:
     ram_size = meminfo.readlines()[0].strip().split(" ")[-2]
 ram_gb = float(ram_size) / 1024.0 / 1024.0
 if ram_gb < 1.5:
-    print("You have insufficient RAM ({} GB) to run the Zulip development environment.".format(
-        round(ram_gb, 2)))
+    print(
+        "You have insufficient RAM ({} GB) to run the Zulip development environment.".format(
+            round(ram_gb, 2),
+        ),
+    )
     print("We recommend at least 2 GB of RAM, and require at least 1.5 GB.")
     sys.exit(1)
 
 try:
     UUID_VAR_PATH = get_dev_uuid_var_path(create_if_missing=True)
     os.makedirs(UUID_VAR_PATH, exist_ok=True)
-    if os.path.exists(os.path.join(VAR_DIR_PATH, 'zulip-test-symlink')):
-        os.remove(os.path.join(VAR_DIR_PATH, 'zulip-test-symlink'))
+    if os.path.exists(os.path.join(VAR_DIR_PATH, "zulip-test-symlink")):
+        os.remove(os.path.join(VAR_DIR_PATH, "zulip-test-symlink"))
     os.symlink(
-        os.path.join(ZULIP_PATH, 'README.md'),
-        os.path.join(VAR_DIR_PATH, 'zulip-test-symlink'),
+        os.path.join(ZULIP_PATH, "README.md"),
+        os.path.join(VAR_DIR_PATH, "zulip-test-symlink"),
     )
-    os.remove(os.path.join(VAR_DIR_PATH, 'zulip-test-symlink'))
+    os.remove(os.path.join(VAR_DIR_PATH, "zulip-test-symlink"))
 except OSError:
-    print(FAIL + "Error: Unable to create symlinks."
-          "Make sure you have permission to create symbolic links." + ENDC)
+    print(
+        FAIL + "Error: Unable to create symlinks."
+        "Make sure you have permission to create symbolic links." + ENDC,
+    )
     print("See this page for more information:")
-    print("  https://zulip.readthedocs.io/en/latest/development/setup-vagrant.html#os-symlink-error")
+    print(
+        "  https://zulip.readthedocs.io/en/latest/development/setup-vagrant.html#os-symlink-error",
+    )
     sys.exit(1)
 
-if platform.architecture()[0] == '64bit':
-    arch = 'amd64'
-elif platform.architecture()[0] == '32bit':
+if platform.architecture()[0] == "64bit":
+    arch = "amd64"
+elif platform.architecture()[0] == "32bit":
     arch = "i386"
 else:
-    logging.critical("Only x86 is supported;"
-                     " ask on chat.zulip.org if you want another architecture.")
+    logging.critical(
+        "Only x86 is supported;"
+        " ask on chat.zulip.org if you want another architecture.",
+    )
     # Note: It's probably actually not hard to add additional
     # architectures.
     sys.exit(1)
 
 distro_info = parse_os_release()
-vendor = distro_info['ID']
-os_version = distro_info['VERSION_ID']
+vendor = distro_info["ID"]
+os_version = distro_info["VERSION_ID"]
 if vendor == "debian" and os_version == "10":  # buster
     POSTGRES_VERSION = "11"
 elif vendor == "ubuntu" and os_version in ["18.04", "18.10"]:  # bionic, cosmic
@@ -104,12 +115,18 @@ elif vendor == "centos" and os_version == "7":
     POSTGRES_VERSION = "10"
 else:
     logging.critical("Unsupported platform: %s %s", vendor, os_version)
-    if vendor == 'ubuntu' and os_version == '14.04':
+    if vendor == "ubuntu" and os_version == "14.04":
         print()
-        print("Ubuntu Trusty reached end-of-life upstream and is no longer a supported platform for Zulip")
-        if os.path.exists('/home/vagrant'):
-            print("To upgrade, run `vagrant destroy`, and then recreate the Vagrant guest.\n")
-            print("See: https://zulip.readthedocs.io/en/latest/development/setup-vagrant.html")
+        print(
+            "Ubuntu Trusty reached end-of-life upstream and is no longer a supported platform for Zulip",
+        )
+        if os.path.exists("/home/vagrant"):
+            print(
+                "To upgrade, run `vagrant destroy`, and then recreate the Vagrant guest.\n",
+            )
+            print(
+                "See: https://zulip.readthedocs.io/en/latest/development/setup-vagrant.html",
+            )
     sys.exit(1)
 
 VENV_DEPENDENCIES = get_venv_dependencies(vendor, os_version)
@@ -120,15 +137,14 @@ COMMON_DEPENDENCIES = [
     "supervisor",
     "git",
     "wget",
-    "ca-certificates",      # Explicit dependency in case e.g. wget is already installed
-    "puppet",               # Used by lint (`puppet parser validate`)
-    "gettext",              # Used by makemessages i18n
-    "transifex-client",     # Needed to sync translations from transifex
-    "curl",                 # Used for fetching PhantomJS as wget occasionally fails on redirects
-    "moreutils",            # Used for sponge command
-    "unzip",                # Needed for Slack import
-    "crudini",              # Used for shell tooling w/ zulip.conf
-
+    "ca-certificates",  # Explicit dependency in case e.g. wget is already installed
+    "puppet",  # Used by lint (`puppet parser validate`)
+    "gettext",  # Used by makemessages i18n
+    "transifex-client",  # Needed to sync translations from transifex
+    "curl",  # Used for fetching PhantomJS as wget occasionally fails on redirects
+    "moreutils",  # Used for sponge command
+    "unzip",  # Needed for Slack import
+    "crudini",  # Used for shell tooling w/ zulip.conf
     # Puppeteer dependencies from here
     "gconf-service",
     "libgconf-2-4",
@@ -144,84 +160,109 @@ COMMON_DEPENDENCIES = [
     # Puppeteer dependencies end here.
 ]
 
-UBUNTU_COMMON_APT_DEPENDENCIES = COMMON_DEPENDENCIES + [
-    "redis-server",
-    "hunspell-en-us",
-    "puppet-lint",
-    "netcat",               # Used for flushing memcached
-    "libfontconfig1",       # Required by phantomjs
-    "default-jre-headless",  # Required by vnu-jar
-] + THUMBOR_VENV_DEPENDENCIES
+UBUNTU_COMMON_APT_DEPENDENCIES = (
+    COMMON_DEPENDENCIES
+    + [
+        "redis-server",
+        "hunspell-en-us",
+        "puppet-lint",
+        "netcat",  # Used for flushing memcached
+        "libfontconfig1",  # Required by phantomjs
+        "default-jre-headless",  # Required by vnu-jar
+    ]
+    + THUMBOR_VENV_DEPENDENCIES
+)
 
-COMMON_YUM_DEPENDENCIES = COMMON_DEPENDENCIES + [
-    "redis",
-    "hunspell-en-US",
-    "rubygem-puppet-lint",
-    "nmap-ncat",
-    "fontconfig",  # phantomjs dependencies from here until libstdc++
-    "freetype",
-    "freetype-devel",
-    "fontconfig-devel",
-    "libstdc++",
-] + YUM_THUMBOR_VENV_DEPENDENCIES
+COMMON_YUM_DEPENDENCIES = (
+    COMMON_DEPENDENCIES
+    + [
+        "redis",
+        "hunspell-en-US",
+        "rubygem-puppet-lint",
+        "nmap-ncat",
+        "fontconfig",  # phantomjs dependencies from here until libstdc++
+        "freetype",
+        "freetype-devel",
+        "fontconfig-devel",
+        "libstdc++",
+    ]
+    + YUM_THUMBOR_VENV_DEPENDENCIES
+)
 
 BUILD_PGROONGA_FROM_SOURCE = False
-if vendor == 'debian' and os_version in [] or vendor == 'ubuntu' and os_version in []:
+if vendor == "debian" and os_version in [] or vendor == "ubuntu" and os_version in []:
     # For platforms without a pgroonga release, we need to build it
     # from source.
     BUILD_PGROONGA_FROM_SOURCE = True
-    SYSTEM_DEPENDENCIES = UBUNTU_COMMON_APT_DEPENDENCIES + [
-        pkg.format(POSTGRES_VERSION) for pkg in [
-            "postgresql-{0}",
-            # Dependency for building pgroonga from source
-            "postgresql-server-dev-{0}",
-            "libgroonga-dev",
-            "libmsgpack-dev",
-            "clang-9",
-            "llvm-9-dev",
+    SYSTEM_DEPENDENCIES = (
+        UBUNTU_COMMON_APT_DEPENDENCIES
+        + [
+            pkg.format(POSTGRES_VERSION)
+            for pkg in [
+                "postgresql-{0}",
+                # Dependency for building pgroonga from source
+                "postgresql-server-dev-{0}",
+                "libgroonga-dev",
+                "libmsgpack-dev",
+                "clang-9",
+                "llvm-9-dev",
+            ]
         ]
-    ] + VENV_DEPENDENCIES
+        + VENV_DEPENDENCIES
+    )
 elif "debian" in os_families():
-    SYSTEM_DEPENDENCIES = UBUNTU_COMMON_APT_DEPENDENCIES + [
-        pkg.format(POSTGRES_VERSION) for pkg in [
-            "postgresql-{0}",
-            "postgresql-{0}-pgroonga",
+    SYSTEM_DEPENDENCIES = (
+        UBUNTU_COMMON_APT_DEPENDENCIES
+        + [
+            pkg.format(POSTGRES_VERSION)
+            for pkg in ["postgresql-{0}", "postgresql-{0}-pgroonga"]
         ]
-    ] + VENV_DEPENDENCIES
+        + VENV_DEPENDENCIES
+    )
 elif "rhel" in os_families():
-    SYSTEM_DEPENDENCIES = COMMON_YUM_DEPENDENCIES + [
-        pkg.format(POSTGRES_VERSION) for pkg in [
-            "postgresql{0}-server",
-            "postgresql{0}",
-            "postgresql{0}-devel",
-            "postgresql{0}-pgroonga",
+    SYSTEM_DEPENDENCIES = (
+        COMMON_YUM_DEPENDENCIES
+        + [
+            pkg.format(POSTGRES_VERSION)
+            for pkg in [
+                "postgresql{0}-server",
+                "postgresql{0}",
+                "postgresql{0}-devel",
+                "postgresql{0}-pgroonga",
+            ]
         ]
-    ] + VENV_DEPENDENCIES
+        + VENV_DEPENDENCIES
+    )
 elif "fedora" in os_families():
-    SYSTEM_DEPENDENCIES = COMMON_YUM_DEPENDENCIES + [
-        pkg.format(POSTGRES_VERSION) for pkg in [
-            "postgresql{0}-server",
-            "postgresql{0}",
-            "postgresql{0}-devel",
-            # Needed to build pgroonga from source
-            "groonga-devel",
-            "msgpack-devel",
+    SYSTEM_DEPENDENCIES = (
+        COMMON_YUM_DEPENDENCIES
+        + [
+            pkg.format(POSTGRES_VERSION)
+            for pkg in [
+                "postgresql{0}-server",
+                "postgresql{0}",
+                "postgresql{0}-devel",
+                # Needed to build pgroonga from source
+                "groonga-devel",
+                "msgpack-devel",
+            ]
         ]
-    ] + VENV_DEPENDENCIES
+        + VENV_DEPENDENCIES
+    )
     BUILD_PGROONGA_FROM_SOURCE = True
 
 if "fedora" in os_families():
-    TSEARCH_STOPWORDS_PATH = "/usr/pgsql-{}/share/tsearch_data/".format(POSTGRES_VERSION)
+    TSEARCH_STOPWORDS_PATH = "/usr/pgsql-{}/share/tsearch_data/".format(
+        POSTGRES_VERSION,
+    )
 else:
-    TSEARCH_STOPWORDS_PATH = "/usr/share/postgresql/{}/tsearch_data/".format(POSTGRES_VERSION)
+    TSEARCH_STOPWORDS_PATH = "/usr/share/postgresql/{}/tsearch_data/".format(
+        POSTGRES_VERSION,
+    )
 REPO_STOPWORDS_PATH = os.path.join(
-    ZULIP_PATH,
-    "puppet",
-    "zulip",
-    "files",
-    "postgresql",
-    "zulip_english.stop",
+    ZULIP_PATH, "puppet", "zulip", "files", "postgresql", "zulip_english.stop",
 )
+
 
 def install_system_deps() -> None:
 
@@ -240,6 +281,7 @@ def install_system_deps() -> None:
     if BUILD_PGROONGA_FROM_SOURCE:
         run_as_root(["./scripts/lib/build-pgroonga"])
 
+
 def install_apt_deps(deps_to_install: List[str]) -> None:
     # setup-apt-repo does an `apt-get update` if the sources.list files changed.
     run_as_root(["./scripts/lib/setup-apt-repo"])
@@ -251,11 +293,16 @@ def install_apt_deps(deps_to_install: List[str]) -> None:
     run_as_root(["apt-get", "update"])
     run_as_root(
         [
-            "env", "DEBIAN_FRONTEND=noninteractive",
-            "apt-get", "-y", "install", "--no-install-recommends",
+            "env",
+            "DEBIAN_FRONTEND=noninteractive",
+            "apt-get",
+            "-y",
+            "install",
+            "--no-install-recommends",
         ]
         + deps_to_install,
     )
+
 
 def install_yum_deps(deps_to_install: List[str]) -> None:
     print(WARNING + "RedHat support is still experimental.")
@@ -269,15 +316,19 @@ def install_yum_deps(deps_to_install: List[str]) -> None:
     #        Requires: perl(IPC::Run)
     yum_extra_flags = []  # type: List[str]
     if vendor == "rhel":
-        exitcode, subs_status = subprocess.getstatusoutput("sudo subscription-manager status")
+        exitcode, subs_status = subprocess.getstatusoutput(
+            "sudo subscription-manager status",
+        )
         if exitcode == 1:
             # TODO this might overkill since `subscription-manager` is already
             # called in setup-yum-repo
-            if 'Status' in subs_status:
+            if "Status" in subs_status:
                 # The output is well-formed
                 yum_extra_flags = ["--skip-broken"]
             else:
-                print("Unrecognized output. `subscription-manager` might not be available")
+                print(
+                    "Unrecognized output. `subscription-manager` might not be available",
+                )
 
     run_as_root(["yum", "install", "-y"] + yum_extra_flags + deps_to_install)
     if "rhel" in os_families():
@@ -286,13 +337,19 @@ def install_yum_deps(deps_to_install: List[str]) -> None:
         run_as_root(["python36", "-m", "ensurepip"])
         # `python36` is not aliased to `python3` by default
         run_as_root(["ln", "-nsf", "/usr/bin/python36", "/usr/bin/python3"])
-    postgres_dir = 'pgsql-{}'.format(POSTGRES_VERSION)
-    for cmd in ['pg_config', 'pg_isready', 'psql']:
+    postgres_dir = "pgsql-{}".format(POSTGRES_VERSION)
+    for cmd in ["pg_config", "pg_isready", "psql"]:
         # Our tooling expects these postgres scripts to be at
         # well-known paths.  There's an argument for eventually
         # making our tooling auto-detect, but this is simpler.
-        run_as_root(["ln", "-nsf", "/usr/{}/bin/{}".format(postgres_dir, cmd),
-                     "/usr/bin/{}".format(cmd)])
+        run_as_root(
+            [
+                "ln",
+                "-nsf",
+                "/usr/{}/bin/{}".format(postgres_dir, cmd),
+                "/usr/bin/{}".format(cmd),
+            ],
+        )
 
     # From here, we do the first-time setup/initialization for the postgres database.
     pg_datadir = "/var/lib/pgsql/{}/data".format(POSTGRES_VERSION)
@@ -305,10 +362,17 @@ def install_yum_deps(deps_to_install: List[str]) -> None:
         # Skip setup if it has been applied previously
         return
 
-    run_as_root(["/usr/{}/bin/postgresql-{}-setup".format(postgres_dir, POSTGRES_VERSION), "initdb"],
-                sudo_args = ['-H'])
+    run_as_root(
+        [
+            "/usr/{}/bin/postgresql-{}-setup".format(postgres_dir, POSTGRES_VERSION),
+            "initdb",
+        ],
+        sudo_args=["-H"],
+    )
     # Use vendored pg_hba.conf, which enables password authentication.
-    run_as_root(["cp", "-a", "puppet/zulip/files/postgresql/centos_pg_hba.conf", pg_hba_conf])
+    run_as_root(
+        ["cp", "-a", "puppet/zulip/files/postgresql/centos_pg_hba.conf", pg_hba_conf],
+    )
     # Later steps will ensure postgres is started
 
     # Link in tsearch data files
@@ -321,6 +385,7 @@ def install_yum_deps(deps_to_install: List[str]) -> None:
         "/usr/pgsql-{}/share/tsearch_data/en_us.affix".format(POSTGRES_VERSION),
     )
 
+
 def main(options: argparse.Namespace) -> "NoReturn":
 
     # yarn and management commands expect to be run from the root of the
@@ -331,32 +396,32 @@ def main(options: argparse.Namespace) -> "NoReturn":
     sha_sum = hashlib.sha1()
 
     for apt_depedency in SYSTEM_DEPENDENCIES:
-        sha_sum.update(apt_depedency.encode('utf8'))
+        sha_sum.update(apt_depedency.encode("utf8"))
     if "debian" in os_families():
-        sha_sum.update(open('scripts/lib/setup-apt-repo', 'rb').read())
+        sha_sum.update(open("scripts/lib/setup-apt-repo", "rb").read())
     else:
         # hash the content of setup-yum-repo*
-        sha_sum.update(open('scripts/lib/setup-yum-repo', 'rb').read())
+        sha_sum.update(open("scripts/lib/setup-yum-repo", "rb").read())
 
     # hash the content of build-pgroonga if pgroonga is built from source
     if BUILD_PGROONGA_FROM_SOURCE:
-        sha_sum.update(open('scripts/lib/build-pgroonga', 'rb').read())
+        sha_sum.update(open("scripts/lib/build-pgroonga", "rb").read())
 
     new_apt_dependencies_hash = sha_sum.hexdigest()
     last_apt_dependencies_hash = None
     apt_hash_file_path = os.path.join(UUID_VAR_PATH, "apt_dependencies_hash")
-    with open(apt_hash_file_path, 'a+') as hash_file:
+    with open(apt_hash_file_path, "a+") as hash_file:
         hash_file.seek(0)
         last_apt_dependencies_hash = hash_file.read()
 
-    if (new_apt_dependencies_hash != last_apt_dependencies_hash):
+    if new_apt_dependencies_hash != last_apt_dependencies_hash:
         try:
             install_system_deps()
         except subprocess.CalledProcessError:
             # Might be a failure due to network connection issues. Retrying...
             print(WARNING + "Installing system dependencies failed; retrying..." + ENDC)
             install_system_deps()
-        with open(apt_hash_file_path, 'w') as hash_file:
+        with open(apt_hash_file_path, "w") as hash_file:
             hash_file.write(new_apt_dependencies_hash)
     else:
         print("No changes to apt dependencies, so skipping apt operations.")
@@ -368,11 +433,17 @@ def main(options: argparse.Namespace) -> "NoReturn":
         "https_proxy=" + os.environ.get("https_proxy", ""),
         "no_proxy=" + os.environ.get("no_proxy", ""),
     ]
-    run_as_root(proxy_env + ["scripts/lib/install-node"], sudo_args = ['-H'])
+    run_as_root(proxy_env + ["scripts/lib/install-node"], sudo_args=["-H"])
 
     if not os.access(NODE_MODULES_CACHE_PATH, os.W_OK):
         run_as_root(["mkdir", "-p", NODE_MODULES_CACHE_PATH])
-        run_as_root(["chown", "{}:{}".format(os.getuid(), os.getgid()), NODE_MODULES_CACHE_PATH])
+        run_as_root(
+            [
+                "chown",
+                "{}:{}".format(os.getuid(), os.getgid()),
+                NODE_MODULES_CACHE_PATH,
+            ],
+        )
 
     # This is a wrapper around `yarn`, which we run last since
     # it can often fail due to network issues beyond our control.
@@ -383,9 +454,11 @@ def main(options: argparse.Namespace) -> "NoReturn":
         try:
             setup_node_modules()
         except subprocess.CalledProcessError:
-            print(FAIL +
-                  "`yarn install` is failing; check your network connection (and proxy settings)."
-                  + ENDC)
+            print(
+                FAIL
+                + "`yarn install` is failing; check your network connection (and proxy settings)."
+                + ENDC,
+            )
             sys.exit(1)
 
     # Install shellcheck.
@@ -406,9 +479,14 @@ def main(options: argparse.Namespace) -> "NoReturn":
     elif "fedora" in os_families():
         # These platforms don't enable and start services on
         # installing their package, so we do that here.
-        for service in ["postgresql-{}".format(POSTGRES_VERSION), "rabbitmq-server", "memcached", "redis"]:
-            run_as_root(["systemctl", "enable", service], sudo_args = ['-H'])
-            run_as_root(["systemctl", "start", service], sudo_args = ['-H'])
+        for service in [
+            "postgresql-{}".format(POSTGRES_VERSION),
+            "rabbitmq-server",
+            "memcached",
+            "redis",
+        ]:
+            run_as_root(["systemctl", "enable", service], sudo_args=["-H"])
+            run_as_root(["systemctl", "start", service], sudo_args=["-H"])
 
     # If we imported modules after activating the virtualenv in this
     # Python process, they could end up mismatching with modules we’ve
@@ -424,27 +502,42 @@ def main(options: argparse.Namespace) -> "NoReturn":
         [
             provision_inner,
             *(["--force"] if options.is_force else []),
-            *(["--build-release-tarball-only"] if options.is_build_release_tarball_only else []),
+            *(
+                ["--build-release-tarball-only"]
+                if options.is_build_release_tarball_only
+                else []
+            ),
             *(["--skip-dev-db-build"] if options.skip_dev_db_build else []),
         ],
     )
 
+
 if __name__ == "__main__":
-    description = ("Provision script to install Zulip")
+    description = "Provision script to install Zulip"
     parser = argparse.ArgumentParser(description=description)
-    parser.add_argument('--force', action='store_true', dest='is_force',
-                        default=False,
-                        help="Ignore all provisioning optimizations.")
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        dest="is_force",
+        default=False,
+        help="Ignore all provisioning optimizations.",
+    )
 
-    parser.add_argument('--build-release-tarball-only', action='store_true',
-                        dest='is_build_release_tarball_only',
-                        default=False,
-                        help="Provision needed to build release tarball.")
+    parser.add_argument(
+        "--build-release-tarball-only",
+        action="store_true",
+        dest="is_build_release_tarball_only",
+        default=False,
+        help="Provision needed to build release tarball.",
+    )
 
-    parser.add_argument('--skip-dev-db-build', action='store_true',
-                        dest='skip_dev_db_build',
-                        default=False,
-                        help="Don't run migrations on dev database.")
+    parser.add_argument(
+        "--skip-dev-db-build",
+        action="store_true",
+        dest="skip_dev_db_build",
+        default=False,
+        help="Don't run migrations on dev database.",
+    )
 
     options = parser.parse_args()
     main(options)

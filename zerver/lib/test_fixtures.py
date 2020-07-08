@@ -29,16 +29,16 @@ from scripts.lib.zulip_tools import (
 UUID_VAR_DIR = get_dev_uuid_var_path()
 
 IMPORTANT_FILES = [
-    'zilencer/management/commands/populate_db.py',
-    'zerver/lib/bulk_create.py',
-    'zerver/lib/generate_test_data.py',
-    'zerver/lib/server_initialization.py',
-    'tools/setup/postgres-init-test-db',
-    'tools/setup/postgres-init-dev-db',
-    'zerver/migrations/0258_enable_online_push_notifications_default.py',
+    "zilencer/management/commands/populate_db.py",
+    "zerver/lib/bulk_create.py",
+    "zerver/lib/generate_test_data.py",
+    "zerver/lib/server_initialization.py",
+    "tools/setup/postgres-init-test-db",
+    "tools/setup/postgres-init-dev-db",
+    "zerver/migrations/0258_enable_online_push_notifications_default.py",
 ]
 
-VERBOSE_MESSAGE_ABOUT_HASH_TRANSITION = '''
+VERBOSE_MESSAGE_ABOUT_HASH_TRANSITION = """
     NOTE!!!!
 
     We are rebuilding your database for a one-time transition.
@@ -55,23 +55,24 @@ VERBOSE_MESSAGE_ABOUT_HASH_TRANSITION = '''
     be the last time this happens (for this particular reason,
     at least), unless you go back to older branches.
 
-'''
+"""
+
 
 def migration_paths() -> List[str]:
     return [
-        *glob.glob('*/migrations/*.py'),
-        'requirements/dev.txt',
+        *glob.glob("*/migrations/*.py"),
+        "requirements/dev.txt",
     ]
+
 
 class Database:
     def __init__(self, platform: str, database_name: str, settings: str):
         self.database_name = database_name
         self.settings = settings
-        self.digest_name = 'db_files_hash_for_' + platform
-        self.migration_status_file = 'migration_status_' + platform
+        self.digest_name = "db_files_hash_for_" + platform
+        self.migration_status_file = "migration_status_" + platform
         self.migration_status_path = os.path.join(
-            UUID_VAR_DIR,
-            self.migration_status_file,
+            UUID_VAR_DIR, self.migration_status_file,
         )
         self.migration_digest_file = "migrations_hash_" + database_name
 
@@ -81,10 +82,10 @@ class Database:
             return json.dumps(value, sort_keys=True)
 
         return [
-            get('LOCAL_DATABASE_PASSWORD'),
-            get('INTERNAL_BOTS'),
-            get('REALM_INTERNAL_BOTS'),
-            get('DISABLED_REALM_INTERNAL_BOTS'),
+            get("LOCAL_DATABASE_PASSWORD"),
+            get("INTERNAL_BOTS"),
+            get("REALM_INTERNAL_BOTS"),
+            get("DISABLED_REALM_INTERNAL_BOTS"),
         ]
 
     def run_db_migrations(self) -> None:
@@ -95,25 +96,28 @@ class Database:
         # Also we export ZULIP_DB_NAME which is ignored by dev platform but
         # recognised by test platform and used to migrate correct db.
         env_prelude = [
-            'env',
-            'DJANGO_SETTINGS_MODULE=' + self.settings,
-            'ZULIP_DB_NAME=' + self.database_name,
+            "env",
+            "DJANGO_SETTINGS_MODULE=" + self.settings,
+            "ZULIP_DB_NAME=" + self.database_name,
         ]
 
-        run(env_prelude + [
-            './manage.py', 'migrate', '--no-input',
-        ])
+        run(env_prelude + ["./manage.py", "migrate", "--no-input"])
 
-        run(env_prelude + [
-            './manage.py', 'get_migration_status', '--output='+self.migration_status_file,
-        ])
+        run(
+            env_prelude
+            + [
+                "./manage.py",
+                "get_migration_status",
+                "--output=" + self.migration_status_file,
+            ],
+        )
 
     def what_to_do_with_migrations(self) -> str:
         status_fn = self.migration_status_path
         settings = self.settings
 
         if not os.path.exists(status_fn):
-            return 'scrap'
+            return "scrap"
 
         with open(status_fn) as f:
             previous_migration_status = f.read()
@@ -123,16 +127,16 @@ class Database:
         all_prev_migrations = extract_migrations_as_list(previous_migration_status)
 
         if len(all_curr_migrations) < len(all_prev_migrations):
-            return 'scrap'
+            return "scrap"
 
         for migration in all_prev_migrations:
             if migration not in all_curr_migrations:
-                return 'scrap'
+                return "scrap"
 
         if len(all_curr_migrations) == len(all_prev_migrations):
-            return 'migrations_are_latest'
+            return "migrations_are_latest"
 
-        return 'migrate'
+        return "migrate"
 
     def database_exists(self) -> bool:
         try:
@@ -155,7 +159,7 @@ class Database:
         # enough time has passed since April 2020 that we're not
         # worried about anomalies doing `git bisect`--probably a few
         # months is sufficient.
-        legacy_status_dir = os.path.join(UUID_VAR_DIR, database_name + '_db_status')
+        legacy_status_dir = os.path.join(UUID_VAR_DIR, database_name + "_db_status")
         if os.path.exists(legacy_status_dir):
             print(VERBOSE_MESSAGE_ABOUT_HASH_TRANSITION)
 
@@ -169,9 +173,7 @@ class Database:
             return True
 
         return is_digest_obsolete(
-            self.digest_name,
-            IMPORTANT_FILES,
-            self.important_settings(),
+            self.digest_name, IMPORTANT_FILES, self.important_settings(),
         )
 
     def template_status(self) -> str:
@@ -186,10 +188,10 @@ class Database:
             #       The only problem this causes is that we waste
             #       some time rebuilding the whole database, but
             #       it's better to err on that side, generally.
-            return 'needs_rebuild'
+            return "needs_rebuild"
 
         if self.files_or_settings_have_changed():
-            return 'needs_rebuild'
+            return "needs_rebuild"
 
         # Here we hash and compare our migration files before doing
         # the work of seeing what to do with them; if there are no
@@ -197,9 +199,9 @@ class Database:
         # migrations without spending a few 100ms parsing all the
         # Python migration code.
         if not self.is_migration_digest_obsolete():
-            return 'current'
+            return "current"
 
-        '''
+        """
         NOTE:
             We immediately update the digest, assuming our
             callers will do what it takes to run the migrations.
@@ -207,50 +209,44 @@ class Database:
             Ideally our callers would just do it themselves
             AFTER the migrations actually succeeded, but the
             caller codepaths are kind of complicated here.
-        '''
+        """
         self.write_new_migration_digest()
 
         migration_op = self.what_to_do_with_migrations()
-        if migration_op == 'scrap':
-            return 'needs_rebuild'
+        if migration_op == "scrap":
+            return "needs_rebuild"
 
-        if migration_op == 'migrate':
-            return 'run_migrations'
+        if migration_op == "migrate":
+            return "run_migrations"
 
-        return 'current'
+        return "current"
 
     def is_migration_digest_obsolete(self) -> bool:
-        return is_digest_obsolete(
-            self.migration_digest_file,
-            migration_paths(),
-        )
+        return is_digest_obsolete(self.migration_digest_file, migration_paths())
 
     def write_new_migration_digest(self) -> None:
         write_new_digest(
-            self.migration_digest_file,
-            migration_paths(),
+            self.migration_digest_file, migration_paths(),
         )
 
     def write_new_db_digest(self) -> None:
         write_new_digest(
-            self.digest_name,
-            IMPORTANT_FILES,
-            self.important_settings(),
+            self.digest_name, IMPORTANT_FILES, self.important_settings(),
         )
 
+
 DEV_DATABASE = Database(
-    platform='dev',
-    database_name='zulip',
-    settings='zproject.settings',
+    platform="dev", database_name="zulip", settings="zproject.settings",
 )
 
 TEST_DATABASE = Database(
-    platform='test',
-    database_name='zulip_test_template',
-    settings='zproject.test_settings',
+    platform="test",
+    database_name="zulip_test_template",
+    settings="zproject.test_settings",
 )
 
-def update_test_databases_if_required(rebuild_test_database: bool=False) -> None:
+
+def update_test_databases_if_required(rebuild_test_database: bool = False) -> None:
     """Checks whether the zulip_test_template database template, is
     consistent with our database migrations; if not, it updates it
     in the fastest way possible:
@@ -269,51 +265,54 @@ def update_test_databases_if_required(rebuild_test_database: bool=False) -> None
     """
     test_template_db_status = TEST_DATABASE.template_status()
 
-    if test_template_db_status == 'needs_rebuild':
-        run(['tools/rebuild-test-database'])
+    if test_template_db_status == "needs_rebuild":
+        run(["tools/rebuild-test-database"])
         TEST_DATABASE.write_new_db_digest()
         return
 
-    if test_template_db_status == 'run_migrations':
+    if test_template_db_status == "run_migrations":
         TEST_DATABASE.run_db_migrations()
-        run(['tools/setup/generate-fixtures'])
+        run(["tools/setup/generate-fixtures"])
         return
 
     if rebuild_test_database:
-        run(['tools/setup/generate-fixtures'])
+        run(["tools/setup/generate-fixtures"])
+
 
 def get_migration_status(**options: Any) -> str:
-    verbosity = options.get('verbosity', 1)
+    verbosity = options.get("verbosity", 1)
 
     for app_config in apps.get_app_configs():
         if module_has_submodule(app_config.module, "management"):
-            import_module('.management', app_config.name)
+            import_module(".management", app_config.name)
 
-    app_label = options['app_label'] if options.get('app_label') else None
-    db = options.get('database', DEFAULT_DB_ALIAS)
+    app_label = options["app_label"] if options.get("app_label") else None
+    db = options.get("database", DEFAULT_DB_ALIAS)
     out = StringIO()
-    command_args = ['--list']
+    command_args = ["--list"]
     if app_label:
         command_args.append(app_label)
 
     call_command(
-        'showmigrations',
+        "showmigrations",
         *command_args,
         database=db,
-        no_color=options.get('no_color', False),
-        settings=options.get('settings', os.environ['DJANGO_SETTINGS_MODULE']),
+        no_color=options.get("no_color", False),
+        settings=options.get("settings", os.environ["DJANGO_SETTINGS_MODULE"]),
         stdout=out,
-        traceback=options.get('traceback', True),
+        traceback=options.get("traceback", True),
         verbosity=verbosity,
     )
     connections.close_all()
     out.seek(0)
     output = out.read()
-    return re.sub(r'\x1b\[(1|0)m', '', output)
+    return re.sub(r"\x1b\[(1|0)m", "", output)
+
 
 def extract_migrations_as_list(migration_status: str) -> List[str]:
-    MIGRATIONS_RE = re.compile(r'\[[X| ]\] (\d+_.+)\n')
+    MIGRATIONS_RE = re.compile(r"\[[X| ]\] (\d+_.+)\n")
     return MIGRATIONS_RE.findall(migration_status)
+
 
 def destroy_leaked_test_databases(expiry_time: int = 60 * 60) -> int:
     """The logic in zerver/lib/test_runner.py tries to delete all the
@@ -337,7 +336,7 @@ def destroy_leaked_test_databases(expiry_time: int = 60 * 60) -> int:
             cursor.execute("SELECT datname FROM pg_database;")
             rows = cursor.fetchall()
             for row in rows:
-                if 'zulip_test_template_' in row[0]:
+                if "zulip_test_template_" in row[0]:
                     test_databases.add(row[0])
     except ProgrammingError:
         pass
@@ -347,7 +346,7 @@ def destroy_leaked_test_databases(expiry_time: int = 60 * 60) -> int:
         if round(time.time()) - os.path.getmtime(file) < expiry_time:
             with open(file) as f:
                 for line in f:
-                    databases_in_use.add(f'zulip_test_template_{line}'.rstrip())
+                    databases_in_use.add(f"zulip_test_template_{line}".rstrip())
         else:
             # Any test-backend run older than expiry_time can be
             # cleaned up, both the database and the file listing its
@@ -360,13 +359,24 @@ def destroy_leaked_test_databases(expiry_time: int = 60 * 60) -> int:
         return 0
 
     commands = "\n".join(f"DROP DATABASE IF EXISTS {db};" for db in databases_to_drop)
-    p = subprocess.Popen(["psql", "-q", "-v", "ON_ERROR_STOP=1", "-h", "localhost",
-                          "postgres", "zulip_test"],
-                         stdin=subprocess.PIPE)
+    p = subprocess.Popen(
+        [
+            "psql",
+            "-q",
+            "-v",
+            "ON_ERROR_STOP=1",
+            "-h",
+            "localhost",
+            "postgres",
+            "zulip_test",
+        ],
+        stdin=subprocess.PIPE,
+    )
     p.communicate(input=commands.encode())
     if p.returncode != 0:
         raise RuntimeError("Error cleaning up test databases!")
     return len(databases_to_drop)
+
 
 def remove_test_run_directories(expiry_time: int = 60 * 60) -> int:
     removed = 0

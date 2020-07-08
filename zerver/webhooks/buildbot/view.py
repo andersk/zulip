@@ -9,10 +9,13 @@ from zerver.lib.webhooks.common import check_send_webhook_message
 from zerver.models import UserProfile
 
 
-@api_key_only_webhook_view('Buildbot')
+@api_key_only_webhook_view("Buildbot")
 @has_request_variables
-def api_buildbot_webhook(request: HttpRequest, user_profile: UserProfile,
-                         payload: Dict[str, Any]=REQ(argument_type='body')) -> HttpResponse:
+def api_buildbot_webhook(
+    request: HttpRequest,
+    user_profile: UserProfile,
+    payload: Dict[str, Any] = REQ(argument_type="body"),
+) -> HttpResponse:
     topic = payload["project"]
     if not topic:
         topic = "general"
@@ -20,18 +23,24 @@ def api_buildbot_webhook(request: HttpRequest, user_profile: UserProfile,
     check_send_webhook_message(request, user_profile, topic, body)
     return json_success()
 
+
 def get_message(payload: Dict[str, Any]) -> str:
     if "results" in payload:
         # See http://docs.buildbot.net/latest/developer/results.html
-        results = ("success", "warnings", "failure", "skipped",
-                   "exception", "retry", "cancelled")
+        results = (
+            "success",
+            "warnings",
+            "failure",
+            "skipped",
+            "exception",
+            "retry",
+            "cancelled",
+        )
         status = results[payload["results"]]
 
     if payload["event"] == "new":
         body = "Build [#{id}]({url}) for **{name}** started.".format(
-            id=payload["buildid"],
-            name=payload["buildername"],
-            url=payload["url"],
+            id=payload["buildid"], name=payload["buildername"], url=payload["url"],
         )
     elif payload["event"] == "finished":
         body = "Build [#{id}]({url}) (result: {status}) for **{name}** finished.".format(

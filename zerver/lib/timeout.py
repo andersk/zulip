@@ -7,16 +7,21 @@ from typing import Any, Callable, Optional, Tuple, Type, TypeVar
 
 # Based on https://code.activestate.com/recipes/483752/
 
+
 class TimeoutExpired(Exception):
-    '''Exception raised when a function times out.'''
+    """Exception raised when a function times out."""
 
     def __str__(self) -> str:
-        return 'Function call timed out.'
+        return "Function call timed out."
 
-ResultT = TypeVar('ResultT')
 
-def timeout(timeout: float, func: Callable[..., ResultT], *args: Any, **kwargs: Any) -> ResultT:
-    '''Call the function in a separate thread.
+ResultT = TypeVar("ResultT")
+
+
+def timeout(
+    timeout: float, func: Callable[..., ResultT], *args: Any, **kwargs: Any
+) -> ResultT:
+    """Call the function in a separate thread.
        Return its return value, or raise an exception,
        within approximately 'timeout' seconds.
 
@@ -29,7 +34,7 @@ def timeout(timeout: float, func: Callable[..., ResultT], *args: Any, **kwargs: 
 
        This may also fail to interrupt functions which are
        stuck in a long-running primitive interpreter
-       operation.'''
+       operation."""
 
     class TimeoutThread(threading.Thread):
         def __init__(self) -> None:
@@ -54,10 +59,13 @@ def timeout(timeout: float, func: Callable[..., ResultT], *args: Any, **kwargs: 
         def raise_async_timeout(self) -> None:
             # Called from another thread.
             # Attempt to raise a TimeoutExpired in the thread represented by 'self'.
-            assert self.ident is not None  # Thread should be running; c_long expects int
+            assert (
+                self.ident is not None
+            )  # Thread should be running; c_long expects int
             tid = ctypes.c_long(self.ident)
             result = ctypes.pythonapi.PyThreadState_SetAsyncExc(
-                tid, ctypes.py_object(TimeoutExpired))
+                tid, ctypes.py_object(TimeoutExpired),
+            )
             if result > 1:
                 # "if it returns a number greater than one, you're in trouble,
                 # and you should call it again with exc=NULL to revert the effect"

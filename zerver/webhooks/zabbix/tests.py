@@ -5,9 +5,9 @@ from zerver.webhooks.zabbix.view import MISCONFIGURED_PAYLOAD_ERROR_MESSAGE
 
 
 class ZabbixHookTests(WebhookTestCase):
-    STREAM_NAME = 'zabbix'
+    STREAM_NAME = "zabbix"
     URL_TEMPLATE = "/api/v1/external/zabbix?api_key={api_key}&stream={stream}"
-    FIXTURE_DIR_NAME = 'zabbix'
+    FIXTURE_DIR_NAME = "zabbix"
 
     def test_zabbix_alert_message(self) -> None:
         """
@@ -15,20 +15,21 @@ class ZabbixHookTests(WebhookTestCase):
         """
         expected_topic = "www.example.com"
         expected_message = "PROBLEM (Average) alert on [www.example.com](https://zabbix.example.com/tr_events.php?triggerid=14032&eventid=10528):\n* Zabbix agent on www.example.com is unreachable for 5 minutes\n* Agent ping is Up (1)"
-        self.send_and_test_stream_message('zabbix_alert', expected_topic, expected_message)
+        self.send_and_test_stream_message(
+            "zabbix_alert", expected_topic, expected_message,
+        )
 
     def test_zabbix_invalid_payload_with_missing_data(self) -> None:
         """
         Tests if invalid Zabbix payloads are handled correctly
         """
         self.url = self.build_webhook_url()
-        payload = self.get_body('zabbix_invalid_payload_with_missing_data')
-        result = self.client_post(self.url, payload, content_type='application/json')
+        payload = self.get_body("zabbix_invalid_payload_with_missing_data")
+        result = self.client_post(self.url, payload, content_type="application/json")
         self.assert_json_error(result, "Invalid payload")
 
         expected_message = MISCONFIGURED_PAYLOAD_ERROR_MESSAGE.format(
-            bot_name=self.test_user.full_name,
-            support_email=FromAddress.SUPPORT,
+            bot_name=self.test_user.full_name, support_email=FromAddress.SUPPORT,
         ).strip()
 
         msg = self.get_last_message()

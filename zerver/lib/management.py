@@ -17,6 +17,7 @@ def is_integer_string(val: str) -> bool:
     except ValueError:
         return False
 
+
 def check_config() -> None:
     for (setting_name, default) in settings.REQUIRED_SETTINGS:
         # if required setting is the same as default OR is not found in settings,
@@ -27,11 +28,15 @@ def check_config() -> None:
         except AttributeError:
             pass
 
-        raise CommandError(f"Error: You must set {setting_name} in /etc/zulip/settings.py.")
+        raise CommandError(
+            f"Error: You must set {setting_name} in /etc/zulip/settings.py.",
+        )
+
 
 def sleep_forever() -> None:
     while True:  # nocoverage
-        time.sleep(10**9)
+        time.sleep(10 ** 9)
+
 
 class ZulipBaseCommand(BaseCommand):
 
@@ -41,34 +46,36 @@ class ZulipBaseCommand(BaseCommand):
         parser.formatter_class = RawTextHelpFormatter
         return parser
 
-    def add_realm_args(self, parser: ArgumentParser, required: bool=False,
-                       help: Optional[str]=None) -> None:
+    def add_realm_args(
+        self,
+        parser: ArgumentParser,
+        required: bool = False,
+        help: Optional[str] = None,
+    ) -> None:
         if help is None:
             help = """The numeric or string ID (subdomain) of the Zulip organization to modify.
 You can use the command list_realms to find ID of the realms in this server."""
 
         parser.add_argument(
-            '-r', '--realm',
-            dest='realm_id',
-            required=required,
-            type=str,
-            help=help)
+            "-r", "--realm", dest="realm_id", required=required, type=str, help=help,
+        )
 
-    def add_user_list_args(self, parser: ArgumentParser,
-                           help: str='A comma-separated list of email addresses.',
-                           all_users_help: str="All users in realm.") -> None:
-        parser.add_argument(
-            '-u', '--users',
-            dest='users',
-            type=str,
-            help=help)
+    def add_user_list_args(
+        self,
+        parser: ArgumentParser,
+        help: str = "A comma-separated list of email addresses.",
+        all_users_help: str = "All users in realm.",
+    ) -> None:
+        parser.add_argument("-u", "--users", dest="users", type=str, help=help)
 
         parser.add_argument(
-            '-a', '--all-users',
-            dest='all_users',
+            "-a",
+            "--all-users",
+            dest="all_users",
             action="store_true",
             default=False,
-            help=all_users_help)
+            help=all_users_help,
+        )
 
     def get_realm(self, options: Dict[str, Any]) -> Optional[Realm]:
         val = options["realm_id"]
@@ -83,22 +90,32 @@ You can use the command list_realms to find ID of the realms in this server."""
                 return Realm.objects.get(id=val)
             return Realm.objects.get(string_id=val)
         except Realm.DoesNotExist:
-            raise CommandError("There is no realm with id '{}'. Aborting.".format(options["realm_id"]))
+            raise CommandError(
+                "There is no realm with id '{}'. Aborting.".format(options["realm_id"]),
+            )
 
-    def get_users(self, options: Dict[str, Any], realm: Optional[Realm],
-                  is_bot: Optional[bool]=None,
-                  include_deactivated: bool=False) -> List[UserProfile]:
+    def get_users(
+        self,
+        options: Dict[str, Any],
+        realm: Optional[Realm],
+        is_bot: Optional[bool] = None,
+        include_deactivated: bool = False,
+    ) -> List[UserProfile]:
         if "all_users" in options:
             all_users = options["all_users"]
 
             if not options["users"] and not all_users:
-                raise CommandError("You have to pass either -u/--users or -a/--all-users.")
+                raise CommandError(
+                    "You have to pass either -u/--users or -a/--all-users.",
+                )
 
             if options["users"] and all_users:
                 raise CommandError("You can't use both -u/--users and -a/--all-users.")
 
             if all_users and realm is None:
-                raise CommandError("The --all-users option requires a realm; please pass --realm.")
+                raise CommandError(
+                    "The --all-users option requires a realm; please pass --realm.",
+                )
 
             if all_users:
                 user_profiles = UserProfile.objects.filter(realm=realm)
@@ -123,21 +140,30 @@ You can use the command list_realms to find ID of the realms in this server."""
         if realm is not None:
             try:
                 return UserProfile.objects.select_related().get(
-                    delivery_email__iexact=email.strip(), realm=realm)
+                    delivery_email__iexact=email.strip(), realm=realm,
+                )
             except UserProfile.DoesNotExist:
-                raise CommandError(f"The realm '{realm}' does not contain a user with email '{email}'")
+                raise CommandError(
+                    f"The realm '{realm}' does not contain a user with email '{email}'",
+                )
 
         # Realm is None in the remaining code path.  Here, we
         # optimistically try to see if there is exactly one user with
         # that email; if so, we'll return it.
         try:
-            return UserProfile.objects.select_related().get(delivery_email__iexact=email.strip())
+            return UserProfile.objects.select_related().get(
+                delivery_email__iexact=email.strip(),
+            )
         except MultipleObjectsReturned:
-            raise CommandError("This Zulip server contains multiple users with that email " +
-                               "(in different realms); please pass `--realm` "
-                               "to specify which one to modify.")
+            raise CommandError(
+                "This Zulip server contains multiple users with that email "
+                + "(in different realms); please pass `--realm` "
+                "to specify which one to modify.",
+            )
         except UserProfile.DoesNotExist:
-            raise CommandError(f"This Zulip server does not contain a user with email '{email}'")
+            raise CommandError(
+                f"This Zulip server does not contain a user with email '{email}'",
+            )
 
     def get_client(self) -> Client:
         """Returns a Zulip Client object to be used for things done in management commands"""

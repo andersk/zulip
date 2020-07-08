@@ -11,25 +11,37 @@ from zerver.lib.utils import generate_random_token
 # so we want to stay limited to 1024 characters.
 MAX_KEY_LENGTH = 1024
 
+
 class ZulipRedisError(Exception):
     pass
+
 
 class ZulipRedisKeyTooLongError(ZulipRedisError):
     pass
 
+
 class ZulipRedisKeyOfWrongFormatError(ZulipRedisError):
     pass
 
-def get_redis_client() -> redis.StrictRedis:
-    return redis.StrictRedis(host=settings.REDIS_HOST, port=settings.REDIS_PORT,
-                             password=settings.REDIS_PASSWORD, db=0)
 
-def put_dict_in_redis(redis_client: redis.StrictRedis, key_format: str,
-                      data_to_store: Mapping[str, Any],
-                      expiration_seconds: int,
-                      token_length: int=64,
-                      token: Optional[str]=None) -> str:
-    key_length = len(key_format) - len('{token}') + token_length
+def get_redis_client() -> redis.StrictRedis:
+    return redis.StrictRedis(
+        host=settings.REDIS_HOST,
+        port=settings.REDIS_PORT,
+        password=settings.REDIS_PASSWORD,
+        db=0,
+    )
+
+
+def put_dict_in_redis(
+    redis_client: redis.StrictRedis,
+    key_format: str,
+    data_to_store: Mapping[str, Any],
+    expiration_seconds: int,
+    token_length: int = 64,
+    token: Optional[str] = None,
+) -> str:
+    key_length = len(key_format) - len("{token}") + token_length
     if key_length > MAX_KEY_LENGTH:
         error_msg = "Requested key too long in put_dict_in_redis. Key format: %s, token length: %s"
         raise ZulipRedisKeyTooLongError(error_msg % (key_format, token_length))
@@ -43,8 +55,10 @@ def put_dict_in_redis(redis_client: redis.StrictRedis, key_format: str,
 
     return key
 
-def get_dict_from_redis(redis_client: redis.StrictRedis, key_format: str, key: str,
-                        ) -> Optional[Dict[str, Any]]:
+
+def get_dict_from_redis(
+    redis_client: redis.StrictRedis, key_format: str, key: str,
+) -> Optional[Dict[str, Any]]:
     # This function requires inputting the intended key_format to validate
     # that the key fits it, as an additionally security measure. This protects
     # against bugs where a caller requests a key based on user input and doesn't
@@ -59,9 +73,12 @@ def get_dict_from_redis(redis_client: redis.StrictRedis, key_format: str, key: s
         return None
     return ujson.loads(data)
 
+
 def validate_key_fits_format(key: str, key_format: str) -> None:
     assert "{token}" in key_format
     regex = key_format.format(token=r"[a-zA-Z0-9]+")
 
     if not re.fullmatch(regex, key):
-        raise ZulipRedisKeyOfWrongFormatError(f"{key} does not match format {key_format}")
+        raise ZulipRedisKeyOfWrongFormatError(
+            f"{key} does not match format {key_format}",
+        )

@@ -22,7 +22,10 @@ from scripts.lib.zulip_tools import (
 )
 from zerver.lib import test_helpers
 from zerver.lib.sqlalchemy_utils import get_sqlalchemy_connection
-from zerver.lib.test_helpers import append_instrumentation_data, write_instrumentation_reports
+from zerver.lib.test_helpers import (
+    append_instrumentation_data,
+    write_instrumentation_reports,
+)
 
 # We need to pick an ID for this test-backend invocation, and store it
 # in this global so it can be used in init_worker; this is used to
@@ -31,16 +34,20 @@ from zerver.lib.test_helpers import append_instrumentation_data, write_instrumen
 # below hack, which fails 1/10000000 of the time.
 random_id_range_start = str(random.randint(1, 10000000))
 
-def get_database_id(worker_id: Optional[int]=None) -> str:
+
+def get_database_id(worker_id: Optional[int] = None) -> str:
     if worker_id:
         return f"{random_id_range_start}_{worker_id}"
     return random_id_range_start
 
+
 # The root directory for this run of the test suite.
 TEST_RUN_DIR = get_or_create_dev_uuid_var_path(
-    os.path.join('test-backend', f'run_{get_database_id()}'))
+    os.path.join("test-backend", f"run_{get_database_id()}"),
+)
 
 _worker_id = 0  # Used to identify the worker process.
+
 
 class TextTestResult(runner.TextTestResult):
     """
@@ -79,10 +86,13 @@ class TextTestResult(runner.TextTestResult):
 
     def addSkip(self, test: TestCase, reason: str) -> None:
         TestResult.addSkip(self, test, reason)
-        self.stream.writeln("** Skipping {}: {}".format(  # type: ignore[attr-defined] # https://github.com/python/typeshed/issues/3139
-            test.id(),
-            reason))
+        self.stream.writeln(
+            "** Skipping {}: {}".format(  # type: ignore[attr-defined] # https://github.com/python/typeshed/issues/3139
+                test.id(), reason,
+            ),
+        )
         self.stream.flush()
+
 
 class RemoteTestResult(django_runner.RemoteTestResult):
     """
@@ -91,21 +101,24 @@ class RemoteTestResult(django_runner.RemoteTestResult):
     """
 
     def addInfo(self, test: TestCase, msg: str) -> None:
-        self.events.append(('addInfo', self.test_index, msg))
+        self.events.append(("addInfo", self.test_index, msg))
 
     def addInstrumentation(self, test: TestCase, data: Dict[str, Any]) -> None:
         # Some elements of data['info'] cannot be serialized.
-        if 'info' in data:
-            del data['info']
+        if "info" in data:
+            del data["info"]
 
-        self.events.append(('addInstrumentation', self.test_index, data))
+        self.events.append(("addInstrumentation", self.test_index, data))
+
 
 def process_instrumented_calls(func: Callable[[Dict[str, Any]], None]) -> None:
     for call in test_helpers.INSTRUMENTED_CALLS:
         func(call)
 
+
 SerializedSubsuite = Tuple[Type[TestSuite], List[str]]
-SubsuiteArgs = Tuple[Type['RemoteTestRunner'], int, SerializedSubsuite, bool]
+SubsuiteArgs = Tuple[Type["RemoteTestRunner"], int, SerializedSubsuite, bool]
+
 
 def run_subsuite(args: SubsuiteArgs) -> Tuple[int, Any]:
     # Reset the accumulated INSTRUMENTED_CALLS before running this subsuite.
@@ -123,7 +136,8 @@ def run_subsuite(args: SubsuiteArgs) -> Tuple[int, Any]:
     process_instrumented_calls(partial(result.addInstrumentation, None))
     return subsuite_index, result.events
 
-def destroy_test_databases(worker_id: Optional[int]=None) -> None:
+
+def destroy_test_databases(worker_id: Optional[int] = None) -> None:
     for alias in connections:
         connection = connections[alias]
         try:
@@ -152,13 +166,13 @@ def destroy_test_databases(worker_id: Optional[int]=None) -> None:
             # DB doesn't exist. No need to do anything.
             pass
 
+
 def create_test_databases(worker_id: int) -> None:
     database_id = get_database_id(worker_id)
     for alias in connections:
         connection = connections[alias]
         connection.creation.clone_test_db(
-            suffix=database_id,
-            keepdb=True,
+            suffix=database_id, keepdb=True,
         )
 
         settings_dict = connection.creation.get_test_db_clone_settings(database_id)
@@ -168,6 +182,7 @@ def create_test_databases(worker_id: int) -> None:
         # to the default database instead of the appropriate clone.
         connection.settings_dict.update(settings_dict)
         connection.close()
+
 
 def init_worker(counter: Synchronized) -> None:
     """
@@ -186,6 +201,7 @@ def init_worker(counter: Synchronized) -> None:
 
     # Clear the cache
     from zerver.lib.cache import get_cache_backend
+
     cache = get_cache_backend(None)
     cache.clear()
 
@@ -197,21 +213,23 @@ def init_worker(counter: Synchronized) -> None:
     initialize_worker_path(_worker_id)
 
     def is_upload_avatar_url(url: URLPattern) -> bool:
-        if url.pattern.regex.pattern == r'^user_avatars/(?P<path>.*)$':
+        if url.pattern.regex.pattern == r"^user_avatars/(?P<path>.*)$":
             return True
         return False
 
     # We manually update the upload directory path in the url regex.
     from zproject import dev_urls
+
     found = False
     for url in dev_urls.urls:
         if is_upload_avatar_url(url):
             found = True
             new_root = os.path.join(settings.LOCAL_UPLOADS_DIR, "avatars")
-            url.default_args['document_root'] = new_root
+            url.default_args["document_root"] = new_root
 
     if not found:
         print("*** Upload directory not found.")
+
 
 class ParallelTestSuite(django_runner.ParallelTestSuite):
     run_subsuite = run_subsuite
@@ -224,7 +242,10 @@ class ParallelTestSuite(django_runner.ParallelTestSuite):
         # most of django_runner.ParallelTestSuite with our own suite
         # definitions.
         assert not isinstance(self.subsuites, SubSuiteList)
-        self.subsuites: Union[SubSuiteList, List[TestSuite]] = SubSuiteList(self.subsuites)
+        self.subsuites: Union[SubSuiteList, List[TestSuite]] = SubSuiteList(
+            self.subsuites,
+        )
+
 
 def check_import_error(test_name: str) -> None:
     try:
@@ -238,18 +259,22 @@ def check_import_error(test_name: str) -> None:
 def initialize_worker_path(worker_id: int) -> None:
     # Allow each test worker process to write to a unique directory
     # within `TEST_RUN_DIR`.
-    worker_path = os.path.join(TEST_RUN_DIR, f'worker_{_worker_id}')
+    worker_path = os.path.join(TEST_RUN_DIR, f"worker_{_worker_id}")
     os.makedirs(worker_path, exist_ok=True)
     settings.TEST_WORKER_DIR = worker_path
 
     # Every process should upload to a separate directory so that
     # race conditions can be avoided.
     settings.LOCAL_UPLOADS_DIR = get_or_create_dev_uuid_var_path(
-        os.path.join("test-backend",
-                     os.path.basename(TEST_RUN_DIR),
-                     os.path.basename(worker_path),
-                     "test_uploads"))
+        os.path.join(
+            "test-backend",
+            os.path.basename(TEST_RUN_DIR),
+            os.path.basename(worker_path),
+            "test_uploads",
+        ),
+    )
     settings.SENDFILE_ROOT = os.path.join(settings.LOCAL_UPLOADS_DIR, "files")
+
 
 class Runner(DiscoverRunner):
     parallel_test_suite = ParallelTestSuite
@@ -268,11 +293,16 @@ class Runner(DiscoverRunner):
     def get_resultclass(self) -> Type[TestResult]:
         return TextTestResult
 
-    def on_template_rendered(self, sender: Any, context: Dict[str, Any], **kwargs: Any) -> None:
-        if hasattr(sender, 'template'):
+    def on_template_rendered(
+        self, sender: Any, context: Dict[str, Any], **kwargs: Any
+    ) -> None:
+        if hasattr(sender, "template"):
             template_name = sender.template.name
             if template_name not in self.templates_rendered:
-                if context.get('shallow_tested') and template_name not in self.templates_rendered:
+                if (
+                    context.get("shallow_tested")
+                    and template_name not in self.templates_rendered
+                ):
                     self.shallow_tested_templates.add(template_name)
                 else:
                     self.templates_rendered.add(template_name)
@@ -282,15 +312,15 @@ class Runner(DiscoverRunner):
         return self.shallow_tested_templates
 
     def setup_test_environment(self, *args: Any, **kwargs: Any) -> Any:
-        settings.DATABASES['default']['NAME'] = settings.BACKEND_DATABASE_TEMPLATE
+        settings.DATABASES["default"]["NAME"] = settings.BACKEND_DATABASE_TEMPLATE
         # We create/destroy the test databases in run_tests to avoid
         # duplicate work when running in parallel mode.
 
         # Write the template database ids to a file that we can
         # reference for cleaning them up if they leak.
-        filepath = os.path.join(get_dev_uuid_var_path(),
-                                TEMPLATE_DATABASE_DIR,
-                                get_database_id())
+        filepath = os.path.join(
+            get_dev_uuid_var_path(), TEMPLATE_DATABASE_DIR, get_database_id(),
+        )
         os.makedirs(os.path.dirname(filepath), exist_ok=True)
         with open(filepath, "w") as f:
             if self.parallel > 1:
@@ -322,9 +352,9 @@ class Runner(DiscoverRunner):
             destroy_test_databases()
 
         # Clean up our record of which databases this process created.
-        filepath = os.path.join(get_dev_uuid_var_path(),
-                                TEMPLATE_DATABASE_DIR,
-                                get_database_id())
+        filepath = os.path.join(
+            get_dev_uuid_var_path(), TEMPLATE_DATABASE_DIR, get_database_id(),
+        )
         os.remove(filepath)
 
         # Clean up our test runs root directory.
@@ -334,14 +364,16 @@ class Runner(DiscoverRunner):
             print("Unable to clean up the test run's directory.")
         return super().teardown_test_environment(*args, **kwargs)
 
-    def test_imports(self, test_labels: List[str], suite: Union[TestSuite, ParallelTestSuite]) -> None:
-        prefix_old = 'unittest.loader.ModuleImportFailure.'  # Python <= 3.4
-        prefix_new = 'unittest.loader._FailedTest.'  # Python > 3.4
+    def test_imports(
+        self, test_labels: List[str], suite: Union[TestSuite, ParallelTestSuite],
+    ) -> None:
+        prefix_old = "unittest.loader.ModuleImportFailure."  # Python <= 3.4
+        prefix_new = "unittest.loader._FailedTest."  # Python > 3.4
         error_prefixes = [prefix_old, prefix_new]
         for test_name in get_test_names(suite):
             for prefix in error_prefixes:
                 if test_name.startswith(prefix):
-                    test_name = test_name[len(prefix):]
+                    test_name = test_name[len(prefix) :]
                     for label in test_labels:
                         # This code block is for Python 3.5 when test label is
                         # directly provided, for example:
@@ -358,11 +390,14 @@ class Runner(DiscoverRunner):
                             break
                     check_import_error(test_name)
 
-    def run_tests(self, test_labels: List[str],
-                  extra_tests: Optional[List[TestCase]]=None,
-                  full_suite: bool=False,
-                  include_webhooks: bool=False,
-                  **kwargs: Any) -> Tuple[bool, List[str]]:
+    def run_tests(
+        self,
+        test_labels: List[str],
+        extra_tests: Optional[List[TestCase]] = None,
+        full_suite: bool = False,
+        include_webhooks: bool = False,
+        **kwargs: Any,
+    ) -> Tuple[bool, List[str]]:
         self.setup_test_environment()
         try:
             suite = self.build_suite(test_labels, extra_tests)
@@ -402,8 +437,11 @@ class Runner(DiscoverRunner):
         self.teardown_test_environment()
         failed = self.suite_result(suite, result)
         if not failed:
-            write_instrumentation_reports(full_suite=full_suite, include_webhooks=include_webhooks)
+            write_instrumentation_reports(
+                full_suite=full_suite, include_webhooks=include_webhooks,
+            )
         return failed, result.failed_tests
+
 
 def get_test_names(suite: Union[TestSuite, ParallelTestSuite]) -> List[str]:
     if isinstance(suite, ParallelTestSuite):
@@ -417,6 +455,7 @@ def get_test_names(suite: Union[TestSuite, ParallelTestSuite]) -> List[str]:
     else:
         return [t.id() for t in get_tests_from_suite(suite)]
 
+
 def get_tests_from_suite(suite: TestSuite) -> TestCase:
     for test in suite:
         if isinstance(test, TestSuite):
@@ -424,8 +463,10 @@ def get_tests_from_suite(suite: TestSuite) -> TestCase:
         else:
             yield test
 
+
 def serialize_suite(suite: TestSuite) -> Tuple[Type[TestSuite], List[str]]:
     return type(suite), get_test_names(suite)
+
 
 def deserialize_suite(args: Tuple[Type[TestSuite], List[str]]) -> TestSuite:
     suite_class, test_names = args
@@ -435,8 +476,10 @@ def deserialize_suite(args: Tuple[Type[TestSuite], List[str]]) -> TestSuite:
         suite.addTest(test)
     return suite
 
+
 class RemoteTestRunner(django_runner.RemoteTestRunner):
     resultclass = RemoteTestResult
+
 
 class SubSuiteList(List[Tuple[Type[TestSuite], List[str]]]):
     """

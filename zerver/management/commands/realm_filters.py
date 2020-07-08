@@ -23,15 +23,28 @@ Example: ./manage.py realm_filters --realm=zulip --op=show
 """
 
     def add_arguments(self, parser: ArgumentParser) -> None:
-        parser.add_argument('--op',
-                            dest='op',
-                            type=str,
-                            default="show",
-                            help='What operation to do (add, show, remove).')
-        parser.add_argument('pattern', metavar='<pattern>', type=str, nargs='?', default=None,
-                            help="regular expression to match")
-        parser.add_argument('url_format_string', metavar='<url pattern>', type=str, nargs='?',
-                            help="format string to substitute")
+        parser.add_argument(
+            "--op",
+            dest="op",
+            type=str,
+            default="show",
+            help="What operation to do (add, show, remove).",
+        )
+        parser.add_argument(
+            "pattern",
+            metavar="<pattern>",
+            type=str,
+            nargs="?",
+            default=None,
+            help="regular expression to match",
+        )
+        parser.add_argument(
+            "url_format_string",
+            metavar="<url pattern>",
+            type=str,
+            nargs="?",
+            help="format string to substitute",
+        )
         self.add_realm_args(parser, True)
 
     def handle(self, *args: Any, **options: str) -> None:
@@ -41,13 +54,13 @@ Example: ./manage.py realm_filters --realm=zulip --op=show
             print(f"{realm.string_id}: {all_realm_filters().get(realm.id, [])}")
             sys.exit(0)
 
-        pattern = options['pattern']
+        pattern = options["pattern"]
         if not pattern:
             self.print_help("./manage.py", "realm_filters")
             raise CommandError
 
         if options["op"] == "add":
-            url_format_string = options['url_format_string']
+            url_format_string = options["url_format_string"]
             if not url_format_string:
                 self.print_help("./manage.py", "realm_filters")
                 raise CommandError

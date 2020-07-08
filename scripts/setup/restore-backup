@@ -54,7 +54,9 @@ def restore_backup(tarball_file: IO[bytes]) -> None:
     if settings.LOCAL_UPLOADS_DIR is not None:
         # We only need to restore LOCAL_UPLOADS_DIR if the system is
         # configured to locally host uploads.
-        paths.append(("uploads", os.path.join(settings.DEPLOY_ROOT, settings.LOCAL_UPLOADS_DIR)))
+        paths.append(
+            ("uploads", os.path.join(settings.DEPLOY_ROOT, settings.LOCAL_UPLOADS_DIR)),
+        )
 
     with tempfile.TemporaryDirectory(prefix="zulip-restore-backup-") as tmp:
         uid = os.getuid()
@@ -105,29 +107,53 @@ def restore_backup(tarball_file: IO[bytes]) -> None:
             env=postgres_env,
         )
         run(["dropdb", "--if-exists", "--", db["NAME"]], cwd="/", env=postgres_env)
-        run(["createdb", "-O", "zulip", "-T", "template0", "--", db["NAME"]], cwd="/", env=postgres_env)
+        run(
+            ["createdb", "-O", "zulip", "-T", "template0", "--", db["NAME"]],
+            cwd="/",
+            env=postgres_env,
+        )
         os.setresuid(0, 0, 0)
 
         if settings.PRODUCTION:
             # In case we are restoring a backup from an older Zulip
             # version, there may be new secrets to generate.
-            subprocess.check_call([
-                os.path.join(settings.DEPLOY_ROOT, "scripts", "setup", "generate_secrets.py"),
-                "--production",
-            ])
+            subprocess.check_call(
+                [
+                    os.path.join(
+                        settings.DEPLOY_ROOT, "scripts", "setup", "generate_secrets.py",
+                    ),
+                    "--production",
+                ],
+            )
 
             # If there is a local rabbitmq, we need to reconfigure it
             # to ensure the rabbitmq password matches the value in the
             # restored zulip-secrets.conf.  We need to be careful to
             # only do this if rabbitmq is configured to run locally on
             # the system.
-            rabbitmq_host = subprocess.check_output(
-                [os.path.join(settings.DEPLOY_ROOT,
-                              "scripts", "get-django-setting"),
-                 "RABBITMQ_HOST"]).strip().decode("utf-8")
+            rabbitmq_host = (
+                subprocess.check_output(
+                    [
+                        os.path.join(
+                            settings.DEPLOY_ROOT, "scripts", "get-django-setting",
+                        ),
+                        "RABBITMQ_HOST",
+                    ],
+                )
+                .strip()
+                .decode("utf-8")
+            )
             if rabbitmq_host in ["127.0.0.1", "::1", "localhost", "localhost6"]:
-                run([os.path.join(settings.DEPLOY_ROOT,
-                                  "scripts", "setup", "configure-rabbitmq")])
+                run(
+                    [
+                        os.path.join(
+                            settings.DEPLOY_ROOT,
+                            "scripts",
+                            "setup",
+                            "configure-rabbitmq",
+                        ),
+                    ],
+                )
 
             # In production, we also need to do a `zulip-puppet-apply`
             # in order to apply any configuration from

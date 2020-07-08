@@ -6,27 +6,13 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('analytics', '0012_add_on_delete'),
+        ("analytics", "0012_add_on_delete"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='installationcount',
-            name='anomaly',
-        ),
-        migrations.RemoveField(
-            model_name='realmcount',
-            name='anomaly',
-        ),
-        migrations.RemoveField(
-            model_name='streamcount',
-            name='anomaly',
-        ),
-        migrations.RemoveField(
-            model_name='usercount',
-            name='anomaly',
-        ),
-        migrations.DeleteModel(
-            name='Anomaly',
-        ),
+        migrations.RemoveField(model_name="installationcount", name="anomaly"),
+        migrations.RemoveField(model_name="realmcount", name="anomaly"),
+        migrations.RemoveField(model_name="streamcount", name="anomaly"),
+        migrations.RemoveField(model_name="usercount", name="anomaly"),
+        migrations.DeleteModel(name="Anomaly"),
     ]

@@ -4,14 +4,14 @@ from zerver.lib.test_classes import WebhookTestCase
 
 
 class IntercomWebHookTests(WebhookTestCase):
-    STREAM_NAME = 'test'
+    STREAM_NAME = "test"
     URL_TEMPLATE = "/api/v1/external/intercom?&api_key={api_key}&stream={stream}"
-    FIXTURE_DIR_NAME = 'intercom'
+    FIXTURE_DIR_NAME = "intercom"
 
-    @patch('zerver.webhooks.intercom.view.check_send_webhook_message')
+    @patch("zerver.webhooks.intercom.view.check_send_webhook_message")
     def test_ping_ignore(self, check_send_webhook_message_mock: MagicMock) -> None:
         self.url = self.build_webhook_url()
-        payload = self.get_body('ping')
+        payload = self.get_body("ping")
         result = self.client_post(self.url, payload, content_type="application/json")
         self.assertFalse(check_send_webhook_message_mock.called)
         self.assert_json_success(result)
@@ -24,18 +24,14 @@ New company **Kandra Labs** created:
 * **Monthly spending**: 0
 """.strip()
         self.send_and_test_stream_message(
-            'company_created',
-            expected_topic,
-            expected_message,
+            "company_created", expected_topic, expected_message,
         )
 
     def test_contact_added_email(self) -> None:
         expected_topic = "Contact: Azure Bus from St. John's"
         expected_message = "New email jerryguitarist@gmail.com added to contact."
         self.send_and_test_stream_message(
-            'contact_added_email',
-            expected_topic,
-            expected_message,
+            "contact_added_email", expected_topic, expected_message,
         )
 
     def test_contact_created(self) -> None:
@@ -47,9 +43,7 @@ New contact created:
 * **Location**: St. John's, Newfoundland and Labrador, Canada
 """.strip()
         self.send_and_test_stream_message(
-            'contact_created',
-            expected_topic,
-            expected_message,
+            "contact_created", expected_topic, expected_message,
         )
 
     def test_contact_signed_up(self) -> None:
@@ -60,72 +54,56 @@ Contact signed up:
 * **Location**: St. John's, Newfoundland and Labrador, Canada
 """.strip()
         self.send_and_test_stream_message(
-            'contact_signed_up',
-            expected_topic,
-            expected_message,
+            "contact_signed_up", expected_topic, expected_message,
         )
 
     def test_contact_tag_created(self) -> None:
         expected_topic = "Contact: Eeshan Garg"
         expected_message = "Contact tagged with the `developer` tag."
         self.send_and_test_stream_message(
-            'contact_tag_created',
-            expected_topic,
-            expected_message,
+            "contact_tag_created", expected_topic, expected_message,
         )
 
     def test_contact_tag_deleted(self) -> None:
         expected_topic = "Contact: Eeshan Garg"
         expected_message = "The tag `developer` was removed from the contact."
         self.send_and_test_stream_message(
-            'contact_tag_deleted',
-            expected_topic,
-            expected_message,
+            "contact_tag_deleted", expected_topic, expected_message,
         )
 
     def test_conversation_admin_assigned(self) -> None:
         expected_topic = "Lead: Eeshan Garg"
         expected_message = "Tim Abbott assigned to conversation."
         self.send_and_test_stream_message(
-            'conversation_admin_assigned',
-            expected_topic,
-            expected_message,
+            "conversation_admin_assigned", expected_topic, expected_message,
         )
 
     def test_conversation_admin_opened(self) -> None:
         expected_topic = "Lead: Cordelia Lear"
         expected_message = "Eeshan Garg opened the conversation."
         self.send_and_test_stream_message(
-            'conversation_admin_opened',
-            expected_topic,
-            expected_message,
+            "conversation_admin_opened", expected_topic, expected_message,
         )
 
     def test_conversation_admin_closed(self) -> None:
         expected_topic = "Lead: Eeshan Garg"
         expected_message = "Cordelia Lear closed the conversation."
         self.send_and_test_stream_message(
-            'conversation_admin_closed',
-            expected_topic,
-            expected_message,
+            "conversation_admin_closed", expected_topic, expected_message,
         )
 
     def test_conversation_admin_snoozed(self) -> None:
         expected_topic = "Lead: Eeshan Garg"
         expected_message = "Cordelia Lear snoozed the conversation."
         self.send_and_test_stream_message(
-            'conversation_admin_snoozed',
-            expected_topic,
-            expected_message,
+            "conversation_admin_snoozed", expected_topic, expected_message,
         )
 
     def test_conversation_admin_unsnoozed(self) -> None:
         expected_topic = "Lead: Eeshan Garg"
         expected_message = "Cordelia Lear unsnoozed the conversation."
         self.send_and_test_stream_message(
-            'conversation_admin_unsnoozed',
-            expected_topic,
-            expected_message,
+            "conversation_admin_unsnoozed", expected_topic, expected_message,
         )
 
     def test_conversation_admin_replied(self) -> None:
@@ -138,9 +116,7 @@ Hey Eeshan! How can I help?
 ```
 """.strip()
         self.send_and_test_stream_message(
-            'conversation_admin_replied',
-            expected_topic,
-            expected_message,
+            "conversation_admin_replied", expected_topic, expected_message,
         )
 
     def test_conversation_admin_noted(self) -> None:
@@ -153,9 +129,7 @@ Talk to Tim about this user's query.
 ```
 """.strip()
         self.send_and_test_stream_message(
-            'conversation_admin_noted',
-            expected_topic,
-            expected_message,
+            "conversation_admin_noted", expected_topic, expected_message,
         )
 
     def test_conversation_admin_single_created(self) -> None:
@@ -168,9 +142,7 @@ Hi Eeshan, What's up
 ```
 """.strip()
         self.send_and_test_stream_message(
-            'conversation_admin_single_created',
-            expected_topic,
-            expected_message,
+            "conversation_admin_single_created", expected_topic, expected_message,
         )
 
     def test_conversation_user_created(self) -> None:
@@ -183,9 +155,7 @@ Hello everyone!
 ```
 """.strip()
         self.send_and_test_stream_message(
-            'conversation_user_created',
-            expected_topic,
-            expected_message,
+            "conversation_user_created", expected_topic, expected_message,
         )
 
     def test_conversation_user_replied(self) -> None:
@@ -198,18 +168,14 @@ Well, I need some help getting access to a developer account.
 ```
 """.strip()
         self.send_and_test_stream_message(
-            'conversation_user_replied',
-            expected_topic,
-            expected_message,
+            "conversation_user_replied", expected_topic, expected_message,
         )
 
     def test_event_created(self) -> None:
         expected_topic = "Events"
         expected_message = "New event **invited-friend** created."
         self.send_and_test_stream_message(
-            'event_created',
-            expected_topic,
-            expected_message,
+            "event_created", expected_topic, expected_message,
         )
 
     def test_user_created(self) -> None:
@@ -221,48 +187,44 @@ New user created:
 """.strip()
 
         self.send_and_test_stream_message(
-            'user_created',
-            expected_topic,
-            expected_message,
+            "user_created", expected_topic, expected_message,
         )
 
     def test_user_deleted(self) -> None:
         self.send_and_test_stream_message(
-            'user_deleted',
-            'User: jerryguitarist@gmail.com',
-            'User deleted.',
+            "user_deleted", "User: jerryguitarist@gmail.com", "User deleted.",
         )
 
     def test_user_email_updated(self) -> None:
         self.send_and_test_stream_message(
-            'user_email_updated',
-            'Contact: Azure Bus from St. John\'s',
-            'User\'s email was updated to aaron@zulip.com.',
+            "user_email_updated",
+            "Contact: Azure Bus from St. John's",
+            "User's email was updated to aaron@zulip.com.",
         )
 
     def test_user_tag_created(self) -> None:
         self.send_and_test_stream_message(
-            'user_tag_created',
-            'User: eeshangarg',
-            'The tag `developer` was added to the user.',
+            "user_tag_created",
+            "User: eeshangarg",
+            "The tag `developer` was added to the user.",
         )
 
     def test_user_tag_deleted(self) -> None:
-        expected_topic = 'User: eeshangarg'
-        expected_message = 'The tag `CSV Import - 2019-03-26 22:46:04 UTC` was removed from the user.'
+        expected_topic = "User: eeshangarg"
+        expected_message = (
+            "The tag `CSV Import - 2019-03-26 22:46:04 UTC` was removed from the user."
+        )
 
         self.send_and_test_stream_message(
-            'user_tag_deleted',
-            expected_topic,
-            expected_message,
+            "user_tag_deleted", expected_topic, expected_message,
         )
 
     def test_user_unsubscribed(self) -> None:
         self.send_and_test_stream_message(
-            'user_unsubscribed',
-            'Contact: Eeshan Garg',
-            'User unsubscribed from emails.',
+            "user_unsubscribed",
+            "Contact: Eeshan Garg",
+            "User unsubscribed from emails.",
         )
 
     def get_body(self, fixture_name: str) -> str:
-        return self.webhook_fixture_data('intercom', fixture_name, file_type="json")
+        return self.webhook_fixture_data("intercom", fixture_name, file_type="json")

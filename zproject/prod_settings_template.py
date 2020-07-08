@@ -27,7 +27,7 @@ from typing import Any, Dict, Tuple
 # support@example.com is totally reasonable, as is admin@example.com.
 # Do not put a display name; e.g. 'support@example.com', not
 # 'Zulip Support <support@example.com>'.
-ZULIP_ADMINISTRATOR = 'zulip-admin@example.com'
+ZULIP_ADMINISTRATOR = "zulip-admin@example.com"
 
 # The user-accessible Zulip hostname for this installation, e.g.
 # zulip.example.com.  This should match what users will put in their
@@ -36,7 +36,7 @@ ZULIP_ADMINISTRATOR = 'zulip-admin@example.com'
 #
 # If you need to access the server on a specific port, you should set
 # EXTERNAL_HOST to e.g. zulip.example.com:1234 here.
-EXTERNAL_HOST = 'zulip.example.com'
+EXTERNAL_HOST = "zulip.example.com"
 
 # Alternative hostnames.  A comma-separated list of strings
 # representing the host/domain names that your users can enter in
@@ -49,12 +49,12 @@ EXTERNAL_HOST = 'zulip.example.com'
 # accessing your server by other hostnames, list them here.
 #
 # Note that these should just be hostnames, without port numbers.
-#ALLOWED_HOSTS = ['zulip-alias.example.com', '192.0.2.1']
+# ALLOWED_HOSTS = ['zulip-alias.example.com', '192.0.2.1']
 
 # If EXTERNAL_HOST is not a valid domain name (e.g. an IP address),
 # set FAKE_EMAIL_DOMAIN below to a domain that Zulip can use when
 # generating (fake) email addresses for bots, dummy users, etc.
-#FAKE_EMAIL_DOMAIN = 'fake-domain.example.com'
+# FAKE_EMAIL_DOMAIN = 'fake-domain.example.com'
 
 
 ################
@@ -70,8 +70,8 @@ EXTERNAL_HOST = 'zulip.example.com'
 #   https://zulip.readthedocs.io/en/latest/production/email.html
 
 # EMAIL_HOST and EMAIL_HOST_USER are generally required.
-#EMAIL_HOST = 'smtp.example.com'
-#EMAIL_HOST_USER = ''
+# EMAIL_HOST = 'smtp.example.com'
+# EMAIL_HOST_USER = ''
 
 # Passwords and secrets are not stored in this file.  The password
 # for user EMAIL_HOST_USER goes in `/etc/zulip/zulip-secrets.conf`.
@@ -79,8 +79,8 @@ EXTERNAL_HOST = 'zulip.example.com'
 #   email_password = abcd1234
 
 # EMAIL_USE_TLS and EMAIL_PORT are required for most SMTP providers.
-#EMAIL_USE_TLS = True
-#EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = 587
 
 # The noreply address to be used as the sender for certain generated
 # emails.  Messages sent to this address could contain sensitive user
@@ -89,20 +89,20 @@ EXTERNAL_HOST = 'zulip.example.com'
 # zulip.example.com).  There are potential security issues if you set
 # ADD_TOKENS_TO_NOREPLY_ADDRESS=False to remove the token; see
 # https://zulip.readthedocs.io/en/latest/production/email.html for details.
-#ADD_TOKENS_TO_NOREPLY_ADDRESS = True
-#TOKENIZED_NOREPLY_EMAIL_ADDRESS = "noreply-{token}@example.com"
+# ADD_TOKENS_TO_NOREPLY_ADDRESS = True
+# TOKENIZED_NOREPLY_EMAIL_ADDRESS = "noreply-{token}@example.com"
 # NOREPLY_EMAIL_ADDRESS is the sender for noreply emails that don't
 # contain confirmation links (where the security problem fixed by
 # ADD_TOKENS_TO_NOREPLY_ADDRESS does not exist), as well as for
 # confirmation emails when ADD_TOKENS_TO_NOREPLY_ADDRESS=False.
-#NOREPLY_EMAIL_ADDRESS = 'noreply@example.com'
+# NOREPLY_EMAIL_ADDRESS = 'noreply@example.com'
 
 # Many countries and bulk mailers require certain types of email to display
 # a physical mailing address to comply with anti-spam legislation.
 # Non-commercial and non-public-facing installations are unlikely to need
 # this setting.
 # The address should have no newlines.
-#PHYSICAL_ADDRESS = ''
+# PHYSICAL_ADDRESS = ''
 
 
 ################
@@ -116,7 +116,7 @@ EXTERNAL_HOST = 'zulip.example.com'
 # enabled.  If you want to disable it, do so after creating the
 # initial realm and user.
 AUTHENTICATION_BACKENDS: Tuple[str, ...] = (
-    'zproject.backends.EmailAuthBackend',  # Email and password; just requires SMTP setup
+    "zproject.backends.EmailAuthBackend",  # Email and password; just requires SMTP setup
     # 'zproject.backends.GoogleAuthBackend',  # Google auth, setup below
     # 'zproject.backends.GitHubAuthBackend',  # GitHub auth, setup below
     # 'zproject.backends.GitLabAuthBackend',  # GitLab auth, setup below
@@ -148,7 +148,7 @@ AUTHENTICATION_BACKENDS: Tuple[str, ...] = (
 # (4) You should get a client ID and a client secret. Copy them.
 # Use the client ID as `SOCIAL_AUTH_GOOGLE_KEY` here, and put the
 # client secret in zulip-secrets.conf as `social_auth_google_secret`.
-#SOCIAL_AUTH_GOOGLE_KEY = <your client ID from Google>
+# SOCIAL_AUTH_GOOGLE_KEY = <your client ID from Google>
 
 #######
 # GitLab OAuth.
@@ -168,8 +168,8 @@ AUTHENTICATION_BACKENDS: Tuple[str, ...] = (
 # zulip-secrets.conf as `social_auth_gitlab_secret`.
 # (5) If you are self-hosting GitLab, provide the URL of the
 # GitLab server as SOCIAL_AUTH_GITLAB_API_URL here.
-#SOCIAL_AUTH_GITLAB_KEY = <your Application ID from GitLab>
-#SOCIAL_AUTH_GITLAB_API_URL = https://gitlab.example.com
+# SOCIAL_AUTH_GITLAB_KEY = <your Application ID from GitLab>
+# SOCIAL_AUTH_GITLAB_API_URL = https://gitlab.example.com
 
 ########
 # GitHub OAuth.
@@ -187,14 +187,14 @@ AUTHENTICATION_BACKENDS: Tuple[str, ...] = (
 # showing a client ID and a client secret.  Use the client ID as
 # `SOCIAL_AUTH_GITHUB_KEY` here, and put the client secret in
 # zulip-secrets.conf as `social_auth_github_secret`.
-#SOCIAL_AUTH_GITHUB_KEY = <your client ID from GitHub>
+# SOCIAL_AUTH_GITHUB_KEY = <your client ID from GitHub>
 
 # (3) Optionally, you can configure the GitHub integration to only
 # allow members of a particular GitHub team or organization to log
 # into your Zulip server through GitHub authentication.  To enable
 # this, set one of the two parameters below:
-#SOCIAL_AUTH_GITHUB_TEAM_ID = <your team id>
-#SOCIAL_AUTH_GITHUB_ORG_NAME = <your org name>
+# SOCIAL_AUTH_GITHUB_TEAM_ID = <your team id>
+# SOCIAL_AUTH_GITHUB_ORG_NAME = <your org name>
 
 # (4) If you are serving multiple Zulip organizations on different
 # subdomains, you need to set SOCIAL_AUTH_SUBDOMAIN.  You can set it
@@ -207,7 +207,7 @@ AUTHENTICATION_BACKENDS: Tuple[str, ...] = (
 # recommendation, you must also set the 'ROOT_SUBDOMAIN_ALIASES' list
 # to include this subdomain.
 #
-#SOCIAL_AUTH_SUBDOMAIN = 'auth'
+# SOCIAL_AUTH_SUBDOMAIN = 'auth'
 
 ########
 # SAML Authentication
@@ -223,7 +223,7 @@ SOCIAL_AUTH_SAML_ORG_INFO = {
     "en-US": {
         "displayname": "Example, Inc. Zulip",
         "name": "zulip",
-        "url": "{}{}".format('https://', EXTERNAL_HOST),
+        "url": "{}{}".format("https://", EXTERNAL_HOST),
     },
 }
 SOCIAL_AUTH_SAML_ENABLED_IDPS = {
@@ -244,10 +244,8 @@ SOCIAL_AUTH_SAML_ENABLED_IDPS = {
         "attr_last_name": "last_name",
         "attr_username": "email",
         "attr_email": "email",
-
         # The "x509cert" attribute is automatically read from
         # /etc/zulip/saml/idps/{idp_name}.crt; don't specify it here.
-
         # Optionally, you can edit display_name and display_icon
         # settings below to change the name and icon that will show on
         # the login button.
@@ -256,11 +254,9 @@ SOCIAL_AUTH_SAML_ENABLED_IDPS = {
         # the left end of the login/register buttons for this IDP.
         # The default of None results in a text-only button.
         # "display_icon": "/path/to/icon.png",
-
         # If you want this IdP to only be enabled for authentication
         # to certain subdomains, uncomment and edit the setting below.
         # "limit_to_subdomains": ["subdomain1", "subdomain2"],
-
         # You can also limit subdomains by setting "attr_org_membership"
         # to be a SAML attribute containing the allowed subdomains for a user.
         # "attr_org_membership": "member",
@@ -275,7 +271,7 @@ SOCIAL_AUTH_SAML_SECURITY_CONFIG: Dict[str, Any] = {
 }
 
 # These SAML settings you likely won't need to modify.
-SOCIAL_AUTH_SAML_SP_ENTITY_ID = 'https://' + EXTERNAL_HOST
+SOCIAL_AUTH_SAML_SP_ENTITY_ID = "https://" + EXTERNAL_HOST
 SOCIAL_AUTH_SAML_TECHNICAL_CONTACT = {
     "givenName": "Technical team",
     "emailAddress": ZULIP_ADMINISTRATOR,
@@ -292,10 +288,10 @@ SOCIAL_AUTH_SAML_SUPPORT_CONTACT = {
 #
 #     https://zulip.readthedocs.io/en/latest/production/authentication-methods.html#sign-in-with-apple
 #
-#SOCIAL_AUTH_APPLE_TEAM = "<your Team ID>"
-#SOCIAL_AUTH_APPLE_SERVICES_ID = "<your Services ID>"
-#SOCIAL_AUTH_APPLE_BUNDLE_ID = "<your Bundle ID>"
-#SOCIAL_AUTH_APPLE_KEY = "<your Key ID>"
+# SOCIAL_AUTH_APPLE_TEAM = "<your Team ID>"
+# SOCIAL_AUTH_APPLE_SERVICES_ID = "<your Services ID>"
+# SOCIAL_AUTH_APPLE_BUNDLE_ID = "<your Bundle ID>"
+# SOCIAL_AUTH_APPLE_KEY = "<your Key ID>"
 
 ########
 # Azure Active Directory OAuth.
@@ -311,7 +307,7 @@ SOCIAL_AUTH_SAML_SUPPORT_CONTACT = {
 #
 # (2) Enter the application ID for the app as SOCIAL_AUTH_AZUREAD_OAUTH2_KEY here
 # (3) Put the application password in zulip-secrets.conf as 'azure_oauth2_secret'.
-#SOCIAL_AUTH_AZUREAD_OAUTH2_KEY = ''
+# SOCIAL_AUTH_AZUREAD_OAUTH2_KEY = ''
 
 ########
 # SSO via REMOTE_USER.
@@ -321,7 +317,7 @@ SOCIAL_AUTH_SAML_SUPPORT_CONTACT = {
 # domain (e.g. if REMOTE_USER is "username" and the corresponding
 # email address is "username@example.com", set SSO_APPEND_DOMAIN =
 # "example.com"), otherwise leave this as None.
-#SSO_APPEND_DOMAIN = None
+# SSO_APPEND_DOMAIN = None
 
 ################
 # Miscellaneous settings.
@@ -331,20 +327,20 @@ SOCIAL_AUTH_SAML_SUPPORT_CONTACT = {
 # notification bouncer server to the mobile apps.  See
 # https://zulip.readthedocs.io/en/latest/production/mobile-push-notifications.html
 # for information on how to sign up for and configure this.
-#PUSH_NOTIFICATION_BOUNCER_URL = 'https://push.zulipchat.com'
+# PUSH_NOTIFICATION_BOUNCER_URL = 'https://push.zulipchat.com'
 
 # Whether to redact the content of push notifications.  This is less
 # usable, but avoids sending message content over the wire.  In the
 # future, we're likely to replace this with an end-to-end push
 # notification encryption feature.
-#PUSH_NOTIFICATION_REDACT_CONTENT = False
+# PUSH_NOTIFICATION_REDACT_CONTENT = False
 
 # Whether to submit basic usage statistics to help the Zulip core team.  Details at
 #
 #   https://zulip.readthedocs.io/en/latest/production/mobile-push-notifications.html
 #
 # Defaults to True if and only if the Mobile Push Notifications Service is enabled.
-#SUBMIT_USAGE_STATISTICS = True
+# SUBMIT_USAGE_STATISTICS = True
 
 # Controls whether session cookies expire when the browser closes
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
@@ -358,33 +354,33 @@ SESSION_COOKIE_AGE = 60 * 60 * 24 * 7 * 2  # 2 weeks
 # PASSWORD_MIN_GUESSES = 10000
 
 # Controls whether Zulip sends "new login" email notifications.
-#SEND_LOGIN_EMAILS = True
+# SEND_LOGIN_EMAILS = True
 
 # Controls whether or not error reports (tracebacks) are emailed to the
 # server administrators.
-#ERROR_REPORTING = True
+# ERROR_REPORTING = True
 # For frontend (JavaScript) tracebacks
-#BROWSER_ERROR_REPORTING = False
+# BROWSER_ERROR_REPORTING = False
 
 # If True, each log message in the server logs will identify the
 # Python module where it came from.  Useful for tracking down a
 # mysterious log message, but a little verbose.
-#LOGGING_SHOW_MODULE = False
+# LOGGING_SHOW_MODULE = False
 
 # If True, each log message in the server logs will identify the
 # process ID.  Useful for correlating logs with information from
 # system-level monitoring tools.
-#LOGGING_SHOW_PID = False
+# LOGGING_SHOW_PID = False
 
 # Controls whether or not Zulip will provide inline image preview when
 # a link to an image is referenced in a message.  Note: this feature
 # can also be disabled in a realm's organization settings.
-#INLINE_IMAGE_PREVIEW = True
+# INLINE_IMAGE_PREVIEW = True
 
 # Controls whether or not Zulip will provide inline previews of
 # websites that are referenced in links in messages.  Note: this feature
 # can also be disabled in a realm's organization settings.
-#INLINE_URL_EMBED_PREVIEW = True
+# INLINE_URL_EMBED_PREVIEW = True
 
 # Controls whether or not Zulip will parse links starting with
 # "file:///" as a hyperlink (useful if you have e.g. an NFS share).
@@ -401,9 +397,9 @@ ENABLE_FILE_LINKS = False
 # path.  For that reason, we recommend replacing /home/zulip/uploads
 # with a symlink instead of changing LOCAL_UPLOADS_DIR.
 LOCAL_UPLOADS_DIR = "/home/zulip/uploads"
-#S3_AUTH_UPLOADS_BUCKET = ""
-#S3_AVATAR_BUCKET = ""
-#S3_REGION = ""
+# S3_AUTH_UPLOADS_BUCKET = ""
+# S3_AVATAR_BUCKET = ""
+# S3_REGION = ""
 
 # Maximum allowed size of uploaded files, in megabytes.  DO NOT SET
 # ABOVE 80MB.  The file upload implementation doesn't support chunked
@@ -429,7 +425,7 @@ ENABLE_GRAVATAR = True
 # To override the default avatar image if ENABLE_GRAVATAR is False, place your
 # custom default avatar image at /home/zulip/local-static/default-avatar.png
 # and uncomment the following line.
-#DEFAULT_AVATAR_URI = '/local-static/default-avatar.png'
+# DEFAULT_AVATAR_URI = '/local-static/default-avatar.png'
 
 # To access an external postgres database you should define the host name in
 # REMOTE_POSTGRES_HOST, port in REMOTE_POSTGRES_PORT, password in the secrets file in the
@@ -437,16 +433,16 @@ ENABLE_GRAVATAR = True
 # Valid values for REMOTE_POSTGRES_SSLMODE are documented in the
 # "SSL Mode Descriptions" table in
 #   https://www.postgresql.org/docs/9.5/static/libpq-ssl.html
-#REMOTE_POSTGRES_HOST = 'dbserver.example.com'
-#REMOTE_POSTGRES_PORT = '5432'
-#REMOTE_POSTGRES_SSLMODE = 'require'
+# REMOTE_POSTGRES_HOST = 'dbserver.example.com'
+# REMOTE_POSTGRES_PORT = '5432'
+# REMOTE_POSTGRES_SSLMODE = 'require'
 
 # If you want to set a Terms of Service for your server, set the path
 # to your markdown file, and uncomment the following line.
-#TERMS_OF_SERVICE = '/etc/zulip/terms.md'
+# TERMS_OF_SERVICE = '/etc/zulip/terms.md'
 
 # Similarly if you want to set a Privacy Policy.
-#PRIVACY_POLICY = '/etc/zulip/privacy.md'
+# PRIVACY_POLICY = '/etc/zulip/privacy.md'
 
 
 ################
@@ -494,7 +490,7 @@ EMAIL_GATEWAY_IMAP_FOLDER = "INBOX"
 # configuring Zoom, see:
 # https://zulip.readthedocs.io/en/latest/production/zoom-configuration.html
 #
-#VIDEO_ZOOM_CLIENT_ID = <your Zoom Client ID>
+# VIDEO_ZOOM_CLIENT_ID = <your Zoom Client ID>
 
 
 ################
@@ -541,31 +537,32 @@ AUTH_LDAP_BIND_DN = ""
 # name they type into the Zulip login form.
 #
 # For more details and alternatives, see the documentation linked above.
-AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=users,dc=example,dc=com",
-                                   ldap.SCOPE_SUBTREE, "(uid=%(user)s)")
+AUTH_LDAP_USER_SEARCH = LDAPSearch(
+    "ou=users,dc=example,dc=com", ldap.SCOPE_SUBTREE, "(uid=%(user)s)",
+)
 
 # Configuration to lookup a user's LDAP data given their email address
 # (For Zulip reverse mapping).  If users log in as e.g. "sam" when
 # their email address is "sam@example.com", set LDAP_APPEND_DOMAIN to
 # "example.com".  Otherwise, leave LDAP_APPEND_DOMAIN=None and set
 # AUTH_LDAP_REVERSE_EMAIL_SEARCH and AUTH_LDAP_USERNAME_ATTR below.
-#LDAP_APPEND_DOMAIN = None
+# LDAP_APPEND_DOMAIN = None
 
 # LDAP attribute to find a user's email address.
 #
 # Leave as None if users log in with their email addresses,
 # or if using LDAP_APPEND_DOMAIN.
-#LDAP_EMAIL_ATTR = None
+# LDAP_EMAIL_ATTR = None
 
 # AUTH_LDAP_REVERSE_EMAIL_SEARCH works like AUTH_LDAP_USER_SEARCH and
 # should query an LDAP user given their email address.  It and
 # AUTH_LDAP_USERNAME_ATTR are required when LDAP_APPEND_DOMAIN is None.
-#AUTH_LDAP_REVERSE_EMAIL_SEARCH = LDAPSearch("ou=users,dc=example,dc=com",
+# AUTH_LDAP_REVERSE_EMAIL_SEARCH = LDAPSearch("ou=users,dc=example,dc=com",
 #                                            ldap.SCOPE_SUBTREE, "(email=%(email)s)")
 
 # AUTH_LDAP_USERNAME_ATTR should be the Zulip username attribute
 # (defined in AUTH_LDAP_USER_SEARCH).
-#AUTH_LDAP_USERNAME_ATTR = "uid"
+# AUTH_LDAP_USERNAME_ATTR = "uid"
 
 # This map defines how to populate attributes of a Zulip user from LDAP.
 #
@@ -580,10 +577,8 @@ AUTH_LDAP_USER_ATTR_MAP = {
     "full_name": "cn",
     # "first_name": "fn",
     # "last_name": "ln",
-
     # Profile pictures can be pulled from the LDAP "thumbnailPhoto"/"jpegPhoto" field.
     # "avatar": "thumbnailPhoto",
-
     # This line is for having Zulip to automatically deactivate users
     # who are disabled in LDAP/Active Directory (and reactivate users who are not).
     # See docs for usage details and precise semantics.
@@ -594,7 +589,7 @@ AUTH_LDAP_USER_ATTR_MAP = {
 # is the only authentication method, then this setting defaults to
 # True.  If other authentication methods are enabled, it defaults to
 # False.
-#LDAP_DEACTIVATE_NON_MATCHING_USERS = True
+# LDAP_DEACTIVATE_NON_MATCHING_USERS = True
 
 ################
 # Miscellaneous settings.
@@ -602,7 +597,7 @@ AUTH_LDAP_USER_ATTR_MAP = {
 # The default CAMO_URI of '/external_content/' is served by the camo
 # setup in the default Zulip nginx configuration.  Setting CAMO_URI
 # to '' will disable the Camo integration.
-CAMO_URI = '/external_content/'
+CAMO_URI = "/external_content/"
 
 # RabbitMQ configuration
 #
@@ -643,18 +638,18 @@ CAMO_URI = '/external_content/'
 # thumbor on a different server, you can configure that by setting
 # THUMBOR_URL here.  Setting THUMBOR_URL='' will let Zulip server know that
 # thumbor is not running or configured.
-#THUMBOR_URL = 'http://127.0.0.1:9995'
+# THUMBOR_URL = 'http://127.0.0.1:9995'
 #
 # This setting controls whether images shown in Zulip's inline image
 # previews should be thumbnailed by thumbor, which saves bandwidth but
 # can modify the image's appearance.
-#THUMBNAIL_IMAGES = True
+# THUMBNAIL_IMAGES = True
 
 # Controls the Jitsi Meet video call integration.  By default, the
 # integration uses the SaaS meet.jit.si server.  You can specify
 # your own Jitsi Meet server, or if you'd like to disable the
 # integration, set JITSI_SERVER_URL = None.
-#JITSI_SERVER_URL = 'jitsi.example.com'
+# JITSI_SERVER_URL = 'jitsi.example.com'
 
 # Controls the Big Blue Button video call integration.  You must also
 # set big_blue_button_secret in zulip-secrets.conf.

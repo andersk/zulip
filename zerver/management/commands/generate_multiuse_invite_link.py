@@ -13,16 +13,18 @@ class Command(ZulipBaseCommand):
         self.add_realm_args(parser, True)
 
         parser.add_argument(
-            '-s', '--streams',
-            dest='streams',
+            "-s",
+            "--streams",
+            dest="streams",
             type=str,
-            help='A comma-separated list of stream names.')
+            help="A comma-separated list of stream names.",
+        )
 
         parser.add_argument(
-            '--referred-by',
-            dest='referred_by',
+            "--referred-by",
+            dest="referred_by",
             type=str,
-            help='Email of referrer',
+            help="Email of referrer",
             required=True,
         )
 
@@ -37,7 +39,9 @@ class Command(ZulipBaseCommand):
                 stream = ensure_stream(realm, stream_name, acting_user=None)
                 streams.append(stream)
 
-        referred_by = self.get_user(options['referred_by'], realm)
-        invite_as = PreregistrationUser.INVITE_AS['MEMBER']
+        referred_by = self.get_user(options["referred_by"], realm)
+        invite_as = PreregistrationUser.INVITE_AS["MEMBER"]
         invite_link = do_create_multiuse_invite_link(referred_by, invite_as, streams)
-        print(f"You can use {invite_link} to invite as many number of people to the organization.")
+        print(
+            f"You can use {invite_link} to invite as many number of people to the organization.",
+        )

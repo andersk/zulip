@@ -7,12 +7,12 @@ from zerver.models import MutedTopic
 
 
 class StreamTopicTarget:
-    '''
+    """
     This class is designed to help us move to a
     StreamTopic table or something similar.  It isolates
     places where we are are still using `topic_name` as
     a key into tables.
-    '''
+    """
 
     def __init__(self, stream_id: int, topic_name: str) -> None:
         self.stream_id = stream_id
@@ -20,15 +20,9 @@ class StreamTopicTarget:
 
     def user_ids_muting_topic(self) -> Set[int]:
         query = MutedTopic.objects.filter(
-            stream_id=self.stream_id,
-            topic_name__iexact=self.topic_name,
-        ).values(
-            'user_profile_id',
-        )
-        return {
-            row['user_profile_id']
-            for row in query
-        }
+            stream_id=self.stream_id, topic_name__iexact=self.topic_name,
+        ).values("user_profile_id")
+        return {row["user_profile_id"] for row in query}
 
     def get_active_subscriptions(self) -> QuerySet:
         return get_active_subscriptions_for_stream_id(self.stream_id)

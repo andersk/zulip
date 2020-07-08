@@ -8,10 +8,12 @@ from django.db.migrations.state import StateApps
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('zerver', '0080_realm_description_length'),
+        ("zerver", "0080_realm_description_length"),
     ]
 
-    def emoji_to_lowercase(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
+    def emoji_to_lowercase(
+        apps: StateApps, schema_editor: DatabaseSchemaEditor,
+    ) -> None:
         RealmEmoji = apps.get_model("zerver", "RealmEmoji")
         emoji = RealmEmoji.objects.all()
         for e in emoji:
@@ -25,8 +27,16 @@ class Migration(migrations.Migration):
     operations = [
         migrations.RunPython(emoji_to_lowercase, elidable=True),
         migrations.AlterField(
-            model_name='realmemoji',
-            name='name',
-            field=models.TextField(validators=[django.core.validators.MinLengthValidator(1), django.core.validators.RegexValidator(message='Invalid characters in emoji name', regex='^[0-9a-z.\\-_]+(?<![.\\-_])$')]),
+            model_name="realmemoji",
+            name="name",
+            field=models.TextField(
+                validators=[
+                    django.core.validators.MinLengthValidator(1),
+                    django.core.validators.RegexValidator(
+                        message="Invalid characters in emoji name",
+                        regex="^[0-9a-z.\\-_]+(?<![.\\-_])$",
+                    ),
+                ],
+            ),
         ),
     ]

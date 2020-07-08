@@ -5,17 +5,14 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('confirmation', '0002_realmcreationkey'),
+        ("confirmation", "0002_realmcreationkey"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='EmailChangeConfirmation',
-            fields=[
-            ],
-            options={
-                'proxy': True,
-            },
-            bases=('confirmation.confirmation',),
+            name="EmailChangeConfirmation",
+            fields=[],
+            options={"proxy": True},
+            bases=("confirmation.confirmation",),
         ),
     ]

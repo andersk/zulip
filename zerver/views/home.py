@@ -42,7 +42,8 @@ def need_accept_tos(user_profile: Optional[UserProfile]) -> bool:
     if settings.TOS_VERSION is None:
         return False
 
-    return int(settings.TOS_VERSION.split('.')[0]) > user_profile.major_tos_version()
+    return int(settings.TOS_VERSION.split(".")[0]) > user_profile.major_tos_version()
+
 
 @zulip_login_required
 def accounts_accept_terms(request: HttpRequest) -> HttpResponse:
@@ -56,20 +57,25 @@ def accounts_accept_terms(request: HttpRequest) -> HttpResponse:
 
     email = request.user.delivery_email
     special_message_template = None
-    if request.user.tos_version is None and settings.FIRST_TIME_TOS_TEMPLATE is not None:
-        special_message_template = 'zerver/' + settings.FIRST_TIME_TOS_TEMPLATE
+    if (
+        request.user.tos_version is None
+        and settings.FIRST_TIME_TOS_TEMPLATE is not None
+    ):
+        special_message_template = "zerver/" + settings.FIRST_TIME_TOS_TEMPLATE
     return render(
         request,
-        'zerver/accounts_accept_terms.html',
-        context={'form': form,
-                 'email': email,
-                 'special_message_template': special_message_template},
+        "zerver/accounts_accept_terms.html",
+        context={
+            "form": form,
+            "email": email,
+            "special_message_template": special_message_template,
+        },
     )
 
-def detect_narrowed_window(request: HttpRequest,
-                           user_profile: Optional[UserProfile]) -> Tuple[List[List[str]],
-                                                                         Optional[Stream],
-                                                                         Optional[str]]:
+
+def detect_narrowed_window(
+    request: HttpRequest, user_profile: Optional[UserProfile],
+) -> Tuple[List[List[str]], Optional[Stream], Optional[str]]:
     """This function implements Zulip's support for a mini Zulip window
     that just handles messages from a single narrow"""
     if user_profile is None:  # nocoverage
@@ -84,13 +90,17 @@ def detect_narrowed_window(request: HttpRequest,
             # TODO: We should support stream IDs and PMs here as well.
             narrow_stream_name = request.GET.get("stream")
             (narrow_stream, ignored_rec, ignored_sub) = access_stream_by_name(
-                user_profile, narrow_stream_name)
+                user_profile, narrow_stream_name,
+            )
             narrow = [["stream", narrow_stream.name]]
         except Exception:
-            logging.warning("Invalid narrow requested, ignoring", extra=dict(request=request))
+            logging.warning(
+                "Invalid narrow requested, ignoring", extra=dict(request=request),
+            )
         if narrow_stream is not None and narrow_topic is not None:
             narrow.append(["topic", narrow_topic])
     return narrow, narrow_stream, narrow_topic
+
 
 def update_last_reminder(user_profile: Optional[UserProfile]) -> None:
     """Reset our don't-spam-users-with-email counter since the
@@ -105,6 +115,7 @@ def update_last_reminder(user_profile: Optional[UserProfile]) -> None:
         user_profile.last_reminder = None
         user_profile.save(update_fields=["last_reminder"])
 
+
 def get_furthest_read_time(user_profile: Optional[UserProfile]) -> Optional[float]:
     if user_profile is None:
         return time.time()
@@ -115,25 +126,33 @@ def get_furthest_read_time(user_profile: Optional[UserProfile]) -> Optional[floa
 
     return calendar.timegm(user_activity.last_visit.utctimetuple())
 
+
 def get_bot_types(user_profile: Optional[UserProfile]) -> List[Dict[str, object]]:
     bot_types: List[Dict[str, object]] = []
     if user_profile is None:  # nocoverage
         return bot_types
 
     for type_id, name in UserProfile.BOT_TYPES.items():
-        bot_types.append({
-            'type_id': type_id,
-            'name': name,
-            'allowed': type_id in user_profile.allowed_bot_types,
-        })
+        bot_types.append(
+            {
+                "type_id": type_id,
+                "name": name,
+                "allowed": type_id in user_profile.allowed_bot_types,
+            },
+        )
     return bot_types
 
+
 def compute_navbar_logo_url(page_params: Dict[str, Any]) -> str:
-    if page_params["color_scheme"] == 2 and page_params["realm_night_logo_source"] != Realm.LOGO_DEFAULT:
+    if (
+        page_params["color_scheme"] == 2
+        and page_params["realm_night_logo_source"] != Realm.LOGO_DEFAULT
+    ):
         navbar_logo_url = page_params["realm_night_logo_url"]
     else:
         navbar_logo_url = page_params["realm_logo_url"]
     return navbar_logo_url
+
 
 def home(request: HttpRequest) -> HttpResponse:
     if not settings.ROOT_DOMAIN_LANDING_PAGE:
@@ -148,28 +167,28 @@ def home(request: HttpRequest) -> HttpResponse:
 
     return hello_view(request)
 
+
 @zulip_login_required
 def home_real(request: HttpRequest) -> HttpResponse:
     # Before we do any real work, check if the app is banned.
     client_user_agent = request.META.get("HTTP_USER_AGENT", "")
-    (insecure_desktop_app, banned_desktop_app, auto_update_broken) = is_outdated_desktop_app(
-        client_user_agent)
+    (
+        insecure_desktop_app,
+        banned_desktop_app,
+        auto_update_broken,
+    ) = is_outdated_desktop_app(client_user_agent)
     if banned_desktop_app:
         return render(
             request,
-            'zerver/insecure_desktop_app.html',
-            context={
-                "auto_update_broken": auto_update_broken,
-            },
+            "zerver/insecure_desktop_app.html",
+            context={"auto_update_broken": auto_update_broken},
         )
     (unsupported_browser, browser_name) = is_unsupported_browser(client_user_agent)
     if unsupported_browser:
         return render(
             request,
-            'zerver/unsupported_browser.html',
-            context={
-                "browser_name": browser_name,
-            },
+            "zerver/unsupported_browser.html",
+            context={"browser_name": browser_name},
         )
 
     # We need to modify the session object every two weeks or it will expire.
@@ -190,16 +209,20 @@ def home_real(request: HttpRequest) -> HttpResponse:
     narrow, narrow_stream, narrow_topic = detect_narrowed_window(request, user_profile)
 
     client_capabilities = {
-        'notification_settings_null': True,
-        'bulk_message_deletion': True,
-        'user_avatar_url_field_optional': True,
+        "notification_settings_null": True,
+        "bulk_message_deletion": True,
+        "user_avatar_url_field_optional": True,
     }
 
-    register_ret = do_events_register(user_profile, request.client,
-                                      apply_markdown=True, client_gravatar=True,
-                                      slim_presence=True,
-                                      client_capabilities=client_capabilities,
-                                      narrow=narrow)
+    register_ret = do_events_register(
+        user_profile,
+        request.client,
+        apply_markdown=True,
+        client_gravatar=True,
+        slim_presence=True,
+        client_capabilities=client_capabilities,
+        narrow=narrow,
+    )
     update_last_reminder(user_profile)
 
     if user_profile is not None:
@@ -207,8 +230,8 @@ def home_real(request: HttpRequest) -> HttpResponse:
         # If you are the only person in the realm and you didn't invite
         # anyone, we'll continue to encourage you to do so on the frontend.
         prompt_for_invites = (
-            first_in_realm and
-            not PreregistrationUser.objects.filter(referred_by=user_profile).count()
+            first_in_realm
+            and not PreregistrationUser.objects.filter(referred_by=user_profile).count()
         )
         needs_tutorial = user_profile.tutorial_status == UserProfile.TUTORIAL_WAITING
 
@@ -225,47 +248,51 @@ def home_real(request: HttpRequest) -> HttpResponse:
     # * If not in the URL, we use the language from the user's settings.
     request_language = translation.get_language_from_path(request.path_info)
     if request_language is None:
-        request_language = register_ret['default_language']
+        request_language = register_ret["default_language"]
     translation.activate(request_language)
     # We also save the language to the user's session, so that
     # something reasonable will happen in logged-in portico pages.
     request.session[translation.LANGUAGE_SESSION_KEY] = translation.get_language()
 
-    two_fa_enabled = settings.TWO_FACTOR_AUTHENTICATION_ENABLED and user_profile is not None
+    two_fa_enabled = (
+        settings.TWO_FACTOR_AUTHENTICATION_ENABLED and user_profile is not None
+    )
 
     # Pass parameters to the client-side JavaScript code.
     # These end up in a global JavaScript Object named 'page_params'.
     page_params = dict(
         # Server settings.
-        debug_mode                      = settings.DEBUG,
-        test_suite                      = settings.TEST_SUITE,
-        poll_timeout                    = settings.POLL_TIMEOUT,
-        insecure_desktop_app            = insecure_desktop_app,
-        login_page                      = settings.HOME_NOT_LOGGED_IN,
-        root_domain_uri                 = settings.ROOT_DOMAIN_URI,
-        save_stacktraces                = settings.SAVE_FRONTEND_STACKTRACES,
-        warn_no_email                   = settings.WARN_NO_EMAIL,
-        search_pills_enabled            = settings.SEARCH_PILLS_ENABLED,
-
+        debug_mode=settings.DEBUG,
+        test_suite=settings.TEST_SUITE,
+        poll_timeout=settings.POLL_TIMEOUT,
+        insecure_desktop_app=insecure_desktop_app,
+        login_page=settings.HOME_NOT_LOGGED_IN,
+        root_domain_uri=settings.ROOT_DOMAIN_URI,
+        save_stacktraces=settings.SAVE_FRONTEND_STACKTRACES,
+        warn_no_email=settings.WARN_NO_EMAIL,
+        search_pills_enabled=settings.SEARCH_PILLS_ENABLED,
         # Misc. extra data.
-        initial_servertime    = time.time(),  # Used for calculating relative presence age
-        default_language_name = get_language_name(register_ret['default_language']),
-        language_list_dbl_col = get_language_list_for_templates(register_ret['default_language']),
-        language_list         = get_language_list(),
-        needs_tutorial        = needs_tutorial,
-        first_in_realm        = first_in_realm,
-        prompt_for_invites    = prompt_for_invites,
-        furthest_read_time    = furthest_read_time,
-        has_mobile_devices    = user_profile is not None and num_push_devices_for_user(user_profile) > 0,
-        bot_types             = get_bot_types(user_profile),
-        two_fa_enabled        = two_fa_enabled,
+        initial_servertime=time.time(),  # Used for calculating relative presence age
+        default_language_name=get_language_name(register_ret["default_language"]),
+        language_list_dbl_col=get_language_list_for_templates(
+            register_ret["default_language"],
+        ),
+        language_list=get_language_list(),
+        needs_tutorial=needs_tutorial,
+        first_in_realm=first_in_realm,
+        prompt_for_invites=prompt_for_invites,
+        furthest_read_time=furthest_read_time,
+        has_mobile_devices=user_profile is not None
+        and num_push_devices_for_user(user_profile) > 0,
+        bot_types=get_bot_types(user_profile),
+        two_fa_enabled=two_fa_enabled,
         # Adding two_fa_enabled as condition saves us 3 queries when
         # 2FA is not enabled.
-        two_fa_enabled_user   = two_fa_enabled and bool(default_device(user_profile)),
+        two_fa_enabled_user=two_fa_enabled and bool(default_device(user_profile)),
     )
 
     undesired_register_ret_fields = [
-        'streams',
+        "streams",
     ]
     for field_name in set(register_ret.keys()) - set(undesired_register_ret_fields):
         page_params[field_name] = register_ret[field_name]
@@ -274,23 +301,31 @@ def home_real(request: HttpRequest) -> HttpResponse:
         # In narrow_stream context, initial pointer is just latest message
         recipient = narrow_stream.recipient
         try:
-            max_message_id = Message.objects.filter(recipient=recipient).order_by('id').reverse()[0].id
+            max_message_id = (
+                Message.objects.filter(recipient=recipient)
+                .order_by("id")
+                .reverse()[0]
+                .id
+            )
         except IndexError:
             max_message_id = -1
         page_params["narrow_stream"] = narrow_stream.name
         if narrow_topic is not None:
             page_params["narrow_topic"] = narrow_topic
-        page_params["narrow"] = [dict(operator=term[0], operand=term[1]) for term in narrow]
+        page_params["narrow"] = [
+            dict(operator=term[0], operand=term[1]) for term in narrow
+        ]
         page_params["max_message_id"] = max_message_id
         page_params["enable_desktop_notifications"] = False
 
-    statsd.incr('views.home')
+    statsd.incr("views.home")
     show_invites, show_add_streams = compute_show_invites_and_add_streams(user_profile)
 
     show_billing = False
     show_plans = False
     if settings.CORPORATE_ENABLED and user_profile is not None:
         from corporate.models import CustomerPlan, get_customer_by_realm
+
         if user_profile.has_billing_access:
             customer = get_customer_by_realm(user_profile.realm)
             if customer is not None:
@@ -302,11 +337,13 @@ def home_real(request: HttpRequest) -> HttpResponse:
         if user_profile.realm.plan_type == Realm.LIMITED:
             show_plans = True
 
-    request._log_data['extra'] = "[{}]".format(register_ret["queue_id"])
+    request._log_data["extra"] = "[{}]".format(register_ret["queue_id"])
 
-    page_params['translation_data'] = {}
-    if request_language != 'en':
-        page_params['translation_data'] = get_language_translation_data(request_language)
+    page_params["translation_data"] = {}
+    if request_language != "en":
+        page_params["translation_data"] = get_language_translation_data(
+            request_language,
+        )
 
     csp_nonce = generate_random_token(48)
     if user_profile is not None:
@@ -324,29 +361,34 @@ def home_real(request: HttpRequest) -> HttpResponse:
 
     navbar_logo_url = compute_navbar_logo_url(page_params)
 
-    response = render(request, 'zerver/app/index.html',
-                      context={'user_profile': user_profile,
-                               'page_params': page_params,
-                               'csp_nonce': csp_nonce,
-                               'search_pills_enabled': settings.SEARCH_PILLS_ENABLED,
-                               'show_invites': show_invites,
-                               'show_add_streams': show_add_streams,
-                               'show_billing': show_billing,
-                               'corporate_enabled': settings.CORPORATE_ENABLED,
-                               'show_plans': show_plans,
-                               'is_owner': is_realm_owner,
-                               'is_admin': is_realm_admin,
-                               'is_guest': is_guest,
-                               'color_scheme': color_scheme,
-                               'navbar_logo_url': navbar_logo_url,
-                               'show_webathena': show_webathena,
-                               'embedded': narrow_stream is not None,
-                               'invite_as': PreregistrationUser.INVITE_AS,
-                               'max_file_upload_size_mib': settings.MAX_FILE_UPLOAD_SIZE,
-                               })
+    response = render(
+        request,
+        "zerver/app/index.html",
+        context={
+            "user_profile": user_profile,
+            "page_params": page_params,
+            "csp_nonce": csp_nonce,
+            "search_pills_enabled": settings.SEARCH_PILLS_ENABLED,
+            "show_invites": show_invites,
+            "show_add_streams": show_add_streams,
+            "show_billing": show_billing,
+            "corporate_enabled": settings.CORPORATE_ENABLED,
+            "show_plans": show_plans,
+            "is_owner": is_realm_owner,
+            "is_admin": is_realm_admin,
+            "is_guest": is_guest,
+            "color_scheme": color_scheme,
+            "navbar_logo_url": navbar_logo_url,
+            "show_webathena": show_webathena,
+            "embedded": narrow_stream is not None,
+            "invite_as": PreregistrationUser.INVITE_AS,
+            "max_file_upload_size_mib": settings.MAX_FILE_UPLOAD_SIZE,
+        },
+    )
     patch_cache_control(response, no_cache=True, no_store=True, must_revalidate=True)
     return response
 
+
 @zulip_login_required
 def desktop_home(request: HttpRequest) -> HttpResponse:
-    return HttpResponseRedirect(reverse('zerver.views.home.home'))
+    return HttpResponseRedirect(reverse("zerver.views.home.home"))

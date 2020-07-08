@@ -17,27 +17,31 @@ Create default stream groups which the users can choose during sign up.
         self.add_realm_args(parser, True)
 
         parser.add_argument(
-            '-n', '--name',
-            dest='name',
+            "-n",
+            "--name",
+            dest="name",
             type=str,
             required=True,
-            help='Name of the group you want to create.',
+            help="Name of the group you want to create.",
         )
 
         parser.add_argument(
-            '-d', '--description',
-            dest='description',
+            "-d",
+            "--description",
+            dest="description",
             type=str,
             required=True,
-            help='Description of the group.',
+            help="Description of the group.",
         )
 
         parser.add_argument(
-            '-s', '--streams',
-            dest='streams',
+            "-s",
+            "--streams",
+            dest="streams",
             type=str,
             required=True,
-            help='A comma-separated list of stream names.')
+            help="A comma-separated list of stream names.",
+        )
 
     def handle(self, *args: Any, **options: Any) -> None:
         realm = self.get_realm(options)
@@ -51,10 +55,12 @@ Create default stream groups which the users can choose during sign up.
 
         try:
             default_stream_group = DefaultStreamGroup.objects.get(
-                name=options["name"], realm=realm, description=options["description"])
+                name=options["name"], realm=realm, description=options["description"],
+            )
         except DefaultStreamGroup.DoesNotExist:
             default_stream_group = DefaultStreamGroup.objects.create(
-                name=options["name"], realm=realm, description=options["description"])
+                name=options["name"], realm=realm, description=options["description"],
+            )
         default_stream_group.streams.set(streams)
 
         default_stream_groups = DefaultStreamGroup.objects.all()

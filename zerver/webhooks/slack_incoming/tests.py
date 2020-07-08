@@ -2,9 +2,9 @@ from zerver.lib.test_classes import WebhookTestCase
 
 
 class SlackIncomingHookTests(WebhookTestCase):
-    STREAM_NAME = 'slack_incoming'
+    STREAM_NAME = "slack_incoming"
     URL_TEMPLATE = "/api/v1/external/slack_incoming?&api_key={api_key}&stream={stream}"
-    FIXTURE_DIR_NAME = 'slack_incoming'
+    FIXTURE_DIR_NAME = "slack_incoming"
 
     def test_message(self) -> None:
         expected_topic = "(no topic)"
@@ -13,9 +13,7 @@ Hello, world.
 """.strip()
 
         self.send_and_test_stream_message(
-            'text',
-            expected_topic,
-            expected_message,
+            "text", expected_topic, expected_message,
         )
 
     def test_message_as_www_urlencoded(self) -> None:
@@ -25,7 +23,7 @@ Hello, world.
 """.strip()
 
         self.send_and_test_stream_message(
-            'urlencoded_text',
+            "urlencoded_text",
             expected_topic,
             expected_message,
             content_type="application/x-www-form-urlencoded",
@@ -41,9 +39,7 @@ Danny Torrence left the following review for your property:
 """.strip()
 
         self.send_and_test_stream_message(
-            'actions',
-            expected_topic,
-            expected_message,
+            "actions", expected_topic, expected_message,
         )
 
     def test_message_with_blocks(self) -> None:
@@ -56,9 +52,7 @@ Danny Torrence left the following review for your property:
 """.strip()
 
         self.send_and_test_stream_message(
-            'blocks',
-            expected_topic,
-            expected_message,
+            "blocks", expected_topic, expected_message,
         )
 
     def test_message_with_attachment(self) -> None:
@@ -86,9 +80,7 @@ Danny Torrence left the following review for your property:
 """.strip()
 
         self.send_and_test_stream_message(
-            'attachment',
-            expected_topic,
-            expected_message,
+            "attachment", expected_topic, expected_message,
         )
 
     def get_body(self, fixture_name: str) -> str:
@@ -96,4 +88,6 @@ Danny Torrence left the following review for your property:
             file_type = "txt"
         else:
             file_type = "json"
-        return self.webhook_fixture_data("slack_incoming", fixture_name, file_type=file_type)
+        return self.webhook_fixture_data(
+            "slack_incoming", fixture_name, file_type=file_type,
+        )

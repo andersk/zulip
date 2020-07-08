@@ -12,7 +12,9 @@ from zerver.lib.response import json_error, json_success
 from zerver.lib.webhooks.common import check_send_webhook_message
 from zerver.models import UserProfile
 
-NOTE_TEMPLATE = "{name} <{email}> added a {note_type} note to [ticket #{ticket_id}]({ticket_url})."
+NOTE_TEMPLATE = (
+    "{name} <{email}> added a {note_type} note to [ticket #{ticket_id}]({ticket_url})."
+)
 PROPERTY_CHANGE_TEMPLATE = """
 {name} <{email}> updated [ticket #{ticket_id}]({ticket_url}):
 
@@ -29,6 +31,7 @@ TICKET_CREATION_TEMPLATE = """
 * **Priority**: {priority}
 * **Status**: {status}
 """.strip()
+
 
 class TicketDict(Dict[str, Any]):
     """
@@ -50,8 +53,17 @@ def property_name(property: str, index: int) -> str:
     information through the API, since only FlightCar uses this integration,
     hardcode their statuses.
     """
-    statuses = ["", "", "Open", "Pending", "Resolved", "Closed",
-                "Waiting on Customer", "Job Application", "Monthly"]
+    statuses = [
+        "",
+        "",
+        "Open",
+        "Pending",
+        "Resolved",
+        "Closed",
+        "Waiting on Customer",
+        "Job Application",
+        "Monthly",
+    ]
     priorities = ["", "Low", "Medium", "High", "Urgent"]
 
     name = ""
@@ -78,8 +90,11 @@ def parse_freshdesk_event(event_string: str) -> List[str]:
         # This is a property change event, like {status:{from:4,to:6}}. Pull out
         # the property, from, and to states.
         property, _, from_state, _, to_state = data
-        return [property, property_name(property, int(from_state)),
-                property_name(property, int(to_state))]
+        return [
+            property,
+            property_name(property, int(from_state)),
+            property_name(property, int(to_state)),
+        ]
 
 
 def format_freshdesk_note_message(ticket: TicketDict, event_info: List[str]) -> str:
@@ -96,7 +111,9 @@ def format_freshdesk_note_message(ticket: TicketDict, event_info: List[str]) -> 
     return content
 
 
-def format_freshdesk_property_change_message(ticket: TicketDict, event_info: List[str]) -> str:
+def format_freshdesk_property_change_message(
+    ticket: TicketDict, event_info: List[str],
+) -> str:
     """Freshdesk will only tell us the first event to match our webhook
     configuration, so if we change multiple properties, we only get the before
     and after data for the first one.
@@ -130,16 +147,27 @@ def format_freshdesk_ticket_creation_message(ticket: TicketDict) -> str:
 
     return content
 
+
 @authenticated_rest_api_view(webhook_client_name="Freshdesk")
 @has_request_variables
-def api_freshdesk_webhook(request: HttpRequest, user_profile: UserProfile,
-                          payload: Dict[str, Any]=REQ(argument_type='body')) -> HttpResponse:
+def api_freshdesk_webhook(
+    request: HttpRequest,
+    user_profile: UserProfile,
+    payload: Dict[str, Any] = REQ(argument_type="body"),
+) -> HttpResponse:
     ticket_data = payload["freshdesk_webhook"]
 
     required_keys = [
-        "triggered_event", "ticket_id", "ticket_url", "ticket_type",
-        "ticket_subject", "ticket_description", "ticket_status",
-        "ticket_priority", "requester_name", "requester_email",
+        "triggered_event",
+        "ticket_id",
+        "ticket_url",
+        "ticket_type",
+        "ticket_subject",
+        "ticket_description",
+        "ticket_status",
+        "ticket_priority",
+        "requester_name",
+        "requester_email",
     ]
 
     for key in required_keys:

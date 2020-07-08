@@ -2,9 +2,9 @@ from zerver.lib.test_classes import WebhookTestCase
 
 
 class GrafanaHookTests(WebhookTestCase):
-    STREAM_NAME = 'grafana'
+    STREAM_NAME = "grafana"
     URL_TEMPLATE = "/api/v1/external/grafana?&api_key={api_key}&stream={stream}"
-    FIXTURE_DIR_NAME = 'grafana'
+    FIXTURE_DIR_NAME = "grafana"
 
     # Note: Include a test function per each distinct message condition your integration supports
     def test_alert(self) -> None:
@@ -21,8 +21,12 @@ Someone is testing the alert notification within grafana.
 """.strip()
 
         # use fixture named helloworld_hello
-        self.send_and_test_stream_message('alert', expected_topic, expected_message,
-                                          content_type="application/x-www-form-urlencoded")
+        self.send_and_test_stream_message(
+            "alert",
+            expected_topic,
+            expected_message,
+            content_type="application/x-www-form-urlencoded",
+        )
 
     def test_no_data_alert(self) -> None:
         expected_topic = "[Alerting] No Data alert"
@@ -34,8 +38,12 @@ The panel has no data.
 """.strip()
 
         # use fixture named helloworld_hello
-        self.send_and_test_stream_message('no_data_alert', expected_topic, expected_message,
-                                          content_type="application/x-www-form-urlencoded")
+        self.send_and_test_stream_message(
+            "no_data_alert",
+            expected_topic,
+            expected_message,
+            content_type="application/x-www-form-urlencoded",
+        )
 
     def test_no_message_alert(self) -> None:
         expected_topic = "[Alerting] No Message alert"
@@ -46,8 +54,12 @@ The panel has no data.
 """.strip()
 
         # use fixture named helloworld_hello
-        self.send_and_test_stream_message('no_message_alert', expected_topic, expected_message,
-                                          content_type="application/x-www-form-urlencoded")
+        self.send_and_test_stream_message(
+            "no_message_alert",
+            expected_topic,
+            expected_message,
+            content_type="application/x-www-form-urlencoded",
+        )
 
     def get_body(self, fixture_name: str) -> str:
         return self.webhook_fixture_data("grafana", fixture_name, file_type="json")

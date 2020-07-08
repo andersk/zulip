@@ -21,11 +21,7 @@ class HipChatImporter(ZulipTestCase):
         )
         user_handler.add_user(user=user_with_id)
 
-        normal_message: Dict[str, Any] = dict(
-            sender=dict(
-                id=1,
-            ),
-        )
+        normal_message: Dict[str, Any] = dict(sender=dict(id=1))
 
         sender_id = get_hipchat_sender_id(
             realm_id=realm_id,
@@ -37,9 +33,7 @@ class HipChatImporter(ZulipTestCase):
 
         self.assertEqual(sender_id, 1)
 
-        bot_message = dict(
-            sender='fred_bot',
-        )
+        bot_message = dict(sender="fred_bot")
 
         # Every message from fred_bot should
         # return the same sender_id.
@@ -56,12 +50,7 @@ class HipChatImporter(ZulipTestCase):
 
             self.assertEqual(sender_id, fred_bot_sender_id)
 
-        id_zero_message = dict(
-            sender=dict(
-                id=0,
-                name='hal_bot',
-            ),
-        )
+        id_zero_message = dict(sender=dict(id=0, name="hal_bot"))
 
         hal_bot_sender_id = 3
         for i in range(3):

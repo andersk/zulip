@@ -4,11 +4,12 @@ import pty
 import sys
 from typing import Callable, Dict, Iterable, Iterator, Tuple, TypeVar
 
-JobData = TypeVar('JobData')
+JobData = TypeVar("JobData")
 
-def run_parallel(job: Callable[[JobData], int],
-                 data: Iterable[JobData],
-                 threads: int=6) -> Iterator[Tuple[int, JobData]]:
+
+def run_parallel(
+    job: Callable[[JobData], int], data: Iterable[JobData], threads: int = 6,
+) -> Iterator[Tuple[int, JobData]]:
     pids: Dict[int, JobData] = {}
 
     def wait_for_one() -> Tuple[int, JobData]:
@@ -52,11 +53,33 @@ def run_parallel(job: Callable[[JobData], int],
             else:
                 raise
 
+
 if __name__ == "__main__":
     # run some unit tests
     import time
+
     jobs = [10, 19, 18, 6, 14, 12, 8, 2, 1, 13, 3, 17, 9, 11, 5, 16, 7, 15, 4]
-    expected_output = [6, 10, 12, 2, 1, 14, 8, 3, 18, 19, 5, 9, 13, 11, 4, 7, 17, 16, 15]
+    expected_output = [
+        6,
+        10,
+        12,
+        2,
+        1,
+        14,
+        8,
+        3,
+        18,
+        19,
+        5,
+        9,
+        13,
+        11,
+        4,
+        7,
+        17,
+        16,
+        15,
+    ]
 
     def wait_and_print(x: int) -> int:
         time.sleep(x * 0.1)

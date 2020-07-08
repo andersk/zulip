@@ -27,7 +27,7 @@ from zerver.lib.types import Validator, ViewFuncT
 
 class RequestConfusingParmsError(JsonableError):
     code = ErrorCode.REQUEST_CONFUSING_VAR
-    data_fields = ['var_name1', 'var_name2']
+    data_fields = ["var_name1", "var_name2"]
 
     def __init__(self, var_name1: str, var_name2: str) -> None:
         self.var_name1: str = var_name1
@@ -37,9 +37,10 @@ class RequestConfusingParmsError(JsonableError):
     def msg_format() -> str:
         return _("Can't decide between '{var_name1}' and '{var_name2}' arguments")
 
+
 class RequestVariableMissingError(JsonableError):
     code = ErrorCode.REQUEST_VARIABLE_MISSING
-    data_fields = ['var_name']
+    data_fields = ["var_name"]
 
     def __init__(self, var_name: str) -> None:
         self.var_name: str = var_name
@@ -48,9 +49,10 @@ class RequestVariableMissingError(JsonableError):
     def msg_format() -> str:
         return _("Missing '{var_name}' argument")
 
+
 class RequestVariableConversionError(JsonableError):
     code = ErrorCode.REQUEST_VARIABLE_INVALID
-    data_fields = ['var_name', 'bad_value']
+    data_fields = ["var_name", "bad_value"]
 
     def __init__(self, var_name: str, bad_value: Any) -> None:
         self.var_name: str = var_name
@@ -60,8 +62,10 @@ class RequestVariableConversionError(JsonableError):
     def msg_format() -> str:
         return _("Bad value for '{var_name}': {bad_value}")
 
+
 # Used in conjunction with @has_request_variables, below
-ResultT = TypeVar('ResultT')
+ResultT = TypeVar("ResultT")
+
 
 class _REQ(Generic[ResultT]):
     # NotSpecified is a sentinel value for determining whether a
@@ -69,6 +73,7 @@ class _REQ(Generic[ResultT]):
     # use None because that could be a valid, user-specified default
     class _NotSpecified:
         pass
+
     NotSpecified = _NotSpecified()
 
     def __init__(
@@ -80,10 +85,10 @@ class _REQ(Generic[ResultT]):
         validator: Optional[Validator[ResultT]] = None,
         str_validator: Optional[Validator[ResultT]] = None,
         argument_type: Optional[str] = None,
-        intentionally_undocumented: bool=False,
-        documentation_pending: bool=False,
+        intentionally_undocumented: bool = False,
+        documentation_pending: bool = False,
         aliases: Sequence[str] = [],
-        path_only: bool=False
+        path_only: bool = False,
     ) -> None:
         """whence: the name of the request variable that should be used
         for this parameter.  Defaults to a request variable of the
@@ -123,8 +128,13 @@ class _REQ(Generic[ResultT]):
         self.documentation_pending = documentation_pending
         self.path_only = path_only
 
-        assert converter is None or (validator is None and str_validator is None), 'converter and validator are mutually exclusive'
-        assert validator is None or str_validator is None, 'validator and str_validator are mutually exclusive'
+        assert converter is None or (
+            validator is None and str_validator is None
+        ), "converter and validator are mutually exclusive"
+        assert (
+            validator is None or str_validator is None
+        ), "validator and str_validator are mutually exclusive"
+
 
 # This factory function ensures that mypy can correctly analyze REQ.
 #
@@ -147,9 +157,10 @@ def REQ(
     intentionally_undocumented: bool = ...,
     documentation_pending: bool = ...,
     aliases: Sequence[str] = ...,
-    path_only: bool = ...
+    path_only: bool = ...,
 ) -> ResultT:
     ...
+
 
 # Overload 2: validator
 @overload
@@ -161,9 +172,10 @@ def REQ(
     intentionally_undocumented: bool = ...,
     documentation_pending: bool = ...,
     aliases: Sequence[str] = ...,
-    path_only: bool = ...
+    path_only: bool = ...,
 ) -> ResultT:
     ...
+
 
 # Overload 3: no converter/validator, default: str or unspecified, argument_type=None
 @overload
@@ -175,9 +187,10 @@ def REQ(
     intentionally_undocumented: bool = ...,
     documentation_pending: bool = ...,
     aliases: Sequence[str] = ...,
-    path_only: bool = ...
+    path_only: bool = ...,
 ) -> str:
     ...
+
 
 # Overload 4: no converter/validator, default=None, argument_type=None
 @overload
@@ -189,9 +202,10 @@ def REQ(
     intentionally_undocumented: bool = ...,
     documentation_pending: bool = ...,
     aliases: Sequence[str] = ...,
-    path_only: bool = ...
+    path_only: bool = ...,
 ) -> Optional[str]:
     ...
+
 
 # Overload 5: argument_type="body"
 @overload
@@ -203,9 +217,10 @@ def REQ(
     intentionally_undocumented: bool = ...,
     documentation_pending: bool = ...,
     aliases: Sequence[str] = ...,
-    path_only: bool = ...
+    path_only: bool = ...,
 ) -> ResultT:
     ...
+
 
 # Implementation
 def REQ(
@@ -216,23 +231,27 @@ def REQ(
     validator: Optional[Validator[ResultT]] = None,
     str_validator: Optional[Validator[ResultT]] = None,
     argument_type: Optional[str] = None,
-    intentionally_undocumented: bool=False,
-    documentation_pending: bool=False,
+    intentionally_undocumented: bool = False,
+    documentation_pending: bool = False,
     aliases: Sequence[str] = [],
-    path_only: bool = False
+    path_only: bool = False,
 ) -> ResultT:
-    return cast(ResultT, _REQ(
-        whence,
-        converter=converter,
-        default=default,
-        validator=validator,
-        str_validator=str_validator,
-        argument_type=argument_type,
-        intentionally_undocumented=intentionally_undocumented,
-        documentation_pending=documentation_pending,
-        aliases=aliases,
-        path_only=path_only,
-    ))
+    return cast(
+        ResultT,
+        _REQ(
+            whence,
+            converter=converter,
+            default=default,
+            validator=validator,
+            str_validator=str_validator,
+            argument_type=argument_type,
+            intentionally_undocumented=intentionally_undocumented,
+            documentation_pending=documentation_pending,
+            aliases=aliases,
+            path_only=path_only,
+        ),
+    )
+
 
 arguments_map: Dict[str, List[str]] = defaultdict(list)
 
@@ -258,11 +277,13 @@ def has_request_variables(view_func: ViewFuncT) -> ViewFuncT:
     if default_param_values is None:
         default_param_values = ()
     num_default_params = len(default_param_values)
-    default_param_names = view_func.__code__.co_varnames[num_params - num_default_params:]
+    default_param_names = view_func.__code__.co_varnames[
+        num_params - num_default_params :
+    ]
 
     post_params = []
 
-    view_func_full_name = '.'.join([view_func.__module__, view_func.__name__])
+    view_func_full_name = ".".join([view_func.__module__, view_func.__name__])
 
     for (name, value) in zip(default_param_names, default_param_values):
         if isinstance(value, _REQ):
@@ -273,13 +294,17 @@ def has_request_variables(view_func: ViewFuncT) -> ViewFuncT:
 
             # Record arguments that should be documented so that our
             # automated OpenAPI docs tests can compare these against the code.
-            if (not value.intentionally_undocumented
-                    and not value.documentation_pending
-                    and not value.path_only):
+            if (
+                not value.intentionally_undocumented
+                and not value.documentation_pending
+                and not value.path_only
+            ):
                 arguments_map[view_func_full_name].append(value.post_var_name)
 
     @wraps(view_func)
-    def _wrapped_view_func(request: HttpRequest, *args: object, **kwargs: object) -> HttpResponse:
+    def _wrapped_view_func(
+        request: HttpRequest, *args: object, **kwargs: object
+    ) -> HttpResponse:
         for param in post_params:
             func_var_name = param.func_var_name
             if param.path_only:
@@ -294,7 +319,7 @@ def has_request_variables(view_func: ViewFuncT) -> ViewFuncT:
                 continue
             assert func_var_name is not None
 
-            if param.argument_type == 'body':
+            if param.argument_type == "body":
                 try:
                     val = ujson.loads(request.body)
                 except ValueError:
@@ -347,7 +372,9 @@ def has_request_variables(view_func: ViewFuncT) -> ViewFuncT:
                 try:
                     val = ujson.loads(val)
                 except Exception:
-                    raise JsonableError(_('Argument "{}" is not valid JSON.').format(post_var_name))
+                    raise JsonableError(
+                        _('Argument "{}" is not valid JSON.').format(post_var_name),
+                    )
 
                 try:
                     val = param.validator(post_var_name, val)
@@ -365,4 +392,6 @@ def has_request_variables(view_func: ViewFuncT) -> ViewFuncT:
 
         return view_func(request, *args, **kwargs)
 
-    return cast(ViewFuncT, _wrapped_view_func)  # https://github.com/python/mypy/issues/1927
+    return cast(
+        ViewFuncT, _wrapped_view_func,
+    )  # https://github.com/python/mypy/issues/1927
