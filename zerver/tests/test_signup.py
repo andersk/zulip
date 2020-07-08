@@ -220,9 +220,7 @@ class AddNewUserHistoryTest(ZulipTestCase):
         )
         # The race message is in the user's history and marked unread.
         self.assertTrue(
-            UserMessage.objects.filter(
-                user_profile=user_profile, message_id=race_message_id,
-            ).exists(),
+            UserMessage.objects.filter(user_profile=user_profile, message_id=race_message_id).exists(),
         )
         self.assertFalse(
             UserMessage.objects.get(
@@ -1369,8 +1367,7 @@ so we didn't send them an invitation. We did send invitations to everyone else!"
         # We only created accounts for the new users.
         for email in existing:
             self.assertRaises(
-                PreregistrationUser.DoesNotExist,
-                lambda: PreregistrationUser.objects.get(email=email),
+                PreregistrationUser.DoesNotExist, lambda: PreregistrationUser.objects.get(email=email),
             )
         for email in new:
             self.assertTrue(PreregistrationUser.objects.get(email=email))
@@ -1624,9 +1621,7 @@ so we didn't send them an invitation. We did send invitations to everyone else!"
         email = self.nonreg_email("alice")
         realm = get_realm("zulip")
         inviter = self.example_user("iago")
-        prereg_user = PreregistrationUser.objects.create(
-            email=email, referred_by=inviter, realm=realm,
-        )
+        prereg_user = PreregistrationUser.objects.create(email=email, referred_by=inviter, realm=realm)
         url = create_confirmation_link(prereg_user, Confirmation.USER_REGISTRATION)
         registration_key = url.split("/")[-1]
 
@@ -1648,9 +1643,7 @@ so we didn't send them an invitation. We did send invitations to everyone else!"
         email = self.nonreg_email("alice")
         realm = get_realm("zulip")
         inviter = self.example_user("iago")
-        prereg_user = PreregistrationUser.objects.create(
-            email=email, referred_by=inviter, realm=realm,
-        )
+        prereg_user = PreregistrationUser.objects.create(email=email, referred_by=inviter, realm=realm)
         url = create_confirmation_link(prereg_user, Confirmation.USER_REGISTRATION)
         registration_key = url.split("/")[-1]
 
@@ -1711,9 +1704,7 @@ so we didn't send them an invitation. We did send invitations to everyone else!"
         password = "password"
         realm = get_realm("zulip")
         inviter = self.example_user("iago")
-        prereg_user = PreregistrationUser.objects.create(
-            email=email, referred_by=inviter, realm=realm,
-        )
+        prereg_user = PreregistrationUser.objects.create(email=email, referred_by=inviter, realm=realm)
         confirmation_link = create_confirmation_link(prereg_user, Confirmation.USER_REGISTRATION)
 
         registration_key = "invalid_confirmation_key"
@@ -1739,9 +1730,7 @@ so we didn't send them an invitation. We did send invitations to everyone else!"
         password = "password"
         realm = get_realm("zulip")
         inviter = self.example_user("iago")
-        prereg_user = PreregistrationUser.objects.create(
-            email=email, referred_by=inviter, realm=realm,
-        )
+        prereg_user = PreregistrationUser.objects.create(email=email, referred_by=inviter, realm=realm)
 
         confirmation_link = create_confirmation_link(prereg_user, Confirmation.USER_REGISTRATION)
         registration_key = confirmation_link.split("/")[-1]
@@ -2119,9 +2108,7 @@ class InvitationsTestCase(InviteUserBase):
         realm = get_realm("zulip")
 
         inviter = UserProfile.objects.first()
-        prereg_user = PreregistrationUser.objects.create(
-            email=email, referred_by=inviter, realm=realm,
-        )
+        prereg_user = PreregistrationUser.objects.create(email=email, referred_by=inviter, realm=realm)
 
         confirmation_link = create_confirmation_link(prereg_user, Confirmation.USER_REGISTRATION)
         registration_key = confirmation_link.split("/")[-1]
@@ -2414,10 +2401,7 @@ class EmailUnsubscribeTests(ZulipTestCase):
             "unsubscribe_link": "",
         }
         send_future_email(
-            "zerver/emails/digest",
-            user_profile.realm,
-            to_user_ids=[user_profile.id],
-            context=context,
+            "zerver/emails/digest", user_profile.realm, to_user_ids=[user_profile.id], context=context,
         )
 
         self.assertEqual(1, ScheduledEmail.objects.filter(users=user_profile).count())
@@ -3166,9 +3150,7 @@ class UserSignUpTest(InviteUserBase):
             },
         )
         # Error page should be displayed
-        self.assert_in_success_response(
-            ["The registration link has expired or is not valid."], result,
-        )
+        self.assert_in_success_response(["The registration link has expired or is not valid."], result)
         self.assertEqual(result.status_code, 200)
 
     def test_signup_with_multiple_default_stream_groups(self) -> None:
@@ -4402,8 +4384,7 @@ class TestLoginPage(ZulipTestCase):
     def test_login_page_registration_hint(self) -> None:
         response = self.client_get("/login/")
         self.assert_not_in_success_response(
-            ["Don't have an account yet? You need to be invited to join this organization."],
-            response,
+            ["Don't have an account yet? You need to be invited to join this organization."], response,
         )
 
         realm = get_realm("zulip")
@@ -4411,8 +4392,7 @@ class TestLoginPage(ZulipTestCase):
         realm.save(update_fields=["invite_required"])
         response = self.client_get("/login/")
         self.assert_in_success_response(
-            ["Don't have an account yet? You need to be invited to join this organization."],
-            response,
+            ["Don't have an account yet? You need to be invited to join this organization."], response,
         )
 
 
@@ -4564,30 +4544,22 @@ class FollowupEmailTest(ZulipTestCase):
         user_profile.date_joined = datetime.datetime(
             2018, 1, 7, 1, 0, 0, 0, tzinfo=datetime.timezone.utc,
         )
-        self.assertEqual(
-            followup_day2_email_delay(user_profile), datetime.timedelta(days=2, hours=-1),
-        )
+        self.assertEqual(followup_day2_email_delay(user_profile), datetime.timedelta(days=2, hours=-1))
         # Test date_joined == Tuesday
         user_profile.date_joined = datetime.datetime(
             2018, 1, 2, 1, 0, 0, 0, tzinfo=datetime.timezone.utc,
         )
-        self.assertEqual(
-            followup_day2_email_delay(user_profile), datetime.timedelta(days=2, hours=-1),
-        )
+        self.assertEqual(followup_day2_email_delay(user_profile), datetime.timedelta(days=2, hours=-1))
         # Test date_joined == Thursday
         user_profile.date_joined = datetime.datetime(
             2018, 1, 4, 1, 0, 0, 0, tzinfo=datetime.timezone.utc,
         )
-        self.assertEqual(
-            followup_day2_email_delay(user_profile), datetime.timedelta(days=1, hours=-1),
-        )
+        self.assertEqual(followup_day2_email_delay(user_profile), datetime.timedelta(days=1, hours=-1))
         # Test date_joined == Friday
         user_profile.date_joined = datetime.datetime(
             2018, 1, 5, 1, 0, 0, 0, tzinfo=datetime.timezone.utc,
         )
-        self.assertEqual(
-            followup_day2_email_delay(user_profile), datetime.timedelta(days=3, hours=-1),
-        )
+        self.assertEqual(followup_day2_email_delay(user_profile), datetime.timedelta(days=3, hours=-1))
 
         # Time offset of America/Phoenix is -07:00
         user_profile.timezone = "America/Phoenix"
@@ -4595,9 +4567,7 @@ class FollowupEmailTest(ZulipTestCase):
         user_profile.date_joined = datetime.datetime(
             2018, 1, 5, 1, 0, 0, 0, tzinfo=datetime.timezone.utc,
         )
-        self.assertEqual(
-            followup_day2_email_delay(user_profile), datetime.timedelta(days=1, hours=-1),
-        )
+        self.assertEqual(followup_day2_email_delay(user_profile), datetime.timedelta(days=1, hours=-1))
 
 
 class NoReplyEmailTest(ZulipTestCase):

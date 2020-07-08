@@ -325,9 +325,7 @@ class SignupWorker(QueueProcessingWorker):
         # TODO: This is the only implementation with Dict cf Mapping; should we simplify?
         user_profile = get_user_profile_by_id(data["user_id"])
         logging.info(
-            "Processing signup for user %s in realm %s",
-            user_profile.id,
-            user_profile.realm.string_id,
+            "Processing signup for user %s in realm %s", user_profile.id, user_profile.realm.string_id,
         )
         if settings.MAILCHIMP_API_KEY and settings.PRODUCTION:
             endpoint = "https://{}.api.mailchimp.com/3.0/lists/{}/members".format(
@@ -655,9 +653,7 @@ class FetchLinksEmbedData(QueueProcessingWorker):
         for url in event["urls"]:
             start_time = time.time()
             url_preview.get_link_embed_data(url)
-            logging.info(
-                "Time spent on get_link_embed_data for %s: %s", url, time.time() - start_time,
-            )
+            logging.info("Time spent on get_link_embed_data for %s: %s", url, time.time() - start_time)
 
         message = Message.objects.get(id=event["message_id"])
         # If the message changed, we will run this task after updating the message

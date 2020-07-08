@@ -96,9 +96,7 @@ def setup_shell_profile(shell_profile: str) -> None:
 def setup_bash_profile() -> None:
     """Select a bash profile file to add setup code to."""
 
-    BASH_PROFILES = [
-        os.path.expanduser(p) for p in ("~/.bash_profile", "~/.bash_login", "~/.profile")
-    ]
+    BASH_PROFILES = [os.path.expanduser(p) for p in ("~/.bash_profile", "~/.bash_login", "~/.profile")]
 
     def clear_old_profile() -> None:
         # An earlier version of this script would output a fresh .bash_profile

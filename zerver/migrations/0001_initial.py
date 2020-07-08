@@ -90,9 +90,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ("password", models.CharField(max_length=128, verbose_name="password")),
                 (
                     "last_login",
-                    models.DateTimeField(
-                        default=django.utils.timezone.now, verbose_name="last login",
-                    ),
+                    models.DateTimeField(default=django.utils.timezone.now, verbose_name="last login"),
                 ),
                 (
                     "is_superuser",
@@ -446,9 +444,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ("last_visit", models.DateTimeField(verbose_name="last visit")),
                 (
                     "client",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="zerver.Client",
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Client"),
                 ),
                 (
                     "user_profile",
@@ -533,9 +529,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ("status", models.PositiveSmallIntegerField(default=1)),
                 (
                     "client",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="zerver.Client",
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Client"),
                 ),
                 (
                     "user_profile",

@@ -133,9 +133,7 @@ def repo_push_branch_data(payload: Dict[str, Any], change: Dict[str, Any]) -> Di
     branch_head = change["toHash"]
 
     if event_type == "ADD":
-        body = get_create_branch_event_message(
-            user_name=user_name, url=None, branch_name=branch_name,
-        )
+        body = get_create_branch_event_message(user_name=user_name, url=None, branch_name=branch_name)
     elif event_type == "UPDATE":
         body = BRANCH_UPDATED_MESSAGE_TEMPLATE.format(
             user_name=user_name, branch_name=branch_name, head=branch_head,

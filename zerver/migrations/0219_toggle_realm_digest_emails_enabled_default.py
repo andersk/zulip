@@ -19,13 +19,9 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name="realm",
-            name="digest_emails_enabled",
-            field=models.BooleanField(default=False),
+            model_name="realm", name="digest_emails_enabled", field=models.BooleanField(default=False),
         ),
         migrations.RunPython(
-            disable_realm_digest_emails_enabled,
-            reverse_code=migrations.RunPython.noop,
-            elidable=True,
+            disable_realm_digest_emails_enabled, reverse_code=migrations.RunPython.noop, elidable=True,
         ),
     ]

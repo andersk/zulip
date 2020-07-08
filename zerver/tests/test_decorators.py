@@ -600,9 +600,7 @@ body:
 
     def test_authenticated_rest_api_view_with_non_webhook_view(self) -> None:
         @authenticated_rest_api_view()
-        def non_webhook_view_raises_exception(
-            request: HttpRequest, user_profile: UserProfile,
-        ) -> None:
+        def non_webhook_view_raises_exception(request: HttpRequest, user_profile: UserProfile) -> None:
             raise Exception("raised by a non-webhook view")
 
         request = HostRequestMock()
@@ -1408,10 +1406,7 @@ class TestValidateApiKey(ZulipTestCase):
     def test_validate_api_key_if_profile_is_incoming_webhook_and_is_webhook_is_set(self) -> None:
         api_key = get_api_key(self.webhook_bot)
         profile = validate_api_key(
-            HostRequestMock(host="zulip.testserver"),
-            self.webhook_bot.email,
-            api_key,
-            is_webhook=True,
+            HostRequestMock(host="zulip.testserver"), self.webhook_bot.email, api_key, is_webhook=True,
         )
         self.assertEqual(profile.id, self.webhook_bot.id)
 
@@ -1597,10 +1592,7 @@ class TestAuthenticatedJsonPostViewDecorator(ZulipTestCase):
                 self._do_test(user), "Account is not associated with this " "subdomain",
             )
             mock_warning.assert_called_with(
-                "User %s (%s) attempted to access API on wrong subdomain (%s)",
-                email,
-                "zulip",
-                "acme",
+                "User %s (%s) attempted to access API on wrong subdomain (%s)", email, "zulip", "acme",
             )
 
     def test_authenticated_json_post_view_if_user_is_incoming_webhook(self) -> None:
@@ -1660,10 +1652,7 @@ class TestAuthenticatedJsonViewDecorator(ZulipTestCase):
                 self._do_test(email), "Account is not associated with this " "subdomain",
             )
             mock_warning.assert_called_with(
-                "User %s (%s) attempted to access API on wrong subdomain (%s)",
-                email,
-                "zulip",
-                "acme",
+                "User %s (%s) attempted to access API on wrong subdomain (%s)", email, "zulip", "acme",
             )
 
     def _do_test(self, user_email: str) -> HttpResponse:

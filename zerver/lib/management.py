@@ -83,9 +83,7 @@ You can use the command list_realms to find ID of the realms in this server."""
                 return Realm.objects.get(id=val)
             return Realm.objects.get(string_id=val)
         except Realm.DoesNotExist:
-            raise CommandError(
-                "There is no realm with id '{}'. Aborting.".format(options["realm_id"]),
-            )
+            raise CommandError("There is no realm with id '{}'. Aborting.".format(options["realm_id"]))
 
     def get_users(
         self,
@@ -132,9 +130,7 @@ You can use the command list_realms to find ID of the realms in this server."""
                     delivery_email__iexact=email.strip(), realm=realm,
                 )
             except UserProfile.DoesNotExist:
-                raise CommandError(
-                    f"The realm '{realm}' does not contain a user with email '{email}'",
-                )
+                raise CommandError(f"The realm '{realm}' does not contain a user with email '{email}'")
 
         # Realm is None in the remaining code path.  Here, we
         # optimistically try to see if there is exactly one user with

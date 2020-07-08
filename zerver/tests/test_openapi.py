@@ -100,8 +100,7 @@ class OpenAPIToolsTest(ZulipTestCase):
 
     def test_validate_against_openapi_schema(self) -> None:
         with self.assertRaises(
-            ValidationError,
-            msg=("Additional properties are not" + " allowed ('foo' was unexpected)"),
+            ValidationError, msg=("Additional properties are not" + " allowed ('foo' was unexpected)"),
         ):
             bad_content: Dict[str, object] = {
                 "msg": "",
@@ -161,11 +160,7 @@ class OpenAPIToolsTest(ZulipTestCase):
                 ValidationError, msg='Extraneous key "str4" in response\'s content',
             ):
                 validate_against_openapi_schema(
-                    (
-                        test_dict["test2"]["responses"]["200"]["content"]["application/json"][
-                            "example"
-                        ]
-                    ),
+                    (test_dict["test2"]["responses"]["200"]["content"]["application/json"]["example"]),
                     "testing",
                     "test2",
                     "200",
@@ -1072,6 +1067,4 @@ class OpenAPIRegexTest(ZulipTestCase):
             match_against_openapi_regex("/users/iago@zulip.com/presence") == "/users/{email}/presence"
         )
         assert match_against_openapi_regex("/messages/23") == "/messages/{message_id}"
-        assert (
-            match_against_openapi_regex("/realm/emoji/realm_emoji_1") == "/realm/emoji/{emoji_name}"
-        )
+        assert match_against_openapi_regex("/realm/emoji/realm_emoji_1") == "/realm/emoji/{emoji_name}"

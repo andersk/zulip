@@ -9,9 +9,7 @@ class ReviewBoardHookTests(WebhookTestCase):
     def test_review_request_published(self) -> None:
         expected_topic = "Scheduler"
         expected_message = "**eeshangarg** opened [#2: Initial commit](https://rbcommons.com/s/zulip/r/2/):\n\n``` quote\n**Description**: Initial commit\n**Status**: pending\n**Target people**: **drsbgarg**\n**Branch**: master\n```"
-        self.send_and_test_stream_message(
-            "review_request_published", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("review_request_published", expected_topic, expected_message)
 
     def test_review_request_published_with_multiple_target_people(self) -> None:
         expected_topic = "Scheduler"

@@ -464,9 +464,7 @@ class HomeTest(ZulipTestCase):
         self.login("hamlet")
         result = self._get_home_page()
         page_params = self._get_page_params(result)
-        self.assertEqual(
-            page_params["realm_notifications_stream_id"], get_stream("Denmark", realm).id,
-        )
+        self.assertEqual(page_params["realm_notifications_stream_id"], get_stream("Denmark", realm).id)
 
     def create_bot(self, owner: UserProfile, bot_email: str, bot_name: str) -> UserProfile:
         user = do_create_user(

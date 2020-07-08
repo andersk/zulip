@@ -75,9 +75,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "sending_client",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="zerver.Client",
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Client"),
                 ),
             ],
             options={"abstract": False},

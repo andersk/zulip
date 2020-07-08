@@ -69,9 +69,7 @@ class AdminNotifyHandlerTest(ZulipTestCase):
             raise Exception("Testing Error!")
         except Exception:
             exc_info = sys.exc_info()
-        record = self.logger.makeRecord(
-            "name", logging.ERROR, "function", 16, "message", {}, exc_info,
-        )
+        record = self.logger.makeRecord("name", logging.ERROR, "function", 16, "message", {}, exc_info)
         handler.emit(record)
 
     def simulate_error(self) -> logging.LogRecord:
@@ -222,8 +220,7 @@ class ErrorFiltersTest(ZulipTestCase):
         from zerver.filters import clean_data_from_query_parameters
 
         self.assertEqual(
-            clean_data_from_query_parameters("api_key=abcdz&stream=1"),
-            "api_key=******&stream=******",
+            clean_data_from_query_parameters("api_key=abcdz&stream=1"), "api_key=******&stream=******",
         )
         self.assertEqual(
             clean_data_from_query_parameters("api_key=abcdz&stream=foo&topic=bar"),

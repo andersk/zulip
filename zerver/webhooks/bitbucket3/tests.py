@@ -10,18 +10,14 @@ class Bitbucket3HookTests(WebhookTestCase):
 
     # Diagnostics Events:
     def test_ping(self) -> None:
-        expected_message = (
-            "Congratulations! The Bitbucket Server webhook was configured successfully!"
-        )
+        expected_message = "Congratulations! The Bitbucket Server webhook was configured successfully!"
         self.send_and_test_stream_message(
             "diagnostics_ping", "Bitbucket Server Ping", expected_message,
         )
 
     def test_ping_with_user_defined_topic(self) -> None:
         self.url = self.build_webhook_url(topic="my topic")
-        expected_message = (
-            "Congratulations! The Bitbucket Server webhook was configured successfully!"
-        )
+        expected_message = "Congratulations! The Bitbucket Server webhook was configured successfully!"
         self.send_and_test_stream_message("diagnostics_ping", "my topic", expected_message)
 
     # Core Repo Events:

@@ -19,8 +19,6 @@ class Migration(migrations.Migration):
             ),
         ),
         migrations.AddField(
-            model_name="realm",
-            name="icon_version",
-            field=models.PositiveSmallIntegerField(default=1),
+            model_name="realm", name="icon_version", field=models.PositiveSmallIntegerField(default=1),
         ),
     ]

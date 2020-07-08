@@ -10,8 +10,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name="userprofile",
-            name="enter_sends",
-            field=models.NullBooleanField(default=False),
+            model_name="userprofile", name="enter_sends", field=models.NullBooleanField(default=False),
         ),
     ]

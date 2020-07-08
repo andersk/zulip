@@ -259,9 +259,7 @@ def get_story_task_body(payload: Dict[str, Any], action: str) -> str:
 
     for a in payload["actions"]:
         if a["entity_type"] == "story":
-            kwargs["name_template"] = STORY_NAME_TEMPLATE.format(
-                name=a["name"], app_url=a["app_url"],
-            )
+            kwargs["name_template"] = STORY_NAME_TEMPLATE.format(name=a["name"], app_url=a["app_url"])
 
     return STORY_TASK_TEMPLATE.format(**kwargs)
 

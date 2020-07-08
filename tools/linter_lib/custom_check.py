@@ -81,9 +81,7 @@ comma_whitespace_rule: List["Rule"] = [
         "bad_lines": ["foo(1,  2, 3)", "foo(1,    2, 3)"],
     },
 ]
-markdown_whitespace_rules = list(
-    [rule for rule in whitespace_rules if rule["pattern"] != r"\s+$"],
-) + [
+markdown_whitespace_rules = list([rule for rule in whitespace_rules if rule["pattern"] != r"\s+$"]) + [
     # Two spaces trailing a line with other content is okay--it's a markdown line break.
     # This rule finds one space trailing a non-space, three or more trailing spaces, and
     # spaces on an empty line.

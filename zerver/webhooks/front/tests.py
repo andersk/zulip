@@ -176,8 +176,7 @@ class FrontHookTests(WebhookTestCase):
     def test_mention(self) -> None:
         expected_topic = "cnv_keocka"
         expected_message = (
-            "**Leela Turanga** left a comment:\n"
-            "```quote\n@bender Could you take it from here?\n```"
+            "**Leela Turanga** left a comment:\n" "```quote\n@bender Could you take it from here?\n```"
         )
 
         self.send_and_test_stream_message(

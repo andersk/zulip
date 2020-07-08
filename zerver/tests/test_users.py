@@ -397,9 +397,7 @@ class PermissionTest(ZulipTestCase):
         with self.assertRaises(JsonableError):
             access_user_by_id(self.example_user("cordelia"), self.example_user("aaron").id)
         # But does have read-only access to it.
-        access_user_by_id(
-            self.example_user("cordelia"), self.example_user("aaron").id, read_only=True,
-        )
+        access_user_by_id(self.example_user("cordelia"), self.example_user("aaron").id, read_only=True)
 
     def test_change_regular_member_to_guest(self) -> None:
         iago = self.example_user("iago")
@@ -924,10 +922,7 @@ class UserProfileTest(ZulipTestCase):
 
         self.assertEqual(user_ids_to_users([], get_realm("zulip")), [])
         self.assertEqual(
-            {
-                user_profile.id
-                for user_profile in user_ids_to_users(real_user_ids, get_realm("zulip"))
-            },
+            {user_profile.id for user_profile in user_ids_to_users(real_user_ids, get_realm("zulip"))},
             set(real_user_ids),
         )
         with self.assertRaises(JsonableError):
@@ -1249,9 +1244,7 @@ class ActivateTest(ZulipTestCase):
             to_user_ids=[hamlet.id, iago.id],
             delay=datetime.timedelta(hours=1),
         )
-        self.assertEqual(
-            ScheduledEmail.objects.filter(users__in=[hamlet, iago]).distinct().count(), 1,
-        )
+        self.assertEqual(ScheduledEmail.objects.filter(users__in=[hamlet, iago]).distinct().count(), 1)
         email = ScheduledEmail.objects.all().first()
         self.assertEqual(email.users.count(), 2)
 
@@ -1385,9 +1378,7 @@ class RecipientInfoTest(ZulipTestCase):
         sub = get_subscription(stream_name, hamlet)
         sub.push_notifications = False
         sub.save()
-        info = get_recipient_info(
-            recipient=recipient, sender_id=hamlet.id, stream_topic=stream_topic,
-        )
+        info = get_recipient_info(recipient=recipient, sender_id=hamlet.id, stream_topic=stream_topic)
         self.assertEqual(info["stream_push_user_ids"], set())
 
         hamlet.enable_stream_push_notifications = False
@@ -1395,17 +1386,12 @@ class RecipientInfoTest(ZulipTestCase):
         sub = get_subscription(stream_name, hamlet)
         sub.push_notifications = True
         sub.save()
-        info = get_recipient_info(
-            recipient=recipient, sender_id=hamlet.id, stream_topic=stream_topic,
-        )
+        info = get_recipient_info(recipient=recipient, sender_id=hamlet.id, stream_topic=stream_topic)
         self.assertEqual(info["stream_push_user_ids"], {hamlet.id})
 
         # Now mute Hamlet to omit him from stream_push_user_ids.
         add_topic_mute(
-            user_profile=hamlet,
-            stream_id=stream.id,
-            recipient_id=recipient.id,
-            topic_name=topic_name,
+            user_profile=hamlet, stream_id=stream.id, recipient_id=recipient.id, topic_name=topic_name,
         )
 
         info = get_recipient_info(

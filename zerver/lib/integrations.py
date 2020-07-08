@@ -444,9 +444,7 @@ WEBHOOK_INTEGRATIONS: List[WebhookIntegration] = [
 ]
 
 INTEGRATIONS: Dict[str, Integration] = {
-    "asana": Integration(
-        "asana", "asana", ["project-management"], doc="zerver/integrations/asana.md",
-    ),
+    "asana": Integration("asana", "asana", ["project-management"], doc="zerver/integrations/asana.md"),
     "capistrano": Integration(
         "capistrano",
         "capistrano",

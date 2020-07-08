@@ -656,9 +656,7 @@ def write_emoticon_data(
     return realmemoji
 
 
-def create_username_to_user_mapping(
-    user_data_list: List[Dict[str, Any]],
-) -> Dict[str, Dict[str, Any]]:
+def create_username_to_user_mapping(user_data_list: List[Dict[str, Any]]) -> Dict[str, Dict[str, Any]]:
     username_to_user = {}
     for user in user_data_list:
         username_to_user[user["username"]] = user

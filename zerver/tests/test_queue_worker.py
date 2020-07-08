@@ -445,9 +445,7 @@ class WorkerTest(ZulipTestCase):
             worker.setup()
             with patch(
                 "zerver.worker.queue_processors.requests.post", return_value=fake_response,
-            ), self.settings(
-                MAILCHIMP_API_KEY="one-two", PRODUCTION=True, ZULIP_FRIENDS_LIST_ID="id",
-            ):
+            ), self.settings(MAILCHIMP_API_KEY="one-two", PRODUCTION=True, ZULIP_FRIENDS_LIST_ID="id"):
                 with patch("logging.warning") as logging_warning_mock:
                     worker.start()
                     logging_warning_mock.assert_called_once_with(
@@ -469,9 +467,7 @@ class WorkerTest(ZulipTestCase):
             worker.setup()
             with patch(
                 "zerver.worker.queue_processors.requests.post", return_value=fake_response,
-            ), self.settings(
-                MAILCHIMP_API_KEY="one-two", PRODUCTION=True, ZULIP_FRIENDS_LIST_ID="id",
-            ):
+            ), self.settings(MAILCHIMP_API_KEY="one-two", PRODUCTION=True, ZULIP_FRIENDS_LIST_ID="id"):
                 worker.start()
                 fake_response.raise_for_status.assert_called_once()
 

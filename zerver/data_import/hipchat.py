@@ -779,9 +779,7 @@ def do_convert_data(
         private_stream_subscriptions = build_stream_subscriptions(
             get_users=subscriber_handler.get_users,
             zerver_recipient=zerver_recipient,
-            zerver_stream=[
-                stream_dict for stream_dict in zerver_stream if stream_dict["invite_only"]
-            ],
+            zerver_stream=[stream_dict for stream_dict in zerver_stream if stream_dict["invite_only"]],
         )
         stream_subscriptions = public_stream_subscriptions + private_stream_subscriptions
     else:

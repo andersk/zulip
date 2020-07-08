@@ -88,9 +88,7 @@ def check_html_templates(templates: Iterable[str], all_dups: bool, fix: bool) ->
 
         if all_dups:
             ignorable_ids_dict = {
-                ids: fns
-                for ids, fns in template_id_dict.items()
-                if ids in IGNORE_IDS and len(fns) > 1
+                ids: fns for ids, fns in template_id_dict.items() if ids in IGNORE_IDS and len(fns) > 1
             }
 
             for ids, fns in ignorable_ids_dict.items():

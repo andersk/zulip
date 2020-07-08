@@ -1307,9 +1307,7 @@ def do_convert_data(slack_zip_file: str, output_dir: str, token: str, threads: i
 
     team_info_dict = get_slack_api_data("https://slack.com/api/team.info", "team", token=token)
     realm_icons_folder = os.path.join(output_dir, "realm_icons")
-    realm_icon_records = fetch_team_icons(
-        realm["zerver_realm"][0], team_info_dict, realm_icons_folder,
-    )
+    realm_icon_records = fetch_team_icons(realm["zerver_realm"][0], team_info_dict, realm_icons_folder)
 
     create_converted_data_files(realm, output_dir, "/realm.json")
     create_converted_data_files(emoji_records, output_dir, "/emoji/records.json")

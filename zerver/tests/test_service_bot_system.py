@@ -482,9 +482,7 @@ class TestServiceBotEventTriggers(ZulipTestCase):
             self.assertTrue(mock_queue_json_publish.called)
 
     @mock.patch("zerver.lib.actions.queue_json_publish")
-    def test_no_trigger_on_personal_message_from_bot(
-        self, mock_queue_json_publish: mock.Mock,
-    ) -> None:
+    def test_no_trigger_on_personal_message_from_bot(self, mock_queue_json_publish: mock.Mock) -> None:
         for bot_type in BOT_TYPE_TO_QUEUE_NAME:
             self.bot_profile.bot_type = bot_type
             self.bot_profile.save()

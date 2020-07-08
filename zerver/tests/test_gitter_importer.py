@@ -34,9 +34,7 @@ class GitterImporter(ZulipTestCase):
         realm = read_file("realm.json")
 
         # test realm
-        self.assertEqual(
-            "Organization imported from Gitter!", realm["zerver_realm"][0]["description"],
-        )
+        self.assertEqual("Organization imported from Gitter!", realm["zerver_realm"][0]["description"])
 
         # test users
         exported_user_ids = self.get_set(realm["zerver_userprofile"], "id")
@@ -74,9 +72,7 @@ class GitterImporter(ZulipTestCase):
         self.assertIn(messages["zerver_message"][0]["content"], "test message")
 
         # test usermessages
-        exported_usermessage_userprofile = self.get_set(
-            messages["zerver_usermessage"], "user_profile",
-        )
+        exported_usermessage_userprofile = self.get_set(messages["zerver_usermessage"], "user_profile")
         self.assertEqual(exported_user_ids, exported_usermessage_userprofile)
         exported_usermessage_message = self.get_set(messages["zerver_usermessage"], "message")
         self.assertEqual(exported_usermessage_message, exported_messages_id)
@@ -119,9 +115,7 @@ class GitterImporter(ZulipTestCase):
 
         self.assertEqual(get_usermentions(messages[0], user_map, user_short_name_to_full_name), [3])
         self.assertEqual(messages[0]["text"], "hi @**user name**")
-        self.assertEqual(
-            get_usermentions(messages[1], user_map, user_short_name_to_full_name), [5, 8],
-        )
+        self.assertEqual(get_usermentions(messages[1], user_map, user_short_name_to_full_name), [5, 8])
         self.assertEqual(messages[1]["text"], "hi @**user2** @**user name 3**")
         self.assertEqual(get_usermentions(messages[2], user_map, user_short_name_to_full_name), [])
         self.assertEqual(messages[2]["text"], "hi @user4")

@@ -134,8 +134,7 @@ def get_usable_missed_message_address(address: str) -> MissedMessageEmailAddress
     try:
         mm_address = MissedMessageEmailAddress.objects.select_related().get(
             email_token=token,
-            timestamp__gt=timezone_now()
-            - timedelta(seconds=MissedMessageEmailAddress.EXPIRY_SECONDS),
+            timestamp__gt=timezone_now() - timedelta(seconds=MissedMessageEmailAddress.EXPIRY_SECONDS),
         )
     except MissedMessageEmailAddress.DoesNotExist:
         raise ZulipEmailForwardError("Missed message address expired or doesn't exist.")
@@ -225,9 +224,7 @@ def get_message_part_by_type(message: EmailMessage, content_type: str) -> Option
     return None
 
 
-def extract_body(
-    message: EmailMessage, include_quotes: bool = False, prefer_text: bool = True,
-) -> str:
+def extract_body(message: EmailMessage, include_quotes: bool = False, prefer_text: bool = True) -> str:
     plaintext_content = extract_plaintext_body(message, include_quotes)
     html_content = extract_html_body(message, include_quotes)
 

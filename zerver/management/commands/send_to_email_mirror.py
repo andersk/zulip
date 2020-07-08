@@ -52,8 +52,7 @@ Example:
             "--stream",
             dest="stream",
             type=str,
-            help="The name of the stream to which you'd like to send "
-            "the message. Default: Denmark",
+            help="The name of the stream to which you'd like to send " "the message. Default: Denmark",
         )
 
         self.add_realm_args(parser, help="Specify which realm to connect to; default is zulip")

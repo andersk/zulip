@@ -143,9 +143,7 @@ Job: [#2722 System - Updates - Ubuntu](http://awx.example.co.uk/#/jobs/playbook/
             "(http://awx.example.co.uk/#/jobs/command/2726) was successful."
         )
 
-        self.send_and_test_stream_message(
-            "adhoc_command_successful", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("adhoc_command_successful", expected_topic, expected_message)
 
     def test_ansibletower_adhoc_command_failed_message(self) -> None:
         """

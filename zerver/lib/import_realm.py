@@ -351,9 +351,7 @@ def fix_message_rendered_content(
             # * rendering markdown failing with the exception being
             #   caught in markdown (which then returns None, causing the the
             #   rendered_content assert above to fire).
-            logging.warning(
-                "Error in markdown rendering for message ID %s; continuing", message["id"],
-            )
+            logging.warning("Error in markdown rendering for message ID %s; continuing", message["id"])
 
 
 def current_table_ids(data: TableData, table: TableName) -> List[int]:
@@ -1062,9 +1060,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
         bulk_import_model(data, UserGroupMembership)
 
     if "zerver_botstoragedata" in data:
-        re_map_foreign_keys(
-            data, "zerver_botstoragedata", "bot_profile", related_table="user_profile",
-        )
+        re_map_foreign_keys(data, "zerver_botstoragedata", "bot_profile", related_table="user_profile")
         update_model_ids(BotStorageData, data, "botstoragedata")
         bulk_import_model(data, BotStorageData)
 

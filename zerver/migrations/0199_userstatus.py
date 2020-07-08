@@ -25,9 +25,7 @@ class Migration(migrations.Migration):
                 ("status", models.PositiveSmallIntegerField(default=1)),
                 (
                     "client",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="zerver.Client",
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Client"),
                 ),
                 (
                     "user_profile",

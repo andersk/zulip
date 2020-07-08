@@ -63,9 +63,7 @@ def generate_time_series_data(
     seed(random_seed)
     noise_scalars = [gauss(0, 1)]
     for i in range(1, length):
-        noise_scalars.append(
-            noise_scalars[-1] * autocorrelation + gauss(0, 1) * (1 - autocorrelation),
-        )
+        noise_scalars.append(noise_scalars[-1] * autocorrelation + gauss(0, 1) * (1 - autocorrelation))
 
     values = [
         0 if holiday else int(v + sqrt(v) * noise_scalar * spikiness)

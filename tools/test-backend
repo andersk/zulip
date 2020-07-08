@@ -501,9 +501,7 @@ def main() -> None:
                 continue
         if not ok:
             print()
-            print(
-                "There are one or more fully covered files that are still in not_yet_fully_covered.",
-            )
+            print("There are one or more fully covered files that are still in not_yet_fully_covered.")
             print("Remove the file(s) from not_yet_fully_covered in `tools/test-backend`.")
             failures = True
     if options.profile:

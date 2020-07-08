@@ -476,9 +476,7 @@ class EditMessageSideEffectsTest(ZulipTestCase):
         mentioned_user = self.example_user("iago")
         self.assertEqual(get_apns_badge_count(mentioned_user), 0)
 
-        with mock.patch(
-            "zerver.lib.push_notifications.push_notifications_enabled", return_value=True,
-        ):
+        with mock.patch("zerver.lib.push_notifications.push_notifications_enabled", return_value=True):
             message_id = self._login_and_send_original_stream_message(content="@**Iago**")
 
         self.assertEqual(get_apns_badge_count(mentioned_user), 1)
@@ -493,9 +491,7 @@ class EditMessageSideEffectsTest(ZulipTestCase):
         group_mentioned_user = self.example_user("cordelia")
         self.assertEqual(get_apns_badge_count(group_mentioned_user), 0)
 
-        with mock.patch(
-            "zerver.lib.push_notifications.push_notifications_enabled", return_value=True,
-        ):
+        with mock.patch("zerver.lib.push_notifications.push_notifications_enabled", return_value=True):
             message_id = self._login_and_send_original_stream_message(
                 content="Hello @*hamletcharacters*",
             )
@@ -515,9 +511,7 @@ class EditMessageSideEffectsTest(ZulipTestCase):
 
         self.assertEqual(get_apns_badge_count(mentioned_user), 0)
 
-        with mock.patch(
-            "zerver.lib.push_notifications.push_notifications_enabled", return_value=True,
-        ):
+        with mock.patch("zerver.lib.push_notifications.push_notifications_enabled", return_value=True):
             message_id = self._login_and_send_original_stream_message(content="@**Iago**")
 
         self.assertEqual(get_apns_badge_count(mentioned_user), 1)

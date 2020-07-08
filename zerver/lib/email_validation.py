@@ -184,9 +184,7 @@ def get_existing_user_errors(
     return errors
 
 
-def validate_email_not_already_in_realm(
-    target_realm: Realm, email: str, verbose: bool = True,
-) -> None:
+def validate_email_not_already_in_realm(target_realm: Realm, email: str, verbose: bool = True) -> None:
     """
     NOTE:
         Only use this to validate that a single email

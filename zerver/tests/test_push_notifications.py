@@ -161,9 +161,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
         self.assert_json_error(result, "Missing 'token' argument")
         result = self.uuid_post(self.server_uuid, endpoint, {"user_id": user_id, "token": token})
         self.assert_json_error(result, "Missing 'token_kind' argument")
-        result = self.uuid_post(
-            self.server_uuid, endpoint, {"token": token, "token_kind": token_kind},
-        )
+        result = self.uuid_post(self.server_uuid, endpoint, {"token": token, "token_kind": token_kind})
         self.assert_json_error(result, "Missing 'user_id' argument")
         result = self.uuid_post(
             self.server_uuid, endpoint, {"user_id": user_id, "token": token, "token_kind": 17},

@@ -41,9 +41,7 @@ class Migration(migrations.Migration):
             model_name="archivedmessage",
             name="archive_transaction",
             field=models.ForeignKey(
-                null=True,
-                on_delete=django.db.models.deletion.CASCADE,
-                to="zerver.ArchiveTransaction",
+                null=True, on_delete=django.db.models.deletion.CASCADE, to="zerver.ArchiveTransaction",
             ),
         ),
     ]

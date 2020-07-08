@@ -203,9 +203,7 @@ class TornadoInMemoryRateLimiterBackend(RateLimiterBackend):
             return
 
         keys_to_delete = [
-            entity_key
-            for entity_key in reset_times_for_rule
-            if reset_times_for_rule[entity_key] < now
+            entity_key for entity_key in reset_times_for_rule if reset_times_for_rule[entity_key] < now
         ]
 
         for entity_key in keys_to_delete:

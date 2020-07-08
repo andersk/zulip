@@ -180,8 +180,7 @@ def write_log_line(
                 log_data["remote_cache_time_stopped"] - log_data["remote_cache_time_restarted"]
             )
             remote_cache_count_delta += (
-                log_data["remote_cache_requests_stopped"]
-                - log_data["remote_cache_requests_restarted"]
+                log_data["remote_cache_requests_stopped"] - log_data["remote_cache_requests_restarted"]
             )
 
         if remote_cache_time_delta > 0.005:

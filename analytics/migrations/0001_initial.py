@@ -52,9 +52,7 @@ class Migration(migrations.Migration):
                 (
                     "anomaly",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to="analytics.Anomaly",
-                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE, to="analytics.Anomaly", null=True,
                     ),
                 ),
             ],
@@ -76,9 +74,7 @@ class Migration(migrations.Migration):
                 (
                     "anomaly",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to="analytics.Anomaly",
-                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE, to="analytics.Anomaly", null=True,
                     ),
                 ),
             ],
@@ -104,9 +100,7 @@ class Migration(migrations.Migration):
                 (
                     "anomaly",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to="analytics.Anomaly",
-                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE, to="analytics.Anomaly", null=True,
                     ),
                 ),
             ],
@@ -127,9 +121,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "stream",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="zerver.Stream",
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Stream"),
                 ),
                 ("property", models.CharField(max_length=40)),
                 ("end_time", models.DateTimeField()),
@@ -138,9 +130,7 @@ class Migration(migrations.Migration):
                 (
                     "anomaly",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to="analytics.Anomaly",
-                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE, to="analytics.Anomaly", null=True,
                     ),
                 ),
             ],
@@ -172,9 +162,7 @@ class Migration(migrations.Migration):
                 (
                     "anomaly",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to="analytics.Anomaly",
-                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE, to="analytics.Anomaly", null=True,
                     ),
                 ),
             ],

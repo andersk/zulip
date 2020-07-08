@@ -166,8 +166,7 @@ class TestFollowupEmails(ZulipTestCase):
 
         with self.settings(AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map):
             self.login_with_return(
-                "newuser_email_as_uid@zulip.com",
-                self.ldap_password("newuser_email_as_uid@zulip.com"),
+                "newuser_email_as_uid@zulip.com", self.ldap_password("newuser_email_as_uid@zulip.com"),
             )
             user = UserProfile.objects.get(delivery_email="newuser_email_as_uid@zulip.com")
             scheduled_emails = ScheduledEmail.objects.filter(users=user)
@@ -274,8 +273,7 @@ class TestMissedMessages(ZulipTestCase):
         if settings.EMAIL_GATEWAY_PATTERN != "":
             reply_to_addresses = [settings.EMAIL_GATEWAY_PATTERN % (t,) for t in tokens]
             reply_to_emails = [
-                str(Address(display_name="Zulip", addr_spec=address))
-                for address in reply_to_addresses
+                str(Address(display_name="Zulip", addr_spec=address)) for address in reply_to_addresses
             ]
         else:
             reply_to_emails = ["noreply@testserver"]
@@ -409,9 +407,7 @@ class TestMissedMessages(ZulipTestCase):
             msg_id, verify_body_include, email_subject, send_as_user, trigger="stream_email_notify",
         )
 
-    def _extra_context_in_missed_stream_messages_mention_two_senders(
-        self, send_as_user: bool,
-    ) -> None:
+    def _extra_context_in_missed_stream_messages_mention_two_senders(self, send_as_user: bool) -> None:
         for i in range(0, 3):
             self.send_stream_message(self.example_user("cordelia"), "Denmark", str(i))
         msg_id = self.send_stream_message(self.example_user("othello"), "Denmark", "@**King Hamlet**")
@@ -420,9 +416,7 @@ class TestMissedMessages(ZulipTestCase):
             "You are receiving this because you were mentioned in Zulip Dev.",
         ]
         email_subject = "#Denmark > test"
-        self._test_cases(
-            msg_id, verify_body_include, email_subject, send_as_user, trigger="mentioned",
-        )
+        self._test_cases(msg_id, verify_body_include, email_subject, send_as_user, trigger="mentioned")
 
     def _extra_context_in_personal_missed_stream_messages(
         self,
@@ -524,9 +518,7 @@ class TestMissedMessages(ZulipTestCase):
             verify_body_does_not_include=verify_body_does_not_include,
         )
 
-    def _extra_context_in_huddle_missed_stream_messages_three_others(
-        self, send_as_user: bool,
-    ) -> None:
+    def _extra_context_in_huddle_missed_stream_messages_three_others(self, send_as_user: bool) -> None:
         msg_id = self.send_huddle_message(
             self.example_user("othello"),
             [self.example_user("hamlet"), self.example_user("iago"), self.example_user("cordelia")],

@@ -50,9 +50,7 @@ class Command(BaseCommand):
                 print(f"{stream.name:>25}", end=" ")
                 recipient = Recipient.objects.filter(type=Recipient.STREAM, type_id=stream.id)
                 print(
-                    "{:10}".format(
-                        len(Subscription.objects.filter(recipient=recipient, active=True)),
-                    ),
+                    "{:10}".format(len(Subscription.objects.filter(recipient=recipient, active=True))),
                     end=" ",
                 )
                 num_messages = len(Message.objects.filter(recipient=recipient))

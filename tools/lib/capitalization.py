@@ -182,9 +182,7 @@ DISALLOWED_REGEXES = [
 ]
 
 BANNED_WORDS = {
-    "realm": (
-        "The term realm should not appear in user-facing strings. " "Use organization instead."
-    ),
+    "realm": ("The term realm should not appear in user-facing strings. " "Use organization instead."),
 }
 
 

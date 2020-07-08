@@ -90,11 +90,7 @@ approach shown above.
         client = Client()
         if headers:
             result = client.post(
-                options["url"],
-                json,
-                content_type="application/json",
-                HTTP_HOST=realm.host,
-                **headers,
+                options["url"], json, content_type="application/json", HTTP_HOST=realm.host, **headers,
             )
         else:
             result = client.post(

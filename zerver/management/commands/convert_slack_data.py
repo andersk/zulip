@@ -18,10 +18,7 @@ class Command(BaseCommand):
         )
 
         parser.add_argument(
-            "--token",
-            metavar="<slack_token>",
-            type=str,
-            help="Slack legacy token of the organsation",
+            "--token", metavar="<slack_token>", type=str, help="Slack legacy token of the organsation",
         )
 
         parser.add_argument(

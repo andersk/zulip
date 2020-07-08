@@ -596,9 +596,7 @@ def narrow_parameter(json: str) -> OptionalNarrowListT:
 
             # whitelist the fields we care about for now
             return dict(
-                operator=elem["operator"],
-                operand=elem["operand"],
-                negated=elem.get("negated", False),
+                operator=elem["operator"], operand=elem["operand"], negated=elem.get("negated", False),
             )
 
         raise ValueError("element is not a dictionary")
@@ -693,8 +691,7 @@ def get_base_query_for_search(
             join(
                 table("zerver_usermessage"),
                 table("zerver_message"),
-                literal_column("zerver_usermessage.message_id")
-                == literal_column("zerver_message.id"),
+                literal_column("zerver_usermessage.message_id") == literal_column("zerver_message.id"),
             ),
         )
         inner_msg_id_col = column("message_id")
@@ -1162,9 +1159,7 @@ def messages_in_narrow_backend(
     # actually received them, as reflected in `zerver_usermessage`.
     query = select(
         [column("message_id"), topic_column_sa(), column("rendered_content")],
-        and_(
-            column("user_profile_id") == literal(user_profile.id), column("message_id").in_(msg_ids),
-        ),
+        and_(column("user_profile_id") == literal(user_profile.id), column("message_id").in_(msg_ids)),
         join(
             table("zerver_usermessage"),
             table("zerver_message"),

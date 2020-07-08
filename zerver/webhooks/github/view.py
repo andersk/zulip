@@ -210,9 +210,7 @@ def get_push_commits_body(payload: Dict[str, Any]) -> str:
 
 def get_public_body(payload: Dict[str, Any]) -> str:
     return "{} made the repository [{}]({}) public.".format(
-        get_sender_name(payload),
-        get_repository_full_name(payload),
-        payload["repository"]["html_url"],
+        get_sender_name(payload), get_repository_full_name(payload), payload["repository"]["html_url"],
     )
 
 
@@ -228,9 +226,7 @@ def get_wiki_pages_body(payload: Dict[str, Any]) -> str:
 
 def get_watch_body(payload: Dict[str, Any]) -> str:
     return "{} starred the repository [{}]({}).".format(
-        get_sender_name(payload),
-        get_repository_full_name(payload),
-        payload["repository"]["html_url"],
+        get_sender_name(payload), get_repository_full_name(payload), payload["repository"]["html_url"],
     )
 
 
@@ -556,9 +552,7 @@ def api_github_webhook(
     return json_success()
 
 
-def get_event(
-    request: HttpRequest, payload: Dict[str, Any], branches: Optional[str],
-) -> Optional[str]:
+def get_event(request: HttpRequest, payload: Dict[str, Any], branches: Optional[str]) -> Optional[str]:
     event = validate_extract_webhook_http_header(request, "X_GITHUB_EVENT", "GitHub")
     if event == "pull_request":
         action = payload["action"]

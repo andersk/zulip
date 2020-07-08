@@ -41,10 +41,7 @@ def copy_user_settings(source_profile: UserProfile, target_profile: UserProfile)
         from zerver.lib.actions import do_change_avatar_fields
 
         do_change_avatar_fields(
-            target_profile,
-            UserProfile.AVATAR_FROM_USER,
-            skip_notify=True,
-            acting_user=target_profile,
+            target_profile, UserProfile.AVATAR_FROM_USER, skip_notify=True, acting_user=target_profile,
         )
         copy_avatar(source_profile, target_profile)
 

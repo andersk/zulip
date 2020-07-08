@@ -373,9 +373,7 @@ class TestStreamEmailMessagesSuccess(ZulipTestCase):
 
         self.assertEqual(
             message.content,
-            "From: {}\n{}".format(
-                "Test Useróąę <hamlet_ę@zulip.com>", "TestStreamEmailMessages Body",
-            ),
+            "From: {}\n{}".format("Test Useróąę <hamlet_ę@zulip.com>", "TestStreamEmailMessages Body"),
         )
         self.assertEqual(get_display_recipient(message.recipient), stream.name)
         self.assertEqual(message.topic_name(), incoming_valid_message["Subject"])
@@ -1176,8 +1174,7 @@ class TestScriptMTA(ZulipTestCase):
             subprocess.check_output([script, "-s", settings.SHARED_SECRET, "-t"], stdin=read_pipe)
         except subprocess.CalledProcessError as e:
             self.assertEqual(
-                e.output,
-                b"5.1.1 Bad destination mailbox address: No missed message email address.\n",
+                e.output, b"5.1.1 Bad destination mailbox address: No missed message email address.\n",
             )
             self.assertEqual(e.returncode, 67)
             success_call = False

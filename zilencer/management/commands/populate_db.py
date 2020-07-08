@@ -249,8 +249,7 @@ class Command(BaseCommand):
             "--test-suite",
             default=False,
             action="store_true",
-            help="Configures populate_db to create a deterministic "
-            "data set for the backend tests.",
+            help="Configures populate_db to create a deterministic " "data set for the backend tests.",
         )
 
     def handle(self, **options: Any) -> None:
@@ -554,10 +553,7 @@ class Command(BaseCommand):
                 zulip_realm, "Phone number", CustomProfileField.SHORT_TEXT, hint="",
             )
             biography = try_add_realm_custom_profile_field(
-                zulip_realm,
-                "Biography",
-                CustomProfileField.LONG_TEXT,
-                hint="What are you known for?",
+                zulip_realm, "Biography", CustomProfileField.LONG_TEXT, hint="What are you known for?",
             )
             favorite_food = try_add_realm_custom_profile_field(
                 zulip_realm,
@@ -581,9 +577,7 @@ class Command(BaseCommand):
                 CustomProfileField.URL,
                 hint="Or your personal blog's URL",
             )
-            mentor = try_add_realm_custom_profile_field(
-                zulip_realm, "Mentor", CustomProfileField.USER,
-            )
+            mentor = try_add_realm_custom_profile_field(zulip_realm, "Mentor", CustomProfileField.USER)
             github_profile = try_add_realm_default_custom_profile_field(zulip_realm, "github")
 
             # Fill in values for Iago and Hamlet
@@ -863,8 +857,7 @@ def generate_and_send_messages(
             message_type = Recipient.HUDDLE
             message.recipient = get_recipient_by_id(random.choice(recipient_huddles))
         elif (
-            randkey
-            <= random_max * (options["percent_huddles"] + options["percent_personals"]) / 100.0
+            randkey <= random_max * (options["percent_huddles"] + options["percent_personals"]) / 100.0
         ):
             message_type = Recipient.PERSONAL
             personals_pair = random.choice(personals_pairs)

@@ -134,9 +134,7 @@ def api_pivotal_webhook_v5(request: HttpRequest, user_profile: UserProfile) -> T
         for change in changes:
             comment = extract_comment(change)
             if comment is not None:
-                content += (
-                    f"{performed_by} added a comment to {story_info}:\n~~~quote\n{comment}\n~~~"
-                )
+                content += f"{performed_by} added a comment to {story_info}:\n~~~quote\n{comment}\n~~~"
     elif event_type == "story_create_activity":
         content += f"{performed_by} created {story_type}: {story_info}\n"
         for change in changes:

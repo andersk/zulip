@@ -604,10 +604,7 @@ def invoice_plan(plan: CustomerPlan, event_time: datetime) -> None:
                 price_args = {"amount": plan.fixed_price}
             else:
                 assert plan.price_per_license is not None  # needed for mypy
-                price_args = {
-                    "unit_amount": plan.price_per_license,
-                    "quantity": ledger_entry.licenses,
-                }
+                price_args = {"unit_amount": plan.price_per_license, "quantity": ledger_entry.licenses}
             description = "Zulip Standard - renewal"
         elif licenses_base is not None and ledger_entry.licenses != licenses_base:
             assert plan.price_per_license

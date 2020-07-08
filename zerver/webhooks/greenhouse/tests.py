@@ -45,10 +45,7 @@ Candidate Stage Change Giuseppe Hurley (ID: 265772), applying for:
 """.strip()
 
         self.send_and_test_stream_message(
-            "candidate_stage_change",
-            expected_topic,
-            expected_message,
-            content_type=self.CONTENT_TYPE,
+            "candidate_stage_change", expected_topic, expected_message, content_type=self.CONTENT_TYPE,
         )
 
     def test_message_prospect_created(self) -> None:

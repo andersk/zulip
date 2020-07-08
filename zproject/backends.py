@@ -871,16 +871,14 @@ class ZulipLDAPUserPopulator(ZulipLDAPAuthBackendBase):
             if user_disabled_in_ldap:
                 if user.is_active:
                     logging.info(
-                        "Deactivating user %s because they are disabled in LDAP.",
-                        user.delivery_email,
+                        "Deactivating user %s because they are disabled in LDAP.", user.delivery_email,
                     )
                     do_deactivate_user(user)
                 # Do an early return to avoid trying to sync additional data.
                 return (user, built)
             elif not user.is_active:
                 logging.info(
-                    "Reactivating user %s because they are not disabled in LDAP.",
-                    user.delivery_email,
+                    "Reactivating user %s because they are not disabled in LDAP.", user.delivery_email,
                 )
                 do_reactivate_user(user)
 
@@ -1983,9 +1981,7 @@ class SAMLAuthBackend(SocialAuthMixin, SAMLAuth):
         else:
             return request_subdomain
 
-    def _check_entitlements(
-        self, idp: SAMLIdentityProvider, attributes: Dict[str, List[str]],
-    ) -> None:
+    def _check_entitlements(self, idp: SAMLIdentityProvider, attributes: Dict[str, List[str]]) -> None:
         """
         Below is the docstring from the social_core SAML backend.
 

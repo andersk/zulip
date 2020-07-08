@@ -47,10 +47,7 @@ def add_reaction(
         reaction_type = emoji_name_to_emoji_code(message.sender.realm, emoji_name)[1]
 
     if Reaction.objects.filter(
-        user_profile=user_profile,
-        message=message,
-        emoji_code=emoji_code,
-        reaction_type=reaction_type,
+        user_profile=user_profile, message=message, emoji_code=emoji_code, reaction_type=reaction_type,
     ).exists():
         raise JsonableError(_("Reaction already exists."))
 
@@ -119,10 +116,7 @@ def remove_reaction(
         emoji_code = emoji_name_to_emoji_code(message.sender.realm, emoji_name)[0]
 
     if not Reaction.objects.filter(
-        user_profile=user_profile,
-        message=message,
-        emoji_code=emoji_code,
-        reaction_type=reaction_type,
+        user_profile=user_profile, message=message, emoji_code=emoji_code, reaction_type=reaction_type,
     ).exists():
         raise JsonableError(_("Reaction doesn't exist."))
 

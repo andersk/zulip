@@ -10,9 +10,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="realmalias",
-            name="allow_subdomains",
-            field=models.BooleanField(default=False),
+            model_name="realmalias", name="allow_subdomains", field=models.BooleanField(default=False),
         ),
         migrations.AlterUniqueTogether(name="realmalias", unique_together={("realm", "domain")}),
     ]

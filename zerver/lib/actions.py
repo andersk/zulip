@@ -2009,10 +2009,7 @@ def do_remove_reaction(
     user_profile: UserProfile, message: Message, emoji_code: str, reaction_type: str,
 ) -> None:
     reaction = Reaction.objects.filter(
-        user_profile=user_profile,
-        message=message,
-        emoji_code=emoji_code,
-        reaction_type=reaction_type,
+        user_profile=user_profile, message=message, emoji_code=emoji_code, reaction_type=reaction_type,
     ).get()
     reaction.delete()
     notify_reaction_update(user_profile, message, reaction, "remove")
@@ -2746,9 +2743,7 @@ def internal_send_huddle_message(
     realm: Realm, sender: UserProfile, emails: List[str], content: str,
 ) -> Optional[int]:
     addressee = Addressee.for_private(emails, realm)
-    message = _internal_prep_message(
-        realm=realm, sender=sender, addressee=addressee, content=content,
-    )
+    message = _internal_prep_message(realm=realm, sender=sender, addressee=addressee, content=content)
     if message is None:
         return None
     message_ids = do_send_messages([message])
@@ -4235,9 +4230,9 @@ def do_create_default_stream_group(
     for stream in streams:
         if stream in default_streams:
             raise JsonableError(
-                _(
-                    "'{stream_name}' is a default stream and cannot be added to '{group_name}'",
-                ).format(stream_name=stream.name, group_name=group_name),
+                _("'{stream_name}' is a default stream and cannot be added to '{group_name}'").format(
+                    stream_name=stream.name, group_name=group_name,
+                ),
             )
 
     check_default_stream_group_name(group_name)
@@ -4260,9 +4255,9 @@ def do_add_streams_to_default_stream_group(
     for stream in streams:
         if stream in default_streams:
             raise JsonableError(
-                _(
-                    "'{stream_name}' is a default stream and cannot be added to '{group_name}'",
-                ).format(stream_name=stream.name, group_name=group.name),
+                _("'{stream_name}' is a default stream and cannot be added to '{group_name}'").format(
+                    stream_name=stream.name, group_name=group.name,
+                ),
             )
         if stream in group.streams.all():
             raise JsonableError(
@@ -4807,9 +4802,7 @@ def update_user_message_flags(message: Message, ums: Iterable[UserMessage]) -> N
         um.save(update_fields=["flags"])
 
 
-def update_to_dict_cache(
-    changed_messages: List[Message], realm_id: Optional[int] = None,
-) -> List[int]:
+def update_to_dict_cache(changed_messages: List[Message], realm_id: Optional[int] = None) -> List[int]:
     """Updates the message as stored in the to_dict cache (for serving
     messages)."""
     items_for_remote_cache = {}
@@ -5228,9 +5221,7 @@ def do_delete_messages(realm: Realm, messages: Iterable[Message]) -> None:
 
 
 def do_delete_messages_by_sender(user: UserProfile) -> None:
-    message_ids = list(
-        Message.objects.filter(sender=user).values_list("id", flat=True).order_by("id"),
-    )
+    message_ids = list(Message.objects.filter(sender=user).values_list("id", flat=True).order_by("id"))
     if message_ids:
         move_messages_to_archive(message_ids, chunk_size=retention.STREAM_MESSAGE_BATCH_SIZE)
 
@@ -6204,9 +6195,7 @@ def notify_realm_custom_profile_fields(realm: Realm, operation: str) -> None:
     send_event(realm, event, active_user_ids(realm.id))
 
 
-def try_add_realm_default_custom_profile_field(
-    realm: Realm, field_subtype: str,
-) -> CustomProfileField:
+def try_add_realm_default_custom_profile_field(realm: Realm, field_subtype: str) -> CustomProfileField:
     field_data = DEFAULT_EXTERNAL_ACCOUNTS[field_subtype]
     field = CustomProfileField(
         realm=realm,
@@ -6475,11 +6464,7 @@ def get_service_dicts_for_bots(
         service_dicts: List[Dict[str, Any]] = []
         if bot_type == UserProfile.OUTGOING_WEBHOOK_BOT:
             service_dicts = [
-                {
-                    "base_url": service.base_url,
-                    "interface": service.interface,
-                    "token": service.token,
-                }
+                {"base_url": service.base_url, "interface": service.interface, "token": service.token}
                 for service in services
             ]
         elif bot_type == UserProfile.EMBEDDED_BOT:

@@ -273,11 +273,7 @@ def compose_activity_message(payload: Dict[str, Any]) -> str:
     # But, they all are almost identical and the only differences between them
     # are the keys at line 9 (check fixtures). So there's no need to split
     # the function like the notification one.
-    if (
-        event_type == "StatusChanged"
-        or event_type == "AssignedToUser"
-        or event_type == "CommentAdded"
-    ):
+    if event_type == "StatusChanged" or event_type == "AssignedToUser" or event_type == "CommentAdded":
         return activity_message(payload)
     else:
         raise UnexpectedWebhookEventType("Raygun", event_type)

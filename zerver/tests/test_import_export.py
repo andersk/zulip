@@ -122,9 +122,7 @@ class QueryUtilTest(ZulipTestCase):
         ]
         all_msg_ids = set()
         chunker = query_chunker(
-            queries=queries,
-            id_collector=all_msg_ids,
-            chunk_size=11,  # use a different size each time
+            queries=queries, id_collector=all_msg_ids, chunk_size=11,  # use a different size each time
         )
         list(chunker)  # exhaust the iterator
         self.assertEqual(
@@ -139,9 +137,7 @@ class QueryUtilTest(ZulipTestCase):
         ]
         all_msg_ids = set()
         chunker = query_chunker(
-            queries=queries,
-            id_collector=all_msg_ids,
-            chunk_size=13,  # use a different size each time
+            queries=queries, id_collector=all_msg_ids, chunk_size=13,  # use a different size each time
         )
         with self.assertRaises(AssertionError):
             list(chunker)  # exercise the iterator
@@ -153,9 +149,7 @@ class QueryUtilTest(ZulipTestCase):
         ]
         all_msg_ids = set()
         chunker = query_chunker(
-            queries=queries,
-            id_collector=all_msg_ids,
-            chunk_size=11,  # use a different size each time
+            queries=queries, id_collector=all_msg_ids, chunk_size=11,  # use a different size each time
         )
         self.assertEqual(len(all_msg_ids), 0)  # until we actually use the iterator
         list(chunker)  # exhaust the iterator
@@ -167,9 +161,7 @@ class QueryUtilTest(ZulipTestCase):
         ]
         all_msg_ids = set()
         chunker = query_chunker(
-            queries=queries,
-            id_collector=all_msg_ids,
-            chunk_size=10,  # use a different size each time
+            queries=queries, id_collector=all_msg_ids, chunk_size=10,  # use a different size each time
         )
         first_chunk = next(chunker)
         self.assertEqual(len(first_chunk), 10)
@@ -359,12 +351,9 @@ class ImportExportTest(ZulipTestCase):
         create_s3_buckets(settings.S3_AUTH_UPLOADS_BUCKET, settings.S3_AVATAR_BUCKET)
 
         realm = Realm.objects.get(string_id="zulip")
-        (
-            attachment_path_id,
-            emoji_path,
-            original_avatar_path_id,
-            test_image,
-        ) = self._setup_export_files(realm)
+        attachment_path_id, emoji_path, original_avatar_path_id, test_image = self._setup_export_files(
+            realm,
+        )
         full_data = self._export_realm(realm)
 
         data = full_data["attachment"]
@@ -610,16 +599,7 @@ class ImportExportTest(ZulipTestCase):
         exported_streams = self.get_set(data["zerver_stream"], "name")
         self.assertEqual(
             exported_streams,
-            {
-                "Denmark",
-                "Rome",
-                "Scotland",
-                "Venice",
-                "Verona",
-                "Private A",
-                "Private B",
-                "Private C",
-            },
+            {"Denmark", "Rome", "Scotland", "Venice", "Verona", "Private A", "Private B", "Private C"},
         )
 
         data = full_data["message"]
@@ -1076,9 +1056,7 @@ class ImportExportTest(ZulipTestCase):
         uploaded_file = Attachment.objects.get(realm=imported_realm)
         self.assertEqual(len(b"zulip!"), uploaded_file.size)
 
-        attachment_file_path = os.path.join(
-            settings.LOCAL_UPLOADS_DIR, "files", uploaded_file.path_id,
-        )
+        attachment_file_path = os.path.join(settings.LOCAL_UPLOADS_DIR, "files", uploaded_file.path_id)
         self.assertTrue(os.path.isfile(attachment_file_path))
 
         # Test emojis

@@ -55,9 +55,7 @@ class RealmExportTest(ZulipTestCase):
         self.assertEqual(args["threads"], 6)
 
         # Get the entry and test that iago initiated it.
-        audit_log_entry = RealmAuditLog.objects.filter(
-            event_type=RealmAuditLog.REALM_EXPORTED,
-        ).first()
+        audit_log_entry = RealmAuditLog.objects.filter(event_type=RealmAuditLog.REALM_EXPORTED).first()
         self.assertEqual(audit_log_entry.acting_user_id, admin.id)
 
         # Test that the file is hosted, and the contents are as expected.
@@ -117,9 +115,7 @@ class RealmExportTest(ZulipTestCase):
         self.assertEqual(args["threads"], 6)
 
         # Get the entry and test that iago initiated it.
-        audit_log_entry = RealmAuditLog.objects.filter(
-            event_type=RealmAuditLog.REALM_EXPORTED,
-        ).first()
+        audit_log_entry = RealmAuditLog.objects.filter(event_type=RealmAuditLog.REALM_EXPORTED).first()
         self.assertEqual(audit_log_entry.acting_user_id, admin.id)
 
         # Test that the file is hosted, and the contents are as expected.

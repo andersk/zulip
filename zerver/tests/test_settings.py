@@ -156,9 +156,7 @@ class ChangeSettingsTest(ZulipTestCase):
             #
             # TODO: Make this work more like do_test_realm_update_api
             if notification_setting != "notification_sound":
-                self.check_for_toggle_param_patch(
-                    "/json/settings/notifications", notification_setting,
-                )
+                self.check_for_toggle_param_patch("/json/settings/notifications", notification_setting)
 
     def test_change_notification_sound(self) -> None:
         pattern = "/json/settings/notifications"
@@ -254,9 +252,7 @@ class ChangeSettingsTest(ZulipTestCase):
 
         self.login("hamlet")
 
-        with self.settings(
-            LDAP_APPEND_DOMAIN="zulip.com", AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map,
-        ):
+        with self.settings(LDAP_APPEND_DOMAIN="zulip.com", AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map):
             result = self.client_patch(
                 "/json/settings",
                 dict(

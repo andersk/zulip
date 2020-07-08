@@ -118,8 +118,7 @@ templates = {
         "commented": "[{user}]({user_link}) commented on task {subject}.",
         "delete": "[{user}]({user_link}) deleted task {subject}.",
         "changed_us": "[{user}]({user_link}) moved task {subject} from user story {old} to {new}.",
-        "due_date": "[{user}]({user_link}) changed due date of task {subject}"
-        " from {old} to {new}.",
+        "due_date": "[{user}]({user_link}) changed due date of task {subject}" " from {old} to {new}.",
         "set_due_date": "[{user}]({user_link}) set due date of task {subject}" " to {new}.",
     },
     "issue": {

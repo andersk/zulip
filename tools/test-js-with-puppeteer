@@ -110,8 +110,7 @@ The Puppeteer frontend tests failed! Please report and ask for help in chat.zuli
         if os.environ.get("CIRCLECI"):
             print("", file=sys.stderr)
             print(
-                "In CircleCI, the Artifacts tab contains screenshots of the failure.",
-                file=sys.stderr,
+                "In CircleCI, the Artifacts tab contains screenshots of the failure.", file=sys.stderr,
             )
             print("", file=sys.stderr)
         sys.exit(ret)

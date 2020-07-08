@@ -213,8 +213,7 @@ def home_real(request: HttpRequest) -> HttpResponse:
         # If you are the only person in the realm and you didn't invite
         # anyone, we'll continue to encourage you to do so on the frontend.
         prompt_for_invites = (
-            first_in_realm
-            and not PreregistrationUser.objects.filter(referred_by=user_profile).count()
+            first_in_realm and not PreregistrationUser.objects.filter(referred_by=user_profile).count()
         )
         needs_tutorial = user_profile.tutorial_status == UserProfile.TUTORIAL_WAITING
 
@@ -279,9 +278,7 @@ def home_real(request: HttpRequest) -> HttpResponse:
         # In narrow_stream context, initial pointer is just latest message
         recipient = narrow_stream.recipient
         try:
-            max_message_id = (
-                Message.objects.filter(recipient=recipient).order_by("id").reverse()[0].id
-            )
+            max_message_id = Message.objects.filter(recipient=recipient).order_by("id").reverse()[0].id
         except IndexError:
             max_message_id = -1
         page_params["narrow_stream"] = narrow_stream.name

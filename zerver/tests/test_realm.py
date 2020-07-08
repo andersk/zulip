@@ -304,9 +304,7 @@ class RealmTest(ZulipTestCase):
         self.login("iago")
 
         disabled_signup_notifications_stream_id = -1
-        req = dict(
-            signup_notifications_stream_id=ujson.dumps(disabled_signup_notifications_stream_id),
-        )
+        req = dict(signup_notifications_stream_id=ujson.dumps(disabled_signup_notifications_stream_id))
         result = self.client_patch("/json/realm", req)
         self.assert_json_success(result)
         realm = get_realm("zulip")
@@ -567,9 +565,7 @@ class RealmTest(ZulipTestCase):
             get_realm("zulip").video_chat_provider, Realm.VIDEO_CHAT_PROVIDERS["jitsi_meet"]["id"],
         )
 
-        req = {
-            "video_chat_provider": ujson.dumps(Realm.VIDEO_CHAT_PROVIDERS["big_blue_button"]["id"]),
-        }
+        req = {"video_chat_provider": ujson.dumps(Realm.VIDEO_CHAT_PROVIDERS["big_blue_button"]["id"])}
         result = self.client_patch("/json/realm", req)
         self.assert_json_success(result)
         self.assertEqual(
@@ -584,9 +580,7 @@ class RealmTest(ZulipTestCase):
     def test_initial_plan_type(self) -> None:
         with self.settings(BILLING_ENABLED=True):
             self.assertEqual(do_create_realm("hosted", "hosted").plan_type, Realm.LIMITED)
-            self.assertEqual(
-                get_realm("hosted").max_invites, settings.INVITES_DEFAULT_REALM_DAILY_MAX,
-            )
+            self.assertEqual(get_realm("hosted").max_invites, settings.INVITES_DEFAULT_REALM_DAILY_MAX)
             self.assertEqual(
                 get_realm("hosted").message_visibility_limit, Realm.MESSAGE_VISIBILITY_LIMITED,
             )
@@ -744,9 +738,7 @@ class RealmAPITest(ZulipTestCase):
                 Realm.EMAIL_ADDRESS_VISIBILITY_NOBODY,
             ],
             video_chat_provider=[
-                dict(
-                    video_chat_provider=ujson.dumps(Realm.VIDEO_CHAT_PROVIDERS["jitsi_meet"]["id"]),
-                ),
+                dict(video_chat_provider=ujson.dumps(Realm.VIDEO_CHAT_PROVIDERS["jitsi_meet"]["id"])),
             ],
         )
 

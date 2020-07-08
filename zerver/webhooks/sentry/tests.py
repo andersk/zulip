@@ -61,9 +61,7 @@ Traceback:
 
 
 ```"""
-        self.send_and_test_stream_message(
-            "event_for_exception_node", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("event_for_exception_node", expected_topic, expected_message)
 
     def test_event_for_exception_python(self) -> None:
         expected_topic = "Exception: Custom exception!"
@@ -99,9 +97,7 @@ Traceback:
 **level:** info
 **timestamp:** 2020-04-30 06:14:13
 ```"""
-        self.send_and_test_stream_message(
-            "event_for_message_golang", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("event_for_message_golang", expected_topic, expected_message)
 
     def test_event_for_message_node(self) -> None:
         expected_topic = "Test event from node."
@@ -121,9 +117,7 @@ Traceback:
 **level:** info
 **timestamp:** 2020-04-28 14:05:04
 ```"""
-        self.send_and_test_stream_message(
-            "event_for_message_python", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("event_for_message_python", expected_topic, expected_message)
 
     def test_issue_assigned_to_individual(self) -> None:
         expected_topic = "A test message event from golang."

@@ -252,9 +252,7 @@ def get_subscription_status(client: Client) -> None:
     stream_id = 1
     result = client.call_endpoint(url=f"/users/{user_id}/subscriptions/{stream_id}", method="GET")
     # {code_example|end}
-    validate_against_openapi_schema(
-        result, "/users/{user_id}/subscriptions/{stream_id}", "get", "200",
-    )
+    validate_against_openapi_schema(result, "/users/{user_id}/subscriptions/{stream_id}", "get", "200")
 
 
 @openapi_test_function("/realm/filters:get")
@@ -274,9 +272,7 @@ def add_realm_filter(client: Client) -> None:
     # {code_example|start}
     # Add a filter to automatically linkify #<number> to the corresponding
     # issue in Zulip's server repo
-    result = client.add_realm_filter(
-        "#(?P<id>[0-9]+)", "https://github.com/zulip/zulip/issues/%(id)s",
-    )
+    result = client.add_realm_filter("#(?P<id>[0-9]+)", "https://github.com/zulip/zulip/issues/%(id)s")
     # {code_example|end}
 
     validate_against_openapi_schema(result, "/realm/filters", "post", "200")

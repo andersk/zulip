@@ -1162,12 +1162,7 @@ def export_uploads_and_avatars(realm: Realm, output_dir: Path) -> None:
     realm_icons_output_dir = os.path.join(output_dir, "realm_icons")
     emoji_output_dir = os.path.join(output_dir, "emoji")
 
-    for dir_path in (
-        uploads_output_dir,
-        avatars_output_dir,
-        realm_icons_output_dir,
-        emoji_output_dir,
-    ):
+    for dir_path in (uploads_output_dir, avatars_output_dir, realm_icons_output_dir, emoji_output_dir):
         if not os.path.exists(dir_path):
             os.makedirs(dir_path)
 

@@ -329,9 +329,7 @@ class ReactionTest(ZulipTestCase):
         first = self.api_delete(reaction_sender, f"/api/v1/messages/{pm_id}/reactions", reaction_info)
         self.assert_json_success(first)
 
-        second = self.api_delete(
-            reaction_sender, f"/api/v1/messages/{pm_id}/reactions", reaction_info,
-        )
+        second = self.api_delete(reaction_sender, f"/api/v1/messages/{pm_id}/reactions", reaction_info)
         self.assert_json_error(second, "Reaction doesn't exist.")
 
     def test_remove_existing_reaction_with_renamed_emoji(self) -> None:

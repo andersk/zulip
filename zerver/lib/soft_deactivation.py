@@ -271,9 +271,7 @@ def do_soft_deactivate_users(users: List[UserProfile]) -> List[UserProfile]:
     return users_soft_deactivated
 
 
-def do_auto_soft_deactivate_users(
-    inactive_for_days: int, realm: Optional[Realm],
-) -> List[UserProfile]:
+def do_auto_soft_deactivate_users(inactive_for_days: int, realm: Optional[Realm]) -> List[UserProfile]:
     filter_kwargs: Dict[str, Realm] = {}
     if realm is not None:
         filter_kwargs = dict(user_profile__realm=realm)

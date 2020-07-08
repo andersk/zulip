@@ -147,9 +147,7 @@ class EditMessageTest(ZulipTestCase):
         self.login_user(user_profile)
         stream = self.make_stream("public_stream")
         self.subscribe(user_profile, stream.name)
-        msg_id = self.send_stream_message(
-            user_profile, stream.name, topic_name="test", content="test",
-        )
+        msg_id = self.send_stream_message(user_profile, stream.name, topic_name="test", content="test")
         result = self.client_get("/json/messages/" + str(msg_id))
         self.assert_json_success(result)
 
@@ -163,9 +161,7 @@ class EditMessageTest(ZulipTestCase):
         self.login_user(user_profile)
         stream = self.make_stream("private_stream", invite_only=True)
         self.subscribe(user_profile, stream.name)
-        msg_id = self.send_stream_message(
-            user_profile, stream.name, topic_name="test", content="test",
-        )
+        msg_id = self.send_stream_message(user_profile, stream.name, topic_name="test", content="test")
         result = self.client_get("/json/messages/" + str(msg_id))
         self.assert_json_success(result)
         self.login("othello")
@@ -889,9 +885,7 @@ class EditMessageTest(ZulipTestCase):
         new_stream = self.make_stream(new_stream)
         self.subscribe(user_profile, stream.name)
         self.subscribe(user_profile, new_stream.name)
-        msg_id = self.send_stream_message(
-            user_profile, stream.name, topic_name=topic, content="First",
-        )
+        msg_id = self.send_stream_message(user_profile, stream.name, topic_name=topic, content="First")
         msg_id_lt = self.send_stream_message(
             user_profile, stream.name, topic_name=topic, content="Second",
         )
@@ -1063,8 +1057,7 @@ class EditMessageTest(ZulipTestCase):
         self.assert_json_success(result)
 
         self.assertEqual(
-            has_message_access(guest_user, Message.objects.get(id=msg_id_to_test_acesss), None),
-            False,
+            has_message_access(guest_user, Message.objects.get(id=msg_id_to_test_acesss), None), False,
         )
         self.assertEqual(
             has_message_access(non_guest_user, Message.objects.get(id=msg_id_to_test_acesss), None),

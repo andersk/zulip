@@ -35,10 +35,7 @@ class Command(BaseCommand):
         )
 
         parser.add_argument(
-            "--output",
-            dest="output_dir",
-            action="store",
-            help="Directory to write exported data to.",
+            "--output", dest="output_dir", action="store", help="Directory to write exported data to.",
         )
 
         parser.add_argument(

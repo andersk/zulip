@@ -427,9 +427,7 @@ class MessagePOSTTest(ZulipTestCase):
                 "type": "private",
                 "content": "Test message",
                 "client": "test suite",
-                "to": ujson.dumps(
-                    [self.example_user("othello").id, self.example_user("cordelia").id],
-                ),
+                "to": ujson.dumps([self.example_user("othello").id, self.example_user("cordelia").id]),
             },
         )
         self.assert_json_success(result)
@@ -1265,9 +1263,7 @@ class StreamMessagesTest(ZulipTestCase):
         for non_subscriber in non_subscribers:
             old_non_subscriber_messages.append(message_stream_count(non_subscriber))
 
-        non_bot_subscribers = [
-            user_profile for user_profile in subscribers if not user_profile.is_bot
-        ]
+        non_bot_subscribers = [user_profile for user_profile in subscribers if not user_profile.is_bot]
         a_subscriber = non_bot_subscribers[0]
         self.login_user(a_subscriber)
         self.send_stream_message(a_subscriber, stream_name, content=content, topic_name=topic_name)
@@ -1310,9 +1306,7 @@ class StreamMessagesTest(ZulipTestCase):
             long_term_idle = i % 2 > 0
 
             email = f"foo{i}@example.com"
-            user = UserProfile.objects.create(
-                realm=realm, email=email, long_term_idle=long_term_idle,
-            )
+            user = UserProfile.objects.create(realm=realm, email=email, long_term_idle=long_term_idle)
             Subscription.objects.create(
                 user_profile=user, recipient=recipient,
             )
@@ -1564,9 +1558,7 @@ class StreamMessagesTest(ZulipTestCase):
         non_ascii_stream_name = "hümbüǵ"
         realm = get_realm("zulip")
         stream = self.make_stream(non_ascii_stream_name)
-        for user_profile in UserProfile.objects.filter(is_active=True, is_bot=False, realm=realm)[
-            0:3
-        ]:
+        for user_profile in UserProfile.objects.filter(is_active=True, is_bot=False, realm=realm)[0:3]:
             self.subscribe(user_profile, stream.name)
 
         self.assert_stream_message(non_ascii_stream_name, topic_name="hümbüǵ", content="hümbüǵ")

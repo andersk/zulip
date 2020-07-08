@@ -208,11 +208,7 @@ class GetCacheWithKeyDecoratorTest(ZulipTestCase):
 
 class SafeCacheFunctionsTest(ZulipTestCase):
     def test_safe_cache_functions_with_all_good_keys(self) -> None:
-        items = {
-            "SafeFunctionsTest:key1": 1,
-            "SafeFunctionsTest:key2": 2,
-            "SafeFunctionsTest:key3": 3,
-        }
+        items = {"SafeFunctionsTest:key1": 1, "SafeFunctionsTest:key2": 2, "SafeFunctionsTest:key3": 3}
         safe_cache_set_many(items)
 
         result = safe_cache_get_many(list(items.keys()))

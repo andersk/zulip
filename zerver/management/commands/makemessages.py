@@ -273,8 +273,7 @@ class Command(makemessages.Command):
                 old_strings = {}
 
             new_strings = {
-                k: v
-                for k, v in self.get_new_strings(old_strings, translation_strings, locale).items()
+                k: v for k, v in self.get_new_strings(old_strings, translation_strings, locale).items()
             }
             with open(output_path, "w") as writer:
                 json.dump(new_strings, writer, indent=2, sort_keys=True)

@@ -167,9 +167,7 @@ def get_status_dict_by_realm(realm_id: int, slim_presence: bool = False) -> Dict
     return get_status_dicts_for_rows(presence_rows, mobile_user_ids, slim_presence)
 
 
-def get_presences_for_realm(
-    realm: Realm, slim_presence: bool,
-) -> Dict[str, Dict[str, Dict[str, Any]]]:
+def get_presences_for_realm(realm: Realm, slim_presence: bool) -> Dict[str, Dict[str, Dict[str, Any]]]:
 
     if realm.presence_disabled:
         # Return an empty dict if presence is disabled in this realm
@@ -178,9 +176,7 @@ def get_presences_for_realm(
     return get_status_dict_by_realm(realm.id, slim_presence)
 
 
-def get_presence_response(
-    requesting_user_profile: UserProfile, slim_presence: bool,
-) -> Dict[str, Any]:
+def get_presence_response(requesting_user_profile: UserProfile, slim_presence: bool) -> Dict[str, Any]:
     realm = requesting_user_profile.realm
     server_timestamp = time.time()
     presences = get_presences_for_realm(realm, slim_presence)

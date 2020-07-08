@@ -284,9 +284,7 @@ def generate_curl_example(
                 "Unknown operation without a securityScheme. " + "Please update insecure_operations.",
             )
     else:
-        raise AssertionError(
-            "Unhandled securityScheme. Please update the code to handle this scheme.",
-        )
+        raise AssertionError("Unhandled securityScheme. Please update the code to handle this scheme.")
 
     if authentication_required:
         lines.append(f"    -u {auth_email}:{auth_api_key}")
@@ -399,9 +397,7 @@ class APICodeExamplesPreprocessor(Preprocessor):
                             text = self.render_fixture(function, name=argument)
                     elif key == "example":
                         if argument == "admin_config=True":
-                            text = SUPPORTED_LANGUAGES[language]["render"](
-                                function, admin_config=True,
-                            )
+                            text = SUPPORTED_LANGUAGES[language]["render"](function, admin_config=True)
                         else:
                             text = SUPPORTED_LANGUAGES[language]["render"](function, **options)
 

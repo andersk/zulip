@@ -81,10 +81,7 @@ def zulip_default_context(request: HttpRequest) -> Dict[str, Any]:
     find_team_link_disabled = settings.FIND_TEAM_LINK_DISABLED
     allow_search_engine_indexing = False
 
-    if (
-        settings.ROOT_DOMAIN_LANDING_PAGE
-        and get_subdomain(request) == Realm.SUBDOMAIN_FOR_ROOT_DOMAIN
-    ):
+    if settings.ROOT_DOMAIN_LANDING_PAGE and get_subdomain(request) == Realm.SUBDOMAIN_FOR_ROOT_DOMAIN:
         register_link_disabled = True
         login_link_disabled = True
         find_team_link_disabled = False

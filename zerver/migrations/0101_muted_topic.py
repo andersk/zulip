@@ -29,9 +29,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "stream",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="zerver.Stream",
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Stream"),
                 ),
                 (
                     "user_profile",

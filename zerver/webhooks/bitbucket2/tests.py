@@ -123,7 +123,9 @@ class Bitbucket2HookTests(WebhookTestCase):
         self.send_and_test_stream_message("issue_created", expected_topic, expected_message)
 
     def test_bitbucket2_on_issue_updated_event(self) -> None:
-        expected_message = "kolaszek updated [Issue #1](https://bitbucket.org/kolaszek/repository-name/issues/2/bug)."
+        expected_message = (
+            "kolaszek updated [Issue #1](https://bitbucket.org/kolaszek/repository-name/issues/2/bug)."
+        )
         self.send_and_test_stream_message(
             "issue_updated", self.EXPECTED_TOPIC_ISSUE_EVENTS, expected_message,
         )

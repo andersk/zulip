@@ -103,9 +103,7 @@ class Command(ZulipBaseCommand):
                 "You've successfully registered for the Mobile Push Notification Service!\n"
                 "To finish setup for sending push notifications:",
             )
-            print(
-                "- Restart the server, using /home/zulip/deployments/current/scripts/restart-server",
-            )
+            print("- Restart the server, using /home/zulip/deployments/current/scripts/restart-server")
             print("- Return to the documentation to learn how to test push notifications")
         else:
             if options["rotate_key"]:

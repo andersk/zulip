@@ -382,8 +382,7 @@ def get_subject_based_on_event(event: str, payload: Dict[str, Any]) -> str:
         return "{} / {}".format(payload["repository"].get("name"), get_branch_name(payload))
     elif event == "Pipeline Hook":
         return "{} / {}".format(
-            get_repo_name(payload),
-            payload["object_attributes"].get("ref").replace("refs/heads/", ""),
+            get_repo_name(payload), payload["object_attributes"].get("ref").replace("refs/heads/", ""),
         )
     elif event.startswith("Merge Request Hook"):
         return TOPIC_WITH_PR_OR_ISSUE_INFO_TEMPLATE.format(
@@ -424,9 +423,7 @@ def get_subject_based_on_event(event: str, payload: Dict[str, Any]) -> str:
     return get_repo_name(payload)
 
 
-def get_event(
-    request: HttpRequest, payload: Dict[str, Any], branches: Optional[str],
-) -> Optional[str]:
+def get_event(request: HttpRequest, payload: Dict[str, Any], branches: Optional[str]) -> Optional[str]:
     event = validate_extract_webhook_http_header(request, "X_GITLAB_EVENT", "GitLab")
     if event == "System Hook":
         # Convert the event name to a Gitlab event title

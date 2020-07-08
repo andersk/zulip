@@ -89,8 +89,7 @@ def parse_cache_script_args(description: str) -> argparse.Namespace:
         "--no-print-headings",
         dest="no_headings",
         action="store_true",
-        help="If specified then script will not print headings for "
-        "what will be deleted/kept back.",
+        help="If specified then script will not print headings for " "what will be deleted/kept back.",
     )
 
     args = parser.parse_args()
@@ -298,9 +297,7 @@ def get_threshold_timestamp(threshold_days: int) -> int:
     return threshold_timestamp
 
 
-def get_caches_to_be_purged(
-    caches_dir: str, caches_in_use: Set[str], threshold_days: int,
-) -> Set[str]:
+def get_caches_to_be_purged(caches_dir: str, caches_in_use: Set[str], threshold_days: int) -> Set[str]:
     # Given a directory containing caches, a list of caches in use
     # and threshold days, this function return a list of caches
     # which can be purged. Remove the cache only if it is:
@@ -543,9 +540,7 @@ def get_config(
     return default_value
 
 
-def set_config(
-    config_file: configparser.RawConfigParser, section: str, key: str, value: str,
-) -> None:
+def set_config(config_file: configparser.RawConfigParser, section: str, key: str, value: str) -> None:
     if not config_file.has_section(section):
         config_file.add_section(section)
     config_file.set(section, key, value)

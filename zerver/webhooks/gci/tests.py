@@ -68,6 +68,4 @@ class GoogleCodeInTests(WebhookTestCase):
     def test_outoftime_event_message(self) -> None:
         expected_topic = "student-yqqtag"
         expected_message = "The deadline for the task [Sails unspread it stopped at kearney](https://codein.withgoogle.com/dashboard/task-instances/6694926301528064/) has passed."
-        self.send_and_test_stream_message(
-            "task_deadline_has_passed", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("task_deadline_has_passed", expected_topic, expected_message)

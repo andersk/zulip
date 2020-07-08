@@ -160,9 +160,7 @@ def handle_event_payload(event: Dict[str, Any]) -> Tuple[str, str]:
     return (subject, body)
 
 
-def handle_issue_payload(
-    action: str, issue: Dict[str, Any], actor: Dict[str, Any],
-) -> Tuple[str, str]:
+def handle_issue_payload(action: str, issue: Dict[str, Any], actor: Dict[str, Any]) -> Tuple[str, str]:
     """ Handle either an issue type event. """
     subject = issue["title"]
     datetime = issue["lastSeen"].split(".")[0].replace("T", " ")

@@ -713,9 +713,7 @@ class RealmEmoji(models.Model):
         return f"<RealmEmoji({self.realm.string_id}): {self.id} {self.name} {self.deactivated} {self.file_name}>"
 
 
-def get_realm_emoji_dicts(
-    realm: Realm, only_active_emojis: bool = False,
-) -> Dict[str, Dict[str, Any]]:
+def get_realm_emoji_dicts(realm: Realm, only_active_emojis: bool = False) -> Dict[str, Dict[str, Any]]:
     query = RealmEmoji.objects.filter(realm=realm).select_related("author")
     if only_active_emojis:
         query = query.filter(deactivated=False)
@@ -751,9 +749,7 @@ def get_active_realm_emoji_uncached(realm: Realm) -> Dict[str, Dict[str, Any]]:
 
 def flush_realm_emoji(sender: Any, **kwargs: Any) -> None:
     realm = kwargs["instance"].realm
-    cache_set(
-        get_realm_emoji_cache_key(realm), get_realm_emoji_uncached(realm), timeout=3600 * 24 * 7,
-    )
+    cache_set(get_realm_emoji_cache_key(realm), get_realm_emoji_uncached(realm), timeout=3600 * 24 * 7)
     cache_set(
         get_active_realm_emoji_cache_key(realm),
         get_active_realm_emoji_uncached(realm),
@@ -1493,9 +1489,7 @@ class MultiuseInvite(models.Model):
     )  # Optional[UserProfile]
     streams: Manager = models.ManyToManyField("Stream")
     realm: Realm = models.ForeignKey(Realm, on_delete=CASCADE)
-    invited_as: int = models.PositiveSmallIntegerField(
-        default=PreregistrationUser.INVITE_AS["MEMBER"],
-    )
+    invited_as: int = models.PositiveSmallIntegerField(default=PreregistrationUser.INVITE_AS["MEMBER"])
 
 
 class EmailChangeStatus(models.Model):
@@ -2056,9 +2050,7 @@ class AbstractReaction(models.Model):
         (REALM_EMOJI, _("Custom emoji")),
         (ZULIP_EXTRA_EMOJI, _("Zulip extra emoji")),
     )
-    reaction_type: str = models.CharField(
-        default=UNICODE_EMOJI, choices=REACTION_TYPES, max_length=30,
-    )
+    reaction_type: str = models.CharField(default=UNICODE_EMOJI, choices=REACTION_TYPES, max_length=30)
 
     # A string that uniquely identifies a particular emoji.  The format varies
     # by type:
@@ -2225,9 +2217,7 @@ class UserMessage(AbstractUserMessage):
     message: Message = models.ForeignKey(Message, on_delete=CASCADE)
 
 
-def get_usermessage_by_message_id(
-    user_profile: UserProfile, message_id: int,
-) -> Optional[UserMessage]:
+def get_usermessage_by_message_id(user_profile: UserProfile, message_id: int) -> Optional[UserMessage]:
     try:
         return UserMessage.objects.select_related().get(
             user_profile=user_profile, message__id=message_id,
@@ -2556,9 +2546,7 @@ def get_realm_user_dicts(realm_id: int) -> List[Dict[str, Any]]:
 
 @cache_with_key(active_user_ids_cache_key, timeout=3600 * 24 * 7)
 def active_user_ids(realm_id: int) -> List[int]:
-    query = UserProfile.objects.filter(realm_id=realm_id, is_active=True).values_list(
-        "id", flat=True,
-    )
+    query = UserProfile.objects.filter(realm_id=realm_id, is_active=True).values_list("id", flat=True)
     return list(query)
 
 
@@ -2618,9 +2606,7 @@ def get_huddle(id_list: List[int]) -> Huddle:
     return get_huddle_backend(huddle_hash, id_list)
 
 
-@cache_with_key(
-    lambda huddle_hash, id_list: huddle_hash_cache_key(huddle_hash), timeout=3600 * 24 * 7,
-)
+@cache_with_key(lambda huddle_hash, id_list: huddle_hash_cache_key(huddle_hash), timeout=3600 * 24 * 7)
 def get_huddle_backend(huddle_hash: str, id_list: List[int]) -> Huddle:
     with transaction.atomic():
         (huddle, created) = Huddle.objects.get_or_create(huddle_hash=huddle_hash)

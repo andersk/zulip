@@ -997,11 +997,7 @@ def aggregate_unread_data(raw_data: RawUnreadMessagesResult) -> UnreadMessagesRe
     )
 
     result: UnreadMessagesResult = dict(
-        pms=pm_objects,
-        streams=stream_objects,
-        huddles=huddle_objects,
-        mentions=mentions,
-        count=count,
+        pms=pm_objects, streams=stream_objects, huddles=huddle_objects, mentions=mentions, count=count,
     )
 
     return result

@@ -62,9 +62,7 @@ class MatterMostImporter(ZulipTestCase):
         self.assertEqual(len(mattermost_data["emoji"]), 2)
         self.assertEqual(mattermost_data["emoji"][0]["name"], "peerdium")
 
-        fixture_file_name = self.fixture_file_name(
-            "export.json", "mattermost_fixtures/direct_channel",
-        )
+        fixture_file_name = self.fixture_file_name("export.json", "mattermost_fixtures/direct_channel")
         mattermost_data = mattermost_data_file_to_dict(fixture_file_name)
 
         self.assertEqual(len(mattermost_data["post"]["channel_post"]), 4)
@@ -220,9 +218,7 @@ class MatterMostImporter(ZulipTestCase):
 
         self.assertEqual(zerver_stream[2]["name"], "Dumbledores army")
         self.assertEqual(zerver_stream[2]["invite_only"], True)
-        self.assertEqual(
-            zerver_stream[2]["description"], "A place for talking about Dumbledores army",
-        )
+        self.assertEqual(zerver_stream[2]["description"], "A place for talking about Dumbledores army")
         self.assertEqual(zerver_stream[2]["rendered_description"], "")
         self.assertEqual(zerver_stream[2]["realm"], 3)
 
@@ -298,9 +294,7 @@ class MatterMostImporter(ZulipTestCase):
         )
 
     def test_convert_huddle_data(self) -> None:
-        fixture_file_name = self.fixture_file_name(
-            "export.json", "mattermost_fixtures/direct_channel",
-        )
+        fixture_file_name = self.fixture_file_name("export.json", "mattermost_fixtures/direct_channel")
         mattermost_data = mattermost_data_file_to_dict(fixture_file_name)
         username_to_user = create_username_to_user_mapping(mattermost_data["user"])
         reset_mirror_dummy_users(username_to_user)
@@ -573,9 +567,7 @@ class MatterMostImporter(ZulipTestCase):
         self.assertEqual({"Harry Potter", "Ron Weasley", "Severus Snape"}, exported_user_full_names)
 
         exported_user_emails = self.get_set(realm["zerver_userprofile"], "email")
-        self.assertEqual(
-            {"harry@zulip.com", "ron@zulip.com", "snape@zulip.com"}, exported_user_emails,
-        )
+        self.assertEqual({"harry@zulip.com", "ron@zulip.com", "snape@zulip.com"}, exported_user_emails)
 
         self.assertEqual(len(realm["zerver_stream"]), 3)
         exported_stream_names = self.get_set(realm["zerver_stream"], "name")

@@ -79,8 +79,7 @@ class APIReturnValuesTablePreprocessor(Preprocessor):
                 )
                 if "properties" in return_values[return_value]["additionalProperties"]:
                     ans += self.render_table(
-                        return_values[return_value]["additionalProperties"]["properties"],
-                        spacing + 8,
+                        return_values[return_value]["additionalProperties"]["properties"], spacing + 8,
                     )
             if (
                 "items" in return_values[return_value]

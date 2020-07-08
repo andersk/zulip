@@ -135,9 +135,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
 
     def test_story_task_completed(self) -> None:
         expected_message = "Task **A new task for this story** ([Add cool feature!](https://app.clubhouse.io/zulip/story/11)) was completed. :tada:"
-        self.send_and_test_stream_message(
-            "story_task_complete", "Add cool feature!", expected_message,
-        )
+        self.send_and_test_stream_message("story_task_complete", "Add cool feature!", expected_message)
 
     @patch("zerver.lib.webhooks.common.check_send_webhook_message")
     def test_story_task_incomplete_ignore(self, check_send_webhook_message_mock: MagicMock) -> None:
@@ -202,9 +200,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
 
     def test_story_label_added(self) -> None:
         expected_message = "The label **mockup** was added to the story [An epic story!](https://app.clubhouse.io/zulip/story/23)."
-        self.send_and_test_stream_message(
-            "story_update_add_label", "An epic story!", expected_message,
-        )
+        self.send_and_test_stream_message("story_update_add_label", "An epic story!", expected_message)
 
     def test_story_label_added_label_name_in_actions(self) -> None:
         expected_message = "The label **sad** was added to the story [An emotional story!](https://app.clubhouse.io/zulip/story/28)."

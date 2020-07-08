@@ -443,9 +443,7 @@ def filter_stream_authorization(
             unauthorized_streams.append(stream)
 
     authorized_streams = [
-        stream
-        for stream in streams
-        if stream.id not in {stream.id for stream in unauthorized_streams}
+        stream for stream in streams if stream.id not in {stream.id for stream in unauthorized_streams}
     ]
     return authorized_streams, unauthorized_streams
 

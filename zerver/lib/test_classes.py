@@ -565,9 +565,7 @@ class ZulipTestCase(TestCase):
         recipient_list = [to_user.id]
         (sending_client, _) = Client.objects.get_or_create(name=sending_client_name)
 
-        return check_send_message(
-            from_user, sending_client, "private", recipient_list, None, content,
-        )
+        return check_send_message(from_user, sending_client, "private", recipient_list, None, content)
 
     def send_huddle_message(
         self,
@@ -869,12 +867,7 @@ class ZulipTestCase(TestCase):
 
     def create_default_device(self, user_profile: UserProfile, number: str = "+12125550100") -> None:
         phone_device = PhoneDevice(
-            user=user_profile,
-            name="default",
-            confirmed=True,
-            number=number,
-            key="abcd",
-            method="sms",
+            user=user_profile, name="default", confirmed=True, number=number, key="abcd", method="sms",
         )
         phone_device.save()
 
@@ -1055,9 +1048,7 @@ class WebhookTestCase(ZulipTestCase):
         """Can be implemented either as returning a dictionary containing the
         post parameters or as string containing the body of the request."""
         assert self.FIXTURE_DIR_NAME is not None
-        return ujson.dumps(
-            ujson.loads(self.webhook_fixture_data(self.FIXTURE_DIR_NAME, fixture_name)),
-        )
+        return ujson.dumps(ujson.loads(self.webhook_fixture_data(self.FIXTURE_DIR_NAME, fixture_name)))
 
     def do_test_topic(self, msg: Message, expected_topic: Optional[str]) -> None:
         if expected_topic is not None:

@@ -162,9 +162,7 @@ class GithubWebhookTest(WebhookTestCase):
 
     def test_issue_msg(self) -> None:
         expected_message = "baxterthehacker opened [Issue #2](https://github.com/baxterthehacker/public-repo/issues/2):\n\n~~~ quote\nIt looks like you accidentally spelled 'commit' with two 't's.\n~~~"
-        self.send_and_test_stream_message(
-            "issues", self.EXPECTED_TOPIC_ISSUE_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("issues", self.EXPECTED_TOPIC_ISSUE_EVENTS, expected_message)
 
     def test_issue_msg_with_custom_topic_in_url(self) -> None:
         self.url = self.build_webhook_url(topic="notifications")
@@ -267,9 +265,7 @@ class GithubWebhookTest(WebhookTestCase):
 
     def test_release_msg(self) -> None:
         expected_message = "baxterthehacker published release [0.0.1](https://github.com/baxterthehacker/public-repo/releases/tag/0.0.1) for tag 0.0.1."
-        self.send_and_test_stream_message(
-            "release", self.EXPECTED_TOPIC_REPO_EVENTS, expected_message,
-        )
+        self.send_and_test_stream_message("release", self.EXPECTED_TOPIC_REPO_EVENTS, expected_message)
 
     def test_page_build_msg(self) -> None:
         expected_message = "Github Pages build, triggered by baxterthehacker, has finished building."
@@ -409,9 +405,7 @@ Check [randscape](http://github.com/github/hello-world/runs/4) completed (succes
 ```quote
 A temporary team so that I can get some webhook fixtures!
 ```"""
-        self.send_and_test_stream_message(
-            "team__edited_description", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("team__edited_description", expected_topic, expected_message)
 
     def test_team_edited_name(self) -> None:
         expected_topic = "team Testing Team"

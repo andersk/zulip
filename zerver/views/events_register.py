@@ -9,9 +9,7 @@ from zerver.lib.validator import check_bool, check_dict, check_list, check_strin
 from zerver.models import Stream, UserProfile
 
 
-def _default_all_public_streams(
-    user_profile: UserProfile, all_public_streams: Optional[bool],
-) -> bool:
+def _default_all_public_streams(user_profile: UserProfile, all_public_streams: Optional[bool]) -> bool:
     if all_public_streams is not None:
         return all_public_streams
     else:
@@ -57,9 +55,7 @@ def events_register_backend(
         default=None,
     ),
     event_types: Optional[Iterable[str]] = REQ(validator=check_list(check_string), default=None),
-    fetch_event_types: Optional[Iterable[str]] = REQ(
-        validator=check_list(check_string), default=None,
-    ),
+    fetch_event_types: Optional[Iterable[str]] = REQ(validator=check_list(check_string), default=None),
     narrow: NarrowT = REQ(validator=check_list(check_list(check_string, length=2)), default=[]),
     queue_lifespan_secs: int = REQ(converter=int, default=0, documentation_pending=True),
 ) -> HttpResponse:

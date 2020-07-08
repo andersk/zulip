@@ -161,10 +161,7 @@ class TestZulipBaseCommand(ZulipTestCase):
             UserProfile.objects.filter(realm=self.zulip_realm, is_bot=False), key=lambda x: x.email,
         )
         user_profiles = self.get_users_sorted(
-            dict(users=None, all_users=True),
-            self.zulip_realm,
-            is_bot=False,
-            include_deactivated=True,
+            dict(users=None, all_users=True), self.zulip_realm, is_bot=False, include_deactivated=True,
         )
         self.assertEqual(user_profiles, expected_user_profiles)
 

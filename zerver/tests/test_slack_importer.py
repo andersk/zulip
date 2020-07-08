@@ -98,9 +98,7 @@ class SlackImporter(ZulipTestCase):
         realm_id = 2
         realm_subdomain = "test-realm"
         time = float(timezone_now().timestamp())
-        test_realm: List[Dict[str, Any]] = build_zerver_realm(
-            realm_id, realm_subdomain, time, "Slack",
-        )
+        test_realm: List[Dict[str, Any]] = build_zerver_realm(realm_id, realm_subdomain, time, "Slack")
         test_zerver_realm_dict = test_realm[0]
 
         self.assertEqual(test_zerver_realm_dict["id"], realm_id)
@@ -406,17 +404,13 @@ class SlackImporter(ZulipTestCase):
         self.assertEqual(zerver_userprofile[0]["email"], "jon@gmail.com")
         self.assertEqual(zerver_userprofile[0]["full_name"], "John Doe")
 
-        self.assertEqual(
-            zerver_userprofile[1]["id"], test_slack_user_id_to_zulip_user_id["U0CBK5KAT"],
-        )
+        self.assertEqual(zerver_userprofile[1]["id"], test_slack_user_id_to_zulip_user_id["U0CBK5KAT"])
         self.assertEqual(zerver_userprofile[1]["role"], UserProfile.ROLE_REALM_OWNER)
         self.assertEqual(zerver_userprofile[1]["is_staff"], False)
         self.assertEqual(zerver_userprofile[1]["is_active"], True)
         self.assertEqual(zerver_userprofile[0]["is_mirror_dummy"], False)
 
-        self.assertEqual(
-            zerver_userprofile[2]["id"], test_slack_user_id_to_zulip_user_id["U09TYF5Sk"],
-        )
+        self.assertEqual(zerver_userprofile[2]["id"], test_slack_user_id_to_zulip_user_id["U09TYF5Sk"])
         self.assertEqual(zerver_userprofile[2]["is_bot"], True)
         self.assertEqual(zerver_userprofile[2]["is_active"], True)
         self.assertEqual(zerver_userprofile[2]["is_mirror_dummy"], False)
@@ -424,9 +418,7 @@ class SlackImporter(ZulipTestCase):
         self.assertEqual(zerver_userprofile[2]["bot_type"], 1)
         self.assertEqual(zerver_userprofile[2]["avatar_source"], "U")
 
-        self.assertEqual(
-            zerver_userprofile[3]["id"], test_slack_user_id_to_zulip_user_id["UHSG7OPQN"],
-        )
+        self.assertEqual(zerver_userprofile[3]["id"], test_slack_user_id_to_zulip_user_id["UHSG7OPQN"])
         self.assertEqual(zerver_userprofile[3]["role"], UserProfile.ROLE_MEMBER)
         self.assertEqual(zerver_userprofile[3]["is_staff"], False)
         self.assertEqual(zerver_userprofile[3]["is_active"], False)
@@ -437,33 +429,25 @@ class SlackImporter(ZulipTestCase):
         self.assertEqual(zerver_userprofile[3]["is_mirror_dummy"], True)
         self.assertEqual(zerver_userprofile[3]["is_api_super_user"], False)
 
-        self.assertEqual(
-            zerver_userprofile[4]["id"], test_slack_user_id_to_zulip_user_id["U8VAHEVUY"],
-        )
+        self.assertEqual(zerver_userprofile[4]["id"], test_slack_user_id_to_zulip_user_id["U8VAHEVUY"])
         self.assertEqual(zerver_userprofile[4]["role"], UserProfile.ROLE_GUEST)
         self.assertEqual(zerver_userprofile[4]["is_staff"], False)
         self.assertEqual(zerver_userprofile[4]["is_active"], True)
         self.assertEqual(zerver_userprofile[4]["is_mirror_dummy"], False)
 
-        self.assertEqual(
-            zerver_userprofile[5]["id"], test_slack_user_id_to_zulip_user_id["U8X25EBAB"],
-        )
+        self.assertEqual(zerver_userprofile[5]["id"], test_slack_user_id_to_zulip_user_id["U8X25EBAB"])
         self.assertEqual(zerver_userprofile[5]["role"], UserProfile.ROLE_GUEST)
         self.assertEqual(zerver_userprofile[5]["is_staff"], False)
         self.assertEqual(zerver_userprofile[5]["is_active"], True)
         self.assertEqual(zerver_userprofile[5]["is_mirror_dummy"], False)
 
-        self.assertEqual(
-            zerver_userprofile[6]["id"], test_slack_user_id_to_zulip_user_id["U015J7JSE"],
-        )
+        self.assertEqual(zerver_userprofile[6]["id"], test_slack_user_id_to_zulip_user_id["U015J7JSE"])
         self.assertEqual(zerver_userprofile[6]["role"], UserProfile.ROLE_REALM_OWNER)
         self.assertEqual(zerver_userprofile[6]["is_staff"], False)
         self.assertEqual(zerver_userprofile[6]["is_active"], True)
         self.assertEqual(zerver_userprofile[6]["is_mirror_dummy"], False)
 
-        self.assertEqual(
-            zerver_userprofile[7]["id"], test_slack_user_id_to_zulip_user_id["U1RDFEC80"],
-        )
+        self.assertEqual(zerver_userprofile[7]["id"], test_slack_user_id_to_zulip_user_id["U1RDFEC80"])
         self.assertEqual(zerver_userprofile[7]["role"], UserProfile.ROLE_REALM_ADMINISTRATOR)
         self.assertEqual(zerver_userprofile[7]["is_staff"], False)
         self.assertEqual(zerver_userprofile[7]["is_active"], True)
@@ -519,12 +503,10 @@ class SlackImporter(ZulipTestCase):
         self.assertEqual(zerver_subscription[0]["recipient"], 12)
         self.assertEqual(zerver_subscription[0]["id"], 0)
         self.assertEqual(
-            zerver_subscription[0]["user_profile"],
-            slack_user_id_to_zulip_user_id[channel_members[0]],
+            zerver_subscription[0]["user_profile"], slack_user_id_to_zulip_user_id[channel_members[0]],
         )
         self.assertEqual(
-            zerver_subscription[2]["user_profile"],
-            slack_user_id_to_zulip_user_id[channel_members[2]],
+            zerver_subscription[2]["user_profile"], slack_user_id_to_zulip_user_id[channel_members[2]],
         )
         self.assertEqual(zerver_subscription[3]["id"], 3)
         self.assertEqual(zerver_subscription[1]["recipient"], zerver_subscription[3]["recipient"])
@@ -588,9 +570,7 @@ class SlackImporter(ZulipTestCase):
 
         # We can't do an assertDictEqual since during the construction of Personal
         # recipients, slack_user_id_to_zulip_user_id are iterated in different order in Python 3.5 and 3.6.
-        self.assertEqual(
-            set(slack_recipient_name_to_zulip_recipient_id.keys()), slack_recipient_names,
-        )
+        self.assertEqual(set(slack_recipient_name_to_zulip_recipient_id.keys()), slack_recipient_names)
         self.assertEqual(
             set(slack_recipient_name_to_zulip_recipient_id.values()), {i for i in range(11)},
         )
@@ -835,10 +815,7 @@ class SlackImporter(ZulipTestCase):
             "U061A5N1G": 8,
             "U061A1R2R": 8,
         }
-        dm_members = {
-            "DJ47BL849": ("U066MTL5U", "U061A5N1G"),
-            "DHX1UP7EG": ("U061A5N1G", "U061A1R2R"),
-        }
+        dm_members = {"DJ47BL849": ("U066MTL5U", "U061A5N1G"), "DHX1UP7EG": ("U061A5N1G", "U061A1R2R")}
 
         zerver_usermessage: List[Dict[str, Any]] = []
         subscriber_map: Dict[int, Set[int]] = dict()

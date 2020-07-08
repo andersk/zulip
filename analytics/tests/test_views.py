@@ -381,9 +381,7 @@ class TestGetChartData(ZulipTestCase):
         )
         self.assert_json_success(result)
         data = result.json()
-        end_times = [
-            ceiling_to_day(self.realm.date_created) + timedelta(days=i) for i in range(-1, 4)
-        ]
+        end_times = [ceiling_to_day(self.realm.date_created) + timedelta(days=i) for i in range(-1, 4)]
         self.assertEqual(data["end_times"], [datetime_to_timestamp(dt) for dt in end_times])
         self.assertEqual(
             data["everyone"],

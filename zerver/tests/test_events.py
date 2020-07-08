@@ -633,11 +633,7 @@ class NormalActionsTest(BaseAction):
                 (
                     "user",
                     check_dict_only(
-                        [
-                            ("email", check_string),
-                            ("full_name", check_string),
-                            ("user_id", check_int),
-                        ],
+                        [("email", check_string), ("full_name", check_string), ("user_id", check_int)],
                     ),
                 ),
             ],
@@ -664,11 +660,7 @@ class NormalActionsTest(BaseAction):
                 (
                     "user",
                     check_dict_only(
-                        [
-                            ("email", check_string),
-                            ("full_name", check_string),
-                            ("user_id", check_int),
-                        ],
+                        [("email", check_string), ("full_name", check_string), ("user_id", check_int)],
                     ),
                 ),
             ],
@@ -696,11 +688,7 @@ class NormalActionsTest(BaseAction):
                 (
                     "user",
                     check_dict_only(
-                        [
-                            ("email", check_string),
-                            ("full_name", check_string),
-                            ("user_id", check_int),
-                        ],
+                        [("email", check_string), ("full_name", check_string), ("user_id", check_int)],
                     ),
                 ),
             ],
@@ -754,11 +742,7 @@ class NormalActionsTest(BaseAction):
                 (
                     "user",
                     check_dict_only(
-                        [
-                            ("email", check_string),
-                            ("full_name", check_string),
-                            ("user_id", check_int),
-                        ],
+                        [("email", check_string), ("full_name", check_string), ("user_id", check_int)],
                     ),
                 ),
             ],
@@ -1152,9 +1136,7 @@ class NormalActionsTest(BaseAction):
         )
 
         do_set_realm_property(
-            self.user_profile.realm,
-            "email_address_visibility",
-            Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS,
+            self.user_profile.realm, "email_address_visibility", Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS,
         )
 
         events = self.verify_action(lambda: self.register("test1@zulip.com", "test1"))
@@ -1519,9 +1501,7 @@ class NormalActionsTest(BaseAction):
             ],
         )
         do_set_realm_property(
-            self.user_profile.realm,
-            "email_address_visibility",
-            Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS,
+            self.user_profile.realm, "email_address_visibility", Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS,
         )
         # Important: We need to refresh from the database here so that
         # we don't have a stale UserProfile object with an old value
@@ -1955,9 +1935,7 @@ class NormalActionsTest(BaseAction):
 
         schema_checker("events[0]", events[0])
 
-        events = self.verify_action(
-            lambda: do_remove_realm_emoji(self.user_profile.realm, "my_emoji"),
-        )
+        events = self.verify_action(lambda: do_remove_realm_emoji(self.user_profile.realm, "my_emoji"))
         schema_checker("events[0]", events[0])
 
     def test_realm_filter_events(self) -> None:
@@ -2545,13 +2523,10 @@ class NormalActionsTest(BaseAction):
                 ("recipient_id", check_int),
             ],
         )
-        msg_id = self.send_personal_message(
-            self.example_user("cordelia"), self.user_profile, "hello",
-        )
+        msg_id = self.send_personal_message(self.example_user("cordelia"), self.user_profile, "hello")
         message = Message.objects.get(id=msg_id)
         events = self.verify_action(
-            lambda: do_delete_messages(self.user_profile.realm, [message]),
-            state_change_expected=True,
+            lambda: do_delete_messages(self.user_profile.realm, [message]), state_change_expected=True,
         )
         schema_checker("events[0]", events[0])
 
@@ -2565,9 +2540,7 @@ class NormalActionsTest(BaseAction):
                 ("recipient_id", check_int),
             ],
         )
-        msg_id = self.send_personal_message(
-            self.example_user("cordelia"), self.user_profile, "hello",
-        )
+        msg_id = self.send_personal_message(self.example_user("cordelia"), self.user_profile, "hello")
         message = Message.objects.get(id=msg_id)
         events = self.verify_action(
             lambda: do_delete_messages(self.user_profile.realm, [message]),
@@ -2584,8 +2557,7 @@ class NormalActionsTest(BaseAction):
         msg_id = self.send_stream_message(user_profile, "Verona")
         message = Message.objects.get(id=msg_id)
         self.verify_action(
-            lambda: do_delete_messages(self.user_profile.realm, [message]),
-            state_change_expected=True,
+            lambda: do_delete_messages(self.user_profile.realm, [message]), state_change_expected=True,
         )
         result = fetch_initial_state_data(
             user_profile, None, "", client_gravatar=False, user_avatar_url_field_optional=False,
@@ -2782,9 +2754,7 @@ class NormalActionsTest(BaseAction):
             ],
         )
 
-        audit_log_entry = RealmAuditLog.objects.filter(
-            event_type=RealmAuditLog.REALM_EXPORTED,
-        ).first()
+        audit_log_entry = RealmAuditLog.objects.filter(event_type=RealmAuditLog.REALM_EXPORTED).first()
         events = self.verify_action(
             lambda: self.client_delete(f"/json/export/realm/{audit_log_entry.id}"),
             state_change_expected=False,
@@ -3170,9 +3140,7 @@ class SubscribeActionTest(BaseAction):
         # Add another user to that totally new stream
         action = lambda: self.subscribe(self.example_user("othello"), "test_stream")
         events = self.verify_action(
-            action,
-            include_subscribers=include_subscribers,
-            state_change_expected=include_subscribers,
+            action, include_subscribers=include_subscribers, state_change_expected=include_subscribers,
         )
         peer_add_schema_checker("events[0]", events[0])
 
@@ -3183,9 +3151,7 @@ class SubscribeActionTest(BaseAction):
             [self.example_user("othello")], [stream], get_client("website"),
         )
         events = self.verify_action(
-            action,
-            include_subscribers=include_subscribers,
-            state_change_expected=include_subscribers,
+            action, include_subscribers=include_subscribers, state_change_expected=include_subscribers,
         )
         peer_remove_schema_checker("events[0]", events[0])
 
@@ -3206,9 +3172,7 @@ class SubscribeActionTest(BaseAction):
         stream_update_schema_checker("events[0]", events[0])
 
         # Update stream privacy
-        action = lambda: do_change_stream_invite_only(
-            stream, True, history_public_to_subscribers=True,
-        )
+        action = lambda: do_change_stream_invite_only(stream, True, history_public_to_subscribers=True)
         events = self.verify_action(action, include_subscribers=include_subscribers)
         stream_update_invite_only_schema_checker("events[0]", events[0])
 

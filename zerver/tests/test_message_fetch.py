@@ -266,9 +266,7 @@ class NarrowBuilderTest(ZulipTestCase):
         term = dict(operator="sender", operand=self.othello_email, negated=True)
         self._do_add_term_test(term, "WHERE sender_id != %(param_1)s")
 
-    def test_add_term_using_sender_operator_with_non_existing_user_as_operand(
-        self,
-    ) -> None:  # NEGATED
+    def test_add_term_using_sender_operator_with_non_existing_user_as_operand(self) -> None:  # NEGATED
         term = dict(operator="sender", operand="non-existing@zulip.com")
         self.assertRaises(BadNarrowOperator, self._build_query, term)
 
@@ -2720,9 +2718,7 @@ class GetOldMessagesTest(ZulipTestCase):
         self.assertNotIn(f"AND message_id = {LARGER_THAN_MAX_MESSAGE_ID}", sql)
         self.assertIn("ORDER BY message_id ASC", sql)
 
-        cond = (
-            f"WHERE user_profile_id = {user_profile.id} AND message_id >= {first_unread_message_id}"
-        )
+        cond = f"WHERE user_profile_id = {user_profile.id} AND message_id >= {first_unread_message_id}"
         self.assertIn(cond, sql)
         cond = f"WHERE user_profile_id = {user_profile.id} AND message_id <= {first_unread_message_id - 1}"
         self.assertIn(cond, sql)
@@ -2892,9 +2888,7 @@ WHERE NOT (recipient_id = %(recipient_id_1)s AND upper(subject) = upper(%(param_
         self.assertEqual(get_sqlalchemy_sql(query), expected_query)
         params = get_sqlalchemy_query_params(query)
 
-        self.assertEqual(
-            params["recipient_id_1"], get_recipient_id_for_stream_name(realm, "Scotland"),
-        )
+        self.assertEqual(params["recipient_id_1"], get_recipient_id_for_stream_name(realm, "Scotland"))
         self.assertEqual(params["param_1"], "golf")
 
         mute_stream(realm, user_profile, "Verona")
@@ -2920,9 +2914,7 @@ recipient_id = %(recipient_id_3)s AND upper(subject) = upper(%(param_2)s))\
         self.assertEqual(get_sqlalchemy_sql(query), expected_query)
         params = get_sqlalchemy_query_params(query)
         self.assertEqual(params["recipient_id_1"], get_recipient_id_for_stream_name(realm, "Verona"))
-        self.assertEqual(
-            params["recipient_id_2"], get_recipient_id_for_stream_name(realm, "Scotland"),
-        )
+        self.assertEqual(params["recipient_id_2"], get_recipient_id_for_stream_name(realm, "Scotland"))
         self.assertEqual(params["param_1"], "golf")
         self.assertEqual(
             params["recipient_id_3"], get_recipient_id_for_stream_name(realm, "web stuff"),

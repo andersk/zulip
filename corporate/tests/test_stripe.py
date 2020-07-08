@@ -791,9 +791,7 @@ class StripeTest(StripeTestCase):
             stripe_charges = [charge for charge in stripe.Charge.list(customer=stripe_customer.id)]
             self.assertEqual(len(stripe_charges), 0)
 
-            stripe_invoices = [
-                invoice for invoice in stripe.Invoice.list(customer=stripe_customer.id)
-            ]
+            stripe_invoices = [invoice for invoice in stripe.Invoice.list(customer=stripe_customer.id)]
             self.assertEqual(len(stripe_invoices), 0)
 
             customer = Customer.objects.get(stripe_customer_id=stripe_customer.id, realm=user.realm)
@@ -1005,9 +1003,7 @@ class StripeTest(StripeTestCase):
             except ValueError:  # nocoverage
                 raise AssertionError("realm_id is not a number")
 
-            stripe_invoices = [
-                invoice for invoice in stripe.Invoice.list(customer=stripe_customer.id)
-            ]
+            stripe_invoices = [invoice for invoice in stripe.Invoice.list(customer=stripe_customer.id)]
             self.assertEqual(len(stripe_invoices), 0)
 
             customer = Customer.objects.get(stripe_customer_id=stripe_customer.id, realm=user.realm)
@@ -1318,9 +1314,7 @@ class StripeTest(StripeTestCase):
                 invoice=invoice, talk_to_stripe=False, del_args=del_args, **upgrade_params,
             )
             self.assert_json_error_contains(response, f"at least {min_licenses_in_response} users")
-            self.assertEqual(
-                ujson.loads(response.content)["error_description"], "not enough licenses",
-            )
+            self.assertEqual(ujson.loads(response.content)["error_description"], "not enough licenses")
 
         def check_max_licenses_error(licenses: int) -> None:
             response = self.upgrade(invoice=True, talk_to_stripe=False, licenses=licenses)
@@ -1519,9 +1513,7 @@ class StripeTest(StripeTestCase):
             )
         self.assertEqual(get_latest_seat_count(realm), 1)
         # Test 1 member and 6 guests
-        UserProfile.objects.create(
-            realm=realm, email="guest5@second.com", role=UserProfile.ROLE_GUEST,
-        )
+        UserProfile.objects.create(realm=realm, email="guest5@second.com", role=UserProfile.ROLE_GUEST)
         self.assertEqual(get_latest_seat_count(realm), 2)
 
     def test_sign_string(self) -> None:
@@ -1644,9 +1636,7 @@ class StripeTest(StripeTestCase):
         for stripe_source in stripe_get_customer(stripe_customer_id).sources:
             assert isinstance(stripe_source, stripe.Card)
             self.assertEqual(stripe_source.last4, "0341")
-        self.assertEqual(
-            len(list(stripe.Invoice.list(customer=stripe_customer_id, status="open"))), 1,
-        )
+        self.assertEqual(len(list(stripe.Invoice.list(customer=stripe_customer_id, status="open"))), 1)
         self.assertEqual(
             1, RealmAuditLog.objects.filter(event_type=RealmAuditLog.STRIPE_CARD_CHANGED).count(),
         )
@@ -2250,9 +2240,7 @@ class RequiresBillingAccessTest(ZulipTestCase):
         cordelia = self.example_user("cordelia")
         self.login_user(cordelia)
         response = self.client_post(url, request_data)
-        self.assert_json_error_contains(
-            response, "Must be a billing administrator or an organization",
-        )
+        self.assert_json_error_contains(response, "Must be a billing administrator or an organization")
 
     def test_non_admins_blocked_from_json_endpoints(self) -> None:
         params: List[Tuple[str, Dict[str, Any]]] = [
@@ -2355,9 +2343,7 @@ class BillingHelpersTest(ZulipTestCase):
         with patch("corporate.lib.stripe.timezone_now", return_value=anchor):
             for (automanage_licenses, discount, free_trial), output in test_cases:
                 output_ = compute_plan_parameters(
-                    automanage_licenses,
-                    discount,
-                    None if free_trial is None else Decimal(free_trial),
+                    automanage_licenses, discount, None if free_trial is None else Decimal(free_trial),
                 )
                 self.assertEqual(output_, output)
 

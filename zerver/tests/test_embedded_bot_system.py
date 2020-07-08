@@ -101,10 +101,7 @@ class TestEmbeddedBotFailures(ZulipTestCase):
         service_profile.save()
         with patch("logging.error") as logging_error_mock:
             self.send_stream_message(
-                user_profile,
-                "Denmark",
-                content=f"@**{bot_profile.full_name}** foo",
-                topic_name="bar",
+                user_profile, "Denmark", content=f"@**{bot_profile.full_name}** foo", topic_name="bar",
             )
             logging_error_mock.assert_called_once_with(
                 "Error: User %s has bot with invalid embedded bot service %s",

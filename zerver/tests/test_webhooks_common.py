@@ -28,9 +28,7 @@ class WebhooksCommonTestCase(ZulipTestCase):
         request.META["HTTP_X_CUSTOM_HEADER"] = "custom_value"
         request.user = webhook_bot
 
-        header_value = validate_extract_webhook_http_header(
-            request, "X_CUSTOM_HEADER", "test_webhook",
-        )
+        header_value = validate_extract_webhook_http_header(request, "X_CUSTOM_HEADER", "test_webhook")
 
         self.assertEqual(header_value, "custom_value")
 

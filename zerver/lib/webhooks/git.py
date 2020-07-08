@@ -118,9 +118,7 @@ def get_push_commits_event_message(
         ).rstrip()
 
 
-def get_force_push_commits_event_message(
-    user_name: str, url: str, branch_name: str, head: str,
-) -> str:
+def get_force_push_commits_event_message(user_name: str, url: str, branch_name: str, head: str) -> str:
     return FORCE_PUSH_COMMITS_MESSAGE_TEMPLATE.format(
         user_name=user_name, url=url, branch_name=branch_name, head=head,
     )
@@ -186,9 +184,7 @@ def get_pull_request_event_message(
         main_message = f"{main_message} {assignee_info}"
 
     if target_branch and base_branch:
-        branch_info = PULL_REQUEST_BRANCH_INFO_TEMPLATE.format(
-            target=target_branch, base=base_branch,
-        )
+        branch_info = PULL_REQUEST_BRANCH_INFO_TEMPLATE.format(target=target_branch, base=base_branch)
         main_message = f"{main_message} {branch_info}"
 
     punctuation = ":" if message else "."

@@ -110,9 +110,7 @@ def get_contact_created_message(payload: Dict[str, Any]) -> Tuple[str, str]:
     body = CONTACT_CREATED.format(
         name=contact.get("name") or contact.get("pseudonym"),
         email=contact["email"],
-        location_info="{city_name}, {region_name}, {country_name}".format(
-            **contact["location_data"],
-        ),
+        location_info="{city_name}, {region_name}, {country_name}".format(**contact["location_data"]),
     )
     topic = get_topic_for_contacts(contact)
     return (topic, body)
@@ -122,9 +120,7 @@ def get_contact_signed_up_message(payload: Dict[str, Any]) -> Tuple[str, str]:
     contact = payload["data"]["item"]
     body = CONTACT_SIGNED_UP.format(
         email=contact["email"],
-        location_info="{city_name}, {region_name}, {country_name}".format(
-            **contact["location_data"],
-        ),
+        location_info="{city_name}, {region_name}, {country_name}".format(**contact["location_data"]),
     )
     topic = get_topic_for_contacts(contact)
     return (topic, body)

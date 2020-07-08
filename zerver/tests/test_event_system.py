@@ -90,9 +90,7 @@ class EventsEndpointTest(ZulipTestCase):
                 self.assertEqual(fa.call_count, 1)
 
         with stub_event_queue_user_events(return_event_queue, return_user_events):
-            result = self.api_post(
-                user, "/json/register", dict(event_types=ujson.dumps([event_type])),
-            )
+            result = self.api_post(user, "/json/register", dict(event_types=ujson.dumps([event_type])))
 
         self.assert_json_success(result)
         result_dict = result.json()
@@ -104,9 +102,7 @@ class EventsEndpointTest(ZulipTestCase):
         return_user_events = [test_event]
 
         with stub_event_queue_user_events(return_event_queue, return_user_events):
-            result = self.api_post(
-                user, "/json/register", dict(event_types=ujson.dumps([event_type])),
-            )
+            result = self.api_post(user, "/json/register", dict(event_types=ujson.dumps([event_type])))
 
         self.assert_json_success(result)
         result_dict = result.json()

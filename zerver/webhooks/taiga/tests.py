@@ -20,7 +20,9 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("userstory_created", self.TOPIC, message)
 
     def test_taiga_userstory_changed_unblocked(self) -> None:
-        message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) unblocked user story **UserStory**."
+        message = (
+            "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) unblocked user story **UserStory**."
+        )
         self.send_and_test_stream_message("userstory_changed_unblocked", self.TOPIC, message)
 
     def test_taiga_userstory_changed_subject(self) -> None:
@@ -289,7 +291,9 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("epic_changed_commented", self.TOPIC, message)
 
     def test_taiga_epic_deleted(self) -> None:
-        message = "[Eeshan Garg](https://tree.taiga.io/profile/eeshangarg) deleted epic **Zulip is great!**."
+        message = (
+            "[Eeshan Garg](https://tree.taiga.io/profile/eeshangarg) deleted epic **Zulip is great!**."
+        )
         self.send_and_test_stream_message("epic_deleted", self.TOPIC, message)
 
     def test_taiga_relateduserstory_created(self) -> None:

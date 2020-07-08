@@ -441,9 +441,7 @@ def allocate_client_descriptor(new_queue_data: MutableMapping[str, Any]) -> Clie
 def do_gc_event_queues(
     to_remove: AbstractSet[str], affected_users: AbstractSet[int], affected_realms: AbstractSet[int],
 ) -> None:
-    def filter_client_dict(
-        client_dict: MutableMapping[int, List[ClientDescriptor]], key: int,
-    ) -> None:
+    def filter_client_dict(client_dict: MutableMapping[int, List[ClientDescriptor]], key: int) -> None:
         if key not in client_dict:
             return
 
@@ -517,9 +515,7 @@ def dump_event_queues(port: int) -> None:
     with open(persistent_queue_filename(port), "w") as stored_queues:
         ujson.dump([(qid, client.to_dict()) for (qid, client) in clients.items()], stored_queues)
 
-    logging.info(
-        "Tornado %d dumped %d event queues in %.3fs", port, len(clients), time.time() - start,
-    )
+    logging.info("Tornado %d dumped %d event queues in %.3fs", port, len(clients), time.time() - start)
 
 
 def load_event_queues(port: int) -> None:
@@ -544,9 +540,7 @@ def load_event_queues(port: int) -> None:
 
         add_to_client_dicts(client)
 
-    logging.info(
-        "Tornado %d loaded %d event queues in %.3fs", port, len(clients), time.time() - start,
-    )
+    logging.info("Tornado %d loaded %d event queues in %.3fs", port, len(clients), time.time() - start)
 
 
 def send_restart_events(immediate: bool = False) -> None:
@@ -698,8 +692,7 @@ def request_event_queue(
             resp = requests_client.post(tornado_uri + "/api/v1/events/internal", data=req)
         except requests.adapters.ConnectionError:
             logging.error(
-                "Tornado server does not seem to be running, check %s "
-                "and %s for more information.",
+                "Tornado server does not seem to be running, check %s " "and %s for more information.",
                 settings.ERROR_FILE_LOG_PATH,
                 "tornado.log",
             )
@@ -1140,9 +1133,7 @@ def process_message_update_event(
             if key != "id":
                 user_event[key] = user_data[key]
         wildcard_mentioned = "wildcard_mentioned" in user_event["flags"]
-        wildcard_mention_notify = wildcard_mentioned and (
-            user_profile_id in wildcard_mention_user_ids
-        )
+        wildcard_mention_notify = wildcard_mentioned and (user_profile_id in wildcard_mention_user_ids)
 
         maybe_enqueue_notifications_for_message_update(
             user_profile_id=user_profile_id,

@@ -350,9 +350,7 @@ class Runner(DiscoverRunner):
             print("Unable to clean up the test run's directory.")
         return super().teardown_test_environment(*args, **kwargs)
 
-    def test_imports(
-        self, test_labels: List[str], suite: Union[TestSuite, ParallelTestSuite],
-    ) -> None:
+    def test_imports(self, test_labels: List[str], suite: Union[TestSuite, ParallelTestSuite]) -> None:
         prefix_old = "unittest.loader.ModuleImportFailure."  # Python <= 3.4
         prefix_new = "unittest.loader._FailedTest."  # Python > 3.4
         error_prefixes = [prefix_old, prefix_new]

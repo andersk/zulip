@@ -263,9 +263,7 @@ class ZulipUploadBackend:
     def get_realm_icon_url(self, realm_id: int, version: int) -> str:
         raise NotImplementedError()
 
-    def upload_realm_logo_image(
-        self, logo_file: File, user_profile: UserProfile, night: bool,
-    ) -> None:
+    def upload_realm_logo_image(self, logo_file: File, user_profile: UserProfile, night: bool) -> None:
         raise NotImplementedError()
 
     def get_realm_logo_url(self, realm_id: int, version: int, night: bool) -> str:
@@ -389,9 +387,7 @@ class S3UploadBackend(ZulipUploadBackend):
             key.load()
         except botocore.exceptions.ClientError:
             file_name = path_id.split("/")[-1]
-            logging.warning(
-                "%s does not exist. Its entry in the database will be removed.", file_name,
-            )
+            logging.warning("%s does not exist. Its entry in the database will be removed.", file_name)
             return False
         key.delete()
         return True
@@ -523,9 +519,7 @@ class S3UploadBackend(ZulipUploadBackend):
         # ?x=x allows templates to append additional parameters with &s
         return f"{self.avatar_bucket_url}/{realm_id}/realm/icon.png?version={version}"
 
-    def upload_realm_logo_image(
-        self, logo_file: File, user_profile: UserProfile, night: bool,
-    ) -> None:
+    def upload_realm_logo_image(self, logo_file: File, user_profile: UserProfile, night: bool) -> None:
         content_type = guess_type(logo_file.name)[0]
         if night:
             basename = "night_logo"
@@ -776,9 +770,7 @@ class LocalUploadBackend(ZulipUploadBackend):
         # ?x=x allows templates to append additional parameters with &s
         return f"/user_avatars/{realm_id}/realm/icon.png?version={version}"
 
-    def upload_realm_logo_image(
-        self, logo_file: File, user_profile: UserProfile, night: bool,
-    ) -> None:
+    def upload_realm_logo_image(self, logo_file: File, user_profile: UserProfile, night: bool) -> None:
         upload_path = self.realm_avatar_and_logo_path(user_profile.realm)
         if night:
             original_file = "night_logo.original"
@@ -846,9 +838,7 @@ class LocalUploadBackend(ZulipUploadBackend):
         )
 
     def upload_export_tarball(self, realm: Realm, tarball_path: str) -> str:
-        path = os.path.join(
-            "exports", str(realm.id), random_name(18), os.path.basename(tarball_path),
-        )
+        path = os.path.join("exports", str(realm.id), random_name(18), os.path.basename(tarball_path))
         abs_path = os.path.join(settings.LOCAL_UPLOADS_DIR, "avatars", path)
         os.makedirs(os.path.dirname(abs_path), exist_ok=True)
         shutil.copy(tarball_path, abs_path)
@@ -937,9 +927,7 @@ def claim_attachment(
     return attachment
 
 
-def create_attachment(
-    file_name: str, path_id: str, user_profile: UserProfile, file_size: int,
-) -> bool:
+def create_attachment(file_name: str, path_id: str, user_profile: UserProfile, file_size: int) -> bool:
     attachment = Attachment.objects.create(
         file_name=file_name,
         path_id=path_id,

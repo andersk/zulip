@@ -238,9 +238,7 @@ v1_api_and_json_patterns = [
         },
     ),
     path(
-        "invites/<int:prereg_id>",
-        rest_dispatch,
-        {"DELETE": "zerver.views.invite.revoke_user_invite"},
+        "invites/<int:prereg_id>", rest_dispatch, {"DELETE": "zerver.views.invite.revoke_user_invite"},
     ),
     path(
         "invites/<int:prereg_id>/resend",
@@ -267,9 +265,7 @@ v1_api_and_json_patterns = [
         {"POST": "zerver.views.message_flags.mark_stream_as_read"},
     ),
     path(
-        "mark_topic_as_read",
-        rest_dispatch,
-        {"POST": "zerver.views.message_flags.mark_topic_as_read"},
+        "mark_topic_as_read", rest_dispatch, {"POST": "zerver.views.message_flags.mark_topic_as_read"},
     ),
     path("zcommand", rest_dispatch, {"POST": "zerver.views.message_send.zcommand_backend"}),
     # messages -> zerver.views.message*
@@ -292,13 +288,9 @@ v1_api_and_json_patterns = [
         },
     ),
     path(
-        "messages/render",
-        rest_dispatch,
-        {"POST": "zerver.views.message_send.render_message_backend"},
+        "messages/render", rest_dispatch, {"POST": "zerver.views.message_send.render_message_backend"},
     ),
-    path(
-        "messages/flags", rest_dispatch, {"POST": "zerver.views.message_flags.update_message_flags"},
-    ),
+    path("messages/flags", rest_dispatch, {"POST": "zerver.views.message_flags.update_message_flags"}),
     path(
         "messages/<int:message_id>/history",
         rest_dispatch,
@@ -374,9 +366,7 @@ v1_api_and_json_patterns = [
         {"POST": "zerver.views.presence.update_active_status_backend"},
     ),
     path(
-        "users/me/status",
-        rest_dispatch,
-        {"POST": "zerver.views.presence.update_user_status_backend"},
+        "users/me/status", rest_dispatch, {"POST": "zerver.views.presence.update_user_status_backend"},
     ),
     # Endpoint used by mobile devices to register their push
     # notification credentials
@@ -651,9 +641,7 @@ i18n_urls = [
     # background.  We can remove this once older versions of the
     # mobile app are no longer present in the wild.
     re_path(r"accounts/login/(google)/$", zerver.views.auth.start_social_login, name="login-social"),
-    path(
-        "accounts/login/start/sso/", zerver.views.auth.start_remote_user_sso, name="start-login-sso",
-    ),
+    path("accounts/login/start/sso/", zerver.views.auth.start_remote_user_sso, name="start-login-sso"),
     path("accounts/login/sso/", zerver.views.auth.remote_user_sso, name="login-sso"),
     path("accounts/login/jwt/", zerver.views.auth.remote_user_jwt, name="login-jwt"),
     re_path(

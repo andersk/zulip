@@ -94,9 +94,7 @@ class Command(BaseCommand):
         # Subscribe shylock to the stream to avoid invariant failures.
         # TODO: This should use subscribe_users_to_streams from populate_db.
         subs = [
-            Subscription(
-                recipient=recipient, user_profile=shylock, color=STREAM_ASSIGNMENT_COLORS[0],
-            ),
+            Subscription(recipient=recipient, user_profile=shylock, color=STREAM_ASSIGNMENT_COLORS[0]),
         ]
         Subscription.objects.bulk_create(subs)
 

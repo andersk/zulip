@@ -563,9 +563,7 @@ def get_mobile_push_content(rendered_content: str) -> str:
         return elem.text or ""
 
     def format_as_quote(quote_text: str) -> str:
-        return "".join(
-            f"> {line}\n" for line in quote_text.splitlines() if line  # Remove empty lines
-        )
+        return "".join(f"> {line}\n" for line in quote_text.splitlines() if line)  # Remove empty lines
 
     def render_olist(ol: lxml.html.HtmlElement) -> str:
         items = []
@@ -859,9 +857,7 @@ def handle_push_notification(user_profile_id: int, missed_message: Dict[str, Any
         send_notifications_to_bouncer(user_profile_id, apns_payload, gcm_payload, gcm_options)
         return
 
-    android_devices = list(
-        PushDeviceToken.objects.filter(user=user_profile, kind=PushDeviceToken.GCM),
-    )
+    android_devices = list(PushDeviceToken.objects.filter(user=user_profile, kind=PushDeviceToken.GCM))
 
     apple_devices = list(PushDeviceToken.objects.filter(user=user_profile, kind=PushDeviceToken.APNS))
 

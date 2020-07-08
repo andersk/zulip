@@ -259,10 +259,7 @@ def fetch_initial_state_data(
         realm_incoming_webhook_bots = []
         for integration in WEBHOOK_INTEGRATIONS:
             realm_incoming_webhook_bots.append(
-                {
-                    "name": integration.name,
-                    "config": {c[1]: c[0] for c in integration.config_options},
-                },
+                {"name": integration.name, "config": {c[1]: c[0] for c in integration.config_options}},
             )
         state["realm_incoming_webhook_bots"] = realm_incoming_webhook_bots
 
@@ -694,9 +691,7 @@ def apply_event(
             user_key = str(event["user_id"])
         else:
             user_key = event["email"]
-        state["presences"][user_key] = get_presence_for_user(event["user_id"], slim_presence)[
-            user_key
-        ]
+        state["presences"][user_key] = get_presence_for_user(event["user_id"], slim_presence)[user_key]
     elif event["type"] == "update_message":
         # We don't return messages in /register, so we don't need to
         # do anything for content updates, but we may need to update

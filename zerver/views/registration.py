@@ -320,9 +320,7 @@ def accounts_register(request: HttpRequest) -> HttpResponse:
 
         if not realm_creation:
             try:
-                existing_user_profile: Optional[UserProfile] = get_user_by_delivery_email(
-                    email, realm,
-                )
+                existing_user_profile: Optional[UserProfile] = get_user_by_delivery_email(email, realm)
             except UserProfile.DoesNotExist:
                 existing_user_profile = None
         else:

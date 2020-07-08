@@ -878,8 +878,7 @@ class AvatarTest(UploadSerializeMixin, ZulipTestCase):
             backend.get_realm_logo_url(15, 1, False), "/user_avatars/15/realm/logo.png?version=1",
         )
         self.assertEqual(
-            backend.get_realm_logo_url(15, 1, True),
-            "/user_avatars/15/realm/night_logo.png?version=1",
+            backend.get_realm_logo_url(15, 1, True), "/user_avatars/15/realm/night_logo.png?version=1",
         )
 
         with self.settings(S3_AVATAR_BUCKET="bucket"):
@@ -1452,8 +1451,7 @@ class RealmLogoTest(UploadSerializeMixin, ZulipTestCase):
         else:
             file_name = "logo.png"
         self.assertEqual(
-            redirect_url,
-            f"/user_avatars/{realm.id}/realm/{file_name}?version=2&night={is_night_str}",
+            redirect_url, f"/user_avatars/{realm.id}/realm/{file_name}?version=2&night={is_night_str}",
         )
 
         do_change_plan_type(realm, Realm.LIMITED)

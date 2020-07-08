@@ -17,10 +17,7 @@ class GocdHookTests(WebhookTestCase):
         )
 
         self.send_and_test_stream_message(
-            "pipeline",
-            self.TOPIC,
-            expected_message,
-            content_type="application/x-www-form-urlencoded",
+            "pipeline", self.TOPIC, expected_message, content_type="application/x-www-form-urlencoded",
         )
 
     def test_failed_message(self) -> None:

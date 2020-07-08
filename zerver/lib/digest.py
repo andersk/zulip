@@ -210,9 +210,7 @@ def handle_digest_email(
 
     # Fetch list of all messages sent after cutoff_date where the user is subscribed
     messages = Message.objects.filter(
-        recipient__type=Recipient.STREAM,
-        recipient__type_id__in=stream_ids,
-        date_sent__gt=cutoff_date,
+        recipient__type=Recipient.STREAM, recipient__type_id__in=stream_ids, date_sent__gt=cutoff_date,
     ).select_related("recipient", "sender", "sending_client")
 
     # Gather hot conversations.

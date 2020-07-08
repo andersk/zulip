@@ -1871,9 +1871,7 @@ class AlertWordNotificationProcessor(markdown.preprocessors.Preprocessor):
 
             if realm_alert_words_automaton is not None:
                 content = "\n".join(lines).lower()
-                for end_index, (original_value, user_ids) in realm_alert_words_automaton.iter(
-                    content,
-                ):
+                for end_index, (original_value, user_ids) in realm_alert_words_automaton.iter(content):
                     if self.check_valid_start_position(
                         content, end_index - len(original_value),
                     ) and self.check_valid_end_position(content, end_index + 1):
@@ -2072,9 +2070,7 @@ class Markdown(markdown.Markdown):
         reg.register(UnicodeEmoji(unicode_emoji_regex), "unicodeemoji", 0)
         return reg
 
-    def register_realm_filters(
-        self, inlinePatterns: markdown.util.Registry,
-    ) -> markdown.util.Registry:
+    def register_realm_filters(self, inlinePatterns: markdown.util.Registry) -> markdown.util.Registry:
         for (pattern, format_string, id) in self.getConfig("realm_filters"):
             inlinePatterns.register(
                 RealmFilterPattern(pattern, format_string, self), f"realm_filters/{pattern}", 45,

@@ -66,10 +66,7 @@ def do_widget_post_save_actions(message: MutableMapping[str, Any]) -> None:
     if widget_type:
         content = dict(widget_type=widget_type, extra_data=extra_data)
         submessage = SubMessage(
-            sender_id=sender_id,
-            message_id=message_id,
-            msg_type="widget",
-            content=json.dumps(content),
+            sender_id=sender_id, message_id=message_id, msg_type="widget", content=json.dumps(content),
         )
         submessage.save()
         message["submessages"] = SubMessage.get_raw_db_rows([message_id])

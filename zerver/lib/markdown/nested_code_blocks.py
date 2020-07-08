@@ -10,9 +10,7 @@ from zerver.lib.markdown import ResultWithFamily, walk_tree_with_family
 class NestedCodeBlocksRenderer(Extension):
     def extendMarkdown(self, md: markdown.Markdown, md_globals: Dict[str, Any]) -> None:
         md.treeprocessors.add(
-            "nested_code_blocks",
-            NestedCodeBlocksRendererTreeProcessor(md, self.getConfigs()),
-            "_end",
+            "nested_code_blocks", NestedCodeBlocksRendererTreeProcessor(md, self.getConfigs()), "_end",
         )
 
 

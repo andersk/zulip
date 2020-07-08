@@ -69,9 +69,7 @@ class GitlabHookTests(WebhookTestCase):
         expected_topic = "my-awesome-project / tomek"
         expected_message = "Tomasz Kolek deleted branch tomek."
 
-        self.send_and_test_stream_message(
-            "push_hook__remove_branch", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("push_hook__remove_branch", expected_topic, expected_message)
 
     def test_add_tag_event_message(self) -> None:
         expected_topic = "my-awesome-project"
@@ -148,9 +146,7 @@ class GitlabHookTests(WebhookTestCase):
         expected_message = "Joe Bloggs created [Issue #2](https://gitlab.example.co.uk/joe.bloggs/testing/issues/2) (assigned to joe.bloggs):\n\n~~~ quote\nTesting\n~~~"
 
         self.send_and_test_stream_message(
-            "issue_hook__confidential_issue_created_with_assignee",
-            expected_subject,
-            expected_message,
+            "issue_hook__confidential_issue_created_with_assignee", expected_subject, expected_message,
         )
 
     def test_create_issue_with_hidden_comment_in_description(self) -> None:
@@ -211,9 +207,7 @@ class GitlabHookTests(WebhookTestCase):
         expected_topic = "my-awesome-project / Issue #1 Issue title_new"
         expected_message = "Tomasz Kolek closed [Issue #1](https://gitlab.com/tomaszkolek0/my-awesome-project/issues/1)."
 
-        self.send_and_test_stream_message(
-            "issue_hook__issue_closed", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("issue_hook__issue_closed", expected_topic, expected_message)
 
     def test_close_confidential_issue_event_message(self) -> None:
         expected_subject = "testing / Issue #1 Testing Test"
@@ -235,7 +229,9 @@ class GitlabHookTests(WebhookTestCase):
 
     def test_reopen_confidential_issue_event_message(self) -> None:
         expected_subject = "testing / Issue #1 Testing Test"
-        expected_message = "Joe Bloggs reopened [Issue #1](https://gitlab.example.co.uk/joe.bloggs/testing/issues/1)."
+        expected_message = (
+            "Joe Bloggs reopened [Issue #1](https://gitlab.example.co.uk/joe.bloggs/testing/issues/1)."
+        )
 
         self.send_and_test_stream_message(
             "issue_hook__confidential_issue_reopened", expected_subject, expected_message,

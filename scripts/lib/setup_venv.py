@@ -218,9 +218,7 @@ def try_to_copy_venv(venv_path: str, new_packages: Set[str]) -> bool:
         run_as_root(["chown", "-R", "{}:{}".format(os.getuid(), os.getgid()), venv_path])
         source_log = get_logfile_name(source_venv_path)
         copy_parent_log(source_log, target_log)
-        create_log_entry(
-            target_log, source_venv_path, copied_packages, new_packages - copied_packages,
-        )
+        create_log_entry(target_log, source_venv_path, copied_packages, new_packages - copied_packages)
         return True
 
     return False

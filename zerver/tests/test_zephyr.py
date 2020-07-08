@@ -16,9 +16,7 @@ class ZephyrTest(ZulipTestCase):
 
         def post(subdomain: Any, **kwargs: Any) -> HttpResponse:
             params = {k: ujson.dumps(v) for k, v in kwargs.items()}
-            return self.client_post(
-                "/accounts/webathena_kerberos_login/", params, subdomain=subdomain,
-            )
+            return self.client_post("/accounts/webathena_kerberos_login/", params, subdomain=subdomain)
 
         result = post("zulip")
         self.assert_json_error(result, "Could not find Kerberos credential")
@@ -78,9 +76,7 @@ class ZephyrTest(ZulipTestCase):
         # zephyr accounts are hardcoded, and should be handled properly.
 
         def kerberos_alter_egos_mock() -> Any:
-            return patch(
-                "zerver.views.zephyr.kerberos_alter_egos", {"kerberos_alter_ego": "starnine"},
-            )
+            return patch("zerver.views.zephyr.kerberos_alter_egos", {"kerberos_alter_ego": "starnine"})
 
         cred = dict(cname=dict(nameString=["kerberos_alter_ego"]))
         with ccache_mock(

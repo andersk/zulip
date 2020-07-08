@@ -123,8 +123,7 @@ class FirstUnreadAnchorTests(ZulipTestCase):
         self.assertEqual(messages_response["anchor"], new_message_id)
 
         with mock.patch(
-            "zerver.views.message_fetch.get_first_visible_message_id",
-            return_value=new_message_id + 1,
+            "zerver.views.message_fetch.get_first_visible_message_id", return_value=new_message_id + 1,
         ):
             messages_reponse = self.get_messages_response(
                 anchor="first_unread", num_before=0, num_after=1,
@@ -133,8 +132,7 @@ class FirstUnreadAnchorTests(ZulipTestCase):
         self.assertIn("anchor", messages_reponse)
 
         with mock.patch(
-            "zerver.views.message_fetch.get_first_visible_message_id",
-            return_value=new_message_id - 1,
+            "zerver.views.message_fetch.get_first_visible_message_id", return_value=new_message_id - 1,
         ):
             messages = self.get_messages(anchor="first_unread", num_before=0, num_after=1)
         self.assert_length(messages, 1)
@@ -466,8 +464,7 @@ class PushNotificationMarkReadFlowsTest(ZulipTestCase):
 
         self.assert_json_success(result)
         self.assertEqual(
-            self.get_mobile_push_notification_ids(user_profile),
-            [second_message_id, third_message_id],
+            self.get_mobile_push_notification_ids(user_profile), [second_message_id, third_message_id],
         )
 
         result = self.client_post(
@@ -479,8 +476,7 @@ class PushNotificationMarkReadFlowsTest(ZulipTestCase):
             self.example_user("cordelia"), "test_stream", "hello", "test_topic",
         )
         self.assertEqual(
-            self.get_mobile_push_notification_ids(user_profile),
-            [third_message_id, fourth_message_id],
+            self.get_mobile_push_notification_ids(user_profile), [third_message_id, fourth_message_id],
         )
 
         result = self.client_post("/json/mark_all_as_read", {})
@@ -569,9 +565,7 @@ class GetUnreadMsgsTest(ZulipTestCase):
         hamlet = self.example_user("hamlet")
         prospero = self.example_user("prospero")
 
-        huddle1_message_ids = [
-            self.send_huddle_message(cordelia, [hamlet, othello]) for i in range(3)
-        ]
+        huddle1_message_ids = [self.send_huddle_message(cordelia, [hamlet, othello]) for i in range(3)]
 
         huddle2_message_ids = [
             self.send_huddle_message(cordelia, [hamlet, prospero]) for i in range(3)
@@ -752,9 +746,7 @@ class GetUnreadMsgsTest(ZulipTestCase):
         self.assertEqual(unread_stream["sender_ids"], [sender_id])
 
         unread_stream = result["streams"][2]
-        self.assertEqual(
-            unread_stream["stream_id"], get_stream("Muted Stream", user_profile.realm).id,
-        )
+        self.assertEqual(unread_stream["stream_id"], get_stream("Muted Stream", user_profile.realm).id)
         self.assertEqual(unread_stream["topic"], "test")
         self.assertEqual(unread_stream["unread_message_ids"], [muted_stream_message_id])
         self.assertEqual(unread_stream["sender_ids"], [sender_id])

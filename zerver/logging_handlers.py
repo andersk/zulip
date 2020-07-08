@@ -117,9 +117,7 @@ class AdminNotifyHandler(logging.Handler):
             if record.exc_info:
                 stack_trace = "".join(traceback.format_exception(*record.exc_info))
                 message = str(record.exc_info[1])
-                is_markdown_rendering_exception = record.msg.startswith(
-                    "Exception in Markdown parser",
-                )
+                is_markdown_rendering_exception = record.msg.startswith("Exception in Markdown parser")
             else:
                 stack_trace = "No stack trace available"
                 message = record.getMessage()

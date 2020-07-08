@@ -32,9 +32,7 @@ class ResponseMock:
         self.text = ujson.dumps(content)
 
 
-def request_exception_error(
-    http_method: Any, final_url: Any, data: Any, **request_kwargs: Any
-) -> Any:
+def request_exception_error(http_method: Any, final_url: Any, data: Any, **request_kwargs: Any) -> Any:
     raise requests.exceptions.RequestException("I'm a generic exception :(")
 
 

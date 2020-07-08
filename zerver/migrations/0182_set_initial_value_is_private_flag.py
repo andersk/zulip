@@ -6,9 +6,7 @@ from django.db.migrations.state import StateApps
 from django.db.models import F
 
 
-def set_initial_value_of_is_private_flag(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def set_initial_value_of_is_private_flag(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     UserMessage = apps.get_model("zerver", "UserMessage")
     Message = apps.get_model("zerver", "Message")
     if not Message.objects.exists():

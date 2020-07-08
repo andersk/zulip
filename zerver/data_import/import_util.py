@@ -667,10 +667,7 @@ def build_realm_emoji(realm_id: int, name: str, id: int, file_name: str) -> Zerv
 
 
 def process_emojis(
-    zerver_realmemoji: List[ZerverFieldsT],
-    emoji_dir: str,
-    emoji_url_map: ZerverFieldsT,
-    threads: int,
+    zerver_realmemoji: List[ZerverFieldsT], emoji_dir: str, emoji_url_map: ZerverFieldsT, threads: int,
 ) -> List[ZerverFieldsT]:
     """
     This function downloads the custom emojis and saves in the output emoji folder.

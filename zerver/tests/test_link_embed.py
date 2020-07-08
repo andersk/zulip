@@ -347,9 +347,7 @@ class PreviewTestCase(ZulipTestCase):
         original_url = "http://test.org/"
         edited_url = "http://edited.org/"
         with mock.patch("zerver.lib.actions.queue_json_publish") as patched:
-            msg_id = self.send_stream_message(
-                user, "Scotland", topic_name="foo", content=original_url,
-            )
+            msg_id = self.send_stream_message(user, "Scotland", topic_name="foo", content=original_url)
             patched.assert_called_once()
             queue = patched.call_args[0][0]
             self.assertEqual(queue, "embed_links")
@@ -610,8 +608,7 @@ class PreviewTestCase(ZulipTestCase):
         }
 
         with mock.patch(
-            "zerver.lib.url_preview.preview.get_oembed_data",
-            side_effect=lambda *args, **kwargs: None,
+            "zerver.lib.url_preview.preview.get_oembed_data", side_effect=lambda *args, **kwargs: None,
         ):
             with mock.patch(
                 "zerver.lib.url_preview.preview.valid_content_type", side_effect=lambda k: True,

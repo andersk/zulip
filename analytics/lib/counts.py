@@ -102,9 +102,7 @@ class DataCollector:
 ## CountStat-level operations ##
 
 
-def process_count_stat(
-    stat: CountStat, fill_to_time: datetime, realm: Optional[Realm] = None,
-) -> None:
+def process_count_stat(stat: CountStat, fill_to_time: datetime, realm: Optional[Realm] = None) -> None:
     # TODO: The realm argument is not yet supported, in that we don't
     # have a solution for how to update FillState if it is passed.  It
     # exists solely as partial plumbing for when we do fully implement
@@ -182,10 +180,7 @@ def do_fill_count_stat_at_hour(
         assert stat.data_collector.pull_function is not None
         rows_added = stat.data_collector.pull_function(stat.property, start_time, end_time, realm)
         logger.info(
-            "%s run pull_function (%dms/%sr)",
-            stat.property,
-            (time.time() - timer) * 1000,
-            rows_added,
+            "%s run pull_function (%dms/%sr)", stat.property, (time.time() - timer) * 1000, rows_added,
         )
     do_aggregate_to_summary_table(stat, end_time, realm)
 
@@ -676,9 +671,7 @@ def get_count_stats(realm: Optional[Realm] = None) -> Dict[str, CountStat]:
         # These are also the set of stats that read from the Message table.
         CountStat(
             "messages_sent:is_bot:hour",
-            sql_data_collector(
-                UserCount, count_message_by_user_query(realm), (UserProfile, "is_bot"),
-            ),
+            sql_data_collector(UserCount, count_message_by_user_query(realm), (UserProfile, "is_bot")),
             CountStat.HOUR,
         ),
         CountStat(

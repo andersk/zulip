@@ -683,9 +683,7 @@ class MarkdownTest(ZulipTestCase):
     @override_settings(INLINE_URL_EMBED_PREVIEW=False)
     def test_url_embed_preview_enabled(self) -> None:
         sender_user_profile = self.example_user("othello")
-        message = copy.deepcopy(
-            Message(sender=sender_user_profile, sending_client=get_client("test")),
-        )
+        message = copy.deepcopy(Message(sender=sender_user_profile, sending_client=get_client("test")))
         realm = message.get_realm()
         realm.inline_url_embed_preview = True  # off by default
         realm.save(update_fields=["inline_url_embed_preview"])
@@ -1575,9 +1573,7 @@ class MarkdownTest(ZulipTestCase):
         )
         self.assertTrue(msg_with_quote == msg_without_language_default_quote)
         self.assertTrue(msg_with_math == msg_without_language_default_math)
-        self.assertTrue(
-            msg_without_language == msg_with_none_default_py == msg_without_language_final,
-        )
+        self.assertTrue(msg_without_language == msg_with_none_default_py == msg_without_language_final)
 
         # Test checking inside nested quotes
         nested_text = "````quote\n\n{}\n\n{}````".format(text.format("js"), text.format(""))
@@ -2319,9 +2315,7 @@ class MarkdownApiTests(ZulipTestCase):
             self.example_user("othello"), "/api/v1/messages/render", dict(content=content),
         )
         self.assert_json_success(result)
-        self.assertEqual(
-            result.json()["rendered"], "<p>That is a <strong>bold</strong> statement</p>",
-        )
+        self.assertEqual(result.json()["rendered"], "<p>That is a <strong>bold</strong> statement</p>")
 
     def test_render_mention_stream_api(self) -> None:
         """Determines whether we're correctly passing the realm context"""

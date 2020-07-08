@@ -1552,9 +1552,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
         self.create_bot(**bot_metadata)
         new_bot = UserProfile.objects.get(full_name="My Stripe Bot")
         config_data = get_bot_config(new_bot)
-        self.assertEqual(
-            config_data, {"integration_id": "stripe", "stripe_api_key": "sample-api-key"},
-        )
+        self.assertEqual(config_data, {"integration_id": "stripe", "stripe_api_key": "sample-api-key"})
 
     @patch("zerver.lib.integrations.WEBHOOK_INTEGRATIONS", stripe_sample_config_options)
     def test_create_incoming_webhook_bot_with_service_name_incorrect_keys(self) -> None:

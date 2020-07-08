@@ -160,9 +160,7 @@ class OpenGraphTest(ZulipTestCase):
 
     def test_login_page_simple_description(self) -> None:
         name = "Zulip Dev"
-        description = (
-            "The Zulip development environment default organization. It's great for testing!"
-        )
+        description = "The Zulip development environment default organization. It's great for testing!"
 
         self.check_title_and_description("/login/", name, [description], [])
 

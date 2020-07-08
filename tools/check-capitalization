@@ -71,9 +71,7 @@ if __name__ == "__main__":
 
     if frontend_errors or backend_errors or banned_errors_back or banned_errors_front:
         # Point the user to the documentation on what the policy is.
-        docs_url = (
-            "https://zulip.readthedocs.io/en/latest/translating/translating.html#capitalization"
-        )
+        docs_url = "https://zulip.readthedocs.io/en/latest/translating/translating.html#capitalization"
         print(WARNING + "See " + docs_url + ENDC)
         print(FAIL + "Failed!" + ENDC)
         sys.exit(1)

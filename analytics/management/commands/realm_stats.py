@@ -172,9 +172,7 @@ class Command(BaseCommand):
                 ),
             )
 
-            active_user_subs = Subscription.objects.filter(
-                user_profile__in=user_profiles, active=True,
-            )
+            active_user_subs = Subscription.objects.filter(user_profile__in=user_profiles, active=True)
 
             # Streams not in home view
             non_home_view = (
