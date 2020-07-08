@@ -70,6 +70,7 @@ settings.CACHES['default'] = {
     'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
 }
 
+
 def clear_database() -> None:
     # Hacky function only for use inside populate_db.  Designed to
     # allow running populate_db repeatedly in series to work without
@@ -94,8 +95,10 @@ def clear_database() -> None:
         model.objects.all().delete()
     Session.objects.all().delete()
 
+
 # Suppress spammy output from the push notifications logger
 push_notifications_logger.disabled = True
+
 
 def subscribe_users_to_streams(realm: Realm, stream_dict: Dict[str, Dict[str, Any]]) -> None:
     subscriptions_to_add = []
@@ -122,6 +125,7 @@ def subscribe_users_to_streams(realm: Realm, stream_dict: Dict[str, Dict[str, An
             all_subscription_logs.append(log)
     Subscription.objects.bulk_create(subscriptions_to_add)
     RealmAuditLog.objects.bulk_create(all_subscription_logs)
+
 
 class Command(BaseCommand):
     help = "Populate a test database"
@@ -642,7 +646,10 @@ class Command(BaseCommand):
             UserMessage.objects.all().update(flags=UserMessage.flags.read)
             self.stdout.write("Successfully populated test database.\n")
 
+
 recipient_hash: Dict[int, Recipient] = {}
+
+
 def get_recipient_by_id(rid: int) -> Recipient:
     if rid in recipient_hash:
         return recipient_hash[rid]
@@ -655,6 +662,8 @@ def get_recipient_by_id(rid: int) -> Recipient:
 # - multiple personals converastions
 # - multiple messages per subject
 # - both single and multi-line content
+
+
 def generate_and_send_messages(data: Tuple[int, Sequence[Sequence[int]], Mapping[str, Any],
                                            Callable[[str], Any], int]) -> int:
     (tot_messages, personals_pairs, options, output, random_seed) = data
@@ -749,6 +758,7 @@ def generate_and_send_messages(data: Tuple[int, Sequence[Sequence[int]], Mapping
 
     return tot_messages
 
+
 def send_messages(messages: List[Message]) -> None:
     # We disable USING_RABBITMQ here, so that deferred work is
     # executed in do_send_message_messages, rather than being
@@ -759,6 +769,7 @@ def send_messages(messages: List[Message]) -> None:
     settings.USING_RABBITMQ = False
     do_send_messages([{'message': message} for message in messages])
     settings.USING_RABBITMQ = True
+
 
 def choose_date_sent(num_messages: int, tot_messages: int, threads: int) -> datetime:
     # Spoofing time not supported with threading
@@ -788,6 +799,7 @@ def choose_date_sent(num_messages: int, tot_messages: int, threads: int) -> date
     spoofed_date += timezone_timedelta(seconds=offset_seconds)
 
     return spoofed_date
+
 
 def create_user_groups() -> None:
     zulip = get_realm('zulip')

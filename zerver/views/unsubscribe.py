@@ -25,17 +25,22 @@ def process_unsubscribe(request: HttpRequest, confirmation_key: str, subscriptio
 # Email unsubscribe functions. All have the function signature
 # processor(user_profile).
 
+
 def do_missedmessage_unsubscribe(user_profile: UserProfile) -> None:
     do_change_notification_settings(user_profile, 'enable_offline_email_notifications', False)
+
 
 def do_welcome_unsubscribe(user_profile: UserProfile) -> None:
     clear_scheduled_emails([user_profile.id], ScheduledEmail.WELCOME)
 
+
 def do_digest_unsubscribe(user_profile: UserProfile) -> None:
     do_change_notification_settings(user_profile, 'enable_digest_emails', False)
 
+
 def do_login_unsubscribe(user_profile: UserProfile) -> None:
     do_change_notification_settings(user_profile, 'enable_login_emails', False)
+
 
 # The keys are part of the URL for the unsubscribe link and must be valid
 # without encoding.
@@ -49,6 +54,8 @@ email_unsubscribers = {
 }
 
 # Login NOT required. These are for one-click unsubscribes.
+
+
 def email_unsubscribe(request: HttpRequest, email_type: str,
                       confirmation_key: str) -> HttpResponse:
     if email_type in email_unsubscribers:

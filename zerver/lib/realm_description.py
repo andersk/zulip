@@ -14,6 +14,7 @@ def get_realm_rendered_description(realm: Realm) -> str:
     return markdown_convert(realm_description_raw, message_realm=realm,
                             no_previews=True)
 
+
 @cache_with_key(realm_text_description_cache_key, timeout=3600*24*7)
 def get_realm_text_description(realm: Realm) -> str:
     html_description = get_realm_rendered_description(realm)

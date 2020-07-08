@@ -19,6 +19,7 @@ def write_realm_nginx_config_line(f: Any, host: str, port: str) -> None:
     set $tornado_server http://tornado{port};
 }}\n""")
 
+
 # Basic system to do Tornado sharding.  Writes two output .tmp files that need
 # to be renamed to the following files to finalize the changes:
 # * /etc/zulip/nginx_sharding.conf; nginx needs to be reloaded after changing.

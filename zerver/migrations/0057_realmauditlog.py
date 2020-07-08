@@ -22,6 +22,7 @@ def backfill_user_activations_and_deactivations(apps: StateApps, schema_editor: 
                                      event_type='user_deactivated', event_time=migration_time,
                                      backfilled=True)
 
+
 def reverse_code(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     RealmAuditLog = apps.get_model('zerver', 'RealmAuditLog')
     RealmAuditLog.objects.filter(event_type='user_created').delete()

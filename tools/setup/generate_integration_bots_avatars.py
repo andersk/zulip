@@ -38,6 +38,7 @@ def create_square_image(png: bytes) -> bytes:
     new_img.save(out, format='png')
     return out.getvalue()
 
+
 def create_integration_bot_avatar(logo_path: str, bot_avatar_path: str) -> None:
     if logo_path.endswith('.svg'):
         avatar = cairosvg.svg2png(
@@ -51,6 +52,7 @@ def create_integration_bot_avatar(logo_path: str, bot_avatar_path: str) -> None:
     os.makedirs(os.path.dirname(bot_avatar_path), exist_ok=True)
     with open(bot_avatar_path, 'wb') as f:
         f.write(avatar)
+
 
 def generate_integration_bots_avatars(check_missing: bool=False) -> None:
     missing = set()
@@ -75,6 +77,7 @@ def generate_integration_bots_avatars(check_missing: bool=False) -> None:
               'to generate them.\nERROR: Commit the newly generated avatars to '
               'the repository.'.format(', '.join(missing)))
         sys.exit(1)
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

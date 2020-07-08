@@ -10,6 +10,7 @@ def disable_realm_digest_emails_enabled(apps: StateApps, schema_editor: Database
     realms = Realm.objects.filter(digest_emails_enabled=True)
     realms.update(digest_emails_enabled=False)
 
+
 class Migration(migrations.Migration):
 
     dependencies = [

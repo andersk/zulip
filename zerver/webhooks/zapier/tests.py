@@ -21,6 +21,7 @@ class ZapierHookTests(WebhookTestCase):
         expected_message = "Foggy in the morning.\nMaximum temperature to be 24.\nMinimum temperature to be 12"
         self.send_and_test_stream_message('weather_update', expected_topic, expected_message)
 
+
 class ZapierZulipAppTests(WebhookTestCase):
     STREAM_NAME = 'zapier'
     URL_TEMPLATE = "/api/v1/external/zapier?api_key={api_key}&stream={stream}"

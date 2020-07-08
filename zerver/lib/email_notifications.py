@@ -85,6 +85,7 @@ def relative_to_full_url(base_url: str, content: str) -> str:
 
     return content
 
+
 def fix_emojis(content: str, base_url: str, emojiset: str) -> str:
     def make_emoji_img_elem(emoji_span_elem: CSSSelector) -> Dict[str, Any]:
         # Convert the emoji spans to img tags.
@@ -116,6 +117,7 @@ def fix_emojis(content: str, base_url: str, emojiset: str) -> str:
 
     content = lxml.html.tostring(fragment).decode('utf-8')
     return content
+
 
 def build_message_list(user_profile: UserProfile, messages: List[Message]) -> List[Dict[str, Any]]:
     """
@@ -247,6 +249,7 @@ def build_message_list(user_profile: UserProfile, messages: List[Message]) -> Li
 
     return messages_to_render
 
+
 def get_narrow_url(user_profile: UserProfile, message: Message,
                    display_recipient: Optional[DisplayRecipientT]=None,
                    stream: Optional[Stream]=None) -> str:
@@ -280,9 +283,11 @@ def get_narrow_url(user_profile: UserProfile, message: Message,
             stream = Stream.objects.only('id', 'name').get(id=message.recipient.type_id)
         return topic_narrow_url(user_profile.realm, stream, message.topic_name())
 
+
 def message_content_allowed_in_missedmessage_emails(user_profile: UserProfile) -> bool:
     return user_profile.realm.message_content_allowed_in_email_notifications and \
         user_profile.message_content_in_email_notifications
+
 
 @statsd_increment("missed_message_reminders")
 def do_send_missedmessage_events_reply_in_zulip(user_profile: UserProfile,
@@ -441,6 +446,7 @@ def do_send_missedmessage_events_reply_in_zulip(user_profile: UserProfile,
     user_profile.last_reminder = timezone_now()
     user_profile.save(update_fields=['last_reminder'])
 
+
 def handle_missedmessage_emails(user_profile_id: int,
                                 missed_email_events: Iterable[Dict[str, Any]]) -> None:
     message_ids = {event.get('message_id'): event.get('trigger') for event in missed_email_events}
@@ -507,12 +513,14 @@ def handle_missedmessage_emails(user_profile_id: int,
             message_count_by_bucket[bucket_tup],
         )
 
+
 def log_digest_event(msg: str) -> None:
     import logging
     import time
     logging.Formatter.converter = time.gmtime
     logging.basicConfig(filename=settings.DIGEST_LOG_PATH, level=logging.INFO)
     logging.info(msg)
+
 
 def followup_day2_email_delay(user: UserProfile) -> timedelta:
     days_to_delay = 2
@@ -532,6 +540,7 @@ def followup_day2_email_delay(user: UserProfile) -> timedelta:
     # of the user's inbox when the user sits down to deal with their inbox,
     # or comes in while they are dealing with their inbox.
     return timedelta(days=days_to_delay, hours=-1)
+
 
 def enqueue_welcome_emails(user: UserProfile, realm_creation: bool=False) -> None:
     from zerver.context_processors import common_context
@@ -582,6 +591,7 @@ def enqueue_welcome_emails(user: UserProfile, realm_creation: bool=False) -> Non
         send_future_email(
             "zerver/emails/followup_day2", user.realm, to_user_ids=[user.id], from_name=from_name,
             from_address=from_address, context=context, delay=followup_day2_email_delay(user))
+
 
 def convert_html_to_markdown(html: str) -> str:
     parser = html2text.HTML2Text()

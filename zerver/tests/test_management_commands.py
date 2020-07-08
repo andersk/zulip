@@ -40,6 +40,7 @@ class TestCheckConfig(ZulipTestCase):
         with self.assertRaisesRegex(CommandError, "Outgoing email not yet configured, see"):
             call_command("send_test_email", 'test@example.com')
 
+
 class TestZulipBaseCommand(ZulipTestCase):
     def setUp(self) -> None:
         super().setUp()
@@ -176,6 +177,7 @@ class TestZulipBaseCommand(ZulipTestCase):
                                               is_bot=False)
         self.assertEqual(user_profiles, expected_user_profiles)
 
+
 class TestCommandsCanStart(ZulipTestCase):
 
     def setUp(self) -> None:
@@ -196,6 +198,7 @@ class TestCommandsCanStart(ZulipTestCase):
         # zerver/management/commands/runtornado.py sets this to True;
         # we need to reset it here.  See #3685 for details.
         settings.RUNNING_INSIDE_TORNADO = False
+
 
 class TestSendWebhookFixtureMessage(ZulipTestCase):
     COMMAND_NAME = 'send_webhook_fixture_message'
@@ -251,6 +254,7 @@ class TestSendWebhookFixtureMessage(ZulipTestCase):
         self.assertTrue(open_mock.called)
         client.post.assert_called_once_with(self.url, "{}", content_type="application/json",
                                             HTTP_HOST="zulip.testserver")
+
 
 class TestGenerateRealmCreationLink(ZulipTestCase):
     COMMAND_NAME = "generate_realm_creation_link"
@@ -314,6 +318,7 @@ class TestGenerateRealmCreationLink(ZulipTestCase):
         result = self.client_get(generated_link)
         self.assert_in_success_response(["The organization creation link has expired or is not valid."], result)
 
+
 class TestCalculateFirstVisibleMessageID(ZulipTestCase):
     COMMAND_NAME = 'calculate_first_visible_message_id'
 
@@ -328,6 +333,7 @@ class TestCalculateFirstVisibleMessageID(ZulipTestCase):
         calls = [call(realm, 35) for realm in Realm.objects.all()]
         m.has_calls(calls, any_order=True)
 
+
 class TestPasswordRestEmail(ZulipTestCase):
     COMMAND_NAME = "send_password_reset_email"
 
@@ -340,6 +346,7 @@ class TestPasswordRestEmail(ZulipTestCase):
         )
         self.assertIn("reset your password", outbox[0].body)
 
+
 class TestRealmReactivationEmail(ZulipTestCase):
     COMMAND_NAME = "send_realm_reactivation_email"
 
@@ -347,6 +354,7 @@ class TestRealmReactivationEmail(ZulipTestCase):
         realm = get_realm('zulip')
         with self.assertRaisesRegex(CommandError, f"The realm {realm.name} is already active."):
             call_command(self.COMMAND_NAME, "--realm=zulip")
+
 
 class TestSendToEmailMirror(ZulipTestCase):
     COMMAND_NAME = "send_to_email_mirror"
@@ -391,6 +399,7 @@ class TestSendToEmailMirror(ZulipTestCase):
         self.assertEqual(message.recipient.type, Recipient.STREAM)
         self.assertEqual(message.recipient.type_id, stream_id)
 
+
 class TestConvertMattermostData(ZulipTestCase):
     COMMAND_NAME = 'convert_mattermost_data'
 
@@ -406,6 +415,7 @@ class TestConvertMattermostData(ZulipTestCase):
             output_dir=os.path.realpath(output_dir),
         )
 
+
 class TestInvoicePlans(ZulipTestCase):
     COMMAND_NAME = 'invoice_plans'
 
@@ -414,6 +424,7 @@ class TestInvoicePlans(ZulipTestCase):
             call_command(self.COMMAND_NAME)
 
         m.assert_called_once()
+
 
 class TestExport(ZulipTestCase):
     COMMAND_NAME = 'export'

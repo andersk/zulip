@@ -38,8 +38,10 @@ def list_realm_custom_profile_fields(request: HttpRequest, user_profile: UserPro
     fields = custom_profile_fields_for_realm(user_profile.realm_id)
     return json_success({'custom_fields': [f.as_dict() for f in fields]})
 
+
 hint_validator = check_capped_string(CustomProfileField.HINT_MAX_LENGTH)
 name_validator = check_capped_string(CustomProfileField.NAME_MAX_LENGTH)
+
 
 def validate_field_name_and_hint(name: str, hint: str) -> None:
     if not name.strip():
@@ -50,6 +52,7 @@ def validate_field_name_and_hint(name: str, hint: str) -> None:
         name_validator('name', name)
     except ValidationError as error:
         raise JsonableError(error.message)
+
 
 def validate_custom_field_data(field_type: int,
                                field_data: ProfileFieldData) -> None:
@@ -64,12 +67,14 @@ def validate_custom_field_data(field_type: int,
     except ValidationError as error:
         raise JsonableError(error.message)
 
+
 def is_default_external_field(field_type: int, field_data: ProfileFieldData) -> bool:
     if field_type != CustomProfileField.EXTERNAL_ACCOUNT:
         return False
     if field_data['subtype'] == 'custom':
         return False
     return True
+
 
 def validate_custom_profile_field(name: str, hint: str, field_type: int,
                                   field_data: ProfileFieldData) -> None:
@@ -85,6 +90,7 @@ def validate_custom_profile_field(name: str, hint: str, field_type: int,
     field_types = [i[0] for i in CustomProfileField.FIELD_TYPE_CHOICES]
     if field_type not in field_types:
         raise JsonableError(_("Invalid field type."))
+
 
 @require_realm_admin
 @has_request_variables
@@ -117,6 +123,7 @@ def create_realm_custom_profile_field(request: HttpRequest,
     except IntegrityError:
         return json_error(_("A field with that label already exists."))
 
+
 @require_realm_admin
 def delete_realm_custom_profile_field(request: HttpRequest, user_profile: UserProfile,
                                       field_id: int) -> HttpResponse:
@@ -128,6 +135,7 @@ def delete_realm_custom_profile_field(request: HttpRequest, user_profile: UserPr
     do_remove_realm_custom_profile_field(realm=user_profile.realm,
                                          field=field)
     return json_success()
+
 
 @require_realm_admin
 @has_request_variables
@@ -156,6 +164,7 @@ def update_realm_custom_profile_field(request: HttpRequest, user_profile: UserPr
         return json_error(_('A field with that label already exists.'))
     return json_success()
 
+
 @require_realm_admin
 @has_request_variables
 def reorder_realm_custom_profile_fields(request: HttpRequest, user_profile: UserProfile,
@@ -163,6 +172,7 @@ def reorder_realm_custom_profile_fields(request: HttpRequest, user_profile: User
                                             check_int))) -> HttpResponse:
     try_reorder_realm_custom_profile_fields(user_profile.realm, order)
     return json_success()
+
 
 @human_users_only
 @has_request_variables
@@ -172,6 +182,7 @@ def remove_user_custom_profile_data(request: HttpRequest, user_profile: UserProf
     for field_id in data:
         check_remove_custom_profile_field_value(user_profile, field_id)
     return json_success()
+
 
 @human_users_only
 @has_request_variables

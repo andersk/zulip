@@ -18,8 +18,10 @@ from zerver.models import RealmAuditLog
 class PushNotificationBouncerException(Exception):
     pass
 
+
 class PushNotificationBouncerRetryLaterError(JsonableError):
     http_status_code = 502
+
 
 def send_to_push_bouncer(
     method: str,
@@ -95,6 +97,7 @@ def send_to_push_bouncer(
     # If we don't throw an exception, it's a successful bounce!
     return ujson.loads(res.content)
 
+
 def send_json_to_push_bouncer(method: str, endpoint: str, post_data: Mapping[str, object]) -> None:
     send_to_push_bouncer(
         method,
@@ -103,7 +106,9 @@ def send_json_to_push_bouncer(method: str, endpoint: str, post_data: Mapping[str
         extra_headers={"Content-type": "application/json"},
     )
 
+
 REALMAUDITLOG_PUSHED_FIELDS = ['id', 'realm', 'event_time', 'backfilled', 'extra_data', 'event_type']
+
 
 def build_analytics_data(realm_count_query: Any,
                          installation_count_query: Any,
@@ -131,6 +136,7 @@ def build_analytics_data(realm_count_query: Any,
     floatify_datetime_fields(data, 'zerver_realmauditlog')
     return (data['analytics_realmcount'], data['analytics_installationcount'],
             data['zerver_realmauditlog'])
+
 
 def send_analytics_to_remote_server() -> None:
     # first, check what's latest

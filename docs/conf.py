@@ -314,6 +314,7 @@ class CustomCommonMarkParser(CommonMarkParser):
     def visit_document(self, node: Node) -> None:
         pass
 
+
 def setup(app: Any) -> None:
 
     app.add_source_parser(CustomCommonMarkParser)

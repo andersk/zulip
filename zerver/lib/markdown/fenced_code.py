@@ -116,6 +116,7 @@ FENCE_RE = re.compile("""
 CODE_WRAP = '<pre><code%s>%s\n</code></pre>'
 LANG_TAG = ' class="%s"'
 
+
 def validate_curl_content(lines: List[str]) -> None:
     error_msg = """
 Missing required -X argument in curl command:
@@ -133,6 +134,7 @@ Missing required -X argument in curl command:
 CODE_VALIDATORS = {
     'curl': validate_curl_content,
 }
+
 
 class FencedCodeExtension(markdown.Extension):
     def __init__(self, config: Mapping[str, Any] = {}) -> None:
@@ -161,6 +163,7 @@ class BaseHandler:
     def done(self) -> None:
         raise NotImplementedError()
 
+
 def generic_handler(processor: Any, output: MutableSequence[str],
                     fence: str, lang: str, header: str,
                     run_content_validators: bool=False,
@@ -174,6 +177,7 @@ def generic_handler(processor: Any, output: MutableSequence[str],
         return SpoilerHandler(processor, output, fence, header)
     else:
         return CodeHandler(processor, output, fence, lang, run_content_validators)
+
 
 def check_for_new_fence(processor: Any, output: MutableSequence[str], line: str,
                         run_content_validators: bool=False,
@@ -191,6 +195,7 @@ def check_for_new_fence(processor: Any, output: MutableSequence[str], line: str,
     else:
         output.append(line)
 
+
 class OuterHandler(BaseHandler):
     def __init__(self, processor: Any, output: MutableSequence[str],
                  run_content_validators: bool=False,
@@ -206,6 +211,7 @@ class OuterHandler(BaseHandler):
 
     def done(self) -> None:
         self.processor.pop()
+
 
 class CodeHandler(BaseHandler):
     def __init__(self, processor: Any, output: MutableSequence[str],
@@ -238,6 +244,7 @@ class CodeHandler(BaseHandler):
         self.output.extend(processed_lines)
         self.output.append('')
         self.processor.pop()
+
 
 class QuoteHandler(BaseHandler):
     def __init__(self, processor: Any, output: MutableSequence[str],
@@ -293,6 +300,7 @@ class SpoilerHandler(BaseHandler):
         self.output.extend(processed_lines)
         self.output.append('')
         self.processor.pop()
+
 
 class TexHandler(BaseHandler):
     def __init__(self, processor: Any, output: MutableSequence[str], fence: str) -> None:
@@ -442,6 +450,7 @@ class FencedBlockPreprocessor(markdown.preprocessors.Preprocessor):
 
 def makeExtension(*args: Any, **kwargs: None) -> FencedCodeExtension:
     return FencedCodeExtension(kwargs)
+
 
 if __name__ == "__main__":
     import doctest

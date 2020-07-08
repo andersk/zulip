@@ -20,10 +20,12 @@ import requests
 # usage: python check-issue-labels
 # Pass --force as an argument to run without a token.
 
+
 def get_config() -> configparser.ConfigParser:
     config = configparser.ConfigParser()
     config.read(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'conf.ini'))
     return config
+
 
 def area_labeled(issue: Dict[str, Any]) -> bool:
     for label in issue["labels"]:
@@ -32,8 +34,10 @@ def area_labeled(issue: Dict[str, Any]) -> bool:
             return True
     return False
 
+
 def is_issue(item: Dict[str, Any]) -> bool:
     return "issues" in item["html_url"]
+
 
 def get_next_page_url(link_header: str) -> Optional[str]:
     matches = re.findall(r'\<(\S+)\>; rel=\"next\"', link_header)
@@ -41,6 +45,7 @@ def get_next_page_url(link_header: str) -> Optional[str]:
         return matches[0]
     except IndexError:
         return None
+
 
 def check_issue_labels() -> None:
     parser = argparse.ArgumentParser()
@@ -83,6 +88,7 @@ def check_issue_labels() -> None:
         print("\n".join(unlabeled_issue_urls))
     else:
         print("No GitHub issues found with missing area labels.")
+
 
 if __name__ == '__main__':
     check_issue_labels()

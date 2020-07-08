@@ -26,6 +26,7 @@ Changelog:
 ```
 """.strip()
 
+
 @api_key_only_webhook_view("NewRelic")
 @has_request_variables
 def api_newrelic_webhook(request: HttpRequest, user_profile: UserProfile,

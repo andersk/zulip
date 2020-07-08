@@ -41,6 +41,7 @@ from zproject.backends import is_user_active
 
 logger = logging.getLogger(__name__)
 
+
 def redact_email_address(error_message: str) -> str:
     if not settings.EMAIL_GATEWAY_EXTRA_PATTERN_HACK:
         domain = settings.EMAIL_GATEWAY_PATTERN.rsplit('@')[-1]
@@ -71,6 +72,7 @@ def redact_email_address(error_message: str) -> str:
 
     return error_message
 
+
 def report_to_zulip(error_message: str) -> None:
     if settings.ERROR_BOT is None:
         return
@@ -83,6 +85,7 @@ def report_to_zulip(error_message: str) -> None:
         f"""~~~\n{error_message}\n~~~""",
     )
 
+
 def log_and_report(email_message: EmailMessage, error_message: str, to: Optional[str]) -> None:
     recipient = to or "No recipient found"
     error_message = "Sender: {}\nTo: {}\n{}".format(email_message.get("From"),
@@ -94,8 +97,10 @@ def log_and_report(email_message: EmailMessage, error_message: str, to: Optional
 
 # Temporary missed message addresses
 
+
 def generate_missed_message_token() -> str:
     return 'mm' + generate_random_token(32)
+
 
 def is_missed_message_address(address: str) -> bool:
     try:
@@ -105,12 +110,14 @@ def is_missed_message_address(address: str) -> bool:
 
     return is_mm_32_format(msg_string)
 
+
 def is_mm_32_format(msg_string: Optional[str]) -> bool:
     '''
     Missed message strings are formatted with a little "mm" prefix
     followed by a randomly generated 32-character string.
     '''
     return msg_string is not None and msg_string.startswith('mm') and len(msg_string) == 34
+
 
 def get_missed_message_token_from_address(address: str) -> str:
     msg_string = get_email_gateway_message_string_from_address(address)
@@ -119,6 +126,7 @@ def get_missed_message_token_from_address(address: str) -> str:
         raise ZulipEmailForwardError('Could not parse missed message address')
 
     return msg_string
+
 
 def get_usable_missed_message_address(address: str) -> MissedMessageEmailAddress:
     token = get_missed_message_token_from_address(address)
@@ -137,6 +145,7 @@ def get_usable_missed_message_address(address: str) -> MissedMessageEmailAddress
 
     return mm_address
 
+
 def create_missed_message_address(user_profile: UserProfile, message: Message) -> str:
     if settings.EMAIL_GATEWAY_PATTERN == '':
         logger.warning("EMAIL_GATEWAY_PATTERN is an empty string, using "
@@ -147,6 +156,7 @@ def create_missed_message_address(user_profile: UserProfile, message: Message) -
                                                           user_profile=user_profile,
                                                           email_token=generate_missed_message_token())
     return str(mm_address)
+
 
 def construct_zulip_body(message: EmailMessage, realm: Realm, show_sender: bool=False,
                          include_quotes: bool=False, include_footer: bool=False,
@@ -172,8 +182,10 @@ def construct_zulip_body(message: EmailMessage, realm: Realm, show_sender: bool=
 
 ## Sending the Zulip ##
 
+
 class ZulipEmailForwardUserError(ZulipEmailForwardError):
     pass
+
 
 def send_zulip(sender: UserProfile, stream: Stream, topic: str, content: str) -> None:
     internal_send_stream_message(
@@ -183,6 +195,7 @@ def send_zulip(sender: UserProfile, stream: Stream, topic: str, content: str) ->
         truncate_topic(topic),
         truncate_body(content),
         email_gateway=True)
+
 
 def get_message_part_by_type(message: EmailMessage, content_type: str) -> Optional[str]:
     charsets = message.get_charsets()
@@ -199,6 +212,7 @@ def get_message_part_by_type(message: EmailMessage, content_type: str) -> Option
                 return content.decode("us-ascii", errors="ignore")
 
     return None
+
 
 def extract_body(message: EmailMessage, include_quotes: bool=False, prefer_text: bool=True) -> str:
     plaintext_content = extract_plaintext_body(message, include_quotes)
@@ -223,7 +237,10 @@ def extract_body(message: EmailMessage, include_quotes: bool=False, prefer_text:
             assert plaintext_content  # Needed for mypy. Ensured by the validating block above.
             return plaintext_content
 
+
 talon_initialized = False
+
+
 def extract_plaintext_body(message: EmailMessage, include_quotes: bool=False) -> Optional[str]:
     import talon
     global talon_initialized
@@ -239,6 +256,7 @@ def extract_plaintext_body(message: EmailMessage, include_quotes: bool=False) ->
             return talon.quotations.extract_from_plain(plaintext_content)
     else:
         return None
+
 
 def extract_html_body(message: EmailMessage, include_quotes: bool=False) -> Optional[str]:
     import talon
@@ -256,6 +274,7 @@ def extract_html_body(message: EmailMessage, include_quotes: bool=False) -> Opti
     else:
         return None
 
+
 def filter_footer(text: str) -> str:
     # Try to filter out obvious footers.
     possible_footers = [line for line in text.split("\n") if line.strip() == "--"]
@@ -265,6 +284,7 @@ def filter_footer(text: str) -> str:
         return text
 
     return text.partition("--")[0].strip()
+
 
 def extract_and_upload_attachments(message: EmailMessage, realm: Realm) -> str:
     user_profile = get_system_bot(settings.EMAIL_GATEWAY_BOT)
@@ -288,6 +308,7 @@ def extract_and_upload_attachments(message: EmailMessage, realm: Realm) -> str:
 
     return '\n'.join(attachment_links)
 
+
 def decode_stream_email_address(email: str) -> Tuple[Stream, Dict[str, bool]]:
     token, options = decode_email_address(email)
 
@@ -297,6 +318,7 @@ def decode_stream_email_address(email: str) -> Tuple[Stream, Dict[str, bool]]:
         raise ZulipEmailForwardError("Bad stream token from email recipient " + email)
 
     return stream, options
+
 
 def find_emailgateway_recipient(message: EmailMessage) -> str:
     # We can't use Delivered-To; if there is a X-Gm-Original-To
@@ -316,6 +338,7 @@ def find_emailgateway_recipient(message: EmailMessage) -> str:
 
     raise ZulipEmailForwardError("Missing recipient in mirror email")
 
+
 def strip_from_subject(subject: str) -> str:
     # strips RE and FWD from the subject
     # from: https://stackoverflow.com/questions/9153629/regex-code-for-removing-fwd-re-etc-from-email-subject
@@ -323,11 +346,13 @@ def strip_from_subject(subject: str) -> str:
     stripped = re.sub(reg, "", subject, flags = re.IGNORECASE | re.MULTILINE)
     return stripped.strip()
 
+
 def is_forwarded(subject: str) -> bool:
     # regex taken from strip_from_subject, we use it to detect various forms
     # of FWD at the beginning of the subject.
     reg = r"([\[\(] *)?\b(FWD?) *([-:;)\]][ :;\])-]*|$)|\]+ *$"
     return bool(re.match(reg, subject, flags=re.IGNORECASE))
+
 
 def process_stream_message(to: str, message: EmailMessage) -> None:
     subject_header = message.get("Subject", "")
@@ -346,6 +371,7 @@ def process_stream_message(to: str, message: EmailMessage) -> None:
         "Successfully processed email to %s (%s)",
         stream.name, stream.realm.string_id,
     )
+
 
 def process_missed_message(to: str, message: EmailMessage) -> None:
     mm_address = get_usable_missed_message_address(to)
@@ -395,6 +421,7 @@ def process_missed_message(to: str, message: EmailMessage) -> None:
         user_profile.id, recipient_str,
     )
 
+
 def process_message(message: EmailMessage, rcpt_to: Optional[str]=None) -> None:
     to: Optional[str] = None
 
@@ -414,11 +441,13 @@ def process_message(message: EmailMessage, rcpt_to: Optional[str]=None) -> None:
     except ZulipEmailForwardError as e:
         log_and_report(message, e.args[0], to)
 
+
 def validate_to_address(rcpt_to: str) -> None:
     if is_missed_message_address(rcpt_to):
         get_usable_missed_message_address(rcpt_to)
     else:
         decode_stream_email_address(rcpt_to)
+
 
 def mirror_email_message(rcpt_to: str, msg_base64: str) -> Dict[str, str]:
     try:
@@ -440,6 +469,7 @@ def mirror_email_message(rcpt_to: str, msg_base64: str) -> Dict[str, str]:
 
 # Email mirror rate limiter code:
 
+
 class RateLimitedRealmMirror(RateLimitedObject):
     def __init__(self, realm: Realm) -> None:
         self.realm = realm
@@ -450,6 +480,7 @@ class RateLimitedRealmMirror(RateLimitedObject):
 
     def rules(self) -> List[Tuple[int, int]]:
         return settings.RATE_LIMITING_MIRROR_REALM_RULES
+
 
 def rate_limit_mirror_by_realm(recipient_realm: Realm) -> None:
     ratelimited = RateLimitedRealmMirror(recipient_realm).rate_limit()[0]

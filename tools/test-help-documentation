@@ -37,6 +37,7 @@ extra_args = ['-a', 'validate_html=set']
 if options.skip_external_link_check:
     extra_args += ['-a', 'skip_external=set']
 
+
 @contextlib.contextmanager
 def vnu_servlet() -> Iterator[None]:
     with subprocess.Popen([
@@ -51,6 +52,7 @@ def vnu_servlet() -> Iterator[None]:
     ]) as proc:
         yield
         proc.terminate()
+
 
 with vnu_servlet(), \
     test_server_running(options.force, external_host, log_file=LOG_FILE,

@@ -14,6 +14,7 @@ def upgrade_stream_post_policy(apps: StateApps, schema_editor: DatabaseSchemaEdi
     Stream.objects.filter(is_announcement_only=True) \
         .update(stream_post_policy=Stream.STREAM_POST_POLICY_ADMINS)
 
+
 class Migration(migrations.Migration):
 
     dependencies = [

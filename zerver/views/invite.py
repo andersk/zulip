@@ -25,6 +25,7 @@ def check_if_owner_required(invited_as: int, user_profile: UserProfile) -> None:
     if invited_as == PreregistrationUser.INVITE_AS['REALM_OWNER'] and not user_profile.is_realm_owner:
         raise OrganizationOwnerRequired()
 
+
 @require_member_or_admin
 @has_request_variables
 def invite_users_backend(request: HttpRequest, user_profile: UserProfile,
@@ -60,6 +61,7 @@ def invite_users_backend(request: HttpRequest, user_profile: UserProfile,
     do_invite_users(user_profile, invitee_emails, streams, invite_as)
     return json_success()
 
+
 def get_invitee_emails_set(invitee_emails_raw: str) -> Set[str]:
     invitee_emails_list = set(re.split(r'[,\n]', invitee_emails_raw))
     invitee_emails = set()
@@ -70,10 +72,12 @@ def get_invitee_emails_set(invitee_emails_raw: str) -> Set[str]:
         invitee_emails.add(email.strip())
     return invitee_emails
 
+
 @require_member_or_admin
 def get_user_invites(request: HttpRequest, user_profile: UserProfile) -> HttpResponse:
     all_users = do_get_user_invites(user_profile)
     return json_success({'invites': all_users})
+
 
 @require_member_or_admin
 @has_request_variables
@@ -95,6 +99,7 @@ def revoke_user_invite(request: HttpRequest, user_profile: UserProfile,
     do_revoke_user_invite(prereg_user)
     return json_success()
 
+
 @require_realm_admin
 @has_request_variables
 def revoke_multiuse_invite(request: HttpRequest, user_profile: UserProfile,
@@ -112,6 +117,7 @@ def revoke_multiuse_invite(request: HttpRequest, user_profile: UserProfile,
 
     do_revoke_multi_use_invite(invite)
     return json_success()
+
 
 @require_member_or_admin
 @has_request_variables
@@ -134,6 +140,7 @@ def resend_user_invite_email(request: HttpRequest, user_profile: UserProfile,
 
     timestamp = do_resend_user_invite_email(prereg_user)
     return json_success({'timestamp': timestamp})
+
 
 @require_realm_admin
 @has_request_variables

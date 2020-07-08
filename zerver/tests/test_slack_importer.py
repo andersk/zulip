@@ -49,6 +49,7 @@ def remove_folder(path: str) -> None:
     if os.path.exists(path):
         shutil.rmtree(path)
 
+
 class MockResponse:
     def __init__(self, json_data: Optional[Dict[str, Any]], status_code: int) -> None:
         self.json_data = json_data
@@ -58,6 +59,8 @@ class MockResponse:
         return self.json_data
 
 # This method will be used by the mock to replace requests.get
+
+
 def mocked_requests_get(*args: List[str], **kwargs: List[str]) -> MockResponse:
     if args[0] == 'https://slack.com/api/users.list?token=xoxp-valid-token':
         return MockResponse({"ok": True, "members": "user_data"}, 200)
@@ -65,6 +68,7 @@ def mocked_requests_get(*args: List[str], **kwargs: List[str]) -> MockResponse:
         return MockResponse({"ok": False, "error": "invalid_auth"}, 200)
     else:
         return MockResponse(None, 404)
+
 
 class SlackImporter(ZulipTestCase):
     logger = logging.getLogger()

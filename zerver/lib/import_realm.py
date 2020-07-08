@@ -125,6 +125,7 @@ path_maps: Dict[str, Dict[str, str]] = {
     'attachment_path': {},
 }
 
+
 def update_id_map(table: TableName, old_id: int, new_id: int) -> None:
     if table not in ID_MAP:
         raise Exception(f'''
@@ -134,11 +135,13 @@ def update_id_map(table: TableName, old_id: int, new_id: int) -> None:
             ''')
     ID_MAP[table][old_id] = new_id
 
+
 def fix_datetime_fields(data: TableData, table: TableName) -> None:
     for item in data[table]:
         for field_name in DATE_FIELDS[table]:
             if item[field_name] is not None:
                 item[field_name] = datetime.datetime.fromtimestamp(item[field_name], tz=datetime.timezone.utc)
+
 
 def fix_upload_links(data: TableData, message_table: TableName) -> None:
     """
@@ -154,6 +157,7 @@ def fix_upload_links(data: TableData, message_table: TableName) -> None:
                     message['content'] = message['content'].replace(key, value)
                     if message['rendered_content']:
                         message['rendered_content'] = message['rendered_content'].replace(key, value)
+
 
 def create_subscription_events(data: TableData, realm_id: int) -> None:
     """
@@ -198,6 +202,7 @@ def create_subscription_events(data: TableData, realm_id: int) -> None:
                                                    event_type=RealmAuditLog.SUBSCRIPTION_CREATED))
     RealmAuditLog.objects.bulk_create(all_subscription_logs)
 
+
 def fix_service_tokens(data: TableData, table: TableName) -> None:
     """
     The tokens in the services are created by 'generate_api_key'.
@@ -206,6 +211,7 @@ def fix_service_tokens(data: TableData, table: TableName) -> None:
     for item in data[table]:
         item['token'] = generate_api_key()
 
+
 def process_huddle_hash(data: TableData, table: TableName) -> None:
     """
     Build new huddle hashes with the updated ids of the users
@@ -213,6 +219,7 @@ def process_huddle_hash(data: TableData, table: TableName) -> None:
     for huddle in data[table]:
         user_id_list = id_map_to_list['huddle_to_user_list'][huddle['id']]
         huddle['huddle_hash'] = get_huddle_hash(user_id_list)
+
 
 def get_huddles_from_subscription(data: TableData, table: TableName) -> None:
     """
@@ -226,6 +233,7 @@ def get_huddles_from_subscription(data: TableData, table: TableName) -> None:
         if subscription['recipient'] in ID_MAP['recipient_to_huddle_map']:
             huddle_id = ID_MAP['recipient_to_huddle_map'][subscription['recipient']]
             id_map_to_list['huddle_to_user_list'][huddle_id].append(subscription['user_profile_id'])
+
 
 def fix_customprofilefield(data: TableData) -> None:
     """
@@ -247,6 +255,7 @@ def fix_customprofilefield(data: TableData) -> None:
                 related_table='user_profile',
                 old_id_list=old_user_id_list)
             item['value'] = ujson.dumps(new_id_list)
+
 
 def fix_message_rendered_content(realm: Realm,
                                  sender_map: Dict[int, Record],
@@ -334,6 +343,7 @@ def fix_message_rendered_content(realm: Realm,
             #   rendered_content assert above to fire).
             logging.warning("Error in markdown rendering for message ID %s; continuing", message['id'])
 
+
 def current_table_ids(data: TableData, table: TableName) -> List[int]:
     """
     Returns the ids present in the current table
@@ -343,6 +353,7 @@ def current_table_ids(data: TableData, table: TableName) -> List[int]:
         id_list.append(item["id"])
     return id_list
 
+
 def idseq(model_class: Any) -> str:
     if model_class == RealmDomain:
         return 'zerver_realmalias_id_seq'
@@ -351,6 +362,7 @@ def idseq(model_class: Any) -> str:
     elif model_class == BotConfigData:
         return 'zerver_botuserconfigdata_id_seq'
     return f'{model_class._meta.db_table}_id_seq'
+
 
 def allocate_ids(model_class: Any, count: int) -> List[int]:
     """
@@ -367,6 +379,7 @@ def allocate_ids(model_class: Any, count: int) -> List[int]:
     # convert List[Tuple[int]] to List[int]
     return [item[0] for item in query]
 
+
 def convert_to_id_fields(data: TableData, table: TableName, field_name: Field) -> None:
     '''
     When Django gives us dict objects via model_to_dict, the foreign
@@ -378,6 +391,7 @@ def convert_to_id_fields(data: TableData, table: TableName, field_name: Field) -
     for item in data[table]:
         item[field_name + "_id"] = item[field_name]
         del item[field_name]
+
 
 def re_map_foreign_keys(data: TableData,
                         table: TableName,
@@ -399,6 +413,7 @@ def re_map_foreign_keys(data: TableData,
 
     re_map_foreign_keys_internal(data[table], table, field_name, related_table, verbose, id_field,
                                  recipient_field, reaction_field)
+
 
 def re_map_foreign_keys_internal(data_table: List[Record],
                                  table: TableName,
@@ -455,6 +470,7 @@ def re_map_foreign_keys_internal(data_table: List[Record],
             else:
                 item[field_name] = new_id
 
+
 def re_map_foreign_keys_many_to_many(data: TableData,
                                      table: TableName,
                                      field_name: Field,
@@ -474,6 +490,7 @@ def re_map_foreign_keys_many_to_many(data: TableData,
             table, field_name, related_table, old_id_list, verbose)
         item[field_name] = new_id_list
         del item[field_name]
+
 
 def re_map_foreign_keys_many_to_many_internal(table: TableName,
                                               field_name: Field,
@@ -498,10 +515,12 @@ def re_map_foreign_keys_many_to_many_internal(table: TableName,
         new_id_list.append(new_id)
     return new_id_list
 
+
 def fix_bitfield_keys(data: TableData, table: TableName, field_name: Field) -> None:
     for item in data[table]:
         item[field_name] = item[field_name + '_mask']
         del item[field_name + '_mask']
+
 
 def fix_realm_authentication_bitfield(data: TableData, table: TableName, field_name: Field) -> None:
     """Used to fixup the authentication_methods bitfield to be a string"""
@@ -510,6 +529,7 @@ def fix_realm_authentication_bitfield(data: TableData, table: TableName, field_n
                                        item[field_name]])
         values_as_int = int(values_as_bitstring, 2)
         item[field_name] = values_as_int
+
 
 def remove_denormalized_recipient_column_from_data(data: TableData) -> None:
     """
@@ -528,9 +548,11 @@ def remove_denormalized_recipient_column_from_data(data: TableData) -> None:
         if 'recipient' in huddle_dict:
             del huddle_dict['recipient']
 
+
 def get_db_table(model_class: Any) -> str:
     """E.g. (RealmDomain -> 'zerver_realmdomain')"""
     return model_class._meta.db_table
+
 
 def update_model_ids(model: Any, data: TableData, related_table: TableName) -> None:
     table = get_db_table(model)
@@ -545,6 +567,7 @@ def update_model_ids(model: Any, data: TableData, related_table: TableName) -> N
     for item in range(len(data[table])):
         update_id_map(related_table, old_id_list[item], allocated_id_list[item])
     re_map_foreign_keys(data, table, 'id', related_table=related_table, id_field=True)
+
 
 def bulk_import_user_message_data(data: TableData, dump_file_id: int) -> None:
     model = UserMessage
@@ -578,6 +601,7 @@ def bulk_import_user_message_data(data: TableData, dump_file_id: int) -> None:
 
     logging.info("Successfully imported %s from %s[%s].", model, table, dump_file_id)
 
+
 def bulk_import_model(data: TableData, model: Any, dump_file_id: Optional[str]=None) -> None:
     table = get_db_table(model)
     # TODO, deprecate dump_file_id
@@ -591,6 +615,8 @@ def bulk_import_model(data: TableData, model: Any, dump_file_id: Optional[str]=N
 # correctly import multiple realms into the same server, we need to
 # check if a Client object already exists, and so we need to support
 # remap all Client IDs to the values in the new DB.
+
+
 def bulk_import_client(data: TableData, model: Any, table: TableName) -> None:
     for item in data[table]:
         try:
@@ -598,6 +624,7 @@ def bulk_import_client(data: TableData, model: Any, table: TableName) -> None:
         except Client.DoesNotExist:
             client = Client.objects.create(name=item['name'])
         update_id_map(table='client', old_id=item['id'], new_id=client.id)
+
 
 def import_uploads(realm: Realm, import_dir: Path, processes: int, processing_avatars: bool=False,
                    processing_emojis: bool=False, processing_realm_icons: bool=False) -> None:
@@ -781,6 +808,8 @@ def import_uploads(realm: Realm, import_dir: Path, processes: int, processing_av
 # Because the Python object => JSON conversion process is not fully
 # faithful, we have to use a set of fixers (e.g. on DateTime objects
 # and Foreign Keys) to do the import correctly.
+
+
 def do_import_realm(import_dir: Path, subdomain: str, processes: int=1) -> Realm:
     logging.info("Importing realm dump %s", import_dir)
     if not os.path.exists(import_dir):
@@ -1079,11 +1108,14 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int=1) -> Realm
 # create_users and do_import_system_bots differ from their equivalent
 # in zerver/lib/server_initialization.py because here we check if the
 # bots don't already exist and only then create a user for these bots.
+
+
 def do_import_system_bots(realm: Any) -> None:
     internal_bots = [(bot['name'], bot['email_template'] % (settings.INTERNAL_BOT_DOMAIN,))
                      for bot in settings.INTERNAL_BOTS]
     create_users(realm, internal_bots, bot_type=UserProfile.DEFAULT_BOT)
     print("Finished importing system bots.")
+
 
 def create_users(realm: Realm, name_list: Iterable[Tuple[str, str]],
                  bot_type: Optional[int]=None) -> None:
@@ -1093,6 +1125,7 @@ def create_users(realm: Realm, name_list: Iterable[Tuple[str, str]],
         if not UserProfile.objects.filter(email=email):
             user_set.add((email, full_name, short_name, True))
     bulk_create_users(realm, user_set, bot_type)
+
 
 def update_message_foreign_keys(import_dir: Path,
                                 sort_by_date: bool) -> None:
@@ -1114,6 +1147,7 @@ def update_message_foreign_keys(import_dir: Path,
 
     # We don't touch user_message keys here; that happens later when
     # we're actually read the files a second time to get actual data.
+
 
 def get_incoming_message_ids(import_dir: Path,
                              sort_by_date: bool) -> List[int]:
@@ -1173,6 +1207,7 @@ def get_incoming_message_ids(import_dir: Path,
 
     return message_ids
 
+
 def import_message_data(realm: Realm,
                         sender_map: Dict[int, Record],
                         import_dir: Path) -> None:
@@ -1223,6 +1258,7 @@ def import_message_data(realm: Realm,
 
         bulk_import_user_message_data(data, dump_file_id)
         dump_file_id += 1
+
 
 def import_attachments(data: TableData) -> None:
 
@@ -1294,6 +1330,7 @@ def import_attachments(data: TableData) -> None:
         execute_values(cursor.cursor, sql_template, tups)
 
     logging.info('Successfully imported M2M table %s', m2m_table_name)
+
 
 def import_analytics_data(realm: Realm, import_dir: Path) -> None:
     analytics_filename = os.path.join(import_dir, "analytics.json")

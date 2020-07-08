@@ -223,6 +223,7 @@ REPO_STOPWORDS_PATH = os.path.join(
     "zulip_english.stop",
 )
 
+
 def install_system_deps() -> None:
 
     # By doing list -> set -> list conversion, we remove duplicates.
@@ -240,6 +241,7 @@ def install_system_deps() -> None:
     if BUILD_PGROONGA_FROM_SOURCE:
         run_as_root(["./scripts/lib/build-pgroonga"])
 
+
 def install_apt_deps(deps_to_install: List[str]) -> None:
     # setup-apt-repo does an `apt-get update` if the sources.list files changed.
     run_as_root(["./scripts/lib/setup-apt-repo"])
@@ -256,6 +258,7 @@ def install_apt_deps(deps_to_install: List[str]) -> None:
         ]
         + deps_to_install,
     )
+
 
 def install_yum_deps(deps_to_install: List[str]) -> None:
     print(WARNING + "RedHat support is still experimental.")
@@ -320,6 +323,7 @@ def install_yum_deps(deps_to_install: List[str]) -> None:
         "/usr/share/myspell/en_US.aff",
         "/usr/pgsql-{}/share/tsearch_data/en_us.affix".format(POSTGRES_VERSION,),
     )
+
 
 def main(options: argparse.Namespace) -> "NoReturn":
 
@@ -428,6 +432,7 @@ def main(options: argparse.Namespace) -> "NoReturn":
             *(["--skip-dev-db-build"] if options.skip_dev_db_build else []),
         ],
     )
+
 
 if __name__ == "__main__":
     description = ("Provision script to install Zulip")

@@ -36,6 +36,7 @@ class AppsTest(ZulipTestCase):
                 mock.assert_called_once()
             mock_logging.assert_called_once()
 
+
 class CacheKeyValidationTest(ZulipTestCase):
     def test_validate_cache_key(self) -> None:
         validate_cache_key('nice_Ascii:string!~')
@@ -73,6 +74,7 @@ class CacheKeyValidationTest(ZulipTestCase):
             cache_set_many({good_key: 0, invalid_key: 1})
         with self.assertRaises(InvalidCacheKeyException):
             cache_delete_many([good_key, invalid_key])
+
 
 class CacheWithKeyDecoratorTest(ZulipTestCase):
     def test_cache_with_key_invalid_character(self) -> None:
@@ -162,6 +164,7 @@ class CacheWithKeyDecoratorTest(ZulipTestCase):
         self.assertEqual(result_two, None)
         self.assert_length(queries, 0)
 
+
 class GetCacheWithKeyDecoratorTest(ZulipTestCase):
     def test_get_cache_with_good_key(self) -> None:
         # Test with a good cache key function, but a get_user function
@@ -199,6 +202,7 @@ class GetCacheWithKeyDecoratorTest(ZulipTestCase):
             with self.assertRaises(NotFoundInCache):
                 get_user_function_with_bad_cache_keys(hamlet.id)
             mock_warn.assert_called_once()
+
 
 class SafeCacheFunctionsTest(ZulipTestCase):
     def test_safe_cache_functions_with_all_good_keys(self) -> None:
@@ -252,6 +256,7 @@ class SafeCacheFunctionsTest(ZulipTestCase):
 
             self.assertEqual(result, good_items)
 
+
 class BotCacheKeyTest(ZulipTestCase):
     def test_bot_profile_key_deleted_on_save(self) -> None:
         # Get the profile cached on both cache keys:
@@ -272,8 +277,10 @@ class BotCacheKeyTest(ZulipTestCase):
         user_profile2 = get_user_profile_by_email(settings.EMAIL_GATEWAY_BOT)
         self.assertEqual(user_profile2.is_api_super_user, flipped_setting)
 
+
 def get_user_email(user: UserProfile) -> str:
     return user.email  # nocoverage
+
 
 class GenericBulkCachedFetchTest(ZulipTestCase):
     def test_query_function_called_only_if_needed(self) -> None:

@@ -40,6 +40,7 @@ def update_invite_as_dict_values(apps: StateApps, schema_editor: DatabaseSchemaE
     MultiuseInvite.objects.filter(invited_as=OLD_INVITE_AS_DICT['GUEST_USER']) \
         .update(invited_as=NEW_INVITE_AS_DICT['GUEST_USER'])
 
+
 class Migration(migrations.Migration):
 
     dependencies = [

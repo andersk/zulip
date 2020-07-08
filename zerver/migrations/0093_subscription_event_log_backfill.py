@@ -42,6 +42,7 @@ def backfill_subscription_log_events(apps: StateApps, schema_editor: DatabaseSch
     RealmAuditLog.objects.bulk_create(objects_to_create)
     objects_to_create = []
 
+
 def reverse_code(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     RealmAuditLog = apps.get_model('zerver', 'RealmAuditLog')
     RealmAuditLog.objects.filter(event_type='subscription_created').delete()

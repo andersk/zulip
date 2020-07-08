@@ -45,6 +45,7 @@ from zproject.backends import check_password_strength, email_belongs_to_ldap
 
 AVATAR_CHANGES_DISABLED_ERROR = _("Avatar changes are disabled in this organization.")
 
+
 def confirm_email_change(request: HttpRequest, confirmation_key: str) -> HttpResponse:
     try:
         email_change_object = get_object_from_key(confirmation_key, Confirmation.EMAIL_CHANGE)
@@ -73,6 +74,7 @@ def confirm_email_change(request: HttpRequest, confirmation_key: str) -> HttpRes
         'old_email': old_email,
     }
     return render(request, 'confirmation/confirm_email_change.html', context=ctx)
+
 
 @human_users_only
 @has_request_variables
@@ -154,8 +156,10 @@ def json_change_settings(request: HttpRequest, user_profile: UserProfile,
 
     return json_success(result)
 
+
 all_timezones = set(get_all_timezones())
 emojiset_choices = {emojiset['key'] for emojiset in UserProfile.emojiset_choices()}
+
 
 @human_users_only
 @has_request_variables
@@ -193,6 +197,7 @@ def update_display_settings_backend(
             result[k] = v
 
     return json_success(result)
+
 
 @human_users_only
 @has_request_variables
@@ -234,6 +239,7 @@ def json_change_notify_settings(
 
     return json_success(result)
 
+
 def set_avatar_backend(request: HttpRequest, user_profile: UserProfile) -> HttpResponse:
     if len(request.FILES) != 1:
         return json_error(_("You must upload exactly one avatar."))
@@ -255,6 +261,7 @@ def set_avatar_backend(request: HttpRequest, user_profile: UserProfile) -> HttpR
     )
     return json_success(json_result)
 
+
 def delete_avatar_backend(request: HttpRequest, user_profile: UserProfile) -> HttpResponse:
     if avatar_changes_disabled(user_profile.realm) and not user_profile.is_realm_admin:
         return json_error(AVATAR_CHANGES_DISABLED_ERROR)
@@ -269,6 +276,8 @@ def delete_avatar_backend(request: HttpRequest, user_profile: UserProfile) -> Ht
 
 # We don't use @human_users_only here, because there are use cases for
 # a bot regenerating its own API key.
+
+
 @has_request_variables
 def regenerate_api_key(request: HttpRequest, user_profile: UserProfile) -> HttpResponse:
     new_api_key = do_regenerate_api_key(user_profile, user_profile)
@@ -276,6 +285,7 @@ def regenerate_api_key(request: HttpRequest, user_profile: UserProfile) -> HttpR
         api_key = new_api_key,
     )
     return json_success(json_result)
+
 
 @human_users_only
 @has_request_variables

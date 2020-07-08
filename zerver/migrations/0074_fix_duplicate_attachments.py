@@ -34,6 +34,7 @@ def fix_duplicate_attachments(apps: StateApps, schema_editor: DatabaseSchemaEdit
             surviving.save()
             a.delete()
 
+
 class Migration(migrations.Migration):
 
     dependencies = [

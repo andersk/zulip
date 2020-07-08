@@ -31,6 +31,7 @@ TEST_CACHES = {
     },
 }
 
+
 @override_settings(INLINE_URL_EMBED_PREVIEW=True)
 class OembedTestCase(ZulipTestCase):
     @mock.patch('pyoembed.requests.get')
@@ -172,6 +173,7 @@ class OpenGraphParserTestCase(ZulipTestCase):
         self.assertEqual(result.get('description'), 'The Rock film')
         self.assertEqual(result.get('oembed'), None)
         self.assertEqual(result.get('html'), None)
+
 
 class GenericParserTestCase(ZulipTestCase):
     def test_parser(self) -> None:

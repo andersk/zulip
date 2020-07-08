@@ -21,6 +21,7 @@ def alert_words_in_realm(realm: Realm) -> Dict[int, List[str]]:
         user_ids_with_words[id_and_word["user_profile_id"]].append(id_and_word["word"])
     return user_ids_with_words
 
+
 @cache_with_key(realm_alert_words_automaton_cache_key, timeout=3600*24)
 def get_alert_word_automaton(realm: Realm) -> ahocorasick.Automaton:
     user_id_with_words = alert_words_in_realm(realm)
@@ -42,8 +43,10 @@ def get_alert_word_automaton(realm: Realm) -> ahocorasick.Automaton:
         return None
     return alert_word_automaton
 
+
 def user_alert_words(user_profile: UserProfile) -> List[str]:
     return list(AlertWord.objects.filter(user_profile=user_profile).values_list("word", flat=True))
+
 
 @transaction.atomic
 def add_user_alert_words(user_profile: UserProfile, new_words: Iterable[str]) -> List[str]:
@@ -65,6 +68,7 @@ def add_user_alert_words(user_profile: UserProfile, new_words: Iterable[str]) ->
     flush_realm_alert_words(user_profile.realm)
 
     return user_alert_words(user_profile)
+
 
 @transaction.atomic
 def remove_user_alert_words(user_profile: UserProfile, delete_words: Iterable[str]) -> List[str]:

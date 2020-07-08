@@ -57,11 +57,13 @@ VERBOSE_MESSAGE_ABOUT_HASH_TRANSITION = '''
 
 '''
 
+
 def migration_paths() -> List[str]:
     return [
         *glob.glob('*/migrations/*.py'),
         'requirements/dev.txt',
     ]
+
 
 class Database:
     def __init__(self, platform: str, database_name: str, settings: str):
@@ -238,6 +240,7 @@ class Database:
             self.important_settings(),
         )
 
+
 DEV_DATABASE = Database(
     platform='dev',
     database_name='zulip',
@@ -249,6 +252,7 @@ TEST_DATABASE = Database(
     database_name='zulip_test_template',
     settings='zproject.test_settings',
 )
+
 
 def update_test_databases_if_required(rebuild_test_database: bool=False) -> None:
     """Checks whether the zulip_test_template database template, is
@@ -282,6 +286,7 @@ def update_test_databases_if_required(rebuild_test_database: bool=False) -> None
     if rebuild_test_database:
         run(['tools/setup/generate-fixtures'])
 
+
 def get_migration_status(**options: Any) -> str:
     verbosity = options.get('verbosity', 1)
 
@@ -311,9 +316,11 @@ def get_migration_status(**options: Any) -> str:
     output = out.read()
     return re.sub(r'\x1b\[(1|0)m', '', output)
 
+
 def extract_migrations_as_list(migration_status: str) -> List[str]:
     MIGRATIONS_RE = re.compile(r'\[[X| ]\] (\d+_.+)\n')
     return MIGRATIONS_RE.findall(migration_status)
+
 
 def destroy_leaked_test_databases(expiry_time: int = 60 * 60) -> int:
     """The logic in zerver/lib/test_runner.py tries to delete all the
@@ -367,6 +374,7 @@ def destroy_leaked_test_databases(expiry_time: int = 60 * 60) -> int:
     if p.returncode != 0:
         raise RuntimeError("Error cleaning up test databases!")
     return len(databases_to_drop)
+
 
 def remove_test_run_directories(expiry_time: int = 60 * 60) -> int:
     removed = 0

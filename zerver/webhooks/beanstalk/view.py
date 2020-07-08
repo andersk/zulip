@@ -29,6 +29,7 @@ def build_message_from_gitlog(user_profile: UserProfile, name: str, ref: str,
 
     return subject, content
 
+
 def _transform_commits_list_to_common_format(commits: List[Dict[str, Any]]) -> List[Dict[str, str]]:
     new_commits_list = []
     for commit in commits:
@@ -43,6 +44,8 @@ def _transform_commits_list_to_common_format(commits: List[Dict[str, Any]]) -> L
 # Beanstalk's web hook UI rejects url with a @ in the username section of a url
 # So we ask the user to replace them with %40
 # We manually fix the username here before passing it along to @authenticated_rest_api_view
+
+
 def beanstalk_decoder(view_func: ViewFuncT) -> ViewFuncT:
     @wraps(view_func)
     def _wrapped_view_func(request: HttpRequest, *args: object, **kwargs: object) -> HttpResponse:
@@ -59,6 +62,7 @@ def beanstalk_decoder(view_func: ViewFuncT) -> ViewFuncT:
         return view_func(request, *args, **kwargs)
 
     return cast(ViewFuncT, _wrapped_view_func)  # https://github.com/python/mypy/issues/1927
+
 
 @beanstalk_decoder
 @authenticated_rest_api_view(webhook_client_name="Beanstalk")

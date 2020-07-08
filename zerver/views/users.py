@@ -87,6 +87,7 @@ def check_last_owner(user_profile: UserProfile) -> bool:
     owners = set(user_profile.realm.get_human_owner_users())
     return user_profile.is_realm_owner and not user_profile.is_bot and len(owners) == 1
 
+
 def deactivate_user_backend(request: HttpRequest, user_profile: UserProfile,
                             user_id: int) -> HttpResponse:
     target = access_user_by_id(user_profile, user_id)
@@ -95,6 +96,7 @@ def deactivate_user_backend(request: HttpRequest, user_profile: UserProfile,
     if check_last_owner(target):
         return json_error(_('Cannot deactivate the only organization owner'))
     return _deactivate_user_profile_backend(request, user_profile, target)
+
 
 def deactivate_user_own_backend(request: HttpRequest, user_profile: UserProfile) -> HttpResponse:
     if UserProfile.objects.filter(realm=user_profile.realm, is_active=True).count() == 1:
@@ -105,15 +107,18 @@ def deactivate_user_own_backend(request: HttpRequest, user_profile: UserProfile)
     do_deactivate_user(user_profile, acting_user=user_profile)
     return json_success()
 
+
 def deactivate_bot_backend(request: HttpRequest, user_profile: UserProfile,
                            bot_id: int) -> HttpResponse:
     target = access_bot_by_id(user_profile, bot_id)
     return _deactivate_user_profile_backend(request, user_profile, target)
 
+
 def _deactivate_user_profile_backend(request: HttpRequest, user_profile: UserProfile,
                                      target: UserProfile) -> HttpResponse:
     do_deactivate_user(target, acting_user=user_profile)
     return json_success()
+
 
 def reactivate_user_backend(request: HttpRequest, user_profile: UserProfile,
                             user_id: int) -> HttpResponse:
@@ -124,6 +129,7 @@ def reactivate_user_backend(request: HttpRequest, user_profile: UserProfile,
     do_reactivate_user(target, acting_user=user_profile)
     return json_success()
 
+
 check_profile_data: Validator[List[Dict[str, Optional[Union[int, str, List[int]]]]]] = check_list(
     check_dict_only([
         ('id', check_int),
@@ -132,6 +138,7 @@ check_profile_data: Validator[List[Dict[str, Optional[Union[int, str, List[int]]
         )),
     ]),
 )
+
 
 @has_request_variables
 def update_user_backend(
@@ -176,6 +183,7 @@ def update_user_backend(
 
     return json_success()
 
+
 def avatar(request: HttpRequest, user_profile: UserProfile,
            email_or_id: str, medium: bool=False) -> HttpResponse:
     """Accepts an email address or user ID and returns the avatar"""
@@ -207,10 +215,12 @@ def avatar(request: HttpRequest, user_profile: UserProfile,
     url = add_query_arg_to_redirect_url(url, request.META['QUERY_STRING'])
     return redirect(url)
 
+
 def get_stream_name(stream: Optional[Stream]) -> Optional[str]:
     if stream:
         return stream.name
     return None
+
 
 @require_member_or_admin
 @has_request_variables
@@ -297,6 +307,7 @@ def patch_bot_backend(
 
     return json_success(json_result)
 
+
 @require_member_or_admin
 @has_request_variables
 def regenerate_bot_api_key(request: HttpRequest, user_profile: UserProfile, bot_id: int) -> HttpResponse:
@@ -307,6 +318,7 @@ def regenerate_bot_api_key(request: HttpRequest, user_profile: UserProfile, bot_
         api_key=new_api_key,
     )
     return json_success(json_result)
+
 
 @require_member_or_admin
 @has_request_variables
@@ -422,6 +434,7 @@ def add_bot_backend(
     )
     return json_success(json_result)
 
+
 @require_member_or_admin
 def get_bots_backend(request: HttpRequest, user_profile: UserProfile) -> HttpResponse:
     bot_profiles = UserProfile.objects.filter(is_bot=True, is_active=True,
@@ -449,6 +462,7 @@ def get_bots_backend(request: HttpRequest, user_profile: UserProfile) -> HttpRes
         )
 
     return json_success({'bots': list(map(bot_info, bot_profiles))})
+
 
 @has_request_variables
 def get_members_backend(request: HttpRequest, user_profile: UserProfile, user_id: Optional[int]=None,
@@ -483,6 +497,7 @@ def get_members_backend(request: HttpRequest, user_profile: UserProfile, user_id
         data = {"members": [members[k] for k in members]}
 
     return json_success(data)
+
 
 @require_realm_admin
 @has_request_variables
@@ -521,6 +536,7 @@ def create_user_backend(request: HttpRequest, user_profile: UserProfile,
     do_create_user(email, password, realm, full_name, short_name, acting_user=user_profile)
     return json_success()
 
+
 def get_profile_backend(request: HttpRequest, user_profile: UserProfile) -> HttpResponse:
     raw_user_data = get_raw_user_data(user_profile.realm, user_profile,
                                       target_user=user_profile,
@@ -535,6 +551,7 @@ def get_profile_backend(request: HttpRequest, user_profile: UserProfile) -> Http
         result['max_message_id'] = messages[0].id
 
     return json_success(result)
+
 
 @has_request_variables
 def get_subscription_backend(request: HttpRequest, user_profile: UserProfile,

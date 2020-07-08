@@ -170,6 +170,7 @@ class TwoFactorLoader(app_directories.Loader):
         dirs = super().get_dirs()
         return [d for d in dirs if 'two_factor' in d]
 
+
 MIDDLEWARE = (
     # With the exception of it's dependencies,
     # our logging middleware should be the top middleware item.
@@ -654,6 +655,7 @@ TEMPLATES = [
 # LOGGING SETTINGS
 ########################################################################
 
+
 def zulip_path(path: str) -> str:
     if DEVELOPMENT:
         # if DEVELOPMENT, store these files in the Zulip checkout
@@ -662,6 +664,7 @@ def zulip_path(path: str) -> str:
         else:
             path = os.path.join(os.path.join(DEPLOY_ROOT, 'var'), os.path.basename(path))
     return path
+
 
 SERVER_LOG_PATH = zulip_path("/var/log/zulip/server.log")
 ERROR_FILE_LOG_PATH = zulip_path("/var/log/zulip/errors.log")

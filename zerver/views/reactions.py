@@ -22,6 +22,7 @@ def create_historical_message(user_profile: UserProfile, message: Message) -> No
                                message=message,
                                flags=UserMessage.flags.historical | UserMessage.flags.read)
 
+
 @has_request_variables
 def add_reaction(request: HttpRequest, user_profile: UserProfile, message_id: int,
                  emoji_name: str=REQ(),
@@ -82,6 +83,7 @@ def add_reaction(request: HttpRequest, user_profile: UserProfile, message_id: in
     do_add_reaction(user_profile, message, emoji_name, emoji_code, reaction_type)
 
     return json_success()
+
 
 @has_request_variables
 def remove_reaction(request: HttpRequest, user_profile: UserProfile, message_id: int,

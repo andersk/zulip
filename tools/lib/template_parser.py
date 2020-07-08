@@ -4,6 +4,7 @@ from typing import Callable, List, Optional, Text
 class FormattedException(Exception):
     pass
 
+
 class TemplateParserException(Exception):
     def __init__(self, message: str) -> None:
         self.message = message
@@ -11,16 +12,19 @@ class TemplateParserException(Exception):
     def __str__(self) -> str:
         return self.message
 
+
 class TokenizationException(Exception):
     def __init__(self, message: str, line_content: Optional[str] = None) -> None:
         self.message = message
         self.line_content = line_content
+
 
 class TokenizerState:
     def __init__(self) -> None:
         self.i = 0
         self.line = 1
         self.col = 1
+
 
 class Token:
     def __init__(self, kind: str, s: str, tag: str, line: int, col: int, line_span: int) -> None:
@@ -30,6 +34,7 @@ class Token:
         self.line = line
         self.col = col
         self.line_span = line_span
+
 
 def tokenize(text: str) -> List[Token]:
     def advance(n: int) -> None:
@@ -195,6 +200,7 @@ def tokenize(text: str) -> List[Token]:
 
     return tokens
 
+
 def validate(fn: Optional[str] = None, text: Optional[str] = None, check_indent: bool = True) -> None:
     assert fn or text
 
@@ -294,8 +300,10 @@ def validate(fn: Optional[str] = None, text: Optional[str] = None, check_indent:
     if state.depth != 0:
         raise TemplateParserException('Missing end tag')
 
+
 def is_special_html_tag(s: str, tag: str) -> bool:
     return tag in ['link', 'meta', '!DOCTYPE']
+
 
 OPTIONAL_CLOSING_TAGS = [
     'circle',
@@ -304,6 +312,7 @@ OPTIONAL_CLOSING_TAGS = [
     'path',
     'polygon',
 ]
+
 
 def is_self_closing_html_tag(s: Text, tag: Text) -> bool:
     if s.endswith('/>'):
@@ -328,6 +337,7 @@ def is_self_closing_html_tag(s: Text, tag: Text) -> bool:
         return True
     return False
 
+
 def is_django_block_tag(tag: str) -> bool:
     return tag in [
         'autoescape',
@@ -344,6 +354,7 @@ def is_django_block_tag(tag: str) -> bool:
         'with',
     ]
 
+
 def get_handlebars_tag(text: str, i: int) -> str:
     end = i + 2
     while end < len(text) - 1 and text[end] != '}':
@@ -352,6 +363,7 @@ def get_handlebars_tag(text: str, i: int) -> str:
         raise TokenizationException('Tag missing "}}"', text[i:end+2])
     s = text[i:end+2]
     return s
+
 
 def get_django_tag(text: str, i: int, stripped: bool = False) -> str:
     end = i + 2
@@ -363,6 +375,7 @@ def get_django_tag(text: str, i: int, stripped: bool = False) -> str:
         raise TokenizationException('Tag missing "%}"', text[i:end+2])
     s = text[i:end+2]
     return s
+
 
 def get_html_tag(text: str, i: int) -> str:
     quote_count = 0
@@ -384,6 +397,7 @@ def get_html_tag(text: str, i: int) -> str:
     s = text[i:end+1]
     return s
 
+
 def get_html_comment(text: str, i: int) -> str:
     end = i + 7
     unclosed_end = 0
@@ -394,6 +408,7 @@ def get_html_comment(text: str, i: int) -> str:
             unclosed_end = end
         end += 1
     raise TokenizationException('Unclosed comment', text[i:unclosed_end])
+
 
 def get_handlebar_comment(text: str, i: int) -> str:
     end = i + 5
@@ -406,6 +421,7 @@ def get_handlebar_comment(text: str, i: int) -> str:
         end += 1
     raise TokenizationException('Unclosed comment', text[i:unclosed_end])
 
+
 def get_django_comment(text: str, i: int) -> str:
     end = i + 4
     unclosed_end = 0
@@ -416,6 +432,7 @@ def get_django_comment(text: str, i: int) -> str:
             unclosed_end = end
         end += 1
     raise TokenizationException('Unclosed comment', text[i:unclosed_end])
+
 
 def get_handlebar_partial(text: str, i: int) -> str:
     end = i + 10

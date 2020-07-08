@@ -45,10 +45,12 @@ def copy_user_settings(source_profile: UserProfile, target_profile: UserProfile)
 
     copy_hotpots(source_profile, target_profile)
 
+
 def get_display_email_address(user_profile: UserProfile, realm: Realm) -> str:
     if not user_profile.email_address_is_realm_public():
         return f"user{user_profile.id}@{get_fake_email_domain()}"
     return user_profile.delivery_email
+
 
 def get_role_for_new_user(invited_as: int, realm_creation: bool=False) -> int:
     if realm_creation or invited_as == PreregistrationUser.INVITE_AS['REALM_OWNER']:
@@ -66,6 +68,8 @@ def get_role_for_new_user(invited_as: int, realm_creation: bool=False) -> int:
 # Only use this for bulk_create -- for normal usage one should use
 # create_user (below) which will also make the Subscription and
 # Recipient objects
+
+
 def create_user_profile(realm: Realm, email: str, password: Optional[str],
                         active: bool, bot_type: Optional[int], full_name: str,
                         short_name: str, bot_owner: Optional[UserProfile],
@@ -96,6 +100,7 @@ def create_user_profile(realm: Realm, email: str, password: Optional[str],
     user_profile.set_password(password)
     user_profile.api_key = generate_api_key()
     return user_profile
+
 
 def create_user(email: str, password: Optional[str], realm: Realm,
                 full_name: str, short_name: str, active: bool = True,

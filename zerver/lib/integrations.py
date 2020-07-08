@@ -47,6 +47,7 @@ CATEGORIES: Dict[str, str] = {
     'bots': _('Interactive bots'),
 }
 
+
 class Integration:
     DEFAULT_LOGO_STATIC_PATH_PNG = 'images/integrations/logos/{name}.png'
     DEFAULT_LOGO_STATIC_PATH_SVG = 'images/integrations/logos/{name}.svg'
@@ -113,6 +114,7 @@ class Integration:
 
         return None
 
+
 class BotIntegration(Integration):
     DEFAULT_LOGO_STATIC_PATH_PNG = 'generated/bots/{name}/logo.png'
     DEFAULT_LOGO_STATIC_PATH_SVG = 'generated/bots/{name}/logo.svg'
@@ -146,6 +148,7 @@ class BotIntegration(Integration):
         if doc is None:
             doc = self.DEFAULT_DOC_PATH.format(name=name)
         self.doc = doc
+
 
 class WebhookIntegration(Integration):
     DEFAULT_FUNCTION_PATH = 'zerver.webhooks.{name}.view.api_{name}_webhook'
@@ -194,11 +197,13 @@ class WebhookIntegration(Integration):
     def url_object(self) -> RegexPattern:
         return url(self.url, self.function)
 
+
 def split_fixture_path(path: str) -> Tuple[str, str]:
     path, fixture_name = os.path.split(path)
     fixture_name, _ = os.path.splitext(fixture_name)
     integration_name = os.path.split(os.path.dirname(path))[-1]
     return integration_name, fixture_name
+
 
 @dataclass
 class ScreenshotConfig:
@@ -212,6 +217,7 @@ class ScreenshotConfig:
     use_basic_auth: bool = False
     custom_headers: Dict[str, str] = field(default_factory=dict)
 
+
 def get_fixture_and_image_paths(integration: WebhookIntegration,
                                 screenshot_config: ScreenshotConfig) -> Tuple[str, str]:
     fixture_dir = os.path.join('zerver', 'webhooks', integration.name, 'fixtures')
@@ -220,6 +226,7 @@ def get_fixture_and_image_paths(integration: WebhookIntegration,
     image_name = screenshot_config.image_name
     image_path = os.path.join('static/images/integrations', image_dir, image_name)
     return fixture_path, image_path
+
 
 class HubotIntegration(Integration):
     GIT_URL_TEMPLATE = "https://github.com/hubot-scripts/hubot-{}"
@@ -243,6 +250,7 @@ class HubotIntegration(Integration):
             legacy=legacy,
         )
 
+
 class EmbeddedBotIntegration(Integration):
     '''
     This class acts as a registry for bots verified as safe
@@ -255,6 +263,7 @@ class EmbeddedBotIntegration(Integration):
         client_name = self.DEFAULT_CLIENT_NAME.format(name=name.title())
         super().__init__(
             name, client_name, *args, **kwargs)
+
 
 EMBEDDED_BOTS: List[EmbeddedBotIntegration] = [
     EmbeddedBotIntegration('converter', []),

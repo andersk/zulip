@@ -77,6 +77,7 @@ def destroy_uploads() -> None:
     if os.path.exists(settings.LOCAL_UPLOADS_DIR):
         shutil.rmtree(settings.LOCAL_UPLOADS_DIR)
 
+
 class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
 
     def test_rest_endpoint(self) -> None:
@@ -1161,6 +1162,7 @@ class AvatarTest(UploadSerializeMixin, ZulipTestCase):
         destroy_uploads()
         super().tearDown()
 
+
 class EmojiTest(UploadSerializeMixin, ZulipTestCase):
     # While testing GIF resizing, we can't test if the final GIF has the same
     # number of frames as the original one because PIL drops duplicate frames
@@ -1201,6 +1203,7 @@ class EmojiTest(UploadSerializeMixin, ZulipTestCase):
     def tearDown(self) -> None:
         destroy_uploads()
         super().tearDown()
+
 
 class RealmIconTest(UploadSerializeMixin, ZulipTestCase):
 
@@ -1333,6 +1336,7 @@ class RealmIconTest(UploadSerializeMixin, ZulipTestCase):
     def tearDown(self) -> None:
         destroy_uploads()
         super().tearDown()
+
 
 class RealmLogoTest(UploadSerializeMixin, ZulipTestCase):
     night = False
@@ -1496,9 +1500,11 @@ class RealmLogoTest(UploadSerializeMixin, ZulipTestCase):
         destroy_uploads()
         super().tearDown()
 
+
 class RealmNightLogoTest(RealmLogoTest):
     # Run the same tests as for RealmLogoTest, just with night mode enabled
     night = True
+
 
 class LocalStorageTest(UploadSerializeMixin, ZulipTestCase):
 
@@ -1881,6 +1887,7 @@ class S3Test(ZulipTestCase):
         path_id = urllib.parse.urlparse(uri).path
         self.assertEqual(delete_export_tarball(path_id), path_id)
 
+
 class SanitizeNameTests(ZulipTestCase):
     def test_file_name(self) -> None:
         self.assertEqual(sanitize_name('test.txt'), 'test.txt')
@@ -1928,6 +1935,7 @@ class UploadSpaceTests(UploadSerializeMixin, ZulipTestCase):
         self.assertEqual(None, cache_get(get_realm_used_upload_space_cache_key(self.realm)))
         self.assertEqual(len(data2), self.realm.currently_used_upload_space_bytes())
 
+
 class ExifRotateTests(ZulipTestCase):
     def test_image_do_not_rotate(self) -> None:
         # Image does not have _getexif method.
@@ -1964,6 +1972,7 @@ class ExifRotateTests(ZulipTestCase):
             img = Image.open(io.BytesIO(img_data))
             exif_rotate(img)
             rotate.assert_called_with(90, expand=True)
+
 
 class DecompressionBombTests(ZulipTestCase):
     def setUp(self) -> None:

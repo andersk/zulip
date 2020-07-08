@@ -39,6 +39,7 @@ def common_context(user: UserProfile) -> Dict[str, Any]:
         'user_name': user.full_name,
     }
 
+
 def get_realm_from_request(request: HttpRequest) -> Optional[Realm]:
     if hasattr(request, "user") and hasattr(request.user, "realm"):
         return request.user.realm
@@ -53,6 +54,7 @@ def get_realm_from_request(request: HttpRequest) -> Optional[Realm]:
         except Realm.DoesNotExist:
             request.realm = None
     return request.realm
+
 
 def zulip_default_context(request: HttpRequest) -> Dict[str, Any]:
     """Context available to all Zulip Jinja2 templates that have a request
@@ -150,6 +152,7 @@ def zulip_default_context(request: HttpRequest) -> Dict[str, Any]:
 
     return context
 
+
 def login_context(request: HttpRequest) -> Dict[str, Any]:
     realm = get_realm_from_request(request)
 
@@ -196,6 +199,7 @@ def login_context(request: HttpRequest) -> Dict[str, Any]:
         auth_dict['button_id_suffix'] = "auth_button_{}".format(auth_dict['name'])
 
     return context
+
 
 def latest_info_context() -> Dict[str, str]:
     context = {

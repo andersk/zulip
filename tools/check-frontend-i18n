@@ -23,6 +23,7 @@ def find_handlebars(translatable_strings: List[str]) -> List[str]:
             errored.append(string)
     return errored
 
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--no-generate',

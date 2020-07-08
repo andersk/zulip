@@ -288,6 +288,7 @@ class UnreadCountTests(ZulipTestCase):
         })
         self.assert_json_error(result, 'No such topic \'abc\'')
 
+
 class FixUnreadTests(ZulipTestCase):
     def test_fix_unreads(self) -> None:
         user = self.example_user('hamlet')
@@ -383,6 +384,7 @@ class FixUnreadTests(ZulipTestCase):
         assert_unread(um_muted_stream_id)
         assert_read(um_unsubscribed_id)
 
+
 class PushNotificationMarkReadFlowsTest(ZulipTestCase):
     def get_mobile_push_notification_ids(self, user_profile: UserProfile) -> List[int]:
         return list(UserMessage.objects.filter(
@@ -442,6 +444,7 @@ class PushNotificationMarkReadFlowsTest(ZulipTestCase):
         self.assertEqual(self.get_mobile_push_notification_ids(user_profile),
                          [])
         mock_push_notifications.assert_called()
+
 
 class GetUnreadMsgsTest(ZulipTestCase):
     def mute_stream(self, user_profile: UserProfile, stream: Stream) -> None:
@@ -858,6 +861,7 @@ class GetUnreadMsgsTest(ZulipTestCase):
         um.save()
         result = get_unread_data()
         self.assertEqual(result['mentions'], [])
+
 
 class MessageAccessTests(ZulipTestCase):
     def test_update_invalid_flags(self) -> None:

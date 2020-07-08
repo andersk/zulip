@@ -140,6 +140,7 @@ enforce_fully_covered = sorted(target_fully_covered - not_yet_fully_covered)
 
 FAILED_TEST_PATH = 'var/last_test_failure.json'
 
+
 def get_failed_tests() -> List[str]:
     try:
         with open(FAILED_TEST_PATH) as f:
@@ -148,10 +149,12 @@ def get_failed_tests() -> List[str]:
         print("var/last_test_failure.json doesn't exist; running all tests.")
         return []
 
+
 def write_failed_tests(failed_tests: List[str]) -> None:
     if failed_tests:
         with open(FAILED_TEST_PATH, 'w') as f:
             ujson.dump(failed_tests, f)
+
 
 @contextlib.contextmanager
 def block_internet() -> Iterator[None]:
@@ -163,6 +166,7 @@ def block_internet() -> Iterator[None]:
         with responses.RequestsMock():
             yield
 
+
 class ZulipInternetBlockedError(Exception):
     def __init__(self, original_msg: str) -> None:
         zulip_msg = (
@@ -172,6 +176,7 @@ class ZulipInternetBlockedError(Exception):
         )
         msg = f"{zulip_msg}\nResponses library error message: {original_msg}"
         super().__init__(msg)
+
 
 def main() -> None:
     TOOLS_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -465,6 +470,7 @@ def main() -> None:
 
     # We'll have printed whether tests passed or failed above
     sys.exit(bool(failures))
+
 
 if __name__ == "__main__":
     main()

@@ -23,6 +23,7 @@ def patched_user_avatar_path(user_profile: UserProfile) -> Text:
     user_key = email.lower() + settings.AVATAR_SALT
     return make_safe_digest(user_key, hashlib.sha1)
 
+
 @patch('zerver.lib.upload.user_avatar_path', patched_user_avatar_path)
 def verify_medium_avatar_image(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     user_profile_model = apps.get_model('zerver', 'UserProfile')

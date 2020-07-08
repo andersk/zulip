@@ -46,11 +46,13 @@ from zerver.models import UserProfile, get_realm
 
 billing_logger = logging.getLogger('corporate.stripe')
 
+
 def unsign_seat_count(signed_seat_count: str, salt: str) -> int:
     try:
         return int(unsign_string(signed_seat_count, salt))
     except signing.BadSignature:
         raise BillingError('tampered seat count')
+
 
 def check_upgrade_parameters(
         billing_modality: str, schedule: str, license_management: Optional[str], licenses: Optional[int],
@@ -82,6 +84,8 @@ def check_upgrade_parameters(
         raise BillingError('too many licenses', message)
 
 # Should only be called if the customer is being charged automatically
+
+
 def payment_method_string(stripe_customer: stripe.Customer) -> str:
     stripe_source: Optional[Union[stripe.Card, stripe.Source]] = stripe_customer.default_source
     # In case of e.g. an expired card
@@ -99,6 +103,7 @@ def payment_method_string(stripe_customer: stripe.Customer) -> str:
     return _("Unknown payment method. Please contact {email}.").format(
         email=settings.ZULIP_ADMINISTRATOR,
     )  # nocoverage
+
 
 @has_request_variables
 def upgrade(request: HttpRequest, user: UserProfile,
@@ -142,6 +147,7 @@ def upgrade(request: HttpRequest, user: UserProfile,
     else:
         return json_success()
 
+
 @zulip_login_required
 def initial_upgrade(request: HttpRequest) -> HttpResponse:
     if not settings.BILLING_ENABLED:
@@ -183,6 +189,7 @@ def initial_upgrade(request: HttpRequest) -> HttpResponse:
     }
     response = render(request, 'corporate/upgrade.html', context=context)
     return response
+
 
 @has_request_variables
 def sponsorship(request: HttpRequest, user: UserProfile,
@@ -227,6 +234,7 @@ def sponsorship(request: HttpRequest, user: UserProfile,
     user.save(update_fields=["is_billing_admin"])
 
     return json_success()
+
 
 @zulip_login_required
 def billing_home(request: HttpRequest) -> HttpResponse:
@@ -304,6 +312,7 @@ def billing_home(request: HttpRequest) -> HttpResponse:
 
     return render(request, 'corporate/billing.html', context=context)
 
+
 @require_billing_access
 @has_request_variables
 def change_plan_status(request: HttpRequest, user: UserProfile,
@@ -329,6 +338,7 @@ def change_plan_status(request: HttpRequest, user: UserProfile,
         assert(plan.status == CustomerPlan.FREE_TRIAL)
         downgrade_now(user.realm)
     return json_success()
+
 
 @require_billing_access
 @has_request_variables

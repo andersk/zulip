@@ -30,6 +30,7 @@ append_key = """\
 #}}}}<{username}>
 """
 
+
 def get_mentor_keys(username: str) -> List[str]:
     url = f'https://api.github.com/users/{username}/keys'
 

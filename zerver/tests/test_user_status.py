@@ -17,9 +17,11 @@ def get_away_user_ids(realm_id: int) -> Set[int]:
         if user_dict[user_id].get('away')
     }
 
+
 def user_info(user: UserProfile) -> Dict[str, Any]:
     user_dict = get_user_info_dict(user.realm_id)
     return user_dict.get(user.id, dict())
+
 
 class UserStatusTest(ZulipTestCase):
     def test_basics(self) -> None:

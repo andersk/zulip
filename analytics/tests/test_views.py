@@ -69,6 +69,7 @@ class TestStatsEndpoint(ZulipTestCase):
         self.assertEqual(result.status_code, 200)
         self.assert_in_response("Zulip analytics for", result)
 
+
 class TestGetChartData(ZulipTestCase):
     def setUp(self) -> None:
         super().setUp()
@@ -410,6 +411,7 @@ class TestGetChartData(ZulipTestCase):
                                  {'chart_name': 'number_of_humans'})
         self.assert_json_success(result)
 
+
 class TestSupportEndpoint(ZulipTestCase):
     def test_search(self) -> None:
         reset_emails_in_zulip_realm()
@@ -647,6 +649,7 @@ class TestSupportEndpoint(ZulipTestCase):
                 result = self.client_post("/activity/support", {"realm_id": f"{lear_realm.id}"})
             m.assert_not_called()
 
+
 class TestGetChartDataHelpers(ZulipTestCase):
     # last_successful_fill is in analytics/models.py, but get_chart_data is
     # the only function that uses it at the moment
@@ -670,6 +673,7 @@ class TestGetChartDataHelpers(ZulipTestCase):
         data = {'everyone': {'a': [16], 'c': [15], 'b': [14], 'e': [13], 'd': [12], 'h': [11]},
                 'user': {'a': [6], 'b': [5], 'd': [4], 'e': [3], 'f': [2], 'g': [1]}}
         self.assertEqual(sort_client_labels(data), ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'])
+
 
 class TestTimeRange(ZulipTestCase):
     def test_time_range(self) -> None:
@@ -696,6 +700,7 @@ class TestTimeRange(ZulipTestCase):
                          [floor_hour-2*HOUR, floor_hour-HOUR, floor_hour, floor_hour+HOUR])
         self.assertEqual(time_range(floor_day, floor_day+DAY, CountStat.DAY, 4),
                          [floor_day-2*DAY, floor_day-DAY, floor_day, floor_day+DAY])
+
 
 class TestMapArrays(ZulipTestCase):
     def test_map_arrays(self) -> None:

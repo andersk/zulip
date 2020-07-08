@@ -6,6 +6,7 @@ from typing import Callable, Dict, Iterable, Iterator, Tuple, TypeVar
 
 JobData = TypeVar('JobData')
 
+
 def run_parallel(job: Callable[[JobData], int],
                  data: Iterable[JobData],
                  threads: int=6) -> Iterator[Tuple[int, JobData]]:
@@ -51,6 +52,7 @@ def run_parallel(job: Callable[[JobData], int],
                 break
             else:
                 raise
+
 
 if __name__ == "__main__":
     # run some unit tests

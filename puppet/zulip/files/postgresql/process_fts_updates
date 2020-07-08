@@ -48,6 +48,7 @@ if options.quiet:
 else:
     logger.setLevel(logging.DEBUG)
 
+
 def update_fts_columns(cursor: psycopg2.extensions.cursor) -> int:
     cursor.execute(
         "SELECT id, message_id FROM fts_update_log LIMIT %s;",
@@ -68,9 +69,11 @@ def update_fts_columns(cursor: psycopg2.extensions.cursor) -> int:
     cursor.execute("DELETE FROM fts_update_log WHERE id = ANY(%s)", (ids,))
     return len(ids)
 
+
 def am_master(cursor: psycopg2.extensions.cursor) -> bool:
     cursor.execute("SELECT pg_is_in_recovery()")
     return not cursor.fetchall()[0][0]
+
 
 pg_args = {}
 

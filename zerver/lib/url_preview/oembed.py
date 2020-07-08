@@ -42,6 +42,7 @@ def get_oembed_data(url: str,
         description=data.get('description'),
     )
 
+
 def strip_cdata(html: str) -> str:
     # Work around a bug in SoundCloud's XML generation:
     # <html>&lt;![CDATA[&lt;iframe ...&gt;&lt;/iframe&gt;]]&gt;</html>

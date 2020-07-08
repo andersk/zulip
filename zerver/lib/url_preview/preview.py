@@ -39,6 +39,7 @@ TIMEOUT = 15
 def is_link(url: str) -> Match[str]:
     return link_regex.match(smart_text(url))
 
+
 def guess_mimetype_from_content(response: requests.Response) -> str:
     mime_magic = magic.Magic(mime=True)
     try:
@@ -46,6 +47,7 @@ def guess_mimetype_from_content(response: requests.Response) -> str:
     except StopIteration:
         content = ''
     return mime_magic.from_buffer(content)
+
 
 def valid_content_type(url: str) -> bool:
     try:
@@ -63,6 +65,7 @@ def valid_content_type(url: str) -> bool:
         content_type = guess_mimetype_from_content(response)
     return content_type.startswith('text/html')
 
+
 def catch_network_errors(func: Callable[..., Any]) -> Callable[..., Any]:
     def wrapper(*args: Any, **kwargs: Any) -> Any:
         try:
@@ -70,6 +73,7 @@ def catch_network_errors(func: Callable[..., Any]) -> Callable[..., Any]:
         except requests.exceptions.RequestException:
             pass
     return wrapper
+
 
 @catch_network_errors
 @cache_with_key(preview_url_cache_key, cache_name=CACHE_NAME, with_statsd_key="urlpreview_data")
@@ -101,6 +105,7 @@ def get_link_embed_data(url: str,
             if not data.get(key) and generic_data.get(key):
                 data[key] = generic_data[key]
     return data
+
 
 @get_cache_with_key(preview_url_cache_key, cache_name=CACHE_NAME)
 def link_embed_data_from_cache(url: str, maxwidth: int=640, maxheight: int=480) -> Any:

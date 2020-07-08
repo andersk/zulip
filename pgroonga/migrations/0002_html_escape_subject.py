@@ -15,6 +15,7 @@ def rebuild_pgroonga_index(apps: StateApps, schema_editor: DatabaseSchemaEditor)
             batch_size=10000,
         )
 
+
 class Migration(migrations.Migration):
     atomic = False
 

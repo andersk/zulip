@@ -78,6 +78,7 @@ EMOJI_POS_INFO_TEMPLATE = """\
 # change directory
 os.chdir(EMOJI_SCRIPT_DIR_PATH)
 
+
 def main() -> None:
     if not os.access(EMOJI_CACHE_PATH, os.W_OK):
         # Note: In production, this block will fail, since we don't
@@ -112,8 +113,10 @@ def main() -> None:
     for filename in to_remove:
         os.remove(os.path.join(TARGET_EMOJI_STYLES, filename))
 
+
 def percent(f: float) -> str:
     return f'{f * 100:0.3f}%'
+
 
 def get_square_size(emoji_data: List[Dict[str, Any]]) -> int:
     """
@@ -131,6 +134,7 @@ def get_square_size(emoji_data: List[Dict[str, Any]]) -> int:
 
     n = max(get_offsets(emoji_data)) + 1
     return n
+
 
 def generate_sprite_css_files(cache_path: str,
                               emoji_data: List[Dict[str, Any]],
@@ -221,6 +225,7 @@ def generate_sprite_css_files(cache_path: str,
                                             'background_size': background_size,
                                             })
 
+
 def setup_emoji_farms(cache_path: str, emoji_data: List[Dict[str, Any]]) -> None:
     def ensure_emoji_image(emoji_dict: Dict[str, Any],
                            src_emoji_farm: str,
@@ -285,6 +290,7 @@ def setup_emoji_farms(cache_path: str, emoji_data: List[Dict[str, Any]]) -> None
         blob_emoji_data = ujson.load(fp)
     setup_emoji_farm('google-blob', blob_emoji_data, 'google')
 
+
 def setup_old_emoji_farm(cache_path: str,
                          emoji_map: Dict[str, str],
                          emoji_data: List[Dict[str, Any]]) -> None:
@@ -317,6 +323,7 @@ def setup_old_emoji_farm(cache_path: str,
         except FileExistsError:
             pass
 
+
 def generate_map_files(cache_path: str, emoji_catalog: Dict[str, List[str]]) -> None:
     # This function generates the main data file about emoji that are
     # consumed by the webapp, mobile apps, markdown processor, etc.
@@ -333,6 +340,7 @@ def generate_map_files(cache_path: str, emoji_catalog: Dict[str, List[str]]) -> 
             'emoji_catalog': emoji_catalog,
             'emoticon_conversions': EMOTICON_CONVERSIONS,
         }, emoji_codes_file)
+
 
 def dump_emojis(cache_path: str) -> None:
     with open('emoji_map.json') as emoji_map_file:
@@ -353,6 +361,7 @@ def dump_emojis(cache_path: str) -> None:
 
     # Generate various map files.
     generate_map_files(cache_path, emoji_catalog)
+
 
 if __name__ == "__main__":
     main()

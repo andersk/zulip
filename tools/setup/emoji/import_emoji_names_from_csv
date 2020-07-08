@@ -36,6 +36,7 @@ FILE_TEMPLATE = (
 
 emoji_names: Set[str] = set()
 
+
 def load_data(data_file: str) -> List[List[str]]:
     emoji_name_data: List[List[str]] = []
     with open(data_file, newline='') as fp:
@@ -44,14 +45,17 @@ def load_data(data_file: str) -> List[List[str]]:
             emoji_name_data.append(row)
     return emoji_name_data[1:]
 
+
 def check_uniqueness(emoji_name: str) -> None:
     if emoji_name in emoji_names:
         raise Exception(f"Duplicate emoji name: {emoji_name}")
     emoji_names.add(emoji_name)
 
+
 def check_valid_emoji_name(emoji_name: str) -> None:
     if re.fullmatch("[+-]?[a-z0-9_-]+", emoji_name) is None:
         raise Exception(f"Invalid emoji name: {emoji_name}")
+
 
 def check_emoji_names(canonical_name: str, aliases: List[str]) -> None:
     if canonical_name == 'X':
@@ -60,6 +64,7 @@ def check_emoji_names(canonical_name: str, aliases: List[str]) -> None:
     for name in names_to_check:
         check_valid_emoji_name(name)
         check_uniqueness(name)
+
 
 def prepare_explanation(explanation: str) -> str:
     if explanation == '':
@@ -75,10 +80,12 @@ def prepare_explanation(explanation: str) -> str:
     wrapped_lines = textwrap.wrap(explanation.strip(), **wrapper_config)
     return ''.join(wrapped_lines)
 
+
 def prepare_aliases(aliases: str) -> List[str]:
     if aliases == '':
         return []
     return [alias.strip() for alias in aliases.split(',')]
+
 
 def main() -> None:
     description = ("This script is used for generating `emoji_names.py`. It takes the "
@@ -128,6 +135,7 @@ def main() -> None:
 
     with open(args.output_file_path, 'w') as fp:
         fp.write(FILE_TEMPLATE % {'emoji_entries': emoji_entries})
+
 
 if __name__ == '__main__':
     main()

@@ -291,6 +291,7 @@ class TestDigestEmailMessages(ZulipTestCase):
         Message.objects.filter(id__in=message_ids).update(sending_client=sending_client)
         return message_ids
 
+
 class TestDigestContentInBrowser(ZulipTestCase):
     def test_get_digest_content_in_browser(self) -> None:
         self.login('hamlet')

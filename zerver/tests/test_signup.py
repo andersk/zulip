@@ -141,6 +141,7 @@ class RedirectAndLogIntoSubdomainTestCase(ZulipTestCase):
                                     'multiuse_object_key': 'key',
                                     })
 
+
 class DeactivationNoticeTestCase(ZulipTestCase):
     def test_redirection_for_deactivated_realm(self) -> None:
         realm = get_realm("zulip")
@@ -169,6 +170,7 @@ class DeactivationNoticeTestCase(ZulipTestCase):
 
         result = self.client_get('/accounts/deactivated/')
         self.assertIn("Zulip Dev, has been deactivated.", result.content.decode())
+
 
 class AddNewUserHistoryTest(ZulipTestCase):
     def test_add_new_user_history_race(self) -> None:
@@ -259,10 +261,12 @@ class AddNewUserHistoryTest(ZulipTestCase):
                 f'<UserMessage: recip / {user_profile.email} ([])>',
             )
 
+
 class InitialPasswordTest(ZulipTestCase):
     def test_none_initial_password_salt(self) -> None:
         with self.settings(INITIAL_PASSWORD_SALT=None):
             self.assertIsNone(initial_password('test@test.com'))
+
 
 class PasswordResetTest(ZulipTestCase):
     """
@@ -549,6 +553,7 @@ class PasswordResetTest(ZulipTestCase):
         result = self.client_get('/accounts/new/send_confirm/alice@example.com')
         self.assert_in_success_response(["/new/"], result)
 
+
 class LoginTest(ZulipTestCase):
     """
     Logging in, registration, and logging out.
@@ -780,6 +785,7 @@ https://www.google.com/images/srpr/logo4w.png</a></p>"""
         self.assertEqual(response.context_data["realm_description"], expected_response)
         self.assertEqual(response.status_code, 200)
 
+
 class InviteUserBase(ZulipTestCase):
     def check_sent_emails(self, correct_recipients: List[str],
                           custom_from_name: Optional[str]=None) -> None:
@@ -814,6 +820,7 @@ class InviteUserBase(ZulipTestCase):
                                 {"invitee_emails": invitee_emails,
                                  "stream_ids": ujson.dumps(stream_ids),
                                  "invite_as": invite_as})
+
 
 class InviteUserTest(InviteUserBase):
     def test_successful_invite_user(self) -> None:
@@ -1642,6 +1649,7 @@ so we didn't send them an invitation. We did send invitations to everyone else!"
         self.assertEqual(response.url, reverse('django.contrib.auth.views.login') + '?email=' +
                          urllib.parse.quote_plus(email))
 
+
 class InvitationsTestCase(InviteUserBase):
     def test_do_get_user_invites(self) -> None:
         self.login('iago')
@@ -1989,6 +1997,7 @@ class InvitationsTestCase(InviteUserBase):
         self.assertIsNotNone(user)
         self.assertEqual(user.delivery_email, email)
 
+
 class InviteeEmailsParserTests(ZulipTestCase):
     def setUp(self) -> None:
         super().setUp()
@@ -2015,6 +2024,7 @@ class InviteeEmailsParserTests(ZulipTestCase):
         emails_raw = f"Email One <{self.email1}>,EmailTwo<{self.email2}>\n{self.email3}"
         expected_set = {self.email1, self.email2, self.email3}
         self.assertEqual(get_invitee_emails_set(emails_raw), expected_set)
+
 
 class MultiuseInviteTest(ZulipTestCase):
     def setUp(self) -> None:
@@ -2177,6 +2187,7 @@ class MultiuseInviteTest(ZulipTestCase):
                                   {"stream_ids": ujson.dumps([54321])})
         self.assert_json_error(result, "Invalid stream id 54321. No invites were sent.")
 
+
 class EmailUnsubscribeTests(ZulipTestCase):
     def test_error_unsubscribe(self) -> None:
 
@@ -2275,6 +2286,7 @@ class EmailUnsubscribeTests(ZulipTestCase):
 
         user_profile.refresh_from_db()
         self.assertFalse(user_profile.enable_login_emails)
+
 
 class RealmCreationTest(ZulipTestCase):
     @override_settings(OPEN_REALM_CREATION=True)
@@ -2574,6 +2586,7 @@ class RealmCreationTest(ZulipTestCase):
         # malformed names should still not
         with self.assertRaises(ValidationError):
             check_subdomain_available('-ba_d-', from_management_command=True)
+
 
 class UserSignUpTest(InviteUserBase):
 
@@ -4000,6 +4013,7 @@ class UserSignUpTest(InviteUserBase):
         user_profile = UserProfile.objects.all().order_by("id").last()
         self.assert_logged_in_user_id(user_profile.id)
 
+
 class DeactivateUserTest(ZulipTestCase):
 
     def test_deactivate_user(self) -> None:
@@ -4039,6 +4053,7 @@ class DeactivateUserTest(ZulipTestCase):
         self.login_user(user)
         result = self.client_delete('/json/users/me')
         self.assert_json_error(result, "Cannot deactivate the only user.")
+
 
 class TestLoginPage(ZulipTestCase):
     @patch('django.http.HttpRequest.get_host')
@@ -4098,6 +4113,7 @@ class TestLoginPage(ZulipTestCase):
         realm.save(update_fields=["invite_required"])
         response = self.client_get("/login/")
         self.assert_in_success_response(["Don't have an account yet? You need to be invited to join this organization."], response)
+
 
 class TestFindMyTeam(ZulipTestCase):
     def test_template(self) -> None:
@@ -4194,6 +4210,7 @@ class TestFindMyTeam(ZulipTestCase):
         from django.core.mail import outbox
         self.assertEqual(len(outbox), 0)
 
+
 class ConfirmationKeyTest(ZulipTestCase):
     def test_confirmation_key(self) -> None:
         request = MagicMock()
@@ -4203,6 +4220,7 @@ class ConfirmationKeyTest(ZulipTestCase):
         result = confirmation_key(request)
         self.assert_json_success(result)
         self.assert_in_response('xyzzy', result)
+
 
 class MobileAuthOTPTest(ZulipTestCase):
     def test_xor_hex_strings(self) -> None:
@@ -4228,6 +4246,7 @@ class MobileAuthOTPTest(ZulipTestCase):
         decryped = otp_decrypt_api_key(result, otp)
         self.assertEqual(decryped, api_key)
 
+
 class FollowupEmailTest(ZulipTestCase):
     def test_followup_day2_email(self) -> None:
         user_profile = self.example_user('hamlet')
@@ -4250,12 +4269,14 @@ class FollowupEmailTest(ZulipTestCase):
         user_profile.date_joined = datetime.datetime(2018, 1, 5, 1, 0, 0, 0, tzinfo=datetime.timezone.utc)
         self.assertEqual(followup_day2_email_delay(user_profile), datetime.timedelta(days=1, hours=-1))
 
+
 class NoReplyEmailTest(ZulipTestCase):
     def test_noreply_email_address(self) -> None:
         self.assertTrue(re.search(self.TOKENIZED_NOREPLY_REGEX, FromAddress.tokenized_no_reply_address()))
 
         with self.settings(ADD_TOKENS_TO_NOREPLY_ADDRESS=False):
             self.assertEqual(FromAddress.tokenized_no_reply_address(), "noreply@testserver")
+
 
 class TwoFactorAuthTest(ZulipTestCase):
     @patch('two_factor.models.totp')
@@ -4296,9 +4317,11 @@ class TwoFactorAuthTest(ZulipTestCase):
             result = self.client_get('/accounts/login/')
             self.assertEqual(result["Location"], "http://zulip.testserver")
 
+
 class NameRestrictionsTest(ZulipTestCase):
     def test_whitelisted_disposable_domains(self) -> None:
         self.assertFalse(is_disposable_domain('OPayQ.com'))
+
 
 class RealmRedirectTest(ZulipTestCase):
     def test_realm_redirect_without_next_param(self) -> None:

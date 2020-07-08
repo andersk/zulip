@@ -22,9 +22,12 @@ class FillState(models.Model):
 
 # The earliest/starting end_time in FillState
 # We assume there is at least one realm
+
+
 def installation_epoch() -> datetime.datetime:
     earliest_realm_creation = Realm.objects.aggregate(models.Min('date_created'))['date_created__min']
     return floor_to_day(earliest_realm_creation)
+
 
 def last_successful_fill(property: str) -> Optional[datetime.datetime]:
     fillstate = FillState.objects.filter(property=property).first()
@@ -33,6 +36,7 @@ def last_successful_fill(property: str) -> Optional[datetime.datetime]:
     if fillstate.state == FillState.DONE:
         return fillstate.end_time
     return fillstate.end_time - datetime.timedelta(hours=1)
+
 
 class BaseCount(models.Model):
     # Note: When inheriting from BaseCount, you may want to rearrange
@@ -45,6 +49,7 @@ class BaseCount(models.Model):
 
     class Meta:
         abstract = True
+
 
 class InstallationCount(BaseCount):
 
@@ -63,6 +68,7 @@ class InstallationCount(BaseCount):
 
     def __str__(self) -> str:
         return f"<InstallationCount: {self.property} {self.subgroup} {self.value}>"
+
 
 class RealmCount(BaseCount):
     realm = models.ForeignKey(Realm, on_delete=models.CASCADE)
@@ -83,6 +89,7 @@ class RealmCount(BaseCount):
 
     def __str__(self) -> str:
         return f"<RealmCount: {self.realm} {self.property} {self.subgroup} {self.value}>"
+
 
 class UserCount(BaseCount):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
@@ -106,6 +113,7 @@ class UserCount(BaseCount):
 
     def __str__(self) -> str:
         return f"<UserCount: {self.user} {self.property} {self.subgroup} {self.value}>"
+
 
 class StreamCount(BaseCount):
     stream = models.ForeignKey(Stream, on_delete=models.CASCADE)

@@ -17,6 +17,7 @@ def validate_order(order: List[int], length: int) -> None:
             print("Incorrect input")
             sys.exit(1)
 
+
 def renumber_migration(conflicts: List[str], order: List[int], last_correct_migration: str) -> None:
     stack: List[str] = []
     for i in order:
@@ -35,6 +36,7 @@ def renumber_migration(conflicts: List[str], order: List[int], last_correct_migr
 
             last_correct_migration = new_name.replace('.py', '')
 
+
 def resolve_conflicts(conflicts: List[str], files_list: List[str]) -> None:
     print("Conflicting migrations:")
     for i in range(0, len(conflicts)):
@@ -48,6 +50,7 @@ def resolve_conflicts(conflicts: List[str], files_list: List[str]) -> None:
 
     last_correct_migration = last_correct_migration.replace('.py', '')
     renumber_migration(conflicts, order, last_correct_migration)
+
 
 if __name__ == '__main__':
 

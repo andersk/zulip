@@ -39,6 +39,7 @@ from zerver.models import (
 class InvalidMirrorInput(Exception):
     pass
 
+
 def create_mirrored_message_users(request: HttpRequest, user_profile: UserProfile,
                                   recipients: Iterable[str]) -> UserProfile:
     if "sender" not in request.POST:
@@ -74,6 +75,7 @@ def create_mirrored_message_users(request: HttpRequest, user_profile: UserProfil
     sender = get_user_including_cross_realm(sender_email, user_profile.realm)
     return sender
 
+
 def same_realm_zephyr_user(user_profile: UserProfile, email: str) -> bool:
     #
     # Are the sender and recipient both addresses in the same Zephyr
@@ -93,6 +95,7 @@ def same_realm_zephyr_user(user_profile: UserProfile, email: str) -> bool:
     return user_profile.realm.is_zephyr_mirror_realm and \
         RealmDomain.objects.filter(realm=user_profile.realm, domain=domain).exists()
 
+
 def same_realm_irc_user(user_profile: UserProfile, email: str) -> bool:
     # Check whether the target email address is an IRC user in the
     # same realm as user_profile, i.e. if the domain were example.com,
@@ -108,6 +111,7 @@ def same_realm_irc_user(user_profile: UserProfile, email: str) -> bool:
     # these realms.
     return RealmDomain.objects.filter(realm=user_profile.realm, domain=domain).exists()
 
+
 def same_realm_jabber_user(user_profile: UserProfile, email: str) -> bool:
     try:
         validators.validate_email(email)
@@ -121,6 +125,7 @@ def same_realm_jabber_user(user_profile: UserProfile, email: str) -> bool:
     # Assumes allow_subdomains=False for all RealmDomain's corresponding to
     # these realms.
     return RealmDomain.objects.filter(realm=user_profile.realm, domain=domain).exists()
+
 
 def handle_deferred_message(sender: UserProfile, client: Client,
                             message_type_name: str,
@@ -155,6 +160,7 @@ def handle_deferred_message(sender: UserProfile, client: Client,
                            deliver_at, realm=realm,
                            forwarder_user_profile=forwarder_user_profile)
     return json_success({"deliver_at": str(deliver_at_usertz)})
+
 
 @has_request_variables
 def send_message_backend(request: HttpRequest, user_profile: UserProfile,
@@ -280,10 +286,12 @@ def send_message_backend(request: HttpRequest, user_profile: UserProfile,
                              widget_content=widget_content)
     return json_success({"id": ret})
 
+
 @has_request_variables
 def zcommand_backend(request: HttpRequest, user_profile: UserProfile,
                      command: str=REQ('command')) -> HttpResponse:
     return json_success(process_zcommands(command, user_profile))
+
 
 @has_request_variables
 def render_message_backend(request: HttpRequest, user_profile: UserProfile,

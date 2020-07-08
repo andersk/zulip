@@ -202,6 +202,7 @@ class AnalyticsTestCase(ZulipTestCase):
             self.assertEqual(table.objects.filter(**kwargs).count(), 1)
         self.assertEqual(table.objects.count(), len(arg_values))
 
+
 class TestProcessCountStat(AnalyticsTestCase):
     def make_dummy_count_stat(self, property: str) -> CountStat:
         query = lambda kwargs: SQL("""
@@ -364,6 +365,7 @@ class TestProcessCountStat(AnalyticsTestCase):
         process_count_stat(stat4, hour25)
         self.assertEqual(InstallationCount.objects.filter(property='stat4').count(), 1)
         self.assertFillStateEquals(stat4, hour24)
+
 
 class TestCountStats(AnalyticsTestCase):
     def setUp(self) -> None:
@@ -991,6 +993,7 @@ class TestCountStats(AnalyticsTestCase):
         self.assertTableState(InstallationCount, ['value'], [])
         self.assertTableState(StreamCount, [], [])
 
+
 class TestDoAggregateToSummaryTable(AnalyticsTestCase):
     # do_aggregate_to_summary_table is mostly tested by the end to end
     # nature of the tests in TestCountStats. But want to highlight one
@@ -1002,6 +1005,7 @@ class TestDoAggregateToSummaryTable(AnalyticsTestCase):
         do_aggregate_to_summary_table(stat, self.TIME_ZERO)
         self.assertFalse(RealmCount.objects.exists())
         self.assertFalse(InstallationCount.objects.exists())
+
 
 class TestDoIncrementLoggingStat(AnalyticsTestCase):
     def test_table_and_id_args(self) -> None:
@@ -1073,6 +1077,7 @@ class TestDoIncrementLoggingStat(AnalyticsTestCase):
         self.assertTableState(RealmCount, ['value'], [[2]])
         do_increment_logging_stat(self.default_realm, stat, None, self.TIME_ZERO)
         self.assertTableState(RealmCount, ['value'], [[3]])
+
 
 class TestLoggingCountStats(AnalyticsTestCase):
     def test_aggregation(self) -> None:
@@ -1187,6 +1192,7 @@ class TestLoggingCountStats(AnalyticsTestCase):
         self.assertEqual(3, UserCount.objects.filter(property=interactions_property)
                          .aggregate(Sum('value'))['value__sum'])
 
+
 class TestDeleteStats(AnalyticsTestCase):
     def test_do_drop_all_analytics_tables(self) -> None:
         user = self.create_user()
@@ -1229,6 +1235,7 @@ class TestDeleteStats(AnalyticsTestCase):
         for table in list(analytics.models.values()):
             self.assertFalse(table.objects.filter(property='to_delete').exists())
             self.assertTrue(table.objects.filter(property='to_save').exists())
+
 
 class TestActiveUsersAudit(AnalyticsTestCase):
     def setUp(self) -> None:
@@ -1377,6 +1384,7 @@ class TestActiveUsersAudit(AnalyticsTestCase):
                 user=user, property=self.current_property, subgroup='false',
                 end_time=end_time, value=1).exists())
         self.assertFalse(UserCount.objects.filter(user=user2, end_time=end_time).exists())
+
 
 class TestRealmActiveHumans(AnalyticsTestCase):
     def setUp(self) -> None:

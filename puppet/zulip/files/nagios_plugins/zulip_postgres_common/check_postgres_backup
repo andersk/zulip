@@ -12,9 +12,11 @@ states = {
     "UNKNOWN": 3,
 }
 
+
 def report(state: str, msg: str) -> None:
     print(f"{state}: {msg}")
     exit(states[state])
+
 
 if subprocess.check_output(['psql', '-v', 'ON_ERROR_STOP=1',
                             'postgres', '-t', '-c',

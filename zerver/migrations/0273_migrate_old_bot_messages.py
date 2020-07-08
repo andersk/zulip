@@ -74,6 +74,7 @@ def fix_messages(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     except UserProfile.DoesNotExist:
         pass
 
+
 class Migration(migrations.Migration):
 
     dependencies = [

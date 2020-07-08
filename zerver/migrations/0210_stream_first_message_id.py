@@ -19,6 +19,7 @@ def backfill_first_message_id(apps: StateApps, schema_editor: DatabaseSchemaEdit
         stream.first_message_id = first_message.id
         stream.save()
 
+
 class Migration(migrations.Migration):
     dependencies = [
         ('zerver', '0209_stream_first_message_id'),

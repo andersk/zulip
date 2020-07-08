@@ -10,6 +10,7 @@ def remove_prereg_users_without_realm(
     prereg_model = apps.get_model("zerver", "PreregistrationUser")
     prereg_model.objects.filter(realm=None, realm_creation=False).delete()
 
+
 class Migration(migrations.Migration):
 
     dependencies = [

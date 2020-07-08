@@ -101,6 +101,7 @@ def api_semaphore_webhook(request: HttpRequest, user_profile: UserProfile,
     check_send_webhook_message(request, user_profile, subject, content)
     return json_success()
 
+
 def semaphore_classic(payload: Dict[str, Any]) -> Tuple[str, str, str]:
     # semaphore only gives the last commit, even if there were multiple commits
     # since the last build
@@ -149,6 +150,7 @@ def semaphore_classic(payload: Dict[str, Any]) -> Tuple[str, str, str]:
         content = f"{event}: {result}"
 
     return content, project_name, branch_name
+
 
 def semaphore_2(payload: Dict[str, Any]) -> Tuple[str, str, Optional[str]]:
     repo_url = payload["repository"]["url"]
@@ -207,8 +209,10 @@ def semaphore_2(payload: Dict[str, Any]) -> Tuple[str, str, Optional[str]]:
         content = DEFAULT_TEMPLATE.format(**context)
     return content, project_name, branch_name
 
+
 def is_github_repo(repo_url: str) -> bool:
     return urlparse(repo_url).hostname == 'github.com'
+
 
 def summary_line(message: str) -> str:
     return message.splitlines()[0]

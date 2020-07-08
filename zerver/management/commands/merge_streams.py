@@ -20,6 +20,7 @@ def bulk_delete_cache_keys(message_ids_to_clear: List[int]) -> None:
 
         message_ids_to_clear = message_ids_to_clear[5000:]
 
+
 class Command(ZulipBaseCommand):
     help = """Merge two streams."""
 

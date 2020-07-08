@@ -35,6 +35,7 @@ ROW_HTML = """\
 </tr>
 """
 
+
 class EmoticonTranslationsHelpExtension(markdown.Extension):
     def extendMarkdown(self, md: markdown.Markdown, md_globals: Dict[str, Any]) -> None:
         """ Add SettingHelpExtension to the Markdown instance. """
@@ -61,6 +62,7 @@ class EmoticonTranslation(Preprocessor):
         ]
         body = ''.join(rows).strip()
         return TABLE_HTML.format(body=body).strip().splitlines()
+
 
 def makeExtension(*args: Any, **kwargs: Any) -> EmoticonTranslationsHelpExtension:
     return EmoticonTranslationsHelpExtension(*args, **kwargs)

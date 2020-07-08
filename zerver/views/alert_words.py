@@ -13,9 +13,11 @@ from zerver.models import UserProfile
 def list_alert_words(request: HttpRequest, user_profile: UserProfile) -> HttpResponse:
     return json_success({'alert_words': user_alert_words(user_profile)})
 
+
 def clean_alert_words(alert_words: List[str]) -> List[str]:
     alert_words = [w.strip() for w in alert_words]
     return [w for w in alert_words if w != ""]
+
 
 @has_request_variables
 def add_alert_words(request: HttpRequest, user_profile: UserProfile,
@@ -23,6 +25,7 @@ def add_alert_words(request: HttpRequest, user_profile: UserProfile,
                     ) -> HttpResponse:
     do_add_alert_words(user_profile, clean_alert_words(alert_words))
     return json_success({'alert_words': user_alert_words(user_profile)})
+
 
 @has_request_variables
 def remove_alert_words(request: HttpRequest, user_profile: UserProfile,

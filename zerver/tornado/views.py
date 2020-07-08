@@ -25,6 +25,7 @@ def notify(request: HttpRequest) -> HttpResponse:
     process_notification(ujson.loads(request.POST['data']))
     return json_success()
 
+
 @has_request_variables
 def cleanup_event_queue(request: HttpRequest, user_profile: UserProfile,
                         queue_id: str=REQ()) -> HttpResponse:
@@ -37,6 +38,7 @@ def cleanup_event_queue(request: HttpRequest, user_profile: UserProfile,
     client.cleanup()
     return json_success()
 
+
 @internal_notify_view(True)
 @has_request_variables
 def get_events_internal(request: HttpRequest,
@@ -46,8 +48,10 @@ def get_events_internal(request: HttpRequest,
     process_client(request, user_profile, client_name="internal")
     return get_events_backend(request, user_profile)
 
+
 def get_events(request: HttpRequest, user_profile: UserProfile) -> HttpResponse:
     return get_events_backend(request, user_profile)
+
 
 @has_request_variables
 def get_events_backend(request: HttpRequest, user_profile: UserProfile,

@@ -9,6 +9,7 @@ from django.db.migrations.state import StateApps
 
 BATCH_SIZE = 1000
 
+
 def process_batch(apps: StateApps, id_start: int, id_end: int, last_id: int) -> None:
     Message = apps.get_model('zerver', 'Message')
     for message in Message.objects.filter(id__gte=id_start, id__lte=id_end).order_by("id"):
@@ -54,6 +55,7 @@ def process_batch(apps: StateApps, id_start: int, id_end: int, last_id: int) -> 
         message.has_attachment = has_attachment
         message.save(update_fields=['has_link', 'has_attachment', 'has_image'])
 
+
 def fix_has_link(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     Message = apps.get_model('zerver', 'Message')
     if not Message.objects.exists():
@@ -78,6 +80,7 @@ def fix_has_link(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     if last_id > id_range_lower_bound:
         # Copy for the last batch.
         process_batch(apps, id_range_lower_bound, last_id, last_id)
+
 
 class Migration(migrations.Migration):
     atomic = False

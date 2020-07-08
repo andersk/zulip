@@ -7,6 +7,7 @@ import pytz
 def get_all_timezones() -> List[str]:
     return sorted(pytz.all_timezones)
 
+
 def get_timezone(tz: str) -> pytz.BaseTzInfo:
     return pytz.timezone(tz)
 
@@ -14,6 +15,8 @@ def get_timezone(tz: str) -> pytz.BaseTzInfo:
 # database and handles duplicate abbreviations in favor of the most
 # common/popular offset. The output of this can be directly passed as
 # tz_data to dateutil.parser.
+
+
 def _calculate_timezones() -> Dict[str, Union[int, Any]]:
     tzdata = {}
     normal = datetime.datetime(2009, 9, 1)  # Any random date is fine here.
@@ -47,11 +50,14 @@ def _calculate_timezones() -> Dict[str, Union[int, Any]]:
             tzdata[tz_name] = -64800  # America/All
     return tzdata
 
+
 timezone_data = None
 
 # _calculate_timezones takes about 25ms to run, so we want to cache
 # its results (while avoiding running it on process startup since we
 # only need it for markdown rendering).
+
+
 def get_common_timezones() -> Dict[str, Union[int, Any]]:
     global timezone_data
     if timezone_data is None:

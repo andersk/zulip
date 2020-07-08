@@ -33,6 +33,7 @@ gear_instructions = """
 1. Select %(item)s.
 """
 
+
 def gear_handle_match(key: str) -> str:
     if relative_help_links:
         item = f'[{gear_info[key][0]}]({gear_info[key][1]})'
@@ -53,6 +54,7 @@ stream_instructions_no_link = """
 1. Click **Manage streams**.
 """
 
+
 def stream_handle_match(key: str) -> str:
     if relative_help_links:
         return f"1. Go to [{stream_info[key][0]}]({stream_info[key][1]})."
@@ -66,17 +68,21 @@ LINK_TYPE_HANDLERS = {
     'stream': stream_handle_match,
 }
 
+
 class RelativeLinksHelpExtension(markdown.Extension):
     def extendMarkdown(self, md: markdown.Markdown, md_globals: Dict[str, Any]) -> None:
         """ Add RelativeLinksHelpExtension to the Markdown instance. """
         md.registerExtension(self)
         md.preprocessors.add('help_relative_links', RelativeLinks(), '_begin')
 
+
 relative_help_links: Optional[bool] = None
+
 
 def set_relative_help_links(value: bool) -> None:
     global relative_help_links
     relative_help_links = value
+
 
 class RelativeLinks(Preprocessor):
     def run(self, lines: List[str]) -> List[str]:
@@ -104,6 +110,7 @@ class RelativeLinks(Preprocessor):
 
     def handleMatch(self, match: Match[str]) -> str:
         return LINK_TYPE_HANDLERS[match.group('link_type')](match.group('key'))
+
 
 def makeExtension(*args: Any, **kwargs: Any) -> RelativeLinksHelpExtension:
     return RelativeLinksHelpExtension(*args, **kwargs)

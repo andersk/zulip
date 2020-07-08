@@ -9,6 +9,7 @@ from zerver.models import AbstractPushDeviceToken, AbstractRealmAuditLog
 def get_remote_server_by_uuid(uuid: str) -> 'RemoteZulipServer':
     return RemoteZulipServer.objects.get(uuid=uuid)
 
+
 class RemoteZulipServer(models.Model):
     UUID_LENGTH = 36
     API_KEY_LENGTH = 64
@@ -28,6 +29,8 @@ class RemoteZulipServer(models.Model):
         return "zulip-server:" + self.uuid
 
 # Variant of PushDeviceToken for a remote server.
+
+
 class RemotePushDeviceToken(AbstractPushDeviceToken):
     server: RemoteZulipServer = models.ForeignKey(RemoteZulipServer, on_delete=models.CASCADE)
     # The user id on the remote server for this device device this is
@@ -38,6 +41,7 @@ class RemotePushDeviceToken(AbstractPushDeviceToken):
 
     def __str__(self) -> str:
         return f"<RemotePushDeviceToken {self.server} {self.user_id}>"
+
 
 class RemoteRealmAuditLog(AbstractRealmAuditLog):
     """Synced audit data from a remote Zulip server, used primarily for
@@ -50,6 +54,7 @@ class RemoteRealmAuditLog(AbstractRealmAuditLog):
 
     def __str__(self) -> str:
         return f"<RemoteRealmAuditLog: {self.server} {self.event_type} {self.event_time} {self.id}>"
+
 
 class RemoteInstallationCount(BaseCount):
     server: RemoteZulipServer = models.ForeignKey(RemoteZulipServer, on_delete=models.CASCADE)
@@ -66,6 +71,8 @@ class RemoteInstallationCount(BaseCount):
         return f"<InstallationCount: {self.property} {self.subgroup} {self.value}>"
 
 # We can't subclass RealmCount because we only have a realm_id here, not a foreign key.
+
+
 class RemoteRealmCount(BaseCount):
     server: RemoteZulipServer = models.ForeignKey(RemoteZulipServer, on_delete=models.CASCADE)
     realm_id: int = models.IntegerField(db_index=True)

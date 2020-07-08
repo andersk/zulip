@@ -26,6 +26,7 @@ def populate_new_fields(apps: StateApps, schema_editor: DatabaseSchemaEditor) ->
                 reaction.reaction_type = 'realm_emoji'
         reaction.save()
 
+
 class Migration(migrations.Migration):
 
     dependencies = [

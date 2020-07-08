@@ -14,6 +14,7 @@ def set_initial_value_for_invited_as(apps: StateApps, schema_editor: DatabaseSch
             user.invited_as = 1     # PreregistrationUser.INVITE_AS['MEMBER']
         user.save(update_fields=["invited_as"])
 
+
 def reverse_code(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     PreregistrationUser = apps.get_model("zerver", "PreregistrationUser")
     for user in PreregistrationUser.objects.all():
@@ -22,6 +23,7 @@ def reverse_code(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
         else:                       # PreregistrationUser.INVITE_AS['MEMBER']
             user.invited_as_admin = False
         user.save(update_fields=["invited_as_admin"])
+
 
 class Migration(migrations.Migration):
 

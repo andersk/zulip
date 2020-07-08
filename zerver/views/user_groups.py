@@ -37,11 +37,13 @@ def add_user_group(request: HttpRequest, user_profile: UserProfile,
     check_add_user_group(user_profile.realm, name, user_profiles, description)
     return json_success()
 
+
 @require_member_or_admin
 @has_request_variables
 def get_user_group(request: HttpRequest, user_profile: UserProfile) -> HttpResponse:
     user_groups = user_groups_in_realm_serialized(user_profile.realm)
     return json_success({"user_groups": user_groups})
+
 
 @require_user_group_edit_permission
 @has_request_variables
@@ -62,6 +64,7 @@ def edit_user_group(request: HttpRequest, user_profile: UserProfile,
 
     return json_success()
 
+
 @require_user_group_edit_permission
 @has_request_variables
 def delete_user_group(request: HttpRequest, user_profile: UserProfile,
@@ -69,6 +72,7 @@ def delete_user_group(request: HttpRequest, user_profile: UserProfile,
 
     check_delete_user_group(user_group_id, user_profile)
     return json_success()
+
 
 @require_user_group_edit_permission
 @has_request_variables
@@ -88,6 +92,7 @@ def update_user_group_backend(request: HttpRequest, user_profile: UserProfile,
     ]
     return compose_views(request, user_profile, method_kwarg_pairs)
 
+
 def add_members_to_group_backend(request: HttpRequest, user_profile: UserProfile,
                                  user_group_id: int, members: List[int]) -> HttpResponse:
     if not members:
@@ -105,6 +110,7 @@ def add_members_to_group_backend(request: HttpRequest, user_profile: UserProfile
 
     bulk_add_members_to_user_group(user_group, user_profiles)
     return json_success()
+
 
 def remove_members_from_group_backend(request: HttpRequest, user_profile: UserProfile,
                                       user_group_id: int, members: List[int]) -> HttpResponse:

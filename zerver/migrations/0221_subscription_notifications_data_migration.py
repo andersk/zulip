@@ -12,6 +12,7 @@ SETTINGS_MAP = {
     'email_notifications': 'enable_stream_email_notifications',
 }
 
+
 def update_notification_settings(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     Subscription = apps.get_model('zerver', 'Subscription')
     UserProfile = apps.get_model('zerver', 'UserProfile')
@@ -24,6 +25,7 @@ def update_notification_settings(apps: StateApps, schema_editor: DatabaseSchemaE
             Subscription.objects.filter(user_profile__in=UserProfile.objects.filter(**user_filter_kwargs),
                                         recipient__type=RECIPIENT_STREAM,
                                         **sub_filter_kwargs).update(**update_kwargs)
+
 
 def reverse_notification_settings(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     Subscription = apps.get_model('zerver', 'Subscription')
@@ -42,6 +44,7 @@ def reverse_notification_settings(apps: StateApps, schema_editor: DatabaseSchema
         sub_filter_kwargs = {sub_setting_name: None}
         update_kwargs = {sub_setting_name: True}
         Subscription.objects.filter(recipient__type__in=[1, 3], **sub_filter_kwargs).update(**update_kwargs)
+
 
 class Migration(migrations.Migration):
 

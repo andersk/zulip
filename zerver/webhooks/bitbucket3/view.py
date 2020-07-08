@@ -48,15 +48,18 @@ PULL_REQUEST_OPENED_OR_MODIFIED_TEMPLATE_WITH_REVIEWERS_WITH_TITLE = """
 `{destination}` (assigned to {assignees} for review)
 """.strip()
 
+
 def fixture_to_headers(fixture_name: str) -> Dict[str, str]:
     if fixture_name == "diagnostics_ping":
         return {"HTTP_X_EVENT_KEY": "diagnostics:ping"}
     return dict()
 
+
 def get_user_name(payload: Dict[str, Any]) -> str:
     user_name = "[{name}]({url})".format(name=payload["actor"]["name"],
                                          url=payload["actor"]["links"]["self"][0]["href"])
     return user_name
+
 
 def ping_handler(payload: Dict[str, Any], include_title: Optional[str]=None,
                  ) -> List[Dict[str, str]]:
@@ -66,6 +69,7 @@ def ping_handler(payload: Dict[str, Any], include_title: Optional[str]=None,
         subject = "Bitbucket Server Ping"
     body = "Congratulations! The Bitbucket Server webhook was configured successfully!"
     return [{"subject": subject, "body": body}]
+
 
 def repo_comment_handler(payload: Dict[str, Any], action: str) -> List[Dict[str, str]]:
     repo_name = payload["repository"]["name"]
@@ -85,6 +89,7 @@ def repo_comment_handler(payload: Dict[str, Any], action: str) -> List[Dict[str,
     )
     return [{"subject": subject, "body": body}]
 
+
 def repo_forked_handler(payload: Dict[str, Any]) -> List[Dict[str, str]]:
     repo_name = payload["repository"]["origin"]["name"]
     subject = BITBUCKET_TOPIC_TEMPLATE.format(repository_name=repo_name)
@@ -95,6 +100,7 @@ def repo_forked_handler(payload: Dict[str, Any]) -> List[Dict[str, str]]:
         fork_url=payload["repository"]["links"]["self"][0]["href"],
     )
     return [{"subject": subject, "body": body}]
+
 
 def repo_modified_handler(payload: Dict[str, Any]) -> List[Dict[str, str]]:
     subject_new = BITBUCKET_TOPIC_TEMPLATE.format(repository_name=payload["new"]["name"])
@@ -109,6 +115,7 @@ def repo_modified_handler(payload: Dict[str, Any]) -> List[Dict[str, str]]:
     punctuation = '.' if new_name[-1] not in string.punctuation else ''
     body = f"{body}{punctuation}"
     return [{"subject": subject_new, "body": body}]
+
 
 def repo_push_branch_data(payload: Dict[str, Any], change: Dict[str, Any]) -> Dict[str, str]:
     event_type = change["type"]
@@ -138,6 +145,7 @@ def repo_push_branch_data(payload: Dict[str, Any], change: Dict[str, Any]) -> Di
     subject = TOPIC_WITH_BRANCH_TEMPLATE.format(repo=repo_name, branch=branch_name)
     return {"subject": subject, "body": body}
 
+
 def repo_push_tag_data(payload: Dict[str, Any], change: Dict[str, Any]) -> Dict[str, str]:
     event_type = change["type"]
     repo_name = payload["repository"]["name"]
@@ -154,6 +162,7 @@ def repo_push_tag_data(payload: Dict[str, Any], change: Dict[str, Any]) -> Dict[
     subject = BITBUCKET_TOPIC_TEMPLATE.format(repository_name=repo_name)
     body = get_push_tag_event_message(get_user_name(payload), tag_name, action=action)
     return {"subject": subject, "body": body}
+
 
 def repo_push_handler(payload: Dict[str, Any], branches: Optional[str]=None,
                       ) -> List[Dict[str, str]]:
@@ -173,6 +182,7 @@ def repo_push_handler(payload: Dict[str, Any], branches: Optional[str]=None,
             raise UnexpectedWebhookEventType("BitBucket Server", message)
     return data
 
+
 def get_assignees_string(pr: Dict[str, Any]) -> Optional[str]:
     reviewers = []
     for reviewer in pr["reviewers"]:
@@ -187,8 +197,10 @@ def get_assignees_string(pr: Dict[str, Any]) -> Optional[str]:
         assignees = ", ".join(reviewers[:-1]) + " and " + reviewers[-1]
     return assignees
 
+
 def get_pr_subject(repo: str, type: str, id: str, title: str) -> str:
     return TOPIC_WITH_PR_OR_ISSUE_INFO_TEMPLATE.format(repo=repo, type=type, id=id, title=title)
+
 
 def get_simple_pr_body(payload: Dict[str, Any], action: str, include_title: Optional[bool]) -> str:
     pr = payload["pullRequest"]
@@ -199,6 +211,7 @@ def get_simple_pr_body(payload: Dict[str, Any], action: str, include_title: Opti
         number=pr["id"],
         title=pr["title"] if include_title else None,
     )
+
 
 def get_pr_opened_or_modified_body(payload: Dict[str, Any], action: str,
                                    include_title: Optional[bool]) -> str:
@@ -240,6 +253,7 @@ def get_pr_opened_or_modified_body(payload: Dict[str, Any], action: str,
         title=pr["title"] if include_title else None,
     )
 
+
 def get_pr_needs_work_body(payload: Dict[str, Any], include_title: Optional[bool]) -> str:
     pr = payload["pullRequest"]
     if not include_title:
@@ -254,6 +268,7 @@ def get_pr_needs_work_body(payload: Dict[str, Any], include_title: Optional[bool
         url=pr["links"]["self"][0]["href"],
         title=pr["title"],
     )
+
 
 def get_pr_reassigned_body(payload: Dict[str, Any], include_title: Optional[bool]) -> str:
     pr = payload["pullRequest"]
@@ -289,6 +304,7 @@ def get_pr_reassigned_body(payload: Dict[str, Any], include_title: Optional[bool
         title=pr["title"],
     )
 
+
 def pr_handler(payload: Dict[str, Any], action: str,
                include_title: bool=False) -> List[Dict[str, str]]:
     pr = payload["pullRequest"]
@@ -304,6 +320,7 @@ def pr_handler(payload: Dict[str, Any], action: str,
         body = get_simple_pr_body(payload, action, include_title)
 
     return [{"subject": subject, "body": body}]
+
 
 def pr_comment_handler(payload: Dict[str, Any], action: str,
                        include_title: bool=False) -> List[Dict[str, str]]:
@@ -323,6 +340,7 @@ def pr_comment_handler(payload: Dict[str, Any], action: str,
     )
 
     return [{"subject": subject, "body": body}]
+
 
 EVENT_HANDLER_MAP = {
     "diagnostics:ping": ping_handler,
@@ -346,12 +364,14 @@ EVENT_HANDLER_MAP = {
     "pr:reviewer:unapproved": partial(pr_handler, action="unapproved"),
 }  # type Dict[str, Optional[Callable[..., List[Dict[str, str]]]]]
 
+
 def get_event_handler(eventkey: str) -> Callable[..., List[Dict[str, str]]]:
     # The main reason for this function existance is because of mypy
     handler: Any = EVENT_HANDLER_MAP.get(eventkey)
     if handler is None:
         raise UnexpectedWebhookEventType("BitBucket Server", eventkey)
     return handler
+
 
 @api_key_only_webhook_view("Bitbucket3")
 @has_request_variables

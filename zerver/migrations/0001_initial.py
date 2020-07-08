@@ -31,6 +31,7 @@ def migrate_existing_attachment_data(apps: StateApps,
 
         entry.save()
 
+
 class Migration(migrations.Migration):
 
     initial = True

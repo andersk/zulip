@@ -13,6 +13,7 @@ from zerver.webhooks.gogs.view import gogs_webhook_main
 
 fixture_to_headers = get_http_headers_from_filename("HTTP_X_GITEA_EVENT")
 
+
 def format_pull_request_event(payload: Dict[str, Any],
                               include_title: bool=False) -> str:
     assignee = payload['pull_request']['assignee']
@@ -32,6 +33,7 @@ def format_pull_request_event(payload: Dict[str, Any],
         data['action'] = 'merged'
 
     return get_pull_request_event_message(**data)
+
 
 @api_key_only_webhook_view('Gitea')
 @has_request_variables

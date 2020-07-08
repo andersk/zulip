@@ -35,6 +35,7 @@ DIGEST_CUTOFF = 5
 # 2. Interesting stream traffic, as determined by the longest and most
 #    diversely comment upon topics.
 
+
 def inactive_since(user_profile: UserProfile, cutoff: datetime.datetime) -> bool:
     # Hasn't used the app in the last DIGEST_CUTOFF (5) days.
     most_recent_visit = [row.last_visit for row in
@@ -48,6 +49,7 @@ def inactive_since(user_profile: UserProfile, cutoff: datetime.datetime) -> bool
     last_visit = max(most_recent_visit)
     return last_visit < cutoff
 
+
 def should_process_digest(realm_str: str) -> bool:
     if realm_str in settings.SYSTEM_ONLY_REALMS:
         # Don't try to send emails to system-only realms
@@ -56,11 +58,14 @@ def should_process_digest(realm_str: str) -> bool:
 
 # Changes to this should also be reflected in
 # zerver/worker/queue_processors.py:DigestWorker.consume()
+
+
 def queue_digest_recipient(user_profile: UserProfile, cutoff: datetime.datetime) -> None:
     # Convert cutoff to epoch seconds for transit.
     event = {"user_profile_id": user_profile.id,
              "cutoff": cutoff.strftime('%s')}
     queue_json_publish("digest_emails", event)
+
 
 def enqueue_emails(cutoff: datetime.datetime) -> None:
     if not settings.SEND_DIGEST_EMAILS:
@@ -81,6 +86,7 @@ def enqueue_emails(cutoff: datetime.datetime) -> None:
                     "User %s is inactive, queuing for potential digest",
                     user_profile.id,
                 )
+
 
 def gather_hot_conversations(user_profile: UserProfile, messages: List[Message]) -> List[Dict[str, Any]]:
     # Gather stream conversations of 2 types:
@@ -146,6 +152,7 @@ def gather_hot_conversations(user_profile: UserProfile, messages: List[Message])
         hot_conversation_render_payloads.append(teaser_data)
     return hot_conversation_render_payloads
 
+
 def gather_new_streams(user_profile: UserProfile,
                        threshold: datetime.datetime) -> Tuple[int, Dict[str, List[str]]]:
     if user_profile.can_access_public_streams():
@@ -167,8 +174,10 @@ def gather_new_streams(user_profile: UserProfile,
 
     return len(new_streams), {"html": streams_html, "plain": streams_plain}
 
+
 def enough_traffic(hot_conversations: str, new_streams: int) -> bool:
     return bool(hot_conversations or new_streams)
+
 
 def handle_digest_email(user_profile_id: int, cutoff: float,
                         render_to_web: bool = False) -> Union[None, Dict[str, Any]]:
@@ -224,6 +233,7 @@ def handle_digest_email(user_profile_id: int, cutoff: float,
                           from_name="Zulip Digest", from_address=FromAddress.no_reply_placeholder,
                           context=context)
     return None
+
 
 def exclude_subscription_modified_streams(user_profile: UserProfile,
                                           stream_ids: List[int],

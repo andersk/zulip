@@ -10,6 +10,7 @@ pattern = re.compile(
     ([ /] .*)?
     $""", re.X)
 
+
 def parse_user_agent(user_agent: str) -> Dict[str, str]:
     match = pattern.match(user_agent)
     assert match is not None

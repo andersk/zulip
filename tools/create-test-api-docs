@@ -15,6 +15,7 @@ import ujson
 
 Call = Dict[str, Any]
 
+
 def clean_up_pattern(s: str) -> str:
     paren_level = 0
     in_braces = False
@@ -35,6 +36,7 @@ def clean_up_pattern(s: str) -> str:
         prior_char = c
     return result
 
+
 def encode_info(info: Any) -> str:
     try:
         result = ''
@@ -53,8 +55,10 @@ def encode_info(info: Any) -> str:
         pass
     return 'NOT ENCODABLE'
 
+
 def fix_test_name(s: str) -> str:
     return s.replace('zerver.tests.', '')
+
 
 def create_single_page(pattern: str, out_dir: str, href: str, calls: List[Call]) -> None:
     fn = out_dir + '/' + href
@@ -81,6 +85,7 @@ def create_single_page(pattern: str, out_dir: str, href: str, calls: List[Call])
             f.write('status code: {}<br>\n'.format(call['status_code']))
             f.write('<br>')
             f.write('</div>')
+
 
 def create_user_docs() -> None:
     fn = 'var/url_coverage.txt'  # TODO: make path more robust, maybe use json suffix

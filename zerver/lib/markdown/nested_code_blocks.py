@@ -15,6 +15,7 @@ class NestedCodeBlocksRenderer(Extension):
             '_end',
         )
 
+
 class NestedCodeBlocksRendererTreeProcessor(markdown.treeprocessors.Treeprocessor):
     def __init__(self, md: markdown.Markdown, config: Dict[str, Any]) -> None:
         super().__init__(md)
@@ -70,6 +71,7 @@ class NestedCodeBlocksRendererTreeProcessor(markdown.treeprocessors.Treeprocesso
             if child is element_to_replace:
                 parent.insert(index, replacement)
                 parent.remove(element_to_replace)
+
 
 def makeExtension(*args: Any, **kwargs: str) -> NestedCodeBlocksRenderer:
     return NestedCodeBlocksRenderer(**kwargs)

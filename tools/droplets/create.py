@@ -32,10 +32,12 @@ parser.add_argument("username", help="Github username for whom you want to creat
 parser.add_argument('--tags', nargs='+', default=[])
 parser.add_argument('-f', '--recreate', dest='recreate', action="store_true", default=False)
 
+
 def get_config() -> configparser.ConfigParser:
     config = configparser.ConfigParser()
     config.read(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'conf.ini'))
     return config
+
 
 def user_exists(username: str) -> bool:
     print(f"Checking to see if GitHub user {username} exists...")
@@ -49,6 +51,7 @@ def user_exists(username: str) -> bool:
         print(err)
         print(f"Does the github user {username} exist?")
         sys.exit(1)
+
 
 def get_keys(username: str) -> List[Dict[str, Any]]:
     print("Checking to see that GitHub user has available public keys...")
@@ -66,6 +69,7 @@ def get_keys(username: str) -> List[Dict[str, Any]]:
         print(f"Has user {username} added ssh keys to their github account?")
         sys.exit(1)
 
+
 def fork_exists(username: str) -> bool:
     print("Checking to see GitHub user has forked zulip/zulip...")
     apiurl_fork = f"https://api.github.com/repos/{username}/zulip"
@@ -78,6 +82,7 @@ def fork_exists(username: str) -> bool:
         print(err)
         print(f"Has user {username} forked zulip/zulip?")
         sys.exit(1)
+
 
 def exit_if_droplet_exists(my_token: str, username: str, recreate: bool) -> None:
     print(f"Checking to see if droplet for {username} already exists...")
@@ -94,6 +99,7 @@ def exit_if_droplet_exists(my_token: str, username: str, recreate: bool) -> None
                 droplet.destroy()
                 return
     print("...No droplet found...proceeding.")
+
 
 def set_user_data(username: str, userkey_dicts: List[Dict[str, Any]]) -> str:
     print("Setting cloud-config data, populated with GitHub user's public keys...")
@@ -134,6 +140,7 @@ su -c 'git config --global pull.rebase true' zulipdev
     print("...returning cloud-config data.")
     return cloudconf
 
+
 def create_droplet(my_token: str, template_id: str, username: str, tags: List[str], user_data: str) -> str:
     droplet = digitalocean.Droplet(
         token=my_token,
@@ -164,6 +171,7 @@ def create_droplet(my_token: str, template_id: str, username: str, tags: List[st
     print(f"...ip address for new droplet is: {droplet.ip_address}.")
     return droplet.ip_address
 
+
 def delete_existing_records(records: List[digitalocean.Record], record_name: str) -> None:
     count = 0
     for record in records:
@@ -172,6 +180,7 @@ def delete_existing_records(records: List[digitalocean.Record], record_name: str
             count = count + 1
     if count:
         print(f"Deleted {count} existing A records for {record_name}.zulipdev.org.")
+
 
 def create_dns_record(my_token: str, username: str, ip_address: str) -> None:
     domain = digitalocean.Domain(token=my_token, name='zulipdev.org')
@@ -186,6 +195,7 @@ def create_dns_record(my_token: str, username: str, ip_address: str) -> None:
     domain.create_new_domain_record(type='A', name=username, data=ip_address)
     print(f"Creating new A record for *.{username}.zulipdev.org that points to {ip_address}.")
     domain.create_new_domain_record(type='A', name=wildcard_name, data=ip_address)
+
 
 def print_completion(username: str) -> None:
     print("""
@@ -214,6 +224,7 @@ Your remote Zulip dev server has been created!
           "If you are leaving Zulip for more than a few weeks, we recommend pushing all of your "
           "active branches to GitHub.")
     print("------")
+
 
 if __name__ == '__main__':
     # define id of image to create new droplets from

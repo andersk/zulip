@@ -35,6 +35,8 @@ emoticon_regex = (f'(?<![^{terminal_symbols}])(?P<emoticon>('
                   + f'))(?![^{terminal_symbols}])')
 
 # Translates emoticons to their colon syntax, e.g. `:smiley:`.
+
+
 def translate_emoticons(text: str) -> str:
     translated = text
 
@@ -42,6 +44,7 @@ def translate_emoticons(text: str) -> str:
         translated = re.sub(re.escape(emoticon), EMOTICON_CONVERSIONS[emoticon], translated)
 
     return translated
+
 
 def emoji_name_to_emoji_code(realm: Realm, emoji_name: str) -> Tuple[str, str]:
     realm_emojis = realm.get_active_emoji()
@@ -53,6 +56,7 @@ def emoji_name_to_emoji_code(realm: Realm, emoji_name: str) -> Tuple[str, str]:
     if emoji_name in name_to_codepoint:
         return name_to_codepoint[emoji_name], Reaction.UNICODE_EMOJI
     raise JsonableError(_("Emoji '{}' does not exist").format(emoji_name))
+
 
 def check_emoji_request(realm: Realm, emoji_name: str, emoji_code: str,
                         emoji_type: str) -> None:
@@ -81,6 +85,7 @@ def check_emoji_request(realm: Realm, emoji_name: str, emoji_code: str,
         # The above are the only valid emoji types
         raise JsonableError(_("Invalid emoji type."))
 
+
 def check_emoji_admin(user_profile: UserProfile, emoji_name: Optional[str]=None) -> None:
     """Raises an exception if the user cannot administer the target realm
     emoji name in their organization."""
@@ -105,12 +110,14 @@ def check_emoji_admin(user_profile: UserProfile, emoji_name: Optional[str]=None)
     if not user_profile.is_realm_admin and not current_user_is_author:
         raise JsonableError(_("Must be an organization administrator or emoji author"))
 
+
 def check_valid_emoji_name(emoji_name: str) -> None:
     if emoji_name:
         if re.match(r'^[0-9a-z.\-_]+(?<![.\-_])$', emoji_name):
             return
         raise JsonableError(_("Invalid characters in emoji name"))
     raise JsonableError(_("Emoji name is missing"))
+
 
 def get_emoji_url(emoji_file_name: str, realm_id: int) -> str:
     return upload_backend.get_emoji_url(emoji_file_name, realm_id)

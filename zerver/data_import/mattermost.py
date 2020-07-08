@@ -53,6 +53,7 @@ def make_realm(realm_id: int, team: Dict[str, Any]) -> ZerverFieldsT:
 
     return realm
 
+
 def process_user(user_dict: Dict[str, Any], realm_id: int, team_name: str,
                  user_id_mapper: IdMapper) -> ZerverFieldsT:
     def is_team_admin(user_dict: Dict[str, Any]) -> bool:
@@ -104,6 +105,7 @@ def process_user(user_dict: Dict[str, Any], realm_id: int, team_name: str,
         timezone=timezone,
     )
 
+
 def convert_user_data(user_handler: UserHandler,
                       user_id_mapper: IdMapper,
                       user_data_map: Dict[str, Dict[str, Any]],
@@ -119,6 +121,7 @@ def convert_user_data(user_handler: UserHandler,
     for raw_item in user_data_list:
         user = process_user(raw_item, realm_id, team_name, user_id_mapper)
         user_handler.add_user(user)
+
 
 def convert_channel_data(channel_data: List[ZerverFieldsT],
                          user_data_map: Dict[str, Dict[str, Any]],
@@ -211,12 +214,14 @@ def convert_channel_data(channel_data: List[ZerverFieldsT],
         streams.append(stream)
     return streams
 
+
 def generate_huddle_name(huddle_members: List[str]) -> str:
     # Simple hash function to generate a unique hash key for the
     # members of a huddle.  Needs to be consistent only within the
     # lifetime of export tool run, as it doesn't appear in the output.
     import hashlib
     return hashlib.md5(''.join(sorted(huddle_members)).encode('utf-8')).hexdigest()
+
 
 def convert_huddle_data(huddle_data: List[ZerverFieldsT],
                         user_data_map: Dict[str, Dict[str, Any]],
@@ -241,6 +246,7 @@ def convert_huddle_data(huddle_data: List[ZerverFieldsT],
             )
             zerver_huddle.append(huddle_dict)
     return zerver_huddle
+
 
 def build_reactions(realm_id: int, total_reactions: List[ZerverFieldsT], reactions: List[ZerverFieldsT],
                     message_id: int,
@@ -280,6 +286,7 @@ def build_reactions(realm_id: int, total_reactions: List[ZerverFieldsT], reactio
         reaction_dict['user_profile'] = user_id_mapper.get(username)
         total_reactions.append(reaction_dict)
 
+
 def get_mentioned_user_ids(raw_message: Dict[str, Any], user_id_mapper: IdMapper) -> Set[int]:
     user_ids = set()
     content = raw_message["content"]
@@ -292,6 +299,7 @@ def get_mentioned_user_ids(raw_message: Dict[str, Any], user_id_mapper: IdMapper
         if user_id_mapper.has(possible_username):
             user_ids.add(user_id_mapper.get(possible_username))
     return user_ids
+
 
 def process_raw_message_batch(realm_id: int,
                               raw_messages: List[Dict[str, Any]],
@@ -393,6 +401,7 @@ def process_raw_message_batch(realm_id: int,
     message_file = f"/messages-{dump_file_id:06}.json"
     create_converted_data_files(message_json, output_dir, message_file)
 
+
 def process_posts(num_teams: int,
                   team_name: str,
                   realm_id: int,
@@ -492,6 +501,7 @@ def process_posts(num_teams: int,
         process_batch=process_batch,
     )
 
+
 def write_message_data(num_teams: int,
                        team_name: str,
                        realm_id: int,
@@ -556,6 +566,7 @@ def write_message_data(num_teams: int,
             zerver_realmemoji=zerver_realmemoji,
             total_reactions=total_reactions,
         )
+
 
 def write_emoticon_data(realm_id: int,
                         custom_emoji_data: List[Dict[str, Any]],
@@ -641,11 +652,13 @@ def write_emoticon_data(realm_id: int,
 
     return realmemoji
 
+
 def create_username_to_user_mapping(user_data_list: List[Dict[str, Any]]) -> Dict[str, Dict[str, Any]]:
     username_to_user = {}
     for user in user_data_list:
         username_to_user[user["username"]] = user
     return username_to_user
+
 
 def check_user_in_team(user: Dict[str, Any], team_name: str) -> bool:
     if user["teams"] is None:
@@ -655,6 +668,7 @@ def check_user_in_team(user: Dict[str, Any], team_name: str) -> bool:
         if team["name"] == team_name:
             return True
     return False
+
 
 def label_mirror_dummy_users(num_teams: int, team_name: str, mattermost_data: Dict[str, Any],
                              username_to_user: Dict[str, Dict[str, Any]]) -> None:
@@ -675,10 +689,12 @@ def label_mirror_dummy_users(num_teams: int, team_name: str, mattermost_data: Di
             if not check_user_in_team(user, team_name):
                 user["is_mirror_dummy"] = True
 
+
 def reset_mirror_dummy_users(username_to_user: Dict[str, Dict[str, Any]]) -> None:
     for username in username_to_user:
         user = username_to_user[username]
         user["is_mirror_dummy"] = False
+
 
 def mattermost_data_file_to_dict(mattermost_data_file: str) -> Dict[str, Any]:
     mattermost_data: Dict[str, Any] = {}
@@ -701,6 +717,7 @@ def mattermost_data_file_to_dict(mattermost_data_file: str) -> Dict[str, Any]:
             else:
                 mattermost_data[data_type].append(row[data_type])
     return mattermost_data
+
 
 def do_convert_data(mattermost_data_dir: str, output_dir: str, masking_content: bool) -> None:
     username_to_user: Dict[str, Dict[str, Any]] = {}

@@ -8,6 +8,7 @@ from psycopg2.sql import SQL
 
 BATCH_SIZE = 1000
 
+
 def sql_copy_pub_date_to_date_sent(id_range_lower_bound: int, id_range_upper_bound: int) -> None:
     query = SQL("""
             UPDATE zerver_message
@@ -19,6 +20,7 @@ def sql_copy_pub_date_to_date_sent(id_range_lower_bound: int, id_range_upper_bou
             "lower_bound": id_range_lower_bound,
             "upper_bound": id_range_upper_bound,
         })
+
 
 def copy_pub_date_to_date_sent(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     Message = apps.get_model('zerver', 'Message')

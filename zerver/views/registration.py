@@ -112,6 +112,7 @@ def check_prereg_key_and_redirect(request: HttpRequest, confirmation_key: str) -
                       'key': confirmation_key,
                       'full_name': request.GET.get("full_name", None)})
 
+
 @require_post
 def accounts_register(request: HttpRequest) -> HttpResponse:
     try:
@@ -436,6 +437,7 @@ def accounts_register(request: HttpRequest) -> HttpResponse:
                  },
     )
 
+
 def login_and_go_to_home(request: HttpRequest, user_profile: UserProfile) -> HttpResponse:
     mobile_flow_otp = get_expirable_session_var(request.session, 'registration_mobile_flow_otp',
                                                 delete=True)
@@ -450,6 +452,7 @@ def login_and_go_to_home(request: HttpRequest, user_profile: UserProfile) -> Htt
     # Using 'mark_sanitized' to work around false positive where Pysa thinks
     # that 'user_profile' is user-controlled
     return HttpResponseRedirect(mark_sanitized(user_profile.realm.uri) + reverse('zerver.views.home.home'))
+
 
 def prepare_activation_url(email: str, request: HttpRequest,
                            realm_creation: bool=False,
@@ -477,6 +480,7 @@ def prepare_activation_url(email: str, request: HttpRequest,
         request.session['confirmation_key'] = {'confirmation_key': activation_url.split('/')[-1]}
     return activation_url
 
+
 def send_confirm_registration_email(email: str, activation_url: str, language: str,
                                     realm: Optional[Realm]=None) -> None:
     send_email('zerver/emails/confirm_registration', to_emails=[email],
@@ -484,11 +488,13 @@ def send_confirm_registration_email(email: str, activation_url: str, language: s
                language=language, context={'activate_url': activation_url},
                realm=realm)
 
+
 def redirect_to_email_login_url(email: str) -> HttpResponseRedirect:
     login_url = reverse('django.contrib.auth.views.login')
     email = urllib.parse.quote_plus(email)
     redirect_url = add_query_to_redirect_url(login_url, 'already_registered=' + email)
     return HttpResponseRedirect(redirect_url)
+
 
 def create_realm(request: HttpRequest, creation_key: Optional[str]=None) -> HttpResponse:
     try:
@@ -532,6 +538,7 @@ def create_realm(request: HttpRequest, creation_key: Optional[str]=None) -> Http
                   'zerver/create_realm.html',
                   context={'form': form, 'current_url': request.get_full_path},
                   )
+
 
 def accounts_home(request: HttpRequest, multiuse_object_key: str="",
                   multiuse_object: Optional[MultiuseInvite]=None) -> HttpResponse:
@@ -579,6 +586,7 @@ def accounts_home(request: HttpRequest, multiuse_object_key: str="",
                     'from_multiuse_invite': from_multiuse_invite})
     return render(request, 'zerver/accounts_home.html', context=context)
 
+
 def accounts_home_from_multiuse_invite(request: HttpRequest, confirmation_key: str) -> HttpResponse:
     multiuse_object = None
     try:
@@ -591,8 +599,10 @@ def accounts_home_from_multiuse_invite(request: HttpRequest, confirmation_key: s
     return accounts_home(request, multiuse_object_key=confirmation_key,
                          multiuse_object=multiuse_object)
 
+
 def generate_204(request: HttpRequest) -> HttpResponse:
     return HttpResponse(content=None, status=204)
+
 
 def find_account(request: HttpRequest) -> HttpResponse:
     from zerver.context_processors import common_context
@@ -636,6 +646,7 @@ def find_account(request: HttpRequest) -> HttpResponse:
                   'zerver/find_account.html',
                   context={'form': form, 'current_url': lambda: url,
                            'emails': emails})
+
 
 def realm_redirect(request: HttpRequest) -> HttpResponse:
     if request.method == 'POST':

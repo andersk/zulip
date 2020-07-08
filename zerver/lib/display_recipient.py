@@ -20,9 +20,11 @@ display_recipient_fields = [
     "is_mirror_dummy",
 ]
 
+
 class TinyStreamResult(TypedDict):
     id: int
     name: str
+
 
 @cache_with_key(lambda *args: display_recipient_cache_key(args[0]),
                 timeout=3600*24*7)
@@ -46,8 +48,10 @@ def get_display_recipient_remote_cache(recipient_id: int, recipient_type: int,
     ).order_by('id').values(*display_recipient_fields)
     return list(user_profile_list)
 
+
 def user_dict_id_fetcher(user_dict: UserDisplayRecipient) -> int:
     return user_dict['id']
+
 
 def bulk_get_user_profile_by_id(uids: List[int]) -> Dict[int, UserDisplayRecipient]:
     return bulk_cached_fetch(
@@ -60,6 +64,7 @@ def bulk_get_user_profile_by_id(uids: List[int]) -> Dict[int, UserDisplayRecipie
         object_ids=uids,
         id_fetcher=user_dict_id_fetcher,
     )
+
 
 def bulk_fetch_display_recipients(recipient_tuples: Set[Tuple[int, int, int]],
                                   ) -> Dict[int, DisplayRecipientT]:

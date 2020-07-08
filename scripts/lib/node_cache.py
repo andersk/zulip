@@ -15,12 +15,14 @@ YARN_PACKAGE_JSON = os.path.join(ZULIP_SRV_PATH, 'zulip-yarn/package.json')
 
 DEFAULT_PRODUCTION = False
 
+
 def get_yarn_args(production: bool) -> List[str]:
     if production:
         yarn_args = ["--prod"]
     else:
         yarn_args = []
     return yarn_args
+
 
 def generate_sha1sum_node_modules(
     setup_dir: Optional[str] = None, production: bool = DEFAULT_PRODUCTION,
@@ -41,6 +43,7 @@ def generate_sha1sum_node_modules(
     yarn_args = get_yarn_args(production=production)
     sha1sum.update(''.join(sorted(yarn_args)).encode('utf8'))
     return sha1sum.hexdigest()
+
 
 def setup_node_modules(
     production: bool = DEFAULT_PRODUCTION,
@@ -65,6 +68,7 @@ def setup_node_modules(
     elif os.path.isdir('node_modules'):
         shutil.rmtree('node_modules')
     os.symlink(cached_node_modules, 'node_modules')
+
 
 def do_yarn_install(
     target_path: str,

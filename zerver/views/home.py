@@ -44,6 +44,7 @@ def need_accept_tos(user_profile: Optional[UserProfile]) -> bool:
 
     return int(settings.TOS_VERSION.split('.')[0]) > user_profile.major_tos_version()
 
+
 @zulip_login_required
 def accounts_accept_terms(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
@@ -65,6 +66,7 @@ def accounts_accept_terms(request: HttpRequest) -> HttpResponse:
                  'email': email,
                  'special_message_template': special_message_template},
     )
+
 
 def detect_narrowed_window(request: HttpRequest,
                            user_profile: Optional[UserProfile]) -> Tuple[List[List[str]],
@@ -92,6 +94,7 @@ def detect_narrowed_window(request: HttpRequest,
             narrow.append(["topic", narrow_topic])
     return narrow, narrow_stream, narrow_topic
 
+
 def update_last_reminder(user_profile: Optional[UserProfile]) -> None:
     """Reset our don't-spam-users-with-email counter since the
     user has since logged in
@@ -105,6 +108,7 @@ def update_last_reminder(user_profile: Optional[UserProfile]) -> None:
         user_profile.last_reminder = None
         user_profile.save(update_fields=["last_reminder"])
 
+
 def get_furthest_read_time(user_profile: Optional[UserProfile]) -> Optional[float]:
     if user_profile is None:
         return time.time()
@@ -114,6 +118,7 @@ def get_furthest_read_time(user_profile: Optional[UserProfile]) -> Optional[floa
         return None
 
     return calendar.timegm(user_activity.last_visit.utctimetuple())
+
 
 def get_bot_types(user_profile: Optional[UserProfile]) -> List[Dict[str, object]]:
     bot_types: List[Dict[str, object]] = []
@@ -128,12 +133,14 @@ def get_bot_types(user_profile: Optional[UserProfile]) -> List[Dict[str, object]
         })
     return bot_types
 
+
 def compute_navbar_logo_url(page_params: Dict[str, Any]) -> str:
     if page_params["color_scheme"] == 2 and page_params["realm_night_logo_source"] != Realm.LOGO_DEFAULT:
         navbar_logo_url = page_params["realm_night_logo_url"]
     else:
         navbar_logo_url = page_params["realm_logo_url"]
     return navbar_logo_url
+
 
 def home(request: HttpRequest) -> HttpResponse:
     if not settings.ROOT_DOMAIN_LANDING_PAGE:
@@ -147,6 +154,7 @@ def home(request: HttpRequest) -> HttpResponse:
         return home_real(request)
 
     return hello_view(request)
+
 
 @zulip_login_required
 def home_real(request: HttpRequest) -> HttpResponse:
@@ -346,6 +354,7 @@ def home_real(request: HttpRequest) -> HttpResponse:
                                })
     patch_cache_control(response, no_cache=True, no_store=True, must_revalidate=True)
     return response
+
 
 @zulip_login_required
 def desktop_home(request: HttpRequest) -> HttpResponse:

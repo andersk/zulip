@@ -26,6 +26,7 @@ ZABBIX_MESSAGE_TEMPLATE = """
 * {item}
 """.strip()
 
+
 @api_key_only_webhook_view('Zabbix')
 @has_request_variables
 def api_zabbix_webhook(request: HttpRequest, user_profile: UserProfile,
@@ -47,8 +48,10 @@ def api_zabbix_webhook(request: HttpRequest, user_profile: UserProfile,
     check_send_webhook_message(request, user_profile, subject, body)
     return json_success()
 
+
 def get_subject_for_http_request(payload: Dict[str, Any]) -> str:
     return ZABBIX_TOPIC_TEMPLATE.format(hostname=payload['hostname'])
+
 
 def get_body_for_http_request(payload: Dict[str, Any]) -> str:
     hostname = payload['hostname']

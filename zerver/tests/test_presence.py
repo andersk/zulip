@@ -68,6 +68,7 @@ class ActivityTest(ZulipTestCase):
 
         self.assert_length(queries, 4)
 
+
 class TestClientModel(ZulipTestCase):
     def test_client_stringification(self) -> None:
         '''
@@ -75,6 +76,7 @@ class TestClientModel(ZulipTestCase):
         '''
         client = make_client('some_client')
         self.assertEqual(str(client), '<Client: some_client>')
+
 
 class UserPresenceModelTests(ZulipTestCase):
     def test_date_logic(self) -> None:
@@ -142,6 +144,7 @@ class UserPresenceModelTests(ZulipTestCase):
             kind=PushDeviceToken.APNS,
         )
         self.assertTrue(pushable())
+
 
 class UserPresenceTests(ZulipTestCase):
     def test_invalid_presence(self) -> None:
@@ -395,6 +398,7 @@ class UserPresenceTests(ZulipTestCase):
             {hamlet.email},
         )
 
+
 class SingleUserPresenceTests(ZulipTestCase):
     def test_email_access(self) -> None:
         user = self.example_user('hamlet')
@@ -467,6 +471,7 @@ class SingleUserPresenceTests(ZulipTestCase):
         )
         result = self.client_post("/json/users/me/presence", req)
         self.assertEqual(result.json()['msg'], '')
+
 
 class UserPresenceAggregationTests(ZulipTestCase):
     def _send_presence_for_aggregated_tests(self, user: UserProfile, status: str,
@@ -568,6 +573,7 @@ class UserPresenceAggregationTests(ZulipTestCase):
                 "timestamp": datetime_to_timestamp(validate_time - datetime.timedelta(seconds=2)),
             },
         )
+
 
 class GetRealmStatusesTest(ZulipTestCase):
     def test_get_statuses(self) -> None:

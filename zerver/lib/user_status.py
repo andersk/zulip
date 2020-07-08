@@ -35,6 +35,7 @@ def get_user_info_dict(realm_id: int) -> Dict[int, Dict[str, Any]]:
 
     return user_dict
 
+
 def update_user_status(user_profile_id: int,
                        status: Optional[int],
                        status_text: Optional[str],

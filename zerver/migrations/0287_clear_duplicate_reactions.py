@@ -22,6 +22,7 @@ def clear_duplicate_reactions(apps: StateApps, schema_editor: DatabaseSchemaEdit
         for reaction in to_cleanup:
             reaction.delete()
 
+
 class Migration(migrations.Migration):
 
     dependencies = [

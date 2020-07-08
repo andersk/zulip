@@ -86,6 +86,7 @@ states = {
     "UNKNOWN": 3,
 }
 
+
 def report(state: str, timestamp: Any = None, msg: Optional[str] = None) -> None:
     now = int(time.time())
     if msg is None:
@@ -97,10 +98,12 @@ def report(state: str, timestamp: Any = None, msg: Optional[str] = None) -> None
     print(f"{state}: {msg}")
     exit(states[state])
 
+
 def send_zulip(sender: zulip.Client, message: Dict[str, Any]) -> None:
     result = sender.send_message(message)
     if result["result"] != "success" and options.nagios:
         report("CRITICAL", msg=f"Error sending Zulip, args were: {message}, {result}")
+
 
 def get_zulips() -> List[Dict[str, Any]]:
     global queue_id, last_event_id
@@ -114,6 +117,7 @@ def get_zulips() -> List[Dict[str, Any]]:
     if 'heartbeat' in {event['type'] for event in res['events']}:
         report("CRITICAL", msg="Got heartbeat waiting for Zulip, which means get_events is hanging")
     return [event['message'] for event in res['events']]
+
 
 if "staging" in options.site and settings.NAGIOS_STAGING_SEND_BOT is not None and \
         settings.NAGIOS_STAGING_RECEIVE_BOT is not None:

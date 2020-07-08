@@ -37,20 +37,25 @@ parser.add_argument('--max-retries', type=int, default=10,
                     help='Number of times to retry fetching data from Github')
 args = parser.parse_args()
 
+
 class ContributorsJSON(TypedDict):
     date: str
     contrib: List[Dict[str, Union[str, int]]]
 
+
 logger = logging.getLogger('zulip.fetch_contributors_json')
+
 
 def fetch_contributors(repo_link: str) -> Optional[List[Dict[str, Dict[str, Any]]]]:
     r: requests.Response = requests.get(repo_link, verify=os.environ.get('CUSTOM_CA_CERTIFICATES'))
     return r.json() if r.status_code == 200 else None
 
+
 def write_to_disk(json_data: ContributorsJSON, out_file: str) -> None:
     with open(out_file, 'w') as f:
         json.dump(json_data, f, indent=2, sort_keys=True)
         f.write("\n")
+
 
 def update_contributor_data_file() -> None:
     """
@@ -141,6 +146,7 @@ def update_contributor_data_file() -> None:
         data['contrib'].append(contributor_data)
 
     write_to_disk(data, settings.CONTRIBUTOR_DATA_FILE_PATH)
+
 
 if __name__ == "__main__":
     update_contributor_data_file()

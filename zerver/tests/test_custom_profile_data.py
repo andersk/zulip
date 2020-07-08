@@ -32,6 +32,7 @@ class CustomProfileFieldTestCase(ZulipTestCase):
         field_ids = [field.id for field in fields]
         return (field_id in field_ids)
 
+
 class CreateCustomProfileFieldTest(CustomProfileFieldTestCase):
     def test_create(self) -> None:
         self.login('iago')
@@ -290,6 +291,7 @@ class CreateCustomProfileFieldTest(CustomProfileFieldTestCase):
         result = self.client_delete("/json/realm/profile_fields/1")
         self.assert_json_error(result, 'Must be an organization administrator')
 
+
 class DeleteCustomProfileFieldTest(CustomProfileFieldTestCase):
     def test_delete(self) -> None:
         self.login('iago')
@@ -353,6 +355,7 @@ class DeleteCustomProfileFieldTest(CustomProfileFieldTestCase):
 
         self.assertFalse(self.custom_field_exists_in_realm(field.id))
         self.assertEqual(user_profile.customprofilefieldvalue_set.count(), self.original_count - 1)
+
 
 class UpdateCustomProfileFieldTest(CustomProfileFieldTestCase):
     def test_update(self) -> None:
@@ -626,6 +629,7 @@ class UpdateCustomProfileFieldTest(CustomProfileFieldTestCase):
             # if always_notify is disabled, shouldn't trigger notify.
             do_update_user_custom_profile_data_if_changed(iago, data)
             mock_notify.assert_not_called()
+
 
 class ListCustomProfileFieldTest(CustomProfileFieldTestCase):
     def test_list(self) -> None:

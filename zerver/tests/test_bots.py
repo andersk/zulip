@@ -41,10 +41,12 @@ def _check_string(var_name: str, val: object) -> Optional[str]:
         return f'{var_name} starts with a "_" and is hence invalid.'
     return None
 
+
 stripe_sample_config_options = [
     WebhookIntegration('stripe', ['financial'], display_name='Stripe',
                        config_options=[("Stripe API Key", "stripe_api_key", _check_string)]),
 ]
+
 
 class BotTest(ZulipTestCase, UploadSerializeMixin):
     def get_bot_user(self, email: str) -> UserProfile:

@@ -10,6 +10,7 @@ from linter_lib.custom_check import non_py_rules, python_rules
 ROOT_DIR = os.path.abspath(os.path.join(__file__, '..', '..', '..'))
 CHECK_MESSAGE = "Fix the corresponding rule in `tools/linter_lib/custom_check.py`."
 
+
 class TestRuleList(TestCase):
 
     def setUp(self) -> None:

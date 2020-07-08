@@ -68,11 +68,14 @@ class SettingHelpExtension(markdown.Extension):
         md.registerExtension(self)
         md.preprocessors.add('setting', Setting(), '_begin')
 
+
 relative_settings_links: Optional[bool] = None
+
 
 def set_relative_settings_links(value: bool) -> None:
     global relative_settings_links
     relative_settings_links = value
+
 
 class Setting(Preprocessor):
     def run(self, lines: List[str]) -> List[str]:
@@ -107,6 +110,7 @@ class Setting(Preprocessor):
             return f"1. Go to [{setting_name}]({setting_link})."
         return settings_markdown % {'setting_type_name': setting_type_name,
                                     'setting_reference': f"**{setting_name}**"}
+
 
 def makeExtension(*args: Any, **kwargs: Any) -> SettingHelpExtension:
     return SettingHelpExtension(*args, **kwargs)

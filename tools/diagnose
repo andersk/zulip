@@ -13,6 +13,7 @@ from scripts.lib.zulip_tools import get_dev_uuid_var_path
 
 UUID_VAR_PATH = get_dev_uuid_var_path()
 
+
 def run(check_func: Callable[[], bool]) -> None:
     '''
     This decorator simply runs functions.  It makes it more
@@ -22,24 +23,29 @@ def run(check_func: Callable[[], bool]) -> None:
     if not rc:
         sys.exit(1)
 
+
 def run_command(args: List[str]) -> None:
     print(' '.join(map(shlex.quote, args)))
     subprocess.check_call(args)
+
 
 @run
 def check_python_version() -> bool:
     subprocess.check_call(['/usr/bin/env', 'python', '-V'])
     return True
 
+
 @run
 def pwd() -> bool:
     print(os.getcwd())
     return True
 
+
 @run
 def host_info() -> bool:
     print(platform.platform())
     return True
+
 
 @run
 def check_django() -> bool:
@@ -62,6 +68,7 @@ def check_django() -> bool:
             ''')
         return False
 
+
 @run
 def provision_version() -> bool:
     fn = os.path.join(UUID_VAR_PATH, 'provision_version')
@@ -75,11 +82,13 @@ def provision_version() -> bool:
         return False
     return True
 
+
 @run
 def node_stuff() -> bool:
     print('node version:')
     subprocess.check_call(['node', '--version'])
     return True
+
 
 @run
 def test_models() -> bool:
@@ -91,6 +100,7 @@ def test_models() -> bool:
     print('Num realms: ', Realm.objects.count())
     print('Num users: ', UserProfile.objects.count())
     return True
+
 
 @run
 def check_venv() -> bool:
@@ -105,6 +115,7 @@ def check_venv() -> bool:
             print('Your venv may be improperly installed!')
             return False
     return True
+
 
 @run
 def check_migrations() -> bool:

@@ -19,6 +19,7 @@ from zerver.lib.types import ViewFuncT
 METHODS = ('GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'PATCH')
 FLAGS = ('override_api_url_scheme')
 
+
 def default_never_cache_responses(view_func: ViewFuncT) -> ViewFuncT:
     """Patched version of the standard Django never_cache_responses
     decorator that adds headers to a response so that it will never be
@@ -34,6 +35,7 @@ def default_never_cache_responses(view_func: ViewFuncT) -> ViewFuncT:
         add_never_cache_headers(response)
         return response
     return cast(ViewFuncT, _wrapped_view_func)  # https://github.com/python/mypy/issues/1927
+
 
 @default_never_cache_responses
 @csrf_exempt

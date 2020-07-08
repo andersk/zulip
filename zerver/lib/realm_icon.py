@@ -8,6 +8,7 @@ from zerver.models import Realm
 def realm_icon_url(realm: Realm) -> str:
     return get_realm_icon_url(realm)
 
+
 def get_realm_icon_url(realm: Realm) -> str:
     if realm.icon_source == 'U':
         return upload_backend.get_realm_icon_url(realm.id, realm.icon_version)

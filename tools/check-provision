@@ -19,5 +19,6 @@ def run() -> None:
 
     assert_provisioning_status_ok(options.force)
 
+
 if __name__ == '__main__':
     run()

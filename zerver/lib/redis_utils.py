@@ -11,18 +11,23 @@ from zerver.lib.utils import generate_random_token
 # so we want to stay limited to 1024 characters.
 MAX_KEY_LENGTH = 1024
 
+
 class ZulipRedisError(Exception):
     pass
+
 
 class ZulipRedisKeyTooLongError(ZulipRedisError):
     pass
 
+
 class ZulipRedisKeyOfWrongFormatError(ZulipRedisError):
     pass
+
 
 def get_redis_client() -> redis.StrictRedis:
     return redis.StrictRedis(host=settings.REDIS_HOST, port=settings.REDIS_PORT,
                              password=settings.REDIS_PASSWORD, db=0)
+
 
 def put_dict_in_redis(redis_client: redis.StrictRedis, key_format: str,
                       data_to_store: Mapping[str, Any],
@@ -43,6 +48,7 @@ def put_dict_in_redis(redis_client: redis.StrictRedis, key_format: str,
 
     return key
 
+
 def get_dict_from_redis(redis_client: redis.StrictRedis, key_format: str, key: str,
                         ) -> Optional[Dict[str, Any]]:
     # This function requires inputting the intended key_format to validate
@@ -58,6 +64,7 @@ def get_dict_from_redis(redis_client: redis.StrictRedis, key_format: str, key: s
     if data is None:
         return None
     return ujson.loads(data)
+
 
 def validate_key_fits_format(key: str, key_format: str) -> None:
     assert "{token}" in key_format

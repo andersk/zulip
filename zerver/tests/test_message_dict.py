@@ -334,6 +334,7 @@ class MessageDictTest(ZulipTestCase):
         self.assert_json_error(
             result, "Invalid anchor")
 
+
 class MessageHydrationTest(ZulipTestCase):
     def test_hydrate_stream_recipient_info(self) -> None:
         realm = get_realm('zulip')
@@ -488,6 +489,7 @@ class MessageHydrationTest(ZulipTestCase):
         # Make sure the email is up-to-date.
         self.assertEqual(cordelia_display_recipient['email'], cordelia_new_email)
 
+
 class TestMessageForIdsDisplayRecipientFetching(ZulipTestCase):
     def _verify_display_recipient(self, display_recipient: DisplayRecipientT,
                                   expected_recipient_objects: Union[Stream, List[UserProfile]]) -> None:
@@ -596,6 +598,7 @@ class TestMessageForIdsDisplayRecipientFetching(ZulipTestCase):
         self._verify_display_recipient(messages[3]['display_recipient'], get_stream("Denmark", hamlet.realm))
         self._verify_display_recipient(messages[4]['display_recipient'], [hamlet, cordelia, othello, iago])
         self._verify_display_recipient(messages[5]['display_recipient'], [cordelia, othello])
+
 
 class SewMessageAndReactionTest(ZulipTestCase):
     def test_sew_messages_and_reaction(self) -> None:

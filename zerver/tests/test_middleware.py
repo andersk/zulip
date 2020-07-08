@@ -47,6 +47,7 @@ class SlowQueryTest(ZulipTestCase):
                 r"123\.456\.789\.012 GET     200 10\.\ds .* \(unknown via \?\)",
             )
 
+
 class OpenGraphTest(ZulipTestCase):
     def check_title_and_description(self, path: str, title: str,
                                     in_description: List[str],

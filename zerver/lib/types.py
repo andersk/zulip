@@ -12,6 +12,7 @@ Validator = Callable[[str, object], ResultT]
 ExtendedValidator = Callable[[str, str, object], str]
 RealmUserValidator = Callable[[int, object, bool], List[int]]
 
+
 class ProfileDataElementBase(TypedDict):
     id: int
     name: str
@@ -20,9 +21,11 @@ class ProfileDataElementBase(TypedDict):
     field_data: Optional[str]
     order: int
 
+
 class ProfileDataElement(ProfileDataElementBase):
     value: str
     rendered_value: Optional[str]
+
 
 ProfileData = List[ProfileDataElement]
 
@@ -32,10 +35,13 @@ UserFieldElement = Tuple[int, str, RealmUserValidator, Callable[[Any], Any], str
 
 ProfileFieldData = Dict[str, Union[Dict[str, str], str]]
 
+
 class UserDisplayRecipient(TypedDict):
     email: str
     full_name: str
     short_name: str
     id: int
     is_mirror_dummy: bool
+
+
 DisplayRecipientT = Union[str, List[UserDisplayRecipient]]

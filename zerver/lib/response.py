@@ -19,6 +19,7 @@ class HttpResponseUnauthorized(HttpResponse):
         else:
             raise AssertionError("Invalid www_authenticate value!")
 
+
 def json_unauthorized(message: Optional[str]=None,
                       www_authenticate: Optional[str]=None) -> HttpResponse:
     if message is None:
@@ -28,12 +29,14 @@ def json_unauthorized(message: Optional[str]=None,
                                  "msg": message}) + "\n").encode()
     return resp
 
+
 def json_method_not_allowed(methods: List[str]) -> HttpResponseNotAllowed:
     resp = HttpResponseNotAllowed(methods)
     resp.content = ujson.dumps({"result": "error",
                                 "msg": "Method Not Allowed",
                                 "allowed_methods": methods}).encode()
     return resp
+
 
 def json_response(res_type: str="success",
                   msg: str="",
@@ -44,8 +47,10 @@ def json_response(res_type: str="success",
     return HttpResponse(content=ujson.dumps(content) + "\n",
                         content_type='application/json', status=status)
 
+
 def json_success(data: Mapping[str, Any]={}) -> HttpResponse:
     return json_response(data=data)
+
 
 def json_response_from_error(exception: JsonableError) -> HttpResponse:
     '''
@@ -59,6 +64,7 @@ def json_response_from_error(exception: JsonableError) -> HttpResponse:
                          msg=exception.msg,
                          data=exception.data,
                          status=exception.http_status_code)
+
 
 def json_error(msg: str, data: Mapping[str, Any]={}, status: int=400) -> HttpResponse:
     return json_response(res_type="error", msg=msg, data=data, status=status)

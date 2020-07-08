@@ -57,6 +57,7 @@ VARMAP = {
     'NoneType': type(None),
 }
 
+
 def schema_type(schema: Dict[str, Any]) -> Union[type, Tuple[type, object]]:
     if 'oneOf' in schema:
         # Hack: Just use the type of the first value
@@ -66,6 +67,7 @@ def schema_type(schema: Dict[str, Any]) -> Union[type, Tuple[type, object]]:
         return (list, schema_type(schema["items"]))
     else:
         return VARMAP[schema["type"]]
+
 
 class OpenAPIToolsTest(ZulipTestCase):
     """Make sure that the tools we use to handle our OpenAPI specification
@@ -198,6 +200,7 @@ class OpenAPIToolsTest(ZulipTestCase):
         with mock.patch('zerver.openapi.openapi.openapi_spec.reload') as mock_reload:
             get_openapi_fixture(TEST_ENDPOINT, TEST_METHOD)
             self.assertFalse(mock_reload.called)
+
 
 class OpenAPIArgumentsTest(ZulipTestCase):
     # This will be filled during test_openapi_arguments:
@@ -1009,6 +1012,7 @@ class TestCurlExampleGeneration(ZulipTestCase):
         ]
         self.assertEqual(generated_curl_example, expected_curl_example)
 
+
 class OpenAPIAttributesTest(ZulipTestCase):
     def test_attributes(self) -> None:
         """
@@ -1045,6 +1049,7 @@ class OpenAPIAttributesTest(ZulipTestCase):
                     validate_schema(response_schema)
                     assert(validate_against_openapi_schema(response_schema['example'], path,
                                                            method, response))
+
 
 class OpenAPIRegexTest(ZulipTestCase):
     def test_regex(self) -> None:

@@ -41,6 +41,7 @@ TIMEDELTA_MAX = timedelta(days=365*1000)
 
 ## Class definitions ##
 
+
 class CountStat:
     HOUR = 'hour'
     DAY = 'day'
@@ -64,15 +65,18 @@ class CountStat:
     def __str__(self) -> str:
         return f"<CountStat: {self.property}>"
 
+
 class LoggingCountStat(CountStat):
     def __init__(self, property: str, output_table: Type[BaseCount], frequency: str) -> None:
         CountStat.__init__(self, property, DataCollector(output_table, None), frequency)
+
 
 class DependentCountStat(CountStat):
     def __init__(self, property: str, data_collector: 'DataCollector', frequency: str,
                  interval: Optional[timedelta] = None, dependencies: Sequence[str] = []) -> None:
         CountStat.__init__(self, property, data_collector, frequency, interval=interval)
         self.dependencies = dependencies
+
 
 class DataCollector:
     def __init__(self, output_table: Type[BaseCount],
@@ -81,6 +85,7 @@ class DataCollector:
         self.pull_function = pull_function
 
 ## CountStat-level operations ##
+
 
 def process_count_stat(stat: CountStat, fill_to_time: datetime,
                        realm: Optional[Realm]=None) -> None:
@@ -142,6 +147,7 @@ def process_count_stat(stat: CountStat, fill_to_time: datetime,
         currently_filled = currently_filled + time_increment
         logger.info("DONE %s (%dms)", stat.property, (end-start)*1000)
 
+
 def do_update_fill_state(fill_state: FillState, end_time: datetime, state: int) -> None:
     fill_state.end_time = end_time
     fill_state.state = state
@@ -149,6 +155,8 @@ def do_update_fill_state(fill_state: FillState, end_time: datetime, state: int) 
 
 # We assume end_time is valid (e.g. is on a day or hour boundary as appropriate)
 # and is timezone aware. It is the caller's responsibility to enforce this!
+
+
 def do_fill_count_stat_at_hour(stat: CountStat, end_time: datetime, realm: Optional[Realm]=None) -> None:
     start_time = end_time - stat.interval
     if not isinstance(stat, LoggingCountStat):
@@ -158,6 +166,7 @@ def do_fill_count_stat_at_hour(stat: CountStat, end_time: datetime, realm: Optio
         logger.info("%s run pull_function (%dms/%sr)",
                     stat.property, (time.time()-timer)*1000, rows_added)
     do_aggregate_to_summary_table(stat, end_time, realm)
+
 
 def do_delete_counts_at_hour(stat: CountStat, end_time: datetime) -> None:
     if isinstance(stat, LoggingCountStat):
@@ -169,6 +178,7 @@ def do_delete_counts_at_hour(stat: CountStat, end_time: datetime) -> None:
         StreamCount.objects.filter(property=stat.property, end_time=end_time).delete()
         RealmCount.objects.filter(property=stat.property, end_time=end_time).delete()
         InstallationCount.objects.filter(property=stat.property, end_time=end_time).delete()
+
 
 def do_aggregate_to_summary_table(stat: CountStat, end_time: datetime,
                                   realm: Optional[Realm]=None) -> None:
@@ -245,6 +255,8 @@ def do_aggregate_to_summary_table(stat: CountStat, end_time: datetime,
 ## Utility functions called from outside counts.py ##
 
 # called from zerver/lib/actions.py; should not throw any errors
+
+
 def do_increment_logging_stat(zerver_object: Union[Realm, UserProfile, Stream], stat: CountStat,
                               subgroup: Optional[Union[str, int, bool]], event_time: datetime,
                               increment: int=1) -> None:
@@ -271,12 +283,14 @@ def do_increment_logging_stat(zerver_object: Union[Realm, UserProfile, Stream], 
         row.value = F('value') + increment
         row.save(update_fields=['value'])
 
+
 def do_drop_all_analytics_tables() -> None:
     UserCount.objects.all().delete()
     StreamCount.objects.all().delete()
     RealmCount.objects.all().delete()
     InstallationCount.objects.all().delete()
     FillState.objects.all().delete()
+
 
 def do_drop_single_stat(property: str) -> None:
     UserCount.objects.filter(property=property).delete()
@@ -287,7 +301,9 @@ def do_drop_single_stat(property: str) -> None:
 
 ## DataCollector-level operations ##
 
+
 QueryFn = Callable[[Dict[str, Composable]], Composable]
+
 
 def do_pull_by_sql_query(
     property: str,
@@ -321,6 +337,7 @@ def do_pull_by_sql_query(
     cursor.close()
     return rowcount
 
+
 def sql_data_collector(
     output_table: Type[BaseCount],
     query: QueryFn,
@@ -336,6 +353,7 @@ def sql_data_collector(
         # passed.
         return do_pull_by_sql_query(property, start_time, end_time, query, group_by)
     return DataCollector(output_table, pull_function)
+
 
 def do_pull_minutes_active(property: str, start_time: datetime, end_time: datetime,
                            realm: Optional[Realm] = None) -> int:
@@ -358,6 +376,7 @@ def do_pull_minutes_active(property: str, start_time: datetime, end_time: dateti
             for ids, seconds in seconds_active.items() if seconds >= 60]
     UserCount.objects.bulk_create(rows)
     return len(rows)
+
 
 def count_message_by_user_query(realm: Optional[Realm]) -> QueryFn:
     if realm is None:
@@ -383,6 +402,8 @@ def count_message_by_user_query(realm: Optional[Realm]) -> QueryFn:
 """).format(**kwargs, realm_clause=realm_clause)
 
 # Note: ignores the group_by / group_by_clause.
+
+
 def count_message_type_by_user_query(realm: Optional[Realm]) -> QueryFn:
     if realm is None:
         realm_clause = SQL("")
@@ -429,6 +450,8 @@ def count_message_type_by_user_query(realm: Optional[Realm]) -> QueryFn:
 # use this also subgroup on UserProfile.is_bot. If in the future there is a
 # stat that counts messages by stream and doesn't need the UserProfile
 # table, consider writing a new query for efficiency.
+
+
 def count_message_by_stream_query(realm: Optional[Realm]) -> QueryFn:
     if realm is None:
         realm_clause = SQL("")
@@ -460,6 +483,8 @@ def count_message_by_stream_query(realm: Optional[Realm]) -> QueryFn:
 
 # Hardcodes the query needed by active_users:is_bot:day, since that is
 # currently the only stat that uses this.
+
+
 def count_user_by_realm_query(realm: Optional[Realm]) -> QueryFn:
     if realm is None:
         realm_clause = SQL("")
@@ -487,6 +512,8 @@ def count_user_by_realm_query(realm: Optional[Realm]) -> QueryFn:
 # Assumes that a user cannot have two RealmAuditLog entries with the same event_time and
 # event_type in [RealmAuditLog.USER_CREATED, USER_DEACTIVATED, etc].
 # In particular, it's important to ensure that migrations don't cause that to happen.
+
+
 def check_realmauditlog_by_user_query(realm: Optional[Realm]) -> QueryFn:
     if realm is None:
         realm_clause = SQL("")
@@ -524,6 +551,7 @@ def check_realmauditlog_by_user_query(realm: Optional[Realm]) -> QueryFn:
         realm_clause=realm_clause,
     )
 
+
 def check_useractivityinterval_by_user_query(realm: Optional[Realm]) -> QueryFn:
     if realm is None:
         realm_clause = SQL("")
@@ -544,6 +572,7 @@ def check_useractivityinterval_by_user_query(realm: Optional[Realm]) -> QueryFn:
         zerver_useractivityinterval.start < %(time_end)s
     GROUP BY zerver_userprofile.id {group_by_clause}
 """).format(**kwargs, realm_clause=realm_clause)
+
 
 def count_realm_active_humans_query(realm: Optional[Realm]) -> QueryFn:
     if realm is None:
@@ -577,6 +606,7 @@ def count_realm_active_humans_query(realm: Optional[Realm]) -> QueryFn:
     GROUP BY usercount1.realm_id
 """).format(**kwargs, realm_clause=realm_clause)
 
+
 # Currently unused and untested
 count_stream_by_realm_query = lambda kwargs: SQL("""
     INSERT INTO analytics_realmcount
@@ -593,6 +623,7 @@ count_stream_by_realm_query = lambda kwargs: SQL("""
         zerver_stream.date_created < %(time_end)s
     GROUP BY zerver_realm.id {group_by_clause}
 """).format(**kwargs)
+
 
 def get_count_stats(realm: Optional[Realm]=None) -> Dict[str, CountStat]:
     ## CountStat declarations ##
@@ -689,6 +720,7 @@ def get_count_stats(realm: Optional[Realm]=None) -> Dict[str, CountStat]:
     ]
 
     return OrderedDict([(stat.property, stat) for stat in count_stats_])
+
 
 # To avoid refactoring for now COUNT_STATS can be used as before
 COUNT_STATS = get_count_stats()

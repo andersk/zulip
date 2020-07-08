@@ -31,16 +31,19 @@ from zerver.lib.test_helpers import append_instrumentation_data, write_instrumen
 # below hack, which fails 1/10000000 of the time.
 random_id_range_start = str(random.randint(1, 10000000))
 
+
 def get_database_id(worker_id: Optional[int]=None) -> str:
     if worker_id:
         return f"{random_id_range_start}_{worker_id}"
     return random_id_range_start
+
 
 # The root directory for this run of the test suite.
 TEST_RUN_DIR = get_or_create_dev_uuid_var_path(
     os.path.join('test-backend', f'run_{get_database_id()}'))
 
 _worker_id = 0  # Used to identify the worker process.
+
 
 class TextTestResult(runner.TextTestResult):
     """
@@ -84,6 +87,7 @@ class TextTestResult(runner.TextTestResult):
             reason))
         self.stream.flush()
 
+
 class RemoteTestResult(django_runner.RemoteTestResult):
     """
     The class follows the unpythonic style of function names of the
@@ -100,12 +104,15 @@ class RemoteTestResult(django_runner.RemoteTestResult):
 
         self.events.append(('addInstrumentation', self.test_index, data))
 
+
 def process_instrumented_calls(func: Callable[[Dict[str, Any]], None]) -> None:
     for call in test_helpers.INSTRUMENTED_CALLS:
         func(call)
 
+
 SerializedSubsuite = Tuple[Type[TestSuite], List[str]]
 SubsuiteArgs = Tuple[Type['RemoteTestRunner'], int, SerializedSubsuite, bool]
+
 
 def run_subsuite(args: SubsuiteArgs) -> Tuple[int, Any]:
     # Reset the accumulated INSTRUMENTED_CALLS before running this subsuite.
@@ -122,6 +129,7 @@ def run_subsuite(args: SubsuiteArgs) -> Tuple[int, Any]:
     # addInstrumentation does not need it.
     process_instrumented_calls(partial(result.addInstrumentation, None))
     return subsuite_index, result.events
+
 
 def destroy_test_databases(worker_id: Optional[int]=None) -> None:
     for alias in connections:
@@ -152,6 +160,7 @@ def destroy_test_databases(worker_id: Optional[int]=None) -> None:
             # DB doesn't exist. No need to do anything.
             pass
 
+
 def create_test_databases(worker_id: int) -> None:
     database_id = get_database_id(worker_id)
     for alias in connections:
@@ -168,6 +177,7 @@ def create_test_databases(worker_id: int) -> None:
         # to the default database instead of the appropriate clone.
         connection.settings_dict.update(settings_dict)
         connection.close()
+
 
 def init_worker(counter: Synchronized) -> None:
     """
@@ -213,6 +223,7 @@ def init_worker(counter: Synchronized) -> None:
     if not found:
         print("*** Upload directory not found.")
 
+
 class ParallelTestSuite(django_runner.ParallelTestSuite):
     run_subsuite = run_subsuite
     init_worker = init_worker
@@ -225,6 +236,7 @@ class ParallelTestSuite(django_runner.ParallelTestSuite):
         # definitions.
         assert not isinstance(self.subsuites, SubSuiteList)
         self.subsuites: Union[SubSuiteList, List[TestSuite]] = SubSuiteList(self.subsuites)
+
 
 def check_import_error(test_name: str) -> None:
     try:
@@ -250,6 +262,7 @@ def initialize_worker_path(worker_id: int) -> None:
                      os.path.basename(worker_path),
                      "test_uploads"))
     settings.SENDFILE_ROOT = os.path.join(settings.LOCAL_UPLOADS_DIR, "files")
+
 
 class Runner(DiscoverRunner):
     parallel_test_suite = ParallelTestSuite
@@ -405,6 +418,7 @@ class Runner(DiscoverRunner):
             write_instrumentation_reports(full_suite=full_suite, include_webhooks=include_webhooks)
         return failed, result.failed_tests
 
+
 def get_test_names(suite: Union[TestSuite, ParallelTestSuite]) -> List[str]:
     if isinstance(suite, ParallelTestSuite):
         # suite is ParallelTestSuite. It will have a subsuites parameter of
@@ -417,6 +431,7 @@ def get_test_names(suite: Union[TestSuite, ParallelTestSuite]) -> List[str]:
     else:
         return [t.id() for t in get_tests_from_suite(suite)]
 
+
 def get_tests_from_suite(suite: TestSuite) -> TestCase:
     for test in suite:
         if isinstance(test, TestSuite):
@@ -424,8 +439,10 @@ def get_tests_from_suite(suite: TestSuite) -> TestCase:
         else:
             yield test
 
+
 def serialize_suite(suite: TestSuite) -> Tuple[Type[TestSuite], List[str]]:
     return type(suite), get_test_names(suite)
+
 
 def deserialize_suite(args: Tuple[Type[TestSuite], List[str]]) -> TestSuite:
     suite_class, test_names = args
@@ -435,8 +452,10 @@ def deserialize_suite(args: Tuple[Type[TestSuite], List[str]]) -> TestSuite:
         suite.addTest(test)
     return suite
 
+
 class RemoteTestRunner(django_runner.RemoteTestRunner):
     resultclass = RemoteTestResult
+
 
 class SubSuiteList(List[Tuple[Type[TestSuite], List[str]]]):
     """

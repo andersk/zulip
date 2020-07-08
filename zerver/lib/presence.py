@@ -44,6 +44,7 @@ def get_status_dicts_for_rows(all_rows: List[Dict[str, Any]],
 
     return user_statuses
 
+
 def get_modern_user_info(presence_rows: List[Dict[str, Any]],
                          mobile_user_ids: Set[int]) -> Dict[str, Any]:
 
@@ -73,6 +74,7 @@ def get_modern_user_info(presence_rows: List[Dict[str, Any]],
         result['idle_timestamp'] = idle_timestamp
 
     return result
+
 
 def get_legacy_user_info(presence_rows: List[Dict[str, Any]],
                          mobile_user_ids: Set[int]) -> Dict[str, Any]:
@@ -117,6 +119,7 @@ def get_legacy_user_info(presence_rows: List[Dict[str, Any]],
         result[info['client']] = info
 
     return result
+
 
 def get_presence_for_user(user_profile_id: int,
                           slim_presence: bool=False) -> Dict[str, Dict[str, Any]]:
@@ -182,6 +185,7 @@ def get_status_dict_by_realm(realm_id: int, slim_presence: bool = False) -> Dict
 
     return get_status_dicts_for_rows(presence_rows, mobile_user_ids, slim_presence)
 
+
 def get_presences_for_realm(realm: Realm,
                             slim_presence: bool) -> Dict[str, Dict[str, Dict[str, Any]]]:
 
@@ -190,6 +194,7 @@ def get_presences_for_realm(realm: Realm,
         return defaultdict(dict)
 
     return get_status_dict_by_realm(realm.id, slim_presence)
+
 
 def get_presence_response(requesting_user_profile: UserProfile,
                           slim_presence: bool) -> Dict[str, Any]:

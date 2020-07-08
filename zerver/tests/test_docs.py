@@ -228,6 +228,7 @@ class DocPageTest(ZulipTestCase):
                                  HTTP_USER_AGENT="ZulipElectron/1.0.0")
         self.assertTrue('data-platform="ZulipElectron"' in result.content.decode("utf-8"))
 
+
 class HelpTest(ZulipTestCase):
     def test_help_settings_links(self) -> None:
         result = self.client_get('/help/change-the-time-format')
@@ -263,6 +264,7 @@ class HelpTest(ZulipTestCase):
         self.assertEqual(result.status_code, 200)
         self.assertIn('<strong>Manage streams</strong>', str(result.content))
         self.assertNotIn('/#streams', str(result.content))
+
 
 class IntegrationTest(ZulipTestCase):
     def test_check_if_every_integration_has_logo_that_exists(self) -> None:
@@ -323,6 +325,7 @@ class IntegrationTest(ZulipTestCase):
             context['subscriptions_html'],
             '<a target="_blank" href="/#streams">streams page</a>')
 
+
 class AboutPageTest(ZulipTestCase):
     def test_endpoint(self) -> None:
         with self.settings(CONTRIBUTOR_DATA_FILE_PATH="zerver/tests/fixtures/authors.json"):
@@ -348,11 +351,13 @@ class AboutPageTest(ZulipTestCase):
         expected_result = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
         self.assertEqual(split_by(flat_list, 3, None), expected_result)
 
+
 class SmtpConfigErrorTest(ZulipTestCase):
     def test_smtp_error(self) -> None:
         result = self.client_get("/config-error/smtp")
         self.assertEqual(result.status_code, 200)
         self.assert_in_success_response(["email configuration"], result)
+
 
 class PlansPageTest(ZulipTestCase):
     def test_plans_auth(self) -> None:
@@ -438,6 +443,7 @@ class PlansPageTest(ZulipTestCase):
         self.assert_in_success_response([current_plan, sponsorship_pending], result)
         self.assert_not_in_success_response([sign_up_now, buy_standard], result)
 
+
 class AppsPageTest(ZulipTestCase):
     def test_apps_view(self) -> None:
         result = self.client_get('/apps')
@@ -454,6 +460,7 @@ class AppsPageTest(ZulipTestCase):
         self.assertEqual(result.status_code, 200)
         html = result.content.decode('utf-8')
         self.assertIn('Apps for every platform.', html)
+
 
 class PrivacyTermsTest(ZulipTestCase):
     def test_custom_tos_template(self) -> None:

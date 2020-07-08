@@ -5,6 +5,7 @@ from django.utils.translation import ugettext as _
 
 T = TypeVar("T", bound="AbstractEnum")
 
+
 class AbstractEnum(Enum):
     '''An enumeration whose members are used strictly for their names.'''
 
@@ -23,6 +24,7 @@ class AbstractEnum(Enum):
 
     def __reduce_ex__(self, proto: object) -> NoReturn:
         raise AssertionError("Not implemented")
+
 
 class ErrorCode(AbstractEnum):
     BAD_REQUEST = ()  # Generic name, from the name of HTTP 400.
@@ -45,6 +47,7 @@ class ErrorCode(AbstractEnum):
     REQUEST_CONFUSING_VAR = ()
     INVALID_API_KEY = ()
     INVALID_ZOOM_TOKEN = ()
+
 
 class JsonableError(Exception):
     '''A standardized error format we can turn into a nice JSON HTTP response.
@@ -132,6 +135,7 @@ class JsonableError(Exception):
     def __str__(self) -> str:
         return self.msg
 
+
 class StreamDoesNotExistError(JsonableError):
     code = ErrorCode.STREAM_DOES_NOT_EXIST
     data_fields = ['stream']
@@ -143,6 +147,7 @@ class StreamDoesNotExistError(JsonableError):
     def msg_format() -> str:
         return _("Stream '{stream}' does not exist")
 
+
 class StreamWithIDDoesNotExistError(JsonableError):
     code = ErrorCode.STREAM_DOES_NOT_EXIST
     data_fields = ['stream_id']
@@ -153,6 +158,7 @@ class StreamWithIDDoesNotExistError(JsonableError):
     @staticmethod
     def msg_format() -> str:
         return _("Stream with ID '{stream_id}' does not exist")
+
 
 class CannotDeactivateLastUserError(JsonableError):
     code = ErrorCode.CANNOT_DEACTIVATE_LAST_USER
@@ -166,6 +172,7 @@ class CannotDeactivateLastUserError(JsonableError):
     def msg_format() -> str:
         return _("Cannot deactivate the only {entity}.")
 
+
 class InvalidMarkdownIncludeStatement(JsonableError):
     code = ErrorCode.INVALID_MARKDOWN_INCLUDE_STATEMENT
     data_fields = ['include_statement']
@@ -177,9 +184,11 @@ class InvalidMarkdownIncludeStatement(JsonableError):
     def msg_format() -> str:
         return _("Invalid markdown include statement: {include_statement}")
 
+
 class RateLimited(Exception):
     def __init__(self, msg: str="") -> None:
         super().__init__(msg)
+
 
 class InvalidJSONError(JsonableError):
     code = ErrorCode.INVALID_JSON
@@ -187,6 +196,7 @@ class InvalidJSONError(JsonableError):
     @staticmethod
     def msg_format() -> str:
         return _("Malformed JSON")
+
 
 class OrganizationAdministratorRequired(JsonableError):
     code: ErrorCode = ErrorCode.UNAUTHORIZED_PRINCIPAL
@@ -200,6 +210,7 @@ class OrganizationAdministratorRequired(JsonableError):
     def msg_format() -> str:
         return OrganizationAdministratorRequired.ADMIN_REQUIRED_MESSAGE
 
+
 class OrganizationOwnerRequired(JsonableError):
     code: ErrorCode = ErrorCode.UNAUTHORIZED_PRINCIPAL
 
@@ -212,8 +223,10 @@ class OrganizationOwnerRequired(JsonableError):
     def msg_format() -> str:
         return OrganizationOwnerRequired.OWNER_REQUIRED_MESSAGE
 
+
 class MarkdownRenderingException(Exception):
     pass
+
 
 class InvalidAPIKeyError(JsonableError):
     code = ErrorCode.INVALID_API_KEY
@@ -226,10 +239,12 @@ class InvalidAPIKeyError(JsonableError):
     def msg_format() -> str:
         return _("Invalid API key")
 
+
 class InvalidAPIKeyFormatError(InvalidAPIKeyError):
     @staticmethod
     def msg_format() -> str:
         return _("Malformed API key")
+
 
 class UnexpectedWebhookEventType(JsonableError):
     code = ErrorCode.UNEXPECTED_WEBHOOK_EVENT_TYPE

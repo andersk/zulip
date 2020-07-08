@@ -19,17 +19,20 @@ ZULIP_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../../
 def get_webhook_integrations() -> List[str]:
     return [integration.name for integration in WEBHOOK_INTEGRATIONS]
 
+
 def get_valid_integration_name(name: str) -> Optional[str]:
     for integration_name in get_webhook_integrations():
         if name == integration_name:
             return integration_name
     return None
 
+
 def dev_panel(request: HttpRequest) -> HttpResponse:
     integrations = get_webhook_integrations()
     bots = UserProfile.objects.filter(is_bot=True, bot_type=UserProfile.INCOMING_WEBHOOK_BOT)
     context = {"integrations": integrations, "bots": bots}
     return render(request, "zerver/integrations/development/dev_panel.html", context)
+
 
 def send_webhook_fixture_message(url: str,
                                  body: str,
@@ -45,6 +48,7 @@ def send_webhook_fixture_message(url: str,
         content_type = standardized_headers.pop("HTTP_CONTENT_TYPE", "text/plain")
     return client.post(url, body, content_type=content_type, HTTP_HOST=http_host,
                        **standardized_headers)
+
 
 @has_request_variables
 def get_fixtures(request: HttpResponse,

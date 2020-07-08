@@ -918,6 +918,7 @@ class MessagePOSTTest(ZulipTestCase):
         result = self.api_post(sender, "/api/v1/messages", payload)
         self.assert_json_success(result)
 
+
 class ScheduledMessageTest(ZulipTestCase):
 
     def last_scheduled_message(self) -> ScheduledMessage:
@@ -1051,6 +1052,7 @@ class ScheduledMessageTest(ZulipTestCase):
         result = self.do_schedule_message('stream', 'Verona',
                                           content + ' 1')
         self.assert_json_error(result, 'Missing deliver_at in a request for delayed message delivery')
+
 
 class StreamMessagesTest(ZulipTestCase):
 
@@ -1398,6 +1400,7 @@ class StreamMessagesTest(ZulipTestCase):
                                                                 user != users[1]})
         self.assertEqual(recent_conversation['max_message_id'], message2_id)
 
+
 class PersonalMessageSendTest(ZulipTestCase):
     def test_personal_to_self(self) -> None:
         """
@@ -1597,6 +1600,7 @@ class ExtractTest(ZulipTestCase):
         with self.assertRaisesRegex(JsonableError, 'Recipient lists may contain emails or user IDs, but not both.'):
             extract_private_recipients(mixed)
 
+
 class InternalPrepTest(ZulipTestCase):
 
     def test_returns_for_internal_sends(self) -> None:
@@ -1718,6 +1722,7 @@ class InternalPrepTest(ZulipTestCase):
         # wasn't automatically created.
         Stream.objects.get(name=stream_name, realm_id=realm.id)
 
+
 class TestCrossRealmPMs(ZulipTestCase):
     def make_realm(self, domain: str) -> Realm:
         realm = Realm.objects.create(string_id=domain, invite_required=False)
@@ -1826,6 +1831,7 @@ class TestCrossRealmPMs(ZulipTestCase):
         with assert_invalid_user():
             self.send_huddle_message(user1, [user2, user3])
 
+
 class TestAddressee(ZulipTestCase):
     def test_addressee_for_user_ids(self) -> None:
         realm = get_realm('zulip')
@@ -1880,6 +1886,7 @@ class TestAddressee(ZulipTestCase):
 
         stream_id = result.stream_id()
         self.assertEqual(stream.id, stream_id)
+
 
 class CheckMessageTest(ZulipTestCase):
     def test_basic_check_message_call(self) -> None:

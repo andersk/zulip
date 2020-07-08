@@ -46,6 +46,7 @@ name_entry_regex = re.compile(r"'(?P<emoji_code>[a-z0-9-]+)': "
                               r"'aliases': \[(?P<aliases>('([+-]?[a-z0-9_, X-]+)'[, ]{0,2})*)\]},")
 explanation_regex = re.compile(r"    # (?P<explanation_line>[^\r\n\t]+)")
 
+
 def prepare_sorting_info() -> None:
     emoji_data: List[Dict[str, Any]] = []
     with open(EMOJI_DATA_PATH) as fp:
@@ -59,20 +60,24 @@ def prepare_sorting_info() -> None:
             'sort_order': sort_order.rjust(3, '0'),
         }
 
+
 def get_sorting_info(emoji_code: str) -> str:
     category = sorting_info[emoji_code]['category']
     category = category_index[category] + '-' + category
     sort_order = sorting_info[emoji_code]['sort_order']
     return ' '.join([category, sort_order])
 
+
 def prepare_explanation(explanation_lines: List[str]) -> str:
     return ' '.join(explanation_lines)
+
 
 def prepare_aliases(captured_aliases: str) -> str:
     aliases = []
     for alias in captured_aliases.split(', '):
         aliases.append(alias.strip("'"))
     return ', '.join(aliases)
+
 
 def main() -> None:
     description = ("This script is used for exporting `emoji_names.py` to comma separated file. It "
@@ -124,6 +129,7 @@ def main() -> None:
     line_sep_len = len(os.linesep)
     fp.truncate(fp.tell() - line_sep_len)
     fp.close()
+
 
 if __name__ == "__main__":
     main()

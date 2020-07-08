@@ -10,6 +10,7 @@ def migrate_set_order_value(apps: StateApps, schema_editor: DatabaseSchemaEditor
     CustomProfileField = apps.get_model('zerver', 'CustomProfileField')
     CustomProfileField.objects.all().update(order=F('id'))
 
+
 class Migration(migrations.Migration):
 
     dependencies = [

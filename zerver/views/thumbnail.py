@@ -20,6 +20,7 @@ def validate_thumbnail_request(user_profile: UserProfile, path: str) -> Optional
     # This is an external link and we don't enforce restricted view policy here.
     return True
 
+
 @has_request_variables
 def backend_serve_thumbnail(request: HttpRequest, user_profile: UserProfile,
                             url: str=REQ(), size_requested: str=REQ("size")) -> HttpResponse:

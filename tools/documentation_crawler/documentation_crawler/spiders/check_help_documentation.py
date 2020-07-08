@@ -52,6 +52,7 @@ class APIDocumentationSpider(UnusedImagesLinterSpider):
     deny_domains: List[str] = []
     images_path = "static/images/api"
 
+
 class PorticoDocumentationSpider(BaseDocumentationSpider):
     def _is_external_url(self, url: str) -> bool:
         return (

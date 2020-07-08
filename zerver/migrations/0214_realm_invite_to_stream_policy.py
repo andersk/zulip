@@ -4,11 +4,14 @@ from django.db.backends.postgresql.schema import DatabaseSchemaEditor
 from django.db.migrations.state import StateApps
 
 INVITE_TO_STREAM_POLICY_MEMBERS = 1
+
+
 def handle_waiting_period(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     Realm = apps.get_model('zerver', 'Realm')
     Realm.INVITE_TO_STREAM_POLICY_WAITING_PERIOD = 3
     Realm.objects.filter(waiting_period_threshold__gt=0).update(
         invite_to_stream_policy=Realm.INVITE_TO_STREAM_POLICY_WAITING_PERIOD)
+
 
 class Migration(migrations.Migration):
 

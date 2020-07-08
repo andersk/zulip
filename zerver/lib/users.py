@@ -52,6 +52,8 @@ def check_full_name(full_name_raw: str) -> str:
 # name (e.g. you can get there by reactivating a deactivated bot after
 # making a new bot with the same name).  This is just a check designed
 # to make it unlikely to happen by accident.
+
+
 def check_bot_name_available(realm_id: int, full_name: str) -> None:
     dup_exists = UserProfile.objects.filter(
         realm_id=realm_id,
@@ -62,11 +64,13 @@ def check_bot_name_available(realm_id: int, full_name: str) -> None:
     if dup_exists:
         raise JsonableError(_("Name is already in use!"))
 
+
 def check_short_name(short_name_raw: str) -> str:
     short_name = short_name_raw.strip()
     if len(short_name) == 0:
         raise JsonableError(_("Bad name or username"))
     return short_name
+
 
 def check_valid_bot_config(bot_type: int, service_name: str,
                            config_data: Dict[str, str]) -> None:
@@ -109,6 +113,8 @@ def check_valid_bot_config(bot_type: int, service_name: str,
             raise JsonableError(_("Invalid configuration data!"))
 
 # Adds an outgoing webhook or embedded bot service.
+
+
 def add_service(name: str, user_profile: UserProfile, base_url: Optional[str]=None,
                 interface: Optional[int]=None, token: Optional[str]=None) -> None:
     Service.objects.create(name=name,
@@ -116,6 +122,7 @@ def add_service(name: str, user_profile: UserProfile, base_url: Optional[str]=No
                            base_url=base_url,
                            interface=interface,
                            token=token)
+
 
 def check_bot_creation_policy(user_profile: UserProfile, bot_type: int) -> None:
     # Realm administrators can always add bot
@@ -130,16 +137,20 @@ def check_bot_creation_policy(user_profile: UserProfile, bot_type: int) -> None:
             bot_type == UserProfile.DEFAULT_BOT:
         raise OrganizationAdministratorRequired()
 
+
 def check_valid_bot_type(user_profile: UserProfile, bot_type: int) -> None:
     if bot_type not in user_profile.allowed_bot_types:
         raise JsonableError(_('Invalid bot type'))
+
 
 def check_valid_interface_type(interface_type: Optional[int]) -> None:
     if interface_type not in Service.ALLOWED_INTERFACE_TYPES:
         raise JsonableError(_('Invalid interface type'))
 
+
 def is_administrator_role(role: int) -> bool:
     return role in {UserProfile.ROLE_REALM_ADMINISTRATOR, UserProfile.ROLE_REALM_OWNER}
+
 
 def bulk_get_users(emails: List[str], realm: Optional[Realm],
                    base_query: 'QuerySet[UserProfile]'=None) -> Dict[str, UserProfile]:
@@ -182,8 +193,10 @@ def bulk_get_users(emails: List[str], realm: Optional[Realm],
         id_fetcher=user_to_email,
     )
 
+
 def get_user_id(user: UserProfile) -> int:
     return user.id
+
 
 def user_ids_to_users(user_ids: Sequence[int], realm: Realm) -> List[UserProfile]:
     # TODO: Consider adding a flag to control whether deactivated
@@ -210,6 +223,7 @@ def user_ids_to_users(user_ids: Sequence[int], realm: Realm) -> List[UserProfile
             raise JsonableError(_("Invalid user ID: {}").format(user_profile.id))
     return user_profiles
 
+
 def access_bot_by_id(user_profile: UserProfile, user_id: int) -> UserProfile:
     try:
         target = get_user_profile_by_id_in_realm(user_id, user_profile.realm)
@@ -220,6 +234,7 @@ def access_bot_by_id(user_profile: UserProfile, user_id: int) -> UserProfile:
     if not user_profile.can_admin_user(target):
         raise JsonableError(_("Insufficient permission"))
     return target
+
 
 def access_user_by_id(user_profile: UserProfile, user_id: int,
                       allow_deactivated: bool=False, allow_bots: bool=False,
@@ -239,6 +254,7 @@ def access_user_by_id(user_profile: UserProfile, user_id: int,
         raise JsonableError(_("Insufficient permission"))
     return target
 
+
 def get_accounts_for_email(email: str) -> List[Dict[str, Optional[str]]]:
     profiles = UserProfile.objects.select_related('realm').filter(delivery_email__iexact=email.strip(),
                                                                   is_active=True,
@@ -250,12 +266,15 @@ def get_accounts_for_email(email: str) -> List[Dict[str, Optional[str]]]:
              "avatar": avatar_url(profile)}
             for profile in profiles]
 
+
 def get_api_key(user_profile: UserProfile) -> str:
     return user_profile.api_key
+
 
 def get_all_api_keys(user_profile: UserProfile) -> List[str]:
     # Users can only have one API key for now
     return [user_profile.api_key]
+
 
 def validate_user_custom_profile_field(realm_id: int, field: CustomProfileField,
                                        value: Union[int, str, List[int]]) -> Union[int, str, List[int]]:
@@ -277,6 +296,7 @@ def validate_user_custom_profile_field(realm_id: int, field: CustomProfileField,
     else:
         raise AssertionError("Invalid field type")
 
+
 def validate_user_custom_profile_data(realm_id: int,
                                       profile_data: List[Dict[str, Union[int, str, List[int]]]]) -> None:
     # This function validate all custom field values according to their field type.
@@ -292,6 +312,7 @@ def validate_user_custom_profile_data(realm_id: int,
         except ValidationError as error:
             raise JsonableError(error.message)
 
+
 def compute_show_invites_and_add_streams(user_profile: Optional[UserProfile]) -> Tuple[bool, bool]:
     if user_profile is None:
         return False, False
@@ -306,6 +327,7 @@ def compute_show_invites_and_add_streams(user_profile: Optional[UserProfile]) ->
         return False, True
 
     return True, True
+
 
 def format_user_row(realm: Realm, acting_user: UserProfile, row: Dict[str, Any],
                     client_gravatar: bool, user_avatar_url_field_optional: bool,
@@ -377,6 +399,7 @@ def format_user_row(realm: Realm, acting_user: UserProfile, row: Dict[str, Any],
         result['profile_data'] = custom_profile_field_data
     return result
 
+
 def user_profile_to_user_row(user_profile: UserProfile) -> Dict[str, Any]:
     # What we're trying to do is simulate the user_profile having been
     # fetched from a QuerySet using `.values(*realm_user_dict_fields)`
@@ -398,6 +421,7 @@ def user_profile_to_user_row(user_profile: UserProfile) -> Dict[str, Any]:
     user_row['bot_owner_id'] = user_row['bot_owner']
     del user_row['bot_owner']
     return user_row
+
 
 def get_cross_realm_dicts() -> List[Dict[str, Any]]:
     users = bulk_get_users(list(settings.CROSS_REALM_BOT_EMAILS), None,
@@ -425,6 +449,7 @@ def get_cross_realm_dicts() -> List[Dict[str, Any]]:
 
     return result
 
+
 def get_custom_profile_field_values(custom_profile_field_values:
                                     List[CustomProfileFieldValue]) -> Dict[int, Dict[str, Any]]:
     profiles_by_user_id: Dict[int, Dict[str, Any]] = defaultdict(dict)
@@ -440,6 +465,7 @@ def get_custom_profile_field_values(custom_profile_field_values:
                 "value": profile_field.value,
             }
     return profiles_by_user_id
+
 
 def get_raw_user_data(realm: Realm, acting_user: UserProfile, *, target_user: Optional[UserProfile]=None,
                       client_gravatar: bool, user_avatar_url_field_optional: bool,

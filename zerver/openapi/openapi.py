@@ -16,6 +16,8 @@ EXCLUDE_UNDOCUMENTED_ENDPOINTS = {"/realm/emoji/{emoji_name}:delete"}
 # Consists of endpoints with some documentation remaining.
 # These are skipped but return true as the validator cannot exclude objects
 EXCLUDE_DOCUMENTED_ENDPOINTS = {"/events:get", "/register:post", "/settings/notifications:patch"}
+
+
 class OpenAPISpec():
     def __init__(self, path: str) -> None:
         self.path = path
@@ -108,7 +110,9 @@ class OpenAPISpec():
 class SchemaError(Exception):
     pass
 
+
 openapi_spec = OpenAPISpec(OPENAPI_SPEC_PATH)
+
 
 def get_schema(endpoint: str, method: str, response: str) -> Dict[str, Any]:
     if len(response) == 3 and ('oneOf' in (openapi_spec.spec())['paths'][endpoint]
@@ -128,11 +132,13 @@ def get_schema(endpoint: str, method: str, response: str) -> Dict[str, Any]:
                   [response]['content']['application/json']['schema']["oneOf"][resp_code])
         return schema
 
+
 def get_openapi_fixture(endpoint: str, method: str,
                         response: str='200') -> Dict[str, Any]:
     """Fetch a fixture from the full spec object.
     """
     return (get_schema(endpoint, method, response)['example'])
+
 
 def get_openapi_description(endpoint: str, method: str) -> str:
     """Fetch a description from the full spec object.
@@ -140,8 +146,10 @@ def get_openapi_description(endpoint: str, method: str) -> str:
     description = openapi_spec.spec()['paths'][endpoint][method.lower()]['description']
     return description
 
+
 def get_openapi_paths() -> Set[str]:
     return set(openapi_spec.spec()['paths'].keys())
+
 
 def get_openapi_parameters(endpoint: str, method: str,
                            include_url_parameters: bool=True) -> List[Dict[str, Any]]:
@@ -156,6 +164,7 @@ def get_openapi_parameters(endpoint: str, method: str,
                       parameter['in'] != 'path']
     return parameters
 
+
 def get_openapi_return_values(endpoint: str, method: str,
                               include_url_parameters: bool=True) -> List[Dict[str, Any]]:
     openapi_endpoint = openapi_spec.spec()['paths'][endpoint][method.lower()]
@@ -167,12 +176,14 @@ def get_openapi_return_values(endpoint: str, method: str,
     response = response['properties']
     return response
 
+
 def match_against_openapi_regex(endpoint: str) -> Optional[str]:
     for key in openapi_spec.regex_keys():
         matches = re.match(fr'{key}', endpoint)
         if matches:
             return openapi_spec.regex_keys()[key]
     return None
+
 
 def validate_against_openapi_schema(content: Dict[str, Any], endpoint: str,
                                     method: str, response: str) -> bool:
@@ -217,6 +228,7 @@ def validate_against_openapi_schema(content: Dict[str, Any], endpoint: str,
     validator.validate(content)
     return True
 
+
 def validate_schema_array(schema: Dict[str, Any]) -> None:
     """
     Helper function for validate_schema
@@ -232,6 +244,7 @@ def validate_schema_array(schema: Dict[str, Any]) -> None:
             validate_schema_array(schema['items'])
         elif schema['items']['type'] == 'object':
             validate_schema(schema['items'])
+
 
 def validate_schema(schema: Dict[str, Any]) -> None:
     """Check if opaque objects are present in the OpenAPI spec; this is an
@@ -262,6 +275,7 @@ def validate_schema(schema: Dict[str, Any]) -> None:
         elif schema['additionalProperties']['type'] == 'object':
             validate_schema(schema['additionalProperties'])
 
+
 def to_python_type(py_type: str) -> type:
     """Transform an OpenAPI-like type to a Python one.
     https://swagger.io/docs/specification/data-models/data-types
@@ -276,6 +290,7 @@ def to_python_type(py_type: str) -> type:
     }
 
     return TYPES[py_type]
+
 
 def likely_deprecated_parameter(parameter_description: str) -> bool:
     if '**Changes**: Deprecated' in parameter_description:

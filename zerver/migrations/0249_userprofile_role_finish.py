@@ -5,6 +5,7 @@ from django.db import migrations, models
 # The values at the time of this migration
 ROLE_MEMBER = 400
 
+
 class Migration(migrations.Migration):
 
     dependencies = [

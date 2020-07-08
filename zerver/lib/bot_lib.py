@@ -60,11 +60,14 @@ class StateHandler:
     def contains(self, key: str) -> bool:
         return is_key_in_bot_storage(self.user_profile, key)
 
+
 class EmbeddedBotQuitException(Exception):
     pass
 
+
 class EmbeddedBotEmptyRecipientsList(Exception):
     pass
+
 
 class EmbeddedBotHandler:
     def __init__(self, user_profile: UserProfile) -> None:

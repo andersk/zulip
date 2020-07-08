@@ -79,6 +79,7 @@ def add_block(block: Dict[str, Any], body: str) -> str:
 
     return body
 
+
 def add_attachment(attachment: Dict[str, Any], body: str) -> str:
     attachment_body = ""
     if "title" in attachment and "title_link" in attachment:
@@ -88,8 +89,10 @@ def add_attachment(attachment: Dict[str, Any], body: str) -> str:
 
     return body + attachment_body
 
+
 def replace_links(text: str) -> str:
     return re.sub(r"<(\w+?:\/\/.*?)\|(.*?)>", r"[\2](\1)", text)
+
 
 def replace_formatting(text: str) -> str:
     # Slack uses *text* for bold, whereas Zulip interprets that as italics

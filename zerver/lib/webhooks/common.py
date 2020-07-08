@@ -38,12 +38,14 @@ that this integration expects!
 # Django prefixes all custom HTTP headers with `HTTP_`
 DJANGO_HTTP_PREFIX = "HTTP_"
 
+
 def notify_bot_owner_about_invalid_json(user_profile: UserProfile,
                                         webhook_client_name: str) -> None:
     send_rate_limited_pm_notification_to_bot_owner(
         user_profile, user_profile.realm,
         INVALID_JSON_MESSAGE.format(webhook_name=webhook_client_name).strip(),
     )
+
 
 class MissingHTTPEventHeader(JsonableError):
     code = ErrorCode.MISSING_HTTP_EVENT_HEADER
@@ -55,6 +57,7 @@ class MissingHTTPEventHeader(JsonableError):
     @staticmethod
     def msg_format() -> str:
         return _("Missing the HTTP event header '{header}'")
+
 
 @has_request_variables
 def check_send_webhook_message(
@@ -91,6 +94,7 @@ def check_send_webhook_message(
             # webhook-errors.log
             pass
 
+
 def standardize_headers(input_headers: Union[None, Dict[str, Any]]) -> Dict[str, str]:
     """ This method can be used to standardize a dictionary of headers with
     the standard format that Django expects. For reference, refer to:
@@ -112,6 +116,7 @@ def standardize_headers(input_headers: Union[None, Dict[str, Any]]) -> Dict[str,
         canonical_headers[polished_header] = str(input_headers[raw_header])
 
     return canonical_headers
+
 
 def validate_extract_webhook_http_header(request: HttpRequest, header: str,
                                          integration_name: str,

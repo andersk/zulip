@@ -68,14 +68,17 @@ def get_sqlalchemy_sql(query: ClauseElement) -> str:
     comp = query.compile(dialect=dialect)
     return str(comp)
 
+
 def get_sqlalchemy_query_params(query: ClauseElement) -> Dict[str, object]:
     dialect = get_sqlalchemy_connection().dialect
     comp = query.compile(dialect=dialect)
     return comp.params
 
+
 def get_recipient_id_for_stream_name(realm: Realm, stream_name: str) -> str:
     stream = get_stream(stream_name, realm)
     return stream.recipient.id
+
 
 def mute_stream(realm: Realm, user_profile: str, stream_name: str) -> None:
     stream = get_stream(stream_name, realm)
@@ -84,11 +87,13 @@ def mute_stream(realm: Realm, user_profile: str, stream_name: str) -> None:
     subscription.is_muted = True
     subscription.save()
 
+
 def first_visible_id_as(message_id: int) -> Any:
     return mock.patch(
         'zerver.views.message_fetch.get_first_visible_message_id',
         return_value=message_id,
     )
+
 
 class NarrowBuilderTest(ZulipTestCase):
     def setUp(self) -> None:
@@ -460,6 +465,7 @@ class NarrowBuilderTest(ZulipTestCase):
     def _build_query(self, term: Dict[str, Any]) -> Query:
         return self.builder.add_term(self.raw_query, term)
 
+
 class NarrowLibraryTest(ZulipTestCase):
     def test_build_narrow_filter(self) -> None:
         fixtures_path = os.path.join(os.path.dirname(__file__),
@@ -515,6 +521,7 @@ class NarrowLibraryTest(ZulipTestCase):
                                                    "operand": "public"}]))
         # Malformed input not allowed
         self.assertFalse(is_web_public_compatible([{"operator": "has"}]))
+
 
 class IncludeHistoryTest(ZulipTestCase):
     def test_ok_to_include_history(self) -> None:
@@ -646,6 +653,7 @@ class IncludeHistoryTest(ZulipTestCase):
         ]
         self.assertTrue(ok_to_include_history(narrow, guest_user_profile))
         self.assertTrue(ok_to_include_history(narrow, subscribed_user_profile))
+
 
 class PostProcessTest(ZulipTestCase):
     def test_basics(self) -> None:
@@ -1045,6 +1053,7 @@ class PostProcessTest(ZulipTestCase):
             found_anchor=False, found_oldest=False,
             found_newest=False, history_limited=False,
         )
+
 
 class GetOldMessagesTest(ZulipTestCase):
 
@@ -2978,6 +2987,7 @@ WHERE user_profile_id = {hamlet_id} AND (content ILIKE '%jumping%' OR subject IL
             '@<span class="highlight">Othello</span>, the Moor of Venice</span>?</p>',
         )
 
+
 class MessageHasKeywordsTest(ZulipTestCase):
     '''Test for keywords like has_link, has_image, has_attachment.'''
 
@@ -3161,6 +3171,7 @@ class MessageHasKeywordsTest(ZulipTestCase):
             self.assertFalse(m.called)
             m.reset_mock()
 
+
 class MessageVisibilityTest(ZulipTestCase):
     def test_update_first_visible_message_id(self) -> None:
         Message.objects.all().delete()
@@ -3218,6 +3229,7 @@ class MessageVisibilityTest(ZulipTestCase):
         with mock.patch("zerver.lib.message.update_first_visible_message_id") as m:
             maybe_update_first_visible_message_id(realm, lookback_hours)
         m.assert_called_once_with(realm)
+
 
 class PersonalMessagesNearTest(ZulipTestCase):
     def test_near_pm_message_url(self) -> None:

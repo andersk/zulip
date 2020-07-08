@@ -85,6 +85,7 @@ class TornadoWebTestCase(AsyncHTTPTestCase, ZulipTestCase):
         self.assertIn('queue_id', body)
         return body['queue_id']
 
+
 class EventsTestCase(TornadoWebTestCase):
     def test_create_queue(self) -> None:
         self.login_user(self.example_user('hamlet'))

@@ -41,6 +41,7 @@ class MITNameTest(ZulipTestCase):
         with mock.patch('DNS.dnslookup', return_value=[['POP IMAP.EXCHANGE.MIT.EDU starnine']]):
             email_is_not_mit_mailing_list("sipbexch@mit.edu")
 
+
 class RateLimitTests(ZulipTestCase):
 
     def setUp(self) -> None:

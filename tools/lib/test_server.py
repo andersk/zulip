@@ -32,6 +32,7 @@ def set_up_django(external_host: str) -> None:
     django.setup()
     os.environ['PYTHONUNBUFFERED'] = 'y'
 
+
 def assert_server_running(server: "subprocess.Popen[bytes]", log_file: Optional[str]) -> None:
     """Get the exit code of the server, or None if it is still running."""
     if server.poll() is not None:
@@ -39,6 +40,7 @@ def assert_server_running(server: "subprocess.Popen[bytes]", log_file: Optional[
         if log_file:
             message += f'\nSee {log_file}\n'
         raise RuntimeError(message)
+
 
 def server_is_up(server: "subprocess.Popen[bytes]", log_file: Optional[str]) -> bool:
     assert_server_running(server, log_file)
@@ -48,6 +50,7 @@ def server_is_up(server: "subprocess.Popen[bytes]", log_file: Optional[str]) -> 
         return requests.get('http://zulipdev.com:9981/accounts/home').status_code == 200
     except Exception:
         return False
+
 
 @contextmanager
 def test_server_running(force: bool=False, external_host: str='testserver',
@@ -94,6 +97,7 @@ def test_server_running(force: bool=False, external_host: str='testserver',
     finally:
         assert_server_running(server, log_file)
         server.terminate()
+
 
 if __name__ == '__main__':
     # The code below is for testing this module works

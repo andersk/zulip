@@ -19,6 +19,7 @@ def populate_is_zephyr(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> 
             is_in_zephyr_realm=True,
         )
 
+
 class Migration(migrations.Migration):
 
     dependencies = [

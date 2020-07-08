@@ -47,6 +47,7 @@ def validate_entity(entity: Union[UserProfile, RemoteZulipServer]) -> RemoteZuli
         raise JsonableError(err_("Must validate with valid Zulip server API key"))
     return entity
 
+
 def validate_bouncer_token_request(entity: Union[UserProfile, RemoteZulipServer],
                                    token: str, kind: int) -> RemoteZulipServer:
     if kind not in [RemotePushDeviceToken.APNS, RemotePushDeviceToken.GCM]:
@@ -54,6 +55,7 @@ def validate_bouncer_token_request(entity: Union[UserProfile, RemoteZulipServer]
     server = validate_entity(entity)
     validate_token(token, kind)
     return server
+
 
 @csrf_exempt
 @require_post
@@ -98,6 +100,7 @@ def register_remote_server(
 
     return json_success({'created': created})
 
+
 @has_request_variables
 def register_remote_push_device(request: HttpRequest, entity: Union[UserProfile, RemoteZulipServer],
                                 user_id: int=REQ(validator=check_int), token: str=REQ(),
@@ -120,6 +123,7 @@ def register_remote_push_device(request: HttpRequest, entity: Union[UserProfile,
 
     return json_success()
 
+
 @has_request_variables
 def unregister_remote_push_device(request: HttpRequest, entity: Union[UserProfile, RemoteZulipServer],
                                   token: str=REQ(),
@@ -136,6 +140,7 @@ def unregister_remote_push_device(request: HttpRequest, entity: Union[UserProfil
 
     return json_success()
 
+
 @has_request_variables
 def unregister_all_remote_push_devices(request: HttpRequest, entity: Union[UserProfile, RemoteZulipServer],
                                        user_id: int=REQ(validator=check_int)) -> HttpResponse:
@@ -143,6 +148,7 @@ def unregister_all_remote_push_devices(request: HttpRequest, entity: Union[UserP
     RemotePushDeviceToken.objects.filter(user_id=user_id,
                                          server=server).delete()
     return json_success()
+
 
 @has_request_variables
 def remote_server_notify_push(request: HttpRequest, entity: Union[UserProfile, RemoteZulipServer],
@@ -174,6 +180,7 @@ def remote_server_notify_push(request: HttpRequest, entity: Union[UserProfile, R
 
     return json_success()
 
+
 def validate_incoming_table_data(server: RemoteZulipServer, model: Any,
                                  rows: List[Dict[str, Any]], is_count_stat: bool=False) -> None:
     last_id = get_last_id_from_server(server, model)
@@ -183,6 +190,7 @@ def validate_incoming_table_data(server: RemoteZulipServer, model: Any,
         if row['id'] <= last_id:
             raise JsonableError(_("Data is out of order."))
         last_id = row['id']
+
 
 def batch_create_table_data(server: RemoteZulipServer, model: Any,
                             row_objects: Union[List[RemoteRealmCount],
@@ -198,6 +206,7 @@ def batch_create_table_data(server: RemoteZulipServer, model: Any,
             )
             raise JsonableError(_("Invalid data."))
         row_objects = row_objects[BATCH_SIZE:]
+
 
 @has_request_variables
 def remote_server_post_analytics(request: HttpRequest,
@@ -267,11 +276,13 @@ def remote_server_post_analytics(request: HttpRequest,
 
     return json_success()
 
+
 def get_last_id_from_server(server: RemoteZulipServer, model: Any) -> int:
     last_count = model.objects.filter(server=server).order_by("remote_id").last()
     if last_count is not None:
         return last_count.remote_id
     return 0
+
 
 @has_request_variables
 def remote_server_check_analytics(request: HttpRequest,

@@ -23,6 +23,7 @@ def validate_disposable(email: str) -> None:
     if is_disposable_domain(email_to_domain(email)):
         raise DisposableEmailError
 
+
 def get_realm_email_validator(realm: Realm) -> Callable[[str], None]:
     if not realm.emails_restricted_to_domains:
         # Should we also do '+' check for non-resticted realms?
@@ -83,6 +84,8 @@ def get_realm_email_validator(realm: Realm) -> Callable[[str], None]:
 # (This function does not check whether the user has been invited to the realm.
 # So for invite-only realms, this is the test for whether a user can be invited,
 # not whether the user can sign up currently.)
+
+
 def email_allowed_for_realm(email: str, realm: Realm) -> None:
     '''
     Avoid calling this in a loop!
@@ -90,6 +93,7 @@ def email_allowed_for_realm(email: str, realm: Realm) -> None:
     outside of the loop.
     '''
     get_realm_email_validator(realm)(email)
+
 
 def validate_email_is_valid(
     email: str,
@@ -112,8 +116,10 @@ def validate_email_is_valid(
 
     return None
 
+
 def email_reserved_for_system_bots_error(email: str) -> str:
     return f'{email} is reserved for system bots'
+
 
 def get_existing_user_errors(
     target_realm: Realm,
@@ -186,6 +192,7 @@ def get_existing_user_errors(
         process_email(email)
 
     return errors
+
 
 def validate_email_not_already_in_realm(target_realm: Realm,
                                         email: str,

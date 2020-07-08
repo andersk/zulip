@@ -61,6 +61,7 @@ def api_pivotal_webhook_v3(request: HttpRequest, user_profile: UserProfile) -> T
         content = f"{description} ({issue_status} {issue_type}{estimate}):\n\n~~~ quote\n{issue_desc}\n~~~\n\n{more_info}"
     return subject, content
 
+
 UNSUPPORTED_EVENT_TYPES = [
     "task_create_activity",
     "comment_delete_activity",
@@ -71,6 +72,7 @@ UNSUPPORTED_EVENT_TYPES = [
     "story_move_into_project_activity",
     "epic_update_activity",
 ]
+
 
 def api_pivotal_webhook_v5(request: HttpRequest, user_profile: UserProfile) -> Tuple[str, str]:
     payload = ujson.loads(request.body)
@@ -154,6 +156,7 @@ def api_pivotal_webhook_v5(request: HttpRequest, user_profile: UserProfile) -> T
         raise UnexpectedWebhookEventType('Pivotal Tracker', event_type)
 
     return subject, content
+
 
 @api_key_only_webhook_view("Pivotal")
 @has_request_variables

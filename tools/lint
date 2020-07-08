@@ -148,5 +148,6 @@ def run() -> None:
 
     linter_config.do_lint()
 
+
 if __name__ == '__main__':
     run()

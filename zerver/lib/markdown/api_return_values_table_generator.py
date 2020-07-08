@@ -79,5 +79,6 @@ class APIReturnValuesTablePreprocessor(Preprocessor):
                 ans += self.render_table(return_values[return_value]['items']['properties'], spacing + 4)
         return ans
 
+
 def makeExtension(*args: Any, **kwargs: str) -> MarkdownReturnValuesTableGenerator:
     return MarkdownReturnValuesTableGenerator(kwargs)

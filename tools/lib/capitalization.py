@@ -183,6 +183,7 @@ BANNED_WORDS = {
               'Use organization instead.'),
 }
 
+
 def get_safe_phrase(phrase: str) -> str:
     """
     Safe phrase is in lower case and doesn't contain characters which can
@@ -191,6 +192,7 @@ def get_safe_phrase(phrase: str) -> str:
     """
     phrase = SPLIT_BOUNDARY_REGEX.sub('_', phrase)
     return phrase.lower()
+
 
 def replace_with_safe_phrase(matchobj: Match[str]) -> str:
     """
@@ -216,6 +218,7 @@ def replace_with_safe_phrase(matchobj: Match[str]) -> str:
 
     return safe_string
 
+
 def get_safe_text(text: str) -> str:
     """
     This returns text which is rendered by BeautifulSoup and is in the
@@ -227,6 +230,7 @@ def get_safe_text(text: str) -> str:
         text = phrase_regex.sub(replace_with_safe_phrase, text)
 
     return text
+
 
 def is_capitalized(safe_text: str) -> bool:
     sentences = SPLIT_BOUNDARY_REGEX.split(safe_text)
@@ -243,6 +247,7 @@ def is_capitalized(safe_text: str) -> bool:
 
     return True
 
+
 def check_banned_words(text: str) -> List[str]:
     lower_cased_text = text.lower()
     errors = []
@@ -257,6 +262,7 @@ def check_banned_words(text: str) -> List[str]:
             errors.append(msg)
 
     return errors
+
 
 def check_capitalization(strings: List[str]) -> Tuple[List[str], List[str], List[str]]:
     errors = []

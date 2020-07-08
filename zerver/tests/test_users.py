@@ -59,11 +59,14 @@ from zerver.models import (
 
 K = TypeVar('K')
 V = TypeVar('V')
+
+
 def find_dict(lst: Iterable[Dict[K, V]], k: K, v: V) -> Dict[K, V]:
     for dct in lst:
         if dct[k] == v:
             return dct
     raise AssertionError(f'Cannot find element in list where key {k} == {v}')
+
 
 class PermissionTest(ZulipTestCase):
     def test_role_setters(self) -> None:
@@ -715,6 +718,7 @@ class PermissionTest(ZulipTestCase):
                                    {'profile_data': ujson.dumps(new_profile_data)})
         self.assert_json_error(result, 'Insufficient permission')
 
+
 class BulkCreateUserTest(ZulipTestCase):
     def test_create_users(self) -> None:
         realm = get_realm('zulip')
@@ -754,6 +758,7 @@ class BulkCreateUserTest(ZulipTestCase):
 
         cher = get_user_by_delivery_email('cher@zulip.com', realm)
         self.assertEqual(cher.full_name, 'Cher')
+
 
 class AdminCreateUserTest(ZulipTestCase):
     def test_create_user_backend(self) -> None:
@@ -862,6 +867,7 @@ class AdminCreateUserTest(ZulipTestCase):
         valid_params["email"] = "iago+label@zulip.com"
         result = self.client_post("/json/users", valid_params)
         self.assert_json_success(result)
+
 
 class UserProfileTest(ZulipTestCase):
     def test_get_emails_from_user_ids(self) -> None:
@@ -1153,6 +1159,7 @@ class UserProfileTest(ZulipTestCase):
         result = self.client_get(f"/json/users/{iago.id}/subscriptions/{stream.id}")
         self.assert_json_error(result, "Invalid stream id")
 
+
 class ActivateTest(ZulipTestCase):
     def test_basics(self) -> None:
         user = self.example_user('hamlet')
@@ -1282,6 +1289,7 @@ class ActivateTest(ZulipTestCase):
                 },
             )
         self.assertEqual(ScheduledEmail.objects.count(), 0)
+
 
 class RecipientInfoTest(ZulipTestCase):
     def test_stream_recipient_info(self) -> None:
@@ -1494,6 +1502,7 @@ class RecipientInfoTest(ZulipTestCase):
                 stream_topic=stream_topic,
             )
 
+
 class BulkUsersTest(ZulipTestCase):
     def test_client_gravatar_option(self) -> None:
         reset_emails_in_zulip_realm()
@@ -1528,6 +1537,7 @@ class BulkUsersTest(ZulipTestCase):
             'gravatar.com',
             get_hamlet_avatar(client_gravatar=False),
         )
+
 
 class GetProfileTest(ZulipTestCase):
 
@@ -1612,6 +1622,7 @@ class GetProfileTest(ZulipTestCase):
             my_user['avatar_url'],
             avatar_url(hamlet),
         )
+
 
 class FakeEmailDomainTest(ZulipTestCase):
     @override_settings(FAKE_EMAIL_DOMAIN="invaliddomain")

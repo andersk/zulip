@@ -27,6 +27,7 @@ def try_git_describe() -> Optional[str]:
     except Exception:  # nocoverage
         return None
 
+
 def add_request_metadata(report: Dict[str, Any], request: HttpRequest) -> None:
     report['has_request'] = True
 
@@ -68,9 +69,11 @@ def add_request_metadata(report: Dict[str, Any], request: HttpRequest) -> None:
         # exception if the host is invalid
         report['host'] = platform.node()
 
+
 @runtime_checkable
 class HasRequest(Protocol):
     request: HttpRequest
+
 
 class AdminNotifyHandler(logging.Handler):
     """An logging handler that sends the log/exception to the queue to be

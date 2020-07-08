@@ -87,6 +87,7 @@ class UploadSerializeMixin(SerializeMixin):
 
         super().setUpClass(*args, **kwargs)
 
+
 class ZulipTestCase(TestCase):
     # Ensure that the test system just shows us diffs
     maxDiff: Optional[int] = None
@@ -940,6 +941,7 @@ class ZulipTestCase(TestCase):
     def ldap_password(self, uid: str) -> str:
         return f"{uid}_ldap_password"
 
+
 class WebhookTestCase(ZulipTestCase):
     """
     Common for all webhooks tests
@@ -1041,6 +1043,7 @@ class WebhookTestCase(ZulipTestCase):
     def do_test_message(self, msg: Message, expected_message: Optional[str]) -> None:
         if expected_message is not None:
             self.assertEqual(msg.content, expected_message)
+
 
 class MigrationsTestCase(ZulipTestCase):  # nocoverage
     """

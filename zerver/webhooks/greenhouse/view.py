@@ -15,6 +15,7 @@ MESSAGE_TEMPLATE = """
 * **Attachments**: {attachments}
 """.strip()
 
+
 def dict_list_to_string(some_list: List[Any]) -> str:
     internal_template = ''
     for item in some_list:
@@ -28,6 +29,7 @@ def dict_list_to_string(some_list: List[Any]) -> str:
 
     internal_template = internal_template[:-2]
     return internal_template
+
 
 @api_key_only_webhook_view('Greenhouse')
 @has_request_variables

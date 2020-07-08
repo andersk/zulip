@@ -15,6 +15,7 @@ TEMPLATE = """
 ```
 """.strip()
 
+
 @api_key_only_webhook_view("Heroku", notify_bot_owner_on_invalid_json=False)
 @has_request_variables
 def api_heroku_webhook(request: HttpRequest, user_profile: UserProfile,

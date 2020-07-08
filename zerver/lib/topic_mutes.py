@@ -22,6 +22,7 @@ def get_topic_mutes(user_profile: UserProfile) -> List[Tuple[str, str, float]]:
         for row in rows
     ]
 
+
 def set_topic_mutes(user_profile: UserProfile, muted_topics: List[List[str]],
                     date_muted: Optional[datetime.datetime]=None) -> None:
     '''
@@ -46,6 +47,7 @@ def set_topic_mutes(user_profile: UserProfile, muted_topics: List[List[str]],
             date_muted=date_muted,
         )
 
+
 def add_topic_mute(user_profile: UserProfile, stream_id: int, recipient_id: int, topic_name: str,
                    date_muted: Optional[datetime.datetime]=None) -> None:
     if date_muted is None:
@@ -58,6 +60,7 @@ def add_topic_mute(user_profile: UserProfile, stream_id: int, recipient_id: int,
         date_muted=date_muted,
     )
 
+
 def remove_topic_mute(user_profile: UserProfile, stream_id: int, topic_name: str) -> None:
     row = MutedTopic.objects.get(
         user_profile=user_profile,
@@ -66,6 +69,7 @@ def remove_topic_mute(user_profile: UserProfile, stream_id: int, topic_name: str
     )
     row.delete()
 
+
 def topic_is_muted(user_profile: UserProfile, stream_id: int, topic_name: str) -> bool:
     is_muted = MutedTopic.objects.filter(
         user_profile=user_profile,
@@ -73,6 +77,7 @@ def topic_is_muted(user_profile: UserProfile, stream_id: int, topic_name: str) -
         topic_name__iexact=topic_name,
     ).exists()
     return is_muted
+
 
 def exclude_topic_mutes(conditions: List[Selectable],
                         user_profile: UserProfile,
@@ -104,6 +109,7 @@ def exclude_topic_mutes(conditions: List[Selectable],
 
     condition = not_(or_(*list(map(mute_cond, rows))))
     return conditions + [condition]
+
 
 def build_topic_mute_checker(user_profile: UserProfile) -> Callable[[int, str], bool]:
     rows = MutedTopic.objects.filter(

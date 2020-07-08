@@ -13,6 +13,7 @@ def get_realm_logo_source(realm: Realm, night: bool) -> str:
         return realm.night_logo_source
     return realm.logo_source
 
+
 def get_realm_logo_url(realm: Realm, night: bool) -> str:
     logo_source = get_realm_logo_source(realm, night)
 
@@ -23,6 +24,7 @@ def get_realm_logo_url(realm: Realm, night: bool) -> str:
             logo_version = realm.logo_version
         return upload_backend.get_realm_logo_url(realm.id, logo_version, night)
     return settings.DEFAULT_LOGO_URI+'?version=0'
+
 
 def get_realm_logo_data(realm: Realm, night: bool) -> Dict[str, Any]:
     if night:

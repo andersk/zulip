@@ -65,6 +65,7 @@ def convert_muted_topics(apps: StateApps, schema_editor: DatabaseSchemaEditor) -
 
     MutedTopic.objects.bulk_create(new_objs)
 
+
 class Migration(migrations.Migration):
 
     dependencies = [

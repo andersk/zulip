@@ -20,6 +20,7 @@ def api_buildbot_webhook(request: HttpRequest, user_profile: UserProfile,
     check_send_webhook_message(request, user_profile, topic, body)
     return json_success()
 
+
 def get_message(payload: Dict[str, Any]) -> str:
     if "results" in payload:
         # See http://docs.buildbot.net/latest/developer/results.html

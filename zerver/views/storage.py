@@ -26,6 +26,7 @@ def update_storage(
         return json_error(str(e))
     return json_success()
 
+
 @has_request_variables
 def get_storage(
         request: HttpRequest,
@@ -38,6 +39,7 @@ def get_storage(
     except StateError as e:
         return json_error(str(e))
     return json_success({'storage': storage})
+
 
 @has_request_variables
 def remove_storage(

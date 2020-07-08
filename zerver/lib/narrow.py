@@ -8,6 +8,8 @@ from zerver.lib.request import JsonableError
 from zerver.lib.topic import get_topic_from_message_info
 
 stop_words_list: Optional[List[str]] = None
+
+
 def read_stop_words() -> List[str]:
     global stop_words_list
     if stop_words_list is None:
@@ -17,11 +19,13 @@ def read_stop_words() -> List[str]:
 
     return stop_words_list
 
+
 def check_supported_events_narrow_filter(narrow: Iterable[Sequence[str]]) -> None:
     for element in narrow:
         operator = element[0]
         if operator not in ["stream", "topic", "sender", "is"]:
             raise JsonableError(_("Operator {} not supported.").format(operator))
+
 
 def is_web_public_compatible(narrow: Iterable[Dict[str, str]]) -> bool:
     for element in narrow:
@@ -31,6 +35,7 @@ def is_web_public_compatible(narrow: Iterable[Dict[str, str]]) -> bool:
         if operator not in ["streams", "stream", "topic", "sender", "has", "search", "near", "id"]:
             return False
     return True
+
 
 def build_narrow_filter(narrow: Iterable[Sequence[str]]) -> Callable[[Mapping[str, Any]], bool]:
     """Changes to this function should come with corresponding changes to

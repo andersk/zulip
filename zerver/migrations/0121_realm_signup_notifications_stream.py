@@ -14,6 +14,7 @@ def set_initial_value_for_signup_notifications_stream(
         realm.signup_notifications_stream = realm.notifications_stream
         realm.save(update_fields=["signup_notifications_stream"])
 
+
 class Migration(migrations.Migration):
 
     dependencies = [

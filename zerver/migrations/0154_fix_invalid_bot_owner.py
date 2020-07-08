@@ -10,6 +10,7 @@ def migrate_fix_invalid_bot_owner_values(apps: StateApps, schema_editor: Databas
     UserProfile = apps.get_model('zerver', 'UserProfile')
     UserProfile.objects.filter(is_bot=False).exclude(bot_owner=None).update(bot_owner=None)
 
+
 class Migration(migrations.Migration):
 
     dependencies = [

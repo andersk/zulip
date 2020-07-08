@@ -17,6 +17,7 @@ def is_integer_string(val: str) -> bool:
     except ValueError:
         return False
 
+
 def check_config() -> None:
     for (setting_name, default) in settings.REQUIRED_SETTINGS:
         # if required setting is the same as default OR is not found in settings,
@@ -29,9 +30,11 @@ def check_config() -> None:
 
         raise CommandError(f"Error: You must set {setting_name} in /etc/zulip/settings.py.")
 
+
 def sleep_forever() -> None:
     while True:  # nocoverage
         time.sleep(10**9)
+
 
 class ZulipBaseCommand(BaseCommand):
 

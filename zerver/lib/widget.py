@@ -19,6 +19,7 @@ def get_widget_data(content: str) -> Tuple[Optional[str], Optional[str]]:
 
     return None, None
 
+
 def get_extra_data_from_widget_type(content: str,
                                     widget_type: Optional[str]) -> Any:
     if widget_type == 'poll':
@@ -41,6 +42,7 @@ def get_extra_data_from_widget_type(content: str,
         }
         return extra_data
     return None
+
 
 def do_widget_post_save_actions(message: MutableMapping[str, Any]) -> None:
     '''

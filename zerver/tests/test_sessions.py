@@ -93,6 +93,7 @@ class TestSessions(ZulipTestCase):
         result = self.client_get("/")
         self.assertEqual('/login/', result.url)
 
+
 class TestExpirableSessionVars(ZulipTestCase):
     def setUp(self) -> None:
         self.session = self.client.session

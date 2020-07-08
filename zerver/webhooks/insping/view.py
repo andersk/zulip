@@ -15,6 +15,7 @@ State changed to **{state}**:
 * **Timestamp**: {timestamp}
 """.strip()
 
+
 @api_key_only_webhook_view('Insping')
 @has_request_variables
 def api_insping_webhook(

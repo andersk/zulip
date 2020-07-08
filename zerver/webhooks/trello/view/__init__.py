@@ -37,6 +37,7 @@ def api_trello_webhook(request: HttpRequest,
     check_send_webhook_message(request, user_profile, subject, body)
     return json_success()
 
+
 def get_subject_and_body(payload: Mapping[str, Any], action_type: str) -> Optional[Tuple[str, str]]:
     if action_type in SUPPORTED_CARD_ACTIONS:
         return process_card_action(payload, action_type)

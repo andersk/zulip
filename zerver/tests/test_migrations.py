@@ -25,6 +25,7 @@ from zerver.models import get_stream
 # As a result, we generally mark these tests as skipped once they have
 # been tested for a migration being merged.
 
+
 class SubsNotificationSettingsTestCase(MigrationsTestCase):  # nocoverage
     __unittest_skip__ = True
 

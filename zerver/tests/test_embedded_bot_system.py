@@ -72,6 +72,7 @@ class TestEmbeddedBotMessaging(ZulipTestCase):
                                          topic_name="bar")
                 mock_logging.assert_called_once_with("I'm quitting!")
 
+
 class TestEmbeddedBotFailures(ZulipTestCase):
     def test_message_embedded_bot_with_invalid_service(self) -> None:
         user_profile = self.example_user("othello")

@@ -18,8 +18,10 @@ class Customer(models.Model):
     def __str__(self) -> str:
         return f"<Customer {self.realm} {self.stripe_customer_id}>"
 
+
 def get_customer_by_realm(realm: Realm) -> Optional[Customer]:
     return Customer.objects.filter(realm=realm).first()
+
 
 class CustomerPlan(models.Model):
     customer: Customer = models.ForeignKey(Customer, on_delete=CASCADE)
@@ -66,15 +68,18 @@ class CustomerPlan(models.Model):
 
     # TODO maybe override setattr to ensure billing_cycle_anchor, etc are immutable
 
+
 def get_current_plan_by_customer(customer: Customer) -> Optional[CustomerPlan]:
     return CustomerPlan.objects.filter(
         customer=customer, status__lt=CustomerPlan.LIVE_STATUS_THRESHOLD).first()
+
 
 def get_current_plan_by_realm(realm: Realm) -> Optional[CustomerPlan]:
     customer = get_customer_by_realm(realm)
     if customer is None:
         return None
     return get_current_plan_by_customer(customer)
+
 
 class LicenseLedger(models.Model):
     plan: CustomerPlan = models.ForeignKey(CustomerPlan, on_delete=CASCADE)

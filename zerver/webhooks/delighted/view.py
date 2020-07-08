@@ -24,11 +24,13 @@ Great! You have new feedback. Score of {score}/10 from {email}:
 ```
 """.strip()
 
+
 def body_template(score: int) -> str:
     if score >= 7:
         return PROMOTER
     else:
         return FEEDBACK
+
 
 @api_key_only_webhook_view("Delighted")
 @has_request_variables

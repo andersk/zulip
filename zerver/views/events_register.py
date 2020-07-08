@@ -16,6 +16,7 @@ def _default_all_public_streams(user_profile: UserProfile,
     else:
         return user_profile.default_all_public_streams
 
+
 def _default_narrow(user_profile: UserProfile,
                     narrow: Iterable[Sequence[str]]) -> Iterable[Sequence[str]]:
     default_stream: Optional[Stream] = user_profile.default_events_register_stream
@@ -23,7 +24,10 @@ def _default_narrow(user_profile: UserProfile,
         narrow = [['stream', default_stream.name]]
     return narrow
 
+
 NarrowT = Iterable[Sequence[str]]
+
+
 @has_request_variables
 def events_register_backend(
         request: HttpRequest, user_profile: UserProfile,

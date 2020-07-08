@@ -160,6 +160,7 @@ class TestEncodeDecode(ZulipTestCase):
         token, options = decode_email_address(address_prefer_html)
         self._assert_options(options, prefer_text=False)
 
+
 class TestGetMissedMessageToken(ZulipTestCase):
     def test_get_missed_message_token(self) -> None:
         with self.settings(EMAIL_GATEWAY_PATTERN="%s@example.com"):
@@ -185,6 +186,7 @@ class TestGetMissedMessageToken(ZulipTestCase):
             with self.assertRaises(ZulipEmailForwardError):
                 get_missed_message_token_from_address(address)
 
+
 class TestFilterFooter(ZulipTestCase):
     def test_filter_footer(self) -> None:
         text = """Test message
@@ -202,6 +204,7 @@ class TestFilterFooter(ZulipTestCase):
         result = filter_footer(text)
         # Multiple possible footers, don't strip
         self.assertEqual(result, text)
+
 
 class TestStreamEmailMessagesSuccess(ZulipTestCase):
     def test_receive_stream_email_messages_success(self) -> None:
@@ -422,6 +425,7 @@ class TestStreamEmailMessagesSuccess(ZulipTestCase):
         self.assertEqual(get_display_recipient(message.recipient), stream.name)
         self.assertEqual(message.topic_name(), incoming_valid_message['Subject'])
 
+
 class TestEmailMirrorMessagesWithAttachments(ZulipTestCase):
     def test_message_with_valid_attachment(self) -> None:
         user_profile = self.example_user('hamlet')
@@ -618,6 +622,7 @@ class TestEmailMirrorMessagesWithAttachments(ZulipTestCase):
         # HTML body is empty, so the plaintext content should be picked, despite prefer-html option.
         self.assertEqual(message.content, "Test message")
 
+
 class TestStreamEmailMessagesEmptyBody(ZulipTestCase):
     def test_receive_stream_email_messages_empty_body(self) -> None:
         # build dummy messages for stream
@@ -688,6 +693,7 @@ class TestStreamEmailMessagesEmptyBody(ZulipTestCase):
         message = most_recent_message(user_profile)
 
         self.assertEqual(message.content, "(No email body)")
+
 
 class TestMissedMessageEmailMessages(ZulipTestCase):
     def test_receive_missed_personal_message_email_messages(self) -> None:
@@ -951,6 +957,7 @@ class TestMissedMessageEmailMessages(ZulipTestCase):
         with self.assertRaises(ZulipEmailForwardError):
             process_missed_message(mm_address, incoming_valid_message)
 
+
 class TestEmptyGatewaySetting(ZulipTestCase):
     def test_missed_message(self) -> None:
         self.login('othello')
@@ -977,6 +984,7 @@ class TestEmptyGatewaySetting(ZulipTestCase):
         with self.settings(EMAIL_GATEWAY_PATTERN=''):
             test_address = encode_email_address(stream)
             self.assertEqual(test_address, '')
+
 
 class TestReplyExtraction(ZulipTestCase):
     def test_is_forwarded(self) -> None:
@@ -1078,6 +1086,7 @@ class TestReplyExtraction(ZulipTestCase):
         process_message(incoming_valid_message)
         message = most_recent_message(user_profile)
         self.assertEqual(message.content, convert_html_to_markdown(html))
+
 
 class TestScriptMTA(ZulipTestCase):
 
@@ -1254,6 +1263,8 @@ class TestStreamEmailMessagesSubjectStripping(ZulipTestCase):
 
 # If the Content-Type header didn't specify a charset, the text content
 # of the email used to not be properly found. Test that this is fixed:
+
+
 class TestContentTypeUnspecifiedCharset(ZulipTestCase):
     def test_charset_not_specified(self) -> None:
         message_as_string = self.fixture_data('1.txt', type='email')
@@ -1275,6 +1286,7 @@ class TestContentTypeUnspecifiedCharset(ZulipTestCase):
 
         self.assertEqual(message.content, "Email fixture 1.txt body")
 
+
 class TestEmailMirrorProcessMessageNoValidRecipient(ZulipTestCase):
     def test_process_message_no_valid_recipient(self) -> None:
         incoming_valid_message = EmailMessage()
@@ -1288,6 +1300,7 @@ class TestEmailMirrorProcessMessageNoValidRecipient(ZulipTestCase):
             process_message(incoming_valid_message)
             mock_log_and_report.assert_called_with(incoming_valid_message,
                                                    "Missing recipient in mirror email", None)
+
 
 class TestEmailMirrorLogAndReport(ZulipTestCase):
     def test_log_and_report(self) -> None:

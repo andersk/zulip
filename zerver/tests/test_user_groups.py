@@ -74,6 +74,7 @@ class UserGroupTestCase(ZulipTestCase):
                         side_effect=Exception):
             self.assertFalse(check_remove_user_from_user_group(othello, user_group))
 
+
 class UserGroupAPITestCase(ZulipTestCase):
     def test_user_group_create(self) -> None:
         hamlet = self.example_user('hamlet')

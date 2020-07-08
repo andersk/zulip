@@ -140,6 +140,7 @@ class TestGenericOutgoingWebhookService(ZulipTestCase):
         success_response = self.handler.process_success(response)
         self.assertEqual(success_response, None)
 
+
 class TestSlackOutgoingWebhookService(ZulipTestCase):
 
     def setUp(self) -> None:

@@ -14,10 +14,12 @@ MESSAGE_TEMPLATE = ("You are going to derail from goal **{goal_name}** in **{tim
                     "You need **{limsum}** to avoid derailing.\n"
                     "* Pledge: **{pledge}$** {expression}\n")
 
+
 def get_time(payload: Dict[str, Any]) -> Any:
     losedate = payload["goal"]["losedate"]
     time_remaining = (losedate - time.time())/3600
     return time_remaining
+
 
 @api_key_only_webhook_view("beeminder")
 @has_request_variables

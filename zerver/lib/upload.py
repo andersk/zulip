@@ -75,8 +75,10 @@ INLINE_MIME_TYPES = [
 # "file name" is the original filename provided by the user run
 # through a sanitization function.
 
+
 class RealmUploadQuotaError(JsonableError):
     code = ErrorCode.REALM_UPLOAD_QUOTA
+
 
 def sanitize_name(value: str) -> str:
     """
@@ -95,15 +97,20 @@ def sanitize_name(value: str) -> str:
     assert value not in {'', '.', '..'}
     return mark_safe(value)
 
+
 def random_name(bytes: int=60) -> str:
     return base64.urlsafe_b64encode(os.urandom(bytes)).decode('utf-8')
+
 
 class BadImageError(JsonableError):
     code = ErrorCode.BAD_IMAGE
 
+
 name_to_tag_num = {name: num for num, name in ExifTags.TAGS.items()}
 
 # https://stackoverflow.com/a/6218425
+
+
 def exif_rotate(image: Image) -> Image:
     if not hasattr(image, '_getexif'):
         return image
@@ -123,6 +130,7 @@ def exif_rotate(image: Image) -> Image:
 
     return image
 
+
 def resize_avatar(image_data: bytes, size: int=DEFAULT_AVATAR_SIZE) -> bytes:
     try:
         im = Image.open(io.BytesIO(image_data))
@@ -137,6 +145,7 @@ def resize_avatar(image_data: bytes, size: int=DEFAULT_AVATAR_SIZE) -> bytes:
         im = im.convert('RGB')
     im.save(out, format='png')
     return out.getvalue()
+
 
 def resize_logo(image_data: bytes) -> bytes:
     try:
@@ -267,11 +276,13 @@ class ZulipUploadBackend:
 
 ### S3
 
+
 def get_bucket(session: Session, bucket_name: str) -> ServiceResource:
     # See https://github.com/python/typeshed/issues/2706
     # for why this return type is a `ServiceResource`.
     bucket = session.resource('s3').Bucket(bucket_name)
     return bucket
+
 
 def upload_image_to_s3(
         # See https://github.com/python/typeshed/issues/2706
@@ -295,6 +306,7 @@ def upload_image_to_s3(
     key.put(Body=contents, Metadata=metadata, ContentType=content_type,
             ContentDisposition=content_disposition)
 
+
 def check_upload_within_quota(realm: Realm, uploaded_file_size: int) -> None:
     upload_quota = realm.upload_quota_bytes()
     if upload_quota is None:
@@ -302,6 +314,7 @@ def check_upload_within_quota(realm: Realm, uploaded_file_size: int) -> None:
     used_space = realm.currently_used_upload_space_bytes()
     if (used_space + uploaded_file_size) > upload_quota:
         raise RealmUploadQuotaError(_("Upload would exceed your organization's upload quota."))
+
 
 def get_file_info(request: HttpRequest, user_file: File) -> Tuple[str, int, Optional[str]]:
 
@@ -331,6 +344,7 @@ def get_signed_upload_url(path: str) -> str:
                                              'Key': path},
                                          ExpiresIn=SIGNED_UPLOAD_URL_DURATION,
                                          HttpMethod='GET')
+
 
 class S3UploadBackend(ZulipUploadBackend):
     def __init__(self) -> None:
@@ -619,6 +633,7 @@ class S3UploadBackend(ZulipUploadBackend):
 
 ### Local
 
+
 def write_local_file(type: str, path: str, file_data: bytes) -> None:
     file_path = os.path.join(settings.LOCAL_UPLOADS_DIR, type, path)
 
@@ -626,10 +641,12 @@ def write_local_file(type: str, path: str, file_data: bytes) -> None:
     with open(file_path, 'wb') as f:
         f.write(file_data)
 
+
 def read_local_file(type: str, path: str) -> bytes:
     file_path = os.path.join(settings.LOCAL_UPLOADS_DIR, type, path)
     with open(file_path, 'rb') as f:
         return f.read()
+
 
 def delete_local_file(type: str, path: str) -> bool:
     file_path = os.path.join(settings.LOCAL_UPLOADS_DIR, type, path)
@@ -641,6 +658,7 @@ def delete_local_file(type: str, path: str) -> bool:
     logging.warning("%s does not exist. Its entry in the database will be removed.", file_name)
     return False
 
+
 def get_local_file_path(path_id: str) -> Optional[str]:
     local_path = os.path.join(settings.LOCAL_UPLOADS_DIR, 'files', path_id)
     if os.path.isfile(local_path):
@@ -648,7 +666,9 @@ def get_local_file_path(path_id: str) -> Optional[str]:
     else:
         return None
 
+
 LOCAL_FILE_ACCESS_TOKEN_SALT = "local_file_"
+
 
 def generate_unauthed_file_access_url(path_id: str) -> str:
     signed_data = TimestampSigner(salt=LOCAL_FILE_ACCESS_TOKEN_SALT).sign(path_id)
@@ -656,6 +676,7 @@ def generate_unauthed_file_access_url(path_id: str) -> str:
 
     filename = path_id.split('/')[-1]
     return reverse('zerver.views.upload.serve_local_file_unauthed', args=[token, filename])
+
 
 def get_local_file_path_id_from_token(token: str) -> Optional[str]:
     signer = TimestampSigner(salt=LOCAL_FILE_ACCESS_TOKEN_SALT)
@@ -666,6 +687,7 @@ def get_local_file_path_id_from_token(token: str) -> Optional[str]:
         return None
 
     return path_id
+
 
 class LocalUploadBackend(ZulipUploadBackend):
     def upload_message_file(self, uploaded_file_name: str, uploaded_file_size: int,
@@ -841,14 +863,17 @@ class LocalUploadBackend(ZulipUploadBackend):
         # export_path has a leading `/`
         return realm.uri + export_path
 
+
 # Common and wrappers
 if settings.LOCAL_UPLOADS_DIR is not None:
     upload_backend: ZulipUploadBackend = LocalUploadBackend()
 else:
     upload_backend = S3UploadBackend()  # nocoverage
 
+
 def delete_message_image(path_id: str) -> bool:
     return upload_backend.delete_message_image(path_id)
+
 
 def upload_avatar_image(user_file: File, acting_user_profile: UserProfile,
                         target_user_profile: UserProfile,
@@ -856,20 +881,26 @@ def upload_avatar_image(user_file: File, acting_user_profile: UserProfile,
     upload_backend.upload_avatar_image(user_file, acting_user_profile,
                                        target_user_profile, content_type=content_type)
 
+
 def delete_avatar_image(user_profile: UserProfile) -> None:
     upload_backend.delete_avatar_image(user_profile)
+
 
 def copy_avatar(source_profile: UserProfile, target_profile: UserProfile) -> None:
     upload_backend.copy_avatar(source_profile, target_profile)
 
+
 def upload_icon_image(user_file: File, user_profile: UserProfile) -> None:
     upload_backend.upload_realm_icon_image(user_file, user_profile)
+
 
 def upload_logo_image(user_file: File, user_profile: UserProfile, night: bool) -> None:
     upload_backend.upload_realm_logo_image(user_file, user_profile, night)
 
+
 def upload_emoji_image(emoji_file: File, emoji_file_name: str, user_profile: UserProfile) -> None:
     upload_backend.upload_emoji_image(emoji_file, emoji_file_name, user_profile)
+
 
 def upload_message_file(uploaded_file_name: str, uploaded_file_size: int,
                         content_type: Optional[str], file_data: bytes,
@@ -877,6 +908,7 @@ def upload_message_file(uploaded_file_name: str, uploaded_file_size: int,
     return upload_backend.upload_message_file(uploaded_file_name, uploaded_file_size,
                                               content_type, file_data, user_profile,
                                               target_realm=target_realm)
+
 
 def claim_attachment(user_profile: UserProfile,
                      path_id: str,
@@ -888,6 +920,7 @@ def claim_attachment(user_profile: UserProfile,
     attachment.save()
     return attachment
 
+
 def create_attachment(file_name: str, path_id: str, user_profile: UserProfile,
                       file_size: int) -> bool:
     attachment = Attachment.objects.create(file_name=file_name, path_id=path_id, owner=user_profile,
@@ -896,14 +929,17 @@ def create_attachment(file_name: str, path_id: str, user_profile: UserProfile,
     notify_attachment_update(user_profile, 'add', attachment.to_dict())
     return True
 
+
 def upload_message_image_from_request(request: HttpRequest, user_file: File,
                                       user_profile: UserProfile) -> str:
     uploaded_file_name, uploaded_file_size, content_type = get_file_info(request, user_file)
     return upload_message_file(uploaded_file_name, uploaded_file_size,
                                content_type, user_file.read(), user_profile)
 
+
 def upload_export_tarball(realm: Realm, tarball_path: str) -> str:
     return upload_backend.upload_export_tarball(realm, tarball_path)
+
 
 def delete_export_tarball(path_id: str) -> Optional[str]:
     return upload_backend.delete_export_tarball(path_id)

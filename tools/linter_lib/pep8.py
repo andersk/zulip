@@ -44,11 +44,6 @@ def check_pep8(files: List[str]) -> bool:
         # Most of these are there for valid reasons.
         'E266',
 
-        # "expected 2 blank lines after class or function definition"
-        # Zulip only uses 1 blank line after class/function
-        # definitions; the PEP-8 recommendation results in super sparse code.
-        'E302', 'E305',
-
         # "module level import not at top of file"
         # Most of these are there for valid reasons, though there might be a
         # few that could be eliminated.

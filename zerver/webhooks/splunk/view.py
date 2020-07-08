@@ -17,6 +17,7 @@ Splunk alert from saved search:
 * **Raw**: `{raw}`
 """.strip()
 
+
 @api_key_only_webhook_view('Splunk')
 @has_request_variables
 def api_splunk_webhook(request: HttpRequest, user_profile: UserProfile,

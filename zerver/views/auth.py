@@ -78,6 +78,7 @@ from zproject.backends import (
 
 ExtraContext = Optional[Dict[str, Any]]
 
+
 def get_safe_redirect_to(url: str, redirect_host: str) -> str:
     is_url_safe = is_safe_url(url=url, allowed_hosts=None)
     if is_url_safe:
@@ -87,6 +88,7 @@ def get_safe_redirect_to(url: str, redirect_host: str) -> str:
         return urllib.parse.urljoin(redirect_host, mark_sanitized(url))
     else:
         return redirect_host
+
 
 def create_preregistration_user(email: str, request: HttpRequest, realm_creation: bool=False,
                                 password_required: bool=True, full_name: Optional[str]=None,
@@ -105,6 +107,7 @@ def create_preregistration_user(email: str, request: HttpRequest, realm_creation
         full_name=full_name,
         full_name_validated=full_name_validated,
     )
+
 
 def maybe_send_to_registration(request: HttpRequest, email: str, full_name: str='',
                                mobile_flow_otp: Optional[str]=None,
@@ -220,6 +223,7 @@ def maybe_send_to_registration(request: HttpRequest, email: str, full_name: str=
     context.update(extra_context)
     return render(request, 'zerver/accounts_home.html', context=context)
 
+
 def register_remote_user(request: HttpRequest, result: ExternalAuthResult) -> HttpResponse:
     # We have verified the user controls an email address, but
     # there's no associated Zulip user account.  Consider sending
@@ -232,6 +236,7 @@ def register_remote_user(request: HttpRequest, result: ExternalAuthResult) -> Ht
 
     kwargs["password_required"] = False
     return maybe_send_to_registration(request, **kwargs)
+
 
 def login_or_register_remote_user(request: HttpRequest, result: ExternalAuthResult) -> HttpResponse:
     """Given a successful authentication showing the user controls given
@@ -275,6 +280,7 @@ def login_or_register_remote_user(request: HttpRequest, result: ExternalAuthResu
     redirect_to = get_safe_redirect_to(redirect_to, user_profile.realm.uri)
     return HttpResponseRedirect(redirect_to)
 
+
 def finish_desktop_flow(request: HttpRequest, user_profile: UserProfile,
                         otp: str) -> HttpResponse:
     """
@@ -295,6 +301,7 @@ def finish_desktop_flow(request: HttpRequest, user_profile: UserProfile,
                                       kwargs = {'template_name': 'zerver/login.html'}),
                'realm_icon_url': realm_icon_url(user_profile.realm)}
     return render(request, 'zerver/desktop_redirect.html', context=context)
+
 
 def finish_mobile_flow(request: HttpRequest, user_profile: UserProfile, otp: str) -> HttpResponse:
     # For the mobile OAuth flow, we send the API key and other
@@ -319,6 +326,7 @@ def finish_mobile_flow(request: HttpRequest, user_profile: UserProfile, otp: str
 
     return response
 
+
 def create_response_for_otp_flow(key: str, otp: str, user_profile: UserProfile,
                                  encrypted_key_field_name: str) -> HttpResponse:
     realm_uri = user_profile.realm.uri
@@ -339,6 +347,7 @@ def create_response_for_otp_flow(key: str, otp: str, user_profile: UserProfile,
     response['Location'] = add_query_to_redirect_url('zulip://login', urllib.parse.urlencode(params))
 
     return response
+
 
 @log_view_func
 @has_request_variables
@@ -392,6 +401,7 @@ def remote_user_sso(
     result = ExternalAuthResult(user_profile=user_profile, data_dict=data_dict)
     return login_or_register_remote_user(request, result)
 
+
 @csrf_exempt
 @log_view_func
 def remote_user_jwt(request: HttpRequest) -> HttpResponse:
@@ -436,6 +446,7 @@ def remote_user_jwt(request: HttpRequest) -> HttpResponse:
 
     return login_or_register_remote_user(request, result)
 
+
 @has_request_variables
 def oauth_redirect_to_root(
     request: HttpRequest,
@@ -477,6 +488,7 @@ def oauth_redirect_to_root(
 
     return redirect(add_query_to_redirect_url(main_site_uri, urllib.parse.urlencode(params)))
 
+
 def handle_desktop_flow(func: ViewFuncT) -> ViewFuncT:
     @wraps(func)
     def wrapper(request: HttpRequest, *args: object, **kwargs: object) -> HttpResponse:
@@ -486,6 +498,7 @@ def handle_desktop_flow(func: ViewFuncT) -> ViewFuncT:
 
         return func(request, *args, **kwargs)
     return cast(ViewFuncT, wrapper)  # https://github.com/python/mypy/issues/1927
+
 
 @handle_desktop_flow
 def start_remote_user_sso(request: HttpRequest) -> HttpResponse:
@@ -497,6 +510,7 @@ def start_remote_user_sso(request: HttpRequest) -> HttpResponse:
     """
     query = request.META['QUERY_STRING']
     return redirect(add_query_to_redirect_url(reverse('login-sso'), query))
+
 
 @handle_desktop_flow
 def start_social_login(request: HttpRequest, backend: str, extra_arg: Optional[str]=None,
@@ -525,6 +539,7 @@ def start_social_login(request: HttpRequest, backend: str, extra_arg: Optional[s
 
     return oauth_redirect_to_root(request, backend_url, 'social', extra_url_params=extra_url_params)
 
+
 @handle_desktop_flow
 def start_social_signup(request: HttpRequest, backend: str, extra_arg: Optional[str]=None,
                         ) -> HttpResponse:
@@ -543,7 +558,9 @@ def start_social_signup(request: HttpRequest, backend: str, extra_arg: Optional[
     return oauth_redirect_to_root(request, backend_url, 'social', is_signup=True,
                                   extra_url_params=extra_url_params)
 
+
 _subdomain_token_salt = 'zerver.views.auth.log_into_subdomain'
+
 
 @log_view_func
 def log_into_subdomain(request: HttpRequest, token: str) -> HttpResponse:
@@ -568,12 +585,14 @@ def log_into_subdomain(request: HttpRequest, token: str) -> HttpResponse:
 
     return login_or_register_remote_user(request, result)
 
+
 def redirect_and_log_into_subdomain(result: ExternalAuthResult) -> HttpResponse:
     token = result.store_data()
     realm = get_realm(result.data_dict["subdomain"])
     subdomain_login_uri = (realm.uri
                            + reverse('zerver.views.auth.log_into_subdomain', args=[token]))
     return redirect(subdomain_login_uri)
+
 
 def get_dev_users(realm: Optional[Realm]=None, extra_users_count: int=10) -> List[UserProfile]:
     # Development environments usually have only a few users, but
@@ -591,11 +610,13 @@ def get_dev_users(realm: Optional[Realm]=None, extra_users_count: int=10) -> Lis
     users = list(shakespearian_users) + list(extra_users)
     return users
 
+
 def redirect_to_misconfigured_ldap_notice(error_type: int) -> HttpResponse:
     if error_type == ZulipLDAPAuthBackend.REALM_IS_NONE_ERROR:
         return redirect_to_config_error('ldap')
     else:
         raise AssertionError("Invalid error type")
+
 
 def show_deactivation_notice(request: HttpRequest) -> HttpResponse:
     realm = get_realm_from_request(request)
@@ -605,8 +626,10 @@ def show_deactivation_notice(request: HttpRequest) -> HttpResponse:
 
     return HttpResponseRedirect(reverse('zerver.views.auth.login_page'))
 
+
 def redirect_to_deactivation_notice() -> HttpResponse:
     return HttpResponseRedirect(reverse('zerver.views.auth.show_deactivation_notice'))
+
 
 def add_dev_login_context(realm: Optional[Realm], context: Dict[str, Any]) -> None:
     users = get_dev_users(realm)
@@ -621,6 +644,7 @@ def add_dev_login_context(realm: Optional[Realm], context: Dict[str, Any]) -> No
     context['guest_users'] = sort([u for u in users if u.is_guest])
     context['direct_users'] = sort([u for u in users if not (u.is_realm_admin or u.is_guest)])
 
+
 def update_login_page_context(request: HttpRequest, context: Dict[str, Any]) -> None:
     for key in ('email', 'already_registered', 'is_deactivated'):
         try:
@@ -629,6 +653,7 @@ def update_login_page_context(request: HttpRequest, context: Dict[str, Any]) -> 
             pass
 
     context['deactivated_account_error'] = DEACTIVATED_ACCOUNT_ERROR
+
 
 class TwoFactorLoginView(BaseTwoFactorLoginView):
     extra_context: ExtraContext = None
@@ -673,6 +698,7 @@ class TwoFactorLoginView(BaseTwoFactorLoginView):
         from unittest.mock import patch
         with patch.object(settings, 'LOGIN_REDIRECT_URL', realm_uri):
             return super().done(form_list, **kwargs)
+
 
 @has_request_variables
 def login_page(
@@ -738,6 +764,7 @@ def login_page(
 
     return template_response
 
+
 def start_two_factor_auth(request: HttpRequest,
                           extra_context: ExtraContext=None,
                           **kwargs: Any) -> HttpResponse:
@@ -769,6 +796,7 @@ def start_two_factor_auth(request: HttpRequest,
                                              **kwargs)
     return two_fa_view(request, **kwargs)
 
+
 @csrf_exempt
 @has_request_variables
 def dev_direct_login(
@@ -792,6 +820,7 @@ def dev_direct_login(
 
     redirect_to = get_safe_redirect_to(next, user_profile.realm.uri)
     return HttpResponseRedirect(redirect_to)
+
 
 @csrf_exempt
 @require_post
@@ -830,6 +859,7 @@ def api_dev_fetch_api_key(request: HttpRequest, username: str=REQ()) -> HttpResp
     api_key = get_api_key(user_profile)
     return json_success({"api_key": api_key, "email": user_profile.delivery_email})
 
+
 @csrf_exempt
 def api_dev_list_users(request: HttpRequest) -> HttpResponse:
     if not dev_auth_enabled() or settings.PRODUCTION:
@@ -839,6 +869,7 @@ def api_dev_list_users(request: HttpRequest) -> HttpResponse:
                                             for u in users if u.is_realm_admin],
                              direct_users=[dict(email=u.delivery_email, realm_uri=u.realm.uri)
                                            for u in users if not u.is_realm_admin]))
+
 
 @csrf_exempt
 @require_post
@@ -883,6 +914,7 @@ def api_fetch_api_key(request: HttpRequest, username: str=REQ(), password: str=R
     api_key = get_api_key(user_profile)
     return json_success({"api_key": api_key, "email": user_profile.delivery_email})
 
+
 def get_auth_backends_data(request: HttpRequest) -> Dict[str, Any]:
     """Returns which authentication methods are enabled on the server"""
     subdomain = get_subdomain(request)
@@ -908,9 +940,11 @@ def get_auth_backends_data(request: HttpRequest) -> Dict[str, Any]:
         result[key] = auth_enabled_helper([auth_backend_name], realm)
     return result
 
+
 def check_server_incompatibility(request: HttpRequest) -> bool:
     user_agent = parse_user_agent(request.META.get("HTTP_USER_AGENT", "Missing User-Agent"))
     return user_agent['name'] == "ZulipInvalid"
+
 
 @require_safe
 @csrf_exempt
@@ -943,6 +977,7 @@ def api_get_server_settings(request: HttpRequest) -> HttpResponse:
             result[settings_item] = context[settings_item]
     return json_success(result)
 
+
 @has_request_variables
 def json_fetch_api_key(request: HttpRequest, user_profile: UserProfile,
                        password: str=REQ(default='')) -> HttpResponse:
@@ -956,15 +991,18 @@ def json_fetch_api_key(request: HttpRequest, user_profile: UserProfile,
     api_key = get_api_key(user_profile)
     return json_success({"api_key": api_key, "email": user_profile.delivery_email})
 
+
 @csrf_exempt
 def api_fetch_google_client_id(request: HttpRequest) -> HttpResponse:
     if not settings.GOOGLE_CLIENT_ID:
         return json_error(_("GOOGLE_CLIENT_ID is not configured"), status=400)
     return json_success({"google_client_id": settings.GOOGLE_CLIENT_ID})
 
+
 @require_post
 def logout_then_login(request: HttpRequest, **kwargs: Any) -> HttpResponse:
     return django_logout_then_login(request, kwargs)
+
 
 def password_reset(request: HttpRequest) -> HttpResponse:
     if not Realm.objects.filter(string_id=get_subdomain(request)).exists():
@@ -977,6 +1015,7 @@ def password_reset(request: HttpRequest) -> HttpResponse:
                                                 form_class=ZulipPasswordResetForm,
                                                 success_url='/accounts/password/reset/done/')
     return view_func(request)
+
 
 @csrf_exempt
 def saml_sp_metadata(request: HttpRequest, **kwargs: Any) -> HttpResponse:  # nocoverage
@@ -999,6 +1038,7 @@ def saml_sp_metadata(request: HttpRequest, **kwargs: Any) -> HttpResponse:  # no
                             content_type='text/xml')
 
     return HttpResponseServerError(content=', '.join(errors))
+
 
 def config_error_view(request: HttpRequest, error_category_name: str) -> HttpResponse:
     contexts = {

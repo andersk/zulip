@@ -210,6 +210,7 @@ class TestFollowupEmails(ZulipTestCase):
         email_data = ujson.loads(scheduled_emails[0].data)
         self.assertEqual(email_data["template_prefix"], 'zerver/emails/followup_day1')
 
+
 class TestMissedMessages(ZulipTestCase):
     def normalize_string(self, s: str) -> str:
         s = s.strip()

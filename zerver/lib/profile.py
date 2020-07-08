@@ -4,6 +4,7 @@ from typing import Callable, TypeVar, cast
 
 FuncT = TypeVar('FuncT', bound=Callable[..., object])
 
+
 def profiled(func: FuncT) -> FuncT:
     """
     This decorator should obviously be used only in a dev environment.

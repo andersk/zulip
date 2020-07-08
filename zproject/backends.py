@@ -100,6 +100,8 @@ redis_client = get_redis_client()
 # `settings.AUTHENTICATION_BACKENDS`, queried via
 # `django.contrib.auth.get_backends`) and at the realm level (via the
 # `Realm.authentication_methods` BitField).
+
+
 def pad_method_dict(method_dict: Dict[str, bool]) -> Dict[str, bool]:
     """Pads an authentication methods dict to contain all auth backends
     supported by the software, regardless of whether they are
@@ -108,6 +110,7 @@ def pad_method_dict(method_dict: Dict[str, bool]) -> Dict[str, bool]:
         if key not in method_dict:
             method_dict[key] = False
     return method_dict
+
 
 def auth_enabled_helper(backends_to_check: List[str], realm: Optional[Realm]) -> bool:
     if realm is not None:
@@ -123,32 +126,42 @@ def auth_enabled_helper(backends_to_check: List[str], realm: Optional[Realm]) ->
                 return True
     return False
 
+
 def ldap_auth_enabled(realm: Optional[Realm]=None) -> bool:
     return auth_enabled_helper(['LDAP'], realm)
+
 
 def email_auth_enabled(realm: Optional[Realm]=None) -> bool:
     return auth_enabled_helper(['Email'], realm)
 
+
 def password_auth_enabled(realm: Optional[Realm]=None) -> bool:
     return ldap_auth_enabled(realm) or email_auth_enabled(realm)
+
 
 def dev_auth_enabled(realm: Optional[Realm]=None) -> bool:
     return auth_enabled_helper(['Dev'], realm)
 
+
 def google_auth_enabled(realm: Optional[Realm]=None) -> bool:
     return auth_enabled_helper(['Google'], realm)
+
 
 def github_auth_enabled(realm: Optional[Realm]=None) -> bool:
     return auth_enabled_helper(['GitHub'], realm)
 
+
 def gitlab_auth_enabled(realm: Optional[Realm]=None) -> bool:
     return auth_enabled_helper(['GitLab'], realm)
+
 
 def apple_auth_enabled(realm: Optional[Realm]=None) -> bool:
     return auth_enabled_helper(['Apple'], realm)
 
+
 def saml_auth_enabled(realm: Optional[Realm]=None) -> bool:
     return auth_enabled_helper(['SAML'], realm)
+
 
 def any_social_backend_enabled(realm: Optional[Realm]=None) -> bool:
     """Used by the login page process to determine whether to show the
@@ -157,14 +170,17 @@ def any_social_backend_enabled(realm: Optional[Realm]=None) -> bool:
                             for social_auth_subclass in EXTERNAL_AUTH_METHODS]
     return auth_enabled_helper(social_backend_names, realm)
 
+
 def redirect_to_config_error(error_type: str) -> HttpResponseRedirect:
     return HttpResponseRedirect(f"/config-error/{error_type}")
+
 
 def require_email_format_usernames(realm: Optional[Realm]=None) -> bool:
     if ldap_auth_enabled(realm):
         if settings.LDAP_EMAIL_ATTR or settings.LDAP_APPEND_DOMAIN:
             return False
     return True
+
 
 def is_user_active(user_profile: UserProfile, return_data: Optional[Dict[str, Any]]=None) -> bool:
     if not user_profile.is_active:
@@ -181,6 +197,7 @@ def is_user_active(user_profile: UserProfile, return_data: Optional[Dict[str, An
         return False
 
     return True
+
 
 def common_get_active_user(email: str, realm: Realm,
                            return_data: Optional[Dict[str, Any]]=None) -> Optional[UserProfile]:
@@ -206,8 +223,10 @@ def common_get_active_user(email: str, realm: Realm,
 
     return user_profile
 
+
 AuthFuncT = TypeVar('AuthFuncT', bound=Callable[..., Optional[UserProfile]])
 rate_limiting_rules = settings.RATE_LIMITING_RULES['authenticate_by_username']
+
 
 class RateLimitedAuthenticationByUsername(RateLimitedObject):
     def __init__(self, username: str) -> None:
@@ -220,8 +239,10 @@ class RateLimitedAuthenticationByUsername(RateLimitedObject):
     def rules(self) -> List[Tuple[int, int]]:
         return rate_limiting_rules
 
+
 def rate_limit_authentication_by_username(request: HttpRequest, username: str) -> None:
     RateLimitedAuthenticationByUsername(username).rate_limit_request(request)
+
 
 def auth_rate_limiting_already_applied(request: HttpRequest) -> bool:
     if not hasattr(request, '_ratelimits_applied'):
@@ -234,6 +255,8 @@ def auth_rate_limiting_already_applied(request: HttpRequest) -> bool:
 # defined by backends, so we need a decorator that doesn't break function signatures.
 # @decorator does this for us.
 # The usual @wraps from functools breaks signatures, so it can't be used here.
+
+
 @decorator
 def rate_limit_auth(auth_func: AuthFuncT, *args: Any, **kwargs: Any) -> Optional[UserProfile]:
     if not settings.RATE_LIMITING_AUTHENTICATE:
@@ -261,6 +284,7 @@ def rate_limit_auth(auth_func: AuthFuncT, *args: Any, **kwargs: Any) -> Optional
 
     return result
 
+
 class ZulipAuthMixin:
     """This common mixin is used to override Django's default behavior for
     looking up a logged-in user by ID to use a version that fetches
@@ -284,6 +308,7 @@ class ZulipAuthMixin:
         except UserProfile.DoesNotExist:
             return None
 
+
 class ZulipDummyBackend(ZulipAuthMixin):
     """Used when we want to log you in without checking any
     authentication (i.e. new user registration or when otherwise
@@ -300,6 +325,7 @@ class ZulipDummyBackend(ZulipAuthMixin):
         if use_dummy_backend:
             return common_get_active_user(username, realm, return_data)
         return None
+
 
 def check_password_strength(password: str) -> bool:
     """
@@ -318,6 +344,7 @@ def check_password_strength(password: str) -> bool:
         return False
 
     return True
+
 
 class EmailAuthBackend(ZulipAuthMixin):
     """
@@ -355,6 +382,7 @@ class EmailAuthBackend(ZulipAuthMixin):
             return user_profile
         return None
 
+
 def is_valid_email(email: str) -> bool:
     try:
         validate_email(email)
@@ -362,10 +390,12 @@ def is_valid_email(email: str) -> bool:
         return False
     return True
 
+
 def check_ldap_config() -> None:
     if not settings.LDAP_APPEND_DOMAIN:
         # Email search needs to be configured in this case.
         assert settings.AUTH_LDAP_USERNAME_ATTR and settings.AUTH_LDAP_REVERSE_EMAIL_SEARCH
+
 
 def find_ldap_users_by_email(email: str) -> Optional[List[_LDAPUser]]:
     """
@@ -374,6 +404,7 @@ def find_ldap_users_by_email(email: str) -> Optional[List[_LDAPUser]]:
     """
     email_search = LDAPReverseEmailSearch(LDAPBackend(), email)
     return email_search.search_for_users(should_populate=False)
+
 
 def email_belongs_to_ldap(realm: Realm, email: str) -> bool:
     """Used to make determinations on whether a user's email address is
@@ -397,21 +428,29 @@ def email_belongs_to_ldap(realm: Realm, email: str) -> bool:
     else:
         return False
 
+
 ldap_logger = logging.getLogger("zulip.ldap")
+
+
 class ZulipLDAPException(_LDAPUser.AuthenticationFailed):
     """Since this inherits from _LDAPUser.AuthenticationFailed, these will
     be caught and logged at debug level inside django-auth-ldap's authenticate()"""
 
+
 class ZulipLDAPExceptionNoMatchingLDAPUser(ZulipLDAPException):
     pass
+
 
 class ZulipLDAPExceptionOutsideDomain(ZulipLDAPExceptionNoMatchingLDAPUser):
     pass
 
+
 class ZulipLDAPConfigurationError(Exception):
     pass
 
+
 LDAP_USER_ACCOUNT_CONTROL_DISABLED_MASK = 2
+
 
 class ZulipLDAPAuthBackendBase(ZulipAuthMixin, LDAPBackend):
     """Common code between LDAP authentication (ZulipLDAPAuthBackend) and
@@ -638,6 +677,7 @@ class ZulipLDAPAuthBackendBase(ZulipAuthMixin, LDAPBackend):
             })
         do_update_user_custom_profile_data_if_changed(user_profile, profile_data)
 
+
 class ZulipLDAPAuthBackend(ZulipLDAPAuthBackendBase):
     REALM_IS_NONE_ERROR = 1
 
@@ -755,6 +795,7 @@ class ZulipLDAPAuthBackend(ZulipLDAPAuthBackendBase):
 
         return user_profile, True
 
+
 class ZulipLDAPUser(_LDAPUser):
     """
     This is an extension of the _LDAPUser class, with a realm attribute
@@ -769,6 +810,7 @@ class ZulipLDAPUser(_LDAPUser):
         del kwargs['realm']
 
         super().__init__(*args, **kwargs)
+
 
 class ZulipLDAPUserPopulator(ZulipLDAPAuthBackendBase):
     """Just like ZulipLDAPAuthBackend, but doesn't let you log in.  Used
@@ -816,8 +858,10 @@ class ZulipLDAPUserPopulator(ZulipLDAPAuthBackendBase):
         self.sync_custom_profile_fields_from_ldap(user, ldap_user)
         return (user, built)
 
+
 class PopulateUserLDAPError(ZulipLDAPException):
     pass
+
 
 @receiver(ldap_error, sender=ZulipLDAPUserPopulator)
 def catch_ldap_error(signal: Signal, **kwargs: Any) -> None:
@@ -833,6 +877,7 @@ def catch_ldap_error(signal: Signal, **kwargs: Any) -> None:
         # The exception message can contain the password (if it was invalid),
         # so it seems better not to log that, and only use the original exception's name here.
         raise PopulateUserLDAPError(kwargs['exception'].__class__.__name__)
+
 
 def sync_user_from_ldap(user_profile: UserProfile, logger: logging.Logger) -> bool:
     backend = ZulipLDAPUserPopulator()
@@ -874,6 +919,8 @@ def sync_user_from_ldap(user_profile: UserProfile, logger: logging.Logger) -> bo
     raise PopulateUserLDAPError(f"populate_user unexpectedly returned {updated_user}")
 
 # Quick tool to test whether you're correctly authenticating to LDAP
+
+
 def query_ldap(email: str) -> List[str]:
     values = []
     backend = next((backend for backend in get_backends() if isinstance(backend, LDAPBackend)), None)
@@ -898,6 +945,7 @@ def query_ldap(email: str) -> List[str]:
         values.append("LDAP backend not configured on this server.")
     return values
 
+
 class DevAuthBackend(ZulipAuthMixin):
     """Allow logging in as any user without a password.  This is used for
     convenience when developing Zulip, and is disabled in production."""
@@ -911,12 +959,14 @@ class DevAuthBackend(ZulipAuthMixin):
             return None
         return common_get_active_user(dev_auth_username, realm, return_data=return_data)
 
+
 class ExternalAuthMethodDictT(TypedDict):
     name: str
     display_name: str
     display_icon: Optional[str]
     login_url: str
     signup_url: str
+
 
 class ExternalAuthMethod(ABC):
     """
@@ -945,7 +995,9 @@ class ExternalAuthMethod(ABC):
         that are all serviced by that backend - our SAML backend is an example of that.
         """
 
+
 EXTERNAL_AUTH_METHODS: List[Type[ExternalAuthMethod]] = []
+
 
 def external_auth_method(cls: Type[ExternalAuthMethod]) -> Type[ExternalAuthMethod]:
     assert issubclass(cls, ExternalAuthMethod)
@@ -955,6 +1007,8 @@ def external_auth_method(cls: Type[ExternalAuthMethod]) -> Type[ExternalAuthMeth
 
 # We want to be able to store this data in redis, so it has to be easy to serialize.
 # That's why we avoid having fields that could pose a problem for that.
+
+
 class ExternalAuthDataDict(TypedDict, total=False):
     subdomain: str
     full_name: str
@@ -966,6 +1020,7 @@ class ExternalAuthDataDict(TypedDict, total=False):
     desktop_flow_otp: Optional[str]
     multiuse_object_key: str
     full_name_validated: bool
+
 
 class ExternalAuthResult:
     LOGIN_KEY_PREFIX = "login_key_"
@@ -1038,6 +1093,7 @@ class ExternalAuthResult:
     class InvalidTokenError(Exception):
         pass
 
+
 @external_auth_method
 class ZulipRemoteUserBackend(RemoteUserBackend, ExternalAuthMethod):
     """Authentication backend that reads the Apache REMOTE_USER variable.
@@ -1075,12 +1131,14 @@ class ZulipRemoteUserBackend(RemoteUserBackend, ExternalAuthMethod):
             signup_url=reverse('start-login-sso'),
         )]
 
+
 def redirect_deactivated_user_to_login() -> HttpResponseRedirect:
     # Specifying the template name makes sure that the user is not redirected to dev_login in case of
     # a deactivated account on a test server.
     login_url = reverse('zerver.views.auth.login_page', kwargs = {'template_name': 'zerver/login.html'})
     redirect_url = login_url + '?is_deactivated=true'
     return HttpResponseRedirect(redirect_url)
+
 
 def social_associate_user_helper(backend: BaseAuth, return_data: Dict[str, Any],
                                  *args: Any, **kwargs: Any) -> Union[HttpResponse, Optional[UserProfile]]:
@@ -1213,6 +1271,7 @@ def social_associate_user_helper(backend: BaseAuth, return_data: Dict[str, Any],
 
     return user_profile
 
+
 @partial
 def social_auth_associate_user(
         backend: BaseAuth,
@@ -1236,6 +1295,7 @@ def social_auth_associate_user(
                 'return_data': return_data,
                 'partial_token': partial_token,
                 'partial_backend_name': backend}
+
 
 def social_auth_finish(backend: Any,
                        details: Dict[str, Any],
@@ -1364,6 +1424,7 @@ def social_auth_finish(backend: Any,
     # then call login_or_register_remote_user.
     return redirect_and_log_into_subdomain(result)
 
+
 class SocialAuthMixin(ZulipAuthMixin, ExternalAuthMethod, BaseAuth):
     # Whether we expect that the full_name value obtained by the
     # social backend is definitely how the user should be referred to
@@ -1412,6 +1473,7 @@ class SocialAuthMixin(ZulipAuthMixin, ExternalAuthMethod, BaseAuth):
             login_url=reverse('login-social', args=(cls.name,)),
             signup_url=reverse('signup-social', args=(cls.name,)),
         )]
+
 
 @external_auth_method
 class GitHubAuthBackend(SocialAuthMixin, GithubOAuth2):
@@ -1490,12 +1552,14 @@ class GitHubAuthBackend(SocialAuthMixin, GithubOAuth2):
 
         raise AssertionError("Invalid configuration")
 
+
 @external_auth_method
 class AzureADAuthBackend(SocialAuthMixin, AzureADOAuth2):
     sort_order = 50
     name = "azuread-oauth2"
     auth_backend_name = "AzureAD"
     display_icon = "/static/images/landing-page/logos/azuread-icon.png"
+
 
 @external_auth_method
 class GitLabAuthBackend(SocialAuthMixin, GitLabOAuth2):
@@ -1512,6 +1576,7 @@ class GitLabAuthBackend(SocialAuthMixin, GitLabOAuth2):
     # we just use the primary email address, which is always verified.
     # (No code is required to do so, as that's the default behavior).
 
+
 @external_auth_method
 class GoogleAuthBackend(SocialAuthMixin, GoogleOAuth2):
     sort_order = 150
@@ -1526,6 +1591,7 @@ class GoogleAuthBackend(SocialAuthMixin, GoogleOAuth2):
         if email_verified:
             verified_emails.append(details["email"])
         return verified_emails
+
 
 @external_auth_method
 class AppleAuthBackend(SocialAuthMixin, AppleIdAuth):
@@ -1695,6 +1761,7 @@ class AppleAuthBackend(SocialAuthMixin, AppleIdAuth):
             # We have an open PR to python-social-auth to clean this up.
             logging.info("/complete/apple/: %s", str(e))
             return None
+
 
 @external_auth_method
 class SAMLAuthBackend(SocialAuthMixin, SAMLAuth):
@@ -1997,6 +2064,7 @@ class SAMLAuthBackend(SocialAuthMixin, SAMLAuth):
 
         return result
 
+
 def validate_otp_params(mobile_flow_otp: Optional[str]=None,
                         desktop_flow_otp: Optional[str]=None) -> None:
     for otp in [mobile_flow_otp, desktop_flow_otp]:
@@ -2005,6 +2073,7 @@ def validate_otp_params(mobile_flow_otp: Optional[str]=None,
 
     if mobile_flow_otp and desktop_flow_otp:
         raise JsonableError(_("Can't use both mobile_flow_otp and desktop_flow_otp together."))
+
 
 def get_external_method_dicts(realm: Optional[Realm]=None) -> List[ExternalAuthMethodDictT]:
     """
@@ -2019,6 +2088,7 @@ def get_external_method_dicts(realm: Optional[Realm]=None) -> List[ExternalAuthM
             result.extend(backend.dict_representation(realm))
 
     return result
+
 
 AUTH_BACKEND_NAME_MAP: Dict[str, Any] = {
     'Dev': DevAuthBackend,

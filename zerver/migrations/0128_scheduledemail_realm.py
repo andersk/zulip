@@ -23,6 +23,7 @@ def set_realm_for_existing_scheduledemails(
     # Shouldn't be needed, but just in case
     scheduledemail_model.objects.filter(realm=None).delete()
 
+
 class Migration(migrations.Migration):
 
     dependencies = [

@@ -133,6 +133,7 @@ if not os.path.exists(os.path.dirname(pid_file_path)):
 with open(pid_file_path, 'w+') as f:
     f.write(str(os.getpgrp()) + "\n")
 
+
 def server_processes() -> List[List[str]]:
     main_cmds = [
         ['./manage.py', 'runserver'] +
@@ -158,12 +159,14 @@ def server_processes() -> List[List[str]]:
     # NORMAL (but slower) operation:
     return main_cmds + other_cmds
 
+
 def do_one_time_webpack_compile() -> None:
     # We just need to compile webpack assets once at startup, not run a daemon,
     # in test mode.  Additionally, webpack-dev-server doesn't support running 2
     # copies on the same system, so this model lets us run the casper tests
     # with a running development server.
     subprocess.check_call(['./tools/webpack', '--quiet', '--test'])
+
 
 def start_webpack_watcher() -> None:
     webpack_cmd = ['./tools/webpack', '--watch', '--port', str(webpack_port)]
@@ -179,6 +182,7 @@ def start_webpack_watcher() -> None:
         webpack_cmd += ["--host", "0.0.0.0"]
     subprocess.Popen(webpack_cmd)
 
+
 def transform_url(protocol: str, path: str, query: str, target_port: int, target_host: str) -> str:
     # generate url with target host
     host = ":".join((target_host, str(target_port)))
@@ -188,6 +192,7 @@ def transform_url(protocol: str, path: str, query: str, target_port: int, target
         path = path[len('/thumbor'):]
     newpath = urlunparse((protocol, host, path, '', query, ''))
     return newpath
+
 
 @gen.engine
 def fetch_request(url: str, callback: Any, **kwargs: Any) -> "Generator[Callable[..., Any], Any, None]":
@@ -312,8 +317,10 @@ class ErrorHandler(BaseHandler):
         self.write('path not supported')
         self.finish()
 
+
 def using_thumbor() -> bool:
     return not options.streamlined
+
 
 class Application(web.Application):
     def __init__(self, enable_logging: bool = False) -> None:
@@ -342,6 +349,7 @@ def shutdown_handler(*args: Any, **kwargs: Any) -> None:
     else:
         io_loop.stop()
 
+
 def print_listeners() -> None:
     print("\nZulip services will listen on ports:")
     ports = [
@@ -362,6 +370,7 @@ def print_listeners() -> None:
 
     proxy_warning = f"Only the proxy port ({proxy_port}) is exposed."
     print(WARNING + "Note to Vagrant users: " + ENDC + proxy_warning + '\n')
+
 
 if options.test:
     do_one_time_webpack_compile()

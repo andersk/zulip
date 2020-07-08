@@ -68,6 +68,8 @@ STRIPE_FIXTURES_DIR = "corporate/tests/stripe_fixtures"
 
 # TODO: check that this creates a token similar to what is created by our
 # actual Stripe Checkout flows
+
+
 def stripe_create_token(card_number: str="4242424242424242") -> stripe.Token:
     return stripe.Token.create(
         card={
@@ -82,6 +84,7 @@ def stripe_create_token(card_number: str="4242424242424242") -> stripe.Token:
             "address_country": "United States",
         })
 
+
 def stripe_fixture_path(decorated_function_name: str, mocked_function_name: str, call_count: int) -> str:
     # Make the eventual filename a bit shorter, and also we conventionally
     # use test_* for the python test files
@@ -89,12 +92,14 @@ def stripe_fixture_path(decorated_function_name: str, mocked_function_name: str,
         decorated_function_name = decorated_function_name[5:]
     return f"{STRIPE_FIXTURES_DIR}/{decorated_function_name}--{mocked_function_name[7:]}.{call_count}.json"
 
+
 def fixture_files_for_function(decorated_function: CallableT) -> List[str]:  # nocoverage
     decorated_function_name = decorated_function.__name__
     if decorated_function_name[:5] == 'test_':
         decorated_function_name = decorated_function_name[5:]
     return sorted([f'{STRIPE_FIXTURES_DIR}/{f}' for f in os.listdir(STRIPE_FIXTURES_DIR)
                    if f.startswith(decorated_function_name + '--')])
+
 
 def generate_and_save_stripe_fixture(decorated_function_name: str, mocked_function_name: str,
                                      mocked_function: CallableT) -> Callable[[Any, Any], Any]:  # nocoverage
@@ -122,6 +127,7 @@ def generate_and_save_stripe_fixture(decorated_function_name: str, mocked_functi
         return stripe_object
     return _generate_and_save_stripe_fixture
 
+
 def read_stripe_fixture(decorated_function_name: str,
                         mocked_function_name: str) -> Callable[[Any, Any], Any]:
     def _read_stripe_fixture(*args: Any, **kwargs: Any) -> Any:
@@ -136,9 +142,11 @@ def read_stripe_fixture(decorated_function_name: str,
         return stripe.util.convert_to_stripe_object(fixture)
     return _read_stripe_fixture
 
+
 def delete_fixture_data(decorated_function: CallableT) -> None:  # nocoverage
     for fixture_file in fixture_files_for_function(decorated_function):
         os.remove(fixture_file)
+
 
 def normalize_fixture_data(decorated_function: CallableT,
                            tested_timestamp_fields: Sequence[str] = []) -> None:  # nocoverage
@@ -196,6 +204,7 @@ def normalize_fixture_data(decorated_function: CallableT,
         with open(fixture_file, "w") as f:
             f.write(file_content)
 
+
 MOCKED_STRIPE_FUNCTION_NAMES = [f"stripe.{name}" for name in [
     "Charge.create", "Charge.list",
     "Coupon.create",
@@ -207,6 +216,7 @@ MOCKED_STRIPE_FUNCTION_NAMES = [f"stripe.{name}" for name in [
     "Subscription.create", "Subscription.delete", "Subscription.retrieve", "Subscription.save",
     "Token.create",
 ]]
+
 
 def mock_stripe(tested_timestamp_fields: Sequence[str]=[],
                 generate: Optional[bool]=None) -> Callable[[CallableT], CallableT]:
@@ -237,9 +247,12 @@ def mock_stripe(tested_timestamp_fields: Sequence[str]=[],
 
 # A Kandra is a fictional character that can become anything. Used as a
 # wildcard when testing for equality.
+
+
 class Kandra:  # nocoverage: TODO
     def __eq__(self, other: Any) -> bool:
         return True
+
 
 class StripeTestCase(ZulipTestCase):
     def setUp(self, *mocks: Mock) -> None:
@@ -351,6 +364,7 @@ class StripeTestCase(ZulipTestCase):
         for mocked_function_name in MOCKED_STRIPE_FUNCTION_NAMES:
             upgrade_func = patch(mocked_function_name, return_value=StripeMock())(upgrade_func)
         upgrade_func(*args)
+
 
 class StripeTest(StripeTestCase):
     @patch("corporate.lib.stripe.billing_logger.error")
@@ -1810,6 +1824,7 @@ class StripeTest(StripeTestCase):
         self.assertEqual(old_plan.next_invoice_date, None)
         self.assertEqual(old_plan.status, CustomerPlan.ENDED)
 
+
 class RequiresBillingAccessTest(ZulipTestCase):
     def setUp(self) -> None:
         super().setUp()
@@ -1862,6 +1877,7 @@ class RequiresBillingAccessTest(ZulipTestCase):
                                         {'stripe_token': ujson.dumps('token')})
         self.assert_json_success(response)
         mocked2.assert_called()
+
 
 class BillingHelpersTest(ZulipTestCase):
     def test_next_month(self) -> None:
@@ -2001,6 +2017,7 @@ class BillingHelpersTest(ZulipTestCase):
                                            tier=CustomerPlan.STANDARD)
         self.assertEqual(get_current_plan_by_realm(realm), plan)
 
+
 class LicenseLedgerTest(StripeTestCase):
     def test_add_plan_renewal_if_needed(self) -> None:
         with patch('corporate.lib.stripe.timezone_now', return_value=self.now):
@@ -2090,6 +2107,7 @@ class LicenseLedgerTest(StripeTestCase):
                           (False, self.seat_count + 1, self.seat_count),
                           (False, self.seat_count + 1, self.seat_count + 1),
                           (False, self.seat_count + 1, self.seat_count + 1)])
+
 
 class InvoiceTest(StripeTestCase):
     def test_invoicing_status_is_started(self) -> None:

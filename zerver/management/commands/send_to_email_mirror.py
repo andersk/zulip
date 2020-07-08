@@ -27,6 +27,7 @@ from zerver.models import Realm, get_realm, get_stream
 # Value of the TO: header doesn't matter, as it is overridden
 # by the command in order for the email to be sent to the correct stream.
 
+
 class Command(ZulipBaseCommand):
     help = """
 Send specified email from a fixture file to the email mirror

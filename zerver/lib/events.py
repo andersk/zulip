@@ -68,6 +68,7 @@ def add_realm_logo_fields(state: Dict[str, Any], realm: Realm) -> None:
     state['realm_night_logo_source'] = get_realm_logo_source(realm, night = True)
     state['max_logo_file_size'] = settings.MAX_LOGO_FILE_SIZE
 
+
 def always_want(msg_type: str) -> bool:
     '''
     This function is used as a helper in
@@ -82,6 +83,8 @@ def always_want(msg_type: str) -> bool:
 # all event types.  Whenever you add new code to this function, you
 # should also add corresponding events for changes in the data
 # structures and new code to apply_events (and add a test in test_events.py).
+
+
 def fetch_initial_state_data(user_profile: UserProfile,
                              event_types: Optional[Iterable[str]],
                              queue_id: str, client_gravatar: bool,
@@ -327,6 +330,7 @@ def fetch_initial_state_data(user_profile: UserProfile,
 
     return state
 
+
 def apply_events(state: Dict[str, Any], events: Iterable[Dict[str, Any]],
                  user_profile: UserProfile, client_gravatar: bool,
                  slim_presence: bool, include_subscribers: bool = True,
@@ -344,6 +348,7 @@ def apply_events(state: Dict[str, Any], events: Iterable[Dict[str, Any]],
             continue
         apply_event(state, event, user_profile,
                     client_gravatar, slim_presence, include_subscribers)
+
 
 def apply_event(state: Dict[str, Any],
                 event: Dict[str, Any],
@@ -833,6 +838,7 @@ def apply_event(state: Dict[str, Any],
     else:
         raise AssertionError("Unexpected event type {}".format(event['type']))
 
+
 def do_events_register(user_profile: UserProfile, user_client: Client,
                        apply_markdown: bool = True,
                        client_gravatar: bool = False,
@@ -898,6 +904,7 @@ def do_events_register(user_profile: UserProfile, user_client: Client,
     else:
         ret['last_event_id'] = -1
     return ret
+
 
 def post_process_state(user_profile: UserProfile, ret: Dict[str, Any],
                        notification_settings_null: bool) -> None:

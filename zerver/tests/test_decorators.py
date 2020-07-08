@@ -407,6 +407,7 @@ body:
         with self.assertRaisesRegex(JsonableError, "This organization has been deactivated"):
             my_webhook(request)
 
+
 class SkipRateLimitingTest(ZulipTestCase):
     def test_authenticated_rest_api_view(self) -> None:
         @authenticated_rest_api_view(skip_rate_limiting=False)
@@ -474,6 +475,7 @@ class SkipRateLimitingTest(ZulipTestCase):
             result = my_rate_limited_view(request)
             # Don't assert json_success, since it'll be the rate_limit mock object
             self.assertTrue(rate_limit_mock.called)
+
 
 class DecoratorLoggingTestCase(ZulipTestCase):
     def test_authenticated_rest_api_view_logging(self) -> None:
@@ -601,6 +603,7 @@ body:
         self.assert_json_error(result, "Missing authorization header for basic auth",
                                status_code=401)
 
+
 class RateLimitTestCase(ZulipTestCase):
     def errors_disallowed(self) -> Any:
         # Due to what is probably a hack in rate_limit(),
@@ -702,6 +705,7 @@ class RateLimitTestCase(ZulipTestCase):
                     self.assertEqual(f(req), 'some value')
 
         self.assertTrue(rate_limit_mock.called)
+
 
 class ValidatorTestCase(ZulipTestCase):
     def test_check_string(self) -> None:
@@ -1102,6 +1106,7 @@ class DeactivatedRealmTest(ZulipTestCase):
                                   content_type="application/json")
         self.assert_json_error_contains(result, "has been deactivated", status_code=400)
 
+
 class LoginRequiredTest(ZulipTestCase):
     def test_login_required(self) -> None:
         """
@@ -1136,6 +1141,7 @@ class LoginRequiredTest(ZulipTestCase):
         result = self.client_get('/accounts/accept_terms/')
         self.assertEqual(result.status_code, 302)
 
+
 class FetchAPIKeyTest(ZulipTestCase):
     def test_fetch_api_key_success(self) -> None:
         user = self.example_user("cordelia")
@@ -1159,6 +1165,7 @@ class FetchAPIKeyTest(ZulipTestCase):
         result = self.client_post("/json/fetch_api_key",
                                   dict(password='wrong_password'))
         self.assert_json_error_contains(result, "password is incorrect")
+
 
 class InactiveUserTest(ZulipTestCase):
     def test_send_deactivated_user(self) -> None:
@@ -1300,6 +1307,7 @@ class TestIncomingWebhookBot(ZulipTestCase):
         self.assert_json_error(result, 'This API is not available to incoming webhook bots.',
                                status_code=401)
 
+
 class TestValidateApiKey(ZulipTestCase):
     def setUp(self) -> None:
         super().setUp()
@@ -1386,6 +1394,7 @@ class TestValidateApiKey(ZulipTestCase):
         profile.is_active = value
         profile.save()
 
+
 class TestInternalNotifyView(ZulipTestCase):
     BORING_RESULT = 'boring'
 
@@ -1450,6 +1459,7 @@ class TestInternalNotifyView(ZulipTestCase):
         self.assertTrue(is_local_addr('::1'))
         self.assertFalse(is_local_addr('42.43.44.45'))
 
+
 class TestHumanUsersOnlyDecorator(ZulipTestCase):
     def test_human_only_endpoints(self) -> None:
         default_bot = self.example_user('default_bot')
@@ -1486,6 +1496,7 @@ class TestHumanUsersOnlyDecorator(ZulipTestCase):
         for endpoint in delete_endpoints:
             result = self.api_delete(default_bot, endpoint)
             self.assert_json_error(result, "This endpoint does not accept bot requests.")
+
 
 class TestAuthenticatedJsonPostViewDecorator(ZulipTestCase):
     def test_authenticated_json_post_view_if_everything_is_correct(self) -> None:
@@ -1558,6 +1569,7 @@ class TestAuthenticatedJsonPostViewDecorator(ZulipTestCase):
         data = {"password": initial_password(user.email), "stream": stream_name}
         return self.client_post('/json/subscriptions/exists', data)
 
+
 class TestAuthenticatedJsonViewDecorator(ZulipTestCase):
     def test_authenticated_json_view_if_subdomain_is_invalid(self) -> None:
         user = self.example_user('hamlet')
@@ -1587,6 +1599,7 @@ class TestAuthenticatedJsonViewDecorator(ZulipTestCase):
     def _do_test(self, user_email: str) -> HttpResponse:
         data = {"password": initial_password(user_email)}
         return self.client_post(r'/accounts/webathena_kerberos_login/', data)
+
 
 class TestZulipLoginRequiredDecorator(ZulipTestCase):
     def test_zulip_login_required_if_subdomain_is_invalid(self) -> None:
@@ -1665,6 +1678,7 @@ class TestZulipLoginRequiredDecorator(ZulipTestCase):
             content = getattr(response, 'content')
             self.assertEqual(content.decode(), 'Success')
 
+
 class TestRequireDecorators(ZulipTestCase):
     def test_require_server_admin_decorator(self) -> None:
         user = self.example_user('hamlet')
@@ -1723,6 +1737,7 @@ class ReturnSuccessOnHeadRequestDecorator(ZulipTestCase):
         response = test_function(request)
         self.assertEqual(ujson.loads(response.content).get('msg'), 'from_test_function')
 
+
 class RestAPITest(ZulipTestCase):
     def test_method_not_allowed(self) -> None:
         self.login('hamlet')
@@ -1745,6 +1760,7 @@ class RestAPITest(ZulipTestCase):
                                  HTTP_ACCEPT='text/html')
         self.assertEqual(result.status_code, 302)
         self.assertTrue(result["Location"].endswith("/login/?next=/json/users"))
+
 
 class CacheTestCase(ZulipTestCase):
     def test_cachify_basics(self) -> None:
@@ -1804,6 +1820,7 @@ class CacheTestCase(ZulipTestCase):
             'goodbye alice smith',
             'goodbye cal johnson',
         ])
+
 
 class TestUserAgentParsing(ZulipTestCase):
     def test_user_agent_parsing(self) -> None:

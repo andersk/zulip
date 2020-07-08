@@ -11,6 +11,7 @@ def user_attachments(user_profile: UserProfile) -> List[Dict[str, Any]]:
     attachments = Attachment.objects.filter(owner=user_profile).prefetch_related('messages')
     return [a.to_dict() for a in attachments]
 
+
 def access_attachment_by_id(user_profile: UserProfile, attachment_id: int,
                             needs_owner: bool=False) -> Attachment:
     query = Attachment.objects.filter(id=attachment_id)
@@ -21,6 +22,7 @@ def access_attachment_by_id(user_profile: UserProfile, attachment_id: int,
     if attachment is None:
         raise JsonableError(_("Invalid attachment"))
     return attachment
+
 
 def remove_attachment(user_profile: UserProfile, attachment: Attachment) -> None:
     try:

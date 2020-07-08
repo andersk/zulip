@@ -17,6 +17,7 @@ def delete_messages_sent_to_stream_stat(apps: StateApps, schema_editor: Database
     InstallationCount.objects.filter(property=property).delete()
     FillState.objects.filter(property=property).delete()
 
+
 class Migration(migrations.Migration):
 
     dependencies = [

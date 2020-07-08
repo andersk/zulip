@@ -39,6 +39,7 @@ def nagios_from_file(results_file: str, max_time_diff: int=60 * 2) -> 'Tuple[int
 
     return (ret, f"{state}: {data}")
 
+
 if __name__ == "__main__":
     RESULTS_FILE = sys.argv[1]
     extra_args = {}

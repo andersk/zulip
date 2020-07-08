@@ -18,6 +18,7 @@ def fix_realm_string_ids(apps: StateApps, schema_editor: DatabaseSchemaEditor) -
     user_realm.string_id = ""
     user_realm.save()
 
+
 class Migration(migrations.Migration):
 
     dependencies = [

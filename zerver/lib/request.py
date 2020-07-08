@@ -37,6 +37,7 @@ class RequestConfusingParmsError(JsonableError):
     def msg_format() -> str:
         return _("Can't decide between '{var_name1}' and '{var_name2}' arguments")
 
+
 class RequestVariableMissingError(JsonableError):
     code = ErrorCode.REQUEST_VARIABLE_MISSING
     data_fields = ['var_name']
@@ -47,6 +48,7 @@ class RequestVariableMissingError(JsonableError):
     @staticmethod
     def msg_format() -> str:
         return _("Missing '{var_name}' argument")
+
 
 class RequestVariableConversionError(JsonableError):
     code = ErrorCode.REQUEST_VARIABLE_INVALID
@@ -60,8 +62,10 @@ class RequestVariableConversionError(JsonableError):
     def msg_format() -> str:
         return _("Bad value for '{var_name}': {bad_value}")
 
+
 # Used in conjunction with @has_request_variables, below
 ResultT = TypeVar('ResultT')
+
 
 class _REQ(Generic[ResultT]):
     # NotSpecified is a sentinel value for determining whether a
@@ -138,6 +142,8 @@ class _REQ(Generic[ResultT]):
 # https://zulip.readthedocs.io/en/latest/testing/mypy.html#using-overload-to-accurately-describe-variations
 #
 # Overload 1: converter
+
+
 @overload
 def REQ(
     whence: Optional[str] = ...,
@@ -152,6 +158,8 @@ def REQ(
     ...
 
 # Overload 2: validator
+
+
 @overload
 def REQ(
     whence: Optional[str] = ...,
@@ -166,6 +174,8 @@ def REQ(
     ...
 
 # Overload 3: no converter/validator, default: str or unspecified, argument_type=None
+
+
 @overload
 def REQ(
     whence: Optional[str] = ...,
@@ -180,6 +190,8 @@ def REQ(
     ...
 
 # Overload 4: no converter/validator, default=None, argument_type=None
+
+
 @overload
 def REQ(
     whence: Optional[str] = ...,
@@ -194,6 +206,8 @@ def REQ(
     ...
 
 # Overload 5: argument_type="body"
+
+
 @overload
 def REQ(
     whence: Optional[str] = ...,
@@ -208,6 +222,8 @@ def REQ(
     ...
 
 # Implementation
+
+
 def REQ(
     whence: Optional[str] = None,
     *,
@@ -234,6 +250,7 @@ def REQ(
         path_only=path_only,
     ))
 
+
 arguments_map: Dict[str, List[str]] = defaultdict(list)
 
 # Extracts variables from the request object and passes them as
@@ -252,6 +269,8 @@ arguments_map: Dict[str, List[str]] = defaultdict(list)
 # Note that this can't be used in helper functions which are not
 # expected to call json_error or json_success, as it uses json_error
 # internally when it encounters an error
+
+
 def has_request_variables(view_func: ViewFuncT) -> ViewFuncT:
     num_params = view_func.__code__.co_argcount
     default_param_values = cast(FunctionType, view_func).__defaults__

@@ -50,6 +50,7 @@ PULL_REQUEST_SUPPORTED_ACTIONS = [
     'comment_deleted',
 ]
 
+
 @api_key_only_webhook_view('Bitbucket2')
 @has_request_variables
 def api_bitbucket2_webhook(request: HttpRequest, user_profile: UserProfile,
@@ -86,12 +87,14 @@ def api_bitbucket2_webhook(request: HttpRequest, user_profile: UserProfile,
 
     return json_success()
 
+
 def get_subject_for_branch_specified_events(payload: Dict[str, Any],
                                             branch_name: Optional[str]=None) -> str:
     return TOPIC_WITH_BRANCH_TEMPLATE.format(
         repo=get_repository_name(payload['repository']),
         branch=get_branch_name_for_push_event(payload) if branch_name is None else branch_name,
     )
+
 
 def get_push_subjects(payload: Dict[str, Any]) -> List[str]:
     subjects_list = []
@@ -107,9 +110,11 @@ def get_push_subjects(payload: Dict[str, Any]) -> List[str]:
             subjects_list.append(str(get_subject_for_branch_specified_events(payload, branch_name)))
     return subjects_list
 
+
 def get_subject(payload: Dict[str, Any]) -> str:
     assert(payload['repository'] is not None)
     return BITBUCKET_TOPIC_TEMPLATE.format(repository_name=get_repository_name(payload['repository']))
+
 
 def get_subject_based_on_type(payload: Dict[str, Any], type: str) -> Any:
     if type.startswith('pull_request'):
@@ -129,6 +134,7 @@ def get_subject_based_on_type(payload: Dict[str, Any], type: str) -> Any:
     if type == 'push':
         return get_push_subjects(payload)
     return get_subject(payload)
+
 
 def get_type(request: HttpRequest, payload: Dict[str, Any]) -> str:
     if payload.get('push'):
@@ -163,9 +169,11 @@ def get_type(request: HttpRequest, payload: Dict[str, Any]) -> str:
 
     raise UnexpectedWebhookEventType('BitBucket2', event_key)
 
+
 def get_body_based_on_type(type: str) -> Any:
     fn = GET_SINGLE_MESSAGE_BODY_DEPENDING_ON_TYPE_MAPPER.get(type)
     return fn
+
 
 def get_push_bodies(payload: Dict[str, Any]) -> List[str]:
     messages_list = []
@@ -182,11 +190,13 @@ def get_push_bodies(payload: Dict[str, Any]) -> List[str]:
             messages_list.append(get_normal_push_body(payload, change))
     return messages_list
 
+
 def get_remove_branch_push_body(payload: Dict[str, Any], change: Dict[str, Any]) -> str:
     return get_remove_branch_event_message(
         get_user_username(payload),
         change['old']['name'],
     )
+
 
 def get_force_push_body(payload: Dict[str, Any], change: Dict[str, Any]) -> str:
     return get_force_push_commits_event_message(
@@ -196,10 +206,12 @@ def get_force_push_body(payload: Dict[str, Any], change: Dict[str, Any]) -> str:
         change['new']['target']['hash'],
     )
 
+
 def get_commit_author_name(commit: Dict[str, Any]) -> str:
     if commit['author'].get('user'):
         return commit['author']['user'].get('username')
     return commit['author']['raw'].split()[0]
+
 
 def get_normal_push_body(payload: Dict[str, Any], change: Dict[str, Any]) -> str:
     commits_data = [{
@@ -217,6 +229,7 @@ def get_normal_push_body(payload: Dict[str, Any], change: Dict[str, Any]) -> str
         is_truncated=change['truncated'],
     )
 
+
 def get_fork_body(payload: Dict[str, Any]) -> str:
     return BITBUCKET_FORK_BODY.format(
         display_name=get_user_display_name(payload),
@@ -224,6 +237,7 @@ def get_fork_body(payload: Dict[str, Any]) -> str:
         fork_name=get_repository_full_name(payload['fork']),
         fork_url=get_repository_url(payload['fork']),
     )
+
 
 def get_commit_comment_body(payload: Dict[str, Any]) -> str:
     comment = payload['comment']
@@ -235,6 +249,7 @@ def get_commit_comment_body(payload: Dict[str, Any]) -> str:
         comment['commit']['hash'],
         comment['content']['raw'],
     )
+
 
 def get_commit_status_changed_body(payload: Dict[str, Any]) -> str:
     commit_api_url = payload['commit_status']['links']['commit']['href']
@@ -253,10 +268,12 @@ def get_commit_status_changed_body(payload: Dict[str, Any]) -> str:
         status=payload['commit_status']['state'],
     )
 
+
 def get_issue_commented_body(payload: Dict[str, Any],
                              include_title: bool=False) -> str:
     action = '[commented]({}) on'.format(payload['comment']['links']['html']['href'])
     return get_issue_action_body(payload, action, include_title)
+
 
 def get_issue_action_body(payload: Dict[str, Any], action: str,
                           include_title: bool=False) -> str:
@@ -278,6 +295,7 @@ def get_issue_action_body(payload: Dict[str, Any], action: str,
         title=issue['title'] if include_title else None,
     )
 
+
 def get_pull_request_action_body(payload: Dict[str, Any], action: str,
                                  include_title: bool=False) -> str:
     pull_request = payload['pullrequest']
@@ -288,6 +306,7 @@ def get_pull_request_action_body(payload: Dict[str, Any], action: str,
         pull_request.get('id'),
         title=pull_request['title'] if include_title else None,
     )
+
 
 def get_pull_request_created_or_updated_body(payload: Dict[str, Any], action: str,
                                              include_title: bool=False) -> str:
@@ -312,6 +331,7 @@ def get_pull_request_created_or_updated_body(payload: Dict[str, Any], action: st
         title=pull_request['title'] if include_title else None,
     )
 
+
 def get_pull_request_comment_created_action_body(
         payload: Dict[str, Any],
         include_title: bool=False,
@@ -319,12 +339,14 @@ def get_pull_request_comment_created_action_body(
     action = '[commented]({})'.format(payload['comment']['links']['html']['href'])
     return get_pull_request_comment_action_body(payload, action, include_title)
 
+
 def get_pull_request_deleted_or_updated_comment_action_body(
         payload: Dict[str, Any], action: str,
         include_title: bool=False,
 ) -> str:
     action = "{} a [comment]({})".format(action, payload['comment']['links']['html']['href'])
     return get_pull_request_comment_action_body(payload, action, include_title)
+
 
 def get_pull_request_comment_action_body(
         payload: Dict[str, Any], action: str,
@@ -339,6 +361,7 @@ def get_pull_request_comment_action_body(
         message=payload['comment']['content']['raw'],
         title=payload['pullrequest']['title'] if include_title else None,
     )
+
 
 def get_push_tag_body(payload: Dict[str, Any], change: Dict[str, Any]) -> str:
     if change.get('new'):
@@ -355,11 +378,13 @@ def get_push_tag_body(payload: Dict[str, Any], change: Dict[str, Any]) -> str:
         action=action,
     )
 
+
 def append_punctuation(title: str, message: str) -> str:
     if title[-1] not in string.punctuation:
         message = f"{message}."
 
     return message
+
 
 def get_repo_updated_body(payload: Dict[str, Any]) -> str:
     changes = ['website', 'name', 'links', 'language', 'full_name', 'description']
@@ -388,26 +413,33 @@ def get_repo_updated_body(payload: Dict[str, Any]) -> str:
 
     return body
 
+
 def get_pull_request_url(pullrequest_payload: Dict[str, Any]) -> str:
     return pullrequest_payload['links']['html']['href']
+
 
 def get_repository_url(repository_payload: Dict[str, Any]) -> str:
     return repository_payload['links']['html']['href']
 
+
 def get_repository_name(repository_payload: Dict[str, Any]) -> str:
     return repository_payload['name']
+
 
 def get_repository_full_name(repository_payload: Dict[str, Any]) -> str:
     return repository_payload['full_name']
 
+
 def get_user_display_name(payload: Dict[str, Any]) -> str:
     return payload['actor']['display_name']
+
 
 def get_user_username(payload: Dict[str, Any]) -> str:
     actor = payload['actor']
     # Certain payloads may not contain a username, so we can
     # return the user's display name or nickname instead.
     return actor.get('username') or actor.get('display_name') or actor.get('nickname')
+
 
 def get_branch_name_for_push_event(payload: Dict[str, Any]) -> Optional[str]:
     change = payload['push']['changes'][-1]
@@ -416,6 +448,7 @@ def get_branch_name_for_push_event(payload: Dict[str, Any]) -> Optional[str]:
         return None
     else:
         return (change['new'] or change['old']).get('name')
+
 
 GET_SINGLE_MESSAGE_BODY_DEPENDING_ON_TYPE_MAPPER = {
     'fork': get_fork_body,

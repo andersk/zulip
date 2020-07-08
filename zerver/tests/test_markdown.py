@@ -186,11 +186,13 @@ class FencedBlockPreprocessorTest(ZulipTestCase):
         lines = processor.run(markdown_input)
         self.assertEqual(lines, expected)
 
+
 def markdown_convert_wrapper(content: str) -> str:
     return markdown_convert(
         content=content,
         message_realm=get_realm('zulip'),
     )
+
 
 class MarkdownMiscTest(ZulipTestCase):
     def test_diffs_work_as_expected(self) -> None:
@@ -269,6 +271,7 @@ class MarkdownMiscTest(ZulipTestCase):
             with mock.patch('logging.error') as mock_logger:
                 render_tex("random text")
                 mock_logger.assert_called_with("Cannot find KaTeX for latex rendering!")
+
 
 class MarkdownListPreprocessorTest(ZulipTestCase):
     # We test that the preprocessor inserts blank lines at correct places.
@@ -356,6 +359,7 @@ Outside. Should convert:<>
         """
         original, expected = self.split_message(msg)
         self.assertEqual(preprocessor.run(original), expected)
+
 
 class MarkdownTest(ZulipTestCase):
     def setUp(self) -> None:
@@ -2078,6 +2082,7 @@ class MarkdownTest(ZulipTestCase):
         converted = markdown_convert_wrapper(dedent(msg))
         self.assertEqual(converted, dedent(expected_output))
 
+
 class MarkdownApiTests(ZulipTestCase):
     def test_render_message_api(self) -> None:
         content = 'That is a **bold** statement'
@@ -2103,6 +2108,7 @@ class MarkdownApiTests(ZulipTestCase):
         stream_id = get_stream('Denmark', get_realm('zulip')).id
         self.assertEqual(result.json()['rendered'],
                          f'<p>This mentions <a class="stream" data-stream-id="{stream_id}" href="/#narrow/stream/{stream_id}-Denmark">#Denmark</a> and <span class="user-mention" data-user-id="{user_id}">@King Hamlet</span>.</p>')
+
 
 class MarkdownErrorTests(ZulipTestCase):
     def test_markdown_error_handling(self) -> None:

@@ -10,6 +10,7 @@ def change_emojiset(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> Non
         user.emojiset = "text"
         user.save(update_fields=["emojiset"])
 
+
 def reverse_change_emojiset(apps: StateApps,
                             schema_editor: DatabaseSchemaEditor) -> None:
     UserProfile = apps.get_model("zerver", "UserProfile")
@@ -20,6 +21,7 @@ def reverse_change_emojiset(apps: StateApps,
         user.emoji_alt_code = True
         user.emojiset = "google"
         user.save(update_fields=["emoji_alt_code", "emojiset"])
+
 
 class Migration(migrations.Migration):
 

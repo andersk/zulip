@@ -161,6 +161,7 @@ class TopicHistoryTest(ZulipTestCase):
         result = self.client_get(endpoint, dict())
         self.assert_json_error(result, 'Invalid stream id')
 
+
 class TopicDeleteTest(ZulipTestCase):
     def test_topic_delete(self) -> None:
         initial_last_msg_id = self.get_last_message().id

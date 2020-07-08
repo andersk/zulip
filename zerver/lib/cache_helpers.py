@@ -36,6 +36,7 @@ from zerver.models import (
 
 MESSAGE_CACHE_SIZE = 75000
 
+
 def message_fetch_objects() -> List[Any]:
     try:
         max_id = Message.objects.only('id').order_by("-id")[0].id
@@ -43,6 +44,7 @@ def message_fetch_objects() -> List[Any]:
         return []
     return Message.objects.select_related().filter(~Q(sender__email='tabbott/extra@mit.edu'),
                                                    id__gt=max_id - MESSAGE_CACHE_SIZE)
+
 
 def message_cache_items(items_for_remote_cache: Dict[str, Tuple[bytes]],
                         message: Message) -> None:
@@ -54,6 +56,7 @@ def message_cache_items(items_for_remote_cache: Dict[str, Tuple[bytes]],
     value = MessageDict.to_dict_uncached([message])[message.id]
     items_for_remote_cache[key] = (value,)
 
+
 def user_cache_items(items_for_remote_cache: Dict[str, Tuple[UserProfile]],
                      user_profile: UserProfile) -> None:
     for api_key in get_all_api_keys(user_profile):
@@ -63,17 +66,21 @@ def user_cache_items(items_for_remote_cache: Dict[str, Tuple[UserProfile]],
     # We have other user_profile caches, but none of them are on the
     # core serving path for lots of requests.
 
+
 def stream_cache_items(items_for_remote_cache: Dict[str, Tuple[Stream]],
                        stream: Stream) -> None:
     items_for_remote_cache[get_stream_cache_key(stream.name, stream.realm_id)] = (stream,)
+
 
 def client_cache_items(items_for_remote_cache: Dict[str, Tuple[Client]],
                        client: Client) -> None:
     items_for_remote_cache[get_client_cache_key(client.name)] = (client,)
 
+
 def huddle_cache_items(items_for_remote_cache: Dict[str, Tuple[Huddle]],
                        huddle: Huddle) -> None:
     items_for_remote_cache[huddle_hash_cache_key(huddle.huddle_hash)] = (huddle,)
+
 
 def session_cache_items(items_for_remote_cache: Dict[str, str],
                         session: Session) -> None:
@@ -84,6 +91,7 @@ def session_cache_items(items_for_remote_cache: Dict[str, str],
         return
     store = session_engine.SessionStore(session_key=session.session_key)
     items_for_remote_cache[store.cache_key] = store.decode(session.session_data)
+
 
 def get_active_realm_ids() -> List[int]:
     """For installations like Zulip Cloud hosting a lot of realms, it only makes
@@ -99,6 +107,7 @@ def get_active_realm_ids() -> List[int]:
         property="1day_actives::day",
         value__gt=0).distinct("realm_id").values_list("realm_id", flat=True)
 
+
 def get_streams() -> List[Stream]:
     return Stream.objects.select_related().filter(
         realm__in=get_active_realm_ids()).exclude(
@@ -106,10 +115,12 @@ def get_streams() -> List[Stream]:
             # have 10,000s of streams with only 1 subscriber.
             is_in_zephyr_realm=True)
 
+
 def get_users() -> List[UserProfile]:
     return UserProfile.objects.select_related().filter(
         long_term_idle=False,
         realm__in=get_active_realm_ids())
+
 
 # Format is (objects query, items filler function, timeout, batch size)
 #
@@ -128,6 +139,7 @@ cache_fillers: Dict[str, Tuple[Callable[[], List[Any]], Callable[[Dict[str, Any]
     'huddle': (lambda: Huddle.objects.select_related().all(), huddle_cache_items, 3600*24*7, 10000),
     'session': (lambda: Session.objects.all(), session_cache_items, 3600*24*7, 10000),
 }
+
 
 def fill_remote_cache(cache: str) -> None:
     remote_cache_time_start = get_remote_cache_time()

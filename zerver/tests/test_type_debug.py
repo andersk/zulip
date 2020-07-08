@@ -7,11 +7,14 @@ from zerver.lib.type_debug import print_types
 
 T = TypeVar('T')
 
+
 def add(x: Any=0, y: Any=0) -> Any:
     return x + y
 
+
 def to_dict(v: Iterable[Tuple[Any, Any]]=[]) -> Dict[Any, Any]:
     return dict(v)
+
 
 class TypesPrintTest(ZulipTestCase):
 

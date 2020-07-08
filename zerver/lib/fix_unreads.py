@@ -21,6 +21,7 @@ migration runs.
 logger = logging.getLogger('zulip.fix_unreads')
 logger.setLevel(logging.WARNING)
 
+
 def build_topic_mute_checker(cursor: CursorObj, user_profile: UserProfile) -> Callable[[int, str], bool]:
     '''
     This function is similar to the function of the same name
@@ -48,6 +49,7 @@ def build_topic_mute_checker(cursor: CursorObj, user_profile: UserProfile) -> Ca
         return (recipient_id, topic.lower()) in tups
 
     return is_muted
+
 
 def update_unread_flags(cursor: CursorObj, user_message_ids: List[int]) -> None:
     query = SQL('''
@@ -142,6 +144,7 @@ def fix_unsubscribed(cursor: CursorObj, user_profile: UserProfile) -> None:
         'fixing unread messages for non-active streams',
         fix,
     )
+
 
 def fix(user_profile: UserProfile) -> None:
     logger.info('\n---\nFixing %s:', user_profile.id)

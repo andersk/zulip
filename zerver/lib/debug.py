@@ -20,6 +20,8 @@ logger = logging.getLogger('zulip.debug')
 # (that link also points to code for an interactive remote debugger
 # setup, which we might want if we move Tornado to run in a daemon
 # rather than via screen).
+
+
 def interactive_debug(sig: int, frame: FrameType) -> None:
     """Interrupt running process, and provide a python prompt for
     interactive debugging."""
@@ -34,9 +36,12 @@ def interactive_debug(sig: int, frame: FrameType) -> None:
 
 # SIGUSR1 => Just print the stack
 # SIGUSR2 => Print stack + open interactive debugging shell
+
+
 def interactive_debug_listen() -> None:
     signal.signal(signal.SIGUSR1, lambda sig, stack: traceback.print_stack(stack))
     signal.signal(signal.SIGUSR2, interactive_debug)
+
 
 def tracemalloc_dump() -> None:
     if not tracemalloc.is_tracing():
@@ -62,13 +67,16 @@ def tracemalloc_dump() -> None:
                 rss_pages // 256,
                 basename)
 
+
 def tracemalloc_listen_sock(sock: socket.socket) -> None:
     logger.debug('pid %s: tracemalloc_listen_sock started!', os.getpid())
     while True:
         sock.recv(1)
         tracemalloc_dump()
 
+
 listener_pid: Optional[int] = None
+
 
 def tracemalloc_listen() -> None:
     global listener_pid
@@ -85,6 +93,7 @@ def tracemalloc_listen() -> None:
                               daemon=True)
     thread.start()
     logger.debug('pid %s: tracemalloc_listen done: %s', os.getpid(), path)
+
 
 def maybe_tracemalloc_listen() -> None:
     '''If tracemalloc tracing enabled, listen for requests to dump a snapshot.

@@ -21,8 +21,10 @@ handlers: Dict[int, 'AsyncDjangoHandler'] = {}
 # Copied from django.core.handlers.base
 logger = logging.getLogger('django.request')
 
+
 def get_handler_by_id(handler_id: int) -> 'AsyncDjangoHandler':
     return handlers[handler_id]
+
 
 def allocate_handler_id(handler: 'AsyncDjangoHandler') -> int:
     global current_handler_id
@@ -31,11 +33,14 @@ def allocate_handler_id(handler: 'AsyncDjangoHandler') -> int:
     current_handler_id += 1
     return handler.handler_id
 
+
 def clear_handler_by_id(handler_id: int) -> None:
     del handlers[handler_id]
 
+
 def handler_stats_string() -> str:
     return f"{len(handlers)} handlers, latest ID {current_handler_id}"
+
 
 def finish_handler(handler_id: int, event_queue_id: str,
                    contents: List[Dict[str, Any]], apply_markdown: bool) -> None:

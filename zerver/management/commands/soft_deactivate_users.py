@@ -32,6 +32,7 @@ def get_users_from_emails(emails: List[str],
         )
     return users
 
+
 class Command(ZulipBaseCommand):
     help = """Soft activate/deactivate users. Users are recognised by their emails here."""
 

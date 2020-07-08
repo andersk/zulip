@@ -39,6 +39,7 @@ def set_initial_value_of_is_private_flag(
         print(f"Processed {processed}/{total} {percent}%")
         sys.stdout.flush()
 
+
 class Migration(migrations.Migration):
     atomic = False
 

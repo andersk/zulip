@@ -41,6 +41,7 @@ def clear_duplicate_counts(apps: StateApps, schema_editor: DatabaseSchemaEditor)
         for duplicate_count in to_cleanup:
             duplicate_count.delete()
 
+
 class Migration(migrations.Migration):
 
     dependencies = [

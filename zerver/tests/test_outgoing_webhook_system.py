@@ -31,14 +31,18 @@ class ResponseMock:
         self.content = content
         self.text = ujson.dumps(content)
 
+
 def request_exception_error(http_method: Any, final_url: Any, data: Any, **request_kwargs: Any) -> Any:
     raise requests.exceptions.RequestException("I'm a generic exception :(")
+
 
 def timeout_error(http_method: Any, final_url: Any, data: Any, **request_kwargs: Any) -> Any:
     raise requests.exceptions.Timeout("Time is up!")
 
+
 def connection_error(http_method: Any, final_url: Any, data: Any, **request_kwargs: Any) -> Any:
     raise requests.exceptions.ConnectionError()
+
 
 class DoRestCallTests(ZulipTestCase):
     def setUp(self) -> None:
@@ -145,6 +149,7 @@ I'm a generic exception :(
 ```''')
         assert self.bot_user.bot_owner is not None
         self.assertEqual(bot_owner_notification.recipient_id, self.bot_user.bot_owner.id)
+
 
 class TestOutgoingWebhookMessaging(ZulipTestCase):
     def create_outgoing_bot(self, bot_owner: UserProfile) -> UserProfile:

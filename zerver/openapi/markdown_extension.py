@@ -61,6 +61,7 @@ DEFAULT_EXAMPLE = {
     "boolean": False,
 }
 
+
 def parse_language_and_options(input_str: Optional[str]) -> Tuple[str, Dict[str, Any]]:
     if not input_str:
         return ("", {})
@@ -76,6 +77,7 @@ def parse_language_and_options(input_str: Optional[str]) -> Tuple[str, Dict[str,
             options[m.group("key")] = json.loads(m.group("value").replace("'", '"'))
         return (language, options)
     return (language, {})
+
 
 def extract_code_example(source: List[str], snippet: List[Any],
                          example_regex: Pattern[str]) -> List[Any]:
@@ -96,6 +98,7 @@ def extract_code_example(source: List[str], snippet: List[Any],
     snippet.append(source[start + 1: end])
     source = source[end + 1:]
     return extract_code_example(source, snippet, example_regex)
+
 
 def render_python_code_example(function: str, admin_config: bool=False,
                                **kwargs: Any) -> List[str]:
@@ -123,6 +126,7 @@ def render_python_code_example(function: str, admin_config: bool=False,
     code_example.append('```')
 
     return code_example
+
 
 def render_javascript_code_example(function: str, admin_config: bool=False,
                                    **kwargs: Any) -> List[str]:
@@ -162,6 +166,7 @@ def render_javascript_code_example(function: str, admin_config: bool=False,
 
     return code_example
 
+
 def curl_method_arguments(endpoint: str, method: str,
                           api_url: str) -> List[str]:
     # We also include the -sS verbosity arguments here.
@@ -178,6 +183,7 @@ def curl_method_arguments(endpoint: str, method: str,
     else:
         msg = f"The request method {method} is not one of {valid_methods}"
         raise ValueError(msg)
+
 
 def get_openapi_param_example_value_as_string(endpoint: str, method: str, param: Dict[str, Any],
                                               curl_argument: bool=False) -> str:
@@ -217,6 +223,7 @@ cURL example."""
         if curl_argument:
             return f"    -d '{param_name}={example_value}'"
         return example_value
+
 
 def generate_curl_example(endpoint: str, method: str,
                           api_url: str,
@@ -299,6 +306,7 @@ def generate_curl_example(endpoint: str, method: str,
 
     return lines
 
+
 def render_curl_example(function: str, api_url: str,
                         exclude: Optional[List[str]]=None,
                         include: Optional[List[str]]=None) -> List[str]:
@@ -316,6 +324,7 @@ def render_curl_example(function: str, api_url: str,
     kwargs["include"] = include
     return generate_curl_example(endpoint, method, **kwargs)
 
+
 SUPPORTED_LANGUAGES: Dict[str, Any] = {
     'python': {
         'client_config': PYTHON_CLIENT_CONFIG,
@@ -331,6 +340,7 @@ SUPPORTED_LANGUAGES: Dict[str, Any] = {
         'render': render_javascript_code_example,
     },
 }
+
 
 class APIMarkdownExtension(Extension):
     def __init__(self, api_url: Optional[str]) -> None:
@@ -348,6 +358,7 @@ class APIMarkdownExtension(Extension):
         md.preprocessors.add(
             'generate_api_description', APIDescriptionPreprocessor(md, self.getConfigs()), '_begin',
         )
+
 
 class APICodeExamplesPreprocessor(Preprocessor):
     def __init__(self, md: markdown.Markdown, config: Dict[str, Any]) -> None:
@@ -407,6 +418,7 @@ class APICodeExamplesPreprocessor(Preprocessor):
 
         return fixture
 
+
 class APIDescriptionPreprocessor(Preprocessor):
     def __init__(self, md: markdown.Markdown, config: Dict[str, Any]) -> None:
         super().__init__(md)
@@ -443,6 +455,7 @@ class APIDescriptionPreprocessor(Preprocessor):
         description_dict = description_dict.replace('{{api_url}}', self.api_url)
         description.extend(description_dict.splitlines())
         return description
+
 
 def makeExtension(*args: Any, **kwargs: str) -> APIMarkdownExtension:
     return APIMarkdownExtension(*args, **kwargs)

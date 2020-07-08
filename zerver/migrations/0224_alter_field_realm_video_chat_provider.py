@@ -22,6 +22,8 @@ VIDEO_CHAT_PROVIDERS = {
         'id': 3,
     },
 }
+
+
 def get_video_chat_provider_detail(providers_dict: Dict[str, Dict[str, Any]],
                                    p_name: Optional[str]=None, p_id: Optional[int]=None,
                                    ) -> Dict[str, Any]:
@@ -32,6 +34,7 @@ def get_video_chat_provider_detail(providers_dict: Dict[str, Dict[str, Any]],
             return provider
     return dict()
 
+
 def update_existing_video_chat_provider_values(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     Realm = apps.get_model('zerver', 'Realm')
 
@@ -41,6 +44,7 @@ def update_existing_video_chat_provider_values(apps: StateApps, schema_editor: D
             p_name=realm.video_chat_provider_old)['id']
         realm.save(update_fields=["video_chat_provider"])
 
+
 def reverse_code(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     Realm = apps.get_model("zerver", "Realm")
 
@@ -49,6 +53,7 @@ def reverse_code(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
             VIDEO_CHAT_PROVIDERS,
             p_id=realm.video_chat_provider)['name']
         realm.save(update_fields=["video_chat_provider_old"])
+
 
 class Migration(migrations.Migration):
     atomic = False

@@ -45,11 +45,13 @@ def check_string(var_name: str, val: object) -> str:
         raise ValidationError(_('{var_name} is not a string').format(var_name=var_name))
     return val
 
+
 def check_required_string(var_name: str, val: object) -> str:
     s = check_string(var_name, val)
     if not s.strip():
         raise ValidationError(_("{item} cannot be blank.").format(item=var_name))
     return s
+
 
 def check_string_in(possible_values: Union[Set[str], List[str]]) -> Validator[str]:
     def validator(var_name: str, val: object) -> str:
@@ -60,8 +62,10 @@ def check_string_in(possible_values: Union[Set[str], List[str]]) -> Validator[st
 
     return validator
 
+
 def check_short_string(var_name: str, val: object) -> str:
     return check_capped_string(50)(var_name, val)
+
 
 def check_capped_string(max_length: int) -> Validator[str]:
     def validator(var_name: str, val: object) -> str:
@@ -74,6 +78,7 @@ def check_capped_string(max_length: int) -> Validator[str]:
 
     return validator
 
+
 def check_string_fixed_length(length: int) -> Validator[str]:
     def validator(var_name: str, val: object) -> str:
         s = check_string(var_name, val)
@@ -85,8 +90,10 @@ def check_string_fixed_length(length: int) -> Validator[str]:
 
     return validator
 
+
 def check_long_string(var_name: str, val: object) -> str:
     return check_capped_string(500)(var_name, val)
+
 
 def check_date(var_name: str, val: object) -> str:
     if not isinstance(val, str):
@@ -97,10 +104,12 @@ def check_date(var_name: str, val: object) -> str:
         raise ValidationError(_('{var_name} is not a date').format(var_name=var_name))
     return val
 
+
 def check_int(var_name: str, val: object) -> int:
     if not isinstance(val, int):
         raise ValidationError(_('{var_name} is not an integer').format(var_name=var_name))
     return val
+
 
 def check_int_in(possible_values: List[int]) -> Validator[int]:
     def validator(var_name: str, val: object) -> int:
@@ -111,15 +120,18 @@ def check_int_in(possible_values: List[int]) -> Validator[int]:
 
     return validator
 
+
 def check_float(var_name: str, val: object) -> float:
     if not isinstance(val, float):
         raise ValidationError(_('{var_name} is not a float').format(var_name=var_name))
     return val
 
+
 def check_bool(var_name: str, val: object) -> bool:
     if not isinstance(val, bool):
         raise ValidationError(_('{var_name} is not a boolean').format(var_name=var_name))
     return val
+
 
 def check_color(var_name: str, val: object) -> str:
     s = check_string(var_name, val)
@@ -129,6 +141,7 @@ def check_color(var_name: str, val: object) -> str:
         raise ValidationError(_('{var_name} is not a valid hex color code').format(var_name=var_name))
     return s
 
+
 def check_none_or(sub_validator: Validator[ResultT]) -> Validator[Optional[ResultT]]:
     def f(var_name: str, val: object) -> Optional[ResultT]:
         if val is None:
@@ -136,6 +149,7 @@ def check_none_or(sub_validator: Validator[ResultT]) -> Validator[Optional[Resul
         else:
             return sub_validator(var_name, val)
     return f
+
 
 def check_list(sub_validator: Validator[ResultT], length: Optional[int]=None) -> Validator[List[ResultT]]:
     def f(var_name: str, val: object) -> List[ResultT]:
@@ -154,6 +168,7 @@ def check_list(sub_validator: Validator[ResultT], length: Optional[int]=None) ->
 
         return cast(List[ResultT], val)
     return f
+
 
 def check_tuple(sub_validators: List[Validator[ResultT]]) -> Validator[Tuple[Any, ...]]:
     def f(var_name: str, val: object) -> Tuple[Any, ...]:
@@ -174,12 +189,16 @@ def check_tuple(sub_validators: List[Validator[ResultT]]) -> Validator[Tuple[Any
     return f
 
 # https://zulip.readthedocs.io/en/latest/testing/mypy.html#using-overload-to-accurately-describe-variations
+
+
 @overload
 def check_dict(required_keys: Iterable[Tuple[str, Validator[object]]]=[],
                optional_keys: Iterable[Tuple[str, Validator[object]]]=[],
                *,
                _allow_only_listed_keys: bool=False) -> Validator[Dict[str, object]]:
     ...
+
+
 @overload
 def check_dict(required_keys: Iterable[Tuple[str, Validator[ResultT]]]=[],
                optional_keys: Iterable[Tuple[str, Validator[ResultT]]]=[],
@@ -187,6 +206,8 @@ def check_dict(required_keys: Iterable[Tuple[str, Validator[ResultT]]]=[],
                value_validator: Validator[ResultT],
                _allow_only_listed_keys: bool=False) -> Validator[Dict[str, ResultT]]:
     ...
+
+
 def check_dict(required_keys: Iterable[Tuple[str, Validator[ResultT]]]=[],
                optional_keys: Iterable[Tuple[str, Validator[ResultT]]]=[],
                *,
@@ -229,12 +250,14 @@ def check_dict(required_keys: Iterable[Tuple[str, Validator[ResultT]]]=[],
 
     return f
 
+
 def check_dict_only(required_keys: Iterable[Tuple[str, Validator[ResultT]]],
                     optional_keys: Iterable[Tuple[str, Validator[ResultT]]]=[]) -> Validator[Dict[str, ResultT]]:
     return cast(
         Validator[Dict[str, ResultT]],
         check_dict(required_keys, optional_keys, _allow_only_listed_keys=True),
     )
+
 
 def check_union(allowed_type_funcs: Iterable[Validator[ResultT]]) -> Validator[ResultT]:
     """
@@ -254,6 +277,7 @@ def check_union(allowed_type_funcs: Iterable[Validator[ResultT]]) -> Validator[R
         raise ValidationError(_('{var_name} is not an allowed_type').format(var_name=var_name))
     return enumerated_type_check
 
+
 def equals(expected_val: ResultT) -> Validator[ResultT]:
     def f(var_name: str, val: object) -> ResultT:
         if val != expected_val:
@@ -263,11 +287,13 @@ def equals(expected_val: ResultT) -> Validator[ResultT]:
         return cast(ResultT, val)
     return f
 
+
 def validate_login_email(email: str) -> None:
     try:
         validate_email(email)
     except ValidationError as err:
         raise JsonableError(str(err.message))
+
 
 def check_url(var_name: str, val: object) -> str:
     # First, ensure val is a string
@@ -280,6 +306,7 @@ def check_url(var_name: str, val: object) -> str:
     except ValidationError:
         raise ValidationError(_('{var_name} is not a URL').format(var_name=var_name))
 
+
 def check_external_account_url_pattern(var_name: str, val: object) -> str:
     s = check_string(var_name, val)
 
@@ -289,6 +316,7 @@ def check_external_account_url_pattern(var_name: str, val: object) -> str:
 
     check_url(var_name, url_val)
     return s
+
 
 def validate_choice_field_data(field_data: ProfileFieldData) -> Dict[str, Dict[str, str]]:
     """
@@ -309,6 +337,7 @@ def validate_choice_field_data(field_data: ProfileFieldData) -> Dict[str, Dict[s
 
     return cast(Dict[str, Dict[str, str]], field_data)
 
+
 def validate_choice_field(var_name: str, field_data: str, value: object) -> str:
     """
     This function is used to validate the value selected by the user against a
@@ -320,6 +349,7 @@ def validate_choice_field(var_name: str, field_data: str, value: object) -> str:
         msg = _("'{value}' is not a valid choice for '{field_name}'.")
         raise ValidationError(msg.format(value=value, field_name=var_name))
     return s
+
 
 def check_widget_content(widget_content: object) -> Dict[str, Any]:
     if not isinstance(widget_content, dict):
@@ -377,6 +407,7 @@ def to_non_negative_int(s: str, max_int_size: int=2**32-1) -> int:
         raise ValueError(f'{x} is too large (max {max_int_size})')
     return x
 
+
 def to_positive_or_allowed_int(allowed_integer: int) -> Callable[[str], int]:
     def convertor(s: str) -> int:
         x = int(s)
@@ -387,6 +418,7 @@ def to_positive_or_allowed_int(allowed_integer: int) -> Callable[[str], int]:
         return to_non_negative_int(s)
     return convertor
 
+
 def check_string_or_int_list(var_name: str, val: object) -> Union[str, List[int]]:
     if isinstance(val, str):
         return val
@@ -395,6 +427,7 @@ def check_string_or_int_list(var_name: str, val: object) -> Union[str, List[int]
         raise ValidationError(_('{var_name} is not a string or an integer list').format(var_name=var_name))
 
     return check_list(check_int)(var_name, val)
+
 
 def check_string_or_int(var_name: str, val: object) -> Union[str, int]:
     if isinstance(val, (str, int)):

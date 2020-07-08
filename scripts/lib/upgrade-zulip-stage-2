@@ -91,6 +91,7 @@ tornado_processes = int(get_config(config_file, 'application_server', 'tornado_p
 
 IS_SERVER_UP = True
 
+
 def shutdown_server() -> None:
     global IS_SERVER_UP
 
@@ -105,6 +106,7 @@ def shutdown_server() -> None:
     subprocess.check_call(["supervisorctl", "stop"] + core_server_services + worker_services,
                           preexec_fn=su_to_zulip)
     IS_SERVER_UP = False
+
 
 # postgresql.version is required for database servers, but wasn't
 # previously; fill it in based on what the OS provides.

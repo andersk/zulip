@@ -18,6 +18,7 @@ def flock(lockfile: Union[int, IO[Any]], shared: bool=False) -> Iterator[None]:
     finally:
         fcntl.flock(lockfile, fcntl.LOCK_UN)
 
+
 @contextmanager
 def lockfile(filename: str, shared: bool=False) -> Iterator[None]:
     """Lock a file using flock(2) for the duration of a 'with' statement.

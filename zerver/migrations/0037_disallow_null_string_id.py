@@ -24,6 +24,7 @@ def set_string_id_using_domain(apps: StateApps, schema_editor: DatabaseSchemaEdi
                     pass
             raise RuntimeError(f"Unable to find a good string_id for realm {realm}")
 
+
 class Migration(migrations.Migration):
 
     dependencies = [

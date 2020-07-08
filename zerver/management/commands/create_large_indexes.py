@@ -74,6 +74,7 @@ def create_indexes() -> None:
 
         print("Finished.")
 
+
 class Command(ZulipBaseCommand):
     help = """Create concurrent indexes for large tables."""
 

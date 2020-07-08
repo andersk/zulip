@@ -16,6 +16,7 @@ from zerver.lib.utils import generate_random_token
 
 RANDOM_KEY_PREFIX = generate_random_token(32)
 
+
 class RateLimitedTestObject(RateLimitedObject):
     def __init__(self, name: str, rules: List[Tuple[int, int]],
                  backend: Type[RateLimiterBackend]) -> None:
@@ -29,6 +30,7 @@ class RateLimitedTestObject(RateLimitedObject):
 
     def rules(self) -> List[Tuple[int, int]]:
         return self._rules
+
 
 class RateLimiterBackendBase(ZulipTestCase):
     __unittest_skip__ = True
@@ -140,6 +142,7 @@ class RateLimiterBackendBase(ZulipTestCase):
         with mock.patch('time.time', return_value=(start_time + 2.1)):
             self.make_request(obj)
 
+
 class RedisRateLimiterBackendTest(RateLimiterBackendBase):
     __unittest_skip__ = False
     backend = RedisRateLimiterBackend
@@ -163,6 +166,7 @@ class RedisRateLimiterBackendTest(RateLimiterBackendBase):
 
         obj.block_access(1)
         self.make_request(obj, expect_ratelimited=True, verify_api_calls_left=False)
+
 
 class TornadoInMemoryRateLimiterBackendTest(RateLimiterBackendBase):
     __unittest_skip__ = False
@@ -199,6 +203,7 @@ class TornadoInMemoryRateLimiterBackendTest(RateLimiterBackendBase):
 
         with mock.patch('time.time', return_value=(start_time + 1.01)):
             self.make_request(obj, expect_ratelimited=False, verify_api_calls_left=False)
+
 
 class RateLimitedObjectsTest(ZulipTestCase):
     def test_user_rate_limits(self) -> None:

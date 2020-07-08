@@ -18,6 +18,7 @@ def get_forward_address() -> str:
     except (configparser.NoSectionError, configparser.NoOptionError):
         return ""
 
+
 def set_forward_address(forward_address: str) -> None:
     config = configparser.ConfigParser()
     config.read(settings.FORWARD_ADDRESS_CONFIG_FILE)
@@ -28,6 +29,7 @@ def set_forward_address(forward_address: str) -> None:
 
     with open(settings.FORWARD_ADDRESS_CONFIG_FILE, "w") as cfgfile:
         config.write(cfgfile)
+
 
 class EmailLogBackEnd(BaseEmailBackend):
     def send_email_smtp(self, email: EmailMultiAlternatives) -> None:

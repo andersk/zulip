@@ -23,8 +23,10 @@ KEY_PREFIX = ''
 
 logger = logging.getLogger(__name__)
 
+
 class RateLimiterLockingException(Exception):
     pass
+
 
 class RateLimitedObject(ABC):
     def __init__(self, backend: Optional['Type[RateLimiterBackend]']=None) -> None:
@@ -103,6 +105,7 @@ class RateLimitedObject(ABC):
     def rules(self) -> List[Tuple[int, int]]:
         pass
 
+
 class RateLimitedUser(RateLimitedObject):
     def __init__(self, user: UserProfile, domain: str='api_by_user') -> None:
         self.user = user
@@ -126,9 +129,11 @@ class RateLimitedUser(RateLimitedObject):
             return result
         return rules[self.domain]
 
+
 def bounce_redis_key_prefix_for_testing(test_name: str) -> None:
     global KEY_PREFIX
     KEY_PREFIX = test_name + ':' + str(os.getpid()) + ':'
+
 
 def add_ratelimit_rule(range_seconds: int, num_requests: int, domain: str='api_by_user') -> None:
     "Add a rate-limiting rule to the ratelimiter"
@@ -142,9 +147,11 @@ def add_ratelimit_rule(range_seconds: int, num_requests: int, domain: str='api_b
     rules[domain].append((range_seconds, num_requests))
     rules[domain].sort(key=lambda x: x[0])
 
+
 def remove_ratelimit_rule(range_seconds: int, num_requests: int, domain: str='api_by_user') -> None:
     global rules
     rules[domain] = [x for x in rules[domain] if x[0] != range_seconds and x[1] != num_requests]
+
 
 class RateLimiterBackend(ABC):
     @classmethod
@@ -174,6 +181,7 @@ class RateLimiterBackend(ABC):
                           max_api_calls: int, max_api_window: int) -> Tuple[bool, float]:
         # Returns (ratelimited, secs_to_freedom)
         pass
+
 
 class TornadoInMemoryRateLimiterBackend(RateLimiterBackend):
     # reset_times[rule][key] is the time at which the event
@@ -288,6 +296,7 @@ class TornadoInMemoryRateLimiterBackend(RateLimiterBackend):
                 break
 
         return ratelimited, time_till_free
+
 
 class RedisRateLimiterBackend(RateLimiterBackend):
     @classmethod
@@ -459,6 +468,7 @@ class RedisRateLimiterBackend(RateLimiterBackend):
                 ratelimited = True
 
         return ratelimited, time
+
 
 class RateLimitResult:
     def __init__(self, entity: RateLimitedObject, secs_to_freedom: float, over_limit: bool,

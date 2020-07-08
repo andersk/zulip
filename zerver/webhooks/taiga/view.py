@@ -34,6 +34,7 @@ def api_taiga_webhook(request: HttpRequest, user_profile: UserProfile,
 
     return json_success()
 
+
 templates = {
     'epic': {
         'create': '[{user}]({user_link}) created epic {subject}.',
@@ -149,6 +150,8 @@ templates = {
 
 
 return_type = Tuple[Optional[Dict[str, Any]], Optional[Dict[str, Any]]]
+
+
 def get_old_and_new_values(change_type: str,
                            message: Mapping[str, Any]) -> return_type:
     """ Parses the payload and finds previous and current value of change_type."""
@@ -168,6 +171,7 @@ def parse_comment(message: Mapping[str, Any]) -> Dict[str, Any]:
             'subject': get_subject(message),
         },
     }
+
 
 def parse_create_or_delete(message: Mapping[str, Any]) -> Dict[str, Any]:
     """ Parses create or delete event. """
@@ -264,6 +268,7 @@ def parse_change_event(change_type: str, message: Mapping[str, Any]) -> Optional
     evt.update({"type": message["type"], "event": event_type, "values": values})
     return evt
 
+
 def parse_webhook_test(message: Mapping[str, Any]) -> Dict[str, Any]:
     return {
         "type": "webhook_test",
@@ -294,17 +299,21 @@ def parse_message(message: Mapping[str, Any]) -> List[Dict[str, Any]]:
 
     return events
 
+
 def generate_content(data: Mapping[str, Any]) -> str:
     """ Gets the template string and formats it with parsed data. """
     template = templates[data['type']][data['event']]
     content = template.format(**data['values'])
     return content
 
+
 def get_owner_name(message: Mapping[str, Any]) -> str:
     return message["by"]["full_name"]
 
+
 def get_owner_link(message: Mapping[str, Any]) -> str:
     return message['by']['permalink']
+
 
 def get_subject(message: Mapping[str, Any]) -> str:
     data = message["data"]
@@ -312,11 +321,13 @@ def get_subject(message: Mapping[str, Any]) -> str:
         return '[' + data.get('subject', data.get('name')) + ']' + '(' + data['permalink'] + ')'
     return '**' + data.get('subject', data.get('name')) + '**'
 
+
 def get_epic_subject(message: Mapping[str, Any]) -> str:
     if 'permalink' in message['data']['epic']:
         return ('[' + message['data']['epic']['subject'] + ']' +
                 '(' + message['data']['epic']['permalink'] + ')')
     return '**' + message['data']['epic']['subject'] + '**'
+
 
 def get_userstory_subject(message: Mapping[str, Any]) -> str:
     if 'permalink' in message['data']['user_story']:

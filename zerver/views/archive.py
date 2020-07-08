@@ -76,6 +76,7 @@ def archive(request: HttpRequest,
         rendered_message_list.append(rendered_msg)
     return get_response(rendered_message_list, True, stream.name)
 
+
 def get_web_public_topics_backend(request: HttpRequest, stream_id: int) -> HttpResponse:
     try:
         stream = get_stream_by_id(stream_id)

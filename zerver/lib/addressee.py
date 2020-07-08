@@ -22,6 +22,7 @@ def get_user_profiles(emails: Iterable[str], realm: Realm) -> List[UserProfile]:
         user_profiles.append(user_profile)
     return user_profiles
 
+
 def get_user_profiles_by_ids(user_ids: Iterable[int], realm: Realm) -> List[UserProfile]:
     user_profiles: List[UserProfile] = []
     for user_id in user_ids:
@@ -32,6 +33,7 @@ def get_user_profiles_by_ids(user_ids: Iterable[int], realm: Realm) -> List[User
         user_profiles.append(user_profile)
     return user_profiles
 
+
 def validate_topic(topic: str) -> str:
     assert topic is not None
     topic = topic.strip()
@@ -39,6 +41,7 @@ def validate_topic(topic: str) -> str:
         raise JsonableError(_("Topic can't be empty"))
 
     return topic
+
 
 class Addressee:
     # This is really just a holder for vars that tended to be passed

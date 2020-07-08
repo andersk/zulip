@@ -55,6 +55,7 @@ def set_realm_admins_as_realm_owners(apps: StateApps, schema_editor: DatabaseSch
         objects_to_create.append(audit_log_entry)
     RealmAuditLog.objects.bulk_create(objects_to_create)
 
+
 class Migration(migrations.Migration):
 
     dependencies = [

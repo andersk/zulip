@@ -11,6 +11,7 @@ from zerver.lib.queue import queue_json_publish
 def error(*args: Any) -> None:
     raise Exception('We cannot enqueue because settings.USING_RABBITMQ is False.')
 
+
 class Command(BaseCommand):
     help = """Read JSON lines from a file and enqueue them to a worker queue.
 

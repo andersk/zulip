@@ -57,6 +57,7 @@ CRITICAL_SECONDS_TO_CLEAR_NORMAL: DefaultDict[str, int] = defaultdict(
     digest_emails=600,
 )
 
+
 def analyze_queue_stats(queue_name: str, stats: Dict[str, Any],
                         queue_count_rabbitmqctl: int) -> Dict[str, Any]:
     now = int(time.time())
@@ -124,8 +125,11 @@ def analyze_queue_stats(queue_name: str, stats: Dict[str, Any],
                 name=queue_name,
                 message='')
 
+
 WARN_COUNT_THRESHOLD_DEFAULT = 10
 CRITICAL_COUNT_THRESHOLD_DEFAULT = 50
+
+
 def check_other_queues(queue_counts_dict: Dict[str, int]) -> List[Dict[str, Any]]:
     """ Do a simple queue size check for queues whose workers don't publish stats files."""
 
@@ -144,6 +148,7 @@ def check_other_queues(queue_counts_dict: Dict[str, int]) -> List[Dict[str, Any]
             results.append(dict(status=OK, name=queue, message=''))
 
     return results
+
 
 def check_rabbitmq_queues() -> None:
     pattern = re.compile(r'(\w+)\t(\d+)')

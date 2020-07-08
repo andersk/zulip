@@ -106,6 +106,7 @@ class PrincipalError(JsonableError):
     def msg_format() -> str:
         return _("User not authorized to execute queries on behalf of '{principal}'")
 
+
 def principal_to_user_profile(agent: UserProfile, principal: Union[str, int]) -> UserProfile:
     try:
         if isinstance(principal, str):
@@ -118,6 +119,7 @@ def principal_to_user_profile(agent: UserProfile, principal: Union[str, int]) ->
         # something a little more clever and check the domain part of the
         # principal to maybe give a better error message
         raise PrincipalError(principal)
+
 
 def check_if_removing_someone_else(user_profile: UserProfile,
                                    principals: Optional[Union[List[str], List[int]]]) -> bool:
@@ -132,6 +134,7 @@ def check_if_removing_someone_else(user_profile: UserProfile,
     else:
         return principals[0] != user_profile.email
 
+
 @require_realm_admin
 def deactivate_stream_backend(request: HttpRequest,
                               user_profile: UserProfile,
@@ -139,6 +142,7 @@ def deactivate_stream_backend(request: HttpRequest,
     stream = access_stream_for_delete_or_update(user_profile, stream_id)
     do_deactivate_stream(stream, acting_user=user_profile)
     return json_success()
+
 
 @require_realm_admin
 @has_request_variables
@@ -148,6 +152,7 @@ def add_default_stream(request: HttpRequest,
     (stream, recipient, sub) = access_stream_by_id(user_profile, stream_id)
     do_add_default_stream(stream)
     return json_success()
+
 
 @require_realm_admin
 @has_request_variables
@@ -160,6 +165,7 @@ def create_default_stream_group(request: HttpRequest, user_profile: UserProfile,
         streams.append(stream)
     do_create_default_stream_group(user_profile.realm, group_name, description, streams)
     return json_success()
+
 
 @require_realm_admin
 @has_request_variables
@@ -176,6 +182,7 @@ def update_default_stream_group_info(request: HttpRequest, user_profile: UserPro
     if new_description is not None:
         do_change_default_stream_group_description(user_profile.realm, group, new_description)
     return json_success()
+
 
 @require_realm_admin
 @has_request_variables
@@ -197,6 +204,7 @@ def update_default_stream_group_streams(request: HttpRequest, user_profile: User
         return json_error(_('Invalid value for "op". Specify one of "add" or "remove".'))
     return json_success()
 
+
 @require_realm_admin
 @has_request_variables
 def remove_default_stream_group(request: HttpRequest, user_profile: UserProfile,
@@ -204,6 +212,7 @@ def remove_default_stream_group(request: HttpRequest, user_profile: UserProfile,
     group = access_default_stream_group_by_id(user_profile.realm, group_id)
     do_remove_default_stream_group(user_profile.realm, group)
     return json_success()
+
 
 @require_realm_admin
 @has_request_variables
@@ -217,6 +226,7 @@ def remove_default_stream(request: HttpRequest,
     )
     do_remove_default_stream(stream)
     return json_success()
+
 
 @require_realm_admin
 @has_request_variables
@@ -277,6 +287,7 @@ def update_stream_backend(
         do_change_stream_invite_only(stream, is_private, history_public_to_subscribers)
     return json_success()
 
+
 @has_request_variables
 def list_subscriptions_backend(
     request: HttpRequest,
@@ -287,6 +298,7 @@ def list_subscriptions_backend(
         user_profile, include_subscribers=include_subscribers,
     )
     return json_success({"subscriptions": subscribed})
+
 
 FuncKwargPair = Tuple[Callable[..., HttpResponse], Dict[str, Union[int, Iterable[Any]]]]
 
@@ -304,6 +316,7 @@ add_subscriptions_schema = check_list(
 
 remove_subscriptions_schema = check_list(check_string)
 
+
 @has_request_variables
 def update_subscriptions_backend(
         request: HttpRequest, user_profile: UserProfile,
@@ -318,6 +331,7 @@ def update_subscriptions_backend(
         (remove_subscriptions_backend, dict(streams_raw=delete)),
     ]
     return compose_views(request, user_profile, method_kwarg_pairs)
+
 
 def compose_views(
     request: HttpRequest,
@@ -343,9 +357,11 @@ def compose_views(
             json_dict.update(ujson.loads(response.content))
     return json_success(json_dict)
 
+
 check_principals: Validator[Union[List[str], List[int]]] = check_union(
     [check_list(check_string), check_list(check_int)],
 )
+
 
 @has_request_variables
 def remove_subscriptions_backend(
@@ -385,6 +401,7 @@ def remove_subscriptions_backend(
 
     return json_success(result)
 
+
 def you_were_just_subscribed_message(acting_user: UserProfile,
                                      recipient_user: UserProfile,
                                      stream_names: Set[str]) -> str:
@@ -405,8 +422,10 @@ def you_were_just_subscribed_message(acting_user: UserProfile,
         message += f"* #**{stream_name}**\n"
     return message
 
+
 RETENTION_DEFAULT: Union[str, int] = "realm_default"
 EMPTY_PRINCIPALS: Union[Sequence[str], Sequence[int]] = []
+
 
 @require_non_guest_user
 @has_request_variables
@@ -582,6 +601,7 @@ def add_subscriptions_backend(
         result["unauthorized"] = [s.name for s in unauthorized_streams]
     return json_success(result)
 
+
 @has_request_variables
 def get_subscribers_backend(request: HttpRequest, user_profile: UserProfile,
                             stream_id: int=REQ('stream', converter=to_non_negative_int)) -> HttpResponse:
@@ -593,6 +613,8 @@ def get_subscribers_backend(request: HttpRequest, user_profile: UserProfile,
 
 # By default, lists all streams that the user has access to --
 # i.e. public streams plus invite-only streams that the user is on
+
+
 @has_request_variables
 def get_streams_backend(
         request: HttpRequest, user_profile: UserProfile,
@@ -610,6 +632,7 @@ def get_streams_backend(
                              include_owner_subscribed=include_owner_subscribed)
     return json_success({"streams": streams})
 
+
 @has_request_variables
 def get_topics_backend(request: HttpRequest, user_profile: UserProfile,
                        stream_id: int=REQ(converter=to_non_negative_int,
@@ -623,6 +646,7 @@ def get_topics_backend(request: HttpRequest, user_profile: UserProfile,
     )
 
     return json_success(dict(topics=result))
+
 
 @require_realm_admin
 @has_request_variables
@@ -642,6 +666,7 @@ def delete_in_topic(request: HttpRequest, user_profile: UserProfile,
     do_delete_messages(user_profile.realm, messages)
 
     return json_success()
+
 
 @require_post
 @authenticated_json_view
@@ -668,12 +693,14 @@ def json_stream_exists(request: HttpRequest, user_profile: UserProfile, stream_n
 
     return json_success(result)  # results are ignored for HEAD requests
 
+
 @has_request_variables
 def json_get_stream_id(request: HttpRequest,
                        user_profile: UserProfile,
                        stream_name: str=REQ('stream')) -> HttpResponse:
     (stream, recipient, sub) = access_stream_by_name(user_profile, stream_name)
     return json_success({'stream_id': stream.id})
+
 
 @has_request_variables
 def update_subscriptions_property(request: HttpRequest,
@@ -686,6 +713,7 @@ def update_subscriptions_property(request: HttpRequest,
                           "value": value}]
     return update_subscription_properties_backend(request, user_profile,
                                                   subscription_data=subscription_data)
+
 
 @has_request_variables
 def update_subscription_properties_backend(

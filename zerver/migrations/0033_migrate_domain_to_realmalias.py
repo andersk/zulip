@@ -12,6 +12,7 @@ def add_domain_to_realm_alias_if_needed(apps: StateApps, schema_editor: Database
         if not RealmAlias.objects.filter(domain=realm.domain).exists():
             RealmAlias.objects.create(realm=realm, domain=realm.domain)
 
+
 class Migration(migrations.Migration):
 
     dependencies = [

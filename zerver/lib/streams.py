@@ -46,13 +46,16 @@ def get_default_value_for_history_public_to_subscribers(
 
     return history_public_to_subscribers
 
+
 def render_stream_description(text: str) -> str:
     return markdown_convert(text, no_previews=True)
+
 
 def send_stream_creation_event(stream: Stream, user_ids: List[int]) -> None:
     event = dict(type="stream", op="create",
                  streams=[stream.to_dict()])
     send_event(stream.realm, event, user_ids)
+
 
 def create_stream_if_needed(realm: Realm,
                             stream_name: str,
@@ -100,6 +103,7 @@ def create_stream_if_needed(realm: Realm,
                                      event_time=event_time)
     return stream, created
 
+
 def create_streams_if_needed(realm: Realm,
                              stream_dicts: List[Mapping[str, Any]],
                              acting_user: Optional[UserProfile]=None) -> Tuple[List[Stream], List[Stream]]:
@@ -126,6 +130,7 @@ def create_streams_if_needed(realm: Realm,
 
     return added_streams, existing_streams
 
+
 def check_stream_name(stream_name: str) -> None:
     if stream_name.strip() == "":
         raise JsonableError(_("Invalid stream name '{}'").format(stream_name))
@@ -135,12 +140,14 @@ def check_stream_name(stream_name: str) -> None:
         if ord(i) == 0:
             raise JsonableError(_("Stream name '{}' contains NULL (0x00) characters.").format(stream_name))
 
+
 def subscribed_to_stream(user_profile: UserProfile, stream_id: int) -> bool:
     return Subscription.objects.filter(
         user_profile=user_profile,
         active=True,
         recipient__type=Recipient.STREAM,
         recipient__type_id=stream_id).exists()
+
 
 def access_stream_for_send_message(sender: UserProfile,
                                    stream: Stream,
@@ -192,12 +199,14 @@ def access_stream_for_send_message(sender: UserProfile,
     # All other cases are an error.
     raise JsonableError(_("Not authorized to send to stream '{}'").format(stream.name))
 
+
 def check_for_exactly_one_stream_arg(stream_id: Optional[int], stream: Optional[str]) -> None:
     if stream_id is None and stream is None:
         raise JsonableError(_("Please supply 'stream'."))
 
     if stream_id is not None and stream is not None:
         raise JsonableError(_("Please choose one: 'stream' or 'stream_id'."))
+
 
 def access_stream_for_delete_or_update(user_profile: UserProfile, stream_id: int) -> Stream:
     # We should only ever use this for realm admins, who are allowed
@@ -219,6 +228,8 @@ def access_stream_for_delete_or_update(user_profile: UserProfile, stream_id: int
 
 # Only set allow_realm_admin flag to True when you want to allow realm admin to
 # access unsubscribed private stream content.
+
+
 def access_stream_common(user_profile: UserProfile, stream: Stream,
                          error: str,
                          require_active: bool=True,
@@ -261,6 +272,7 @@ def access_stream_common(user_profile: UserProfile, stream: Stream,
     # an error.
     raise JsonableError(error)
 
+
 def access_stream_by_id(user_profile: UserProfile,
                         stream_id: int,
                         require_active: bool=True,
@@ -273,9 +285,11 @@ def access_stream_by_id(user_profile: UserProfile,
                                             allow_realm_admin=allow_realm_admin)
     return (stream, recipient, sub)
 
+
 def get_public_streams_queryset(realm: Realm) -> 'QuerySet[Stream]':
     return Stream.objects.filter(realm=realm, invite_only=False,
                                  history_public_to_subscribers=True)
+
 
 def get_stream_by_id(stream_id: int) -> Stream:
     error = _("Invalid stream id")
@@ -285,6 +299,7 @@ def get_stream_by_id(stream_id: int) -> Stream:
         raise JsonableError(error)
     return stream
 
+
 def check_stream_name_available(realm: Realm, name: str) -> None:
     check_stream_name(name)
     try:
@@ -292,6 +307,7 @@ def check_stream_name_available(realm: Realm, name: str) -> None:
         raise JsonableError(_("Stream name '{}' is already taken.").format(name))
     except Stream.DoesNotExist:
         pass
+
 
 def access_stream_by_name(user_profile: UserProfile,
                           stream_name: str,
@@ -305,6 +321,7 @@ def access_stream_by_name(user_profile: UserProfile,
     (recipient, sub) = access_stream_common(user_profile, stream, error,
                                             allow_realm_admin=allow_realm_admin)
     return (stream, recipient, sub)
+
 
 def access_stream_for_unmute_topic_by_name(user_profile: UserProfile,
                                            stream_name: str,
@@ -328,6 +345,7 @@ def access_stream_for_unmute_topic_by_name(user_profile: UserProfile,
         raise JsonableError(error)
     return stream
 
+
 def access_stream_for_unmute_topic_by_id(user_profile: UserProfile,
                                          stream_id: int,
                                          error: str) -> Stream:
@@ -336,6 +354,7 @@ def access_stream_for_unmute_topic_by_id(user_profile: UserProfile,
     except Stream.DoesNotExist:
         raise JsonableError(error)
     return stream
+
 
 def can_access_stream_history(user_profile: UserProfile, stream: Stream) -> bool:
     """Determine whether the provided user is allowed to access the
@@ -366,6 +385,7 @@ def can_access_stream_history(user_profile: UserProfile, stream: Stream) -> bool
         return True
     return False
 
+
 def can_access_stream_history_by_name(user_profile: UserProfile, stream_name: str) -> bool:
     try:
         stream = get_stream(stream_name, user_profile.realm)
@@ -373,12 +393,14 @@ def can_access_stream_history_by_name(user_profile: UserProfile, stream_name: st
         return False
     return can_access_stream_history(user_profile, stream)
 
+
 def can_access_stream_history_by_id(user_profile: UserProfile, stream_id: int) -> bool:
     try:
         stream = get_stream_by_id_in_realm(stream_id, user_profile.realm)
     except Stream.DoesNotExist:
         return False
     return can_access_stream_history(user_profile, stream)
+
 
 def filter_stream_authorization(user_profile: UserProfile,
                                 streams: Iterable[Stream]) -> Tuple[List[Stream], List[Stream]]:
@@ -405,6 +427,7 @@ def filter_stream_authorization(user_profile: UserProfile,
     authorized_streams = [stream for stream in streams if
                           stream.id not in {stream.id for stream in unauthorized_streams}]
     return authorized_streams, unauthorized_streams
+
 
 def list_to_streams(streams_raw: Iterable[Mapping[str, Any]],
                     user_profile: UserProfile,
@@ -476,11 +499,13 @@ def list_to_streams(streams_raw: Iterable[Mapping[str, Any]],
 
     return existing_streams, created_streams
 
+
 def access_default_stream_group_by_id(realm: Realm, group_id: int) -> DefaultStreamGroup:
     try:
         return DefaultStreamGroup.objects.get(realm=realm, id=group_id)
     except DefaultStreamGroup.DoesNotExist:
         raise JsonableError(_("Default stream group with id '{}' does not exist.").format(group_id))
+
 
 def get_stream_by_narrow_operand_access_unchecked(operand: Union[str, int], realm: Realm) -> Stream:
     """This is required over access_stream_* in certain cases where

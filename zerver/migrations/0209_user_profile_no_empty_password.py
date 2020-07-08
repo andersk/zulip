@@ -202,6 +202,7 @@ def ensure_no_empty_passwords(apps: StateApps, schema_editor: DatabaseSchemaEdit
                                         USER_API_KEY_CHANGED,
                                         AFFECTED_USER_TYPE_CHANGED_PASSWORD)
 
+
 def reset_user_api_key(user_profile: Any) -> None:
     old_api_key = user_profile.api_key
     user_profile.api_key = generate_api_key()
@@ -215,6 +216,7 @@ def reset_user_api_key(user_profile: Any) -> None:
     event = {'type': 'clear_push_device_tokens',
              'user_profile_id': user_profile.id}
     queue_json_publish("deferred_work", event)
+
 
 class Migration(migrations.Migration):
     atomic = False

@@ -69,6 +69,7 @@ from zerver.models import (
 LARGER_THAN_MAX_MESSAGE_ID = 10000000000000000
 MAX_MESSAGES_PER_FETCH = 5000
 
+
 class BadNarrowOperator(JsonableError):
     code = ErrorCode.BAD_NARROW
     data_fields = ['desc']
@@ -79,6 +80,7 @@ class BadNarrowOperator(JsonableError):
     @staticmethod
     def msg_format() -> str:
         return _('Invalid narrow operator: {desc}')
+
 
 # TODO: Should be Select, but sqlalchemy stubs are busted
 Query = Any
@@ -91,6 +93,7 @@ OptionalNarrowListT = Optional[List[Dict[str, Any]]]
 # These delimiters will not appear in rendered messages or HTML-escaped topics.
 TS_START = "<ts-match>"
 TS_STOP = "</ts-match>"
+
 
 def ts_locs_array(
     config: ColumnElement, text: ColumnElement, tsquery: ColumnElement,
@@ -110,6 +113,8 @@ def ts_locs_array(
     )
 
 # When you add a new operator to this, also update zerver/lib/narrow.py
+
+
 class NarrowBuilder:
     '''
     Build up a SQLAlchemy query to find messages matching a narrow.
@@ -475,6 +480,7 @@ class NarrowBuilder:
         cond = column("search_tsvector").op("@@")(tsquery)
         return query.where(maybe_negate(cond))
 
+
 def highlight_string(text: str, locs: Iterable[Tuple[int, int]]) -> str:
     highlight_start = '<span class="highlight">'
     highlight_stop = '</span>'
@@ -511,12 +517,14 @@ def highlight_string(text: str, locs: Iterable[Tuple[int, int]]) -> str:
     result += text[pos:]
     return result
 
+
 def get_search_fields(rendered_content: str, topic_name: str, content_matches: Iterable[Tuple[int, int]],
                       topic_matches: Iterable[Tuple[int, int]]) -> Dict[str, str]:
     return {
         'match_content': highlight_string(rendered_content, content_matches),
         MATCH_TOPIC: highlight_string(escape_html(topic_name), topic_matches),
     }
+
 
 def narrow_parameter(json: str) -> OptionalNarrowListT:
 
@@ -580,6 +588,7 @@ def narrow_parameter(json: str) -> OptionalNarrowListT:
 
     return list(map(convert_term, data))
 
+
 def ok_to_include_history(narrow: OptionalNarrowListT, user_profile: UserProfile) -> bool:
     # There are occasions where we need to find Message rows that
     # have no corresponding UserMessage row, because the user is
@@ -612,12 +621,14 @@ def ok_to_include_history(narrow: OptionalNarrowListT, user_profile: UserProfile
 
     return include_history
 
+
 def get_stream_from_narrow_access_unchecked(narrow: OptionalNarrowListT, realm: Realm) -> Optional[Stream]:
     if narrow is not None:
         for term in narrow:
             if term['operator'] == 'stream':
                 return get_stream_by_narrow_operand_access_unchecked(term['operand'], realm)
     return None
+
 
 def exclude_muting_conditions(user_profile: UserProfile,
                               narrow: OptionalNarrowListT) -> List[Selectable]:
@@ -650,6 +661,7 @@ def exclude_muting_conditions(user_profile: UserProfile,
 
     return conditions
 
+
 def get_base_query_for_search(user_profile: UserProfile,
                               need_message: bool,
                               need_user_message: bool) -> Tuple[Query, ColumnElement]:
@@ -676,6 +688,7 @@ def get_base_query_for_search(user_profile: UserProfile,
                        table("zerver_message"))
         inner_msg_id_col = literal_column("zerver_message.id")
         return (query, inner_msg_id_col)
+
 
 def add_narrow_conditions(user_profile: UserProfile,
                           inner_msg_id_col: ColumnElement,
@@ -709,6 +722,7 @@ def add_narrow_conditions(user_profile: UserProfile,
         query = builder.add_term(query, search_term)
 
     return (query, is_search)
+
 
 def find_first_unread_anchor(sa_conn: Any,
                              user_profile: UserProfile,
@@ -755,6 +769,7 @@ def find_first_unread_anchor(sa_conn: Any,
 
     return anchor
 
+
 def parse_anchor_value(anchor_val: Optional[str],
                        use_first_unread_anchor: bool) -> Optional[int]:
     """Given the anchor and use_first_unread_anchor parameters passed by
@@ -790,6 +805,7 @@ def parse_anchor_value(anchor_val: Optional[str],
         return anchor
     except ValueError:
         raise JsonableError(_("Invalid anchor"))
+
 
 @has_request_variables
 def get_messages_backend(request: HttpRequest, user_profile: UserProfile,
@@ -968,6 +984,7 @@ def get_messages_backend(request: HttpRequest, user_profile: UserProfile,
     )
     return json_success(ret)
 
+
 def limit_query_to_range(query: Query,
                          num_before: int,
                          num_after: int,
@@ -1048,6 +1065,7 @@ def limit_query_to_range(query: Query,
 
     return query
 
+
 def post_process_limited_query(rows: List[Any],
                                num_before: int,
                                num_after: int,
@@ -1111,6 +1129,8 @@ def post_process_limited_query(rows: List[Any],
         found_oldest=found_oldest,
         history_limited=history_limited,
     )
+
+
 @has_request_variables
 def messages_in_narrow_backend(request: HttpRequest, user_profile: UserProfile,
                                msg_ids: List[int]=REQ(validator=check_list(check_int)),

@@ -43,6 +43,7 @@ def get_presence_backend(request: HttpRequest, user_profile: UserProfile,
         val.pop('pushable', None)
     return json_success(result)
 
+
 @human_users_only
 @has_request_variables
 def update_user_status_backend(request: HttpRequest,
@@ -66,6 +67,7 @@ def update_user_status_backend(request: HttpRequest,
     )
 
     return json_success()
+
 
 @human_users_only
 @has_request_variables
@@ -102,6 +104,7 @@ def update_active_status_backend(request: HttpRequest, user_profile: UserProfile
             ret['zephyr_mirror_active'] = False
 
     return json_success(ret)
+
 
 def get_statuses_for_realm(request: HttpRequest, user_profile: UserProfile) -> HttpResponse:
     # This isn't used by the webapp; it's available for API use by

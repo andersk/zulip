@@ -44,6 +44,8 @@ def force_bytes(s: Union[str, bytes], encoding: str='utf-8') -> bytes:
 # there is already an ASN.1 implementation, but in the interest of
 # limiting MIT Kerberos's exposure to malformed ccaches, encode it
 # ourselves. To that end, here's the laziest DER encoder ever.
+
+
 def der_encode_length(length: int) -> bytes:
     if length <= 127:
         return struct.pack('!B', length)
@@ -54,8 +56,10 @@ def der_encode_length(length: int) -> bytes:
     out = struct.pack('!B', len(out) | 0x80) + out
     return out
 
+
 def der_encode_tlv(tag: int, value: bytes) -> bytes:
     return struct.pack('!B', tag) + der_encode_length(len(value)) + value
+
 
 def der_encode_integer_value(val: int) -> bytes:
     if not isinstance(val, int):
@@ -79,26 +83,34 @@ def der_encode_integer_value(val: int) -> bytes:
         val >>= 8
     return out
 
+
 def der_encode_integer(val: int) -> bytes:
     return der_encode_tlv(0x02, der_encode_integer_value(val))
+
+
 def der_encode_int32(val: int) -> bytes:
     if val < -2147483648 or val > 2147483647:
         raise ValueError("Bad value")
     return der_encode_integer(val)
+
+
 def der_encode_uint32(val: int) -> bytes:
     if val < 0 or val > 4294967295:
         raise ValueError("Bad value")
     return der_encode_integer(val)
+
 
 def der_encode_string(val: str) -> bytes:
     if not isinstance(val, str):
         raise TypeError("unicode")
     return der_encode_tlv(0x1b, val.encode("utf-8"))
 
+
 def der_encode_octet_string(val: bytes) -> bytes:
     if not isinstance(val, bytes):
         raise TypeError("bytes")
     return der_encode_tlv(0x04, val)
+
 
 def der_encode_sequence(tlvs: List[Optional[bytes]], tagged: bool=True) -> bytes:
     body = []
@@ -111,6 +123,7 @@ def der_encode_sequence(tlvs: List[Optional[bytes]], tagged: bool=True) -> bytes
             tlv = der_encode_tlv(0xa0 | i, tlv)
         body.append(tlv)
     return der_encode_tlv(0x30, b"".join(body))
+
 
 def der_encode_ticket(tkt: Dict[str, Any]) -> bytes:
     return der_encode_tlv(
@@ -134,10 +147,12 @@ def der_encode_ticket(tkt: Dict[str, Any]) -> bytes:
 # Kerberos ccache writing code. Using format documentation from here:
 # https://www.gnu.org/software/shishi/manual/html_node/The-Credential-Cache-Binary-File-Format.html
 
+
 def ccache_counted_octet_string(data: bytes) -> bytes:
     if not isinstance(data, bytes):
         raise TypeError("bytes")
     return struct.pack("!I", len(data)) + data
+
 
 def ccache_principal(name: Dict[str, str], realm: str) -> bytes:
     header = struct.pack("!II", name["nameType"], len(name["nameString"]))
@@ -145,9 +160,11 @@ def ccache_principal(name: Dict[str, str], realm: str) -> bytes:
             b"".join(ccache_counted_octet_string(force_bytes(c))
                      for c in name["nameString"]))
 
+
 def ccache_key(key: Dict[str, str]) -> bytes:
     return (struct.pack("!H", key["keytype"]) +
             ccache_counted_octet_string(base64.b64decode(key["keyvalue"])))
+
 
 def flags_to_uint32(flags: List[str]) -> int:
     ret = 0
@@ -155,6 +172,7 @@ def flags_to_uint32(flags: List[str]) -> int:
         if v:
             ret |= 1 << (31 - i)
     return ret
+
 
 def ccache_credential(cred: Dict[str, Any]) -> bytes:
     out = ccache_principal(cred["cname"], cred["crealm"])
@@ -173,6 +191,7 @@ def ccache_credential(cred: Dict[str, Any]) -> bytes:
     # No second_ticket.
     out += ccache_counted_octet_string(b"")
     return out
+
 
 def make_ccache(cred: Dict[str, Any]) -> bytes:
     # Do we need a DeltaTime header? The ccache I get just puts zero

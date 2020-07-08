@@ -37,6 +37,7 @@ def mute_topic(user_profile: UserProfile,
     do_mute_topic(user_profile, stream, recipient, topic_name, date_muted)
     return json_success()
 
+
 def unmute_topic(user_profile: UserProfile,
                  stream_id: Optional[int],
                  stream_name: Optional[str],
@@ -54,6 +55,7 @@ def unmute_topic(user_profile: UserProfile,
 
     do_unmute_topic(user_profile, stream, topic_name)
     return json_success()
+
 
 @has_request_variables
 def update_muted_topic(request: HttpRequest,

@@ -17,5 +17,6 @@ class ZulipExceptionReporterFilter(SafeExceptionReporterFilter):
                 filtered_post[var] = '**********'
         return filtered_post
 
+
 def clean_data_from_query_parameters(val: str) -> str:
     return re.sub(r"([a-z_-]+=)([^&]+)([&]|$)", r"\1******\3", val)

@@ -32,6 +32,7 @@ def rename_zulip_realm_to_zulipinternal(apps: StateApps, schema_editor: Database
     internal_realm.name = "System use only"
     internal_realm.save()
 
+
 class Migration(migrations.Migration):
 
     dependencies = [

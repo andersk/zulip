@@ -667,6 +667,7 @@ class RealmTest(ZulipTestCase):
         result = self.client_patch('/json/realm', req)
         self.assert_json_success(result)
 
+
 class RealmAPITest(ZulipTestCase):
 
     def setUp(self) -> None:
@@ -786,6 +787,7 @@ class RealmAPITest(ZulipTestCase):
         realm = self.update_with_api('message_content_delete_limit_seconds', 600)
         self.assertEqual(realm.allow_message_deleting, True)
         self.assertEqual(realm.message_content_delete_limit_seconds, 600)
+
 
 class ScrubRealmTest(ZulipTestCase):
     def test_scrub_realm(self) -> None:

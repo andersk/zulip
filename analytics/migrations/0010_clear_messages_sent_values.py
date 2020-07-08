@@ -17,6 +17,7 @@ def clear_message_sent_by_message_type_values(apps: StateApps, schema_editor: Da
     InstallationCount.objects.filter(property=property).delete()
     FillState.objects.filter(property=property).delete()
 
+
 class Migration(migrations.Migration):
 
     dependencies = [('analytics', '0009_remove_messages_to_stream_stat')]

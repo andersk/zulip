@@ -12,10 +12,12 @@ def is_reserved_subdomain(subdomain: str) -> bool:
         return True
     return False
 
+
 def is_disposable_domain(domain: str) -> bool:
     if domain.lower() in WHITELISTED_EMAIL_DOMAINS:
         return False
     return domain.lower() in DISPOSABLE_DOMAINS
+
 
 ZULIP_RESERVED_SUBDOMAINS = frozenset([
     # zulip terms

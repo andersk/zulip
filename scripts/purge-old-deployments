@@ -32,6 +32,7 @@ def parse_args() -> argparse.Namespace:
     args.verbose |= args.dry_run    # Always print a detailed report in case of dry run.
     return args
 
+
 def get_deployments_to_be_purged(recent_deployments: Set[str]) -> Set[str]:
     all_deployments = {os.path.join(DEPLOYMENTS_DIR, deployment)
                        for deployment in os.listdir(DEPLOYMENTS_DIR)}
@@ -49,6 +50,7 @@ def get_deployments_to_be_purged(recent_deployments: Set[str]) -> Set[str]:
             deployments_to_purge.add(deployment)
     return deployments_to_purge
 
+
 def main() -> None:
     args = parse_args()
     deployments_to_keep = get_recent_deployments(args.threshold_days)
@@ -64,6 +66,7 @@ def main() -> None:
     # Call 'clean-unused-caches' script to clean any orphaned/unused caches.
     subprocess.check_call([os.path.join(ZULIP_PATH, "scripts/lib/clean-unused-caches")] + sys.argv[1:])
     print("Done!")
+
 
 if __name__ == "__main__":
     main()

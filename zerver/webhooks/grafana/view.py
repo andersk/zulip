@@ -12,6 +12,7 @@ GRAFANA_TOPIC_TEMPLATE = '{alert_title}'
 
 GRAFANA_MESSAGE_TEMPLATE = '[{rule_name}]({rule_url})\n\n{alert_message}{eval_matches}'
 
+
 @api_key_only_webhook_view('Grafana')
 @has_request_variables
 def api_grafana_webhook(

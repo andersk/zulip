@@ -33,13 +33,17 @@ Event = Dict[str, Any]
 # This is used for testing LoopQueueProcessingWorker, which
 # would run forever if we don't mock time.sleep to abort the
 # loop.
+
+
 class AbortLoop(Exception):
     pass
+
 
 loopworker_sleep_mock = patch(
     'zerver.worker.queue_processors.time.sleep',
     side_effect=AbortLoop,
 )
+
 
 class WorkerTest(ZulipTestCase):
     class FakeClient:

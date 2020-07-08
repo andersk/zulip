@@ -10,6 +10,7 @@ def backfill_last_message_id(apps: StateApps, schema_editor: DatabaseSchemaEdito
         event_last_message_id__isnull=True, event_type__in=event_type)
     subscription_logs.update(event_last_message_id=-1)
 
+
 class Migration(migrations.Migration):
 
     dependencies = [

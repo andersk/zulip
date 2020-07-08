@@ -35,6 +35,7 @@ states: Dict[str, int] = {
     "UNKNOWN": 3,
 }
 
+
 def report(state: str, short_msg: str, too_old: AbstractSet[Any] = set()) -> None:
     too_old_data = ""
     if too_old:
@@ -46,6 +47,7 @@ def report(state: str, short_msg: str, too_old: AbstractSet[Any] = set()) -> Non
     print(f"{state}: {short_msg}{too_old_data}")
 
     exit(states[state])
+
 
 now = timezone_now()
 

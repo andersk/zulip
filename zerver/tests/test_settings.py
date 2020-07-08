@@ -391,6 +391,7 @@ class ChangeSettingsTest(ZulipTestCase):
                 result = self.client_post("/json/users/me/avatar", {'f1': fp1})
             self.assert_json_error(result, "Avatar changes are disabled in this organization.", 400)
 
+
 class UserChangesTest(ZulipTestCase):
     def test_update_api_key(self) -> None:
         user = self.example_user('hamlet')

@@ -95,24 +95,30 @@ class _RateLimitFilter:
             if should_reset_handling_exception:
                 self.handling_exception.value = False
 
+
 class ZulipLimiter(_RateLimitFilter):
     pass
 
+
 class EmailLimiter(_RateLimitFilter):
     pass
+
 
 class ReturnTrue(logging.Filter):
     def filter(self, record: logging.LogRecord) -> bool:
         return True
 
+
 class ReturnEnabled(logging.Filter):
     def filter(self, record: logging.LogRecord) -> bool:
         return settings.LOGGING_ENABLED
+
 
 class RequireReallyDeployed(logging.Filter):
     def filter(self, record: logging.LogRecord) -> bool:
         from django.conf import settings
         return settings.PRODUCTION
+
 
 def skip_200_and_304(record: logging.LogRecord) -> bool:
     # Apparently, `status_code` is added by Django and is not an actual
@@ -123,6 +129,7 @@ def skip_200_and_304(record: logging.LogRecord) -> bool:
 
     return True
 
+
 def skip_site_packages_logs(record: logging.LogRecord) -> bool:
     # This skips the log records that are generated from libraries
     # installed in site packages.
@@ -130,6 +137,7 @@ def skip_site_packages_logs(record: logging.LogRecord) -> bool:
     if 'site-packages' in record.pathname:
         return False
     return True
+
 
 def find_log_caller_module(record: logging.LogRecord) -> Optional[str]:
     '''Find the module name corresponding to where this record was logged.
@@ -149,10 +157,12 @@ def find_log_caller_module(record: logging.LogRecord) -> Optional[str]:
             return None
         f = f.f_back
 
+
 logger_nicknames = {
     'root': '',  # This one is more like undoing a nickname.
     'zulip.requests': 'zr',  # Super common.
 }
+
 
 def find_log_origin(record: logging.LogRecord) -> str:
     logger_name = logger_nicknames.get(record.name, record.name)
@@ -174,6 +184,7 @@ def find_log_origin(record: logging.LogRecord) -> str:
 
     return logger_name
 
+
 log_level_abbrevs = {
     'DEBUG':    'DEBG',
     'INFO':     'INFO',
@@ -182,10 +193,12 @@ log_level_abbrevs = {
     'CRITICAL': 'CRIT',
 }
 
+
 def abbrev_log_levelname(levelname: str) -> str:
     # It's unlikely someone will set a custom log level with a custom name,
     # but it's an option, so we shouldn't crash if someone does.
     return log_level_abbrevs.get(levelname, levelname[:4])
+
 
 class ZulipFormatter(logging.Formatter):
     # Used in the base implementation.  Default uses `,`.
@@ -209,6 +222,7 @@ class ZulipFormatter(logging.Formatter):
             setattr(record, 'zulip_origin', find_log_origin(record))
             setattr(record, 'zulip_decorated', True)
         return super().format(record)
+
 
 def log_to_file(logger: Logger,
                 filename: str,

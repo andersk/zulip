@@ -32,6 +32,7 @@ GitterDataT = List[Dict[str, Any]]
 
 realm_id = 0
 
+
 def gitter_workspace_to_realm(domain_name: str, gitter_data: GitterDataT,
                               realm_subdomain: str) -> Tuple[ZerverFieldsT,
                                                              List[ZerverFieldsT],
@@ -60,6 +61,7 @@ def gitter_workspace_to_realm(domain_name: str, gitter_data: GitterDataT,
     realm['zerver_subscription'] = zerver_subscription
 
     return realm, avatars, user_map, stream_map
+
 
 def build_userprofile(timestamp: Any, domain_name: str,
                       gitter_data: GitterDataT) -> Tuple[List[ZerverFieldsT],
@@ -105,10 +107,12 @@ def build_userprofile(timestamp: Any, domain_name: str,
     logging.info('######### IMPORTING USERS FINISHED #########\n')
     return zerver_userprofile, avatar_list, user_map
 
+
 def get_user_email(user_data: ZerverFieldsT, domain_name: str) -> str:
     # TODO Get user email from github
     email = ("{}@users.noreply.github.com".format(user_data['username']))
     return email
+
 
 def build_stream_map(timestamp: Any,
                      gitter_data: GitterDataT) -> Tuple[List[ZerverFieldsT],
@@ -142,6 +146,7 @@ def build_stream_map(timestamp: Any,
     logging.info('######### IMPORTING STREAMS FINISHED #########\n')
 
     return stream, [defaultstream], stream_map
+
 
 def build_recipient_and_subscription(
     zerver_userprofile: List[ZerverFieldsT],
@@ -185,6 +190,7 @@ def build_recipient_and_subscription(
             subscription_id += 1
 
     return zerver_recipient, zerver_subscription
+
 
 def convert_gitter_workspace_messages(gitter_data: GitterDataT, output_dir: str,
                                       subscriber_map: Dict[int, Set[int]],
@@ -244,6 +250,7 @@ def convert_gitter_workspace_messages(gitter_data: GitterDataT, output_dir: str,
 
     logging.info('######### IMPORTING MESSAGES FINISHED #########\n')
 
+
 def get_usermentions(message: Dict[str, Any], user_map: Dict[str, int],
                      user_short_name_to_full_name: Dict[str, str]) -> List[int]:
     mentioned_user_ids = []
@@ -262,6 +269,7 @@ def get_usermentions(message: Dict[str, Any], user_map: Dict[str, int],
 
                 mentioned_user_ids.append(user_map[mention['userId']])
     return mentioned_user_ids
+
 
 def do_convert_data(gitter_data_file: str, output_dir: str, threads: int=6) -> None:
     #  Subdomain is set by the user while running the import commands
@@ -315,6 +323,7 @@ def do_convert_data(gitter_data_file: str, output_dir: str, threads: int=6) -> N
 
     logging.info('######### DATA CONVERSION FINISHED #########\n')
     logging.info("Zulip data dump created at %s", output_dir)
+
 
 def write_data_to_file(output_file: str, data: Any) -> None:
     with open(output_file, "w") as f:

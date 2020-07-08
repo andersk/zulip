@@ -30,6 +30,7 @@ TICKET_CREATION_TEMPLATE = """
 * **Status**: {status}
 """.strip()
 
+
 class TicketDict(Dict[str, Any]):
     """
     A helper class to turn a dictionary with ticket information into
@@ -129,6 +130,7 @@ def format_freshdesk_ticket_creation_message(ticket: TicketDict) -> str:
     )
 
     return content
+
 
 @authenticated_rest_api_view(webhook_client_name="Freshdesk")
 @has_request_variables

@@ -27,6 +27,7 @@ def expand_reqs_helper(fpath: str, visited: MutableSet[str]) -> List[str]:
                 result.append(dep)
     return result
 
+
 def expand_reqs(fpath: str) -> List[str]:
     """
     Returns a sorted list of unique dependencies specified by the requirements file `fpath`.
@@ -37,9 +38,11 @@ def expand_reqs(fpath: str) -> List[str]:
     output = expand_reqs_helper(absfpath, set())
     return sorted(set(output))
 
+
 def hash_deps(deps: Iterable[str]) -> str:
     deps_str = "\n".join(deps) + "\n"
     return hashlib.sha1(deps_str.encode('utf-8')).hexdigest()
+
 
 def main() -> int:
     description = ("Finds the SHA1 hash of list of dependencies in a requirements file"
@@ -58,6 +61,7 @@ def main() -> int:
         for dep in deps:
             print(dep)
     return 0
+
 
 if __name__ == "__main__":
     sys.exit(main())

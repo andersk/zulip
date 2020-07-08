@@ -23,12 +23,14 @@ from zerver.lib.cache import dict_to_items_tuple, ignore_unhashable_lru_cache, i
 
 register = Library()
 
+
 def and_n_others(values: List[str], limit: int) -> str:
     # A helper for the commonly appended "and N other(s)" string, with
     # the appropriate pluralization.
     return " and {} other{}".format(
         len(values) - limit, "" if len(values) == limit + 1 else "s",
     )
+
 
 @register.filter(name='display_list', is_safe=True)
 def display_list(values: List[str], display_limit: int) -> str:
@@ -59,6 +61,7 @@ def display_list(values: List[str], display_limit: int) -> str:
 
     return display_string
 
+
 md_extensions: Optional[List[Any]] = None
 md_macro_extension: Optional[Any] = None
 # Prevent the automatic substitution of macros in these docs. If
@@ -71,6 +74,8 @@ docs_without_macros = [
 # render_markdown_path is passed a context dictionary (unhashable), which
 # results in the calls not being cached. To work around this, we convert the
 # dict to a tuple of dict items to cache the results.
+
+
 @dict_to_items_tuple
 @ignore_unhashable_lru_cache(512)
 @items_tuple_to_dict

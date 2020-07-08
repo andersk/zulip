@@ -61,6 +61,7 @@ class MissedMessageTest(ZulipTestCase):
         message_type = 'private'
         assert_missing([othello.id])
 
+
 class TestBulkGetHuddleUserIds(ZulipTestCase):
     def test_bulk_get_huddle_user_ids(self) -> None:
         hamlet = self.example_user('hamlet')

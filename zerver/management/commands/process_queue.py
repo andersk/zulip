@@ -84,6 +84,7 @@ class Command(BaseCommand):
 
             worker.start()
 
+
 class Threaded_worker(threading.Thread):
     def __init__(self, queue_name: str) -> None:
         threading.Thread.__init__(self)

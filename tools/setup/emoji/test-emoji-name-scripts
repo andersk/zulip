@@ -9,6 +9,7 @@ import tempfile
 
 TOOLS_DIR = os.path.abspath(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 
+
 def generate_files(source_file: str, tmp_dir: str) -> None:
     # Copy the source CSV file to out temporary test directory.
     input_file_path = source_file
@@ -36,6 +37,7 @@ def generate_files(source_file: str, tmp_dir: str) -> None:
                            '--input-file', input_file_path, '--output-file', output_file_path],
                           stdout=subprocess.DEVNULL)
 
+
 def print_diff(path_file1: str, path_file2: str) -> None:
     with open(path_file1) as file1:
         with open(path_file2) as file2:
@@ -48,12 +50,14 @@ def print_diff(path_file1: str, path_file2: str) -> None:
     for line in diff:
         print(line)
 
+
 def compare_files(first_file: str, second_file: str) -> None:
     same = True
     same = same and filecmp.cmp(first_file, second_file, shallow=False)
     if not same:
         print_diff(first_file, second_file)
         raise Exception("Round trip conversion failed!!")
+
 
 def check_files(tmp_dir: str) -> None:
     # Compare the original and regenerated CSV files.
@@ -65,6 +69,7 @@ def check_files(tmp_dir: str) -> None:
     first_file = os.path.join(tmp_dir, 'NAME_MAP_A')
     second_file = os.path.join(tmp_dir, 'NAME_MAP_B')
     compare_files(first_file, second_file)
+
 
 def main() -> None:
     description = ("This tool is used test the emoji tooling that we use to import/export "
@@ -80,6 +85,7 @@ def main() -> None:
     with tempfile.TemporaryDirectory() as tmp_dir:
         generate_files(args.input_file_path, tmp_dir)
         check_files(tmp_dir)
+
 
 if __name__ == "__main__":
     main()

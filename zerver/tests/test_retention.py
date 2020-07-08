@@ -43,6 +43,7 @@ from zerver.tornado.event_queue import send_event
 ZULIP_REALM_DAYS = 30
 MIT_REALM_DAYS = 100
 
+
 class RetentionTestingBase(ZulipTestCase):
     def _get_usermessage_ids(self, message_ids: List[int]) -> List[int]:
         return list(UserMessage.objects.filter(message_id__in=message_ids).values_list('id', flat=True))
@@ -86,6 +87,7 @@ class RetentionTestingBase(ZulipTestCase):
             set(ArchivedUserMessage.objects.values_list('id', flat=True)),
             set(expected_usermessage_ids),
         )
+
 
 class ArchiveMessagesTestingBase(RetentionTestingBase):
     def setUp(self) -> None:
@@ -171,6 +173,7 @@ class ArchiveMessagesTestingBase(RetentionTestingBase):
         self._change_messages_date_sent([expired_message_id], timezone_now() - timedelta(days=MIT_REALM_DAYS + 1))
         return {'expired_message_id': expired_message_id, 'actual_message_id': actual_message_id,
                 'other_user_message_id': other_message_id}
+
 
 class TestArchiveMessagesGeneral(ArchiveMessagesTestingBase):
     def test_no_expired_messages(self) -> None:
@@ -410,6 +413,7 @@ class TestArchiveMessagesGeneral(ArchiveMessagesTestingBase):
         for message in archived_messages:
             self.assertEqual(message.archive_transaction_id, transactions[2].id)
 
+
 class TestArchivingSubMessages(ArchiveMessagesTestingBase):
     def test_archiving_submessages(self) -> None:
         expired_msg_ids = self._make_expired_zulip_messages(2)
@@ -459,6 +463,7 @@ class TestArchivingSubMessages(ArchiveMessagesTestingBase):
             set(submessage_ids),
         )
 
+
 class TestArchivingReactions(ArchiveMessagesTestingBase, EmojiReactionBase):
     def test_archiving_reactions(self) -> None:
         expired_msg_ids = self._make_expired_zulip_messages(2)
@@ -488,6 +493,7 @@ class TestArchivingReactions(ArchiveMessagesTestingBase, EmojiReactionBase):
             set(reaction_ids),
         )
 
+
 class MoveMessageToArchiveBase(RetentionTestingBase):
     def setUp(self) -> None:
         super().setUp()
@@ -512,6 +518,7 @@ class MoveMessageToArchiveBase(RetentionTestingBase):
         self.assertFalse(ArchivedUserMessage.objects.exists())
         self.assertFalse(ArchivedMessage.objects.exists())
         self.assertFalse(ArchivedAttachment.objects.exists())
+
 
 class MoveMessageToArchiveGeneral(MoveMessageToArchiveBase):
     def test_personal_messages_archiving(self) -> None:
@@ -707,6 +714,7 @@ class MoveMessageToArchiveGeneral(MoveMessageToArchiveBase):
             set(attachment_ids),
         )
 
+
 class MoveMessageToArchiveWithSubMessages(MoveMessageToArchiveBase):
     def test_archiving_message_with_submessages(self) -> None:
         msg_id = self.send_stream_message(self.sender, "Verona")
@@ -747,6 +755,7 @@ class MoveMessageToArchiveWithSubMessages(MoveMessageToArchiveBase):
             set(submessage_ids),
         )
 
+
 class MoveMessageToArchiveWithReactions(MoveMessageToArchiveBase, EmojiReactionBase):
     def test_archiving_message_with_reactions(self) -> None:
         msg_id = self.send_stream_message(self.sender, "Verona")
@@ -772,6 +781,7 @@ class MoveMessageToArchiveWithReactions(MoveMessageToArchiveBase, EmojiReactionB
             set(Reaction.objects.filter(id__in=reaction_ids).values_list('id', flat=True)),
             set(reaction_ids),
         )
+
 
 class TestCleaningArchive(ArchiveMessagesTestingBase):
     def test_clean_archived_data(self) -> None:
@@ -885,6 +895,7 @@ class TestGetRealmAndStreamsForArchiving(ZulipTestCase):
 
         self.assert_length(result, len(simple_algorithm_result))
         self.assertEqual(result, simple_algorithm_result)
+
 
 class TestRestoreStreamMessages(ArchiveMessagesTestingBase):
     def test_restore_retention_policy_deletions_for_stream(self) -> None:

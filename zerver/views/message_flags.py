@@ -23,6 +23,8 @@ def get_latest_update_message_flag_activity(user_profile: UserProfile) -> Option
 
 # NOTE: If this function name is changed, add the new name to the
 # query in get_latest_update_message_flag_activity
+
+
 @has_request_variables
 def update_message_flags(request: HttpRequest, user_profile: UserProfile,
                          messages: List[int]=REQ(validator=check_list(check_int)),
@@ -38,6 +40,7 @@ def update_message_flags(request: HttpRequest, user_profile: UserProfile,
                          'messages': messages,
                          'msg': ''})
 
+
 @has_request_variables
 def mark_all_as_read(request: HttpRequest, user_profile: UserProfile) -> HttpResponse:
     count = do_mark_all_as_read(user_profile, request.client)
@@ -47,6 +50,7 @@ def mark_all_as_read(request: HttpRequest, user_profile: UserProfile) -> HttpRes
 
     return json_success({'result': 'success',
                          'msg': ''})
+
 
 @has_request_variables
 def mark_stream_as_read(request: HttpRequest,
@@ -60,6 +64,7 @@ def mark_stream_as_read(request: HttpRequest,
 
     return json_success({'result': 'success',
                          'msg': ''})
+
 
 @has_request_variables
 def mark_topic_as_read(request: HttpRequest,

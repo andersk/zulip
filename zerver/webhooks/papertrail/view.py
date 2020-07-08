@@ -17,6 +17,7 @@ SEARCH_TEMPLATE = """
 ```
 """.strip()
 
+
 @api_key_only_webhook_view('Papertrail')
 @has_request_variables
 def api_papertrail_webhook(

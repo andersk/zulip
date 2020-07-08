@@ -50,6 +50,7 @@ class EmailTranslationTestCase(ZulipTestCase):
             enqueue_welcome_emails(hamlet)
         check_translation("Viele Grüße", "")
 
+
 class TranslationTestCase(ZulipTestCase):
     """
     Translations strings should change with locale. URLs should be locale

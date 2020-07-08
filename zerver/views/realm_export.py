@@ -65,10 +65,12 @@ def export_realm(request: HttpRequest, user: UserProfile) -> HttpResponse:
     queue_json_publish('deferred_work', event)
     return json_success()
 
+
 @require_realm_admin
 def get_realm_exports(request: HttpRequest, user: UserProfile) -> HttpResponse:
     realm_exports = get_realm_exports_serialized(user)
     return json_success({"exports": realm_exports})
+
 
 @require_realm_admin
 def delete_realm_export(request: HttpRequest, user: UserProfile, export_id: int) -> HttpResponse:

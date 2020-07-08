@@ -37,6 +37,7 @@ class TestGetNextHotspots(ZulipTestCase):
         with self.settings(DEVELOPMENT=True, ALWAYS_SEND_ALL_HOTSPOTS = True):
             self.assertEqual(len(ALL_HOTSPOTS), len(get_next_hotspots(self.user)))
 
+
 class TestHotspots(ZulipTestCase):
     def test_do_mark_hotspot_as_read(self) -> None:
         user = self.example_user('hamlet')

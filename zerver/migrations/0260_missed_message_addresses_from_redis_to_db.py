@@ -11,6 +11,7 @@ from zerver.lib.utils import generate_random_token
 def generate_missed_message_token() -> str:
     return 'mm' + generate_random_token(32)
 
+
 def move_missed_message_addresses_to_database(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     redis_client = get_redis_client()
     MissedMessageEmailAddress = apps.get_model('zerver', 'MissedMessageEmailAddress')
@@ -82,6 +83,7 @@ def move_missed_message_addresses_to_database(apps: StateApps, schema_editor: Da
         # We successfully transferred this missed-message email's data
         # to the database, so this message can be deleted from redis.
         redis_client.delete(key)
+
 
 class Migration(migrations.Migration):
     # Atomicity is not feasible here, since we're doing operations on redis too.

@@ -196,12 +196,14 @@ def update_realm(
 
     return json_success(data)
 
+
 @require_realm_owner
 @has_request_variables
 def deactivate_realm(request: HttpRequest, user: UserProfile) -> HttpResponse:
     realm = user.realm
     do_deactivate_realm(realm, user)
     return json_success()
+
 
 @require_safe
 def check_subdomain_available(request: HttpRequest, subdomain: str) -> HttpResponse:
@@ -210,6 +212,7 @@ def check_subdomain_available(request: HttpRequest, subdomain: str) -> HttpRespo
         return json_success({"msg": "available"})
     except ValidationError as e:
         return json_success({"msg": e.message})
+
 
 def realm_reactivation(request: HttpRequest, confirmation_key: str) -> HttpResponse:
     try:

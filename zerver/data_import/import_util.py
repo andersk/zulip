@@ -39,6 +39,7 @@ from zerver.models import (
 # stubs
 ZerverFieldsT = Dict[str, Any]
 
+
 class SubscriberHandler:
     def __init__(self) -> None:
         self.stream_info: Dict[int, Set[int]] = dict()
@@ -66,6 +67,7 @@ class SubscriberHandler:
         else:
             raise AssertionError("stream_id or huddle_id is required")
 
+
 def build_zerver_realm(realm_id: int, realm_subdomain: str, time: float,
                        other_product: str) -> List[ZerverFieldsT]:
     realm = Realm(id=realm_id, date_created=time,
@@ -75,6 +77,7 @@ def build_zerver_realm(realm_id: int, realm_subdomain: str, time: float,
     realm_dict = model_to_dict(realm, exclude='authentication_methods')
     realm_dict['authentication_methods'] = auth_methods
     return[realm_dict]
+
 
 def build_user_profile(avatar_source: str,
                        date_joined: Any,
@@ -105,6 +108,7 @@ def build_user_profile(avatar_source: str,
     dct = model_to_dict(obj)
     return dct
 
+
 def build_avatar(zulip_user_id: int, realm_id: int, email: str, avatar_url: str,
                  timestamp: Any, avatar_list: List[ZerverFieldsT]) -> None:
     avatar = dict(
@@ -117,6 +121,7 @@ def build_avatar(zulip_user_id: int, realm_id: int, email: str, avatar_url: str,
         s3_path="",
         size="")
     avatar_list.append(avatar)
+
 
 def make_subscriber_map(zerver_subscription: List[ZerverFieldsT]) -> Dict[int, Set[int]]:
     '''
@@ -132,6 +137,7 @@ def make_subscriber_map(zerver_subscription: List[ZerverFieldsT]) -> Dict[int, S
         subscriber_map[recipient_id].add(user_id)
 
     return subscriber_map
+
 
 def make_user_messages(zerver_message: List[ZerverFieldsT],
                        subscriber_map: Dict[int, Set[int]],
@@ -160,6 +166,7 @@ def make_user_messages(zerver_message: List[ZerverFieldsT],
 
     return zerver_usermessage
 
+
 def build_subscription(recipient_id: int, user_id: int,
                        subscription_id: int) -> ZerverFieldsT:
     subscription = Subscription(
@@ -169,6 +176,7 @@ def build_subscription(recipient_id: int, user_id: int,
     subscription_dict['user_profile'] = user_id
     subscription_dict['recipient'] = recipient_id
     return subscription_dict
+
 
 def build_public_stream_subscriptions(
         zerver_userprofile: List[ZerverFieldsT],
@@ -212,6 +220,7 @@ def build_public_stream_subscriptions(
 
     return subscriptions
 
+
 def build_stream_subscriptions(
         get_users: Callable[..., Set[int]],
         zerver_recipient: List[ZerverFieldsT],
@@ -239,6 +248,7 @@ def build_stream_subscriptions(
             subscriptions.append(subscription)
 
     return subscriptions
+
 
 def build_huddle_subscriptions(
         get_users: Callable[..., Set[int]],
@@ -268,6 +278,7 @@ def build_huddle_subscriptions(
 
     return subscriptions
 
+
 def build_personal_subscriptions(zerver_recipient: List[ZerverFieldsT]) -> List[ZerverFieldsT]:
 
     subscriptions: List[ZerverFieldsT] = []
@@ -290,6 +301,7 @@ def build_personal_subscriptions(zerver_recipient: List[ZerverFieldsT]) -> List[
 
     return subscriptions
 
+
 def build_recipient(type_id: int, recipient_id: int, type: int) -> ZerverFieldsT:
     recipient = Recipient(
         type_id=type_id,  # stream id
@@ -297,6 +309,7 @@ def build_recipient(type_id: int, recipient_id: int, type: int) -> ZerverFieldsT
         type=type)
     recipient_dict = model_to_dict(recipient)
     return recipient_dict
+
 
 def build_recipients(zerver_userprofile: Iterable[ZerverFieldsT],
                      zerver_stream: Iterable[ZerverFieldsT],
@@ -343,6 +356,7 @@ def build_recipients(zerver_userprofile: Iterable[ZerverFieldsT],
         recipients.append(recipient_dict)
     return recipients
 
+
 def build_realm(zerver_realm: List[ZerverFieldsT], realm_id: int,
                 domain_name: str) -> ZerverFieldsT:
     realm = dict(zerver_client=[{"name": "populate_db", "id": 1},
@@ -365,6 +379,7 @@ def build_realm(zerver_realm: List[ZerverFieldsT], realm_id: int,
                  zerver_realmemoji=[],
                  zerver_realmfilter=[])
     return realm
+
 
 def build_usermessages(zerver_usermessage: List[ZerverFieldsT],
                        subscriber_map: Dict[int, Set[int]],
@@ -397,6 +412,7 @@ def build_usermessages(zerver_usermessage: List[ZerverFieldsT],
             zerver_usermessage.append(usermessage)
     return (user_messages_created, user_messages_skipped)
 
+
 def build_user_message(user_id: int,
                        message_id: int,
                        is_private: bool,
@@ -417,6 +433,7 @@ def build_user_message(user_id: int,
     )
     return usermessage
 
+
 def build_defaultstream(realm_id: int, stream_id: int,
                         defaultstream_id: int) -> ZerverFieldsT:
     defaultstream = dict(
@@ -424,6 +441,7 @@ def build_defaultstream(realm_id: int, stream_id: int,
         realm=realm_id,
         id=defaultstream_id)
     return defaultstream
+
 
 def build_stream(date_created: Any, realm_id: int, name: str,
                  description: str, stream_id: int, deactivated: bool=False,
@@ -441,11 +459,13 @@ def build_stream(date_created: Any, realm_id: int, name: str,
     stream_dict['realm'] = realm_id
     return stream_dict
 
+
 def build_huddle(huddle_id: int) -> ZerverFieldsT:
     huddle = Huddle(
         id=huddle_id,
     )
     return model_to_dict(huddle)
+
 
 def build_message(topic_name: str, date_sent: float, message_id: int, content: str,
                   rendered_content: Optional[str], user_id: int, recipient_id: int,
@@ -468,6 +488,7 @@ def build_message(topic_name: str, date_sent: float, message_id: int, content: s
     zulip_message_dict['recipient'] = recipient_id
 
     return zulip_message_dict
+
 
 def build_attachment(realm_id: int, message_ids: Set[int],
                      user_id: int, fileinfo: ZerverFieldsT, s3_path: str,
@@ -493,6 +514,7 @@ def build_attachment(realm_id: int, message_ids: Set[int],
     attachment_dict['realm'] = realm_id
 
     zerver_attachment.append(attachment_dict)
+
 
 def process_avatars(avatar_list: List[ZerverFieldsT], avatar_dir: str, realm_id: int,
                     threads: int, size_url_suffix: str='') -> List[ZerverFieldsT]:
@@ -551,6 +573,7 @@ def process_avatars(avatar_list: List[ZerverFieldsT], avatar_dir: str, realm_id:
     logging.info('######### GETTING AVATARS FINISHED #########\n')
     return avatar_list + avatar_original_list
 
+
 def write_avatar_png(avatar_folder: str,
                      realm_id: int,
                      user_id: int,
@@ -584,7 +607,10 @@ def write_avatar_png(avatar_folder: str,
 
     return metadata
 
+
 ListJobData = TypeVar('ListJobData')
+
+
 def run_parallel_wrapper(f: Callable[[ListJobData], None], full_items: List[ListJobData],
                          threads: int=6) -> Iterator[Tuple[int, List[ListJobData]]]:
     logging.info("Distributing %s items across %s threads", len(full_items), threads)
@@ -602,6 +628,7 @@ def run_parallel_wrapper(f: Callable[[ListJobData], None], full_items: List[List
         return 0
     job_lists: List[List[ListJobData]] = [full_items[i::threads] for i in range(threads)]
     return run_parallel(wrapping_function, job_lists, threads=threads)
+
 
 def process_uploads(upload_list: List[ZerverFieldsT], upload_dir: str,
                     threads: int) -> List[ZerverFieldsT]:
@@ -639,6 +666,7 @@ def process_uploads(upload_list: List[ZerverFieldsT], upload_dir: str,
     logging.info('######### GETTING ATTACHMENTS FINISHED #########\n')
     return upload_list
 
+
 def build_realm_emoji(realm_id: int,
                       name: str,
                       id: int,
@@ -651,6 +679,7 @@ def build_realm_emoji(realm_id: int,
             file_name=file_name,
         ),
     )
+
 
 def process_emojis(zerver_realmemoji: List[ZerverFieldsT], emoji_dir: str,
                    emoji_url_map: ZerverFieldsT, threads: int) -> List[ZerverFieldsT]:
@@ -699,6 +728,7 @@ def process_emojis(zerver_realmemoji: List[ZerverFieldsT], emoji_dir: str,
 
     logging.info('######### GETTING EMOJIS FINISHED #########\n')
     return emoji_records
+
 
 def create_converted_data_files(data: Any, output_dir: str, file_path: str) -> None:
     output_file = output_dir + file_path

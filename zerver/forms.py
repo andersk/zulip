@@ -53,6 +53,7 @@ AUTHENTICATION_RATE_LIMITED_ERROR = "You're making too many attempts to sign in.
                                     "Try again in %s seconds or contact your organization administrator " + \
                                     "for help."
 
+
 def email_is_not_mit_mailing_list(email: str) -> None:
     """Prevent MIT mailing lists from signing up for Zulip"""
     if "@mit.edu" in email:
@@ -65,6 +66,7 @@ def email_is_not_mit_mailing_list(email: str) -> None:
                 raise ValidationError(mark_safe(MIT_VALIDATION_ERROR))
             else:
                 raise AssertionError("Unexpected DNS error")
+
 
 def check_subdomain_available(subdomain: str, from_management_command: bool=False) -> None:
     error_strings = {
@@ -88,6 +90,7 @@ def check_subdomain_available(subdomain: str, from_management_command: bool=Fals
     if is_reserved_subdomain(subdomain) or \
        Realm.objects.filter(string_id=subdomain).exists():
         raise ValidationError(error_strings['unavailable'])
+
 
 class RegistrationForm(forms.Form):
     MAX_PASSWORD_LENGTH = 100
@@ -137,8 +140,10 @@ class RegistrationForm(forms.Form):
         check_subdomain_available(subdomain)
         return subdomain
 
+
 class ToSForm(forms.Form):
     terms = forms.BooleanField(required=True)
+
 
 class HomepageForm(forms.Form):
     email = forms.EmailField()
@@ -186,14 +191,17 @@ class HomepageForm(forms.Form):
 
         return email
 
+
 def email_is_not_disposable(email: str) -> None:
     if is_disposable_domain(email_to_domain(email)):
         raise ValidationError(_("Please use your real email address."))
+
 
 class RealmCreationForm(forms.Form):
     # This form determines whether users can create a new realm.
     email = forms.EmailField(validators=[email_not_system_bot,
                                          email_is_not_disposable])
+
 
 class LoggingSetPasswordForm(SetPasswordForm):
     new_password1 = forms.CharField(
@@ -224,6 +232,7 @@ class LoggingSetPasswordForm(SetPasswordForm):
                            commit=commit)
         return self.user
 
+
 def generate_password_reset_url(user_profile: UserProfile,
                                 token_generator: PasswordResetTokenGenerator) -> str:
     token = token_generator.make_token(user_profile)
@@ -231,6 +240,7 @@ def generate_password_reset_url(user_profile: UserProfile,
     endpoint = reverse('django.contrib.auth.views.password_reset_confirm',
                        kwargs=dict(uidb64=uid, token=token))
     return f"{user_profile.realm.uri}{endpoint}"
+
 
 class ZulipPasswordResetForm(PasswordResetForm):
     def save(self,
@@ -316,6 +326,7 @@ class ZulipPasswordResetForm(PasswordResetForm):
                        language=language, context=context,
                        realm=realm)
 
+
 class RateLimitedPasswordResetByEmail(RateLimitedObject):
     def __init__(self, email: str) -> None:
         self.email = email
@@ -327,14 +338,17 @@ class RateLimitedPasswordResetByEmail(RateLimitedObject):
     def rules(self) -> List[Tuple[int, int]]:
         return settings.RATE_LIMITING_RULES['password_reset_form_by_email']
 
+
 def rate_limit_password_reset_form_by_email(email: str) -> None:
     ratelimited, _ = RateLimitedPasswordResetByEmail(email).rate_limit()
     if ratelimited:
         raise RateLimited
 
+
 class CreateUserForm(forms.Form):
     full_name = forms.CharField(max_length=100)
     email = forms.EmailField()
+
 
 class OurAuthenticationForm(AuthenticationForm):
     def clean(self) -> Dict[str, Any]:
@@ -390,6 +404,7 @@ class OurAuthenticationForm(AuthenticationForm):
         """
         return field_name
 
+
 class AuthenticationTokenForm(TwoFactorAuthenticationTokenForm):
     """
     We add this form to update the widget of otp_token. The default
@@ -399,6 +414,7 @@ class AuthenticationTokenForm(TwoFactorAuthenticationTokenForm):
     otp_token = forms.IntegerField(label=_("Token"), min_value=1,
                                    max_value=int('9' * totp_digits()),
                                    widget=forms.TextInput)
+
 
 class MultiEmailField(forms.Field):
     def to_python(self, emails: str) -> List[str]:
@@ -414,6 +430,7 @@ class MultiEmailField(forms.Field):
         for email in emails:
             validate_email(email)
 
+
 class FindMyTeamForm(forms.Form):
     emails = MultiEmailField(
         help_text=_("Add up to 10 comma-separated email addresses."))
@@ -424,6 +441,7 @@ class FindMyTeamForm(forms.Form):
             raise forms.ValidationError(_("Please enter at most 10 emails."))
 
         return emails
+
 
 class RealmRedirectForm(forms.Form):
     subdomain = forms.CharField(max_length=Realm.MAX_REALM_SUBDOMAIN_LENGTH, required=True)

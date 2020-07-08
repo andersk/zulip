@@ -16,6 +16,8 @@ from zerver.logging_handlers import AdminNotifyHandler, HasRequest
 
 captured_request: Optional[HttpRequest] = None
 captured_exc_info: Optional[Union[Tuple[Type[BaseException], BaseException, TracebackType], Tuple[None, None, None]]] = None
+
+
 def capture_and_throw(domain: Optional[str]=None) -> Callable[[ViewFuncT], ViewFuncT]:
     def wrapper(view_func: ViewFuncT) -> ViewFuncT:
         @wraps(view_func)
@@ -30,6 +32,7 @@ def capture_and_throw(domain: Optional[str]=None) -> Callable[[ViewFuncT], ViewF
                 raise e
         return cast(ViewFuncT, wrapped_view)  # https://github.com/python/mypy/issues/1927
     return wrapper
+
 
 class AdminNotifyHandlerTest(ZulipTestCase):
     logger = logging.getLogger('django')
@@ -188,6 +191,7 @@ class AdminNotifyHandlerTest(ZulipTestCase):
         self.assertIn("message", report)
         self.assertIn("stack_trace", report)
 
+
 class LoggingConfigTest(ZulipTestCase):
     @staticmethod
     def all_loggers() -> Iterator[logging.Logger]:
@@ -206,6 +210,7 @@ class LoggingConfigTest(ZulipTestCase):
             for handler in logger.handlers:
                 assert not isinstance(handler, AdminEmailHandler)
 
+
 class ErrorFiltersTest(ZulipTestCase):
     def test_clean_data_from_query_parameters(self) -> None:
         from zerver.filters import clean_data_from_query_parameters
@@ -213,6 +218,7 @@ class ErrorFiltersTest(ZulipTestCase):
                          "api_key=******&stream=******")
         self.assertEqual(clean_data_from_query_parameters("api_key=abcdz&stream=foo&topic=bar"),
                          "api_key=******&stream=******&topic=******")
+
 
 class RateLimitFilterTest(ZulipTestCase):
     def test_recursive_filter_handling(self) -> None:

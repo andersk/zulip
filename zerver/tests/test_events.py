@@ -148,6 +148,7 @@ def check_events_dict(required_keys: List[Tuple[str, Validator[object]]]) -> Val
     assert len(keys) == len(set(keys))
     return check_dict_only(required_keys)
 
+
 # These fields are used for "stream" events, and are included in the
 # larger "subscription" events that also contain personal settings.
 basic_stream_fields = [
@@ -163,6 +164,7 @@ basic_stream_fields = [
     ('stream_id', check_int),
     ('stream_post_policy', check_int),
 ]
+
 
 class BaseAction(ZulipTestCase):
     def setUp(self) -> None:
@@ -302,6 +304,7 @@ class BaseAction(ZulipTestCase):
 
             sys.stdout.flush()
             raise AssertionError('Mismatching states')
+
 
 class NormalActionsTest(BaseAction):
     def create_bot(self, email: str, **extras: Any) -> UserProfile:
@@ -2496,6 +2499,7 @@ class NormalActionsTest(BaseAction):
             lambda: do_set_zoom_token(self.user_profile, None))
         schema_checker('events[0]', events[0])
 
+
 class RealmPropertyActionTest(BaseAction):
     def do_set_realm_property_test(self, name: str) -> None:
         bool_tests: List[bool] = [True, False, True]
@@ -2567,6 +2571,7 @@ class RealmPropertyActionTest(BaseAction):
         for prop in Realm.property_types:
             with self.settings(SEND_DIGEST_EMAILS=True):
                 self.do_set_realm_property_test(prop)
+
 
 class UserDisplayActionTest(BaseAction):
     def do_set_user_display_settings_test(self, setting_name: str) -> None:
@@ -2643,6 +2648,7 @@ class UserDisplayActionTest(BaseAction):
     def test_set_user_display_settings(self) -> None:
         for prop in UserProfile.property_types:
             self.do_set_user_display_settings_test(prop)
+
 
 class SubscribeActionTest(BaseAction):
     def test_subscribe_events(self) -> None:

@@ -177,6 +177,7 @@ from tools.lib.test_script import assert_provisioning_status_ok
 
 assert_provisioning_status_ok(options.force)
 
+
 def get_dev_host() -> str:
     # See similar code in dev_settings.py.  We only use
     # this to report where you can find coverage reports.
@@ -199,8 +200,10 @@ def get_dev_host() -> str:
         # default, via the "zulipdev.com" hostname.
         return 'zulipdev.com:9991'
 
+
 def print_error(msg: str) -> None:
     print(BOLDRED + 'ERROR:' + ENDC + ' ' + msg)
+
 
 def run_tests_via_node_js() -> int:
     os.environ['TZ'] = 'UTC'
@@ -249,6 +252,7 @@ def run_tests_via_node_js() -> int:
         sys.exit(1)
     return ret
 
+
 def check_line_coverage(fn: str, line_coverage: Dict[Any, Any], line_mapping: Dict[Any, Any], log: bool = True) -> bool:
     missing_lines = []
     for line in line_coverage:
@@ -263,6 +267,7 @@ def check_line_coverage(fn: str, line_coverage: Dict[Any, Any], line_mapping: Di
         return False
     return True
 
+
 def read_coverage() -> Any:
     coverage_json = None
     try:
@@ -272,6 +277,7 @@ def read_coverage() -> Any:
         print(NODE_COVERAGE_PATH + " doesn't exist. Cannot enforce fully covered files.")
         raise
     return coverage_json
+
 
 def enforce_proper_coverage(coverage_json: Any) -> bool:
     all_js_files = set(
@@ -319,6 +325,7 @@ def enforce_proper_coverage(coverage_json: Any) -> bool:
 
     problems_encountered = (coverage_lost or coverage_not_enforced)
     return problems_encountered
+
 
 ret = run_tests_via_node_js()
 

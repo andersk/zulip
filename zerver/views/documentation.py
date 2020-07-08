@@ -50,6 +50,7 @@ def add_api_uri_context(context: Dict[str, Any], request: HttpRequest) -> None:
     context['settings_html'] = settings_html
     context['subscriptions_html'] = subscriptions_html
 
+
 class ApiURLView(TemplateView):
     def get_context_data(self, **kwargs: Any) -> Dict[str, str]:
         context = super().get_context_data(**kwargs)
@@ -134,6 +135,7 @@ class MarkdownDirectoryView(ApiURLView):
             result.status_code = http_status
         return result
 
+
 def add_integrations_context(context: Dict[str, Any]) -> None:
     alphabetical_sorted_categories = OrderedDict(sorted(CATEGORIES.items()))
     alphabetical_sorted_integration = OrderedDict(sorted(INTEGRATIONS.items()))
@@ -144,6 +146,7 @@ def add_integrations_context(context: Dict[str, Any]) -> None:
     context['categories_dict'] = alphabetical_sorted_categories
     context['integrations_dict'] = alphabetical_sorted_integration
     context['integrations_count_display'] = integrations_count_display
+
 
 def add_integrations_open_graph_context(context: Dict[str, Any], request: HttpRequest) -> None:
     path_name = request.path.rstrip('/').split('/')[-1]
@@ -164,6 +167,7 @@ def add_integrations_open_graph_context(context: Dict[str, Any], request: HttpRe
     elif path_name == 'integrations':
         context['OPEN_GRAPH_TITLE'] = 'Connect the tools you use to Zulip'
         context['OPEN_GRAPH_DESCRIPTION'] = description
+
 
 class IntegrationView(ApiURLView):
     template_name = 'zerver/integrations/index.html'

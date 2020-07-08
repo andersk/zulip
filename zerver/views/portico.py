@@ -23,6 +23,7 @@ def apps_view(request: HttpRequest, _: str) -> HttpResponse:
         )
     return HttpResponseRedirect('https://zulip.com/apps/', status=301)
 
+
 @add_google_analytics
 def plans_view(request: HttpRequest) -> HttpResponse:
     realm = get_realm_from_request(request)
@@ -49,6 +50,7 @@ def plans_view(request: HttpRequest) -> HttpResponse:
         context={"realm_plan_type": realm_plan_type, 'free_trial_days': free_trial_days, 'sponsorship_pending': sponsorship_pending},
     )
 
+
 @add_google_analytics
 def team_view(request: HttpRequest) -> HttpResponse:
     if not settings.ZILENCER_ENABLED:
@@ -71,17 +73,21 @@ def team_view(request: HttpRequest) -> HttpResponse:
         },
     )
 
+
 def get_isolated_page(request: HttpRequest) -> bool:
     '''Accept a GET param `?nav=no` to render an isolated, navless page.'''
     return request.GET.get('nav') == 'no'
+
 
 @add_google_analytics
 def landing_view(request: HttpRequest, template_name: str) -> HttpResponse:
     return TemplateResponse(request, template_name)
 
+
 @add_google_analytics
 def hello_view(request: HttpRequest) -> HttpResponse:
     return TemplateResponse(request, 'zerver/hello.html', latest_info_context())
+
 
 @add_google_analytics
 def terms_view(request: HttpRequest) -> HttpResponse:
@@ -89,6 +95,7 @@ def terms_view(request: HttpRequest) -> HttpResponse:
         request, 'zerver/terms.html',
         context={'isolated_page': get_isolated_page(request)},
     )
+
 
 @add_google_analytics
 def privacy_view(request: HttpRequest) -> HttpResponse:

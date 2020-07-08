@@ -26,8 +26,10 @@ from zerver.models import UserProfile
 
 fixture_to_headers = get_http_headers_from_filename("HTTP_X_GOGS_EVENT")
 
+
 def get_issue_url(repo_url: str, issue_nr: int) -> str:
     return f"{repo_url}/issues/{issue_nr}"
+
 
 def format_push_event(payload: Dict[str, Any]) -> str:
 
@@ -45,6 +47,7 @@ def format_push_event(payload: Dict[str, Any]) -> str:
 
     return get_push_commits_event_message(**data)
 
+
 def format_new_branch_event(payload: Dict[str, Any]) -> str:
 
     branch_name = payload['ref']
@@ -56,6 +59,7 @@ def format_new_branch_event(payload: Dict[str, Any]) -> str:
         'branch_name': branch_name,
     }
     return get_create_branch_event_message(**data)
+
 
 def format_pull_request_event(payload: Dict[str, Any],
                               include_title: bool=False) -> str:
@@ -76,6 +80,7 @@ def format_pull_request_event(payload: Dict[str, Any],
 
     return get_pull_request_event_message(**data)
 
+
 def format_issues_event(payload: Dict[str, Any], include_title: bool=False) -> str:
     issue_nr = payload['issue']['number']
     assignee = payload['issue']['assignee']
@@ -88,6 +93,7 @@ def format_issues_event(payload: Dict[str, Any], include_title: bool=False) -> s
         assignee=assignee['login'] if assignee else None,
         title=payload['issue']['title'] if include_title else None,
     )
+
 
 def format_issue_comment_event(payload: Dict[str, Any], include_title: bool=False) -> str:
     action = payload['action']
@@ -109,6 +115,7 @@ def format_issue_comment_event(payload: Dict[str, Any], include_title: bool=Fals
         title=issue['title'] if include_title else None,
     )
 
+
 def format_release_event(payload: Dict[str, Any], include_title: bool=False) -> str:
     data = {
         'user_name': payload['release']['author']['username'],
@@ -120,6 +127,7 @@ def format_release_event(payload: Dict[str, Any], include_title: bool=False) -> 
 
     return get_release_event_message(**data)
 
+
 @api_key_only_webhook_view('Gogs')
 @has_request_variables
 def api_gogs_webhook(request: HttpRequest, user_profile: UserProfile,
@@ -128,6 +136,7 @@ def api_gogs_webhook(request: HttpRequest, user_profile: UserProfile,
                      user_specified_topic: Optional[str]=REQ("topic", default=None)) -> HttpResponse:
     return gogs_webhook_main("Gogs", "X_GOGS_EVENT", format_pull_request_event,
                              request, user_profile, payload, branches, user_specified_topic)
+
 
 def gogs_webhook_main(integration_name: str, http_header_name: str,
                       format_pull_request_event: Callable[..., Any],

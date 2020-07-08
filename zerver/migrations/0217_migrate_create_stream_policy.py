@@ -19,6 +19,7 @@ def upgrade_create_stream_policy(apps: StateApps, schema_editor: DatabaseSchemaE
         .filter(create_stream_by_admins_only=False) \
         .update(create_stream_policy=Realm.CREATE_STREAM_POLICY_WAITING_PERIOD)
 
+
 class Migration(migrations.Migration):
 
     dependencies = [

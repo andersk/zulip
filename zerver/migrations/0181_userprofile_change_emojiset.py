@@ -7,6 +7,7 @@ def change_emojiset_choice(apps: StateApps, schema_editor: DatabaseSchemaEditor)
     UserProfile = apps.get_model('zerver', 'UserProfile')
     UserProfile.objects.exclude(emojiset__in=['google', 'text']).update(emojiset='google')
 
+
 class Migration(migrations.Migration):
 
     dependencies = [

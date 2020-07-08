@@ -97,6 +97,7 @@ class PublicURLTest(ZulipTestCase):
             self.assertEqual('success', data['result'])
             self.assertEqual('ABCD', data['google_client_id'])
 
+
 class URLResolutionTest(ZulipTestCase):
     def get_callback_string(self, pattern: django.urls.resolvers.URLPattern) -> Optional[str]:
         callback_str = hasattr(pattern, 'lookup_str') and 'lookup_str'
@@ -127,6 +128,7 @@ class URLResolutionTest(ZulipTestCase):
             if callback_str:
                 (module_name, base_view) = callback_str.rsplit(".", 1)
                 self.check_function_exists(module_name, base_view)
+
 
 class ErrorPageTest(ZulipTestCase):
     def test_bogus_http_host(self) -> None:

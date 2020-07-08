@@ -16,11 +16,13 @@ from zerver.views.registration import accounts_register
 def confirmation_key(request: HttpRequest) -> HttpResponse:
     return json_success(request.session.get('confirmation_key'))
 
+
 def modify_postdata(request: HttpRequest, **kwargs: Any) -> None:
     request.POST._mutable = True
     for key, value in kwargs.items():
         request.POST[key] = value
     request.POST._mutable = False
+
 
 @csrf_exempt
 def register_development_user(request: HttpRequest) -> HttpResponse:
@@ -38,6 +40,7 @@ def register_development_user(request: HttpRequest) -> HttpResponse:
     modify_postdata(request, key=key, full_name=name, password='test', terms='true')
 
     return accounts_register(request)
+
 
 @csrf_exempt
 def register_development_realm(request: HttpRequest) -> HttpResponse:

@@ -133,6 +133,7 @@ class WebhooksCommonTestCase(ZulipTestCase):
         expected_djangoified_headers = {"CONTENT_TYPE": "text/plain", "HTTP_X_EVENT_TYPE": "ping"}
         self.assertEqual(djangoified_headers, expected_djangoified_headers)
 
+
 class MissingEventHeaderTestCase(WebhookTestCase):
     STREAM_NAME = 'groove'
     URL_TEMPLATE = '/api/v1/external/groove?stream={stream}&api_key={api_key}'

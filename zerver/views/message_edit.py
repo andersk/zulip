@@ -74,6 +74,7 @@ def fill_edit_history_entries(message_history: List[Dict[str, Any]], message: Me
         user_id = message.sender_id,
     ))
 
+
 @has_request_variables
 def get_message_edit_history(request: HttpRequest, user_profile: UserProfile,
                              message_id: int=REQ(converter=to_non_negative_int,
@@ -92,7 +93,10 @@ def get_message_edit_history(request: HttpRequest, user_profile: UserProfile,
     fill_edit_history_entries(message_edit_history, message)
     return json_success({"message_history": reversed(message_edit_history)})
 
+
 PROPAGATE_MODE_VALUES = ["change_later", "change_one", "change_all"]
+
+
 @has_request_variables
 def update_message_backend(request: HttpRequest, user_profile: UserMessage,
                            message_id: int=REQ(converter=to_non_negative_int, path_only=True),
@@ -248,6 +252,7 @@ def validate_can_delete_message(user_profile: UserProfile, message: Message) -> 
         raise JsonableError(_("The time limit for deleting this message has passed"))
     return
 
+
 @has_request_variables
 def delete_message_backend(request: HttpRequest, user_profile: UserProfile,
                            message_id: int=REQ(converter=to_non_negative_int,
@@ -259,6 +264,7 @@ def delete_message_backend(request: HttpRequest, user_profile: UserProfile,
     except (Message.DoesNotExist, IntegrityError):
         raise JsonableError(_("Message already deleted"))
     return json_success()
+
 
 @has_request_variables
 def json_fetch_raw_message(request: HttpRequest, user_profile: UserProfile,

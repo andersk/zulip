@@ -172,6 +172,7 @@ class EventsEndpointTest(ZulipTestCase):
         result = self.client_post_request('/notify_tornado', req)
         self.assert_json_success(result)
 
+
 class GetEventsTest(ZulipTestCase):
     def tornado_call(self, view_func: Callable[[HttpRequest, UserProfile], HttpResponse],
                      user_profile: UserProfile,
@@ -354,6 +355,7 @@ class GetEventsTest(ZulipTestCase):
         self.assertEqual(message["content"], "<p><strong>hello</strong></p>")
         self.assertEqual(message["avatar_url"], None)
 
+
 class FetchInitialStateDataTest(ZulipTestCase):
     # Non-admin users don't have access to all bots
     def test_realm_bots_non_admin(self) -> None:
@@ -459,6 +461,7 @@ class FetchInitialStateDataTest(ZulipTestCase):
                 self.assertIsNone(user_dict['avatar_url'])
             else:
                 self.assertFalse('avatar_url' in user_dict)
+
 
 class ClientDescriptorsTest(ZulipTestCase):
     def test_get_client_info_for_all_public_streams(self) -> None:
@@ -742,6 +745,7 @@ class ClientDescriptorsTest(ZulipTestCase):
             ),
         ])
 
+
 class FetchQueriesTest(ZulipTestCase):
     def test_queries(self) -> None:
         user = self.example_user("hamlet")
@@ -859,6 +863,7 @@ class TestEventsRegisterAllPublicStreamsDefaults(ZulipTestCase):
         result = _default_all_public_streams(self.user_profile, None)
         self.assertFalse(result)
 
+
 class TestEventsRegisterNarrowDefaults(ZulipTestCase):
     def setUp(self) -> None:
         super().setUp()
@@ -889,6 +894,7 @@ class TestEventsRegisterNarrowDefaults(ZulipTestCase):
         self.user_profile.save()
         result = _default_narrow(self.user_profile, [])
         self.assertEqual(result, [])
+
 
 class TestGetRawUserDataSystemBotRealm(ZulipTestCase):
     def test_get_raw_user_data_on_system_bot_realm(self) -> None:
