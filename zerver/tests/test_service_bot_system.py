@@ -49,9 +49,7 @@ class TestServiceBotBasics(ZulipTestCase):
         )
 
         expected = dict(
-            outgoing_webhooks=[
-                dict(trigger="private_message", user_profile_id=outgoing_bot.id),
-            ],
+            outgoing_webhooks=[dict(trigger="private_message", user_profile_id=outgoing_bot.id)],
         )
 
         self.assertEqual(event_dict, expected)
@@ -462,9 +460,7 @@ class TestServiceBotEventTriggers(ZulipTestCase):
             self.bot_profile.bot_type = bot_type
             self.bot_profile.save()
 
-            self.send_stream_message(
-                self.second_bot_profile, "Denmark", "@**FooBot** foo bar!!!",
-            )
+            self.send_stream_message(self.second_bot_profile, "Denmark", "@**FooBot** foo bar!!!")
             self.assertFalse(mock_queue_json_publish.called)
 
     @mock.patch("zerver.lib.actions.queue_json_publish")

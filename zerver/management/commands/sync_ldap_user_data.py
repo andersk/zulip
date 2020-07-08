@@ -78,9 +78,7 @@ class Command(ZulipBaseCommand):
     def handle(self, *args: Any, **options: Any) -> None:
         if options.get("realm_id") is not None:
             realm = self.get_realm(options)
-            user_profiles = self.get_users(
-                options, realm, is_bot=False, include_deactivated=True,
-            )
+            user_profiles = self.get_users(options, realm, is_bot=False, include_deactivated=True)
         else:
             user_profiles = UserProfile.objects.select_related().filter(is_bot=False)
         sync_ldap_user_data(user_profiles, not options["force"])

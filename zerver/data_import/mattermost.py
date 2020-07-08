@@ -349,9 +349,7 @@ def process_raw_message_batch(
         mention_user_ids = get_mentioned_user_ids(raw_message, user_id_mapper)
         mention_map[message_id] = mention_user_ids
 
-        content = fix_mentions(
-            content=raw_message["content"], mention_user_ids=mention_user_ids,
-        )
+        content = fix_mentions(content=raw_message["content"], mention_user_ids=mention_user_ids)
         content = h.handle(content)
 
         if len(content) > 10000:  # nocoverage
@@ -373,13 +371,9 @@ def process_raw_message_batch(
             member_ids = {user_id_mapper.get(member) for member in members}
             pm_members[message_id] = member_ids
             if sender_user_id == user_id_mapper.get(members[0]):
-                recipient_id = get_recipient_id_from_receiver_name(
-                    members[1], Recipient.PERSONAL,
-                )
+                recipient_id = get_recipient_id_from_receiver_name(members[1], Recipient.PERSONAL)
             else:
-                recipient_id = get_recipient_id_from_receiver_name(
-                    members[0], Recipient.PERSONAL,
-                )
+                recipient_id = get_recipient_id_from_receiver_name(members[0], Recipient.PERSONAL)
         else:
             raise AssertionError(
                 "raw_message without channel_name, huddle_name or pm_members key",
@@ -830,9 +824,7 @@ def do_convert_data(mattermost_data_dir: str, output_dir: str, masking_content: 
 
         # Mattermost currently supports only exporting messages from channels.
         # Personal messages and huddles are not exported.
-        zerver_subscription = (
-            personal_subscriptions + stream_subscriptions + huddle_subscriptions
-        )
+        zerver_subscription = personal_subscriptions + stream_subscriptions + huddle_subscriptions
         realm["zerver_subscription"] = zerver_subscription
 
         zerver_realmemoji = write_emoticon_data(

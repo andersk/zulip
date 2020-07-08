@@ -61,9 +61,7 @@ if __name__ == "__main__":
     while True:
         conflicts: List[str] = []
         stack: List[str] = []
-        files_list = [
-            os.path.basename(path) for path in glob.glob("zerver/migrations/????_*.py")
-        ]
+        files_list = [os.path.basename(path) for path in glob.glob("zerver/migrations/????_*.py")]
         file_index = [file[0:4] for file in files_list]
 
         for file in file_index:

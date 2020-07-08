@@ -507,9 +507,7 @@ class MessageDict:
             obj["sender_is_mirror_dummy"] = user_row["is_mirror_dummy"]
 
     @staticmethod
-    def hydrate_recipient_info(
-        obj: Dict[str, Any], display_recipient: DisplayRecipientT,
-    ) -> None:
+    def hydrate_recipient_info(obj: Dict[str, Any], display_recipient: DisplayRecipientT) -> None:
         """
         This method hyrdrates recipient info with things
         like full names and emails of senders.  Eventually
@@ -555,8 +553,7 @@ class MessageDict:
     @staticmethod
     def bulk_hydrate_recipient_info(objs: List[Dict[str, Any]]) -> None:
         recipient_tuples = {  # We use set to eliminate duplicate tuples.
-            (obj["recipient_id"], obj["recipient_type"], obj["recipient_type_id"])
-            for obj in objs
+            (obj["recipient_id"], obj["recipient_type"], obj["recipient_type_id"]) for obj in objs
         }
         display_recipients = bulk_fetch_display_recipients(recipient_tuples)
 
@@ -670,9 +667,7 @@ def has_message_access(
     return True
 
 
-def bulk_access_messages(
-    user_profile: UserProfile, messages: Sequence[Message],
-) -> List[Message]:
+def bulk_access_messages(user_profile: UserProfile, messages: Sequence[Message]) -> List[Message]:
     filtered_messages = []
 
     for message in messages:
@@ -941,9 +936,7 @@ def get_raw_unread_data(user_profile: UserProfile) -> RawUnreadMessagesResult:
         if msg_type == Recipient.STREAM:
             stream_id = row["message__recipient__type_id"]
             topic = row[MESSAGE__TOPIC]
-            stream_dict[message_id] = dict(
-                stream_id=stream_id, topic=topic, sender_id=sender_id,
-            )
+            stream_dict[message_id] = dict(stream_id=stream_id, topic=topic, sender_id=sender_id)
             if not is_row_muted(stream_id, recipient_id, topic):
                 unmuted_stream_msgs.add(message_id)
 

@@ -11,9 +11,7 @@ def hash_util_encode(string: str) -> str:
     # frontend.
     # `safe` has a default value of "/", but we want those encoded, too.
     return (
-        urllib.parse.quote(string.encode("utf-8"), safe=b"")
-        .replace(".", "%2E")
-        .replace("%", ".")
+        urllib.parse.quote(string.encode("utf-8"), safe=b"").replace(".", "%2E").replace("%", ".")
     )
 
 

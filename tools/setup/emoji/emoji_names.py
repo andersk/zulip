@@ -768,10 +768,7 @@ EMOJI_NAME_MAPS: Dict[str, Dict[str, Any]] = {
     "1f93a": {"canonical_name": "fencing", "aliases": []},
     "1f93c": {"canonical_name": "wrestling", "aliases": []},
     # seemed like reasonable additions
-    "1f938": {
-        "canonical_name": "cartwheel",
-        "aliases": ["acrobatics", "gymnastics", "tumbling"],
-    },
+    "1f938": {"canonical_name": "cartwheel", "aliases": ["acrobatics", "gymnastics", "tumbling"]},
     # seemed the best emoji for sports
     "26f9": {"canonical_name": "ball", "aliases": ["sports"]},
     "1f93e": {"canonical_name": "handball", "aliases": []},

@@ -54,9 +54,7 @@ def patch_openapi_example_values(
         param_name = param["name"]
         if param_name in realm_example_values:
             if "content" in param:
-                param["content"]["application/json"]["example"] = realm_example_values[
-                    param_name
-                ]
+                param["content"]["application/json"]["example"] = realm_example_values[param_name]
             else:
                 param["example"] = realm_example_values[param_name]
 

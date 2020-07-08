@@ -480,9 +480,7 @@ v1_api_and_json_patterns = [
         },
     ),
     # settings -> zerver.views.user_settings
-    path(
-        "settings", rest_dispatch, {"PATCH": "zerver.views.user_settings.json_change_settings"},
-    ),
+    path("settings", rest_dispatch, {"PATCH": "zerver.views.user_settings.json_change_settings"}),
     path(
         "settings/display",
         rest_dispatch,
@@ -879,16 +877,12 @@ i18n_urls = [
     path("hello/", zerver.views.portico.hello_view, name="landing-page"),
     path("new-user/", RedirectView.as_view(url="/hello", permanent=True)),
     path(
-        "features/",
-        zerver.views.portico.landing_view,
-        {"template_name": "zerver/features.html"},
+        "features/", zerver.views.portico.landing_view, {"template_name": "zerver/features.html"},
     ),
     path("plans/", zerver.views.portico.plans_view, name="plans"),
     re_path(r"apps/(.*)$", zerver.views.portico.apps_view, name="zerver.views.home.apps_view"),
     path("team/", zerver.views.portico.team_view),
-    path(
-        "history/", zerver.views.portico.landing_view, {"template_name": "zerver/history.html"},
-    ),
+    path("history/", zerver.views.portico.landing_view, {"template_name": "zerver/history.html"}),
     path(
         "why-zulip/",
         zerver.views.portico.landing_view,
@@ -915,9 +909,7 @@ i18n_urls = [
         {"template_name": "zerver/for-working-groups-and-communities.html"},
     ),
     path(
-        "security/",
-        zerver.views.portico.landing_view,
-        {"template_name": "zerver/security.html"},
+        "security/", zerver.views.portico.landing_view, {"template_name": "zerver/security.html"},
     ),
     path(
         "atlassian/",

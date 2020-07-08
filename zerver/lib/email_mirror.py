@@ -232,9 +232,7 @@ def extract_body(
     html_content = extract_html_body(message, include_quotes)
 
     if plaintext_content is None and html_content is None:
-        logging.warning(
-            "Content types: %s", [part.get_content_type() for part in message.walk()],
-        )
+        logging.warning("Content types: %s", [part.get_content_type() for part in message.walk()])
         raise ZulipEmailForwardUserError("Unable to find plaintext or HTML message body")
     if not plaintext_content and not html_content:
         raise ZulipEmailForwardUserError("Email has no nonempty body sections; ignoring.")

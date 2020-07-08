@@ -142,9 +142,7 @@ class AnalyticsTestCase(ZulipTestCase):
         huddle.save(update_fields=["recipient"])
         return huddle, recipient
 
-    def create_message(
-        self, sender: UserProfile, recipient: Recipient, **kwargs: Any
-    ) -> Message:
+    def create_message(self, sender: UserProfile, recipient: Recipient, **kwargs: Any) -> Message:
         defaults = {
             "sender": sender,
             "recipient": recipient,
@@ -293,11 +291,7 @@ class TestProcessCountStat(AnalyticsTestCase):
             user=user, realm=realm, property=user_stat.property, end_time=end_time, value=5,
         )
         StreamCount.objects.create(
-            stream=stream,
-            realm=realm,
-            property=stream_stat.property,
-            end_time=end_time,
-            value=5,
+            stream=stream, realm=realm, property=stream_stat.property, end_time=end_time, value=5,
         )
         RealmCount.objects.create(
             realm=realm, property=realm_stat.property, end_time=end_time, value=5,
@@ -362,9 +356,7 @@ class TestProcessCountStat(AnalyticsTestCase):
         process_count_stat(stat1, hour[2])
         process_count_stat(stat3, hour[1])
         self.assertTableState(
-            InstallationCount,
-            ["property", "end_time"],
-            [["stat1", hour[1]], ["stat1", hour[2]]],
+            InstallationCount, ["property", "end_time"], [["stat1", hour[1]], ["stat1", hour[2]]],
         )
         self.assertFillStateEquals(stat3, hour[0])
 
@@ -445,9 +437,7 @@ class TestCountStats(AnalyticsTestCase):
                 date_joined=creation_time,
             )
             recipient = self.create_stream_with_recipient(
-                name=f"stream {minutes_ago}",
-                realm=self.second_realm,
-                date_created=creation_time,
+                name=f"stream {minutes_ago}", realm=self.second_realm, date_created=creation_time,
             )[1]
             self.create_message(user, recipient, date_sent=creation_time)
         self.hourly_user = get_user("user-1@second.analytics", self.second_realm)
@@ -1698,9 +1688,7 @@ class TestRealmActiveHumans(AnalyticsTestCase):
 
         for i in [-1, 0, 1]:
             do_fill_count_stat_at_hour(self.stat, self.TIME_ZERO + i * self.DAY)
-        self.assertTableState(
-            RealmCount, ["value", "end_time"], [[1, self.TIME_ZERO + self.DAY]],
-        )
+        self.assertTableState(RealmCount, ["value", "end_time"], [[1, self.TIME_ZERO + self.DAY]])
 
     def test_bots_not_counted(self) -> None:
         bot = self.create_user(is_bot=True)

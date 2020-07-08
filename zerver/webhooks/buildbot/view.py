@@ -27,15 +27,7 @@ def api_buildbot_webhook(
 def get_message(payload: Dict[str, Any]) -> str:
     if "results" in payload:
         # See http://docs.buildbot.net/latest/developer/results.html
-        results = (
-            "success",
-            "warnings",
-            "failure",
-            "skipped",
-            "exception",
-            "retry",
-            "cancelled",
-        )
+        results = ("success", "warnings", "failure", "skipped", "exception", "retry", "cancelled")
         status = results[payload["results"]]
 
     if payload["event"] == "new":
@@ -44,10 +36,7 @@ def get_message(payload: Dict[str, Any]) -> str:
         )
     elif payload["event"] == "finished":
         body = "Build [#{id}]({url}) (result: {status}) for **{name}** finished.".format(
-            id=payload["buildid"],
-            name=payload["buildername"],
-            url=payload["url"],
-            status=status,
+            id=payload["buildid"], name=payload["buildername"], url=payload["url"], status=status,
         )
 
     return body

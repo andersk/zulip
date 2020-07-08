@@ -3,9 +3,7 @@ from typing import Optional, Set, Tuple
 
 # Match multi-word string between @** ** or match any one-word
 # sequences after @
-find_mentions = (
-    r"(?<![^\s\'\"\(,:<])@(?P<silent>_?)(?P<match>\*\*[^\*]+\*\*|all|everyone|stream)"
-)
+find_mentions = r"(?<![^\s\'\"\(,:<])@(?P<silent>_?)(?P<match>\*\*[^\*]+\*\*|all|everyone|stream)"
 user_group_mentions = r"(?<![^\s\'\"\(,:<])@(\*[^\*]+\*)"
 
 wildcards = ["all", "everyone", "stream"]

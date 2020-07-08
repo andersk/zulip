@@ -230,8 +230,7 @@ class EditMessageTest(ZulipTestCase):
 
         new_content_1 = "content after edit"
         result_1 = self.client_patch(
-            "/json/messages/" + str(msg_id_1),
-            {"message_id": msg_id_1, "content": new_content_1},
+            "/json/messages/" + str(msg_id_1), {"message_id": msg_id_1, "content": new_content_1},
         )
         self.assert_json_success(result_1)
 
@@ -260,8 +259,7 @@ class EditMessageTest(ZulipTestCase):
         )
         new_content_1 = "content after edit"
         result_1 = self.client_patch(
-            "/json/messages/" + str(msg_id_1),
-            {"message_id": msg_id_1, "content": new_content_1},
+            "/json/messages/" + str(msg_id_1), {"message_id": msg_id_1, "content": new_content_1},
         )
         self.assert_json_success(result_1)
 
@@ -299,8 +297,7 @@ class EditMessageTest(ZulipTestCase):
             "content before edit, line 3"
         )
         result_2 = self.client_patch(
-            "/json/messages/" + str(msg_id_2),
-            {"message_id": msg_id_2, "content": new_content_2},
+            "/json/messages/" + str(msg_id_2), {"message_id": msg_id_2, "content": new_content_2},
         )
         self.assert_json_success(result_2)
 
@@ -344,8 +341,7 @@ class EditMessageTest(ZulipTestCase):
         )
         new_content_1 = "Here is a link to [zulip](www.zulipchat.com)."
         result_1 = self.client_patch(
-            "/json/messages/" + str(msg_id_1),
-            {"message_id": msg_id_1, "content": new_content_1},
+            "/json/messages/" + str(msg_id_1), {"message_id": msg_id_1, "content": new_content_1},
         )
         self.assert_json_success(result_1)
 
@@ -681,9 +677,7 @@ class EditMessageTest(ZulipTestCase):
         self.login("iago")
         set_message_editing_params(False, 0, True)
         self.login("cordelia")
-        do_edit_message_assert_error(
-            id_, "D", "Your organization has turned off message editing",
-        )
+        do_edit_message_assert_error(id_, "D", "Your organization has turned off message editing")
 
         # non-admin users cannot edit topics sent > 24 hrs ago
         message.date_sent = message.date_sent - datetime.timedelta(seconds=90000)
@@ -802,9 +796,7 @@ class EditMessageTest(ZulipTestCase):
                 "flags": ["wildcard_mentioned"],
             }
 
-        users_to_be_notified = sorted(
-            map(notify, [cordelia.id, hamlet.id]), key=itemgetter("id"),
-        )
+        users_to_be_notified = sorted(map(notify, [cordelia.id, hamlet.id]), key=itemgetter("id"))
         result = self.client_patch(
             "/json/messages/" + str(message_id),
             {"message_id": message_id, "content": "Hello @**everyone**"},
@@ -818,9 +810,7 @@ class EditMessageTest(ZulipTestCase):
             (arg_realm, arg_event, arg_notified_users) = call_args[0]
             if arg_event["type"] == "update_message":
                 self.assertEqual(arg_event["type"], "update_message")
-                self.assertEqual(
-                    arg_event["wildcard_mention_user_ids"], [cordelia.id, hamlet.id],
-                )
+                self.assertEqual(arg_event["wildcard_mention_user_ids"], [cordelia.id, hamlet.id])
                 self.assertEqual(
                     sorted(arg_notified_users, key=itemgetter("id")), users_to_be_notified,
                 )
@@ -832,16 +822,12 @@ class EditMessageTest(ZulipTestCase):
         id1 = self.send_stream_message(
             self.example_user("hamlet"), "Scotland", topic_name="topic1",
         )
-        id2 = self.send_stream_message(
-            self.example_user("iago"), "Scotland", topic_name="topic1",
-        )
+        id2 = self.send_stream_message(self.example_user("iago"), "Scotland", topic_name="topic1")
         id3 = self.send_stream_message(self.example_user("iago"), "Rome", topic_name="topic1")
         id4 = self.send_stream_message(
             self.example_user("hamlet"), "Scotland", topic_name="topic2",
         )
-        id5 = self.send_stream_message(
-            self.example_user("iago"), "Scotland", topic_name="topic1",
-        )
+        id5 = self.send_stream_message(self.example_user("iago"), "Scotland", topic_name="topic1")
 
         result = self.client_patch(
             "/json/messages/" + str(id1),
@@ -867,12 +853,8 @@ class EditMessageTest(ZulipTestCase):
         id4 = self.send_stream_message(
             self.example_user("hamlet"), "Scotland", topic_name="topic2",
         )
-        id5 = self.send_stream_message(
-            self.example_user("iago"), "Scotland", topic_name="topic1",
-        )
-        id6 = self.send_stream_message(
-            self.example_user("iago"), "Scotland", topic_name="topic3",
-        )
+        id5 = self.send_stream_message(self.example_user("iago"), "Scotland", topic_name="topic1")
+        id6 = self.send_stream_message(self.example_user("iago"), "Scotland", topic_name="topic3")
 
         result = self.client_patch(
             "/json/messages/" + str(id2),
@@ -896,9 +878,7 @@ class EditMessageTest(ZulipTestCase):
             self.example_user("hamlet"), "Scotland", topic_name="Topic1",
         )
         id3 = self.send_stream_message(self.example_user("iago"), "Rome", topic_name="topiC1")
-        id4 = self.send_stream_message(
-            self.example_user("iago"), "Scotland", topic_name="toPic1",
-        )
+        id4 = self.send_stream_message(self.example_user("iago"), "Scotland", topic_name="toPic1")
 
         result = self.client_patch(
             "/json/messages/" + str(id2),

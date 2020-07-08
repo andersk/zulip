@@ -820,8 +820,7 @@ def import_uploads(
                         upload_backend.ensure_basic_avatar_image(user_profile=user_profile)
                 except BadImageError:
                     logging.warning(
-                        "Could not thumbnail avatar image for user %s; ignoring",
-                        user_profile.id,
+                        "Could not thumbnail avatar image for user %s; ignoring", user_profile.id,
                     )
                     # Delete the record of the avatar to avoid 404s.
                     do_change_avatar_fields(
@@ -1016,9 +1015,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
         UserProfile, UserProfile.objects.filter(realm=realm),
     )
 
-    re_map_foreign_keys(
-        data, "zerver_subscription", "user_profile", related_table="user_profile",
-    )
+    re_map_foreign_keys(data, "zerver_subscription", "user_profile", related_table="user_profile")
     get_huddles_from_subscription(data, "zerver_subscription")
     re_map_foreign_keys(data, "zerver_subscription", "recipient", related_table="recipient")
     update_model_ids(Subscription, data, "subscription")
@@ -1107,18 +1104,14 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
         bulk_import_model(data, BotConfigData)
 
     fix_datetime_fields(data, "zerver_userpresence")
-    re_map_foreign_keys(
-        data, "zerver_userpresence", "user_profile", related_table="user_profile",
-    )
+    re_map_foreign_keys(data, "zerver_userpresence", "user_profile", related_table="user_profile")
     re_map_foreign_keys(data, "zerver_userpresence", "client", related_table="client")
     re_map_foreign_keys(data, "zerver_userpresence", "realm", related_table="realm")
     update_model_ids(UserPresence, data, "user_presence")
     bulk_import_model(data, UserPresence)
 
     fix_datetime_fields(data, "zerver_useractivity")
-    re_map_foreign_keys(
-        data, "zerver_useractivity", "user_profile", related_table="user_profile",
-    )
+    re_map_foreign_keys(data, "zerver_useractivity", "user_profile", related_table="user_profile")
     re_map_foreign_keys(data, "zerver_useractivity", "client", related_table="client")
     update_model_ids(UserActivity, data, "useractivity")
     bulk_import_model(data, UserActivity)
@@ -1145,9 +1138,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
     bulk_import_model(data, CustomProfileFieldValue)
 
     # Import uploaded files and avatars
-    import_uploads(
-        realm, os.path.join(import_dir, "avatars"), processes, processing_avatars=True,
-    )
+    import_uploads(realm, os.path.join(import_dir, "avatars"), processes, processing_avatars=True)
     import_uploads(realm, os.path.join(import_dir, "uploads"), processes)
 
     # We need to have this check as the emoji files are only present in the data

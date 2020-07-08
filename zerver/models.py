@@ -791,9 +791,7 @@ def filter_pattern_validator(value: str) -> None:
 
 
 def filter_format_validator(value: str) -> None:
-    regex = re.compile(
-        r"^([\.\/:a-zA-Z0-9#_?=&;-]+%\(([a-zA-Z0-9_-]+)\)s)+[/a-zA-Z0-9#_?=&;-]*$",
-    )
+    regex = re.compile(r"^([\.\/:a-zA-Z0-9#_?=&;-]+%\(([a-zA-Z0-9_-]+)\)s)+[/a-zA-Z0-9#_?=&;-]*$")
 
     if not regex.match(value):
         raise ValidationError(_("Invalid URL format string."))
@@ -832,9 +830,7 @@ def realm_in_local_realm_filters_cache(realm_id: int) -> bool:
 
 def realm_filters_for_realm(realm_id: int) -> List[Tuple[str, str, int]]:
     if not realm_in_local_realm_filters_cache(realm_id):
-        per_request_realm_filters_cache[realm_id] = realm_filters_for_realm_remote_cache(
-            realm_id,
-        )
+        per_request_realm_filters_cache[realm_id] = realm_filters_for_realm_remote_cache(realm_id)
     return per_request_realm_filters_cache[realm_id]
 
 
@@ -1475,9 +1471,7 @@ class PreregistrationUser(models.Model):
 
     # If the pre-registration process provides a suggested full name for this user,
     # store it here to use it to prepopulate the Full Name field in the registration form:
-    full_name: Optional[str] = models.CharField(
-        max_length=UserProfile.MAX_NAME_LENGTH, null=True,
-    )
+    full_name: Optional[str] = models.CharField(max_length=UserProfile.MAX_NAME_LENGTH, null=True)
     full_name_validated: bool = models.BooleanField(default=False)
     referred_by: Optional[UserProfile] = models.ForeignKey(
         UserProfile, null=True, on_delete=CASCADE,

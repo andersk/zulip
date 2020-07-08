@@ -123,9 +123,7 @@ From image editing program:
         (emoji_code, reaction_type) = emoji_name_to_emoji_code(realm, "whale")
         do_add_reaction(starr, preview_message, "whale", emoji_code, reaction_type)
 
-        twitter_message = Message.objects.get(
-            id__in=message_ids, content__icontains="gvanrossum",
-        )
+        twitter_message = Message.objects.get(id__in=message_ids, content__icontains="gvanrossum")
         # Setting up a twitter integration in dev is a decent amount of work. If you need
         # to update this tweet, either copy the format below, or send the link to the tweet
         # to chat.zulip.org and ask an admin of that server to get you the rendered_content.

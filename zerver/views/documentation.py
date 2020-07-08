@@ -11,12 +11,7 @@ from django.views.generic import TemplateView
 
 from zerver.context_processors import zulip_default_context
 from zerver.decorator import add_google_analytics_context
-from zerver.lib.integrations import (
-    CATEGORIES,
-    INTEGRATIONS,
-    HubotIntegration,
-    WebhookIntegration,
-)
+from zerver.lib.integrations import CATEGORIES, INTEGRATIONS, HubotIntegration, WebhookIntegration
 from zerver.lib.request import REQ, has_request_variables
 from zerver.lib.subdomains import get_subdomain
 from zerver.models import Realm

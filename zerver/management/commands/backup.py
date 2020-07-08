@@ -113,10 +113,7 @@ class Command(ZulipBaseCommand):
                     tarball_path = options["output"]
 
                 run(
-                    ["tar", "-C", tmp, "-cPzf", tarball_path]
-                    + transform_args
-                    + ["--"]
-                    + members,
+                    ["tar", "-C", tmp, "-cPzf", tarball_path] + transform_args + ["--"] + members,
                 )
                 print(f"Backup tarball written to {tarball_path}")
             except BaseException:

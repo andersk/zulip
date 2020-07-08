@@ -325,9 +325,7 @@ def do_rest_call(
 
     except requests.exceptions.Timeout:
         logging.info(
-            "Trigger event %s on %s timed out. Retrying",
-            event["command"],
-            event["service_name"],
+            "Trigger event %s on %s timed out. Retrying", event["command"], event["service_name"],
         )
         failure_message = "A timeout occurred."
         request_retry(event, failure_message=failure_message)

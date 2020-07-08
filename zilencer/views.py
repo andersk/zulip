@@ -69,9 +69,7 @@ def register_remote_server(
     zulip_org_key: str = REQ(
         str_validator=check_string_fixed_length(RemoteZulipServer.API_KEY_LENGTH),
     ),
-    hostname: str = REQ(
-        str_validator=check_capped_string(RemoteZulipServer.HOSTNAME_MAX_LENGTH),
-    ),
+    hostname: str = REQ(str_validator=check_capped_string(RemoteZulipServer.HOSTNAME_MAX_LENGTH)),
     contact_email: str = REQ(str_validator=check_string),
     new_org_key: Optional[str] = REQ(
         str_validator=check_string_fixed_length(RemoteZulipServer.API_KEY_LENGTH), default=None,
@@ -93,11 +91,7 @@ def register_remote_server(
 
     remote_server, created = RemoteZulipServer.objects.get_or_create(
         uuid=zulip_org_id,
-        defaults={
-            "hostname": hostname,
-            "contact_email": contact_email,
-            "api_key": zulip_org_key,
-        },
+        defaults={"hostname": hostname, "contact_email": contact_email, "api_key": zulip_org_key},
     )
 
     if not created:

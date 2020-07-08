@@ -297,9 +297,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 (
                     "realm",
                     models.ForeignKey(
-                        null=True,
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to="zerver.Realm",
+                        null=True, on_delete=django.db.models.deletion.CASCADE, to="zerver.Realm",
                     ),
                 ),
             ],

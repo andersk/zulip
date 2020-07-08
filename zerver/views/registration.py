@@ -693,10 +693,7 @@ def find_account(request: HttpRequest) -> HttpResponse:
         if form.is_valid():
             emails = form.cleaned_data["emails"]
             for user in UserProfile.objects.filter(
-                delivery_email__in=emails,
-                is_active=True,
-                is_bot=False,
-                realm__deactivated=False,
+                delivery_email__in=emails, is_active=True, is_bot=False, realm__deactivated=False,
             ):
                 context = common_context(user)
                 context.update({"email": user.delivery_email})

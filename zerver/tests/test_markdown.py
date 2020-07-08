@@ -193,9 +193,7 @@ def markdown_convert_wrapper(content: str) -> str:
 
 class MarkdownMiscTest(ZulipTestCase):
     def test_diffs_work_as_expected(self) -> None:
-        str1 = (
-            "<p>The quick brown fox jumps over the lazy dog.  Animal stories are fun, yeah</p>"
-        )
+        str1 = "<p>The quick brown fox jumps over the lazy dog.  Animal stories are fun, yeah</p>"
         str2 = "<p>The fast fox jumps over the lazy dogs and cats.  Animal stories are fun</p>"
         expected_diff = "\u001b[34m-\u001b[0m <p>The \u001b[33mquick brown\u001b[0m fox jumps over the lazy dog.  Animal stories are fun\u001b[31m, yeah\u001b[0m</p>\n\u001b[34m+\u001b[0m <p>The \u001b[33mfast\u001b[0m fox jumps over the lazy dog\u001b[32ms and cats\u001b[0m.  Animal stories are fun</p>\n"
         self.assertEqual(diff_strings(str1, str2), expected_diff)
@@ -929,8 +927,7 @@ class MarkdownTest(ZulipTestCase):
             "<p>{}</p>\n{}".format(
                 make_link("https://www.twitter.com/wdaher/status/287977969287315456"),
                 make_inline_twitter_preview(
-                    "https://www.twitter.com/wdaher/status/287977969287315456",
-                    normal_tweet_html,
+                    "https://www.twitter.com/wdaher/status/287977969287315456", normal_tweet_html,
                 ),
             ),
         )
@@ -1165,8 +1162,7 @@ class MarkdownTest(ZulipTestCase):
         realm_filter.save()
         self.assertEqual(
             realm_filter.__str__(),
-            "<RealmFilter(zulip): #(?P<id>[0-9]{2,8})"
-            " https://trac.example.com/ticket/%(id)s>",
+            "<RealmFilter(zulip): #(?P<id>[0-9]{2,8})" " https://trac.example.com/ticket/%(id)s>",
         )
 
         msg = Message(sender=self.example_user("othello"))
@@ -1849,8 +1845,7 @@ class MarkdownTest(ZulipTestCase):
         realm_filter.save()
         self.assertEqual(
             realm_filter.__str__(),
-            "<RealmFilter(zulip): #(?P<id>[0-9]{2,8})"
-            " https://trac.example.com/ticket/%(id)s>",
+            "<RealmFilter(zulip): #(?P<id>[0-9]{2,8})" " https://trac.example.com/ticket/%(id)s>",
         )
         # Create a user that potentially interferes with the pattern.
         test_user = create_user(
@@ -1914,8 +1909,7 @@ class MarkdownTest(ZulipTestCase):
         realm_filter.save()
         self.assertEqual(
             realm_filter.__str__(),
-            "<RealmFilter(zulip): #(?P<id>[0-9]{2,8})"
-            " https://trac.example.com/ticket/%(id)s>",
+            "<RealmFilter(zulip): #(?P<id>[0-9]{2,8})" " https://trac.example.com/ticket/%(id)s>",
         )
         # Create a user-group that potentially interferes with the pattern.
         user_id = user_profile.id
@@ -2090,8 +2084,7 @@ class MarkdownTest(ZulipTestCase):
         realm_filter.save()
         self.assertEqual(
             realm_filter.__str__(),
-            "<RealmFilter(zulip): #(?P<id>[0-9]{2,8})"
-            " https://trac.example.com/ticket/%(id)s>",
+            "<RealmFilter(zulip): #(?P<id>[0-9]{2,8})" " https://trac.example.com/ticket/%(id)s>",
         )
         # Create a topic link that potentially interferes with the pattern.
         denmark = get_stream("Denmark", realm)
@@ -2158,8 +2151,7 @@ class MarkdownTest(ZulipTestCase):
         realm_filter.save()
         self.assertEqual(
             realm_filter.__str__(),
-            "<RealmFilter(zulip): #(?P<id>[0-9]{2,8})"
-            " https://trac.example.com/ticket/%(id)s>",
+            "<RealmFilter(zulip): #(?P<id>[0-9]{2,8})" " https://trac.example.com/ticket/%(id)s>",
         )
         # Create a stream that potentially interferes with the pattern.
         stream = Stream.objects.create(name="Stream #1234", realm=realm)

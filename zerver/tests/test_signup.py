@@ -109,12 +109,7 @@ class RedirectAndLogIntoSubdomainTestCase(ZulipTestCase):
         data = load_subdomain_token(response)
         self.assertDictEqual(
             data,
-            {
-                "full_name": name,
-                "email": email,
-                "subdomain": realm.subdomain,
-                "is_signup": False,
-            },
+            {"full_name": name, "email": email, "subdomain": realm.subdomain, "is_signup": False},
         )
 
         data_dict = ExternalAuthDataDict(is_signup=True, multiuse_object_key="key")
@@ -221,9 +216,7 @@ class AddNewUserHistoryTest(ZulipTestCase):
 
         # Our first message is in the user's history
         self.assertTrue(
-            UserMessage.objects.filter(
-                user_profile=user_profile, message_id=message_id,
-            ).exists(),
+            UserMessage.objects.filter(user_profile=user_profile, message_id=message_id).exists(),
         )
         # The race message is in the user's history and marked unread.
         self.assertTrue(
@@ -1350,9 +1343,7 @@ earl-test@zulip.com""",
         result = self.invite(hamlet_email, ["Denmark"])
         self.assert_json_error(result, "We weren't able to invite anyone.")
 
-        self.assertFalse(
-            PreregistrationUser.objects.filter(email__iexact=hamlet_email).exists(),
-        )
+        self.assertFalse(PreregistrationUser.objects.filter(email__iexact=hamlet_email).exists())
         self.check_sent_emails([])
 
     def normalize_string(self, s: str) -> str:
@@ -1810,13 +1801,9 @@ class InvitationsTestCase(InviteUserBase):
         user_profile = self.example_user("iago")
         hamlet = self.example_user("hamlet")
         othello = self.example_user("othello")
-        prereg_user_one = PreregistrationUser(
-            email="TestOne@zulip.com", referred_by=user_profile,
-        )
+        prereg_user_one = PreregistrationUser(email="TestOne@zulip.com", referred_by=user_profile)
         prereg_user_one.save()
-        prereg_user_two = PreregistrationUser(
-            email="TestTwo@zulip.com", referred_by=user_profile,
-        )
+        prereg_user_two = PreregistrationUser(email="TestTwo@zulip.com", referred_by=user_profile)
         prereg_user_two.save()
         prereg_user_three = PreregistrationUser(email="TestThree@zulip.com", referred_by=hamlet)
         prereg_user_three.save()
@@ -1847,14 +1834,10 @@ class InvitationsTestCase(InviteUserBase):
         self.login("iago")
         user_profile = self.example_user("iago")
 
-        prereg_user_one = PreregistrationUser(
-            email="TestOne@zulip.com", referred_by=user_profile,
-        )
+        prereg_user_one = PreregistrationUser(email="TestOne@zulip.com", referred_by=user_profile)
         prereg_user_one.save()
         expired_datetime = timezone_now() - datetime.timedelta(days=(days_to_activate + 1))
-        prereg_user_two = PreregistrationUser(
-            email="TestTwo@zulip.com", referred_by=user_profile,
-        )
+        prereg_user_two = PreregistrationUser(email="TestTwo@zulip.com", referred_by=user_profile)
         prereg_user_two.save()
         PreregistrationUser.objects.filter(id=prereg_user_two.id).update(
             invited_at=expired_datetime,
@@ -2233,9 +2216,7 @@ class InviteeEmailsParserTests(ZulipTestCase):
         expected_set = {self.email1, self.email2, self.email3}
         self.assertEqual(get_invitee_emails_set(emails_raw), expected_set)
 
-    def test_if_emails_from_email_client_separated_by_newlines_are_parsed_correctly(
-        self,
-    ) -> None:
+    def test_if_emails_from_email_client_separated_by_newlines_are_parsed_correctly(self) -> None:
         emails_raw = (
             f"Email One <{self.email1}>\nEmailTwo<{self.email2}>\nEmail Three<{self.email3}>"
         )
@@ -3204,9 +3185,7 @@ class UserSignUpTest(InviteUserBase):
             group1_streams.append(stream)
         do_create_default_stream_group(realm, "group 1", "group 1 description", group1_streams)
 
-        result = self.submit_reg_form_for_user(
-            email, password, default_stream_groups=["group 1"],
-        )
+        result = self.submit_reg_form_for_user(email, password, default_stream_groups=["group 1"])
         self.check_user_subscribed_only_to_streams("newguy", default_streams + group1_streams)
 
     def test_signup_two_confirmation_links(self) -> None:
@@ -3460,8 +3439,7 @@ class UserSignUpTest(InviteUserBase):
         email = "user@acme.com"
         form = HomepageForm({"email": email}, realm=realm)
         self.assertIn(
-            f"Your email address, {email}, is not in one of the domains",
-            form.errors["email"][0],
+            f"Your email address, {email}, is not in one of the domains", form.errors["email"][0],
         )
 
     def test_failed_signup_due_to_disposable_email(self) -> None:
@@ -3853,9 +3831,7 @@ class UserSignUpTest(InviteUserBase):
             subdomain = "zulip"
             self.login_with_return(email, password, HTTP_HOST=subdomain + ".testserver")
 
-            user_profile = UserProfile.objects.get(
-                delivery_email=email, realm=get_realm("zulip"),
-            )
+            user_profile = UserProfile.objects.get(delivery_email=email, realm=get_realm("zulip"))
             self.logout()
 
             # Test registration in another realm works.
@@ -3922,9 +3898,7 @@ class UserSignUpTest(InviteUserBase):
             "zproject.backends.ZulipDummyBackend",
         ),
     )
-    def test_signup_with_ldap_and_email_enabled_using_email_with_ldap_append_domain(
-        self,
-    ) -> None:
+    def test_signup_with_ldap_and_email_enabled_using_email_with_ldap_append_domain(self) -> None:
         password = "nonldappassword"
         email = "newuser@zulip.com"
         subdomain = "zulip"
@@ -4205,9 +4179,7 @@ class UserSignUpTest(InviteUserBase):
 
         user_profile = UserProfile.objects.get(delivery_email=self.nonreg_email("newuser"))
         self.assertTrue(user_profile.is_realm_admin)
-        sub = get_stream_subscriptions_for_user(user_profile).filter(
-            recipient__type_id=stream.id,
-        )
+        sub = get_stream_subscriptions_for_user(user_profile).filter(recipient__type_id=stream.id)
         self.assertEqual(len(sub), 1)
 
     def test_registration_when_name_changes_are_disabled(self) -> None:
@@ -4444,9 +4416,9 @@ class DeactivateUserTest(ZulipTestCase):
 
     def test_do_not_deactivate_final_user(self) -> None:
         realm = get_realm("zulip")
-        UserProfile.objects.filter(realm=realm).exclude(
-            role=UserProfile.ROLE_REALM_OWNER,
-        ).update(is_active=False)
+        UserProfile.objects.filter(realm=realm).exclude(role=UserProfile.ROLE_REALM_OWNER).update(
+            is_active=False,
+        )
         user = self.example_user("desdemona")
         self.login_user(user)
         result = self.client_delete("/json/users/me")
@@ -4780,9 +4752,7 @@ class RealmRedirectTest(ZulipTestCase):
         self.assertEqual(result["Location"], "http://zephyr.testserver")
 
         result = self.client_post("/accounts/go/", {"subdomain": "invalid"})
-        self.assert_in_success_response(
-            ["We couldn&#39;t find that Zulip organization."], result,
-        )
+        self.assert_in_success_response(["We couldn&#39;t find that Zulip organization."], result)
 
     def test_realm_redirect_with_next_param(self) -> None:
         result = self.client_get("/accounts/go/?next=billing")

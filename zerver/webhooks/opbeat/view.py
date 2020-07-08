@@ -19,12 +19,7 @@ subject_types: Dict[str, List[List[str]]] = {
     "base": [["title"], ["html_url"], ["#summary"], ["subject"]],
     "comment": [[""], ["subject"]],
     "errorgroup": [["E#{}", "number"], ["html_url"], ["last_occurrence:error"]],
-    "error": [
-        [""],
-        ['">**Most recent Occurrence**'],
-        ["in {}", "extra/pathname"],
-        ["!message"],
-    ],
+    "error": [[""], ['">**Most recent Occurrence**'], ["in {}", "extra/pathname"], ["!message"]],
 }
 
 

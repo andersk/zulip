@@ -96,9 +96,7 @@ class MessageDictTest(ZulipTestCase):
             # The next step mutates the dict in place
             # for performance reasons.
             MessageDict.post_process_dicts(
-                [unhydrated_dict],
-                apply_markdown=apply_markdown,
-                client_gravatar=client_gravatar,
+                [unhydrated_dict], apply_markdown=apply_markdown, client_gravatar=client_gravatar,
             )
             final_dict = unhydrated_dict
             return final_dict
@@ -256,8 +254,7 @@ class MessageDictTest(ZulipTestCase):
         )
         self.assertEqual(
             realm_filter.__str__(),
-            "<RealmFilter(zulip): #(?P<id>[0-9]{2,8})"
-            " https://trac.example.com/ticket/%(id)s>",
+            "<RealmFilter(zulip): #(?P<id>[0-9]{2,8})" " https://trac.example.com/ticket/%(id)s>",
         )
 
         def get_message(sender: UserProfile) -> Message:

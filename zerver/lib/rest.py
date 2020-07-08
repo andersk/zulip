@@ -28,9 +28,7 @@ def default_never_cache_responses(view_func: ViewFuncT) -> ViewFuncT:
     """
 
     @wraps(view_func)
-    def _wrapped_view_func(
-        request: HttpRequest, *args: object, **kwargs: object
-    ) -> HttpResponse:
+    def _wrapped_view_func(request: HttpRequest, *args: object, **kwargs: object) -> HttpResponse:
         response = view_func(request, *args, **kwargs)
         if response.has_header("Cache-Control"):
             return response

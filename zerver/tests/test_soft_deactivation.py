@@ -510,9 +510,7 @@ class SoftDeactivationMessageTest(ZulipTestCase):
             user_messages = get_user_messages(user)
             self.assertEqual(len(user_messages), count)
 
-        def assert_last_um_content(
-            user: UserProfile, content: str, negate: bool = False,
-        ) -> None:
+        def assert_last_um_content(user: UserProfile, content: str, negate: bool = False) -> None:
             user_messages = get_user_messages(user)
             if negate:
                 self.assertNotEqual(user_messages[-1].content, content)

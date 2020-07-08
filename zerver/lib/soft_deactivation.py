@@ -164,9 +164,7 @@ def add_missing_messages(user_profile: UserProfile) -> None:
     subscription_logs = list(
         RealmAuditLog.objects.select_related("modified_stream")
         .filter(
-            modified_user=user_profile,
-            modified_stream__id__in=stream_ids,
-            event_type__in=events,
+            modified_user=user_profile, modified_stream__id__in=stream_ids, event_type__in=events,
         )
         .order_by("event_last_message_id", "id"),
     )

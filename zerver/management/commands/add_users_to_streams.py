@@ -11,9 +11,7 @@ class Command(ZulipBaseCommand):
 
     def add_arguments(self, parser: CommandParser) -> None:
         self.add_realm_args(parser, True)
-        self.add_user_list_args(
-            parser, all_users_help="Add all users in realm to these streams.",
-        )
+        self.add_user_list_args(parser, all_users_help="Add all users in realm to these streams.")
 
         parser.add_argument(
             "-s",

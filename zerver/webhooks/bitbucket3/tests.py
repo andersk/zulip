@@ -200,9 +200,7 @@ class Bitbucket3HookTests(WebhookTestCase):
     def test_pr_merged(self) -> None:
         expected_topic = "sandbox / PR #6 sample_file: Add sample_file.txt."
         expected_message = """[zura](http://139.59.64.214:7990/users/zura) merged [PR #6](http://139.59.64.214:7990/projects/SBOX/repos/sandbox/pull-requests/6)."""
-        self.send_and_test_stream_message(
-            "pull_request_merged", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request_merged", expected_topic, expected_message)
 
     # PR Reviewer Events:
     def test_pr_approved(self) -> None:

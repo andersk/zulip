@@ -577,12 +577,7 @@ class MessagePOSTTest(ZulipTestCase):
         self.login("hamlet")
         result = self.client_post(
             "/json/messages",
-            {
-                "type": "stream",
-                "to": "Verona",
-                "client": "test suite",
-                "content": "Test message",
-            },
+            {"type": "stream", "to": "Verona", "client": "test suite", "content": "Test message"},
         )
         self.assert_json_error(result, "Missing topic")
 
@@ -714,9 +709,7 @@ class MessagePOSTTest(ZulipTestCase):
 
         with mock.patch(
             "DNS.dnslookup",
-            return_value=[
-                ["espuser:*:95494:101:Esp Classroom,,,:/mit/espuser:/bin/athena/bash"],
-            ],
+            return_value=[["espuser:*:95494:101:Esp Classroom,,,:/mit/espuser:/bin/athena/bash"]],
         ):
             result2 = self.api_post(
                 self.mit_user("espuser"), "/api/v1/messages", msg, subdomain="zephyr",
@@ -1468,9 +1461,7 @@ class StreamMessagesTest(ZulipTestCase):
             ).flags.is_private.is_set,
         )
 
-    def _send_stream_message(
-        self, user: UserProfile, stream_name: str, content: str,
-    ) -> Set[int]:
+    def _send_stream_message(self, user: UserProfile, stream_name: str, content: str) -> Set[int]:
         with mock.patch("zerver.lib.actions.send_event") as m:
             self.send_stream_message(
                 user, stream_name, content=content,
@@ -1599,9 +1590,9 @@ class StreamMessagesTest(ZulipTestCase):
         non_ascii_stream_name = "hümbüǵ"
         realm = get_realm("zulip")
         stream = self.make_stream(non_ascii_stream_name)
-        for user_profile in UserProfile.objects.filter(
-            is_active=True, is_bot=False, realm=realm,
-        )[0:3]:
+        for user_profile in UserProfile.objects.filter(is_active=True, is_bot=False, realm=realm)[
+            0:3
+        ]:
             self.subscribe(user_profile, stream.name)
 
         self.assert_stream_message(non_ascii_stream_name, topic_name="hümbüǵ", content="hümbüǵ")
@@ -1631,8 +1622,7 @@ class StreamMessagesTest(ZulipTestCase):
         self.assertEqual(len(recent_conversations), 1)
         recent_conversation = list(recent_conversations.values())[0]
         self.assertEqual(
-            set(recent_conversation["user_ids"]),
-            {user.id for user in users if user != users[1]},
+            set(recent_conversation["user_ids"]), {user.id for user in users if user != users[1]},
         )
         self.assertEqual(recent_conversation["max_message_id"], message2_id)
 

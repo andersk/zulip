@@ -31,8 +31,7 @@ class TestRuleList(TestCase):
                 path = line_tuple[0]
                 abs_path = os.path.abspath(os.path.join(ROOT_DIR, path))
                 self.assertTrue(
-                    os.path.isfile(abs_path),
-                    f"The file '{path}' doesn't exist. {CHECK_MESSAGE}",
+                    os.path.isfile(abs_path), f"The file '{path}' doesn't exist. {CHECK_MESSAGE}",
                 )
 
             for path in rule.get("include_only", {}):

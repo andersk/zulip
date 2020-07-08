@@ -846,9 +846,7 @@ def fetch_user_profile(response: TableData, config: Config, context: Context) ->
     response["zerver_userprofile_mirrordummy"] = dummy_rows
 
 
-def fetch_user_profile_cross_realm(
-    response: TableData, config: Config, context: Context,
-) -> None:
+def fetch_user_profile_cross_realm(response: TableData, config: Config, context: Context) -> None:
     realm = context["realm"]
     response["zerver_userprofile_crossrealm"] = []
 
@@ -1090,9 +1088,7 @@ def export_partial_message_files(
         # not the sender).  The `consented_user_ids` list has
         # precisely those users whose Recipient.PERSONAL recipient ID
         # was already present in recipient_ids_for_us above.
-        ids_of_non_exported_possible_recipients = (
-            ids_of_our_possible_senders - consented_user_ids
-        )
+        ids_of_non_exported_possible_recipients = ids_of_our_possible_senders - consented_user_ids
 
         recipients_for_them = Recipient.objects.filter(
             type=Recipient.PERSONAL, type_id__in=ids_of_non_exported_possible_recipients,
@@ -1375,11 +1371,7 @@ def export_files_from_s3(
 
         record["path"] = key.key
         _save_s3_object_to_file(
-            key,
-            output_dir,
-            processing_avatars,
-            processing_emoji,
-            processing_realm_icon_and_logo,
+            key, output_dir, processing_avatars, processing_emoji, processing_realm_icon_and_logo,
         )
 
         records.append(record)

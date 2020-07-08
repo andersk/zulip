@@ -93,8 +93,6 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.RunPython(
-            backfill_user_activations_and_deactivations,
-            reverse_code=reverse_code,
-            elidable=True,
+            backfill_user_activations_and_deactivations, reverse_code=reverse_code, elidable=True,
         ),
     ]

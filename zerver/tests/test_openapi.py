@@ -681,9 +681,7 @@ so maybe we shouldn't include it in pending_endpoints.
                     print(" -", accepted_arguments)
                     assert url_pattern in self.buggy_documentation_endpoints
                 elif len(openapi_parameter_names - accepted_arguments) > 0:  # nocoverage
-                    print(
-                        "Documented invalid parameters for", url_pattern, method, function_name,
-                    )
+                    print("Documented invalid parameters for", url_pattern, method, function_name)
                     print(" -", openapi_parameter_names)
                     print(" +", accepted_arguments)
                     assert url_pattern in self.buggy_documentation_endpoints
@@ -782,9 +780,7 @@ class TestCurlExampleGeneration(ZulipTestCase):
 
     spec_mock_with_invalid_method: Dict[str, object] = {
         "security": [{"basicAuth": []}],
-        "paths": {
-            "/endpoint": {"brew": {}},  # the data is irrelevant as is should be rejected.
-        },
+        "paths": {"/endpoint": {"brew": {}}},  # the data is irrelevant as is should be rejected.
     }
 
     spec_mock_using_object = {

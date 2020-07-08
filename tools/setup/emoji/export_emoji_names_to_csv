@@ -119,9 +119,7 @@ def main() -> None:
                 canonical_name = match.group("canonical_name")
                 aliases = prepare_aliases(match.group("aliases"))
                 explanation = prepare_explanation(explanation_lines)
-                output_data.append(
-                    [emoji_code, sort_info, canonical_name, aliases, explanation],
-                )
+                output_data.append([emoji_code, sort_info, canonical_name, aliases, explanation])
                 explanation_lines = []
                 continue
 

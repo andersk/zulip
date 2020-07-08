@@ -235,11 +235,7 @@ elif args.from_git:
     # safely; this seems like a worthwhile tradeoff to minimize downtime.
     logging.info("Building static assets...")
     subprocess.check_call(
-        [
-            "./tools/update-prod-static",
-            "--prev-deploy",
-            os.path.join(DEPLOYMENTS_DIR, "current"),
-        ],
+        ["./tools/update-prod-static", "--prev-deploy", os.path.join(DEPLOYMENTS_DIR, "current")],
         preexec_fn=su_to_zulip,
     )
     logging.info("Caching zulip git version...")

@@ -516,9 +516,7 @@ def add_subscriptions_backend(
             )
         if not user_profile.can_subscribe_other_users():
             if user_profile.realm.invite_to_stream_policy == Realm.POLICY_ADMINS_ONLY:
-                return json_error(
-                    _("Only administrators can modify other users' subscriptions."),
-                )
+                return json_error(_("Only administrators can modify other users' subscriptions."))
             # Realm.POLICY_MEMBERS_ONLY only fails if the
             # user is a guest, which happens in the decorator above.
             assert user_profile.realm.invite_to_stream_policy == Realm.POLICY_FULL_MEMBERS_ONLY

@@ -25,9 +25,7 @@ class UpdownHookTests(WebhookTestCase):
     def test_updown_check_up_event(self) -> None:
         expected_topic = "https://updown.io"
         expected_message = "Service is `up`."
-        self.send_and_test_stream_message(
-            "check_up_first_time", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("check_up_first_time", expected_topic, expected_message)
 
     def test_updown_check_up_multiple_events(self) -> None:
         first_message_expected_topic = "https://updown.io"

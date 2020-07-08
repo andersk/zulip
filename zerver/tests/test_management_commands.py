@@ -247,9 +247,7 @@ class TestSendWebhookFixtureMessage(ZulipTestCase):
         with self.assertRaises(CommandError):
             call_command(self.COMMAND_NAME, fixture=self.fixture_path, url=self.url)
 
-        os_path_exists_mock.assert_any_call(
-            os.path.join(settings.DEPLOY_ROOT, self.fixture_path),
-        )
+        os_path_exists_mock.assert_any_call(os.path.join(settings.DEPLOY_ROOT, self.fixture_path))
 
     @patch("zerver.management.commands.send_webhook_fixture_message.os.path.exists")
     @patch("zerver.management.commands.send_webhook_fixture_message.Client")

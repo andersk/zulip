@@ -234,9 +234,7 @@ class EditMessageSideEffectsTest(ZulipTestCase):
         This is a bit blunt, as it affects other users too,
         but we only really look at Cordelia's data, anyway.
         """
-        return mock.patch(
-            "zerver.tornado.event_queue.receiver_is_off_zulip", return_value=False,
-        )
+        return mock.patch("zerver.tornado.event_queue.receiver_is_off_zulip", return_value=False)
 
     def test_stream_push_notify_for_sorta_present_user(self) -> None:
         self._turn_on_stream_push_for_cordelia()
@@ -249,10 +247,7 @@ class EditMessageSideEffectsTest(ZulipTestCase):
         original_content = "no mention"
         updated_content = "nothing special about updated message"
         self._send_and_update_message(
-            original_content,
-            updated_content,
-            expect_short_circuit=True,
-            connected_to_zulip=True,
+            original_content, updated_content, expect_short_circuit=True, connected_to_zulip=True,
         )
 
     def _make_cordelia_present_on_web(self) -> None:
@@ -432,10 +427,7 @@ class EditMessageSideEffectsTest(ZulipTestCase):
         original_content = "Mention @**all**"
         updated_content = "now we mention @**Cordelia Lear**"
         self._send_and_update_message(
-            original_content,
-            updated_content,
-            expect_short_circuit=True,
-            connected_to_zulip=True,
+            original_content, updated_content, expect_short_circuit=True, connected_to_zulip=True,
         )
 
     def test_updates_with_upgrade_wildcard_mention_disabled(self) -> None:
@@ -452,10 +444,7 @@ class EditMessageSideEffectsTest(ZulipTestCase):
         original_content = "Mention @**all**"
         updated_content = "now we mention @**Cordelia Lear**"
         self._send_and_update_message(
-            original_content,
-            updated_content,
-            expect_short_circuit=True,
-            connected_to_zulip=True,
+            original_content, updated_content, expect_short_circuit=True, connected_to_zulip=True,
         )
 
     def test_updates_with_stream_mention_of_fully_present_user(self) -> None:

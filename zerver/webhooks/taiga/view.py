@@ -87,8 +87,7 @@ templates = {
         "delete": "[{user}]({user_link}) deleted user story {subject}.",
         "due_date": "[{user}]({user_link}) changed due date of user story {subject}"
         " from {old} to {new}.",
-        "set_due_date": "[{user}]({user_link}) set due date of user story {subject}"
-        " to {new}.",
+        "set_due_date": "[{user}]({user_link}) set due date of user story {subject}" " to {new}.",
     },
     "milestone": {
         "create": "[{user}]({user_link}) created sprint {subject}.",
@@ -148,9 +147,7 @@ templates = {
         "blocked": "[{user}]({user_link}) blocked issue {subject}.",
         "unblocked": "[{user}]({user_link}) unblocked issue {subject}.",
     },
-    "webhook_test": {
-        "test": "[{user}]({user_link}) triggered a test of the Taiga integration.",
-    },
+    "webhook_test": {"test": "[{user}]({user_link}) triggered a test of the Taiga integration."},
 }
 
 

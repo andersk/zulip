@@ -180,9 +180,7 @@ def do_fill_count_stat_at_hour(
     if not isinstance(stat, LoggingCountStat):
         timer = time.time()
         assert stat.data_collector.pull_function is not None
-        rows_added = stat.data_collector.pull_function(
-            stat.property, start_time, end_time, realm,
-        )
+        rows_added = stat.data_collector.pull_function(stat.property, start_time, end_time, realm)
         logger.info(
             "%s run pull_function (%dms/%sr)",
             stat.property,
@@ -234,9 +232,7 @@ def do_aggregate_to_summary_table(
                 {realm_clause}
             GROUP BY zerver_realm.id, {output_table}.subgroup
         """,
-        ).format(
-            output_table=Identifier(output_table._meta.db_table), realm_clause=realm_clause,
-        )
+        ).format(output_table=Identifier(output_table._meta.db_table), realm_clause=realm_clause)
         start = time.time()
         cursor.execute(realmcount_query, {"property": stat.property, "end_time": end_time})
         end = time.time()

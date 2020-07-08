@@ -216,9 +216,7 @@ class FrontHookTests(WebhookTestCase):
         payload_json = ujson.loads(payload)
         payload_json["type"] = "qwerty"
         result = self.client_post(
-            self.url,
-            ujson.dumps(payload_json),
-            content_type="application/x-www-form-urlencoded",
+            self.url, ujson.dumps(payload_json), content_type="application/x-www-form-urlencoded",
         )
 
         self.assert_json_error(result, "Unknown webhook request")

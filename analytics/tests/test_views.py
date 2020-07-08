@@ -121,9 +121,7 @@ class TestGetChartData(ZulipTestCase):
                 for i, subgroup in enumerate(user_subgroups)
             ],
         )
-        FillState.objects.create(
-            property=stat.property, end_time=fill_time, state=FillState.DONE,
-        )
+        FillState.objects.create(property=stat.property, end_time=fill_time, state=FillState.DONE)
 
     def test_number_of_humans(self) -> None:
         stat = COUNT_STATS["realm_active_humans::day"]
@@ -132,9 +130,7 @@ class TestGetChartData(ZulipTestCase):
         self.insert_data(stat, [None], [])
         stat = COUNT_STATS["active_users_audit:is_bot:day"]
         self.insert_data(stat, ["false"], [])
-        result = self.client_get(
-            "/json/analytics/chart_data", {"chart_name": "number_of_humans"},
-        )
+        result = self.client_get("/json/analytics/chart_data", {"chart_name": "number_of_humans"})
         self.assert_json_success(result)
         data = result.json()
         self.assertEqual(
@@ -268,9 +264,7 @@ class TestGetChartData(ZulipTestCase):
             end_time=self.end_times_day[0],
             state=FillState.DONE,
         )
-        result = self.client_get(
-            "/json/analytics/chart_data", {"chart_name": "number_of_humans"},
-        )
+        result = self.client_get("/json/analytics/chart_data", {"chart_name": "number_of_humans"})
         self.assert_json_success(result)
         data = result.json()
         self.assertEqual(data["everyone"], {"_1day": [0], "_15day": [0], "all_time": [0]})
@@ -607,14 +601,9 @@ class TestSupportEndpoint(ZulipTestCase):
                 )
                 self.assert_in_success_response([], result)
             else:
-                self.assert_not_in_success_response(
-                    ['<span class="label">invite</span>'], result,
-                )
+                self.assert_not_in_success_response(['<span class="label">invite</span>'], result)
                 self.assert_in_success_response(
-                    [
-                        "<b>Expires in</b>: 1\xa0day",
-                        "<b>Status</b>: Link has never been clicked",
-                    ],
+                    ["<b>Expires in</b>: 1\xa0day", "<b>Status</b>: Link has never been clicked"],
                     result,
                 )
 
@@ -785,16 +774,13 @@ class TestSupportEndpoint(ZulipTestCase):
         result = self.client_post(
             "/activity/support", {"realm_id": f"{lear_realm.id}", "sponsorship_pending": "true"},
         )
-        self.assert_in_success_response(
-            ["Lear &amp; Co. marked as pending sponsorship."], result,
-        )
+        self.assert_in_success_response(["Lear &amp; Co. marked as pending sponsorship."], result)
         customer = get_customer_by_realm(lear_realm)
         assert customer is not None
         self.assertTrue(customer.sponsorship_pending)
 
         result = self.client_post(
-            "/activity/support",
-            {"realm_id": f"{lear_realm.id}", "sponsorship_pending": "false"},
+            "/activity/support", {"realm_id": f"{lear_realm.id}", "sponsorship_pending": "false"},
         )
         self.assert_in_success_response(
             ["Lear &amp; Co. is no longer pending sponsorship."], result,

@@ -205,9 +205,7 @@ class UnreadCountTests(ZulipTestCase):
         stream = self.subscribe(user_profile, "test_stream")
         self.subscribe(self.example_user("cordelia"), "test_stream")
 
-        message_id = self.send_stream_message(
-            self.example_user("hamlet"), "test_stream", "hello",
-        )
+        message_id = self.send_stream_message(self.example_user("hamlet"), "test_stream", "hello")
         unrelated_message_id = self.send_stream_message(
             self.example_user("hamlet"), "Denmark", "hello",
         )
@@ -465,8 +463,7 @@ class PushNotificationMarkReadFlowsTest(ZulipTestCase):
         )
 
         result = self.client_post(
-            "/json/mark_topic_as_read",
-            {"stream_id": str(stream.id), "topic_name": "test_topic"},
+            "/json/mark_topic_as_read", {"stream_id": str(stream.id), "topic_name": "test_topic"},
         )
 
         self.assert_json_success(result)
@@ -566,9 +563,7 @@ class GetUnreadMsgsTest(ZulipTestCase):
 
         self.assertEqual(
             stream_dict[message_ids["lunch"][0]],
-            dict(
-                sender_id=cordelia.id, stream_id=get_stream("social", realm).id, topic="lunch",
-            ),
+            dict(sender_id=cordelia.id, stream_id=get_stream("social", realm).id, topic="lunch"),
         )
 
     def test_raw_unread_huddle(self) -> None:
@@ -593,9 +588,7 @@ class GetUnreadMsgsTest(ZulipTestCase):
             set(huddle_dict.keys()), set(huddle1_message_ids) | set(huddle2_message_ids),
         )
 
-        huddle_string = ",".join(
-            str(uid) for uid in sorted([cordelia.id, hamlet.id, othello.id])
-        )
+        huddle_string = ",".join(str(uid) for uid in sorted([cordelia.id, hamlet.id, othello.id]))
 
         self.assertEqual(
             huddle_dict[huddle1_message_ids[0]], dict(user_ids_string=huddle_string),
@@ -606,9 +599,7 @@ class GetUnreadMsgsTest(ZulipTestCase):
         othello = self.example_user("othello")
         hamlet = self.example_user("hamlet")
 
-        cordelia_pm_message_ids = [
-            self.send_personal_message(cordelia, hamlet) for i in range(3)
-        ]
+        cordelia_pm_message_ids = [self.send_personal_message(cordelia, hamlet) for i in range(3)]
 
         othello_pm_message_ids = [self.send_personal_message(othello, hamlet) for i in range(3)]
 
@@ -752,17 +743,13 @@ class GetUnreadMsgsTest(ZulipTestCase):
         self.assertTrue("sender_ids" not in unread_pm)
 
         unread_stream = result["streams"][0]
-        self.assertEqual(
-            unread_stream["stream_id"], get_stream("Denmark", user_profile.realm).id,
-        )
+        self.assertEqual(unread_stream["stream_id"], get_stream("Denmark", user_profile.realm).id)
         self.assertEqual(unread_stream["topic"], "muted-topic")
         self.assertEqual(unread_stream["unread_message_ids"], [muted_topic_message_id])
         self.assertEqual(unread_stream["sender_ids"], [sender_id])
 
         unread_stream = result["streams"][1]
-        self.assertEqual(
-            unread_stream["stream_id"], get_stream("Denmark", user_profile.realm).id,
-        )
+        self.assertEqual(unread_stream["stream_id"], get_stream("Denmark", user_profile.realm).id)
         self.assertEqual(unread_stream["topic"], "test")
         self.assertEqual(unread_stream["unread_message_ids"], [stream_message_id])
         self.assertEqual(unread_stream["sender_ids"], [sender_id])
@@ -961,9 +948,7 @@ class MessageAccessTests(ZulipTestCase):
         # Send a message to yourself to make sure we have at least one with the read flag
         sent_message_ids = [
             self.send_personal_message(
-                self.example_user("cordelia"),
-                self.example_user("cordelia"),
-                "test_read_message",
+                self.example_user("cordelia"), self.example_user("cordelia"), "test_read_message",
             ),
         ]
         result = self.client_post(

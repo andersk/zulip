@@ -178,10 +178,7 @@ def queries_captured(
             duration = stop - start
             if include_savepoints or not isinstance(sql, str) or "SAVEPOINT" not in sql:
                 queries.append(
-                    {
-                        "sql": self.mogrify(sql, params).decode("utf-8"),
-                        "time": f"{duration:.3f}",
-                    },
+                    {"sql": self.mogrify(sql, params).decode("utf-8"), "time": f"{duration:.3f}"},
                 )
 
     def cursor_execute(
@@ -259,9 +256,7 @@ def find_key_by_email(address: str) -> Optional[str]:
 
 
 def message_stream_count(user_profile: UserProfile) -> int:
-    return (
-        UserMessage.objects.select_related("message").filter(user_profile=user_profile).count()
-    )
+    return UserMessage.objects.select_related("message").filter(user_profile=user_profile).count()
 
 
 def most_recent_usermessage(user_profile: UserProfile) -> UserMessage:

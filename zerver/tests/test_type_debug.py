@@ -78,9 +78,7 @@ class TypesPrintTest(ZulipTestCase):
 
     def test_tuple(self) -> None:
         self.check_signature("add((), ()) -> ()", (), add, (), ())
-        self.check_signature(
-            "add((int,), (str,)) -> (int, str)", (1, "one"), add, (1,), ("one",),
-        )
+        self.check_signature("add((int,), (str,)) -> (int, str)", (1, "one"), add, (1,), ("one",))
         self.check_signature("add(((),), ((),)) -> ((), ())", ((), ()), add, ((),), ((),))
 
     def test_class(self) -> None:

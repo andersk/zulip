@@ -144,9 +144,7 @@ class ReactionEmojiTest(ZulipTestCase):
 
         # Verify that hamlet did not receive the message.
         self.assertFalse(
-            UserMessage.objects.filter(
-                user_profile=user_profile, message_id=message_id,
-            ).exists(),
+            UserMessage.objects.filter(user_profile=user_profile, message_id=message_id).exists(),
         )
 
         # Have hamlet react to the message
@@ -222,9 +220,7 @@ class ReactionEmojiTest(ZulipTestCase):
         self.assertEqual(reaction_type, "unicode_emoji")
 
         # Test override `:zulip:` emoji.
-        overriding_emoji = RealmEmoji.objects.create(
-            name="zulip", realm=realm, file_name="zulip",
-        )
+        overriding_emoji = RealmEmoji.objects.create(name="zulip", realm=realm, file_name="zulip")
         emoji_code, reaction_type = emoji_name_to_emoji_code(realm, "zulip")
         self.assertEqual(emoji_code, str(overriding_emoji.id))
         self.assertEqual(reaction_type, "realm_emoji")
@@ -339,9 +335,7 @@ class ReactionTest(ZulipTestCase):
             "emoji_name": "smile",
         }
 
-        add = self.api_post(
-            reaction_sender, f"/api/v1/messages/{pm_id}/reactions", reaction_info,
-        )
+        add = self.api_post(reaction_sender, f"/api/v1/messages/{pm_id}/reactions", reaction_info)
         self.assert_json_success(add)
 
         first = self.api_delete(
@@ -465,9 +459,7 @@ class ReactionEventTest(ZulipTestCase):
             "emoji_name": "smile",
         }
 
-        add = self.api_post(
-            reaction_sender, f"/api/v1/messages/{pm_id}/reactions", reaction_info,
-        )
+        add = self.api_post(reaction_sender, f"/api/v1/messages/{pm_id}/reactions", reaction_info)
         self.assert_json_success(add)
 
         events: List[Mapping[str, Any]] = []
@@ -737,9 +729,7 @@ class DefaultEmojiReactionTests(EmojiReactionBase):
 
         # Verify that hamlet did not receive the message.
         self.assertFalse(
-            UserMessage.objects.filter(
-                user_profile=user_profile, message_id=message_id,
-            ).exists(),
+            UserMessage.objects.filter(user_profile=user_profile, message_id=message_id).exists(),
         )
 
         # Have hamlet react to the message

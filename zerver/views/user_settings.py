@@ -146,9 +146,7 @@ def json_change_settings(
         if user_profile.realm.email_changes_disabled and not user_profile.is_realm_admin:
             return json_error(_("Email address changes are disabled in this organization."))
 
-        error = validate_email_is_valid(
-            new_email, get_realm_email_validator(user_profile.realm),
-        )
+        error = validate_email_is_valid(new_email, get_realm_email_validator(user_profile.realm))
         if error:
             return json_error(error)
 
@@ -224,14 +222,10 @@ def update_display_settings_backend(
 def json_change_notify_settings(
     request: HttpRequest,
     user_profile: UserProfile,
-    enable_stream_desktop_notifications: Optional[bool] = REQ(
-        validator=check_bool, default=None,
-    ),
+    enable_stream_desktop_notifications: Optional[bool] = REQ(validator=check_bool, default=None),
     enable_stream_email_notifications: Optional[bool] = REQ(validator=check_bool, default=None),
     enable_stream_push_notifications: Optional[bool] = REQ(validator=check_bool, default=None),
-    enable_stream_audible_notifications: Optional[bool] = REQ(
-        validator=check_bool, default=None,
-    ),
+    enable_stream_audible_notifications: Optional[bool] = REQ(validator=check_bool, default=None),
     wildcard_mentions_notify: Optional[bool] = REQ(validator=check_bool, default=None),
     notification_sound: Optional[str] = REQ(validator=check_string, default=None),
     enable_desktop_notifications: Optional[bool] = REQ(validator=check_bool, default=None),
@@ -244,9 +238,7 @@ def json_change_notify_settings(
     message_content_in_email_notifications: Optional[bool] = REQ(
         validator=check_bool, default=None,
     ),
-    pm_content_in_desktop_notifications: Optional[bool] = REQ(
-        validator=check_bool, default=None,
-    ),
+    pm_content_in_desktop_notifications: Optional[bool] = REQ(validator=check_bool, default=None),
     desktop_icon_count_display: Optional[int] = REQ(validator=check_int, default=None),
     realm_name_in_notifications: Optional[bool] = REQ(validator=check_bool, default=None),
     presence_enabled: Optional[bool] = REQ(validator=check_bool, default=None),

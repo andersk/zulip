@@ -164,11 +164,7 @@ EXEMPT_FILES = {
 
 parser = argparse.ArgumentParser(USAGE)
 parser.add_argument(
-    "--coverage",
-    dest="coverage",
-    action="store_true",
-    default=False,
-    help="Get coverage report",
+    "--coverage", dest="coverage", action="store_true", default=False, help="Get coverage report",
 )
 parser.add_argument(
     "--force",

@@ -32,9 +32,7 @@ class EmailChangeTestCase(ZulipTestCase):
         key = "invalid_key"
         url = confirmation_url(key, None, Confirmation.EMAIL_CHANGE)
         response = self.client_get(url)
-        self.assert_in_success_response(
-            ["Whoops. The confirmation link is malformed."], response,
-        )
+        self.assert_in_success_response(["Whoops. The confirmation link is malformed."], response)
 
     def test_confirm_email_change_when_time_exceeded(self) -> None:
         user_profile = self.example_user("hamlet")
@@ -207,9 +205,7 @@ class EmailChangeTestCase(ZulipTestCase):
     def test_change_delivery_email_end_to_end_with_admins_visibility(self) -> None:
         user_profile = self.example_user("hamlet")
         do_set_realm_property(
-            user_profile.realm,
-            "email_address_visibility",
-            Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS,
+            user_profile.realm, "email_address_visibility", Realm.EMAIL_ADDRESS_VISIBILITY_ADMINS,
         )
 
         self.login_user(user_profile)

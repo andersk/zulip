@@ -43,9 +43,7 @@ class RealmExportTest(ZulipTestCase):
         tarball_path = create_dummy_file("test-export.tar.gz")
 
         # Test the export logic.
-        with patch(
-            "zerver.lib.export.do_export_realm", return_value=tarball_path,
-        ) as mock_export:
+        with patch("zerver.lib.export.do_export_realm", return_value=tarball_path) as mock_export:
             with self.settings(LOCAL_UPLOADS_DIR=None), stdout_suppressed():
                 result = self.client_post("/json/export/realm")
         self.assert_json_success(result)
@@ -74,8 +72,7 @@ class RealmExportTest(ZulipTestCase):
         export_dict = result.json()["exports"]
         self.assertEqual(export_dict[0]["id"], audit_log_entry.id)
         self.assertEqual(
-            export_dict[0]["export_url"],
-            "https://test-avatar-bucket.s3.amazonaws.com" + path_id,
+            export_dict[0]["export_url"], "https://test-avatar-bucket.s3.amazonaws.com" + path_id,
         )
         self.assertEqual(export_dict[0]["acting_user_id"], admin.id)
         self.assert_length(
@@ -108,9 +105,7 @@ class RealmExportTest(ZulipTestCase):
         tarball_path = create_dummy_file("test-export.tar.gz")
 
         # Test the export logic.
-        with patch(
-            "zerver.lib.export.do_export_realm", return_value=tarball_path,
-        ) as mock_export:
+        with patch("zerver.lib.export.do_export_realm", return_value=tarball_path) as mock_export:
             with stdout_suppressed():
                 result = self.client_post("/json/export/realm")
         self.assert_json_success(result)

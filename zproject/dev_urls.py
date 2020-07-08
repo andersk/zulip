@@ -39,10 +39,7 @@ urls = [
     path(
         "casper/<path:path>",
         serve,
-        {
-            "document_root": os.path.join(settings.DEPLOY_ROOT, "var/casper"),
-            "show_indexes": True,
-        },
+        {"document_root": os.path.join(settings.DEPLOY_ROOT, "var/casper"), "show_indexes": True},
     ),
     path(
         "docs/<path:path>",

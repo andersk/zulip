@@ -85,8 +85,7 @@ class TopicHistoryTest(ZulipTestCase):
         self.assertEqual([topic["name"] for topic in history], ["topic0", "topic1", "topic2"])
 
         self.assertEqual(
-            [topic["max_id"] for topic in history],
-            [topic0_msg_id, topic1_msg_id, topic2_msg_id],
+            [topic["max_id"] for topic in history], [topic0_msg_id, topic1_msg_id, topic2_msg_id],
         )
 
         # Now try as cordelia, who we imagine as a totally new user in
@@ -105,8 +104,7 @@ class TopicHistoryTest(ZulipTestCase):
         self.assertIn("topic0", [topic["name"] for topic in history])
 
         self.assertEqual(
-            [topic["max_id"] for topic in history],
-            [topic0_msg_id, topic1_msg_id, topic2_msg_id],
+            [topic["max_id"] for topic in history], [topic0_msg_id, topic1_msg_id, topic2_msg_id],
         )
 
         # Now make stream private, but subscribe cordelia
@@ -194,9 +192,7 @@ class TopicDeleteTest(ZulipTestCase):
         self.assertEqual(self.get_last_message().id, last_msg_id)
 
         # Make the stream's history public to subscribers
-        do_change_stream_invite_only(
-            stream, invite_only=True, history_public_to_subscribers=True,
-        )
+        do_change_stream_invite_only(stream, invite_only=True, history_public_to_subscribers=True)
         # Delete the topic should now remove all messages
         result = self.client_post(endpoint, {"topic_name": topic_name})
         self.assert_json_success(result)

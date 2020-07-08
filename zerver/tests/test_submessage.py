@@ -72,9 +72,7 @@ class TestBasics(ZulipTestCase):
 
         hamlet = self.example_user("hamlet")
         bad_message_id = self.send_personal_message(from_user=hamlet, to_user=hamlet)
-        payload = dict(
-            message_id=bad_message_id, msg_type="whatever", content="does not matter",
-        )
+        payload = dict(message_id=bad_message_id, msg_type="whatever", content="does not matter")
         result = self.client_post("/json/submessage", payload)
         self.assert_json_error(result, "Invalid message(s)")
 
@@ -86,9 +84,7 @@ class TestBasics(ZulipTestCase):
         self.login_user(cordelia)
 
         payload = dict(
-            message_id=message_id,
-            msg_type="whatever",
-            content='{"name": "alice", "salary": 20}',
+            message_id=message_id, msg_type="whatever", content='{"name": "alice", "salary": 20}',
         )
         with mock.patch("zerver.lib.actions.send_event") as m:
             result = self.client_post("/json/submessage", payload)

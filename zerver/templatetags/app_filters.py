@@ -19,11 +19,7 @@ import zerver.lib.markdown.include
 import zerver.lib.markdown.nested_code_blocks
 import zerver.lib.markdown.tabbed_sections
 import zerver.openapi.markdown_extension
-from zerver.lib.cache import (
-    dict_to_items_tuple,
-    ignore_unhashable_lru_cache,
-    items_tuple_to_dict,
-)
+from zerver.lib.cache import dict_to_items_tuple, ignore_unhashable_lru_cache, items_tuple_to_dict
 
 register = Library()
 
@@ -31,9 +27,7 @@ register = Library()
 def and_n_others(values: List[str], limit: int) -> str:
     # A helper for the commonly appended "and N other(s)" string, with
     # the appropriate pluralization.
-    return " and {} other{}".format(
-        len(values) - limit, "" if len(values) == limit + 1 else "s",
-    )
+    return " and {} other{}".format(len(values) - limit, "" if len(values) == limit + 1 else "s")
 
 
 @register.filter(name="display_list", is_safe=True)

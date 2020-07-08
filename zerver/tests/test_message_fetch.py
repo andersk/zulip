@@ -297,8 +297,7 @@ class NarrowBuilderTest(ZulipTestCase):
     ) -> None:  # NEGATED
         term = dict(operator="pm-with", operand=self.hamlet_email, negated=True)
         self._do_add_term_test(
-            term,
-            "WHERE NOT (sender_id = %(sender_id_1)s AND recipient_id = %(recipient_id_1)s)",
+            term, "WHERE NOT (sender_id = %(sender_id_1)s AND recipient_id = %(recipient_id_1)s)",
         )
 
     def test_add_term_using_pm_with_operator_and_self_and_user_as_operand(self) -> None:
@@ -1483,9 +1482,7 @@ class GetOldMessagesTest(ZulipTestCase):
         self.assertFalse(aaron.is_active)
 
         personals = [
-            m
-            for m in get_user_messages(self.example_user("hamlet"))
-            if not m.is_stream_message()
+            m for m in get_user_messages(self.example_user("hamlet")) if not m.is_stream_message()
         ]
         for personal in personals:
             emails = dr_emails(get_display_recipient(personal.recipient))
@@ -1789,9 +1786,7 @@ class GetOldMessagesTest(ZulipTestCase):
         self.login_user(user)
 
         def send(content: str) -> int:
-            msg_id = self.send_stream_message(
-                sender=user, stream_name="Verona", content=content,
-            )
+            msg_id = self.send_stream_message(sender=user, stream_name="Verona", content=content)
             return msg_id
 
         good_id = send("KEYWORDMATCH and should work")
@@ -1874,9 +1869,7 @@ class GetOldMessagesTest(ZulipTestCase):
         )
 
         (lunch_message,) = [m for m in messages if m[TOPIC_NAME] == "lunch plans"]
-        self.assertEqual(
-            lunch_message[MATCH_TOPIC], '<span class="highlight">lunch</span> plans',
-        )
+        self.assertEqual(lunch_message[MATCH_TOPIC], '<span class="highlight">lunch</span> plans')
         self.assertEqual(lunch_message["match_content"], "<p>I am hungry!</p>")
 
         # Should not crash when multiple search operands are present
@@ -1992,9 +1985,7 @@ class GetOldMessagesTest(ZulipTestCase):
             dict(operator="stream", operand="newstream"),
         ]
         stream_search_result: Dict[str, Any] = self.get_and_check_messages(
-            dict(
-                narrow=ujson.dumps(stream_search_narrow), anchor=0, num_after=10, num_before=10,
-            ),
+            dict(narrow=ujson.dumps(stream_search_narrow), anchor=0, num_after=10, num_before=10),
         )
         self.assertEqual(len(stream_search_result["messages"]), 1)
         self.assertEqual(
@@ -2593,11 +2584,7 @@ class GetOldMessagesTest(ZulipTestCase):
     def exercise_bad_narrow_operand(
         self, operator: str, operands: Sequence[Any], error_msg: str,
     ) -> None:
-        other_params: List[Tuple[str, Any]] = [
-            ("anchor", 0),
-            ("num_before", 0),
-            ("num_after", 0),
-        ]
+        other_params: List[Tuple[str, Any]] = [("anchor", 0), ("num_before", 0), ("num_after", 0)]
         for operand in operands:
             post_params = dict(other_params + [("narrow", ujson.dumps([[operator, operand]]))])
             result = self.client_get("/json/messages", post_params)
@@ -2857,9 +2844,7 @@ class GetOldMessagesTest(ZulipTestCase):
 
         # Do some tests on the main query, to verify the muting logic
         # runs on this code path.
-        queries = [
-            q for q in all_queries if str(q["sql"]).startswith("SELECT message_id, flags")
-        ]
+        queries = [q for q in all_queries if str(q["sql"]).startswith("SELECT message_id, flags")]
         self.assertEqual(len(queries), 1)
 
         stream = get_stream("Scotland", realm)
@@ -2981,9 +2966,7 @@ recipient_id = %(recipient_id_3)s AND upper(subject) = upper(%(param_2)s))\
 
         sql_template = "SELECT anon_1.message_id, anon_1.flags \nFROM (SELECT message_id, flags \nFROM zerver_usermessage \nWHERE user_profile_id = {hamlet_id} ORDER BY message_id ASC \n LIMIT 11) AS anon_1 ORDER BY message_id ASC"
         sql = sql_template.format(**query_ids)
-        self.common_check_get_messages_query(
-            {"anchor": 0, "num_before": 0, "num_after": 10}, sql,
-        )
+        self.common_check_get_messages_query({"anchor": 0, "num_before": 0, "num_after": 10}, sql)
 
         sql_template = "SELECT anon_1.message_id, anon_1.flags \nFROM (SELECT message_id, flags \nFROM zerver_usermessage \nWHERE user_profile_id = {hamlet_id} AND message_id <= 100 ORDER BY message_id DESC \n LIMIT 11) AS anon_1 ORDER BY message_id ASC"
         sql = sql_template.format(**query_ids)
@@ -3246,11 +3229,7 @@ class MessageHasKeywordsTest(ZulipTestCase):
         realm_id = user_profile.realm_id
         dummy_files = [
             ("zulip.txt", f"{realm_id}/31/4CBjtTLYZhk66pZrF8hnYGwc/zulip.txt", sample_size),
-            (
-                "temp_file.py",
-                f"{realm_id}/31/4CBjtTLYZhk66pZrF8hnYGwc/temp_file.py",
-                sample_size,
-            ),
+            ("temp_file.py", f"{realm_id}/31/4CBjtTLYZhk66pZrF8hnYGwc/temp_file.py", sample_size),
             ("abc.py", f"{realm_id}/31/4CBjtTLYZhk66pZrF8hnYGwc/abc.py", sample_size),
         ]
 
@@ -3497,9 +3476,7 @@ class MessageVisibilityTest(ZulipTestCase):
         end_time = timezone_now() - datetime.timedelta(hours=lookback_hours - 5)
         stat = COUNT_STATS["messages_sent:is_bot:hour"]
 
-        RealmCount.objects.create(
-            realm=realm, property=stat.property, end_time=end_time, value=5,
-        )
+        RealmCount.objects.create(realm=realm, property=stat.property, end_time=end_time, value=5)
         with mock.patch("zerver.lib.message.update_first_visible_message_id") as m:
             maybe_update_first_visible_message_id(realm, lookback_hours)
         m.assert_not_called()
@@ -3511,9 +3488,7 @@ class MessageVisibilityTest(ZulipTestCase):
             maybe_update_first_visible_message_id(realm, lookback_hours)
         m.assert_not_called()
 
-        RealmCount.objects.create(
-            realm=realm, property=stat.property, end_time=end_time, value=5,
-        )
+        RealmCount.objects.create(realm=realm, property=stat.property, end_time=end_time, value=5)
         with mock.patch("zerver.lib.message.update_first_visible_message_id") as m:
             maybe_update_first_visible_message_id(realm, lookback_hours)
         m.assert_called_once_with(realm)

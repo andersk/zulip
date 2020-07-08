@@ -128,10 +128,7 @@ class WebhooksCommonTestCase(ZulipTestCase):
 
         raw_headers = {"Content-Type": "text/plain", "X-Event-Type": "ping"}
         djangoified_headers = standardize_headers(raw_headers)
-        expected_djangoified_headers = {
-            "CONTENT_TYPE": "text/plain",
-            "HTTP_X_EVENT_TYPE": "ping",
-        }
+        expected_djangoified_headers = {"CONTENT_TYPE": "text/plain", "HTTP_X_EVENT_TYPE": "ping"}
         self.assertEqual(djangoified_headers, expected_djangoified_headers)
 
 

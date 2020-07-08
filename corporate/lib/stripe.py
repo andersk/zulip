@@ -638,8 +638,7 @@ def invoice_plan(plan: CustomerPlan, event_time: datetime) -> None:
                 "quantity": ledger_entry.licenses - licenses_base,
             }
             description = "Additional license ({} - {})".format(
-                ledger_entry.event_time.strftime("%b %-d, %Y"),
-                period_end.strftime("%b %-d, %Y"),
+                ledger_entry.event_time.strftime("%b %-d, %Y"), period_end.strftime("%b %-d, %Y"),
             )
 
         if price_args:

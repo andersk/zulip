@@ -379,9 +379,7 @@ class NormalActionsTest(BaseAction):
         )
 
     def test_stream_send_message_events(self) -> None:
-        def get_checker(
-            check_gravatar: Validator[Optional[str]],
-        ) -> Validator[Dict[str, object]]:
+        def get_checker(check_gravatar: Validator[Optional[str]]) -> Validator[Dict[str, object]]:
             schema_checker = check_events_dict(
                 [
                     ("type", equals("message")),
@@ -716,9 +714,7 @@ class NormalActionsTest(BaseAction):
         message_id = self.send_stream_message(self.example_user("hamlet"), "Verona", "hello")
         message = Message.objects.get(id=message_id)
         events = self.verify_action(
-            lambda: do_add_reaction(
-                self.user_profile, message, "tada", "1f389", "unicode_emoji",
-            ),
+            lambda: do_add_reaction(self.user_profile, message, "tada", "1f389", "unicode_emoji"),
             state_change_expected=False,
         )
         schema_checker("events[0]", events[0])
@@ -1184,9 +1180,7 @@ class NormalActionsTest(BaseAction):
             [("type", equals("alert_words")), ("alert_words", check_list(check_string))],
         )
 
-        events = self.verify_action(
-            lambda: do_add_alert_words(self.user_profile, ["alert_word"]),
-        )
+        events = self.verify_action(lambda: do_add_alert_words(self.user_profile, ["alert_word"]))
         alert_words_checker("events[0]", events[0])
 
         events = self.verify_action(
@@ -2173,9 +2167,7 @@ class NormalActionsTest(BaseAction):
                 ("property", equals("icon")),
                 (
                     "data",
-                    check_dict_only(
-                        [("icon_url", check_string), ("icon_source", check_string)],
-                    ),
+                    check_dict_only([("icon_url", check_string), ("icon_source", check_string)]),
                 ),
             ],
         )
@@ -2193,9 +2185,7 @@ class NormalActionsTest(BaseAction):
                 ("property", equals("logo")),
                 (
                     "data",
-                    check_dict_only(
-                        [("logo_url", check_string), ("logo_source", check_string)],
-                    ),
+                    check_dict_only([("logo_url", check_string), ("logo_source", check_string)]),
                 ),
             ],
         )
@@ -2366,9 +2356,7 @@ class NormalActionsTest(BaseAction):
             payload_url=ujson.dumps("http://hostname.domain2.com"),
             interface_type=Service.GENERIC,
         )
-        action = lambda: do_update_outgoing_webhook_service(
-            bot, 2, "http://hostname.domain2.com",
-        )
+        action = lambda: do_update_outgoing_webhook_service(bot, 2, "http://hostname.domain2.com")
         events = self.verify_action(action)
         update_outgoing_webhook_service_checker("events[0]", events[0])
 
@@ -3267,16 +3255,12 @@ class SubscribeActionTest(BaseAction):
         action = lambda: bulk_remove_subscriptions(
             [self.example_user("hamlet")], [stream], get_client("website"),
         )
-        events = self.verify_action(
-            action, include_subscribers=include_subscribers, num_events=3,
-        )
+        events = self.verify_action(action, include_subscribers=include_subscribers, num_events=3)
         remove_schema_checker("events[0]", events[0])
 
         # Now resubscribe a user, to make sure that works on a vacated stream
         action = lambda: self.subscribe(self.example_user("hamlet"), "test_stream")
-        events = self.verify_action(
-            action, include_subscribers=include_subscribers, num_events=2,
-        )
+        events = self.verify_action(action, include_subscribers=include_subscribers, num_events=2)
         add_schema_checker("events[1]", events[1])
 
         action = lambda: do_change_stream_description(stream, "new description")
@@ -3292,23 +3276,17 @@ class SubscribeActionTest(BaseAction):
 
         # Update stream stream_post_policy property
         action = lambda: do_change_stream_post_policy(stream, Stream.STREAM_POST_POLICY_ADMINS)
-        events = self.verify_action(
-            action, include_subscribers=include_subscribers, num_events=2,
-        )
+        events = self.verify_action(action, include_subscribers=include_subscribers, num_events=2)
         stream_update_stream_post_policy_schema_checker("events[0]", events[0])
 
         action = lambda: do_change_stream_message_retention_days(stream, -1)
-        events = self.verify_action(
-            action, include_subscribers=include_subscribers, num_events=1,
-        )
+        events = self.verify_action(action, include_subscribers=include_subscribers, num_events=1)
         stream_update_message_retention_days_schema_checker("events[0]", events[0])
 
         # Subscribe to a totally new invite-only stream, so it's just Hamlet on it
         stream = self.make_stream("private", self.user_profile.realm, invite_only=True)
         user_profile = self.example_user("hamlet")
         action = lambda: bulk_add_subscriptions([stream], [user_profile])
-        events = self.verify_action(
-            action, include_subscribers=include_subscribers, num_events=2,
-        )
+        events = self.verify_action(action, include_subscribers=include_subscribers, num_events=2)
         stream_create_schema_checker("events[0]", events[0])
         add_schema_checker("events[1]", events[1])

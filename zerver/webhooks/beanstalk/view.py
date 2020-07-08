@@ -59,9 +59,7 @@ def _transform_commits_list_to_common_format(
 # We manually fix the username here before passing it along to @authenticated_rest_api_view
 def beanstalk_decoder(view_func: ViewFuncT) -> ViewFuncT:
     @wraps(view_func)
-    def _wrapped_view_func(
-        request: HttpRequest, *args: object, **kwargs: object
-    ) -> HttpResponse:
+    def _wrapped_view_func(request: HttpRequest, *args: object, **kwargs: object) -> HttpResponse:
         auth_type: str
         encoded_value: str
         auth_type, encoded_value = request.META["HTTP_AUTHORIZATION"].split()

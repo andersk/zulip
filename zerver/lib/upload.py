@@ -535,9 +535,7 @@ class S3UploadBackend(ZulipUploadBackend):
             basename = "night_logo"
         else:
             basename = "logo"
-        s3_file_name = os.path.join(
-            self.realm_avatar_and_logo_path(user_profile.realm), basename,
-        )
+        s3_file_name = os.path.join(self.realm_avatar_and_logo_path(user_profile.realm), basename)
 
         image_data = logo_file.read()
         upload_image_to_s3(
@@ -636,9 +634,7 @@ class S3UploadBackend(ZulipUploadBackend):
         config = Config(signature_version=botocore.UNSIGNED)
 
         public_url = session.create_client("s3", config=config).generate_presigned_url(
-            "get_object",
-            Params={"Bucket": self.avatar_bucket.name, "Key": key.key},
-            ExpiresIn=0,
+            "get_object", Params={"Bucket": self.avatar_bucket.name, "Key": key.key}, ExpiresIn=0,
         )
         return public_url
 
@@ -921,9 +917,7 @@ def upload_logo_image(user_file: File, user_profile: UserProfile, night: bool) -
     upload_backend.upload_realm_logo_image(user_file, user_profile, night)
 
 
-def upload_emoji_image(
-    emoji_file: File, emoji_file_name: str, user_profile: UserProfile,
-) -> None:
+def upload_emoji_image(emoji_file: File, emoji_file_name: str, user_profile: UserProfile) -> None:
     upload_backend.upload_emoji_image(emoji_file, emoji_file_name, user_profile)
 
 

@@ -227,9 +227,7 @@ def fetch_initial_state_data(
         # client-side code for handing medium-size avatars.  See #8253
         # for details.
         state["avatar_source"] = user_profile.avatar_source
-        state["avatar_url_medium"] = avatar_url(
-            user_profile, medium=True, client_gravatar=False,
-        )
+        state["avatar_url_medium"] = avatar_url(user_profile, medium=True, client_gravatar=False)
         state["avatar_url"] = avatar_url(user_profile, medium=False, client_gravatar=False)
 
         state["can_create_streams"] = user_profile.can_create_streams()
@@ -283,9 +281,7 @@ def fetch_initial_state_data(
         # intermediate form as a dictionary keyed by recipient_id,
         # which is more efficient to update, and is rewritten to the
         # final format in post_process_state.
-        state["raw_recent_private_conversations"] = get_recent_private_conversations(
-            user_profile,
-        )
+        state["raw_recent_private_conversations"] = get_recent_private_conversations(user_profile)
 
     if want("subscription"):
         subscriptions, unsubscribed, never_subscribed = gather_subscriptions_helper(
@@ -391,9 +387,7 @@ def apply_event(
                 # Handle maintaining the recent_private_conversations data structure.
                 conversations = state["raw_recent_private_conversations"]
                 recipient_id = get_recent_conversations_recipient_id(
-                    user_profile,
-                    event["message"]["recipient_id"],
-                    event["message"]["sender_id"],
+                    user_profile, event["message"]["recipient_id"], event["message"]["sender_id"],
                 )
 
                 if recipient_id not in conversations:
@@ -535,9 +529,7 @@ def apply_event(
 
         if event["op"] == "delete":
             state["realm_bots"] = [
-                item
-                for item in state["realm_bots"]
-                if item["user_id"] != event["bot"]["user_id"]
+                item for item in state["realm_bots"] if item["user_id"] != event["bot"]["user_id"]
             ]
 
         if event["op"] == "update":
@@ -667,9 +659,7 @@ def apply_event(
             state["unsubscribed"] = [s for s in state["unsubscribed"] if not was_added(s)]
 
             # remove them from never_subscribed if they had been there
-            state["never_subscribed"] = [
-                s for s in state["never_subscribed"] if not was_added(s)
-            ]
+            state["never_subscribed"] = [s for s in state["never_subscribed"] if not was_added(s)]
 
         elif event["op"] == "remove":
             removed_names = set(map(name, event["subscriptions"]))
@@ -740,9 +730,7 @@ def apply_event(
         else:
             message_ids = event["message_ids"]  # nocoverage
         max_message = (
-            Message.objects.filter(usermessage__user_profile=user_profile)
-            .order_by("-id")
-            .first()
+            Message.objects.filter(usermessage__user_profile=user_profile).order_by("-id").first()
         )
         if max_message:
             state["max_message_id"] = max_message.id
@@ -778,9 +766,7 @@ def apply_event(
         # this recent conversation; we need to recompute that value
         # from scratch.  Definitely don't need to re-query everything,
         # but this case is likely rare enough that it's reasonable to do so.
-        state["raw_recent_private_conversations"] = get_recent_private_conversations(
-            user_profile,
-        )
+        state["raw_recent_private_conversations"] = get_recent_private_conversations(user_profile)
     elif event["type"] == "reaction":
         # The client will get the message with the reactions directly
         pass
@@ -798,11 +784,7 @@ def apply_event(
         # We don't return messages in `/register`, so most flags we
         # can ignore, but we do need to update the unread_msgs data if
         # unread state is changed.
-        if (
-            "raw_unread_msgs" in state
-            and event["flag"] == "read"
-            and event["operation"] == "add"
-        ):
+        if "raw_unread_msgs" in state and event["flag"] == "read" and event["operation"] == "add":
             for remove_id in event["messages"]:
                 remove_message_id_from_unread_mgs(state["raw_unread_msgs"], remove_id)
         if event["flag"] == "starred" and "starred_messages" in state:

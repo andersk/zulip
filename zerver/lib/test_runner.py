@@ -292,10 +292,7 @@ class Runner(DiscoverRunner):
         if hasattr(sender, "template"):
             template_name = sender.template.name
             if template_name not in self.templates_rendered:
-                if (
-                    context.get("shallow_tested")
-                    and template_name not in self.templates_rendered
-                ):
+                if context.get("shallow_tested") and template_name not in self.templates_rendered:
                     self.shallow_tested_templates.add(template_name)
                 else:
                     self.templates_rendered.add(template_name)
@@ -311,9 +308,7 @@ class Runner(DiscoverRunner):
 
         # Write the template database ids to a file that we can
         # reference for cleaning them up if they leak.
-        filepath = os.path.join(
-            get_dev_uuid_var_path(), TEMPLATE_DATABASE_DIR, get_database_id(),
-        )
+        filepath = os.path.join(get_dev_uuid_var_path(), TEMPLATE_DATABASE_DIR, get_database_id())
         os.makedirs(os.path.dirname(filepath), exist_ok=True)
         with open(filepath, "w") as f:
             if self.parallel > 1:
@@ -345,9 +340,7 @@ class Runner(DiscoverRunner):
             destroy_test_databases()
 
         # Clean up our record of which databases this process created.
-        filepath = os.path.join(
-            get_dev_uuid_var_path(), TEMPLATE_DATABASE_DIR, get_database_id(),
-        )
+        filepath = os.path.join(get_dev_uuid_var_path(), TEMPLATE_DATABASE_DIR, get_database_id())
         os.remove(filepath)
 
         # Clean up our test runs root directory.

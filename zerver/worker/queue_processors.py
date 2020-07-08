@@ -255,10 +255,7 @@ class QueueProcessingWorker(ABC):
                 self.consumed_since_last_emptied = 0
 
             self.consume_interation_counter += 1
-            if (
-                self.consume_interation_counter
-                >= self.CONSUME_ITERATIONS_BEFORE_UPDATE_STATS_NUM
-            ):
+            if self.consume_interation_counter >= self.CONSUME_ITERATIONS_BEFORE_UPDATE_STATS_NUM:
 
                 self.consume_interation_counter = 0
                 self.update_statistics(remaining_queue_size)

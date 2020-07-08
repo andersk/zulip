@@ -58,9 +58,7 @@ class AdminNotifyHandlerTest(ZulipTestCase):
         super().tearDown()
 
     def get_admin_zulip_handler(self) -> AdminNotifyHandler:
-        return [h for h in logging.getLogger("").handlers if isinstance(h, AdminNotifyHandler)][
-            0
-        ]
+        return [h for h in logging.getLogger("").handlers if isinstance(h, AdminNotifyHandler)][0]
 
     @patch("zerver.logging_handlers.try_git_describe")
     def test_basic(self, mock_function: MagicMock) -> None:
@@ -237,9 +235,7 @@ class ErrorFiltersTest(ZulipTestCase):
 class RateLimitFilterTest(ZulipTestCase):
     def test_recursive_filter_handling(self) -> None:
         def mocked_cache_get(key: str) -> int:
-            logging.error(
-                "Log an error to trigger recursive filter() calls in _RateLimitFilter.",
-            )
+            logging.error("Log an error to trigger recursive filter() calls in _RateLimitFilter.")
             raise Exception
 
         with patch("zerver.lib.logging_util.cache.get", side_effect=mocked_cache_get) as m:

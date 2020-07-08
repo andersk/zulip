@@ -230,13 +230,7 @@ latex_elements: Dict[str, str] = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (
-        master_doc,
-        "zulip-contributor-docs.tex",
-        "Zulip Documentation",
-        "The Zulip Team",
-        "manual",
-    ),
+    (master_doc, "zulip-contributor-docs.tex", "Zulip Documentation", "The Zulip Team", "manual"),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of

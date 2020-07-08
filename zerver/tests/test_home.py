@@ -249,8 +249,7 @@ class HomeTest(ZulipTestCase):
             with patch("zerver.lib.cache.cache_set") as cache_mock:
                 result = self._get_home_page(stream="Denmark")
         self.assertEqual(
-            set(result["Cache-Control"].split(", ")),
-            {"must-revalidate", "no-store", "no-cache"},
+            set(result["Cache-Control"].split(", ")), {"must-revalidate", "no-store", "no-cache"},
         )
 
         self.assert_length(queries, 42)
@@ -285,9 +284,7 @@ class HomeTest(ZulipTestCase):
             "user_id",
         ]
 
-        realm_bots_actual_keys = sorted(
-            [str(key) for key in page_params["realm_bots"][0].keys()],
-        )
+        realm_bots_actual_keys = sorted([str(key) for key in page_params["realm_bots"][0].keys()])
         self.assertEqual(realm_bots_actual_keys, realm_bots_expected_keys)
 
     def test_home_under_2fa_without_otp_device(self) -> None:
@@ -459,8 +456,7 @@ class HomeTest(ZulipTestCase):
         html = result.content.decode("utf-8")
         self.assertIn("lunch", html)
         self.assertEqual(
-            set(result["Cache-Control"].split(", ")),
-            {"must-revalidate", "no-store", "no-cache"},
+            set(result["Cache-Control"].split(", ")), {"must-revalidate", "no-store", "no-cache"},
         )
 
     def test_notifications_stream(self) -> None:

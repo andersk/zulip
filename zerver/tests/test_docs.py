@@ -327,22 +327,16 @@ class IntegrationTest(ZulipTestCase):
         context = dict()
         with self.settings(ROOT_DOMAIN_LANDING_PAGE=True):
             add_api_uri_context(context, HostRequestMock(host="mysubdomain.testserver"))
+        self.assertEqual(context["settings_html"], '<a href="/#settings">Zulip settings page</a>')
         self.assertEqual(
-            context["settings_html"], '<a href="/#settings">Zulip settings page</a>',
-        )
-        self.assertEqual(
-            context["subscriptions_html"],
-            '<a target="_blank" href="/#streams">streams page</a>',
+            context["subscriptions_html"], '<a target="_blank" href="/#streams">streams page</a>',
         )
 
         context = dict()
         add_api_uri_context(context, HostRequestMock())
+        self.assertEqual(context["settings_html"], '<a href="/#settings">Zulip settings page</a>')
         self.assertEqual(
-            context["settings_html"], '<a href="/#settings">Zulip settings page</a>',
-        )
-        self.assertEqual(
-            context["subscriptions_html"],
-            '<a target="_blank" href="/#streams">streams page</a>',
+            context["subscriptions_html"], '<a target="_blank" href="/#streams">streams page</a>',
         )
 
 

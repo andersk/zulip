@@ -33,11 +33,7 @@ from zerver.lib.actions import (
     do_reactivate_user,
     do_set_realm_property,
 )
-from zerver.lib.cache import (
-    dict_to_items_tuple,
-    ignore_unhashable_lru_cache,
-    items_tuple_to_dict,
-)
+from zerver.lib.cache import dict_to_items_tuple, ignore_unhashable_lru_cache, items_tuple_to_dict
 from zerver.lib.exceptions import InvalidAPIKeyError, InvalidAPIKeyFormatError, JsonableError
 from zerver.lib.initial_password import initial_password
 from zerver.lib.request import (
@@ -1813,9 +1809,7 @@ class ReturnSuccessOnHeadRequestDecorator(ZulipTestCase):
 
         @return_success_on_head_request
         def test_function(request: HttpRequest) -> HttpResponse:
-            return json_response(
-                msg="from_test_function",
-            )  # nocoverage. isn't meant to be called
+            return json_response(msg="from_test_function")  # nocoverage. isn't meant to be called
 
         response = test_function(request)
         self.assert_json_success(response)

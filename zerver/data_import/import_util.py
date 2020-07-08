@@ -358,12 +358,7 @@ def build_realm(
         zerver_userpresence=[],  # shows last logged in data, which is not available
         zerver_userprofile_mirrordummy=[],
         zerver_realmdomain=[
-            {
-                "realm": realm_id,
-                "allow_subdomains": False,
-                "domain": domain_name,
-                "id": realm_id,
-            },
+            {"realm": realm_id, "allow_subdomains": False, "domain": domain_name, "id": realm_id},
         ],
         zerver_useractivity=[],
         zerver_realm=zerver_realm,

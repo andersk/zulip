@@ -23,9 +23,7 @@ def transfer_uploads_to_s3(processes: int) -> None:
 def transfer_avatars_to_s3(processes: int) -> None:
     def _transfer_avatar_to_s3(user: UserProfile) -> int:
         avatar_path = user_avatar_path(user)
-        file_path = (
-            os.path.join(settings.LOCAL_UPLOADS_DIR, "avatars", avatar_path) + ".original"
-        )
+        file_path = os.path.join(settings.LOCAL_UPLOADS_DIR, "avatars", avatar_path) + ".original"
         try:
             with open(file_path, "rb") as f:
                 s3backend.upload_avatar_image(f, user, user)
@@ -81,9 +79,7 @@ def transfer_emoji_to_s3(processes: int) -> None:
         emoji_path = RealmEmoji.PATH_ID_TEMPLATE.format(
             realm_id=realm_emoji.realm.id, emoji_file_name=realm_emoji.file_name,
         )
-        emoji_path = (
-            os.path.join(settings.LOCAL_UPLOADS_DIR, "avatars", emoji_path) + ".original"
-        )
+        emoji_path = os.path.join(settings.LOCAL_UPLOADS_DIR, "avatars", emoji_path) + ".original"
         try:
             with open(emoji_path, "rb") as f:
                 s3backend.upload_emoji_image(f, realm_emoji.file_name, realm_emoji.author)

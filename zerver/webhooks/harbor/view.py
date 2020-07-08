@@ -116,7 +116,5 @@ def api_harbor_webhook(
 
     content: str = content_func(payload, user_profile, operator_username)
 
-    check_send_webhook_message(
-        request, user_profile, topic, content, unquote_url_parameters=True,
-    )
+    check_send_webhook_message(request, user_profile, topic, content, unquote_url_parameters=True)
     return json_success()

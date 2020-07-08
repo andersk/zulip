@@ -61,8 +61,7 @@ def compute_stats(log_level: int) -> None:
         sorted(total_user_counts.keys(), key=lambda x: -total_user_counts[x]),
     ):
         percent_zulip = round(
-            100
-            - (user_counts[email].get("zephyr_mirror", 0)) * 100.0 / total_user_counts[email],
+            100 - (user_counts[email].get("zephyr_mirror", 0)) * 100.0 / total_user_counts[email],
             1,
         )
         for size in top_percents.keys():

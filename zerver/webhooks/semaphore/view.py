@@ -199,9 +199,7 @@ def semaphore_2(payload: Dict[str, Any]) -> Tuple[str, str, Optional[str]]:
             pull_request_url=pull_request_url,
             pull_request_number=pull_request_number,
         )
-        template = (
-            GH_PULL_REQUEST_TEMPLATE if is_github_repo(repo_url) else PULL_REQUEST_TEMPLATE
-        )
+        template = GH_PULL_REQUEST_TEMPLATE if is_github_repo(repo_url) else PULL_REQUEST_TEMPLATE
         content = template.format(**context)
     elif payload["revision"]["reference_type"] == "tag":
         branch_name = ""

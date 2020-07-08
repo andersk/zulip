@@ -79,9 +79,7 @@ def get_emoji_file_name(emoji_file_name: str, new_name: str) -> str:
     return "".join((new_name, image_ext))
 
 
-def migrate_realm_emoji_image_files(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def migrate_realm_emoji_image_files(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     RealmEmoji = apps.get_model("zerver", "RealmEmoji")
     uploader = get_uploader()
     for realm_emoji in RealmEmoji.objects.all():

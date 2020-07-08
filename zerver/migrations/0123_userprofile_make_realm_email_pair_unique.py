@@ -15,7 +15,5 @@ class Migration(migrations.Migration):
             name="email",
             field=models.EmailField(db_index=True, max_length=254),
         ),
-        migrations.AlterUniqueTogether(
-            name="userprofile", unique_together={("realm", "email")},
-        ),
+        migrations.AlterUniqueTogether(name="userprofile", unique_together={("realm", "email")}),
     ]

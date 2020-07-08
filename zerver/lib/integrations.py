@@ -465,9 +465,7 @@ INTEGRATIONS: Dict[str, Integration] = {
     "discourse": Integration(
         "discourse", "discourse", ["communication"], doc="zerver/integrations/discourse.md",
     ),
-    "email": Integration(
-        "email", "email", ["communication"], doc="zerver/integrations/email.md",
-    ),
+    "email": Integration("email", "email", ["communication"], doc="zerver/integrations/email.md"),
     "errbot": Integration(
         "errbot", "errbot", ["meta-integration", "bots"], doc="zerver/integrations/errbot.md",
     ),

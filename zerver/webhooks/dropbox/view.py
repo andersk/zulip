@@ -12,9 +12,7 @@ from zerver.models import UserProfile
 @api_key_only_webhook_view("Dropbox", notify_bot_owner_on_invalid_json=False)
 @has_request_variables
 def api_dropbox_webhook(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    challenge: Optional[str] = REQ(default=None),
+    request: HttpRequest, user_profile: UserProfile, challenge: Optional[str] = REQ(default=None),
 ) -> HttpResponse:
     if request.method == "POST":
         topic = "Dropbox"

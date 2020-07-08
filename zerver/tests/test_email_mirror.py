@@ -100,9 +100,7 @@ class TestEncodeDecode(ZulipTestCase):
         self.assertEqual(token, stream.email_token)
 
         email_address = email_address.replace("@testserver", "@zulip.org")
-        email_address_all_options = email_address_all_options.replace(
-            "@testserver", "@zulip.org",
-        )
+        email_address_all_options = email_address_all_options.replace("@testserver", "@zulip.org")
         with self.assertRaises(ZulipEmailForwardError):
             decode_email_address(email_address)
 
@@ -585,9 +583,7 @@ class TestEmailMirrorMessagesWithAttachments(ZulipTestCase):
         incoming_valid_message.set_content("Test body")
         # Create an invalid attachment:
         attachment_msg = MIMEPart()
-        attachment_msg.add_header(
-            "Content-Disposition", "attachment", filename="some_attachment",
-        )
+        attachment_msg.add_header("Content-Disposition", "attachment", filename="some_attachment")
         incoming_valid_message.add_attachment(attachment_msg)
 
         incoming_valid_message["Subject"] = "TestStreamEmailMessages Subject"
@@ -1165,9 +1161,7 @@ class TestReplyExtraction(ZulipTestCase):
 
 class TestScriptMTA(ZulipTestCase):
     def test_success(self) -> None:
-        script = os.path.join(
-            os.path.dirname(__file__), "../../scripts/lib/email-mirror-postfix",
-        )
+        script = os.path.join(os.path.dirname(__file__), "../../scripts/lib/email-mirror-postfix")
 
         sender = self.example_email("hamlet")
         stream = get_stream("Denmark", get_realm("zulip"))
@@ -1184,9 +1178,7 @@ class TestScriptMTA(ZulipTestCase):
         )
 
     def test_error_no_recipient(self) -> None:
-        script = os.path.join(
-            os.path.dirname(__file__), "../../scripts/lib/email-mirror-postfix",
-        )
+        script = os.path.join(os.path.dirname(__file__), "../../scripts/lib/email-mirror-postfix")
 
         sender = self.example_email("hamlet")
         stream = get_stream("Denmark", get_realm("zulip"))
@@ -1198,9 +1190,7 @@ class TestScriptMTA(ZulipTestCase):
         os.close(write_pipe)
         success_call = True
         try:
-            subprocess.check_output(
-                [script, "-s", settings.SHARED_SECRET, "-t"], stdin=read_pipe,
-            )
+            subprocess.check_output([script, "-s", settings.SHARED_SECRET, "-t"], stdin=read_pipe)
         except subprocess.CalledProcessError as e:
             self.assertEqual(
                 e.output,
@@ -1512,9 +1502,7 @@ class TestEmailMirrorLogAndReport(ZulipTestCase):
         # Test with EMAIL_GATEWAY_EXTRA_PATTERN_HACK:
         with self.settings(EMAIL_GATEWAY_EXTRA_PATTERN_HACK="@zulip.org"):
             stream_to_address = stream_to_address.replace("@testserver", "@zulip.org")
-            scrubbed_stream_address = scrubbed_stream_address.replace(
-                "@testserver", "@zulip.org",
-            )
+            scrubbed_stream_address = scrubbed_stream_address.replace("@testserver", "@zulip.org")
             error_message = "test message {}"
             error_message = error_message.format(stream_to_address)
             expected_message = "test message {} <Address to stream id: {}>"

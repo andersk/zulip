@@ -26,9 +26,7 @@ need further help!
 """
 
 
-def guess_zulip_user_from_teamcity(
-    teamcity_username: str, realm: Realm,
-) -> Optional[UserProfile]:
+def guess_zulip_user_from_teamcity(teamcity_username: str, realm: Realm) -> Optional[UserProfile]:
     try:
         # Try to find a matching user in Zulip
         # We search a user's full name, short name,

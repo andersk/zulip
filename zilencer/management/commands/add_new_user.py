@@ -19,9 +19,7 @@ and will otherwise fall back to the zulip realm."""
         realm = self.get_realm(options)
         if realm is None:
             realm = (
-                Realm.objects.filter(string_id__startswith="realm")
-                .order_by("-string_id")
-                .first()
+                Realm.objects.filter(string_id__startswith="realm").order_by("-string_id").first()
             )
         if realm is None:
             print(

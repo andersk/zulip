@@ -31,7 +31,9 @@ class StripeHookTests(WebhookTestCase):
 
     def test_charge_failed(self) -> None:
         expected_topic = "charges"
-        expected_message = "[Charge](https://dashboard.stripe.com/charges/ch_00000000000000) for 1.00 AUD failed"
+        expected_message = (
+            "[Charge](https://dashboard.stripe.com/charges/ch_00000000000000) for 1.00 AUD failed"
+        )
         self.send_and_test_stream_message(
             "charge_failed",
             expected_topic,
@@ -222,9 +224,7 @@ Amount due: 0.00 INR
     def test_pseudo_refund_event(self) -> None:
         expected_topic = "refunds"
         expected_message = "A [refund](https://dashboard.stripe.com/refunds/pyr_abcde12345ABCDF) for a [payment](https://dashboard.stripe.com/payments/py_abcde12345ABCDG) of 1234 EUR was updated."
-        self.send_and_test_stream_message(
-            "pseudo_refund_event", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pseudo_refund_event", expected_topic, expected_message)
 
     @patch("zerver.webhooks.stripe.view.check_send_webhook_message")
     def test_account_updated_without_previous_attributes_ignore(

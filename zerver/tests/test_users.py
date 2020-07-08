@@ -901,9 +901,7 @@ class UserProfileTest(ZulipTestCase):
         # User is not active
         hamlet.is_active = False
         hamlet.save()
-        with self.assertRaisesRegex(
-            ValidationError, rf"User with ID {hamlet.id} is deactivated",
-        ):
+        with self.assertRaisesRegex(ValidationError, rf"User with ID {hamlet.id} is deactivated"):
             check_valid_user_ids(realm.id, [hamlet.id])
         check_valid_user_ids(realm.id, [hamlet.id], allow_deactivated=True)
 

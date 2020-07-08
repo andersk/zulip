@@ -27,9 +27,7 @@ class Migration(migrations.Migration):
             field=models.PositiveSmallIntegerField(default=COLOR_SCHEME_AUTOMATIC),
         ),
         migrations.RunPython(
-            set_color_scheme_to_night_mode,
-            reverse_code=migrations.RunPython.noop,
-            elidable=True,
+            set_color_scheme_to_night_mode, reverse_code=migrations.RunPython.noop, elidable=True,
         ),
         migrations.RemoveField(model_name="userprofile", name="night_mode"),
     ]

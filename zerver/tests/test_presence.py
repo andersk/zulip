@@ -528,9 +528,7 @@ class UserPresenceAggregationTests(ZulipTestCase):
             latest_result_dict["presences"][user.email]["aggregated"],
             {
                 "status": status,
-                "timestamp": datetime_to_timestamp(
-                    validate_time - datetime.timedelta(seconds=2),
-                ),
+                "timestamp": datetime_to_timestamp(validate_time - datetime.timedelta(seconds=2)),
                 "client": "ZulipAndroid",
             },
         )
@@ -557,9 +555,7 @@ class UserPresenceAggregationTests(ZulipTestCase):
             result_dict["presences"][user.email]["aggregated"],
             {
                 "status": "active",
-                "timestamp": datetime_to_timestamp(
-                    validate_time - datetime.timedelta(seconds=1),
-                ),
+                "timestamp": datetime_to_timestamp(validate_time - datetime.timedelta(seconds=1)),
                 "client": "ZulipTestDev",
             },
         )
@@ -572,9 +568,7 @@ class UserPresenceAggregationTests(ZulipTestCase):
             result_dict["presence"]["aggregated"],
             {
                 "status": "active",
-                "timestamp": datetime_to_timestamp(
-                    validate_time - datetime.timedelta(seconds=2),
-                ),
+                "timestamp": datetime_to_timestamp(validate_time - datetime.timedelta(seconds=2)),
             },
         )
 
@@ -586,9 +580,7 @@ class UserPresenceAggregationTests(ZulipTestCase):
             result_dict["presence"]["aggregated"],
             {
                 "status": "idle",
-                "timestamp": datetime_to_timestamp(
-                    validate_time - datetime.timedelta(seconds=2),
-                ),
+                "timestamp": datetime_to_timestamp(validate_time - datetime.timedelta(seconds=2)),
             },
         )
 
@@ -611,9 +603,7 @@ class UserPresenceAggregationTests(ZulipTestCase):
             result_dict["presence"]["aggregated"],
             {
                 "status": "idle",
-                "timestamp": datetime_to_timestamp(
-                    validate_time - datetime.timedelta(seconds=2),
-                ),
+                "timestamp": datetime_to_timestamp(validate_time - datetime.timedelta(seconds=2)),
             },
         )
 
@@ -627,9 +617,7 @@ class UserPresenceAggregationTests(ZulipTestCase):
             result_dict["presence"]["aggregated"],
             {
                 "status": "offline",
-                "timestamp": datetime_to_timestamp(
-                    validate_time - datetime.timedelta(seconds=2),
-                ),
+                "timestamp": datetime_to_timestamp(validate_time - datetime.timedelta(seconds=2)),
             },
         )
 

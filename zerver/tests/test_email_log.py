@@ -24,9 +24,7 @@ class EmailLogTest(ZulipTestCase):
             result = self.client_get("/emails/clear/")
             self.assertEqual(result.status_code, 302)
             result = self.client_get(result["Location"])
-            self.assertIn(
-                "manually generate most of the emails by clicking", str(result.content),
-            )
+            self.assertIn("manually generate most of the emails by clicking", str(result.content))
 
     def test_forward_address_details(self) -> None:
         forward_address = "forward-to@example.com"

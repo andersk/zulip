@@ -213,9 +213,7 @@ class TestFollowupEmails(ZulipTestCase):
         with self.settings(
             LDAP_EMAIL_ATTR="mail", AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map,
         ):
-            self.login_with_return(
-                "newuser_with_email", self.ldap_password("newuser_with_email"),
-            )
+            self.login_with_return("newuser_with_email", self.ldap_password("newuser_with_email"))
             user = UserProfile.objects.get(delivery_email="newuser_email@zulip.com")
             scheduled_emails = ScheduledEmail.objects.filter(users=user)
 
@@ -816,11 +814,7 @@ class TestMissedMessages(ZulipTestCase):
         ]
         email_subject = "PMs with Othello, the Moor of Venice"
         self._test_cases(
-            msg_id,
-            verify_body_include,
-            email_subject,
-            send_as_user=False,
-            verify_html_body=True,
+            msg_id, verify_body_include, email_subject, send_as_user=False, verify_html_body=True,
         )
 
     def test_emojiset_in_missed_message(self) -> None:
@@ -837,11 +831,7 @@ class TestMissedMessages(ZulipTestCase):
         ]
         email_subject = "PMs with Othello, the Moor of Venice"
         self._test_cases(
-            msg_id,
-            verify_body_include,
-            email_subject,
-            send_as_user=False,
-            verify_html_body=True,
+            msg_id, verify_body_include, email_subject, send_as_user=False, verify_html_body=True,
         )
 
     def test_stream_link_in_missed_message(self) -> None:
@@ -855,11 +845,7 @@ class TestMissedMessages(ZulipTestCase):
         verify_body_include = [f'<a class="stream" data-stream-id="5" href="{href}">#Verona</a']
         email_subject = "PMs with Othello, the Moor of Venice"
         self._test_cases(
-            msg_id,
-            verify_body_include,
-            email_subject,
-            send_as_user=False,
-            verify_html_body=True,
+            msg_id, verify_body_include, email_subject, send_as_user=False, verify_html_body=True,
         )
 
     def test_sender_name_in_missed_message(self) -> None:

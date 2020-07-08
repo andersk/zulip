@@ -52,11 +52,7 @@ from zerver.lib.emoji import (
 from zerver.lib.exceptions import MarkdownRenderingException
 from zerver.lib.markdown import fenced_code
 from zerver.lib.markdown.fenced_code import FENCE_RE
-from zerver.lib.mention import (
-    extract_user_group,
-    possible_mentions,
-    possible_user_group_mentions,
-)
+from zerver.lib.mention import extract_user_group, possible_mentions, possible_user_group_mentions
 from zerver.lib.tex import render_tex
 from zerver.lib.thumbnail import user_uploads_or_external
 from zerver.lib.timeout import TimeoutExpired, timeout
@@ -435,9 +431,7 @@ def fetch_tweet_data(tweet_id: str) -> Optional[Dict[str, Any]]:
                 # Code 34 means that the message doesn't exist; return
                 # None so that we will cache the error
                 return None
-            elif (
-                len(t) == 1 and ("code" in t[0]) and (t[0]["code"] == 88 or t[0]["code"] == 130)
-            ):
+            elif len(t) == 1 and ("code" in t[0]) and (t[0]["code"] == 88 or t[0]["code"] == 130):
                 # Code 88 means that we were rate-limited and 130
                 # means Twitter is having capacity issues; either way
                 # just raise the error so we don't cache None and will
@@ -1703,9 +1697,7 @@ class RealmFilterPattern(markdown.inlinepatterns.Pattern):
 
     def handleMatch(self, m: Match[str]) -> Union[Element, str]:
         db_data = self.md.zulip_db_data
-        return url_to_a(
-            db_data, self.format_string % m.groupdict(), m.group(OUTER_CAPTURE_GROUP),
-        )
+        return url_to_a(db_data, self.format_string % m.groupdict(), m.group(OUTER_CAPTURE_GROUP))
 
 
 class UserMentionPattern(markdown.inlinepatterns.Pattern):
@@ -1995,9 +1987,7 @@ class Markdown(markdown.Markdown):
         preprocessors.register(
             markdown.preprocessors.NormalizeWhitespace(self), "normalize_whitespace", 30,
         )
-        preprocessors.register(
-            fenced_code.FencedBlockPreprocessor(self), "fenced_code_block", 25,
-        )
+        preprocessors.register(fenced_code.FencedBlockPreprocessor(self), "fenced_code_block", 25)
         preprocessors.register(
             AlertWordNotificationProcessor(self), "custom_text_notifications", 20,
         )
@@ -2069,9 +2059,7 @@ class Markdown(markdown.Markdown):
             BacktickInlineProcessor(markdown.inlinepatterns.BACKTICK_RE), "backtick", 105,
         )
         reg.register(
-            markdown.inlinepatterns.DoubleTagPattern(STRONG_EM_RE, "strong,em"),
-            "strong_em",
-            100,
+            markdown.inlinepatterns.DoubleTagPattern(STRONG_EM_RE, "strong,em"), "strong_em", 100,
         )
         reg.register(UserMentionPattern(mention.find_mentions, self), "usermention", 95)
         reg.register(Tex(r"\B(?<!\$)\$\$(?P<body>[^\n_$](\\\$|[^$\n])*)\$\$(?!\$)\B"), "tex", 90)

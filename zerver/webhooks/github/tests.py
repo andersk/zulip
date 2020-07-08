@@ -187,7 +187,9 @@ class GithubWebhookTest(WebhookTestCase):
         self.send_and_test_stream_message("issues", expected_topic, expected_message)
 
     def test_membership_msg(self) -> None:
-        expected_message = "baxterthehacker added [kdaigle](https://github.com/kdaigle) to the Contractors team."
+        expected_message = (
+            "baxterthehacker added [kdaigle](https://github.com/kdaigle) to the Contractors team."
+        )
         self.send_and_test_stream_message(
             "membership", self.EXPECTED_TOPIC_ORGANIZATION_EVENTS, expected_message,
         )
@@ -317,9 +319,7 @@ class GithubWebhookTest(WebhookTestCase):
         self.url = self.build_webhook_url(topic="notifications")
         expected_topic = "notifications"
         expected_message = "baxterthehacker submitted [PR Review for #1 Update the README with new information](https://github.com/baxterthehacker/public-repo/pull/1#pullrequestreview-2626884)."
-        self.send_and_test_stream_message(
-            "pull_request_review", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("pull_request_review", expected_topic, expected_message)
 
     def test_pull_request_review_comment_msg(self) -> None:
         expected_message = "baxterthehacker created [PR Review Comment](https://github.com/baxterthehacker/public-repo/pull/1#discussion_r29724692):\n\n~~~ quote\nMaybe you should use more emojji on this line.\n~~~"

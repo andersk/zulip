@@ -455,9 +455,7 @@ def filter_stream_authorization(
 
 
 def list_to_streams(
-    streams_raw: Iterable[Mapping[str, Any]],
-    user_profile: UserProfile,
-    autocreate: bool = False,
+    streams_raw: Iterable[Mapping[str, Any]], user_profile: UserProfile, autocreate: bool = False,
 ) -> Tuple[List[Stream], List[Stream]]:
     """Converts list of dicts to a list of Streams, validating input in the process
 
@@ -522,9 +520,7 @@ def list_to_streams(
         # paranoid approach, since often on Zulip two people will discuss
         # creating a new stream, and both people eagerly do it.)
         created_streams, dup_streams = create_streams_if_needed(
-            realm=user_profile.realm,
-            stream_dicts=missing_stream_dicts,
-            acting_user=user_profile,
+            realm=user_profile.realm, stream_dicts=missing_stream_dicts, acting_user=user_profile,
         )
         existing_streams += dup_streams
 

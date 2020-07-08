@@ -13,12 +13,7 @@ class Command(ZulipBaseCommand):
         parser.add_argument("-e", "--email", dest="email", help="Email account of user.")
         parser.add_argument("-a", "--api-key", dest="api_key", help="API key of user.")
         parser.add_argument(
-            "-s",
-            "--seconds",
-            dest="seconds",
-            default=60,
-            type=int,
-            help="Seconds to block for.",
+            "-s", "--seconds", dest="seconds", default=60, type=int, help="Seconds to block for.",
         )
         parser.add_argument(
             "-d",

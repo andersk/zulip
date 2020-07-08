@@ -450,10 +450,7 @@ class GitlabHookTests(WebhookTestCase):
         expected_message = "Build job_name from test stage changed status to success."
 
         self.send_and_test_stream_message(
-            "build_succeeded",
-            expected_topic,
-            expected_message,
-            HTTP_X_GITLAB_EVENT="Build Hook",
+            "build_succeeded", expected_topic, expected_message, HTTP_X_GITLAB_EVENT="Build Hook",
         )
 
     def test_pipeline_succeeded_with_artifacts_event_message(self) -> None:

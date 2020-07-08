@@ -529,9 +529,7 @@ class SlackImporter(ZulipTestCase):
             slack_user_id_to_zulip_user_id[channel_members[2]],
         )
         self.assertEqual(zerver_subscription[3]["id"], 3)
-        self.assertEqual(
-            zerver_subscription[1]["recipient"], zerver_subscription[3]["recipient"],
-        )
+        self.assertEqual(zerver_subscription[1]["recipient"], zerver_subscription[3]["recipient"])
         self.assertEqual(zerver_subscription[1]["pin_to_top"], False)
 
     def test_channels_to_zerver_stream(self) -> None:
@@ -621,16 +619,13 @@ class SlackImporter(ZulipTestCase):
         self.assertEqual(zerver_stream[0]["description"], "no purpose")
         self.assertEqual(zerver_stream[0]["invite_only"], False)
         self.assertEqual(zerver_stream[0]["realm"], realm_id)
-        self.assertEqual(
-            zerver_stream[2]["id"], test_added_channels[zerver_stream[2]["name"]][1],
-        )
+        self.assertEqual(zerver_stream[2]["id"], test_added_channels[zerver_stream[2]["name"]][1])
 
         self.assertEqual(self.get_set(realm["zerver_huddle"], "id"), {0, 1, 2})
         self.assertEqual(realm["zerver_userpresence"], [])
 
     @mock.patch(
-        "zerver.data_import.slack.users_to_zerver_userprofile",
-        return_value=[[], [], {}, [], []],
+        "zerver.data_import.slack.users_to_zerver_userprofile", return_value=[[], [], {}, [], []],
     )
     @mock.patch(
         "zerver.data_import.slack.channels_to_zerver_stream",
@@ -892,9 +887,7 @@ class SlackImporter(ZulipTestCase):
         # Message conversion already tested in tests.test_slack_message_conversion
         self.assertEqual(zerver_message[0]["content"], "@**Jane**: hey!")
         self.assertEqual(zerver_message[0]["has_link"], False)
-        self.assertEqual(
-            zerver_message[2]["content"], "http://journals.plos.org/plosone/article",
-        )
+        self.assertEqual(zerver_message[2]["content"], "http://journals.plos.org/plosone/article")
         self.assertEqual(zerver_message[2]["has_link"], True)
         self.assertEqual(zerver_message[5]["has_link"], False)
         self.assertEqual(zerver_message[7]["has_link"], False)
@@ -902,8 +895,7 @@ class SlackImporter(ZulipTestCase):
         self.assertEqual(zerver_message[3][EXPORT_TOPIC_NAME], "imported from slack")
         self.assertEqual(zerver_message[3]["content"], "/me added bot")
         self.assertEqual(
-            zerver_message[4]["recipient"],
-            slack_recipient_name_to_zulip_recipient_id["general"],
+            zerver_message[4]["recipient"], slack_recipient_name_to_zulip_recipient_id["general"],
         )
         self.assertEqual(zerver_message[2][EXPORT_TOPIC_NAME], "imported from slack")
         self.assertEqual(

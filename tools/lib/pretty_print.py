@@ -151,9 +151,7 @@ def pretty_print_html(html: str, num_spaces: int = 4) -> str:
                             + info["extra_indent"]
                             - info["extra_indent_prev"]
                         )
-                    elif (
-                        start_line + info["line_span"] - 1 == end_line and info["line_span"] > 1
-                    ):
+                    elif start_line + info["line_span"] - 1 == end_line and info["line_span"] > 1:
                         offsets[end_line] = (
                             1 + info["extra_indent"] + (info["depth"] + 1) * num_spaces
                         ) - adjustment

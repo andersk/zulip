@@ -663,9 +663,7 @@ def process_raw_message_batch(
         }
         mention_map[message_id] = mention_user_ids
 
-        content = fix_mentions(
-            content=raw_message["content"], mention_user_ids=mention_user_ids,
-        )
+        content = fix_mentions(content=raw_message["content"], mention_user_ids=mention_user_ids)
         content = h.handle(content)
 
         if len(content) > 10000:

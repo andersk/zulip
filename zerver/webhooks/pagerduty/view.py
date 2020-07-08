@@ -147,8 +147,7 @@ def send_formated_pagerduty(
     if message_type in ("incident.trigger", "incident.unacknowledge"):
         template = INCIDENT_WITH_SERVICE_AND_ASSIGNEE
     elif (
-        message_type == "incident.resolve"
-        and format_dict.get("resolving_agent_info") is not None
+        message_type == "incident.resolve" and format_dict.get("resolving_agent_info") is not None
     ):
         template = INCIDENT_RESOLVED_WITH_AGENT
     elif message_type == "incident.resolve" and format_dict.get("resolving_agent_info") is None:

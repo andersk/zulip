@@ -70,9 +70,7 @@ class RealmTest(ZulipTestCase):
         with tornado_redirected_to_list(events):
             do_set_realm_property(realm, "name", new_name)
         event = events[0]["event"]
-        self.assertEqual(
-            event, dict(type="realm", op="update", property="name", value=new_name),
-        )
+        self.assertEqual(event, dict(type="realm", op="update", property="name", value=new_name))
 
     def test_update_realm_description_events(self) -> None:
         realm = get_realm("zulip")
@@ -82,8 +80,7 @@ class RealmTest(ZulipTestCase):
             do_set_realm_property(realm, "description", new_description)
         event = events[0]["event"]
         self.assertEqual(
-            event,
-            dict(type="realm", op="update", property="description", value=new_description),
+            event, dict(type="realm", op="update", property="description", value=new_description),
         )
 
     def test_update_realm_description(self) -> None:
@@ -99,8 +96,7 @@ class RealmTest(ZulipTestCase):
 
         event = events[0]["event"]
         self.assertEqual(
-            event,
-            dict(type="realm", op="update", property="description", value=new_description),
+            event, dict(type="realm", op="update", property="description", value=new_description),
         )
 
     def test_realm_description_length(self) -> None:
@@ -320,17 +316,13 @@ class RealmTest(ZulipTestCase):
         self.assertEqual(realm.signup_notifications_stream, None)
 
         new_signup_notifications_stream_id = 4
-        req = dict(
-            signup_notifications_stream_id=ujson.dumps(new_signup_notifications_stream_id),
-        )
+        req = dict(signup_notifications_stream_id=ujson.dumps(new_signup_notifications_stream_id))
 
         result = self.client_patch("/json/realm", req)
         self.assert_json_success(result)
         realm = get_realm("zulip")
         assert realm.signup_notifications_stream is not None
-        self.assertEqual(
-            realm.signup_notifications_stream.id, new_signup_notifications_stream_id,
-        )
+        self.assertEqual(realm.signup_notifications_stream.id, new_signup_notifications_stream_id)
 
         invalid_signup_notifications_stream_id = 1234
         req = dict(
@@ -578,9 +570,7 @@ class RealmTest(ZulipTestCase):
             get_realm("zulip").video_chat_provider, Realm.VIDEO_CHAT_PROVIDERS["disabled"]["id"],
         )
 
-        req = {
-            "video_chat_provider": ujson.dumps(Realm.VIDEO_CHAT_PROVIDERS["jitsi_meet"]["id"]),
-        }
+        req = {"video_chat_provider": ujson.dumps(Realm.VIDEO_CHAT_PROVIDERS["jitsi_meet"]["id"])}
         result = self.client_patch("/json/realm", req)
         self.assert_json_success(result)
         self.assertEqual(
@@ -876,9 +866,7 @@ class ScrubRealmTest(ZulipTestCase):
 
         self.assertEqual(Message.objects.filter(sender__in=[iago, othello]).count(), 10)
         self.assertEqual(Message.objects.filter(sender__in=[cordelia, king]).count(), 10)
-        self.assertEqual(
-            UserMessage.objects.filter(user_profile__in=[iago, othello]).count(), 20,
-        )
+        self.assertEqual(UserMessage.objects.filter(user_profile__in=[iago, othello]).count(), 20)
         self.assertEqual(
             UserMessage.objects.filter(user_profile__in=[cordelia, king]).count(), 20,
         )
@@ -905,9 +893,7 @@ class ScrubRealmTest(ZulipTestCase):
         for user in zulip_users:
             self.assertTrue(re.search("Scrubbed [a-z0-9]{15}", user.full_name))
             self.assertTrue(re.search("scrubbed-[a-z0-9]{15}@" + zulip.host, user.email))
-            self.assertTrue(
-                re.search("scrubbed-[a-z0-9]{15}@" + zulip.host, user.delivery_email),
-            )
+            self.assertTrue(re.search("scrubbed-[a-z0-9]{15}@" + zulip.host, user.delivery_email))
 
         lear_users = UserProfile.objects.filter(realm=lear)
         for user in lear_users:

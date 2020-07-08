@@ -47,9 +47,7 @@ class Command(sendtestemail.Command):
         print("Successfully sent 2 emails to {}!".format(", ".join(kwargs["email"])))
 
         if kwargs["managers"]:
-            mail_managers(
-                "Zulip manager email test", "This email was sent to the site managers.",
-            )
+            mail_managers("Zulip manager email test", "This email was sent to the site managers.")
 
         if kwargs["admins"]:
             mail_admins("Zulip admins email test", "This email was sent to the site admins.")

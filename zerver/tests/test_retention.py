@@ -76,9 +76,7 @@ class RetentionTestingBase(ZulipTestCase):
     ) -> None:
         # Check that the data was restored:
         self.assertEqual(
-            set(
-                Message.objects.filter(id__in=expected_message_ids).values_list("id", flat=True),
-            ),
+            set(Message.objects.filter(id__in=expected_message_ids).values_list("id", flat=True)),
             set(expected_message_ids),
         )
 
@@ -131,9 +129,7 @@ class ArchiveMessagesTestingBase(RetentionTestingBase):
         # send messages from mit.edu realm and change messages pub date
         sender = self.mit_user("espuser")
         recipient = self.mit_user("starnine")
-        msg_ids = [
-            self.send_personal_message(sender, recipient) for i in range(message_quantity)
-        ]
+        msg_ids = [self.send_personal_message(sender, recipient) for i in range(message_quantity)]
 
         self._change_messages_date_sent(msg_ids, date_sent)
         return msg_ids
@@ -171,11 +167,7 @@ class ArchiveMessagesTestingBase(RetentionTestingBase):
         realm_id = get_realm("zulip").id
         dummy_files = [
             ("zulip.txt", f"{realm_id}/31/4CBjtTLYZhk66pZrF8hnYGwc/zulip.txt", sample_size),
-            (
-                "temp_file.py",
-                f"{realm_id}/31/4CBjtTLYZhk66pZrF8hnYGwc/temp_file.py",
-                sample_size,
-            ),
+            ("temp_file.py", f"{realm_id}/31/4CBjtTLYZhk66pZrF8hnYGwc/temp_file.py", sample_size),
             ("abc.py", f"{realm_id}/31/4CBjtTLYZhk66pZrF8hnYGwc/abc.py", sample_size),
         ]
 
@@ -305,9 +297,7 @@ class TestArchiveMessagesGeneral(ArchiveMessagesTestingBase):
         msg_ids = [self._send_cross_realm_personal_message() for i in range(1, 7)]
         usermsg_ids = self._get_usermessage_ids(msg_ids)
         # Make the message expired on the recipient's realm:
-        self._change_messages_date_sent(
-            msg_ids, timezone_now() - timedelta(ZULIP_REALM_DAYS + 1),
-        )
+        self._change_messages_date_sent(msg_ids, timezone_now() - timedelta(ZULIP_REALM_DAYS + 1))
 
         archive_messages()
         self._verify_archive_data(msg_ids, usermsg_ids)
@@ -544,9 +534,7 @@ class TestArchivingReactions(ArchiveMessagesTestingBase, EmojiReactionBase):
 
         self.assertEqual(
             set(
-                ArchivedReaction.objects.filter(id__in=reaction_ids).values_list(
-                    "id", flat=True,
-                ),
+                ArchivedReaction.objects.filter(id__in=reaction_ids).values_list("id", flat=True),
             ),
             set(reaction_ids),
         )
@@ -569,11 +557,7 @@ class MoveMessageToArchiveBase(RetentionTestingBase):
         realm_id = get_realm("zulip").id
         dummy_files = [
             ("zulip.txt", f"{realm_id}/31/4CBjtTLYZhk66pZrF8hnYGwc/zulip.txt", sample_size),
-            (
-                "temp_file.py",
-                f"{realm_id}/31/4CBjtTLYZhk66pZrF8hnYGwc/temp_file.py",
-                sample_size,
-            ),
+            ("temp_file.py", f"{realm_id}/31/4CBjtTLYZhk66pZrF8hnYGwc/temp_file.py", sample_size),
             ("abc.py", f"{realm_id}/31/4CBjtTLYZhk66pZrF8hnYGwc/abc.py", sample_size),
             ("hello.txt", f"{realm_id}/31/4CBjtTLYZhk66pZrF8hnYGwc/hello.txt", sample_size),
             ("new.py", f"{realm_id}/31/4CBjtTLYZhk66pZrF8hnYGwc/new.py", sample_size),
@@ -687,9 +671,7 @@ class MoveMessageToArchiveGeneral(MoveMessageToArchiveBase):
         )
         for attachment_id in attachment_ids:
             attachment_id_to_message_ids[attachment_id] = list(
-                Message.objects.filter(attachment__id=attachment_id).values_list(
-                    "id", flat=True,
-                ),
+                Message.objects.filter(attachment__id=attachment_id).values_list("id", flat=True),
             )
 
         usermsg_ids = self._get_usermessage_ids(msg_ids)
@@ -826,9 +808,7 @@ class MoveMessageToArchiveWithSubMessages(MoveMessageToArchiveBase):
 
         self.assertEqual(
             set(
-                ArchivedSubMessage.objects.filter(message_id=msg_id).values_list(
-                    "id", flat=True,
-                ),
+                ArchivedSubMessage.objects.filter(message_id=msg_id).values_list("id", flat=True),
             ),
             set(submessage_ids),
         )

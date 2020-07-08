@@ -71,9 +71,7 @@ def check_short_name(short_name_raw: str) -> str:
     return short_name
 
 
-def check_valid_bot_config(
-    bot_type: int, service_name: str, config_data: Dict[str, str],
-) -> None:
+def check_valid_bot_config(bot_type: int, service_name: str, config_data: Dict[str, str]) -> None:
     if bot_type == UserProfile.INCOMING_WEBHOOK_BOT:
         from zerver.lib.integrations import WEBHOOK_INTEGRATIONS
 
@@ -121,11 +119,7 @@ def add_service(
     token: Optional[str] = None,
 ) -> None:
     Service.objects.create(
-        name=name,
-        user_profile=user_profile,
-        base_url=base_url,
-        interface=interface,
-        token=token,
+        name=name, user_profile=user_profile, base_url=base_url, interface=interface, token=token,
     )
 
 

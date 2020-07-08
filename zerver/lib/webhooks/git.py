@@ -254,9 +254,7 @@ def get_push_tag_event_message(
     else:
         tag_part = TAG_WITHOUT_URL_TEMPLATE.format(tag_name=tag_name)
 
-    message = PUSH_TAGS_MESSAGE_TEMPLATE.format(
-        user_name=user_name, action=action, tag=tag_part,
-    )
+    message = PUSH_TAGS_MESSAGE_TEMPLATE.format(user_name=user_name, action=action, tag=tag_part)
 
     if tag_name[-1] not in string.punctuation:
         message = f"{message}."

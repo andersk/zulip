@@ -109,9 +109,7 @@ class RegistrationForm(forms.Form):
     # The required-ness of the password field gets overridden if it isn't
     # actually required for a realm
     password = forms.CharField(widget=forms.PasswordInput, max_length=MAX_PASSWORD_LENGTH)
-    realm_subdomain = forms.CharField(
-        max_length=Realm.MAX_REALM_SUBDOMAIN_LENGTH, required=False,
-    )
+    realm_subdomain = forms.CharField(max_length=Realm.MAX_REALM_SUBDOMAIN_LENGTH, required=False)
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         # Since the superclass doesn't except random extra kwargs, we
@@ -178,9 +176,7 @@ class HomepageForm(forms.Form):
         if realm is None:
             raise ValidationError(
                 _(
-                    "The organization you are trying to "
-                    "join using {email} does not "
-                    "exist.",
+                    "The organization you are trying to " "join using {email} does not " "exist.",
                 ).format(email=email),
             )
 
@@ -460,10 +456,7 @@ class AuthenticationTokenForm(TwoFactorAuthenticationTokenForm):
     """
 
     otp_token = forms.IntegerField(
-        label=_("Token"),
-        min_value=1,
-        max_value=int("9" * totp_digits()),
-        widget=forms.TextInput,
+        label=_("Token"), min_value=1, max_value=int("9" * totp_digits()), widget=forms.TextInput,
     )
 
 

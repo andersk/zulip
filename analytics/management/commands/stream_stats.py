@@ -29,9 +29,7 @@ class Command(BaseCommand):
             realms = Realm.objects.all()
 
         for realm in realms:
-            streams = Stream.objects.filter(realm=realm).exclude(
-                Q(name__istartswith="tutorial-"),
-            )
+            streams = Stream.objects.filter(realm=realm).exclude(Q(name__istartswith="tutorial-"))
             # private stream count
             private_count = 0
             # public stream count
@@ -47,9 +45,7 @@ class Command(BaseCommand):
             print(f"{private_count} private streams )")
             print("------------")
             print(
-                "{:>25} {:>15} {:>10} {:>12}".format(
-                    "stream", "subscribers", "messages", "type",
-                ),
+                "{:>25} {:>15} {:>10} {:>12}".format("stream", "subscribers", "messages", "type"),
             )
 
             for stream in streams:

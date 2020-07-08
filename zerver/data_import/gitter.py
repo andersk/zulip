@@ -85,9 +85,7 @@ def build_userprofile(
             user_map[user_data["id"]] = user_id
 
             email = get_user_email(user_data, domain_name)
-            build_avatar(
-                user_id, realm_id, email, user_data["avatarUrl"], timestamp, avatar_list,
-            )
+            build_avatar(user_id, realm_id, email, user_data["avatarUrl"], timestamp, avatar_list)
 
             # Build userprofile object
             userprofile = UserProfile(
@@ -227,9 +225,7 @@ def convert_gitter_workspace_messages(
             break
         for message in message_data:
             message_time = dateutil.parser.parse(message["sent"]).timestamp()
-            mentioned_user_ids = get_usermentions(
-                message, user_map, user_short_name_to_full_name,
-            )
+            mentioned_user_ids = get_usermentions(message, user_map, user_short_name_to_full_name)
             rendered_content = None
             topic_name = "imported from gitter" + (
                 f' room {message["room"]}' if "room" in message else ""

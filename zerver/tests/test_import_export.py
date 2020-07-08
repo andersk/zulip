@@ -113,8 +113,7 @@ class QueryUtilTest(ZulipTestCase):
         )
         list(chunker)  # exhaust the iterator
         self.assertEqual(
-            len(all_msg_ids),
-            len(Message.objects.filter(sender_id__in=[cordelia.id, hamlet.id])),
+            len(all_msg_ids), len(Message.objects.filter(sender_id__in=[cordelia.id, hamlet.id])),
         )
 
         # Try just a single query to validate chunking.
@@ -244,9 +243,7 @@ class ImportExportTest(ZulipTestCase):
         result["avatar_dir"] = os.path.join(output_dir, "avatars")
         result["avatar_dir_records"] = read_file(os.path.join("avatars", "records.json"))
         result["realm_icons_dir"] = os.path.join(output_dir, "realm_icons")
-        result["realm_icons_dir_records"] = read_file(
-            os.path.join("realm_icons", "records.json"),
-        )
+        result["realm_icons_dir_records"] = read_file(os.path.join("realm_icons", "records.json"))
         return result
 
     def _setup_export_files(self, realm: Realm) -> Tuple[str, str, str, bytes]:
@@ -301,9 +298,7 @@ class ImportExportTest(ZulipTestCase):
 
     def test_export_files_from_local(self) -> None:
         realm = Realm.objects.get(string_id="zulip")
-        path_id, emoji_path, original_avatar_path_id, test_image = self._setup_export_files(
-            realm,
-        )
+        path_id, emoji_path, original_avatar_path_id, test_image = self._setup_export_files(realm)
         full_data = self._export_realm(realm)
 
         data = full_data["attachment"]
@@ -387,9 +382,7 @@ class ImportExportTest(ZulipTestCase):
 
         # Test uploads
         fields = attachment_path_id.split("/")
-        fn = os.path.join(
-            full_data["uploads_dir"], os.path.join(fields[0], fields[1], fields[2]),
-        )
+        fn = os.path.join(full_data["uploads_dir"], os.path.join(fields[0], fields[1], fields[2]))
         with open(fn) as f:
             self.assertEqual(f.read(), "zulip!")
         records = full_data["uploads_dir_records"]
@@ -519,9 +512,7 @@ class ImportExportTest(ZulipTestCase):
         self.assertNotIn("default-bot@zulip.com", exported_user_emails)
         self.assertNotIn(self.example_email("cordelia"), exported_user_emails)
 
-        dummy_user_emails = self.get_set(
-            data["zerver_userprofile_mirrordummy"], "delivery_email",
-        )
+        dummy_user_emails = self.get_set(data["zerver_userprofile_mirrordummy"], "delivery_email")
         self.assertIn(self.example_email("cordelia"), dummy_user_emails)
         self.assertIn(self.example_email("othello"), dummy_user_emails)
         self.assertIn("default-bot@zulip.com", dummy_user_emails)
@@ -784,9 +775,7 @@ class ImportExportTest(ZulipTestCase):
         )
 
         special_characters_message = "```\n'\n```\n@**Polonius**"
-        self.send_stream_message(
-            self.example_user("iago"), "Denmark", special_characters_message,
-        )
+        self.send_stream_message(self.example_user("iago"), "Denmark", special_characters_message)
 
         sample_user = self.example_user("hamlet")
 

@@ -10,9 +10,7 @@ VIDEO_CHAT_PROVIDERS = {
 }
 
 
-def remove_google_hangouts_provider(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor,
-) -> None:
+def remove_google_hangouts_provider(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
     # We are removing the Google Hangout integration because Google has
     # removed the Hangouts brand. All the realms that used Hangouts as
     # their video chat provided are now setted to the default, jitsi.

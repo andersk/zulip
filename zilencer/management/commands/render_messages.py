@@ -57,9 +57,7 @@ class Command(BaseCommand):
                             content = entry["prev_content"]
                             break
                 result.write(
-                    ujson.dumps(
-                        {"id": message.id, "content": render_markdown(message, content)},
-                    ),
+                    ujson.dumps({"id": message.id, "content": render_markdown(message, content)}),
                 )
                 if message.id != latest:
                     result.write(",")

@@ -114,9 +114,7 @@ class AdminNotifyHandler(logging.Handler):
             report["node"] = platform.node()
             report["host"] = platform.node()
 
-            report["deployment_data"] = dict(
-                git=try_git_describe(), ZULIP_VERSION=ZULIP_VERSION,
-            )
+            report["deployment_data"] = dict(git=try_git_describe(), ZULIP_VERSION=ZULIP_VERSION)
 
             if record.exc_info:
                 stack_trace = "".join(traceback.format_exception(*record.exc_info))

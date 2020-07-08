@@ -37,9 +37,7 @@ class AbortLoop(Exception):
     pass
 
 
-loopworker_sleep_mock = patch(
-    "zerver.worker.queue_processors.time.sleep", side_effect=AbortLoop,
-)
+loopworker_sleep_mock = patch("zerver.worker.queue_processors.time.sleep", side_effect=AbortLoop)
 
 
 class WorkerTest(ZulipTestCase):
@@ -173,9 +171,7 @@ class WorkerTest(ZulipTestCase):
                 self.is_running = False
 
         timer = MockTimer()
-        loopworker_sleep_mock = patch(
-            "zerver.worker.queue_processors.Timer", return_value=timer,
-        )
+        loopworker_sleep_mock = patch("zerver.worker.queue_processors.Timer", return_value=timer)
 
         send_mock = patch(
             "zerver.lib.email_notifications.do_send_missedmessage_events_reply_in_zulip",

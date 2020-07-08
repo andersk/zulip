@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="realm",
-            name="google_hangouts_domain",
-            field=models.TextField(default=""),
+            model_name="realm", name="google_hangouts_domain", field=models.TextField(default=""),
         ),
     ]

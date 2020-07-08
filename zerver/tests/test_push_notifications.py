@@ -204,9 +204,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
         # make the code simple for sending an incorrect API key.
         self.API_KEYS[self.server_uuid] = "invalid"
         result = self.uuid_post(
-            self.server_uuid,
-            endpoint,
-            dict(user_id=user_id, token_kind=token_kind, token=token),
+            self.server_uuid, endpoint, dict(user_id=user_id, token_kind=token_kind, token=token),
         )
         self.assert_json_error(
             result,
@@ -318,8 +316,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
             self.assert_json_error(result, "Token does not exist")
 
             with mock.patch(
-                "zerver.lib.remote_server.requests.request",
-                side_effect=requests.ConnectionError,
+                "zerver.lib.remote_server.requests.request", side_effect=requests.ConnectionError,
             ):
                 result = self.client_post(endpoint, {"token": token}, subdomain="zulip")
                 self.assert_json_error(
@@ -332,9 +329,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
                 "zerver.lib.remote_server.requests.request", return_value=Result(status=500),
             ):
                 result = self.client_post(endpoint, {"token": token}, subdomain="zulip")
-                self.assert_json_error(
-                    result, "Received 500 from push notification bouncer", 502,
-                )
+                self.assert_json_error(result, "Received 500 from push notification bouncer", 502)
 
         # Add tokens
         for endpoint, token, kind in endpoints:
@@ -346,9 +341,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
             self.assert_json_success(result)
 
             tokens = list(
-                RemotePushDeviceToken.objects.filter(
-                    user_id=user.id, token=token, server=server,
-                ),
+                RemotePushDeviceToken.objects.filter(user_id=user.id, token=token, server=server),
             )
             self.assertEqual(len(tokens), 1)
             self.assertEqual(tokens[0].token, token)
@@ -364,9 +357,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
             )
             self.assert_json_success(result)
             tokens = list(
-                RemotePushDeviceToken.objects.filter(
-                    user_id=user.id, token=token, server=server,
-                ),
+                RemotePushDeviceToken.objects.filter(user_id=user.id, token=token, server=server),
             )
             self.assertEqual(len(tokens), 0)
 
@@ -497,9 +488,7 @@ class AnalyticsBouncerTest(BouncerTestCase):
 
         # Test only having new InstallationCount rows
         InstallationCount.objects.create(
-            property=realm_stat.property,
-            end_time=end_time + datetime.timedelta(days=1),
-            value=6,
+            property=realm_stat.property, end_time=end_time + datetime.timedelta(days=1), value=6,
         )
         send_analytics_to_remote_server()
         check_counts(9, 3, 2, 1)
@@ -793,9 +782,7 @@ class HandlePushNotificationTest(PushNotificationTest):
             handle_push_notification(self.user_profile.id, missed_message)
             for _, _, token in apns_devices:
                 mock_info.assert_any_call(
-                    "APNs: Success sending for user %d to device %s",
-                    self.user_profile.id,
-                    token,
+                    "APNs: Success sending for user %d to device %s", self.user_profile.id, token,
                 )
             for _, _, token in gcm_devices:
                 mock_info.assert_any_call(
@@ -930,8 +917,7 @@ class HandlePushNotificationTest(PushNotificationTest):
             "trigger": "private_message",
         }
         with self.settings(PUSH_NOTIFICATION_BOUNCER_URL=True), mock.patch(
-            "zerver.lib.push_notifications.get_message_payload_apns",
-            return_value={"apns": True},
+            "zerver.lib.push_notifications.get_message_payload_apns", return_value={"apns": True},
         ), mock.patch(
             "zerver.lib.push_notifications.get_message_payload_gcm",
             return_value=({"gcm": True}, {}),
@@ -964,8 +950,7 @@ class HandlePushNotificationTest(PushNotificationTest):
             "trigger": "private_message",
         }
         with mock.patch(
-            "zerver.lib.push_notifications.get_message_payload_apns",
-            return_value={"apns": True},
+            "zerver.lib.push_notifications.get_message_payload_apns", return_value={"apns": True},
         ), mock.patch(
             "zerver.lib.push_notifications.get_message_payload_gcm",
             return_value=({"gcm": True}, {}),
@@ -1132,8 +1117,7 @@ class HandlePushNotificationTest(PushNotificationTest):
         )
 
         with mock.patch(
-            "zerver.lib.push_notifications.get_message_payload_apns",
-            return_value={"apns": True},
+            "zerver.lib.push_notifications.get_message_payload_apns", return_value={"apns": True},
         ), mock.patch(
             "zerver.lib.push_notifications.get_message_payload_gcm",
             return_value=({"gcm": True}, {}),
@@ -2047,9 +2031,9 @@ class TestClearOnRead(ZulipTestCase):
             self.send_stream_message(self.example_user("iago"), stream.name, f"yo {i}")
             for i in range(n_msgs)
         ]
-        UserMessage.objects.filter(
-            user_profile_id=hamlet.id, message_id__in=message_ids,
-        ).update(flags=F("flags").bitor(UserMessage.flags.active_mobile_push_notification))
+        UserMessage.objects.filter(user_profile_id=hamlet.id, message_id__in=message_ids).update(
+            flags=F("flags").bitor(UserMessage.flags.active_mobile_push_notification),
+        )
 
         with mock.patch("zerver.lib.actions.queue_json_publish") as mock_publish:
             do_mark_stream_messages_as_read(hamlet, self.client, stream)

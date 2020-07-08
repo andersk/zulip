@@ -10,8 +10,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="realmemoji",
-            name="deactivated",
-            field=models.BooleanField(default=False),
+            model_name="realmemoji", name="deactivated", field=models.BooleanField(default=False),
         ),
     ]

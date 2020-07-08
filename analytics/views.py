@@ -852,9 +852,7 @@ def user_activity_intervals() -> Tuple[mark_safe, Dict[str, float]]:
 
     output += f"\nTotal Duration:                      {total_duration}\n"
     output += f"\nTotal Duration in minutes:           {total_duration.total_seconds() / 60.}\n"
-    output += (
-        f"Total Duration amortized to a month: {total_duration.total_seconds() * 30. / 60.}"
-    )
+    output += f"Total Duration amortized to a month: {total_duration.total_seconds() * 30. / 60.}"
     content = mark_safe("<pre>" + output + "</pre>")
     return content, realm_minutes
 
@@ -1405,9 +1403,7 @@ def get_user_activity_summary(records: List[QuerySet]) -> Dict[str, Dict[str, An
             summary[action] = dict(count=record.count, last_visit=record.last_visit)
         else:
             summary[action]["count"] += record.count
-            summary[action]["last_visit"] = max(
-                summary[action]["last_visit"], record.last_visit,
-            )
+            summary[action]["last_visit"] = max(summary[action]["last_visit"], record.last_visit)
 
     if records:
         summary["name"] = records[0].user_profile.full_name
@@ -1649,9 +1645,7 @@ def get_realm_activity(request: HttpRequest, realm_str: str) -> HttpResponse:
 
     title = realm_str
     return render(
-        request,
-        "analytics/activity.html",
-        context=dict(data=data, realm_link=None, title=title),
+        request, "analytics/activity.html", context=dict(data=data, realm_link=None, title=title),
     )
 
 

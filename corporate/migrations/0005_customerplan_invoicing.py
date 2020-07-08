@@ -12,9 +12,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RenameField(
-            model_name="customerplan",
-            old_name="next_billing_date",
-            new_name="next_invoice_date",
+            model_name="customerplan", old_name="next_billing_date", new_name="next_invoice_date",
         ),
         migrations.RemoveField(model_name="customerplan", name="billed_through"),
         migrations.AddField(

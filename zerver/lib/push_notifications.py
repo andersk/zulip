@@ -280,9 +280,7 @@ def parse_gcm_options(options: Dict[str, Any], data: Dict[str, Any]) -> str:
         # We're strict about the API; there is no use case for a newer Zulip
         # server talking to an older bouncer, so we only need to provide
         # one-way compatibility.
-        raise JsonableError(
-            _("Invalid GCM options to bouncer: {}").format(ujson.dumps(options)),
-        )
+        raise JsonableError(_("Invalid GCM options to bouncer: {}").format(ujson.dumps(options)))
 
     return priority  # when this grows a second option, can make it a tuple
 
@@ -341,9 +339,7 @@ def send_android_push_notification(
         for reg_id, new_reg_id in res["canonical"].items():
             if reg_id == new_reg_id:
                 # I'm not sure if this should happen. In any case, not really actionable.
-                logger.warning(
-                    "GCM: Got canonical ref but it already matches our ID %s!", reg_id,
-                )
+                logger.warning("GCM: Got canonical ref but it already matches our ID %s!", reg_id)
             elif not DeviceTokenClass.objects.filter(
                 token=new_reg_id, kind=DeviceTokenClass.GCM,
             ).count():

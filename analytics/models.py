@@ -144,4 +144,6 @@ class StreamCount(BaseCount):
         index_together = ["property", "realm", "end_time"]
 
     def __str__(self) -> str:
-        return f"<StreamCount: {self.stream} {self.property} {self.subgroup} {self.value} {self.id}>"
+        return (
+            f"<StreamCount: {self.stream} {self.property} {self.subgroup} {self.value} {self.id}>"
+        )

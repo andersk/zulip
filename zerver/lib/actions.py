@@ -590,9 +590,7 @@ def created_bot_event(user_profile: UserProfile) -> Dict[str, Any]:
         return stream.name
 
     default_sending_stream_name = stream_name(user_profile.default_sending_stream)
-    default_events_register_stream_name = stream_name(
-        user_profile.default_events_register_stream,
-    )
+    default_events_register_stream_name = stream_name(user_profile.default_events_register_stream)
 
     bot = dict(
         email=user_profile.email,
@@ -1327,9 +1325,7 @@ def get_recipient_info(
                 user_profile_push_notifications=F(
                     "user_profile__enable_stream_push_notifications",
                 ),
-                user_profile_wildcard_mentions_notify=F(
-                    "user_profile__wildcard_mentions_notify",
-                ),
+                user_profile_wildcard_mentions_notify=F("user_profile__wildcard_mentions_notify"),
             )
             .values(
                 "user_profile_id",
@@ -3273,9 +3269,7 @@ def bulk_add_subscriptions(
         subscribed_user_ids = all_subscribers_by_stream[stream.id]
 
         peer_user_ids = get_peer_user_ids_for_stream_change(
-            stream=stream,
-            altered_user_ids=new_user_ids,
-            subscribed_user_ids=subscribed_user_ids,
+            stream=stream, altered_user_ids=new_user_ids, subscribed_user_ids=subscribed_user_ids,
         )
 
         if peer_user_ids:
@@ -4036,11 +4030,7 @@ def do_rename_stream(
 
     if log:
         log_event(
-            {
-                "type": "stream_name_change",
-                "realm": stream.realm.string_id,
-                "new_name": new_name,
-            },
+            {"type": "stream_name_change", "realm": stream.realm.string_id, "new_name": new_name},
         )
 
     recipient_id = stream.recipient_id
@@ -4336,9 +4326,7 @@ def do_create_default_stream_group(
     )
     if not created:
         raise JsonableError(
-            _("Default stream group '{group_name}' already exists").format(
-                group_name=group_name,
-            ),
+            _("Default stream group '{group_name}' already exists").format(group_name=group_name),
         )
 
     group.streams.set(streams)
@@ -4557,9 +4545,7 @@ def do_update_user_presence(
         send_presence_changed(user_profile, presence)
 
 
-def update_user_activity_interval(
-    user_profile: UserProfile, log_time: datetime.datetime,
-) -> None:
+def update_user_activity_interval(user_profile: UserProfile, log_time: datetime.datetime) -> None:
     event = {"user_profile_id": user_profile.id, "time": datetime_to_timestamp(log_time)}
     queue_json_publish("user_activity_interval", event)
 
@@ -5883,10 +5869,7 @@ def do_invite_users(
     for email in validated_emails:
         # The logged in user is the referrer.
         prereg_user = PreregistrationUser(
-            email=email,
-            referred_by=user_profile,
-            invited_as=invite_as,
-            realm=user_profile.realm,
+            email=email, referred_by=user_profile, invited_as=invite_as, realm=user_profile.realm,
         )
         prereg_user.save()
         stream_ids = [stream.id for stream in streams]
@@ -6295,9 +6278,7 @@ def do_claim_attachments(message: Message, potential_path_ids: List[str]) -> boo
         user_profile = message.sender
         is_message_realm_public = False
         if message.is_stream_message():
-            is_message_realm_public = Stream.objects.get(
-                id=message.recipient.type_id,
-            ).is_public()
+            is_message_realm_public = Stream.objects.get(id=message.recipient.type_id).is_public()
 
         if not validate_attachment_request(user_profile, path_id):
             # Technically, there are 2 cases here:
@@ -6357,9 +6338,7 @@ def check_attachment_reference_change(message: Message) -> bool:
 
 def notify_realm_custom_profile_fields(realm: Realm, operation: str) -> None:
     fields = custom_profile_fields_for_realm(realm.id)
-    event = dict(
-        type="custom_profile_fields", op=operation, fields=[f.as_dict() for f in fields],
-    )
+    event = dict(type="custom_profile_fields", op=operation, fields=[f.as_dict() for f in fields])
     send_event(realm, event, active_user_ids(realm.id))
 
 

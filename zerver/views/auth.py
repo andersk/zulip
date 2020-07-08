@@ -27,11 +27,7 @@ from two_factor.views import LoginView as BaseTwoFactorLoginView
 
 from confirmation.models import Confirmation, create_confirmation_link
 from version import API_FEATURE_LEVEL, ZULIP_VERSION
-from zerver.context_processors import (
-    get_realm_from_request,
-    login_context,
-    zulip_default_context,
-)
+from zerver.context_processors import get_realm_from_request, login_context, zulip_default_context
 from zerver.decorator import do_login, log_view_func, process_client, require_post
 from zerver.forms import (
     DEACTIVATED_ACCOUNT_ERROR,
@@ -156,10 +152,7 @@ def maybe_send_to_registration(
     assert not (mobile_flow_otp and desktop_flow_otp)
     if mobile_flow_otp:
         set_expirable_session_var(
-            request.session,
-            "registration_mobile_flow_otp",
-            mobile_flow_otp,
-            expiry_seconds=3600,
+            request.session, "registration_mobile_flow_otp", mobile_flow_otp, expiry_seconds=3600,
         )
     elif desktop_flow_otp:
         set_expirable_session_var(
@@ -331,9 +324,7 @@ def finish_desktop_flow(
     return render(request, "zerver/desktop_redirect.html", context=context)
 
 
-def finish_mobile_flow(
-    request: HttpRequest, user_profile: UserProfile, otp: str,
-) -> HttpResponse:
+def finish_mobile_flow(request: HttpRequest, user_profile: UserProfile, otp: str) -> HttpResponse:
     # For the mobile OAuth flow, we send the API key and other
     # necessary details in a redirect to a zulip:// URI scheme.
     api_key = get_api_key(user_profile)
@@ -1064,10 +1055,7 @@ def json_fetch_api_key(
     realm = get_realm(subdomain)
     if password_auth_enabled(user_profile.realm):
         if not authenticate(
-            request=request,
-            username=user_profile.delivery_email,
-            password=password,
-            realm=realm,
+            request=request, username=user_profile.delivery_email, password=password, realm=realm,
         ):
             return json_error(_("Your username or password is incorrect."))
 

@@ -223,9 +223,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
         )
 
     @patch("zerver.lib.webhooks.common.check_send_webhook_message")
-    def test_story_label_removed_ignore(
-        self, check_send_webhook_message_mock: MagicMock,
-    ) -> None:
+    def test_story_label_removed_ignore(self, check_send_webhook_message_mock: MagicMock) -> None:
         payload = self.get_body("story_update_remove_label")
         result = self.client_post(self.url, payload, content_type="application/json")
         self.assertFalse(check_send_webhook_message_mock.called)

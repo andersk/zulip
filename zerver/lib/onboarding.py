@@ -99,9 +99,7 @@ def send_initial_pms(user: UserProfile) -> None:
         organization_setup_text=organization_setup_text,
     )
 
-    internal_send_private_message(
-        user.realm, get_system_bot(settings.WELCOME_BOT), user, content,
-    )
+    internal_send_private_message(user.realm, get_system_bot(settings.WELCOME_BOT), user, content)
 
 
 def send_initial_realm_messages(realm: Realm) -> None:
@@ -190,8 +188,6 @@ def send_initial_realm_messages(realm: Realm) -> None:
     # We find the one of our just-sent messages with turtle.png in it,
     # and react to it.  This is a bit hacky, but works and is kinda a
     # 1-off thing.
-    turtle_message = Message.objects.get(
-        id__in=message_ids, content__icontains="cute/turtle.png",
-    )
+    turtle_message = Message.objects.get(id__in=message_ids, content__icontains="cute/turtle.png")
     (emoji_code, reaction_type) = emoji_name_to_emoji_code(realm, "turtle")
     do_add_reaction(welcome_bot, turtle_message, "turtle", emoji_code, reaction_type)

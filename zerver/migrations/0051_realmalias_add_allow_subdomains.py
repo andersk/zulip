@@ -14,7 +14,5 @@ class Migration(migrations.Migration):
             name="allow_subdomains",
             field=models.BooleanField(default=False),
         ),
-        migrations.AlterUniqueTogether(
-            name="realmalias", unique_together={("realm", "domain")},
-        ),
+        migrations.AlterUniqueTogether(name="realmalias", unique_together={("realm", "domain")}),
     ]

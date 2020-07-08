@@ -60,10 +60,7 @@ parser.add_argument(
     help="Run tests despite possible problems.",
 )
 parser.add_argument(
-    "--verbose",
-    help="Whether or not to enable verbose mode",
-    action="store_true",
-    default=False,
+    "--verbose", help="Whether or not to enable verbose mode", action="store_true", default=False,
 )
 parser.add_argument(
     "--remote-debug",

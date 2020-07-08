@@ -302,9 +302,7 @@ class MatterMostImporter(ZulipTestCase):
         snape_id = user_id_mapper.get("snape")
         self.assertEqual({malfoy_id, pansy_id, snape_id}, {3, 4, 5})
         self.assertEqual(
-            subscriber_handler.get_users(
-                stream_id=stream_id_mapper.get("slytherin-common-room"),
-            ),
+            subscriber_handler.get_users(stream_id=stream_id_mapper.get("slytherin-common-room")),
             {malfoy_id, pansy_id, snape_id},
         )
         self.assertEqual(
@@ -573,9 +571,7 @@ class MatterMostImporter(ZulipTestCase):
         output_dir = self.make_import_output_dir("mattermost")
 
         do_convert_data(
-            mattermost_data_dir=mattermost_data_dir,
-            output_dir=output_dir,
-            masking_content=False,
+            mattermost_data_dir=mattermost_data_dir, output_dir=output_dir, masking_content=False,
         )
 
         harry_team_output_dir = self.team_output_dir(output_dir, "gryffindor")
@@ -626,9 +622,7 @@ class MatterMostImporter(ZulipTestCase):
             realm["zerver_subscription"], "user_profile",
         )
         self.assertEqual(len(exported_subscription_userprofile), 3)
-        exported_subscription_recipients = self.get_set(
-            realm["zerver_subscription"], "recipient",
-        )
+        exported_subscription_recipients = self.get_set(realm["zerver_subscription"], "recipient")
         self.assertEqual(len(exported_subscription_recipients), 6)
 
         messages = self.read_file(harry_team_output_dir, "messages-000001.json")
@@ -663,9 +657,7 @@ class MatterMostImporter(ZulipTestCase):
         output_dir = self.make_import_output_dir("mattermost")
 
         do_convert_data(
-            mattermost_data_dir=mattermost_data_dir,
-            output_dir=output_dir,
-            masking_content=False,
+            mattermost_data_dir=mattermost_data_dir, output_dir=output_dir, masking_content=False,
         )
 
         harry_team_output_dir = self.team_output_dir(output_dir, "gryffindor")
@@ -718,9 +710,7 @@ class MatterMostImporter(ZulipTestCase):
             realm["zerver_subscription"], "user_profile",
         )
         self.assertEqual(len(exported_subscription_userprofile), 4)
-        exported_subscription_recipients = self.get_set(
-            realm["zerver_subscription"], "recipient",
-        )
+        exported_subscription_recipients = self.get_set(realm["zerver_subscription"], "recipient")
         self.assertEqual(len(exported_subscription_recipients), 8)
 
         messages = self.read_file(harry_team_output_dir, "messages-000001.json")

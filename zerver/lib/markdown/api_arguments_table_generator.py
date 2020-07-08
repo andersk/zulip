@@ -109,9 +109,7 @@ class APIArgumentsTablePreprocessor(Preprocessor):
         arguments = sorted(arguments, key=lambda argument: "deprecated" in argument)
         for argument in arguments:
             description = argument["description"]
-            oneof = [
-                "`" + str(item) + "`" for item in argument.get("schema", {}).get("enum", [])
-            ]
+            oneof = ["`" + str(item) + "`" for item in argument.get("schema", {}).get("enum", [])]
             if oneof:
                 description += "\nMust be one of: {}.".format(", ".join(oneof))
 

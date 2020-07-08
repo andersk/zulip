@@ -237,9 +237,7 @@ def normalize_fixture_data(
         )
         # Dates
         file_content = re.sub(r'(?<="Date": )"(.* GMT)"', '"NORMALIZED DATETIME"', file_content)
-        file_content = re.sub(
-            r"[0-3]\d [A-Z][a-z]{2} 20[1-2]\d", "NORMALIZED DATE", file_content,
-        )
+        file_content = re.sub(r"[0-3]\d [A-Z][a-z]{2} 20[1-2]\d", "NORMALIZED DATE", file_content)
         # IP addresses
         file_content = re.sub(r'"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}"', '"0.0.0.0"', file_content)
         # All timestamps not in tested_timestamp_fields
@@ -1109,9 +1107,7 @@ class StripeTest(StripeTestCase):
             customer_plan.refresh_from_db()
             realm.refresh_from_db()
             self.assertEqual(customer_plan.status, CustomerPlan.ACTIVE)
-            self.assertEqual(
-                customer_plan.next_invoice_date, add_months(free_trial_end_date, 12),
-            )
+            self.assertEqual(customer_plan.next_invoice_date, add_months(free_trial_end_date, 12))
             self.assertEqual(realm.plan_type, Realm.STANDARD)
             invoices = [invoice for invoice in stripe.Invoice.list(customer=stripe_customer.id)]
             self.assertEqual(len(invoices), 1)
@@ -1602,9 +1598,7 @@ class StripeTest(StripeTestCase):
         self.assert_in_success_response(["85"], self.client_get("/upgrade/"))
         # Check that the customer was charged the discounted amount
         self.upgrade()
-        stripe_customer_id = Customer.objects.values_list(
-            "stripe_customer_id", flat=True,
-        ).first()
+        stripe_customer_id = Customer.objects.values_list("stripe_customer_id", flat=True).first()
         self.assertEqual(
             1200 * self.seat_count,
             [charge for charge in stripe.Charge.list(customer=stripe_customer_id)][0].amount,
@@ -1692,8 +1686,7 @@ class StripeTest(StripeTestCase):
             len(list(stripe.Invoice.list(customer=stripe_customer_id, status="open"))), 1,
         )
         self.assertEqual(
-            1,
-            RealmAuditLog.objects.filter(event_type=RealmAuditLog.STRIPE_CARD_CHANGED).count(),
+            1, RealmAuditLog.objects.filter(event_type=RealmAuditLog.STRIPE_CARD_CHANGED).count(),
         )
 
         # Replace with a valid card
@@ -1713,8 +1706,7 @@ class StripeTest(StripeTestCase):
         for stripe_invoice in stripe.Invoice.list(customer=stripe_customer_id):
             self.assertEqual(stripe_invoice.status, "paid")
         self.assertEqual(
-            2,
-            RealmAuditLog.objects.filter(event_type=RealmAuditLog.STRIPE_CARD_CHANGED).count(),
+            2, RealmAuditLog.objects.filter(event_type=RealmAuditLog.STRIPE_CARD_CHANGED).count(),
         )
 
     @patch("corporate.lib.stripe.billing_logger.info")

@@ -108,9 +108,7 @@ def _get_unversioned_gravatar_url(email: str, medium: bool) -> str:
     if settings.ENABLE_GRAVATAR:
         gravitar_query_suffix = f"&s={MEDIUM_AVATAR_SIZE}" if medium else ""
         hash_key = gravatar_hash(email)
-        return (
-            f"https://secure.gravatar.com/avatar/{hash_key}?d=identicon{gravitar_query_suffix}"
-        )
+        return f"https://secure.gravatar.com/avatar/{hash_key}?d=identicon{gravitar_query_suffix}"
     return settings.DEFAULT_AVATAR_URI + "?x=x"
 
 

@@ -610,9 +610,7 @@ class ZulipLDAPAuthBackendBase(ZulipAuthMixin, LDAPBackend):
                 user.avatar_hash = user_avatar_content_hash(ldap_avatar)
                 user.save(update_fields=["avatar_hash"])
             else:
-                logging.warning(
-                    "Could not parse %s field for user %s", avatar_attr_name, user.id,
-                )
+                logging.warning("Could not parse %s field for user %s", avatar_attr_name, user.id)
 
     def is_account_control_disabled_user(self, ldap_user: _LDAPUser) -> bool:
         """Implements the userAccountControl check for whether a user has been
@@ -621,9 +619,7 @@ class ZulipLDAPAuthBackendBase(ZulipAuthMixin, LDAPBackend):
         account_control_value = ldap_user.attrs[
             settings.AUTH_LDAP_USER_ATTR_MAP["userAccountControl"]
         ][0]
-        ldap_disabled = bool(
-            int(account_control_value) & LDAP_USER_ACCOUNT_CONTROL_DISABLED_MASK,
-        )
+        ldap_disabled = bool(int(account_control_value) & LDAP_USER_ACCOUNT_CONTROL_DISABLED_MASK)
         return ldap_disabled
 
     @classmethod
@@ -954,9 +950,7 @@ def sync_user_from_ldap(user_profile: UserProfile, logger: logging.Logger) -> bo
     #
     # Ideally, we'd contribute changes to `django-auth-ldap` upstream
     # making this flow possible in a more directly supported fashion.
-    updated_user = ZulipLDAPUser(
-        backend, ldap_username, realm=user_profile.realm,
-    ).populate_user()
+    updated_user = ZulipLDAPUser(backend, ldap_username, realm=user_profile.realm).populate_user()
     if updated_user:
         logger.info("Updated %s.", user_profile.delivery_email)
         return True
@@ -1106,8 +1100,7 @@ class ExternalAuthResult:
                 or data_dict["full_name"] == self.user_profile.full_name
             )
             assert (
-                "email" not in data_dict
-                or data_dict["email"] == self.user_profile.delivery_email
+                "email" not in data_dict or data_dict["email"] == self.user_profile.delivery_email
             )
             # Update these data_dict fields to ensure consistency with self.user_profile. This is mostly
             # defensive code, but is useful in these scenarios:
@@ -1578,9 +1571,7 @@ class GitHubAuthBackend(SocialAuthMixin, GithubOAuth2):
     sort_order = 100
     display_icon = "/static/images/landing-page/logos/github-icon.png"
 
-    def get_all_associated_email_objects(
-        self, *args: Any, **kwargs: Any
-    ) -> List[Dict[str, Any]]:
+    def get_all_associated_email_objects(self, *args: Any, **kwargs: Any) -> List[Dict[str, Any]]:
         access_token = kwargs["response"]["access_token"]
         try:
             emails = self._user_data(access_token, "/emails")
@@ -1932,9 +1923,7 @@ class SAMLAuthBackend(SocialAuthMixin, SAMLAuth):
         # returned a successful authentication.
         params_to_relay = self.standard_relay_params
         request_data = self.strategy.request_data().dict()
-        data_to_relay = {
-            key: request_data[key] for key in params_to_relay if key in request_data
-        }
+        data_to_relay = {key: request_data[key] for key in params_to_relay if key in request_data}
         relay_state = ujson.dumps({"state_token": self.put_data_in_redis(data_to_relay)})
 
         return auth.login(return_to=relay_state)
@@ -2146,10 +2135,7 @@ class SAMLAuthBackend(SocialAuthMixin, SAMLAuth):
         idp_dict = settings.SOCIAL_AUTH_SAML_ENABLED_IDPS.get(idp_name)
         if idp_dict is None:
             raise AssertionError(f"IdP: {idp_name} not found")
-        if (
-            "limit_to_subdomains" in idp_dict
-            and subdomain not in idp_dict["limit_to_subdomains"]
-        ):
+        if "limit_to_subdomains" in idp_dict and subdomain not in idp_dict["limit_to_subdomains"]:
             return False
 
         return True

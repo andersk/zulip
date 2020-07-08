@@ -174,11 +174,7 @@ class BeanstalkHookTests(WebhookTestCase):
 
 > Added some code"""
         self.api_stream_message(
-            self.test_user,
-            "svn_changefile",
-            expected_topic,
-            expected_message,
-            content_type=None,
+            self.test_user, "svn_changefile", expected_topic, expected_message, content_type=None,
         )
 
     def get_body(self, fixture_name: str) -> Dict[str, str]:

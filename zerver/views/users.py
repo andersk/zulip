@@ -134,9 +134,7 @@ def reactivate_user_backend(
     return json_success()
 
 
-check_profile_data: Validator[
-    List[Dict[str, Optional[Union[int, str, List[int]]]]]
-] = check_list(
+check_profile_data: Validator[List[Dict[str, Optional[Union[int, str, List[int]]]]]] = check_list(
     check_dict_only(
         [
             ("id", check_int),
@@ -274,9 +272,7 @@ def patch_bot_backend(
         if default_sending_stream == "":
             stream: Optional[Stream] = None
         else:
-            (stream, recipient, sub) = access_stream_by_name(
-                user_profile, default_sending_stream,
-            )
+            (stream, recipient, sub) = access_stream_by_name(user_profile, default_sending_stream)
         do_change_default_sending_stream(bot, stream)
     if default_events_register_stream is not None:
         if default_events_register_stream == "":
@@ -472,9 +468,7 @@ def add_bot_backend(
 
 @require_member_or_admin
 def get_bots_backend(request: HttpRequest, user_profile: UserProfile) -> HttpResponse:
-    bot_profiles = UserProfile.objects.filter(
-        is_bot=True, is_active=True, bot_owner=user_profile,
-    )
+    bot_profiles = UserProfile.objects.filter(is_bot=True, is_active=True, bot_owner=user_profile)
     bot_profiles = bot_profiles.select_related(
         "default_sending_stream", "default_events_register_stream",
     )

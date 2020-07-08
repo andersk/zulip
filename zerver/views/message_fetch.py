@@ -264,9 +264,7 @@ class NarrowBuilder:
             matching_streams = get_active_streams(self.user_profile.realm).filter(
                 name__iregex=fr"^(un)*{self._pg_re_escape(base_stream_name)}(\.d)*$",
             )
-            recipient_ids = [
-                matching_stream.recipient_id for matching_stream in matching_streams
-            ]
+            recipient_ids = [matching_stream.recipient_id for matching_stream in matching_streams]
             cond = column("recipient_id").in_(recipient_ids)
             return query.where(maybe_negate(cond))
 
@@ -371,9 +369,7 @@ class NarrowBuilder:
                 This is where we handle passing a list of user IDs for the narrow, which is the
                 preferred/cleaner API.
                 """
-                user_profiles = get_user_profiles_by_ids(
-                    user_ids=operand, realm=self.user_realm,
-                )
+                user_profiles = get_user_profiles_by_ids(user_ids=operand, realm=self.user_realm)
 
             recipient = recipient_for_user_profiles(
                 user_profiles=user_profiles,
@@ -780,9 +776,7 @@ def find_first_unread_anchor(
     need_message = True
 
     query, inner_msg_id_col = get_base_query_for_search(
-        user_profile=user_profile,
-        need_message=need_message,
-        need_user_message=need_user_message,
+        user_profile=user_profile, need_message=need_message, need_user_message=need_user_message,
     )
 
     query, is_search = add_narrow_conditions(
@@ -808,9 +802,7 @@ def find_first_unread_anchor(
     return anchor
 
 
-def parse_anchor_value(
-    anchor_val: Optional[str], use_first_unread_anchor: bool,
-) -> Optional[int]:
+def parse_anchor_value(anchor_val: Optional[str], use_first_unread_anchor: bool) -> Optional[int]:
     """Given the anchor and use_first_unread_anchor parameters passed by
     the client, computes what anchor value the client requested,
     handling backwards-compatibility and the various string-valued
@@ -891,9 +883,7 @@ def get_messages_backend(
         need_user_message = True
 
     query, inner_msg_id_col = get_base_query_for_search(
-        user_profile=user_profile,
-        need_message=need_message,
-        need_user_message=need_user_message,
+        user_profile=user_profile, need_message=need_message, need_user_message=need_user_message,
     )
 
     query, is_search = add_narrow_conditions(

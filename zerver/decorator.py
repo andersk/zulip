@@ -380,9 +380,7 @@ def api_key_only_webhook_view(
 ) -> Callable[[Callable[..., HttpResponse]], Callable[..., HttpResponse]]:
     # TODO The typing here could be improved by using the Extended Callable types:
     # https://mypy.readthedocs.io/en/latest/kinds_of_types.html#extended-callable-types
-    def _wrapped_view_func(
-        view_func: Callable[..., HttpResponse],
-    ) -> Callable[..., HttpResponse]:
+    def _wrapped_view_func(view_func: Callable[..., HttpResponse]) -> Callable[..., HttpResponse]:
         @csrf_exempt
         @has_request_variables
         @wraps(view_func)
@@ -506,9 +504,7 @@ def do_login(request: HttpRequest, user_profile: UserProfile) -> None:
 
 def log_view_func(view_func: ViewFuncT) -> ViewFuncT:
     @wraps(view_func)
-    def _wrapped_view_func(
-        request: HttpRequest, *args: object, **kwargs: object
-    ) -> HttpResponse:
+    def _wrapped_view_func(request: HttpRequest, *args: object, **kwargs: object) -> HttpResponse:
         request._query = view_func.__name__
         return view_func(request, *args, **kwargs)
 
@@ -517,9 +513,7 @@ def log_view_func(view_func: ViewFuncT) -> ViewFuncT:
 
 def add_logging_data(view_func: ViewFuncT) -> ViewFuncT:
     @wraps(view_func)
-    def _wrapped_view_func(
-        request: HttpRequest, *args: object, **kwargs: object
-    ) -> HttpResponse:
+    def _wrapped_view_func(request: HttpRequest, *args: object, **kwargs: object) -> HttpResponse:
         process_client(request, request.user, is_browser_view=True, query=view_func.__name__)
         return rate_limit()(view_func)(request, *args, **kwargs)
 
@@ -528,9 +522,7 @@ def add_logging_data(view_func: ViewFuncT) -> ViewFuncT:
 
 def human_users_only(view_func: ViewFuncT) -> ViewFuncT:
     @wraps(view_func)
-    def _wrapped_view_func(
-        request: HttpRequest, *args: object, **kwargs: object
-    ) -> HttpResponse:
+    def _wrapped_view_func(request: HttpRequest, *args: object, **kwargs: object) -> HttpResponse:
         if request.user.is_bot:
             return json_error(_("This endpoint does not accept bot requests."))
         return view_func(request, *args, **kwargs)
@@ -560,9 +552,7 @@ def zulip_login_required(
 def require_server_admin(view_func: ViewFuncT) -> ViewFuncT:
     @zulip_login_required
     @wraps(view_func)
-    def _wrapped_view_func(
-        request: HttpRequest, *args: object, **kwargs: object
-    ) -> HttpResponse:
+    def _wrapped_view_func(request: HttpRequest, *args: object, **kwargs: object) -> HttpResponse:
         if not request.user.is_staff:
             return HttpResponseRedirect(settings.HOME_NOT_LOGGED_IN)
 
@@ -633,9 +623,7 @@ def require_user_group_edit_permission(view_func: ViewFuncT) -> ViewFuncT:
 def authenticated_uploads_api_view(
     skip_rate_limiting: bool = False,
 ) -> Callable[[Callable[..., HttpResponse]], Callable[..., HttpResponse]]:
-    def _wrapped_view_func(
-        view_func: Callable[..., HttpResponse],
-    ) -> Callable[..., HttpResponse]:
+    def _wrapped_view_func(view_func: Callable[..., HttpResponse]) -> Callable[..., HttpResponse]:
         @csrf_exempt
         @has_request_variables
         @wraps(view_func)
@@ -665,9 +653,7 @@ def authenticated_rest_api_view(
     is_webhook: bool = False,
     skip_rate_limiting: bool = False,
 ) -> Callable[[Callable[..., HttpResponse]], Callable[..., HttpResponse]]:
-    def _wrapped_view_func(
-        view_func: Callable[..., HttpResponse],
-    ) -> Callable[..., HttpResponse]:
+    def _wrapped_view_func(view_func: Callable[..., HttpResponse]) -> Callable[..., HttpResponse]:
         @csrf_exempt
         @wraps(view_func)
         def _wrapped_func_arguments(
@@ -726,9 +712,7 @@ def authenticated_rest_api_view(
 
 def process_as_post(view_func: ViewFuncT) -> ViewFuncT:
     @wraps(view_func)
-    def _wrapped_view_func(
-        request: HttpRequest, *args: object, **kwargs: object
-    ) -> HttpResponse:
+    def _wrapped_view_func(request: HttpRequest, *args: object, **kwargs: object) -> HttpResponse:
         # Adapted from django/http/__init__.py.
         # So by default Django doesn't populate request.POST for anything besides
         # POST requests. We want this dict populated for PATCH/PUT, so we have to
@@ -802,9 +786,7 @@ def authenticated_json_view(
     allow_unauthenticated: bool = False,
 ) -> Callable[..., HttpResponse]:
     @wraps(view_func)
-    def _wrapped_view_func(
-        request: HttpRequest, *args: object, **kwargs: object
-    ) -> HttpResponse:
+    def _wrapped_view_func(request: HttpRequest, *args: object, **kwargs: object) -> HttpResponse:
         return authenticate_log_and_execute_json(
             request,
             view_func,
@@ -929,8 +911,7 @@ def rate_limit(domain: str = "api_by_user") -> Callable[[ViewFuncT], ViewFuncT]:
 
             if not user:  # nocoverage # See comments below
                 logging.error(
-                    "Requested rate-limiting on %s but user is not authenticated!",
-                    func.__name__,
+                    "Requested rate-limiting on %s but user is not authenticated!", func.__name__,
                 )
                 return func(request, *args, **kwargs)
 
@@ -953,9 +934,7 @@ def rate_limit(domain: str = "api_by_user") -> Callable[[ViewFuncT], ViewFuncT]:
 
 def return_success_on_head_request(view_func: ViewFuncT) -> ViewFuncT:
     @wraps(view_func)
-    def _wrapped_view_func(
-        request: HttpRequest, *args: object, **kwargs: object
-    ) -> HttpResponse:
+    def _wrapped_view_func(request: HttpRequest, *args: object, **kwargs: object) -> HttpResponse:
         if request.method == "HEAD":
             return json_success()
         return view_func(request, *args, **kwargs)
@@ -1005,9 +984,7 @@ def add_google_analytics_context(context: Dict[str, object]) -> None:
 
 def add_google_analytics(view_func: ViewFuncT) -> ViewFuncT:
     @wraps(view_func)
-    def _wrapped_view_func(
-        request: HttpRequest, *args: object, **kwargs: object
-    ) -> HttpResponse:
+    def _wrapped_view_func(request: HttpRequest, *args: object, **kwargs: object) -> HttpResponse:
         response = view_func(request, *args, **kwargs)
         if isinstance(response, SimpleTemplateResponse):
             if response.context_data is None:

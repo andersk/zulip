@@ -58,9 +58,7 @@ class Command(BaseCommand):
 
     def total_messages(self, realm: Realm, days_ago: int) -> int:
         sent_time_cutoff = timezone_now() - datetime.timedelta(days=days_ago)
-        return Message.objects.filter(
-            sender__realm=realm, date_sent__gt=sent_time_cutoff,
-        ).count()
+        return Message.objects.filter(sender__realm=realm, date_sent__gt=sent_time_cutoff).count()
 
     def human_messages(self, realm: Realm, days_ago: int) -> int:
         sent_time_cutoff = timezone_now() - datetime.timedelta(days=days_ago)
@@ -72,9 +70,7 @@ class Command(BaseCommand):
     def stream_messages(self, realm: Realm, days_ago: int) -> int:
         sent_time_cutoff = timezone_now() - datetime.timedelta(days=days_ago)
         return human_messages.filter(
-            sender__realm=realm,
-            date_sent__gt=sent_time_cutoff,
-            recipient__type=Recipient.STREAM,
+            sender__realm=realm, date_sent__gt=sent_time_cutoff, recipient__type=Recipient.STREAM,
         ).count()
 
     def private_messages(self, realm: Realm, days_ago: int) -> int:

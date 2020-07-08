@@ -10,8 +10,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="userprofile",
-            name="quota",
-            field=models.IntegerField(default=1073741824),
+            model_name="userprofile", name="quota", field=models.IntegerField(default=1073741824),
         ),
     ]

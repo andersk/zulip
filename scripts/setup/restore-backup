@@ -110,9 +110,7 @@ def restore_backup(tarball_file: IO[bytes]) -> None:
             # version, there may be new secrets to generate.
             subprocess.check_call(
                 [
-                    os.path.join(
-                        settings.DEPLOY_ROOT, "scripts", "setup", "generate_secrets.py",
-                    ),
+                    os.path.join(settings.DEPLOY_ROOT, "scripts", "setup", "generate_secrets.py"),
                     "--production",
                 ],
             )

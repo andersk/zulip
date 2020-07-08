@@ -69,17 +69,13 @@ class RealmFilterTest(ZulipTestCase):
         self.assertIsNotNone(re.match(data["pattern"], "PR 123"))
 
         data["pattern"] = r"lp/(?P<id>[0-9]+)"
-        data[
-            "url_format_string"
-        ] = "https://realm.com/my_realm_filter/?value=%(id)s&sort=reverse"
+        data["url_format_string"] = "https://realm.com/my_realm_filter/?value=%(id)s&sort=reverse"
         result = self.client_post("/json/realm/filters", info=data)
         self.assert_json_success(result)
         self.assertIsNotNone(re.match(data["pattern"], "lp/123"))
 
         data["pattern"] = r"lp:(?P<id>[0-9]+)"
-        data[
-            "url_format_string"
-        ] = "https://realm.com/my_realm_filter/?sort=reverse&value=%(id)s"
+        data["url_format_string"] = "https://realm.com/my_realm_filter/?sort=reverse&value=%(id)s"
         result = self.client_post("/json/realm/filters", info=data)
         self.assert_json_success(result)
         self.assertIsNotNone(re.match(data["pattern"], "lp:123"))

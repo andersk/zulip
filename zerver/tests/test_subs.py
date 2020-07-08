@@ -312,8 +312,7 @@ class TestCreateStreams(ZulipTestCase):
         # each user in the notifications stream.
         announce_stream_subs = Subscription.objects.filter(recipient=announce_stream.recipient)
         self.assertEqual(
-            final_usermessage_count - initial_usermessage_count,
-            4 + announce_stream_subs.count(),
+            final_usermessage_count - initial_usermessage_count, 4 + announce_stream_subs.count(),
         )
 
         def get_unread_stream_data(user: UserProfile) -> List[Dict[str, Any]]:
@@ -342,9 +341,7 @@ class RecipientTest(ZulipTestCase):
         realm = get_realm("zulip")
         stream = get_stream("Verona", realm)
         recipient = Recipient.objects.get(type_id=stream.id, type=Recipient.STREAM)
-        self.assertEqual(
-            str(recipient), f"<Recipient: Verona ({stream.id}, {Recipient.STREAM})>",
-        )
+        self.assertEqual(str(recipient), f"<Recipient: Verona ({stream.id}, {Recipient.STREAM})>")
 
 
 class StreamAdminTest(ZulipTestCase):
@@ -680,8 +677,7 @@ class StreamAdminTest(ZulipTestCase):
         with tornado_redirected_to_list(events):
             stream_id = stream_name_fr_exists.id
             result = self.client_patch(
-                f"/json/streams/{stream_id}",
-                {"new_name": ujson.dumps("français name".encode())},
+                f"/json/streams/{stream_id}", {"new_name": ujson.dumps("français name".encode())},
             )
         self.assert_json_success(result)
         stream_name_mixed_exists = get_stream("français name", realm)
@@ -748,10 +744,7 @@ class StreamAdminTest(ZulipTestCase):
 
         self.login_user(iago)
         result = self.common_subscribe_to_streams(
-            iago,
-            ["private_stream"],
-            dict(principals=ujson.dumps([hamlet.id])),
-            invite_only=True,
+            iago, ["private_stream"], dict(principals=ujson.dumps([hamlet.id])), invite_only=True,
         )
         self.assert_json_success(result)
 
@@ -1837,8 +1830,7 @@ class DefaultStreamGroupTest(ZulipTestCase):
         new_description = "new group1 description"
 
         result = self.client_patch(
-            f"/json/default_stream_groups/{group_id}",
-            {"group_name": group_name, "op": "change"},
+            f"/json/default_stream_groups/{group_id}", {"group_name": group_name, "op": "change"},
         )
         self.assert_json_error(result, 'You must pass "new_description" or "new_group_name".')
 
@@ -2121,13 +2113,7 @@ class SubscriptionPropertiesTest(ZulipTestCase):
             "/api/v1/users/me/subscriptions/properties",
             {
                 "subscription_data": ujson.dumps(
-                    [
-                        {
-                            "property": "pin_to_top",
-                            "stream_id": stream_id,
-                            "value": new_pin_to_top,
-                        },
-                    ],
+                    [{"property": "pin_to_top", "stream_id": stream_id, "value": new_pin_to_top}],
                 ),
             },
         )
@@ -3293,9 +3279,7 @@ class SubscriptionAPITest(ZulipTestCase):
             list_to_streams(streams_raw, guest_user)
 
         stream = self.make_stream("private_stream", invite_only=True)
-        result = self.common_subscribe_to_streams(
-            guest_user, ["private_stream"], allow_fail=True,
-        )
+        result = self.common_subscribe_to_streams(guest_user, ["private_stream"], allow_fail=True)
         self.assert_json_error(result, "Not allowed for guest users")
         self.assertEqual(filter_stream_authorization(guest_user, [stream]), ([], [stream]))
 

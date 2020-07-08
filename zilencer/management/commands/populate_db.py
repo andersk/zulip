@@ -771,13 +771,7 @@ class Command(BaseCommand):
             if i < options["num_messages"] % threads:
                 count += 1
             jobs.append(
-                (
-                    count,
-                    personals_pairs,
-                    options,
-                    self.stdout.write,
-                    random.randint(0, 10 ** 10),
-                ),
+                (count, personals_pairs, options, self.stdout.write, random.randint(0, 10 ** 10)),
             )
 
         for job in jobs:
@@ -834,9 +828,7 @@ def generate_and_send_messages(
     recipient_streams: List[int] = [
         klass.id for klass in Recipient.objects.filter(type=Recipient.STREAM)
     ]
-    recipient_huddles: List[int] = [
-        h.id for h in Recipient.objects.filter(type=Recipient.HUDDLE)
-    ]
+    recipient_huddles: List[int] = [h.id for h in Recipient.objects.filter(type=Recipient.HUDDLE)]
 
     huddle_members: Dict[int, List[int]] = {}
     for h in recipient_huddles:

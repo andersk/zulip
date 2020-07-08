@@ -155,8 +155,7 @@ class CreateCustomProfileFieldTest(CustomProfileFieldTestCase):
 
         # Should also work without name or hint and only external field type and subtype data
         result = self.client_post(
-            "/json/realm/profile_fields",
-            info=dict(field_type=field_type, field_data=field_data),
+            "/json/realm/profile_fields", info=dict(field_type=field_type, field_data=field_data),
         )
         self.assert_json_success(result)
 
@@ -471,9 +470,7 @@ class UpdateCustomProfileFieldTest(CustomProfileFieldTestCase):
 
     def test_update_invalid_date(self) -> None:
         field_name = "Birthday"
-        self.assert_error_update_invalid_value(
-            field_name, "a-b-c", f"{field_name} is not a date",
-        )
+        self.assert_error_update_invalid_value(field_name, "a-b-c", f"{field_name} is not a date")
         self.assert_error_update_invalid_value(field_name, 123, f"{field_name} is not a string")
 
     def test_update_invalid_url(self) -> None:
@@ -587,9 +584,7 @@ class UpdateCustomProfileFieldTest(CustomProfileFieldTestCase):
         rendered_value = iago_profile_quote["rendered_value"]
         self.assertIsNotNone(value)
         self.assertIsNotNone(rendered_value)
-        self.assertEqual(
-            "<p><strong><em>beware</em></strong> of jealousy...</p>", rendered_value,
-        )
+        self.assertEqual("<p><strong><em>beware</em></strong> of jealousy...</p>", rendered_value)
 
     def test_do_update_value_not_changed(self) -> None:
         iago = self.example_user("iago")

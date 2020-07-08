@@ -60,8 +60,7 @@ STORY_GITHUB_PR_TEMPLATE = (
     "New GitHub PR [#{name}]({url}) opened for story" " {name_template} ({old} -> {new})."
 )
 STORY_GITHUB_BRANCH_TEMPLATE = (
-    "New GitHub branch [{name}]({url})"
-    " associated with story {name_template} ({old} -> {new})."
+    "New GitHub branch [{name}]({url})" " associated with story {name_template} ({old} -> {new})."
 )
 
 

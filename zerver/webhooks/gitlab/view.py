@@ -210,9 +210,7 @@ def get_commented_issue_event_body(payload: Dict[str, Any], include_title: bool 
     )
 
 
-def get_commented_snippet_event_body(
-    payload: Dict[str, Any], include_title: bool = False,
-) -> str:
+def get_commented_snippet_event_body(payload: Dict[str, Any], include_title: bool = False) -> str:
     comment = payload["object_attributes"]
     action = "[commented]({}) on".format(comment["url"])
     url = "{}/snippets/{}".format(
@@ -445,12 +443,7 @@ def get_event(
         event_name = payload.get("event_name", payload.get("object_kind"))
         event = event_name.split("__")[0].replace("_", " ").title()
         event = f"{event} Hook"
-    if event in [
-        "Confidential Issue Hook",
-        "Issue Hook",
-        "Merge Request Hook",
-        "Wiki Page Hook",
-    ]:
+    if event in ["Confidential Issue Hook", "Issue Hook", "Merge Request Hook", "Wiki Page Hook"]:
         action = payload["object_attributes"].get("action", "open")
         event = f"{event} {action}"
     elif event in ["Confidential Note Hook", "Note Hook"]:
