@@ -34,9 +34,7 @@ def dev_panel(request: HttpRequest) -> HttpResponse:
     return render(request, "zerver/integrations/development/dev_panel.html", context)
 
 
-def send_webhook_fixture_message(
-    url: str, body: str, is_json: bool, custom_headers: Dict[str, Any],
-) -> HttpResponse:
+def send_webhook_fixture_message(url: str, body: str, is_json: bool, custom_headers: Dict[str, Any]) -> HttpResponse:
     client = Client()
     realm = get_realm("zulip")
     standardized_headers = standardize_headers(custom_headers)
@@ -133,7 +131,5 @@ def send_all_webhook_fixture_messages(
         else:
             is_json = False
         response = send_webhook_fixture_message(url, content, is_json, headers)
-        responses.append(
-            {"status_code": response.status_code, "fixture_name": fixture, "message": response.content},
-        )
+        responses.append({"status_code": response.status_code, "fixture_name": fixture, "message": response.content})
     return json_success({"responses": responses})

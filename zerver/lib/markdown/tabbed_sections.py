@@ -91,9 +91,7 @@ class TabbedSectionsPreprocessor(Preprocessor):
                 tab_section["tabs"] = [{"tab_name": "null_tab", "start": tab_section["start_tabs_index"]}]
             nav_bar = self.generate_nav_bar(tab_section)
             content_blocks = self.generate_content_blocks(tab_section, lines)
-            rendered_tabs = CODE_SECTION_TEMPLATE.format(
-                tab_class=tab_class, nav_bar=nav_bar, blocks=content_blocks,
-            )
+            rendered_tabs = CODE_SECTION_TEMPLATE.format(tab_class=tab_class, nav_bar=nav_bar, blocks=content_blocks)
 
             start = tab_section["start_tabs_index"]
             end = tab_section["end_tabs_index"] + 1

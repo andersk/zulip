@@ -226,9 +226,7 @@ class ZulipFormatter(logging.Formatter):
         return super().format(record)
 
 
-def log_to_file(
-    logger: Logger, filename: str, log_format: str = "%(asctime)s %(levelname)-8s %(message)s",
-) -> None:
+def log_to_file(logger: Logger, filename: str, log_format: str = "%(asctime)s %(levelname)-8s %(message)s") -> None:
     """Note: `filename` should be declared in zproject/settings.py with zulip_path."""
     formatter = logging.Formatter(log_format)
     handler = logging.FileHandler(filename)

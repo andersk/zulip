@@ -53,9 +53,7 @@ def check_full_name(full_name_raw: str) -> str:
 # making a new bot with the same name).  This is just a check designed
 # to make it unlikely to happen by accident.
 def check_bot_name_available(realm_id: int, full_name: str) -> None:
-    dup_exists = UserProfile.objects.filter(
-        realm_id=realm_id, full_name=full_name.strip(), is_active=True,
-    ).exists()
+    dup_exists = UserProfile.objects.filter(realm_id=realm_id, full_name=full_name.strip(), is_active=True).exists()
 
     if dup_exists:
         raise JsonableError(_("Name is already in use!"))
@@ -115,9 +113,7 @@ def add_service(
     interface: Optional[int] = None,
     token: Optional[str] = None,
 ) -> None:
-    Service.objects.create(
-        name=name, user_profile=user_profile, base_url=base_url, interface=interface, token=token,
-    )
+    Service.objects.create(name=name, user_profile=user_profile, base_url=base_url, interface=interface, token=token)
 
 
 def check_bot_creation_policy(user_profile: UserProfile, bot_type: int) -> None:

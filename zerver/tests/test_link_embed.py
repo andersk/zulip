@@ -367,9 +367,7 @@ class PreviewTestCase(ZulipTestCase):
                     msg = Message.objects.select_related("sender").get(id=msg_id)
                     self.assertIn(f'<a href="{edited_url}" title="The Rock">The Rock</a>', msg.rendered_content)
 
-        with mock.patch(
-            "zerver.views.message_edit.queue_json_publish", wraps=wrapped_queue_json_publish,
-        ) as patched:
+        with mock.patch("zerver.views.message_edit.queue_json_publish", wraps=wrapped_queue_json_publish) as patched:
             result = self.client_patch(
                 "/json/messages/" + str(msg_id), {"message_id": msg_id, "content": edited_url},
             )
@@ -410,9 +408,7 @@ class PreviewTestCase(ZulipTestCase):
         # Relative urls should not be sent for url preview.
         with mock.patch("zerver.lib.actions.queue_json_publish") as patched:
             self.send_personal_message(
-                self.example_user("prospero"),
-                self.example_user("cordelia"),
-                content="http://zulip.testserver/api/",
+                self.example_user("prospero"), self.example_user("cordelia"), content="http://zulip.testserver/api/",
             )
             patched.assert_not_called()
 
@@ -424,9 +420,7 @@ class PreviewTestCase(ZulipTestCase):
 
     def test_http_error_get_data(self) -> None:
         url = "http://test.org/"
-        msg_id = self.send_personal_message(
-            self.example_user("hamlet"), self.example_user("cordelia"), content=url,
-        )
+        msg_id = self.send_personal_message(self.example_user("hamlet"), self.example_user("cordelia"), content=url)
         msg = Message.objects.select_related("sender").get(id=msg_id)
         event = {
             "message_id": msg_id,

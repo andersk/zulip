@@ -74,9 +74,7 @@ class WorkerTest(ZulipTestCase):
         user = self.example_user("hamlet")
         UserActivity.objects.filter(user_profile=user.id, client=get_client("ios")).delete()
 
-        data = dict(
-            user_profile_id=user.id, client_id=get_client("ios").id, time=time.time(), query="send_message",
-        )
+        data = dict(user_profile_id=user.id, client_id=get_client("ios").id, time=time.time(), query="send_message")
         fake_client.queue.append(("user_activity", data))
 
         # The block below adds an event using the old format,

@@ -146,11 +146,7 @@ parser.add_argument(
     help="watch for changes to source files (for development)",
 )
 parser.add_argument(
-    "--host",
-    action="store",
-    dest="host",
-    default="127.0.0.1",
-    help="set the host for the webpack server to run on",
+    "--host", action="store", dest="host", default="127.0.0.1", help="set the host for the webpack server to run on",
 )
 parser.add_argument(
     "--port", action="store", dest="port", default="9994", help="set the port for the webpack server to run on",

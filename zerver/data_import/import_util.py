@@ -109,12 +109,7 @@ def build_user_profile(
 
 
 def build_avatar(
-    zulip_user_id: int,
-    realm_id: int,
-    email: str,
-    avatar_url: str,
-    timestamp: Any,
-    avatar_list: List[ZerverFieldsT],
+    zulip_user_id: int, realm_id: int, email: str, avatar_url: str, timestamp: Any, avatar_list: List[ZerverFieldsT],
 ) -> None:
     avatar = dict(
         path=avatar_url,  # Save original avatar url here, which is downloaded later

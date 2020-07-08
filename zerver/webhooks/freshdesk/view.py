@@ -51,17 +51,7 @@ def property_name(property: str, index: int) -> str:
     information through the API, since only FlightCar uses this integration,
     hardcode their statuses.
     """
-    statuses = [
-        "",
-        "",
-        "Open",
-        "Pending",
-        "Resolved",
-        "Closed",
-        "Waiting on Customer",
-        "Job Application",
-        "Monthly",
-    ]
+    statuses = ["", "", "Open", "Pending", "Resolved", "Closed", "Waiting on Customer", "Job Application", "Monthly"]
     priorities = ["", "Low", "Medium", "High", "Urgent"]
 
     name = ""

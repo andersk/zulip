@@ -1096,8 +1096,7 @@ class StripeTest(StripeTestCase):
         stripe_customer_id = Customer.objects.first().stripe_customer_id
         # Check that the Charge used the old quantity, not new_seat_count
         self.assertEqual(
-            8000 * self.seat_count,
-            [charge for charge in stripe.Charge.list(customer=stripe_customer_id)][0].amount,
+            8000 * self.seat_count, [charge for charge in stripe.Charge.list(customer=stripe_customer_id)][0].amount,
         )
         # Check that the invoice has a credit for the old amount and a charge for the new one
         stripe_invoice = [invoice for invoice in stripe.Invoice.list(customer=stripe_customer_id)][0]
@@ -1157,9 +1156,7 @@ class StripeTest(StripeTestCase):
         self.assertEqual(ledger_entry.licenses, 23)
         self.assertEqual(ledger_entry.licenses_at_next_renewal, 23)
         # Check the Charges and Invoices in Stripe
-        self.assertEqual(
-            8000 * 23, [charge for charge in stripe.Charge.list(customer=stripe_customer_id)][0].amount,
-        )
+        self.assertEqual(8000 * 23, [charge for charge in stripe.Charge.list(customer=stripe_customer_id)][0].amount)
         stripe_invoice = [invoice for invoice in stripe.Invoice.list(customer=stripe_customer_id)][0]
         self.assertEqual([8000 * 23, -8000 * 23], [item.amount for item in stripe_invoice.lines])
         # Check that we correctly populated RealmAuditLog
@@ -1454,8 +1451,7 @@ class StripeTest(StripeTestCase):
         self.upgrade()
         stripe_customer_id = Customer.objects.values_list("stripe_customer_id", flat=True).first()
         self.assertEqual(
-            1200 * self.seat_count,
-            [charge for charge in stripe.Charge.list(customer=stripe_customer_id)][0].amount,
+            1200 * self.seat_count, [charge for charge in stripe.Charge.list(customer=stripe_customer_id)][0].amount,
         )
         stripe_invoice = [invoice for invoice in stripe.Invoice.list(customer=stripe_customer_id)][0]
         self.assertEqual(
@@ -1470,8 +1466,7 @@ class StripeTest(StripeTestCase):
         attach_discount_to_realm(user.realm, Decimal(25))
         process_initial_upgrade(user, self.seat_count, True, CustomerPlan.ANNUAL, stripe_create_token().id)
         self.assertEqual(
-            6000 * self.seat_count,
-            [charge for charge in stripe.Charge.list(customer=stripe_customer_id)][0].amount,
+            6000 * self.seat_count, [charge for charge in stripe.Charge.list(customer=stripe_customer_id)][0].amount,
         )
         stripe_invoice = [invoice for invoice in stripe.Invoice.list(customer=stripe_customer_id)][0]
         self.assertEqual(
@@ -1663,9 +1658,7 @@ class StripeTest(StripeTestCase):
         self.assertEqual(annual_ledger_entries.values_list("licenses", "licenses_at_next_renewal")[0], (20, 20))
         self.assertEqual(annual_ledger_entries[1].is_renewal, False)
         self.assertEqual(annual_ledger_entries.values_list("licenses", "licenses_at_next_renewal")[1], (25, 25))
-        audit_log = RealmAuditLog.objects.get(
-            event_type=RealmAuditLog.CUSTOMER_SWITCHED_FROM_MONTHLY_TO_ANNUAL_PLAN,
-        )
+        audit_log = RealmAuditLog.objects.get(event_type=RealmAuditLog.CUSTOMER_SWITCHED_FROM_MONTHLY_TO_ANNUAL_PLAN)
         self.assertEqual(audit_log.realm, user.realm)
         self.assertEqual(ujson.loads(audit_log.extra_data)["monthly_plan_id"], monthly_plan.id)
         self.assertEqual(ujson.loads(audit_log.extra_data)["annual_plan_id"], annual_plan.id)

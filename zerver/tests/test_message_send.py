@@ -68,9 +68,7 @@ from zerver.views.message_send import InvalidMirrorInput
 
 
 class MessagePOSTTest(ZulipTestCase):
-    def _send_and_verify_message(
-        self, user: UserProfile, stream_name: str, error_msg: Optional[str] = None,
-    ) -> None:
+    def _send_and_verify_message(self, user: UserProfile, stream_name: str, error_msg: Optional[str] = None) -> None:
         if error_msg is None:
             msg_id = self.send_stream_message(user, stream_name)
             result = self.api_get(user, "/json/messages/" + str(msg_id))
@@ -1330,9 +1328,7 @@ class StreamMessagesTest(ZulipTestCase):
 
         self.send_stream_message(self.example_user("hamlet"), "Denmark", content="test")
         message = most_recent_message(user_profile)
-        self.assertFalse(
-            UserMessage.objects.get(user_profile=user_profile, message=message).flags.is_private.is_set,
-        )
+        self.assertFalse(UserMessage.objects.get(user_profile=user_profile, message=message).flags.is_private.is_set)
 
         self.send_personal_message(self.example_user("hamlet"), user_profile, content="test")
         message = most_recent_message(user_profile)

@@ -208,9 +208,7 @@ class Bitbucket2HookTests(WebhookTestCase):
         )
 
     def test_bitbucket2_on_pull_request_fulfilled_event(self) -> None:
-        expected_message = (
-            "kolaszek merged [PR #1](https://bitbucket.org/kolaszek/repository-name/pull-requests/1)."
-        )
+        expected_message = "kolaszek merged [PR #1](https://bitbucket.org/kolaszek/repository-name/pull-requests/1)."
         kwargs = {
             "HTTP_X_EVENT_KEY": "pullrequest:fulfilled",
         }

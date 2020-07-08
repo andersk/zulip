@@ -200,11 +200,7 @@ class TestCreateStreams(ZulipTestCase):
         realm = get_realm("zulip")
         stream_dicts: List[Mapping[str, Any]] = [
             {"name": "publicstream", "description": "Public stream with public history"},
-            {
-                "name": "privatestream",
-                "description": "Private stream with non-public history",
-                "invite_only": True,
-            },
+            {"name": "privatestream", "description": "Private stream with non-public history", "invite_only": True},
             {
                 "name": "privatewithhistory",
                 "description": "Private stream with public history",
@@ -696,9 +692,7 @@ class StreamAdminTest(ZulipTestCase):
         # Inspect the notification message sent
         message = self.get_last_message()
         actual_stream = Stream.objects.get(id=message.recipient.type_id)
-        message_content = (
-            f"@_**King Hamlet|{user_profile.id}** renamed stream **stream_name1** to **stream_name2**."
-        )
+        message_content = f"@_**King Hamlet|{user_profile.id}** renamed stream **stream_name1** to **stream_name2**."
         self.assertEqual(actual_stream.name, "stream_name2")
         self.assertEqual(actual_stream.realm_id, user_profile.realm_id)
         self.assertEqual(message.recipient.type, Recipient.STREAM)
@@ -720,9 +714,7 @@ class StreamAdminTest(ZulipTestCase):
         result = self.client_patch(f"/json/streams/{stream_id}", {"new_name": ujson.dumps("new_private_stream")})
         self.assert_json_success(result)
 
-        result = self.client_patch(
-            f"/json/streams/{stream_id}", {"new_description": ujson.dumps("new description")},
-        )
+        result = self.client_patch(f"/json/streams/{stream_id}", {"new_description": ujson.dumps("new description")})
         self.assert_json_success(result)
 
         # But cannot change stream type.
@@ -2697,9 +2689,7 @@ class SubscriptionAPITest(ZulipTestCase):
         self.assert_json_error(result, "Your account is too new to modify other users' subscriptions.")
 
         do_set_realm_property(realm, "waiting_period_threshold", 0)
-        self.common_subscribe_to_streams(
-            self.test_user, ["stream2"], {"principals": ujson.dumps([invitee_user_id])},
-        )
+        self.common_subscribe_to_streams(self.test_user, ["stream2"], {"principals": ujson.dumps([invitee_user_id])})
 
     def test_can_subscribe_other_users(self) -> None:
         """
@@ -4163,9 +4153,7 @@ class GetSubscribersTest(ZulipTestCase):
         """
         stream_name = gather_subscriptions(self.user_profile)[0][0]["name"]
         stream_id = get_stream(stream_name, self.user_profile.realm).id
-        expected_subscribers = gather_subscriptions(self.user_profile, include_subscribers=True)[0][0][
-            "subscribers"
-        ]
+        expected_subscribers = gather_subscriptions(self.user_profile, include_subscribers=True)[0][0]["subscribers"]
         result = self.client_get(f"/json/streams/{stream_id}/members")
         self.assert_json_success(result)
         result_dict = result.json()
@@ -4316,8 +4304,7 @@ class StreamTrafficTest(ZulipTestCase):
         )
         # stream between 7 and 27 days old
         self.assertEqual(
-            get_average_weekly_stream_traffic(42, timezone_now() - timedelta(days=10), {42: (98 * 10 + 9) // 7}),
-            98,
+            get_average_weekly_stream_traffic(42, timezone_now() - timedelta(days=10), {42: (98 * 10 + 9) // 7}), 98,
         )
         # stream less than 7 days old
         self.assertEqual(get_average_weekly_stream_traffic(42, timezone_now() - timedelta(days=5), {42: 100}), None)

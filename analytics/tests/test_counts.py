@@ -498,9 +498,7 @@ class TestCountStats(AnalyticsTestCase):
             [[1, "false", human1], [1, "false", human2], [3, "true", bot], [1, "false", self.hourly_user]],
         )
         self.assertTableState(
-            RealmCount,
-            ["value", "subgroup", "realm"],
-            [[2, "false"], [3, "true"], [1, "false", self.second_realm]],
+            RealmCount, ["value", "subgroup", "realm"], [[2, "false"], [3, "true"], [1, "false", self.second_realm]],
         )
         self.assertTableState(InstallationCount, ["value", "subgroup"], [[3, "false"], [3, "true"]])
         self.assertTableState(StreamCount, [], [])
@@ -535,9 +533,7 @@ class TestCountStats(AnalyticsTestCase):
         do_fill_count_stat_at_hour(stat, self.TIME_ZERO, self.default_realm)
 
         self.assertTableState(
-            UserCount,
-            ["value", "subgroup", "user"],
-            [[1, "false", human1], [1, "false", human2], [3, "true", bot]],
+            UserCount, ["value", "subgroup", "user"], [[1, "false", human1], [1, "false", human2], [3, "true", bot]],
         )
         self.assertTableState(
             RealmCount,
@@ -809,9 +805,7 @@ class TestCountStats(AnalyticsTestCase):
             ],
         )
         self.assertTableState(
-            RealmCount,
-            ["value", "subgroup", "realm"],
-            [[3, "false"], [2, "true"], [2, "false", self.second_realm]],
+            RealmCount, ["value", "subgroup", "realm"], [[3, "false"], [2, "true"], [2, "false", self.second_realm]],
         )
         self.assertTableState(InstallationCount, ["value", "subgroup"], [[5, "false"], [2, "true"]])
         self.assertTableState(UserCount, [], [])
@@ -1419,9 +1413,7 @@ class TestActiveUsersAudit(AnalyticsTestCase):
             self.add_event(RealmAuditLog.USER_CREATED, 1, user=user)
         do_fill_count_stat_at_hour(self.stat, self.TIME_ZERO)
         self.assertTableState(
-            UserCount,
-            ["subgroup", "user"],
-            [["false", user1], ["false", user2], ["false", user3], ["true", user4]],
+            UserCount, ["subgroup", "user"], [["false", user1], ["false", user2], ["false", user3], ["true", user4]],
         )
         self.assertTableState(
             RealmCount,

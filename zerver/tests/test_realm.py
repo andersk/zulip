@@ -545,9 +545,7 @@ class RealmTest(ZulipTestCase):
         req = {"video_chat_provider": ujson.dumps(Realm.VIDEO_CHAT_PROVIDERS["big_blue_button"]["id"])}
         result = self.client_patch("/json/realm", req)
         self.assert_json_success(result)
-        self.assertEqual(
-            get_realm("zulip").video_chat_provider, Realm.VIDEO_CHAT_PROVIDERS["big_blue_button"]["id"],
-        )
+        self.assertEqual(get_realm("zulip").video_chat_provider, Realm.VIDEO_CHAT_PROVIDERS["big_blue_button"]["id"])
 
         req = {"video_chat_provider": ujson.dumps(Realm.VIDEO_CHAT_PROVIDERS["zoom"]["id"])}
         result = self.client_patch("/json/realm", req)

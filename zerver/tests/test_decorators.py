@@ -238,9 +238,7 @@ class DecoratorTestCase(ZulipTestCase):
 
     def test_REQ_argument_type(self) -> None:
         @has_request_variables
-        def get_payload(
-            request: HttpRequest, payload: Dict[str, Any] = REQ(argument_type="body"),
-        ) -> Dict[str, Any]:
+        def get_payload(request: HttpRequest, payload: Dict[str, Any] = REQ(argument_type="body")) -> Dict[str, Any]:
             return payload
 
         request = HostRequestMock()
@@ -1374,9 +1372,7 @@ class TestValidateApiKey(ZulipTestCase):
 
     def test_validate_api_key_if_email_is_case_insensitive(self) -> None:
         api_key = get_api_key(self.default_bot)
-        profile = validate_api_key(
-            HostRequestMock(host="zulip.testserver"), self.default_bot.email.upper(), api_key,
-        )
+        profile = validate_api_key(HostRequestMock(host="zulip.testserver"), self.default_bot.email.upper(), api_key)
         self.assertEqual(profile.id, self.default_bot.id)
 
     def test_valid_api_key_if_user_is_on_wrong_subdomain(self) -> None:
@@ -1586,9 +1582,7 @@ class TestAuthenticatedJsonViewDecorator(ZulipTestCase):
         with mock.patch("logging.warning") as mock_warning, mock.patch(
             "zerver.decorator.get_subdomain", return_value="",
         ):
-            self.assert_json_error_contains(
-                self._do_test(email), "Account is not associated with this " "subdomain",
-            )
+            self.assert_json_error_contains(self._do_test(email), "Account is not associated with this " "subdomain")
             mock_warning.assert_called_with(
                 "User %s (%s) attempted to access API on wrong subdomain (%s)", email, "zulip", "",
             )
@@ -1596,9 +1590,7 @@ class TestAuthenticatedJsonViewDecorator(ZulipTestCase):
         with mock.patch("logging.warning") as mock_warning, mock.patch(
             "zerver.decorator.get_subdomain", return_value="acme",
         ):
-            self.assert_json_error_contains(
-                self._do_test(email), "Account is not associated with this " "subdomain",
-            )
+            self.assert_json_error_contains(self._do_test(email), "Account is not associated with this " "subdomain")
             mock_warning.assert_called_with(
                 "User %s (%s) attempted to access API on wrong subdomain (%s)", email, "zulip", "acme",
             )

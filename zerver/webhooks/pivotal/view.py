@@ -153,9 +153,7 @@ def api_pivotal_webhook_v5(request: HttpRequest, user_profile: UserProfile) -> T
             old_values = change.get("original_values", {})
             new_values = change["new_values"]
             if "current_state" in old_values and "current_state" in new_values:
-                content += " from **{}** to **{}**.".format(
-                    old_values["current_state"], new_values["current_state"],
-                )
+                content += " from **{}** to **{}**.".format(old_values["current_state"], new_values["current_state"])
     elif event_type in UNSUPPORTED_EVENT_TYPES:
         # Known but unsupported Pivotal event types
         pass

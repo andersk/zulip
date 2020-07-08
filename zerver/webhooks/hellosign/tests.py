@@ -39,11 +39,7 @@ class HelloSignHookTests(WebhookTestCase):
             "The `NDA with Acme Co.` document is awaiting the signature of " "Jack, and was just signed by Jill."
         )
         self.send_and_test_stream_message(
-            "signatures_with_own_subject",
-            expected_topic,
-            expected_message,
-            content_type=None,
-            topic=expected_topic,
+            "signatures_with_own_subject", expected_topic, expected_message, content_type=None, topic=expected_topic,
         )
 
     def get_body(self, fixture_name: str) -> Dict[str, str]:

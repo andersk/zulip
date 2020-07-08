@@ -307,10 +307,7 @@ FuncKwargPair = Tuple[Callable[..., HttpResponse], Dict[str, Union[int, Iterable
 add_subscriptions_schema = check_list(
     check_dict_only(
         required_keys=[("name", check_string)],
-        optional_keys=[
-            ("color", check_color),
-            ("description", check_capped_string(Stream.MAX_DESCRIPTION_LENGTH)),
-        ],
+        optional_keys=[("color", check_color), ("description", check_capped_string(Stream.MAX_DESCRIPTION_LENGTH))],
     ),
 )
 

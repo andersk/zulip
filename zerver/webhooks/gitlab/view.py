@@ -63,9 +63,7 @@ def get_remove_branch_event_body(payload: Dict[str, Any]) -> str:
 
 def get_tag_push_event_body(payload: Dict[str, Any]) -> str:
     return get_push_tag_event_message(
-        get_user_name(payload),
-        get_tag_name(payload),
-        action="pushed" if payload.get("checkout_sha") else "removed",
+        get_user_name(payload), get_tag_name(payload), action="pushed" if payload.get("checkout_sha") else "removed",
     )
 
 
@@ -117,9 +115,7 @@ def get_merge_request_event_body(payload: Dict[str, Any], action: str, include_t
     )
 
 
-def get_merge_request_open_or_updated_body(
-    payload: Dict[str, Any], action: str, include_title: bool = False,
-) -> str:
+def get_merge_request_open_or_updated_body(payload: Dict[str, Any], action: str, include_title: bool = False) -> str:
     pull_request = payload["object_attributes"]
     return get_pull_request_event_message(
         get_issue_user_name(payload),

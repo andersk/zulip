@@ -14,8 +14,6 @@ class Migration(migrations.Migration):
             model_name="multiuseinvite", name="invited_as", field=models.PositiveSmallIntegerField(default=400),
         ),
         migrations.AlterField(
-            model_name="preregistrationuser",
-            name="invited_as",
-            field=models.PositiveSmallIntegerField(default=400),
+            model_name="preregistrationuser", name="invited_as", field=models.PositiveSmallIntegerField(default=400),
         ),
     ]

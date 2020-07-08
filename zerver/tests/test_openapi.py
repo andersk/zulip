@@ -952,9 +952,7 @@ class TestCurlExampleGeneration(ZulipTestCase):
         self.assertEqual(generated_curl_example, expected_curl_example)
 
     def test_generate_and_render_curl_example_with_excludes(self) -> None:
-        generated_curl_example = self.curl_example(
-            "/messages", "GET", exclude=["client_gravatar", "apply_markdown"],
-        )
+        generated_curl_example = self.curl_example("/messages", "GET", exclude=["client_gravatar", "apply_markdown"])
         expected_curl_example = [
             "```curl",
             "curl -sSX GET -G http://localhost:9991/api/v1/messages \\",
@@ -1029,8 +1027,7 @@ class OpenAPIRegexTest(ZulipTestCase):
         assert match_against_openapi_regex("/messages/matches_narrow") is None
         # Making sure documented endpoints are matched correctly.
         assert (
-            match_against_openapi_regex("/users/23/subscriptions/21")
-            == "/users/{user_id}/subscriptions/{stream_id}"
+            match_against_openapi_regex("/users/23/subscriptions/21") == "/users/{user_id}/subscriptions/{stream_id}"
         )
         assert match_against_openapi_regex("/users/iago@zulip.com/presence") == "/users/{email}/presence"
         assert match_against_openapi_regex("/messages/23") == "/messages/{message_id}"

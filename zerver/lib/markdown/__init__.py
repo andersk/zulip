@@ -1887,10 +1887,7 @@ class Markdown(markdown.Markdown):
                 "Realm-specific filters for realm_filters_key {}".format(kwargs["realm"]),
             ],
             "realm": [kwargs["realm"], "Realm id"],
-            "code_block_processor_disabled": [
-                kwargs["code_block_processor_disabled"],
-                "Disabled for email gateway",
-            ],
+            "code_block_processor_disabled": [kwargs["code_block_processor_disabled"], "Disabled for email gateway"],
         }
 
         super().__init__(*args, **kwargs)
@@ -2005,9 +2002,7 @@ class Markdown(markdown.Markdown):
 
     def register_realm_filters(self, inlinePatterns: markdown.util.Registry) -> markdown.util.Registry:
         for (pattern, format_string, id) in self.getConfig("realm_filters"):
-            inlinePatterns.register(
-                RealmFilterPattern(pattern, format_string, self), f"realm_filters/{pattern}", 45,
-            )
+            inlinePatterns.register(RealmFilterPattern(pattern, format_string, self), f"realm_filters/{pattern}", 45)
         return inlinePatterns
 
     def build_treeprocessors(self) -> markdown.util.Registry:

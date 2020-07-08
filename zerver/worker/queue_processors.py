@@ -220,9 +220,7 @@ class QueueProcessingWorker(ABC):
     def consume(self, data: Dict[str, Any]) -> None:
         pass
 
-    def do_consume(
-        self, consume_func: Callable[[List[Dict[str, Any]]], None], events: List[Dict[str, Any]],
-    ) -> None:
+    def do_consume(self, consume_func: Callable[[List[Dict[str, Any]]], None], events: List[Dict[str, Any]]) -> None:
         try:
             time_start = time.time()
             consume_func(events)
@@ -349,9 +347,7 @@ class ConfirmationEmailWorker(QueueProcessingWorker):
                 PreregistrationUser.objects.filter(email__iexact=data["email"].strip()),
             ).latest("invited_at")
         else:
-            invitee = filter_to_valid_prereg_users(
-                PreregistrationUser.objects.filter(id=data["prereg_id"]),
-            ).first()
+            invitee = filter_to_valid_prereg_users(PreregistrationUser.objects.filter(id=data["prereg_id"])).first()
             if invitee is None:
                 # The invitation could have been revoked
                 return
@@ -519,9 +515,7 @@ class MissedMessageWorker(QueueProcessingWorker):
             if current_time - timestamp < self.BATCH_DURATION:
                 continue
             events = self.events_by_recipient[user_profile_id]
-            logging.info(
-                "Batch-processing %s missedmessage_emails events for user %s", len(events), user_profile_id,
-            )
+            logging.info("Batch-processing %s missedmessage_emails events for user %s", len(events), user_profile_id)
             handle_missedmessage_emails(user_profile_id, events)
             del self.events_by_recipient[user_profile_id]
             del self.batch_start_by_recipient[user_profile_id]

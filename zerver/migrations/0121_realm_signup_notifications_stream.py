@@ -33,8 +33,6 @@ class Migration(migrations.Migration):
             ),
         ),
         migrations.RunPython(
-            set_initial_value_for_signup_notifications_stream,
-            reverse_code=migrations.RunPython.noop,
-            elidable=True,
+            set_initial_value_for_signup_notifications_stream, reverse_code=migrations.RunPython.noop, elidable=True,
         ),
     ]

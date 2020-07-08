@@ -11,9 +11,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name="remotepushdevicetoken",
-            name="token",
-            field=models.CharField(db_index=True, max_length=4096),
+            model_name="remotepushdevicetoken", name="token", field=models.CharField(db_index=True, max_length=4096),
         ),
         migrations.AlterField(
             model_name="remotepushdevicetoken", name="user_id", field=models.BigIntegerField(db_index=True),

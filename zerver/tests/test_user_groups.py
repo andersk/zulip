@@ -410,11 +410,7 @@ class UserGroupAPITestCase(ZulipTestCase):
         )
 
         payload = dict(
-            type="stream",
-            to=stream_name,
-            client="test suite",
-            topic="whatever",
-            content=content_with_group_mention,
+            type="stream", to=stream_name, client="test suite", topic="whatever", content=content_with_group_mention,
         )
 
         with mock.patch("logging.info"):

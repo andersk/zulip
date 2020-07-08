@@ -193,9 +193,7 @@ class TestArchiveMessagesGeneral(ArchiveMessagesTestingBase):
 
         # Change some Zulip messages to be expired:
         expired_zulip_msg_ids = list(
-            Message.objects.order_by("id")
-            .filter(sender__realm=self.zulip_realm)
-            .values_list("id", flat=True)[3:10],
+            Message.objects.order_by("id").filter(sender__realm=self.zulip_realm).values_list("id", flat=True)[3:10],
         )
         self._change_messages_date_sent(
             expired_zulip_msg_ids, timezone_now() - timedelta(ZULIP_REALM_DAYS + 1),
@@ -222,9 +220,7 @@ class TestArchiveMessagesGeneral(ArchiveMessagesTestingBase):
         # Change some Zulip messages date_sent, but the realm has no retention policy,
         # so they shouldn't get archived
         zulip_msg_ids = list(
-            Message.objects.order_by("id")
-            .filter(sender__realm=self.zulip_realm)
-            .values_list("id", flat=True)[3:10],
+            Message.objects.order_by("id").filter(sender__realm=self.zulip_realm).values_list("id", flat=True)[3:10],
         )
         self._change_messages_date_sent(
             zulip_msg_ids, timezone_now() - timedelta(ZULIP_REALM_DAYS + 1),

@@ -285,10 +285,7 @@ class EventQueue:
         # migration code in from_dict or load_event_queues to account for
         # loading event queues that lack that key.
         d = dict(
-            id=self.id,
-            next_event_id=self.next_event_id,
-            queue=list(self.queue),
-            virtual_events=self.virtual_events,
+            id=self.id, next_event_id=self.next_event_id, queue=list(self.queue), virtual_events=self.virtual_events,
         )
         if self.newest_pruned_id is not None:
             d["newest_pruned_id"] = self.newest_pruned_id
@@ -942,9 +939,7 @@ def process_message_event(event_template: Mapping[str, Any], users: Iterable[Map
         stream_push_notify = user_data.get("stream_push_notify", False)
         stream_email_notify = user_data.get("stream_email_notify", False)
         wildcard_mention_notify = (
-            user_data.get("wildcard_mention_notify", False)
-            and "wildcard_mentioned" in flags
-            and "read" not in flags
+            user_data.get("wildcard_mention_notify", False) and "wildcard_mentioned" in flags and "read" not in flags
         )
 
         # We first check if a message is potentially mentionable,

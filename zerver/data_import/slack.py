@@ -143,9 +143,7 @@ def build_realmemoji(custom_emoji_list: ZerverFieldsT, realm_id: int) -> Tuple[L
         if "emoji.slack-edge.com" in url:
             # Some of the emojis we get from the api have invalid links
             # this is to prevent errors related to them
-            realmemoji = RealmEmoji(
-                name=emoji_name, id=emoji_id, file_name=os.path.basename(url), deactivated=False,
-            )
+            realmemoji = RealmEmoji(name=emoji_name, id=emoji_id, file_name=os.path.basename(url), deactivated=False)
 
             realmemoji_dict = model_to_dict(realmemoji, exclude=["realm", "author"])
             realmemoji_dict["author"] = None

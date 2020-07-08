@@ -182,10 +182,7 @@ class ImportExportTest(ZulipTestCase):
         return output_dir
 
     def _export_realm(
-        self,
-        realm: Realm,
-        exportable_user_ids: Optional[Set[int]] = None,
-        consent_message_id: Optional[int] = None,
+        self, realm: Realm, exportable_user_ids: Optional[Set[int]] = None, consent_message_id: Optional[int] = None,
     ) -> Dict[str, Any]:
         output_dir = self._make_output_dir()
         with patch("logging.info"), patch("zerver.lib.export.create_soft_link"):
@@ -950,9 +947,7 @@ class ImportExportTest(ZulipTestCase):
                 Recipient.objects.get(type=Recipient.PERSONAL, type_id=user_profile.id).id,
             )
         for stream in Stream.objects.filter(realm=imported_realm):
-            self.assertEqual(
-                stream.recipient_id, Recipient.objects.get(type=Recipient.STREAM, type_id=stream.id).id,
-            )
+            self.assertEqual(stream.recipient_id, Recipient.objects.get(type=Recipient.STREAM, type_id=stream.id).id)
 
         for huddle_object in Huddle.objects.all():
             # Huddles don't have a realm column, so we just test all Huddles for simplicity.
@@ -1019,9 +1014,7 @@ class ImportExportTest(ZulipTestCase):
 
     @use_s3_backend
     def test_import_files_from_s3(self) -> None:
-        uploads_bucket, avatar_bucket = create_s3_buckets(
-            settings.S3_AUTH_UPLOADS_BUCKET, settings.S3_AVATAR_BUCKET,
-        )
+        uploads_bucket, avatar_bucket = create_s3_buckets(settings.S3_AUTH_UPLOADS_BUCKET, settings.S3_AVATAR_BUCKET)
 
         realm = Realm.objects.get(string_id="zulip")
         self._setup_export_files(realm)

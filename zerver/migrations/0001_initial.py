@@ -302,10 +302,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
                 ("desktop_notifications", models.BooleanField(default=True)),
                 ("audible_notifications", models.BooleanField(default=True)),
                 ("notifications", models.BooleanField(default=False)),
-                (
-                    "recipient",
-                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Recipient"),
-                ),
+                ("recipient", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Recipient")),
                 (
                     "user_profile",
                     models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
@@ -559,9 +556,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
             field=models.BooleanField(db_index=True, default=False),
         ),
         migrations.AddField(
-            model_name="userprofile",
-            name="is_realm_admin",
-            field=models.BooleanField(db_index=True, default=False),
+            model_name="userprofile", name="is_realm_admin", field=models.BooleanField(db_index=True, default=False),
         ),
         migrations.AlterField(model_name="realmemoji", name="img_url", field=models.URLField()),
         migrations.AlterField(
@@ -621,9 +616,7 @@ CREATE TRIGGER zerver_message_update_search_tsvector_async
             ),
         ),
         migrations.RunPython(code=migrate_existing_attachment_data, elidable=True),
-        migrations.AddField(
-            model_name="subscription", name="pin_to_top", field=models.BooleanField(default=False),
-        ),
+        migrations.AddField(model_name="subscription", name="pin_to_top", field=models.BooleanField(default=False)),
         migrations.AddField(
             model_name="userprofile", name="default_language", field=models.CharField(default="en", max_length=50),
         ),

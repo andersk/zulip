@@ -51,9 +51,9 @@ class TestRuleList(TestCase):
 
             for line in rule.get("bad_lines", []):
                 # create=True is superfluous when mocking built-ins in Python >= 3.5
-                with patch(
-                    "builtins.open", return_value=StringIO(line + "\n\n"), create=True, autospec=True,
-                ), patch("builtins.print"):
+                with patch("builtins.open", return_value=StringIO(line + "\n\n"), create=True, autospec=True), patch(
+                    "builtins.print",
+                ):
                     filename = list(rule.get("include_only", {"foo.bar"}))[0]
                     self.assertTrue(
                         RuleList([], [rule]).custom_check_file(filename, "baz", ""),

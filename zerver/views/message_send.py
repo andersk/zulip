@@ -316,9 +316,7 @@ def send_message_backend(
 
 
 @has_request_variables
-def zcommand_backend(
-    request: HttpRequest, user_profile: UserProfile, command: str = REQ("command"),
-) -> HttpResponse:
+def zcommand_backend(request: HttpRequest, user_profile: UserProfile, command: str = REQ("command")) -> HttpResponse:
     return json_success(process_zcommands(command, user_profile))
 
 

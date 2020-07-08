@@ -650,11 +650,7 @@ class DefaultEmojiReactionTests(EmojiReactionBase):
         hamlet = self.example_user("hamlet")
         message = Message.objects.get(id=1)
         Reaction.objects.create(
-            user_profile=hamlet,
-            message=message,
-            emoji_name="+1",
-            emoji_code="1f44d",
-            reaction_type="unicode_emoji",
+            user_profile=hamlet, message=message, emoji_name="+1", emoji_code="1f44d", reaction_type="unicode_emoji",
         )
 
         reaction_info = {

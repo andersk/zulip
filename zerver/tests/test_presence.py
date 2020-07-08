@@ -277,8 +277,7 @@ class UserPresenceTests(ZulipTestCase):
 
         self.assertEqual(seconds_usage_between(user_profile, time_zero, third_time).total_seconds(), 1500)
         self.assertEqual(
-            seconds_usage_between(user_profile, time_zero, third_time + timedelta(seconds=10)).total_seconds(),
-            1510,
+            seconds_usage_between(user_profile, time_zero, third_time + timedelta(seconds=10)).total_seconds(), 1510,
         )
         self.assertEqual(
             seconds_usage_between(user_profile, time_zero, third_time + timedelta(seconds=1000)).total_seconds(),
@@ -499,10 +498,7 @@ class UserPresenceAggregationTests(ZulipTestCase):
         result_dict = self._send_presence_for_aggregated_tests(user, "active", validate_time)
         self.assertDictEqual(
             result_dict["presence"]["aggregated"],
-            {
-                "status": "active",
-                "timestamp": datetime_to_timestamp(validate_time - datetime.timedelta(seconds=2)),
-            },
+            {"status": "active", "timestamp": datetime_to_timestamp(validate_time - datetime.timedelta(seconds=2))},
         )
 
     def test_aggregated_presense_idle(self) -> None:

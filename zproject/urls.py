@@ -198,9 +198,7 @@ v1_api_and_json_patterns = [
         {"GET": "zerver.views.users.get_bots_backend", "POST": "zerver.views.users.add_bot_backend"},
     ),
     path(
-        "bots/<int:bot_id>/api_key/regenerate",
-        rest_dispatch,
-        {"POST": "zerver.views.users.regenerate_bot_api_key"},
+        "bots/<int:bot_id>/api_key/regenerate", rest_dispatch, {"POST": "zerver.views.users.regenerate_bot_api_key"},
     ),
     path(
         "bots/<int:bot_id>",
@@ -252,9 +250,7 @@ v1_api_and_json_patterns = [
         rest_dispatch,
         {"GET": "zerver.views.message_edit.get_message_edit_history"},
     ),
-    path(
-        "messages/matches_narrow", rest_dispatch, {"GET": "zerver.views.message_fetch.messages_in_narrow_backend"},
-    ),
+    path("messages/matches_narrow", rest_dispatch, {"GET": "zerver.views.message_fetch.messages_in_narrow_backend"}),
     path(
         "users/me/subscriptions/properties",
         rest_dispatch,
@@ -392,13 +388,9 @@ v1_api_and_json_patterns = [
     ),
     # settings -> zerver.views.user_settings
     path("settings", rest_dispatch, {"PATCH": "zerver.views.user_settings.json_change_settings"}),
+    path("settings/display", rest_dispatch, {"PATCH": "zerver.views.user_settings.update_display_settings_backend"}),
     path(
-        "settings/display", rest_dispatch, {"PATCH": "zerver.views.user_settings.update_display_settings_backend"},
-    ),
-    path(
-        "settings/notifications",
-        rest_dispatch,
-        {"PATCH": "zerver.views.user_settings.json_change_notify_settings"},
+        "settings/notifications", rest_dispatch, {"PATCH": "zerver.views.user_settings.json_change_notify_settings"},
     ),
     # users/me/alert_words -> zerver.views.alert_words
     path(
@@ -715,9 +707,7 @@ i18n_urls = [
     path("terms/", zerver.views.portico.terms_view, name="terms"),
     path("privacy/", zerver.views.portico.privacy_view, name="privacy"),
     re_path(
-        r"^config-error/(?P<error_category_name>[\w,-]+)$",
-        zerver.views.auth.config_error_view,
-        name="config_error",
+        r"^config-error/(?P<error_category_name>[\w,-]+)$", zerver.views.auth.config_error_view, name="config_error",
     ),
     re_path(r"^config-error/remoteuser/(?P<error_category_name>[\w,-]+)$", zerver.views.auth.config_error_view),
 ]
@@ -824,9 +814,7 @@ v1_api_mobile_patterns = [
     path("fetch_api_key", zerver.views.auth.api_fetch_api_key, name="zerver.views.auth.api_fetch_api_key"),
     # This is for the signing in through the devAuthBackEnd on mobile apps.
     path(
-        "dev_fetch_api_key",
-        zerver.views.auth.api_dev_fetch_api_key,
-        name="zerver.views.auth.api_dev_fetch_api_key",
+        "dev_fetch_api_key", zerver.views.auth.api_dev_fetch_api_key, name="zerver.views.auth.api_dev_fetch_api_key",
     ),
     # This is for fetching the emails of the admins and the users.
     path("dev_list_users", zerver.views.auth.api_dev_list_users, name="zerver.views.auth.api_dev_list_users"),

@@ -41,9 +41,7 @@ def create_square_image(png: bytes) -> bytes:
 
 def create_integration_bot_avatar(logo_path: str, bot_avatar_path: str) -> None:
     if logo_path.endswith(".svg"):
-        avatar = cairosvg.svg2png(
-            url=logo_path, output_width=DEFAULT_AVATAR_SIZE, output_height=DEFAULT_AVATAR_SIZE,
-        )
+        avatar = cairosvg.svg2png(url=logo_path, output_width=DEFAULT_AVATAR_SIZE, output_height=DEFAULT_AVATAR_SIZE)
     else:
         with open(logo_path, "rb") as f:
             image = f.read()

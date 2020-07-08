@@ -263,10 +263,7 @@ def get_pr_reassigned_body(payload: Dict[str, Any], include_title: Optional[bool
             )
         punctuation = "." if pr["title"][-1] not in string.punctuation else ""
         message = PULL_REQUEST_REASSIGNED_TO_NONE_TEMPLATE_WITH_TITLE.format(
-            user_name=get_user_name(payload),
-            number=pr["id"],
-            url=pr["links"]["self"][0]["href"],
-            title=pr["title"],
+            user_name=get_user_name(payload), number=pr["id"], url=pr["links"]["self"][0]["href"], title=pr["title"],
         )
         message = f"{message}{punctuation}"
         return message

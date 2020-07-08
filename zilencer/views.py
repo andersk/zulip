@@ -86,8 +86,7 @@ def register_remote_server(
         raise JsonableError(e.message)
 
     remote_server, created = RemoteZulipServer.objects.get_or_create(
-        uuid=zulip_org_id,
-        defaults={"hostname": hostname, "contact_email": contact_email, "api_key": zulip_org_key},
+        uuid=zulip_org_id, defaults={"hostname": hostname, "contact_email": contact_email, "api_key": zulip_org_key},
     )
 
     if not created:
@@ -202,9 +201,7 @@ def validate_incoming_table_data(
 
 
 def batch_create_table_data(
-    server: RemoteZulipServer,
-    model: Any,
-    row_objects: Union[List[RemoteRealmCount], List[RemoteInstallationCount]],
+    server: RemoteZulipServer, model: Any, row_objects: Union[List[RemoteRealmCount], List[RemoteInstallationCount]],
 ) -> None:
     BATCH_SIZE = 1000
     while len(row_objects) > 0:

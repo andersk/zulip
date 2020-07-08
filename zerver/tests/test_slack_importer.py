@@ -828,8 +828,7 @@ class SlackImporter(ZulipTestCase):
             slack_recipient_name_to_zulip_recipient_id["mpdm-user9--user2--user10-1"],
         )
         self.assertEqual(
-            zerver_message[6]["recipient"],
-            slack_recipient_name_to_zulip_recipient_id["mpdm-user6--user7--user4-1"],
+            zerver_message[6]["recipient"], slack_recipient_name_to_zulip_recipient_id["mpdm-user6--user7--user4-1"],
         )
         self.assertEqual(zerver_message[7]["recipient"], slack_recipient_name_to_zulip_recipient_id["U061A5N1G"])
         self.assertEqual(zerver_message[7]["recipient"], slack_recipient_name_to_zulip_recipient_id["U061A5N1G"])

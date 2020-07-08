@@ -604,9 +604,7 @@ class NormalActionsTest(BaseAction):
                 ("user_id", check_int),
                 (
                     "user",
-                    check_dict_only(
-                        [("email", check_string), ("full_name", check_string), ("user_id", check_int)],
-                    ),
+                    check_dict_only([("email", check_string), ("full_name", check_string), ("user_id", check_int)]),
                 ),
             ],
         )
@@ -630,9 +628,7 @@ class NormalActionsTest(BaseAction):
                 ("user_id", check_int),
                 (
                     "user",
-                    check_dict_only(
-                        [("email", check_string), ("full_name", check_string), ("user_id", check_int)],
-                    ),
+                    check_dict_only([("email", check_string), ("full_name", check_string), ("user_id", check_int)]),
                 ),
             ],
         )
@@ -657,9 +653,7 @@ class NormalActionsTest(BaseAction):
                 ("user_id", check_int),
                 (
                     "user",
-                    check_dict_only(
-                        [("email", check_string), ("full_name", check_string), ("user_id", check_int)],
-                    ),
+                    check_dict_only([("email", check_string), ("full_name", check_string), ("user_id", check_int)]),
                 ),
             ],
         )
@@ -711,9 +705,7 @@ class NormalActionsTest(BaseAction):
                 ("user_id", check_int),
                 (
                     "user",
-                    check_dict_only(
-                        [("email", check_string), ("full_name", check_string), ("user_id", check_int)],
-                    ),
+                    check_dict_only([("email", check_string), ("full_name", check_string), ("user_id", check_int)]),
                 ),
             ],
         )
@@ -2121,11 +2113,7 @@ class NormalActionsTest(BaseAction):
                                 "services",
                                 check_list(
                                     check_dict_only(
-                                        [
-                                            ("base_url", check_url),
-                                            ("interface", check_int),
-                                            ("token", check_string),
-                                        ],
+                                        [("base_url", check_url), ("interface", check_int), ("token", check_string)],
                                     ),
                                 ),
                             ),

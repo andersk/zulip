@@ -1492,8 +1492,7 @@ class SocialAuthBase(DesktopFlowTestingLib, ZulipTestCase):
 
     def test_social_auth_complete_when_base_exc_is_raised(self) -> None:
         with mock.patch(
-            "social_core.backends.oauth.BaseOAuth2.auth_complete",
-            side_effect=AuthStateForbidden("State forbidden"),
+            "social_core.backends.oauth.BaseOAuth2.auth_complete", side_effect=AuthStateForbidden("State forbidden"),
         ), self.assertLogs(self.logger_string, level="WARNING"):
             result = self.client_get(reverse("social:complete", args=[self.backend.name]))
             self.assertEqual(result.status_code, 302)
@@ -2132,9 +2131,7 @@ class SAMLAuthBackendTest(SocialAuthBase):
             account_data_dict = self.get_account_data_dict(email=self.email, name=self.name)
             with self.assertLogs(self.logger_string, level="INFO") as m:
                 result = self.social_auth_test(
-                    account_data_dict,
-                    subdomain="zulip",
-                    extra_attributes=dict(member=["zephyr", "othersubdomain"]),
+                    account_data_dict, subdomain="zulip", extra_attributes=dict(member=["zephyr", "othersubdomain"]),
                 )
         self.assertEqual(result.status_code, 302)
         self.assertEqual("/login/", result.url)
@@ -2367,9 +2364,7 @@ class AppleAuthBackendNativeFlowTest(AppleAuthMixin, SocialAuthBase):
         """
 
         if not skip_id_token:
-            id_token: Optional[str] = self.generate_id_token(
-                account_data_dict, settings.SOCIAL_AUTH_APPLE_BUNDLE_ID,
-            )
+            id_token: Optional[str] = self.generate_id_token(account_data_dict, settings.SOCIAL_AUTH_APPLE_BUNDLE_ID)
         else:
             id_token = None
 
@@ -2835,8 +2830,7 @@ class GitHubAuthBackendTest(SocialAuthBase):
             m.output,
             [
                 self.logger_output(
-                    "Social auth (GitHub) failed because user has no verified"
-                    " emails associated with the account",
+                    "Social auth (GitHub) failed because user has no verified" " emails associated with the account",
                     "warning",
                 ),
             ],
@@ -2859,8 +2853,7 @@ class GitHubAuthBackendTest(SocialAuthBase):
             m.output,
             [
                 self.logger_output(
-                    "Social auth (GitHub) failed because user has no verified"
-                    " emails associated with the account",
+                    "Social auth (GitHub) failed because user has no verified" " emails associated with the account",
                     "warning",
                 ),
             ],
@@ -3584,11 +3577,7 @@ class TestTwoFactor(ZulipTestCase):
             LDAP_APPEND_DOMAIN="zulip.com",
             AUTH_LDAP_USER_ATTR_MAP=ldap_user_attr_map,
         ):
-            first_step_data = {
-                "username": email,
-                "password": password,
-                "two_factor_login_view-current_step": "auth",
-            }
+            first_step_data = {"username": email, "password": password, "two_factor_login_view-current_step": "auth"}
             result = self.client_post("/accounts/login/", first_step_data)
             self.assertEqual(result.status_code, 200)
 
@@ -4248,9 +4237,7 @@ class TestLDAP(ZulipLDAPTestCase):
         common_attrs = ["cn", "userPassword", "phoneNumber", "birthDate"]
         for key, value in ldap_dir.items():
             self.assertTrue(regex.match(key))
-            self.assertCountEqual(
-                list(value.keys()), common_attrs + ["uid", "thumbnailPhoto", "userAccountControl"],
-            )
+            self.assertCountEqual(list(value.keys()), common_attrs + ["uid", "thumbnailPhoto", "userAccountControl"])
 
         ldap_dir = generate_dev_ldap_dir("b", 9)
         self.assertEqual(len(ldap_dir), 9)
@@ -4483,9 +4470,7 @@ class TestLDAP(ZulipLDAPTestCase):
                 self.backend.get_or_build_user(email, _LDAPUser())
 
             email = "spam@acme.com"
-            with self.assertRaisesRegex(
-                ZulipLDAPException, "This email domain isn't allowed in this organization.",
-            ):
+            with self.assertRaisesRegex(ZulipLDAPException, "This email domain isn't allowed in this organization."):
                 self.backend.get_or_build_user(email, _LDAPUser())
 
     @override_settings(AUTHENTICATION_BACKENDS=("zproject.backends.ZulipLDAPAuthBackend",))
@@ -4821,9 +4806,7 @@ class TestZulipLDAPUserPopulator(ZulipLDAPTestCase):
         with self.settings(
             AUTH_LDAP_USER_ATTR_MAP={"full_name": "cn", "custom_profile_field__non_existent": "homePhone"},
         ):
-            with self.assertRaisesRegex(
-                ZulipLDAPException, "Custom profile field with name non_existent not found",
-            ):
+            with self.assertRaisesRegex(ZulipLDAPException, "Custom profile field with name non_existent not found"):
                 self.perform_ldap_sync(self.example_user("hamlet"))
 
     def test_update_custom_profile_field_invalid_data(self) -> None:
@@ -4852,9 +4835,7 @@ class TestZulipLDAPUserPopulator(ZulipLDAPTestCase):
         hamlet = self.example_user("hamlet")
         phone_number_field = CustomProfileField.objects.get(realm=hamlet.realm, name="Phone number")
         birthday_field = CustomProfileField.objects.get(realm=hamlet.realm, name="Birthday")
-        phone_number_field_value = CustomProfileFieldValue.objects.get(
-            user_profile=hamlet, field=phone_number_field,
-        )
+        phone_number_field_value = CustomProfileFieldValue.objects.get(user_profile=hamlet, field=phone_number_field)
         phone_number_field_value.value = "123456789"
         phone_number_field_value.save(update_fields=["value"])
         expected_call_args = [hamlet, [{"id": birthday_field.id, "value": "1900-09-08"}]]
@@ -4963,10 +4944,7 @@ class TestRequireEmailFormatUsernames(ZulipTestCase):
 
     def test_require_email_format_usernames_for_email_and_ldap_with_email_attr(self) -> None:
         with self.settings(
-            AUTHENTICATION_BACKENDS=(
-                "zproject.backends.EmailAuthBackend",
-                "zproject.backends.ZulipLDAPAuthBackend",
-            ),
+            AUTHENTICATION_BACKENDS=("zproject.backends.EmailAuthBackend", "zproject.backends.ZulipLDAPAuthBackend"),
             LDAP_EMAIL_ATTR="email",
         ):
             realm = Realm.objects.get(string_id="zulip")
@@ -4974,10 +4952,7 @@ class TestRequireEmailFormatUsernames(ZulipTestCase):
 
     def test_require_email_format_usernames_for_email_and_ldap_with_append_email(self) -> None:
         with self.settings(
-            AUTHENTICATION_BACKENDS=(
-                "zproject.backends.EmailAuthBackend",
-                "zproject.backends.ZulipLDAPAuthBackend",
-            ),
+            AUTHENTICATION_BACKENDS=("zproject.backends.EmailAuthBackend", "zproject.backends.ZulipLDAPAuthBackend"),
             LDAP_APPEND_DOMAIN="zulip.com",
         ):
             realm = Realm.objects.get(string_id="zulip")

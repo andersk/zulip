@@ -26,9 +26,7 @@ class Command(ZulipBaseCommand):
 
     def add_arguments(self, parser: ArgumentParser) -> None:
         parser.add_argument("stream_to_keep", type=str, help="name of stream to keep")
-        parser.add_argument(
-            "stream_to_destroy", type=str, help="name of stream to merge into the stream being kept",
-        )
+        parser.add_argument("stream_to_destroy", type=str, help="name of stream to merge into the stream being kept")
         self.add_realm_args(parser, True)
 
     def handle(self, *args: Any, **options: str) -> None:

@@ -56,9 +56,7 @@ class MirroredMessageUsersTest(ZulipTestCase):
             with self.assertRaises(InvalidMirrorInput):
                 create_mirrored_message_users(request, user, recipients)
 
-    @mock.patch(
-        "DNS.dnslookup", return_value=[["sipbtest:*:20922:101:Fred Sipb,,,:/mit/sipbtest:/bin/athena/tcsh"]],
-    )
+    @mock.patch("DNS.dnslookup", return_value=[["sipbtest:*:20922:101:Fred Sipb,,,:/mit/sipbtest:/bin/athena/tcsh"]])
     def test_zephyr_mirror_new_recipient(self, ignored: object) -> None:
         """Test mirror dummy user creation for PM recipients"""
         client = get_client(name="zephyr_mirror")
@@ -86,9 +84,7 @@ class MirroredMessageUsersTest(ZulipTestCase):
         bob = get_user(new_user_email, new_user_realm)
         self.assertTrue(bob.is_mirror_dummy)
 
-    @mock.patch(
-        "DNS.dnslookup", return_value=[["sipbtest:*:20922:101:Fred Sipb,,,:/mit/sipbtest:/bin/athena/tcsh"]],
-    )
+    @mock.patch("DNS.dnslookup", return_value=[["sipbtest:*:20922:101:Fred Sipb,,,:/mit/sipbtest:/bin/athena/tcsh"]])
     def test_zephyr_mirror_new_sender(self, ignored: object) -> None:
         """Test mirror dummy user creation for sender when sending to stream"""
         client = get_client(name="zephyr_mirror")

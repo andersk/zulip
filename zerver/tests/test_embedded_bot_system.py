@@ -72,10 +72,7 @@ class TestEmbeddedBotMessaging(ZulipTestCase):
         ):
             with patch("logging.warning") as mock_logging:
                 self.send_stream_message(
-                    self.user_profile,
-                    "Denmark",
-                    content=f"@**{self.bot_profile.full_name}** foo",
-                    topic_name="bar",
+                    self.user_profile, "Denmark", content=f"@**{self.bot_profile.full_name}** foo", topic_name="bar",
                 )
                 mock_logging.assert_called_once_with("I'm quitting!")
 

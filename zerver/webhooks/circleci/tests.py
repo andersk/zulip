@@ -27,9 +27,7 @@ Build [#1429](https://circleci.com/gh/Hypro999/zulip/1429) of `bionic-backend-fr
 - **Author:** Hemanth V. Alluri (Hypro999)
 - **Committer:** Hemanth V. Alluri (Hypro999)
 """.strip()
-        self.send_and_test_stream_message(
-            "github_bionic_backend_frontend_failure", expected_topic, expected_message,
-        )
+        self.send_and_test_stream_message("github_bionic_backend_frontend_failure", expected_topic, expected_message)
 
     def test_for_success_build_off_github_with_multiple_parties(self) -> None:
         expected_topic = "zulip"

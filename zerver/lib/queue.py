@@ -366,9 +366,7 @@ def queue_json_publish(
             get_worker(queue_name).consume_wrapper(event)
 
 
-def retry_event(
-    queue_name: str, event: Dict[str, Any], failure_processor: Callable[[Dict[str, Any]], None],
-) -> None:
+def retry_event(queue_name: str, event: Dict[str, Any], failure_processor: Callable[[Dict[str, Any]], None]) -> None:
     if "failed_tries" not in event:
         event["failed_tries"] = 0
     event["failed_tries"] += 1

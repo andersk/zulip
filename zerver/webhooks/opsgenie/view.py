@@ -40,9 +40,7 @@ def api_opsgenie_webhook(
     if "escalationName" in payload:
         info["additional_info"] += bullet_template.format(key="Escalation", value=payload["escalationName"])
     if "removedTags" in payload["alert"]:
-        info["additional_info"] += bullet_template.format(
-            key="Tags removed", value=payload["alert"]["removedTags"],
-        )
+        info["additional_info"] += bullet_template.format(key="Tags removed", value=payload["alert"]["removedTags"])
     if "message" in payload["alert"]:
         info["additional_info"] += bullet_template.format(key="Message", value=payload["alert"]["message"])
     if info["tags"]:

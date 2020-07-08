@@ -36,11 +36,7 @@ To restore a specific ArchiveTransaction:
             help="Restore manually deleted messages.",
         )
         parser.add_argument(
-            "-t",
-            "--transaction-id",
-            dest="transaction_id",
-            type=int,
-            help="Restore a specific ArchiveTransaction.",
+            "-t", "--transaction-id", dest="transaction_id", type=int, help="Restore a specific ArchiveTransaction.",
         )
 
         self.add_realm_args(

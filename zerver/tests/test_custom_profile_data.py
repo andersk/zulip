@@ -327,8 +327,7 @@ class UpdateCustomProfileFieldTest(CustomProfileFieldTestCase):
 
         field = CustomProfileField.objects.get(name="Phone number", realm=realm)
         result = self.client_patch(
-            f"/json/realm/profile_fields/{field.id}",
-            info={"name": "", "field_type": CustomProfileField.SHORT_TEXT},
+            f"/json/realm/profile_fields/{field.id}", info={"name": "", "field_type": CustomProfileField.SHORT_TEXT},
         )
         self.assert_json_error(result, "Label cannot be blank.")
 

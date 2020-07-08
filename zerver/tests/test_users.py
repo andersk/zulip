@@ -615,23 +615,17 @@ class PermissionTest(ZulipTestCase):
             field = CustomProfileField.objects.get(name=field_name, realm=realm)
             new_profile_data.append({"id": field.id, "value": field_value})
 
-            result = self.client_patch(
-                f"/json/users/{cordelia.id}", {"profile_data": ujson.dumps(new_profile_data)},
-            )
+            result = self.client_patch(f"/json/users/{cordelia.id}", {"profile_data": ujson.dumps(new_profile_data)})
             self.assert_json_error(result, error_msg)
 
         # non-existent field and no data
         invalid_profile_data = [{"id": 9001, "value": ""}]
-        result = self.client_patch(
-            f"/json/users/{cordelia.id}", {"profile_data": ujson.dumps(invalid_profile_data)},
-        )
+        result = self.client_patch(f"/json/users/{cordelia.id}", {"profile_data": ujson.dumps(invalid_profile_data)})
         self.assert_json_error(result, "Field id 9001 not found.")
 
         # non-existent field and data
         invalid_profile_data = [{"id": 9001, "value": "some data"}]
-        result = self.client_patch(
-            f"/json/users/{cordelia.id}", {"profile_data": ujson.dumps(invalid_profile_data)},
-        )
+        result = self.client_patch(f"/json/users/{cordelia.id}", {"profile_data": ujson.dumps(invalid_profile_data)})
         self.assert_json_error(result, "Field id 9001 not found.")
 
         # Test for clearing/resetting field values.

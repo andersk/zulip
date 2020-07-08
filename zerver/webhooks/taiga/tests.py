@@ -46,7 +46,9 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("userstory_changed_points", self.TOPIC, message)
 
     def test_taiga_userstory_changed_new_sprint(self) -> None:
-        message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) added user story **UserStory** to sprint Sprint1."
+        message = (
+            "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) added user story **UserStory** to sprint Sprint1."
+        )
         self.send_and_test_stream_message("userstory_changed_new_sprint", self.TOPIC, message)
 
     def test_taiga_userstory_changed_sprint(self) -> None:
@@ -76,7 +78,9 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("userstory_changed_blocked", self.TOPIC, message)
 
     def test_taiga_userstory_changed_assigned(self) -> None:
-        message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) assigned user story **UserStory** to TomaszKolek."
+        message = (
+            "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) assigned user story **UserStory** to TomaszKolek."
+        )
         self.send_and_test_stream_message("userstory_changed_assigned", self.TOPIC, message)
 
     def test_taiga_userstory_comment_added(self) -> None:
@@ -200,9 +204,7 @@ class TaigaHookTests(WebhookTestCase):
         self.send_and_test_stream_message("issue_changed_subject", self.TOPIC, message)
 
     def test_taiga_issue_changed_description(self) -> None:
-        message = (
-            "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) updated description of issue **New issue**."
-        )
+        message = "[TomaszKolek](https://tree.taiga.io/profile/kolaszek) updated description of issue **New issue**."
         self.send_and_test_stream_message("issue_changed_description", self.TOPIC, message)
 
     def test_taiga_issue_changed_type(self) -> None:

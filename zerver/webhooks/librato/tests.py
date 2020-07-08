@@ -43,7 +43,9 @@ class LibratoHookTests(WebhookTestCase):
 
     def test_alert_clear(self) -> None:
         expected_topic = "Alert Alert_name"
-        expected_message = "Alert [alert_name](https://metrics.librato.com/alerts#/6309313) has cleared at 2016-04-12 13:11:44 UTC!"
+        expected_message = (
+            "Alert [alert_name](https://metrics.librato.com/alerts#/6309313) has cleared at 2016-04-12 13:11:44 UTC!"
+        )
         self.send_and_test_stream_message(
             "alert_cleared", expected_topic, expected_message, content_type="application/x-www-form-urlencoded",
         )

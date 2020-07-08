@@ -175,13 +175,7 @@ def resize_gif(im: GifImageFile, size: int = DEFAULT_EMOJI_SIZE) -> bytes:
         duration_info.append(im.info["duration"])
     out = io.BytesIO()
     frames[0].save(
-        out,
-        save_all=True,
-        optimize=True,
-        format="GIF",
-        append_images=frames[1:],
-        duration=duration_info,
-        loop=loop,
+        out, save_all=True, optimize=True, format="GIF", append_images=frames[1:], duration=duration_info, loop=loop,
     )
     return out.getvalue()
 

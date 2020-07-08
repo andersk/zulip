@@ -1144,9 +1144,7 @@ class TestScriptMTA(ZulipTestCase):
         read_pipe, write_pipe = os.pipe()
         os.write(write_pipe, mail.encode())
         os.close(write_pipe)
-        subprocess.check_call(
-            [script, "-r", stream_to_address, "-s", settings.SHARED_SECRET, "-t"], stdin=read_pipe,
-        )
+        subprocess.check_call([script, "-r", stream_to_address, "-s", settings.SHARED_SECRET, "-t"], stdin=read_pipe)
 
     def test_error_no_recipient(self) -> None:
         script = os.path.join(os.path.dirname(__file__), "../../scripts/lib/email-mirror-postfix")
@@ -1334,9 +1332,7 @@ class TestEmailMirrorProcessMessageNoValidRecipient(ZulipTestCase):
 
         with mock.patch("zerver.lib.email_mirror.log_and_report") as mock_log_and_report:
             process_message(incoming_valid_message)
-            mock_log_and_report.assert_called_with(
-                incoming_valid_message, "Missing recipient in mirror email", None,
-            )
+            mock_log_and_report.assert_called_with(incoming_valid_message, "Missing recipient in mirror email", None)
 
 
 class TestEmailMirrorLogAndReport(ZulipTestCase):

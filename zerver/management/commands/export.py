@@ -81,11 +81,7 @@ class Command(ZulipBaseCommand):
 
     def add_arguments(self, parser: ArgumentParser) -> None:
         parser.add_argument(
-            "--output",
-            dest="output_dir",
-            action="store",
-            default=None,
-            help="Directory to write exported data to.",
+            "--output", dest="output_dir", action="store", default=None, help="Directory to write exported data to.",
         )
         parser.add_argument(
             "--threads",

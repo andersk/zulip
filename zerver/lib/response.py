@@ -30,9 +30,7 @@ def json_unauthorized(message: Optional[str] = None, www_authenticate: Optional[
 
 def json_method_not_allowed(methods: List[str]) -> HttpResponseNotAllowed:
     resp = HttpResponseNotAllowed(methods)
-    resp.content = ujson.dumps(
-        {"result": "error", "msg": "Method Not Allowed", "allowed_methods": methods},
-    ).encode()
+    resp.content = ujson.dumps({"result": "error", "msg": "Method Not Allowed", "allowed_methods": methods}).encode()
     return resp
 
 

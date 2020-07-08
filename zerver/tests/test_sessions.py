@@ -119,8 +119,6 @@ class TestExpirableSessionVars(ZulipTestCase):
     def test_get_var_is_not_expirable(self) -> None:
         self.session["test_get_var_is_not_expirable"] = 0
         with mock.patch("zerver.lib.sessions.logging.warning") as mock_warn:
-            value = get_expirable_session_var(
-                self.session, "test_get_var_is_not_expirable", default_value="default",
-            )
+            value = get_expirable_session_var(self.session, "test_get_var_is_not_expirable", default_value="default")
             self.assertEqual(value, "default")
             mock_warn.assert_called_once()

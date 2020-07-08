@@ -552,10 +552,7 @@ def get_messages(client: Client) -> None:
         "anchor": "newest",
         "num_before": 100,
         "num_after": 0,
-        "narrow": [
-            {"operator": "sender", "operand": "iago@zulip.com"},
-            {"operator": "stream", "operand": "Verona"},
-        ],
+        "narrow": [{"operator": "sender", "operand": "iago@zulip.com"}, {"operator": "stream", "operand": "Verona"}],
     }
     result = client.get_messages(request)
     # {code_example|end}

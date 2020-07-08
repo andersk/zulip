@@ -113,10 +113,7 @@ js_rules = RuleList(
             "description": "The module blueslip has no function warning, try using blueslip.warn",
         },
         {"pattern": r"i18n\.t\([^)]+[^,\{\)]$", "description": "i18n string should not be a multiline string"},
-        {
-            "pattern": r"""i18n\.t\(['"].+?['"]\s*\+""",
-            "description": "Do not concatenate arguments within i18n.t()",
-        },
+        {"pattern": r"""i18n\.t\(['"].+?['"]\s*\+""", "description": "Do not concatenate arguments within i18n.t()"},
         {
             "pattern": r"""i18n\.t\([a-zA-Z]""",
             "exclude": {"static/js/templates.js"},
@@ -593,9 +590,7 @@ html_rules: List["Rule"] = whitespace_rules + prose_style_rules + [
             ("templates/zerver/register.html", 'placeholder="Acme or Ακμή"'),
         },
         "exclude": {"templates/analytics/support.html"},
-        "good_lines": [
-            '<input class="stream-list-filter" type="text" placeholder="{{ _(\'Search streams\') }}" />',
-        ],
+        "good_lines": ['<input class="stream-list-filter" type="text" placeholder="{{ _(\'Search streams\') }}" />'],
         "bad_lines": ['<input placeholder="foo">'],
     },
     {
@@ -607,25 +602,19 @@ html_rules: List["Rule"] = whitespace_rules + prose_style_rules + [
     {
         "pattern": "placeholder='[^{]",
         "description": "`placeholder` value should be translatable.",
-        "good_lines": [
-            '<input class="stream-list-filter" type="text" placeholder="{{ _(\'Search streams\') }}" />',
-        ],
+        "good_lines": ['<input class="stream-list-filter" type="text" placeholder="{{ _(\'Search streams\') }}" />'],
         "bad_lines": ["<input placeholder='foo'>"],
     },
     {
         "pattern": "aria-label='[^{]",
         "description": "`aria-label` value should be translatable.",
-        "good_lines": [
-            '<button type="button" class="close close-alert-word-status" aria-label="{{t \'Close\' }}">',
-        ],
+        "good_lines": ['<button type="button" class="close close-alert-word-status" aria-label="{{t \'Close\' }}">'],
         "bad_lines": ["<button aria-label='foo'></button>"],
     },
     {
         "pattern": 'aria-label="[^{]',
         "description": "`aria-label` value should be translatable.",
-        "good_lines": [
-            '<button type="button" class="close close-alert-word-status" aria-label="{{t \'Close\' }}">',
-        ],
+        "good_lines": ['<button type="button" class="close close-alert-word-status" aria-label="{{t \'Close\' }}">'],
         "bad_lines": ['<button aria-label="foo"></button>'],
     },
     {
@@ -784,12 +773,7 @@ json_rules = RuleList(
         # exclude in whitespace_rules, since we only want to ignore
         # JSON files with tab-based whitespace, not webhook code).
         trailing_whitespace_rule,
-        {
-            "pattern": "\t",
-            "strip": "\n",
-            "exclude": {"zerver/webhooks/"},
-            "description": "Fix tab-based whitespace",
-        },
+        {"pattern": "\t", "strip": "\n", "exclude": {"zerver/webhooks/"}, "description": "Fix tab-based whitespace"},
         {
             "pattern": r'":["\[\{]',
             "exclude": {"zerver/webhooks/", "zerver/tests/fixtures/"},

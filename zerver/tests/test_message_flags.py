@@ -366,11 +366,7 @@ class PushNotificationMarkReadFlowsTest(ZulipTestCase):
         result = self.api_post(
             user_profile,
             "/api/v1/users/me/subscriptions/properties",
-            {
-                "subscription_data": ujson.dumps(
-                    [{"property": property_name, "value": True, "stream_id": stream.id}],
-                ),
-            },
+            {"subscription_data": ujson.dumps([{"property": property_name, "value": True, "stream_id": stream.id}])},
         )
         result = self.api_post(
             user_profile,
@@ -822,9 +818,7 @@ class MessageAccessTests(ZulipTestCase):
             self.send_stream_message(self.example_user("hamlet"), stream_name, "test_unused"),
         ]
         received_message_ids = [
-            self.send_personal_message(
-                self.example_user("hamlet"), self.example_user("cordelia"), "test_received",
-            ),
+            self.send_personal_message(self.example_user("hamlet"), self.example_user("cordelia"), "test_received"),
         ]
 
         # Now login as another user who wasn't on that stream

@@ -216,9 +216,7 @@ class TestRealmAuditLog(ZulipTestCase):
         user = self.example_user("hamlet")
         do_regenerate_api_key(user, user)
         self.assertEqual(
-            RealmAuditLog.objects.filter(
-                event_type=RealmAuditLog.USER_API_KEY_CHANGED, event_time__gte=now,
-            ).count(),
+            RealmAuditLog.objects.filter(event_type=RealmAuditLog.USER_API_KEY_CHANGED, event_time__gte=now).count(),
             1,
         )
         self.assertTrue(user.api_key)
@@ -233,11 +231,7 @@ class TestRealmAuditLog(ZulipTestCase):
         self.assertEqual(result, {})
 
         StreamCount.objects.create(
-            realm=realm,
-            stream=stream,
-            property="messages_in_stream:is_bot:day",
-            end_time=timezone_now(),
-            value=999,
+            realm=realm, stream=stream, property="messages_in_stream:is_bot:day", end_time=timezone_now(), value=999,
         )
 
         result = get_streams_traffic(stream_ids)

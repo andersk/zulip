@@ -349,9 +349,7 @@ def realm_user_count_by_role(realm: Realm) -> Dict[str, Any]:
         UserProfile.ROLE_GUEST: 0,
     }
     for value_dict in list(
-        UserProfile.objects.filter(realm=realm, is_bot=False, is_active=True)
-        .values("role")
-        .annotate(Count("role")),
+        UserProfile.objects.filter(realm=realm, is_bot=False, is_active=True).values("role").annotate(Count("role")),
     ):
         human_counts[value_dict["role"]] = value_dict["role__count"]
     bot_count = UserProfile.objects.filter(realm=realm, is_bot=True, is_active=True).count()
@@ -2084,9 +2082,7 @@ def recipient_for_user_profiles(
     allow_deactivated: bool = False,
 ) -> Recipient:
 
-    recipient_profiles = validate_recipient_user_profiles(
-        user_profiles, sender, allow_deactivated=allow_deactivated,
-    )
+    recipient_profiles = validate_recipient_user_profiles(user_profiles, sender, allow_deactivated=allow_deactivated)
 
     return get_recipient_from_user_profiles(
         recipient_profiles, forwarded_mirror_message, forwarder_user_profile, sender,
@@ -3094,9 +3090,7 @@ def get_available_notification_sounds() -> List[str]:
     return available_notification_sounds
 
 
-def notify_subscriptions_removed(
-    user_profile: UserProfile, streams: Iterable[Stream], no_log: bool = False,
-) -> None:
+def notify_subscriptions_removed(user_profile: UserProfile, streams: Iterable[Stream], no_log: bool = False) -> None:
     if not no_log:
         log_event(
             {
@@ -3398,9 +3392,7 @@ def do_change_bot_owner(user_profile: UserProfile, bot_owner: UserProfile, actin
     # Since `bot_owner_id` is included in the user profile dict we need
     # to update the users dict with the new bot owner id
     event: Dict[str, Any] = dict(
-        type="realm_user",
-        op="update",
-        person=dict(user_id=user_profile.id, bot_owner_id=user_profile.bot_owner.id),
+        type="realm_user", op="update", person=dict(user_id=user_profile.id, bot_owner_id=user_profile.bot_owner.id),
     )
     send_event(user_profile.realm, event, active_user_ids(user_profile.realm_id))
 
@@ -3542,10 +3534,7 @@ def do_change_logo_source(
         realm.save(update_fields=["night_logo_source", "night_logo_version"])
 
     RealmAuditLog.objects.create(
-        event_type=RealmAuditLog.REALM_LOGO_CHANGED,
-        realm=realm,
-        event_time=timezone_now(),
-        acting_user=acting_user,
+        event_type=RealmAuditLog.REALM_LOGO_CHANGED, realm=realm, event_time=timezone_now(), acting_user=acting_user,
     )
 
     event = dict(
@@ -3614,9 +3603,7 @@ def do_change_default_sending_stream(user_profile: UserProfile, stream: Optional
         send_event(
             user_profile.realm,
             dict(
-                type="realm_bot",
-                op="update",
-                bot=dict(user_id=user_profile.id, default_sending_stream=stream_name),
+                type="realm_bot", op="update", bot=dict(user_id=user_profile.id, default_sending_stream=stream_name),
             ),
             bot_owner_user_ids(user_profile),
         )
@@ -3792,9 +3779,7 @@ def do_rename_stream(stream: Stream, new_name: str, user_profile: UserProfile, l
         ["name", new_name],
     ]
     for property, value in data_updates:
-        event = dict(
-            op="update", type="stream", property=property, value=value, stream_id=stream.id, name=old_name,
-        )
+        event = dict(op="update", type="stream", property=property, value=value, stream_id=stream.id, name=old_name)
         send_event(stream.realm, event, can_access_stream_user_ids(stream))
     sender = get_system_bot(settings.NOTIFICATION_BOT)
     with override_language(stream.realm.default_language):
@@ -4453,11 +4438,7 @@ def do_update_message_flags(
             user_profile, COUNT_STATS["messages_read::hour"], None, event_time, increment=count,
         )
         do_increment_logging_stat(
-            user_profile,
-            COUNT_STATS["messages_read_interactions::hour"],
-            None,
-            event_time,
-            increment=min(1, count),
+            user_profile, COUNT_STATS["messages_read_interactions::hour"], None, event_time, increment=min(1, count),
         )
     return count
 
@@ -5285,9 +5266,7 @@ def filter_presence_idle_user_ids(user_ids: Set[int]) -> List[int]:
 
     recent = timezone_now() - datetime.timedelta(seconds=OFFLINE_THRESHOLD_SECS)
     rows = (
-        UserPresence.objects.filter(
-            user_profile_id__in=user_ids, status=UserPresence.ACTIVE, timestamp__gte=recent,
-        )
+        UserPresence.objects.filter(user_profile_id__in=user_ids, status=UserPresence.ACTIVE, timestamp__gte=recent)
         .exclude(client__name="ZulipMobile")
         .distinct("user_profile_id")
         .values("user_profile_id")
@@ -5343,9 +5322,7 @@ class InvitationError(JsonableError):
 def estimate_recent_invites(realms: Iterable[Realm], *, days: int) -> int:
     """An upper bound on the number of invites sent in the last `days` days"""
     recent_invites = RealmCount.objects.filter(
-        realm__in=realms,
-        property="invites_sent::day",
-        end_time__gte=timezone_now() - datetime.timedelta(days=days),
+        realm__in=realms, property="invites_sent::day", end_time__gte=timezone_now() - datetime.timedelta(days=days),
     ).aggregate(Sum("value"))["value__sum"]
     if recent_invites is None:
         return 0
@@ -5532,9 +5509,7 @@ def do_get_user_invites(user_profile: UserProfile) -> List[Dict[str, Any]]:
     return invites
 
 
-def do_create_multiuse_invite_link(
-    referred_by: UserProfile, invited_as: int, streams: Sequence[Stream] = [],
-) -> str:
+def do_create_multiuse_invite_link(referred_by: UserProfile, invited_as: int, streams: Sequence[Stream] = []) -> str:
     realm = referred_by.realm
     invite = MultiuseInvite.objects.create(realm=realm, referred_by=referred_by)
     if streams:
@@ -6138,9 +6113,7 @@ def get_service_dicts_for_bots(bot_dicts: List[Dict[str, Any]], realm: Realm) ->
     for service in Service.objects.filter(user_profile_id__in=bot_profile_ids):
         bot_services_by_uid[service.user_profile_id].append(service)
 
-    embedded_bot_ids = [
-        bot_dict["id"] for bot_dict in bot_dicts if bot_dict["bot_type"] == UserProfile.EMBEDDED_BOT
-    ]
+    embedded_bot_ids = [bot_dict["id"] for bot_dict in bot_dicts if bot_dict["bot_type"] == UserProfile.EMBEDDED_BOT]
     embedded_bot_configs = get_bot_configs(embedded_bot_ids)
 
     service_dicts_by_uid: Dict[int, List[Dict[str, Any]]] = {}
@@ -6198,8 +6171,7 @@ def do_send_user_group_members_update_event(event_name: str, user_group: UserGro
 
 def bulk_add_members_to_user_group(user_group: UserGroup, user_profiles: List[UserProfile]) -> None:
     memberships = [
-        UserGroupMembership(user_group_id=user_group.id, user_profile=user_profile)
-        for user_profile in user_profiles
+        UserGroupMembership(user_group_id=user_group.id, user_profile=user_profile) for user_profile in user_profiles
     ]
     UserGroupMembership.objects.bulk_create(memberships)
 

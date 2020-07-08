@@ -33,9 +33,7 @@ from django.conf import settings
 duplicate_commits_file = os.path.join(os.path.dirname(__file__), "duplicate_commits.json")
 
 parser = argparse.ArgumentParser()
-parser.add_argument(
-    "--max-retries", type=int, default=10, help="Number of times to retry fetching data from Github",
-)
+parser.add_argument("--max-retries", type=int, default=10, help="Number of times to retry fetching data from Github")
 args = parser.parse_args()
 
 

@@ -32,9 +32,7 @@ class Migration(migrations.Migration):
             model_name="subscription", name="is_muted", field=models.BooleanField(default=False, null=True),
         ),
         migrations.AlterField(
-            model_name="subscription",
-            name="push_notifications",
-            field=models.BooleanField(default=None, null=True),
+            model_name="subscription", name="push_notifications", field=models.BooleanField(default=None, null=True),
         ),
         migrations.AlterField(
             model_name="subscription",

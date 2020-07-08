@@ -897,9 +897,7 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
     re_map_foreign_keys(data, "zerver_userprofile", "bot_owner", related_table="user_profile")
     re_map_foreign_keys(data, "zerver_userprofile", "default_sending_stream", related_table="stream")
     re_map_foreign_keys(data, "zerver_userprofile", "default_events_register_stream", related_table="stream")
-    re_map_foreign_keys(
-        data, "zerver_userprofile", "last_active_message_id", related_table="message", id_field=True,
-    )
+    re_map_foreign_keys(data, "zerver_userprofile", "last_active_message_id", related_table="message", id_field=True)
     for user_profile_dict in data["zerver_userprofile"]:
         user_profile_dict["password"] = None
         user_profile_dict["api_key"] = generate_api_key()

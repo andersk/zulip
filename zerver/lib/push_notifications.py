@@ -518,9 +518,7 @@ def get_gcm_alert(message: Message) -> str:
         return f"New private group message from {sender_str}"
     elif message.recipient.type == Recipient.PERSONAL and message.trigger == "private_message":
         return f"New private message from {sender_str}"
-    elif message.is_stream_message() and (
-        message.trigger == "mentioned" or message.trigger == "wildcard_mentioned"
-    ):
+    elif message.is_stream_message() and (message.trigger == "mentioned" or message.trigger == "wildcard_mentioned"):
         return f"New mention from {sender_str}"
     else:  # message.is_stream_message() and message.trigger == 'stream_push_notify'
         return f"New stream message from {sender_str} in {get_display_recipient(message.recipient)}"

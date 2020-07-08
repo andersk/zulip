@@ -171,9 +171,7 @@ class HomepageForm(forms.Form):
 
         if realm is None:
             raise ValidationError(
-                _("The organization you are trying to " "join using {email} does not " "exist.").format(
-                    email=email,
-                ),
+                _("The organization you are trying to " "join using {email} does not " "exist.").format(email=email),
             )
 
         if not from_multiuse_invite and realm.invite_required:
@@ -386,11 +384,7 @@ class OurAuthenticationForm(AuthenticationForm):
             return_data: Dict[str, Any] = {}
             try:
                 self.user_cache = authenticate(
-                    request=self.request,
-                    username=username,
-                    password=password,
-                    realm=realm,
-                    return_data=return_data,
+                    request=self.request, username=username, password=password, realm=realm, return_data=return_data,
                 )
             except RateLimited as e:
                 secs_to_freedom = int(float(str(e)))

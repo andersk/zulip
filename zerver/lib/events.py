@@ -592,9 +592,7 @@ def apply_event(
 
             if event["property"] in policy_permission_dict.keys():
                 if policy_permission_dict[event["property"]] in state:
-                    state[policy_permission_dict[event["property"]]] = user_profile.has_permission(
-                        event["property"],
-                    )
+                    state[policy_permission_dict[event["property"]]] = user_profile.has_permission(event["property"])
 
         elif event["op"] == "update_dict":
             for key, value in event["data"].items():
@@ -712,9 +710,7 @@ def apply_event(
         if "raw_recent_private_conversations" not in state or event["message_type"] != "private":
             return
 
-        recipient_id = get_recent_conversations_recipient_id(
-            user_profile, event["recipient_id"], event["sender_id"],
-        )
+        recipient_id = get_recent_conversations_recipient_id(user_profile, event["recipient_id"], event["sender_id"])
 
         # Ideally, we'd have test coverage for these two blocks.  To
         # do that, we'll need a test where we delete not-the-latest

@@ -936,9 +936,7 @@ def fetch_usermessages(
     return user_message_chunk
 
 
-def export_usermessages_batch(
-    input_path: Path, output_path: Path, consent_message_id: Optional[int] = None,
-) -> None:
+def export_usermessages_batch(input_path: Path, output_path: Path, consent_message_id: Optional[int] = None) -> None:
     """As part of the system for doing parallel exports, this runs on one
     batch of Message objects and adds the corresponding UserMessage
     objects. (This is called by the export_usermessage_batch
@@ -1161,10 +1159,7 @@ def export_uploads_and_avatars(realm: Realm, output_dir: Path) -> None:
         export_files_from_s3(realm, settings.S3_AUTH_UPLOADS_BUCKET, output_dir=uploads_output_dir)
         export_files_from_s3(realm, settings.S3_AVATAR_BUCKET, output_dir=emoji_output_dir, processing_emoji=True)
         export_files_from_s3(
-            realm,
-            settings.S3_AVATAR_BUCKET,
-            output_dir=realm_icons_output_dir,
-            processing_realm_icon_and_logo=True,
+            realm, settings.S3_AVATAR_BUCKET, output_dir=realm_icons_output_dir, processing_realm_icon_and_logo=True,
         )
 
 
@@ -1702,9 +1697,9 @@ def export_messages_single_user(
     min_id = -1
     dump_file_id = 1
     while True:
-        actual_query = user_message_query.select_related("message", "message__sending_client").filter(
-            id__gt=min_id,
-        )[0:chunk_size]
+        actual_query = user_message_query.select_related("message", "message__sending_client").filter(id__gt=min_id)[
+            0:chunk_size
+        ]
         user_message_chunk = [um for um in actual_query]
         user_message_ids = {um.id for um in user_message_chunk}
 

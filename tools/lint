@@ -95,11 +95,7 @@ def run() -> None:
     if args.force:
         command.append("--force")
     linter_config.external_linter(
-        "mypy",
-        command,
-        ["py"],
-        pass_targets=False,
-        description="Static type checker for Python (config: mypy.ini)",
+        "mypy", command, ["py"], pass_targets=False, description="Static type checker for Python (config: mypy.ini)",
     )
     linter_config.external_linter(
         "tsc",

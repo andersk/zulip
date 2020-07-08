@@ -336,9 +336,7 @@ def do_pull_by_sql_query(
 def sql_data_collector(
     output_table: Type[BaseCount], query: QueryFn, group_by: Optional[Tuple[models.Model, str]],
 ) -> DataCollector:
-    def pull_function(
-        property: str, start_time: datetime, end_time: datetime, realm: Optional[Realm] = None,
-    ) -> int:
+    def pull_function(property: str, start_time: datetime, end_time: datetime, realm: Optional[Realm] = None) -> int:
         # The pull function type needs to accept a Realm argument
         # because the 'minutes_active::day' CountStat uses
         # DataCollector directly for do_pull_minutes_active, which

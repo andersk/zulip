@@ -11,9 +11,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name="confirmation",
-            name="confirmation_key",
-            field=models.CharField(db_index=True, max_length=40),
+            model_name="confirmation", name="confirmation_key", field=models.CharField(db_index=True, max_length=40),
         ),
         migrations.AlterField(
             model_name="confirmation", name="date_sent", field=models.DateTimeField(db_index=True),

@@ -733,9 +733,7 @@ def get_active_realm_emoji_uncached(realm: Realm) -> Dict[str, Dict[str, Any]]:
 def flush_realm_emoji(sender: Any, **kwargs: Any) -> None:
     realm = kwargs["instance"].realm
     cache_set(get_realm_emoji_cache_key(realm), get_realm_emoji_uncached(realm), timeout=3600 * 24 * 7)
-    cache_set(
-        get_active_realm_emoji_cache_key(realm), get_active_realm_emoji_uncached(realm), timeout=3600 * 24 * 7,
-    )
+    cache_set(get_active_realm_emoji_cache_key(realm), get_active_realm_emoji_uncached(realm), timeout=3600 * 24 * 7)
 
 
 post_save.connect(flush_realm_emoji, sender=RealmEmoji)
@@ -1116,11 +1114,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     TUTORIAL_WAITING = "W"
     TUTORIAL_STARTED = "S"
     TUTORIAL_FINISHED = "F"
-    TUTORIAL_STATES = (
-        (TUTORIAL_WAITING, "Waiting"),
-        (TUTORIAL_STARTED, "Started"),
-        (TUTORIAL_FINISHED, "Finished"),
-    )
+    TUTORIAL_STATES = ((TUTORIAL_WAITING, "Waiting"), (TUTORIAL_STARTED, "Started"), (TUTORIAL_FINISHED, "Finished"))
     tutorial_status: str = models.CharField(default=TUTORIAL_WAITING, choices=TUTORIAL_STATES, max_length=1)
 
     # Contains serialized JSON of the form:
@@ -1648,9 +1642,7 @@ class MutedTopic(models.Model):
         unique_together = ("user_profile", "stream", "topic_name")
 
     def __str__(self) -> str:
-        return (
-            f"<MutedTopic: ({self.user_profile.email}, {self.stream.name}, {self.topic_name}, {self.date_muted})>"
-        )
+        return f"<MutedTopic: ({self.user_profile.email}, {self.stream.name}, {self.topic_name}, {self.date_muted})>"
 
 
 class Client(models.Model):

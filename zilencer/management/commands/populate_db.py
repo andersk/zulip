@@ -178,11 +178,7 @@ class Command(BaseCommand):
         )
 
         parser.add_argument(
-            "--max-topics",
-            dest="max_topics",
-            type=int,
-            default=None,
-            help="The number of maximum topics to create",
+            "--max-topics", dest="max_topics", type=int, default=None, help="The number of maximum topics to create",
         )
 
         parser.add_argument(
@@ -190,11 +186,7 @@ class Command(BaseCommand):
         )
 
         parser.add_argument(
-            "--personals",
-            dest="num_personals",
-            type=int,
-            default=6,
-            help="The number of personal pairs to create.",
+            "--personals", dest="num_personals", type=int, default=6, help="The number of personal pairs to create.",
         )
 
         parser.add_argument("--threads", dest="threads", type=int, default=1, help="The number of threads to use.")

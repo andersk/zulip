@@ -772,9 +772,7 @@ class FileUploadTest(UploadSerializeMixin, ZulipTestCase):
                 response = self.client_get(uri)
                 _get_sendfile.cache_clear()
                 test_run, worker = os.path.split(os.path.dirname(settings.LOCAL_UPLOADS_DIR))
-                self.assertEqual(
-                    response["X-Accel-Redirect"], "/serve_uploads/" + fp_path + "/" + name_str_for_test,
-                )
+                self.assertEqual(response["X-Accel-Redirect"], "/serve_uploads/" + fp_path + "/" + name_str_for_test)
                 if content_disposition != "":
                     self.assertIn("attachment;", response["Content-disposition"])
                     self.assertIn(content_disposition, response["Content-disposition"])
@@ -1856,9 +1854,7 @@ class S3Test(ZulipTestCase):
         result = re.search(re.compile(r"([0-9a-fA-F]{32})"), uri)
         if result is not None:
             hex_value = result.group(1)
-        expected_url = (
-            f"https://{bucket.name}.s3.amazonaws.com/exports/{hex_value}/{os.path.basename(tarball_path)}"
-        )
+        expected_url = f"https://{bucket.name}.s3.amazonaws.com/exports/{hex_value}/{os.path.basename(tarball_path)}"
         self.assertEqual(uri, expected_url)
 
         # Delete the tarball.

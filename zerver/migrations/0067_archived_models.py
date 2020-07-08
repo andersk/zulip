@@ -42,10 +42,7 @@ class Migration(migrations.Migration):
                 ("has_image", models.BooleanField(db_index=True, default=False)),
                 ("has_link", models.BooleanField(db_index=True, default=False)),
                 ("archive_timestamp", models.DateTimeField(db_index=True, default=django.utils.timezone.now)),
-                (
-                    "recipient",
-                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Recipient"),
-                ),
+                ("recipient", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="zerver.Recipient")),
                 (
                     "sender",
                     models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),

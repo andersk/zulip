@@ -261,8 +261,7 @@ def get_usermentions(
                 gitter_mention = "@{}".format(mention["screenName"])
                 if mention["screenName"] not in user_short_name_to_full_name:
                     logging.info(
-                        "Mentioned user %s never sent any messages, so has no full name data",
-                        mention["screenName"],
+                        "Mentioned user %s never sent any messages, so has no full name data", mention["screenName"],
                     )
                     full_name = mention["screenName"]
                 else:

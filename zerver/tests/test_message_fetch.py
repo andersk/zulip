@@ -136,11 +136,7 @@ class NarrowBuilderTest(ZulipTestCase):
         # Add new streams
         stream_dicts: List[Mapping[str, Any]] = [
             {"name": "publicstream", "description": "Public stream with public history"},
-            {
-                "name": "privatestream",
-                "description": "Private stream with non-public history",
-                "invite_only": True,
-            },
+            {"name": "privatestream", "description": "Private stream with non-public history", "invite_only": True},
             {
                 "name": "privatewithhistory",
                 "description": "Private stream with public history",
@@ -169,11 +165,7 @@ class NarrowBuilderTest(ZulipTestCase):
         # Add new streams
         stream_dicts: List[Mapping[str, Any]] = [
             {"name": "publicstream", "description": "Public stream with public history"},
-            {
-                "name": "privatestream",
-                "description": "Private stream with non-public history",
-                "invite_only": True,
-            },
+            {"name": "privatestream", "description": "Private stream with non-public history", "invite_only": True},
             {
                 "name": "privatewithhistory",
                 "description": "Private stream with public history",
@@ -282,9 +274,7 @@ class NarrowBuilderTest(ZulipTestCase):
 
     def test_add_term_using_pm_with_operator_the_same_user_as_operand_and_negated(self) -> None:  # NEGATED
         term = dict(operator="pm-with", operand=self.hamlet_email, negated=True)
-        self._do_add_term_test(
-            term, "WHERE NOT (sender_id = %(sender_id_1)s AND recipient_id = %(recipient_id_1)s)",
-        )
+        self._do_add_term_test(term, "WHERE NOT (sender_id = %(sender_id_1)s AND recipient_id = %(recipient_id_1)s)")
 
     def test_add_term_using_pm_with_operator_and_self_and_user_as_operand(self) -> None:
         myself_and_other = ",".join([self.example_user("hamlet").email, self.example_user("othello").email])
@@ -1287,8 +1277,7 @@ class GetOldMessagesTest(ZulipTestCase):
         query_ids["othello_recipient"] = othello_user.recipient_id
         recipients = (
             Recipient.objects.filter(
-                type=Recipient.STREAM,
-                type_id__in=Stream.objects.filter(realm=hamlet_user.realm, invite_only=False),
+                type=Recipient.STREAM, type_id__in=Stream.objects.filter(realm=hamlet_user.realm, invite_only=False),
             )
             .values("id")
             .order_by("id")
@@ -2987,9 +2976,7 @@ WHERE user_profile_id = {hamlet_id} AND (content ILIKE '%jumping%' OR subject IL
             dict(operator="sender", operand=cordelia.email),
             dict(operator="search", operand="othello"),
         ]
-        result = self.get_and_check_messages(
-            dict(narrow=ujson.dumps(narrow), anchor=next_message_id, num_after=10),
-        )
+        result = self.get_and_check_messages(dict(narrow=ujson.dumps(narrow), anchor=next_message_id, num_after=10))
         self.assertEqual(len(result["messages"]), 1)
         messages = result["messages"]
 

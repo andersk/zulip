@@ -26,9 +26,7 @@ class TestBasics(ZulipTestCase):
             msg_type="whatever", content="stuff1", message_id=message_id, sender=cordelia,
         )
 
-        sm2 = SubMessage.objects.create(
-            msg_type="whatever", content="stuff2", message_id=message_id, sender=hamlet,
-        )
+        sm2 = SubMessage.objects.create(msg_type="whatever", content="stuff2", message_id=message_id, sender=hamlet)
 
         expected_data = [
             dict(id=sm1.id, message_id=message_id, sender_id=cordelia.id, msg_type="whatever", content="stuff1"),

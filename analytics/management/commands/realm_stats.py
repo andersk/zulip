@@ -160,9 +160,7 @@ class Command(BaseCommand):
                 .values("user_profile")
                 .annotate(count=Count("user_profile"))
             )
-            print(
-                "{} users have starred {} messages".format(len(starrers), sum([elt["count"] for elt in starrers])),
-            )
+            print("{} users have starred {} messages".format(len(starrers), sum([elt["count"] for elt in starrers])))
 
             active_user_subs = Subscription.objects.filter(user_profile__in=user_profiles, active=True)
 

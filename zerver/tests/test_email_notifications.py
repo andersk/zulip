@@ -577,9 +577,7 @@ class TestMissedMessages(ZulipTestCase):
 
     def test_message_content_disabled_in_missed_message_notifications(self) -> None:
         # Test when user disabled message content in email notifications.
-        do_change_notification_settings(
-            self.example_user("hamlet"), "message_content_in_email_notifications", False,
-        )
+        do_change_notification_settings(self.example_user("hamlet"), "message_content_in_email_notifications", False)
         self._extra_context_in_missed_stream_messages_mention(False, show_message_content=False)
         mail.outbox = []
         self._extra_context_in_missed_stream_messages_wildcard_mention(False, show_message_content=False)

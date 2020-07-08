@@ -159,9 +159,7 @@ def get_conversation_admin_reply_message(payload: Dict[str, Any], action: str) -
     user = payload["data"]["item"]["user"]
     note = payload["data"]["item"]["conversation_parts"]["conversation_parts"][0]
     content = strip_tags(note["body"])
-    body = CONVERSATION_ADMIN_REPLY_TEMPLATE.format(
-        admin_name=assignee.get("name"), action=action, content=content,
-    )
+    body = CONVERSATION_ADMIN_REPLY_TEMPLATE.format(admin_name=assignee.get("name"), action=action, content=content)
     topic = get_topic_for_contacts(user)
     return (topic, body)
 

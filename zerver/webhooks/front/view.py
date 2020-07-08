@@ -48,9 +48,7 @@ def get_outbound_message_body(payload: Dict[str, Any]) -> str:
 
 def get_outbound_reply_body(payload: Dict[str, Any]) -> str:
     link, outbox, inbox, subject = get_message_data(payload)
-    return "[Outbound reply]({link}) from **{inbox}** to **{outbox}**.".format(
-        link=link, inbox=inbox, outbox=outbox,
-    )
+    return "[Outbound reply]({link}) from **{inbox}** to **{outbox}**.".format(link=link, inbox=inbox, outbox=outbox)
 
 
 def get_comment_body(payload: Dict[str, Any]) -> str:

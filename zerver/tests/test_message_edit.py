@@ -105,9 +105,7 @@ class EditMessageTest(ZulipTestCase):
         msg_id = self.send_stream_message(
             self.example_user("hamlet"), "Scotland", topic_name="editing", content="before edit",
         )
-        result = self.client_patch(
-            "/json/messages/" + str(msg_id), {"message_id": msg_id, "content": "after edit"},
-        )
+        result = self.client_patch("/json/messages/" + str(msg_id), {"message_id": msg_id, "content": "after edit"})
         self.assert_json_success(result)
         self.check_message(msg_id, topic_name="editing", content="after edit")
 
@@ -649,10 +647,7 @@ class EditMessageTest(ZulipTestCase):
         message = Message.objects.get(id=message_id)
 
         def do_update_message_topic_success(
-            user_profile: UserProfile,
-            message: Message,
-            topic_name: str,
-            users_to_be_notified: List[Dict[str, Any]],
+            user_profile: UserProfile, message: Message, topic_name: str, users_to_be_notified: List[Dict[str, Any]],
         ) -> None:
             do_update_message(
                 user_profile=user_profile,
@@ -993,14 +988,11 @@ class EditMessageTest(ZulipTestCase):
             has_message_access(non_guest_user, Message.objects.get(id=msg_id_to_test_acesss), None), True,
         )
         self.assertEqual(
-            UserMessage.objects.filter(
-                user_profile_id=non_guest_user.id, message_id=msg_id_to_test_acesss,
-            ).count(),
+            UserMessage.objects.filter(user_profile_id=non_guest_user.id, message_id=msg_id_to_test_acesss).count(),
             0,
         )
         self.assertEqual(
-            has_message_access(self.example_user("iago"), Message.objects.get(id=msg_id_to_test_acesss), None),
-            True,
+            has_message_access(self.example_user("iago"), Message.objects.get(id=msg_id_to_test_acesss), None), True,
         )
 
     def test_no_notify_move_message_to_stream(self) -> None:

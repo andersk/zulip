@@ -25,9 +25,7 @@ class RedisUtilsTest(ZulipTestCase):
             "a": 1,
             "b": "some value",
         }
-        key = put_dict_in_redis(
-            self.redis_client, self.key_format, data, expiration_seconds=self.expiration_seconds,
-        )
+        key = put_dict_in_redis(self.redis_client, self.key_format, data, expiration_seconds=self.expiration_seconds)
         retrieved_data = get_dict_from_redis(self.redis_client, self.key_format, key)
         self.assertEqual(data, retrieved_data)
 

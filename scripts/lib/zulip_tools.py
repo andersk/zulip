@@ -321,9 +321,7 @@ def purge_unused_caches(
     caches_to_purge = get_caches_to_be_purged(caches_dir, caches_in_use, args.threshold_days)
     caches_to_keep = all_caches - caches_to_purge
 
-    may_be_perform_purging(
-        caches_to_purge, caches_to_keep, cache_type, args.dry_run, args.verbose, args.no_headings,
-    )
+    may_be_perform_purging(caches_to_purge, caches_to_keep, cache_type, args.dry_run, args.verbose, args.no_headings)
     if args.verbose:
         print("Done!")
 

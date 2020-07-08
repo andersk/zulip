@@ -390,10 +390,7 @@ def process_raw_message_batch(
         )
 
     zerver_usermessage = make_user_messages(
-        zerver_message=zerver_message,
-        subscriber_map=subscriber_map,
-        is_pm_data=is_pm_data,
-        mention_map=mention_map,
+        zerver_message=zerver_message, subscriber_map=subscriber_map, is_pm_data=is_pm_data, mention_map=mention_map,
     )
 
     message_json = dict(zerver_message=zerver_message, zerver_usermessage=zerver_usermessage)
@@ -626,9 +623,7 @@ def write_emoticon_data(
     create_converted_data_files(emoji_records, output_dir, "/emoji/records.json")
 
     realmemoji = [
-        build_realm_emoji(
-            realm_id=realm_id, name=rec["name"], id=NEXT_ID("realmemoji"), file_name=rec["file_name"],
-        )
+        build_realm_emoji(realm_id=realm_id, name=rec["name"], id=NEXT_ID("realmemoji"), file_name=rec["file_name"])
         for rec in emoji_records
     ]
     logging.info("Done processing emoticons")

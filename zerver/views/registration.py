@@ -563,9 +563,7 @@ def create_realm(request: HttpRequest, creation_key: Optional[str] = None) -> Ht
             return HttpResponseRedirect(reverse("new_realm_send_confirm", kwargs={"email": email}))
     else:
         form = RealmCreationForm()
-    return render(
-        request, "zerver/create_realm.html", context={"form": form, "current_url": request.get_full_path},
-    )
+    return render(request, "zerver/create_realm.html", context={"form": form, "current_url": request.get_full_path})
 
 
 def accounts_home(

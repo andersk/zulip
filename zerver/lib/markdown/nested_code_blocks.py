@@ -55,9 +55,7 @@ class NestedCodeBlocksRendererTreeProcessor(markdown.treeprocessors.Treeprocesso
         pre.text = code_block_text
         return div
 
-    def replace_element(
-        self, parent: Optional[Element], replacement: Element, element_to_replace: Element,
-    ) -> None:
+    def replace_element(self, parent: Optional[Element], replacement: Element, element_to_replace: Element) -> None:
         if parent is None:
             return
 

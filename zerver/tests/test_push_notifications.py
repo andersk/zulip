@@ -140,9 +140,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
         realm.string_id = ""
         realm.save()
 
-        result = self.api_post(
-            hamlet, endpoint, dict(user_id=15, token=token, token_kind=token_kind), subdomain="",
-        )
+        result = self.api_post(hamlet, endpoint, dict(user_id=15, token=token, token_kind=token_kind), subdomain="")
         self.assert_json_error(result, "Must validate with valid Zulip server API key")
 
     def test_register_remote_push_user_paramas(self) -> None:
@@ -176,10 +174,7 @@ class PushBouncerNotificationTest(BouncerTestCase):
         self.assert_json_error(result, "Must validate with valid Zulip server API key")
 
         result = self.uuid_post(
-            self.server_uuid,
-            endpoint,
-            dict(user_id=user_id, token_kind=token_kind, token=token),
-            subdomain="zulip",
+            self.server_uuid, endpoint, dict(user_id=user_id, token_kind=token_kind, token=token), subdomain="zulip",
         )
         self.assert_json_error(result, "Invalid subdomain for push notifications bouncer", status_code=401)
 
@@ -939,9 +934,7 @@ class HandlePushNotificationTest(PushNotificationTest):
         self.setup_gcm_tokens()
         message = self.get_message(Recipient.PERSONAL, type_id=1)
         UserMessage.objects.create(
-            user_profile=self.user_profile,
-            message=message,
-            flags=UserMessage.flags.active_mobile_push_notification,
+            user_profile=self.user_profile, message=message, flags=UserMessage.flags.active_mobile_push_notification,
         )
 
         android_devices = list(PushDeviceToken.objects.filter(user=self.user_profile, kind=PushDeviceToken.GCM))
@@ -1174,9 +1167,7 @@ class TestAPNs(PushNotificationTest):
     def test_apns_badge_count(self, mock_push_notifications: mock.MagicMock) -> None:
         user_profile = self.example_user("othello")
         # Test APNs badge count for personal messages.
-        message_ids = [
-            self.send_personal_message(self.sender, user_profile, "Content of message") for i in range(3)
-        ]
+        message_ids = [self.send_personal_message(self.sender, user_profile, "Content of message") for i in range(3)]
         self.assertEqual(get_apns_badge_count(user_profile), 3)
         # Similarly, test APNs badge count for stream mention.
         stream = self.subscribe(user_profile, "Denmark")

@@ -161,9 +161,7 @@ class GithubWebhookTest(WebhookTestCase):
         self.send_and_test_stream_message("membership", self.EXPECTED_TOPIC_ORGANIZATION_EVENTS, expected_message)
 
     def test_membership_removal_msg(self) -> None:
-        expected_message = (
-            "baxterthehacker removed [kdaigle](https://github.com/kdaigle) from the Contractors team."
-        )
+        expected_message = "baxterthehacker removed [kdaigle](https://github.com/kdaigle) from the Contractors team."
         self.send_and_test_stream_message(
             "membership__removal", self.EXPECTED_TOPIC_ORGANIZATION_EVENTS, expected_message,
         )
@@ -326,9 +324,7 @@ class GithubWebhookTest(WebhookTestCase):
     def test_pull_request__review_requested_team_reviewer_msg(self) -> None:
         expected_message = "**singhsourabh** requested [shreyaskargit](https://github.com/shreyaskargit), [bajaj99prashant](https://github.com/bajaj99prashant), [review-team](https://github.com/orgs/test-org965/teams/review-team), [authority](https://github.com/orgs/test-org965/teams/authority) and [management](https://github.com/orgs/test-org965/teams/management) for a review on [PR #4](https://github.com/test-org965/webhook-test/pull/4)."
         self.send_and_test_stream_message(
-            "pull_request__review_requested_team_reviewer",
-            "webhook-test / PR #4 testing webhook",
-            expected_message,
+            "pull_request__review_requested_team_reviewer", "webhook-test / PR #4 testing webhook", expected_message,
         )
 
     def test_pull_request_review_requested_with_custom_topic_in_url(self) -> None:
@@ -440,10 +436,7 @@ A temporary team so that I can get some webhook fixtures!
         self.url = self.build_webhook_url()
         payload = self.get_body("repository_vulnerability_alert")
         result = self.client_post(
-            self.url,
-            payload,
-            HTTP_X_GITHUB_EVENT="repository_vulnerability_alert",
-            content_type="application/json",
+            self.url, payload, HTTP_X_GITHUB_EVENT="repository_vulnerability_alert", content_type="application/json",
         )
         self.assertFalse(check_send_webhook_message_mock.called)
         self.assert_json_success(result)

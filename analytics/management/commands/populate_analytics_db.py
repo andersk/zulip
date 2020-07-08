@@ -99,9 +99,7 @@ class Command(BaseCommand):
         def insert_fixture_data(
             stat: CountStat, fixture_data: Mapping[Optional[str], List[int]], table: Type[BaseCount],
         ) -> None:
-            end_times = time_range(
-                last_end_time, last_end_time, stat.frequency, len(list(fixture_data.values())[0]),
-            )
+            end_times = time_range(last_end_time, last_end_time, stat.frequency, len(list(fixture_data.values())[0]))
             if table == InstallationCount:
                 id_args: Dict[str, Any] = {}
             if table == RealmCount:

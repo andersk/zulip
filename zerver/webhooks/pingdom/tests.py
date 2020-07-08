@@ -17,7 +17,9 @@ class PingdomHookTests(WebhookTestCase):
         """
         Tests if pingdom smtp check from up to down is handled correctly
         """
-        expected_message = "Service smtp.someurl.com changed its SMTP status from UP to DOWN:\n\n``` quote\nConnection refused\n```"
+        expected_message = (
+            "Service smtp.someurl.com changed its SMTP status from UP to DOWN:\n\n``` quote\nConnection refused\n```"
+        )
         self.send_and_test_stream_message("smtp_up_to_down", "SMTP check status.", expected_message)
 
     def test_pingdom_from_up_to_down_imap_check_message(self) -> None:

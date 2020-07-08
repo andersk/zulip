@@ -128,8 +128,7 @@ Job: [#2722 System - Updates - Ubuntu](http://awx.example.co.uk/#/jobs/playbook/
         """
         expected_topic = "shell: uname -r"
         expected_message = (
-            "AdHoc Command: [#2726 shell: uname -r]"
-            "(http://awx.example.co.uk/#/jobs/command/2726) was successful."
+            "AdHoc Command: [#2726 shell: uname -r]" "(http://awx.example.co.uk/#/jobs/command/2726) was successful."
         )
 
         self.send_and_test_stream_message("adhoc_command_successful", expected_topic, expected_message)
@@ -151,8 +150,7 @@ Job: [#2722 System - Updates - Ubuntu](http://awx.example.co.uk/#/jobs/playbook/
         """
         expected_topic = "Cleanup Job Details"
         expected_message = (
-            "System Job: [#2721 Cleanup Job Details]"
-            "(http://awx.example.co.uk/#/jobs/system/2721) was successful."
+            "System Job: [#2721 Cleanup Job Details]" "(http://awx.example.co.uk/#/jobs/system/2721) was successful."
         )
 
         self.send_and_test_stream_message("system_job_successful", expected_topic, expected_message)

@@ -53,9 +53,7 @@ def get_user_groups(user_profile: UserProfile) -> List[UserGroup]:
 
 
 def check_add_user_to_user_group(user_profile: UserProfile, user_group: UserGroup) -> bool:
-    member_obj, created = UserGroupMembership.objects.get_or_create(
-        user_group=user_group, user_profile=user_profile,
-    )
+    member_obj, created = UserGroupMembership.objects.get_or_create(user_group=user_group, user_profile=user_profile)
     return created
 
 

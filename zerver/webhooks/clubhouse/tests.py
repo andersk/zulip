@@ -10,7 +10,9 @@ class ClubhouseWebhookTest(WebhookTestCase):
     FIXTURE_DIR_NAME = "clubhouse"
 
     def test_story_create(self) -> None:
-        expected_message = "New story [Add cool feature!](https://app.clubhouse.io/zulip/story/11) of type **feature** was created."
+        expected_message = (
+            "New story [Add cool feature!](https://app.clubhouse.io/zulip/story/11) of type **feature** was created."
+        )
         self.send_and_test_stream_message(
             "story_create", "Add cool feature!", expected_message,
         )

@@ -520,11 +520,7 @@ def zulip_login_required(
 ) -> Union[Callable[[ViewFuncT], ViewFuncT], ViewFuncT]:
     actual_decorator = lambda function: user_passes_test(
         logged_in_and_active, login_url=login_url, redirect_field_name=redirect_field_name,
-    )(
-        zulip_otp_required(redirect_field_name=redirect_field_name, login_url=login_url)(
-            add_logging_data(function),
-        ),
-    )
+    )(zulip_otp_required(redirect_field_name=redirect_field_name, login_url=login_url)(add_logging_data(function)))
 
     if function:
         return actual_decorator(function)

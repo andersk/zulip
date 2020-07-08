@@ -21,11 +21,7 @@ class Command(ZulipBaseCommand):
     def add_arguments(self, parser: ArgumentParser) -> None:
         parser.add_argument("email", metavar="<email>", type=str, help="email of user to export")
         parser.add_argument(
-            "--output",
-            dest="output_dir",
-            action="store",
-            default=None,
-            help="Directory to write exported data to.",
+            "--output", dest="output_dir", action="store", default=None, help="Directory to write exported data to.",
         )
         self.add_realm_args(parser)
 

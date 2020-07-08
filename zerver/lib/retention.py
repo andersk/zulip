@@ -209,9 +209,7 @@ def move_expired_messages_to_archive_by_recipient(
     )
 
 
-def move_expired_personal_and_huddle_messages_to_archive(
-    realm: Realm, chunk_size: int = MESSAGE_BATCH_SIZE,
-) -> int:
+def move_expired_personal_and_huddle_messages_to_archive(realm: Realm, chunk_size: int = MESSAGE_BATCH_SIZE) -> int:
     message_retention_days = realm.message_retention_days
     assert message_retention_days != -1
     check_date = timezone_now() - timedelta(days=message_retention_days)

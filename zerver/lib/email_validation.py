@@ -126,9 +126,7 @@ def get_existing_user_errors(
 
     errors: Dict[str, Tuple[str, bool]] = {}
 
-    users = get_users_by_delivery_email(emails, target_realm).only(
-        "delivery_email", "is_active", "is_mirror_dummy",
-    )
+    users = get_users_by_delivery_email(emails, target_realm).only("delivery_email", "is_active", "is_mirror_dummy")
 
     """
     A note on casing: We will preserve the casing used by

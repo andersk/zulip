@@ -13,8 +13,6 @@ class Migration(migrations.Migration):
             model_name="userprofile", name="last_active_message_id", field=models.IntegerField(null=True),
         ),
         migrations.AddField(
-            model_name="userprofile",
-            name="long_term_idle",
-            field=models.BooleanField(db_index=True, default=False),
+            model_name="userprofile", name="long_term_idle", field=models.BooleanField(db_index=True, default=False),
         ),
     ]

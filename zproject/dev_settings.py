@@ -123,9 +123,7 @@ if FAKE_LDAP_MODE:
     # prod_settings_template.py and on ReadTheDocs.
     LDAP_APPEND_DOMAIN = None
     AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=users,dc=zulip,dc=com", ldap.SCOPE_ONELEVEL, "(uid=%(user)s)")
-    AUTH_LDAP_REVERSE_EMAIL_SEARCH = LDAPSearch(
-        "ou=users,dc=zulip,dc=com", ldap.SCOPE_ONELEVEL, "(email=%(email)s)",
-    )
+    AUTH_LDAP_REVERSE_EMAIL_SEARCH = LDAPSearch("ou=users,dc=zulip,dc=com", ldap.SCOPE_ONELEVEL, "(email=%(email)s)")
 
     if FAKE_LDAP_MODE == "a":
         AUTH_LDAP_REVERSE_EMAIL_SEARCH = LDAPSearch(

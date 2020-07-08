@@ -1144,9 +1144,7 @@ class InviteUserTest(InviteUserBase):
         # The first, from notification-bot to the user who invited the new user.
         second_msg = last_3_messages[1]
         self.assertEqual(second_msg.sender.email, "notification-bot@zulip.com")
-        self.assertTrue(
-            second_msg.content.startswith(f"alice_zulip.com <`{invitee_profile.email}`> accepted your"),
-        )
+        self.assertTrue(second_msg.content.startswith(f"alice_zulip.com <`{invitee_profile.email}`> accepted your"))
 
         # The second, from welcome-bot to the user who was invited.
         third_msg = last_3_messages[2]
@@ -1305,9 +1303,7 @@ so we didn't send them an invitation. We did send invitations to everyone else!"
 
         # We only created accounts for the new users.
         for email in existing:
-            self.assertRaises(
-                PreregistrationUser.DoesNotExist, lambda: PreregistrationUser.objects.get(email=email),
-            )
+            self.assertRaises(PreregistrationUser.DoesNotExist, lambda: PreregistrationUser.objects.get(email=email))
         for email in new:
             self.assertTrue(PreregistrationUser.objects.get(email=email))
 
@@ -1603,12 +1599,7 @@ so we didn't send them an invitation. We did send invitations to everyone else!"
         self.assertEqual(len(invites), 3)
 
         do_create_user(
-            "foo@zulip.com",
-            "password",
-            self.user_profile.realm,
-            "full name",
-            "short name",
-            prereg_user=prereg_user,
+            "foo@zulip.com", "password", self.user_profile.realm, "full name", "short name", prereg_user=prereg_user,
         )
 
         accepted_invite = PreregistrationUser.objects.filter(
@@ -2288,9 +2279,7 @@ class EmailUnsubscribeTests(ZulipTestCase):
             "new_streams": {"plain": []},
             "unsubscribe_link": "",
         }
-        send_future_email(
-            "zerver/emails/digest", user_profile.realm, to_user_ids=[user_profile.id], context=context,
-        )
+        send_future_email("zerver/emails/digest", user_profile.realm, to_user_ids=[user_profile.id], context=context)
 
         self.assertEqual(1, ScheduledEmail.objects.filter(users=user_profile).count())
 
@@ -2532,9 +2521,7 @@ class RealmCreationTest(ZulipTestCase):
             "zephyr": "unavailable",
         }
         for string_id, error_msg in errors.items():
-            result = self.submit_reg_form_for_user(
-                email, password, realm_subdomain=string_id, realm_name=realm_name,
-            )
+            result = self.submit_reg_form_for_user(email, password, realm_subdomain=string_id, realm_name=realm_name)
             self.assert_in_response(error_msg, result)
 
         # test valid subdomain
@@ -4370,11 +4357,7 @@ class TwoFactorAuthTest(ZulipTestCase):
             TWO_FACTOR_AUTHENTICATION_ENABLED=True,
         ):
 
-            first_step_data = {
-                "username": email,
-                "password": password,
-                "two_factor_login_view-current_step": "auth",
-            }
+            first_step_data = {"username": email, "password": password, "two_factor_login_view-current_step": "auth"}
             result = self.client_post("/accounts/login/", first_step_data)
             self.assertEqual(result.status_code, 200)
 

@@ -811,8 +811,7 @@ class MarkdownTest(ZulipTestCase):
         mention_in_link_tweet_html = """<a href="http://t.co/@foo">http://foo.com</a>"""
 
         media_tweet_html = (
-            '<a href="http://t.co/xo7pAhK6n3">'
-            "http://twitter.com/NEVNBoston/status/421654515616849920/photo/1</a>"
+            '<a href="http://t.co/xo7pAhK6n3">' "http://twitter.com/NEVNBoston/status/421654515616849920/photo/1</a>"
         )
 
         emoji_in_tweet_html = """Zulip is <span aria-label=\"100\" class="emoji emoji-1f4af" role=\"img\" title="100">:100:</span>% open-source!"""
@@ -1170,9 +1169,7 @@ class MarkdownTest(ZulipTestCase):
 
         # test nested realm patterns should avoid double matching
         RealmFilter(
-            realm=realm,
-            pattern=r"hello#(?P<id>[0-9]+)",
-            url_format_string=r"https://trac.example.com/hello/%(id)s",
+            realm=realm, pattern=r"hello#(?P<id>[0-9]+)", url_format_string=r"https://trac.example.com/hello/%(id)s",
         ).save()
         converted_topic = topic_links(realm.id, "hello#123 #234")
         self.assertEqual(
@@ -1236,9 +1233,7 @@ class MarkdownTest(ZulipTestCase):
     def test_realm_patterns_negative(self) -> None:
         realm = get_realm("zulip")
         RealmFilter(
-            realm=realm,
-            pattern=r"#(?P<id>[0-9]{2,8})",
-            url_format_string=r"https://trac.example.com/ticket/%(id)s",
+            realm=realm, pattern=r"#(?P<id>[0-9]{2,8})", url_format_string=r"https://trac.example.com/ticket/%(id)s",
         ).save()
         boring_msg = Message(sender=self.example_user("othello"))
         boring_msg.set_topic_name("no match here")
@@ -1834,8 +1829,7 @@ class MarkdownTest(ZulipTestCase):
         assert_mentions("smush@*steve*smush", set())
 
         assert_mentions(
-            "@*support* Hello @**King Hamlet** and @**Cordelia Lear**\n" "@**Foo van Barson** @**all**",
-            {"support"},
+            "@*support* Hello @**King Hamlet** and @**Cordelia Lear**\n" "@**Foo van Barson** @**all**", {"support"},
         )
 
         assert_mentions(
@@ -2023,9 +2017,7 @@ class MarkdownTest(ZulipTestCase):
         href = f"/#narrow/stream/{uni.id}-{quoted_name}"
         self.assertEqual(
             render_markdown(msg, content),
-            '<p><a class="stream" data-stream-id="{s.id}" href="{href}">#{s.name}</a></p>'.format(
-                s=uni, href=href,
-            ),
+            '<p><a class="stream" data-stream-id="{s.id}" href="{href}">#{s.name}</a></p>'.format(s=uni, href=href),
         )
 
     def test_stream_atomic_string(self) -> None:

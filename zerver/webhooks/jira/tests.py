@@ -161,9 +161,7 @@ Adding a comment. Oh, what a comment it is!
 
     def test_deleted(self) -> None:
         expected_topic = "BUG-15: New bug with hook"
-        expected_message = (
-            "Leo Franchi deleted [BUG-15: New bug with hook](http://lfranchi.com:8080/browse/BUG-15)."
-        )
+        expected_message = "Leo Franchi deleted [BUG-15: New bug with hook](http://lfranchi.com:8080/browse/BUG-15)."
         self.send_and_test_stream_message("deleted_v1", expected_topic, expected_message)
         self.send_and_test_stream_message("deleted_v2", expected_topic, expected_message)
 

@@ -98,9 +98,7 @@ class Command(compilemessages.Command):
 
         for locale in locales:
             if locale == "en":
-                data["languages"].append(
-                    {"name": "English", "name_local": "English", "code": "en", "locale": "en"},
-                )
+                data["languages"].append({"name": "English", "name_local": "English", "code": "en", "locale": "en"})
                 continue
 
             lc_messages_path = os.path.join(locale_path, locale, "LC_MESSAGES")

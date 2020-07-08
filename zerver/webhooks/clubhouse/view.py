@@ -20,8 +20,7 @@ DESC_CHANGED_TEMPLATE = (
 DESC_REMOVED_TEMPLATE = "Description for the {entity} {name_template} was removed."
 STATE_CHANGED_TEMPLATE = "State of the {entity} {name_template} was changed from **{old}** to **{new}**."
 NAME_CHANGED_TEMPLATE = (
-    "The name of the {entity} {name_template} was changed from:\n"
-    "``` quote\n{old}\n```\nto\n``` quote\n{new}\n```"
+    "The name of the {entity} {name_template} was changed from:\n" "``` quote\n{old}\n```\nto\n``` quote\n{new}\n```"
 )
 ARCHIVED_TEMPLATE = "The {entity} {name_template} was {action}."
 STORY_TASK_TEMPLATE = "Task **{task_description}** was {action} the story {name_template}."

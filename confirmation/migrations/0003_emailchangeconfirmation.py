@@ -10,9 +10,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name="EmailChangeConfirmation",
-            fields=[],
-            options={"proxy": True},
-            bases=("confirmation.confirmation",),
+            name="EmailChangeConfirmation", fields=[], options={"proxy": True}, bases=("confirmation.confirmation",),
         ),
     ]

@@ -136,9 +136,7 @@ class BeanstalkHookTests(WebhookTestCase):
         expected_message = """Leo Franchi pushed [revision 3](http://lfranchi-svn.beanstalkapp.com/work-test/changesets/3):
 
 > Removed a file and added another one!"""
-        self.api_stream_message(
-            self.test_user, "svn_addremove", expected_topic, expected_message, content_type=None,
-        )
+        self.api_stream_message(self.test_user, "svn_addremove", expected_topic, expected_message, content_type=None)
 
     def test_svn_changefile(self) -> None:
         expected_topic = "svn r2"

@@ -9,7 +9,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name="realm", name="allow_edit_history", field=models.BooleanField(default=True),
-        ),
+        migrations.AddField(model_name="realm", name="allow_edit_history", field=models.BooleanField(default=True)),
     ]

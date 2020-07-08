@@ -93,11 +93,7 @@ class TestGetChartData(ZulipTestCase):
         RealmCount.objects.bulk_create(
             [
                 RealmCount(
-                    property=stat.property,
-                    subgroup=subgroup,
-                    end_time=insert_time,
-                    value=100 + i,
-                    realm=self.realm,
+                    property=stat.property, subgroup=subgroup, end_time=insert_time, value=100 + i, realm=self.realm,
                 )
                 for i, subgroup in enumerate(realm_subgroups)
             ],
@@ -182,12 +178,7 @@ class TestGetChartData(ZulipTestCase):
                     "Private messages": self.data(0),
                     "Group private messages": self.data(0),
                 },
-                "display_order": [
-                    "Private messages",
-                    "Public streams",
-                    "Private streams",
-                    "Group private messages",
-                ],
+                "display_order": ["Private messages", "Public streams", "Private streams", "Group private messages"],
                 "result": "success",
             },
         )
@@ -679,9 +670,7 @@ class TestSupportEndpoint(ZulipTestCase):
         self.login("iago")
 
         with mock.patch("analytics.views.do_deactivate_realm") as m:
-            result = self.client_post(
-                "/activity/support", {"realm_id": f"{lear_realm.id}", "status": "deactivated"},
-            )
+            result = self.client_post("/activity/support", {"realm_id": f"{lear_realm.id}", "status": "deactivated"})
             m.assert_called_once_with(lear_realm, self.example_user("iago"))
             self.assert_in_success_response(["Lear &amp; Co. deactivated"], result)
 

@@ -56,12 +56,8 @@ class AttachmentsTests(ZulipTestCase):
 
     def test_list_unauthenticated(self) -> None:
         result = self.client_get("/json/attachments")
-        self.assert_json_error(
-            result, "Not logged in: API authentication or user session required", status_code=401,
-        )
+        self.assert_json_error(result, "Not logged in: API authentication or user session required", status_code=401)
 
     def test_delete_unauthenticated(self) -> None:
         result = self.client_delete(f"/json/attachments/{self.attachment.id}")
-        self.assert_json_error(
-            result, "Not logged in: API authentication or user session required", status_code=401,
-        )
+        self.assert_json_error(result, "Not logged in: API authentication or user session required", status_code=401)

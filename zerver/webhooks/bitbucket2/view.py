@@ -32,9 +32,7 @@ BITBUCKET_TOPIC_TEMPLATE = "{repository_name}"
 USER_PART = "User {display_name}(login: {username})"
 
 BITBUCKET_FORK_BODY = USER_PART + " forked the repository into [{fork_name}]({fork_url})."
-BITBUCKET_COMMIT_STATUS_CHANGED_BODY = (
-    "[System {key}]({system_url}) changed status of" " {commit_info} to {status}."
-)
+BITBUCKET_COMMIT_STATUS_CHANGED_BODY = "[System {key}]({system_url}) changed status of" " {commit_info} to {status}."
 BITBUCKET_REPO_UPDATED_CHANGED = (
     "{actor} changed the {change} of the **{repo_name}**" " repo from **{old}** to **{new}**"
 )

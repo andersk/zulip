@@ -28,12 +28,16 @@ class GiteaHookTests(WebhookTestCase):
 
     def test_pull_request_opened(self) -> None:
         expected_topic = "test / PR #1905 New pr"
-        expected_message = """kostekIV opened [PR #4](https://try.gitea.io/kostekIV/test/pulls/4) from `test-branch` to `master`."""
+        expected_message = (
+            """kostekIV opened [PR #4](https://try.gitea.io/kostekIV/test/pulls/4) from `test-branch` to `master`."""
+        )
         self.send_and_test_stream_message("pull_request__opened", expected_topic, expected_message)
 
     def test_pull_request_merged(self) -> None:
         expected_topic = "test / PR #1905 New pr"
-        expected_message = """kostekIV merged [PR #4](https://try.gitea.io/kostekIV/test/pulls/4) from `test-branch` to `master`."""
+        expected_message = (
+            """kostekIV merged [PR #4](https://try.gitea.io/kostekIV/test/pulls/4) from `test-branch` to `master`."""
+        )
         self.send_and_test_stream_message("pull_request__merged", expected_topic, expected_message)
 
     def test_pull_request_edited(self) -> None:

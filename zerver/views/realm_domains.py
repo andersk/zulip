@@ -38,10 +38,7 @@ def create_realm_domain(
 @require_realm_admin
 @has_request_variables
 def patch_realm_domain(
-    request: HttpRequest,
-    user_profile: UserProfile,
-    domain: str,
-    allow_subdomains: bool = REQ(validator=check_bool),
+    request: HttpRequest, user_profile: UserProfile, domain: str, allow_subdomains: bool = REQ(validator=check_bool),
 ) -> HttpResponse:
     try:
         realm_domain = RealmDomain.objects.get(realm=user_profile.realm, domain=domain)
