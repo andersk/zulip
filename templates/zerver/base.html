@@ -30,7 +30,7 @@
         {% endblock %}
     </head>
 
-    <body {% if color_scheme == 1 %} class="color-scheme-automatic" {% elif color_scheme == 2 %} class="night-mode" {% endif %}>
+    <body class="{% if color_scheme == 1 %}color-scheme-automatic{% elif color_scheme == 2 %}night-mode{% endif %} {% if noscroll %}noscroll{% endif %}">
         {% block content %}
         {% endblock %}
 

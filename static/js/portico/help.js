@@ -66,5 +66,3 @@ $(".markdown").on("click", () => {
 });
 
 render_code_sections();
-
-$("body").addClass("noscroll");
