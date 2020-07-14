@@ -15,34 +15,11 @@ function registerCodeSection($codeSection) {
     });
 }
 
-function highlight_current_article() {
-    $(".help .sidebar a").removeClass("highlighted");
-    const path = window.location.pathname;
-
-    if (!path) {
-        return;
-    }
-
-    const hash = window.location.hash;
-    let article = $('.help .sidebar a[href="' + path + hash + '"]');
-    if (!article.length) {
-        // If there isn't an entry in the left sidebar that matches
-        // the full url+hash pair, instead highlight an entry in the
-        // left sidebar that just matches the url part.
-        article = $('.help .sidebar a[href="' + path + '"]');
-    }
-    // Highlight current article link and the heading of the same
-    article.closest("ul").css("display", "block");
-    article.addClass("highlighted");
-}
-
 function render_code_sections() {
     $(".code-section").each(function () {
         activate_correct_tab($(this));
         registerCodeSection($(this));
     });
-
-    highlight_current_article();
 
     common.adjust_mac_shortcuts(".markdown .content code", true);
 

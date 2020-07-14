@@ -8,6 +8,9 @@ from django.conf import settings
 from django.http import HttpRequest, HttpResponse, HttpResponseNotFound
 from django.template import loader
 from django.views.generic import TemplateView
+from jinja2 import Markup as mark_safe
+from lxml import html
+from lxml.etree import Element, SubElement, XPath
 
 from zerver.context_processors import zulip_default_context
 from zerver.decorator import add_google_analytics_context
@@ -55,6 +58,10 @@ class ApiURLView(TemplateView):
         context = super().get_context_data(**kwargs)
         add_api_uri_context(context, self.request)
         return context
+
+
+sidebar_links = XPath("//a[@href=$url]")
+sidebar_uls = XPath("//a[@href=$url]/ancestor::ul")
 
 
 class MarkdownDirectoryView(ApiURLView):
@@ -117,13 +124,29 @@ class MarkdownDirectoryView(ApiURLView):
                 f"REPLACMENT_OPEN_GRAPH_DESCRIPTION_{int(2**24 * random.random())}")
             context["OPEN_GRAPH_DESCRIPTION"] = self.request.placeholder_open_graph_description
 
-        context["sidebar_index"] = sidebar_index
         context["sidebar_class"] = sidebar_class
         # An "article" might require the api_uri_context to be rendered
         api_uri_context: Dict[str, Any] = {}
         add_api_uri_context(api_uri_context, self.request)
         api_uri_context["run_content_validators"] = True
         context["api_uri_context"] = api_uri_context
+
+        sidebar_html = render_markdown_path(sidebar_index, api_uri_context)
+        tree = html.fragment_fromstring(sidebar_html, create_parent=True)
+        home_h1 = Element("h1")
+        home_link = SubElement(home_h1, "a")
+        home_link.attrib["class"] = "no-underline"
+        home_link.attrib["href"] = context["doc_root"]
+        home_link.text = "Home"
+        tree.insert(0, home_h1)
+        url = context["doc_root"] + article
+        for ul in sidebar_uls(tree, url=url):
+            ul.attrib["style"] = "display: block;"
+        for a in sidebar_links(tree, url=url):
+            a.attrib["class"] = a.attrib.get("class", "") + " highlighted"
+        sidebar_html = "".join(html.tostring(child, encoding="unicode") for child in tree)
+        context["sidebar_html"] = mark_safe(sidebar_html)
+
         add_google_analytics_context(context)
         return context
 
