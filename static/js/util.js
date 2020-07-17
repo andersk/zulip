@@ -32,9 +32,7 @@ exports.lower_bound = function (array, arg1, arg2, arg3, arg4) {
     }
 
     if (less === undefined) {
-        less = function (a, b) {
-            return a < b;
-        };
+        less = function (a, b) { return a < b; };
     }
 
     let len = last - first;
@@ -60,11 +58,12 @@ function lower_same(a, b) {
 
 exports.same_stream_and_topic = function util_same_stream_and_topic(a, b) {
     // Streams and topics are case-insensitive.
-    return a.stream_id === b.stream_id && lower_same(a.topic, b.topic);
+    return a.stream_id === b.stream_id &&
+        lower_same(a.topic, b.topic);
 };
 
 exports.is_pm_recipient = function (user_id, message) {
-    const recipients = message.to_user_ids.split(",");
+    const recipients = message.to_user_ids.split(',');
     return recipients.includes(user_id.toString());
 };
 
@@ -81,13 +80,13 @@ exports.same_recipient = function util_same_recipient(a, b) {
     }
 
     switch (a.type) {
-        case "private":
-            if (a.to_user_ids === undefined) {
-                return false;
-            }
-            return a.to_user_ids === b.to_user_ids;
-        case "stream":
-            return exports.same_stream_and_topic(a, b);
+    case 'private':
+        if (a.to_user_ids === undefined) {
+            return false;
+        }
+        return a.to_user_ids === b.to_user_ids;
+    case 'stream':
+        return exports.same_stream_and_topic(a, b);
     }
 
     // should never get here
@@ -95,22 +94,19 @@ exports.same_recipient = function util_same_recipient(a, b) {
 };
 
 exports.same_sender = function util_same_sender(a, b) {
-    return (
-        a !== undefined &&
-        b !== undefined &&
-        a.sender_email.toLowerCase() === b.sender_email.toLowerCase()
-    );
+    return a !== undefined && b !== undefined &&
+            a.sender_email.toLowerCase() === b.sender_email.toLowerCase();
 };
 
 exports.normalize_recipients = function (recipients) {
     // Converts a string listing emails of message recipients
     // into a canonical formatting: emails sorted ASCIIbetically
     // with exactly one comma and no spaces between each.
-    recipients = recipients.split(",").map((s) => s.trim());
+    recipients = recipients.split(',').map((s) => s.trim());
     recipients = recipients.map((s) => s.toLowerCase());
     recipients = recipients.filter((s) => s.length > 0);
     recipients.sort();
-    return recipients.join(",");
+    return recipients.join(',');
 };
 
 // Avoid URI decode errors by removing characters from the end
@@ -129,7 +125,7 @@ exports.robust_uri_decode = function (str) {
             end -= 1;
         }
     }
-    return "";
+    return '';
 };
 
 // If we can, use a locale-aware sorter.  However, if the browser
@@ -243,14 +239,14 @@ exports.get_match_topic = function (obj) {
 
 exports.get_draft_topic = function (obj) {
     // We will need to support subject for old drafts.
-    return obj.topic || obj.subject || "";
+    return obj.topic || obj.subject || '';
 };
 
 exports.get_reload_topic = function (obj) {
     // When we first upgrade to releases that have
     // topic=foo in the code, the user's reload URL
     // may still have subject=foo from the prior version.
-    return obj.topic || obj.subject || "";
+    return obj.topic || obj.subject || '';
 };
 
 exports.get_edit_event_topic = function (obj) {
@@ -272,7 +268,7 @@ exports.get_edit_event_prev_topic = function (obj) {
 };
 
 exports.is_topic_synonym = function (operator) {
-    return operator === "subject";
+    return operator === 'subject';
 };
 
 exports.convert_message_topic = function (message) {
@@ -329,10 +325,7 @@ exports.clean_user_content_links = function (html) {
             title = url;
             legacy_title = href;
         }
-        elt.setAttribute(
-            "title",
-            ["", legacy_title].includes(elt.title) ? title : `${title}\n${elt.title}`,
-        );
+        elt.setAttribute("title", ["", legacy_title].includes(elt.title) ? title : `${title}\n${elt.title}`);
     }
     return content.innerHTML;
 };

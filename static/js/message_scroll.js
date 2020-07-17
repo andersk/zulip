@@ -12,7 +12,8 @@ let loading_older_messages_indicator_showing = false;
 let loading_newer_messages_indicator_showing = false;
 exports.show_loading_older = function () {
     if (!loading_older_messages_indicator_showing) {
-        loading.make_indicator($("#loading_older_messages_indicator"), {abs_positioned: true});
+        loading.make_indicator($('#loading_older_messages_indicator'),
+                               {abs_positioned: true});
         loading_older_messages_indicator_showing = true;
         floating_recipient_bar.hide();
     }
@@ -28,7 +29,8 @@ exports.hide_loading_older = function () {
 exports.show_loading_newer = function () {
     if (!loading_newer_messages_indicator_showing) {
         $(".bottom-messages-logo").show();
-        loading.make_indicator($("#loading_newer_messages_indicator"), {abs_positioned: true});
+        loading.make_indicator($('#loading_newer_messages_indicator'),
+                               {abs_positioned: true});
         loading_newer_messages_indicator_showing = true;
         floating_recipient_bar.hide();
     }
@@ -79,7 +81,8 @@ exports.update_top_of_narrow_notices = function (msg_list) {
         return;
     }
 
-    if (msg_list.data.fetch_status.has_found_oldest() && current_msg_list !== home_msg_list) {
+    if (msg_list.data.fetch_status.has_found_oldest() &&
+        current_msg_list !== home_msg_list) {
         const filter = narrow_state.filter();
         // Potentially display the notice that lets users know
         // that not all messages were searched.  One could
@@ -87,11 +90,9 @@ exports.update_top_of_narrow_notices = function (msg_list) {
         // conditions, but there's a very legitimate use case
         // for moderation of searching for all messages sent
         // by a potential spammer user.
-        if (
-            !filter.contains_only_private_messages() &&
+        if (!filter.contains_only_private_messages() &&
             !filter.includes_full_stream_history() &&
-            !filter.is_personal_filter()
-        ) {
+            !filter.is_personal_filter()) {
             exports.show_end_of_results_notice();
         }
     }
@@ -113,7 +114,7 @@ exports.actively_scrolling = function () {
 exports.scroll_finished = function () {
     actively_scrolling = false;
 
-    if (!$("#home").hasClass("active")) {
+    if (!$('#home').hasClass('active')) {
         return;
     }
 
@@ -152,15 +153,13 @@ function scroll_finish() {
 }
 
 exports.initialize = function () {
-    message_viewport.message_pane.scroll(
-        _.throttle(() => {
-            unread_ops.process_visible();
-            scroll_finish();
-        }, 50),
-    );
+    message_viewport.message_pane.scroll(_.throttle(() => {
+        unread_ops.process_visible();
+        scroll_finish();
+    }, 50));
 
     // Scroll handler that marks messages as read when you scroll past them.
-    $(document).on("message_selected.zulip", (event) => {
+    $(document).on('message_selected.zulip', (event) => {
         if (event.id === -1) {
             return;
         }
@@ -174,10 +173,11 @@ exports.initialize = function () {
                 messages = event.msg_list.message_range(event.previously_selected, event.id);
             }
             if (event.msg_list.can_mark_messages_read()) {
-                unread_ops.notify_server_messages_read(messages, {from: "pointer"});
+                unread_ops.notify_server_messages_read(messages, {from: 'pointer'});
             }
         }
     });
 };
+
 
 window.message_scroll = exports;

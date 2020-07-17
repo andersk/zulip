@@ -9,7 +9,7 @@ function add_messages(messages, msg_list, opts) {
         return;
     }
 
-    loading.destroy_indicator($("#page_loading_indicator"));
+    loading.destroy_indicator($('#page_loading_indicator'));
 
     const render_info = msg_list.add_messages(messages, opts);
 
@@ -49,14 +49,9 @@ exports.get_messages_in_topic = function (stream_id, topic) {
     // all the messages. Please only use it in case of
     // very rare events like topic edits. Its primary
     // use case is the new experimental Recent Topics UI.
-    return message_list.all
-        .all_messages()
-        .filter(
-            (x) =>
-                x.type === "stream" &&
-                x.stream_id === stream_id &&
-                x.topic.toLowerCase() === topic.toLowerCase(),
-        );
+    return message_list.all.all_messages().filter((x) => x.type === 'stream' &&
+               x.stream_id === stream_id &&
+               x.topic.toLowerCase() === topic.toLowerCase());
 };
 
 window.message_util = exports;

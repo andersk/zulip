@@ -21,15 +21,7 @@ exports.toggle = function (opts) {
         opts.values.forEach((value, i) => {
             // create a tab with a tab-id so they don't have to be referenced
             // by text value which can be inconsistent.
-            const tab = $(
-                "<div class='ind-tab' data-tab-key='" +
-                    value.key +
-                    "' data-tab-id='" +
-                    i +
-                    "' tabindex='0'>" +
-                    value.label +
-                    "</div>",
-            );
+            const tab = $("<div class='ind-tab' data-tab-key='" + value.key + "' data-tab-id='" + i + "' tabindex='0'>" + value.label + "</div>");
 
             // add proper classes for styling in CSS.
             if (i === 0) {
@@ -43,7 +35,7 @@ exports.toggle = function (opts) {
             _component.append(tab);
         });
         return _component;
-    })(opts);
+    }(opts));
 
     const meta = {
         $ind_tab: component.find(".ind-tab"),
@@ -52,7 +44,7 @@ exports.toggle = function (opts) {
 
     function select_tab(idx) {
         const elem = meta.$ind_tab.eq(idx);
-        if (elem.hasClass("disabled")) {
+        if (elem.hasClass('disabled')) {
             return;
         }
         meta.$ind_tab.removeClass("selected");
@@ -61,7 +53,10 @@ exports.toggle = function (opts) {
 
         meta.idx = idx;
         if (opts.callback) {
-            opts.callback(opts.values[idx].label, opts.values[idx].key);
+            opts.callback(
+                opts.values[idx].label,
+                opts.values[idx].key,
+            );
         }
 
         if (!opts.child_wants_focus) {
@@ -101,7 +96,7 @@ exports.toggle = function (opts) {
         if (typeof opts.selected === "number") {
             select_tab(opts.selected);
         }
-    })();
+    }());
 
     const prototype = {
         maybe_go_left: maybe_go_left,
@@ -111,7 +106,7 @@ exports.toggle = function (opts) {
             const value = opts.values.find((o) => o.key === name);
 
             const idx = opts.values.indexOf(value);
-            meta.$ind_tab.eq(idx).addClass("disabled");
+            meta.$ind_tab.eq(idx).addClass('disabled');
         },
 
         value: function () {

@@ -7,10 +7,11 @@ exports.reset_id_state = function () {
 exports.get_new_local_id = function () {
     exports.next_local_id += 1;
     const local_id = exports.next_local_id;
-    return "loc-" + local_id.toString();
+    return 'loc-' + local_id.toString();
 };
 
-function report_send_time(send_time, receive_time, locally_echoed, rendered_changed) {
+function report_send_time(send_time, receive_time,
+                          locally_echoed, rendered_changed) {
     const data = {
         time: send_time.toString(),
         received: receive_time.toString(),
@@ -22,7 +23,7 @@ function report_send_time(send_time, receive_time, locally_echoed, rendered_chan
     }
 
     channel.post({
-        url: "/json/report/send_times",
+        url: '/json/report/send_times',
         data: data,
     });
 }
@@ -31,12 +32,12 @@ exports.start_tracking_message = function (opts) {
     const local_id = opts.local_id;
 
     if (!opts.local_id) {
-        blueslip.error("You must supply a local_id");
+        blueslip.error('You must supply a local_id');
         return;
     }
 
     if (exports.messages.has(local_id)) {
-        blueslip.error("We are re-using a local_id");
+        blueslip.error('We are re-using a local_id');
         return;
     }
 
@@ -53,6 +54,7 @@ exports.message_state = function (opts) {
 
     self.data.local_id = opts.local_id;
     self.data.locally_echoed = opts.locally_echoed;
+
 
     self.data.received = undefined;
     self.data.send_finished = undefined;
@@ -71,11 +73,9 @@ exports.message_state = function (opts) {
             return;
         }
 
-        blueslip.log(
-            "Restarting get_events due to " +
-                "delayed receipt of sent message " +
-                self.data.local_id,
-        );
+        blueslip.log("Restarting get_events due to " +
+                     "delayed receipt of sent message " +
+                     self.data.local_id);
 
         server_events.restart_get_events();
     };
@@ -85,12 +85,10 @@ exports.message_state = function (opts) {
             return;
         }
         const data = self.data;
-        report_send_time(
-            data.send_finished - data.start,
-            data.received - data.start,
-            data.locally_echoed,
-            data.rendered_content_disparity,
-        );
+        report_send_time(data.send_finished - data.start,
+                         data.received - data.start,
+                         data.locally_echoed,
+                         data.rendered_content_disparity);
     };
 
     self.report_event_received = function () {
@@ -117,7 +115,8 @@ exports.message_state = function (opts) {
     };
 
     self.ready = function () {
-        return self.data.send_finished !== undefined && self.data.received !== undefined;
+        return self.data.send_finished !== undefined &&
+               self.data.received !== undefined;
     };
 
     return self;
@@ -127,11 +126,12 @@ exports.get_message_state = function (local_id) {
     const state = exports.messages.get(local_id);
 
     if (!state) {
-        blueslip.warn("Unknown local_id: " + local_id);
+        blueslip.warn('Unknown local_id: ' + local_id);
     }
 
     return state;
 };
+
 
 exports.mark_disparity = function (local_id) {
     const state = exports.get_message_state(local_id);
