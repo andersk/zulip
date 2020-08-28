@@ -42,13 +42,19 @@ def get_zoom_session(user: UserProfile) -> OAuth2Session:
     if settings.VIDEO_ZOOM_CLIENT_ID is None:
         raise JsonableError(_("Zoom credentials have not been configured"))
 
+    client_id = settings.VIDEO_ZOOM_CLIENT_ID
+    client_secret = settings.VIDEO_ZOOM_CLIENT_SECRET
+    if user.realm.string_id == "zoomtesting":  # nocoverage
+        client_id = settings.VIDEO_ZOOM_TESTING_CLIENT_ID
+        client_secret = settings.VIDEO_ZOOM_CLIENT_SECRET
+
     return OAuth2Session(
-        settings.VIDEO_ZOOM_CLIENT_ID,
+        client_id,
         redirect_uri=urljoin(settings.ROOT_DOMAIN_URI, "/calls/zoom/complete"),
         auto_refresh_url="https://zoom.us/oauth/token",
         auto_refresh_kwargs={
-            "client_id": settings.VIDEO_ZOOM_CLIENT_ID,
-            "client_secret": settings.VIDEO_ZOOM_CLIENT_SECRET,
+            "client_id": client_id,
+            "client_secret": client_secret,
         },
         token=user.zoom_token,
         token_updater=partial(do_set_zoom_token, user),
@@ -106,12 +112,16 @@ def complete_zoom_user_in_realm(
     if not constant_time_compare(state["sid"], get_zoom_sid(request)):
         raise JsonableError(_("Invalid Zoom session identifier"))
 
+    client_secret = settings.VIDEO_ZOOM_CLIENT_SECRET
+    if request.user.realm.string_id == "zoomtesting":  # nocoverage
+        client_secret = settings.VIDEO_ZOOM_CLIENT_SECRET
+
     oauth = get_zoom_session(request.user)
     try:
         token = oauth.fetch_token(
             "https://zoom.us/oauth/token",
             code=code,
-            client_secret=settings.VIDEO_ZOOM_CLIENT_SECRET,
+            client_secret=client_secret,
         )
     except OAuth2Error:
         raise JsonableError(_("Invalid Zoom credentials"))
@@ -145,17 +155,24 @@ def make_zoom_video_call(request: HttpRequest, user: UserProfile) -> HttpRespons
 def deauthorize_zoom_user(request: HttpRequest) -> HttpResponse:
     data = json.loads(request.body.decode("utf-8"))
     payload = data["payload"]
+
+    client_id = settings.VIDEO_ZOOM_CLIENT_ID
+    client_secret = settings.VIDEO_ZOOM_CLIENT_SECRET
+    if payload["client_id"] == getattr(settings, "VIDEO_ZOOM_TESTING_CLIENT_ID", None):  # nocoverage
+        client_id = settings.VIDEO_ZOOM_TESTING_CLIENT_ID
+        client_secret = settings.VIDEO_ZOOM_CLIENT_SECRET
+
     if payload["user_data_retention"] == "false":
         requests.post(
             "https://api.zoom.us/oauth/data/compliance",
             json={
-                "client_id": settings.VIDEO_ZOOM_CLIENT_ID,
+                "client_id": client_id,
                 "user_id": payload["user_id"],
                 "account_id": payload["account_id"],
                 "deauthorization_event_received": payload,
                 "compliance_completed": True,
             },
-            auth=(settings.VIDEO_ZOOM_CLIENT_ID, settings.VIDEO_ZOOM_CLIENT_SECRET),
+            auth=(client_id, client_secret),
         ).raise_for_status()
     return json_success()
 
