@@ -42,7 +42,7 @@ pyinotify
 tblib
 
 # Needed to lint Git commit messages
-gitlint
+https://github.com/andersk/gitlint/archive/5a9adc062e13ca264866576f9299b405b56842b8.zip#egg=gitlint==0.14.0+git  # forked to unpin versioned requirements
 
 # Needed for visualising cprofile reports
 snakeviz

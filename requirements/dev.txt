@@ -341,9 +341,8 @@ fakeldap==0.6.2 \
 future==0.18.2 \
     --hash=sha256:b1bead90b70cf6ec3f0710ae53a525360fa360d306a86583adc6bf83a4db537d \
     # via aws-xray-sdk, python-twitter
-gitlint==0.14.0 \
-    --hash=sha256:93031a896dd143b685530be567bb742d99eb3ecc633cefa432f73c3bf6c20f46 \
-    --hash=sha256:df28d82c2e2aaa48d6d89bed6af08d8b9706c2e8b3ce968decc87e86b1461edc \
+https://github.com/andersk/gitlint/archive/5a9adc062e13ca264866576f9299b405b56842b8.zip#egg=gitlint==0.14.0+git \
+    --hash=sha256:2df461bcdbea3f1ceb337bbb9b8f5d92e3abf0228a655a5528a67d681c820369 \
     # via -r requirements/dev.in
 h2==2.6.2 \
     --hash=sha256:93cbd1013a2218539af05cdf9fc37b786655b93bbc94f5296b7dabd1c5cadf41 \
