@@ -24,6 +24,7 @@ import * as navigate from "./navigate";
 import * as overlays from "./overlays";
 import * as popovers from "./popovers";
 import * as reactions from "./reactions";
+import * as recent_topics from "./recent_topics";
 import * as search from "./search";
 import * as stream_list from "./stream_list";
 import * as stream_popover from "./stream_popover";

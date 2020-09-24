@@ -14,6 +14,7 @@ import * as narrow_state from "./narrow_state";
 import * as notifications from "./notifications";
 import * as pm_list from "./pm_list";
 import * as recent_senders from "./recent_senders";
+import * as recent_topics from "./recent_topics";
 import * as resize from "./resize";
 import * as stream_data from "./stream_data";
 import * as stream_list from "./stream_list";

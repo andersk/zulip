@@ -5,6 +5,7 @@ import * as message_store from "./message_store";
 import * as message_viewport from "./message_viewport";
 import * as notifications from "./notifications";
 import * as overlays from "./overlays";
+import * as recent_topics from "./recent_topics";
 import * as reload from "./reload";
 import * as unread from "./unread";
 import * as unread_ui from "./unread_ui";

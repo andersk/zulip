@@ -5,6 +5,7 @@ import * as common from "./common";
 import {localstorage} from "./localstorage";
 import * as message_list from "./message_list";
 import * as recent_senders from "./recent_senders";
+import * as recent_topics from "./recent_topics";
 import * as ui_report from "./ui_report";
 
 // What, if anything, obscures the home tab?

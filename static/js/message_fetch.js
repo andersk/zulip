@@ -9,6 +9,7 @@ import * as narrow from "./narrow";
 import * as narrow_state from "./narrow_state";
 import * as people from "./people";
 import * as pm_list from "./pm_list";
+import * as recent_topics from "./recent_topics";
 import * as server_events from "./server_events";
 import * as stream_data from "./stream_data";
 import * as stream_list from "./stream_list";
