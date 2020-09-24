@@ -5,6 +5,7 @@ import * as compose_actions from "./compose_actions";
 import * as compose_fade from "./compose_fade";
 import * as compose_state from "./compose_state";
 import {Filter} from "./filter";
+import * as message_edit from "./message_edit";
 import * as message_list from "./message_list";
 import {MessageListData} from "./message_list_data";
 import * as narrow_state from "./narrow_state";

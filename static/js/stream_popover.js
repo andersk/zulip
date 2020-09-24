@@ -10,6 +10,7 @@ const render_unstar_messages_modal = require("../templates/unstar_messages_modal
 
 const blueslip = require("./blueslip");
 const channel = require("./channel");
+const message_edit = require("./message_edit");
 const muting = require("./muting");
 const muting_ui = require("./muting_ui");
 const narrow = require("./narrow");

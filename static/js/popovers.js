@@ -19,6 +19,7 @@ const blueslip = require("./blueslip");
 const compose_actions = require("./compose_actions");
 const compose_state = require("./compose_state");
 const feature_flags = require("./feature_flags");
+const message_edit = require("./message_edit");
 const message_viewport = require("./message_viewport");
 const muting = require("./muting");
 const muting_ui = require("./muting_ui");

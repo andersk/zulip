@@ -13,6 +13,7 @@ const channel = require("./channel");
 const compose = require("./compose");
 const compose_actions = require("./compose_actions");
 const compose_state = require("./compose_state");
+const message_edit = require("./message_edit");
 const muting_ui = require("./muting_ui");
 const narrow = require("./narrow");
 const rows = require("./rows");
