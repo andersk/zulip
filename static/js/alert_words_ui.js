@@ -2,6 +2,7 @@
 
 const render_alert_word_settings_item = require("../templates/settings/alert_word_settings_item.hbs");
 
+const alert_words = require("./alert_words");
 const channel = require("./channel");
 
 exports.render_alert_words_ui = function () {

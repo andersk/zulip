@@ -7,7 +7,6 @@ declare let ListCursor: any;
 declare let UserSearch: any;
 declare let activity: any;
 declare let admin: any;
-declare let alert_words: any;
 declare let alert_words_ui: any;
 declare let attachments_ui: any;
 declare let avatar: any;

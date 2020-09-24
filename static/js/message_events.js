@@ -1,5 +1,6 @@
 "use strict";
 
+const alert_words = require("./alert_words");
 const channel = require("./channel");
 const compose_fade = require("./compose_fade");
 const compose_state = require("./compose_state");

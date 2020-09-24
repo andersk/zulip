@@ -1,5 +1,6 @@
 "use strict";
 
+const alert_words = require("./alert_words");
 const blueslip = require("./blueslip");
 const message_list = require("./message_list");
 const people = require("./people");

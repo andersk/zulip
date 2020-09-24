@@ -2,6 +2,7 @@
 
 const emoji = require("../shared/js/emoji");
 
+const alert_words = require("./alert_words");
 const blueslip = require("./blueslip");
 const compose = require("./compose");
 const compose_fade = require("./compose_fade");

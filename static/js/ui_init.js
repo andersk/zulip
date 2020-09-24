@@ -6,6 +6,7 @@ const generated_emoji_codes = require("../generated/emoji/emoji_codes");
 const emoji = require("../shared/js/emoji");
 const render_edit_content_button = require("../templates/edit_content_button.hbs");
 
+const alert_words = require("./alert_words");
 const blueslip = require("./blueslip");
 const click_handlers = require("./click_handlers");
 const compose = require("./compose");
