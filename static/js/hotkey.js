@@ -1,5 +1,6 @@
 import * as emoji from "../shared/js/emoji";
 
+import * as activity from "./activity";
 import * as common from "./common";
 import * as compose from "./compose";
 import * as compose_actions from "./compose_actions";
