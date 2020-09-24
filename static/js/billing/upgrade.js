@@ -1,8 +1,6 @@
-"use strict";
+import * as helpers from "./helpers";
 
-const helpers = require("./helpers");
-
-exports.initialize = () => {
+export const initialize = () => {
     helpers.set_tab("upgrade");
 
     const add_card_handler = StripeCheckout.configure({
@@ -83,8 +81,6 @@ exports.initialize = () => {
     helpers.update_charged_amount(prices, $("input[type=radio][name=schedule]:checked").val());
 };
 
-window.upgrade = exports;
-
 $(() => {
-    exports.initialize();
+    initialize();
 });

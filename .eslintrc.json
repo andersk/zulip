@@ -120,7 +120,6 @@
                 "run_test": false,
                 "StripeCheckout": false,
                 "ui_init": false,
-                "upgrade": false,
                 "zxcvbn": false
             }
         },
