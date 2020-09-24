@@ -1,6 +1,7 @@
 "use strict";
 
 const loading = require("./loading");
+const ui_report = require("./ui_report");
 
 exports.display_checkmark = function ($elem) {
     const check_mark = document.createElement("img");

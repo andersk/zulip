@@ -26,6 +26,7 @@ import * as stream_data from "./stream_data";
 import * as stream_edit from "./stream_edit";
 import * as subs from "./subs";
 import * as transmit from "./transmit";
+import * as ui_report from "./ui_report";
 import * as upload from "./upload";
 import * as util from "./util";
 import * as zcommand from "./zcommand";

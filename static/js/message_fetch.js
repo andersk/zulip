@@ -10,6 +10,7 @@ const people = require("./people");
 const pm_list = require("./pm_list");
 const stream_data = require("./stream_data");
 const stream_list = require("./stream_list");
+const ui_report = require("./ui_report");
 
 const consts = {
     backfill_idle_time: 10 * 1000,

@@ -7,6 +7,7 @@
 // execution.
 
 import * as blueslip_stacktrace from "./blueslip_stacktrace";
+import * as ui_report from "./ui_report";
 
 if (Error.stackTraceLimit !== undefined) {
     Error.stackTraceLimit = 100000;

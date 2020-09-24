@@ -7,6 +7,7 @@ const common = require("./common");
 const {localstorage} = require("./localstorage");
 const message_list = require("./message_list");
 const recent_senders = require("./recent_senders");
+const ui_report = require("./ui_report");
 
 // What, if anything, obscures the home tab?
 

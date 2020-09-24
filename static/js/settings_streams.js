@@ -6,6 +6,7 @@ const channel = require("./channel");
 const list_render = require("./list_render");
 const loading = require("./loading");
 const stream_data = require("./stream_data");
+const ui_report = require("./ui_report");
 
 const meta = {
     loaded: false,
