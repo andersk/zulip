@@ -2,6 +2,7 @@ import {FoldDict} from "./fold_dict";
 import * as message_store from "./message_store";
 import * as muting from "./muting";
 import * as people from "./people";
+import * as settings_notifications from "./settings_notifications";
 import * as stream_data from "./stream_data";
 import * as util from "./util";
 

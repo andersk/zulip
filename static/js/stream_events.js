@@ -4,6 +4,7 @@ import * as message_list from "./message_list";
 import * as message_util from "./message_util";
 import * as narrow_state from "./narrow_state";
 import * as overlays from "./overlays";
+import * as settings_notifications from "./settings_notifications";
 import * as stream_color from "./stream_color";
 import * as stream_data from "./stream_data";
 import * as stream_list from "./stream_list";
