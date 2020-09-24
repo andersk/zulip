@@ -8,6 +8,7 @@ const render_subscription_table_body = require("../templates/subscription_table_
 const render_subscriptions = require("../templates/subscriptions.hbs");
 
 const blueslip = require("./blueslip");
+const components = require("./components");
 const loading = require("./loading");
 const people = require("./people");
 const scroll_util = require("./scroll_util");

@@ -1,6 +1,4 @@
-"use strict";
-
-const keydown_util = require("./keydown_util");
+import * as keydown_util from "./keydown_util";
 
 /* USAGE:
     Toggle x = components.toggle({
@@ -14,7 +12,7 @@ const keydown_util = require("./keydown_util");
     }).get();
 */
 
-exports.toggle = function (opts) {
+export function toggle(opts) {
     const component = (function render_component(opts) {
         const _component = $("<div class='tab-switcher'></div>");
         if (opts.html_class) {
@@ -159,6 +157,4 @@ exports.toggle = function (opts) {
     };
 
     return prototype;
-};
-
-window.components = exports;
+}
