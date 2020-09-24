@@ -28,7 +28,6 @@ declare let settings_invites: any;
 declare let settings_linkifiers: any;
 declare let settings_org: any;
 declare let settings_profile_fields: any;
-declare let settings_sections: any;
 declare let settings_streams: any;
 declare let settings_ui: any;
 declare let settings_user_groups: any;
