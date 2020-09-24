@@ -17,6 +17,7 @@ import * as muting_ui from "./muting_ui";
 import * as narrow from "./narrow";
 import * as rows from "./rows";
 import * as settings_panel_menu from "./settings_panel_menu";
+import * as settings_toggle from "./settings_toggle";
 import * as stream_edit from "./stream_edit";
 import * as stream_list from "./stream_list";
 import * as ui_util from "./ui_util";
