@@ -8,6 +8,7 @@ const blueslip = require("./blueslip");
 const overlays = require("./overlays");
 const people = require("./people");
 const settings_account = require("./settings_account");
+const settings_bots = require("./settings_bots");
 const settings_config = require("./settings_config");
 const settings_notifications = require("./settings_notifications");
 const settings_panel_menu = require("./settings_panel_menu");
