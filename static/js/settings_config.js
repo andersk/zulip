@@ -1,6 +1,4 @@
-"use strict";
-
-const settings_notifications = require("./settings_notifications");
+import * as settings_notifications from "./settings_notifications";
 
 /*
     This file contains translations between the integer values used in
@@ -16,7 +14,7 @@ const settings_notifications = require("./settings_notifications");
     API documentation) without a ton of copying.
 */
 
-exports.demote_inactive_streams_values = {
+export const demote_inactive_streams_values = {
     automatic: {
         code: 1,
         description: i18n.t("Automatic"),
@@ -31,7 +29,7 @@ exports.demote_inactive_streams_values = {
     },
 };
 
-exports.color_scheme_values = {
+export const color_scheme_values = {
     automatic: {
         code: 1,
         description: i18n.t("Automatic"),
@@ -46,7 +44,7 @@ exports.color_scheme_values = {
     },
 };
 
-exports.twenty_four_hour_time_values = {
+export const twenty_four_hour_time_values = {
     twenty_four_hour_clock: {
         value: true,
         description: i18n.t("24-hour clock (17:00)"),
@@ -57,7 +55,7 @@ exports.twenty_four_hour_time_values = {
     },
 };
 
-exports.get_all_display_settings = () => ({
+export const get_all_display_settings = () => ({
     settings: {
         user_display_settings: [
             "dense_mode",
@@ -73,7 +71,7 @@ exports.get_all_display_settings = () => ({
     },
 });
 
-exports.email_address_visibility_values = {
+export const email_address_visibility_values = {
     everyone: {
         code: 1,
         description: i18n.t("Admins, members, and guests"),
@@ -93,7 +91,7 @@ exports.email_address_visibility_values = {
     },
 };
 
-exports.create_stream_policy_values = {
+export const create_stream_policy_values = {
     by_admins_only: {
         order: 1,
         code: 2,
@@ -111,9 +109,9 @@ exports.create_stream_policy_values = {
     },
 };
 
-exports.invite_to_stream_policy_values = exports.create_stream_policy_values;
+export const invite_to_stream_policy_values = create_stream_policy_values;
 
-exports.user_group_edit_policy_values = {
+export const user_group_edit_policy_values = {
     by_admins_only: {
         order: 1,
         code: 2,
@@ -126,7 +124,7 @@ exports.user_group_edit_policy_values = {
     },
 };
 
-exports.private_message_policy_values = {
+export const private_message_policy_values = {
     by_anyone: {
         order: 1,
         code: 1,
@@ -195,12 +193,11 @@ const time_limit_dropdown_values = new Map([
         },
     ],
 ]);
-exports.msg_edit_limit_dropdown_values = time_limit_dropdown_values;
-exports.msg_delete_limit_dropdown_values = time_limit_dropdown_values;
+export const msg_edit_limit_dropdown_values = time_limit_dropdown_values;
+export const msg_delete_limit_dropdown_values = time_limit_dropdown_values;
+export const retain_message_forever = -1;
 
-exports.retain_message_forever = -1;
-
-exports.user_role_values = {
+export const user_role_values = {
     guest: {
         code: 600,
         description: i18n.t("Guest"),
@@ -219,12 +216,12 @@ exports.user_role_values = {
     },
 };
 
-const user_role_array = Object.values(exports.user_role_values);
-exports.user_role_map = new Map(user_role_array.map((role) => [role.code, role.description]));
+const user_role_array = Object.values(user_role_values);
+export const user_role_map = new Map(user_role_array.map((role) => [role.code, role.description]));
 
 // NOTIFICATIONS
 
-exports.general_notifications_table_labels = {
+export const general_notifications_table_labels = {
     realm: [
         /* An array of notification settings of any category like
          * `stream_notification_settings` which makes a single row of
@@ -247,7 +244,7 @@ exports.general_notifications_table_labels = {
     },
 };
 
-exports.stream_specific_notification_settings = [
+export const stream_specific_notification_settings = [
     "desktop_notifications",
     "audible_notifications",
     "push_notifications",
@@ -255,7 +252,7 @@ exports.stream_specific_notification_settings = [
     "wildcard_mentions_notify",
 ];
 
-exports.stream_notification_settings = [
+export const stream_notification_settings = [
     "enable_stream_desktop_notifications",
     "enable_stream_audible_notifications",
     "enable_stream_push_notifications",
@@ -291,17 +288,17 @@ const other_notification_settings = desktop_notification_settings.concat(
     ["notification_sound"],
 );
 
-exports.all_notification_settings = other_notification_settings.concat(
+export const all_notification_settings = other_notification_settings.concat(
     pm_mention_notification_settings,
-    exports.stream_notification_settings,
+    stream_notification_settings,
 );
 
-exports.all_notifications = () => ({
+export const all_notifications = () => ({
     general_settings: [
         {
             label: i18n.t("Streams"),
             notification_settings: settings_notifications.get_notifications_table_row_data(
-                exports.stream_notification_settings,
+                stream_notification_settings,
             ),
         },
         {
