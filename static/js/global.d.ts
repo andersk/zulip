@@ -96,7 +96,6 @@ declare let starred_messages: any;
 declare let stream_create: any;
 declare let stream_edit: any;
 declare let stream_events: any;
-declare let stream_muting: any;
 declare let stream_popover: any;
 declare let stream_ui_updates: any;
 declare let subs: any;

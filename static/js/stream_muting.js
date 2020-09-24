@@ -1,10 +1,8 @@
-"use strict";
+import * as message_list from "./message_list";
+import * as message_viewport from "./message_viewport";
+import * as stream_list from "./stream_list";
 
-const message_list = require("./message_list");
-const message_viewport = require("./message_viewport");
-const stream_list = require("./stream_list");
-
-exports.update_is_muted = function (sub, value) {
+export function update_is_muted(sub, value) {
     sub.is_muted = value;
 
     setTimeout(() => {
@@ -62,6 +60,4 @@ exports.update_is_muted = function (sub, value) {
             "'] #sub_is_muted_setting .sub_setting_control",
     );
     is_muted_checkbox.prop("checked", value);
-};
-
-window.stream_muting = exports;
+}
