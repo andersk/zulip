@@ -203,7 +203,6 @@
                 "starred_messages": false,
                 "stream_create": false,
                 "stream_edit": false,
-                "stream_events": false,
                 "stream_popover": false,
                 "stream_ui_updates": false,
                 "StripeCheckout": false,

@@ -13,6 +13,7 @@ const people = require("./people");
 const reload = require("./reload");
 const settings_config = require("./settings_config");
 const stream_data = require("./stream_data");
+const stream_events = require("./stream_events");
 const stream_list = require("./stream_list");
 const stream_topic_history = require("./stream_topic_history");
 const submessage = require("./submessage");
