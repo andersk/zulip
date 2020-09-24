@@ -155,7 +155,6 @@
                 "stream_ui_updates": false,
                 "StripeCheckout": false,
                 "message_view_header": false,
-                "templates": false,
                 "typing": false,
                 "typing_data": false,
                 "typing_events": false,
