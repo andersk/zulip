@@ -1,9 +1,7 @@
-"use strict";
+import render_widgets_todo_widget from "../templates/widgets/todo_widget.hbs";
+import render_widgets_todo_widget_tasks from "../templates/widgets/todo_widget_tasks.hbs";
 
-const render_widgets_todo_widget = require("../templates/widgets/todo_widget.hbs");
-const render_widgets_todo_widget_tasks = require("../templates/widgets/todo_widget_tasks.hbs");
-
-const blueslip = require("./blueslip");
+import * as blueslip from "./blueslip";
 
 class TaskData {
     task_map = new Map();
@@ -122,9 +120,9 @@ class TaskData {
         }
     }
 }
-exports.TaskData = TaskData;
+export {TaskData};
 
-exports.activate = function (opts) {
+export function activate(opts) {
     const elem = opts.elem;
     const callback = opts.callback;
 
@@ -183,6 +181,4 @@ exports.activate = function (opts) {
 
     render();
     render_results();
-};
-
-window.todo_widget = exports;
+}
