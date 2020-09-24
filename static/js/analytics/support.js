@@ -1,5 +1,7 @@
 "use strict";
 
+const common = require("../common");
+
 $(() => {
     $("body").on("click", ".scrub-realm-button", function (e) {
         e.preventDefault();

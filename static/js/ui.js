@@ -3,6 +3,7 @@
 const {default: SimpleBar} = require("simplebar");
 
 const blueslip = require("./blueslip");
+const common = require("./common");
 
 // What, if anything, obscures the home tab?
 

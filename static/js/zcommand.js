@@ -2,6 +2,8 @@
 
 const marked = require("../third/marked/lib/marked");
 
+const common = require("./common");
+
 /*
 
 What in the heck is a zcommand?

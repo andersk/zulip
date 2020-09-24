@@ -9,6 +9,7 @@ const render_compose_not_subscribed = require("../templates/compose_not_subscrib
 const render_compose_private_stream_alert = require("../templates/compose_private_stream_alert.hbs");
 
 const blueslip = require("./blueslip");
+const common = require("./common");
 const people = require("./people");
 const rendered_markdown = require("./rendered_markdown");
 const util = require("./util");
