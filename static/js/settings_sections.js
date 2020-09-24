@@ -1,6 +1,7 @@
 "use strict";
 
 const alert_words_ui = require("./alert_words_ui");
+const attachments_ui = require("./attachments_ui");
 const blueslip = require("./blueslip");
 
 const load_func_dict = new Map(); // group -> function

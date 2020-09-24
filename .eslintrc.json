@@ -107,7 +107,6 @@
                 "UserSearch": false,
                 "activity": false,
                 "admin": false,
-                "attachments_ui": false,
                 "avatar": false,
                 "billing": false,
                 "bot_data": false,

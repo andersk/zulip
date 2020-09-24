@@ -4,6 +4,7 @@ const emoji = require("../shared/js/emoji");
 
 const alert_words = require("./alert_words");
 const alert_words_ui = require("./alert_words_ui");
+const attachments_ui = require("./attachments_ui");
 const blueslip = require("./blueslip");
 const compose = require("./compose");
 const compose_fade = require("./compose_fade");
