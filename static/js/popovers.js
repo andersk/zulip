@@ -34,6 +34,7 @@ import * as settings_data from "./settings_data";
 import * as stream_popover from "./stream_popover";
 import * as user_groups from "./user_groups";
 import * as user_status from "./user_status";
+import * as user_status_ui from "./user_status_ui";
 import * as util from "./util";
 
 let current_actions_popover_elem;

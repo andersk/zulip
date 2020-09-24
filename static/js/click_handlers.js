@@ -32,6 +32,7 @@ import * as stream_list from "./stream_list";
 import * as stream_popover from "./stream_popover";
 import * as ui_util from "./ui_util";
 import * as unread_ops from "./unread_ops";
+import * as user_status_ui from "./user_status_ui";
 import * as util from "./util";
 
 function convert_enter_to_click(e) {

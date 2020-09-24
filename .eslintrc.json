@@ -172,7 +172,6 @@
                 "upgrade": false,
                 "upload_widget": false,
                 "user_events": false,
-                "user_status_ui": false,
                 "zxcvbn": false
             }
         },
