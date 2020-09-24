@@ -1,9 +1,7 @@
-"use strict";
+import render_widgets_tictactoe_widget from "../templates/widgets/tictactoe_widget.hbs";
 
-const render_widgets_tictactoe_widget = require("../templates/widgets/tictactoe_widget.hbs");
-
-const blueslip = require("./blueslip");
-const people = require("./people");
+import * as blueslip from "./blueslip";
+import * as people from "./people";
 
 class TicTacToeData {
     me = people.my_current_user_id();
@@ -114,7 +112,7 @@ class TicTacToeData {
     }
 }
 
-exports.activate = function (opts) {
+export function activate(opts) {
     const elem = opts.elem;
     const callback = opts.callback;
 
@@ -144,6 +142,4 @@ exports.activate = function (opts) {
     };
 
     render();
-};
-
-window.tictactoe_widget = exports;
+}
