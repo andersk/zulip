@@ -21,7 +21,6 @@ declare let helpers: any;
 declare let home_msg_list: any;
 declare let hotspots: any;
 declare let i18n: any;
-declare let padded_widget: any;
 declare let page_params: any;
 declare let panels: any;
 declare let pointer: any;
