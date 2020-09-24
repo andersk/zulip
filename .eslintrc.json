@@ -103,7 +103,6 @@
             "files": ["frontend_tests/**", "static/js/**"],
             "globals": {
                 "$": false,
-                "billing": false,
                 "bridge": false,
                 "csrf_token": false,
                 "current_msg_list": true,
