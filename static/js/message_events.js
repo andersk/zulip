@@ -2,6 +2,7 @@
 
 const channel = require("./channel");
 const compose_fade = require("./compose_fade");
+const compose_state = require("./compose_state");
 const huddle_data = require("./huddle_data");
 const message_list = require("./message_list");
 const narrow = require("./narrow");

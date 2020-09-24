@@ -121,7 +121,6 @@
                 "colorspace": false,
                 "compose": false,
                 "compose_actions": false,
-                "compose_state": false,
                 "compose_ui": false,
                 "composebox_typeahead": false,
                 "condense": false,

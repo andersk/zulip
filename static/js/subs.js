@@ -10,6 +10,7 @@ const render_subscriptions = require("../templates/subscriptions.hbs");
 const blueslip = require("./blueslip");
 const channel = require("./channel");
 const components = require("./components");
+const compose_state = require("./compose_state");
 const loading = require("./loading");
 const message_live_update = require("./message_live_update");
 const people = require("./people");

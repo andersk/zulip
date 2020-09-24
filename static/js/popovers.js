@@ -16,6 +16,7 @@ const render_user_info_popover_title = require("../templates/user_info_popover_t
 const render_user_profile_modal = require("../templates/user_profile_modal.hbs");
 
 const blueslip = require("./blueslip");
+const compose_state = require("./compose_state");
 const feature_flags = require("./feature_flags");
 const message_viewport = require("./message_viewport");
 const muting = require("./muting");

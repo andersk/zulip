@@ -10,6 +10,7 @@ const typeahead = require("../shared/js/typeahead");
 
 const channel = require("./channel");
 const compose_pm_pill = require("./compose_pm_pill");
+const compose_state = require("./compose_state");
 const people = require("./people");
 const rows = require("./rows");
 const settings_data = require("./settings_data");

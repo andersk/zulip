@@ -3,6 +3,7 @@
 const emoji = require("../shared/js/emoji");
 
 const common = require("./common");
+const compose_state = require("./compose_state");
 const drafts = require("./drafts");
 const feedback_widget = require("./feedback_widget");
 const muting_ui = require("./muting_ui");

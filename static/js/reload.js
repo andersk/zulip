@@ -1,4 +1,5 @@
 import * as blueslip from "./blueslip";
+import * as compose_state from "./compose_state";
 import {localstorage} from "./localstorage";
 import * as message_list from "./message_list";
 import * as narrow_state from "./narrow_state";
