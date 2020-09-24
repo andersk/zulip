@@ -59,6 +59,7 @@ const timerender = require("./timerender");
 const topic_list = require("./topic_list");
 const topic_zoom = require("./topic_zoom");
 const tutorial = require("./tutorial");
+const typing = require("./typing");
 const ui = require("./ui");
 const ui_util = require("./ui_util");
 const unread = require("./unread");
