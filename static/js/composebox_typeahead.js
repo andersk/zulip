@@ -10,6 +10,7 @@ import * as channel from "./channel";
 import * as compose from "./compose";
 import * as compose_pm_pill from "./compose_pm_pill";
 import * as compose_state from "./compose_state";
+import * as message_store from "./message_store";
 import * as people from "./people";
 import * as rows from "./rows";
 import * as settings_data from "./settings_data";

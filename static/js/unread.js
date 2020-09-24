@@ -1,4 +1,5 @@
 import {FoldDict} from "./fold_dict";
+import * as message_store from "./message_store";
 import * as muting from "./muting";
 import * as people from "./people";
 import * as stream_data from "./stream_data";

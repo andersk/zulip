@@ -9,6 +9,7 @@ const render_emoji_popover_search_results = require("../templates/emoji_popover_
 const render_emoji_showcase = require("../templates/emoji_showcase.hbs");
 
 const blueslip = require("./blueslip");
+const message_store = require("./message_store");
 const popovers = require("./popovers");
 const rows = require("./rows");
 const ui = require("./ui");

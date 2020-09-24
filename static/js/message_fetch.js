@@ -5,6 +5,7 @@ const channel = require("./channel");
 const huddle_data = require("./huddle_data");
 const message_list = require("./message_list");
 const message_scroll = require("./message_scroll");
+const message_store = require("./message_store");
 const narrow = require("./narrow");
 const narrow_state = require("./narrow_state");
 const people = require("./people");
