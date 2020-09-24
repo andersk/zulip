@@ -1,6 +1,7 @@
 "use strict";
 
 const blueslip = require("./blueslip");
+const scroll_util = require("./scroll_util");
 
 class ListCursor {
     constructor({highlight_class, list}) {

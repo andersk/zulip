@@ -10,6 +10,7 @@ const render_subscriptions = require("../templates/subscriptions.hbs");
 const blueslip = require("./blueslip");
 const loading = require("./loading");
 const people = require("./people");
+const scroll_util = require("./scroll_util");
 const search_util = require("./search_util");
 const util = require("./util");
 
