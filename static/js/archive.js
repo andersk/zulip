@@ -5,6 +5,8 @@ const XDate = require("xdate");
 
 const render_archive_message_group = require("../templates/archive_message_group.hbs");
 
+const color_data = require("./color_data");
+
 function should_separate_into_groups(current_msg_time, next_msg_time) {
     const current_time = new XDate(current_msg_time * 1000);
     const next_time = new XDate(next_msg_time * 1000);

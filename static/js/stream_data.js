@@ -1,6 +1,7 @@
 "use strict";
 
 const blueslip = require("./blueslip");
+const color_data = require("./color_data");
 const {FoldDict} = require("./fold_dict");
 const {LazySet} = require("./lazy_set");
 const message_list = require("./message_list");

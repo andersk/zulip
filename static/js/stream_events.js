@@ -1,6 +1,7 @@
 "use strict";
 
 const blueslip = require("./blueslip");
+const color_data = require("./color_data");
 const message_list = require("./message_list");
 const narrow_state = require("./narrow_state");
 const stream_list = require("./stream_list");
