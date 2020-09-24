@@ -3,6 +3,7 @@
 const blueslip = require("./blueslip");
 const drafts = require("./drafts");
 const floating_recipient_bar = require("./floating_recipient_bar");
+const info_overlay = require("./info_overlay");
 const message_viewport = require("./message_viewport");
 const narrow = require("./narrow");
 const subs = require("./subs");
