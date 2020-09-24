@@ -21,6 +21,7 @@ import * as overlays from "./overlays";
 import * as people from "./people";
 import * as resize from "./resize";
 import * as search from "./search";
+import * as search_pill from "./search_pill";
 import * as stream_data from "./stream_data";
 import * as stream_list from "./stream_list";
 import * as stream_topic_history from "./stream_topic_history";
