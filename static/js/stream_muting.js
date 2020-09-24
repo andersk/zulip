@@ -1,4 +1,5 @@
 import * as message_list from "./message_list";
+import * as message_scroll from "./message_scroll";
 import * as message_viewport from "./message_viewport";
 import * as stream_list from "./stream_list";
 

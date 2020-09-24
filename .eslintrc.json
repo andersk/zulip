@@ -145,7 +145,6 @@
                 "message_events": false,
                 "message_fetch": false,
                 "message_flags": false,
-                "message_scroll": false,
                 "message_store": false,
                 "message_util": false,
                 "navigate": false,

@@ -1,4 +1,5 @@
 import * as blueslip from "./blueslip";
+import * as message_scroll from "./message_scroll";
 import * as rows from "./rows";
 import * as util from "./util";
 
