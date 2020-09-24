@@ -121,7 +121,6 @@
                 "realm_night_logo": false,
                 "run_test": false,
                 "spoilers": false,
-                "stream_ui_updates": false,
                 "StripeCheckout": false,
                 "ui_init": false,
                 "upgrade": false,

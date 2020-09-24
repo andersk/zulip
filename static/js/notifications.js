@@ -15,6 +15,7 @@ import * as navigate from "./navigate";
 import * as people from "./people";
 import * as settings_config from "./settings_config";
 import * as stream_data from "./stream_data";
+import * as stream_ui_updates from "./stream_ui_updates";
 import * as ui from "./ui";
 import * as unread from "./unread";
 import * as unread_ops from "./unread_ops";

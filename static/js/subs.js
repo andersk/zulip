@@ -23,6 +23,7 @@ import * as stream_data from "./stream_data";
 import * as stream_edit from "./stream_edit";
 import * as stream_list from "./stream_list";
 import * as stream_muting from "./stream_muting";
+import * as stream_ui_updates from "./stream_ui_updates";
 import * as typeahead_helper from "./typeahead_helper";
 import * as ui from "./ui";
 import * as ui_report from "./ui_report";

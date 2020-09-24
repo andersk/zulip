@@ -12,5 +12,4 @@ declare let home_msg_list: any;
 declare let i18n: any;
 declare let page_params: any;
 declare let pointer: any;
-declare let stream_ui_updates: any;
 declare let upgrade: any;
