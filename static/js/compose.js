@@ -25,6 +25,7 @@ const rtl = require("./rtl");
 const sent_messages = require("./sent_messages");
 const transmit = require("./transmit");
 const util = require("./util");
+const zcommand = require("./zcommand");
 
 // Docs: https://zulip.readthedocs.io/en/latest/subsystems/sending-messages.html
 
