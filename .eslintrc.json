@@ -105,7 +105,6 @@
                 "$": false,
                 "billing": false,
                 "bridge": false,
-                "compose_ui": false,
                 "csrf_token": false,
                 "current_msg_list": true,
                 "dropdown_list_widget": false,

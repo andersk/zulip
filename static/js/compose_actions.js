@@ -8,6 +8,7 @@ import * as compose from "./compose";
 import * as compose_fade from "./compose_fade";
 import * as compose_pm_pill from "./compose_pm_pill";
 import * as compose_state from "./compose_state";
+import * as compose_ui from "./compose_ui";
 import * as drafts from "./drafts";
 import * as hash_util from "./hash_util";
 import * as message_viewport from "./message_viewport";

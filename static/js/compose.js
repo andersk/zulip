@@ -13,6 +13,7 @@ import * as compose_actions from "./compose_actions";
 import * as compose_fade from "./compose_fade";
 import * as compose_pm_pill from "./compose_pm_pill";
 import * as compose_state from "./compose_state";
+import * as compose_ui from "./compose_ui";
 import * as drafts from "./drafts";
 import * as echo from "./echo";
 import * as loading from "./loading";

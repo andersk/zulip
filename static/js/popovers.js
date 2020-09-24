@@ -17,6 +17,7 @@ import * as blueslip from "./blueslip";
 import * as buddy_data from "./buddy_data";
 import * as compose_actions from "./compose_actions";
 import * as compose_state from "./compose_state";
+import * as compose_ui from "./compose_ui";
 import * as condense from "./condense";
 import * as emoji_picker from "./emoji_picker";
 import * as feature_flags from "./feature_flags";

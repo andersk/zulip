@@ -8,6 +8,7 @@ import * as compose from "./compose";
 import * as compose_actions from "./compose_actions";
 import * as compose_fade from "./compose_fade";
 import * as compose_state from "./compose_state";
+import * as compose_ui from "./compose_ui";
 import * as hashchange from "./hashchange";
 import {localstorage} from "./localstorage";
 import * as markdown from "./markdown";
