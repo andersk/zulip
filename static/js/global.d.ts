@@ -108,7 +108,6 @@ declare let message_view_header: any;
 declare let templates: any;
 declare let timerender: any;
 declare let stream_topic_history: any;
-declare let transmit: any;
 declare let tutorial: any;
 declare let typeahead_helper: any;
 declare let typing: any;

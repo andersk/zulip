@@ -217,7 +217,6 @@
                 "message_view_header": false,
                 "templates": false,
                 "timerender": false,
-                "transmit": false,
                 "tutorial": false,
                 "typeahead_helper": false,
                 "typing": false,

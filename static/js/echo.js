@@ -8,6 +8,7 @@ import * as pm_list from "./pm_list";
 import * as rows from "./rows";
 import * as sent_messages from "./sent_messages";
 import * as stream_list from "./stream_list";
+import * as transmit from "./transmit";
 import * as util from "./util";
 
 // Docs: https://zulip.readthedocs.io/en/latest/subsystems/sending-messages.html
