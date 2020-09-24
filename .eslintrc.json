@@ -162,7 +162,6 @@
                 "lightbox": false,
                 "list_render": false,
                 "list_util": false,
-                "loading": false,
                 "localStorage": false,
                 "local_message": false,
                 "localstorage": false,

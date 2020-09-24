@@ -1,6 +1,7 @@
 "use strict";
 
 const blueslip = require("./blueslip");
+const loading = require("./loading");
 const util = require("./util");
 
 // Miscellaneous early setup.
