@@ -7,6 +7,7 @@ const copy_code_button = require("../templates/copy_code_button.hbs");
 
 const blueslip = require("./blueslip");
 const people = require("./people");
+const rtl = require("./rtl");
 
 /*
     rendered_markdown

@@ -13,6 +13,7 @@ const common = require("./common");
 const loading = require("./loading");
 const people = require("./people");
 const rendered_markdown = require("./rendered_markdown");
+const rtl = require("./rtl");
 const util = require("./util");
 
 // Docs: https://zulip.readthedocs.io/en/latest/subsystems/sending-messages.html
