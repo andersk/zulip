@@ -120,7 +120,6 @@
                 "colorspace": false,
                 "compose_ui": false,
                 "composebox_typeahead": false,
-                "condense": false,
                 "confirm_dialog": false,
                 "copy_and_paste": false,
                 "csrf_token": false,

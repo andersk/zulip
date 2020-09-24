@@ -9,6 +9,7 @@ const render_edit_content_button = require("../templates/edit_content_button.hbs
 const blueslip = require("./blueslip");
 const compose = require("./compose");
 const compose_pm_pill = require("./compose_pm_pill");
+const condense = require("./condense");
 const drafts = require("./drafts");
 const echo = require("./echo");
 const emojisets = require("./emojisets");

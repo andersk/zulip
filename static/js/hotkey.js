@@ -6,6 +6,7 @@ const common = require("./common");
 const compose = require("./compose");
 const compose_actions = require("./compose_actions");
 const compose_state = require("./compose_state");
+const condense = require("./condense");
 const drafts = require("./drafts");
 const feedback_widget = require("./feedback_widget");
 const message_edit = require("./message_edit");

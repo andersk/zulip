@@ -3,6 +3,7 @@
 const autosize = require("autosize");
 
 const blueslip = require("./blueslip");
+const condense = require("./condense");
 const message_viewport = require("./message_viewport");
 const util = require("./util");
 

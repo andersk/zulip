@@ -18,6 +18,7 @@ const render_user_profile_modal = require("../templates/user_profile_modal.hbs")
 const blueslip = require("./blueslip");
 const compose_actions = require("./compose_actions");
 const compose_state = require("./compose_state");
+const condense = require("./condense");
 const feature_flags = require("./feature_flags");
 const message_edit = require("./message_edit");
 const message_edit_history = require("./message_edit_history");

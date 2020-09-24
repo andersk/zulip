@@ -8,6 +8,7 @@ import * as blueslip from "./blueslip";
 import * as channel from "./channel";
 import * as compose from "./compose";
 import * as compose_actions from "./compose_actions";
+import * as condense from "./condense";
 import * as echo from "./echo";
 import * as loading from "./loading";
 import * as markdown from "./markdown";
