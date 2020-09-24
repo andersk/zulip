@@ -5,6 +5,7 @@ const _ = require("lodash");
 const blueslip = require("./blueslip");
 const channel = require("./channel");
 const keydown_util = require("./keydown_util");
+const narrow = require("./narrow");
 const people = require("./people");
 const pm_list = require("./pm_list");
 

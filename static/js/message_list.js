@@ -4,6 +4,7 @@ import * as blueslip from "./blueslip";
 import {MessageListData} from "./message_list_data";
 import {MessageListView} from "./message_list_view";
 import * as message_viewport from "./message_viewport";
+import * as narrow from "./narrow";
 import * as narrow_state from "./narrow_state";
 
 export let narrowed;

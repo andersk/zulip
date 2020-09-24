@@ -11,6 +11,7 @@ const render_buddy_list_tooltip_content = require("../templates/buddy_list_toolt
 const blueslip = require("./blueslip");
 const channel = require("./channel");
 const muting_ui = require("./muting_ui");
+const narrow = require("./narrow");
 const rows = require("./rows");
 const settings_panel_menu = require("./settings_panel_menu");
 const stream_list = require("./stream_list");

@@ -8,6 +8,7 @@ const render_notification = require("../templates/notification.hbs");
 const blueslip = require("./blueslip");
 const channel = require("./channel");
 const muting = require("./muting");
+const narrow = require("./narrow");
 const narrow_state = require("./narrow_state");
 const people = require("./people");
 const settings_config = require("./settings_config");

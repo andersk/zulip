@@ -1,6 +1,7 @@
 "use strict";
 
 const {Filter} = require("./filter");
+const narrow = require("./narrow");
 const narrow_state = require("./narrow_state");
 
 // Exported for unit testing

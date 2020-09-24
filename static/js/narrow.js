@@ -1,19 +1,17 @@
-"use strict";
-
-const blueslip = require("./blueslip");
-const channel = require("./channel");
-const {Filter} = require("./filter");
-const message_list = require("./message_list");
-const {MessageListData} = require("./message_list_data");
-const narrow_state = require("./narrow_state");
-const people = require("./people");
-const stream_list = require("./stream_list");
-const top_left_corner = require("./top_left_corner");
-const topic_generator = require("./topic_generator");
-const unread = require("./unread");
-const unread_ops = require("./unread_ops");
-const util = require("./util");
-const widgetize = require("./widgetize");
+import * as blueslip from "./blueslip";
+import * as channel from "./channel";
+import {Filter} from "./filter";
+import * as message_list from "./message_list";
+import {MessageListData} from "./message_list_data";
+import * as narrow_state from "./narrow_state";
+import * as people from "./people";
+import * as stream_list from "./stream_list";
+import * as top_left_corner from "./top_left_corner";
+import * as topic_generator from "./topic_generator";
+import * as unread from "./unread";
+import * as unread_ops from "./unread_ops";
+import * as util from "./util";
+import * as widgetize from "./widgetize";
 
 let unnarrow_times;
 
@@ -69,7 +67,7 @@ function report_unnarrow_time() {
     unnarrow_times = {};
 }
 
-exports.save_pre_narrow_offset_for_reload = function () {
+export function save_pre_narrow_offset_for_reload() {
     if (current_msg_list.selected_id() !== -1) {
         if (current_msg_list.selected_row().length === 0) {
             blueslip.debug("narrow.activate missing selected row", {
@@ -84,7 +82,7 @@ exports.save_pre_narrow_offset_for_reload = function () {
         }
         current_msg_list.pre_narrow_offset = current_msg_list.selected_row().offset().top;
     }
-};
+}
 
 function update_narrow_title(filter) {
     // Take the most detailed part of the narrow to use as the title.
@@ -92,37 +90,38 @@ function update_narrow_title(filter) {
     // "is", we shouldn't update the narrow title
     if (filter.has_operator("stream")) {
         if (filter.has_operator("topic")) {
-            exports.narrow_title = filter.operands("topic")[0];
+            narrow_title = filter.operands("topic")[0];
         } else {
-            exports.narrow_title = filter.operands("stream")[0];
+            narrow_title = filter.operands("stream")[0];
         }
     } else if (filter.has_operator("is")) {
         let title = filter.operands("is")[0];
         title = title.charAt(0).toUpperCase() + title.slice(1) + " messages";
-        exports.narrow_title = title;
+        narrow_title = title;
     } else if (filter.has_operator("pm-with") || filter.has_operator("group-pm-with")) {
         const emails = filter.public_operators()[0].operand;
         const user_ids = people.emails_strings_to_user_ids_string(emails);
         if (user_ids !== undefined) {
             const names = people.get_recipients(user_ids);
             if (filter.has_operator("pm-with")) {
-                exports.narrow_title = names;
+                narrow_title = names;
             } else {
-                exports.narrow_title = names + " and others";
+                narrow_title = names + " and others";
             }
         } else {
             if (emails.includes(",")) {
-                exports.narrow_title = "Invalid users";
+                narrow_title = "Invalid users";
             } else {
-                exports.narrow_title = "Invalid user";
+                narrow_title = "Invalid user";
             }
         }
     }
     notifications.redraw_title();
 }
 
-exports.narrow_title = "home";
-exports.activate = function (raw_operators, opts) {
+export let narrow_title = "home";
+
+export function activate(raw_operators, opts) {
     /* Main entrypoint for switching to a new view / message list.
        Note that for historical reasons related to the current
        client-side caching structure, the "All messages"/home_msg_list
@@ -169,7 +168,7 @@ exports.activate = function (raw_operators, opts) {
     $(".tooltip").hide();
 
     if (raw_operators.length === 0) {
-        return exports.deactivate();
+        return deactivate();
     }
     const filter = new Filter(raw_operators);
     const operators = filter.operators();
@@ -232,7 +231,7 @@ exports.activate = function (raw_operators, opts) {
     const muting_enabled = narrow_state.muting_enabled();
 
     // Save how far from the pointer the top of the message list was.
-    exports.save_pre_narrow_offset_for_reload();
+    save_pre_narrow_offset_for_reload();
 
     let msg_data = new MessageListData({
         filter: narrow_state.filter(),
@@ -243,7 +242,7 @@ exports.activate = function (raw_operators, opts) {
     // with no backend help) and we have the message we want to select.
     // Also update id_info accordingly.
     // original back.
-    exports.maybe_add_local_messages({
+    maybe_add_local_messages({
         id_info,
         msg_data,
     });
@@ -311,7 +310,7 @@ exports.activate = function (raw_operators, opts) {
             anchor,
             cont() {
                 if (!select_immediately) {
-                    exports.update_selection({
+                    update_selection({
                         id_info,
                         select_offset: then_select_offset,
                     });
@@ -323,7 +322,7 @@ exports.activate = function (raw_operators, opts) {
     })();
 
     if (select_immediately) {
-        exports.update_selection({
+        update_selection({
             id_info,
             select_offset: then_select_offset,
         });
@@ -368,7 +367,7 @@ exports.activate = function (raw_operators, opts) {
         msg_list.initial_free_time = new Date();
         maybe_report_narrow_time(msg_list);
     }, 0);
-};
+}
 
 function min_defined(a, b) {
     if (a === undefined) {
@@ -392,7 +391,7 @@ function load_local_messages(msg_data) {
     return !msg_data.empty();
 }
 
-exports.maybe_add_local_messages = function (opts) {
+export function maybe_add_local_messages(opts) {
     // This function determines whether we need to go to the server to
     // fetch messages for the requested narrow, or whether we have the
     // data cached locally to render the narrow correctly without
@@ -546,9 +545,9 @@ exports.maybe_add_local_messages = function (opts) {
     // !can_apply_locally + target_id is a rare combination in the
     // first place, so we don't bother.
     return;
-};
+}
 
-exports.update_selection = function (opts) {
+export function update_selection(opts) {
     if (message_list.narrowed.empty()) {
         return;
     }
@@ -579,15 +578,15 @@ exports.update_selection = function (opts) {
         message_list.narrowed.view.set_message_offset(select_offset);
     }
     unread_ops.process_visible();
-};
+}
 
-exports.activate_stream_for_cycle_hotkey = function (stream_name) {
+export function activate_stream_for_cycle_hotkey(stream_name) {
     // This is the common code for A/D hotkeys.
     const filter_expr = [{operator: "stream", operand: stream_name}];
-    exports.activate(filter_expr, {});
-};
+    activate(filter_expr, {});
+}
 
-exports.stream_cycle_backward = function () {
+export function stream_cycle_backward() {
     const curr_stream = narrow_state.stream();
 
     if (!curr_stream) {
@@ -600,10 +599,10 @@ exports.stream_cycle_backward = function () {
         return;
     }
 
-    exports.activate_stream_for_cycle_hotkey(stream_name);
-};
+    activate_stream_for_cycle_hotkey(stream_name);
+}
 
-exports.stream_cycle_forward = function () {
+export function stream_cycle_forward() {
     const curr_stream = narrow_state.stream();
 
     if (!curr_stream) {
@@ -616,10 +615,10 @@ exports.stream_cycle_forward = function () {
         return;
     }
 
-    exports.activate_stream_for_cycle_hotkey(stream_name);
-};
+    activate_stream_for_cycle_hotkey(stream_name);
+}
 
-exports.narrow_to_next_topic = function () {
+export function narrow_to_next_topic() {
     const curr_info = {
         stream: narrow_state.stream(),
         topic: narrow_state.topic(),
@@ -636,10 +635,10 @@ exports.narrow_to_next_topic = function () {
         {operator: "topic", operand: next_narrow.topic},
     ];
 
-    exports.activate(filter_expr, {});
-};
+    activate(filter_expr, {});
+}
 
-exports.narrow_to_next_pm_string = function () {
+export function narrow_to_next_pm_string() {
     const curr_pm = narrow_state.pm_string();
 
     const next_pm = topic_generator.get_next_unread_pm_string(curr_pm);
@@ -659,22 +658,22 @@ exports.narrow_to_next_pm_string = function () {
         force_close: true,
     };
 
-    exports.activate(filter_expr, opts);
-};
+    activate(filter_expr, opts);
+}
 
 // Activate narrowing with a single operator.
 // This is just for syntactic convenience.
-exports.by = function (operator, operand, opts) {
-    exports.activate([{operator, operand}], opts);
-};
+export function by(operator, operand, opts) {
+    activate([{operator, operand}], opts);
+}
 
-exports.by_topic = function (target_id, opts) {
+export function by_topic(target_id, opts) {
     // don't use current_msg_list as it won't work for muted messages or for out-of-narrow links
     const original = message_store.get(target_id);
     if (original.type !== "stream") {
         // Only stream messages have topics, but the
         // user wants us to narrow in some way.
-        exports.by_recipient(target_id, opts);
+        by_recipient(target_id, opts);
         return;
     }
 
@@ -688,11 +687,11 @@ exports.by_topic = function (target_id, opts) {
         {operator: "topic", operand: original.topic},
     ];
     opts = {then_select_id: target_id, ...opts};
-    exports.activate(search_terms, opts);
-};
+    activate(search_terms, opts);
+}
 
 // Called for the 'narrow by stream' hotkey.
-exports.by_recipient = function (target_id, opts) {
+export function by_recipient(target_id, opts) {
     opts = {then_select_id: target_id, ...opts};
     // don't use current_msg_list as it won't work for muted messages or for out-of-narrow links
     const message = message_store.get(target_id);
@@ -704,17 +703,17 @@ exports.by_recipient = function (target_id, opts) {
 
     switch (message.type) {
         case "private":
-            exports.by("pm-with", message.reply_to, opts);
+            by("pm-with", message.reply_to, opts);
             break;
 
         case "stream":
-            exports.by("stream", message.stream, opts);
+            by("stream", message.stream, opts);
             break;
     }
-};
+}
 
 // Called by the narrow_to_compose_target hotkey.
-exports.to_compose_target = function () {
+export function to_compose_target() {
     if (!compose_state.composing()) {
         return;
     }
@@ -737,7 +736,7 @@ exports.to_compose_target = function () {
         if (topics.includes(topic)) {
             operators.push({operator: "topic", operand: topic});
         }
-        exports.activate(operators, opts);
+        activate(operators, opts);
         return;
     }
 
@@ -748,12 +747,12 @@ exports.to_compose_target = function () {
         // If there are no recipients or any recipient is
         // invalid, narrow to all PMs.
         if (emails.length === 0 || invalid.length > 0) {
-            exports.by("is", "private", opts);
+            by("is", "private", opts);
             return;
         }
-        exports.by("pm-with", util.normalize_recipients(recipient_string), opts);
+        by("pm-with", util.normalize_recipients(recipient_string), opts);
     }
-};
+}
 
 function handle_post_narrow_deactivate_processes() {
     compose_fade.update_message_list();
@@ -770,13 +769,13 @@ function handle_post_narrow_deactivate_processes() {
     widgetize.set_widgets_for_list();
     typing_events.render_notifications_for_narrow();
     message_view_header.initialize();
-    exports.narrow_title = "home";
+    narrow_title = "home";
     notifications.redraw_title();
     message_scroll.hide_top_of_narrow_notices();
     message_scroll.update_top_of_narrow_notices(home_msg_list);
 }
 
-exports.deactivate = function () {
+export function deactivate() {
     // NOTE: Never call this function independently,
     // always use hashchange.go_to_location("") to
     // activate All message narrow.
@@ -803,7 +802,7 @@ exports.deactivate = function () {
         // There is no way to intercept in-flight scroll events, and they will
         // cause you to end up in the wrong place if you are actively scrolling
         // on an unnarrow. Wait a bit and try again once the scrolling is over.
-        setTimeout(exports.deactivate, 50);
+        setTimeout(deactivate, 50);
         return;
     }
 
@@ -813,7 +812,7 @@ exports.deactivate = function () {
 
     narrow_state.reset_current_filter();
 
-    exports.hide_empty_narrow_message();
+    hide_empty_narrow_message();
 
     $("body").removeClass("narrowed_view");
     $("#zfilt").removeClass("focused_table");
@@ -867,18 +866,18 @@ exports.deactivate = function () {
         unnarrow_times.initial_free_time = new Date();
         report_unnarrow_time();
     });
-};
+}
 
-exports.restore_home_state = function () {
+export function restore_home_state() {
     // If we click on the All Messages link while already at All Messages, unnarrow.
     // If we click on the All Messages link from another nav pane, just go
     // back to the state you were in (possibly still narrowed) before
     // you left the All Messages pane.
     if (!overlays.is_active()) {
-        exports.deactivate();
+        deactivate();
     }
     navigate.maybe_scroll_to_selected();
-};
+}
 
 function set_invalid_narrow_message(invalid_narrow_message) {
     const search_string_display = $("#empty_search_stop_words_string");
@@ -1048,7 +1047,7 @@ function pick_empty_narrow_banner() {
     return default_banner;
 }
 
-exports.show_empty_narrow_message = function () {
+export function show_empty_narrow_message() {
     $(".empty_feed_notice").hide();
     pick_empty_narrow_banner().show();
     $("#left_bar_compose_reply_button_big").attr(
@@ -1056,12 +1055,10 @@ exports.show_empty_narrow_message = function () {
         i18n.t("There are no messages to reply to."),
     );
     $("#left_bar_compose_reply_button_big").prop("disabled", true);
-};
+}
 
-exports.hide_empty_narrow_message = function () {
+export function hide_empty_narrow_message() {
     $(".empty_feed_notice").hide();
     $("#left_bar_compose_reply_button_big").attr("title", i18n.t("Reply (r)"));
     $("#left_bar_compose_reply_button_big").prop("disabled", false);
-};
-
-window.narrow = exports;
+}

@@ -3,6 +3,7 @@
 const blueslip = require("./blueslip");
 const drafts = require("./drafts");
 const message_viewport = require("./message_viewport");
+const narrow = require("./narrow");
 
 // Read https://zulip.readthedocs.io/en/latest/subsystems/hashchange-system.html
 // or locally: docs/subsystems/hashchange-system.md

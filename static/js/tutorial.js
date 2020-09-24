@@ -1,6 +1,7 @@
 "use strict";
 
 const channel = require("./channel");
+const narrow = require("./narrow");
 
 function set_tutorial_status(status, callback) {
     return channel.post({

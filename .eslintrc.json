@@ -162,7 +162,6 @@
                 "message_scroll": false,
                 "message_store": false,
                 "message_util": false,
-                "narrow": false,
                 "navigate": false,
                 "night_mode": false,
                 "notifications": false,

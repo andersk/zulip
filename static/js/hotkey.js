@@ -6,6 +6,7 @@ const common = require("./common");
 const drafts = require("./drafts");
 const feedback_widget = require("./feedback_widget");
 const muting_ui = require("./muting_ui");
+const narrow = require("./narrow");
 const stream_list = require("./stream_list");
 const topic_zoom = require("./topic_zoom");
 
