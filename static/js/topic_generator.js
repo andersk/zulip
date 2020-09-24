@@ -3,6 +3,7 @@
 const blueslip = require("./blueslip");
 const muting = require("./muting");
 const pm_conversations = require("./pm_conversations");
+const stream_sort = require("./stream_sort");
 const unread = require("./unread");
 
 exports.sub_list_generator = function (lst, lower, upper) {
