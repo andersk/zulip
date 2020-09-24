@@ -10,6 +10,7 @@ const list_render = require("./list_render");
 const loading = require("./loading");
 const overlays = require("./overlays");
 const people = require("./people");
+const presence = require("./presence");
 const settings_config = require("./settings_config");
 const settings_data = require("./settings_data");
 const settings_panel_menu = require("./settings_panel_menu");
