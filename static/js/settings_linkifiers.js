@@ -1,26 +1,24 @@
-"use strict";
+import render_admin_filter_list from "../templates/admin_filter_list.hbs";
 
-const render_admin_filter_list = require("../templates/admin_filter_list.hbs");
-
-const channel = require("./channel");
-const list_render = require("./list_render");
-const loading = require("./loading");
-const ui = require("./ui");
-const ui_report = require("./ui_report");
+import * as channel from "./channel";
+import * as list_render from "./list_render";
+import * as loading from "./loading";
+import * as ui from "./ui";
+import * as ui_report from "./ui_report";
 
 const meta = {
     loaded: false,
 };
 
-exports.reset = function () {
+export function reset() {
     meta.loaded = false;
-};
+}
 
-exports.maybe_disable_widgets = function () {
+export function maybe_disable_widgets() {
     if (page_params.is_admin) {
         return;
     }
-};
+}
 
 function compare_by_index(a, b, i) {
     if (a[i] > b[i]) {
@@ -39,7 +37,7 @@ function sort_url(a, b) {
     return compare_by_index(a, b, 1);
 }
 
-exports.populate_filters = function (filters_data) {
+export function populate_filters(filters_data) {
     if (!meta.loaded) {
         return;
     }
@@ -78,21 +76,21 @@ exports.populate_filters = function (filters_data) {
     });
 
     loading.destroy_indicator($("#admin_page_filters_loading_indicator"));
-};
+}
 
-exports.set_up = function () {
-    exports.build_page();
-    exports.maybe_disable_widgets();
-};
+export function set_up() {
+    build_page();
+    maybe_disable_widgets();
+}
 
-exports.build_page = function () {
+export function build_page() {
     meta.loaded = true;
 
     // create loading indicators
     loading.make_indicator($("#admin_page_filters_loading_indicator"));
 
     // Populate filters table
-    exports.populate_filters(page_params.realm_filters);
+    populate_filters(page_params.realm_filters);
 
     $(".admin_filters_table").on("click", ".delete", function (e) {
         e.preventDefault();
@@ -158,6 +156,4 @@ exports.build_page = function () {
                 },
             });
         });
-};
-
-window.settings_linkifiers = exports;
+}
