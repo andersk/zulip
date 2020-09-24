@@ -7,6 +7,7 @@ const render_notification = require("../templates/notification.hbs");
 
 const blueslip = require("./blueslip");
 const channel = require("./channel");
+const muting = require("./muting");
 const people = require("./people");
 const settings_config = require("./settings_config");
 const unread_ops = require("./unread_ops");

@@ -1,6 +1,7 @@
 "use strict";
 
 const blueslip = require("./blueslip");
+const muting = require("./muting");
 const pm_conversations = require("./pm_conversations");
 
 exports.sub_list_generator = function (lst, lower, upper) {

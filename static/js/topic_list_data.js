@@ -1,5 +1,7 @@
 "use strict";
 
+const muting = require("./muting");
+
 const max_topics = 5;
 const max_topics_with_unread = 8;
 

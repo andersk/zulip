@@ -11,6 +11,7 @@ const compose_pm_pill = require("./compose_pm_pill");
 const drafts = require("./drafts");
 const emojisets = require("./emojisets");
 const markdown_config = require("./markdown_config");
+const muting = require("./muting");
 const people = require("./people");
 const pm_conversations = require("./pm_conversations");
 const unread_ui = require("./unread_ui");

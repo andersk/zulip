@@ -6,6 +6,7 @@ const render_recent_topic_row = require("../templates/recent_topic_row.hbs");
 const render_recent_topics_filters = require("../templates/recent_topics_filters.hbs");
 const render_recent_topics_body = require("../templates/recent_topics_table.hbs");
 
+const muting = require("./muting");
 const people = require("./people");
 
 const topics = new Map(); // Key is stream-id:topic.

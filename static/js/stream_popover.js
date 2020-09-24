@@ -10,6 +10,7 @@ const render_unstar_messages_modal = require("../templates/unstar_messages_modal
 
 const blueslip = require("./blueslip");
 const channel = require("./channel");
+const muting = require("./muting");
 const unread_ops = require("./unread_ops");
 
 // We handle stream popovers and topic popovers in this
