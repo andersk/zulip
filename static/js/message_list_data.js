@@ -1,15 +1,13 @@
-"use strict";
+import _ from "lodash";
 
-const _ = require("lodash");
+import * as blueslip from "./blueslip";
+import {FetchStatus} from "./fetch_status";
+import {Filter} from "./filter";
+import * as muting from "./muting";
+import * as unread from "./unread";
+import * as util from "./util";
 
-const blueslip = require("./blueslip");
-const {FetchStatus} = require("./fetch_status");
-const {Filter} = require("./filter");
-const muting = require("./muting");
-const unread = require("./unread");
-const util = require("./util");
-
-class MessageListData {
+export class MessageListData {
     constructor(opts) {
         this.muting_enabled = opts.muting_enabled;
         if (this.muting_enabled) {
@@ -542,7 +540,3 @@ class MessageListData {
         return msg;
     }
 }
-
-module.exports = MessageListData;
-
-window.MessageListData = MessageListData;
