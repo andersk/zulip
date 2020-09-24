@@ -10,6 +10,7 @@ const message_edit = require("./message_edit");
 const message_list = require("./message_list");
 const muting_ui = require("./muting_ui");
 const narrow_state = require("./narrow_state");
+const night_mode = require("./night_mode");
 const people = require("./people");
 const reload = require("./reload");
 const settings_config = require("./settings_config");

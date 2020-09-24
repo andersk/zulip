@@ -42,7 +42,6 @@ declare let message_flags: any;
 declare let message_store: any;
 declare let message_util: any;
 declare let navigate: any;
-declare let night_mode: any;
 declare let notifications: any;
 declare let overlays: any;
 declare let padded_widget: any;
