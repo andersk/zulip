@@ -11,6 +11,7 @@ const render_emoji_showcase = require("../templates/emoji_showcase.hbs");
 const blueslip = require("./blueslip");
 const message_store = require("./message_store");
 const popovers = require("./popovers");
+const reactions = require("./reactions");
 const rows = require("./rows");
 const ui = require("./ui");
 
