@@ -1,5 +1,7 @@
 "use strict";
 
+const helpers = require("./helpers");
+
 exports.initialize = () => {
     helpers.set_tab("upgrade");
 

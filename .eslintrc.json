@@ -108,7 +108,6 @@
                 "current_msg_list": true,
                 "dropdown_list_widget": false,
                 "flatpickr": false,
-                "helpers": false,
                 "history": false,
                 "home_msg_list": false,
                 "i18n": false,
