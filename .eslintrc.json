@@ -250,7 +250,6 @@
                 "user_events": false,
                 "user_status": false,
                 "user_status_ui": false,
-                "widgetize": false,
                 "zcommand": false,
                 "zxcvbn": false
             }

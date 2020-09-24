@@ -140,5 +140,4 @@ declare let upload_widget: any;
 declare let user_events: any;
 declare let user_status: any;
 declare let user_status_ui: any;
-declare let widgetize: any;
 declare let zcommand: any;

@@ -2,6 +2,7 @@
 
 const blueslip = require("./blueslip");
 const channel = require("./channel");
+const widgetize = require("./widgetize");
 
 exports.get_message_events = function (message) {
     if (message.locally_echoed) {
