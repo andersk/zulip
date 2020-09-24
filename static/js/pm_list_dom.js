@@ -1,12 +1,10 @@
-"use strict";
+import _ from "lodash";
 
-const _ = require("lodash");
+import render_pm_list_item from "../templates/pm_list_item.hbs";
 
-const render_pm_list_item = require("../templates/pm_list_item.hbs");
+import * as vdom from "./vdom";
 
-const vdom = require("./vdom");
-
-exports.keyed_pm_li = (convo) => {
+export const keyed_pm_li = (convo) => {
     const render = () => render_pm_list_item(convo);
 
     const eq = (other) => _.isEqual(convo, other.convo);
@@ -21,15 +19,13 @@ exports.keyed_pm_li = (convo) => {
     };
 };
 
-exports.pm_ul = (convos) => {
+export const pm_ul = (convos) => {
     const attrs = [
         ["class", "expanded_private_messages"],
         ["data-name", "private"],
     ];
     return vdom.ul({
         attrs,
-        keyed_nodes: convos.map(exports.keyed_pm_li),
+        keyed_nodes: convos.map(keyed_pm_li),
     });
 };
-
-window.pm_list_dom = exports;

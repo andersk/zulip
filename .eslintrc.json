@@ -179,7 +179,6 @@
                 "panels": false,
                 "pill_typeahead": false,
                 "pm_list": false,
-                "pm_list_dom": false,
                 "pointer": false,
                 "popovers": false,
                 "presence": false,
