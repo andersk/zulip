@@ -103,7 +103,6 @@
             "files": ["frontend_tests/**", "static/js/**"],
             "globals": {
                 "$": false,
-                "admin": false,
                 "billing": false,
                 "bot_data": false,
                 "bridge": false,

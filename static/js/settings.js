@@ -2,6 +2,7 @@ import moment from "moment-timezone";
 
 import render_settings_tab from "../templates/settings_tab.hbs";
 
+import * as admin from "./admin";
 import * as blueslip from "./blueslip";
 import * as overlays from "./overlays";
 import * as people from "./people";
