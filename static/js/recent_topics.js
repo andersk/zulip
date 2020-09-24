@@ -10,6 +10,7 @@ const hash_util = require("./hash_util");
 const hashchange = require("./hashchange");
 const list_render = require("./list_render");
 const message_store = require("./message_store");
+const message_util = require("./message_util");
 const muting = require("./muting");
 const overlays = require("./overlays");
 const people = require("./people");
