@@ -6,6 +6,7 @@
 // (We should do bot updates here too.)
 const blueslip = require("./blueslip");
 const compose = require("./compose");
+const gear_menu = require("./gear_menu");
 const message_live_update = require("./message_live_update");
 const narrow_state = require("./narrow_state");
 const people = require("./people");

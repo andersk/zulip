@@ -14,6 +14,7 @@ const condense = require("./condense");
 const drafts = require("./drafts");
 const echo = require("./echo");
 const emojisets = require("./emojisets");
+const gear_menu = require("./gear_menu");
 const lightbox = require("./lightbox");
 const markdown = require("./markdown");
 const markdown_config = require("./markdown_config");

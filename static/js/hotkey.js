@@ -9,6 +9,7 @@ const compose_state = require("./compose_state");
 const condense = require("./condense");
 const drafts = require("./drafts");
 const feedback_widget = require("./feedback_widget");
+const gear_menu = require("./gear_menu");
 const lightbox = require("./lightbox");
 const message_edit = require("./message_edit");
 const muting_ui = require("./muting_ui");
