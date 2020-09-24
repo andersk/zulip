@@ -35,6 +35,7 @@ const subs = require("./subs");
 const topic_list = require("./topic_list");
 const topic_zoom = require("./topic_zoom");
 const ui = require("./ui");
+const ui_util = require("./ui_util");
 const unread = require("./unread");
 const unread_ui = require("./unread_ui");
 const user_groups = require("./user_groups");

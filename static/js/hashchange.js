@@ -7,6 +7,7 @@ const info_overlay = require("./info_overlay");
 const message_viewport = require("./message_viewport");
 const narrow = require("./narrow");
 const subs = require("./subs");
+const ui_util = require("./ui_util");
 
 // Read https://zulip.readthedocs.io/en/latest/subsystems/hashchange-system.html
 // or locally: docs/subsystems/hashchange-system.md

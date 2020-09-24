@@ -1,6 +1,7 @@
 import render_input_pill from "../templates/input_pill.hbs";
 
 import * as blueslip from "./blueslip";
+import * as ui_util from "./ui_util";
 
 // See https://zulip.readthedocs.io/en/latest/subsystems/input-pills.html
 export function random_id() {

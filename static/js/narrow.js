@@ -18,6 +18,7 @@ import * as stream_list from "./stream_list";
 import * as stream_topic_history from "./stream_topic_history";
 import * as top_left_corner from "./top_left_corner";
 import * as topic_generator from "./topic_generator";
+import * as ui_util from "./ui_util";
 import * as unread from "./unread";
 import * as unread_ops from "./unread_ops";
 import * as util from "./util";

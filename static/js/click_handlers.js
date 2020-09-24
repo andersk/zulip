@@ -21,6 +21,7 @@ const rows = require("./rows");
 const settings_panel_menu = require("./settings_panel_menu");
 const stream_edit = require("./stream_edit");
 const stream_list = require("./stream_list");
+const ui_util = require("./ui_util");
 const unread_ops = require("./unread_ops");
 const util = require("./util");
 

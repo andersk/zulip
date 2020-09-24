@@ -14,6 +14,7 @@ import * as narrow_state from "./narrow_state";
 import * as people from "./people";
 import * as reload_state from "./reload_state";
 import * as stream_data from "./stream_data";
+import * as ui_util from "./ui_util";
 import * as unread_ops from "./unread_ops";
 
 export function blur_compose_inputs() {

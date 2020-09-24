@@ -18,6 +18,7 @@ const resize = require("./resize");
 const stream_color = require("./stream_color");
 const stream_data = require("./stream_data");
 const subs = require("./subs");
+const ui_util = require("./ui_util");
 const unread_ops = require("./unread_ops");
 
 // We handle stream popovers and topic popovers in this

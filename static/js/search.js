@@ -3,6 +3,7 @@
 const {Filter} = require("./filter");
 const narrow = require("./narrow");
 const narrow_state = require("./narrow_state");
+const ui_util = require("./ui_util");
 
 // Exported for unit testing
 exports.is_using_input_method = false;

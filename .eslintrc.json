@@ -203,7 +203,6 @@
                 "typing_data": false,
                 "typing_events": false,
                 "ui_init": false,
-                "ui_util": false,
                 "upgrade": false,
                 "upload_widget": false,
                 "user_events": false,
