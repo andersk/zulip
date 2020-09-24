@@ -14,6 +14,5 @@ declare let page_params: any;
 declare let pointer: any;
 declare let search_pill: any;
 declare let search_pill_widget: any;
-declare let settings_ui: any;
 declare let stream_ui_updates: any;
 declare let upgrade: any;

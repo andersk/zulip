@@ -13,6 +13,7 @@ import * as people from "./people";
 import * as pill_typeahead from "./pill_typeahead";
 import * as popovers from "./popovers";
 import * as settings_bots from "./settings_bots";
+import * as settings_ui from "./settings_ui";
 import * as setup from "./setup";
 import * as ui_report from "./ui_report";
 import * as user_pill from "./user_pill";

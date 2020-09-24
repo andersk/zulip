@@ -3,6 +3,7 @@ import * as emojisets from "./emojisets";
 import * as loading from "./loading";
 import * as overlays from "./overlays";
 import * as settings_config from "./settings_config";
+import * as settings_ui from "./settings_ui";
 import * as ui_report from "./ui_report";
 
 const meta = {

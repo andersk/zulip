@@ -17,6 +17,7 @@ import * as pill_typeahead from "./pill_typeahead";
 import * as popovers from "./popovers";
 import * as settings_config from "./settings_config";
 import * as settings_data from "./settings_data";
+import * as settings_ui from "./settings_ui";
 import * as stream_color from "./stream_color";
 import * as stream_data from "./stream_data";
 import * as stream_pill from "./stream_pill";

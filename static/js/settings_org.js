@@ -10,6 +10,7 @@ import * as realm_icon from "./realm_icon";
 import * as realm_logo from "./realm_logo";
 import * as settings_config from "./settings_config";
 import * as settings_notifications from "./settings_notifications";
+import * as settings_ui from "./settings_ui";
 import * as stream_data from "./stream_data";
 import * as ui_report from "./ui_report";
 
