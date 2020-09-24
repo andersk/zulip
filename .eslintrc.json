@@ -104,7 +104,6 @@
             "globals": {
                 "$": false,
                 "admin": false,
-                "avatar": false,
                 "billing": false,
                 "bot_data": false,
                 "bridge": false,
