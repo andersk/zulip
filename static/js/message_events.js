@@ -11,6 +11,7 @@ const pm_list = require("./pm_list");
 const recent_senders = require("./recent_senders");
 const stream_data = require("./stream_data");
 const stream_list = require("./stream_list");
+const stream_topic_history = require("./stream_topic_history");
 const unread = require("./unread");
 const unread_ops = require("./unread_ops");
 const unread_ui = require("./unread_ui");

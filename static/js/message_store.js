@@ -5,6 +5,7 @@ const message_list = require("./message_list");
 const people = require("./people");
 const pm_conversations = require("./pm_conversations");
 const recent_senders = require("./recent_senders");
+const stream_topic_history = require("./stream_topic_history");
 const util = require("./util");
 
 const stored_messages = new Map();

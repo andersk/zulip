@@ -14,6 +14,7 @@ const reload = require("./reload");
 const settings_config = require("./settings_config");
 const stream_data = require("./stream_data");
 const stream_list = require("./stream_list");
+const stream_topic_history = require("./stream_topic_history");
 const submessage = require("./submessage");
 const unread_ops = require("./unread_ops");
 const user_groups = require("./user_groups");

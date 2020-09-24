@@ -6,6 +6,7 @@ import * as message_list from "./message_list";
 import * as people from "./people";
 import * as settings_config from "./settings_config";
 import * as stream_color from "./stream_color";
+import * as stream_topic_history from "./stream_topic_history";
 import * as util from "./util";
 
 class BinaryDict {

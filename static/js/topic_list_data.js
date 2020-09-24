@@ -1,5 +1,6 @@
 import * as muting from "./muting";
 import * as narrow_state from "./narrow_state";
+import * as stream_topic_history from "./stream_topic_history";
 import * as unread from "./unread";
 
 const max_topics = 5;
