@@ -11,6 +11,7 @@ const channel = require("./channel");
 const common = require("./common");
 const overlays = require("./overlays");
 const people = require("./people");
+const pill_typeahead = require("./pill_typeahead");
 const popovers = require("./popovers");
 const setup = require("./setup");
 const ui_report = require("./ui_report");

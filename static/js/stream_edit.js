@@ -11,6 +11,7 @@ import * as list_render from "./list_render";
 import * as narrow_state from "./narrow_state";
 import * as overlays from "./overlays";
 import * as people from "./people";
+import * as pill_typeahead from "./pill_typeahead";
 import * as popovers from "./popovers";
 import * as settings_config from "./settings_config";
 import * as settings_data from "./settings_data";

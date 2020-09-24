@@ -42,7 +42,6 @@ declare let notifications: any;
 declare let padded_widget: any;
 declare let page_params: any;
 declare let panels: any;
-declare let pill_typeahead: any;
 declare let pointer: any;
 declare let presence: any;
 declare let reactions: any;

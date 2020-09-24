@@ -147,7 +147,6 @@
                 "padded_widget": false,
                 "page_params": false,
                 "panels": false,
-                "pill_typeahead": false,
                 "pointer": false,
                 "presence": false,
                 "reactions": false,
