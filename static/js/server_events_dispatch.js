@@ -8,6 +8,7 @@ const compose_fade = require("./compose_fade");
 const composebox_typeahead = require("./composebox_typeahead");
 const markdown = require("./markdown");
 const message_edit = require("./message_edit");
+const message_flags = require("./message_flags");
 const message_list = require("./message_list");
 const muting_ui = require("./muting_ui");
 const narrow_state = require("./narrow_state");

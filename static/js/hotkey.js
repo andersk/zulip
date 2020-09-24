@@ -13,6 +13,7 @@ import * as hashchange from "./hashchange";
 import * as lightbox from "./lightbox";
 import * as list_util from "./list_util";
 import * as message_edit from "./message_edit";
+import * as message_flags from "./message_flags";
 import * as muting_ui from "./muting_ui";
 import * as narrow from "./narrow";
 import * as navigate from "./navigate";
