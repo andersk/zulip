@@ -3,6 +3,7 @@
 const _ = require("lodash");
 
 const blueslip = require("./blueslip");
+const {Filter} = require("./filter");
 const muting = require("./muting");
 const unread = require("./unread");
 const util = require("./util");

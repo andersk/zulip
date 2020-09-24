@@ -1,5 +1,6 @@
 "use strict";
 
+const {Filter} = require("./filter");
 const input_pill = require("./input_pill");
 
 exports.create_item_from_search_string = function (search_string) {

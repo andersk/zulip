@@ -2,6 +2,7 @@
 
 const blueslip = require("./blueslip");
 const channel = require("./channel");
+const {Filter} = require("./filter");
 const people = require("./people");
 const stream_list = require("./stream_list");
 const top_left_corner = require("./top_left_corner");

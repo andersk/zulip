@@ -1,6 +1,7 @@
 "use strict";
 
 const blueslip = require("./blueslip");
+const {Filter} = require("./filter");
 const people = require("./people");
 const unread = require("./unread");
 
