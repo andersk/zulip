@@ -157,7 +157,6 @@
                 "StripeCheckout": false,
                 "message_view_header": false,
                 "templates": false,
-                "tutorial": false,
                 "typing": false,
                 "typing_data": false,
                 "typing_events": false,
