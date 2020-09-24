@@ -15,6 +15,7 @@ const muting_ui = require("./muting_ui");
 const narrow = require("./narrow");
 const stream_color = require("./stream_color");
 const stream_data = require("./stream_data");
+const subs = require("./subs");
 const unread_ops = require("./unread_ops");
 
 // We handle stream popovers and topic popovers in this

@@ -204,7 +204,6 @@
                 "stream_popover": false,
                 "stream_ui_updates": false,
                 "StripeCheckout": false,
-                "subs": false,
                 "message_view_header": false,
                 "templates": false,
                 "timerender": false,

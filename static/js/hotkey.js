@@ -11,6 +11,7 @@ const feedback_widget = require("./feedback_widget");
 const muting_ui = require("./muting_ui");
 const narrow = require("./narrow");
 const stream_list = require("./stream_list");
+const subs = require("./subs");
 const topic_zoom = require("./topic_zoom");
 
 function do_narrow_action(action) {

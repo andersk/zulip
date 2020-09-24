@@ -95,7 +95,6 @@ declare let settings_users: any;
 declare let starred_messages: any;
 declare let stream_popover: any;
 declare let stream_ui_updates: any;
-declare let subs: any;
 declare let message_view_header: any;
 declare let templates: any;
 declare let timerender: any;

@@ -14,6 +14,7 @@ import * as settings_data from "./settings_data";
 import * as stream_color from "./stream_color";
 import * as stream_data from "./stream_data";
 import * as stream_pill from "./stream_pill";
+import * as subs from "./subs";
 import * as user_pill from "./user_pill";
 import * as util from "./util";
 

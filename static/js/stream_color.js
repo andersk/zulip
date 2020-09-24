@@ -1,5 +1,7 @@
 import _ from "lodash";
 
+import * as subs from "./subs";
+
 export const default_color = "#c2c2c2";
 
 // Classes which could be returned by get_color_class.

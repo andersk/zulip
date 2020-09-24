@@ -17,6 +17,7 @@ const stream_events = require("./stream_events");
 const stream_list = require("./stream_list");
 const stream_topic_history = require("./stream_topic_history");
 const submessage = require("./submessage");
+const subs = require("./subs");
 const unread_ops = require("./unread_ops");
 const user_groups = require("./user_groups");
 
