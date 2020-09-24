@@ -7,6 +7,7 @@ const buddy_data = require("./buddy_data");
 const {buddy_list} = require("./buddy_list");
 const channel = require("./channel");
 const keydown_util = require("./keydown_util");
+const {ListCursor} = require("./list_cursor");
 const narrow = require("./narrow");
 const people = require("./people");
 const pm_list = require("./pm_list");
