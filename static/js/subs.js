@@ -10,6 +10,7 @@ const render_subscriptions = require("../templates/subscriptions.hbs");
 const blueslip = require("./blueslip");
 const loading = require("./loading");
 const people = require("./people");
+const search_util = require("./search_util");
 const util = require("./util");
 
 exports.show_subs_pane = {
