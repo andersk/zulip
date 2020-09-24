@@ -146,7 +146,6 @@
                 "list_util": false,
                 "localStorage": false,
                 "location": false,
-                "message_edit_history": false,
                 "message_events": false,
                 "message_fetch": false,
                 "message_flags": false,
