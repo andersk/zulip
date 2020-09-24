@@ -80,7 +80,6 @@ declare let message_view_header: any;
 declare let templates: any;
 declare let timerender: any;
 declare let tutorial: any;
-declare let typeahead_helper: any;
 declare let typing: any;
 declare let typing_data: any;
 declare let typing_events: any;

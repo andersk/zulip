@@ -189,7 +189,6 @@
                 "templates": false,
                 "timerender": false,
                 "tutorial": false,
-                "typeahead_helper": false,
                 "typing": false,
                 "typing_data": false,
                 "typing_events": false,
