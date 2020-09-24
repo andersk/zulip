@@ -3,6 +3,7 @@
 const _ = require("lodash");
 
 const blueslip = require("./blueslip");
+const channel = require("./channel");
 // Docs: https://zulip.readthedocs.io/en/latest/subsystems/events-system.html
 
 let waiting_on_homeview_load = true;

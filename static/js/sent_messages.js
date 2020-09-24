@@ -1,6 +1,7 @@
 "use strict";
 
 const blueslip = require("./blueslip");
+const channel = require("./channel");
 
 exports.messages = new Map();
 

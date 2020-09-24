@@ -2,6 +2,7 @@
 
 const marked = require("../third/marked/lib/marked");
 
+const channel = require("./channel");
 const common = require("./common");
 const feedback_widget = require("./feedback_widget");
 

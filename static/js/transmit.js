@@ -1,6 +1,7 @@
 "use strict";
 
 const blueslip = require("./blueslip");
+const channel = require("./channel");
 const people = require("./people");
 
 exports.send_message = function (request, on_success, error) {

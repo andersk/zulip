@@ -7,6 +7,7 @@ const render_settings_custom_user_profile_field = require("../templates/settings
 const render_settings_dev_env_email_access = require("../templates/settings/dev_env_email_access.hbs");
 
 const blueslip = require("./blueslip");
+const channel = require("./channel");
 const common = require("./common");
 const people = require("./people");
 const setup = require("./setup");

@@ -1,6 +1,7 @@
 "use strict";
 
 const blueslip = require("./blueslip");
+const channel = require("./channel");
 const people = require("./people");
 const util = require("./util");
 

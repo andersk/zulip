@@ -5,6 +5,7 @@ const render_settings_admin_auth_methods_list = require("../templates/settings/a
 const render_settings_admin_realm_domains_list = require("../templates/settings/admin_realm_domains_list.hbs");
 
 const blueslip = require("./blueslip");
+const channel = require("./channel");
 const loading = require("./loading");
 const settings_config = require("./settings_config");
 

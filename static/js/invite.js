@@ -6,6 +6,7 @@ const render_invitation_failed_error = require("../templates/invitation_failed_e
 const render_invite_subscription = require("../templates/invite_subscription.hbs");
 const render_settings_dev_env_email_access = require("../templates/settings/dev_env_email_access.hbs");
 
+const channel = require("./channel");
 const common = require("./common");
 
 function reset_error_messages() {

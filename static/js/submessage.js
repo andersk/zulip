@@ -1,6 +1,7 @@
 "use strict";
 
 const blueslip = require("./blueslip");
+const channel = require("./channel");
 
 exports.get_message_events = function (message) {
     if (message.locally_echoed) {

@@ -120,7 +120,6 @@
                 "bridge": false,
                 "buddy_data": false,
                 "buddy_list": false,
-                "channel": false,
                 "click_handlers": false,
                 "color_data": false,
                 "colorspace": false,

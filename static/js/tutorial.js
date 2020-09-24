@@ -1,5 +1,7 @@
 "use strict";
 
+const channel = require("./channel");
+
 function set_tutorial_status(status, callback) {
     return channel.post({
         url: "/json/users/me/tutorial_status",

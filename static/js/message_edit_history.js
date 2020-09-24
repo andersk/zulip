@@ -4,6 +4,7 @@ const XDate = require("xdate");
 
 const render_message_edit_history = require("../templates/message_edit_history.hbs");
 
+const channel = require("./channel");
 const people = require("./people");
 
 exports.fetch_and_render_message_history = function (message) {

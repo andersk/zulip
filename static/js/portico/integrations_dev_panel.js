@@ -1,5 +1,7 @@
 "use strict";
 
+const channel = require("../channel");
+
 // Main JavaScript file for the Integrations development panel at
 // /devtools/integrations.
 

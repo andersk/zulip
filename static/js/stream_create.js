@@ -4,6 +4,7 @@ const render_announce_stream_docs = require("../templates/announce_stream_docs.h
 const render_new_stream_users = require("../templates/new_stream_users.hbs");
 const render_subscription_invites_warning_modal = require("../templates/subscription_invites_warning_modal.hbs");
 
+const channel = require("./channel");
 const loading = require("./loading");
 const people = require("./people");
 

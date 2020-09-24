@@ -6,6 +6,7 @@ const render_compose_notification = require("../templates/compose_notification.h
 const render_notification = require("../templates/notification.hbs");
 
 const blueslip = require("./blueslip");
+const channel = require("./channel");
 const people = require("./people");
 const settings_config = require("./settings_config");
 
