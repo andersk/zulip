@@ -73,7 +73,6 @@ declare let page_params: any;
 declare let panels: any;
 declare let pill_typeahead: any;
 declare let pointer: any;
-declare let poll_widget: any;
 declare let popovers: any;
 declare let presence: any;
 declare let reactions: any;

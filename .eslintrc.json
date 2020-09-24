@@ -252,7 +252,6 @@
                 "user_events": false,
                 "user_status": false,
                 "user_status_ui": false,
-                "poll_widget": false,
                 "widgetize": false,
                 "zcommand": false,
                 "zform": false,

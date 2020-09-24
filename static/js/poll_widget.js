@@ -1,10 +1,8 @@
-"use strict";
+import render_widgets_poll_widget from "../templates/widgets/poll_widget.hbs";
+import render_widgets_poll_widget_results from "../templates/widgets/poll_widget_results.hbs";
 
-const render_widgets_poll_widget = require("../templates/widgets/poll_widget.hbs");
-const render_widgets_poll_widget_results = require("../templates/widgets/poll_widget_results.hbs");
-
-const blueslip = require("./blueslip");
-const people = require("./people");
+import * as blueslip from "./blueslip";
+import * as people from "./people";
 
 class PollData {
     // This object just holds data for a poll, although it
@@ -178,9 +176,9 @@ class PollData {
         return data.some((el) => el.option === latest_option);
     }
 }
-exports.PollData = PollData;
+export {PollData};
 
-exports.activate = function (opts) {
+export function activate(opts) {
     const elem = opts.elem;
     const callback = opts.callback;
 
@@ -369,6 +367,4 @@ exports.activate = function (opts) {
     build_widget();
     render_question();
     render_results();
-};
-
-window.poll_widget = exports;
+}
