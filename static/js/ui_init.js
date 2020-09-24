@@ -19,6 +19,7 @@ const pm_list = require("./pm_list");
 const rows = require("./rows");
 const stream_list = require("./stream_list");
 const topic_list = require("./topic_list");
+const topic_zoom = require("./topic_zoom");
 const unread = require("./unread");
 const unread_ui = require("./unread_ui");
 const user_groups = require("./user_groups");

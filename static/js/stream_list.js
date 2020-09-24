@@ -8,6 +8,7 @@ import * as keydown_util from "./keydown_util";
 import * as scroll_util from "./scroll_util";
 import * as stream_sort from "./stream_sort";
 import * as topic_list from "./topic_list";
+import * as topic_zoom from "./topic_zoom";
 import * as unread from "./unread";
 
 export let stream_cursor;

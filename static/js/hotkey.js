@@ -7,6 +7,7 @@ const drafts = require("./drafts");
 const feedback_widget = require("./feedback_widget");
 const muting_ui = require("./muting_ui");
 const stream_list = require("./stream_list");
+const topic_zoom = require("./topic_zoom");
 
 function do_narrow_action(action) {
     action(current_msg_list.selected_id(), {trigger: "hotkey"});
