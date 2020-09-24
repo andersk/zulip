@@ -11,6 +11,7 @@ const drafts = require("./drafts");
 const message_viewport = require("./message_viewport");
 const narrow_state = require("./narrow_state");
 const people = require("./people");
+const reload_state = require("./reload_state");
 const unread_ops = require("./unread_ops");
 
 exports.blur_compose_inputs = function () {

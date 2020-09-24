@@ -4,6 +4,7 @@ const blueslip = require("./blueslip");
 const {localstorage} = require("./localstorage");
 const message_list = require("./message_list");
 const narrow_state = require("./narrow_state");
+const reload_state = require("./reload_state");
 const util = require("./util");
 
 // Read https://zulip.readthedocs.io/en/latest/subsystems/hashchange-system.html

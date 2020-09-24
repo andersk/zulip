@@ -4,6 +4,7 @@ const XDate = require("xdate");
 
 const blueslip = require("./blueslip");
 const people = require("./people");
+const reload_state = require("./reload_state");
 
 // This module just manages data.  See activity.js for
 // the UI of our buddy list.
