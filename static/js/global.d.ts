@@ -31,7 +31,6 @@ declare let hotkey: any;
 declare let hotspots: any;
 declare let i18n: any;
 declare let invite: any;
-declare let list_util: any;
 declare let message_events: any;
 declare let message_fetch: any;
 declare let message_flags: any;

@@ -12,6 +12,7 @@ const drafts = require("./drafts");
 const feedback_widget = require("./feedback_widget");
 const gear_menu = require("./gear_menu");
 const lightbox = require("./lightbox");
+const list_util = require("./list_util");
 const message_edit = require("./message_edit");
 const muting_ui = require("./muting_ui");
 const narrow = require("./narrow");
