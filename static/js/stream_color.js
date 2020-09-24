@@ -1,5 +1,6 @@
 import _ from "lodash";
 
+import * as colorspace from "./colorspace";
 import * as subs from "./subs";
 
 export const default_color = "#c2c2c2";

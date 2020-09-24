@@ -7,7 +7,6 @@ declare let admin: any;
 declare let avatar: any;
 declare let billing: any;
 declare let bot_data: any;
-declare let colorspace: any;
 declare let compose_ui: any;
 declare let confirm_dialog: any;
 declare let csrf_token: any;

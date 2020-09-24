@@ -108,7 +108,6 @@
                 "billing": false,
                 "bot_data": false,
                 "bridge": false,
-                "colorspace": false,
                 "compose_ui": false,
                 "confirm_dialog": false,
                 "csrf_token": false,
