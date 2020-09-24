@@ -1,5 +1,6 @@
 import XDate from "xdate";
 
+import * as topic_list from "./topic_list";
 import * as unread from "./unread";
 
 let last_mention_count = 0;

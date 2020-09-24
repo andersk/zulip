@@ -8,6 +8,7 @@ const render_stream_sidebar_row = require("../templates/stream_sidebar_row.hbs")
 const blueslip = require("./blueslip");
 const keydown_util = require("./keydown_util");
 const scroll_util = require("./scroll_util");
+const topic_list = require("./topic_list");
 const unread = require("./unread");
 
 let has_scrolled = false;

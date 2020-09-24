@@ -1,5 +1,7 @@
 "use strict";
 
+const topic_list = require("./topic_list");
+
 let zoomed_in = false;
 
 exports.is_zoomed_in = function () {
