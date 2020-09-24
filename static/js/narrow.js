@@ -8,6 +8,7 @@ import * as condense from "./condense";
 import {Filter} from "./filter";
 import * as hashchange from "./hashchange";
 import * as message_edit from "./message_edit";
+import * as message_fetch from "./message_fetch";
 import * as message_list from "./message_list";
 import {MessageListData} from "./message_list_data";
 import * as message_scroll from "./message_scroll";
