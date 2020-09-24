@@ -8,6 +8,7 @@ const channel = require("./channel");
 const list_render = require("./list_render");
 const loading = require("./loading");
 const people = require("./people");
+const ui = require("./ui");
 const ui_report = require("./ui_report");
 
 const meta = {

@@ -9,6 +9,7 @@ const render_settings_dev_env_email_access = require("../templates/settings/dev_
 const channel = require("./channel");
 const common = require("./common");
 const stream_data = require("./stream_data");
+const ui = require("./ui");
 const ui_report = require("./ui_report");
 
 function reset_error_messages() {

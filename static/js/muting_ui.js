@@ -7,6 +7,7 @@ import * as list_render from "./list_render";
 import * as muting from "./muting";
 import * as stream_data from "./stream_data";
 import * as stream_list from "./stream_list";
+import * as ui from "./ui";
 import * as unread_ui from "./unread_ui";
 
 function timestamp_ms() {

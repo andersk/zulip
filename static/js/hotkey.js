@@ -16,6 +16,7 @@ const narrow = require("./narrow");
 const stream_list = require("./stream_list");
 const subs = require("./subs");
 const topic_zoom = require("./topic_zoom");
+const ui = require("./ui");
 
 function do_narrow_action(action) {
     action(current_msg_list.selected_id(), {trigger: "hotkey"});

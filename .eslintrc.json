@@ -203,7 +203,6 @@
                 "typing": false,
                 "typing_data": false,
                 "typing_events": false,
-                "ui": false,
                 "ui_init": false,
                 "ui_util": false,
                 "upgrade": false,

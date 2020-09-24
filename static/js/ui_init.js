@@ -34,6 +34,7 @@ const stream_list = require("./stream_list");
 const subs = require("./subs");
 const topic_list = require("./topic_list");
 const topic_zoom = require("./topic_zoom");
+const ui = require("./ui");
 const unread = require("./unread");
 const unread_ui = require("./unread_ui");
 const user_groups = require("./user_groups");
