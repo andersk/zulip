@@ -54,7 +54,6 @@ declare let message_edit_history: any;
 declare let message_events: any;
 declare let message_fetch: any;
 declare let message_flags: any;
-declare let message_live_update: any;
 declare let message_scroll: any;
 declare let message_store: any;
 declare let message_util: any;
