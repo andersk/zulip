@@ -1,4 +1,5 @@
 import * as channel from "./channel";
+import * as message_viewport from "./message_viewport";
 import * as unread_ui from "./unread_ui";
 
 export function mark_all_as_read() {

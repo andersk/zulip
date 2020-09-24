@@ -3,6 +3,7 @@
 const autosize = require("autosize");
 
 const blueslip = require("./blueslip");
+const message_viewport = require("./message_viewport");
 
 exports.narrowed = undefined;
 exports.set_narrowed = function (value) {

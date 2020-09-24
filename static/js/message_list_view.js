@@ -9,6 +9,7 @@ const render_recipient_row = require("../templates/recipient_row.hbs");
 const render_single_message = require("../templates/single_message.hbs");
 
 const blueslip = require("./blueslip");
+const message_viewport = require("./message_viewport");
 const people = require("./people");
 const rendered_markdown = require("./rendered_markdown");
 const util = require("./util");

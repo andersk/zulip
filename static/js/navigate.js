@@ -1,5 +1,6 @@
 "use strict";
 
+const message_viewport = require("./message_viewport");
 const unread_ops = require("./unread_ops");
 
 function go_to_row(msg_id) {

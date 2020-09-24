@@ -4,6 +4,7 @@ const render_user_presence_row = require("../templates/user_presence_row.hbs");
 const render_user_presence_rows = require("../templates/user_presence_rows.hbs");
 
 const blueslip = require("./blueslip");
+const message_viewport = require("./message_viewport");
 
 class BuddyListConf {
     container_sel = "#user_presences";
