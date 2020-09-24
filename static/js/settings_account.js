@@ -10,6 +10,7 @@ const blueslip = require("./blueslip");
 const common = require("./common");
 const people = require("./people");
 const setup = require("./setup");
+const user_pill = require("./user_pill");
 
 exports.update_email = function (new_email) {
     const email_input = $("#email_value");

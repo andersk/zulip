@@ -271,7 +271,6 @@
                 "upload_widget": false,
                 "user_events": false,
                 "user_groups": false,
-                "user_pill": false,
                 "user_status": false,
                 "user_status_ui": false,
                 "poll_widget": false,

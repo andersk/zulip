@@ -2,6 +2,7 @@
 
 const people = require("./people");
 const settings_data = require("./settings_data");
+const user_pill = require("./user_pill");
 
 exports.set_up = function (input, pills, opts) {
     let source = opts.source;

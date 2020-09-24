@@ -9,6 +9,7 @@ const loading = require("./loading");
 const people = require("./people");
 const settings_config = require("./settings_config");
 const settings_data = require("./settings_data");
+const user_pill = require("./user_pill");
 
 const section = {
     active: {},

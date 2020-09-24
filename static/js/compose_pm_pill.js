@@ -2,6 +2,7 @@
 
 const input_pill = require("./input_pill");
 const people = require("./people");
+const user_pill = require("./user_pill");
 const util = require("./util");
 
 exports.initialize_pill = function () {
