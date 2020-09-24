@@ -10,6 +10,7 @@ const blueslip = require("./blueslip");
 const channel = require("./channel");
 const common = require("./common");
 const people = require("./people");
+const popovers = require("./popovers");
 const setup = require("./setup");
 const ui_report = require("./ui_report");
 const user_pill = require("./user_pill");

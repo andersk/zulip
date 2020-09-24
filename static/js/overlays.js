@@ -1,6 +1,7 @@
 "use strict";
 
 const blueslip = require("./blueslip");
+const popovers = require("./popovers");
 
 let active_overlay;
 let close_handler;

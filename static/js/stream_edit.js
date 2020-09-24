@@ -10,6 +10,7 @@ import * as input_pill from "./input_pill";
 import * as list_render from "./list_render";
 import * as narrow_state from "./narrow_state";
 import * as people from "./people";
+import * as popovers from "./popovers";
 import * as settings_config from "./settings_config";
 import * as settings_data from "./settings_data";
 import * as stream_color from "./stream_color";

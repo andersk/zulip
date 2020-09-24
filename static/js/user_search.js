@@ -1,5 +1,6 @@
 "use strict";
 
+const popovers = require("./popovers");
 const resize = require("./resize");
 const stream_popover = require("./stream_popover");
 

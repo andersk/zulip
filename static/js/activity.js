@@ -8,6 +8,7 @@ const keydown_util = require("./keydown_util");
 const narrow = require("./narrow");
 const people = require("./people");
 const pm_list = require("./pm_list");
+const popovers = require("./popovers");
 
 /*
     Helpers for detecting user activity and managing user idle states

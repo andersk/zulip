@@ -12,6 +12,7 @@ import * as message_edit from "./message_edit";
 import * as muting from "./muting";
 import * as muting_ui from "./muting_ui";
 import * as narrow from "./narrow";
+import * as popovers from "./popovers";
 import * as resize from "./resize";
 import * as stream_color from "./stream_color";
 import * as stream_data from "./stream_data";
