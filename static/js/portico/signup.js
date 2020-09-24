@@ -1,8 +1,6 @@
-"use strict";
+import moment from "moment-timezone";
 
-const moment = require("moment-timezone");
-
-const common = require("../common");
+import * as common from "../common";
 
 $(() => {
     // NB: this file is included on multiple pages.  In each context,
