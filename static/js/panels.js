@@ -1,10 +1,8 @@
-"use strict";
-
-const {localstorage} = require("./localstorage");
-const notifications = require("./notifications");
-const unread_ops = require("./unread_ops");
-const unread_ui = require("./unread_ui");
-const util = require("./util");
+import {localstorage} from "./localstorage";
+import * as notifications from "./notifications";
+import * as unread_ops from "./unread_ops";
+import * as unread_ui from "./unread_ui";
+import * as util from "./util";
 
 const resize_app = function () {
     const panels_height = $("#panels").height();
@@ -17,7 +15,7 @@ const resize_app = function () {
     $("#floating_recipient_bar").css("top", frb_top + "px");
 };
 
-exports.resize_app = resize_app;
+export {resize_app};
 
 const show_step = function ($process, step) {
     $process
@@ -52,7 +50,7 @@ function should_show_notifications(ls) {
     );
 }
 
-exports.check_profile_incomplete = function () {
+export function check_profile_incomplete() {
     if (!page_params.is_admin) {
         return;
     }
@@ -68,24 +66,24 @@ exports.check_profile_incomplete = function () {
     } else {
         $("[data-process='profile-incomplete']").hide();
     }
-};
+}
 
-exports.initialize = function () {
+export function initialize() {
     const ls = localstorage();
     if (page_params.insecure_desktop_app) {
-        exports.open($("[data-process='insecure-desktop-app']"));
+        open($("[data-process='insecure-desktop-app']"));
     } else if (page_params.warn_no_email === true && page_params.is_admin) {
         // if email has not been set up and the user is the admin,
         // display a warning to tell them to set up an email server.
-        exports.open($("[data-process='email-server']"));
+        open($("[data-process='email-server']"));
     } else if (should_show_notifications(ls)) {
-        exports.open($("[data-process='notifications']"));
+        open($("[data-process='notifications']"));
     } else if (unread_ui.should_display_bankruptcy_banner()) {
-        exports.open($("[data-process='bankruptcy']"));
+        open($("[data-process='bankruptcy']"));
     } else {
         // TODO: This should be restructured with separate check and
         // show calls.
-        exports.check_profile_incomplete();
+        check_profile_incomplete();
     }
 
     // Configure click handlers.
@@ -128,12 +126,10 @@ exports.initialize = function () {
             $(this).click();
         }
     });
-};
+}
 
-exports.open = function ($process) {
+export function open($process) {
     $("[data-process]").hide();
     $process.show();
     resize_app();
-};
-
-window.panels = exports;
+}

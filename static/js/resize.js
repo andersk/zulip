@@ -4,6 +4,7 @@ import * as blueslip from "./blueslip";
 import * as condense from "./condense";
 import * as message_viewport from "./message_viewport";
 import * as navigate from "./navigate";
+import * as panels from "./panels";
 import * as popovers from "./popovers";
 import * as ui from "./ui";
 import * as util from "./util";

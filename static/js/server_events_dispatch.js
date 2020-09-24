@@ -20,6 +20,7 @@ import * as narrow_state from "./narrow_state";
 import * as night_mode from "./night_mode";
 import * as notifications from "./notifications";
 import * as overlays from "./overlays";
+import * as panels from "./panels";
 import * as people from "./people";
 import * as reactions from "./reactions";
 import * as realm_icon from "./realm_icon";
