@@ -1,15 +1,13 @@
-"use strict";
-
-const blueslip = require("./blueslip");
-const loading = require("./loading");
-const util = require("./util");
+import * as blueslip from "./blueslip";
+import * as loading from "./loading";
+import * as util from "./util";
 
 // Miscellaneous early setup.
-exports.password_change_in_progress = false;
+export let password_change_in_progress = false;
 
-exports.set_password_change_in_progress = function (value) {
-    exports.password_change_in_progress = value;
-};
+export function set_password_change_in_progress(value) {
+    password_change_in_progress = value;
+}
 
 $(() => {
     if (util.is_mobile()) {
@@ -43,7 +41,7 @@ $(() => {
 
     // For some reason, jQuery wants this to be attached to an element.
     $(document).ajaxError((event, xhr) => {
-        if (exports.password_change_in_progress) {
+        if (password_change_in_progress) {
             // The backend for handling password change API requests
             // will replace the user's session; this results in a
             // brief race where any API request will fail with a 401
