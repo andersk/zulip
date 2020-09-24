@@ -1,5 +1,7 @@
 "use strict";
 
+const muting_ui = require("./muting_ui");
+
 exports.loaded = false;
 
 exports.set_up = function () {

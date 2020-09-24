@@ -18,6 +18,7 @@ const render_user_profile_modal = require("../templates/user_profile_modal.hbs")
 const blueslip = require("./blueslip");
 const feature_flags = require("./feature_flags");
 const muting = require("./muting");
+const muting_ui = require("./muting_ui");
 const people = require("./people");
 const settings_data = require("./settings_data");
 const util = require("./util");

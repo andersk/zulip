@@ -3,6 +3,7 @@
 const emoji = require("../shared/js/emoji");
 
 const blueslip = require("./blueslip");
+const muting_ui = require("./muting_ui");
 const people = require("./people");
 const settings_config = require("./settings_config");
 const unread_ops = require("./unread_ops");
