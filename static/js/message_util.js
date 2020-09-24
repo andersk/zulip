@@ -2,6 +2,7 @@
 
 const loading = require("./loading");
 const message_list = require("./message_list");
+const resize = require("./resize");
 const unread = require("./unread");
 const unread_ui = require("./unread_ui");
 

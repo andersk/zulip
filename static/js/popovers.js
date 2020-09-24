@@ -28,6 +28,7 @@ const muting_ui = require("./muting_ui");
 const narrow = require("./narrow");
 const narrow_state = require("./narrow_state");
 const people = require("./people");
+const resize = require("./resize");
 const rows = require("./rows");
 const settings_data = require("./settings_data");
 const user_groups = require("./user_groups");

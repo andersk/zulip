@@ -7,6 +7,7 @@ import * as blueslip from "./blueslip";
 import * as keydown_util from "./keydown_util";
 import * as narrow from "./narrow";
 import * as narrow_state from "./narrow_state";
+import * as resize from "./resize";
 import * as scroll_util from "./scroll_util";
 import * as stream_color from "./stream_color";
 import * as stream_data from "./stream_data";

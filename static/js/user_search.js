@@ -1,5 +1,7 @@
 "use strict";
 
+const resize = require("./resize");
+
 class UserSearch {
     // This is mostly view code to manage the user search widget
     // above the buddy list.  We rely on other code to manage the

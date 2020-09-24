@@ -14,6 +14,7 @@ const message_edit = require("./message_edit");
 const muting = require("./muting");
 const muting_ui = require("./muting_ui");
 const narrow = require("./narrow");
+const resize = require("./resize");
 const stream_color = require("./stream_color");
 const stream_data = require("./stream_data");
 const subs = require("./subs");

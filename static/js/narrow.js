@@ -11,6 +11,7 @@ import * as message_list from "./message_list";
 import {MessageListData} from "./message_list_data";
 import * as narrow_state from "./narrow_state";
 import * as people from "./people";
+import * as resize from "./resize";
 import * as stream_data from "./stream_data";
 import * as stream_list from "./stream_list";
 import * as stream_topic_history from "./stream_topic_history";

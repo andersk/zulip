@@ -19,6 +19,7 @@ import * as loading from "./loading";
 import * as markdown from "./markdown";
 import * as people from "./people";
 import * as rendered_markdown from "./rendered_markdown";
+import * as resize from "./resize";
 import * as rtl from "./rtl";
 import * as sent_messages from "./sent_messages";
 import * as stream_data from "./stream_data";

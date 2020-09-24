@@ -62,7 +62,6 @@ declare let realm_icon: any;
 declare let realm_logo: any;
 declare let recent_topics: any;
 declare let reminder: any;
-declare let resize: any;
 declare let scroll_bar: any;
 declare let search: any;
 declare let search_pill: any;
