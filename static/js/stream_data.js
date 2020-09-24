@@ -7,6 +7,7 @@ const {LazySet} = require("./lazy_set");
 const message_list = require("./message_list");
 const people = require("./people");
 const settings_config = require("./settings_config");
+const stream_color = require("./stream_color");
 const util = require("./util");
 
 class BinaryDict {

@@ -1,17 +1,15 @@
-"use strict";
+import _ from "lodash";
 
-const _ = require("lodash");
-
-exports.default_color = "#c2c2c2";
+export const default_color = "#c2c2c2";
 
 // Classes which could be returned by get_color_class.
-exports.color_classes = "dark_background";
+export const color_classes = "dark_background";
 
 function update_table_stream_color(table, stream_name, color) {
     // This is ugly, but temporary, as the new design will make it
     // so that we only have color in the headers.
     const style = color;
-    const color_class = exports.get_color_class(color);
+    const color_class = get_color_class(color);
 
     const stream_labels = $("#floating_recipient_bar").add(table).find(".stream_label");
 
@@ -32,7 +30,7 @@ function update_table_stream_color(table, stream_name, color) {
                     "inset 2px 0px 0px 0px " + style + ", -1px 0px 0px 0px " + style,
                 );
             $label.css({background: style, "border-left-color": style});
-            $label.removeClass(exports.color_classes);
+            $label.removeClass(color_classes);
             $label.addClass(color_class);
         }
     }
@@ -64,22 +62,22 @@ const subscriptions_table_colorpicker_options = {
     palette: stream_color_palette,
 };
 
-exports.set_colorpicker_color = function (colorpicker, color) {
+export function set_colorpicker_color(colorpicker, color) {
     colorpicker.spectrum({
         ...subscriptions_table_colorpicker_options,
         color,
         container: "#subscription_overlay .subscription_settings.show",
     });
-};
+}
 
-exports.update_stream_color = function (sub, color, opts) {
+export function update_stream_color(sub, color, opts) {
     opts = {update_historical: false, ...opts};
     sub.color = color;
     const stream_id = sub.stream_id;
     // The swatch in the subscription row header.
     $(".stream-row[data-stream-id='" + stream_id + "'] .icon").css("background-color", color);
     // The swatch in the color picker.
-    exports.set_colorpicker_color(
+    set_colorpicker_color(
         $(
             "#subscription_overlay .subscription_settings[data-stream-id='" +
                 stream_id +
@@ -98,7 +96,7 @@ exports.update_stream_color = function (sub, color, opts) {
     }
     update_stream_sidebar_swatch_color(stream_id, color);
     message_view_header.colorize_message_view_header();
-};
+}
 
 function picker_do_change_color(color) {
     const stream_id = parseInt($(this).attr("stream_id"), 10);
@@ -107,7 +105,7 @@ function picker_do_change_color(color) {
 }
 subscriptions_table_colorpicker_options.change = picker_do_change_color;
 
-exports.sidebar_popover_colorpicker_options = {
+export const sidebar_popover_colorpicker_options = {
     clickoutFiresChange: true,
     showPaletteOnly: true,
     showPalette: true,
@@ -117,7 +115,7 @@ exports.sidebar_popover_colorpicker_options = {
     change: picker_do_change_color,
 };
 
-exports.sidebar_popover_colorpicker_options_full = {
+export const sidebar_popover_colorpicker_options_full = {
     clickoutFiresChange: false,
     showPalette: true,
     showInput: true,
@@ -129,7 +127,8 @@ exports.sidebar_popover_colorpicker_options_full = {
 };
 
 let lightness_threshold;
-exports.initialize = function () {
+
+export function initialize() {
     // sRGB color component for dark label text.
     // 0x33 to match the color #333333 set by Bootstrap.
     const label_color = 0x33;
@@ -137,7 +136,7 @@ exports.initialize = function () {
 
     // Compute midpoint lightness between that and white (100).
     lightness_threshold = (lightness + 100) / 2;
-};
+}
 
 // From a background color (in format "#fff" or "#ffffff")
 // pick a CSS class (or empty string) to determine the
@@ -148,7 +147,7 @@ exports.initialize = function () {
 // already saved on the server, etc.
 //
 // This gets called on every message, so cache the results.
-exports.get_color_class = _.memoize((color) => {
+export let get_color_class = _.memoize((color) => {
     let match;
     let i;
     const channel = [0, 0, 0];
@@ -180,5 +179,3 @@ exports.get_color_class = _.memoize((color) => {
     // dark and light label lightness.
     return lightness < lightness_threshold ? "dark_background" : "";
 });
-
-window.stream_color = exports;
