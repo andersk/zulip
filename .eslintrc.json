@@ -108,7 +108,6 @@
                 "bot_data": false,
                 "bridge": false,
                 "compose_ui": false,
-                "confirm_dialog": false,
                 "csrf_token": false,
                 "current_msg_list": true,
                 "dropdown_list_widget": false,

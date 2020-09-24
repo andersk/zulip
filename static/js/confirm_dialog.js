@@ -1,9 +1,7 @@
-"use strict";
+import render_confirm_dialog from "../templates/confirm_dialog.hbs";
 
-const render_confirm_dialog = require("../templates/confirm_dialog.hbs");
-
-const blueslip = require("./blueslip");
-const overlays = require("./overlays");
+import * as blueslip from "./blueslip";
+import * as overlays from "./overlays";
 
 /*
     Look for confirm_dialog in settings_user_groups
@@ -30,7 +28,7 @@ const overlays = require("./overlays");
 
 */
 
-exports.launch = function (conf) {
+export function launch(conf) {
     const html = render_confirm_dialog();
     const confirm_dialog = $(html);
 
@@ -78,6 +76,4 @@ exports.launch = function (conf) {
 
     // Open the modal
     overlays.open_modal("#confirm_dialog_modal");
-};
-
-window.confirm_dialog = exports;
+}
