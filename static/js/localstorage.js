@@ -1,6 +1,4 @@
-"use strict";
-
-const blueslip = require("./blueslip");
+import * as blueslip from "./blueslip";
 
 const ls = {
     // parse JSON without throwing an error.
@@ -89,7 +87,7 @@ const ls = {
 };
 
 // return a new function instance that has instance-scoped variables.
-const localstorage = function () {
+export const localstorage = function () {
     const _data = {
         VERSION: 1,
         expires: Infinity,
@@ -175,6 +173,3 @@ localstorage.supported = function supports_localstorage() {
         return false;
     }
 };
-
-module.exports = localstorage;
-window.localstorage = localstorage;
