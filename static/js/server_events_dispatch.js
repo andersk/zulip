@@ -30,6 +30,7 @@ import * as submessage from "./submessage";
 import * as subs from "./subs";
 import * as ui from "./ui";
 import * as unread_ops from "./unread_ops";
+import * as user_events from "./user_events";
 import * as user_groups from "./user_groups";
 import * as user_status from "./user_status";
 

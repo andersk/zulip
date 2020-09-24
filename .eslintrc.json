@@ -166,7 +166,6 @@
                 "ui_init": false,
                 "upgrade": false,
                 "upload_widget": false,
-                "user_events": false,
                 "zxcvbn": false
             }
         },

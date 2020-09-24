@@ -55,4 +55,3 @@ declare let typing_data: any;
 declare let typing_events: any;
 declare let upgrade: any;
 declare let upload_widget: any;
-declare let user_events: any;
