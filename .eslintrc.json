@@ -116,7 +116,6 @@
                 "bridge": false,
                 "buddy_data": false,
                 "buddy_list": false,
-                "click_handlers": false,
                 "colorspace": false,
                 "compose_ui": false,
                 "composebox_typeahead": false,

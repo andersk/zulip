@@ -1,29 +1,27 @@
-"use strict";
-
-const _ = require("lodash");
-const WinChan = require("winchan");
+import _ from "lodash";
+import WinChan from "winchan";
 
 // You won't find every click handler here, but it's a good place to start!
 
-const render_buddy_list_tooltip = require("../templates/buddy_list_tooltip.hbs");
-const render_buddy_list_tooltip_content = require("../templates/buddy_list_tooltip_content.hbs");
+import render_buddy_list_tooltip from "../templates/buddy_list_tooltip.hbs";
+import render_buddy_list_tooltip_content from "../templates/buddy_list_tooltip_content.hbs";
 
-const blueslip = require("./blueslip");
-const channel = require("./channel");
-const compose = require("./compose");
-const compose_actions = require("./compose_actions");
-const compose_state = require("./compose_state");
-const message_edit = require("./message_edit");
-const message_edit_history = require("./message_edit_history");
-const muting_ui = require("./muting_ui");
-const narrow = require("./narrow");
-const rows = require("./rows");
-const settings_panel_menu = require("./settings_panel_menu");
-const stream_edit = require("./stream_edit");
-const stream_list = require("./stream_list");
-const ui_util = require("./ui_util");
-const unread_ops = require("./unread_ops");
-const util = require("./util");
+import * as blueslip from "./blueslip";
+import * as channel from "./channel";
+import * as compose from "./compose";
+import * as compose_actions from "./compose_actions";
+import * as compose_state from "./compose_state";
+import * as message_edit from "./message_edit";
+import * as message_edit_history from "./message_edit_history";
+import * as muting_ui from "./muting_ui";
+import * as narrow from "./narrow";
+import * as rows from "./rows";
+import * as settings_panel_menu from "./settings_panel_menu";
+import * as stream_edit from "./stream_edit";
+import * as stream_list from "./stream_list";
+import * as ui_util from "./ui_util";
+import * as unread_ops from "./unread_ops";
+import * as util from "./util";
 
 function convert_enter_to_click(e) {
     const key = e.which;
@@ -33,7 +31,7 @@ function convert_enter_to_click(e) {
     }
 }
 
-exports.initialize = function () {
+export function initialize() {
     // MESSAGE CLICKING
 
     function initialize_long_tap() {
@@ -998,6 +996,4 @@ exports.initialize = function () {
     $(".settings-header.mobile .fa-chevron-left").on("click", () => {
         settings_panel_menu.mobile_deactivate_section();
     });
-};
-
-window.click_handlers = exports;
+}
