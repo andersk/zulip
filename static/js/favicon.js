@@ -1,7 +1,3 @@
-"use strict";
-
-exports.set = function (url) {
+export function set(url) {
     $("#favicon").attr("href", url);
-};
-
-window.favicon = exports;
+}
