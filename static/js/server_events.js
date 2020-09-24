@@ -8,6 +8,7 @@ import * as message_store from "./message_store";
 import * as reload from "./reload";
 import * as reload_state from "./reload_state";
 import * as sent_messages from "./sent_messages";
+import * as server_events_dispatch from "./server_events_dispatch";
 import * as ui_report from "./ui_report";
 
 // Docs: https://zulip.readthedocs.io/en/latest/subsystems/events-system.html

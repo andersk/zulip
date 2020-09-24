@@ -1,39 +1,37 @@
-"use strict";
+import * as emoji from "../shared/js/emoji";
 
-const emoji = require("../shared/js/emoji");
+import * as alert_words from "./alert_words";
+import * as alert_words_ui from "./alert_words_ui";
+import * as attachments_ui from "./attachments_ui";
+import * as blueslip from "./blueslip";
+import * as compose from "./compose";
+import * as compose_fade from "./compose_fade";
+import * as composebox_typeahead from "./composebox_typeahead";
+import * as markdown from "./markdown";
+import * as message_edit from "./message_edit";
+import * as message_flags from "./message_flags";
+import * as message_list from "./message_list";
+import * as muting_ui from "./muting_ui";
+import * as narrow_state from "./narrow_state";
+import * as night_mode from "./night_mode";
+import * as notifications from "./notifications";
+import * as overlays from "./overlays";
+import * as people from "./people";
+import * as reload from "./reload";
+import * as scroll_bar from "./scroll_bar";
+import * as settings_config from "./settings_config";
+import * as starred_messages from "./starred_messages";
+import * as stream_data from "./stream_data";
+import * as stream_events from "./stream_events";
+import * as stream_list from "./stream_list";
+import * as stream_topic_history from "./stream_topic_history";
+import * as submessage from "./submessage";
+import * as subs from "./subs";
+import * as ui from "./ui";
+import * as unread_ops from "./unread_ops";
+import * as user_groups from "./user_groups";
 
-const alert_words = require("./alert_words");
-const alert_words_ui = require("./alert_words_ui");
-const attachments_ui = require("./attachments_ui");
-const blueslip = require("./blueslip");
-const compose = require("./compose");
-const compose_fade = require("./compose_fade");
-const composebox_typeahead = require("./composebox_typeahead");
-const markdown = require("./markdown");
-const message_edit = require("./message_edit");
-const message_flags = require("./message_flags");
-const message_list = require("./message_list");
-const muting_ui = require("./muting_ui");
-const narrow_state = require("./narrow_state");
-const night_mode = require("./night_mode");
-const notifications = require("./notifications");
-const overlays = require("./overlays");
-const people = require("./people");
-const reload = require("./reload");
-const scroll_bar = require("./scroll_bar");
-const settings_config = require("./settings_config");
-const starred_messages = require("./starred_messages");
-const stream_data = require("./stream_data");
-const stream_events = require("./stream_events");
-const stream_list = require("./stream_list");
-const stream_topic_history = require("./stream_topic_history");
-const submessage = require("./submessage");
-const subs = require("./subs");
-const ui = require("./ui");
-const unread_ops = require("./unread_ops");
-const user_groups = require("./user_groups");
-
-exports.dispatch_normal_event = function dispatch_normal_event(event) {
+export function dispatch_normal_event(event) {
     const noop = function () {};
     switch (event.type) {
         case "alert_words":
@@ -583,6 +581,4 @@ exports.dispatch_normal_event = function dispatch_normal_event(event) {
             settings_exports.populate_exports_table(event.exports);
             break;
     }
-};
-
-window.server_events_dispatch = exports;
+}

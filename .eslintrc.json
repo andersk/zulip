@@ -143,7 +143,6 @@
                 "run_test": false,
                 "search_pill": false,
                 "search_pill_widget": false,
-                "server_events_dispatch": false,
                 "settings": false,
                 "settings_account": false,
                 "settings_bots": false,
