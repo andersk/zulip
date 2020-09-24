@@ -226,7 +226,6 @@
                 "ui_report": false,
                 "ui_util": false,
                 "upgrade": false,
-                "upload": false,
                 "upload_widget": false,
                 "user_events": false,
                 "user_status": false,

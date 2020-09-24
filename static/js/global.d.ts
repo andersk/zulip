@@ -116,7 +116,6 @@ declare let ui: any;
 declare let ui_report: any;
 declare let ui_util: any;
 declare let upgrade: any;
-declare let upload: any;
 declare let upload_widget: any;
 declare let user_events: any;
 declare let user_status: any;
