@@ -7,6 +7,7 @@ const compose = require("./compose");
 const compose_actions = require("./compose_actions");
 const compose_state = require("./compose_state");
 const condense = require("./condense");
+const copy_and_paste = require("./copy_and_paste");
 const drafts = require("./drafts");
 const feedback_widget = require("./feedback_widget");
 const gear_menu = require("./gear_menu");

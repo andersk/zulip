@@ -120,7 +120,6 @@
                 "compose_ui": false,
                 "composebox_typeahead": false,
                 "confirm_dialog": false,
-                "copy_and_paste": false,
                 "csrf_token": false,
                 "current_msg_list": true,
                 "dropdown_list_widget": false,

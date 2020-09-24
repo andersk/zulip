@@ -19,7 +19,6 @@ declare let colorspace: any;
 declare let composebox_typeahead: any;
 declare let compose_ui: any;
 declare let confirm_dialog: any;
-declare let copy_and_paste: any;
 declare let csrf_token: any;
 declare let current_msg_list: any;
 declare let emoji: any;

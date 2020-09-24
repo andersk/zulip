@@ -11,6 +11,7 @@ const click_handlers = require("./click_handlers");
 const compose = require("./compose");
 const compose_pm_pill = require("./compose_pm_pill");
 const condense = require("./condense");
+const copy_and_paste = require("./copy_and_paste");
 const drafts = require("./drafts");
 const echo = require("./echo");
 const emojisets = require("./emojisets");
