@@ -104,7 +104,6 @@
             "globals": {
                 "$": false,
                 "ListCursor": false,
-                "UserSearch": false,
                 "activity": false,
                 "admin": false,
                 "avatar": false,

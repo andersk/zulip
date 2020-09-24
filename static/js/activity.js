@@ -11,6 +11,7 @@ const pm_list = require("./pm_list");
 const popovers = require("./popovers");
 const presence = require("./presence");
 const server_events = require("./server_events");
+const {UserSearch} = require("./user_search");
 
 /*
     Helpers for detecting user activity and managing user idle states
