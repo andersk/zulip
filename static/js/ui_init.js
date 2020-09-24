@@ -50,6 +50,7 @@ import * as server_events from "./server_events";
 import * as settings_panel_menu from "./settings_panel_menu";
 import * as settings_sections from "./settings_sections";
 import * as settings_toggle from "./settings_toggle";
+import * as spoilers from "./spoilers";
 import * as starred_messages from "./starred_messages";
 import * as stream_color from "./stream_color";
 import * as stream_data from "./stream_data";
