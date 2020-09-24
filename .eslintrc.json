@@ -193,7 +193,6 @@
                 "reload_state": false,
                 "reminder": false,
                 "resize": false,
-                "rows": false,
                 "run_test": false,
                 "scroll_bar": false,
                 "search": false,

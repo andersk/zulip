@@ -2,6 +2,8 @@
 
 const TurndownService = require("turndown/lib/turndown.cjs");
 
+const rows = require("./rows");
+
 function find_boundary_tr(initial_tr, iterate_row) {
     let j;
     let skip_same_td_check = false;

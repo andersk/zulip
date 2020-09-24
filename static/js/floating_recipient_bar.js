@@ -3,6 +3,7 @@
 const XDate = require("xdate");
 
 const blueslip = require("./blueslip");
+const rows = require("./rows");
 
 let is_floating_recipient_bar_showing = false;
 

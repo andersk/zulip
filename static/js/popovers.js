@@ -21,6 +21,7 @@ const message_viewport = require("./message_viewport");
 const muting = require("./muting");
 const muting_ui = require("./muting_ui");
 const people = require("./people");
+const rows = require("./rows");
 const settings_data = require("./settings_data");
 const util = require("./util");
 

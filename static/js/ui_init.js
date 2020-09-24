@@ -15,6 +15,7 @@ const message_viewport = require("./message_viewport");
 const muting = require("./muting");
 const people = require("./people");
 const pm_conversations = require("./pm_conversations");
+const rows = require("./rows");
 const unread_ui = require("./unread_ui");
 
 // This is where most of our initialization takes place.

@@ -9,6 +9,7 @@ const render_emoji_popover_search_results = require("../templates/emoji_popover_
 const render_emoji_showcase = require("../templates/emoji_showcase.hbs");
 
 const blueslip = require("./blueslip");
+const rows = require("./rows");
 
 // Emoji picker is of fixed width and height. Update these
 // whenever these values are changed in `reactions.css`.
