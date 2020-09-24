@@ -104,7 +104,6 @@
             "globals": {
                 "$": false,
                 "billing": false,
-                "bot_data": false,
                 "bridge": false,
                 "compose_ui": false,
                 "csrf_token": false,

@@ -4,7 +4,6 @@
 // to TS.
 
 declare let billing: any;
-declare let bot_data: any;
 declare let compose_ui: any;
 declare let csrf_token: any;
 declare let current_msg_list: any;

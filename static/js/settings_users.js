@@ -3,6 +3,7 @@ import render_admin_human_form from "../templates/admin_human_form.hbs";
 import render_admin_user_list from "../templates/admin_user_list.hbs";
 
 import * as blueslip from "./blueslip";
+import * as bot_data from "./bot_data";
 import * as channel from "./channel";
 import * as list_render from "./list_render";
 import * as loading from "./loading";
