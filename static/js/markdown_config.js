@@ -1,9 +1,7 @@
-"use strict";
-
-const hash_util = require("./hash_util");
-const people = require("./people");
-const stream_data = require("./stream_data");
-const user_groups = require("./user_groups");
+import * as hash_util from "./hash_util";
+import * as people from "./people";
+import * as stream_data from "./stream_data";
+import * as user_groups from "./user_groups";
 
 /*
     This config is in a separate file for partly
@@ -27,7 +25,7 @@ const user_groups = require("./user_groups");
     when the lookups fail.
 */
 
-exports.get_helpers = () => ({
+export const get_helpers = () => ({
     // user stuff
     get_actual_name_from_user_id: people.get_actual_name_from_user_id,
     get_user_id_from_name: people.get_user_id_from_name,
