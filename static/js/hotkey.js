@@ -3,6 +3,7 @@
 const emoji = require("../shared/js/emoji");
 
 const common = require("./common");
+const feedback_widget = require("./feedback_widget");
 
 function do_narrow_action(action) {
     action(current_msg_list.selected_id(), {trigger: "hotkey"});

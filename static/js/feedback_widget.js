@@ -1,8 +1,6 @@
-"use strict";
+import render_feedback_container from "../templates/feedback_container.hbs";
 
-const render_feedback_container = require("../templates/feedback_container.hbs");
-
-const blueslip = require("./blueslip");
+import * as blueslip from "./blueslip";
 
 /*
 
@@ -106,15 +104,15 @@ function set_up_handlers() {
     });
 }
 
-exports.is_open = function () {
+export function is_open() {
     return meta.opened;
-};
+}
 
-exports.dismiss = function () {
+export function dismiss() {
     animate.fadeOut();
-};
+}
 
-exports.show = function (opts) {
+export function show(opts) {
     if (!opts.populate) {
         blueslip.error("programmer needs to supply populate callback.");
         return;
@@ -137,6 +135,4 @@ exports.show = function (opts) {
     opts.populate(meta.$container.find(".feedback_content"));
 
     animate.fadeIn();
-};
-
-window.feedback_widget = exports;
+}

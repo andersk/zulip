@@ -3,6 +3,7 @@
 const marked = require("../third/marked/lib/marked");
 
 const common = require("./common");
+const feedback_widget = require("./feedback_widget");
 
 /*
 
