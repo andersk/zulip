@@ -8,6 +8,7 @@ const blueslip = require("./blueslip");
 const channel = require("./channel");
 const list_render = require("./list_render");
 const loading = require("./loading");
+const overlays = require("./overlays");
 const people = require("./people");
 const settings_config = require("./settings_config");
 const settings_data = require("./settings_data");

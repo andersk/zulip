@@ -11,6 +11,7 @@ import * as components from "./components";
 import * as compose_state from "./compose_state";
 import * as loading from "./loading";
 import * as message_live_update from "./message_live_update";
+import * as overlays from "./overlays";
 import * as people from "./people";
 import * as scroll_util from "./scroll_util";
 import * as search_util from "./search_util";

@@ -5,6 +5,7 @@ const render_subscription_setting_icon = require("../templates/subscription_sett
 const render_subscription_type = require("../templates/subscription_type.hbs");
 
 const list_render = require("./list_render");
+const overlays = require("./overlays");
 const stream_data = require("./stream_data");
 const stream_edit = require("./stream_edit");
 const subs = require("./subs");

@@ -1,6 +1,7 @@
 import * as common from "./common";
 import * as components from "./components";
 import * as keydown_util from "./keydown_util";
+import * as overlays from "./overlays";
 import * as popovers from "./popovers";
 import * as ui from "./ui";
 

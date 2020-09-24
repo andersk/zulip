@@ -40,7 +40,6 @@ declare let message_store: any;
 declare let message_util: any;
 declare let navigate: any;
 declare let notifications: any;
-declare let overlays: any;
 declare let padded_widget: any;
 declare let page_params: any;
 declare let panels: any;

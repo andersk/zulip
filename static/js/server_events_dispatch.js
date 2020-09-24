@@ -11,6 +11,7 @@ const message_list = require("./message_list");
 const muting_ui = require("./muting_ui");
 const narrow_state = require("./narrow_state");
 const night_mode = require("./night_mode");
+const overlays = require("./overlays");
 const people = require("./people");
 const reload = require("./reload");
 const scroll_bar = require("./scroll_bar");

@@ -11,6 +11,7 @@ import * as message_list from "./message_list";
 import {MessageListData} from "./message_list_data";
 import * as message_scroll from "./message_scroll";
 import * as narrow_state from "./narrow_state";
+import * as overlays from "./overlays";
 import * as people from "./people";
 import * as resize from "./resize";
 import * as stream_data from "./stream_data";

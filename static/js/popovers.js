@@ -25,6 +25,7 @@ import * as muting from "./muting";
 import * as muting_ui from "./muting_ui";
 import * as narrow from "./narrow";
 import * as narrow_state from "./narrow_state";
+import * as overlays from "./overlays";
 import * as people from "./people";
 import * as resize from "./resize";
 import * as rows from "./rows";

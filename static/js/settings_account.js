@@ -9,6 +9,7 @@ const render_settings_dev_env_email_access = require("../templates/settings/dev_
 const blueslip = require("./blueslip");
 const channel = require("./channel");
 const common = require("./common");
+const overlays = require("./overlays");
 const people = require("./people");
 const popovers = require("./popovers");
 const setup = require("./setup");

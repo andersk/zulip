@@ -8,6 +8,7 @@ const render_recent_topics_body = require("../templates/recent_topics_table.hbs"
 
 const list_render = require("./list_render");
 const muting = require("./muting");
+const overlays = require("./overlays");
 const people = require("./people");
 const recent_senders = require("./recent_senders");
 const stream_data = require("./stream_data");
