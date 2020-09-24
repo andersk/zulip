@@ -1,9 +1,7 @@
-"use strict";
+import render_dropdown_list from "../templates/settings/dropdown_list.hbs";
 
-const render_dropdown_list = require("../templates/settings/dropdown_list.hbs");
-
-const blueslip = require("./blueslip");
-const list_render = require("./list_render");
+import * as blueslip from "./blueslip";
+import * as list_render from "./list_render";
 
 const DropdownListWidget = function (opts) {
     const init = () => {
