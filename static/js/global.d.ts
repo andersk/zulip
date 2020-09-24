@@ -28,7 +28,6 @@ declare let settings_profile_fields: any;
 declare let settings_streams: any;
 declare let settings_ui: any;
 declare let settings_user_groups: any;
-declare let settings_users: any;
 declare let stream_ui_updates: any;
 declare let message_view_header: any;
 declare let typing: any;
