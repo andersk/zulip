@@ -141,7 +141,6 @@
                 "invite": false,
                 "jQuery": false,
                 "lightbox": false,
-                "list_render": false,
                 "list_util": false,
                 "localStorage": false,
                 "location": false,

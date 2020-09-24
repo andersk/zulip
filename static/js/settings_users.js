@@ -6,6 +6,7 @@ const render_admin_user_list = require("../templates/admin_user_list.hbs");
 
 const blueslip = require("./blueslip");
 const channel = require("./channel");
+const list_render = require("./list_render");
 const loading = require("./loading");
 const people = require("./people");
 const settings_config = require("./settings_config");

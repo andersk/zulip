@@ -3,6 +3,7 @@
 const render_admin_default_streams_list = require("../templates/admin_default_streams_list.hbs");
 
 const channel = require("./channel");
+const list_render = require("./list_render");
 const loading = require("./loading");
 const stream_data = require("./stream_data");
 

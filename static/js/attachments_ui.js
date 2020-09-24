@@ -6,6 +6,7 @@ const render_settings_upload_space_stats = require("../templates/settings/upload
 const render_uploaded_files_list = require("../templates/uploaded_files_list.hbs");
 
 const channel = require("./channel");
+const list_render = require("./list_render");
 const loading = require("./loading");
 
 let attachments;

@@ -7,6 +7,7 @@ import render_subscription_stream_privacy_modal from "../templates/subscription_
 import * as blueslip from "./blueslip";
 import * as channel from "./channel";
 import * as input_pill from "./input_pill";
+import * as list_render from "./list_render";
 import * as narrow_state from "./narrow_state";
 import * as people from "./people";
 import * as settings_config from "./settings_config";

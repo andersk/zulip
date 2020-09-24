@@ -5,6 +5,7 @@ const render_settings_revoke_invite_modal = require("../templates/settings/revok
 
 const blueslip = require("./blueslip");
 const channel = require("./channel");
+const list_render = require("./list_render");
 const loading = require("./loading");
 const people = require("./people");
 const settings_config = require("./settings_config");

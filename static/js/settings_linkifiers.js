@@ -3,6 +3,7 @@
 const render_admin_filter_list = require("../templates/admin_filter_list.hbs");
 
 const channel = require("./channel");
+const list_render = require("./list_render");
 const loading = require("./loading");
 
 const meta = {
