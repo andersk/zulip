@@ -1,6 +1,7 @@
 "use strict";
 
 const blueslip = require("./blueslip");
+const drafts = require("./drafts");
 
 // Read https://zulip.readthedocs.io/en/latest/subsystems/hashchange-system.html
 // or locally: docs/subsystems/hashchange-system.md

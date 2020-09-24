@@ -3,6 +3,7 @@
 const emoji = require("../shared/js/emoji");
 
 const common = require("./common");
+const drafts = require("./drafts");
 const feedback_widget = require("./feedback_widget");
 
 function do_narrow_action(action) {

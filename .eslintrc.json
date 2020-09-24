@@ -136,7 +136,6 @@
                 "copy_and_paste": false,
                 "csrf_token": false,
                 "current_msg_list": true,
-                "drafts": false,
                 "dropdown_list_widget": false,
                 "echo": false,
                 "emoji_picker": false,
