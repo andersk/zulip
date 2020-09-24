@@ -10,6 +10,7 @@ const render_buddy_list_tooltip_content = require("../templates/buddy_list_toolt
 
 const blueslip = require("./blueslip");
 const channel = require("./channel");
+const compose_actions = require("./compose_actions");
 const compose_state = require("./compose_state");
 const muting_ui = require("./muting_ui");
 const narrow = require("./narrow");

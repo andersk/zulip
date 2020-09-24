@@ -11,6 +11,7 @@ const render_compose_private_stream_alert = require("../templates/compose_privat
 const blueslip = require("./blueslip");
 const channel = require("./channel");
 const common = require("./common");
+const compose_actions = require("./compose_actions");
 const compose_fade = require("./compose_fade");
 const compose_pm_pill = require("./compose_pm_pill");
 const compose_state = require("./compose_state");

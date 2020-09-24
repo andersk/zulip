@@ -120,7 +120,6 @@
                 "color_data": false,
                 "colorspace": false,
                 "compose": false,
-                "compose_actions": false,
                 "compose_ui": false,
                 "composebox_typeahead": false,
                 "condense": false,
