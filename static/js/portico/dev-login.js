@@ -1,5 +1,3 @@
-"use strict";
-
 $(() => {
     // This code will be executed when the user visits /login and
     // dev_login.html is rendered.
@@ -15,3 +13,4 @@ $(() => {
         }
     }
 });
+export {};
