@@ -1,11 +1,9 @@
-"use strict";
-
-const blueslip = require("./blueslip");
-const {localstorage} = require("./localstorage");
-const message_list = require("./message_list");
-const narrow_state = require("./narrow_state");
-const reload_state = require("./reload_state");
-const util = require("./util");
+import * as blueslip from "./blueslip";
+import {localstorage} from "./localstorage";
+import * as message_list from "./message_list";
+import * as narrow_state from "./narrow_state";
+import * as reload_state from "./reload_state";
+import * as util from "./util";
 
 // Read https://zulip.readthedocs.io/en/latest/subsystems/hashchange-system.html
 function preserve_state(send_after_reload, save_pointer, save_narrow, save_compose) {
@@ -97,7 +95,7 @@ function preserve_state(send_after_reload, save_pointer, save_narrow, save_compo
 
 // Check if we're doing a compose-preserving reload.  This must be
 // done before the first call to get_events
-exports.initialize = function () {
+export function initialize() {
     const location = window.location.toString();
     const hash_fragment = location.substring(location.indexOf("#") + 1);
 
@@ -175,7 +173,7 @@ exports.initialize = function () {
 
     activity.set_new_user_input(false);
     hashchange.changehash(vars.oldhash);
-};
+}
 
 function do_reload_app(send_after_reload, save_pointer, save_narrow, save_compose, message) {
     if (reload_state.is_in_progress()) {
@@ -225,7 +223,7 @@ function do_reload_app(send_after_reload, save_pointer, save_narrow, save_compos
     window.location.reload(true);
 }
 
-exports.initiate = function (options) {
+export function initiate(options) {
     options = {
         immediate: false,
         save_pointer: true,
@@ -326,7 +324,7 @@ exports.initiate = function (options) {
         idle_control = $(document).idle({idle: basic_idle_timeout, onIdle: reload_from_idle});
         $(document).on("compose_started.zulip", compose_started_handler);
     }
-};
+}
 
 window.addEventListener("beforeunload", () => {
     // When navigating away from the page do not try to reload.
@@ -337,5 +335,3 @@ window.addEventListener("beforeunload", () => {
     blueslip.log("Setting reload_in_progress in beforeunload handler");
     reload_state.set_state_to_in_progress();
 });
-
-window.reload = exports;

@@ -1,4 +1,5 @@
 import * as blueslip from "./blueslip";
+import * as reload from "./reload";
 import * as reload_state from "./reload_state";
 
 const pending_requests = [];
