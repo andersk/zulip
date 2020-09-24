@@ -9,6 +9,7 @@ import * as blueslip from "./blueslip";
 import * as channel from "./channel";
 import * as components from "./components";
 import * as compose_state from "./compose_state";
+import * as hash_util from "./hash_util";
 import * as loading from "./loading";
 import * as message_live_update from "./message_live_update";
 import * as overlays from "./overlays";

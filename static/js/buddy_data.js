@@ -2,6 +2,7 @@
 
 const blueslip = require("./blueslip");
 const compose_fade = require("./compose_fade");
+const hash_util = require("./hash_util");
 const people = require("./people");
 const unread = require("./unread");
 const util = require("./util");

@@ -1,6 +1,7 @@
 import * as blueslip from "./blueslip";
 import * as color_data from "./color_data";
 import {FoldDict} from "./fold_dict";
+import * as hash_util from "./hash_util";
 import {LazySet} from "./lazy_set";
 import * as message_list from "./message_list";
 import * as people from "./people";

@@ -10,6 +10,7 @@ import * as blueslip from "./blueslip";
 import * as compose from "./compose";
 import * as compose_fade from "./compose_fade";
 import * as condense from "./condense";
+import * as hash_util from "./hash_util";
 import * as message_edit from "./message_edit";
 import * as message_viewport from "./message_viewport";
 import * as narrow_state from "./narrow_state";

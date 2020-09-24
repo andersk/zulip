@@ -1,5 +1,6 @@
 "use strict";
 
+const hash_util = require("./hash_util");
 const people = require("./people");
 const stream_data = require("./stream_data");
 const user_groups = require("./user_groups");

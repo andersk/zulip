@@ -1,4 +1,5 @@
 import * as blueslip from "./blueslip";
+import * as hash_util from "./hash_util";
 import * as narrow_state from "./narrow_state";
 import * as people from "./people";
 import * as pm_conversations from "./pm_conversations";
