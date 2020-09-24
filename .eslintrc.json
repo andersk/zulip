@@ -130,7 +130,6 @@
                 "spoilers": false,
                 "stream_ui_updates": false,
                 "StripeCheckout": false,
-                "typing_events": false,
                 "ui_init": false,
                 "upgrade": false,
                 "zxcvbn": false
