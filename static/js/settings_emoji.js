@@ -1,22 +1,20 @@
-"use strict";
+import * as emoji from "../shared/js/emoji";
+import render_admin_emoji_list from "../templates/admin_emoji_list.hbs";
+import render_settings_emoji_settings_tip from "../templates/settings/emoji_settings_tip.hbs";
 
-const emoji = require("../shared/js/emoji");
-const render_admin_emoji_list = require("../templates/admin_emoji_list.hbs");
-const render_settings_emoji_settings_tip = require("../templates/settings/emoji_settings_tip.hbs");
-
-const channel = require("./channel");
-const list_render = require("./list_render");
-const loading = require("./loading");
-const people = require("./people");
-const ui = require("./ui");
-const ui_report = require("./ui_report");
-const upload_widget = require("./upload_widget");
+import * as channel from "./channel";
+import * as list_render from "./list_render";
+import * as loading from "./loading";
+import * as people from "./people";
+import * as ui from "./ui";
+import * as ui_report from "./ui_report";
+import * as upload_widget from "./upload_widget";
 
 const meta = {
     loaded: false,
 };
 
-exports.can_add_emoji = function () {
+export function can_add_emoji() {
     if (page_params.is_guest) {
         return false;
     }
@@ -27,7 +25,7 @@ exports.can_add_emoji = function () {
 
     // for normal users, we depend on the setting
     return !page_params.realm_add_emoji_by_admins_only;
-};
+}
 
 function can_admin_emoji(emoji) {
     if (page_params.is_admin) {
@@ -43,7 +41,7 @@ function can_admin_emoji(emoji) {
     return false;
 }
 
-exports.update_custom_emoji_ui = function () {
+export function update_custom_emoji_ui() {
     const rendered_tip = render_settings_emoji_settings_tip({
         realm_add_emoji_by_admins_only: page_params.realm_add_emoji_by_admins_only,
     });
@@ -56,12 +54,12 @@ exports.update_custom_emoji_ui = function () {
         $(".admin-emoji-form").show();
     }
 
-    exports.populate_emoji();
-};
+    populate_emoji();
+}
 
-exports.reset = function () {
+export function reset() {
     meta.loaded = false;
-};
+}
 
 function sort_author_full_name(a, b) {
     if (a.author.full_name > b.author.full_name) {
@@ -72,7 +70,7 @@ function sort_author_full_name(a, b) {
     return -1;
 }
 
-exports.populate_emoji = function () {
+export function populate_emoji() {
     if (!meta.loaded) {
         return;
     }
@@ -123,9 +121,9 @@ exports.populate_emoji = function () {
     });
 
     loading.destroy_indicator($("#admin_page_emoji_loading_indicator"));
-};
+}
 
-exports.build_emoji_upload_widget = function () {
+export function build_emoji_upload_widget() {
     const get_file_input = function () {
         return $("#emoji_file_input");
     };
@@ -146,15 +144,15 @@ exports.build_emoji_upload_widget = function () {
         preview_text,
         preview_image,
     );
-};
+}
 
-exports.set_up = function () {
+export function set_up() {
     meta.loaded = true;
 
     loading.make_indicator($("#admin_page_emoji_loading_indicator"));
 
     // Populate emoji table
-    exports.populate_emoji();
+    populate_emoji();
 
     $(".admin_emoji_table").on("click", ".delete", function (e) {
         e.preventDefault();
@@ -173,7 +171,7 @@ exports.set_up = function () {
         });
     });
 
-    const emoji_widget = exports.build_emoji_upload_widget();
+    const emoji_widget = build_emoji_upload_widget();
 
     $(".organization form.admin-emoji-form")
         .off("submit")
@@ -214,6 +212,4 @@ exports.set_up = function () {
                 },
             });
         });
-};
-
-window.settings_emoji = exports;
+}
