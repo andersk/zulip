@@ -4,6 +4,7 @@ const Uppy = require("@uppy/core");
 const ProgressBar = require("@uppy/progress-bar");
 const XHRUpload = require("@uppy/xhr-upload");
 
+const compose = require("./compose");
 const compose_actions = require("./compose_actions");
 const compose_state = require("./compose_state");
 

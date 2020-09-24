@@ -3,6 +3,7 @@
 const emoji = require("../shared/js/emoji");
 
 const blueslip = require("./blueslip");
+const compose = require("./compose");
 const compose_fade = require("./compose_fade");
 const markdown = require("./markdown");
 const message_list = require("./message_list");

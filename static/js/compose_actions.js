@@ -4,6 +4,7 @@ import * as fenced_code from "../shared/js/fenced_code";
 
 import * as channel from "./channel";
 import * as common from "./common";
+import * as compose from "./compose";
 import * as compose_fade from "./compose_fade";
 import * as compose_pm_pill from "./compose_pm_pill";
 import * as compose_state from "./compose_state";

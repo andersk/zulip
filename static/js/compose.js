@@ -1,31 +1,29 @@
-"use strict";
+import Handlebars from "handlebars/runtime";
 
-const Handlebars = require("handlebars/runtime");
+import render_compose_all_everyone from "../templates/compose_all_everyone.hbs";
+import render_compose_announce from "../templates/compose_announce.hbs";
+import render_compose_invite_users from "../templates/compose_invite_users.hbs";
+import render_compose_not_subscribed from "../templates/compose_not_subscribed.hbs";
+import render_compose_private_stream_alert from "../templates/compose_private_stream_alert.hbs";
 
-const render_compose_all_everyone = require("../templates/compose_all_everyone.hbs");
-const render_compose_announce = require("../templates/compose_announce.hbs");
-const render_compose_invite_users = require("../templates/compose_invite_users.hbs");
-const render_compose_not_subscribed = require("../templates/compose_not_subscribed.hbs");
-const render_compose_private_stream_alert = require("../templates/compose_private_stream_alert.hbs");
-
-const blueslip = require("./blueslip");
-const channel = require("./channel");
-const common = require("./common");
-const compose_actions = require("./compose_actions");
-const compose_fade = require("./compose_fade");
-const compose_pm_pill = require("./compose_pm_pill");
-const compose_state = require("./compose_state");
-const drafts = require("./drafts");
-const echo = require("./echo");
-const loading = require("./loading");
-const markdown = require("./markdown");
-const people = require("./people");
-const rendered_markdown = require("./rendered_markdown");
-const rtl = require("./rtl");
-const sent_messages = require("./sent_messages");
-const transmit = require("./transmit");
-const util = require("./util");
-const zcommand = require("./zcommand");
+import * as blueslip from "./blueslip";
+import * as channel from "./channel";
+import * as common from "./common";
+import * as compose_actions from "./compose_actions";
+import * as compose_fade from "./compose_fade";
+import * as compose_pm_pill from "./compose_pm_pill";
+import * as compose_state from "./compose_state";
+import * as drafts from "./drafts";
+import * as echo from "./echo";
+import * as loading from "./loading";
+import * as markdown from "./markdown";
+import * as people from "./people";
+import * as rendered_markdown from "./rendered_markdown";
+import * as rtl from "./rtl";
+import * as sent_messages from "./sent_messages";
+import * as transmit from "./transmit";
+import * as util from "./util";
+import * as zcommand from "./zcommand";
 
 // Docs: https://zulip.readthedocs.io/en/latest/subsystems/sending-messages.html
 
@@ -42,19 +40,19 @@ let user_acknowledged_announce;
 let wildcard_mention;
 let uppy;
 
-exports.all_everyone_warn_threshold = 15;
-exports.announce_warn_threshold = 60;
+export const all_everyone_warn_threshold = 15;
+export const announce_warn_threshold = 60;
+export const uploads_domain = document.location.protocol + "//" + document.location.host;
+export const uploads_path = "/user_uploads";
 
-exports.uploads_domain = document.location.protocol + "//" + document.location.host;
-exports.uploads_path = "/user_uploads";
-exports.uploads_re = new RegExp(
-    "\\]\\(" + exports.uploads_domain + "(" + exports.uploads_path + "[^\\)]+)\\)",
+export const uploads_re = new RegExp(
+    "\\]\\(" + uploads_domain + "(" + uploads_path + "[^\\)]+)\\)",
     "g",
 );
 
 function make_uploads_relative(content) {
     // Rewrite uploads in Markdown links back to domain-relative form
-    return content.replace(exports.uploads_re, "]($1)");
+    return content.replace(uploads_re, "]($1)");
 }
 
 function show_all_everyone_warnings(stream_id) {
@@ -75,7 +73,7 @@ function show_all_everyone_warnings(stream_id) {
     user_acknowledged_all_everyone = false;
 }
 
-exports.compute_show_video_chat_button = function () {
+export function compute_show_video_chat_button() {
     const available_providers = page_params.realm_available_video_chat_providers;
     if (page_params.realm_video_chat_provider === available_providers.disabled.id) {
         return false;
@@ -89,19 +87,19 @@ exports.compute_show_video_chat_button = function () {
     }
 
     return true;
-};
+}
 
-exports.update_video_chat_button_display = function () {
-    const show_video_chat_button = exports.compute_show_video_chat_button();
+export function update_video_chat_button_display() {
+    const show_video_chat_button = compute_show_video_chat_button();
     $("#below-compose-content .video_link").toggle(show_video_chat_button);
     $(".message-edit-feature-group .video_link").toggle(show_video_chat_button);
-};
+}
 
-exports.clear_all_everyone_warnings = function () {
+export function clear_all_everyone_warnings() {
     $("#compose-all-everyone").hide();
     $("#compose-all-everyone").empty();
     $("#compose-send-status").hide();
-};
+}
 
 function show_sending_indicator(whats_happening) {
     $("#sending-indicator").text(whats_happening);
@@ -122,37 +120,37 @@ function show_announce_warnings(stream_id) {
     user_acknowledged_announce = false;
 }
 
-exports.clear_announce_warnings = function () {
+export function clear_announce_warnings() {
     $("#compose-announce").hide();
     $("#compose-announce").empty();
     $("#compose-send-status").hide();
-};
+}
 
-exports.clear_invites = function () {
+export function clear_invites() {
     $("#compose_invite_users").hide();
     $("#compose_invite_users").empty();
-};
+}
 
-exports.clear_private_stream_alert = function () {
+export function clear_private_stream_alert() {
     $("#compose_private_stream_alert").hide();
     $("#compose_private_stream_alert").empty();
-};
+}
 
-exports.reset_user_acknowledged_all_everyone_flag = function () {
+export function reset_user_acknowledged_all_everyone_flag() {
     user_acknowledged_all_everyone = undefined;
-};
+}
 
-exports.reset_user_acknowledged_announce_flag = function () {
+export function reset_user_acknowledged_announce_flag() {
     user_acknowledged_announce = undefined;
-};
+}
 
-exports.clear_preview_area = function () {
+export function clear_preview_area() {
     $("#compose-textarea").show();
     $("#undo_markdown_preview").hide();
     $("#preview_message_area").hide();
     $("#preview_content").empty();
     $("#markdown_preview").show();
-};
+}
 
 function update_stream_button(btn_text, title) {
     $("#left_bar_compose_stream_button_big").text(btn_text);
@@ -164,23 +162,23 @@ function update_conversation_button(btn_text, title) {
     $("#left_bar_compose_private_button_big").prop("title", title);
 }
 
-exports.update_closed_compose_buttons_for_private = function () {
+export function update_closed_compose_buttons_for_private() {
     const text_stream = i18n.t("New stream message");
     const title_stream = text_stream + " (c)";
     const text_conversation = i18n.t("New private message");
     const title_conversation = text_conversation + " (x)";
     update_stream_button(text_stream, title_stream);
     update_conversation_button(text_conversation, title_conversation);
-};
+}
 
-exports.update_closed_compose_buttons_for_stream = function () {
+export function update_closed_compose_buttons_for_stream() {
     const text_stream = i18n.t("New topic");
     const title_stream = text_stream + " (c)";
     const text_conversation = i18n.t("New private message");
     const title_conversation = text_conversation + " (x)";
     update_stream_button(text_stream, title_stream);
     update_conversation_button(text_conversation, title_conversation);
-};
+}
 
 function update_fade() {
     if (!compose_state.composing()) {
@@ -192,31 +190,31 @@ function update_fade() {
     compose_fade.update_all();
 }
 
-exports.abort_xhr = function () {
+export function abort_xhr() {
     $("#compose-send-button").prop("disabled", false);
     uppy.cancelAll();
-};
+}
 
-exports.zoom_token_callbacks = new Map();
-exports.zoom_xhrs = new Map();
+export const zoom_token_callbacks = new Map();
+export const zoom_xhrs = new Map();
 
-exports.abort_zoom = function (edit_message_id) {
+export function abort_zoom(edit_message_id) {
     const key = edit_message_id || "";
-    exports.zoom_token_callbacks.delete(key);
-    if (exports.zoom_xhrs.has(key)) {
-        exports.zoom_xhrs.get(key).abort();
+    zoom_token_callbacks.delete(key);
+    if (zoom_xhrs.has(key)) {
+        zoom_xhrs.get(key).abort();
     }
-};
+}
 
-exports.empty_topic_placeholder = function () {
+export function empty_topic_placeholder() {
     return i18n.t("(no topic)");
-};
+}
 
 function create_message_object() {
     // Topics are optional, and we provide a placeholder if one isn't given.
     let topic = compose_state.topic();
     if (topic === "") {
-        topic = exports.empty_topic_placeholder();
+        topic = empty_topic_placeholder();
     }
 
     const content = make_uploads_relative(compose_state.message_content());
@@ -268,7 +266,7 @@ function create_message_object() {
     return message;
 }
 
-exports.create_message_object = create_message_object;
+export {create_message_object};
 
 function compose_error(error_text, bad_input) {
     $("#compose-send-status")
@@ -284,7 +282,7 @@ function compose_error(error_text, bad_input) {
     }
 }
 
-exports.compose_error = compose_error;
+export {compose_error};
 
 function nonexistent_stream_reply_error() {
     $("#nonexistent_stream_reply_error").show();
@@ -309,7 +307,7 @@ function compose_not_subscribed_error(error_text, bad_input) {
     }
 }
 
-exports.nonexistent_stream_reply_error = nonexistent_stream_reply_error;
+export {nonexistent_stream_reply_error};
 
 function clear_compose_box() {
     $("#compose-textarea").val("").trigger("focus");
@@ -320,17 +318,17 @@ function clear_compose_box() {
     $("#sending-indicator").hide();
 }
 
-exports.clear_compose_box = clear_compose_box;
+export {clear_compose_box};
 
-exports.send_message_success = function (local_id, message_id, locally_echoed) {
+export function send_message_success(local_id, message_id, locally_echoed) {
     if (!locally_echoed) {
         clear_compose_box();
     }
 
     echo.reify_message_id(local_id, message_id);
-};
+}
 
-exports.send_message = function send_message(request) {
+export function send_message(request) {
     if (request === undefined) {
         request = create_message_object();
     }
@@ -370,7 +368,7 @@ exports.send_message = function send_message(request) {
     request.locally_echoed = locally_echoed;
 
     function success(data) {
-        exports.send_message_success(local_id, data.id, locally_echoed);
+        send_message_success(local_id, data.id, locally_echoed);
     }
 
     function error(response) {
@@ -392,22 +390,22 @@ exports.send_message = function send_message(request) {
     if (locally_echoed) {
         clear_compose_box();
     }
-};
+}
 
-exports.enter_with_preview_open = function () {
+export function enter_with_preview_open() {
     if (page_params.enter_sends) {
         // If enter_sends is enabled, we attempt to send the message
-        exports.finish();
+        finish();
     } else {
         // Otherwise, we return to the compose box and focus it
         $("#compose-textarea").trigger("focus");
     }
-};
+}
 
-exports.finish = function () {
-    exports.clear_preview_area();
-    exports.clear_invites();
-    exports.clear_private_stream_alert();
+export function finish() {
+    clear_preview_area();
+    clear_invites();
+    clear_private_stream_alert();
     notifications.clear_compose_notifications();
 
     const message_content = compose_state.message_content();
@@ -416,32 +414,32 @@ exports.finish = function () {
     // actual messages with recipients; users only send them
     // from the compose box for convenience sake.
     if (zcommand.process(message_content)) {
-        exports.do_post_send_tasks();
+        do_post_send_tasks();
         clear_compose_box();
         return;
     }
 
-    if (!exports.validate()) {
+    if (!validate()) {
         return false;
     }
 
     if (reminder.is_deferred_delivery(message_content)) {
         reminder.schedule_message();
     } else {
-        exports.send_message();
+        send_message();
     }
-    exports.do_post_send_tasks();
+    do_post_send_tasks();
     return true;
-};
+}
 
-exports.do_post_send_tasks = function () {
-    exports.clear_preview_area();
+export function do_post_send_tasks() {
+    clear_preview_area();
     // TODO: Do we want to fire the event even if the send failed due
     // to a server-side error?
     $(document).trigger($.Event("compose_finished.zulip"));
-};
+}
 
-exports.update_email = function (user_id, new_email) {
+export function update_email(user_id, new_email) {
     let reply_to = compose_state.private_message_recipient();
 
     if (!reply_to) {
@@ -451,9 +449,9 @@ exports.update_email = function (user_id, new_email) {
     reply_to = people.update_email_in_reply_to(reply_to, user_id, new_email);
 
     compose_state.private_message_recipient(reply_to);
-};
+}
 
-exports.get_invalid_recipient_emails = function () {
+export function get_invalid_recipient_emails() {
     const private_recipients = util.extract_pm_recipients(
         compose_state.private_message_recipient(),
     );
@@ -462,7 +460,7 @@ exports.get_invalid_recipient_emails = function () {
     );
 
     return invalid_recipients;
-};
+}
 
 function check_unsubscribed_stream_for_send(stream_name, autosubscribe) {
     let result;
@@ -500,7 +498,7 @@ function validate_stream_message_mentions(stream_id) {
     const stream_count = stream_data.get_subscriber_count(stream_id) || 0;
 
     // check if wildcard_mention has any mention and henceforth execute the warning message.
-    if (wildcard_mention !== null && stream_count > exports.all_everyone_warn_threshold) {
+    if (wildcard_mention !== null && stream_count > all_everyone_warn_threshold) {
         if (
             user_acknowledged_all_everyone === undefined ||
             user_acknowledged_all_everyone === false
@@ -514,7 +512,7 @@ function validate_stream_message_mentions(stream_id) {
         }
     } else {
         // the message no longer contains @all or @everyone
-        exports.clear_all_everyone_warnings();
+        clear_all_everyone_warnings();
     }
     // at this point, the user has either acknowledged the warning or removed @all / @everyone
     user_acknowledged_all_everyone = undefined;
@@ -525,7 +523,7 @@ function validate_stream_message_mentions(stream_id) {
 function validate_stream_message_announce(sub) {
     const stream_count = stream_data.get_subscriber_count(sub.stream_id) || 0;
 
-    if (sub.name === "announce" && stream_count > exports.announce_warn_threshold) {
+    if (sub.name === "announce" && stream_count > announce_warn_threshold) {
         if (user_acknowledged_announce === undefined || user_acknowledged_announce === false) {
             // user has not seen a warning message yet if undefined
             show_announce_warnings(sub.stream_id);
@@ -535,7 +533,7 @@ function validate_stream_message_announce(sub) {
             return false;
         }
     } else {
-        exports.clear_announce_warnings();
+        clear_announce_warnings();
     }
     // at this point, the user has acknowledged the warning
     user_acknowledged_announce = undefined;
@@ -575,7 +573,7 @@ function validate_stream_message_post_policy(sub) {
     return true;
 }
 
-exports.validation_error = function (error_type, stream_name) {
+export function validation_error(error_type, stream_name) {
     let response;
 
     const context = {};
@@ -605,16 +603,16 @@ exports.validation_error = function (error_type, stream_name) {
         }
     }
     return true;
-};
+}
 
-exports.validate_stream_message_address_info = function (stream_name) {
+export function validate_stream_message_address_info(stream_name) {
     if (stream_data.is_subscribed(stream_name)) {
         return true;
     }
     const autosubscribe = page_params.narrow_stream !== undefined;
     const error_type = check_unsubscribed_stream_for_send(stream_name, autosubscribe);
-    return exports.validation_error(error_type, stream_name);
-};
+    return validation_error(error_type, stream_name);
+}
 
 function validate_stream_message() {
     const stream_name = compose_state.stream_name();
@@ -633,7 +631,7 @@ function validate_stream_message() {
 
     const sub = stream_data.get_sub(stream_name);
     if (!sub) {
-        return exports.validation_error("does-not-exist", stream_name);
+        return validation_error("does-not-exist", stream_name);
     }
 
     if (!validate_stream_message_post_policy(sub)) {
@@ -649,7 +647,7 @@ function validate_stream_message() {
     // for `@all`. Users shouldn't have to hit "yes" more than once.
     if (wildcard_mention !== null && stream_name === "announce") {
         if (
-            !exports.validate_stream_message_address_info(stream_name) ||
+            !validate_stream_message_address_info(stream_name) ||
             !validate_stream_message_mentions(sub.stream_id)
         ) {
             return false;
@@ -657,7 +655,7 @@ function validate_stream_message() {
         // If either criteria isn't met, just do the normal validation.
     } else {
         if (
-            !exports.validate_stream_message_address_info(stream_name) ||
+            !validate_stream_message_address_info(stream_name) ||
             !validate_stream_message_mentions(sub.stream_id) ||
             !validate_stream_message_announce(sub)
         ) {
@@ -695,7 +693,7 @@ function validate_private_message() {
         return true;
     }
 
-    const invalid_recipients = exports.get_invalid_recipient_emails();
+    const invalid_recipients = get_invalid_recipient_emails();
 
     let context = {};
     if (invalid_recipients.length === 1) {
@@ -716,7 +714,7 @@ function validate_private_message() {
     return true;
 }
 
-exports.validate = function () {
+export function validate() {
     $("#compose-send-button").prop("disabled", true).trigger("blur");
     const message_content = compose_state.message_content();
     if (reminder.is_deferred_delivery(message_content)) {
@@ -739,9 +737,9 @@ exports.validate = function () {
         return validate_private_message();
     }
     return validate_stream_message();
-};
+}
 
-exports.handle_keydown = function (event, textarea) {
+export function handle_keydown(event, textarea) {
     const code = event.keyCode || event.which;
     const isBold = code === 66;
     const isItalic = code === 73 && !event.shiftKey;
@@ -799,14 +797,14 @@ exports.handle_keydown = function (event, textarea) {
         compose_ui.autosize_textarea(textarea);
         return;
     }
-};
+}
 
-exports.handle_keyup = function (event, textarea) {
+export function handle_keyup(event, textarea) {
     // Set the rtl class if the text has an rtl direction, remove it otherwise
     rtl.set_rtl_class_for_textarea(textarea);
-};
+}
 
-exports.needs_subscribe_warning = function (user_id, stream_id) {
+export function needs_subscribe_warning(user_id, stream_id) {
     // This returns true if all of these conditions are met:
     //  * the user is valid
     //  * the user is not already subscribed to the stream
@@ -838,14 +836,14 @@ exports.needs_subscribe_warning = function (user_id, stream_id) {
     }
 
     return true;
-};
+}
 
 function insert_video_call_url(url, target_textarea) {
     const link_text = i18n.t("Click to join video call");
     compose_ui.insert_syntax_and_focus(`[${link_text}](${url})`, target_textarea);
 }
 
-exports.render_and_show_preview = function (preview_spinner, preview_content_box, content) {
+export function render_and_show_preview(preview_spinner, preview_content_box, content) {
     function show_preview(rendered_content, raw_content) {
         // content is passed to check for status messages ("/me ...")
         // and will be undefined in case of errors
@@ -903,9 +901,9 @@ exports.render_and_show_preview = function (preview_spinner, preview_content_box
             },
         });
     }
-};
+}
 
-exports.warn_if_private_stream_is_linked = function (linked_stream) {
+export function warn_if_private_stream_is_linked(linked_stream) {
     // For PMs, we currently don't warn about links to private
     // streams, since you are specifically sharing the existence of
     // the private stream with someone.  One could imagine changing
@@ -949,9 +947,9 @@ exports.warn_if_private_stream_is_linked = function (linked_stream) {
 
     warning_area.append(new_row);
     warning_area.show();
-};
+}
 
-exports.warn_if_mentioning_unsubscribed_user = function (mentioned) {
+export function warn_if_mentioning_unsubscribed_user(mentioned) {
     if (compose_state.get_message_type() !== "stream") {
         return;
     }
@@ -979,7 +977,7 @@ exports.warn_if_mentioning_unsubscribed_user = function (mentioned) {
         return;
     }
 
-    if (exports.needs_subscribe_warning(user_id, sub.stream_id)) {
+    if (needs_subscribe_warning(user_id, sub.stream_id)) {
         const error_area = $("#compose_invite_users");
         const existing_invites_area = $("#compose_invite_users .compose_invite_user");
 
@@ -1001,10 +999,10 @@ exports.warn_if_mentioning_unsubscribed_user = function (mentioned) {
 
         error_area.show();
     }
-};
+}
 
-exports.initialize = function () {
-    $("#below-compose-content .video_link").toggle(exports.compute_show_video_chat_button());
+export function initialize() {
+    $("#below-compose-content .video_link").toggle(compute_show_video_chat_button());
     $(
         "#stream_message_recipient_stream,#stream_message_recipient_topic,#private_message_recipient",
     ).on("keyup", update_fade);
@@ -1012,15 +1010,15 @@ exports.initialize = function () {
         "#stream_message_recipient_stream,#stream_message_recipient_topic,#private_message_recipient",
     ).on("change", update_fade);
     $("#compose-textarea").on("keydown", (event) => {
-        exports.handle_keydown(event, $("#compose-textarea").expectOne());
+        handle_keydown(event, $("#compose-textarea").expectOne());
     });
     $("#compose-textarea").on("keyup", (event) => {
-        exports.handle_keyup(event, $("#compose-textarea").expectOne());
+        handle_keyup(event, $("#compose-textarea").expectOne());
     });
 
     $("#compose form").on("submit", (e) => {
         e.preventDefault();
-        exports.finish();
+        finish();
     });
 
     resize.watch_manual_resize("#compose-textarea");
@@ -1032,8 +1030,8 @@ exports.initialize = function () {
 
         $(event.target).parents(".compose-all-everyone").remove();
         user_acknowledged_all_everyone = true;
-        exports.clear_all_everyone_warnings();
-        exports.finish();
+        clear_all_everyone_warnings();
+        finish();
     });
 
     $("#compose-announce").on("click", ".compose-announce-confirm", (event) => {
@@ -1041,8 +1039,8 @@ exports.initialize = function () {
 
         $(event.target).parents(".compose-announce").remove();
         user_acknowledged_announce = true;
-        exports.clear_announce_warnings();
-        exports.finish();
+        clear_announce_warnings();
+        finish();
     });
 
     $("#compose-send-status").on("click", ".sub_unsub_button", (event) => {
@@ -1081,7 +1079,7 @@ exports.initialize = function () {
         }
 
         function failure(error_msg) {
-            exports.clear_invites();
+            clear_invites();
             compose_error(error_msg, $("#compose-textarea"));
             $(event.target).prop("disabled", true);
         }
@@ -1146,7 +1144,7 @@ exports.initialize = function () {
         let video_call_link;
         const video_call_id = util.random_int(100000000000000, 999999999999999);
         const available_providers = page_params.realm_available_video_chat_providers;
-        const show_video_chat_button = exports.compute_show_video_chat_button();
+        const show_video_chat_button = compute_show_video_chat_button();
 
         if (!show_video_chat_button) {
             return;
@@ -1156,20 +1154,20 @@ exports.initialize = function () {
             available_providers.zoom &&
             page_params.realm_video_chat_provider === available_providers.zoom.id
         ) {
-            exports.abort_zoom(edit_message_id);
+            abort_zoom(edit_message_id);
             const key = edit_message_id || "";
 
             const make_zoom_call = () => {
-                exports.zoom_xhrs.set(
+                zoom_xhrs.set(
                     key,
                     channel.post({
                         url: "/json/calls/zoom/create",
                         success(res) {
-                            exports.zoom_xhrs.delete(key);
+                            zoom_xhrs.delete(key);
                             insert_video_call_url(res.url, target_textarea);
                         },
                         error(xhr, status) {
-                            exports.zoom_xhrs.delete(key);
+                            zoom_xhrs.delete(key);
                             if (
                                 status === "error" &&
                                 xhr.responseJSON &&
@@ -1190,7 +1188,7 @@ exports.initialize = function () {
             if (page_params.has_zoom_token) {
                 make_zoom_call();
             } else {
-                exports.zoom_token_callbacks.set(key, make_zoom_call);
+                zoom_token_callbacks.set(key, make_zoom_call);
                 window.open(
                     window.location.protocol + "//" + window.location.host + "/calls/zoom/register",
                     "_blank",
@@ -1221,16 +1219,12 @@ exports.initialize = function () {
         $("#undo_markdown_preview").show();
         $("#preview_message_area").show();
 
-        exports.render_and_show_preview(
-            $("#markdown_preview_spinner"),
-            $("#preview_content"),
-            content,
-        );
+        render_and_show_preview($("#markdown_preview_spinner"), $("#preview_content"), content);
     });
 
     $("#compose").on("click", "#undo_markdown_preview", (e) => {
         e.preventDefault();
-        exports.clear_preview_area();
+        clear_preview_area();
     });
 
     uppy = upload.setup_upload({
@@ -1252,6 +1246,4 @@ exports.initialize = function () {
             compose_actions.start("stream", {});
         }
     }
-};
-
-window.compose = exports;
+}
