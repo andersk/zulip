@@ -32,6 +32,7 @@ import * as people from "./people";
 import * as reminder from "./reminder";
 import * as resize from "./resize";
 import * as rows from "./rows";
+import * as settings_account from "./settings_account";
 import * as settings_data from "./settings_data";
 import * as stream_popover from "./stream_popover";
 import * as user_groups from "./user_groups";
