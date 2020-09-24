@@ -18,6 +18,7 @@ const scroll_util = require("./scroll_util");
 const search_util = require("./search_util");
 const stream_create = require("./stream_create");
 const stream_data = require("./stream_data");
+const stream_edit = require("./stream_edit");
 const stream_list = require("./stream_list");
 const stream_muting = require("./stream_muting");
 const util = require("./util");

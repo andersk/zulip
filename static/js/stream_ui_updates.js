@@ -5,6 +5,7 @@ const render_subscription_setting_icon = require("../templates/subscription_sett
 const render_subscription_type = require("../templates/subscription_type.hbs");
 
 const stream_data = require("./stream_data");
+const stream_edit = require("./stream_edit");
 
 exports.update_check_button_for_sub = function (sub) {
     const button = subs.check_button_for_sub(sub);
