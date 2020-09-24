@@ -161,7 +161,6 @@
                 "search": false,
                 "search_pill": false,
                 "search_pill_widget": false,
-                "search_suggestion": false,
                 "server_events": false,
                 "server_events_dispatch": false,
                 "settings": false,
