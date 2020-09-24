@@ -201,7 +201,6 @@
                 "settings_users": false,
                 "spoilers": false,
                 "starred_messages": false,
-                "stream_create": false,
                 "stream_edit": false,
                 "stream_popover": false,
                 "stream_ui_updates": false,

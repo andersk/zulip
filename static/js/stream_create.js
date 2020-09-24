@@ -1,27 +1,25 @@
-"use strict";
+import render_announce_stream_docs from "../templates/announce_stream_docs.hbs";
+import render_new_stream_users from "../templates/new_stream_users.hbs";
+import render_subscription_invites_warning_modal from "../templates/subscription_invites_warning_modal.hbs";
 
-const render_announce_stream_docs = require("../templates/announce_stream_docs.hbs");
-const render_new_stream_users = require("../templates/new_stream_users.hbs");
-const render_subscription_invites_warning_modal = require("../templates/subscription_invites_warning_modal.hbs");
-
-const channel = require("./channel");
-const loading = require("./loading");
-const people = require("./people");
-const stream_data = require("./stream_data");
+import * as channel from "./channel";
+import * as loading from "./loading";
+import * as people from "./people";
+import * as stream_data from "./stream_data";
 
 let created_stream;
 
-exports.reset_created_stream = function () {
+export function reset_created_stream() {
     created_stream = undefined;
-};
+}
 
-exports.set_name = function (stream) {
+export function set_name(stream) {
     created_stream = stream;
-};
+}
 
-exports.get_name = function () {
+export function get_name() {
     return created_stream;
-};
+}
 
 class StreamSubscriptionError {
     report_no_subs_to_stream() {
@@ -237,7 +235,7 @@ function create_stream() {
     });
 }
 
-exports.new_stream_clicked = function (stream_name) {
+export function new_stream_clicked(stream_name) {
     // this changes the tab switcher (settings/preview) which isn't necessary
     // to a add new stream title.
     subs.show_subs_pane.create_stream();
@@ -246,7 +244,7 @@ exports.new_stream_clicked = function (stream_name) {
     if (stream_name !== "") {
         $("#create_stream_name").val(stream_name);
     }
-    exports.show_new_stream_modal();
+    show_new_stream_modal();
 
     // at less than 700px we have a @media query that when you tap the
     // .create_stream_button, the stream prompt slides in. However, when you
@@ -258,7 +256,7 @@ exports.new_stream_clicked = function (stream_name) {
     if (window.innerWidth > 700) {
         $("#create_stream_name").trigger("focus");
     }
-};
+}
 
 function clear_error_display() {
     stream_name_error.clear_errors();
@@ -266,7 +264,7 @@ function clear_error_display() {
     stream_subscription_error.clear_errors();
 }
 
-exports.show_new_stream_modal = function () {
+export function show_new_stream_modal() {
     $("#stream-creation").removeClass("hide");
     $(".right .settings").hide();
 
@@ -281,7 +279,7 @@ exports.show_new_stream_modal = function () {
 
     const container = $("#people_to_add");
     container.html(html);
-    exports.create_handlers_for_users(container);
+    create_handlers_for_users(container);
 
     // Make the options default to the same each time:
     // public, "announce stream" on.
@@ -315,9 +313,9 @@ exports.show_new_stream_modal = function () {
 
         e.preventDefault();
     });
-};
+}
 
-exports.create_handlers_for_users = function (container) {
+export function create_handlers_for_users(container) {
     // container should be $('#people_to_add')...see caller to verify
     container.on("change", "#user-checkboxes input", update_announce_stream_state);
 
@@ -391,9 +389,9 @@ exports.create_handlers_for_users = function (container) {
 
         e.preventDefault();
     });
-};
+}
 
-exports.set_up_handlers = function () {
+export function set_up_handlers() {
     const container = $("#stream-creation").expectOne();
 
     container.on("change", "#make-invite-only input", update_announce_stream_state);
@@ -477,6 +475,4 @@ exports.set_up_handlers = function () {
             e.preventDefault();
         }
     });
-};
-
-window.stream_create = exports;
+}
