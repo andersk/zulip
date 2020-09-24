@@ -110,7 +110,6 @@
                 "billing": false,
                 "bot_data": false,
                 "bridge": false,
-                "buddy_data": false,
                 "buddy_list": false,
                 "colorspace": false,
                 "compose_ui": false,

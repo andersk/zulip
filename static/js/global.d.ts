@@ -9,7 +9,6 @@ declare let admin: any;
 declare let avatar: any;
 declare let billing: any;
 declare let bot_data: any;
-declare let buddy_data: any;
 declare let buddy_list: any;
 declare let colorspace: any;
 declare let compose_ui: any;
