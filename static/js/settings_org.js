@@ -9,6 +9,7 @@ const channel = require("./channel");
 const loading = require("./loading");
 const overlays = require("./overlays");
 const realm_icon = require("./realm_icon");
+const realm_logo = require("./realm_logo");
 const settings_config = require("./settings_config");
 const stream_data = require("./stream_data");
 const ui_report = require("./ui_report");
