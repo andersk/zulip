@@ -16,7 +16,6 @@ declare let bot_data: any;
 declare let buddy_data: any;
 declare let buddy_list: any;
 declare let colorspace: any;
-declare let composebox_typeahead: any;
 declare let compose_ui: any;
 declare let confirm_dialog: any;
 declare let csrf_token: any;
