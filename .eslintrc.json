@@ -132,7 +132,6 @@
                 "settings": false,
                 "settings_profile_fields": false,
                 "settings_ui": false,
-                "settings_user_groups": false,
                 "spoilers": false,
                 "stream_ui_updates": false,
                 "StripeCheckout": false,
