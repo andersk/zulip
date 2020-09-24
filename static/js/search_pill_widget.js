@@ -1,5 +1,7 @@
 "use strict";
 
+const hashchange = require("./hashchange");
+
 exports.initialize = function () {
     if (!page_params.search_pills_enabled) {
         return;

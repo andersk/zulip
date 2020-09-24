@@ -8,6 +8,7 @@ const render_settings_dev_env_email_access = require("../templates/settings/dev_
 
 const channel = require("./channel");
 const common = require("./common");
+const hashchange = require("./hashchange");
 const overlays = require("./overlays");
 const stream_data = require("./stream_data");
 const ui = require("./ui");

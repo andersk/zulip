@@ -124,7 +124,6 @@
                 "dropdown_list_widget": false,
                 "emoji_picker": false,
                 "flatpickr": false,
-                "hashchange": false,
                 "helpers": false,
                 "history": false,
                 "home_msg_list": false,

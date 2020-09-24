@@ -6,6 +6,7 @@ import * as compose_fade from "./compose_fade";
 import * as compose_state from "./compose_state";
 import * as condense from "./condense";
 import {Filter} from "./filter";
+import * as hashchange from "./hashchange";
 import * as message_edit from "./message_edit";
 import * as message_list from "./message_list";
 import {MessageListData} from "./message_list_data";

@@ -7,6 +7,7 @@ const render_recent_topics_filters = require("../templates/recent_topics_filters
 const render_recent_topics_body = require("../templates/recent_topics_table.hbs");
 
 const hash_util = require("./hash_util");
+const hashchange = require("./hashchange");
 const list_render = require("./list_render");
 const muting = require("./muting");
 const overlays = require("./overlays");
