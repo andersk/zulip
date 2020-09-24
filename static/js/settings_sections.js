@@ -4,6 +4,7 @@ const alert_words_ui = require("./alert_words_ui");
 const attachments_ui = require("./attachments_ui");
 const blueslip = require("./blueslip");
 const settings_account = require("./settings_account");
+const settings_display = require("./settings_display");
 
 const load_func_dict = new Map(); // group -> function
 const loaded_groups = new Set();
