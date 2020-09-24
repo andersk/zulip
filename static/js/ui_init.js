@@ -13,6 +13,7 @@ const emojisets = require("./emojisets");
 const markdown_config = require("./markdown_config");
 const people = require("./people");
 const pm_conversations = require("./pm_conversations");
+const unread_ui = require("./unread_ui");
 
 // This is where most of our initialization takes place.
 // TODO: Organize it a lot better.  In particular, move bigger
