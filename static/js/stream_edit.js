@@ -11,6 +11,7 @@ const input_pill = require("./input_pill");
 const people = require("./people");
 const settings_config = require("./settings_config");
 const settings_data = require("./settings_data");
+const stream_pill = require("./stream_pill");
 const user_pill = require("./user_pill");
 const util = require("./util");
 
