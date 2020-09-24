@@ -3,6 +3,7 @@
 const _ = require("lodash");
 
 const blueslip = require("./blueslip");
+const {FetchStatus} = require("./fetch_status");
 const {Filter} = require("./filter");
 const muting = require("./muting");
 const unread = require("./unread");

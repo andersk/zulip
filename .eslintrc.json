@@ -103,7 +103,6 @@
             "files": ["frontend_tests/**", "static/js/**"],
             "globals": {
                 "$": false,
-                "FetchStatus": false,
                 "ListCursor": false,
                 "MessageListData": false,
                 "MessageListView": false,
