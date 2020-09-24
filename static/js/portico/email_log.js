@@ -1,6 +1,4 @@
-"use strict";
-
-const channel = require("../channel");
+import * as channel from "../channel";
 
 $(() => {
     // This code will be executed when the user visits /emails in
