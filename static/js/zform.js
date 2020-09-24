@@ -1,11 +1,9 @@
-"use strict";
+import render_widgets_zform_choices from "../templates/widgets/zform_choices.hbs";
 
-const render_widgets_zform_choices = require("../templates/widgets/zform_choices.hbs");
+import * as blueslip from "./blueslip";
+import * as schema from "./schema";
 
-const blueslip = require("./blueslip");
-const schema = require("./schema");
-
-exports.validate_extra_data = function (data) {
+export function validate_extra_data(data) {
     function check(data) {
         function check_choice_data(data) {
             function check_choice_item(field_name, val) {
@@ -41,15 +39,15 @@ exports.validate_extra_data = function (data) {
     }
 
     return true;
-};
+}
 
-exports.activate = function (opts) {
+export function activate(opts) {
     const self = {};
 
     const outer_elem = opts.elem;
     const data = opts.extra_data;
 
-    if (!exports.validate_extra_data(data)) {
+    if (!validate_extra_data(data)) {
         // callee will log reason we fail
         return;
     }
@@ -103,6 +101,4 @@ exports.activate = function (opts) {
     render();
 
     return self;
-};
-
-window.zform = exports;
+}

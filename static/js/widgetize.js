@@ -4,6 +4,7 @@ const blueslip = require("./blueslip");
 const poll_widget = require("./poll_widget");
 const tictactoe_widget = require("./tictactoe_widget");
 const todo_widget = require("./todo_widget");
+const zform = require("./zform");
 
 const widgets = new Map([
     ["poll", poll_widget],
