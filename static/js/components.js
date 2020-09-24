@@ -1,5 +1,7 @@
 "use strict";
 
+const keydown_util = require("./keydown_util");
+
 /* USAGE:
     Toggle x = components.toggle({
         selected: Integer selected_index,

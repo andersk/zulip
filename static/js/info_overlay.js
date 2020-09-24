@@ -1,6 +1,7 @@
 "use strict";
 
 const common = require("./common");
+const keydown_util = require("./keydown_util");
 
 // Make it explicit that our toggler is undefined until
 // set_up_toggler is called.

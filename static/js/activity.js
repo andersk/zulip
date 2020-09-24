@@ -3,6 +3,7 @@
 const _ = require("lodash");
 
 const blueslip = require("./blueslip");
+const keydown_util = require("./keydown_util");
 const people = require("./people");
 
 /*
