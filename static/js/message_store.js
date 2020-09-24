@@ -3,6 +3,7 @@
 const blueslip = require("./blueslip");
 const people = require("./people");
 const pm_conversations = require("./pm_conversations");
+const recent_senders = require("./recent_senders");
 const util = require("./util");
 
 const stored_messages = new Map();
