@@ -7,6 +7,7 @@ const emoji = require("../shared/js/emoji");
 const render_edit_content_button = require("../templates/edit_content_button.hbs");
 
 const blueslip = require("./blueslip");
+const compose_pm_pill = require("./compose_pm_pill");
 const drafts = require("./drafts");
 const emojisets = require("./emojisets");
 const markdown_config = require("./markdown_config");

@@ -10,6 +10,7 @@ const render_compose_private_stream_alert = require("../templates/compose_privat
 
 const blueslip = require("./blueslip");
 const common = require("./common");
+const compose_pm_pill = require("./compose_pm_pill");
 const drafts = require("./drafts");
 const loading = require("./loading");
 const people = require("./people");
