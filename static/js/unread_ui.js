@@ -1,5 +1,6 @@
 import XDate from "xdate";
 
+import * as pm_list from "./pm_list";
 import * as topic_list from "./topic_list";
 import * as unread from "./unread";
 

@@ -2,6 +2,7 @@
 
 const channel = require("./channel");
 const huddle_data = require("./huddle_data");
+const pm_list = require("./pm_list");
 const unread = require("./unread");
 const unread_ops = require("./unread_ops");
 const unread_ui = require("./unread_ui");

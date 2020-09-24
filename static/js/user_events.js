@@ -6,6 +6,7 @@
 // (We should do bot updates here too.)
 const blueslip = require("./blueslip");
 const people = require("./people");
+const pm_list = require("./pm_list");
 const settings_config = require("./settings_config");
 
 exports.update_person = function update(person) {

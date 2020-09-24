@@ -6,6 +6,7 @@ const blueslip = require("./blueslip");
 const channel = require("./channel");
 const keydown_util = require("./keydown_util");
 const people = require("./people");
+const pm_list = require("./pm_list");
 
 /*
     Helpers for detecting user activity and managing user idle states
