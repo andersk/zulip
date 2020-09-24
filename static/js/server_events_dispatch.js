@@ -13,6 +13,7 @@ const narrow_state = require("./narrow_state");
 const night_mode = require("./night_mode");
 const people = require("./people");
 const reload = require("./reload");
+const scroll_bar = require("./scroll_bar");
 const settings_config = require("./settings_config");
 const stream_data = require("./stream_data");
 const stream_events = require("./stream_events");
