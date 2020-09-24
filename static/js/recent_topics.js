@@ -8,6 +8,7 @@ const render_recent_topics_body = require("../templates/recent_topics_table.hbs"
 
 const muting = require("./muting");
 const people = require("./people");
+const unread = require("./unread");
 
 const topics = new Map(); // Key is stream-id:topic.
 let topics_widget;

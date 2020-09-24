@@ -10,6 +10,7 @@ const channel = require("./channel");
 const muting = require("./muting");
 const people = require("./people");
 const settings_config = require("./settings_config");
+const unread = require("./unread");
 const unread_ops = require("./unread_ops");
 
 const notice_memory = new Map();

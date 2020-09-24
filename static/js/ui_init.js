@@ -16,6 +16,7 @@ const muting = require("./muting");
 const people = require("./people");
 const pm_conversations = require("./pm_conversations");
 const rows = require("./rows");
+const unread = require("./unread");
 const unread_ui = require("./unread_ui");
 const user_groups = require("./user_groups");
 

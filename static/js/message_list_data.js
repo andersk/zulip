@@ -4,6 +4,7 @@ const _ = require("lodash");
 
 const blueslip = require("./blueslip");
 const muting = require("./muting");
+const unread = require("./unread");
 const util = require("./util");
 
 class MessageListData {

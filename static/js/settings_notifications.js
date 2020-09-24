@@ -4,6 +4,7 @@ const render_stream_specific_notification_row = require("../templates/settings/s
 
 const channel = require("./channel");
 const settings_config = require("./settings_config");
+const unread = require("./unread");
 
 exports.get_notifications_table_row_data = function (notify_settings) {
     return settings_config.general_notifications_table_labels.realm.map((column, index) => {
