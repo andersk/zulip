@@ -4,6 +4,7 @@ const render_message_view_header = require("../templates/message_view_header.hbs
 
 const narrow_state = require("./narrow_state");
 const rendered_markdown = require("./rendered_markdown");
+const search = require("./search");
 
 function get_sub_count(current_stream) {
     const sub_count = current_stream.subscriber_count;

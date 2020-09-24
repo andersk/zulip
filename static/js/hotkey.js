@@ -17,6 +17,7 @@ const muting_ui = require("./muting_ui");
 const narrow = require("./narrow");
 const overlays = require("./overlays");
 const popovers = require("./popovers");
+const search = require("./search");
 const stream_list = require("./stream_list");
 const stream_popover = require("./stream_popover");
 const subs = require("./subs");
