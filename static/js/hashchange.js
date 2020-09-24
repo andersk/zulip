@@ -6,6 +6,7 @@ const floating_recipient_bar = require("./floating_recipient_bar");
 const info_overlay = require("./info_overlay");
 const message_viewport = require("./message_viewport");
 const narrow = require("./narrow");
+const settings_panel_menu = require("./settings_panel_menu");
 const subs = require("./subs");
 const ui_util = require("./ui_util");
 
