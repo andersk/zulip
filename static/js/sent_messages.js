@@ -1,5 +1,6 @@
 import * as blueslip from "./blueslip";
 import * as channel from "./channel";
+import * as server_events from "./server_events";
 
 export let next_local_id;
 export const messages = new Map();
