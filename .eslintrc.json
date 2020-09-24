@@ -150,7 +150,6 @@
                 "list_render": false,
                 "list_util": false,
                 "localStorage": false,
-                "local_message": false,
                 "location": false,
                 "message_edit": false,
                 "message_edit_history": false,

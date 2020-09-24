@@ -1,6 +1,7 @@
 "use strict";
 
 const blueslip = require("./blueslip");
+const local_message = require("./local_message");
 const markdown = require("./markdown");
 const message_list = require("./message_list");
 const narrow_state = require("./narrow_state");
