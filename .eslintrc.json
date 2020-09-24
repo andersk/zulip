@@ -285,7 +285,6 @@
                 "user_status": false,
                 "user_status_ui": false,
                 "poll_widget": false,
-                "vdom": false,
                 "widgetize": false,
                 "zcommand": false,
                 "zform": false,

@@ -1,10 +1,8 @@
-"use strict";
+import _ from "lodash";
 
-const _ = require("lodash");
+import * as blueslip from "./blueslip";
 
-const blueslip = require("./blueslip");
-
-exports.eq_array = (a, b, eq) => {
+export const eq_array = (a, b, eq) => {
     if (a === b) {
         // either both are undefined, or they
         // are referentially equal
@@ -22,12 +20,12 @@ exports.eq_array = (a, b, eq) => {
     return a.every((item, i) => eq(item, b[i]));
 };
 
-exports.ul = (opts) => ({
+export const ul = (opts) => ({
     tag_name: "ul",
     opts,
 });
 
-exports.render_tag = (tag) => {
+export const render_tag = (tag) => {
     /*
         This renders a tag into a string.  It will
         automatically escape attributes, but it's your
@@ -57,7 +55,7 @@ exports.render_tag = (tag) => {
     return start_tag + "\n" + innards + "\n" + end_tag;
 };
 
-exports.update = (replace_content, find, new_dom, old_dom) => {
+export const update = (replace_content, find, new_dom, old_dom) => {
     /*
         The update method allows you to continually
         update a "virtual" representation of your DOM,
@@ -110,7 +108,7 @@ exports.update = (replace_content, find, new_dom, old_dom) => {
         `pm_list_dom.js`.
     */
     function do_full_update() {
-        const rendered_dom = exports.render_tag(new_dom);
+        const rendered_dom = render_tag(new_dom);
         replace_content(rendered_dom);
     }
 
@@ -131,7 +129,7 @@ exports.update = (replace_content, find, new_dom, old_dom) => {
         return;
     }
 
-    const same_structure = exports.eq_array(
+    const same_structure = eq_array(
         new_opts.keyed_nodes,
         old_opts.keyed_nodes,
         (a, b) => a.key === b.key,
@@ -166,10 +164,10 @@ exports.update = (replace_content, find, new_dom, old_dom) => {
         child_elems.eq(i).replaceWith(rendered_dom);
     }
 
-    exports.update_attrs(find(), new_opts.attrs, old_opts.attrs);
+    update_attrs(find(), new_opts.attrs, old_opts.attrs);
 };
 
-exports.update_attrs = (elem, new_attrs, old_attrs) => {
+export let update_attrs = (elem, new_attrs, old_attrs) => {
     const new_dict = new Map(new_attrs);
     const old_dict = new Map(old_attrs);
 
@@ -185,5 +183,3 @@ exports.update_attrs = (elem, new_attrs, old_attrs) => {
         }
     }
 };
-
-window.vdom = exports;

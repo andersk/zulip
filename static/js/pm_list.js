@@ -3,6 +3,7 @@
 const blueslip = require("./blueslip");
 const people = require("./people");
 const pm_conversations = require("./pm_conversations");
+const vdom = require("./vdom");
 
 let prior_dom;
 let private_messages_open = false;

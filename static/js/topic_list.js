@@ -8,6 +8,7 @@ const render_topic_list_item = require("../templates/topic_list_item.hbs");
 
 const blueslip = require("./blueslip");
 const topic_list_data = require("./topic_list_data");
+const vdom = require("./vdom");
 
 /*
     Track all active widgets with a Map.
