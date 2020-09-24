@@ -9,6 +9,7 @@ const common = require("./common");
 const compose_pm_pill = require("./compose_pm_pill");
 const drafts = require("./drafts");
 const people = require("./people");
+const unread_ops = require("./unread_ops");
 
 exports.blur_compose_inputs = function () {
     $(".message_comp").find("input, textarea, button, #private_message_recipient").trigger("blur");

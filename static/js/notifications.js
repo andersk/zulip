@@ -9,6 +9,7 @@ const blueslip = require("./blueslip");
 const channel = require("./channel");
 const people = require("./people");
 const settings_config = require("./settings_config");
+const unread_ops = require("./unread_ops");
 
 const notice_memory = new Map();
 

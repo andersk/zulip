@@ -3,6 +3,7 @@
 const _ = require("lodash");
 
 const loading = require("./loading");
+const unread_ops = require("./unread_ops");
 
 let actively_scrolling = false;
 

@@ -3,6 +3,7 @@
 const _ = require("lodash");
 
 const channel = require("./channel");
+const unread_ops = require("./unread_ops");
 
 function send_flag_update(message, flag, op) {
     channel.post({

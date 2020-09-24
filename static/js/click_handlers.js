@@ -11,6 +11,7 @@ const render_buddy_list_tooltip_content = require("../templates/buddy_list_toolt
 const blueslip = require("./blueslip");
 const channel = require("./channel");
 const settings_panel_menu = require("./settings_panel_menu");
+const unread_ops = require("./unread_ops");
 const util = require("./util");
 
 function convert_enter_to_click(e) {
