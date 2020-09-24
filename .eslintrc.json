@@ -170,7 +170,6 @@
                 "settings_user_groups": false,
                 "settings_users": false,
                 "spoilers": false,
-                "starred_messages": false,
                 "stream_ui_updates": false,
                 "StripeCheckout": false,
                 "message_view_header": false,

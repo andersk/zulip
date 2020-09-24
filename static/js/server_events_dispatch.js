@@ -19,6 +19,7 @@ const people = require("./people");
 const reload = require("./reload");
 const scroll_bar = require("./scroll_bar");
 const settings_config = require("./settings_config");
+const starred_messages = require("./starred_messages");
 const stream_data = require("./stream_data");
 const stream_events = require("./stream_events");
 const stream_list = require("./stream_list");
