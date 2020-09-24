@@ -4,6 +4,7 @@ const pygments_data = require("../generated/pygments_data");
 const render_settings_admin_auth_methods_list = require("../templates/settings/admin_auth_methods_list.hbs");
 const render_settings_admin_realm_domains_list = require("../templates/settings/admin_realm_domains_list.hbs");
 
+const blueslip = require("./blueslip");
 const settings_config = require("./settings_config");
 
 const meta = {

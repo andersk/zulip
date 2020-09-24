@@ -1,5 +1,6 @@
 "use strict";
 
+const blueslip = require("./blueslip");
 const people = require("./people");
 const util = require("./util");
 // Docs: https://zulip.readthedocs.io/en/latest/subsystems/sending-messages.html

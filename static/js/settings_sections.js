@@ -1,5 +1,7 @@
 "use strict";
 
+const blueslip = require("./blueslip");
+
 const load_func_dict = new Map(); // group -> function
 const loaded_groups = new Set();
 

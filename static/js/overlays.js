@@ -1,5 +1,7 @@
 "use strict";
 
+const blueslip = require("./blueslip");
+
 let active_overlay;
 let close_handler;
 let open_overlay_name;

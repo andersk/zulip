@@ -2,6 +2,7 @@
 
 const render_widgets_tictactoe_widget = require("../templates/widgets/tictactoe_widget.hbs");
 
+const blueslip = require("./blueslip");
 const people = require("./people");
 
 class TicTacToeData {

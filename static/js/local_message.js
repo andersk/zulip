@@ -2,6 +2,8 @@
 
 const XDate = require("xdate");
 
+const blueslip = require("./blueslip");
+
 function truncate_precision(float) {
     return parseFloat(float.toFixed(3));
 }

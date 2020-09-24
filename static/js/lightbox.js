@@ -1,5 +1,6 @@
 "use strict";
 
+const blueslip = require("./blueslip");
 const people = require("./people");
 
 let is_open = false;

@@ -1,5 +1,7 @@
 "use strict";
 
+const blueslip = require("./blueslip");
+
 exports.messages = new Map();
 
 exports.reset_id_state = function () {

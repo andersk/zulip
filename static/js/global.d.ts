@@ -17,7 +17,6 @@ declare let alert_words_ui: any;
 declare let attachments_ui: any;
 declare let avatar: any;
 declare let billing: any;
-declare let blueslip: any;
 declare let bot_data: any;
 declare let buddy_data: any;
 declare let buddy_list: any;

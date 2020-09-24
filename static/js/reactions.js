@@ -5,6 +5,7 @@ const _ = require("lodash");
 const emoji = require("../shared/js/emoji");
 const render_message_reaction = require("../templates/message_reaction.hbs");
 
+const blueslip = require("./blueslip");
 const people = require("./people");
 
 exports.view = {}; // function namespace

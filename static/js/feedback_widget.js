@@ -2,6 +2,8 @@
 
 const render_feedback_container = require("../templates/feedback_container.hbs");
 
+const blueslip = require("./blueslip");
+
 /*
 
 This code lets you show something like this:

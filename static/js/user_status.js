@@ -1,5 +1,7 @@
 "use strict";
 
+const blueslip = require("./blueslip");
+
 const away_user_ids = new Set();
 const user_info = new Map();
 

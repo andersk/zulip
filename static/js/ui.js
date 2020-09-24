@@ -2,6 +2,8 @@
 
 const {default: SimpleBar} = require("simplebar");
 
+const blueslip = require("./blueslip");
+
 // What, if anything, obscures the home tab?
 
 exports.replace_emoji_with_text = function (element) {

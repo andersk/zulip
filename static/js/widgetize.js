@@ -1,5 +1,7 @@
 "use strict";
 
+const blueslip = require("./blueslip");
+
 const widgets = new Map([
     ["poll", poll_widget],
     ["tictactoe", tictactoe_widget],

@@ -2,6 +2,7 @@
 
 const XDate = require("xdate");
 
+const blueslip = require("./blueslip");
 const people = require("./people");
 
 // This module just manages data.  See activity.js for

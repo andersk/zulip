@@ -1,5 +1,3 @@
-"use strict";
-
 /* eslint-disable no-console */
 
 // System documented in https://zulip.readthedocs.io/en/latest/subsystems/logging.html
@@ -8,7 +6,7 @@
 // in order to be able to report exceptions that occur during their
 // execution.
 
-const blueslip_stacktrace = require("./blueslip_stacktrace");
+import * as blueslip_stacktrace from "./blueslip_stacktrace";
 
 if (Error.stackTraceLimit !== undefined) {
     Error.stackTraceLimit = 100000;
@@ -67,7 +65,7 @@ for (const name of ["debug", "log", "info", "warn", "error"]) {
 
 const logger = new Logger();
 
-exports.get_log = function blueslip_get_log() {
+export const get_log = function blueslip_get_log() {
     return logger.get_log();
 };
 
@@ -184,7 +182,7 @@ class BlueslipError extends Error {
     }
 }
 
-exports.exception_msg = function blueslip_exception_msg(ex) {
+export const exception_msg = function blueslip_exception_msg(ex) {
     let message = ex.message;
     if (ex.fileName !== undefined) {
         message += " at " + ex.fileName;
@@ -200,7 +198,7 @@ $(window).on("error", (event) => {
     if (!ex || ex instanceof BlueslipError) {
         return;
     }
-    const message = exports.exception_msg(ex);
+    const message = exception_msg(ex);
     report_error(message, ex.stack);
 });
 
@@ -212,22 +210,22 @@ function build_arg_list(msg, more_info) {
     return args;
 }
 
-exports.debug = function blueslip_debug(msg, more_info) {
+export const debug = function blueslip_debug(msg, more_info) {
     const args = build_arg_list(msg, more_info);
     logger.debug(...args);
 };
 
-exports.log = function blueslip_log(msg, more_info) {
+export const log = function blueslip_log(msg, more_info) {
     const args = build_arg_list(msg, more_info);
     logger.log(...args);
 };
 
-exports.info = function blueslip_info(msg, more_info) {
+export const info = function blueslip_info(msg, more_info) {
     const args = build_arg_list(msg, more_info);
     logger.info(...args);
 };
 
-exports.warn = function blueslip_warn(msg, more_info) {
+export const warn = function blueslip_warn(msg, more_info) {
     const args = build_arg_list(msg, more_info);
     logger.warn(...args);
     if (page_params.debug_mode) {
@@ -235,7 +233,7 @@ exports.warn = function blueslip_warn(msg, more_info) {
     }
 };
 
-exports.error = function blueslip_error(msg, more_info, stack) {
+export const error = function blueslip_error(msg, more_info, stack) {
     if (stack === undefined) {
         stack = Error().stack;
     }
@@ -248,28 +246,28 @@ exports.error = function blueslip_error(msg, more_info, stack) {
     }
 };
 
-exports.fatal = function blueslip_fatal(msg, more_info) {
+export const fatal = function blueslip_fatal(msg, more_info) {
     report_error(msg, Error().stack, {more_info});
     throw new BlueslipError(msg, more_info);
 };
 
-exports.timings = new Map();
+export const timings = new Map();
 
-exports.start_timing = function (label) {
+export function start_timing(label) {
     const t1 = performance.now();
 
     return function () {
         const t2 = performance.now();
         const elapsed = t2 - t1;
-        exports.timings.set(label, elapsed);
+        timings.set(label, elapsed);
     };
-};
+}
 
 // Produces an easy-to-read preview on an HTML element.  Currently
 // only used for including in error report emails; be sure to discuss
 // with other developers before using it in a user-facing context
 // because it is not XSS-safe.
-exports.preview_node = function (node) {
+export function preview_node(node) {
     if (node.constructor === jQuery) {
         node = node[0];
     }
@@ -288,6 +286,4 @@ exports.preview_node = function (node) {
         ">";
 
     return node_preview;
-};
-
-window.blueslip = exports;
+}

@@ -2,6 +2,7 @@
 
 const autosize = require("autosize");
 
+const blueslip = require("./blueslip");
 const util = require("./util");
 
 let narrow_window = false;

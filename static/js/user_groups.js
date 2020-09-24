@@ -1,5 +1,6 @@
 "use strict";
 
+const blueslip = require("./blueslip");
 const {FoldDict} = require("./fold_dict");
 
 let user_group_name_dict;

@@ -2,6 +2,8 @@
 
 const _ = require("lodash");
 
+const blueslip = require("./blueslip");
+
 exports.eq_array = (a, b, eq) => {
     if (a === b) {
         // either both are undefined, or they

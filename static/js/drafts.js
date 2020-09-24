@@ -5,6 +5,7 @@ const XDate = require("xdate");
 
 const render_draft_table_body = require("../templates/draft_table_body.hbs");
 
+const blueslip = require("./blueslip");
 const people = require("./people");
 const util = require("./util");
 

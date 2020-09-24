@@ -6,6 +6,7 @@ const render_stream_subscription_info = require("../templates/stream_subscriptio
 const render_subscription_settings = require("../templates/subscription_settings.hbs");
 const render_subscription_stream_privacy_modal = require("../templates/subscription_stream_privacy_modal.hbs");
 
+const blueslip = require("./blueslip");
 const people = require("./people");
 const settings_config = require("./settings_config");
 const settings_data = require("./settings_data");

@@ -1,5 +1,7 @@
 "use strict";
 
+const blueslip = require("./blueslip");
+
 const DEFAULTS = {
     INITIAL_RENDER_COUNT: 80,
     LOAD_COUNT: 20,

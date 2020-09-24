@@ -1,5 +1,6 @@
 "use strict";
 
+const blueslip = require("./blueslip");
 const huddle_data = require("./huddle_data");
 const people = require("./people");
 

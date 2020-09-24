@@ -1,5 +1,7 @@
 "use strict";
 
+const blueslip = require("./blueslip");
+
 const funcs = {
     setZoom(meta, zoom) {
         // condition to handle zooming event by zoom hotkeys

@@ -4,6 +4,7 @@ import moment from "moment-timezone";
 
 import * as typeahead from "../shared/js/typeahead";
 
+import * as blueslip from "./blueslip";
 import {FoldDict} from "./fold_dict";
 import * as settings_data from "./settings_data";
 import * as util from "./util";

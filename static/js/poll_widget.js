@@ -3,6 +3,7 @@
 const render_widgets_poll_widget = require("../templates/widgets/poll_widget.hbs");
 const render_widgets_poll_widget_results = require("../templates/widgets/poll_widget_results.hbs");
 
+const blueslip = require("./blueslip");
 const people = require("./people");
 
 class PollData {

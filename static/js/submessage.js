@@ -1,5 +1,7 @@
 "use strict";
 
+const blueslip = require("./blueslip");
+
 exports.get_message_events = function (message) {
     if (message.locally_echoed) {
         return;

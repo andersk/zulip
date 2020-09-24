@@ -3,6 +3,8 @@
 const render_widgets_todo_widget = require("../templates/widgets/todo_widget.hbs");
 const render_widgets_todo_widget_tasks = require("../templates/widgets/todo_widget_tasks.hbs");
 
+const blueslip = require("./blueslip");
+
 class TaskData {
     task_map = new Map();
 

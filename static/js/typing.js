@@ -2,6 +2,7 @@
 
 const typing_status = require("../shared/js/typing_status");
 
+const blueslip = require("./blueslip");
 const people = require("./people");
 
 // This module handles the outbound side of typing indicators.

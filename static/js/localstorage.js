@@ -1,5 +1,7 @@
 "use strict";
 
+const blueslip = require("./blueslip");
+
 const ls = {
     // parse JSON without throwing an error.
     parseJSON(str) {

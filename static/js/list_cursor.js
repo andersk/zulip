@@ -1,5 +1,7 @@
 "use strict";
 
+const blueslip = require("./blueslip");
+
 class ListCursor {
     constructor({highlight_class, list}) {
         const config_ok =

@@ -2,6 +2,7 @@
 
 const XDate = require("xdate");
 
+const blueslip = require("./blueslip");
 const {FoldDict} = require("./fold_dict");
 
 const muted_topics = new Map();

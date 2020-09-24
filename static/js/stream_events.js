@@ -1,5 +1,7 @@
 "use strict";
 
+const blueslip = require("./blueslip");
+
 // In theory, this function should apply the account-level defaults,
 // however, they are only called after a manual override, so
 // doing so is unnecessary with the current code.  Ideally, we'd do a

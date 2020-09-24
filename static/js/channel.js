@@ -1,5 +1,7 @@
 "use strict";
 
+const blueslip = require("./blueslip");
+
 const pending_requests = [];
 
 function add_pending_request(jqXHR) {

@@ -2,6 +2,7 @@
 
 const emoji = require("../shared/js/emoji");
 
+const blueslip = require("./blueslip");
 const people = require("./people");
 const settings_config = require("./settings_config");
 

@@ -2,6 +2,8 @@
 
 const render_input_pill = require("../templates/input_pill.hbs");
 
+const blueslip = require("./blueslip");
+
 // See https://zulip.readthedocs.io/en/latest/subsystems/input-pills.html
 exports.random_id = function () {
     return Math.random().toString(16);

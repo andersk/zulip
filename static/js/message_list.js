@@ -2,6 +2,8 @@
 
 const autosize = require("autosize");
 
+const blueslip = require("./blueslip");
+
 exports.narrowed = undefined;
 exports.set_narrowed = function (value) {
     exports.narrowed = value;

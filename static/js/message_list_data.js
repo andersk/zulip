@@ -2,6 +2,7 @@
 
 const _ = require("lodash");
 
+const blueslip = require("./blueslip");
 const util = require("./util");
 
 class MessageListData {

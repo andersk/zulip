@@ -117,7 +117,6 @@
                 "attachments_ui": false,
                 "avatar": false,
                 "billing": false,
-                "blueslip": false,
                 "bot_data": false,
                 "bridge": false,
                 "buddy_data": false,

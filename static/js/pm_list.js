@@ -1,5 +1,6 @@
 "use strict";
 
+const blueslip = require("./blueslip");
 const people = require("./people");
 const pm_conversations = require("./pm_conversations");
 
