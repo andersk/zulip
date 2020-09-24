@@ -3,6 +3,7 @@
 const blueslip = require("./blueslip");
 const channel = require("./channel");
 const people = require("./people");
+const topic_generator = require("./topic_generator");
 const unread = require("./unread");
 const unread_ops = require("./unread_ops");
 const util = require("./util");

@@ -1,12 +1,10 @@
-"use strict";
+import * as blueslip from "./blueslip";
+import * as muting from "./muting";
+import * as pm_conversations from "./pm_conversations";
+import * as stream_sort from "./stream_sort";
+import * as unread from "./unread";
 
-const blueslip = require("./blueslip");
-const muting = require("./muting");
-const pm_conversations = require("./pm_conversations");
-const stream_sort = require("./stream_sort");
-const unread = require("./unread");
-
-exports.sub_list_generator = function (lst, lower, upper) {
+export function sub_list_generator(lst, lower, upper) {
     // lower/upper has Python range semantics so if you pass
     // in lower=5 and upper=8, you get elements 5/6/7
     let i = lower;
@@ -21,9 +19,9 @@ exports.sub_list_generator = function (lst, lower, upper) {
             return res;
         },
     };
-};
+}
 
-exports.reverse_sub_list_generator = function (lst, lower, upper) {
+export function reverse_sub_list_generator(lst, lower, upper) {
     // lower/upper has Python range semantics so if you pass
     // in lower=5 and upper=8, you get elements 7/6/5
     let i = upper - 1;
@@ -38,17 +36,17 @@ exports.reverse_sub_list_generator = function (lst, lower, upper) {
             return res;
         },
     };
-};
+}
 
-exports.list_generator = function (lst) {
-    return exports.sub_list_generator(lst, 0, lst.length);
-};
+export function list_generator(lst) {
+    return sub_list_generator(lst, 0, lst.length);
+}
 
-exports.reverse_list_generator = function (lst) {
-    return exports.reverse_sub_list_generator(lst, 0, lst.length);
-};
+export function reverse_list_generator(lst) {
+    return reverse_sub_list_generator(lst, 0, lst.length);
+}
 
-exports.fchain = function (outer_gen, get_inner_gen) {
+export function fchain(outer_gen, get_inner_gen) {
     let outer_val = outer_gen.next();
     let inner_gen;
 
@@ -71,73 +69,67 @@ exports.fchain = function (outer_gen, get_inner_gen) {
             }
         },
     };
-};
+}
 
-exports.chain = function (gen_lst) {
+export function chain(gen_lst) {
     function get(which) {
         return which;
     }
 
-    const outer_gen = exports.list_generator(gen_lst);
+    const outer_gen = list_generator(gen_lst);
 
-    return exports.fchain(outer_gen, get);
-};
+    return fchain(outer_gen, get);
+}
 
-exports.wrap = function (lst, val) {
+export function wrap(lst, val) {
     if (val === undefined) {
-        return exports.list_generator(lst);
+        return list_generator(lst);
     }
 
     const i = lst.indexOf(val);
     if (i < 0) {
-        return exports.list_generator(lst);
+        return list_generator(lst);
     }
 
-    const inners = [
-        exports.sub_list_generator(lst, i, lst.length),
-        exports.sub_list_generator(lst, 0, i),
-    ];
+    const inners = [sub_list_generator(lst, i, lst.length), sub_list_generator(lst, 0, i)];
 
-    return exports.chain(inners);
-};
+    return chain(inners);
+}
 
-exports.wrap_exclude = function (lst, val) {
+export function wrap_exclude(lst, val) {
     if (val === undefined) {
-        return exports.list_generator(lst);
+        return list_generator(lst);
     }
 
     const i = lst.indexOf(val);
     if (i < 0) {
-        return exports.list_generator(lst);
+        return list_generator(lst);
     }
 
-    const inners = [
-        exports.sub_list_generator(lst, i + 1, lst.length),
-        exports.sub_list_generator(lst, 0, i),
-    ];
+    const inners = [sub_list_generator(lst, i + 1, lst.length), sub_list_generator(lst, 0, i)];
 
-    return exports.chain(inners);
-};
+    return chain(inners);
+}
 
-exports.reverse_wrap_exclude = function (lst, val) {
+export function reverse_wrap_exclude(lst, val) {
     if (val === undefined) {
-        return exports.reverse_list_generator(lst);
+        return reverse_list_generator(lst);
     }
 
     const i = lst.indexOf(val);
     if (i < 0) {
-        return exports.reverse_list_generator(lst);
+        return reverse_list_generator(lst);
     }
 
     const inners = [
-        exports.reverse_sub_list_generator(lst, 0, i),
-        exports.reverse_sub_list_generator(lst, i + 1, lst.length),
+        reverse_sub_list_generator(lst, 0, i),
+        reverse_sub_list_generator(lst, i + 1, lst.length),
     ];
 
-    return exports.chain(inners);
-};
+    return chain(inners);
+}
 
-exports.filter = function (gen, filter_func) {
+export function filter(gen, filter_func) {
     return {
         next() {
             while (true) {
@@ -151,9 +143,9 @@ exports.filter = function (gen, filter_func) {
             }
         },
     };
-};
+}
 
-exports.map = function (gen, map_func) {
+export function map(gen, map_func) {
     return {
         next() {
             const val = gen.next();
@@ -163,18 +155,18 @@ exports.map = function (gen, map_func) {
             return map_func(val);
         },
     };
-};
+}
 
-exports.next_topic = function (streams, get_topics, has_unread_messages, curr_stream, curr_topic) {
-    const stream_gen = exports.wrap(streams, curr_stream);
+export function next_topic(streams, get_topics, has_unread_messages, curr_stream, curr_topic) {
+    const stream_gen = wrap(streams, curr_stream);
 
     function get_topic_gen(which_stream) {
         let gen;
 
         if (which_stream === curr_stream) {
-            gen = exports.wrap_exclude(get_topics(which_stream), curr_topic);
+            gen = wrap_exclude(get_topics(which_stream), curr_topic);
         } else {
-            gen = exports.list_generator(get_topics(which_stream));
+            gen = list_generator(get_topics(which_stream));
         }
 
         function has_unread(topic) {
@@ -188,17 +180,17 @@ exports.next_topic = function (streams, get_topics, has_unread_messages, curr_st
             };
         }
 
-        gen = exports.filter(gen, has_unread);
-        gen = exports.map(gen, make_object);
+        gen = filter(gen, has_unread);
+        gen = map(gen, make_object);
 
         return gen;
     }
 
-    const outer_gen = exports.fchain(stream_gen, get_topic_gen);
+    const outer_gen = fchain(stream_gen, get_topic_gen);
     return outer_gen.next();
-};
+}
 
-exports.get_next_topic = function (curr_stream, curr_topic) {
+export function get_next_topic(curr_stream, curr_topic) {
     let my_streams = stream_sort.get_streams();
 
     my_streams = my_streams.filter((stream_name) => {
@@ -225,48 +217,40 @@ exports.get_next_topic = function (curr_stream, curr_topic) {
         return unread.topic_has_any_unread(stream_id, topic);
     }
 
-    return exports.next_topic(
-        my_streams,
-        get_unmuted_topics,
-        has_unread_messages,
-        curr_stream,
-        curr_topic,
-    );
-};
+    return next_topic(my_streams, get_unmuted_topics, has_unread_messages, curr_stream, curr_topic);
+}
 
-exports._get_pm_gen = function (curr_pm) {
+export function _get_pm_gen(curr_pm) {
     const my_pm_strings = pm_conversations.recent.get_strings();
-    const gen = exports.wrap_exclude(my_pm_strings, curr_pm);
+    const gen = wrap_exclude(my_pm_strings, curr_pm);
     return gen;
-};
+}
 
-exports._get_unread_pm_gen = function (curr_pm) {
-    const pm_gen = exports._get_pm_gen(curr_pm);
+export function _get_unread_pm_gen(curr_pm) {
+    const pm_gen = _get_pm_gen(curr_pm);
 
     function has_unread(user_ids_string) {
         const num_unread = unread.num_unread_for_person(user_ids_string);
         return num_unread > 0;
     }
 
-    const gen = exports.filter(pm_gen, has_unread);
+    const gen = filter(pm_gen, has_unread);
     return gen;
-};
+}
 
-exports.get_next_unread_pm_string = function (curr_pm) {
-    const gen = exports._get_unread_pm_gen(curr_pm);
+export function get_next_unread_pm_string(curr_pm) {
+    const gen = _get_unread_pm_gen(curr_pm);
     return gen.next();
-};
+}
 
-exports.get_next_stream = function (curr_stream) {
+export function get_next_stream(curr_stream) {
     const my_streams = stream_sort.get_streams();
-    const stream_gen = exports.wrap_exclude(my_streams, curr_stream);
+    const stream_gen = wrap_exclude(my_streams, curr_stream);
     return stream_gen.next();
-};
+}
 
-exports.get_prev_stream = function (curr_stream) {
+export function get_prev_stream(curr_stream) {
     const my_streams = stream_sort.get_streams();
-    const stream_gen = exports.reverse_wrap_exclude(my_streams, curr_stream);
+    const stream_gen = reverse_wrap_exclude(my_streams, curr_stream);
     return stream_gen.next();
-};
-
-window.topic_generator = exports;
+}
