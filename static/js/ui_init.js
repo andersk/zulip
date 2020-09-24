@@ -10,6 +10,7 @@ const blueslip = require("./blueslip");
 const compose_pm_pill = require("./compose_pm_pill");
 const drafts = require("./drafts");
 const emojisets = require("./emojisets");
+const markdown = require("./markdown");
 const markdown_config = require("./markdown_config");
 const message_viewport = require("./message_viewport");
 const muting = require("./muting");

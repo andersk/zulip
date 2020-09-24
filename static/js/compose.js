@@ -15,6 +15,7 @@ const compose_fade = require("./compose_fade");
 const compose_pm_pill = require("./compose_pm_pill");
 const drafts = require("./drafts");
 const loading = require("./loading");
+const markdown = require("./markdown");
 const people = require("./people");
 const rendered_markdown = require("./rendered_markdown");
 const rtl = require("./rtl");

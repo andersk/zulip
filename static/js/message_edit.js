@@ -9,6 +9,7 @@ const render_topic_edit_form = require("../templates/topic_edit_form.hbs");
 const blueslip = require("./blueslip");
 const channel = require("./channel");
 const loading = require("./loading");
+const markdown = require("./markdown");
 const message_viewport = require("./message_viewport");
 const rows = require("./rows");
 

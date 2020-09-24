@@ -1,14 +1,12 @@
-"use strict";
+import katex from "katex";
+import _ from "lodash";
+import moment from "moment";
 
-const katex = require("katex");
-const _ = require("lodash");
-const moment = require("moment");
+import * as emoji from "../shared/js/emoji";
+import * as fenced_code from "../shared/js/fenced_code";
+import marked from "../third/marked/lib/marked";
 
-const emoji = require("../shared/js/emoji");
-const fenced_code = require("../shared/js/fenced_code");
-const marked = require("../third/marked/lib/marked");
-
-const blueslip = require("./blueslip");
+import * as blueslip from "./blueslip";
 
 // This contains zulip's frontend Markdown implementation; see
 // docs/subsystems/markdown.md for docs on our Markdown syntax.  The other
@@ -40,7 +38,7 @@ const backend_only_markdown_re = [
     /[^\s]*(?:twitter|youtube).com\/[^\s]*/,
 ];
 
-exports.translate_emoticons_to_names = (text) => {
+export const translate_emoticons_to_names = (text) => {
     // Translates emoticons in a string to their colon syntax.
     let translated = text;
     let replacement_text;
@@ -80,7 +78,7 @@ exports.translate_emoticons_to_names = (text) => {
     return translated;
 };
 
-exports.contains_backend_only_syntax = function (content) {
+export function contains_backend_only_syntax(content) {
     // Try to guess whether or not a message contains syntax that only the
     // backend Markdown processor can correctly handle.
     // If it doesn't, we can immediately render it client-side for local echo.
@@ -95,9 +93,9 @@ exports.contains_backend_only_syntax = function (content) {
         return regex.test(content);
     });
     return markedup !== undefined || false_filter_match !== undefined;
-};
+}
 
-exports.apply_markdown = function (message) {
+export function apply_markdown(message) {
     message_store.init_booleans(message);
 
     const options = {
@@ -208,10 +206,10 @@ exports.apply_markdown = function (message) {
     };
     // Our python-markdown processor appends two \n\n to input
     message.content = marked(message.raw_content + "\n\n", options).trim();
-    message.is_me_message = exports.is_status_message(message.raw_content);
-};
+    message.is_me_message = is_status_message(message.raw_content);
+}
 
-exports.add_topic_links = function (message) {
+export function add_topic_links(message) {
     if (message.type !== "stream") {
         message.topic_links = [];
         return;
@@ -246,11 +244,11 @@ exports.add_topic_links = function (message) {
     }
 
     message.topic_links = links;
-};
+}
 
-exports.is_status_message = function (raw_content) {
+export function is_status_message(raw_content) {
     return raw_content.startsWith("/me ");
-};
+}
 
 function make_emoji_span(codepoint, title, alt_text) {
     return (
@@ -470,7 +468,7 @@ function python_to_js_filter(pattern, url) {
     return [final_regex, url];
 }
 
-exports.update_realm_filter_rules = function (realm_filters) {
+export function update_realm_filter_rules(realm_filters) {
     // Update the marked parser with our particular set of realm filters
     realm_filter_map.clear();
     realm_filter_list = [];
@@ -490,9 +488,9 @@ exports.update_realm_filter_rules = function (realm_filters) {
     }
 
     marked.InlineLexer.rules.zulip.realm_filters = marked_rules;
-};
+}
 
-exports.initialize = function (realm_filters, helper_config) {
+export function initialize(realm_filters, helper_config) {
     helpers = helper_config;
 
     function disable_markdown_regex(rules, name) {
@@ -530,7 +528,7 @@ exports.initialize = function (realm_filters, helper_config) {
 
         // In this scenario, the message has to be from the user, so the only
         // requirement should be that they have the setting on.
-        return exports.translate_emoticons_to_names(src);
+        return translate_emoticons_to_names(src);
     }
 
     // Disable lheadings
@@ -551,7 +549,7 @@ exports.initialize = function (realm_filters, helper_config) {
     // Disable autolink as (a) it is not used in our backend and (b) it interferes with @mentions
     disable_markdown_regex(marked.InlineLexer.rules.zulip, "autolink");
 
-    exports.update_realm_filter_rules(realm_filters);
+    update_realm_filter_rules(realm_filters);
 
     // Tell our fenced code preprocessor how to insert arbitrary
     // HTML into the output. This generated HTML is safe to not escape
@@ -576,6 +574,4 @@ exports.initialize = function (realm_filters, helper_config) {
         renderer: r,
         preprocessors: [preprocess_code_blocks, preprocess_translate_emoticons],
     });
-};
-
-window.markdown = exports;
+}
