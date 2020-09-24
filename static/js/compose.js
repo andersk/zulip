@@ -17,6 +17,7 @@ import * as drafts from "./drafts";
 import * as echo from "./echo";
 import * as loading from "./loading";
 import * as markdown from "./markdown";
+import * as notifications from "./notifications";
 import * as people from "./people";
 import * as rendered_markdown from "./rendered_markdown";
 import * as resize from "./resize";

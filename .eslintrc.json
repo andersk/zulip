@@ -140,7 +140,6 @@
                 "message_flags": false,
                 "message_store": false,
                 "message_util": false,
-                "notifications": false,
                 "padded_widget": false,
                 "page_params": false,
                 "panels": false,

@@ -1,6 +1,7 @@
 import * as channel from "./channel";
 import * as message_list from "./message_list";
 import * as message_viewport from "./message_viewport";
+import * as notifications from "./notifications";
 import * as overlays from "./overlays";
 import * as reload from "./reload";
 import * as unread from "./unread";

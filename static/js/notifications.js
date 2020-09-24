@@ -1,23 +1,21 @@
-"use strict";
+import _ from "lodash";
 
-const _ = require("lodash");
+import render_compose_notification from "../templates/compose_notification.hbs";
+import render_notification from "../templates/notification.hbs";
 
-const render_compose_notification = require("../templates/compose_notification.hbs");
-const render_notification = require("../templates/notification.hbs");
-
-const blueslip = require("./blueslip");
-const channel = require("./channel");
-const favicon = require("./favicon");
-const muting = require("./muting");
-const narrow = require("./narrow");
-const narrow_state = require("./narrow_state");
-const navigate = require("./navigate");
-const people = require("./people");
-const settings_config = require("./settings_config");
-const stream_data = require("./stream_data");
-const ui = require("./ui");
-const unread = require("./unread");
-const unread_ops = require("./unread_ops");
+import * as blueslip from "./blueslip";
+import * as channel from "./channel";
+import * as favicon from "./favicon";
+import * as muting from "./muting";
+import * as narrow from "./narrow";
+import * as narrow_state from "./narrow_state";
+import * as navigate from "./navigate";
+import * as people from "./people";
+import * as settings_config from "./settings_config";
+import * as stream_data from "./stream_data";
+import * as ui from "./ui";
+import * as unread from "./unread";
+import * as unread_ops from "./unread_ops";
 
 const notice_memory = new Map();
 
@@ -34,9 +32,9 @@ let flashing = false;
 
 let NotificationAPI;
 
-exports.set_notification_api = function (n) {
+export function set_notification_api(n) {
     NotificationAPI = n;
-};
+}
 
 if (window.electron_bridge && window.electron_bridge.new_notification) {
     class ElectronBridgeNotification extends EventTarget {
@@ -67,9 +65,9 @@ if (window.electron_bridge && window.electron_bridge.new_notification) {
     NotificationAPI = window.Notification;
 }
 
-exports.get_notifications = function () {
+export function get_notifications() {
     return notice_memory;
-};
+}
 
 function get_audio_file_path(audio_element, audio_file_without_extension) {
     if (audio_element.canPlayType('audio/ogg; codecs="vorbis"')) {
@@ -79,7 +77,7 @@ function get_audio_file_path(audio_element, audio_file_without_extension) {
     return audio_file_without_extension + ".mp3";
 }
 
-exports.initialize = function () {
+export function initialize() {
     $(window)
         .on("focus", () => {
             window_focused = true;
@@ -117,7 +115,7 @@ exports.initialize = function () {
             "/static/audio/notification_sounds/" + page_params.notification_sound;
         source.attr("src", get_audio_file_path(audio[0], audio_file_without_extension));
     }
-};
+}
 
 function update_notification_sound_source() {
     // Simplified version of the source creation in `exports.initialize`, for
@@ -133,23 +131,23 @@ function update_notification_sound_source() {
     $("#notifications-area").find("audio")[0].load();
 }
 
-exports.permission_state = function () {
+export function permission_state() {
     if (NotificationAPI === undefined) {
         // act like notifications are blocked if they do not have access to
         // the notification API.
         return "denied";
     }
     return NotificationAPI.permission;
-};
+}
 
 let new_message_count = 0;
 
-exports.update_title_count = function (count) {
+export function update_title_count(count) {
     new_message_count = count;
-    exports.redraw_title();
-};
+    redraw_title();
+}
 
-exports.redraw_title = function () {
+export function redraw_title() {
     // Update window title and favicon to reflect unread messages in current view
     let n;
 
@@ -190,7 +188,7 @@ exports.redraw_title = function () {
     if (window.electron_bridge !== undefined) {
         window.electron_bridge.send_event("total_unread_count", new_message_count);
     }
-};
+}
 
 function flash_pms() {
     // When you have unread PMs, toggle the favicon between the unread count and
@@ -215,17 +213,17 @@ function flash_pms() {
     }
 }
 
-exports.update_pm_count = function () {
+export function update_pm_count() {
     // TODO: Add a `window.electron_bridge.updatePMCount(new_pm_count);` call?
     if (!flashing) {
         flashing = true;
         flash_pms();
     }
-};
+}
 
-exports.is_window_focused = function () {
+export function is_window_focused() {
     return window_focused;
-};
+}
 
 function in_browser_notify(message, title, content, raw_operators, opts) {
     const notification_html = $(
@@ -257,7 +255,7 @@ function in_browser_notify(message, title, content, raw_operators, opts) {
         });
 }
 
-exports.notify_above_composebox = function (note, link_class, link_msg_id, link_text) {
+export function notify_above_composebox(note, link_class, link_msg_id, link_text) {
     const notification_html = $(
         render_compose_notification({
             note,
@@ -266,10 +264,10 @@ exports.notify_above_composebox = function (note, link_class, link_msg_id, link_
             link_text,
         }),
     );
-    exports.clear_compose_notifications();
+    clear_compose_notifications();
     $("#out-of-view-notification").append(notification_html);
     $("#out-of-view-notification").show();
-};
+}
 
 if (window.electron_bridge !== undefined) {
     // The code below is for sending a message received from notification reply which
@@ -439,18 +437,18 @@ function process_notification(notification) {
     }
 }
 
-exports.process_notification = process_notification;
+export {process_notification};
 
-exports.close_notification = function (message) {
+export function close_notification(message) {
     for (const [key, notice_mem_entry] of notice_memory) {
         if (notice_mem_entry.message_id === message.id) {
             notice_mem_entry.obj.close();
             notice_memory.delete(key);
         }
     }
-};
+}
 
-exports.message_is_notifiable = function (message) {
+export function message_is_notifiable(message) {
     // Independent of the user's notification settings, are there
     // properties of the message that unconditionally mean we
     // shouldn't notify about it.
@@ -484,9 +482,9 @@ exports.message_is_notifiable = function (message) {
     // Everything else is on the table; next filter based on notification
     // settings.
     return true;
-};
+}
 
-exports.should_send_desktop_notification = function (message) {
+export function should_send_desktop_notification(message) {
     // Always notify for testing notifications.
     if (message.type === "test-notification") {
         return true;
@@ -530,9 +528,9 @@ exports.should_send_desktop_notification = function (message) {
     }
 
     return false;
-};
+}
 
-exports.should_send_audible_notification = function (message) {
+export function should_send_audible_notification(message) {
     // For streams, ding if sounds are enabled for all messages on
     // this stream.
     if (
@@ -570,21 +568,21 @@ exports.should_send_audible_notification = function (message) {
     }
 
     return false;
-};
+}
 
-exports.granted_desktop_notifications_permission = function () {
+export function granted_desktop_notifications_permission() {
     return NotificationAPI && NotificationAPI.permission === "granted";
-};
+}
 
-exports.request_desktop_notifications_permission = function () {
+export function request_desktop_notifications_permission() {
     if (NotificationAPI) {
         return NotificationAPI.requestPermission();
     }
-};
+}
 
-exports.received_messages = function (messages) {
+export function received_messages(messages) {
     for (const message of messages) {
-        if (!exports.message_is_notifiable(message)) {
+        if (!message_is_notifiable(message)) {
             continue;
         }
         if (!unread.message_unread(message)) {
@@ -594,20 +592,20 @@ exports.received_messages = function (messages) {
 
         message.notification_sent = true;
 
-        if (exports.should_send_desktop_notification(message)) {
+        if (should_send_desktop_notification(message)) {
             process_notification({
                 message,
-                desktop_notify: exports.granted_desktop_notifications_permission(),
+                desktop_notify: granted_desktop_notifications_permission(),
             });
         }
-        if (exports.should_send_audible_notification(message) && supports_sound) {
+        if (should_send_audible_notification(message) && supports_sound) {
             $("#notifications-area").find("audio")[0].play();
         }
     }
-};
+}
 
-exports.send_test_notification = function (content) {
-    exports.received_messages([
+export function send_test_notification(content) {
+    received_messages([
         {
             id: Math.random(),
             type: "test-notification",
@@ -618,7 +616,7 @@ exports.send_test_notification = function (content) {
             unread: true,
         },
     ]);
-};
+}
 
 function get_message_header(message) {
     if (message.type === "stream") {
@@ -635,7 +633,7 @@ function get_message_header(message) {
     return i18n.t("private messages with __recipient__", {recipient: message.display_reply_to});
 }
 
-exports.get_local_notify_mix_reason = function (message) {
+export function get_local_notify_mix_reason(message) {
     const row = current_msg_list.get_row(message.id);
     if (row.length > 0) {
         // If our message is in the current message list, we do
@@ -662,9 +660,9 @@ exports.get_local_notify_mix_reason = function (message) {
     ) {
         return i18n.t("Sent! Your message is outside your current narrow.");
     }
-};
+}
 
-exports.notify_local_mixes = function (messages, need_user_to_scroll) {
+export function notify_local_mixes(messages, need_user_to_scroll) {
     /*
         This code should only be called when we are displaying
         messages sent by current client. It notifies users that
@@ -693,12 +691,12 @@ exports.notify_local_mixes = function (messages, need_user_to_scroll) {
             continue;
         }
 
-        let reason = exports.get_local_notify_mix_reason(message);
+        let reason = get_local_notify_mix_reason(message);
 
         if (!reason) {
             if (need_user_to_scroll) {
                 reason = i18n.t("Sent! Scroll down to view your message.");
-                exports.notify_above_composebox(reason, "", null, "");
+                notify_above_composebox(reason, "", null, "");
                 setTimeout(() => {
                     $("#out-of-view-notification").hide();
                 }, 3000);
@@ -715,13 +713,13 @@ exports.notify_local_mixes = function (messages, need_user_to_scroll) {
             message_recipient: get_message_header(message),
         });
 
-        exports.notify_above_composebox(reason, link_class, link_msg_id, link_text);
+        notify_above_composebox(reason, link_class, link_msg_id, link_text);
     }
-};
+}
 
 // for callback when we have to check with the server if a message should be in
 // the current_msg_list (!can_apply_locally; a.k.a. "a search").
-exports.notify_messages_outside_current_search = function (messages) {
+export function notify_messages_outside_current_search(messages) {
     for (const message of messages) {
         if (!people.is_current_user(message.sender_email)) {
             continue;
@@ -729,22 +727,22 @@ exports.notify_messages_outside_current_search = function (messages) {
         const link_text = i18n.t("Narrow to __- message_recipient__", {
             message_recipient: get_message_header(message),
         });
-        exports.notify_above_composebox(
+        notify_above_composebox(
             i18n.t("Sent! Your recent message is outside the current search."),
             "compose_notification_narrow_by_topic",
             message.id,
             link_text,
         );
     }
-};
+}
 
-exports.clear_compose_notifications = function () {
+export function clear_compose_notifications() {
     $("#out-of-view-notification").empty();
     $("#out-of-view-notification").stop(true, true);
     $("#out-of-view-notification").hide();
-};
+}
 
-exports.reify_message_id = function (opts) {
+export function reify_message_id(opts) {
     const old_id = opts.old_id;
     const new_id = opts.new_id;
 
@@ -758,9 +756,9 @@ exports.reify_message_id = function (opts) {
             elem.data("message-id", new_id);
         }
     }
-};
+}
 
-exports.register_click_handlers = function () {
+export function register_click_handlers() {
     $("#out-of-view-notification").on("click", ".compose_notification_narrow_by_topic", (e) => {
         const message_id = $(e.currentTarget).data("message-id");
         narrow.by_topic(message_id, {trigger: "compose_notification"});
@@ -775,13 +773,13 @@ exports.register_click_handlers = function () {
         e.preventDefault();
     });
     $("#out-of-view-notification").on("click", ".out-of-view-notification-close", (e) => {
-        exports.clear_compose_notifications();
+        clear_compose_notifications();
         e.stopPropagation();
         e.preventDefault();
     });
-};
+}
 
-exports.handle_global_notification_updates = function (notification_name, setting) {
+export function handle_global_notification_updates(notification_name, setting) {
     // Update the global settings checked when determining if we should notify
     // for a given message. These settings do not affect whether or not a
     // particular stream should receive notifications.
@@ -798,6 +796,4 @@ exports.handle_global_notification_updates = function (notification_name, settin
         // Change the sound source with the new page `notification_sound`.
         update_notification_sound_source();
     }
-};
-
-window.notifications = exports;
+}

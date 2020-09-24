@@ -11,6 +11,7 @@ import * as compose_state from "./compose_state";
 import * as drafts from "./drafts";
 import * as message_viewport from "./message_viewport";
 import * as narrow_state from "./narrow_state";
+import * as notifications from "./notifications";
 import * as people from "./people";
 import * as reload_state from "./reload_state";
 import * as stream_data from "./stream_data";

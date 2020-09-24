@@ -16,6 +16,7 @@ import * as message_edit_history from "./message_edit_history";
 import * as muting_ui from "./muting_ui";
 import * as narrow from "./narrow";
 import * as navigate from "./navigate";
+import * as notifications from "./notifications";
 import * as overlays from "./overlays";
 import * as popovers from "./popovers";
 import * as rows from "./rows";

@@ -1,5 +1,6 @@
 import XDate from "xdate";
 
+import * as notifications from "./notifications";
 import * as pm_list from "./pm_list";
 import * as stream_list from "./stream_list";
 import * as top_left_corner from "./top_left_corner";
