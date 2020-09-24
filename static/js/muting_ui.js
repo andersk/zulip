@@ -4,6 +4,7 @@ import render_topic_muted from "../templates/topic_muted.hbs";
 import * as channel from "./channel";
 import * as feedback_widget from "./feedback_widget";
 import * as muting from "./muting";
+import * as stream_list from "./stream_list";
 import * as unread_ui from "./unread_ui";
 
 function timestamp_ms() {

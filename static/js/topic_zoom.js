@@ -1,5 +1,6 @@
 "use strict";
 
+const stream_list = require("./stream_list");
 const topic_list = require("./topic_list");
 
 let zoomed_in = false;

@@ -17,6 +17,7 @@ const people = require("./people");
 const pm_conversations = require("./pm_conversations");
 const pm_list = require("./pm_list");
 const rows = require("./rows");
+const stream_list = require("./stream_list");
 const topic_list = require("./topic_list");
 const unread = require("./unread");
 const unread_ui = require("./unread_ui");

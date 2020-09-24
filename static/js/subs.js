@@ -14,6 +14,7 @@ const loading = require("./loading");
 const people = require("./people");
 const scroll_util = require("./scroll_util");
 const search_util = require("./search_util");
+const stream_list = require("./stream_list");
 const util = require("./util");
 
 exports.show_subs_pane = {

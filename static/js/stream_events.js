@@ -1,6 +1,7 @@
 "use strict";
 
 const blueslip = require("./blueslip");
+const stream_list = require("./stream_list");
 
 // In theory, this function should apply the account-level defaults,
 // however, they are only called after a manual override, so

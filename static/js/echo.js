@@ -4,6 +4,7 @@ const blueslip = require("./blueslip");
 const people = require("./people");
 const pm_list = require("./pm_list");
 const rows = require("./rows");
+const stream_list = require("./stream_list");
 const util = require("./util");
 // Docs: https://zulip.readthedocs.io/en/latest/subsystems/sending-messages.html
 
