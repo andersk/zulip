@@ -1,6 +1,4 @@
-"use strict";
-
-const common = require("../common");
+import * as common from "../common";
 
 $(() => {
     $("body").on("click", ".scrub-realm-button", function (e) {
