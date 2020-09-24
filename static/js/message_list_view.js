@@ -1,20 +1,18 @@
-"use strict";
+import _ from "lodash";
+import XDate from "xdate";
 
-const _ = require("lodash");
-const XDate = require("xdate");
+import render_bookend from "../templates/bookend.hbs";
+import render_message_group from "../templates/message_group.hbs";
+import render_recipient_row from "../templates/recipient_row.hbs";
+import render_single_message from "../templates/single_message.hbs";
 
-const render_bookend = require("../templates/bookend.hbs");
-const render_message_group = require("../templates/message_group.hbs");
-const render_recipient_row = require("../templates/recipient_row.hbs");
-const render_single_message = require("../templates/single_message.hbs");
-
-const blueslip = require("./blueslip");
-const message_viewport = require("./message_viewport");
-const people = require("./people");
-const rendered_markdown = require("./rendered_markdown");
-const rows = require("./rows");
-const submessage = require("./submessage");
-const util = require("./util");
+import * as blueslip from "./blueslip";
+import * as message_viewport from "./message_viewport";
+import * as people from "./people";
+import * as rendered_markdown from "./rendered_markdown";
+import * as rows from "./rows";
+import * as submessage from "./submessage";
+import * as util from "./util";
 
 function same_day(earlier_msg, later_msg) {
     if (earlier_msg === undefined || later_msg === undefined) {
@@ -155,7 +153,7 @@ function populate_group_from_message_container(group, message_container) {
     render_group_display_date(group, message_container);
 }
 
-class MessageListView {
+export class MessageListView {
     constructor(list, table_name, collapse_messages) {
         this.list = list;
         this.collapse_messages = collapse_messages;
@@ -1289,6 +1287,3 @@ class MessageListView {
         }
     }
 }
-
-module.exports = MessageListView;
-window.MessageListView = MessageListView;
