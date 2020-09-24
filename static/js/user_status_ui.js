@@ -2,6 +2,7 @@
 
 const overlays = require("./overlays");
 const people = require("./people");
+const user_status = require("./user_status");
 
 exports.input_field = function () {
     return $(".user_status_overlay input.user_status");

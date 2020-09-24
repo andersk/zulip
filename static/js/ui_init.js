@@ -57,6 +57,7 @@ const ui_util = require("./ui_util");
 const unread = require("./unread");
 const unread_ui = require("./unread_ui");
 const user_groups = require("./user_groups");
+const user_status = require("./user_status");
 
 // This is where most of our initialization takes place.
 // TODO: Organize it a lot better.  In particular, move bigger

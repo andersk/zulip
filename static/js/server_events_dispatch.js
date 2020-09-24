@@ -30,6 +30,7 @@ import * as subs from "./subs";
 import * as ui from "./ui";
 import * as unread_ops from "./unread_ops";
 import * as user_groups from "./user_groups";
+import * as user_status from "./user_status";
 
 export function dispatch_normal_event(event) {
     const noop = function () {};

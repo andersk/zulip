@@ -6,6 +6,7 @@ const hash_util = require("./hash_util");
 const people = require("./people");
 const presence = require("./presence");
 const unread = require("./unread");
+const user_status = require("./user_status");
 const util = require("./util");
 /*
 
