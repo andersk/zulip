@@ -129,7 +129,6 @@
                 "jQuery": false,
                 "localStorage": false,
                 "location": false,
-                "message_events": false,
                 "message_fetch": false,
                 "padded_widget": false,
                 "page_params": false,

@@ -5,6 +5,7 @@ const _ = require("lodash");
 const blueslip = require("./blueslip");
 const channel = require("./channel");
 const echo = require("./echo");
+const message_events = require("./message_events");
 const message_store = require("./message_store");
 const reload = require("./reload");
 const reload_state = require("./reload_state");
