@@ -3,6 +3,7 @@
 const render_widgets_zform_choices = require("../templates/widgets/zform_choices.hbs");
 
 const blueslip = require("./blueslip");
+const schema = require("./schema");
 
 exports.validate_extra_data = function (data) {
     function check(data) {

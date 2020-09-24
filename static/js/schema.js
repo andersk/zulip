@@ -1,5 +1,3 @@
-"use strict";
-
 /*
 
 These runtime schema validators are defensive and
@@ -9,13 +7,13 @@ side validators in zerver/lib/validator.py.
 
 */
 
-exports.check_string = function (var_name, val) {
+export function check_string(var_name, val) {
     if (typeof val !== "string") {
         return var_name + " is not a string";
     }
-};
+}
 
-exports.check_record = function (var_name, val, fields) {
+export function check_record(var_name, val, fields) {
     if (typeof val !== "object") {
         return var_name + " is not a record";
     }
@@ -32,9 +30,9 @@ exports.check_record = function (var_name, val, fields) {
     if (msg) {
         return "in " + var_name + " " + msg;
     }
-};
+}
 
-exports.check_array = function (var_name, val, checker) {
+export function check_array(var_name, val, checker) {
     if (!Array.isArray(val)) {
         return var_name + " is not an array";
     }
@@ -46,6 +44,4 @@ exports.check_array = function (var_name, val, checker) {
             return "in " + var_name + " we found an item where " + msg;
         }
     }
-};
-
-window.schema = exports;
+}
