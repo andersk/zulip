@@ -1,6 +1,7 @@
 "use strict";
 
 const blueslip = require("./blueslip");
+const {LightboxCanvas} = require("./lightbox_canvas");
 const people = require("./people");
 
 let is_open = false;

@@ -1,6 +1,4 @@
-"use strict";
-
-const blueslip = require("./blueslip");
+import * as blueslip from "./blueslip";
 
 const funcs = {
     setZoom(meta, zoom) {
@@ -208,7 +206,7 @@ const funcs = {
     },
 };
 
-class LightboxCanvas {
+export class LightboxCanvas {
     meta = {
         direction: -1,
         zoom: 1,
@@ -272,6 +270,3 @@ class LightboxCanvas {
         this.meta.onresize = callback;
     }
 }
-
-module.exports = LightboxCanvas;
-window.LightboxCanvas = LightboxCanvas;
