@@ -175,7 +175,7 @@ export default (env?: string): webpack.Configuration[] => {
             chunkFilename: production ? "[contenthash].js" : "[id].js",
         },
         resolve: {
-            extensions: [".ts", ".js"],
+            extensions: [".wasm", ".ts", ".mjs", ".js", ".json"],
         },
         // We prefer cheap-module-source-map over any eval-** options
         // because the eval-options currently don't support being

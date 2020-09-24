@@ -4,7 +4,7 @@ const autosize = require("autosize");
 const confirmDatePlugin = require("flatpickr/dist/plugins/confirmDate/confirmDate");
 const moment = require("moment");
 
-const pygments_data = require("../generated/pygments_data.json");
+const pygments_data = require("../generated/pygments_data");
 const emoji = require("../shared/js/emoji");
 const typeahead = require("../shared/js/typeahead");
 

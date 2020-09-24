@@ -2,7 +2,7 @@
 
 const _ = require("lodash");
 
-const generated_emoji_codes = require("../generated/emoji/emoji_codes.json");
+const generated_emoji_codes = require("../generated/emoji/emoji_codes");
 const emoji = require("../shared/js/emoji");
 const render_edit_content_button = require("../templates/edit_content_button.hbs");
 

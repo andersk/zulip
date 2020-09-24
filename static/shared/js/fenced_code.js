@@ -2,7 +2,7 @@ import katex from "katex";
 import _ from "lodash";
 
 // eslint-disable-next-line
-const pygments_data = require("../../generated/pygments_data.json");
+const pygments_data = require("../../generated/pygments_data");
 
 // Parsing routine that can be dropped in to message parsing
 // and formats code blocks

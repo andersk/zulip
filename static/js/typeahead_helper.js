@@ -3,7 +3,7 @@
 const Handlebars = require("handlebars/runtime");
 const _ = require("lodash");
 
-const pygments_data = require("../generated/pygments_data.json");
+const pygments_data = require("../generated/pygments_data");
 const emoji = require("../shared/js/emoji");
 const typeahead = require("../shared/js/typeahead");
 const render_typeahead_list_item = require("../templates/typeahead_list_item.hbs");
