@@ -1,6 +1,4 @@
-"use strict";
-
-const common = require("../common");
+import * as common from "../common";
 
 $(() => {
     $("a.envelope-link").on("click", function () {
