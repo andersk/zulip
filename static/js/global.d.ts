@@ -75,7 +75,6 @@ declare let search: any;
 declare let search_pill: any;
 declare let search_pill_widget: any;
 declare let search_suggestion: any;
-declare let sent_messages: any;
 declare let server_events: any;
 declare let server_events_dispatch: any;
 declare let settings: any;

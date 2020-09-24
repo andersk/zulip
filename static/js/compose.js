@@ -20,6 +20,7 @@ const markdown = require("./markdown");
 const people = require("./people");
 const rendered_markdown = require("./rendered_markdown");
 const rtl = require("./rtl");
+const sent_messages = require("./sent_messages");
 const util = require("./util");
 
 // Docs: https://zulip.readthedocs.io/en/latest/subsystems/sending-messages.html

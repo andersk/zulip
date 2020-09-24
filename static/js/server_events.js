@@ -7,6 +7,7 @@ const channel = require("./channel");
 const echo = require("./echo");
 const reload = require("./reload");
 const reload_state = require("./reload_state");
+const sent_messages = require("./sent_messages");
 // Docs: https://zulip.readthedocs.io/en/latest/subsystems/events-system.html
 
 let waiting_on_homeview_load = true;
