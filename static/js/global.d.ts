@@ -26,7 +26,6 @@ declare let helpers: any;
 declare let home_msg_list: any;
 declare let hotspots: any;
 declare let i18n: any;
-declare let invite: any;
 declare let message_events: any;
 declare let message_fetch: any;
 declare let message_flags: any;

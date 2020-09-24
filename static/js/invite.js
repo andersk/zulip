@@ -1,18 +1,16 @@
-"use strict";
+import autosize from "autosize";
 
-const autosize = require("autosize");
+import render_invitation_failed_error from "../templates/invitation_failed_error.hbs";
+import render_invite_subscription from "../templates/invite_subscription.hbs";
+import render_settings_dev_env_email_access from "../templates/settings/dev_env_email_access.hbs";
 
-const render_invitation_failed_error = require("../templates/invitation_failed_error.hbs");
-const render_invite_subscription = require("../templates/invite_subscription.hbs");
-const render_settings_dev_env_email_access = require("../templates/settings/dev_env_email_access.hbs");
-
-const channel = require("./channel");
-const common = require("./common");
-const hashchange = require("./hashchange");
-const overlays = require("./overlays");
-const stream_data = require("./stream_data");
-const ui = require("./ui");
-const ui_report = require("./ui_report");
+import * as channel from "./channel";
+import * as common from "./common";
+import * as hashchange from "./hashchange";
+import * as overlays from "./overlays";
+import * as stream_data from "./stream_data";
+import * as ui from "./ui";
+import * as ui_report from "./ui_report";
 
 function reset_error_messages() {
     $("#invite_status").hide().text("").removeClass(common.status_classes);
@@ -137,7 +135,7 @@ function generate_multiuse_invite() {
     });
 }
 
-exports.get_invite_streams = function () {
+export function get_invite_streams() {
     const streams = stream_data.get_invite_stream_data();
 
     function compare_streams(a, b) {
@@ -145,11 +143,11 @@ exports.get_invite_streams = function () {
     }
     streams.sort(compare_streams);
     return streams;
-};
+}
 
 function update_subscription_checkboxes() {
     const data = {
-        streams: exports.get_invite_streams(),
+        streams: get_invite_streams(),
         notifications_stream: stream_data.get_notifications_stream(),
     };
     const html = render_invite_subscription(data);
@@ -161,7 +159,7 @@ function prepare_form_to_be_shown() {
     reset_error_messages();
 }
 
-exports.launch = function () {
+export function launch() {
     $("#submit-invitation").button();
     prepare_form_to_be_shown();
 
@@ -181,9 +179,9 @@ exports.launch = function () {
             submit_invitation_form();
         }
     });
-};
+}
 
-exports.initialize = function () {
+export function initialize() {
     $(document).on("click", "#invite_check_all_button", () => {
         $("#streams_to_add :checkbox").prop("checked", true);
     });
@@ -219,6 +217,4 @@ exports.initialize = function () {
         $("#invite-method-choice").show();
         reset_error_messages();
     });
-};
-
-window.invite = exports;
+}
