@@ -17,6 +17,7 @@ const people = require("./people");
 const pm_conversations = require("./pm_conversations");
 const rows = require("./rows");
 const unread_ui = require("./unread_ui");
+const user_groups = require("./user_groups");
 
 // This is where most of our initialization takes place.
 // TODO: Organize it a lot better.  In particular, move bigger

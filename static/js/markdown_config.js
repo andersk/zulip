@@ -1,6 +1,7 @@
 "use strict";
 
 const people = require("./people");
+const user_groups = require("./user_groups");
 
 /*
     This config is in a separate file for partly
