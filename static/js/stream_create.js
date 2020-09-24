@@ -7,6 +7,7 @@ const render_subscription_invites_warning_modal = require("../templates/subscrip
 const channel = require("./channel");
 const loading = require("./loading");
 const people = require("./people");
+const stream_data = require("./stream_data");
 
 let created_stream;
 

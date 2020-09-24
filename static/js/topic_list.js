@@ -6,6 +6,7 @@ import render_topic_list_item from "../templates/topic_list_item.hbs";
 
 import * as blueslip from "./blueslip";
 import * as narrow from "./narrow";
+import * as stream_data from "./stream_data";
 import * as topic_list_data from "./topic_list_data";
 import * as vdom from "./vdom";
 

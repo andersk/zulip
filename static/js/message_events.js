@@ -9,6 +9,7 @@ const narrow = require("./narrow");
 const narrow_state = require("./narrow_state");
 const pm_list = require("./pm_list");
 const recent_senders = require("./recent_senders");
+const stream_data = require("./stream_data");
 const stream_list = require("./stream_list");
 const unread = require("./unread");
 const unread_ops = require("./unread_ops");

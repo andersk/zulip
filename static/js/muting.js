@@ -2,6 +2,7 @@ import XDate from "xdate";
 
 import * as blueslip from "./blueslip";
 import {FoldDict} from "./fold_dict";
+import * as stream_data from "./stream_data";
 
 const muted_topics = new Map();
 

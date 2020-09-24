@@ -1,6 +1,7 @@
 "use strict";
 
 const people = require("./people");
+const stream_data = require("./stream_data");
 const user_groups = require("./user_groups");
 
 /*

@@ -9,6 +9,7 @@ import * as message_list from "./message_list";
 import {MessageListData} from "./message_list_data";
 import * as narrow_state from "./narrow_state";
 import * as people from "./people";
+import * as stream_data from "./stream_data";
 import * as stream_list from "./stream_list";
 import * as top_left_corner from "./top_left_corner";
 import * as topic_generator from "./topic_generator";

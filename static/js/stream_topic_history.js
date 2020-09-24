@@ -2,6 +2,7 @@
 
 const channel = require("./channel");
 const {FoldDict} = require("./fold_dict");
+const stream_data = require("./stream_data");
 const unread = require("./unread");
 
 const stream_dict = new Map(); // stream_id -> PerStreamHistory object

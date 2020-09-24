@@ -8,6 +8,7 @@ const render_settings_dev_env_email_access = require("../templates/settings/dev_
 
 const channel = require("./channel");
 const common = require("./common");
+const stream_data = require("./stream_data");
 
 function reset_error_messages() {
     $("#invite_status").hide().text("").removeClass(common.status_classes);

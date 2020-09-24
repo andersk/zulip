@@ -9,6 +9,7 @@ const render_recent_topics_body = require("../templates/recent_topics_table.hbs"
 const muting = require("./muting");
 const people = require("./people");
 const recent_senders = require("./recent_senders");
+const stream_data = require("./stream_data");
 const unread = require("./unread");
 
 const topics = new Map(); // Key is stream-id:topic.

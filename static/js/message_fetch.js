@@ -8,6 +8,7 @@ const narrow = require("./narrow");
 const narrow_state = require("./narrow_state");
 const people = require("./people");
 const pm_list = require("./pm_list");
+const stream_data = require("./stream_data");
 const stream_list = require("./stream_list");
 
 const consts = {

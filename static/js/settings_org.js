@@ -8,6 +8,7 @@ const blueslip = require("./blueslip");
 const channel = require("./channel");
 const loading = require("./loading");
 const settings_config = require("./settings_config");
+const stream_data = require("./stream_data");
 
 const meta = {
     loaded: false,

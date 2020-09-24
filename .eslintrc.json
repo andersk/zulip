@@ -202,7 +202,6 @@
                 "spoilers": false,
                 "starred_messages": false,
                 "stream_create": false,
-                "stream_data": false,
                 "stream_edit": false,
                 "stream_events": false,
                 "stream_topic_history": false,

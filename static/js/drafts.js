@@ -13,6 +13,7 @@ import * as markdown from "./markdown";
 import * as narrow from "./narrow";
 import * as people from "./people";
 import * as stream_color from "./stream_color";
+import * as stream_data from "./stream_data";
 import * as util from "./util";
 
 function set_count(count) {

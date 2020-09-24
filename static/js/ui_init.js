@@ -23,6 +23,7 @@ const reload = require("./reload");
 const rows = require("./rows");
 const sent_messages = require("./sent_messages");
 const stream_color = require("./stream_color");
+const stream_data = require("./stream_data");
 const stream_list = require("./stream_list");
 const topic_list = require("./topic_list");
 const topic_zoom = require("./topic_zoom");

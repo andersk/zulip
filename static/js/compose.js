@@ -21,6 +21,7 @@ import * as people from "./people";
 import * as rendered_markdown from "./rendered_markdown";
 import * as rtl from "./rtl";
 import * as sent_messages from "./sent_messages";
+import * as stream_data from "./stream_data";
 import * as transmit from "./transmit";
 import * as upload from "./upload";
 import * as util from "./util";

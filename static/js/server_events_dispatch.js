@@ -12,6 +12,7 @@ const narrow_state = require("./narrow_state");
 const people = require("./people");
 const reload = require("./reload");
 const settings_config = require("./settings_config");
+const stream_data = require("./stream_data");
 const stream_list = require("./stream_list");
 const submessage = require("./submessage");
 const unread_ops = require("./unread_ops");

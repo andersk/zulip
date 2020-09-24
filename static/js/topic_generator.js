@@ -1,6 +1,7 @@
 import * as blueslip from "./blueslip";
 import * as muting from "./muting";
 import * as pm_conversations from "./pm_conversations";
+import * as stream_data from "./stream_data";
 import * as stream_sort from "./stream_sort";
 import * as unread from "./unread";
 

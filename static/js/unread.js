@@ -1,6 +1,7 @@
 import {FoldDict} from "./fold_dict";
 import * as muting from "./muting";
 import * as people from "./people";
+import * as stream_data from "./stream_data";
 import * as util from "./util";
 
 // The unread module tracks the message IDs and locations of the

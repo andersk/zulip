@@ -6,6 +6,7 @@ import copy_code_button from "../templates/copy_code_button.hbs";
 import * as blueslip from "./blueslip";
 import * as people from "./people";
 import * as rtl from "./rtl";
+import * as stream_data from "./stream_data";
 import * as user_groups from "./user_groups";
 
 /*

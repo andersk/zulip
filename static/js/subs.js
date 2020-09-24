@@ -16,6 +16,7 @@ const message_live_update = require("./message_live_update");
 const people = require("./people");
 const scroll_util = require("./scroll_util");
 const search_util = require("./search_util");
+const stream_data = require("./stream_data");
 const stream_list = require("./stream_list");
 const util = require("./util");
 

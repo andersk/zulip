@@ -6,6 +6,7 @@ import {MessageListView} from "./message_list_view";
 import * as message_viewport from "./message_viewport";
 import * as narrow from "./narrow";
 import * as narrow_state from "./narrow_state";
+import * as stream_data from "./stream_data";
 
 export let narrowed;
 

@@ -1,3 +1,5 @@
+import * as stream_data from "./stream_data";
+
 function display_pill(sub) {
     return "#" + sub.name + ": " + sub.subscriber_count + " users";
 }

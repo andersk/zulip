@@ -4,6 +4,7 @@ const render_stream_specific_notification_row = require("../templates/settings/s
 
 const channel = require("./channel");
 const settings_config = require("./settings_config");
+const stream_data = require("./stream_data");
 const unread = require("./unread");
 
 exports.get_notifications_table_row_data = function (notify_settings) {
