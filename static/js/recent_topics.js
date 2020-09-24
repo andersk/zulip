@@ -16,6 +16,7 @@ const overlays = require("./overlays");
 const people = require("./people");
 const recent_senders = require("./recent_senders");
 const stream_data = require("./stream_data");
+const timerender = require("./timerender");
 const unread = require("./unread");
 
 const topics = new Map(); // Key is stream-id:topic.

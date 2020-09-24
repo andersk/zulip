@@ -16,6 +16,7 @@ import * as rows from "./rows";
 import * as settings_data from "./settings_data";
 import * as stream_data from "./stream_data";
 import * as stream_topic_history from "./stream_topic_history";
+import * as timerender from "./timerender";
 import * as typeahead_helper from "./typeahead_helper";
 import * as user_groups from "./user_groups";
 import * as user_pill from "./user_pill";

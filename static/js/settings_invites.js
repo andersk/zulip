@@ -9,6 +9,7 @@ const list_render = require("./list_render");
 const loading = require("./loading");
 const people = require("./people");
 const settings_config = require("./settings_config");
+const timerender = require("./timerender");
 const ui_report = require("./ui_report");
 const util = require("./util");
 

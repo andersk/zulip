@@ -7,6 +7,7 @@ import * as blueslip from "./blueslip";
 import * as people from "./people";
 import * as rtl from "./rtl";
 import * as stream_data from "./stream_data";
+import * as timerender from "./timerender";
 import * as user_groups from "./user_groups";
 
 /*

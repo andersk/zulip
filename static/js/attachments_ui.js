@@ -6,6 +6,7 @@ import render_uploaded_files_list from "../templates/uploaded_files_list.hbs";
 import * as channel from "./channel";
 import * as list_render from "./list_render";
 import * as loading from "./loading";
+import * as timerender from "./timerender";
 import * as ui from "./ui";
 import * as ui_report from "./ui_report";
 

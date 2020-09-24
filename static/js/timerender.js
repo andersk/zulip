@@ -1,7 +1,5 @@
-"use strict";
-
-const moment = require("moment");
-const XDate = require("xdate");
+import moment from "moment";
+import XDate from "xdate";
 
 let next_timerender_id = 0;
 
@@ -17,7 +15,7 @@ const set_to_start_of_day = function (time) {
 //      needs_update:    a boolean for if it will need to be updated when the
 //                       day changes
 // }
-exports.render_now = function (time, today) {
+export function render_now(time, today) {
     const start_of_today = set_to_start_of_day(today || new XDate());
     const start_of_other_day = set_to_start_of_day(time.clone());
 
@@ -60,10 +58,10 @@ exports.render_now = function (time, today) {
         formal_time_str,
         needs_update,
     };
-};
+}
 
 // Current date is passed as an argument for unit testing
-exports.last_seen_status_from_date = function (last_active_date, current_date) {
+export function last_seen_status_from_date(last_active_date, current_date) {
     if (typeof current_date === "undefined") {
         current_date = new XDate();
     }
@@ -102,7 +100,7 @@ exports.last_seen_status_from_date = function (last_active_date, current_date) {
     return i18n.t("__last_active_date__", {
         last_active_date: last_active_date.toString("MMM\xa0dd,\xa0yyyy"),
     });
-};
+}
 
 // List of the dates that need to be updated when the day changes.
 // Each timestamp is represented as a list of length 2:
@@ -112,9 +110,10 @@ let update_list = [];
 // The time at the beginning of the next day, when the timestamps are updated.
 // Represented as an XDate with hour, minute, second, millisecond 0.
 let next_update;
-exports.initialize = function () {
+
+export function initialize() {
     next_update = set_to_start_of_day(new XDate()).addDays(1);
-};
+}
 
 // time_above is an optional argument, to support dates that look like:
 // --- ▲ Yesterday ▲ ------ ▼ Today ▼ ---
@@ -150,13 +149,13 @@ function render_date_span(elem, rendered_time, rendered_time_above) {
 // (What's actually spliced into the message template is the contents
 // of this DOM node as HTML, so effectively a copy of the node. That's
 // okay since to update the time later we look up the node by its id.)
-exports.render_date = function (time, time_above, today) {
+export function render_date(time, time_above, today) {
     const className = "timerender" + next_timerender_id;
     next_timerender_id += 1;
-    const rendered_time = exports.render_now(time, today);
+    const rendered_time = render_now(time, today);
     let node = $("<span />").attr("class", className);
     if (time_above !== undefined) {
-        const rendered_time_above = exports.render_now(time_above, today);
+        const rendered_time_above = render_now(time_above, today);
         node = render_date_span(node, rendered_time, rendered_time_above);
     } else {
         node = render_date_span(node, rendered_time);
@@ -168,10 +167,10 @@ exports.render_date = function (time, time_above, today) {
         time_above,
     });
     return node;
-};
+}
 
 // Renders the timestamp returned by the <time:> Markdown syntax.
-exports.render_markdown_timestamp = function (time, text) {
+export function render_markdown_timestamp(time, text) {
     const hourformat = page_params.twenty_four_hour_time ? "HH:mm" : "h:mm A";
     const timestring = time.format("ddd, MMM D YYYY, " + hourformat);
     const titlestring = "This time is in your timezone. Original text was '" + text + "'.";
@@ -179,11 +178,11 @@ exports.render_markdown_timestamp = function (time, text) {
         text: timestring,
         title: titlestring,
     };
-};
+}
 
 // This isn't expected to be called externally except manually for
 // testing purposes.
-exports.update_timestamps = function () {
+export function update_timestamps() {
     const now = new XDate();
     if (now >= next_update) {
         const to_process = update_list;
@@ -199,9 +198,9 @@ exports.update_timestamps = function () {
                 for (const element of elements) {
                     const time = entry.time;
                     const time_above = entry.time_above;
-                    const rendered_time = exports.render_now(time);
+                    const rendered_time = render_now(time);
                     if (time_above) {
-                        const rendered_time_above = exports.render_now(time_above);
+                        const rendered_time_above = render_now(time_above);
                         render_date_span($(element), rendered_time, rendered_time_above);
                     } else {
                         render_date_span($(element), rendered_time);
@@ -218,17 +217,17 @@ exports.update_timestamps = function () {
 
         next_update = set_to_start_of_day(now.clone().addDays(1));
     }
-};
+}
 
-setInterval(exports.update_timestamps, 60 * 1000);
+setInterval(update_timestamps, 60 * 1000);
 
 // Transform a Unix timestamp into a ISO 8601 formatted date string.
 //   Example: 1978-10-31T13:37:42Z
-exports.get_full_time = function (timestamp) {
+export function get_full_time(timestamp) {
     return new XDate(timestamp * 1000).toISOString();
-};
+}
 
-exports.get_timestamp_for_flatpickr = (timestring) => {
+export const get_timestamp_for_flatpickr = (timestring) => {
     let timestamp;
     moment.suppressDeprecationWarnings = true; // eslint-disable-line no-import-assign
     try {
@@ -245,16 +244,16 @@ exports.get_timestamp_for_flatpickr = (timestring) => {
     return timestamp.toDate();
 };
 
-exports.stringify_time = function (time) {
+export function stringify_time(time) {
     if (page_params.twenty_four_hour_time) {
         return time.toString("HH:mm");
     }
     return time.toString("h:mm TT");
-};
+}
 
 // this is for rendering absolute time based off the preferences for twenty-four
 // hour time in the format of "%mmm %d, %h:%m %p".
-exports.absolute_time = (function () {
+export const absolute_time = (function () {
     const MONTHS = [
         "Jan",
         "Feb",
@@ -307,7 +306,7 @@ exports.absolute_time = (function () {
     };
 })();
 
-exports.get_full_datetime = function (time) {
+export function get_full_datetime(time) {
     // Convert to number of hours ahead/behind UTC.
     // The sign of getTimezoneOffset() is reversed wrt
     // the conventional meaning of UTC+n / UTC-n
@@ -316,23 +315,21 @@ exports.get_full_datetime = function (time) {
         date: time.toLocaleDateString(),
         time: time.toLocaleTimeString() + " (UTC" + (tz_offset < 0 ? "" : "+") + tz_offset + ")",
     };
-};
+}
 
 // XDate.toLocaleDateString and XDate.toLocaleTimeString are
 // expensive, so we delay running the following code until we need
 // the full date and time strings.
-exports.set_full_datetime = function timerender_set_full_datetime(message, time_elem) {
+export const set_full_datetime = function timerender_set_full_datetime(message, time_elem) {
     if (message.full_date_str !== undefined) {
         return;
     }
 
     const time = new XDate(message.timestamp * 1000);
-    const full_datetime = exports.get_full_datetime(time);
+    const full_datetime = get_full_datetime(time);
 
     message.full_date_str = full_datetime.date;
     message.full_time_str = full_datetime.time;
 
     time_elem.attr("title", message.full_date_str + " " + message.full_time_str);
 };
-
-window.timerender = exports;
