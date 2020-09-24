@@ -20,6 +20,7 @@ import * as settings_panel_menu from "./settings_panel_menu";
 import * as settings_toggle from "./settings_toggle";
 import * as stream_edit from "./stream_edit";
 import * as stream_list from "./stream_list";
+import * as stream_popover from "./stream_popover";
 import * as ui_util from "./ui_util";
 import * as unread_ops from "./unread_ops";
 import * as util from "./util";

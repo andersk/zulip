@@ -1,6 +1,7 @@
 "use strict";
 
 const resize = require("./resize");
+const stream_popover = require("./stream_popover");
 
 class UserSearch {
     // This is mostly view code to manage the user search widget

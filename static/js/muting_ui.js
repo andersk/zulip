@@ -7,6 +7,7 @@ import * as list_render from "./list_render";
 import * as muting from "./muting";
 import * as stream_data from "./stream_data";
 import * as stream_list from "./stream_list";
+import * as stream_popover from "./stream_popover";
 import * as ui from "./ui";
 import * as unread_ui from "./unread_ui";
 

@@ -11,6 +11,7 @@ import * as resize from "./resize";
 import * as scroll_util from "./scroll_util";
 import * as stream_color from "./stream_color";
 import * as stream_data from "./stream_data";
+import * as stream_popover from "./stream_popover";
 import * as stream_sort from "./stream_sort";
 import * as topic_list from "./topic_list";
 import * as topic_zoom from "./topic_zoom";

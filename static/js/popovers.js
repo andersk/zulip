@@ -31,6 +31,7 @@ const people = require("./people");
 const resize = require("./resize");
 const rows = require("./rows");
 const settings_data = require("./settings_data");
+const stream_popover = require("./stream_popover");
 const user_groups = require("./user_groups");
 const util = require("./util");
 
