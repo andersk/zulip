@@ -160,7 +160,6 @@
                 "typing_events": false,
                 "ui_init": false,
                 "upgrade": false,
-                "upload_widget": false,
                 "zxcvbn": false
             }
         },

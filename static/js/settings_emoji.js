@@ -10,6 +10,7 @@ const loading = require("./loading");
 const people = require("./people");
 const ui = require("./ui");
 const ui_report = require("./ui_report");
+const upload_widget = require("./upload_widget");
 
 const meta = {
     loaded: false,
