@@ -1,5 +1,6 @@
 "use strict";
 
+const input_pill = require("./input_pill");
 const people = require("./people");
 const util = require("./util");
 

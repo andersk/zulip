@@ -1,6 +1,7 @@
 "use strict";
 
 const blueslip = require("./blueslip");
+const input_pill = require("./input_pill");
 const people = require("./people");
 
 // This will be used for pills for things like composing PMs
