@@ -3,6 +3,7 @@
 const channel = require("./channel");
 const huddle_data = require("./huddle_data");
 const message_list = require("./message_list");
+const narrow_state = require("./narrow_state");
 const pm_list = require("./pm_list");
 const recent_senders = require("./recent_senders");
 const stream_list = require("./stream_list");

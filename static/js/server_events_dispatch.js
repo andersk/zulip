@@ -5,6 +5,7 @@ const emoji = require("../shared/js/emoji");
 const blueslip = require("./blueslip");
 const message_list = require("./message_list");
 const muting_ui = require("./muting_ui");
+const narrow_state = require("./narrow_state");
 const people = require("./people");
 const settings_config = require("./settings_config");
 const stream_list = require("./stream_list");

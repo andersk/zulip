@@ -9,6 +9,7 @@ const render_subscription_stream_privacy_modal = require("../templates/subscript
 const blueslip = require("./blueslip");
 const channel = require("./channel");
 const input_pill = require("./input_pill");
+const narrow_state = require("./narrow_state");
 const people = require("./people");
 const settings_config = require("./settings_config");
 const settings_data = require("./settings_data");

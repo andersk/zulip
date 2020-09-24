@@ -5,6 +5,7 @@ import render_stream_sidebar_row from "../templates/stream_sidebar_row.hbs";
 
 import * as blueslip from "./blueslip";
 import * as keydown_util from "./keydown_util";
+import * as narrow_state from "./narrow_state";
 import * as scroll_util from "./scroll_util";
 import * as stream_sort from "./stream_sort";
 import * as topic_list from "./topic_list";

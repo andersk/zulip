@@ -20,6 +20,7 @@ const feature_flags = require("./feature_flags");
 const message_viewport = require("./message_viewport");
 const muting = require("./muting");
 const muting_ui = require("./muting_ui");
+const narrow_state = require("./narrow_state");
 const people = require("./people");
 const rows = require("./rows");
 const settings_data = require("./settings_data");

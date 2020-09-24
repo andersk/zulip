@@ -2,6 +2,7 @@
 
 const blueslip = require("./blueslip");
 const message_list = require("./message_list");
+const narrow_state = require("./narrow_state");
 const stream_list = require("./stream_list");
 
 // In theory, this function should apply the account-level defaults,

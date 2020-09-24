@@ -2,6 +2,7 @@
 
 const render_typing_notifications = require("../templates/typing_notifications.hbs");
 
+const narrow_state = require("./narrow_state");
 const people = require("./people");
 
 // See docs/subsystems/typing-indicators.md for details on typing indicators.

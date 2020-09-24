@@ -1,4 +1,5 @@
 import * as muting from "./muting";
+import * as narrow_state from "./narrow_state";
 import * as unread from "./unread";
 
 const max_topics = 5;
