@@ -134,7 +134,6 @@
                 "settings_exports": false,
                 "settings_linkifiers": false,
                 "settings_invites": false,
-                "settings_muting": false,
                 "settings_org": false,
                 "settings_profile_fields": false,
                 "settings_sections": false,
