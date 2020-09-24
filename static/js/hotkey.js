@@ -15,6 +15,7 @@ const lightbox = require("./lightbox");
 const message_edit = require("./message_edit");
 const muting_ui = require("./muting_ui");
 const narrow = require("./narrow");
+const navigate = require("./navigate");
 const overlays = require("./overlays");
 const popovers = require("./popovers");
 const search = require("./search");

@@ -10,6 +10,7 @@ const channel = require("./channel");
 const muting = require("./muting");
 const narrow = require("./narrow");
 const narrow_state = require("./narrow_state");
+const navigate = require("./navigate");
 const people = require("./people");
 const settings_config = require("./settings_config");
 const stream_data = require("./stream_data");
