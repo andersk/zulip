@@ -8,7 +8,6 @@ declare let compose_ui: any;
 declare let csrf_token: any;
 declare let current_msg_list: any;
 declare let emoji: any;
-declare let emoji_picker: any;
 declare let helpers: any;
 declare let home_msg_list: any;
 declare let i18n: any;

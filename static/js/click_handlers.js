@@ -13,6 +13,7 @@ import * as channel from "./channel";
 import * as compose from "./compose";
 import * as compose_actions from "./compose_actions";
 import * as compose_state from "./compose_state";
+import * as emoji_picker from "./emoji_picker";
 import * as hash_util from "./hash_util";
 import * as hashchange from "./hashchange";
 import * as hotspots from "./hotspots";
