@@ -4,6 +4,7 @@ const render_typing_notifications = require("../templates/typing_notifications.h
 
 const narrow_state = require("./narrow_state");
 const people = require("./people");
+const typing_data = require("./typing_data");
 
 // See docs/subsystems/typing-indicators.md for details on typing indicators.
 
