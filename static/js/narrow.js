@@ -13,6 +13,7 @@ import * as message_list from "./message_list";
 import {MessageListData} from "./message_list_data";
 import * as message_scroll from "./message_scroll";
 import * as message_store from "./message_store";
+import * as message_view_header from "./message_view_header";
 import * as narrow_state from "./narrow_state";
 import * as navigate from "./navigate";
 import * as notifications from "./notifications";

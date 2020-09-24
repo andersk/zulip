@@ -132,7 +132,6 @@
                 "spoilers": false,
                 "stream_ui_updates": false,
                 "StripeCheckout": false,
-                "message_view_header": false,
                 "typing": false,
                 "typing_data": false,
                 "typing_events": false,

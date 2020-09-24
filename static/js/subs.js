@@ -13,6 +13,7 @@ import * as hash_util from "./hash_util";
 import * as hashchange from "./hashchange";
 import * as loading from "./loading";
 import * as message_live_update from "./message_live_update";
+import * as message_view_header from "./message_view_header";
 import * as overlays from "./overlays";
 import * as people from "./people";
 import * as scroll_util from "./scroll_util";

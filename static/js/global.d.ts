@@ -22,7 +22,6 @@ declare let search_pill: any;
 declare let search_pill_widget: any;
 declare let settings_ui: any;
 declare let stream_ui_updates: any;
-declare let message_view_header: any;
 declare let typing: any;
 declare let typing_data: any;
 declare let typing_events: any;
