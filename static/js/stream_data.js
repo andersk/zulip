@@ -3,6 +3,7 @@
 const blueslip = require("./blueslip");
 const {FoldDict} = require("./fold_dict");
 const {LazySet} = require("./lazy_set");
+const message_list = require("./message_list");
 const people = require("./people");
 const settings_config = require("./settings_config");
 const util = require("./util");

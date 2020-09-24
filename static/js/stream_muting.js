@@ -1,5 +1,6 @@
 "use strict";
 
+const message_list = require("./message_list");
 const message_viewport = require("./message_viewport");
 const stream_list = require("./stream_list");
 

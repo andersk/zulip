@@ -3,6 +3,7 @@
 const XDate = require("xdate");
 
 const blueslip = require("./blueslip");
+const message_list = require("./message_list");
 
 function truncate_precision(float) {
     return parseFloat(float.toFixed(3));

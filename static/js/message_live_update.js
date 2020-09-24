@@ -1,5 +1,6 @@
 "use strict";
 
+const message_list = require("./message_list");
 const people = require("./people");
 
 function rerender_messages_view() {

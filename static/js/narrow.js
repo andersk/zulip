@@ -3,6 +3,7 @@
 const blueslip = require("./blueslip");
 const channel = require("./channel");
 const {Filter} = require("./filter");
+const message_list = require("./message_list");
 const {MessageListData} = require("./message_list_data");
 const people = require("./people");
 const stream_list = require("./stream_list");

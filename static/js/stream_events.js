@@ -1,6 +1,7 @@
 "use strict";
 
 const blueslip = require("./blueslip");
+const message_list = require("./message_list");
 const stream_list = require("./stream_list");
 
 // In theory, this function should apply the account-level defaults,

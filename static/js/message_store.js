@@ -1,6 +1,7 @@
 "use strict";
 
 const blueslip = require("./blueslip");
+const message_list = require("./message_list");
 const people = require("./people");
 const pm_conversations = require("./pm_conversations");
 const recent_senders = require("./recent_senders");
