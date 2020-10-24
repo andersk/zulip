@@ -393,7 +393,7 @@
                 "no-console": "error"
             },
             "settings": {
-                "import/resolver": "webpack"
+                "import/resolver": {"webpack": {}, "typescript": {}}
             }
         },
         {

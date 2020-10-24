@@ -1,11 +1,8 @@
-/// <reference types="webpack-dev-server" />
-
 import path from "path";
 
-import CleanCss from "clean-css";
+import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
-import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin";
 import TerserPlugin from "terser-webpack-plugin";
 import webpack from "webpack";
 import BundleTracker from "webpack-bundle-tracker";
@@ -13,20 +10,26 @@ import BundleTracker from "webpack-bundle-tracker";
 import DebugRequirePlugin from "./tools/debug-require-webpack-plugin";
 import assets from "./tools/webpack.assets.json";
 
-const cacheLoader: webpack.RuleSetUseItem = {
-    loader: "cache-loader",
-    options: {
-        cacheDirectory: path.resolve(__dirname, "var/webpack-cache"),
-    },
-};
-
 export default (_env: unknown, argv: {mode?: string}): webpack.Configuration[] => {
     const production: boolean = argv.mode === "production";
 
-    const config: webpack.Configuration = {
-        name: "frontend",
+    const baseConfig: webpack.Configuration = {
         mode: production ? "production" : "development",
         context: __dirname,
+        cache: {
+            type: "filesystem",
+            buildDependencies: {
+                config: [__filename],
+            },
+        },
+        snapshot: {
+            immutablePaths: ["/srv/zulip-npm-cache"],
+        },
+    };
+
+    const frontendConfig: webpack.Configuration = {
+        ...baseConfig,
+        name: "frontend",
         entry: production
             ? assets
             : Object.fromEntries(
@@ -76,7 +79,7 @@ export default (_env: unknown, argv: {mode?: string}): webpack.Configuration[] =
                         path.resolve(__dirname, "static/shared/js"),
                         path.resolve(__dirname, "static/js"),
                     ],
-                    use: [cacheLoader, "babel-loader"],
+                    loader: "babel-loader",
                 },
                 // Uses script-loader on minified files so we don't change global variables in them.
                 // Also has the effect of making processing these files fast
@@ -85,7 +88,7 @@ export default (_env: unknown, argv: {mode?: string}): webpack.Configuration[] =
                 {
                     // We dont want to match admin.js
                     test: /(\.min|min\.|zxcvbn)\.js/,
-                    use: [cacheLoader, "script-loader"],
+                    loader: "script-loader",
                 },
                 // regular css files
                 {
@@ -93,7 +96,6 @@ export default (_env: unknown, argv: {mode?: string}): webpack.Configuration[] =
                     exclude: path.resolve(__dirname, "static/styles"),
                     use: [
                         MiniCssExtractPlugin.loader,
-                        cacheLoader,
                         {
                             loader: "css-loader",
                             options: {
@@ -108,7 +110,6 @@ export default (_env: unknown, argv: {mode?: string}): webpack.Configuration[] =
                     include: path.resolve(__dirname, "static/styles"),
                     use: [
                         MiniCssExtractPlugin.loader,
-                        cacheLoader,
                         {
                             loader: "css-loader",
                             options: {
@@ -126,53 +127,49 @@ export default (_env: unknown, argv: {mode?: string}): webpack.Configuration[] =
                 },
                 {
                     test: /\.hbs$/,
-                    use: [
-                        cacheLoader,
-                        {
-                            loader: "handlebars-loader",
-                            options: {
-                                // Tell webpack not to explicitly require these.
-                                knownHelpers: [
-                                    "if",
-                                    "unless",
-                                    "each",
-                                    "with",
-                                    // The ones below are defined in static/js/templates.js
-                                    "plural",
-                                    "eq",
-                                    "and",
-                                    "or",
-                                    "not",
-                                    "t",
-                                    "tr",
-                                    "rendered_markdown",
-                                ],
-                                preventIndent: true,
-                            },
-                        },
-                    ],
+                    loader: "handlebars-loader",
+                    options: {
+                        // Tell webpack not to explicitly require these.
+                        knownHelpers: [
+                            "if",
+                            "unless",
+                            "each",
+                            "with",
+                            // The ones below are defined in static/js/templates.js
+                            "plural",
+                            "eq",
+                            "and",
+                            "or",
+                            "not",
+                            "t",
+                            "tr",
+                            "rendered_markdown",
+                        ],
+                        preventIndent: true,
+                    },
                 },
                 // load fonts and files
                 {
                     test: /\.(eot|jpg|svg|ttf|otf|png|woff2?)$/,
-                    use: [
-                        {
-                            loader: "file-loader",
-                            options: {
-                                name: production ? "[name].[hash].[ext]" : "[path][name].[ext]",
-                                outputPath: "files/",
-                            },
-                        },
-                    ],
+                    loader: "file-loader",
+                    options: {
+                        name: production ? "[name].[contenthash].[ext]" : "[path][name].[ext]",
+                        outputPath: "files/",
+                    },
                 },
             ],
         },
         output: {
             path: path.resolve(__dirname, "static/webpack-bundles"),
+            publicPath: "",
             filename: production ? "[name].[contenthash].js" : "[name].js",
+            assetModuleFilename: production
+                ? "files/[name].[hash][ext][query]"
+                : "files/[path][name].[ext][query]",
             chunkFilename: production ? "[contenthash].js" : "[id].js",
         },
         resolve: {
+            ...baseConfig.resolve,
             extensions: [".ts", ".js"],
         },
         // We prefer cheap-module-source-map over any eval-* options
@@ -181,40 +178,21 @@ export default (_env: unknown, argv: {mode?: string}): webpack.Configuration[] =
         devtool: production ? "source-map" : "cheap-module-source-map",
         optimization: {
             minimizer: [
-                // Based on a comment in NMFR/optimize-css-assets-webpack-plugin#10.
-                // Can be simplified when NMFR/optimize-css-assets-webpack-plugin#87
-                // is fixed.
-                new OptimizeCssAssetsPlugin({
-                    cssProcessor: {
-                        async process(css, options: any) {
-                            const filename = path.basename(options.to);
-                            const result = await new CleanCss(options).minify({
-                                [filename]: {
-                                    styles: css,
-                                    sourceMap: options.map.prev,
-                                },
-                            });
-                            for (const warning of result.warnings) {
-                                console.warn(warning);
-                            }
-                            return {
-                                css: result.styles + `\n/*# sourceMappingURL=${filename}.map */`,
-                                map: result.sourceMap,
-                            };
-                        },
-                    },
-                    cssProcessorOptions: {
-                        map: {},
-                        returnPromise: true,
-                        sourceMap: true,
-                        sourceMapInlineSources: true,
-                    },
-                }),
-                new TerserPlugin({
-                    cache: true,
-                    parallel: true,
+                new CssMinimizerPlugin({
                     sourceMap: true,
+                    minify: (data, sourceMap) => {
+                        // css-minimizer-webpack-plugin needs this require
+                        // inside the function.
+                        // eslint-disable-next-line @typescript-eslint/no-var-requires
+                        const CleanCSS = require("clean-css");
+                        const [[filename, styles]] = Object.entries(data);
+                        const out = new CleanCSS({sourceMap: true}).minify({
+                            [filename]: {styles, sourceMap},
+                        });
+                        return {css: out.styles, map: out.sourceMap, warnings: out.warnings};
+                    },
                 }),
+                new TerserPlugin(),
             ],
             splitChunks: {
                 chunks: "all",
@@ -229,8 +207,7 @@ export default (_env: unknown, argv: {mode?: string}): webpack.Configuration[] =
                 filename: production
                     ? "../../webpack-stats-production.json"
                     : "../../var/webpack-stats-dev.json",
-                relativePath: true,
-                // Respecify many defaults until https://github.com/jazzband/webpack-bundle-tracker/pull/55 is merged
+                // Respecify many defaults until https://github.com/owais/webpack-bundle-tracker/pull/55 is merged
                 path: path.resolve(__dirname, "static/webpack-bundles"),
                 integrity: false,
                 integrityHashes: [],
@@ -238,8 +215,6 @@ export default (_env: unknown, argv: {mode?: string}): webpack.Configuration[] =
             ...(production
                 ? []
                 : [
-                      // Better logging from console for hot reload
-                      new webpack.NamedModulesPlugin(),
                       // script-loader should load sourceURL in dev
                       new webpack.LoaderOptionsPlugin({debug: true}),
                   ]),
@@ -265,18 +240,16 @@ export default (_env: unknown, argv: {mode?: string}): webpack.Configuration[] =
     };
 
     const serverConfig: webpack.Configuration = {
+        ...baseConfig,
         name: "server",
-        mode: production ? "production" : "development",
         target: "node",
-        context: __dirname,
         entry: {
             "katex-cli": "shebang-loader!katex/cli",
         },
         output: {
             path: path.resolve(__dirname, "static/webpack-bundles"),
-            filename: "[name].js",
         },
     };
 
-    return [config, serverConfig];
+    return [frontendConfig, serverConfig];
 };
