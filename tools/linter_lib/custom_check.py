@@ -480,7 +480,7 @@ html_rules: List["Rule"] = [
      'description': "Don't directly load dependencies from CDNs.  See docs/subsystems/html-css.md",
      'exclude': {"templates/corporate/billing.html", "templates/zerver/hello.html",
                  "templates/corporate/upgrade.html"},
-     'good_lines': ["{{ render_entrypoint('landing-page') }}"],
+     'good_lines': ["{{ render_bundle('landing-page') }}"],
      'bad_lines': ['<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>']},
     {'pattern': "title='[^{]",
      'description': "`title` value should be translatable.",
