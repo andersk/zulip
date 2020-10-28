@@ -26,8 +26,8 @@
         {% endif %}
 
         {% block webpack %}
-        {{ render_entrypoint(entrypoint, 'css', attrs='nonce="%s"' % (csp_nonce,) if csp_nonce else '') }}
-        {{ render_entrypoint(entrypoint, 'js', attrs='defer nonce="%s"' % (csp_nonce,) if csp_nonce else 'defer') }}
+        {{ render_bundle(entrypoint, 'css', attrs='nonce="%s"' % (csp_nonce,) if csp_nonce else '') }}
+        {{ render_bundle(entrypoint, 'js', attrs='defer nonce="%s"' % (csp_nonce,) if csp_nonce else 'defer') }}
         {% endblock %}
 
         {% block customhead %}

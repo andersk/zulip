@@ -102,7 +102,7 @@ tornado==4.*  # https://github.com/zulip/zulip/issues/8913
 orjson
 
 # Django extension for serving webpack modules
-django-webpack4-loader
+https://github.com/gilmrjc/django-webpack-loader/archive/017fd795510c7b74bfe720447abcce14a8261649.zip#egg=django-webpack-loader==0.7.0+git  # https://github.com/owais/django-webpack-loader/pull/232
 
 # Needed for iOS push notifications
 apns2
