@@ -27,23 +27,26 @@ Changelog:
 ```
 """.strip()
 
+
 @webhook_view("NewRelic")
 @has_request_variables
-def api_newrelic_webhook(request: HttpRequest, user_profile: UserProfile,
-                         alert: Optional[Dict[str, Any]]=REQ(validator=check_dict([]), default=None),
-                         deployment: Optional[Dict[str, Any]]=REQ(validator=check_dict([]), default=None),
-                         ) -> HttpResponse:
+def api_newrelic_webhook(
+    request: HttpRequest,
+    user_profile: UserProfile,
+    alert: Optional[Dict[str, Any]] = REQ(validator=check_dict([]), default=None),
+    deployment: Optional[Dict[str, Any]] = REQ(validator=check_dict([]), default=None),
+) -> HttpResponse:
     if alert:
         # Use the message as the subject because it stays the same for
         # "opened", "acknowledged", and "closed" messages that should be
         # grouped.
-        subject = alert['message']
+        subject = alert["message"]
         content = ALERT_TEMPLATE.format(**alert)
     elif deployment:
-        subject = "{} deploy".format(deployment['application_name'])
+        subject = "{} deploy".format(deployment["application_name"])
         content = DEPLOY_TEMPLATE.format(**deployment)
     else:
-        raise UnsupportedWebhookEventType('Unknown Event Type')
+        raise UnsupportedWebhookEventType("Unknown Event Type")
 
     check_send_webhook_message(request, user_profile, subject, content)
     return json_success()

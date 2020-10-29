@@ -140,13 +140,11 @@ def build_page_params_for_home_page_load(
 
     request_language = get_and_set_request_language(
         request,
-        register_ret['default_language'],
-        translation.get_language_from_path(request.path_info)
+        register_ret["default_language"],
+        translation.get_language_from_path(request.path_info),
     )
 
-    two_fa_enabled = (
-        settings.TWO_FACTOR_AUTHENTICATION_ENABLED and user_profile is not None
-    )
+    two_fa_enabled = settings.TWO_FACTOR_AUTHENTICATION_ENABLED and user_profile is not None
 
     # Pass parameters to the client-side JavaScript code.
     # These end up in a global JavaScript Object named 'page_params'.
@@ -164,9 +162,7 @@ def build_page_params_for_home_page_load(
         # Misc. extra data.
         initial_servertime=time.time(),  # Used for calculating relative presence age
         default_language_name=get_language_name(register_ret["default_language"]),
-        language_list_dbl_col=get_language_list_for_templates(
-            register_ret["default_language"]
-        ),
+        language_list_dbl_col=get_language_list_for_templates(register_ret["default_language"]),
         language_list=get_language_list(),
         needs_tutorial=needs_tutorial,
         first_in_realm=first_in_realm,
@@ -189,19 +185,14 @@ def build_page_params_for_home_page_load(
         recipient = narrow_stream.recipient
         try:
             max_message_id = (
-                Message.objects.filter(recipient=recipient)
-                .order_by("id")
-                .reverse()[0]
-                .id
+                Message.objects.filter(recipient=recipient).order_by("id").reverse()[0].id
             )
         except IndexError:
             max_message_id = -1
         page_params["narrow_stream"] = narrow_stream.name
         if narrow_topic is not None:
             page_params["narrow_topic"] = narrow_topic
-        page_params["narrow"] = [
-            dict(operator=term[0], operand=term[1]) for term in narrow
-        ]
+        page_params["narrow"] = [dict(operator=term[0], operand=term[1]) for term in narrow]
         page_params["max_message_id"] = max_message_id
         page_params["enable_desktop_notifications"] = False
 

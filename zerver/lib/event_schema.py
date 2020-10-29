@@ -299,7 +299,10 @@ hotspots_event = event_dict_type(
     required_keys=[
         # force vertical
         ("type", Equals("hotspots")),
-        ("hotspots", ListType(_hotspot),),
+        (
+            "hotspots",
+            ListType(_hotspot),
+        ),
     ]
 )
 check_hotspots = make_checker(hotspots_event)
@@ -511,7 +514,10 @@ realm_bot_add_event = event_dict_type(
 _check_realm_bot_add = make_checker(realm_bot_add_event)
 
 
-def check_realm_bot_add(var_name: str, event: Dict[str, object],) -> None:
+def check_realm_bot_add(
+    var_name: str,
+    event: Dict[str, object],
+) -> None:
     _check_realm_bot_add(var_name, event)
 
     assert isinstance(event["bot"], dict)
@@ -523,13 +529,9 @@ def check_realm_bot_add(var_name: str, event: Dict[str, object],) -> None:
     if bot_type == UserProfile.DEFAULT_BOT:
         check_data(Equals([]), services_field, services)
     elif bot_type == UserProfile.OUTGOING_WEBHOOK_BOT:
-        check_data(
-            ListType(bot_services_outgoing_type, length=1), services_field, services
-        )
+        check_data(ListType(bot_services_outgoing_type, length=1), services_field, services)
     elif bot_type == UserProfile.EMBEDDED_BOT:
-        check_data(
-            ListType(bot_services_embedded_type, length=1), services_field, services
-        )
+        check_data(ListType(bot_services_embedded_type, length=1), services_field, services)
     else:
         raise AssertionError(f"Unknown bot_type: {bot_type}")
 
@@ -696,7 +698,10 @@ realm_export_event = event_dict_type(
     required_keys=[
         # force vertical
         ("type", Equals("realm_export")),
-        ("exports", ListType(export_type),),
+        (
+            "exports",
+            ListType(export_type),
+        ),
     ]
 )
 _check_realm_export = make_checker(realm_export_event)
@@ -774,7 +779,11 @@ realm_update_event = event_dict_type(
 _check_realm_update = make_checker(realm_update_event)
 
 
-def check_realm_update(var_name: str, event: Dict[str, object], prop: str,) -> None:
+def check_realm_update(
+    var_name: str,
+    event: Dict[str, object],
+    prop: str,
+) -> None:
     """
     Realm updates have these two fields:
 
@@ -1099,7 +1108,10 @@ stream_update_event = event_dict_type(
 _check_stream_update = make_checker(stream_update_event)
 
 
-def check_stream_update(var_name: str, event: Dict[str, object],) -> None:
+def check_stream_update(
+    var_name: str,
+    event: Dict[str, object],
+) -> None:
     _check_stream_update(var_name, event)
     prop = event["property"]
     value = event["value"]
@@ -1168,7 +1180,9 @@ _check_subscription_add = make_checker(subscription_add_event)
 
 
 def check_subscription_add(
-    var_name: str, event: Dict[str, object], include_subscribers: bool,
+    var_name: str,
+    event: Dict[str, object],
+    include_subscribers: bool,
 ) -> None:
     _check_subscription_add(var_name, event)
 
@@ -1284,7 +1298,10 @@ update_display_settings_event = event_dict_type(
 _check_update_display_settings = make_checker(update_display_settings_event)
 
 
-def check_update_display_settings(var_name: str, event: Dict[str, object],) -> None:
+def check_update_display_settings(
+    var_name: str,
+    event: Dict[str, object],
+) -> None:
     """
     Display setting events have a "setting" field that
     is more specifically typed according to the
@@ -1316,7 +1333,9 @@ _check_update_global_notifications = make_checker(update_global_notifications_ev
 
 
 def check_update_global_notifications(
-    var_name: str, event: Dict[str, object], desired_val: Union[bool, int, str],
+    var_name: str,
+    event: Dict[str, object],
+    desired_val: Union[bool, int, str],
 ) -> None:
     """
     See UserProfile.notification_setting_types for
@@ -1370,9 +1389,7 @@ update_message_topic_fields = [
     (TOPIC_NAME, str),
 ]
 
-update_message_optional_fields = (
-    update_message_content_fields + update_message_topic_fields
-)
+update_message_optional_fields = update_message_content_fields + update_message_topic_fields
 
 # The schema here does not include the "embedded"
 # variant of update_message; it is for message
@@ -1515,9 +1532,7 @@ user_group_update_event = event_dict_type(
 _check_user_group_update = make_checker(user_group_update_event)
 
 
-def check_user_group_update(
-    var_name: str, event: Dict[str, object], field: str
-) -> None:
+def check_user_group_update(var_name: str, event: Dict[str, object], field: str) -> None:
     _check_user_group_update(var_name, event)
 
     assert isinstance(event["data"], dict)

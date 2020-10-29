@@ -2,12 +2,12 @@ from zerver.lib.test_classes import WebhookTestCase
 
 
 class NewRelicHookTests(WebhookTestCase):
-    STREAM_NAME = 'newrelic'
+    STREAM_NAME = "newrelic"
     URL_TEMPLATE = "/api/v1/external/newrelic?stream={stream}&api_key={api_key}"
 
     def test_alert(self) -> None:
         expected_topic = "Apdex score fell below critical level of 0.90"
-        expected_message = 'Alert opened on [application name]: Apdex score fell below critical level of 0.90 ([view alert](https://rpm.newrelc.com/accounts/[account_id]/applications/[application_id]/incidents/[incident_id])).'
+        expected_message = "Alert opened on [application name]: Apdex score fell below critical level of 0.90 ([view alert](https://rpm.newrelc.com/accounts/[account_id]/applications/[application_id]/incidents/[incident_id]))."
 
         self.check_webhook(
             "alert",
@@ -17,7 +17,7 @@ class NewRelicHookTests(WebhookTestCase):
         )
 
     def test_deployment(self) -> None:
-        expected_topic = 'Test App deploy'
+        expected_topic = "Test App deploy"
         expected_message = """
 **1242** deployed by **Zulip Test**:
 

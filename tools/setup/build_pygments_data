@@ -4,9 +4,9 @@ import os
 
 from pygments.lexers import get_all_lexers, get_lexer_by_name
 
-ZULIP_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../')
-DATA_PATH = os.path.join(ZULIP_PATH, 'tools', 'setup', 'lang.json')
-OUT_PATH = os.path.join(ZULIP_PATH, 'static', 'generated', 'pygments_data.json')
+ZULIP_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../../")
+DATA_PATH = os.path.join(ZULIP_PATH, "tools", "setup", "lang.json")
+OUT_PATH = os.path.join(ZULIP_PATH, "static", "generated", "pygments_data.json")
 
 with open(DATA_PATH) as f:
     langs = json.load(f)
@@ -14,10 +14,7 @@ with open(DATA_PATH) as f:
 lexers = get_all_lexers()
 for lexer in lexers:
     for name in lexer[1]:
-        langs[name] = {
-            'priority': langs.get(name, 0),
-            'pretty_name': get_lexer_by_name(name).name
-        }
+        langs[name] = {"priority": langs.get(name, 0), "pretty_name": get_lexer_by_name(name).name}
 
-with open(OUT_PATH, 'w') as f:
+with open(OUT_PATH, "w") as f:
     json.dump({"langs": langs}, f)

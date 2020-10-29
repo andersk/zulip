@@ -18,8 +18,10 @@ def get_canonical_timezone_map() -> Dict[str, str]:
                 canonical[alias] = name
     return canonical
 
+
 def canonicalize_timezone(key: str) -> str:
     return get_canonical_timezone_map().get(key, key)
+
 
 # This method carefully trims a list of common timezones in the pytz
 # database and handles duplicate abbreviations in favor of the most
@@ -41,10 +43,10 @@ def get_common_timezones() -> Dict[str, Union[int, Any]]:
         tzdata[tz_name] = offset
         # Handle known duplicates/exceptions.
         # IST: Asia/Kolkata and Europe/Dublin.
-        if tz_name == 'IST':
+        if tz_name == "IST":
             tzdata[tz_name] = 19800  # Asia/Kolkata
         # CDT: America/AlmostAll and America/Havana.
-        if tz_name == 'CDT':
+        if tz_name == "CDT":
             tzdata[tz_name] = -68400  # America/AlmostAll
         # CST America/Belize -64800
         # CST America/Costa_Rica -64800
@@ -57,6 +59,6 @@ def get_common_timezones() -> Dict[str, Union[int, Any]]:
         # CST Asia/Macau 28800
         # CST Asia/Shanghai 28800
         # CST Asia/Taipei 28800
-        if tz_name == 'CST':
+        if tz_name == "CST":
             tzdata[tz_name] = -64800  # America/All
     return tzdata

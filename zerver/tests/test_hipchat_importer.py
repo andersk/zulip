@@ -38,7 +38,7 @@ class HipChatImporter(ZulipTestCase):
         self.assertEqual(sender_id, 1)
 
         bot_message = dict(
-            sender='fred_bot',
+            sender="fred_bot",
         )
 
         # Every message from fred_bot should
@@ -59,7 +59,7 @@ class HipChatImporter(ZulipTestCase):
         id_zero_message = dict(
             sender=dict(
                 id=0,
-                name='hal_bot',
+                name="hal_bot",
             ),
         )
 
