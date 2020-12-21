@@ -100,7 +100,7 @@ def find_js_test_files(test_dir: str, files: Iterable[str]) -> List[str]:
 
 def prepare_puppeteer_run() -> None:
     os.chdir(ZULIP_PATH)
-    subprocess.check_call(['node', 'node_modules/puppeteer/install.js'])
+    subprocess.check_call(['node', '--require=puppeteer/install', '--eval=0'])
     os.makedirs('var/puppeteer', exist_ok=True)
     for f in glob.glob('var/puppeteer/puppeteer-failure*.png'):
         os.remove(f)

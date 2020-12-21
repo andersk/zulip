@@ -4,6 +4,7 @@
 
 const path = require("path");
 
+const {spawn} = require("child_process");
 const commander = require("commander");
 const mkdirp = require("mkdirp");
 const puppeteer = require("puppeteer");
@@ -27,6 +28,8 @@ if (options.messageId === undefined) {
 
 // TODO: Refactor to share code with frontend_tests/puppeteer_tests/00-realm-creation.js
 async function run() {
+    await spawn("node", ["--require=puppeteer/install", "--eval=0"], {stdio: "inherit"});
+
     const browser = await puppeteer.launch({
         args: [
             "--window-size=1400,1024",
