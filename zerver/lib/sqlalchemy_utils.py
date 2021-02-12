@@ -15,7 +15,7 @@ class NonClosingPool(sqlalchemy.pool.NullPool):
     def _do_return_conn(self, conn: sqlalchemy.engine.base.Connection) -> None:
         pass
 
-    def recreate(self) -> "NonClosingPool":
+    def recreate(self) -> 'NonClosingPool':
         return self.__class__(
             creator=self._creator,  # type: ignore[attr-defined] # implementation detail
             recycle=self._recycle,  # type: ignore[attr-defined] # implementation detail
@@ -26,24 +26,17 @@ class NonClosingPool(sqlalchemy.pool.NullPool):
             _dispatch=self.dispatch,  # type: ignore[attr-defined] # implementation detail
         )
 
-
 sqlalchemy_engine: Optional[Any] = None
-
-
 def get_sqlalchemy_connection() -> sqlalchemy.engine.base.Connection:
     global sqlalchemy_engine
     if sqlalchemy_engine is None:
-
         def get_dj_conn() -> TimeTrackingConnection:
             connection.ensure_connection()
             return connection.connection
-
-        sqlalchemy_engine = sqlalchemy.create_engine(
-            "postgresql://",
-            creator=get_dj_conn,
-            poolclass=NonClosingPool,
-            pool_reset_on_return=False,
-        )
+        sqlalchemy_engine = sqlalchemy.create_engine('postgresql://',
+                                                     creator=get_dj_conn,
+                                                     poolclass=NonClosingPool,
+                                                     pool_reset_on_return=False)
     sa_connection = sqlalchemy_engine.connect()
     sa_connection.execution_options(autocommit=False)
     return sa_connection

@@ -2,9 +2,9 @@ from zerver.lib.test_classes import WebhookTestCase
 
 
 class SentryHookTests(WebhookTestCase):
-    STREAM_NAME = "sentry"
+    STREAM_NAME = 'sentry'
     URL_TEMPLATE = "/api/v1/external/sentry?&api_key={api_key}&stream={stream}"
-    FIXTURE_DIR_NAME = "sentry"
+    FIXTURE_DIR_NAME = 'sentry'
 
     def test_event_for_exception_golang(self) -> None:
         expected_topic = '*url.Error: Get "bad_url": unsupported protocol scheme ""'
@@ -114,9 +114,7 @@ Traceback:
 **timestamp:** 2020-10-26 16:39:54
 **filename:** None
 ```"""
-        self.check_webhook(
-            "webhook_event_for_exception_javascript", expected_topic, expected_message
-        )
+        self.check_webhook("webhook_event_for_exception_javascript", expected_topic, expected_message)
 
     def test_event_for_message_golang(self) -> None:
         expected_topic = "A test message event from golang."

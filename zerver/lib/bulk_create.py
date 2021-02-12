@@ -8,40 +8,28 @@ from zerver.lib.streams import render_stream_description
 from zerver.models import Realm, RealmAuditLog, Recipient, Stream, Subscription, UserProfile
 
 
-def bulk_create_users(
-    realm: Realm,
-    users_raw: Set[Tuple[str, str, bool]],
-    bot_type: Optional[int] = None,
-    bot_owner: Optional[UserProfile] = None,
-    tos_version: Optional[str] = None,
-    timezone: str = "",
-) -> None:
+def bulk_create_users(realm: Realm,
+                      users_raw: Set[Tuple[str, str, bool]],
+                      bot_type: Optional[int]=None,
+                      bot_owner: Optional[UserProfile]=None,
+                      tos_version: Optional[str]=None,
+                      timezone: str="") -> None:
     """
     Creates and saves a UserProfile with the given email.
     Has some code based off of UserManage.create_user, but doesn't .save()
     """
-    existing_users = frozenset(
-        UserProfile.objects.filter(realm=realm).values_list("email", flat=True)
-    )
+    existing_users = frozenset(UserProfile.objects.filter(
+        realm=realm).values_list('email', flat=True))
     users = sorted(user_raw for user_raw in users_raw if user_raw[0] not in existing_users)
 
     # Now create user_profiles
     profiles_to_create: List[UserProfile] = []
     for (email, full_name, active) in users:
-        profile = create_user_profile(
-            realm,
-            email,
-            initial_password(email),
-            active,
-            bot_type,
-            full_name,
-            bot_owner,
-            False,
-            tos_version,
-            timezone,
-            tutorial_status=UserProfile.TUTORIAL_FINISHED,
-            enter_sends=True,
-        )
+        profile = create_user_profile(realm, email,
+                                      initial_password(email), active, bot_type,
+                                      full_name, bot_owner, False, tos_version,
+                                      timezone, tutorial_status=UserProfile.TUTORIAL_FINISHED,
+                                      enter_sends=True)
         profiles_to_create.append(profile)
 
     if realm.email_address_visibility == Realm.EMAIL_ADDRESS_VISIBILITY_EVERYONE:
@@ -54,19 +42,14 @@ def bulk_create_users(
 
         for user_profile in profiles_to_create:
             user_profile.email = get_display_email_address(user_profile)
-        UserProfile.objects.bulk_update(profiles_to_create, ["email"])
+        UserProfile.objects.bulk_update(profiles_to_create, ['email'])
 
     user_ids = {user.id for user in profiles_to_create}
 
     RealmAuditLog.objects.bulk_create(
-        RealmAuditLog(
-            realm=realm,
-            modified_user=profile_,
-            event_type=RealmAuditLog.USER_CREATED,
-            event_time=profile_.date_joined,
-        )
-        for profile_ in profiles_to_create
-    )
+        RealmAuditLog(realm=realm, modified_user=profile_,
+                      event_type=RealmAuditLog.USER_CREATED, event_time=profile_.date_joined)
+        for profile_ in profiles_to_create)
 
     recipients_to_create: List[Recipient] = []
     for user_id in user_ids:
@@ -75,9 +58,7 @@ def bulk_create_users(
 
     Recipient.objects.bulk_create(recipients_to_create)
 
-    bulk_set_users_or_streams_recipient_fields(
-        UserProfile, profiles_to_create, recipients_to_create
-    )
+    bulk_set_users_or_streams_recipient_fields(UserProfile, profiles_to_create, recipients_to_create)
 
     recipients_by_user_id: Dict[int, Recipient] = {}
     for recipient in recipients_to_create:
@@ -91,12 +72,9 @@ def bulk_create_users(
 
     Subscription.objects.bulk_create(subscriptions_to_create)
 
-
-def bulk_set_users_or_streams_recipient_fields(
-    model: Model,
-    objects: Union[Iterable[UserProfile], Iterable[Stream]],
-    recipients: Optional[Iterable[Recipient]] = None,
-) -> None:
+def bulk_set_users_or_streams_recipient_fields(model: Model,
+                                               objects: Union[Iterable[UserProfile], Iterable[Stream]],
+                                               recipients: Optional[Iterable[Recipient]]=None) -> None:
     assert model in [UserProfile, Stream]
     for obj in objects:
         assert isinstance(obj, model)
@@ -119,20 +97,20 @@ def bulk_set_users_or_streams_recipient_fields(
         if result is not None:
             result.recipient = recipient
             objects_to_update.add(result)
-    model.objects.bulk_update(objects_to_update, ["recipient"])
-
+    model.objects.bulk_update(objects_to_update, ['recipient'])
 
 # This is only sed in populate_db, so doesn't really need tests
-def bulk_create_streams(realm: Realm, stream_dict: Dict[str, Dict[str, Any]]) -> None:  # nocoverage
+def bulk_create_streams(realm: Realm,
+                        stream_dict: Dict[str, Dict[str, Any]]) -> None:  # nocoverage
     existing_streams = {
-        name.lower() for name in Stream.objects.filter(realm=realm).values_list("name", flat=True)
+        name.lower()
+        for name in Stream.objects.filter(realm=realm).values_list('name', flat=True)
     }
     streams_to_create: List[Stream] = []
     for name, options in stream_dict.items():
-        if "history_public_to_subscribers" not in options:
-            options["history_public_to_subscribers"] = (
-                not options.get("invite_only", False) and not realm.is_zephyr_mirror_realm
-            )
+        if 'history_public_to_subscribers' not in options:
+            options['history_public_to_subscribers'] = (
+                not options.get("invite_only", False) and not realm.is_zephyr_mirror_realm)
         if name.lower() not in existing_streams:
             streams_to_create.append(
                 Stream(
@@ -141,9 +119,8 @@ def bulk_create_streams(realm: Realm, stream_dict: Dict[str, Dict[str, Any]]) ->
                     description=options["description"],
                     rendered_description=render_stream_description(options["description"]),
                     invite_only=options.get("invite_only", False),
-                    stream_post_policy=options.get(
-                        "stream_post_policy", Stream.STREAM_POST_POLICY_EVERYONE
-                    ),
+                    stream_post_policy=options.get("stream_post_policy",
+                                                   Stream.STREAM_POST_POLICY_EVERYONE),
                     history_public_to_subscribers=options["history_public_to_subscribers"],
                     is_web_public=options.get("is_web_public", False),
                     is_in_zephyr_realm=realm.is_zephyr_mirror_realm,
@@ -161,9 +138,10 @@ def bulk_create_streams(realm: Realm, stream_dict: Dict[str, Dict[str, Any]]) ->
     Stream.objects.bulk_create(streams_to_create)
 
     recipients_to_create: List[Recipient] = []
-    for stream in Stream.objects.filter(realm=realm).values("id", "name"):
-        if stream["name"].lower() not in existing_streams:
-            recipients_to_create.append(Recipient(type_id=stream["id"], type=Recipient.STREAM))
+    for stream in Stream.objects.filter(realm=realm).values('id', 'name'):
+        if stream['name'].lower() not in existing_streams:
+            recipients_to_create.append(Recipient(type_id=stream['id'],
+                                                  type=Recipient.STREAM))
     Recipient.objects.bulk_create(recipients_to_create)
 
     bulk_set_users_or_streams_recipient_fields(Stream, streams_to_create, recipients_to_create)

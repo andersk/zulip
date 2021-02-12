@@ -36,7 +36,6 @@ MAX_HOT_TOPICS_TO_BE_INCLUDED_IN_DIGEST = 4
 
 TopicKey = Tuple[int, str]
 
-
 class DigestTopic:
     def __init__(self, topic_key: TopicKey) -> None:
         self.topic_key = topic_key
@@ -75,12 +74,10 @@ class DigestTopic:
             "first_few_messages": first_few_messages,
         }
 
-
 # Digests accumulate 2 types of interesting traffic for a user:
 # 1. New streams
 # 2. Interesting stream traffic, as determined by the longest and most
 #    diversely comment upon topics.
-
 
 def should_process_digest(realm_str: str) -> bool:
     if realm_str in settings.SYSTEM_ONLY_REALMS:
@@ -88,61 +85,49 @@ def should_process_digest(realm_str: str) -> bool:
         return False
     return True
 
-
 # Changes to this should also be reflected in
 # zerver/worker/queue_processors.py:DigestWorker.consume()
 def queue_digest_user_ids(user_ids: List[int], cutoff: datetime.datetime) -> None:
     # Convert cutoff to epoch seconds for transit.
-    event = {"user_ids": user_ids, "cutoff": cutoff.strftime("%s")}
+    event = {
+        "user_ids": user_ids,
+        "cutoff": cutoff.strftime('%s')
+    }
     queue_json_publish("digest_emails", event)
-
 
 def enqueue_emails(cutoff: datetime.datetime) -> None:
     if not settings.SEND_DIGEST_EMAILS:
         return
 
     weekday = timezone_now().weekday()
-    for realm in Realm.objects.filter(
-        deactivated=False, digest_emails_enabled=True, digest_weekday=weekday
-    ):
+    for realm in Realm.objects.filter(deactivated=False, digest_emails_enabled=True, digest_weekday=weekday):
         if should_process_digest(realm.string_id):
             _enqueue_emails_for_realm(realm, cutoff)
-
 
 def _enqueue_emails_for_realm(realm: Realm, cutoff: datetime.datetime) -> None:
     # This should only be called directly by tests.  Use enqueue_emails
     # to process all realms that are set up for processing on any given day.
-    realm_user_ids = set(
-        UserProfile.objects.filter(
-            realm=realm,
-            is_active=True,
-            is_bot=False,
-            enable_digest_emails=True,
-        ).values_list("id", flat=True)
-    )
+    realm_user_ids = set(UserProfile.objects.filter(
+        realm=realm,
+        is_active=True,
+        is_bot=False,
+        enable_digest_emails=True,
+    ).values_list('id', flat=True))
 
     twelve_hours_ago = timezone_now() - datetime.timedelta(hours=12)
 
-    recent_user_ids = set(
-        RealmAuditLog.objects.filter(
-            realm_id=realm.id,
-            event_type=RealmAuditLog.USER_DIGEST_EMAIL_CREATED,
-            event_time__gt=twelve_hours_ago,
-        )
-        .values_list("modified_user_id", flat=True)
-        .distinct()
-    )
+    recent_user_ids = set(RealmAuditLog.objects.filter(
+        realm_id=realm.id,
+        event_type=RealmAuditLog.USER_DIGEST_EMAIL_CREATED,
+        event_time__gt=twelve_hours_ago,
+    ).values_list('modified_user_id', flat=True).distinct())
 
     realm_user_ids -= recent_user_ids
 
-    active_user_ids = set(
-        UserActivityInterval.objects.filter(
-            user_profile_id__in=realm_user_ids,
-            end__gt=cutoff,
-        )
-        .values_list("user_profile_id", flat=True)
-        .distinct()
-    )
+    active_user_ids = set(UserActivityInterval.objects.filter(
+        user_profile_id__in=realm_user_ids,
+        end__gt=cutoff,
+    ).values_list('user_profile_id', flat=True).distinct())
 
     user_ids = list(realm_user_ids - active_user_ids)
     user_ids.sort()
@@ -152,13 +137,12 @@ def _enqueue_emails_for_realm(realm: Realm, cutoff: datetime.datetime) -> None:
     # from the queue takes too long to process.
     chunk_size = 30
     for i in range(0, len(user_ids), chunk_size):
-        chunk_user_ids = user_ids[i : i + chunk_size]
+        chunk_user_ids = user_ids[i:i + chunk_size]
         queue_digest_user_ids(chunk_user_ids, cutoff)
         logger.info(
             "Queuing user_ids for potential digest: %s",
             chunk_user_ids,
         )
-
 
 def get_recent_topics(
     stream_ids: List[int],
@@ -169,20 +153,16 @@ def get_recent_topics(
     #   * topic length
     #   * number of senders
 
-    messages = (
-        Message.objects.filter(
-            recipient__type=Recipient.STREAM,
-            recipient__type_id__in=stream_ids,
-            date_sent__gt=cutoff_date,
-        )
-        .order_by(
-            "id",  # we will sample the first few messages
-        )
-        .select_related(
-            "recipient",  # we need stream_id
-            "sender",  # we need the sender's full name
-            "sending_client",  # for Message.sent_by_human
-        )
+    messages = Message.objects.filter(
+        recipient__type=Recipient.STREAM,
+        recipient__type_id__in=stream_ids,
+        date_sent__gt=cutoff_date,
+    ).order_by(
+        'id',  # we will sample the first few messages
+    ).select_related(
+        'recipient',  # we need stream_id
+        'sender',  # we need the sender's full name
+        'sending_client'  # for Message.sent_by_human
     )
 
     digest_topic_map: Dict[TopicKey, DigestTopic] = {}
@@ -198,18 +178,18 @@ def get_recent_topics(
 
     return topics
 
-
 def get_hot_topics(
     all_topics: List[DigestTopic],
     stream_ids: Set[int],
 ) -> List[DigestTopic]:
-    topics = [topic for topic in all_topics if topic.stream_id() in stream_ids]
+    topics = [
+        topic for topic in all_topics
+        if topic.stream_id() in stream_ids
+    ]
 
     hot_topics = heapq.nlargest(2, topics, key=DigestTopic.diversity)
 
-    for topic in heapq.nlargest(
-        MAX_HOT_TOPICS_TO_BE_INCLUDED_IN_DIGEST, topics, key=DigestTopic.length
-    ):
+    for topic in heapq.nlargest(MAX_HOT_TOPICS_TO_BE_INCLUDED_IN_DIGEST, topics, key=DigestTopic.length):
         if topic not in hot_topics:
             hot_topics.append(topic)
         if len(hot_topics) == MAX_HOT_TOPICS_TO_BE_INCLUDED_IN_DIGEST:
@@ -217,11 +197,9 @@ def get_hot_topics(
 
     return hot_topics
 
-
 def get_recent_streams(realm: Realm, threshold: datetime.datetime) -> List[Stream]:
     fields = ["id", "name", "is_web_public", "invite_only"]
     return list(get_active_streams(realm).filter(date_created__gt=threshold).only(*fields))
-
 
 def gather_new_streams(
     realm: Realm,
@@ -246,10 +224,8 @@ def gather_new_streams(
 
     return len(new_streams), {"html": streams_html, "plain": streams_plain}
 
-
 def enough_traffic(hot_conversations: str, new_streams: int) -> bool:
     return bool(hot_conversations or new_streams)
-
 
 def get_user_stream_map(user_ids: List[int]) -> Dict[int, Set[int]]:
     rows = Subscription.objects.filter(
@@ -257,28 +233,26 @@ def get_user_stream_map(user_ids: List[int]) -> Dict[int, Set[int]]:
         recipient__type=Recipient.STREAM,
         active=True,
         is_muted=False,
-    ).values("user_profile_id", "recipient__type_id")
+    ).values('user_profile_id', 'recipient__type_id')
 
     # maps user_id -> {stream_id, stream_id, ...}
     dct: Dict[int, Set[int]] = defaultdict(set)
     for row in rows:
-        dct[row["user_profile_id"]].add(row["recipient__type_id"])
+        dct[row['user_profile_id']].add(row['recipient__type_id'])
 
     return dct
-
 
 def get_slim_stream_map(stream_ids: Set[int]) -> Dict[int, Stream]:
     # This can be passed to build_message_list.
     streams = Stream.objects.filter(
         id__in=stream_ids,
-    ).only("id", "name")
+    ).only('id', 'name')
 
     return {stream.id: stream for stream in streams}
 
-
 def bulk_get_digest_context(users: List[UserProfile], cutoff: float) -> Dict[int, Dict[str, Any]]:
     # We expect a non-empty list of users all from the same realm.
-    assert users
+    assert(users)
     realm = users[0].realm
     for user in users:
         assert user.realm_id == realm.id
@@ -323,14 +297,15 @@ def bulk_get_digest_context(users: List[UserProfile], cutoff: float) -> Dict[int
 
         # Get context data for hot conversations.
         context["hot_conversations"] = [
-            hot_topic.teaser_data(user, stream_map) for hot_topic in hot_topics
+            hot_topic.teaser_data(user, stream_map)
+            for hot_topic in hot_topics
         ]
 
         # Gather new streams.
         new_streams_count, new_streams = gather_new_streams(
             realm=realm,
             recent_streams=recent_streams,
-            can_access_public=user.can_access_public_streams(),
+            can_access_public=user.can_access_public_streams()
         )
         context["new_streams"] = new_streams
         context["new_streams_count"] = new_streams_count
@@ -339,10 +314,8 @@ def bulk_get_digest_context(users: List[UserProfile], cutoff: float) -> Dict[int
 
     return result
 
-
 def get_digest_context(user: UserProfile, cutoff: float) -> Dict[str, Any]:
     return bulk_get_digest_context([user], cutoff)[user.id]
-
 
 @transaction.atomic
 def bulk_handle_digest_email(user_ids: List[int], cutoff: float) -> None:
@@ -362,7 +335,7 @@ def bulk_handle_digest_email(user_ids: List[int], cutoff: float) -> None:
             logger.info("Sending digest email for user %s", user.id)
             # Send now, as a ScheduledEmail
             send_future_email(
-                "zerver/emails/digest",
+                'zerver/emails/digest',
                 user.realm,
                 to_user_ids=[user.id],
                 from_name="Zulip Digest",
@@ -371,7 +344,6 @@ def bulk_handle_digest_email(user_ids: List[int], cutoff: float) -> None:
             )
 
     bulk_write_realm_audit_logs(digest_users)
-
 
 def bulk_write_realm_audit_logs(users: List[UserProfile]) -> None:
     if not users:
@@ -396,10 +368,7 @@ def bulk_write_realm_audit_logs(users: List[UserProfile]) -> None:
 
     RealmAuditLog.objects.bulk_create(log_rows)
 
-
-def get_modified_streams(
-    user_ids: List[int], cutoff_date: datetime.datetime
-) -> Dict[int, Set[int]]:
+def get_modified_streams(user_ids: List[int], cutoff_date: datetime.datetime) -> Dict[int, Set[int]]:
     """Skipping streams where the user's subscription status has changed
     when constructing digests is critical to ensure correctness for
     streams without shared history, guest users, and long-term idle
@@ -419,15 +388,11 @@ def get_modified_streams(
     ]
 
     # Get rows where the users' subscriptions have changed.
-    rows = (
-        RealmAuditLog.objects.filter(
-            modified_user_id__in=user_ids,
-            event_time__gt=cutoff_date,
-            event_type__in=events,
-        )
-        .values("modified_user_id", "modified_stream_id")
-        .distinct()
-    )
+    rows = RealmAuditLog.objects.filter(
+        modified_user_id__in=user_ids,
+        event_time__gt=cutoff_date,
+        event_type__in=events,
+    ).values("modified_user_id", "modified_stream_id").distinct()
 
     result: Dict[int, Set[int]] = defaultdict(set)
 

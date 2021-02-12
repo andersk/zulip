@@ -4,27 +4,23 @@ from typing import List, TypeVar
 from psycopg2.extensions import cursor
 from psycopg2.sql import SQL, Composable, Identifier
 
-CursorObj = TypeVar("CursorObj", bound=cursor)
+CursorObj = TypeVar('CursorObj', bound=cursor)
 
 
-def do_batch_update(
-    cursor: CursorObj,
-    table: str,
-    assignments: List[Composable],
-    batch_size: int = 10000,
-    sleep: float = 0.1,
-) -> None:  # nocoverage
+def do_batch_update(cursor: CursorObj,
+                    table: str,
+                    assignments: List[Composable],
+                    batch_size: int=10000,
+                    sleep: float=0.1) -> None:  # nocoverage
     # The string substitution below is complicated by our need to
     # support multiple PostgreSQL versions.
-    stmt = SQL(
-        """
+    stmt = SQL('''
         UPDATE {}
         SET {}
         WHERE id >= %s AND id < %s
-    """
-    ).format(
+    ''').format(
         Identifier(table),
-        SQL(", ").join(assignments),
+        SQL(', ').join(assignments),
     )
 
     cursor.execute(SQL("SELECT MIN(id), MAX(id) FROM {}").format(Identifier(table)))
@@ -36,7 +32,7 @@ def do_batch_update(
     while min_id <= max_id:
         lower = min_id
         upper = min_id + batch_size
-        print(f"    Updating range [{lower},{upper})")
+        print(f'    Updating range [{lower},{upper})')
         cursor.execute(stmt, [lower, upper])
 
         min_id = upper
@@ -47,4 +43,4 @@ def do_batch_update(
             cursor.execute(SQL("SELECT MAX(id) FROM {}").format(Identifier(table)))
             (max_id,) = cursor.fetchone()
 
-    print("    Finishing...", end="")
+    print("    Finishing...", end='')

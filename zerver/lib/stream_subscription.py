@@ -15,12 +15,10 @@ class SubInfo:
     sub: Subscription
     stream: Stream
 
-
 @dataclass
 class SubscriberPeerInfo:
     subscribed_ids: Dict[int, Set[int]]
     private_peer_dict: Dict[int, Set[int]]
-
 
 def get_active_subscriptions_for_stream_id(stream_id: int) -> QuerySet:
     # TODO: Change return type to QuerySet[Subscription]
@@ -30,7 +28,6 @@ def get_active_subscriptions_for_stream_id(stream_id: int) -> QuerySet:
         active=True,
     )
 
-
 def get_active_subscriptions_for_stream_ids(stream_ids: Set[int]) -> QuerySet:
     # TODO: Change return type to QuerySet[Subscription]
     return Subscription.objects.filter(
@@ -39,14 +36,12 @@ def get_active_subscriptions_for_stream_ids(stream_ids: Set[int]) -> QuerySet:
         active=True,
     )
 
-
 def get_subscribed_stream_ids_for_user(user_profile: UserProfile) -> QuerySet:
     return Subscription.objects.filter(
         user_profile_id=user_profile,
         recipient__type=Recipient.STREAM,
         active=True,
-    ).values_list("recipient__type_id", flat=True)
-
+    ).values_list('recipient__type_id', flat=True)
 
 def get_stream_subscriptions_for_user(user_profile: UserProfile) -> QuerySet:
     # TODO: Change return type to QuerySet[Subscription]
@@ -55,14 +50,12 @@ def get_stream_subscriptions_for_user(user_profile: UserProfile) -> QuerySet:
         recipient__type=Recipient.STREAM,
     )
 
-
 def get_stream_subscriptions_for_users(user_profiles: List[UserProfile]) -> QuerySet:
     # TODO: Change return type to QuerySet[Subscription]
     return Subscription.objects.filter(
         user_profile__in=user_profiles,
         recipient__type=Recipient.STREAM,
     )
-
 
 def get_bulk_stream_subscriber_info(
     users: List[UserProfile],
@@ -76,7 +69,7 @@ def get_bulk_stream_subscriber_info(
         recipient__type=Recipient.STREAM,
         recipient__type_id__in=stream_ids,
         active=True,
-    ).only("user_profile_id", "recipient_id")
+    ).only('user_profile_id', 'recipient_id')
 
     stream_map = {stream.recipient_id: stream for stream in streams}
     user_map = {user.id: user for user in users}
@@ -98,41 +91,29 @@ def get_bulk_stream_subscriber_info(
 
     return result
 
-
 def num_subscribers_for_stream_id(stream_id: int) -> int:
-    return (
-        get_active_subscriptions_for_stream_id(stream_id)
-        .filter(
-            user_profile__is_active=True,
-        )
-        .count()
-    )
-
+    return get_active_subscriptions_for_stream_id(stream_id).filter(
+        user_profile__is_active=True,
+    ).count()
 
 def get_user_ids_for_streams(stream_ids: Set[int]) -> Dict[int, Set[int]]:
-    all_subs = (
-        get_active_subscriptions_for_stream_ids(stream_ids)
-        .filter(
-            user_profile__is_active=True,
-        )
-        .values(
-            "recipient__type_id",
-            "user_profile_id",
-        )
-        .order_by(
-            "recipient__type_id",
-        )
+    all_subs = get_active_subscriptions_for_stream_ids(stream_ids).filter(
+        user_profile__is_active=True,
+    ).values(
+        'recipient__type_id',
+        'user_profile_id',
+    ).order_by(
+        'recipient__type_id',
     )
 
-    get_stream_id = itemgetter("recipient__type_id")
+    get_stream_id = itemgetter('recipient__type_id')
 
     result: Dict[int, Set[int]] = defaultdict(set)
     for stream_id, rows in itertools.groupby(all_subs, get_stream_id):
-        user_ids = {row["user_profile_id"] for row in rows}
+        user_ids = {row['user_profile_id'] for row in rows}
         result[stream_id] = user_ids
 
     return result
-
 
 def bulk_get_subscriber_peer_info(
     realm: Realm,
@@ -185,7 +166,6 @@ def bulk_get_subscriber_peer_info(
         private_peer_dict=private_peer_dict,
     )
 
-
 def bulk_get_private_peers(
     realm: Realm,
     private_streams: List[Stream],
@@ -214,12 +194,9 @@ def bulk_get_private_peers(
 
     return peer_ids
 
-
-def handle_stream_notifications_compatibility(
-    user_profile: Optional[UserProfile],
-    stream_dict: Dict[str, Any],
-    notification_settings_null: bool,
-) -> None:
+def handle_stream_notifications_compatibility(user_profile: Optional[UserProfile],
+                                              stream_dict: Dict[str, Any],
+                                              notification_settings_null: bool) -> None:
     # Old versions of the mobile apps don't support `None` as a
     # value for the stream-level notifications properties, so we
     # have to handle the normally frontend-side defaults for these
@@ -233,16 +210,10 @@ def handle_stream_notifications_compatibility(
     # backwards-compatibility problem in our view.
     assert not notification_settings_null
 
-    for notification_type in [
-        "desktop_notifications",
-        "audible_notifications",
-        "push_notifications",
-        "email_notifications",
-    ]:
+    for notification_type in ["desktop_notifications", "audible_notifications",
+                              "push_notifications", "email_notifications"]:
         # Values of true/false are supported by older clients.
         if stream_dict[notification_type] is not None:
             continue
         target_attr = "enable_stream_" + notification_type
-        stream_dict[notification_type] = (
-            False if user_profile is None else getattr(user_profile, target_attr)
-        )
+        stream_dict[notification_type] = False if user_profile is None else getattr(user_profile, target_attr)

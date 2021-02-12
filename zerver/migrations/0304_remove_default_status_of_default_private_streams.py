@@ -5,23 +5,18 @@ from django.db.backends.postgresql.schema import DatabaseSchemaEditor
 from django.db.migrations.state import StateApps
 
 
-def remove_default_status_of_default_private_streams(
-    apps: StateApps, schema_editor: DatabaseSchemaEditor
-) -> None:
-    DefaultStream = apps.get_model("zerver", "DefaultStream")
+def remove_default_status_of_default_private_streams(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> None:
+    DefaultStream = apps.get_model('zerver', 'DefaultStream')
     DefaultStream.objects.filter(stream__invite_only=True).delete()
-
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("zerver", "0303_realm_wildcard_mention_policy"),
+        ('zerver', '0303_realm_wildcard_mention_policy'),
     ]
 
     operations = [
-        migrations.RunPython(
-            remove_default_status_of_default_private_streams,
-            reverse_code=migrations.RunPython.noop,
-            elidable=True,
-        ),
+        migrations.RunPython(remove_default_status_of_default_private_streams,
+                             reverse_code=migrations.RunPython.noop,
+                             elidable=True),
     ]

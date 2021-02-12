@@ -6,9 +6,8 @@ from analytics.models import BaseCount
 from zerver.models import AbstractPushDeviceToken, AbstractRealmAuditLog
 
 
-def get_remote_server_by_uuid(uuid: str) -> "RemoteZulipServer":
+def get_remote_server_by_uuid(uuid: str) -> 'RemoteZulipServer':
     return RemoteZulipServer.objects.get(uuid=uuid)
-
 
 class RemoteZulipServer(models.Model):
     UUID_LENGTH = 36
@@ -20,14 +19,13 @@ class RemoteZulipServer(models.Model):
 
     hostname: str = models.CharField(max_length=HOSTNAME_MAX_LENGTH)
     contact_email: str = models.EmailField(blank=True, null=False)
-    last_updated: datetime.datetime = models.DateTimeField("last updated", auto_now=True)
+    last_updated: datetime.datetime = models.DateTimeField('last updated', auto_now=True)
 
     def __str__(self) -> str:
         return f"<RemoteZulipServer {self.hostname} {self.uuid[0:12]}>"
 
     def format_requestor_for_logs(self) -> str:
         return "zulip-server:" + self.uuid
-
 
 # Variant of PushDeviceToken for a remote server.
 class RemotePushDeviceToken(AbstractPushDeviceToken):
@@ -41,12 +39,10 @@ class RemotePushDeviceToken(AbstractPushDeviceToken):
     def __str__(self) -> str:
         return f"<RemotePushDeviceToken {self.server} {self.user_id}>"
 
-
 class RemoteRealmAuditLog(AbstractRealmAuditLog):
     """Synced audit data from a remote Zulip server, used primarily for
     billing.  See RealmAuditLog and AbstractRealmAuditLog for details.
     """
-
     server: RemoteZulipServer = models.ForeignKey(RemoteZulipServer, on_delete=models.CASCADE)
     realm_id: int = models.IntegerField(db_index=True)
     # The remote_id field lets us deduplicate data from the remote server
@@ -54,7 +50,6 @@ class RemoteRealmAuditLog(AbstractRealmAuditLog):
 
     def __str__(self) -> str:
         return f"<RemoteRealmAuditLog: {self.server} {self.event_type} {self.event_time} {self.id}>"
-
 
 class RemoteInstallationCount(BaseCount):
     server: RemoteZulipServer = models.ForeignKey(RemoteZulipServer, on_delete=models.CASCADE)
@@ -69,7 +64,6 @@ class RemoteInstallationCount(BaseCount):
 
     def __str__(self) -> str:
         return f"<InstallationCount: {self.property} {self.subgroup} {self.value}>"
-
 
 # We can't subclass RealmCount because we only have a realm_id here, not a foreign key.
 class RemoteRealmCount(BaseCount):

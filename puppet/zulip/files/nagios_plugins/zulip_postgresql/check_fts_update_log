@@ -5,7 +5,7 @@ Nagios plugin to check the length of the FTS update log.
 """
 import sys
 
-sys.path.append("/home/zulip/deployments/current")
+sys.path.append('/home/zulip/deployments/current')
 try:
     from scripts.lib.setup_path import setup_path
 
@@ -22,11 +22,9 @@ states = {
     "UNKNOWN": 3,
 }
 
-
 def report(state: str, num: str) -> None:
     print(f"{state}: {num} rows in fts_update_log table")
     exit(states[state])
-
 
 conn = psycopg2.connect(database="zulip")
 cursor = conn.cursor()
@@ -35,6 +33,6 @@ cursor.execute("SELECT count(*) FROM fts_update_log")
 num = cursor.fetchall()[0][0]
 
 if num > 5:
-    report("CRITICAL", num)
+    report('CRITICAL', num)
 
-report("OK", num)
+report('OK', num)

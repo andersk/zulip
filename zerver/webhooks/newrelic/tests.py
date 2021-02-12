@@ -2,9 +2,9 @@ from zerver.lib.test_classes import WebhookTestCase
 
 
 class NewRelicHookTests(WebhookTestCase):
-    STREAM_NAME = "newrelic"
+    STREAM_NAME = 'newrelic'
     URL_TEMPLATE = "/api/v1/external/newrelic?stream={stream}&api_key={api_key}"
-    FIXTURE_DIR_NAME = "newrelic"
+    FIXTURE_DIR_NAME = 'newrelic'
 
     def test_open(self) -> None:
         expected_topic = "Test policy name (1234)"
@@ -56,10 +56,7 @@ Violation description test.
                 "",
                 content_type="application/json",
             )
-        self.assertIn(
-            "The newrelic webhook requires current_state be in [open|acknowledged|closed]",
-            e.exception.args[0],
-        )
+        self.assertIn("The newrelic webhook requires current_state be in [open|acknowledged|closed]", e.exception.args[0])
 
     def test_missing_fields(self) -> None:
         expected_topic = "Unknown Policy (Unknown ID)"
@@ -85,10 +82,7 @@ No details.
                 "",
                 content_type="application/json",
             )
-        self.assertIn(
-            "The newrelic webhook requires current_state be in [open|acknowledged|closed]",
-            e.exception.args[0],
-        )
+        self.assertIn("The newrelic webhook requires current_state be in [open|acknowledged|closed]", e.exception.args[0])
 
     def test_missing_timestamp(self) -> None:
         with self.assertRaises(AssertionError) as e:
@@ -98,9 +92,7 @@ No details.
                 "",
                 content_type="application/json",
             )
-        self.assertIn(
-            "The newrelic webhook requires timestamp in milliseconds", e.exception.args[0]
-        )
+        self.assertIn("The newrelic webhook requires timestamp in milliseconds", e.exception.args[0])
 
     def test_malformatted_time(self) -> None:
         with self.assertRaises(AssertionError) as e:

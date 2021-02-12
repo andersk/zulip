@@ -104,7 +104,6 @@ from zerver.models import (
 
 logger = logging.getLogger(__name__)
 
-
 class WorkerTimeoutException(Exception):
     def __init__(self, limit: int, event_count: int) -> None:
         self.limit = limit
@@ -113,52 +112,35 @@ class WorkerTimeoutException(Exception):
     def __str__(self) -> str:
         return f"Timed out after {self.limit * self.event_count} seconds processing {self.event_count} events"
 
-
 class WorkerDeclarationException(Exception):
     pass
 
-
-ConcreteQueueWorker = TypeVar("ConcreteQueueWorker", bound="QueueProcessingWorker")
-
+ConcreteQueueWorker = TypeVar('ConcreteQueueWorker', bound='QueueProcessingWorker')
 
 def assign_queue(
-    queue_name: str,
-    enabled: bool = True,
-    is_test_queue: bool = False,
+        queue_name: str, enabled: bool=True, is_test_queue: bool=False,
 ) -> Callable[[Type[ConcreteQueueWorker]], Type[ConcreteQueueWorker]]:
     def decorate(clazz: Type[ConcreteQueueWorker]) -> Type[ConcreteQueueWorker]:
         clazz.queue_name = queue_name
         if enabled:
             register_worker(queue_name, clazz, is_test_queue)
         return clazz
-
     return decorate
-
 
 worker_classes: Dict[str, Type["QueueProcessingWorker"]] = {}
 test_queues: Set[str] = set()
-
-
-def register_worker(
-    queue_name: str, clazz: Type["QueueProcessingWorker"], is_test_queue: bool = False
-) -> None:
+def register_worker(queue_name: str, clazz: Type['QueueProcessingWorker'], is_test_queue: bool=False) -> None:
     worker_classes[queue_name] = clazz
     if is_test_queue:
         test_queues.add(queue_name)
 
-
-def get_worker(queue_name: str) -> "QueueProcessingWorker":
+def get_worker(queue_name: str) -> 'QueueProcessingWorker':
     return worker_classes[queue_name]()
 
-
-def get_active_worker_queues(only_test_queues: bool = False) -> List[str]:
+def get_active_worker_queues(only_test_queues: bool=False) -> List[str]:
     """Returns all (either test, or real) worker queues."""
-    return [
-        queue_name
-        for queue_name in worker_classes.keys()
-        if bool(queue_name in test_queues) == only_test_queues
-    ]
-
+    return [queue_name for queue_name in worker_classes.keys()
+            if bool(queue_name in test_queues) == only_test_queues]
 
 def check_and_send_restart_signal() -> None:
     try:
@@ -168,35 +150,27 @@ def check_and_send_restart_signal() -> None:
     except Exception:
         pass
 
-
 def retry_send_email_failures(
-    func: Callable[[ConcreteQueueWorker, Dict[str, Any]], None],
+        func: Callable[[ConcreteQueueWorker, Dict[str, Any]], None],
 ) -> Callable[[ConcreteQueueWorker, Dict[str, Any]], None]:
+
     @wraps(func)
     def wrapper(worker: ConcreteQueueWorker, data: Dict[str, Any]) -> None:
         try:
             func(worker, data)
-        except (
-            smtplib.SMTPServerDisconnected,
-            socket.gaierror,
-            socket.timeout,
-            EmailNotDeliveredException,
-        ) as e:
+        except (smtplib.SMTPServerDisconnected, socket.gaierror, socket.timeout,
+                EmailNotDeliveredException) as e:
             error_class_name = e.__class__.__name__
 
             def on_failure(event: Dict[str, Any]) -> None:
-                logging.exception(
-                    "Event %r failed due to exception %s", event, error_class_name, stack_info=True
-                )
+                logging.exception("Event %r failed due to exception %s", event, error_class_name, stack_info=True)
 
             retry_event(worker.queue_name, data, on_failure)
 
     return wrapper
 
-
 def timer_expired(limit: int, event_count: int, signal: int, frame: FrameType) -> None:
     raise WorkerTimeoutException(limit, event_count)
-
 
 class QueueProcessingWorker(ABC):
     queue_name: str
@@ -239,11 +213,11 @@ class QueueProcessingWorker(ABC):
 
         os.makedirs(settings.QUEUE_STATS_DIR, exist_ok=True)
 
-        fname = f"{self.queue_name}.stats"
+        fname = f'{self.queue_name}.stats'
         fn = os.path.join(settings.QUEUE_STATS_DIR, fname)
-        with lockfile(fn + ".lock"):
-            tmp_fn = fn + ".tmp"
-            with open(tmp_fn, "wb") as f:
+        with lockfile(fn + '.lock'):
+            tmp_fn = fn + '.tmp'
+            with open(tmp_fn, 'wb') as f:
                 f.write(
                     orjson.dumps(stats_dict, option=orjson.OPT_APPEND_NEWLINE | orjson.OPT_INDENT_2)
                 )
@@ -263,15 +237,14 @@ class QueueProcessingWorker(ABC):
     def consume(self, data: Dict[str, Any]) -> None:
         pass
 
-    def do_consume(
-        self, consume_func: Callable[[List[Dict[str, Any]]], None], events: List[Dict[str, Any]]
-    ) -> None:
+    def do_consume(self, consume_func: Callable[[List[Dict[str, Any]]], None],
+                   events: List[Dict[str, Any]]) -> None:
         consume_time_seconds: Optional[float] = None
         with configure_scope() as scope:
             scope.clear_breadcrumbs()
             add_breadcrumb(
-                type="debug",
-                category="queue_processor",
+                type='debug',
+                category='queue_processor',
                 message=f"Consuming {self.queue_name}",
                 data={"events": events, "local_queue_size": self.get_remaining_local_queue_size()},
             )
@@ -324,11 +297,8 @@ class QueueProcessingWorker(ABC):
                 return
 
             self.consume_iteration_counter += 1
-            if (
-                self.consume_iteration_counter >= self.CONSUME_ITERATIONS_BEFORE_UPDATE_STATS_NUM
-                or time.time() - self.last_statistics_update_time
-                >= self.MAX_SECONDS_BEFORE_UPDATE_STATS
-            ):
+            if (self.consume_iteration_counter >= self.CONSUME_ITERATIONS_BEFORE_UPDATE_STATS_NUM
+                    or time.time() - self.last_statistics_update_time >= self.MAX_SECONDS_BEFORE_UPDATE_STATS):
                 self.consume_iteration_counter = 0
                 self.update_statistics(remaining_local_queue_size)
 
@@ -338,33 +308,27 @@ class QueueProcessingWorker(ABC):
 
     def _handle_consume_exception(self, events: List[Dict[str, Any]], exception: Exception) -> None:
         with configure_scope() as scope:
-            scope.set_context(
-                "events",
-                {
-                    "data": events,
-                    "queue_name": self.queue_name,
-                },
-            )
+            scope.set_context("events", {
+                "data": events,
+                "queue_name": self.queue_name,
+            })
             if isinstance(exception, WorkerTimeoutException):
                 with sentry_sdk.push_scope() as scope:
-                    scope.fingerprint = ["worker-timeout", self.queue_name]
-                    logging.exception(
-                        "%s in queue %s", str(exception), self.queue_name, stack_info=True
-                    )
+                    scope.fingerprint = ['worker-timeout', self.queue_name]
+                    logging.exception("%s in queue %s",
+                                      str(exception), self.queue_name, stack_info=True)
             else:
-                logging.exception(
-                    "Problem handling data on queue %s", self.queue_name, stack_info=True
-                )
+                logging.exception("Problem handling data on queue %s", self.queue_name, stack_info=True)
         if not os.path.exists(settings.QUEUE_ERROR_DIR):
             os.mkdir(settings.QUEUE_ERROR_DIR)  # nocoverage
         # Use 'mark_sanitized' to prevent Pysa from detecting this false positive
         # flow. 'queue_name' is always a constant string.
-        fname = mark_sanitized(f"{self.queue_name}.errors")
+        fname = mark_sanitized(f'{self.queue_name}.errors')
         fn = os.path.join(settings.QUEUE_ERROR_DIR, fname)
-        line = f"{time.asctime()}\t{orjson.dumps(events).decode()}\n"
-        lock_fn = fn + ".lock"
+        line = f'{time.asctime()}\t{orjson.dumps(events).decode()}\n'
+        lock_fn = fn + '.lock'
         with lockfile(lock_fn):
-            with open(fn, "a") as f:
+            with open(fn, 'a') as f:
                 f.write(line)
         check_and_send_restart_signal()
 
@@ -382,7 +346,6 @@ class QueueProcessingWorker(ABC):
     def stop(self) -> None:  # nocoverage
         assert self.q is not None
         self.q.stop_consuming()
-
 
 class LoopQueueProcessingWorker(QueueProcessingWorker):
     sleep_delay = 1
@@ -406,8 +369,7 @@ class LoopQueueProcessingWorker(QueueProcessingWorker):
         """In LoopQueueProcessingWorker, consume is used just for automated tests"""
         self.consume_batch([event])
 
-
-@assign_queue("invites")
+@assign_queue('invites')
 class ConfirmationEmailWorker(QueueProcessingWorker):
     def consume(self, data: Mapping[str, Any]) -> None:
         if "email" in data:
@@ -425,9 +387,7 @@ class ConfirmationEmailWorker(QueueProcessingWorker):
                 return
 
         referrer = get_user_profile_by_id(data["referrer_id"])
-        logger.info(
-            "Sending invitation for realm %s to %s", referrer.realm.string_id, invitee.email
-        )
+        logger.info("Sending invitation for realm %s to %s", referrer.realm.string_id, invitee.email)
         activate_url = do_send_confirmation_email(invitee, referrer)
 
         # queue invitation reminder
@@ -446,11 +406,9 @@ class ConfirmationEmailWorker(QueueProcessingWorker):
                 from_address=FromAddress.tokenized_no_reply_placeholder,
                 language=referrer.realm.default_language,
                 context=context,
-                delay=datetime.timedelta(days=settings.INVITATION_LINK_VALIDITY_DAYS - 2),
-            )
+                delay=datetime.timedelta(days=settings.INVITATION_LINK_VALIDITY_DAYS - 2))
 
-
-@assign_queue("user_activity")
+@assign_queue('user_activity')
 class UserActivityWorker(LoopQueueProcessingWorker):
     """The UserActivity queue is perhaps our highest-traffic queue, and
     requires some care to ensure it performs adequately.
@@ -469,7 +427,6 @@ class UserActivityWorker(LoopQueueProcessingWorker):
       common events from doing an action multiple times.
 
     """
-
     client_id_map: Dict[str, int] = {}
 
     def start(self) -> None:
@@ -499,10 +456,10 @@ class UserActivityWorker(LoopQueueProcessingWorker):
 
             key_tuple = (user_profile_id, client_id, event["query"])
             if key_tuple not in uncommitted_events:
-                uncommitted_events[key_tuple] = (1, event["time"])
+                uncommitted_events[key_tuple] = (1, event['time'])
             else:
                 count, time = uncommitted_events[key_tuple]
-                uncommitted_events[key_tuple] = (count + 1, max(time, event["time"]))
+                uncommitted_events[key_tuple] = (count + 1, max(time, event['time']))
 
         # Then we insert the updates into the database.
         #
@@ -515,16 +472,14 @@ class UserActivityWorker(LoopQueueProcessingWorker):
             log_time = timestamp_to_datetime(time)
             do_update_user_activity(user_profile_id, client_id, query, count, log_time)
 
-
-@assign_queue("user_activity_interval")
+@assign_queue('user_activity_interval')
 class UserActivityIntervalWorker(QueueProcessingWorker):
     def consume(self, event: Mapping[str, Any]) -> None:
         user_profile = get_user_profile_by_id(event["user_profile_id"])
         log_time = timestamp_to_datetime(event["time"])
         do_update_user_activity_interval(user_profile, log_time)
 
-
-@assign_queue("user_presence")
+@assign_queue('user_presence')
 class UserPresenceWorker(QueueProcessingWorker):
     def consume(self, event: Mapping[str, Any]) -> None:
         logging.debug("Received presence event: %s", event)
@@ -534,8 +489,7 @@ class UserPresenceWorker(QueueProcessingWorker):
         status = event["status"]
         do_update_user_presence(user_profile, client, log_time, status)
 
-
-@assign_queue("missedmessage_emails")
+@assign_queue('missedmessage_emails')
 class MissedMessageWorker(QueueProcessingWorker):
     # Aggregate all messages received over the last BATCH_DURATION
     # seconds to let someone finish sending a batch of messages and/or
@@ -566,7 +520,7 @@ class MissedMessageWorker(QueueProcessingWorker):
             logging.debug("Received missedmessage_emails event: %s", event)
 
             # When we process an event, just put it into the queue and ensure we have a timer going.
-            user_profile_id = event["user_profile_id"]
+            user_profile_id = event['user_profile_id']
             if user_profile_id not in self.batch_start_by_recipient:
                 self.batch_start_by_recipient[user_profile_id] = time.time()
             self.events_by_recipient[user_profile_id].append(event)
@@ -578,9 +532,8 @@ class MissedMessageWorker(QueueProcessingWorker):
         if self.timer_event is not None:
             return
 
-        self.timer_event = Timer(
-            self.TIMER_FREQUENCY, MissedMessageWorker.maybe_send_batched_emails, [self]
-        )
+        self.timer_event = Timer(self.TIMER_FREQUENCY, MissedMessageWorker.maybe_send_batched_emails,
+                                 [self])
         self.timer_event.start()
 
     def maybe_send_batched_emails(self) -> None:
@@ -596,11 +549,8 @@ class MissedMessageWorker(QueueProcessingWorker):
                 if current_time - timestamp < self.BATCH_DURATION:
                     continue
                 events = self.events_by_recipient[user_profile_id]
-                logging.info(
-                    "Batch-processing %s missedmessage_emails events for user %s",
-                    len(events),
-                    user_profile_id,
-                )
+                logging.info("Batch-processing %s missedmessage_emails events for user %s",
+                             len(events), user_profile_id)
                 handle_missedmessage_emails(user_profile_id, events)
                 del self.events_by_recipient[user_profile_id]
                 del self.batch_start_by_recipient[user_profile_id]
@@ -612,8 +562,7 @@ class MissedMessageWorker(QueueProcessingWorker):
             if len(self.batch_start_by_recipient) > 0:
                 self.ensure_timer()
 
-
-@assign_queue("email_senders")
+@assign_queue('email_senders')
 class EmailSendingWorker(QueueProcessingWorker):
     @retry_send_email_failures
     def consume(self, event: Dict[str, Any]) -> None:
@@ -621,13 +570,12 @@ class EmailSendingWorker(QueueProcessingWorker):
         # data to send_email_from_dict (which neither takes that
         # argument nor needs that data).
         copied_event = copy.deepcopy(event)
-        if "failed_tries" in copied_event:
-            del copied_event["failed_tries"]
+        if 'failed_tries' in copied_event:
+            del copied_event['failed_tries']
         handle_send_email_format_changes(copied_event)
         send_email_from_dict(copied_event)
 
-
-@assign_queue("missedmessage_mobile_notifications")
+@assign_queue('missedmessage_mobile_notifications')
 class PushNotificationsWorker(QueueProcessingWorker):  # nocoverage
     def start(self) -> None:
         # initialize_push_notifications doesn't strictly do anything
@@ -639,34 +587,27 @@ class PushNotificationsWorker(QueueProcessingWorker):  # nocoverage
     def consume(self, event: Dict[str, Any]) -> None:
         try:
             if event.get("type", "add") == "remove":
-                message_ids = event.get("message_ids")
+                message_ids = event.get('message_ids')
                 if message_ids is None:  # legacy task across an upgrade
-                    message_ids = [event["message_id"]]
-                handle_remove_push_notification(event["user_profile_id"], message_ids)
+                    message_ids = [event['message_id']]
+                handle_remove_push_notification(event['user_profile_id'], message_ids)
             else:
-                handle_push_notification(event["user_profile_id"], event)
+                handle_push_notification(event['user_profile_id'], event)
         except PushNotificationBouncerRetryLaterError:
-
             def failure_processor(event: Dict[str, Any]) -> None:
                 logger.warning(
                     "Maximum retries exceeded for trigger:%s event:push_notification",
-                    event["user_profile_id"],
-                )
-
+                    event['user_profile_id'])
             retry_event(self.queue_name, event, failure_processor)
 
-
-@assign_queue("error_reports")
+@assign_queue('error_reports')
 class ErrorReporter(QueueProcessingWorker):
     def consume(self, event: Mapping[str, Any]) -> None:
-        logging.info(
-            "Processing traceback with type %s for %s", event["type"], event.get("user_email")
-        )
+        logging.info("Processing traceback with type %s for %s", event['type'], event.get('user_email'))
         if settings.ERROR_REPORTING:
-            do_report_error(event["type"], event["report"])
+            do_report_error(event['type'], event['report'])
 
-
-@assign_queue("digest_emails")
+@assign_queue('digest_emails')
 class DigestWorker(QueueProcessingWorker):  # nocoverage
     # Who gets a digest is entirely determined by the enqueue_digest_emails
     # management command, not here.
@@ -678,11 +619,10 @@ class DigestWorker(QueueProcessingWorker):  # nocoverage
             user_ids = [event["user_profile_id"]]
         bulk_handle_digest_email(user_ids, event["cutoff"])
 
-
-@assign_queue("email_mirror")
+@assign_queue('email_mirror')
 class MirrorWorker(QueueProcessingWorker):
     def consume(self, event: Mapping[str, Any]) -> None:
-        rcpt_to = event["rcpt_to"]
+        rcpt_to = event['rcpt_to']
         msg = email.message_from_bytes(
             base64.b64decode(event["msg_base64"]),
             policy=email.policy.default,
@@ -695,76 +635,75 @@ class MirrorWorker(QueueProcessingWorker):
             try:
                 rate_limit_mirror_by_realm(recipient_realm)
             except RateLimited:
-                logger.warning(
-                    "MirrorWorker: Rejecting an email from: %s to realm: %s - rate limited.",
-                    msg["From"],
-                    recipient_realm.name,
-                )
+                logger.warning("MirrorWorker: Rejecting an email from: %s to realm: %s - rate limited.",
+                               msg['From'], recipient_realm.name)
                 return
 
         mirror_email(msg, rcpt_to=rcpt_to)
 
-
-@assign_queue("embed_links")
+@assign_queue('embed_links')
 class FetchLinksEmbedData(QueueProcessingWorker):
     # This is a slow queue with network requests, so a disk write is negligible.
     # Update stats file after every consume call.
     CONSUME_ITERATIONS_BEFORE_UPDATE_STATS_NUM = 1
 
     def consume(self, event: Mapping[str, Any]) -> None:
-        for url in event["urls"]:
+        for url in event['urls']:
             start_time = time.time()
             url_preview.get_link_embed_data(url)
-            logging.info(
-                "Time spent on get_link_embed_data for %s: %s", url, time.time() - start_time
-            )
+            logging.info("Time spent on get_link_embed_data for %s: %s", url, time.time() - start_time)
 
-        message = Message.objects.get(id=event["message_id"])
+        message = Message.objects.get(id=event['message_id'])
         # If the message changed, we will run this task after updating the message
         # in zerver.views.message_edit.update_message_backend
-        if message.content != event["message_content"]:
+        if message.content != event['message_content']:
             return
         if message.content is not None:
             query = UserMessage.objects.filter(
                 message=message.id,
             )
-            message_user_ids = set(query.values_list("user_profile_id", flat=True))
+            message_user_ids = set(query.values_list('user_profile_id', flat=True))
 
             # Fetch the realm whose settings we're using for rendering
-            realm = Realm.objects.get(id=event["message_realm_id"])
+            realm = Realm.objects.get(id=event['message_realm_id'])
 
             # If rendering fails, the called code will raise a JsonableError.
             rendered_content = render_incoming_message(
-                message, message.content, message_user_ids, realm
-            )
-            do_update_embedded_data(message.sender, message, message.content, rendered_content)
+                message,
+                message.content,
+                message_user_ids,
+                realm)
+            do_update_embedded_data(
+                message.sender, message, message.content, rendered_content)
 
-
-@assign_queue("outgoing_webhooks")
+@assign_queue('outgoing_webhooks')
 class OutgoingWebhookWorker(QueueProcessingWorker):
     def consume(self, event: Dict[str, Any]) -> None:
-        message = event["message"]
-        event["command"] = message["content"]
+        message = event['message']
+        event['command'] = message['content']
 
-        services = get_bot_services(event["user_profile_id"])
+        services = get_bot_services(event['user_profile_id'])
         for service in services:
-            event["service_name"] = str(service.name)
+            event['service_name'] = str(service.name)
             service_handler = get_outgoing_webhook_service_handler(service)
             request_data = service_handler.build_bot_request(event)
             if request_data:
-                do_rest_call(service.base_url, request_data, event, service_handler)
+                do_rest_call(service.base_url,
+                             request_data,
+                             event,
+                             service_handler)
 
-
-@assign_queue("embedded_bots")
+@assign_queue('embedded_bots')
 class EmbeddedBotWorker(QueueProcessingWorker):
+
     def get_bot_api_client(self, user_profile: UserProfile) -> EmbeddedBotHandler:
         return EmbeddedBotHandler(user_profile)
 
     def consume(self, event: Mapping[str, Any]) -> None:
-        user_profile_id = event["user_profile_id"]
+        user_profile_id = event['user_profile_id']
         user_profile = get_user_profile_by_id(user_profile_id)
 
-        message: Dict[str, Any] = event["message"]
+        message: Dict[str, Any] = event['message']
 
         # TODO: Do we actually want to allow multiple Services per bot user?
         services = get_bot_services(user_profile_id)
@@ -773,19 +712,18 @@ class EmbeddedBotWorker(QueueProcessingWorker):
             if bot_handler is None:
                 logging.error(
                     "Error: User %s has bot with invalid embedded bot service %s",
-                    user_profile_id,
-                    service.name,
+                    user_profile_id, service.name,
                 )
                 continue
             try:
-                if hasattr(bot_handler, "initialize"):
+                if hasattr(bot_handler, 'initialize'):
                     bot_handler.initialize(self.get_bot_api_client(user_profile))
-                if event["trigger"] == "mention":
-                    message["content"] = extract_query_without_mention(
+                if event['trigger'] == 'mention':
+                    message['content'] = extract_query_without_mention(
                         message=message,
                         client=cast(ExternalBotHandler, self.get_bot_api_client(user_profile)),
                     )
-                    assert message["content"] is not None
+                    assert message['content'] is not None
                 bot_handler.handle_message(
                     message=message,
                     bot_handler=self.get_bot_api_client(user_profile),
@@ -793,8 +731,7 @@ class EmbeddedBotWorker(QueueProcessingWorker):
             except EmbeddedBotQuitException as e:
                 logging.warning(str(e))
 
-
-@assign_queue("deferred_work")
+@assign_queue('deferred_work')
 class DeferredWorker(QueueProcessingWorker):
     """This queue processor is intended for cases where we want to trigger a
     potentially expensive, not urgent, job to be run on a separate
@@ -802,70 +739,56 @@ class DeferredWorker(QueueProcessingWorker):
     can provide a low-latency HTTP response or avoid risk of request
     timeouts for an operation that could in rare cases take minutes).
     """
-
     # Because these operations have no SLO, and can take minutes,
     # remove any processing timeouts
     MAX_CONSUME_SECONDS = None
 
     def consume(self, event: Dict[str, Any]) -> None:
         start = time.time()
-        if event["type"] == "mark_stream_messages_as_read":
-            user_profile = get_user_profile_by_id(event["user_profile_id"])
+        if event['type'] == 'mark_stream_messages_as_read':
+            user_profile = get_user_profile_by_id(event['user_profile_id'])
 
-            for recipient_id in event["stream_recipient_ids"]:
+            for recipient_id in event['stream_recipient_ids']:
                 do_mark_stream_messages_as_read(user_profile, recipient_id)
-        elif event["type"] == "mark_stream_messages_as_read_for_everyone":
+        elif event["type"] == 'mark_stream_messages_as_read_for_everyone':
             # This event is generated by the stream deactivation code path.
             batch_size = 100
             offset = 0
             while True:
-                messages = Message.objects.filter(
-                    recipient_id=event["stream_recipient_id"]
-                ).order_by("id")[offset : offset + batch_size]
-                UserMessage.objects.filter(message__in=messages).extra(
-                    where=[UserMessage.where_unread()]
-                ).update(flags=F("flags").bitor(UserMessage.flags.read))
+                messages = Message.objects.filter(recipient_id=event["stream_recipient_id"]) \
+                    .order_by("id")[offset:offset + batch_size]
+                UserMessage.objects.filter(message__in=messages).extra(where=[UserMessage.where_unread()]) \
+                    .update(flags=F('flags').bitor(UserMessage.flags.read))
                 offset += len(messages)
                 if len(messages) < batch_size:
                     break
-        elif event["type"] == "clear_push_device_tokens":
+        elif event['type'] == 'clear_push_device_tokens':
             try:
                 clear_push_device_tokens(event["user_profile_id"])
             except PushNotificationBouncerRetryLaterError:
-
                 def failure_processor(event: Dict[str, Any]) -> None:
                     logger.warning(
                         "Maximum retries exceeded for trigger:%s event:clear_push_device_tokens",
-                        event["user_profile_id"],
-                    )
-
+                        event['user_profile_id'])
                 retry_event(self.queue_name, event, failure_processor)
-        elif event["type"] == "realm_export":
-            realm = Realm.objects.get(id=event["realm_id"])
+        elif event['type'] == 'realm_export':
+            realm = Realm.objects.get(id=event['realm_id'])
             output_dir = tempfile.mkdtemp(prefix="zulip-export-")
-            export_event = RealmAuditLog.objects.get(id=event["id"])
-            user_profile = get_user_profile_by_id(event["user_profile_id"])
+            export_event = RealmAuditLog.objects.get(id=event['id'])
+            user_profile = get_user_profile_by_id(event['user_profile_id'])
 
             try:
-                public_url = export_realm_wrapper(
-                    realm=realm,
-                    output_dir=output_dir,
-                    threads=6,
-                    upload=True,
-                    public_only=True,
-                    delete_after_upload=True,
-                )
+                public_url = export_realm_wrapper(realm=realm, output_dir=output_dir,
+                                                  threads=6, upload=True, public_only=True,
+                                                  delete_after_upload=True)
             except Exception:
-                export_event.extra_data = orjson.dumps(
-                    dict(
-                        failed_timestamp=timezone_now().timestamp(),
-                    )
-                ).decode()
-                export_event.save(update_fields=["extra_data"])
+                export_event.extra_data = orjson.dumps(dict(
+                    failed_timestamp=timezone_now().timestamp(),
+                )).decode()
+                export_event.save(update_fields=['extra_data'])
                 logging.error(
                     "Data export for %s failed after %s",
-                    user_profile.realm.string_id,
-                    time.time() - start,
+                    user_profile.realm.string_id, time.time() - start,
                 )
                 notify_realm_export(user_profile)
                 return
@@ -873,19 +796,15 @@ class DeferredWorker(QueueProcessingWorker):
             assert public_url is not None
 
             # Update the extra_data field now that the export is complete.
-            export_event.extra_data = orjson.dumps(
-                dict(
-                    export_path=urllib.parse.urlparse(public_url).path,
-                )
-            ).decode()
-            export_event.save(update_fields=["extra_data"])
+            export_event.extra_data = orjson.dumps(dict(
+                export_path=urllib.parse.urlparse(public_url).path,
+            )).decode()
+            export_event.save(update_fields=['extra_data'])
 
             # Send a private message notification letting the user who
             # triggered the export know the export finished.
             with override_language(user_profile.default_language):
-                content = _(
-                    "Your data export is complete and has been uploaded here:\n\n{public_url}"
-                ).format(public_url=public_url)
+                content = _("Your data export is complete and has been uploaded here:\n\n{public_url}").format(public_url=public_url)
             internal_send_private_message(
                 realm=user_profile.realm,
                 sender=get_system_bot(settings.NOTIFICATION_BOT),
@@ -898,15 +817,14 @@ class DeferredWorker(QueueProcessingWorker):
             notify_realm_export(user_profile)
             logging.info(
                 "Completed data export for %s in %s",
-                user_profile.realm.string_id,
-                time.time() - start,
+                user_profile.realm.string_id, time.time() - start,
             )
 
         end = time.time()
-        logger.info("deferred_work processed %s event (%dms)", event["type"], (end - start) * 1000)
+        logger.info("deferred_work processed %s event (%dms)", event['type'],
+                    (end-start)*1000)
 
-
-@assign_queue("test", is_test_queue=True)
+@assign_queue('test', is_test_queue=True)
 class TestWorker(QueueProcessingWorker):
     # This worker allows you to test the queue worker infrastructure without
     # creating significant side effects.  It can be useful in development or
@@ -916,15 +834,14 @@ class TestWorker(QueueProcessingWorker):
         fn = settings.ZULIP_WORKER_TEST_FILE
         message = orjson.dumps(event)
         logging.info("TestWorker should append this message to %s: %s", fn, message.decode())
-        with open(fn, "ab") as f:
-            f.write(message + b"\n")
+        with open(fn, 'ab') as f:
+            f.write(message + b'\n')
 
-
-@assign_queue("noop", is_test_queue=True)
+@assign_queue('noop', is_test_queue=True)
 class NoopWorker(QueueProcessingWorker):
     """Used to profile the queue processing framework, in zilencer's queue_rate."""
 
-    def __init__(self, max_consume: int = 1000, slow_queries: Optional[List[int]] = None) -> None:
+    def __init__(self, max_consume: int=1000, slow_queries: Optional[List[int]]=None) -> None:
         self.consumed = 0
         self.max_consume = max_consume
         self.slow_queries: Set[int] = set(slow_queries or [])
@@ -938,14 +855,12 @@ class NoopWorker(QueueProcessingWorker):
         if self.consumed >= self.max_consume:
             self.stop()
 
-
-@assign_queue("noop_batch", is_test_queue=True)
+@assign_queue('noop_batch', is_test_queue=True)
 class BatchNoopWorker(LoopQueueProcessingWorker):
     """Used to profile the queue processing framework, in zilencer's queue_rate."""
-
     batch_size = 500
 
-    def __init__(self, max_consume: int = 1000, slow_queries: Optional[List[int]] = None) -> None:
+    def __init__(self, max_consume: int=1000, slow_queries: Optional[List[int]]=None) -> None:
         self.consumed = 0
         self.max_consume = max_consume
         self.slow_queries: Set[int] = set(slow_queries or [])
