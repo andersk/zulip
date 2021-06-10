@@ -1,9 +1,6 @@
 import $ from "jquery";
 import _ from "lodash";
 
-import render_confirm_mute_user from "../templates/confirm_mute_user.hbs";
-import render_topic_muted from "../templates/topic_muted.hbs";
-
 import * as activity from "./activity";
 import * as channel from "./channel";
 import * as confirm_dialog from "./confirm_dialog";

@@ -9,10 +9,10 @@ export class UserSearch {
     // above the buddy list.  We rely on other code to manage the
     // details of populating the list when we change.
 
-    $widget = $("#user_search_section").expectOne();
-    $input = $(".user-list-filter").expectOne();
-
     constructor(opts) {
+        this.$widget = $("#user_search_section").expectOne();
+        this.$input = $(".user-list-filter").expectOne();
+
         this._reset_items = opts.reset_items;
         this._update_list = opts.update_list;
         this._on_focus = opts.on_focus;

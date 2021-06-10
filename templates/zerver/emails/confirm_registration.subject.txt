@@ -1,5 +1,0 @@
-{% if create_realm %}
-{{ _("Create your Zulip organization") }}
-{% else %}
-{{ _("Activate your Zulip account") }}
-{% endif %}

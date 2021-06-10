@@ -36,7 +36,7 @@ export function $t_html(descriptor, values) {
     return intl.formatMessage(descriptor, {
         ...default_html_elements,
         ...Object.fromEntries(
-            Object.entries(values ?? {}).map(([key, value]) => [
+            Object.entries(values != null ? values : {}).map(([key, value]) => [
                 key,
                 typeof value === "function" ? value : _.escape(value),
             ]),

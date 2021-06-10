@@ -83,13 +83,15 @@ Handlebars.registerHelper("tr", function (options) {
     const result = intl.formatMessage(descriptor, {
         ...default_html_elements,
         ...Object.fromEntries(
-            Object.entries(options.fn.partials ?? {}).map(([name, value]) => [
-                name,
-                (s) => value(this, {data: {"partial-block": () => s.join("")}}),
-            ]),
+            Object.entries(options.fn.partials != null ? options.fn.partials : {}).map(
+                ([name, value]) => [
+                    name,
+                    (s) => value(this, {data: {"partial-block": () => s.join("")}}),
+                ],
+            ),
         ),
         ...Object.fromEntries(
-            Object.entries(this ?? {}).map(([key, value]) => [
+            Object.entries(this != null ? this : {}).map(([key, value]) => [
                 key,
                 Handlebars.Utils.escapeExpression(value),
             ]),

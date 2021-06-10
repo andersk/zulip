@@ -1,7 +1,5 @@
 import $ from "jquery";
 
-import render_admin_playground_list from "../templates/settings/admin_playground_list.hbs";
-
 import * as channel from "./channel";
 import {$t_html} from "./i18n";
 import * as ListWidget from "./list_widget";

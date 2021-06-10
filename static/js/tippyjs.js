@@ -1,8 +1,6 @@
 import $ from "jquery";
 import tippy, {delegate} from "tippy.js";
 
-import render_left_sidebar_stream_setting_popover from "../templates/left_sidebar_stream_setting_popover.hbs";
-
 import * as reactions from "./reactions";
 import * as rows from "./rows";
 import * as settings_data from "./settings_data";

@@ -1,8 +1,6 @@
 import {format, isSameDay} from "date-fns";
 import $ from "jquery";
 
-import render_message_edit_history from "../templates/message_edit_history.hbs";
-
 import * as channel from "./channel";
 import {$t_html} from "./i18n";
 import * as people from "./people";

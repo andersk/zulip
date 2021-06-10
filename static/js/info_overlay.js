@@ -1,7 +1,5 @@
 import $ from "jquery";
 
-import render_markdown_help from "../templates/markdown_help.hbs";
-
 import * as browser_history from "./browser_history";
 import * as common from "./common";
 import * as components from "./components";

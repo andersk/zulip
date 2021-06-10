@@ -1,8 +1,5 @@
 import $ from "jquery";
 
-import render_admin_linkifier_edit_form from "../templates/settings/admin_linkifier_edit_form.hbs";
-import render_admin_linkifier_list from "../templates/settings/admin_linkifier_list.hbs";
-
 import * as channel from "./channel";
 import {$t_html} from "./i18n";
 import * as ListWidget from "./list_widget";

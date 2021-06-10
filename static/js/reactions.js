@@ -2,7 +2,6 @@ import $ from "jquery";
 import _ from "lodash";
 
 import * as emoji from "../shared/js/emoji";
-import render_message_reaction from "../templates/message_reaction.hbs";
 
 import * as blueslip from "./blueslip";
 import * as channel from "./channel";

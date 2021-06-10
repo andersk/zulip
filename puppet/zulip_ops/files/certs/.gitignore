@@ -1,2 +1,0 @@
-# Don't check SSL private keys into git!
-*.key

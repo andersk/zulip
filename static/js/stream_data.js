@@ -31,10 +31,10 @@ class BinaryDict {
             - autocomplete stream in compose
     */
 
-    trues = new FoldDict();
-    falses = new FoldDict();
-
     constructor(pred) {
+        this.trues = new FoldDict();
+        this.falses = new FoldDict();
+
         this.pred = pred;
     }
 

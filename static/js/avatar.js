@@ -1,7 +1,5 @@
 import $ from "jquery";
 
-import render_confirm_delete_user_avatar from "../templates/confirm_delete_user_avatar.hbs";
-
 import * as channel from "./channel";
 import * as confirm_dialog from "./confirm_dialog";
 import {$t_html} from "./i18n";

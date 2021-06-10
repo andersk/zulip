@@ -33,13 +33,13 @@ function report_send_time(send_time, receive_time, locally_echoed, rendered_chan
 }
 
 export class MessageState {
-    start = new Date();
-
-    received = undefined;
-    send_finished = undefined;
-    rendered_content_disparity = false;
-
     constructor(opts) {
+        this.start = new Date();
+
+        this.received = undefined;
+        this.send_finished = undefined;
+        this.rendered_content_disparity = false;
+
         this.local_id = opts.local_id;
         this.locally_echoed = opts.locally_echoed;
     }

@@ -1,8 +1,6 @@
 import $ from "jquery";
 import _ from "lodash";
 
-import render_compose_notification from "../templates/compose_notification.hbs";
-
 import * as alert_words from "./alert_words";
 import * as blueslip from "./blueslip";
 import * as channel from "./channel";

@@ -1,8 +1,5 @@
 import $ from "jquery";
 
-import render_confirm_unstar_all_messages from "../templates/confirm_unstar_all_messages.hbs";
-import render_confirm_unstar_all_messages_in_topic from "../templates/confirm_unstar_all_messages_in_topic.hbs";
-
 import * as confirm_dialog from "./confirm_dialog";
 import {$t_html} from "./i18n";
 import * as message_flags from "./message_flags";

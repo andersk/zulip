@@ -1,13 +1,6 @@
 import $ from "jquery";
 import _ from "lodash";
 
-import render_compose from "../templates/compose.hbs";
-import render_compose_all_everyone from "../templates/compose_all_everyone.hbs";
-import render_compose_announce from "../templates/compose_announce.hbs";
-import render_compose_invite_users from "../templates/compose_invite_users.hbs";
-import render_compose_not_subscribed from "../templates/compose_not_subscribed.hbs";
-import render_compose_private_stream_alert from "../templates/compose_private_stream_alert.hbs";
-
 import * as blueslip from "./blueslip";
 import * as channel from "./channel";
 import * as common from "./common";

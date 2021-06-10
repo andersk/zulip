@@ -1,9 +1,6 @@
 import $ from "jquery";
 import {Sortable} from "sortablejs";
 
-import render_admin_profile_field_list from "../templates/settings/admin_profile_field_list.hbs";
-import render_settings_profile_field_choice from "../templates/settings/profile_field_choice.hbs";
-
 import * as channel from "./channel";
 import * as loading from "./loading";
 import {page_params} from "./page_params";

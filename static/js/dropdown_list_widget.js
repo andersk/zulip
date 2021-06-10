@@ -1,7 +1,5 @@
 import $ from "jquery";
 
-import render_dropdown_list from "../templates/settings/dropdown_list.hbs";
-
 import * as blueslip from "./blueslip";
 import * as ListWidget from "./list_widget";
 

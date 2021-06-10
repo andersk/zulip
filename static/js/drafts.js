@@ -3,8 +3,6 @@ import Handlebars from "handlebars/runtime";
 import $ from "jquery";
 import tippy from "tippy.js";
 
-import render_draft_table_body from "../templates/draft_table_body.hbs";
-
 import * as blueslip from "./blueslip";
 import * as browser_history from "./browser_history";
 import * as color_class from "./color_class";

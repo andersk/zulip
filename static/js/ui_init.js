@@ -5,7 +5,6 @@ import generated_emoji_codes from "../generated/emoji/emoji_codes.json";
 import generated_pygments_data from "../generated/pygments_data.json";
 import * as emoji from "../shared/js/emoji";
 import * as fenced_code from "../shared/js/fenced_code";
-import render_edit_content_button from "../templates/edit_content_button.hbs";
 
 import * as activity from "./activity";
 import * as alert_words from "./alert_words";

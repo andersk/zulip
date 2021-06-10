@@ -1,8 +1,5 @@
 import $ from "jquery";
 
-import render_admin_tab from "../templates/settings/admin_tab.hbs";
-import render_settings_organization_settings_tip from "../templates/settings/organization_settings_tip.hbs";
-
 import {$t} from "./i18n";
 import * as overlays from "./overlays";
 import {page_params} from "./page_params";

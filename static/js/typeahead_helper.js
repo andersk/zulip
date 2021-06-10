@@ -3,7 +3,6 @@ import _ from "lodash";
 
 import pygments_data from "../generated/pygments_data.json";
 import * as typeahead from "../shared/js/typeahead";
-import render_typeahead_list_item from "../templates/typeahead_list_item.hbs";
 
 import * as buddy_data from "./buddy_data";
 import * as people from "./people";

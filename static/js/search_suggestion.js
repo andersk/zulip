@@ -570,10 +570,10 @@ function get_operator_suggestions(last) {
 }
 
 class Attacher {
-    result = [];
-    prev = new Set();
-
     constructor(base) {
+        this.result = [];
+        this.prev = new Set();
+
         this.base = base;
     }
 

@@ -1,7 +1,5 @@
 import $ from "jquery";
 
-import render_muted_topic_ui_row from "../templates/muted_topic_ui_row.hbs";
-
 import * as ListWidget from "./list_widget";
 import * as muting from "./muting";
 import * as muting_ui from "./muting_ui";

@@ -15,19 +15,21 @@ export class FetchStatus {
     // object has the complete history of the view or whether more
     // messages should be loaded when scrolling to the top or bottom
     // of the message feed.
-    _loading_older = false;
-    _loading_newer = false;
-    _found_oldest = false;
-    _found_newest = false;
-    _history_limited = false;
+    constructor() {
+        // Tracks the highest message ID that we know exist in this view,
+        // but are not within the contiguous range of messages we have
+        // received from the server.  Used to correctly handle a rare race
+        // condition where a newly sent message races with fetching a
+        // group of messages that would lead to found_newest being set
+        // (described in detail below).
+        this._expected_max_message_id = 0;
 
-    // Tracks the highest message ID that we know exist in this view,
-    // but are not within the contiguous range of messages we have
-    // received from the server.  Used to correctly handle a rare race
-    // condition where a newly sent message races with fetching a
-    // group of messages that would lead to found_newest being set
-    // (described in detail below).
-    _expected_max_message_id = 0;
+        this._loading_older = false;
+        this._loading_newer = false;
+        this._found_oldest = false;
+        this._found_newest = false;
+        this._history_limited = false;
+    }
 
     start_older_batch(opts) {
         this._loading_older = true;

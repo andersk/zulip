@@ -1,9 +1,6 @@
 import $ from "jquery";
 import _ from "lodash";
 
-import render_stream_privacy from "../templates/stream_privacy.hbs";
-import render_stream_sidebar_row from "../templates/stream_sidebar_row.hbs";
-
 import * as blueslip from "./blueslip";
 import * as color_class from "./color_class";
 import * as hash_util from "./hash_util";
@@ -44,7 +41,9 @@ export function update_count_in_dom(stream_li, count) {
 }
 
 class StreamSidebar {
-    rows = new Map(); // stream id -> row widget
+    constructor() {
+        this.rows = new Map(); // stream id -> row widget
+    }
 
     set_row(stream_id, widget) {
         this.rows.set(stream_id, widget);

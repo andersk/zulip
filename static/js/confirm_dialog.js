@@ -1,8 +1,5 @@
 import $ from "jquery";
 
-import render_confirm_dialog from "../templates/confirm_dialog.hbs";
-import render_confirm_dialog_heading from "../templates/confirm_dialog_heading.hbs";
-
 import * as blueslip from "./blueslip";
 import * as overlays from "./overlays";
 

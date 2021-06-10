@@ -214,22 +214,22 @@ const funcs = {
 };
 
 export class LightboxCanvas {
-    meta = {
-        direction: -1,
-        zoom: 1,
-        image: null,
-        coords: {
-            x: 0.5,
-            y: 0.5,
-        },
-        speed: 1,
-        // this is to normalize the speed to what I would consider to be
-        // "standard" zoom speed.
-        internalSpeedMultiplier: 0.05,
-        maxZoom: 10,
-    };
-
     constructor(el) {
+        this.meta = {
+            direction: -1,
+            zoom: 1,
+            image: null,
+            coords: {
+                x: 0.5,
+                y: 0.5,
+            },
+            speed: 1,
+            // this is to normalize the speed to what I would consider to be
+            // "standard" zoom speed.
+            internalSpeedMultiplier: 0.05,
+            maxZoom: 10,
+        };
+
         if (el instanceof Node) {
             this.canvas = el;
         } else if (typeof el === "string") {

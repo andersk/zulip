@@ -1,11 +1,6 @@
 import $ from "jquery";
 import _ from "lodash";
 
-import render_filter_topics from "../templates/filter_topics.hbs";
-import render_more_topics from "../templates/more_topics.hbs";
-import render_more_topics_spinner from "../templates/more_topics_spinner.hbs";
-import render_topic_list_item from "../templates/topic_list_item.hbs";
-
 import * as blueslip from "./blueslip";
 import * as narrow from "./narrow";
 import * as stream_popover from "./stream_popover";
@@ -128,9 +123,9 @@ function filter_topics_li() {
 }
 
 export class TopicListWidget {
-    prior_dom = undefined;
-
     constructor(parent_elem, my_stream_id) {
+        this.prior_dom = undefined;
+
         this.parent_elem = parent_elem;
         this.my_stream_id = my_stream_id;
         this.topic_search_text = "";

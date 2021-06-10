@@ -30,9 +30,9 @@ export const unread_mentions_counter = new Set();
 const unread_messages = new Set();
 
 class Bucketer {
-    reverse_lookup = new Map();
-
     constructor(options) {
+        this.reverse_lookup = new Map();
+
         this.key_to_bucket = new options.KeyDict();
         this.make_bucket = options.make_bucket;
     }
@@ -86,10 +86,12 @@ class Bucketer {
 }
 
 class UnreadPMCounter {
-    bucketer = new Bucketer({
-        KeyDict: Map,
-        make_bucket: () => new Set(),
-    });
+    constructor() {
+        this.bucketer = new Bucketer({
+            KeyDict: Map,
+            make_bucket: () => new Set(),
+        });
+    }
 
     clear() {
         this.bucketer.clear();
@@ -196,10 +198,12 @@ function make_per_stream_bucketer() {
 }
 
 class UnreadTopicCounter {
-    bucketer = new Bucketer({
-        KeyDict: Map, // bucket keys are stream_ids
-        make_bucket: make_per_stream_bucketer,
-    });
+    constructor() {
+        this.bucketer = new Bucketer({
+            KeyDict: Map, // bucket keys are stream_ids
+            make_bucket: make_per_stream_bucketer,
+        });
+    }
 
     clear() {
         this.bucketer.clear();

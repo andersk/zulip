@@ -1,14 +1,6 @@
 import {addDays} from "date-fns";
 import $ from "jquery";
 
-import render_bankruptcy_alert_content from "../templates/navbar_alerts/bankruptcy.hbs";
-import render_configure_email_alert_content from "../templates/navbar_alerts/configure_outgoing_email.hbs";
-import render_desktop_notifications_alert_content from "../templates/navbar_alerts/desktop_notifications.hbs";
-import render_insecure_desktop_app_alert_content from "../templates/navbar_alerts/insecure_desktop_app.hbs";
-import render_navbar_alert_wrapper from "../templates/navbar_alerts/navbar_alert_wrapper.hbs";
-import render_profile_incomplete_alert_content from "../templates/navbar_alerts/profile_incomplete.hbs";
-import render_server_needs_upgrade_alert_content from "../templates/navbar_alerts/server_needs_upgrade.hbs";
-
 import {localstorage} from "./localstorage";
 import * as notifications from "./notifications";
 import {page_params} from "./page_params";

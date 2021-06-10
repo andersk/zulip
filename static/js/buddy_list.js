@@ -1,8 +1,5 @@
 import $ from "jquery";
 
-import render_user_presence_row from "../templates/user_presence_row.hbs";
-import render_user_presence_rows from "../templates/user_presence_rows.hbs";
-
 import * as blueslip from "./blueslip";
 import * as buddy_data from "./buddy_data";
 import * as message_viewport from "./message_viewport";
@@ -10,10 +7,14 @@ import * as padded_widget from "./padded_widget";
 import * as ui from "./ui";
 
 class BuddyListConf {
-    container_sel = "#user_presences";
-    scroll_container_sel = "#buddy_list_wrapper";
-    item_sel = "li.user_sidebar_entry";
-    padding_sel = "#buddy_list_wrapper_padding";
+    constructor() {
+        this.container_sel = "#user_presences";
+        this.scroll_container_sel = "#buddy_list_wrapper";
+        this.item_sel = "li.user_sidebar_entry";
+        this.padding_sel = "#buddy_list_wrapper_padding";
+
+        this.compare_function = buddy_data.compare_function;
+    }
 
     items_to_html(opts) {
         const user_info = opts.items;
@@ -42,8 +43,6 @@ class BuddyListConf {
         return data;
     }
 
-    compare_function = buddy_data.compare_function;
-
     height_to_fill() {
         // Because the buddy list gets sized dynamically, we err on the side
         // of using the height of the entire viewport for deciding
@@ -56,7 +55,13 @@ class BuddyListConf {
 }
 
 export class BuddyList extends BuddyListConf {
-    keys = [];
+    constructor() {
+        this.keys = [];
+
+        // This is a bit of a hack to make sure we at least have
+        // an empty list to start, before we get the initial payload.
+        container = $(this.container_sel);
+    }
 
     populate(opts) {
         this.render_count = 0;
@@ -285,10 +290,6 @@ export class BuddyList extends BuddyListConf {
             });
         }
     }
-
-    // This is a bit of a hack to make sure we at least have
-    // an empty list to start, before we get the initial payload.
-    container = $(this.container_sel);
 
     start_scroll_handler() {
         // We have our caller explicitly call this to make

@@ -1,10 +1,6 @@
 import $ from "jquery";
 import _ from "lodash";
 
-import render_settings_api_key_modal from "../templates/settings/api_key_modal.hbs";
-import render_settings_custom_user_profile_field from "../templates/settings/custom_user_profile_field.hbs";
-import render_settings_dev_env_email_access from "../templates/settings/dev_env_email_access.hbs";
-
 import * as avatar from "./avatar";
 import * as blueslip from "./blueslip";
 import * as channel from "./channel";
@@ -395,7 +391,9 @@ export function set_up() {
             "#new_password + .password_visibility_toggle",
         );
         $("#old_password, #new_password").val("");
-        password_quality?.("", $("#pw_strength .bar"), $("#new_password"));
+        if (password_quality != null) {
+            password_quality("", $("#pw_strength .bar"), $("#new_password"));
+        }
     }
 
     clear_password_change();
@@ -481,7 +479,9 @@ export function set_up() {
 
     $("#new_password").on("input", () => {
         const field = $("#new_password");
-        password_quality?.(field.val(), $("#pw_strength .bar"), field);
+        if (password_quality != null) {
+            password_quality(field.val(), $("#pw_strength .bar"), field);
+        }
     });
 
     $("#change_full_name_button").on("click", (e) => {

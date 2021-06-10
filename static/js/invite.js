@@ -2,11 +2,6 @@ import autosize from "autosize";
 import ClipboardJS from "clipboard";
 import $ from "jquery";
 
-import copy_invite_link from "../templates/copy_invite_link.hbs";
-import render_invitation_failed_error from "../templates/invitation_failed_error.hbs";
-import render_invite_subscription from "../templates/invite_subscription.hbs";
-import render_settings_dev_env_email_access from "../templates/settings/dev_env_email_access.hbs";
-
 import * as browser_history from "./browser_history";
 import * as channel from "./channel";
 import * as common from "./common";

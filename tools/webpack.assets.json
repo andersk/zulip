@@ -1,10 +1,5 @@
 {
-    "activity": [
-        "./static/js/bundles/common",
-        "sorttable",
-        "./static/js/analytics/activity",
-        "./static/styles/portico/activity.css"
-    ],
+    "activity": ["./static/js/bundles/common", "sorttable", "./static/js/analytics/activity"],
     "archive": [
         "./static/js/bundles/portico",
         "./static/js/archive",
@@ -13,57 +8,34 @@
         "./static/js/timerender",
         "./static/js/templates",
         "./static/js/stream_color",
-        "./static/js/scroll_bar",
-        "katex/dist/katex.css",
-        "./static/styles/rendered_markdown.css",
-        "./static/styles/zulip.css",
-        "./static/styles/portico/archive.css",
-        "./static/generated/emoji-styles/google-sprite.css"
+        "./static/js/scroll_bar"
     ],
     "billing": [
         "./static/js/bundles/portico",
         "./static/js/portico/landing-page",
-        "./static/styles/portico/landing_page.css",
         "./static/js/billing/helpers",
         "./static/js/billing/billing",
         "./static/js/templates",
-        "./static/js/loading",
-        "./static/styles/portico/billing.css"
+        "./static/js/loading"
     ],
     "upgrade": [
         "./static/js/bundles/portico",
         "./static/js/portico/landing-page",
-        "./static/styles/portico/landing_page.css",
         "./static/js/billing/helpers",
         "./static/js/billing/upgrade",
         "./static/js/templates",
-        "./static/js/loading",
-        "./static/styles/portico/billing.css"
+        "./static/js/loading"
     ],
     "portico": ["./static/js/bundles/portico"],
-    "error-styles": [
-        "./static/third/bootstrap/css/bootstrap.css",
-        "./static/styles/portico/portico_styles.css"
-    ],
     "common": ["./static/js/bundles/common"],
     "help": [
         "./static/js/bundles/portico",
-        "simplebar/dist/simplebar.css",
         "simplebar",
         "./static/js/portico/help",
         "./static/js/portico/tabbed-instructions"
     ],
-    "landing-page": [
-        "./static/js/bundles/portico",
-        "./static/js/portico/landing-page",
-        "./static/styles/portico/landing_page.css"
-    ],
-    "integrations": [
-        "./static/js/bundles/portico",
-        "./static/js/portico/integrations",
-        "./static/styles/portico/landing_page.css",
-        "./static/styles/portico/integrations.css"
-    ],
+    "landing-page": ["./static/js/bundles/portico", "./static/js/portico/landing-page"],
+    "integrations": ["./static/js/bundles/portico", "./static/js/portico/integrations"],
     "signup": ["./static/js/bundles/portico", "jquery-validation", "./static/js/portico/signup"],
     "register": ["./static/js/bundles/portico", "jquery-validation", "./static/js/portico/signup"],
     "confirm-preregistrationuser": [
@@ -74,18 +46,11 @@
         "./static/js/bundles/common",
         "sorttable",
         "./static/js/analytics/activity",
-        "./static/styles/portico/activity.css",
-        "./static/js/analytics/support",
-        "./static/styles/app_components.css"
+        "./static/js/analytics/support"
     ],
     "desktop-login": ["./static/js/bundles/portico", "./static/js/portico/desktop-login"],
     "desktop-redirect": ["./static/js/bundles/portico", "./static/js/portico/desktop-redirect"],
-    "stats": [
-        "./static/js/bundles/portico",
-        "./static/styles/portico/stats.css",
-        "./static/js/stats/stats",
-        "tippy.js/dist/tippy.css"
-    ],
+    "stats": ["./static/js/bundles/portico", "./static/js/stats/stats"],
     "app": ["./static/js/bundles/app"],
     "digest": ["./static/js/bundles/portico"]
 }

@@ -2,12 +2,6 @@ import $ from "jquery";
 import _ from "lodash";
 import tippy from "tippy.js";
 
-import render_subscription from "../templates/subscription.hbs";
-import render_subscription_settings from "../templates/subscription_settings.hbs";
-import render_subscription_table_body from "../templates/subscription_table_body.hbs";
-import render_subscriptions from "../templates/subscriptions.hbs";
-import render_unsubscribe_private_stream_modal from "../templates/unsubscribe_private_stream_modal.hbs";
-
 import * as blueslip from "./blueslip";
 import * as browser_history from "./browser_history";
 import * as channel from "./channel";

@@ -2,10 +2,6 @@ import ClipboardJS from "clipboard";
 import {isValid, parseISO} from "date-fns";
 import $ from "jquery";
 
-import copy_code_button from "../templates/copy_code_button.hbs";
-import render_markdown_timestamp from "../templates/markdown_timestamp.hbs";
-import view_code_in_playground from "../templates/view_code_in_playground.hbs";
-
 import * as blueslip from "./blueslip";
 import {$t, $t_html} from "./i18n";
 import {page_params} from "./page_params";

@@ -3,18 +3,6 @@ import {add, formatISO, parseISO, set} from "date-fns";
 import ConfirmDatePlugin from "flatpickr/dist/plugins/confirmDate/confirmDate";
 import $ from "jquery";
 
-import render_actions_popover_content from "../templates/actions_popover_content.hbs";
-import render_mobile_message_buttons_popover from "../templates/mobile_message_buttons_popover.hbs";
-import render_mobile_message_buttons_popover_content from "../templates/mobile_message_buttons_popover_content.hbs";
-import render_no_arrow_popover from "../templates/no_arrow_popover.hbs";
-import render_playground_links_popover_content from "../templates/playground_links_popover_content.hbs";
-import render_remind_me_popover_content from "../templates/remind_me_popover_content.hbs";
-import render_user_group_info_popover from "../templates/user_group_info_popover.hbs";
-import render_user_group_info_popover_content from "../templates/user_group_info_popover_content.hbs";
-import render_user_info_popover_content from "../templates/user_info_popover_content.hbs";
-import render_user_info_popover_title from "../templates/user_info_popover_title.hbs";
-import render_user_profile_modal from "../templates/user_profile_modal.hbs";
-
 import * as blueslip from "./blueslip";
 import * as buddy_data from "./buddy_data";
 import * as compose_actions from "./compose_actions";

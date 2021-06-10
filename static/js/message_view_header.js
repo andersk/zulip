@@ -1,7 +1,5 @@
 import $ from "jquery";
 
-import render_message_view_header from "../templates/message_view_header.hbs";
-
 import {$t} from "./i18n";
 import * as narrow_state from "./narrow_state";
 import {page_params} from "./page_params";

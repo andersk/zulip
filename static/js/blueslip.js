@@ -56,7 +56,9 @@ function make_logger_func(name) {
 }
 
 class Logger {
-    _memory_log = [];
+    constructor() {
+        this._memory_log = [];
+    }
 
     get_log() {
         return this._memory_log;
@@ -172,9 +174,9 @@ function report_error(
 }
 
 class BlueslipError extends Error {
-    name = "BlueslipError";
-
     constructor(msg, more_info) {
+        this.name = "BlueslipError";
+
         super(msg);
         if (more_info !== undefined) {
             this.more_info = more_info;

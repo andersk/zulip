@@ -25,11 +25,13 @@ function filter_muted_pms(conversation) {
 }
 
 class RecentPrivateMessages {
-    // This data structure keeps track of the sets of users you've had
-    // recent conversations with, sorted by time (implemented via
-    // `message_id` sorting, since that's how we time-sort messages).
-    recent_message_ids = new FoldDict(); // key is user_ids_string
-    recent_private_messages = [];
+    constructor() {
+        // This data structure keeps track of the sets of users you've had
+        // recent conversations with, sorted by time (implemented via
+        // `message_id` sorting, since that's how we time-sort messages).
+        this.recent_message_ids = new FoldDict(); // key is user_ids_string
+        this.recent_private_messages = [];
+    }
 
     insert(user_ids, message_id) {
         if (user_ids.length === 0) {

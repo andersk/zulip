@@ -1,9 +1,6 @@
 import $ from "jquery";
 import _ from "lodash";
 
-import render_giphy_picker from "../templates/giphy_picker.hbs";
-import render_giphy_picker_mobile from "../templates/giphy_picker_mobile.hbs";
-
 import * as blueslip from "./blueslip";
 import * as compose_ui from "./compose_ui";
 import {media_breakpoints_num} from "./css_variables";

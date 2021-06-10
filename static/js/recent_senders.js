@@ -7,14 +7,16 @@ import * as message_store from "./message_store";
 // If we find reuse opportunities, we should just put it into
 // its own module.
 export class IdTracker {
-    ids = new Set();
+    constructor() {
+        // We cache the max message id to make sure that
+        // typeahead code is efficient.  We don't eagerly
+        // compute it, since it's plausible a spammy bot
+        // could cause us to process many messages at a time
+        // during fetching.
+        this._cached_max_id = undefined;
 
-    // We cache the max message id to make sure that
-    // typeahead code is efficient.  We don't eagerly
-    // compute it, since it's plausible a spammy bot
-    // could cause us to process many messages at a time
-    // during fetching.
-    _cached_max_id = undefined;
+        this.ids = new Set();
+    }
 
     add(id) {
         this.ids.add(id);

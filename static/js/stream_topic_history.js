@@ -102,11 +102,11 @@ export class PerStreamHistory {
           deleted.
     */
 
-    topics = new FoldDict();
-    // Most recent message ID for the stream.
-    max_message_id = 0;
-
     constructor(stream_id) {
+        this.topics = new FoldDict();
+        // Most recent message ID for the stream.
+        this.max_message_id = 0;
+
         this.stream_id = stream_id;
     }
 

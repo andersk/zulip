@@ -5,8 +5,6 @@ import WinChan from "winchan";
 
 // You won't find every click handler here, but it's a good place to start!
 
-import render_buddy_list_tooltip_content from "../templates/buddy_list_tooltip_content.hbs";
-
 import * as activity from "./activity";
 import * as blueslip from "./blueslip";
 import * as browser_history from "./browser_history";

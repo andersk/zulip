@@ -4,9 +4,6 @@ export class PollData {
     // should be represented for rendering, plus how the
     // server sends us data.
 
-    key_to_option = new Map();
-    my_idx = 1;
-
     constructor({
         current_user_id,
         is_my_poll,
@@ -15,6 +12,97 @@ export class PollData {
         comma_separated_names,
         report_error_function,
     }) {
+        this.key_to_option = new Map();
+        this.my_idx = 1;
+
+        this.handle = {
+            new_option: {
+                outbound: (option) => {
+                    const event = {
+                        type: "new_option",
+                        idx: this.my_idx,
+                        option,
+                    };
+
+                    this.my_idx += 1;
+
+                    return event;
+                },
+
+                inbound: (sender_id, data) => {
+                    const idx = data.idx;
+                    const key = sender_id + "," + idx;
+                    const option = data.option;
+                    const votes = new Map();
+
+                    this.key_to_option.set(key, {
+                        option,
+                        user_id: sender_id,
+                        votes,
+                    });
+
+                    if (this.my_idx <= idx) {
+                        this.my_idx = idx + 1;
+                    }
+                },
+            },
+
+            question: {
+                outbound: (question) => {
+                    const event = {
+                        type: "question",
+                        question,
+                    };
+                    if (this.is_my_poll) {
+                        return event;
+                    }
+                    return undefined;
+                },
+
+                inbound: (sender_id, data) => {
+                    this.set_question(data.question);
+                },
+            },
+
+            vote: {
+                outbound: (key) => {
+                    let vote = 1;
+
+                    // toggle
+                    if (this.key_to_option.get(key).votes.get(this.me)) {
+                        vote = -1;
+                    }
+
+                    const event = {
+                        type: "vote",
+                        key,
+                        vote,
+                    };
+
+                    return event;
+                },
+
+                inbound: (sender_id, data) => {
+                    const key = data.key;
+                    const vote = data.vote;
+                    const option = this.key_to_option.get(key);
+
+                    if (option === undefined) {
+                        this.report_error_function("unknown key for poll: " + key);
+                        return;
+                    }
+
+                    const votes = option.votes;
+
+                    if (vote === 1) {
+                        votes.set(sender_id, 1);
+                    } else {
+                        votes.delete(sender_id);
+                    }
+                },
+            },
+        };
+
         this.me = current_user_id;
         this.is_my_poll = is_my_poll;
         this.poll_question = question;
@@ -78,94 +166,6 @@ export class PollData {
 
         return widget_data;
     }
-
-    handle = {
-        new_option: {
-            outbound: (option) => {
-                const event = {
-                    type: "new_option",
-                    idx: this.my_idx,
-                    option,
-                };
-
-                this.my_idx += 1;
-
-                return event;
-            },
-
-            inbound: (sender_id, data) => {
-                const idx = data.idx;
-                const key = sender_id + "," + idx;
-                const option = data.option;
-                const votes = new Map();
-
-                this.key_to_option.set(key, {
-                    option,
-                    user_id: sender_id,
-                    votes,
-                });
-
-                if (this.my_idx <= idx) {
-                    this.my_idx = idx + 1;
-                }
-            },
-        },
-
-        question: {
-            outbound: (question) => {
-                const event = {
-                    type: "question",
-                    question,
-                };
-                if (this.is_my_poll) {
-                    return event;
-                }
-                return undefined;
-            },
-
-            inbound: (sender_id, data) => {
-                this.set_question(data.question);
-            },
-        },
-
-        vote: {
-            outbound: (key) => {
-                let vote = 1;
-
-                // toggle
-                if (this.key_to_option.get(key).votes.get(this.me)) {
-                    vote = -1;
-                }
-
-                const event = {
-                    type: "vote",
-                    key,
-                    vote,
-                };
-
-                return event;
-            },
-
-            inbound: (sender_id, data) => {
-                const key = data.key;
-                const vote = data.vote;
-                const option = this.key_to_option.get(key);
-
-                if (option === undefined) {
-                    this.report_error_function("unknown key for poll: " + key);
-                    return;
-                }
-
-                const votes = option.votes;
-
-                if (vote === 1) {
-                    votes.set(sender_id, 1);
-                } else {
-                    votes.delete(sender_id);
-                }
-            },
-        },
-    };
 
     handle_event(sender_id, data) {
         const type = data.type;

@@ -1,13 +1,76 @@
 import $ from "jquery";
 
-import render_widgets_todo_widget from "../templates/widgets/todo_widget.hbs";
-import render_widgets_todo_widget_tasks from "../templates/widgets/todo_widget_tasks.hbs";
-
 import * as blueslip from "./blueslip";
 import {$t} from "./i18n";
 
 export class TaskData {
-    task_map = new Map();
+    constructor() {
+        this.handle = {
+            new_task: {
+                outbound: (task, desc) => {
+                    const event = {
+                        type: "new_task",
+                        key: this.get_new_index(),
+                        task,
+                        desc,
+                        completed: false,
+                    };
+
+                    if (!this.name_in_use(task)) {
+                        return event;
+                    }
+                    return undefined;
+                },
+
+                inbound: (sender_id, data) => {
+                    // for legacy reasons, the inbound idx is
+                    // called key in the event
+                    const idx = data.key;
+                    const key = idx + "," + sender_id;
+                    const task = data.task;
+                    const desc = data.desc;
+                    const completed = data.completed;
+
+                    const task_data = {
+                        task,
+                        desc,
+                        idx,
+                        key,
+                        completed,
+                    };
+
+                    if (!this.name_in_use(task)) {
+                        this.task_map.set(key, task_data);
+                    }
+                },
+            },
+
+            strike: {
+                outbound: (key) => {
+                    const event = {
+                        type: "strike",
+                        key,
+                    };
+
+                    return event;
+                },
+
+                inbound: (sender_id, data) => {
+                    const key = data.key;
+                    const item = this.task_map.get(key);
+
+                    if (item === undefined) {
+                        blueslip.warn("Do we have legacy data? unknown key for tasks: " + key);
+                        return;
+                    }
+
+                    item.completed = !item.completed;
+                },
+            },
+        };
+
+        this.task_map = new Map();
+    }
 
     get_new_index() {
         let idx = 0;
@@ -51,70 +114,6 @@ export class TaskData {
 
         return false;
     }
-
-    handle = {
-        new_task: {
-            outbound: (task, desc) => {
-                const event = {
-                    type: "new_task",
-                    key: this.get_new_index(),
-                    task,
-                    desc,
-                    completed: false,
-                };
-
-                if (!this.name_in_use(task)) {
-                    return event;
-                }
-                return undefined;
-            },
-
-            inbound: (sender_id, data) => {
-                // for legacy reasons, the inbound idx is
-                // called key in the event
-                const idx = data.key;
-                const key = idx + "," + sender_id;
-                const task = data.task;
-                const desc = data.desc;
-                const completed = data.completed;
-
-                const task_data = {
-                    task,
-                    desc,
-                    idx,
-                    key,
-                    completed,
-                };
-
-                if (!this.name_in_use(task)) {
-                    this.task_map.set(key, task_data);
-                }
-            },
-        },
-
-        strike: {
-            outbound: (key) => {
-                const event = {
-                    type: "strike",
-                    key,
-                };
-
-                return event;
-            },
-
-            inbound: (sender_id, data) => {
-                const key = data.key;
-                const item = this.task_map.get(key);
-
-                if (item === undefined) {
-                    blueslip.warn("Do we have legacy data? unknown key for tasks: " + key);
-                    return;
-                }
-
-                item.completed = !item.completed;
-            },
-        },
-    };
 
     handle_event(sender_id, data) {
         const type = data.type;

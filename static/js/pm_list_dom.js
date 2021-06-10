@@ -1,7 +1,5 @@
 import _ from "lodash";
 
-import render_pm_list_item from "../templates/pm_list_item.hbs";
-
 import * as vdom from "./vdom";
 
 export function keyed_pm_li(convo) {

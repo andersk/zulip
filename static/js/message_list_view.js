@@ -2,11 +2,6 @@ import {isSameDay} from "date-fns";
 import $ from "jquery";
 import _ from "lodash";
 
-import render_bookend from "../templates/bookend.hbs";
-import render_message_group from "../templates/message_group.hbs";
-import render_recipient_row from "../templates/recipient_row.hbs";
-import render_single_message from "../templates/single_message.hbs";
-
 import * as activity from "./activity";
 import * as blueslip from "./blueslip";
 import * as color_class from "./color_class";
@@ -173,6 +168,12 @@ function populate_group_from_message_container(group, message_container) {
 
 export class MessageListView {
     constructor(list, table_name, collapse_messages) {
+        // Number of messages to render at a time
+        this._RENDER_WINDOW_SIZE = 400;
+        // Number of messages away from edge of render window at which we
+        // trigger a re-render
+        this._RENDER_THRESHOLD = 50;
+
         this.list = list;
         this.collapse_messages = collapse_messages;
         this._rows = new Map();
@@ -187,12 +188,6 @@ export class MessageListView {
         this._render_win_start = 0;
         this._render_win_end = 0;
     }
-
-    // Number of messages to render at a time
-    _RENDER_WINDOW_SIZE = 400;
-    // Number of messages away from edge of render window at which we
-    // trigger a re-render
-    _RENDER_THRESHOLD = 50;
 
     _get_msg_timestring(message_container) {
         let last_edit_timestamp;
