@@ -27,7 +27,7 @@ options = parser.parse_args()
 assert_provisioning_status_ok(options.skip_provision_check)
 
 with test_server_running(
-    skip_provision_check=options.skip_provision_check, external_host="zulipdev.com:9981"
+    skip_provision_check=options.skip_provision_check, external_host="localhost:9981"
 ):
     # Zerver imports should happen after `django.setup()` is run
     # by the test_server_running decorator.
@@ -63,7 +63,7 @@ with test_server_running(
     user.save(update_fields=["can_create_users"])
 
     api_key = get_api_key(user)
-    site = "http://zulip.zulipdev.com:9981"
+    site = "http://localhost:9981"
     client = Client(
         email=email,
         api_key=api_key,
@@ -75,7 +75,7 @@ with test_server_running(
     realm = get_realm("zulip")
     user = get_user(email, realm)
     api_key = get_api_key(user)
-    site = "http://zulip.zulipdev.com:9981"
+    site = "http://localhost:9981"
     owner_client = Client(
         email=email,
         api_key=api_key,

@@ -27,10 +27,10 @@ if external_host_env is None:
         EXTERNAL_HOST = os.uname()[1].lower() + ":9991"
     else:
         # For local development environments, we use localhost by
-        # default, via the "zulipdev.com" hostname.
-        EXTERNAL_HOST = "zulipdev.com:9991"
-        # Serve the main dev realm at the literal name "localhost",
-        # so it works out of the box even when not on the Internet.
+        # default, via the "localhost" hostname.  Modern browsers map
+        # localhost and *.localhost without going through DNS, so no
+        # /etc/hosts games are needed to access subdomains.
+        EXTERNAL_HOST = "localhost:9991"
         REALM_HOSTS = {
             "zulip": "localhost:9991",
         }
@@ -42,7 +42,7 @@ else:
 
 EXTERNAL_HOST_WITHOUT_PORT = deport(EXTERNAL_HOST)
 
-FAKE_EMAIL_DOMAIN = "zulipdev.com"
+FAKE_EMAIL_DOMAIN = "localhost"
 
 ALLOWED_HOSTS = ["*"]
 

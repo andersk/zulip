@@ -91,7 +91,7 @@ def run_tests(files: Iterable[str], external_host: str) -> None:
             # Resetting test environment.
             reset_zulip_test_database()
             # We are calling to /flush_caches to remove all the server-side caches.
-            response = requests.post("http://zulip.zulipdev.com:9981/flush_caches")
+            response = requests.post("http://localhost:9981/flush_caches")
             assert response.status_code == 200
 
             if ret != 0:
@@ -143,7 +143,7 @@ Screenshots are extremely helpful for understanding puppeteer test failures.
         sys.exit(ret)
 
 
-external_host = "zulipdev.com:9981"
+external_host = "localhost:9981"
 assert_provisioning_status_ok(options.skip_provision_check)
 prepare_puppeteer_run(is_firefox=options.firefox)
 run_tests(options.tests, external_host)

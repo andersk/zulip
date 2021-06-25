@@ -10,7 +10,7 @@ const blueslip = require("../zjsunit/zblueslip");
 const {page_params} = require("../zjsunit/zpage_params");
 
 set_global("location", {
-    origin: "http://zulip.zulipdev.com",
+    origin: "http://localhost",
 });
 
 const example_realm_linkifiers = [

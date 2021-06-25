@@ -55,7 +55,7 @@ custom backend, `EmailLogBackEnd`.  It does the following:
 
 * Logs any sent emails to `var/log/email_content.log`. This log is
   displayed by the `/emails` endpoint
-  (e.g. http://zulip.zulipdev.com:9991/emails).
+  (e.g. http://localhost:9991/emails).
 * Print a friendly message on console advertising `/emails` to make
   this nice and discoverable.
 

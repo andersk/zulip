@@ -63,32 +63,8 @@ user-facing documentation on this.
 
 ### Working with subdomains in development environment
 
-By default, Linux does not provide a convenient way to use subdomains
-in your local development environment.  To solve this problem, we use
-the **zulipdev.com** domain, which has a wildcard A record pointing to
-127.0.0.1.  You can use zulipdev.com to connect to your Zulip
-development server instead of localhost. The default realm with the
-Shakespeare users has the subdomain `zulip` and can be accessed by
-visiting **zulip.zulipdev.com**.
-
-If you are behind a **proxy server**, this method won't work. When you
-make a request to load zulipdev.com in your browser, the proxy server
-will try to get the page on your behalf.  Since zulipdev.com points
-to 127.0.0.1 the proxy server is likely to give you a 503 error.  The
-workaround is to disable your proxy for `*.zulipdev.com`. The DNS
-lookup should still work even if you disable proxy for
-*.zulipdev.com. If it doesn't you can add zulipdev.com records in
-`/etc/hosts` file. The file should look something like this.
-
- ```
-127.0.0.1    localhost
-
-127.0.0.1    zulipdev.com
-
-127.0.0.1    zulip.zulipdev.com
-
-127.0.0.1    testsubdomain.zulipdev.com
-```
-
-These records are also useful if you want to e.g. run the Puppeteer tests
-when you are not connected to the Internet.
+The default realm with the Shakespeare users has the subdomain `zulip`
+and can be accessed by visiting <http://localhost:9991>.  Other realms
+can be accessed at subdomains of localhost like
+<http://analytics.localhost:9991>, which are supported by all modern
+browsers.

@@ -3,7 +3,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Subject: Normal subject
 From: hamlet@zulip.com
-To: foo@zulipdev.com
+To: foo@localhost
 Reply-to: othello@zulip.com
 
 Email fixture 1.txt body

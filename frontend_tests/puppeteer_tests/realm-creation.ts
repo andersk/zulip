@@ -7,7 +7,7 @@ import common from "../puppeteer_lib/common";
 const email = "alice@test.example.com";
 const subdomain = "testsubdomain";
 const organization_name = "Awesome Organization";
-const host = "zulipdev.com:9981";
+const host = "localhost:9981";
 
 async function realm_creation_tests(page: Page): Promise<void> {
     await page.goto("http://" + host + "/new/");

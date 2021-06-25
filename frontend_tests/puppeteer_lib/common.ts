@@ -20,7 +20,7 @@ class CommonUtils {
     browser: Browser | null = null;
     screenshot_id = 0;
     is_firefox = process.env.PUPPETEER_PRODUCT === "firefox";
-    realm_url = "http://zulip.zulipdev.com:9981/";
+    realm_url = "http://localhost:9981/";
     gps = new StackTraceGPS({ajax: async (url) => (await fetch(url)).text()});
 
     pm_recipient = {

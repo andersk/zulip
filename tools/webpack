@@ -29,7 +29,7 @@ def build_for_dev_server(host: str, port: str, minify: bool, disable_host_check:
         # webpack-cli has a bug where it ignores --watch-poll with
         # multi-config, and we don't need the katex-cli part anyway.
         "--config-name=frontend",
-        "--allowed-hosts=" + ",".join([host, ".zulipdev.com", ".zulipdev.org"]),
+        "--allowed-hosts=" + ",".join([host, f".{host}"]),
         f"--host={host}",
         f"--port={port}",
         # We add the hot flag using the cli because it takes care

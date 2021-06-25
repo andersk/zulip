@@ -554,10 +554,7 @@ if CAMO_URI != "":
 # STATIC CONTENT AND MINIFICATION SETTINGS
 ########################################################################
 
-if PRODUCTION or IS_DEV_DROPLET or os.getenv("EXTERNAL_HOST") is not None:
-    STATIC_URL = urljoin(ROOT_DOMAIN_URI, "/static/")
-else:
-    STATIC_URL = "http://localhost:9991/static/"
+STATIC_URL = urljoin(ROOT_DOMAIN_URI, "/static/")
 
 # ZulipStorage is a modified version of ManifestStaticFilesStorage,
 # and, like that class, it inserts a file hash into filenames

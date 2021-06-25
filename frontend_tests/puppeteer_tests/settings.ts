@@ -325,7 +325,7 @@ async function assert_language_changed_to_chinese(page: Page): Promise<void> {
 }
 
 async function test_i18n_language_precedence(page: Page): Promise<void> {
-    const settings_url_for_german = "http://zulip.zulipdev.com:9981/de/#settings";
+    const settings_url_for_german = "http://localhost:9981/de/#settings";
     await page.goto(settings_url_for_german);
     await page.waitForSelector("#settings-change-box", {visible: true});
     const page_language_code = await page.evaluate(() => document.documentElement.lang);
@@ -352,7 +352,7 @@ async function test_default_language_setting(page: Page): Promise<void> {
 
     // Check that the saved indicator appears
     await check_language_setting_status(page);
-    await page.goto("http://zulip.zulipdev.com:9981/#settings"); // get back to normal language.
+    await page.goto("http://localhost:9981/#settings"); // get back to normal language.
     await page.waitForSelector(display_settings_section, {visible: true});
     await page.click(display_settings_section);
     await page.waitForSelector("#language-settings-status", {visible: true});

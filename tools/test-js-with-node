@@ -211,8 +211,8 @@ def get_dev_host() -> str:
         return hostname + ":9991"
     else:
         # For local development environments, we use localhost by
-        # default, via the "zulipdev.com" hostname.
-        return "zulipdev.com:9991"
+        # default.
+        return "localhost:9991"
 
 
 def print_error(msg: str) -> None:

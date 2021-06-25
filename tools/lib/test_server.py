@@ -45,8 +45,7 @@ def server_is_up(server: "subprocess.Popen[bytes]", log_file: Optional[str]) -> 
     assert_server_running(server, log_file)
     try:
         # We could get a 501 error if the reverse proxy is up but the Django app isn't.
-        # Note that zulipdev.com is mapped via DNS to 127.0.0.1.
-        return requests.get("http://zulipdev.com:9981/accounts/home").status_code == 200
+        return requests.get("http://localhost:9981/accounts/home").status_code == 200
     except requests.RequestException:
         return False
 
