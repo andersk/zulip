@@ -2,7 +2,7 @@
 
 import path from "path";
 
-import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
+import {ESBuildMinifyPlugin} from "esbuild-loader";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import webpack from "webpack";
@@ -175,12 +175,7 @@ export default (env: {minimize?: boolean} = {}, argv: {mode?: string}): webpack.
         devtool: production ? "source-map" : "cheap-module-source-map",
         optimization: {
             minimize: env.minimize ?? production,
-            minimizer: [
-                new CssMinimizerPlugin({
-                    minify: CssMinimizerPlugin.cleanCssMinify,
-                }),
-                "...",
-            ],
+            minimizer: [new ESBuildMinifyPlugin({css: true, format: "iife", target: "es5"})],
             splitChunks: {
                 chunks: "all",
                 // webpack/examples/many-pages suggests 20 requests for HTTP/2
@@ -243,6 +238,9 @@ export default (env: {minimize?: boolean} = {}, argv: {mode?: string}): webpack.
         },
         output: {
             path: path.resolve(__dirname, "static/webpack-bundles"),
+        },
+        optimization: {
+            minimizer: [new ESBuildMinifyPlugin({target: "node14"})],
         },
     };
 

@@ -26,7 +26,6 @@
     "clipboard": "^2.0.4",
     "core-js": "^3.6.5",
     "css-loader": "^6.2.0",
-    "css-minimizer-webpack-plugin": "^3.0.2",
     "css.escape": "^1.5.1",
     "date-fns": "^2.16.1",
     "date-fns-tz": "^1.1.1",
@@ -34,6 +33,7 @@
     "emoji-datasource-google-blob": "npm:emoji-datasource-google@^3.0.0",
     "emoji-datasource-twitter": "^7.0.2",
     "error-stack-parser": "^2.0.2",
+    "esbuild-loader": "^2.15.1",
     "eslint-plugin-formatjs": "^2.16.0",
     "expose-loader": "^3.0.0",
     "flatpickr": "^4.5.7",
@@ -84,7 +84,6 @@
     "@babel/eslint-parser": "^7.11.3",
     "@formatjs/cli": "^4.2.6",
     "@types/clean-css": "^4.2.2",
-    "@types/css-minimizer-webpack-plugin": "^3.0.2",
     "@types/jquery": "^3.3.31",
     "@types/lodash": "^4.14.172",
     "@types/mini-css-extract-plugin": "^2.2.0",
@@ -129,6 +128,7 @@
     "zulip-js": "^2.0.8"
   },
   "resolutions": {
+    "esbuild-loader/esbuild": "npm:esbuild@^0.13.2",
     "/source-map": "https://codeload.github.com/benthemonkey/source-map/tar.gz/d95423f77edef6cbb9e21d2d6014c7de85ae220a"
   },
   "repository": {
