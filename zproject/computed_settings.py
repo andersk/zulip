@@ -588,17 +588,12 @@ else:
 # ZulipStorage is a modified version of ManifestStaticFilesStorage,
 # and, like that class, it inserts a file hash into filenames
 # to prevent the browser from using stale files from cache.
-#
-# Unlike PipelineStorage, it requires the files to exist in
-# STATIC_ROOT even for dev servers.  So we only use
-# ZulipStorage when not DEBUG.
+STATICFILES_STORAGE = "zerver.lib.storage.ZulipStorage"
 
-if not DEBUG:
-    STATICFILES_STORAGE = "zerver.lib.storage.ZulipStorage"
-    if PRODUCTION:
-        STATIC_ROOT = "/home/zulip/prod-static"
-    else:
-        STATIC_ROOT = os.path.abspath(os.path.join(DEPLOY_ROOT, "prod-static/serve"))
+if PRODUCTION:
+    STATIC_ROOT = "/home/zulip/prod-static"
+else:
+    STATIC_ROOT = os.path.abspath(os.path.join(DEPLOY_ROOT, "prod-static/serve"))
 
 # If changing this, you need to also the hack modifications to this in
 # our compilemessages management command.
@@ -607,7 +602,8 @@ LOCALE_PATHS = (os.path.join(DEPLOY_ROOT, "locale"),)
 # We want all temporary uploaded files to be stored on disk.
 FILE_UPLOAD_MAX_MEMORY_SIZE = 0
 
-STATICFILES_DIRS = ["static/"]
+if DEVELOPMENT or "ZULIP_COLLECTING_STATIC" in os.environ:
+    STATICFILES_DIRS = [os.path.join(DEPLOY_ROOT, "static")]
 
 if DEBUG:
     WEBPACK_BUNDLES = "../webpack/"
