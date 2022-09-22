@@ -18,11 +18,15 @@ from tools.lib import sanity_check
 
 sanity_check.check_venv(__file__)
 
+import django
+from django.conf import settings
+from django.contrib.staticfiles.storage import staticfiles_storage
 from tornado import httpclient, httputil, web
 from tornado.platform.asyncio import AsyncIOMainLoop
 from typing_extensions import override
 
 from tools.lib.test_script import add_provision_check_override_param, assert_provisioning_status_ok
+from zproject.config import SECRETS_FILENAME
 
 if "posix" in os.name and os.geteuid() == 0:
     raise RuntimeError("run-dev should not be run as root.")
@@ -99,6 +103,7 @@ else:
 
 manage_args = [f"--settings={settings_module}"]
 os.environ["DJANGO_SETTINGS_MODULE"] = settings_module
+django.setup()
 
 if options.behind_https_proxy:
     os.environ["BEHIND_HTTPS_PROXY"] = "1"
@@ -136,6 +141,10 @@ with open(pid_file_path, "w+") as f:
 
 
 def server_processes() -> List[List[str]]:
+    default_avatar_uri = settings.DEFAULT_AVATAR_URI
+    if default_avatar_uri is None:
+        default_avatar_uri = staticfiles_storage.url("images/default-avatar.png")
+
     main_cmds = [
         [
             "./manage.py",
@@ -145,14 +154,14 @@ def server_processes() -> List[List[str]]:
             f"127.0.0.1:{django_port}",
         ],
         [
-            "env",
-            "PYTHONUNBUFFERED=1",
-            "python3",
-            *tornado_autoreload,
-            "./manage.py",
-            "runtornado",
-            *manage_args,
-            f"127.0.0.1:{tornado_port}",
+            "./boq",
+            f"--address=127.0.0.1:{tornado_port}",
+            f"--secrets-file={SECRETS_FILENAME}",
+            "--rabbitmq-host=127.0.0.1",
+            "--rabbitmq-user=zulip",
+            "--rabbitmq-notify-queue=notify_tornado",
+            *(["--enable-gravatar"] if settings.ENABLE_GRAVATAR else []),
+            f"--default-avatar-uri={default_avatar_uri}",
         ],
     ]
 

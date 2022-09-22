@@ -15,11 +15,12 @@ config_file.read("/etc/zulip/zulip.conf")
 # Whether this instance of Zulip is running in a production environment.
 PRODUCTION = config_file.has_option("machine", "deploy_type")
 DEVELOPMENT = not PRODUCTION
-secrets_file = configparser.RawConfigParser()
 if PRODUCTION:  # nocoverage
-    secrets_file.read("/etc/zulip/zulip-secrets.conf")
+    SECRETS_FILENAME = "/etc/zulip/zulip-secrets.conf"
 else:
-    secrets_file.read(os.path.join(DEPLOY_ROOT, "zproject/dev-secrets.conf"))
+    SECRETS_FILENAME = os.path.join(DEPLOY_ROOT, "zproject/dev-secrets.conf")
+secrets_file = configparser.RawConfigParser()
+secrets_file.read(SECRETS_FILENAME)
 
 
 @overload
