@@ -2,9 +2,11 @@
 
 import path from "path";
 
+import type {JsMinifyOptions as SwcOptions} from "@swc/core";
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import TerserPlugin from "terser-webpack-plugin";
 import {DefinePlugin} from "webpack";
 import type webpack from "webpack";
 import BundleTracker from "webpack-bundle-tracker";
@@ -187,7 +189,9 @@ export default (
                 new CssMinimizerPlugin({
                     minify: CssMinimizerPlugin.cleanCssMinify,
                 }),
-                "...",
+                new TerserPlugin<SwcOptions>({
+                    minify: TerserPlugin.swcMinify,
+                }),
             ],
             splitChunks: {
                 chunks: "all",
