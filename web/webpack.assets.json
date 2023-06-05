@@ -1,7 +1,8 @@
 {
     "activity": [
         "./src/bundles/common",
-        "sorttable",
+        "sortable-tablesort/sortable",
+        "sortable-tablesort/sortable.css",
         "./src/analytics/activity",
         "./styles/portico/activity.css"
     ],
@@ -68,7 +69,6 @@
     ],
     "support": [
         "./src/bundles/common",
-        "sorttable",
         "./src/analytics/activity",
         "./styles/portico/activity.css",
         "./src/analytics/support"

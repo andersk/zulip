@@ -193,12 +193,12 @@ dependencies:
   simplebar:
     specifier: ^6.2.0
     version: 6.2.5
+  sortable-tablesort:
+    specifier: ^2.1.3
+    version: 2.1.3
   sortablejs:
     specifier: ^1.9.0
     version: 1.15.0
-  sorttable:
-    specifier: ^1.0.2
-    version: 1.0.2
   source-code-pro:
     specifier: ^2.38.0
     version: 2.38.0
@@ -10548,12 +10548,12 @@ packages:
       smart-buffer: 4.2.0
     dev: false
 
-  /sortablejs@1.15.0:
-    resolution: {integrity: sha512-bv9qgVMjUMf89wAvM6AxVvS/4MX3sPeN0+agqShejLU5z5GX4C75ow1O2e5k4L6XItUyAK3gH6AxSbXrOM5e8w==}
+  /sortable-tablesort@2.1.3:
+    resolution: {integrity: sha512-36jdBjIVouizA219tfeqpEMFzhv61rXg6m4FLUcamrVXChkGzbdEOMNmYkLJ2gyF4MIMyy9oJh9dejX4Lhzz2Q==}
     dev: false
 
-  /sorttable@1.0.2:
-    resolution: {integrity: sha512-dY6xMviQb4+zeZ11MSOqYfgXbv3pA6q4y35/lqVRulAXhR36MYvYjxTSWbctwiVWaRk0ufY10gNwFrcdrXPeWA==}
+  /sortablejs@1.15.0:
+    resolution: {integrity: sha512-bv9qgVMjUMf89wAvM6AxVvS/4MX3sPeN0+agqShejLU5z5GX4C75ow1O2e5k4L6XItUyAK3gH6AxSbXrOM5e8w==}
     dev: false
 
   /source-code-pro@2.38.0:
