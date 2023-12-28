@@ -1,7 +1,8 @@
 import Handlebars from "handlebars/runtime";
+import assert from "minimalistic-assert";
 
+import {page_params} from "./base_page_params";
 import {$t, $t_html} from "./i18n";
-import {page_params} from "./page_params";
 import type {RealmDefaultSettings} from "./realm_user_settings_defaults";
 import type {StreamSpecificNotificationSettings} from "./sub_store";
 import {StreamPostPolicy} from "./sub_store";
@@ -782,6 +783,9 @@ export function get_notifications_table_row_data(
     notify_settings: PageParamsItem[],
     settings_object: Settings,
 ): NotificationSettingCheckbox[] {
+    assert(page_params.page_type === "home");
+    const {realm_push_notifications_enabled} = page_params;
+
     return general_notifications_table_labels.realm.map((column, index) => {
         const setting_name = notify_settings[index];
         if (setting_name === undefined) {
@@ -805,7 +809,7 @@ export function get_notifications_table_row_data(
             is_mobile_checkbox: false,
         };
         if (column === "mobile") {
-            checkbox.is_disabled = !page_params.realm_push_notifications_enabled;
+            checkbox.is_disabled = !realm_push_notifications_enabled;
             checkbox.is_mobile_checkbox = true;
         }
         return checkbox;
@@ -826,41 +830,45 @@ export type AllNotifications = {
     };
 };
 
-export const all_notifications = (settings_object: Settings): AllNotifications => ({
-    general_settings: [
-        {
-            label: $t({defaultMessage: "Streams"}),
-            notification_settings: get_notifications_table_row_data(
-                stream_notification_settings,
-                settings_object,
-            ),
+export function all_notifications(settings_object: Settings): AllNotifications {
+    assert(page_params.page_type === "home");
+
+    return {
+        general_settings: [
+            {
+                label: $t({defaultMessage: "Streams"}),
+                notification_settings: get_notifications_table_row_data(
+                    stream_notification_settings,
+                    settings_object,
+                ),
+            },
+            {
+                label: $t({defaultMessage: "DMs, mentions, and alerts"}),
+                notification_settings: get_notifications_table_row_data(
+                    pm_mention_notification_settings,
+                    settings_object,
+                ),
+            },
+            {
+                label: $t({defaultMessage: "Followed topics"}),
+                notification_settings: get_notifications_table_row_data(
+                    followed_topic_notification_settings,
+                    settings_object,
+                ),
+            },
+        ],
+        settings: {
+            desktop_notification_settings,
+            mobile_notification_settings,
+            email_message_notification_settings,
+            other_email_settings,
         },
-        {
-            label: $t({defaultMessage: "DMs, mentions, and alerts"}),
-            notification_settings: get_notifications_table_row_data(
-                pm_mention_notification_settings,
-                settings_object,
-            ),
+        show_push_notifications_tooltip: {
+            push_notifications: !page_params.realm_push_notifications_enabled,
+            enable_online_push_notifications: !page_params.realm_push_notifications_enabled,
         },
-        {
-            label: $t({defaultMessage: "Followed topics"}),
-            notification_settings: get_notifications_table_row_data(
-                followed_topic_notification_settings,
-                settings_object,
-            ),
-        },
-    ],
-    settings: {
-        desktop_notification_settings,
-        mobile_notification_settings,
-        email_message_notification_settings,
-        other_email_settings,
-    },
-    show_push_notifications_tooltip: {
-        push_notifications: !page_params.realm_push_notifications_enabled,
-        enable_online_push_notifications: !page_params.realm_push_notifications_enabled,
-    },
-});
+    };
+}
 
 export const realm_name_in_email_notifications_policy_values = {
     automatic: {

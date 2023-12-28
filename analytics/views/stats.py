@@ -76,7 +76,9 @@ def render_stats(
         guest_users = None
         space_used = None
 
+    # Sync this with stats_params_schema in base_page_params.ts
     page_params = dict(
+        page_type="stats",
         data_url_suffix=data_url_suffix,
         for_installation=for_installation,
         remote=remote,

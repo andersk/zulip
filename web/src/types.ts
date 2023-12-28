@@ -1,3 +1,5 @@
+import {z} from "zod";
+
 // TODO/typescript: Move this to submessage.js
 export type Submessage = {
     id: number;
@@ -57,14 +59,22 @@ export type UpdateMessageEvent = {
 // types to their appropriate modules.
 export type User = Record<string, never>;
 
-export type GroupPermissionSetting = {
-    require_system_group: boolean;
-    allow_internet_group: boolean;
-    allow_owners_group: boolean;
-    allow_nobody_group: boolean;
-    allow_everyone_group: boolean;
-    default_group_name: string;
-    id_field_name: string;
-    default_for_system_groups: string | null;
-    allowed_system_groups: string[];
-};
+export const group_permission_setting_schema = z.object({
+    require_system_group: z.boolean(),
+    allow_internet_group: z.boolean(),
+    allow_owners_group: z.boolean(),
+    allow_nobody_group: z.boolean(),
+    allow_everyone_group: z.boolean(),
+    default_group_name: z.string(),
+    id_field_name: z.string(),
+    default_for_system_groups: z.nullable(z.string()),
+    allowed_system_groups: z.array(z.string()),
+});
+export type GroupPermissionSetting = z.output<typeof group_permission_setting_schema>;
+
+export const term_schema = z.object({
+    negated: z.optional(z.boolean()),
+    operator: z.string(),
+    operand: z.string(),
+});
+export type Term = z.output<typeof term_schema>;

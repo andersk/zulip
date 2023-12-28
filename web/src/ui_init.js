@@ -15,6 +15,7 @@ import * as activity_ui from "./activity_ui";
 import * as add_stream_options_popover from "./add_stream_options_popover";
 import * as alert_words from "./alert_words";
 import * as audible_notifications from "./audible_notifications";
+import {home_params_schema, register_response_schema} from "./base_page_params";
 import * as blueslip from "./blueslip";
 import * as bot_data from "./bot_data";
 import * as channel from "./channel";
@@ -723,7 +724,20 @@ $(async () => {
             url: "/json/register",
             data,
             success(response_data) {
-                Object.assign(page_params, response_data);
+                const {development_environment, ...unexpected} = home_params_schema
+                    .partial()
+                    .parse(response_data);
+                const unexpected_keys = Object.keys(unexpected);
+                if (unexpected_keys.length > 0) {
+                    blueslip.error(
+                        `Unexpected keys in register response: ${JSON.stringify(unexpected_keys)}`,
+                    );
+                }
+
+                Object.assign(
+                    page_params,
+                    register_response_schema.passthrough().parse(response_data),
+                );
                 initialize_everything();
             },
             error() {

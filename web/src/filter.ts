@@ -13,6 +13,7 @@ import {page_params} from "./page_params";
 import * as people from "./people";
 import * as stream_data from "./stream_data";
 import type {StreamSubscription} from "./sub_store";
+import type {Term} from "./types";
 import * as unread from "./unread";
 import * as user_topics from "./user_topics";
 import * as util from "./util";
@@ -232,12 +233,6 @@ function message_matches_search_term(message: Message, operator: string, operand
 
     return true; // unknown operators return true (effectively ignored)
 }
-
-export type Term = {
-    negated?: boolean;
-    operator: string;
-    operand: string;
-};
 
 export class Filter {
     _operators: Term[];

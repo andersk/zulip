@@ -1,12 +1,12 @@
 import * as blueslip from "./blueslip";
 import {Filter} from "./filter";
-import type {Term} from "./filter";
 import * as inbox_util from "./inbox_util";
 import {page_params} from "./page_params";
 import * as people from "./people";
 import * as recent_view_util from "./recent_view_util";
 import * as stream_data from "./stream_data";
 import type {StreamSubscription} from "./sub_store";
+import type {Term} from "./types";
 import * as unread from "./unread";
 
 let current_filter: Filter | undefined;

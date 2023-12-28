@@ -1,11 +1,12 @@
 import $ from "jquery";
+import assert from "minimalistic-assert";
 
 import macbook_image from "../../images/app-screenshots/macbook.png";
 import microsoft_image from "../../images/app-screenshots/microsoft.png";
 import ubuntu_image from "../../images/app-screenshots/ubuntu.png";
 import android_image from "../../images/app-screenshots/zulip-android.png";
 import iphone_image from "../../images/app-screenshots/zulip-iphone-rough.png";
-import {page_params} from "../page_params";
+import {page_params} from "../base_page_params";
 
 import {detect_user_os} from "./tabbed-instructions";
 import render_tabs from "./team";
@@ -131,6 +132,7 @@ $(() => {
     events();
 
     if (window.location.pathname === "/team/") {
+        assert(page_params.page_type === "team");
         const contributors = page_params.contributors;
         delete page_params.contributors;
         render_tabs(contributors);

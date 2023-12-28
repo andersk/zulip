@@ -1,7 +1,7 @@
 import * as Sentry from "@sentry/browser";
 import _ from "lodash";
 
-import {page_params} from "./page_params";
+import {page_params} from "./base_page_params";
 
 type UserInfo = {
     id?: string;
@@ -37,7 +37,7 @@ if (page_params.server_sentry_dsn) {
             new RegExp("^" + _.escapeRegExp(new URL(".", document.currentScript.src).href)),
         );
     }
-    if (page_params.realm_uri !== undefined) {
+    if (page_params.page_type === "home") {
         url_matches.push(new RegExp("^" + _.escapeRegExp(page_params.realm_uri) + "/"));
     }
     const sentry_key =
@@ -50,7 +50,7 @@ if (page_params.server_sentry_dsn) {
     const user_info: UserInfo = {
         realm: sentry_key,
     };
-    if (sentry_key !== "www") {
+    if (sentry_key !== "www" && page_params.page_type === "home") {
         user_info.role = page_params.is_owner
             ? "Organization owner"
             : page_params.is_admin
@@ -108,7 +108,9 @@ if (page_params.server_sentry_dsn) {
             tags: {
                 realm: sentry_key,
                 user_role: user_info.role ?? "Browser",
-                server_version: page_params.zulip_version,
+                ...(page_params.page_type === "home"
+                    ? {server_version: page_params.zulip_version}
+                    : {}),
             },
             user: user_info,
         },
