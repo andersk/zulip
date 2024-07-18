@@ -1,0 +1,19 @@
+name: Update GitHub Actions
+
+on: workflow_dispatch
+
+permissions:
+  contents: read
+
+jobs:
+  update-github-actions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run GitHub Actions Version Updater
+        continue-on-error: true
+        uses: saadmk11/github-actions-version-updater@v0.8.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          skip_pull_request: true
+      - run: git diff
