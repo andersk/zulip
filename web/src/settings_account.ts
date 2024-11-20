@@ -2,6 +2,7 @@ import $ from "jquery";
 import assert from "minimalistic-assert";
 import {z} from "zod";
 
+import {html} from "../shared/src/html.ts";
 import render_change_email_modal from "../templates/change_email_modal.hbs";
 import render_demo_organization_add_email_modal from "../templates/demo_organization_add_email_modal.hbs";
 import render_dialog_change_password from "../templates/dialog_change_password.hbs";
@@ -773,10 +774,10 @@ export function set_up(): void {
                                 "Error: Cannot deactivate the only user. You can deactivate the whole organization though in your <z-link>organization profile settings</z-link>.",
                         },
                         {
-                            "z-link": (content_html) =>
-                                `<a target="_blank" href="/#organization/organization-profile">${content_html.join(
-                                    "",
-                                )}</a>`,
+                            "z-link": (content) =>
+                                html`<a target="_blank" href="/#organization/organization-profile"
+                                    >${content}</a
+                                >`,
                         },
                     );
                     let rendered_error_msg = "";

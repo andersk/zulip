@@ -1,5 +1,6 @@
 import $ from "jquery";
 
+import {html} from "../shared/src/html.ts";
 import render_keyboard_shortcut from "../templates/keyboard_shortcuts.hbs";
 import render_markdown_help from "../templates/markdown_help.hbs";
 import render_search_operator from "../templates/search_operators.hbs";
@@ -254,10 +255,13 @@ Last task`,
                     "You can also make <z-link>tables</z-link> with this <z-link>Markdown-ish table syntax</z-link>.",
             },
             {
-                "z-link": (content_html) =>
-                    `<a target="_blank" rel="noopener noreferrer" href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#wiki-tables">${content_html.join(
-                        "",
-                    )}</a>`,
+                "z-link": (content) =>
+                    html`<a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#wiki-tables"
+                        >${content}</a
+                    >`,
             },
         ),
     },
