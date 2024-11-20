@@ -63,6 +63,13 @@ export function $t_html(
     });
 }
 
+export function $html_t(
+    descriptor: MessageDescriptor,
+    values?: Record<string, ToHtml | ((content: Html) => ToHtml)>,
+): Html {
+    return {__html: $t_html(descriptor, values)};
+}
+
 export let language_list: (typeof page_params & {page_type: "home"})["language_list"];
 
 export function get_language_name(language_code: string): string | undefined {
