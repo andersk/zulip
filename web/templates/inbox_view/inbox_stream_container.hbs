@@ -1,13 +1,13 @@
-{{#each topics_dict as |key_value_list _index|}}
-    <div id="{{key_value_list.[0]}}">
-        {{#each ../streams_dict as |stream_key_value _stream_index|}}
-            {{#if (eq stream_key_value.[0] key_value_list.[0])}}
-                {{> inbox_row stream_key_value.[1]}}
+{{#each topics_dict}}
+    <div id="{{./[0]}}">
+        {{#each ../streams_dict}}
+            {{#if (eq ./[0] ../[0])}}
+                {{> inbox_row ./[1]}}
             {{/if}}
         {{/each}}
         <div class="inbox-topic-container">
-            {{#each key_value_list.[1]}}
-                {{>inbox_row this.[1]}}
+            {{#each ./[1]}}
+                {{>inbox_row ./[1]}}
             {{/each}}
         </div>
     </div>
