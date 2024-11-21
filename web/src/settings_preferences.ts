@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import assert from "minimalistic-assert";
 
 import {html} from "../shared/src/html.ts";
-import render_dialog_default_language from "../templates/default_language_modal.hbs";
+import render_dialog_default_language from "../templates/default_language_modal.ts";
 
 import * as channel from "./channel.ts";
 import * as dialog_widget from "./dialog_widget.ts";

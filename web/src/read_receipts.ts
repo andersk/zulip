@@ -4,8 +4,8 @@ import SimpleBar from "simplebar";
 import {z} from "zod";
 
 import {html} from "../shared/src/html.ts";
-import render_read_receipts from "../templates/read_receipts.hbs";
-import render_read_receipts_modal from "../templates/read_receipts_modal.hbs";
+import render_read_receipts from "../templates/read_receipts.ts";
+import render_read_receipts_modal from "../templates/read_receipts_modal.ts";
 
 import * as channel from "./channel.ts";
 import {$t, $t_html} from "./i18n.ts";
